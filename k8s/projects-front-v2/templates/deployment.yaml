@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
+  name: {{ tpl .Values.fullName . }}
+spec:
+  selector:
+    matchLabels:
+      {{- tpl (.Values.commonLabels  | toYaml | nindent 6 ) $ }}
+  template:
+    metadata:
+      labels:
+        {{- tpl (.Values.commonLabels  | toYaml | nindent 8) $ }}
+      annotations:
+      {{- if .Values.injectedEnv.nonSensitive }}
+        checksum/configmap: {{ include (print $.Template.BasePath "/environment-configmap.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.injectedEnv.sensitive }}
+        checksum/secret: {{ include (print $.Template.BasePath "/environment-secret.yaml") . | sha256sum }}
+      {{- end }}
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
+        fsGroup: 101
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        {{- with $.Values.image }}
+        - image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
+        {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          imagePullPolicy: IfNotPresent
+          name: projects-frontend
+          ports:
+            - name: http
+              containerPort: {{ .Values.targetPort }}
+          env:
+            - name: ADD_HEADER_HSTS
+              value: add_header  Strict-Transport-Security "max-age=31536000" always;
+            - name: NGINX_RESOLVER
+              value: 10.0.0.10
+          envFrom:
+            {{- if .Values.injectedEnv.nonSensitive }}
+            - configMapRef:
+                name: {{ tpl .Values.fullName . }}
+            {{- end }}
+            {{- if .Values.injectedEnv.sensitive }}
+            - secretRef:
+                name: {{ tpl .Values.fullName . }}
+            {{- end }}
+          resources: {{- .Values.resources |toYaml | nindent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 5
+            httpGet:
+              host:
+              scheme: HTTP
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 1
+            httpGet:
+              host:
+              scheme: HTTP
+              path: /
+              port: http

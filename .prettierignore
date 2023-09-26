@@ -1,0 +1,9 @@
+dist
+docs
+deployment
+.storybook
+.husky
+.github
+public
+.vscode
+storybook-static

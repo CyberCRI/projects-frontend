@@ -1,0 +1,83 @@
+<template>
+    <div class="profile-edit-group">
+        <div class="form-group">
+            <label>
+                {{ $t('profile.edit.groups.groups.label') }} ({{ groups ? groups.length : 0 }})
+            </label>
+            <div class="group-list-list">
+                <CardList
+                    :desktop-columns-number="4"
+                    :is-loading="isLoading"
+                    :limit="8"
+                    :groups="groups"
+                    :with-title="false"
+                >
+                    <template #groups="groupListSlotProps">
+                        <GroupCard
+                            v-if="groupListSlotProps.group"
+                            :group="groupListSlotProps.group"
+                        />
+                    </template>
+                    <template #empty>
+                        <div class="empty-ctn" :class="gridLayout">
+                            <EmptyCard class="empty-card" :label="$t('me.no-group')" />
+                        </div>
+                    </template>
+                </CardList>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import CardList from '@/components/lpikit/ProjectList/CardList.vue'
+import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import { getGroup } from '@/api/group.service'
+import EmptyCard from '@/components/lpikit/UserProfile/EmptyCard.vue'
+export default {
+    name: 'ProfileGroupsEditTab',
+    components: {
+        CardList,
+        GroupCard,
+        EmptyCard,
+    },
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            groups: [],
+            isLoading: false,
+        }
+    },
+
+    async mounted() {
+        this.isLoading = true
+        try {
+            this.groups = await Promise.all(
+                this.user.people_groups.map(async (group) => {
+                    try {
+                        return await getGroup(
+                            this.$store.state.organizations.current.code,
+                            group.id
+                        )
+                    } catch (error) {
+                        console.error(error)
+                        return null
+                    }
+                })
+            )
+            this.groups = this.groups.filter((group) => !!group)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            this.isLoading = false
+        }
+    },
+}
+</script>
+<style scoped lang="scss">
+@import './profile-form';
+</style>

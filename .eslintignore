@@ -1,0 +1,9 @@
+src/functs/dotatlas.js
+src/assets
+dist
+docs
+deployment
+.storybook
+.husky
+.github
+public

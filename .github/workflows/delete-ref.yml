@@ -1,0 +1,11 @@
+on:
+  delete:
+    branches:
+      - "*"
+    tags:
+      - "**"
+      - "!**_deploy"
+
+jobs:
+  delete-ref:
+    uses: CyberCRI/github-workflows/.github/workflows/delete-tag-deploy-when-matching-ref-deleted.yaml@deploy-fast

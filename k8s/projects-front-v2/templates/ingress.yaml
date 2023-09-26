@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
+  name: {{ tpl .Values.fullName . }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.certManagerClusterIssuer }}
+    kubernetes.io/ingress.class: nginx
+    # see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#redirect-fromto-www
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+spec:
+  rules:
+    - host: {{.Values.hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ tpl .Values.fullName . }}
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - {{.Values.hostname }}
+        # Required as cert is checked before www -> non-www redirect
+        # https://github.com/kubernetes/ingress-nginx/issues/2043
+        - {{ printf "www.%s" .Values.hostname }}
+      secretName: {{.Values.hostname }}-tls

@@ -1,0 +1,51 @@
+.env
+.env*.local
+.env.e2e
+
+.DS_Store
+
+node_modules/
+dist/
+
+*.tar.gz
+npm-debug.log
+yarn-error.log
+image-resize.min.js
+package.json-MIN
+translation-keep.json
+sftp-config.json
+sftp.json
+.vscode
+
+# ESlint
+.eslintcache
+
+# Prettier
+build
+coverage
+
+storybook-static
+report
+
+src/functs/dotatlas.prod.js
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*old
+*.tmp
+*.test
+
+# e2e tests
+tests/e2e/tests_output
+tests/e2e/screens
+*.log
+
+# Playwight
+playwight-report/
+/test-results/
+/playwright-report/
+/playwright/.cache/

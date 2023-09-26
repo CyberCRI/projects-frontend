@@ -1,0 +1,41 @@
+name: Lint & Test
+on:
+  workflow_call:
+jobs:
+  e2e-tests:
+    environment:
+      name: ${{ github.ref == 'refs/heads/staging' && 'Staging' || 'Dev' }}
+    timeout-minutes: 10
+    runs-on: [self-hosted, default-runner]
+    env:
+      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
+      PLAYWRIGHT_TEST_EMAIL: ${{vars.PLAYWRIGHT_TEST_EMAIL}}
+      FRONTEND_URL: ${{vars.FRONTEND_URL}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Read node and npm versions from package.json
+        uses: skjnldsv/read-package-engines-version-actions@v2
+        id: package-engines-versions
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Install playwright Browsers
+        run: npx playwright install chrome --with-deps # todo: add other browsers
+      - name: Run Playwright tests
+        run:  npm run test:play:chrome # todo: add other browsers
+      # - name: Run Playwright read
+      #   run: npm run test:play:read # todo: add other browsers
+      # - name: Run Playwright write
+      #   run: npm run test:play:write # todo: add other browsers
+      # - name: Run Playwright socket
+      #   run: npm run test:play:websocket # todo: add other browsers
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

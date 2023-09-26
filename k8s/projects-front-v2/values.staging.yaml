@@ -1,0 +1,8 @@
+injectedEnv:
+  nonSensitive:
+      VITE_APP_KEYCLOAK_URL: https://id.lp-i.xyz/auth
+      VITE_APP_VERSION: "{{ .Values.application.revision }}"
+
+domain: k8s.lp-i.xyz
+
+certManagerClusterIssuer: letsencrypt-prod

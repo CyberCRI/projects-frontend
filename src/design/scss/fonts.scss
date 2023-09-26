@@ -1,0 +1,129 @@
+/*
+** https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
+** You can find more information on the font weights that exists.
+** We might need to change this list once we have the new design.
+** https://google-webfonts-helper.herokuapp.com/fonts
+** Uses google fonts API with a better number of font formats
+*/
+
+$uniqId: unique_id();
+
+/* ubuntu-300 - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: local('Ubuntu-Thin'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-300italic - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: italic;
+    font-weight: 300;
+    font-display: swap;
+    src: local('Ubuntu-Thin-Italic'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-regular - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Ubuntu'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-italic - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Ubuntu-Italic'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-500 - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Ubuntu-Medium'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-500italic - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Ubuntu-Medium-Italic'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-700 - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Ubuntu-Bold'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.ttf?v=#{$uniqId}')
+            format('truetype');
+}
+
+/* ubuntu-700italic - latin */
+@font-face {
+    font-family: Ubuntu;
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Ubuntu-Bold-Italic'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
+            format('woff2'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
+            format('woff'),
+        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
+            format('truetype');
+}

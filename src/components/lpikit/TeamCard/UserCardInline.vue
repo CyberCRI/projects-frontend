@@ -1,0 +1,213 @@
+<template>
+    <div
+        class="user-card-small"
+        @click="$emit('user-clicked')"
+        :class="{ selected: selected, passive: passive }"
+    >
+        <div class="user-container">
+            <CroppedImage
+                :alt="
+                    user.keycloack_id
+                        ? `${user.given_name} ${user.family_name} image`
+                        : `${user.name} image`
+                "
+                :image-sizes="imageSizes"
+                :src="imageError ? defaultImage : userImage"
+                @error="placeHolderImg"
+                class="img-container"
+            />
+            <div class="user-info">
+                <div v-if="user.keycloak_id" class="name">
+                    {{ $filters.capitalize(user.given_name) }}
+                    {{ $filters.capitalize(user.family_name) }}
+                </div>
+                <div v-else class="name">
+                    {{ $filters.capitalize(user.name) }}
+                </div>
+
+                <div v-if="role" class="role">{{ roleLabel }}</div>
+
+                <div v-if="user.job" class="title">{{ user.job }}</div>
+
+                <div v-if="user.description" class="title" v-html="user.description"></div>
+            </div>
+        </div>
+
+        <div v-if="icon" class="icon" :class="{ 'icon--selected': selected }">
+            <IconImage :name="icon" />
+        </div>
+    </div>
+</template>
+
+<script>
+import IconImage from '@/components/svgs/IconImage.vue'
+import imageMixin from '@/mixins/imageMixin.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+
+export default {
+    name: 'UserCardInline',
+
+    mixins: [imageMixin],
+
+    emits: ['user-clicked'],
+
+    components: { IconImage, CroppedImage },
+
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        },
+
+        role: {
+            type: String,
+            default: null,
+        },
+
+        icon: {
+            type: String,
+            default: null,
+        },
+        selected: {
+            type: Boolean,
+            default: false,
+        },
+        passive: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    data() {
+        return {
+            imageError: false,
+        }
+    },
+
+    computed: {
+        roleLabel() {
+            if (this.role) {
+                if (this.role === 'owners') return this.$t('role.editor')
+                else if (this.role === 'members') return this.$t('role.teammate')
+                else if (this.role === 'reviewers') return this.$t('role.reviewer')
+            }
+            return null
+        },
+
+        userImage() {
+            if (this.user.keycloak_id) {
+                return this.user.profile_picture
+                    ? this.user.profile_picture.variations.medium
+                    : null
+            }
+            return this.user.header_image ? this.user.header_image.variations.medium : null
+        },
+        imageSizes() {
+            return this.imageError ? null : pictureApiToImageSizes(this.user.profile_picture)
+        },
+        defaultImage() {
+            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
+        },
+    },
+
+    methods: {
+        placeHolderImg() {
+            this.imageError = true
+        },
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+.user-card-small {
+    display: flex;
+    align-items: center;
+    padding: $space-s;
+    box-sizing: border-box;
+    border: $border-width-s solid $green;
+    border-radius: $border-radius-m;
+    background-color: $white;
+    height: pxToRem(70px);
+    color: $black;
+    position: relative;
+    justify-content: space-between;
+    cursor: pointer;
+    width: pxToRem(240px);
+
+    &.passive {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .user-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .img-container {
+        border-radius: 50%;
+        background-size: cover;
+        background-position: top center;
+        width: pxToRem(48px);
+        height: pxToRem(48px);
+        flex-shrink: 0;
+    }
+
+    .user-info {
+        margin-left: $space-m;
+        flex-grow: 1;
+
+        .title {
+            font-size: $font-size-xs;
+            font-weight: 400;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+    }
+
+    .lpi-button {
+        flex-shrink: 0;
+    }
+
+    .icon {
+        fill: $primary-dark;
+        width: pxToRem(20px);
+        height: pxToRem(20px);
+        position: absolute;
+        right: 4px;
+        top: 4px;
+        border-radius: $border-radius-50;
+        cursor: pointer;
+
+        &--selected {
+            background: $primary-dark;
+            fill: $white;
+        }
+    }
+
+    .name {
+        font-weight: 700;
+        font-size: $font-size-s;
+        line-height: 20px;
+        margin-bottom: $space-s;
+    }
+
+    .role {
+        background: $green;
+        color: $black;
+        font-size: $font-size-s;
+        font-weight: 700;
+        display: inline-block;
+        padding: $space-2xs $space-xs;
+        margin-bottom: $space-m;
+    }
+}
+
+.selected {
+    background: $primary-lighter;
+}
+</style>

@@ -1,0 +1,13 @@
+/.git
+/dist
+/node_modules
+/.vscode
+/.github
+/.husky
+/.dockerignore
+/.editorconfig
+/.env*
+/.gitignore
+/.gitlab-ci.yml
+/Dockerfile
+/tests

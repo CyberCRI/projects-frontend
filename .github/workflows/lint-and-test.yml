@@ -1,0 +1,53 @@
+name: Lint & Test
+on:
+  workflow_call:
+jobs:
+  lint-and-test:
+    runs-on: [self-hosted, default-runner]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Necessary for https://github.com/wagoid/commitlint-github-action
+      - name: Read node and npm versions from package.json
+        uses: skjnldsv/read-package-engines-version-actions@v2
+        id: package-engines-versions
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Cache node_modules
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install the dependencies
+        run: yarn install --frozen-lockfile
+
+      - uses: wagoid/commitlint-github-action@v5
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
+      - name: Check that prettier has been run on all files
+        run: yarn format:check
+      - name: Run the linter
+        run: yarn lint
+      # - name: Run unit tests with coverage
+      #   uses: artiomtr/jest-coverage-report-action@v2.0-rc.5
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     package-manager: yarn
+      #     skip-step: install
+      #     test-script: yarn test:unit
+      #     annotations: failed-tests
+      - name: Run the tests
+        run: yarn test:unit:ci
+      - name: Uninstall Yarn
+        run: npm uninstall -g yarn

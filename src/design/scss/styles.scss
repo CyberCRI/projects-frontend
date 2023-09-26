@@ -1,0 +1,146 @@
+.custom-scrollbar {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        border: solid 3px transparent;
+        border-radius: $scrollbar-radius;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $primary-dark;
+        border-radius: $scrollbar-radius;
+    }
+}
+
+// shadow effect on hover
+
+$shadow-hover-duration: 0.3s;
+$shadow-hover-easing: cubic-bezier(0.155, 1.105, 0.295, 1.12);
+$shadow-hover-def-1: 0 5px 10px rgb(0 0 0 / 12%);
+$shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
+$shadow-hover-scale: scale(1.01);
+
+.shadow-box {
+    transition: $shadow-hover-duration transform $shadow-hover-easing,
+        $shadow-hover-duration box-shadow,
+        $shadow-hover-duration -webkit-transform $shadow-hover-easing;
+
+    &:hover {
+        transform: $shadow-hover-scale;
+        box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+    }
+}
+
+.shadow-drop {
+    transition: $shadow-hover-duration transform $shadow-hover-easing,
+        filter $shadow-hover-duration $shadow-hover-easing,
+        text-shadow $shadow-hover-duration $shadow-hover-easing;
+
+    &:hover {
+        transform: $shadow-hover-scale;
+        filter: drop-shadow($shadow-hover-def-1) drop-shadow($shadow-hover-def-2);
+        text-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title,
+.titlebar,
+.name,
+.button,
+.rightbutton,
+.date,
+.seemore,
+.cat,
+.tag,
+.linkcat,
+.status,
+.projecttag,
+.maintag,
+.catbox,
+.selectedtag,
+.tip,
+.switchlabel,
+.sectiontitle,
+.label,
+.toplabel,
+.boxlabl,
+.peopleline,
+.bannertitle,
+.dessummary,
+.bannersubtitle {
+    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
+    font-weight: 700;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.form {
+    padding-bottom: $space-l;
+
+    .title {
+        font-size: $font-size-m;
+        color: $primary-dark;
+        font-weight: bold;
+        margin: 0 0 $space-l;
+    }
+
+    .description {
+        display: block;
+        margin-bottom: $space-m;
+        font-size: $font-size-xs;
+    }
+
+    .image-input-ctn,
+    .lpi-button:not(.no-margin) {
+        margin: $space-m auto 0;
+    }
+
+    > *:not(:first-of-type) {
+        margin-top: $space-l;
+    }
+
+    .error-description {
+        color: $salmon-dark;
+        margin-top: $space-s;
+        font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
+        font-size: $font-size-s;
+    }
+}
+
+// global
+body.has-open-drawer {
+    // prevent scrolling behind drawers
+    overflow: hidden;
+}
+
+.narrow-body {
+    width: 100%;
+    max-width: pxToRem(1200px);
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    @media screen and (min-width: $max-desktop) {
+        max-width: pxToRem(1280px);
+    }
+}
+
+.narrow-content {
+    width: 100%;
+    max-width: pxToRem(800px);
+    margin: 0 auto;
+    box-sizing: border-box;
+}

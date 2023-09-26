@@ -1,0 +1,51 @@
+people:
+    apiUrl: https://api.people.example.com
+    frontendUrl: https://people.example.com
+
+apiUrl: https://api.projects.example.com
+
+targetPort: 8080
+
+commonLabels:
+    app.kubernetes.io/name: projects-frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/instance: '{{ .Values.instanceName }}'
+    app.kubernetes.io/part-of: projects
+    app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+
+image:
+    repository: criprodprod.azurecr.io
+    path: projects-front
+    tag: '{{ .Values.application.revision }}'
+
+hostname: dummy-hostname
+
+prefix: dummy-prefix
+instanceName: dummy-instance
+
+application:
+  revision: dummy-revision
+  sourceTargetRevision: dummy-sourceTargetRevision
+
+resourceName: frontend
+fullName: '{{ join "-" (list .Values.instanceName .Values.resourceName) }}'
+
+injectedEnv:
+  nonSensitive:
+      VITE_APP_API_URL: '{{ printf "https://api.projects.%s" .Values.domain }}'
+      VITE_APP_DOC: '{{ printf "https://docs.projects.%s" .Values.domain }}'
+      VITE_APP_WSS_HOST: '{{ printf "wss://hocus-pocus.%s" .Values.domain }}'
+      VITE_APP_META_PORTAL_URL: '{{ printf "https://projects.%s" .Values.domain }}'
+      VITE_APP_MIXPANEL_API_URL: '{{ printf "https://mixpanel-proxy.%s" .Values.domain }}'
+      VITE_APP_BASE_URL: '{{ .Values.hostname }}'
+      VITE_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
+
+domain: dummy.domain
+
+resources:
+  requests:
+    cpu: 1m
+    memory: 30Mi
+  limits:
+    memory: 50Mi

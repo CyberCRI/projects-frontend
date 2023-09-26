@@ -1,0 +1,2417 @@
+{
+    "about": {
+        "page-title": "About",
+        "HEADER": {
+            "title": "Projects Team"
+        },
+        "WHY": {
+            "title": "Why create Projects.directory?",
+            "des": "In any organization with more than twenty members, it's hard to know who does what and what anyone's working on right now. We started Projects to let {link} users share their projects and initiatives between students, researchers, staff members and teachers.",
+            "des1": "In an interdisciplinary environment, you cannot rely on top-down communication only : people need to talk, to discover other projects relevant to their work, to be inspired by cool projects that make sense for themselves and the planet. So we built a platform to let anyone display his/her own projects and passions to their community and to the world.",
+            "des2": "It was soon obvious that ANY organization has similar needs. So we let other groups share their own projects (NGOs, universities...) on their own portals, while all projects where shared on a {link}. We got the support of the French Ministry of Education, the City of Paris, the Île-de-France Region, the Université de Paris and many others.",
+            "platform": "global platform",
+            "button_blog": {
+                "text": "Platform blog"
+            }
+        },
+        "GOAL": {
+            "title": "Where do we go from there?",
+            "des": "CRI and UNESCO co-created {lpiLink}, an initiative to transform education on a worldwide scale. #LearningPlanet is a global open alliance of educational stakeholders and learning communities with a cause, with the mission to inspire & empower learners of all ages to contribute to shaping better futures. Our aim is to foster collaboration between thousands of actors of education and create a digital ecosystem to help them learn better together",
+            "des1": "Projects.directory is the most mature tool of this digital ecosystem. We hope that any organization focused on solving sustainable development goals will use it to share their projects and initiatives.",
+            "des2": "Projects.directory leverages collective and artificial intelligence from the {weLearnLink} initiative and the {skillLink} project.",
+            "button_community": {
+                "text": "Onboard your community"
+            }
+        },
+        "TEAM_CORE": {
+            "title": "Core Team",
+            "des": "They create and improve the Projects platform",
+            "list": [
+                {
+                    "title": "Tech Leader",
+                    "des": "Creator of CRI Projects, full-stack expert"
+                },
+                {
+                    "title": "Project Manager",
+                    "des": "Sets the strategy, organizes the project, and makes sense of our users requirements"
+                },
+                {
+                    "title": "Front-end Developer",
+                    "des": "Creates beautiful designs and implements them in the app"
+                },
+                {
+                    "title": "Chief Information Officer",
+                    "des": "Leads technology projects at CRI"
+                },
+                {
+                    "title": "Data scientist",
+                    "des": "In charge of recommendation engine and search algorithms"
+                },
+                {
+                    "title": "Back-end Developer",
+                    "des": "Develops APIs and complex back-end tasks"
+                },
+                {
+                    "title": "Pedagogical Coordinator",
+                    "des": "Coordinates deployment within University of Paris at Challenge Institute"
+                },
+                {
+                    "title": "Tech specialist",
+                    "des": "Documents the Projects platform and coordinates #LearningPlanet digital needs"
+                }
+            ]
+        },
+        "TEAM_CONTRIB": {
+            "title": "Contributors",
+            "des": "They help us design the platform",
+            "list": [
+                {
+                    "title": "Intern",
+                    "des": "Supports users and creates help documentation"
+                },
+                {
+                    "title": "Scientific Advisor",
+                    "des": "Creator of ProfChercheurs initiative and CRI research fellow"
+                },
+                {
+                    "title": "Community manager",
+                    "des": "PHD student and ÉPhiScience founder, super tester of new features"
+                },
+                {
+                    "title": "Pedagogical coordinator",
+                    "des": "Designs and tests pedagogical scenarii using Projects with Licence students"
+                },
+                {
+                    "title": "Full-stack developer",
+                    "des": "Created and integrated the WeLearn concept map in Projects search"
+                },
+                {
+                    "title": "Community manager and key user",
+                    "des": "Deployed France EduNum Projects portal for the French Ministry of Education "
+                },
+                {
+                    "title": "Project advisor and CRI board member",
+                    "des": "Leads LearningPlanet initiative "
+                },
+                {
+                    "title": "CRI co-founder",
+                    "des": "Helps create the vision for the future of education and our digital ecosystem "
+                }
+            ]
+        },
+        "JOBS": {
+            "title": "Want to work with us?",
+            "des": "We are hiring specialists to help us develop new features and grow.",
+            "des1": "You want to improve education and help all changemakers share their projects all around the world? Join us!",
+            "button_jobboard": {
+                "text": "View open positions"
+            },
+            "button_contact": {
+                "text": "Contact us"
+            }
+        }
+    },
+    "admin": {
+        "title": "My Admin Panel",
+        "menu": {
+            "full-profile": "full profile",
+            "general-info": "General information",
+            "new-project": "new project",
+            "see-stats": "See stats"
+        },
+        "tabs": {
+            "information": "General",
+            "categories": "Categories",
+            "tags": "Tags",
+            "help": "Help",
+            "links": "Links",
+            "templates": "Templates",
+            "users": "Users",
+            "groups": "Groups"
+        },
+        "page-title": "Admin",
+        "portal": {
+            "content-management": "Managing my content",
+            "management": "Manage my portal",
+            "leave": "Do you really want to leave?",
+            "cancel": "Stay here",
+            "change": "Change page",
+            "user-management": "management of my users",
+            "general": {
+                "invisible": "Invisible",
+                "preview-homepage": "Homepage preview",
+                "logo": "Logo",
+                "banner": "Banner",
+                "preview": "Preview",
+                "size-min-banner": "Minimum size for the banner: {minWidth}px * {minHeight}px",
+                "size-min-logo": "Minimum size for the logo: {minWidth}px * {minHeight}px",
+                "portal-referencing": "Parent portal referencing",
+                "visible": "Visible"
+            },
+            "categories": {
+                "add": "Add a category",
+                "edit": "Edit a category",
+                "is-reviewable": "Authorize reviews",
+                "limit-publication-to-reviewers": "Limit publication to reviewers",
+                "preview-categories": "Preview in categories",
+                "preview-page": "Preview page",
+                "display-projects": "Display projects",
+                "hide-projects": "Hide projects",
+                "delete-category": "Delete category",
+                "delete-category-description": "Are you sure you want to delete this category? This action cannot be undone."
+            }
+        },
+        "form": {
+            "admin-info": {
+                "name": {
+                    "required": "The name of community is required",
+                    "max-length": "The name of community must be less than 32 characters"
+                },
+                "dashboard-title": {
+                    "required": "The title is required",
+                    "max-length": "The title must be less than 128 characters"
+                },
+                "contact-email": {
+                    "required": "The email is required",
+                    "email": "This must be a valid email"
+                },
+                "language": {
+                    "required": "The language is required"
+                },
+                "background-color": {
+                    "required-if": "The background color is required if linking on main portal of Projects"
+                }
+            },
+            "template": {
+                "category": {
+                    "required": "The category is required"
+                }
+            }
+        },
+        "groups": {
+            "intro": "Register links allow users who want to create a Projects account on your portal to do so. All you need to do is share with them the link. Many people can subscribe using one link.   You can control what group they will be part of when creating the link.",
+            "create-group": "Create group",
+            "add-modal-title-1": "Add child group to \"",
+            "add-modal-title-2": "\" group",
+            "subtitle-add-child": "Select in the list the child group. You can only select one.",
+            "edit-modal-title": "Add parent group",
+            "subtitle-edit-child": "Select in the list the parent group. You can only select one."
+        }
+    },
+    "account": {
+        "title": "Create an account",
+        "edit-title": "Edit an account",
+        "sub-title": "Fields with * are mandatory. ",
+        "link": "Need help? We’re here.",
+        "button": "Create account",
+        "form": {
+            "first-name": "First name *",
+            "last-name": "Last name *",
+            "title": "Title *",
+            "email": "Email *",
+            "google": "Google Account",
+            "create-google": "Create account in Google",
+            "rights": "Rights",
+            "rights-description": "Rights granted on projects platform",
+            "groups": "Groups",
+            "groups-description": "This user will be part of the following groups"
+        },
+        "password-reset": {
+            "success": "Password reset link send",
+            "error": "Error while sending password reset link"
+        },
+        "edit": "Edit account",
+        "create-success": "Account created",
+        "update-success": "Account updated",
+        "delete-success": "Account deleted",
+        "delete-account": "Delete account",
+        "reset-password": "Reset password",
+        "reset-delete": "Reset password & delete account",
+        "error": "An error ocurred."
+    },
+    "userItem": {
+        "teamLeader": "Group Leader"
+    },
+    "groups": {
+        "title": "User role",
+        "edit": "Edit user role",
+        "users": "User: a user is part of your community. They can create projects, edit their projects, and write comments on any project. They see a private project when they are part of the team of this projects, they see all projects with the community visibility, and all public projects.",
+        "facilitators": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users.",
+        "admins": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators.",
+        "none": "None: This person has a Projects account but is not part of your portal. They can only see the public projects.",
+        "roles": {
+            "none": "None",
+            "users": "User",
+            "facilitators": "Facilitator",
+            "admins": "Org admin"
+        },
+        "empty": "No groups",
+        "main-groups": "Main Groups"
+    },
+    "invitation": {
+        "copy-link": "Copy link",
+        "create": {
+            "create-success": "Invitation created",
+            "create-error": "Error during invitation creation",
+            "field": {
+                "description": {
+                    "label": "Add a description",
+                    "notice": "This is only for you to remember who you created this link for and why.",
+                    "placeholder": "Who do you create this link for?"
+                },
+                "group": {
+                    "add": "Add",
+                    "error": "Group is required",
+                    "label": "Choose the group *",
+                    "notice": "Users using this link to register will be added to this group.",
+                    "selected": "Selected group:"
+                },
+                "validity": {
+                    "error": "Validity is required",
+                    "label": "Choose your validity duration *",
+                    "notice": "Once you create it, the link will be valid only during this period.",
+                    "one-year": "1 year",
+                    "pick-date": "Pick a date",
+                    "valid-until": "Valid until :"
+                }
+            },
+            "intro": "Register links allow users who want to create a Projects account on your portal to do so. All you need to do is share with them the link. Many people can subscribe using one link. You can control what group they will be part of when creating the link.",
+            "link": "Need help? We’re here.",
+            "notice": "Fields marked with * are mandatory.",
+            "title": "Create a register link"
+        },
+        "delete-confirm-title": "Delete this link?",
+        "generate-link": "Generate link",
+        "list": {
+            "created-by-column": "Created by",
+            "description-column": "Description",
+            "expire-column": "Expires on",
+            "group-column": "Group",
+            "intro": "Register links allow users who want to create a Projects account on your portal to do so. All you need to do is share with them the link. Many people can subscribe using one link.   You can control what group they will be part of when creating the link.",
+            "link-column": "Link",
+            "title": "Register links"
+        }
+    },
+    "blog": {
+        "add-entry": "add blog entry",
+        "delete-entry": "Do you want to delete this blog entry ?",
+        "edit-entry": "edit entry",
+        "entry": "blog entry",
+        "add-error": "Error creating blog entry",
+        "edit-error": "An error occurred while saving. We would advise you to check your connection and try again.",
+        "fulltitle": "the blog",
+        "last-entry": "last blog entry",
+        "last-publication": "last blog entry",
+        "no-entry": "No entry yet ...",
+        "post": "blog entry",
+        "posts": "blog entries",
+        "saved": "saved",
+        "title": "blog"
+    },
+    "browse": {
+        "page-title": "Search",
+        "placeholder": "What are you looking for?"
+    },
+    "category": {
+        "add-success": "Category successfully added",
+        "choose": "Choose a project type",
+        "choose-hint": "You are about to create a new project page. What kind of project do you plan to add?",
+        "edit-order-success": "Categories order successfully edited",
+        "info": "You can classify projects into different categories (ex: student projects, teacher projects, research projects, etc. ). Every project will have to be associated with one of these categories. Maximum 15 categories allowed.",
+        "maximum-reach": "You reach maximum categories allowed. You can update one.",
+        "my-categories": "my categories",
+        "page-title": "Category",
+        "tags": "Category Tags",
+        "title": "Categories",
+        "all-projects": "See all projects"
+    },
+    "comment": {
+        "add-comment": "Add your comment!",
+        "comment": "comment",
+        "comment-verb": "comment",
+        "comments": "comments",
+        "deleted": "comment deleted on the",
+        "discard-comment": "Discard comment?",
+        "discard-changes": "Discard changes?",
+        "last-comment": "last comment",
+        "last-from": "Last comment from",
+        "new": "new comment",
+        "need-account": "You need an account to publish comments",
+        "no-comments": "no comment has been made yet ...",
+        "publish": "Publish your comment",
+        "delete-title": "Delete definitely?",
+        "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
+    },
+    "common": {
+        "add": "Add",
+        "all-information-complete": "All informations must be complete",
+        "apply": "apply",
+        "added-on-the": "added on",
+        "back": "back",
+        "banner-portal": "Part of",
+        "cancel": "Cancel",
+        "chose-date": "Chose date",
+        "close": "close",
+        "confirm": "confirm",
+        "content": "content",
+        "continue": "continue",
+        "copy": "copy",
+        "created-on": "Created on",
+        "deadline": "deadline",
+        "delete": "Delete",
+        "delete-selection": "Delete selection",
+        "delete-user": "Delete",
+        "description": "description",
+        "destroy": "destroy",
+        "destroy-confirm": "Are you sure that you want to delete this project? This action cannot be undone.",
+        "cant-quit-self": "You are the last editor of the team. Every project must have at least one editor.\nYou can either add another editor before leaving the project, or delete the project from the Configuration tab.",
+        "cant-quit-other": "This is the last editor of the team. Every project must have at least one editor.\nYou can either add another editor supressing this one, or delete the project from the Configuration tab.",
+        "destroy-quit": "Are you sure you want to delete this project?",
+        "direct-link": "direct link",
+        "edit": "edit",
+        "edited-on": "Edited on",
+        "end": "finish",
+        "exit-full-screen": "Exit full-screen",
+        "file-required": "A file is required",
+        "for": "for",
+        "from": "From",
+        "full-screen": "Full-screen",
+        "groups": "Groups",
+        "index": "Index",
+        "insert": "insert",
+        "less": "less",
+        "link": "link",
+        "learn-more": "learn more",
+        "loading": "Loading",
+        "login": "login",
+        "logout": "logout",
+        "more": "more",
+        "more-info": "more information",
+        "next": "next",
+        "no": "no",
+        "none": "none",
+        "ok": "ok",
+        "org": "portal members",
+        "other": "other",
+        "quit": "quit the projet",
+        "quit-project": "Are you sure you want to quit this project?",
+        "post": "post",
+        "project": "project",
+        "page": "page",
+        "preview": "preview",
+        "previous": "previous",
+        "publish": "publish",
+        "read": "read",
+        "reply": "reply",
+        "remove-group": "Are you sure you want to remove this group?",
+        "remove-user": "Are you sure you want to remove this user?",
+        "save": "save",
+        "send": "Send",
+        "see-less": "see less",
+        "see-more": "see more",
+        "set-deadline": "set deadline",
+        "share": "Share",
+        "shrink": "shrink",
+        "socket-error": "Server socket - Connection error",
+        "submit": "submit",
+        "the-project": "The project",
+        "title": "title",
+        "updated-on-the": "modifié le",
+        "update-success": "Update successful",
+        "yes": "yes",
+        "disconnect": "Disconnect",
+        "first-name": "First name",
+        "last-name": "Name",
+        "role": "Role",
+        "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved."
+    },
+    "crikit": {
+        "image-upload": {
+            "upload": "Drop your image here or click to browse."
+        },
+        "errors": {
+            "too-big-file-size": "The size of the file is too big, {sizeMax}MB max.",
+            "invalid-extension": "This extension file is not allowed.",
+            "min-height-image": "Image must have a minimum height of {minHeight}px.",
+            "min-width-image": "Image must have a minimum width of {minWidth}px."
+        }
+    },
+    "description": {
+        "default-placeholder": "Now, describe your project.",
+        "description": "description",
+        "placeholder": "You do not have a description yet, think about adding one!",
+        "delete": "Are you sure you want to close the editor ?",
+        "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
+        "edit": "edit description (draft)",
+        "edit-title": "edit description",
+        "add": "Add description",
+        "error": "An error occurred while saving. We would advise you to check your connection and try again.",
+        "quit-without-saving-title": "Quit without saving?",
+        "saved": "Saved"
+    },
+    "dialog": {
+        "messages": {
+            "delete": "Are you sure you want to {remove} this item? This action cannot be undone.",
+            "remove": "delete"
+        }
+    },
+    "discover": {
+        "page-title": "Discover",
+        "HEADER": {
+            "title": "Share your projects",
+            "impact": "to increase impact",
+            "des": "Use the Projects platform to showcase your projects,",
+            "facilitate": "facilitate synergies and foster collaboration",
+            "common": "for common good.",
+            "button_discover": "Explore Projects",
+            "button_access": "Get access"
+        },
+        "INTRO": {
+            "title": "Join our fast growing Platform",
+            "list": [
+                {
+                    "title": "Projects Hosted"
+                },
+                {
+                    "title": "Active Users"
+                },
+                {
+                    "title": "Communities"
+                }
+            ]
+        },
+        "FEATURES": [
+            {
+                "title": "Get Inspired",
+                "des": "Discover many interesting projects not only{0}through our powerful search but also based on{0}AI recommendations, location, or thematic map.",
+                "list": [
+                    {
+                        "title": "Recommandations",
+                        "des": "Hop from one  project to  similar ones thanks to projects linked by team members, or through automatic project recommendations."
+                    },
+                    {
+                        "title": "Tag Map",
+                        "des": "Use our tag map to discover projects in a totally new way! It groups projects according to how similar their tags are. The tags are Wikipedia articles."
+                    },
+                    {
+                        "title": "Geographic Map",
+                        "des": "Explore projects on the world map by team location and by place where the project had an impact."
+                    }
+                ]
+            },
+            {
+                "title": "Share and Collaborate",
+                "des": "Create efficiently a rich presentation of your project,{0}and increase your impact by joining forces.",
+                "list": [
+                    {
+                        "des": "Edit your project description simultaneously with your team members to add formatted text, images, videos, and links through a user-friendly text editor."
+                    },
+                    {
+                        "des": "Easily recruit participants or contributors by broadcasting the information to the whole community through public announcements."
+                    },
+                    {
+                        "des": "Add Sustainable Development Goals you contribute to so that users can find your project based on this information."
+                    },
+                    {
+                        "des": "Exchange with community members through the comments section."
+                    },
+                    {
+                        "des": "Complete your project with any type of external ressources, whether they are inspirations, creations, documentations,  other related projects..."
+                    },
+                    {
+                        "des": "Let others follow your project, or share it by a simple link"
+                    }
+                ]
+            },
+            {
+                "title": "TEACH",
+                "des": "Use functionnalities specifically designed for teaching project-based courses.",
+                "list": [
+                    {
+                        "title": "CUSTOM PROJECT TEMPLATES",
+                        "des": "Guide a project creator so that the content of their project corresponds to your expectations."
+                    },
+                    {
+                        "title": "EASY REVIEWING OF STUDENT PROJECTS",
+                        "des": "Create reviews and approve the publication of your students' projects."
+                    }
+                ]
+            },
+            {
+                "title": "MANAGE YOUR COMMUNITY",
+                "des": "Create an instance of Projects just for your community.{0}And enjoy the flexibility we offer to manage it, hassle free.",
+                "list": [
+                    {
+                        "title": "PERSONNALIZED PORTAL",
+                        "des": "Personnalize everything: Put your images, logos, titles, create your own categories, tags."
+                    },
+                    {
+                        "title": "EASY ADMINISTRATION AND MODERATION",
+                        "des": "Anytime, manage options for your community through the community admin space,  and moderate projects on your portal with admin rights."
+                    },
+                    {
+                        "title": "Clickable projects on your website",
+                        "des": "If your community has a website, you can embed easily projects that you want to feature there. When users click on it, they will be redirected to Projects."
+                    }
+                ]
+            }
+        ],
+        "PROJECT": {
+            "title": "Follow the PROJECTS Platform",
+            "des": "Discover everything about the Projects platform in its very own project.",
+            "project": {
+                "title": "CRI Projects",
+                "des": "Créer un annuaire des projets d'une organisation avec les ressources et compétences mobilisées"
+            }
+        },
+        "TESTIMONIALS": {
+            "list": [
+                {
+                    "project": {
+                        "title": "INTERNSHIP L3 - CEEBIOS _ Elise Buard",
+                        "des": "Bachelor's degree internship semester FdV. In charge of the formations of Biomimicry in France."
+                    },
+                    "title": "For education",
+                    "des": "Project-based courses, internships, student associations, self-study, etc.",
+                    "quote": "The Projects  platform allowed me to communicate about the results of all that I did for my internship.{0}The comments section allowed readers to ask for more information and to give me their thoughts on what they would like to read.{0}I was able to create my own illustrated logbook and this allowed my readers to discover precisely the implementation and expansion of biomimicry",
+                    "author": "- Elise Buard, Bachelor Student, Internship CEEBIOS"
+                },
+                {
+                    "project": {
+                        "title": "PROFS-CHERCHEURS - COVID19",
+                        "des": "Répondre collectivement face au COVID19"
+                    },
+                    "title": "For research",
+                    "des": "Research labs, citizen science initiatives, open-source challenges.",
+                    "quote": "High impact research tends to be interdisciplinary, with multiple stakeholders involved in its co-construction. But far too often knowledge and communities are siloed in disciplines, and communication with other stakeholders is difficult. The Projects platform helps to easily showcase impactful research, to easily find collaborators across disciplines, and to easily collaborate with the stakeholders that need your research.",
+                    "author": "- Ignacio Atal, Profs Chercheurs"
+                },
+                {
+                    "project": {
+                        "title": "EcoloVie",
+                        "des": "Réduire l'impact écologique de notre famille"
+                    },
+                    "title": "For personal SDG projects",
+                    "des": "Independent collectives and activists tackling critical social challenges.",
+                    "quote": "Our project: become an eco-responsible family. With the Projects platform, we can easily share our actions about food, transportation, housing, recycling and buying practices, and hopefully inspire others to change, one household at a time!",
+                    "author": "- Anne Mistral, family member"
+                }
+            ]
+        },
+        "ACCESS": {
+            "title": "GET ACCESS",
+            "des": "Request access to experiment all the features{0}or get in touch to create a dedicated portal",
+            "button_personal": {
+                "text": "Request a personal account"
+            },
+            "button_community": {
+                "text": "Request Projects for your community"
+            }
+        },
+        "PARTNERS": {
+            "title": "PARTNERS"
+        },
+        "CONTACT": {
+            "title": "CONTACT US",
+            "des": "For any question, please contact us at {link}"
+        }
+    },
+    "drawer": {
+        "clear": "Clear all selected",
+        "save": "Save",
+        "cancel": "Cancel",
+        "select-all": "Select all"
+    },
+    "errors": {
+        "title_401": "This action is forbidden",
+        "text_401": "Are you connected ?",
+        "unauthorized": "401 Unauthorized.",
+        "unprocessable-entity": "422 Unprocessable Entity.",
+        "bad-gateway": "502 Bad gateway.",
+        "resource-already-exists": "The resource already exists."
+    },
+    "faq": {
+        "add": "Add a Help tab",
+        "add-success": "Help successfully updated",
+        "delete-confirm-content": "Are you sure that you want to delete the Help Tab personalised for your portal. All its content will be deleted.",
+        "delete-confirm-title": "Custom help tab deletion",
+        "edit": "Edit help tab",
+        "info": "There is a generic help accessible by clicking on the button \"Help\" on the top right corner. If you want to add a tab  with a help page specific to your portal, you can do it below.",
+        "portal": "Help",
+        "tab": "Name of the tab",
+        "title": "FAQ",
+        "video": "Video tutorial"
+    },
+    "feed": {
+        "add-blog": "add a new blog entry",
+        "added-blog": "added a new blog entry",
+        "add-goal": "add a new goal",
+        "added-goal": "added a new goal",
+        "add-resource": "add a new resource",
+        "added-resource": "added a new resource",
+        "created-project": "created the project",
+        "made-comment": "made a new comment",
+        "updated-blog": "updated a blog entries",
+        "updated-comment": "updated a comment",
+        "updated-goal": "updated a goal",
+        "updated-project": "updated the project",
+        "updated-recruits": "updated recruits",
+        "updated-resource": "updated a resource"
+    },
+    "file": {
+        "add-file": "add a file here",
+        "add-image": "add an image",
+        "add-video": "add a video",
+        "add-video-hint": "Add a video by entering its youtube or vimeo URL.",
+        "attachment": "attached document | attached documents",
+        "upload": "Upload",
+        "videos": "Videos"
+    },
+    "form": {
+        "background-color": "background color",
+        "category": "Category",
+        "category-name": "Name of the category",
+        "organization-name": "Name of your community",
+        "delete": "Delete",
+        "description": "Description",
+        "email": "Email",
+        "email-contact": "email",
+        "field-length-constraint": "This field should contain at least 3 characters",
+        "field-required": "This field is required",
+        "image": "Image",
+        "invalid": "Invalid form",
+        "language": "Language",
+        "motto": "Motto",
+        "name": "name",
+        "required": "This field is required",
+        "text-color": "Text color",
+        "title": "Title",
+        "url": "url",
+        "contact": {
+            "subtitle": "Fill in this quick form and we’ll get back to you shortly",
+            "subject": "Subject",
+            "subject-placeholder": "What would you like to share with us?",
+            "email": "Email",
+            "email-placeholder": "Email",
+            "content": "Message",
+            "content-placeholder": "Ask us questions with a maximum of details."
+        },
+        "report": {
+            "title": "The title field is required",
+            "message": "The description field is required",
+            "content": "The content field is required",
+            "url": {
+                "required": "The url field is required",
+                "format": "Please enter a valid url"
+            },
+            "email": {
+                "required": "The email field is required",
+                "format": "Please enter a valid email address"
+            }
+        },
+        "review": {
+            "title": "The title field is required",
+            "message": "The description field is required",
+            "description": "The description field is required"
+        },
+        "goal": {
+            "title": "The title field is required",
+            "description": "The description field is required"
+        },
+        "blog": {
+            "title": "The title field is required",
+            "description": "The description field is required"
+        },
+        "resources": {
+            "title": "The title field is required",
+            "description": "The description field is required",
+            "link": {
+                "required": "The url field is required",
+                "format": "Please enter a valid url"
+            }
+        },
+        "announcement": {
+            "title": "The title field is required",
+            "description": "The description field is required"
+        },
+        "reply-announcement": {
+            "first-name": "The first name field is required",
+            "last-name": "The last name field is required",
+            "email": {
+                "required": "The email field is required",
+                "format": "Please enter a valid email address"
+            },
+            "description": "The description field is required"
+        }
+    },
+    "footer": {
+        "contact": "Contact us",
+        "legal-notices": "Legal notices",
+        "terms-of-service": "Terms of service",
+        "cookies": "Cookies",
+        "accessibility": "Accessibility",
+        "personal-data": "Protection policy of personal data",
+        "directory": "Discover many more projects of other organisations on our meta-portal :",
+        "help": "Help",
+        "projects": "Projects Platform",
+        "madeBy": "is made by"
+    },
+    "goal": {
+        "add": "add a goal",
+        "completed-on-the": "completed on the",
+        "description": "goal description",
+        "edit": "edit goal",
+        "fulltitle": "project goals",
+        "goal": "goal",
+        "goals": "goals",
+        "longtitle": "U.N. Sustainable Development Goals",
+        "no-goals": "No goal has been defined yet...",
+        "planned-for-the": "planned for the",
+        "project-main-goal": "Main Goal/Purpose",
+        "select": "select goals",
+        "status": "goal's status",
+        "status-title": "status",
+        "title": "goal's title",
+        "delete": "Would you like to delete this goal?"
+    },
+    "group": {
+        "contact": "Contact",
+        "edit-group": "Edit group",
+        "follow": "Follow",
+        "join": "Join",
+        "join-our-chat": "Join our chat",
+        "linked-groups-title": "Linked groups ({quantity})",
+        "recommandations-hint": "Some groups and people that might interest you",
+        "recommandations-title": "Recommandations",
+        "resource-button": "See {quantity} more resources",
+        "resource-title": "Resources ({quantity})",
+        "see-more-people-button": "See {users} more",
+        "see-more-projects-button": "{quantity} more projects",
+        "see-subgroups": "See {count} subgroup | See {count} subgroups",
+        "share": "Share",
+        "the-team": "The team ({users})",
+        "projects-title": "Projects ({quantity})",
+        "website": "Group website",
+        "news": "Announcements",
+        "more": "More",
+        "less": "Less",
+        "see-more": "See more",
+        "see-less": "See less",
+        "subgroups": "SUBGROUPS",
+        "snapshot": "Snapshot",
+        "members": "Members",
+        "projects": "Projects",
+        "visibility-private": "Visibility : private",
+        "visibility-public": "Visibility : public",
+        "visibility-org": "Visibility : portal",
+        "group-members": "Group members",
+        "group-projects": "Group projects",
+        "search-group": "Search a group",
+        "select-group": "Select a group",
+        "image-header": "Image",
+        "random-image": "Random image",
+        "create-group": "Create a group",
+        "root": "(Root)",
+        "create": {
+            "choose-category-first": "Please choose a category first",
+            "help-link": "We're here to help.",
+            "notice": "Fields marked with * are mandatory. You can always modify this later. No idea what you should do?",
+            "title": "Create a new group"
+        },
+        "edit": {
+            "title": "Edit a group"
+        },
+        "form": {
+            "add": "Add",
+            "add-projects": "Add featured projects",
+            "edit": "Edit",
+            "edit-members": "Edit members",
+            "edit-roles": "Edit roles",
+            "completed-info-to-access-presentation": "All the informations on this page must be complete to access the presentation",
+            "create-group": "Create group",
+            "change-default-image": "Change default image",
+            "edit-group": "Edit group",
+            "edit-name": "Edit name of the group",
+            "link-your-group": "Link your group to our network and benefit from our recommandations system",
+            "group-category": "Group category",
+            "email": "email",
+            "email-label": "Email",
+            "email-placeholder": "Ex. surname.name{'@'}myuniversity.fr",
+            "short-description-label": "Headline",
+            "short-description-placeholder": "Describe your group in one sentence",
+            "ready-to-present": "Are you ready to present your group?",
+            "resize-image": "Reframe the image",
+            "some-tag-ideas": "Some ideas among our popular tags:",
+            "tag-hint": "1 tag minimum, 3 recommended",
+            "name-label": "Group name",
+            "name-placeholder": "Ex. Hitbox: interactive boxing bag",
+            "upload-image": "Upload an image",
+            "description-label": "Description",
+            "add-description": "Add description",
+            "add-parent-group": "Add parent group",
+            "write-description": "Directly write your description and the rest of the information later",
+            "project-label": "Featured projects",
+            "parent-group-label": "Parent group",
+            "visibility": {
+                "title": "Group visibility",
+                "public": "Public",
+                "private": "Private",
+                "members": "Members",
+                "public_description": "Public: anyone can find this group on Internet",
+                "private_description": "Private: visible only by the admins and the group members",
+                "members_description": "Members: visible only by the members of this portal"
+            },
+            "name-errors": {
+                "required": "The group name field is required",
+                "max": "The group name field may not be greater than 180 characters"
+            },
+            "email-errors": {
+                "required": "The email field is required",
+                "max": "The email field may not be greater than 180 characters",
+                "min": "The email field must be at least 3 characters"
+            },
+            "short-description-errors": {
+                "max": "The headline field may not be greater than 150 characters"
+            },
+            "delete": "Delete group"
+        },
+        "role": {
+            "members": {
+                "label": "Member",
+                "help": "Member"
+            },
+            "leaders": {
+                "label": "Group Leader",
+                "help": "Group Leader"
+            },
+            "managers": {
+                "label": "Editor",
+                "help": "Editor"
+            },
+            "leaders-managers": {
+                "label": "Leader and Manager"
+            },
+            "editors": {
+                "label": "Editor",
+                "help": "Editor"
+            }
+        }
+    },
+    "header": {
+        "visibility": "Visibility",
+        "private": "Private: visible only to team members",
+        "org": "Only visible to the members of your portal",
+        "public": "Public: visible to any visitor of the website",
+        "similar-project": "similar project",
+        "similar-projects": "similar projects",
+        "location": "location",
+        "locations": "locations",
+        "portals-start": "Belongs to ",
+        "portals-end-plural": " portals",
+        "portals-end-singular": " portal",
+        "views": "Views",
+        "creation": "Created",
+        "update": "Edited",
+        "close": "Close",
+        "mobile-menu-title": "Menu"
+    },
+    "home": {
+        "all-projects": "All projects",
+        "announcements": "announcements",
+        "browse": "browse",
+        "browse-projects": "browse projects",
+        "communities": "Portals",
+        "home": "Home",
+        "new-project": "New project",
+        "new-project-creation": "New project creation",
+        "recruitment": "recruitment",
+        "start-new-project": "Start your new project!",
+        "subtitle_1": "A lot happens at CRI, we have top class research, high level education and a passionate community of people. We make, we try, we propose.",
+        "subtitle_2": "Help us keep track of all these great ideas!",
+        "categories": {
+            "title": "Projects Categories"
+        }
+    },
+    "language": {
+        "add": "add a language",
+        "label-en": "English",
+        "label-fr": "Français",
+        "project-fr": "Project in french",
+        "project-en": "Project in english"
+    },
+    "location": {
+        "add": "location",
+        "loading": "Loading locations"
+    },
+    "map": {
+        "empty": "Nothing here yet... Contributors did not localize any projects yet.",
+        "page-title": "Map",
+        "projects": "projects map",
+        "worldmap": "Discover projects by location"
+    },
+    "me": {
+        "follow": "Projects I follow",
+        "no-follow": "You are not following a project yet",
+        "followed": {
+            "whats-new": "what's going on?"
+        },
+        "groups": "Groups I'm a member of",
+        "no-group": "Your are not member of a group yet",
+        "myprojects": {
+            "admin": "Admin"
+        },
+        "my-projects": "my projects",
+        "no-bio": "You did not write your biography yet",
+        "no-skill": "You did not add skill yet",
+        "page-title": "My profile",
+        "projects-logs": "Projects log (history of projects)",
+        "projects-owner": "Projects I manage",
+        "projects-participate": "Projects I'm a member of",
+        "no-project-participate": "You are not member of a project yet",
+        "projects-reviewing": "Projects I'm reviewing",
+        "no-project-reviewing": "You are not reviewer of a project yet",
+        "skills": "Skills",
+        "hobbies": "Hobbies",
+        "levels-help-link": "Skill levels"
+    },
+    "you": {
+        "no-follow": "No projects followed yet",
+        "no-group": "Not a member of a group yet",
+        "no-bio": "No biography yet",
+        "no-skill": "No skills indicated yet",
+        "no-project-participate": "Not a member of a project yet",
+        "no-project-reviewing": "Not a reviewer of a project yet"
+    },
+    "message": {
+        "error-login": "An error occured during login. Please try again.",
+        "failed": "Error while sending message. Please try again.",
+        "leave-confirmation": "You're about to leave the page with unsaved data.",
+        "sent": "Message sent",
+        "redirect": "Redirect in progress",
+        "error": {
+            "unauthorized": "Unauthorized: Access is denied due to invalid credentials.",
+            "unprocessable-entity": "Unprocessable entity: Unable to process the contained instructions.",
+            "bad-gateway": "Bad gateway: The server encountered a temporary error and could not complete your request."
+        }
+    },
+    "multieditor": {
+        "agree": "agree",
+        "blockquote": "Blockquote",
+        "bold": "bold",
+        "bullet_list": "Bullet List",
+        "clear_format": "Clear Format",
+        "click-to-play-video": "Click again to start/stop video",
+        "color": {
+            "change-color": "Change color",
+            "choose": "Or choose a custom one",
+            "color": "Color",
+            "current": "Current",
+            "pick": "Pick a color",
+            "set-color": "Set color"
+        },
+        "code_block": "Code Block",
+        "concurrent-updates": "Concurrent updates",
+        "delete_column": "Delete this column",
+        "delete_row": "Delete this row",
+        "delete_table": "Delete Table",
+        "delete_video": "Delete video",
+        "external_link": "Open Link",
+        "heading_1": "Heading 1",
+        "heading_2": "Heading 2",
+        "heading_3": "Heading 3",
+        "image": {
+            "25_width": "25% width",
+            "50_width": "50% width",
+            "75_width": "75% width",
+            "100_width": "100% width",
+            "full": "Full",
+            "image": "Image",
+            "large": "Large",
+            "medium": "Medium",
+            "original": "Original",
+            "original_size": "Original width",
+            "small": "Small"
+        },
+        "insert_column_left": "Add Column Before",
+        "insert_column_right": "Add Column After",
+        "insert_row_top": "Add Row Before",
+        "insert_row_bottom": "Add Row After",
+        "italic": "italic",
+        "later": "later",
+        "link": "link",
+        "edit-link": "edit link",
+        "frozen": "Editor is locked",
+        "merge": "The project was updated by someone else meanwhile. Please merge your changes in the new version.",
+        "merge_cells": "Merge cells",
+        "not-synced": "Loading...",
+        "offline": "Offline",
+        "redo": "Redo",
+        "remove_link": "Remove Link",
+        "server-connected": "Server is connected.",
+        "server-connecting": "Server is connecting...",
+        "server-disconnected": "Server is disconnected.",
+        "server-unconnectable": "Cannot connect to server. Please retry later.",
+        "split_cell": "Split cell",
+        "table": "Table",
+        "text_align_left": "Text Align Left",
+        "text_align_right": "Text Align Right",
+        "text_align_center": "Text Align Center",
+        "toggle_header_row": "Toggle Header Row",
+        "toggle_header_cell": "Toggle Header Cell",
+        "unauthorized": "Unauthorized edit",
+        "underline": "underline",
+        "undo": "Undo",
+        "video": "Video",
+        "save": "Save without exiting"
+    },
+    "homeCarousel": {
+        "tab1": {
+            "title": "Get Inspired",
+            "text": "Discover interesting and inspiring projects. Browse projects on the geographic map and the tag map. Search by title, team member or project tag."
+        },
+        "tab2": {
+            "title": "Share",
+            "text": "Easily document and share your projects with all visitors and within your community. Add to your project a description, external resources, goals, tags, and blog entries."
+        },
+        "tab3": {
+            "title": "Collaborate",
+            "text": "Collaboratively edit your project with your team members. Set up announcements to recruit participants (contributors, new team members, interns, workers, etc.), exchange comments with community members."
+        },
+        "tab4": {
+            "title": "Show your impact",
+            "text": "Increase impact worldwide and showcase inspiring efforts for common good. Identify which {sdg} you contribute to. Geolocalise all the places where your projects generate an impact.",
+            "sdg": "SDG",
+            "sdgAbbr": "Sustainable Development Goals",
+            "link": "https://en.unesco.org/sustainabledevelopmentgoals"
+        }
+    },
+    "onboarding": {
+        "step": "step",
+        "tab-1-title": "Get Inspired",
+        "tab-1-text": "Discover interesting and inspiring projects. Browse projects on the geographic map and the tag map. Search by title, team member or project tag.",
+        "tab-2-title": "Share",
+        "tab-2-text": "Easily document and share your projects with all visitors and within your community. Add to your project a description, external resources, goals, tags, and blog entries.",
+        "tab-3-title": "Collaborate",
+        "tab-3-text": "Collaboratively edit your project with your team members. Set up announcements to recruit participants (contributors, new team members, interns, workers, etc.), exchange comments with community members.",
+        "tab-4-title": "Show your impact",
+        "tab-4-text": "Increase impact worldwide and showcase inspiring efforts for common good. Identify which <a href='https://en.unesco.org/sustainabledevelopmentgoals' target='_blank'><abbr title='Sustainable Development Goals'>SDG</abbr>s</a> you contribute to. Geolocalise all the places where your projects generate an impact.",
+        "title": "What is Projects?"
+    },
+    "onboarding-modal": {
+        "next": "Next",
+        "previous": "Previous"
+    },
+    "page404": {
+        "contact": "Kinda lost? You can contact us at {0}",
+        "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",
+        "illustration-text": "YES, THIS IS AN ERROR 404 AND NOW YOU’RE LOST IN THIS JUNGLE...",
+        "page-title": "Page not found",
+        "search": "This is not what you were looking for right? Same player want to {0}?",
+        "search-again": "search again",
+        "title": "Oops....",
+        "not-connected": {
+            "title": "Try to login",
+            "illustration-text": "TO ENTER YOU NEED TO LOGIN",
+            "connect": "We cannot find the page you’re looking for. To reach it, you might {0}.",
+            "login": "need to login"
+        }
+    },
+    "picture": {
+        "add-picture": "Add a picture",
+        "change-picture": "Change picture"
+    },
+    "print": {
+        "blog-entries": "print blog entries",
+        "description": "print description",
+        "goals": "print goals",
+        "print": "print",
+        "printing": "Printing project...",
+        "project": "print project",
+        "project-printing": "Printing project ...",
+        "resources": "print resources"
+    },
+    "profile": {
+        "edit": {
+            "edit-my-profile": "Edit my Profile",
+            "edit-your-profile": "Edit your profile",
+            "notice": "Fields with * are mandatory.",
+            "help": "Need help? We're here.",
+            "edit": "Edit",
+            "general": {
+                "tab": "General info",
+                "form-has-error": "There is missing or invalid field in the form.",
+                "save-error": "Error while saving profile.",
+                "save-success": "Profile saved.",
+                "pronouns": {
+                    "label": "Pronouns",
+                    "notice": "Let others know how to refer to you.",
+                    "placeholder": "Examples: She/Her, He/Him, They/Them, etc."
+                },
+                "first-name": {
+                    "label": "First name *",
+                    "placeholder": "Ex. Jane",
+                    "is-required": "The first name field is required."
+                },
+                "last-name": {
+                    "label": "Last name *",
+                    "placeholder": "Ex. Doe",
+                    "is-required": "The last name field is required."
+                },
+                "professional-email": {
+                    "label": "Professional email *",
+                    "placeholder": "Ex. jane.doe{'@'}yourcompany.com",
+                    "is-required": "The professional email field is required.",
+                    "is-email": "The professional email must be a valid email."
+                },
+                "personal-email": {
+                    "label": "Personal email *",
+                    "placeholder": "Ex. jane.doe{'@'}youremailprovide.com",
+                    "is-required": "The personal email field is required.",
+                    "is-email": "The personal email must be a valid email."
+                },
+                "professional-number": {
+                    "label": "Professional number",
+                    "placeholder": "Ex. +33 600000000"
+                },
+                "personal-number": {
+                    "label": "Personal number",
+                    "placeholder": "Ex. +33 600000000"
+                },
+                "personal-webpage": {
+                    "label": "Personal webpage",
+                    "placeholder": "Place here your personal page URL",
+                    "is-url": "The personal webpage must be a valid URL."
+                },
+                "linkedin": {
+                    "label": "Linkedin account",
+                    "placeholder": "Place here your linkedin account URL",
+                    "is-url": "The Linkedin account must be a valid URL."
+                },
+                "twitter": {
+                    "label": "Twitter account",
+                    "placeholder": "Place here your twitter account URL",
+                    "is-url": "The Twitter account must be a valid URL."
+                },
+                "picture": {
+                    "label": "Profile picture",
+                    "notice": "(120 x 120 px mini - format jpg, png)",
+                    "upload-image": "Upload an image",
+                    "resize-image": "resize your image"
+                },
+                "title": {
+                    "label": "Title *",
+                    "placeholder": "Ex. Project manager, Student in M2 Biology, Researcher in Education  etc.",
+                    "is-required": "The title field is required."
+                },
+                "office": {
+                    "label": "Office in your organization",
+                    "placeholder": "Ex. CRI 6.01"
+                },
+                "organization-address": {
+                    "label": "Organization name and address",
+                    "placeholder": "Ex. Learning Planet Institute,\n8 rue Charles V,\n75004 Paris"
+                },
+                "tags": {
+                    "label": "Tags *",
+                    "add": "Add",
+                    "notice": "Add tags to your profile. This will help others find / discover you."
+                },
+                "sdgs": {
+                    "label": "SDGs",
+                    "add": "Add",
+                    "notice": "Add Sustainable Development Goals (SDGs) you want to contribute to. Ie: <SDG #1, SDG#2...>",
+                    "notice-start": "Add ",
+                    "notice-link": "Sustainable Development Goals (SDGs)",
+                    "notice-end": " you want to contribute to.  Example: Quality education, Zero hunger, Climate action, etc.",
+                    "link": "https://sdgs.un.org/goals"
+                }
+            },
+            "bio": {
+                "tab": "Bio",
+                "save-error": "Error while saving profile.",
+                "save-success": "Profile saved.",
+                "short-bio": {
+                    "label": "Short bio",
+                    "placeholder": "1 to 2 lines to briefly describe you"
+                },
+                "professional-bio": {
+                    "label": "Professional bio",
+                    "placeholder": "Present yourself professionally. Present your career path and your current occupation."
+                },
+                "personal-bio": {
+                    "label": "Personal bio",
+                    "placeholder": "Present yourself personally. Tell us about you and your passions!"
+                }
+            },
+            "projects": {
+                "tab": "Projects",
+                "member": {
+                    "label": "Projects I am a member of",
+                    "notice": "If you wish to become a member of an existing project, you should ask the project team to add you. Or you can create your project."
+                },
+                "followed": {
+                    "label": "Projects I follow",
+                    "notice": "When you follow a project you receive notifications about any new activity on it. If you want to follow a  project, visit it and click the \"Follow\" button next to its title.",
+                    "add": "Add"
+                },
+                "reviewed": {
+                    "label": "Projects I review",
+                    "notice": "If you wish to become a reviewer of an existing project, you should ask the project team to add you."
+                }
+            },
+            "groups": {
+                "tab": "Groups",
+                "groups": {
+                    "label": "Groups I'm a member of"
+                }
+            },
+            "skills": {
+                "tab": "Skills",
+                "intro": "You have not selected skills yet. Professional skills and hobbies allow your colleagues and your community to find you based on what you’re good at, what you’re interested in and what you care about.",
+                "save-error": "Error while saving profile.",
+                "save-success": "Profile saved.",
+                "skills": {
+                    "add": "Add professional skills",
+                    "edit-items": "Edit skills",
+                    "edit-levels": "Edit levels",
+                    "already-added": "Skill already added",
+                    "levels-help": "Skill levels",
+                    "drawer": {
+                        "add": {
+                            "title": "Add professional skills",
+                            "notice": "Type the first letters of your skill, and select the right one for you among suggestions.",
+                            "placeholder": "Type a skill",
+                            "confirm": "Next"
+                        },
+                        "edit": {
+                            "title": "Skill levels",
+                            "notice": "Indicate your level of mastery.",
+                            "help": "More about skill levels",
+                            "confirm": "Save"
+                        }
+                    }
+                },
+                "hobbies": {
+                    "add": "Add hobbies",
+                    "edit-items": "Edit hobbies",
+                    "already-added": "Hobby already added",
+                    "edit-levels": "Edit levels",
+                    "levels-help": "Hobbies levels",
+                    "drawer": {
+                        "add": {
+                            "title": "Add personal hobbies",
+                            "notice": "Type the first letters of your hobby, and select the right one for you among suggestions.",
+                            "placeholder": "Type a hobby",
+                            "confirm": "Next"
+                        },
+                        "edit": {
+                            "title": "Hobbies levels",
+                            "notice": "Indicate your level of mastery.",
+                            "help": "More about the hobbies levels",
+                            "confirm": "Save"
+                        }
+                    }
+                },
+                "levels": {
+                    "curious": "Curious",
+                    "basic": "Basic",
+                    "competent": "Competent",
+                    "expert": "Expert",
+                    "genius": "Genius"
+                },
+                "tip": {
+                    "intro-edit": "The different levels you can choose from:",
+                    "curious": {
+                        "title": "Level 1: Curious",
+                        "description": ""
+                    },
+                    "basic": {
+                        "title": "Level 2: Basic",
+                        "description": "High-school level, or did some tutorial, or a small project"
+                    },
+                    "competent": {
+                        "title": "Level 3: Competent",
+                        "description": "Master-level or did an intermediate project, or can teach to licence level"
+                    },
+                    "expert": {
+                        "title": "Level 4: Expert",
+                        "description": "PhD-level or did a big project, or can teach to master level"
+                    }
+                }
+            },
+            "privacy": {
+                "tab": "Privacy",
+                "save-error": "Error while saving profile.",
+                "save-success": "Profile saved.",
+                "publication-status": {
+                    "label": "General profile visibility",
+                    "notice": "Default : public for everyone"
+                },
+                "picture": {
+                    "label": "Picture visibility",
+                    "notice": "Default : My portal"
+                },
+                "personal-email": {
+                    "label": "Personal mail visibility",
+                    "notice": "Default : hidden for everyone"
+                },
+                "personal-phone": {
+                    "label": "Personal phone visibility",
+                    "notice": "Default : hidden for everyone"
+                },
+                "skills-hobbies": {
+                    "label": "Skills & hobbies visibility",
+                    "notice": "Default : hidden for everyone"
+                },
+                "socials": {
+                    "label": "Social media visibility visibility",
+                    "notice": "(Ex. LinkedIn, Twitter, personal website...) Default : My portal"
+                },
+                "options": {
+                    "hide": "Hidden",
+                    "org": "My portal",
+                    "pub": "Public"
+                }
+            }
+        },
+        "go-to-page": "View profile's page",
+        "drawer_title": "Profile",
+        "identity": "Identity",
+        "contacts": "Contacts",
+        "projects": "Projects",
+        "skills": "Skills",
+        "groups": "Groups",
+        "snapshot": "Snapshot",
+        "realisations": "Publications",
+        "privacy": "Privacy",
+        "save": "SAVE",
+        "skillsearch_placeholder": "Search skill...",
+        "skillsearch_empty": "No results found",
+        "skill_name": "Skill",
+        "skill_level": "Level",
+        "skill_goal": "Goal for next year",
+        "skill_guide": "1 bar: Curious. You're interested, but you do not have any specific skills in it.{0}2 bars: Basic. Bachelor level, or did a basic project{0}3 bars: Competent. Master level, or did an intermediate project, or can teach to Bachelor level.{0}4 bars: Expert. PHD, or did a substantial part of a complex project, or can teach advanced courses in master or to professionals.",
+        "sdgs": "SDGs",
+        "sdgs_sentence": "SDGs selected",
+        "realisations_sentence": "ADD A PUBLICATION OR A LINK...",
+        "realisations_list": "PUBLICATIONS AND LINKS",
+        "url": "URL",
+        "cancel-add": "Cancel",
+        "enter-doi": "ENTER DOI",
+        "link-address": "ENTER URL",
+        "choose-link-category": "Choose a link category",
+        "published": "Published",
+        "published-in": "in",
+        "in": "in",
+        "add-doi": "Add",
+        "doi-not-found": "DOI not found",
+        "add-link": "Add",
+        "doi": "Publication (DOI)",
+        "doi-placeholder": "doi number - ex: 10.1002/acr.23817",
+        "validate-doi": "Validate",
+        "validate-link": "Validate",
+        "url_placeholder": "Add an URL https://...",
+        "link-invalid": "This link is invalid...",
+        "privacy_sentence": "Privacy options",
+        "privacy_hidden": "Hidden",
+        "privacy_community": "Community",
+        "privacy_everyone": "Everyone",
+        "privacy_global": "Profile global visibility",
+        "privacy_global_default": "Set your profile global visibility (default : Community)",
+        "privacy_picture": "Picture visibility",
+        "privacy_picture_default": "Set your profile picture visibility (default : Community)",
+        "privacy_mail": "Personal mail visibility",
+        "privacy_mail_default": "Set your personal mail visibility (default : hide for everyone)",
+        "privacy_phone": "Personal phone visibility",
+        "privacy_phone_default": "Set your personal phone visibility (default : hide for everyone)",
+        "privacy_skills": "Skills visibility",
+        "privacy_skills_default": "Set your personal skills visibility (default : hide for everyone)",
+        "upload": "Click to upload",
+        "lastname": "Last Name",
+        "firstname": "First Name",
+        "address": "Office",
+        "title": "Title",
+        "search-room": "Type to search a room",
+        "current-room": "Current room",
+        "address_pro": "Pro Address",
+        "office": "Office",
+        "bio": "Bio",
+        "bio_short": "Short Bio",
+        "bio_pro": "Professional Bio",
+        "bio_personal": "Personal Bio",
+        "pro_contacts": "Pro Contacts",
+        "pro_mail": "Pro Mail",
+        "pro_phone": "Pro Phone",
+        "it_change": "Contact IT to change",
+        "personal_contacts": "Personal Contacts",
+        "personal_phone": "Personal Phone",
+        "personal_mail": "Personal Mail",
+        "socials": "Socials",
+        "www": "Personal Web Page",
+        "bold": "bold",
+        "italic": "italic",
+        "strike": "strike",
+        "code": "code",
+        "paragraph": "paragraph",
+        "h1": "h1",
+        "h2": "h2",
+        "h3": "h3",
+        "h4": "h4",
+        "h5": "h5",
+        "h6": "h6",
+        "bullet_list": "bullet list",
+        "ordered_list": "ordered list",
+        "code_block": "code block",
+        "blockquote": "blockquote",
+        "horizontal_rule": "horizontal rule",
+        "hard_break": "hard break",
+        "redo": "redo",
+        "undo": "undo",
+        "curious": "Curious",
+        "basic": "Basic",
+        "competent": "Competent",
+        "expert": "Expert",
+        "view": "VIEW",
+        "less": "See less",
+        "more": "See more",
+        "least_recent": "Least recent",
+        "most_recent": "Most recent",
+        "warning": {
+            "abandon": "Cancel",
+            "redirect": "Redirect to People",
+            "text1": "This functionality will soon be available on Projects.",
+            "text2": "In the meantime, you are going to be redirected to our People app to edit your profile.",
+            "text3": "Your modifications will appear in your profile on People and on Projects.",
+            "text4": "When you click Redirect to People:",
+            "text5": "People opens. Then :",
+            "item1": "on the top right corner, click {connection}",
+            "item2": "then click on {name} still in the top right corner",
+            "item3": "then click on the green button {edit}",
+            "connection": "CONNECTION",
+            "name": "your first name",
+            "edit": "EDIT PROFILE",
+            "title": "Will be available soon"
+        },
+        "cancel-title": "Cancel profile editing",
+        "cancel-content": "Are you sure you want to cancel your profile edition. Any change made will be lost."
+    },
+    "project": {
+        "add": "Add project",
+        "add-linked-project": "Add a linked project",
+        "add-location-point": "Add a location point",
+        "add-map-point": "add a project location point",
+        "add-project-follow": "Add projects I follow",
+        "add-review": "add review",
+        "add-reviewer-on-public-project-title": "Status change",
+        "add-reviewer-on-public-project-message": "The reviewer should decide whether the project is ready for publication. Therefore the status of the project will be put to private, and once the reviewer approves the publication, it will become public again.",
+        "add_summary": "How to add a table of content in your description?",
+        "add-to-project": {
+            "title": "Add to project",
+            "blog-entry": "Blog entry",
+            "goal": "Goal",
+            "sdg": "SDG",
+            "link-and-attached-document": "Resources",
+            "team-member": "Team member",
+            "announcement": "Announcement",
+            "comment": "comment",
+            "location": "Location"
+        },
+        "apply-succes": "Application sent",
+        "advanced-options": "Advanced options",
+        "announcement-create": "Create announcement",
+        "announcement-edit": "Edit announcement",
+        "announcements": "announcement | announcements",
+        "announcement-disabled": "Your project must be public to create an announcement associated to this project",
+        "at-coordinates": "at coordinates",
+        "at-least-one-org-message": "The project must belong to at least one organization.",
+        "cant-quit": "Quit project",
+        "copy-success": "Blog post url copied",
+        "contact-us": "Contact us",
+        "create-project": "Create a project",
+        "create": {
+            "choose-category-first": "Please choose a category first",
+            "help-link": "We're here to help.",
+            "notice": "Fields marked with * are mandatory. You can always modify this later. No idea what you should do?",
+            "title": "Create a new project"
+        },
+        "description": "description",
+        "description_summary": "The description of your project would be clearer with a \"table of content\".",
+        "destroy": "Delete project",
+        "duplicate": "duplicate this project",
+        "duplicate-hint": "Duplicate this project will create an identical copy with a new identifier",
+        "duplicating": "Duplicating project",
+        "edit": "edit project",
+        "edit-linked-project": "Edit linked project",
+        "edit-location-point": "Edit location point",
+        "edit-map": "edit geolocation",
+        "edit-review": "edit review",
+        "files": "project file | project file | project files",
+        "follow": "Follow",
+        "followed": "Followed",
+        "form": {
+            "add-tags": "Add tags",
+            "form-incomplete": "Some fields are missing or incomplete. Pleae complete them before proceeding.",
+            "create-project": "Create project",
+            "change-default-image": "Change default image",
+            "edit-project": "Edit project",
+            "edit-title": "Edit title",
+            "link-your-project": "Link your project to our network and benefit from our recommandations system",
+            "project-category": "Project category",
+            "purpose": "purpose",
+            "purpose-label": "Project's goal",
+            "purpose-placeholder": "What is the goal of your project?",
+            "ready-to-present": "Are you ready to present your project?",
+            "resize-image": "Reframe the image",
+            "some-tag-ideas": "Some ideas among our popular tags:",
+            "tag-hint": "1 tag minimum, 3 recommended",
+            "title-label": "Add a title",
+            "title-placeholder": "What is the name of this project?",
+            "upload-image": "Upload an image",
+            "write-description": "Directly write your description and the rest of the information later",
+            "title-errors": {
+                "required": "The title field is required",
+                "max": "The title field may not be greater than 180 characters"
+            },
+            "purpose-errors": {
+                "required": "The purpose field is required",
+                "max": "The purpose field may not be greater than 180 characters",
+                "min": "The purpose field must be at least 3 characters"
+            }
+        },
+        "goals_title": "If your project contributes to one or more SDGs, let us know!",
+        "help_title": "Hey, we need your help on this project!",
+        "image-header": "Image",
+        "image-alert": {
+            "upload": "Upload",
+            "notice": "Upload a new visual to maximise impact! You’ll need a square shape!"
+        },
+        "impact": "impact",
+        "impact-location": "Impact location",
+        "impact-location-hint": "Locate your project impacts. ex: your project helps curb deforestation in Indonesia.",
+        "keep-project": "Keep project",
+        "language": "project language",
+        "last-active": "last active projects",
+        "life-status": "Project's life status",
+        "link_projects": "Link others projects to yours",
+        "link_title": "Add links to documentation, articles, blog posts, and online tools which helped you carry out your project.",
+        "linked": "Linked project | Linked projects",
+        "linked-project": "Linked project",
+        "linked-project-confirm-delete": "Are you sure to delete this linked project?",
+        "linked-project-other-reason": "Other",
+        "linked-projects": "Linked projects",
+        "link-confirm-delete": "Are you sure you want to delete this link from the project?",
+        "file-confirm-delete": "Are you sure you want to delete this file from the project?",
+        "blog-confirm-delete": "Are you sure you want to delete this blog entry from the project?",
+        "list": "projects list",
+        "loading": "Loading project",
+        "location-type-label": "Location type",
+        "lock": "lock project",
+        "map-hint-1": "1 - Zoom and move on the map to the desired location",
+        "map-hint-2": "2 - Right click on map to place your location(s) point(s)",
+        "map-hint-3": "3 - You can then edit them by right clicking on them",
+        "menu": "project menu",
+        "no-reason-defined": "No reason defined",
+        "org-change": "change project organisation",
+        "org-hint": "Changing project org should be done with caution. For example, Managers from linked orgs will gain access to your project. Linked orgs can also have editorial policies you should respect.",
+        "overview": "Overview",
+        "private": "Private Projects",
+        "publish": "publish project",
+        "publications": "Publications",
+        "public": "Public projects",
+        "quit": "Quit project",
+        "quit-hint": "You can quit the project. The project will disappear from your personal list. You will not be able to edit it anymore.",
+        "quit-message-error": "Error during the modification of the project team",
+        "quit-message-success": "You are not part of the project anymore",
+        "random-image": "random image",
+        "read-description": "Read description",
+        "resource": "Resource | Resources",
+        "review": "review",
+        "reviews": "Reviews",
+        "review-confirm-delete": "Are you sure to delete this review?",
+        "reviewable": "Ready for review",
+        "reviewed": "reviewed",
+        "reviewed-on-the": "reviewed on the",
+        "reviewers-restriction": "Only the reviewer can change the visibility of this project",
+        "remove-group": "Remove group",
+        "remove-user": "Remove user",
+        "show-n-projects": "Show the {count} projects",
+        "suggested": "similar project | similar projects",
+        "suggested-hint": "Projects that might interest you",
+        "summary": "summary",
+        "settings": "settings",
+        "org-settings": {
+            "title": "Portal(s) of the portal",
+            "description": "The project belongs to the selected portals. Beware when you add or modify the portals your project belongs to. For instance, admins of a new organisation are automatically granted access to your project. Or organisations may have specific editorial rules that you should follow.",
+            "warning": "Your project belongs to the organizations below. You can edit the category of your project there:"
+        },
+        "summary-long": "project summary",
+        "table-content": "table of content",
+        "team-location": "Project team work location",
+        "team-location-hint": "Locate your project team(s) main location(s)",
+        "title": "project title",
+        "to-review": "project to review",
+        "type-change": "change project type",
+        "type-hint": "Changing the base type of a project can have implications on its visibility. Use this with caution.",
+        "unauthorized-access": "Oops, something went wrong while accessing this project...",
+        "unauthorized-access1": "Do you have the rights to access this project? Has this project been deleted?",
+        "unauthorized-access2": "You'll be automatically redirected in 5 seconds.",
+        "updated": {
+            "default": "updated this project !",
+            "basics": "updated this project's general infos",
+            "blog-entry": "updated a blog entry of this project",
+            "blog-entry-create": "added a new blog entry of this project",
+            "category": "updated the category this project's category",
+            "description": "saved this project's description",
+            "duplicate": "duplicated this project",
+            "life": "updated this project's lifecycle",
+            "organization": "updated this project's organization",
+            "review": "updated this project's review",
+            "sdg": "updated this project's SDG",
+            "status": "updated this project's visibility"
+        },
+        "updating": "Updating project",
+        "upload_title": "Add downloadable files to your project.",
+        "use_h1h2": "Easy! Just use the H1 / H2 options ( heading level 1 / heading level 2 ) in the editor.{0} A table of content will be automatically generated.",
+        "view": "view project",
+        "views": "{count} view | {count} views",
+        "visibility": "Project's Visibility",
+        "actions": "Quick actions",
+        "copy": "(copy)",
+        "card": {
+            "link": "View full project"
+        },
+        "nothing": "Nothing here...",
+        "tag-warning": "NB: If a user switches languages in your portal, the tags with translations will we translated for them. Otherwise, the tags will be shown in English."
+    },
+    "project_list": {
+        "updated_at": "Latest active",
+        "random": "Random",
+        "recommended": "Recommended",
+        "sort_by": "Sort by:"
+    },
+    "projects": "projects",
+    "recruit": {
+        "about-you": "Tell us about yourself and what motivates you",
+        "add-announcement": "add an announcement",
+        "add-job": "job",
+        "announcement": "announcement",
+        "announcements": "no announcement | {count} announcement | {count} announcements",
+        "apply": "apply",
+        "creation-date": "created on",
+        "delete-announcement-message": "Do you want to delete this announcement ?",
+        "edit-announcement": "edit announcement",
+        "email": "Warning, we need a valid email address to contact you. (We will not save this information on the platform).",
+        "firstname": "firstname",
+        "is-remunerated": "is remunerated",
+        "job": "job",
+        "lastname": "lastname",
+        "motivation-hint": "It should contain at least 20 characters",
+        "new-announcement": "new announcement",
+        "participant": "participant",
+        "remunerated": "remunerated",
+        "send": "Send application",
+        "title": "Title",
+        "traineeship": "traineeship",
+        "type": "announcement type",
+        "updated": "updated",
+        "valid-until-the": "valid until",
+        "view": "view"
+    },
+    "report": {
+        "abuse": "Report abuse",
+        "content": "Report content",
+        "abuse-sent": "Abuse report sent",
+        "abuse-title": "Explain the report in a few words.",
+        "abuse-text": "Describe as precisely as possible why you report this project.",
+        "abuse-url": "Copy paste the URL of the page you want to report.",
+        "bug": "Report a bug",
+        "bug-sent": "Bug report sent",
+        "bug-title": "Explain the bug in a few words.",
+        "bug-text": "Describe as precisely as possible the issue you've experienced and how to reproduce to reproduce it.",
+        "bug-url": "Copy paste the URL of the page where you add this issue."
+    },
+    "resource": {
+        "add": "add resource",
+        "add-file": "add a file",
+        "add-link": "add a link",
+        "add-link-url": "add link URL",
+        "add-link-url-label": "URL",
+        "add-link-text": "add link text",
+        "add-link-text-label": "Text",
+        "add-other": "add another resource",
+        "add-success": "This resource has been successfully added",
+        "adding": "Adding resource ...",
+        "already-copied": "Resource already in clipboard",
+        "already-exists": "The resource already exists.",
+        "copied": "Resource copied to clipboard",
+        "copy-blog-url": "Blog post url copied",
+        "edit-link": "edit a link",
+        "edit-file": "edit a file",
+        "fulltitle": "project resources",
+        "invalid-image": "Unsupported file ... is this an image ?",
+        "link-address": "link address",
+        "link-category": "Choose a link category",
+        "link-invalid": "This link is invalid ...",
+        "load-images": "loading images...",
+        "no-resource": "No resource has been added yet ...",
+        "online": "online resources",
+        "reference-project": "reference a project",
+        "purpose": "Why do you link this resource to your project ?",
+        "reject-file": "File rejected ...",
+        "remove-image": "Removing Image ...",
+        "remove-video": "Removing Video ...",
+        "resource": "resource",
+        "resources": "resources",
+        "select-link-category": "Please select a category link",
+        "validate-link": "Validate link",
+        "send-file": "Sending file ...",
+        "send-image": "Sending Image ...",
+        "web": "link to web resources | links to web resources",
+        "web-link": "web link | web link | web links"
+    },
+    "resource-category": {
+        "project_website": "project websites",
+        "documentary_resource": "documentation",
+        "inspiration": "inspiration",
+        "data": "datasets",
+        "publication": "publications",
+        "source_code": "source code",
+        "tool": "tools",
+        "other": "other",
+        "inspired-by": "inspired by",
+        "element-of": "element of",
+        "similar-to": "similar to",
+        "next-project": "next project",
+        "previous-project": "previous project",
+        "translation-of": "translation of"
+    },
+    "restriction": {
+        "private": "Only members of the project can view it.",
+        "org": "Only members of its community can view it",
+        "public": "Everyone can view the project."
+    },
+    "result_box": {
+        "people": "people",
+        "person": "people",
+        "groups": "groups",
+        "group": "group"
+    },
+    "visibility": {
+        "private-title": "Private:",
+        "public-title": "Public:",
+        "community-title": "Portal members:",
+        "private": "visible only to team members.",
+        "public": "visible to any visitor, even without an account.",
+        "community": "visible only to users who have an account on this portal."
+    },
+    "register": {
+        "title": "Create an account",
+        "email": {
+            "label": "Email *",
+            "placeholder": "Enter your email",
+            "is-required": "Email is required",
+            "is-invalid": "This is not a valid email"
+        },
+        "given_name": {
+            "label": "Firstname *",
+            "placeholder": "Enter your firstname",
+            "is-required": "Firstname is required"
+        },
+        "family_name": {
+            "label": "Lastname *",
+            "placeholder": "Enter your lastname",
+            "is-required": "Lastname is required"
+        },
+        "job": {
+            "label": "Job *",
+            "placeholder": "Enter your job",
+            "is-required": "Job is required"
+        },
+        "confirmation": "You will receive a confirmation mail to the address you provided. Please click on the link in the mail to activate your account.",
+        "save-error": "A technical problem occured. Please retry later.",
+        "tos": "By continuing, you agree to our {term} and {privacy}",
+        "term": "term of service",
+        "privacy": "privacy policy"
+    },
+    "role": {
+        "choose-role": "Choose from the following roles :",
+        "role-editor": "Has all edit rights for this group.",
+        "role-reviewer": "When the project has been marked as 'ready for review', the reviewer can give feedback, and can lock a project to prevent further edits in the project. A reviewer also has edit rights.",
+        "role-teammate": "He has no edit rights, but appears as member of the team.",
+        "label": "with the role",
+        "editor": "Editor",
+        "editors": "Editors",
+        "project-reviewers": "project reviewer | project reviewers",
+        "project-teammates": "project teammate | project teammates",
+        "reviewer": "Reviewer",
+        "reviewers": "Reviewers",
+        "selected-reviewers": "selected reviewers",
+        "teammate": "Participant",
+        "teammates": "Participants",
+        "select": "Select the rights",
+        "group": "Groups",
+        "leader": "Group Leader",
+        "role-leader": "Is an Editor who will appear with a “Group Leader” tag.",
+        "member": "Member",
+        "role-member": "Appears as group member. Their projects appear among the projects of the group."
+    },
+    "search": {
+        "all-filters": "All filters",
+        "banner-portal": "You can also search for projects of all communities on ",
+        "browse-map": "Browse by map",
+        "by-language": "by language",
+        "by-people": "by people",
+        "by-tag": "by tag",
+        "by-sdg": "by SDG",
+        "filter-by-language": "Add a language",
+        "filter-by-people": "Add a person",
+        "filter-by-tag": "Add a tag",
+        "filter-by-sdg": "Add a SDD",
+        "filter-by-category": "Add a category",
+        "language": "language",
+        "people": "people",
+        "tag": "tag",
+        "ambiguousTag": "Ambiguous Tag",
+        "subtitle-ambiguous-tag": "This tag has different meanings. Select the one you are interested in:",
+        "sdg": "SDG",
+        "skills": "Skills",
+        "category": "category",
+        "choose": "choose among main tags or search for tags",
+        "filter": "filter",
+        "filters": "Filters",
+        "add-filter": "Add a filter",
+        "geographic-map": "Geographic map",
+        "nothing-found": "nothing found",
+        "people-directory": "search in people directory",
+        "projects": "search in projects",
+        "projects-tab": "Projects ({count})",
+        "projects-tab-label": "Projects",
+        "group-tab": "Groups ({count})",
+        "people-tab": "People ({count})",
+        "search-tab": "All ({count})",
+        "peoples": "People",
+        "groups": "Groups",
+        "all": "All",
+        "projects-section": "Projects",
+        "all-section": "All entities",
+        "groups-section": "Groups",
+        "people-section": "People",
+        "result": "search results",
+        "search-title": "Search",
+        "search": "Search group",
+        "search-for-a-tag": "Search for a tag",
+        "search-all": "Search in all communities",
+        "search-group": "Type group's first letters",
+        "search-tag": "Type tag's first letters",
+        "search-skill": "Type skill's first letters",
+        "search-user": "Type person's name first letters",
+        "search-in": "Search projects in",
+        "specific-tags": "choose from {organizationName} tags",
+        "wiki-tags": "choose thematic tags",
+        "term-is-ambigous": "Term is ambiguous.{0}See our suggestions",
+        "info": "You can also search projects from every communities on",
+        "geo-map": "Geographic map",
+        "tag-map": "Tag map",
+        "geo-map-description": "Discover projects on a world map",
+        "tag-map-description": "Discover projetcs on a Wikipédia tag map",
+        "open-map": "Open the map",
+        "current-tag-description": "Type tag’s first letters and select the right tag",
+        "current-skill-description": "Type skill’s first letters and select the right skill",
+        "disambiguate": "(DISAMBIGUATION)"
+    },
+    "sdg": {
+        "add-short": "add a SDG",
+        "add": "add a sustainable development goal",
+        "order": "by sdg",
+        "1": {
+            "title": "No Poverty",
+            "description": "End poverty in all its forms everywhere"
+        },
+        "2": {
+            "title": "Zero Hunger",
+            "description": "End hunger, achieve food security and improved nutrition and promote sustainable agriculture"
+        },
+        "3": {
+            "title": "Good Health and Well-Being",
+            "description": "Ensure healthy lives and promote well-being for all at all ages"
+        },
+        "4": {
+            "title": "Quality Education",
+            "description": "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all"
+        },
+        "5": {
+            "title": "Gender Equality",
+            "description": "Achieve gender equality and empower all women and girls"
+        },
+        "6": {
+            "title": "Clean Water and Sanitation",
+            "description": "Ensure availability and sustainable management of water and sanitation for all"
+        },
+        "7": {
+            "title": "Affordable and Clean Energy",
+            "description": "Ensure access to affordable, reliable, sustainable and modern energy for all"
+        },
+        "8": {
+            "title": "Decent Work and Economic Growth",
+            "description": "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all"
+        },
+        "9": {
+            "title": "Industry, Innovation and Infrastructure",
+            "description": "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation"
+        },
+        "10": {
+            "title": "Reduced Inequalities",
+            "description": "Reduce inequality within and among countries"
+        },
+        "11": {
+            "title": "Sustainable Cities and Communities",
+            "description": "Make cities and human settlements inclusive, safe, resilient and sustainable"
+        },
+        "12": {
+            "title": "Responsible Consumption and Production",
+            "description": "Ensure sustainable consumption and production patterns"
+        },
+        "13": {
+            "title": "Climate Action",
+            "description": "Take urgent action to combat climate change and its impacts"
+        },
+        "14": {
+            "title": "Life Below Water",
+            "description": "Conserve and sustainably use the oceans, seas and marine resources for sustainable development"
+        },
+        "15": {
+            "title": "Life on Land",
+            "description": "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss"
+        },
+        "16": {
+            "title": "Peace, Justice and Strong Institutions",
+            "description": "Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels"
+        },
+        "17": {
+            "title": "Partnerships for the Goals",
+            "description": "Strengthen the means of implementation and revitalize the global partnership for sustainable development"
+        },
+        "sdg-fulltext": "sustainable development goals",
+        "title": "SDG"
+    },
+    "stats": {
+        "all-orgs": "All organisations",
+        "cumulated-projects": "Cumulative new projects",
+        "new-projects": "New projects",
+        "number-projects-org": "Number of projects per organisation",
+        "number-projects-sdg": "Number of projects per SDG",
+        "number-tags": "Most used tags in projects",
+        "page-title": "Statistics",
+        "time-evolution": "Projects temporal evolution",
+        "title": "stats",
+        "updated-projects": "Monthly project updates"
+    },
+    "status": {
+        "complete": "completed",
+        "completed": "completed",
+        "cancel": "cancel",
+        "canceled": "canceled",
+        "ended": "ended",
+        "ongoing": "ongoing",
+        "private": "private",
+        "public": "public",
+        "running": "running",
+        "title": "What is the project life status ?",
+        "toreview": "to review",
+        "updated": "project's status updated",
+        "na": "none"
+    },
+    "tag": {
+        "add-specific": "Create tags to organize projects",
+        "add-specific-info": "These tags make it possible to organize projects in addition to categories (examples: “Master 2 LiSc”, “MAT001”, “school year 2022-2023”, etc.). They are specific to your organization. They are useful for filtering your projects in the search.",
+        "add-wiki": "Put tags forward to link projects by theme",
+        "add-wiki-info": "When a user creates a project, they can add a thematic tag from Wikipedia (e.g. biochemistry, physics, etc.). This makes it easier to find the project and improve project recommendations by thematic similarity. You can highlight important thematic tags for your organization.",
+        "add-success": "tag successfully added",
+        "delete-success": "tag successfully removed",
+        "edit": "edit tags",
+        "info": "When creating a project, users can tag it with Wikipedia tags (ex: biology, physics, etc). It helps to easily find projects, organize them by subject and improve referencing. You can showcase wikipedia tags that are important to your organization and also create tags specific to your portal that do not exist in Wikipedia. This feature is restricted to admins.",
+        "main-tags": "Main tags",
+        "no-tags": "You do not suggest any tags",
+        "no-wiki-tags": "You do not suggest any thematic tags",
+        "no-specific-tags": "You do not suggest any organizational tags",
+        "specific": "Tags specific to my portal",
+        "suggestions": "Suggestions",
+        "all": "Tags of my portal",
+        "selected": "Selected tags (click to remove)",
+        "title": "Tags"
+    },
+    "team": {
+        "add": "add members",
+        "edit": "edit team member",
+        "add-about": "you're about to add",
+        "add-people": "add people",
+        "edit-about": "you are about to update",
+        "member": "team member",
+        "group-members": "group members",
+        "project-members": "project members",
+        "myself": "Myself",
+        "no-user-message": "No user corresponds to your search",
+        "others-members": "other members",
+        "project": "the team",
+        "remove-user-confirm": "Are you sure you want to delete this user from the project?",
+        "remove-group-confirm": "Are you sure you want to remove this group from the project?",
+        "team": "Team",
+        "see": "See profile"
+    },
+    "template": {
+        "add-success": "Template successfully updated",
+        "edit-tags": "Edit tags",
+        "blog-content": "Template for blog content",
+        "blog-title": "Template for blog title",
+        "advancement-goal-title": "template for advancement goal title",
+        "advancement-goal-content": "template for advancement goal content",
+        "category": "Template Category",
+        "description": "Template for Description",
+        "language": "Language Template",
+        "info": "If you want to suggest to users how to organise their project in a specific category, you can create a template for that category. Then, when a user will create a project in that category, the project will be initialised with the text that you defined in the template. This text is meant as a guide to users.",
+        "no-tag-set": "No tag has been set for now.",
+        "placeholder-purpose": "Project goal",
+        "placeholder-title": "Title Placeholder",
+        "tags": "Template tags",
+        "title": "Templates",
+        "tips-category": "Select a category to which your template will apply."
+    },
+    "tips": {
+        "background-color": "This color will be displayed behind the text.",
+        "category-delete": "You can only delete a category if the category does not contain any projects. Please transfer all the projects in the category to other categories.",
+        "category-image": "Image used to illustrate a category. It is not required if you would rather simply display a colour. Minimum width: 1024pxpx, Minimum height: 400pxpx",
+        "limit-publication-to-reviewers": "Do you want to limit the publication of projects to reviewers ?",
+        "organization-name": "This name will be used to identify your community in community-specific pages (e.g: statistics page).",
+        "organization-title": "The title of your portal will appear on the banner of your welcome page. Preview above.",
+        "organization-motto": "What motto characterises the ideology of your organization? Preview above.",
+        "organization-email": "Contact email of your portal.",
+        "organization-language": "The language by default of your portal.",
+        "organization-visibility": "Do you want a link to your portal from the main portal of Projects?",
+        "organization-logo": "Your logo will appear on the parent portal on a white background. If the logo you previously uploaded is not compatible with a white background, please choose a background colour below.",
+        "text-color": "This is the text color displayed over the background color.",
+        "tip": "tip"
+    },
+    "toasts": {
+        "abuse-report": {
+            "success": "The content has been reported successfully",
+            "error": "Error during the content report"
+        },
+        "announcement-create": {
+            "success": "The announcement has been created successfully",
+            "error": "Error during the announcement creation"
+        },
+        "announcement-delete": {
+            "success": "The announcement has been deleted successfully",
+            "error": "Error during the announcement deletion"
+        },
+        "announcement-update": {
+            "success": "The announcement has been updated successfully",
+            "error": "Error during the announcement update"
+        },
+        "bug-report": {
+            "success": "The bug has been reported successfully",
+            "error": "Error during the bug report"
+        },
+        "category-template-update": {
+            "success": "The category template has been updated successfully",
+            "error": "Error during the category template update"
+        },
+        "category-update": {
+            "success": "The category has been updated successfully",
+            "error": "Error during the category update"
+        },
+        "categories-reorder": {
+            "success": "The categories order has been updated successfully",
+            "error": "Error during the categories order update"
+        },
+        "comment-create": {
+            "success": "The comment has been added successfully",
+            "error": "Error during the comment creation"
+        },
+        "comment-delete": {
+            "success": "The comment has been deleted successfully",
+            "error": "Error during the comment deletion"
+        },
+        "comment-update": {
+            "success": "The comment has been updated successfully",
+            "error": "Error during the comment update"
+        },
+        "contact": {
+            "success": "Your contact request has been taken into account",
+            "error": "Error while submitting the form"
+        },
+        "description-update": {
+            "success": "The description has been updated successfully",
+            "error": "Error during the description update"
+        },
+        "faq-create": {
+            "success": "The custom help has been created successfully",
+            "error": "Error during the custom help creation"
+        },
+        "faq-delete": {
+            "success": "The custom help has been deleted successfully",
+            "error": "Error during the custom help deletion"
+        },
+        "faq-update": {
+            "success": "The custom help has been updated successfully",
+            "error": "Error during the custom help update"
+        },
+        "file-create": {
+            "success": "The file has been added successfully",
+            "error": "Error during the file creation"
+        },
+        "file-delete": {
+            "success": "The file has been deleted successfully",
+            "error": "Error during the file deletion"
+        },
+        "file-update": {
+            "success": "The file has been updated successfully",
+            "error": "Error during the file update"
+        },
+        "goal-create": {
+            "success": "The goal has been created successfully",
+            "error": "Error during the goal creation"
+        },
+        "goal-delete": {
+            "success": "The goal has been deleted successfully",
+            "error": "Error during the goal deletion"
+        },
+        "goal-update": {
+            "success": "The goal has been updated successfully",
+            "error": "Error during the goal update"
+        },
+        "blog-create": {
+            "success": "The blog entry has been created successfully",
+            "error": "Error during the blog entry creation"
+        },
+        "blog-delete": {
+            "success": "The blog entry has been deleted successfully",
+            "error": "Error during the blog entry deletion"
+        },
+        "blog-update": {
+            "success": "The blog entry has been updated successfully",
+            "error": "Error during the blog entry update"
+        },
+        "group-added": {
+            "success": "The group has been added successfully",
+            "error": "Error during the group addition"
+        },
+        "link-already-exists": "This link already exists",
+        "link-create": {
+            "success": "The link has been added successfully",
+            "error": "Error during the link creation"
+        },
+        "link-delete": {
+            "success": "The link has been deleted successfully",
+            "error": "Error during the link deletion"
+        },
+        "link-update": {
+            "success": "The link has been updated successfully",
+            "error": "Error during the link update"
+        },
+        "linked-project-create": {
+            "success": "The linked projects have been added successfully",
+            "error": "Error during the linked projects creation"
+        },
+        "linked-project-delete": {
+            "success": "The linked project has been deleted successfully",
+            "error": "Error during the linked project deletion"
+        },
+        "linked-project-update": {
+            "success": "The linked project has been updated successfully",
+            "error": "Error during the linked project update"
+        },
+        "location-create": {
+            "success": "The location has been added successfully",
+            "error": "Error during the location creation"
+        },
+        "location-delete": {
+            "success": "The location has been deleted successfully",
+            "error": "Error during the location deletion"
+        },
+        "location-update": {
+            "success": "The location has been updated successfully",
+            "error": "Error during the location update"
+        },
+        "organization-general-update": {
+            "success": "The portal general informations have been updated successfully",
+            "error": "Error during the portal general informations update"
+        },
+        "organization-tag-create": {
+            "success": "The tag has been added to the organization successfully",
+            "error": "Error during the tag creation"
+        },
+        "organization-tag-delete": {
+            "success": "The tag has been deleted from the organization successfully",
+            "error": "Error during the tag deletion"
+        },
+        "group-create": {
+            "success": "The group has been created successfully",
+            "error": "Error during the group creation"
+        },
+        "group-edit": {
+            "success": "The group has been updated successfully",
+            "error": "Error during the group update"
+        },
+        "project-categories-update": {
+            "success": "The project categories have been updated successfully",
+            "error": "Error during the project categories update"
+        },
+        "project-create": {
+            "success": "The project has been created successfully",
+            "error": "Error during the project creation"
+        },
+        "project-destroy": {
+            "success": "The project has been deleted successfully",
+            "error": "Error during the project deletion"
+        },
+        "project-edit": {
+            "success": "The project has been updated successfully",
+            "error": "Error during project update"
+        },
+        "project-duplication": {
+            "success": "The project has been duplicated successfully",
+            "error": "Error during the project duplication"
+        },
+        "project-quit": {
+            "success": "You quit the project successfully",
+            "error": "Error during the operation"
+        },
+        "project-life-status-update": {
+            "success": "The project life status has been updated successfully",
+            "error": "Error during the project life status update"
+        },
+        "project-organizations-update": {
+            "success": "The project organizations have been updated successfully",
+            "error": "Error during the project organizations update",
+            "invalid": "Please choose an organization for your project"
+        },
+        "project-visibility-update": {
+            "success": "The project visibility has been updated successfully",
+            "error": "Error during the project visibility update"
+        },
+        "review-create": {
+            "success": "The review has been added successfully",
+            "error": "Error during the review creation"
+        },
+        "review-delete": {
+            "success": "The review has been deleted successfully",
+            "error": "Error during the review deletion"
+        },
+        "review-update": {
+            "success": "The review has been updated successfully",
+            "error": "Error during the review update"
+        },
+        "sdgs-update": {
+            "success": "The SDGs have been updated successfully",
+            "error": "Error during the SDGs update"
+        },
+        "team-member-create": {
+            "success": "The user has been added successfully",
+            "error": "Error during the user addition"
+        },
+        "team-member-delete": {
+            "success": "The user has been deleted successfully",
+            "error": "Error during the user deletion"
+        },
+        "team-group-delete": {
+            "success": "The group has been deleted successfully",
+            "error": "Error during the group deletion"
+        },
+        "team-member-update": {
+            "success": "The user has been updated successfully",
+            "error": "Error during the user update"
+        },
+        "add-followed-project": {
+            "success": "The project has been added successfully to the followed projects",
+            "error": "Error during the addition of the project to the followed projects"
+        }
+    },
+    "tos": {
+        "page-title": "Terms of service"
+    },
+    "success": {
+        "created": "Successfully created.",
+        "updated": "Successfully updated.",
+        "deleted": "Successfully deleted."
+    },
+    "notifications": {
+        "header": "Notifications",
+        "title": "Notification settings",
+        "tabs": {
+            "email": "Email Notifications",
+            "options": {
+                "yes": "Yes",
+                "no": "No"
+            }
+        },
+        "project": {
+            "title": "Project Notification",
+            "changes": "Changes notifications",
+            "reviews": "Reviews notifications",
+            "members": "Members notifications",
+            "applications": "Application notifications",
+            "blogEntries": "Blog entries notifications"
+        },
+        "projects": {
+            "title": "Notifications that you receive by email:",
+            "follow": "Projects you follow",
+            "follow-sub": "Be notified when projects that you have follow are modified",
+            "member": "Added as team member",
+            "member-sub": "Be notified when somebody adds you as a team member in a project",
+            "comment": "Comments",
+            "comment-sub": "Be notified when somebody comments your project",
+            "project": "Your projects",
+            "project-sub": "Be notified when other team members modify your projects",
+            "announcement": "Announcements",
+            "announcement-sub": "Be notified when new announcements are published on the website",
+            "review": "Ready for review",
+            "review-sub": "When you are a reviewer of a project, be notified when a project is ready to be reviewed by you",
+            "reviewed": "Has been reviewed",
+            "reviewed-sub": "When your project is ready for review, be notified when the reviewer of your project has submitted his review",
+            "reply": "Reply to your comment",
+            "reply-sub": "Be notified when somebody replies to your comment"
+        },
+        "follow": {
+            "title": "Follow Notification",
+            "changes": "Changes notifications",
+            "reviews": "Reviews notifications",
+            "blogEntries": "Blog entries notifications"
+        },
+        "organization": {
+            "added": "New user to organization notification"
+        },
+        "read-all": "Read all notifications",
+        "type": {
+            "comment": "{sender} commented {project}",
+            "reply": "{sender} replied to your comment in {project}",
+            "review": "{sender} reviewed project {project}",
+            "ready_for_review": "{sender} marked his project as ready for review. You can now review project {project}",
+            "project_updated": "{sender} updated the project {project}",
+            "member_added_self": "{sender} added you to project {project}",
+            "member_updated_self": "Your role in the project {project} has been updated by {sender}",
+            "member_added": "{sender} added a member to the project {project}",
+            "member_updated": "{sender} updated the role of {user} in the project {project}",
+            "member_removed": "{sender} removed {user} from the team of the project {project}",
+            "announcement": "{sender} published a new announcement in the project {project}",
+            "application": "{applicant} applied to your announcement {announcement} in the project {project}",
+            "blog_entry": "{sender} published a new blog entry in the project {project}",
+            "invitation_today_reminder": "A {link} you created for the group {today_group} will expire today",
+            "invitation_week_reminder": "A {link} you created for the group {week_group} will expire in a week",
+            "register-link": "register link"
+        },
+        "empty": "You have no notifications"
+    },
+    "socket": {
+        "error-title": "Socket server error: Oops...",
+        "error-text": "You will not be able to edit your project because we cannot connect to the socket server. This might be due to the quality of your internet connection.",
+        "error-action": "Ok"
+    },
+    "people": {
+        "title": "People",
+        "see-people": "See all people"
+    },
+    "portal": {
+        "sub-title": "Discover portals that belong to other organisations. Browse, get inspired, and get in touch!"
+    }
+}
