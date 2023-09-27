@@ -1,3 +1,6 @@
 [submodule "sops"]
 	path = sops
 	url = ../sops.git
+[submodule "devops-toolbox"]
+	path = devops-toolbox
+	url = ../sops.git
