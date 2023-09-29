@@ -23,7 +23,8 @@ $shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
 $shadow-hover-scale: scale(1.01);
 
 .shadow-box {
-    transition: $shadow-hover-duration transform $shadow-hover-easing,
+    transition:
+        $shadow-hover-duration transform $shadow-hover-easing,
         $shadow-hover-duration box-shadow,
         $shadow-hover-duration -webkit-transform $shadow-hover-easing;
 
@@ -34,7 +35,8 @@ $shadow-hover-scale: scale(1.01);
 }
 
 .shadow-drop {
-    transition: $shadow-hover-duration transform $shadow-hover-easing,
+    transition:
+        $shadow-hover-duration transform $shadow-hover-easing,
         filter $shadow-hover-duration $shadow-hover-easing,
         text-shadow $shadow-hover-duration $shadow-hover-easing;
 
