@@ -87,7 +87,9 @@ export default {
         border: $border-width-s solid $primary-dark;
         border-radius: $border-radius-l;
         cursor: pointer;
-        transition: height 0.15s ease-in-out, width 0.15s ease-in-out;
+        transition:
+            height 0.15s ease-in-out,
+            width 0.15s ease-in-out;
 
         &__dot {
             width: 16px;

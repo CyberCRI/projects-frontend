@@ -657,7 +657,10 @@ export default {
         z-index: 9999;
         text-decoration: none;
         text-transform: uppercase;
-        transition: opacity 0.2s linear, visibility 0s linear 0.2s, bottom 0.2s ease;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear 0.2s,
+            bottom 0.2s ease;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 100%;
@@ -670,7 +673,10 @@ export default {
     .btn-top.visible {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.2s linear, visibility 0s linear, bottom 0.2s ease;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear,
+            bottom 0.2s ease;
     }
 
     .header {
@@ -877,14 +883,18 @@ export default {
     .tabs-content li {
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.2s linear, visibility 0s linear 0.2s;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear 0.2s;
     }
 
     .tabs-img li.selected,
     .tabs-content li.selected {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.2s linear 0.2s, visibility 0s linear;
+        transition:
+            opacity 0.2s linear 0.2s,
+            visibility 0s linear;
     }
 
     .feature-table img {
@@ -1321,13 +1331,17 @@ export default {
         visibility: hidden;
         width: 100vw;
         z-index: 999999;
-        transition: opacity 0.2s linear, visibility 0s linear 0.2s;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear 0.2s;
     }
 
     .zoom.visible {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.2s linear, visibility 0s linear;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear;
     }
 
     .zoom img {

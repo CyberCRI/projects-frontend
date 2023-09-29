@@ -75,7 +75,9 @@ export default {
     padding: 0;
     position: relative;
     overflow: hidden;
-    transition: box-shadow 150ms, transform 150ms;
+    transition:
+        box-shadow 150ms,
+        transform 150ms;
     background: transparent;
     height: 40px;
     margin: 0;

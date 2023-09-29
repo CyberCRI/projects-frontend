@@ -439,7 +439,10 @@ export default {
         z-index: 9999;
         text-decoration: none;
         text-transform: uppercase;
-        transition: opacity 0.2s linear, visibility 0s linear 0.2s, bottom 0.2s ease;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear 0.2s,
+            bottom 0.2s ease;
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 100%;
@@ -452,7 +455,10 @@ export default {
     .btn-top.visible {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.2s linear, visibility 0s linear, bottom 0.2s ease;
+        transition:
+            opacity 0.2s linear,
+            visibility 0s linear,
+            bottom 0.2s ease;
     }
 
     .block-about {
