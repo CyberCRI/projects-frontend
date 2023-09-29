@@ -206,7 +206,11 @@ export default {
             // debounced to not hammer the browser on each resize
             async function () {
                 // dirty fix for unit test async error (code is executed after dom was suppressed)
-                if (!window.document) return
+                try {
+                    if (!document) return
+                } catch (e) {
+                    return
+                }
 
                 /* for each tab, we check if it fit in the wrapper
                  * if it doesn't, we hide it and add it to the more tabs

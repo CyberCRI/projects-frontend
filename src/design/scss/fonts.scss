@@ -14,7 +14,8 @@ $uniqId: unique_id();
     font-style: normal;
     font-weight: 300;
     font-display: swap;
-    src: local('Ubuntu-Thin'),
+    src:
+        local('Ubuntu-Thin'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}')
@@ -29,7 +30,8 @@ $uniqId: unique_id();
     font-style: italic;
     font-weight: 300;
     font-display: swap;
-    src: local('Ubuntu-Thin-Italic'),
+    src:
+        local('Ubuntu-Thin-Italic'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
@@ -44,7 +46,8 @@ $uniqId: unique_id();
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: local('Ubuntu'),
+    src:
+        local('Ubuntu'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
@@ -59,7 +62,8 @@ $uniqId: unique_id();
     font-style: italic;
     font-weight: 400;
     font-display: swap;
-    src: local('Ubuntu-Italic'),
+    src:
+        local('Ubuntu-Italic'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}')
@@ -74,7 +78,8 @@ $uniqId: unique_id();
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: local('Ubuntu-Medium'),
+    src:
+        local('Ubuntu-Medium'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}')
@@ -89,7 +94,8 @@ $uniqId: unique_id();
     font-style: italic;
     font-weight: 500;
     font-display: swap;
-    src: local('Ubuntu-Medium-Italic'),
+    src:
+        local('Ubuntu-Medium-Italic'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
@@ -104,7 +110,8 @@ $uniqId: unique_id();
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: local('Ubuntu-Bold'),
+    src:
+        local('Ubuntu-Bold'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}')
@@ -119,7 +126,8 @@ $uniqId: unique_id();
     font-style: italic;
     font-weight: 700;
     font-display: swap;
-    src: local('Ubuntu-Bold-Italic'),
+    src:
+        local('Ubuntu-Bold-Italic'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
             format('woff2'),
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
