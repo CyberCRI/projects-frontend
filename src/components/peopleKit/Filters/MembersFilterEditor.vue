@@ -4,7 +4,7 @@
             <FilterValue
                 v-for="(member, index) in selection"
                 :key="member.id"
-                :label="member.name.fullname"
+                :label="member.given_name + ' ' + member.family_name"
                 icon="Close"
                 @click="removeFilter(index)"
                 class="actionable"
@@ -25,7 +25,7 @@
                 v-for="user in usersList"
                 @click="addMember(user)"
                 :key="user.kid"
-                :label="user.name.fullname"
+                :label="user.given_name + ' ' + user.family_name"
                 class="actionable suggested"
             />
         </div>
