@@ -298,16 +298,16 @@ export default {
         },
 
         async updateLanguage(lang) {
-            this.$emit('is-loading', true)
             if (this.isConnected) {
                 const body = {
                     language: lang,
                 }
-                await patchUser(this.$store.getters['users/kid'], body)
+                // dont wait for termination, user update take a while
+                // and we dont want the UI to freeze meanwhile
+                patchUser(this.$store.getters['users/kid'], body)
             }
 
             await this.$store.dispatch('languages/updateCurrentLanguage', lang)
-            this.$emit('is-loading', false)
         },
 
         async toAnnouncements() {
