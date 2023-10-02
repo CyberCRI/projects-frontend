@@ -1,12 +1,12 @@
 import { AuthResult } from '@/api/auth/keycloak'
 
 import {
-    getUser,
     logoutFromKeycloak,
     refreshAccessToken,
     getNotifications,
     patchNotifications,
 } from '@/api/auth/auth.service'
+import { getUser } from '@/api/people.service'
 import analytics from '@/analytics'
 import funct from '@/functs/functions'
 import { NotificationsSettings, UserModel } from '@/models/user.model'

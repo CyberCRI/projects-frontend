@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import { getUser } from '@/api/auth/auth.service'
+import { getUser } from '@/api/people.service.ts'
 import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
 export default {
     name: 'ProfileEditLayout',

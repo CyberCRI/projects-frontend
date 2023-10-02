@@ -105,7 +105,7 @@
 import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import { patchUserPrivacy } from '@/api/people.service.ts'
-import { getUser } from '@/api/auth/auth.service'
+import { getUser } from '@/api/people.service.ts'
 
 function defaultForm() {
     return {

@@ -10,8 +10,15 @@ export async function getUser(id: string): Promise<PeopleModel> {
     return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`)).data
 }
 
-// Create account
-export async function postUser(inviteToken: string, payload: UserPostData): Promise<PeopleModel> {
+export async function postUser(payload: UserPostData): Promise<PeopleModel> {
+    return (await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/`, payload)).data
+}
+
+// Create account with invitation
+export async function postUserWithInvitation(
+    inviteToken: string,
+    payload: UserPostData
+): Promise<PeopleModel> {
     // use token as auth header with and "Invite" key instead of "Bearer"
     const config = {
         headers: {
@@ -61,6 +68,10 @@ export async function patchUserPicture(
             body
         )
     ).data
+}
+
+export async function deleteUser(kid: string) {
+    return await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/`)
 }
 
 export async function postUserPicture(keycloak_id: string, body: FormData): Promise<PeopleModel> {

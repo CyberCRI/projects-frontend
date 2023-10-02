@@ -166,7 +166,7 @@
 
 <script>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { patchUser } from '@/api/auth/auth.service'
+import { patchUser } from '@/api/people.service.ts'
 import { getAnnouncements } from '@/api/announcements.service'
 
 import permissions from '@/mixins/permissions.ts'

@@ -76,7 +76,7 @@ import {
     getPeopleGroupsHierarchy,
     removeUserPeopleGroup,
 } from '@/api/organizations.service'
-import { getUser } from '@/api/auth/auth.service'
+import { getUser } from '@/api/people.service.ts'
 
 export default {
     name: 'GroupFrom',

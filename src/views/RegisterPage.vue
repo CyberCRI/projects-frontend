@@ -96,7 +96,7 @@
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
-import { postUser } from '@/api/people.service.ts'
+import { postUserWithInvitation } from '@/api/people.service.ts'
 import { postUserImage } from '@/api/auth/auth.service.ts'
 import { helpers, required, email } from '@vuelidate/validators'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
@@ -189,7 +189,7 @@ export default {
                     )
                 }
 
-                const user = await postUser(this.token, {
+                const user = await postUserWithInvitation(this.token, {
                     ...this.form,
                 })
 

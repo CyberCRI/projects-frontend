@@ -255,10 +255,15 @@ import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesU
 import utils from '@/functs/functions.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 import GroupHierarchyList from '@/components/Layouts/Account/GroupHierarchyList.vue'
-import { patchUserPicture } from '@/api/people.service'
+import {
+    postUser,
+    patchUser,
+    deleteUser,
+    postUserPicture,
+    patchUserPicture,
+} from '@/api/people.service'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import { resetUserPassword } from '@/api/people.service.ts'
-import { deleteUser, postUserImage, createUser, patchUser } from '@/api/auth/auth.service'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 
@@ -585,9 +590,9 @@ export default {
                 }
 
                 if (this.isAddMode) {
-                    const user = await createUser(payload)
+                    const user = await postUser(payload)
                     if (user) {
-                        await postUserImage(user.keycloak_id, formData)
+                        await postUserPicture(user.keycloak_id, formData)
                     }
 
                     this.$store.dispatch('notifications/pushToast', {
@@ -598,7 +603,7 @@ export default {
                     const user = await patchUser(this.selectedUser.keycloak_id, payload)
                     console.log('USER', user)
                     if (payload.profile_picture instanceof File) {
-                        const image = await postUserImage(user.keycloak_id, formData)
+                        const image = await postUserPicture(user.keycloak_id, formData)
 
                         formData.delete('file')
                         payload.profile_picture.id = image.id

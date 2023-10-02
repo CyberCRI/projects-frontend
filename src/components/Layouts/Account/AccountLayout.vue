@@ -16,8 +16,7 @@
 
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
-import { getUser } from '@/api/auth/auth.service'
-
+import { getUser } from '@/api/people.service.ts'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/Layouts/Account/AccountFormTitleBlock.vue'
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'

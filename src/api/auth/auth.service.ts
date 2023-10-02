@@ -140,14 +140,6 @@ export async function refreshAccessToken(): Promise<any> {
     }
 }
 
-export async function getUser(kid) {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/`)).data
-}
-
-export async function createUser(payload) {
-    return (await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/`, payload)).data
-}
-
 export async function getNotifications(kid) {
     return (
         await axios.get(
@@ -163,33 +155,4 @@ export async function patchNotifications({ kid, payload }) {
             payload
         )
     ).data
-}
-
-export async function patchUser(kid, body) {
-    return (await axios.patch(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/`, body))
-        .data
-}
-
-export async function postUserImage(kid, body) {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/profile-picture/`,
-            body
-        )
-    ).data
-}
-
-export async function patchUserImage(kid, picture_id, body) {
-    return (
-        await axios.patch(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/user/${kid}/profile-picture/${picture_id}/`,
-            body
-        )
-    ).data
-}
-
-export async function deleteUser(kid) {
-    return await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/`)
 }

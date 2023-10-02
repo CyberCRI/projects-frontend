@@ -3,28 +3,39 @@
  * @description user data from people
  */
 export interface PeopleModel {
-    expire?: Date
-    gid?: string
-    groups?: string[]
-    invite_expire?: Date
-    kid: string // Keycloak user id
-    maingroup: string
-    name: {
-        firstname: string
-        fullname: string
-        lastname: string
-    }
-    personnalmail: string
-    pic?: string
-    pid: string // user id
-    primaryemail: string
-    org?: string
-    role?: string
-    room?: string
-    state?: string
-    title: string // Job title
-    type: string
-    urlname?: string
+    slug: string
+    roles?: Array<string>
+    permissions?: Array<string>
+    is_superuser?: boolean
+    people_groups: Array<Object>
+    notifications?: number
+    privacy_settings?: Object
+    skills: Array<Object>
+    hobbies: Array<Object>
+    id: number
+    language: string
+    keycloak_id: string // Keycloak user id
+    people_id: string // user id
+    email: string
+    given_name: string
+    family_name: string
+    birthday?: any
+    pronouns?: string
+    personal_description?: string
+    short_description?: string
+    professional_description?: string
+    location?: string
+    job: string // Job title
+    mobile_phone?: string
+    personnal_email: string
+    sdgs: Array<number>
+    facebook?: string
+    linkedin?: string
+    medium?: string
+    website?: string
+    skype?: string
+    landline_phone?: string
+    twitter?: string
 }
 
 export interface UserPostData {
