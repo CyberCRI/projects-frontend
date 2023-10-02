@@ -579,11 +579,17 @@ export default {
 
                     const formData = new FormData()
 
-                    ;['given_name', 'family_name', 'job', 'email', 'create_in_google'].forEach(
-                        (key) => {
-                            formData.append(key, this.form[key])
-                        }
-                    )
+                    ;['given_name', 'family_name', 'job', 'email'].forEach((key) => {
+                        formData.append(key, this.form[key])
+                    })
+
+                    if (this.form.create_in_google) {
+                        // note true will convert to "true" and be coerced to True by backend
+                        // we dont add the key if it is false, as backend will receive "false" (the string)
+                        // that will be coerced to boolean True
+                        formData.append('create_in_google', true)
+                    }
+
                     usersRoles.forEach((role) => {
                         formData.append('roles_to_add', role)
                     })
