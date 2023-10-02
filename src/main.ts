@@ -66,7 +66,8 @@ async function main(): Promise<void> {
 
     store.dispatch('languages/updateCurrentLanguage', lang)
 
-    await store.dispatch('users/getUser', store.state.users.keycloak_id)
+    if (store.state.users?.keycloak_id)
+        await store.dispatch('users/getUser', store.state.users.keycloak_id)
 
     // Get org information on init
     await store.dispatch(

@@ -72,3 +72,32 @@ export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): 
             : ''
     )
 }
+
+// TODO:
+// temporary pseudo duplicate (only key prefix change)
+// to accomodate API change for post user
+// while patch keep old behavior
+export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes): void {
+    formData.append(
+        'profile_picture_scale_x',
+        imageSizes && typeof imageSizes.scaleX == 'number' ? String(imageSizes.scaleX) : ''
+    )
+    formData.append(
+        'profile_picture_scale_y',
+        imageSizes && typeof imageSizes.scaleY == 'number' ? String(imageSizes.scaleY) : ''
+    )
+    formData.append(
+        'profile_picture_left',
+        imageSizes && typeof imageSizes.left == 'number' ? String(imageSizes.left) : ''
+    )
+    formData.append(
+        'profile_picture_top',
+        imageSizes && typeof imageSizes.top == 'number' ? String(imageSizes.top) : ''
+    )
+    formData.append(
+        'profile_picture_natural_ratio',
+        imageSizes && typeof imageSizes.naturalRatio == 'number'
+            ? String(imageSizes.naturalRatio)
+            : ''
+    )
+}

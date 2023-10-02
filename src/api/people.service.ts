@@ -10,14 +10,14 @@ export async function getUser(id: string): Promise<PeopleModel> {
     return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`)).data
 }
 
-export async function postUser(payload: UserPostData): Promise<PeopleModel> {
+export async function postUser(payload: FormData): Promise<PeopleModel> {
     return (await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/`, payload)).data
 }
 
 // Create account with invitation
 export async function postUserWithInvitation(
     inviteToken: string,
-    payload: UserPostData
+    payload: FormData
 ): Promise<PeopleModel> {
     // use token as auth header with and "Invite" key instead of "Bearer"
     const config = {
