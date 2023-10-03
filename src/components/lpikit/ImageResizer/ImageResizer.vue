@@ -5,6 +5,7 @@
 </template>
 <script>
 import Croppr from 'croppr'
+import 'croppr/dist/croppr.css'
 
 export default {
     name: 'ImageResizer',
@@ -159,8 +160,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import 'croppr/dist/croppr.css';
-
 .image-resizer {
     flex-grow: 1;
     max-height: 100%;

@@ -19,6 +19,11 @@ export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null)
         ['scale_x', 'scale_y', 'left', 'top', 'natural_ratio'].reduce(
             (acc, key) => acc && typeof pictureApiData[key] === 'number',
             true
+        ) &&
+        ['scale_x', 'scale_y', 'natural_ratio'].reduce(
+            // null scale or ratio mean a null image size
+            (acc, key) => acc && pictureApiData[key] != 0,
+            true
         )
         ? {
               scaleX: pictureApiData.scale_x,
@@ -40,7 +45,7 @@ export function imageSizesToPictureApi(imagesSizes: ImageSizes): ImageSizesFromA
               natural_ratio: imagesSizes.naturalRatio,
           }
         : {
-              scale_x: null,
+              scale_x: null, // for json null is ok, if we swicth to formdata, we'll use 0
               scale_y: null,
               left: null,
               top: null,
@@ -70,5 +75,35 @@ export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): 
         imageSizes && typeof imageSizes.naturalRatio == 'number'
             ? String(imageSizes.naturalRatio)
             : ''
+    )
+}
+
+// TODO:
+// temporary pseudo duplicate (only key prefix change)
+// to accomodate API change for post user
+// while patch keep old behavior
+export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes): void {
+    // null scale or ratio mean a null image size
+    formData.append(
+        'profile_picture_scale_x',
+        imageSizes && typeof imageSizes.scaleX == 'number' ? String(imageSizes.scaleX) : '0'
+    )
+    formData.append(
+        'profile_picture_scale_y',
+        imageSizes && typeof imageSizes.scaleY == 'number' ? String(imageSizes.scaleY) : '0'
+    )
+    formData.append(
+        'profile_picture_left',
+        imageSizes && typeof imageSizes.left == 'number' ? String(imageSizes.left) : '0'
+    )
+    formData.append(
+        'profile_picture_top',
+        imageSizes && typeof imageSizes.top == 'number' ? String(imageSizes.top) : '0'
+    )
+    formData.append(
+        'profile_picture_natural_ratio',
+        imageSizes && typeof imageSizes.naturalRatio == 'number'
+            ? String(imageSizes.naturalRatio)
+            : '0'
     )
 }

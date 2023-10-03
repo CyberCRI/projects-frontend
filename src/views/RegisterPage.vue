@@ -96,10 +96,9 @@
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
-import { postUser } from '@/api/people.service.ts'
-import { postUserImage } from '@/api/auth/auth.service.ts'
+import { postUserWithInvitation } from '@/api/people.service.ts'
 import { helpers, required, email } from '@vuelidate/validators'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 import utils from '@/functs/functions.ts'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
@@ -179,23 +178,21 @@ export default {
                 this.form.profile_picture = await utils.getPatatoidFile(this.currentPatatoidIndex)
 
                 const formData = new FormData()
-                imageSizesFormData(formData)
+                imageSizesFormDataPost(formData)
 
                 if (this.form.profile_picture instanceof File) {
                     formData.append(
-                        'file',
+                        'profile_picture_file',
                         this.form['profile_picture'],
                         this.form['profile_picture'].name
                     )
                 }
 
-                const user = await postUser(this.token, {
-                    ...this.form,
+                ;['given_name', 'family_name', 'job', 'email'].forEach((key) => {
+                    formData.append(key, this.form[key])
                 })
 
-                if (user) {
-                    await postUserImage(user.keycloak_id, formData)
-                }
+                const user = await postUserWithInvitation(this.token, formData)
 
                 this.confirm = true
             } catch (error) {

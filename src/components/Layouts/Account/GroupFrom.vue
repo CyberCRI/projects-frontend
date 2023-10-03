@@ -47,21 +47,19 @@
                 <div v-for="group in selectedPeopleGroups" :key="group.name" class="group-item">
                     <p class="group-name">{{ group.name }}</p>
                     <div class="check-box-items">
-                        <div class="item" v-for="role in group.roles" :key="role">
-                            <input
-                                v-if="role.split(':')[2] !== 'members'"
-                                type="checkbox"
-                                :name="role.name"
-                                :checked="adaptedUserRoles.indexOf(role) > -1"
-                                @change="addRemoveGroupRight($event, group, role)"
-                            />
-                            <label
-                                v-if="role.split(':')[2] !== 'members'"
-                                :for="role.split(':')[2]"
-                                class="list-label"
-                                >{{ role.split(':')[2].slice(0, -1) }}</label
-                            >
-                        </div>
+                        <template v-for="role in group.roles" :key="role">
+                            <div class="item" v-if="role.split(':')[2] !== 'members'">
+                                <input
+                                    type="checkbox"
+                                    :name="role.name"
+                                    :checked="adaptedUserRoles.indexOf(role) > -1"
+                                    @change="addRemoveGroupRight($event, group, role)"
+                                />
+                                <label :for="role.split(':')[2]" class="list-label">{{
+                                    role.split(':')[2].slice(0, -1)
+                                }}</label>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -76,7 +74,7 @@ import {
     getPeopleGroupsHierarchy,
     removeUserPeopleGroup,
 } from '@/api/organizations.service'
-import { getUser } from '@/api/auth/auth.service'
+import { getUser } from '@/api/people.service.ts'
 
 export default {
     name: 'GroupFrom',

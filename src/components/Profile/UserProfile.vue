@@ -42,7 +42,7 @@ import ProfileHeader from '@/components/lpikit/FullProfile/ProfileHeader.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProfileTabs from '@/components/Layouts/Profile/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-import { getUser } from '@/api/auth/auth.service.ts'
+import { getUser } from '@/api/people.service.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {

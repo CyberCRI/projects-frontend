@@ -251,14 +251,23 @@ import RadioButton from '@/components/lpikit/RadioInput/RadioButton.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import {
+    imageSizesFormData,
+    imageSizesFormDataPost,
+    pictureApiToImageSizes,
+} from '@/functs/imageSizesUtils.ts'
 import utils from '@/functs/functions.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 import GroupHierarchyList from '@/components/Layouts/Account/GroupHierarchyList.vue'
-import { patchUserPicture } from '@/api/people.service'
+import {
+    postUser,
+    patchUser,
+    deleteUser,
+    postUserPicture,
+    patchUserPicture,
+} from '@/api/people.service'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import { resetUserPassword } from '@/api/people.service.ts'
-import { deleteUser, postUserImage, createUser, patchUser } from '@/api/auth/auth.service'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 
@@ -314,7 +323,7 @@ export default {
             showImageResizer: false,
             showRemoveUserQuit: false,
             selectedRole: {},
-            roles: [],
+            roles: [], // TODO this doesn't seem realy used
             roleNone: {
                 value: 0,
                 name: 'none',
@@ -511,8 +520,9 @@ export default {
         updateRole(role) {
             this.selectedRole = role
 
-            if (role && role.id !== 0) this.form.groups_ids = [role.id]
-            else this.form.groups_ids = []
+            // dead code ?
+            // if (role && role.id !== 0) this.form.groups_ids = [role.id]
+            // else this.form.groups_ids = []
         },
 
         addRemovePeopleGroup(group) {
@@ -559,46 +569,90 @@ export default {
         async confirm() {
             this.asyncSave = true
             try {
-                const usersRoles = this.selectedRole.value === 0 ? [] : [this.selectedRole.value]
-                const payload = {
-                    ...this.form,
-                    profile_picture: this.form.profile_picture,
-                    roles_to_add: [...usersRoles],
-                    roles_to_remove:
-                        this.selectedUser && this.selectedRole.value === 0
-                            ? [
-                                  `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`,
-                              ]
-                            : [],
-                }
-
-                const formData = new FormData()
-
-                imageSizesFormData(formData, this.form.imageSizes)
-
-                if (payload.profile_picture instanceof File) {
-                    formData.append(
-                        'file',
-                        this.form['profile_picture'],
-                        this.form['profile_picture'].name
-                    )
-                }
+                const usersRoles =
+                    this.selectedRole.value === 0
+                        ? []
+                        : [this.selectedRole.value, ...this.form.roles_to_add]
 
                 if (this.isAddMode) {
-                    const user = await createUser(payload)
-                    if (user) {
-                        await postUserImage(user.keycloak_id, formData)
+                    // CREATE
+
+                    const formData = new FormData()
+
+                    ;['given_name', 'family_name', 'job', 'email'].forEach((key) => {
+                        formData.append(key, this.form[key])
+                    })
+
+                    if (this.form.create_in_google) {
+                        // note true will convert to "true" and be coerced to True by backend
+                        // we dont add the key if it is false, as backend will receive "false" (the string)
+                        // that will be coerced to boolean True
+                        formData.append('create_in_google', true)
                     }
+
+                    usersRoles.forEach((role) => {
+                        formData.append('roles_to_add', role)
+                    })
+                    ;(this.form.roles_to_remove || []).forEach((role) => {
+                        formData.append('roles_to_remove', role)
+                    })
+                    // if role is none remove also organization role
+                    if (this.selectedUser && this.selectedRole.value === 0) {
+                        formData.append(
+                            'roles_to_remove',
+                            `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
+                        )
+                    }
+
+                    if (this.form.profile_picture instanceof File) {
+                        formData.append(
+                            'profile_picture_file',
+                            this.form['profile_picture'],
+                            this.form['profile_picture'].name
+                        )
+                    }
+
+                    imageSizesFormDataPost(formData, this.form.imageSizes)
+
+                    const user = await postUser(formData)
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('account.create-success'),
                         type: 'success',
                     })
                 } else {
+                    // UPDATE
+                    // patch still use old api style
+                    // where image is separated from generam payload
+                    const payload = {
+                        ...this.form,
+                        profile_picture: this.form.profile_picture,
+                        roles_to_add: [...usersRoles],
+                        roles_to_remove:
+                            // if role is none remove also organization role
+                            this.selectedUser && this.selectedRole.value === 0
+                                ? [
+                                      `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`,
+                                  ]
+                                : [],
+                    }
+
+                    const formData = new FormData()
+
+                    imageSizesFormData(formData, this.form.imageSizes)
+
+                    if (payload.profile_picture instanceof File) {
+                        formData.append(
+                            'file',
+                            this.form['profile_picture'],
+                            this.form['profile_picture'].name
+                        )
+                    }
+
                     const user = await patchUser(this.selectedUser.keycloak_id, payload)
                     console.log('USER', user)
                     if (payload.profile_picture instanceof File) {
-                        const image = await postUserImage(user.keycloak_id, formData)
+                        const image = await postUserPicture(user.keycloak_id, formData)
 
                         formData.delete('file')
                         payload.profile_picture.id = image.id
