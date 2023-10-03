@@ -456,6 +456,10 @@ export default {
         hasFormChanged() {
             return this.v$.$anyDirty
         },
+        isSelf() {
+            const connectedUser = this.$store.getters['users/userFromApi']
+            return connectedUser && this.user.keycloak_id === connectedUser.keycloak_id
+        },
     },
 
     methods: {
@@ -545,7 +549,14 @@ export default {
                 console.error(error)
             } finally {
                 this.asyncing = false
-                if (isValid) this.$router.push('/profile')
+                if (isValid) {
+                    if (this.isSelf) this.$router.push({ name: 'Profile' })
+                    else
+                        this.$router.push({
+                            name: 'ProfileOtherUser',
+                            params: { userKId: this.user.keycloak_id },
+                        })
+                }
             }
         },
         async resetForm() {
