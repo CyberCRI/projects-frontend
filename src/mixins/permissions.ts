@@ -66,6 +66,11 @@ export default {
         },
 
         /* PROJECTS */
+
+        canCreateProject() {
+            return this.$store.getters['users/isConnected']
+        },
+
         canEditProject() {
             return (
                 this.hasPermission(

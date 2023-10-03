@@ -63,7 +63,7 @@
                 @click="$router.push('map')"
             />
             <LpiButton
-                v-if="isConnected"
+                v-if="canCreateProject"
                 :label="$t('project.create-project')"
                 class="btn"
                 left-icon="Plus"
