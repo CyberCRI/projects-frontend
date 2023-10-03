@@ -4,6 +4,7 @@ import { APIResponseList } from '@/api/types'
 import { PeopleModel, UserPostData } from '@/models/people.model'
 import { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import store from '@/store'
 
 // New user service using projects API
 export async function getUser(id: string): Promise<PeopleModel> {
@@ -11,7 +12,14 @@ export async function getUser(id: string): Promise<PeopleModel> {
 }
 
 export async function postUser(payload: FormData): Promise<PeopleModel> {
-    return (await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/`, payload)).data
+    return (
+        await axios.post(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
+                store.state.organizations?.current?.code || ''
+            }`,
+            payload
+        )
+    ).data
 }
 
 // Create account with invitation
@@ -26,7 +34,13 @@ export async function postUserWithInvitation(
         },
     }
     return (
-        await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/`, payload, config)
+        await axios.post(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
+                store.state.organizations?.current?.code || ''
+            }`,
+            payload,
+            config
+        )
     ).data
 }
 
@@ -120,7 +134,11 @@ export async function deleteUserSkill(skill_id: number): Promise<PeopleModel> {
 export async function resetUserPassword(keycloak_id: string): Promise<PeopleModel> {
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${keycloak_id}/reset-password/`
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/user/${keycloak_id}/reset-password/?organization=${
+                store.state.organizations?.current?.code || ''
+            }`
         )
     ).data
 }
