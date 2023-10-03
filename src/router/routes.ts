@@ -303,18 +303,17 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
-    // TODO: put this back once we create a new page
-    // {
-    //     path: '/people/',
-    //     name: 'People',
-    //     component: () =>
-    //         import(
-    //             /* webpackChunkName: "Category" */ '../components/Layouts/People/GroupLayout.vue'
-    //         ),
-    //     meta: {
-    //         resetScroll: true,
-    //     },
-    // },
+    {
+        path: '/people/',
+        name: 'People',
+        component: () =>
+            import(
+                /* webpackChunkName: "PeopleLayout" */ '../components/Layouts/People/PeopleLayout.vue'
+            ),
+        meta: {
+            resetScroll: true,
+        },
+    },
     {
         path: '/category/:id',
         name: 'Category',

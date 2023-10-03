@@ -69,6 +69,7 @@
             :preselection="selectedFilters"
             @close="currentDrawer = null"
             @confirm="confirm"
+            :selected-section="selectedSection.type"
         />
     </div>
 </template>
@@ -150,7 +151,7 @@ export default {
         }
     },
 
-    async created() {
+    async mounted() {
         // converts host component "search" (arrays of id)
         // to arrays of object (needed in this component for displayinf them)
 
@@ -192,12 +193,6 @@ export default {
 
         this.selectedFilters = filters
         this.filtersInited = true
-    },
-
-    mounted() {
-        this.selectedSection =
-            this.sectionFilters.find((sec) => sec.type === this.search.section) ||
-            this.sectionFilters[0]
     },
 
     computed: {
@@ -423,6 +418,12 @@ export default {
                 this.$emit('filters-updated', this.adaptToParent(this.selectedFilters))
             },
             deep: true,
+        },
+        'search.section': {
+            handler: function (neo) {
+                this.selectedSection =
+                    this.sectionFilters.find((sec) => sec.type === neo) || this.sectionFilters[0]
+            },
         },
     },
 }
