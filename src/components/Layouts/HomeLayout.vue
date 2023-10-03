@@ -320,9 +320,9 @@ export default {
                 .then(({ results }) => {
                     this.announcements = results.filter(
                         (announcement) =>
-                            (announcement.project.publication_status !== 'private' &&
-                                !announcement.deadline) ||
-                            new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
+                            announcement.project.publication_status !== 'private' &&
+                            (!announcement.deadline ||
+                                new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0))
                     )
                 })
                 .catch((err) => {
