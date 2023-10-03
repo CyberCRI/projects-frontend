@@ -29,7 +29,7 @@
                         :label="$filters.capitalize($t('common.see-more'))"
                         size="link"
                         right-icon="ArrowRight"
-                        @click="goTo('/search/projects')"
+                        @click="goTo({ name: 'ProjectSearch', query: seeMoreQuery })"
                     />
                 </div>
                 <div :class="gridLayout" class="card-list">
@@ -49,7 +49,7 @@
                         :label="$filters.capitalize($t('common.see-more'))"
                         size="link"
                         right-icon="ArrowRight"
-                        @click="goTo('/search/groups')"
+                        @click="goTo({ name: 'GroupSearch', query: seeMoreQuery })"
                     />
                 </div>
                 <div :class="gridLayout" class="card-list">
@@ -69,7 +69,7 @@
                         :label="$filters.capitalize($t('common.see-more'))"
                         size="link"
                         right-icon="ArrowRight"
-                        @click="goTo('/search/people')"
+                        @click="goTo({ name: 'PeopleSearch', query: seeMoreQuery })"
                     />
                 </div>
                 <div :class="gridLayout" class="card-list">
@@ -143,6 +143,11 @@ export default {
         displaySeeMoreButton: {
             type: Boolean,
             default: false,
+        },
+
+        seeMoreQuery: {
+            type: Object,
+            default: null,
         },
 
         withTitle: {

@@ -15,6 +15,7 @@
                 :peoples="ProjectListSearchSlotProps.peoples"
                 :total-count="ProjectListSearchSlotProps.totalCount"
                 :display-see-more-button="true"
+                :see-more-query="search"
                 :with-title="true"
                 class="list-container"
             >
