@@ -194,10 +194,7 @@ export default {
                 })
 
                 if (user) {
-                    await postUserImage({
-                        kid: user.keycloak_id,
-                        body: formData,
-                    })
+                    await postUserImage(user.keycloak_id, formData)
                 }
 
                 this.confirm = true
