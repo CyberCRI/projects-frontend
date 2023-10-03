@@ -23,3 +23,4 @@ export const users: User[] = [
 
 export const frontURL: string = process.env.FRONTEND_URL
 export const emailToReport: string = 'test.report@gmail.com'
+export const organizationCode: string = process.env.VITE_APP_APIBASEORGID
