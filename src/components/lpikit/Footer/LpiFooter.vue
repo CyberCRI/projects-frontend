@@ -171,6 +171,7 @@
             <div class="creators">
                 <div>
                     <p class="projects">{{ $t('footer.projects') }}</p>
+                    <p v-if="appVersion">{{ appVersion }}</p>
                     <p>{{ $t('footer.madeBy') }}</p>
                 </div>
 
@@ -231,6 +232,9 @@ export default {
 
         isRegisterPage() {
             return this.$route.name === 'Register'
+        },
+        appVersion() {
+            return import.meta.env.VITE_APP_VERSION
         },
     },
 }
