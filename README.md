@@ -2,6 +2,18 @@
 
 ![](https://assets.projects.lp-i.org/projects/organization/logo/d5ddb4a6-7eac-4178-9813-52b3c0ea7fbe2eaa6790-9cdd-443a-98af-bb47abd276_uv0HCns.medium.png?se=2023-10-03T14%3A01%3A34Z&sp=r&sv=2022-11-02&sr=b&sig=X/vk1QhXw8Wat1jrIBl9BphWooYlyU%2BtHoh7Th0BIMI%3D)
 
+- [Projects](#projects)
+  - [stack](#stack)
+  - [Team tools](#team-tools)
+  - [Getting started](#getting-started)
+  - [Contributing](#contributing)
+  - [End-to-end testing](#end-to-end-testing)
+  - [Unit testing](#unit-testing)
+  - [Internationalization](#internationalization)
+  - [Vue Style Guide](#vue-style-guide)
+  - [Typescript](#typescript)
+  - [Backend Endpoints and Schemas](#backend-endpoints-and-schemas)
+  - [Environments](#environments)
 
 
 An annuary to display and manage projects related to the UN sustainable goals.
@@ -11,6 +23,11 @@ This is the source running the frontend for the website [projects.directory](htt
 > Fill your profile with your skills and goals
 > Use the Projects platform to showcase your projects,
 > facilitate synergies and foster collaboration for common good.
+
+
+## stack
+
+this project depends on a few others (backend, websocket server), we provide a fullstack repository : [projects-fullstack](https://github.com/CyberCRI/projects-fullstack) please refer to it for further documentation
 
 ## Team tools
 
@@ -117,17 +134,5 @@ We use the strongly recommended rules from vue style guide and a few other ones 
 
 ## Environments
 
--   development: https://cri.projects.k8s.lp-i.dev/
--   staging (a.k.a. pre-prod): https://cri.projects.k8s.lp-i.xyz/ and the meta portal https://projects.k8s.lp-i.xyz
--   production: the meta-portal https://projects.directory/, LPI portal https://projects.learningplanetinstitute.org/ and many more...
-
 > The development environment is built on each push on the branch `main`, staging on each push of an `auto_staging` tag on main branch and the production on by pushsing a semver tag (i.e. `v1.2.3`) on the main branch.
 
-## stack
-
-this project depends on a few others, please refer to them for further documentation:
-
-- a backend [project-backend](https://github.com/CyberCRI/projects-backend)
-- a websocket server [projects-ws-hocuspocus](https://github.com/CyberCRI/projects-ws-hocuspocus)
-
-will also provide a fullstack repository : [projects-fullstack](https://github.com/CyberCRI/projects-fullstack)
