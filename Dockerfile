@@ -6,9 +6,10 @@ COPY package.json yarn.lock /app/
 RUN yarn install --pure-lockfile --non-interactive &&\
     rm -rf /usr/local/share/.cache
 
-ARG VITE_APP_API_ORG_CODE=CRI \
+ARG VITE_APP_API_DEFAULT_VERSION=/v1 \
+    VITE_APP_API_ORG_CODE=CRI \
     VITE_APP_API_URL=https://api.projects.k8s.lp-i.dev \
-    VITE_APP_API_DEFAULT_VERSION=/v1 \
+    VITE_APP_BASE_URL \
     VITE_APP_CAPTCHA_KEY=6Lej3a4UAAAAAFzSbSGrznwFxeZzH0PXdrcTb7kN \
     VITE_APP_CURRENTTHEME="" \
     VITE_APP_DOC=https://docs.projects.k8s.lp-i.dev/ \
@@ -20,13 +21,12 @@ ARG VITE_APP_API_ORG_CODE=CRI \
     VITE_APP_KEYCLOAK_URL=https://id.learning-planet.org/auth \
     VITE_APP_MAX_SIZE_FILE=5000000 \
     VITE_APP_META_PORTAL_URL=https://projects.directory \
-    VITE_APP_BASE_URL \
     VITE_APP_MIXPANEL_API_URL \
     VITE_APP_MIXPANEL_PROJECT_TOKEN \
-    VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
-    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
     VITE_APP_PUBLIC_BINARIES_PREFIX \
-    VITE_APP_VERSION
+    VITE_APP_VERSION\
+    VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
+    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev
 
 COPY . /app/
 
