@@ -81,7 +81,6 @@ export function searchEquals(search_a, search_b, ignoredKeys = null) {
 export function updateSearchQuery(that, filterKeys) {
     // cleanup
     const search = JSON.parse(JSON.stringify(that.search))
-
     // keep only keys we are interested in
     for (const key in search) {
         if (!filterKeys || !filterKeys.includes(key)) delete search[key]

@@ -58,14 +58,7 @@ export default {
             filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
-            filterQueryParams: [
-                'search',
-                'organization_tags',
-                'wikipedia_tags',
-                'sdgs',
-                'skills',
-                'page',
-            ],
+            filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
             selectedSection: 'all',
         }
     },
