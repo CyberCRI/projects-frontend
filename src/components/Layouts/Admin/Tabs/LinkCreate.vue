@@ -31,7 +31,12 @@
                             {{ $t('invitation.create.field.validity.pick-date') }}
                         </button>
 
-                        <button type="button" @click="setValidOneYear" class="validity-type-btn">
+                        <button
+                            type="button"
+                            @click="setValidOneYear"
+                            class="validity-type-btn"
+                            data-test="one-year"
+                        >
                             <IconImage
                                 v-if="form.expire_at && validityType == 'one-year'"
                                 class="icon"

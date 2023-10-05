@@ -102,7 +102,6 @@
                                 class="btn"
                                 left-icon="TrashCanOutline"
                                 secondary
-                                data-test="create-link"
                                 :no-border="true"
                                 @click="deleteLink(link.id)"
                             />

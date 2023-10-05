@@ -6,6 +6,6 @@ export async function logOut(page) {
     await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
     logger.info('Click on dropdown user account ')
     await page.locator('[data-test="dropdown-user-account"]').click()
-    await page.locator('[data-test-id="disconnect"]').click()
+    await page.locator('[data-test="disconnect"]').click()
     logger.info('Click to disconnect')
 }

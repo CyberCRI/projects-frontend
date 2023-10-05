@@ -42,7 +42,6 @@
                                 class="drop-down-menu-item-content"
                                 @click="menuAction(item)"
                                 :data-test="item.dataTest"
-                                :data-test-id="item.dataTest"
                             >
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
                                     <IconImage :name="item.leftIcon" />
@@ -367,9 +366,7 @@ export default {
 .menu-fade-leave-active,
 .menu-fade-enter-active {
     transform: translateY(0);
-    transition:
-        0.15s transform ease-in-out,
-        0.1s border-top-right-radius ease-in-out 0.05s;
+    transition: 0.15s transform ease-in-out, 0.1s border-top-right-radius ease-in-out 0.05s;
 }
 
 .menu-fade-enter,
