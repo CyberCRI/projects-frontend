@@ -32,7 +32,6 @@ this project depends on a few others (backend, websocket server), we provide a f
 ## Team tools
 
 -   [Slack](https://learningplane-9lc4300.slack.com)
--   [Sprint board](https://cri-paris.atlassian.net/jira/software/projects/PROJ/boards/1)
 
 ## Getting started
 
@@ -43,6 +42,7 @@ Create a .env file from [.env.example](.env.example):
 ```bash
 cp .env.example .env
 ```
+And make sure to set the properly the variables.
 
 Install app dependencies with [yarn](https://yarnpkg.com/) :
 
