@@ -4,7 +4,7 @@
             <span class="name">{{ $t('group.subgroups') }} : </span>
         </div>
         <router-link
-            :to="{ name: 'Group', params: { groupId: subgroup.id } }"
+            :to="{ name: 'Group', params: { groupId: subgroup.slug || subgroup.id } }"
             class="subgroups-item"
             v-for="(subgroup, index) in subgroups"
             :key="index"

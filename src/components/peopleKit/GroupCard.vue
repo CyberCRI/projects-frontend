@@ -106,7 +106,9 @@ export default {
         toLink() {
             // a to-link attribute make the basic card a router-link
             // witch we dont want when just selecting project
-            return this.hasAddIcon ? null : `/group/${this.group.id}`
+            return this.hasAddIcon
+                ? null
+                : { name: 'Group', params: { groupId: this.group.slug || this.group.id } }
         },
     },
 
