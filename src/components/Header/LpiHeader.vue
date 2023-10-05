@@ -15,7 +15,13 @@
             <div class="header__group-buttons">
                 <HeaderLink
                     :label="$t('search.search-title')"
-                    route="projects"
+                    :routes="[
+                        'Search',
+                        'GlobalSearch',
+                        'ProjectSearch',
+                        'PeopleSearch',
+                        'GroupSearch',
+                    ]"
                     @click="goTo('Search')"
                 />
                 <!--TODO: put this back once the new page is created-->
@@ -23,15 +29,19 @@
                 <HeaderLink
                     v-if="$store.getters['projectCategories/all'].length"
                     :label="$t('projects')"
-                    route="Categories"
+                    :routes="['Categories']"
                     @click="goTo('Categories')"
                 />
                 <HeaderLink
-                    :label="$t('search.people')"
-                    route="PeopleSearch"
-                    @click="goTo('PeopleSearch', null, { section: 'people' })"
+                    :label="$t('common.people')"
+                    :routes="['People']"
+                    @click="goTo('People')"
                 />
-                <HeaderLink :label="$t('common.groups')" route="Groups" @click="goTo('Groups')" />
+                <HeaderLink
+                    :label="$t('common.groups')"
+                    :routes="['Groups']"
+                    @click="goTo('Groups')"
+                />
                 <HeaderDropDown
                     :label="$t('common.more')"
                     :menu-items="moreMenu"
@@ -452,14 +462,15 @@ export default {
                     dataTest: 'search',
                 },
                 {
-                    label: this.$t('common.more'),
-                    childItems: this.moreMenu,
-                    condition: true,
-                    dataTest: 'more',
+                    label: this.$t('projects'),
+                    action: () => this.goTo('Categories'),
+                    leftIcon: null,
+                    condition: this.$store.getters['projectCategories/all'].length,
+                    dataTest: 'search',
                 },
                 {
-                    label: this.$t('search.peoples'),
-                    action: () => this.goTo('PeopleSearch'),
+                    label: this.$t('common.people'),
+                    action: () => this.goTo('People'),
                     leftIcon: null,
                     condition: true,
                     dataTest: 'people',
@@ -472,18 +483,10 @@ export default {
                     dataTest: 'people',
                 },
                 {
-                    label: this.$t('projects'),
-                    action: () => this.goTo('Categories'),
-                    leftIcon: null,
-                    condition: this.$store.getters['projectCategories/all'].length,
-                    dataTest: 'search',
-                },
-                {
-                    label: this.$t('faq.portal'),
-                    action: () => this.goTo('Help'),
-                    leftIcon: null,
+                    label: this.$t('common.more'),
+                    childItems: this.moreMenu,
                     condition: true,
-                    dataTest: 'help',
+                    dataTest: 'more',
                 },
                 {
                     label: this.$t('notifications.header'),

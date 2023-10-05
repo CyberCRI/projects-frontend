@@ -42,8 +42,8 @@ export default {
             default: null,
         },
 
-        route: {
-            type: String,
+        routes: {
+            type: Array,
             default: null,
         },
 
@@ -59,7 +59,7 @@ export default {
 
     computed: {
         underlined() {
-            return this.$route.name === this.route
+            return this.routes && this.routes.length && this.routes.includes(this.$route.name)
         },
     },
 }

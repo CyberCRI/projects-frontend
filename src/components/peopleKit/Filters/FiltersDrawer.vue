@@ -84,6 +84,10 @@ export default {
             type: Object,
             required: true,
         },
+        selectedSection: {
+            type: String,
+            default: 'all',
+        },
     },
 
     data() {
@@ -163,10 +167,6 @@ export default {
                     ? 'ambiguousTag'
                     : this.filters[this.mode].title
             return this.$t(`search.${title}`)
-        },
-
-        selectedSection() {
-            return this.$route.query.section
         },
     },
 
