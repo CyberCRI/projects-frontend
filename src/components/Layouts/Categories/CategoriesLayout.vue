@@ -87,18 +87,19 @@ export default {
 
     methods: {
         goTo(id) {
-            this.$router.push(`/category/${id}`)
+            this.$router.push({ name: 'Category', params: { id } })
         },
 
         updateSearchQuery(searchButton) {
             if (searchButton)
                 this.$router.push({
-                    name: 'Search',
-                    query: this.searchFilter,
+                    name: 'ProjectSearch',
+                    query: { ...this.searchFilter, section: 'projects' },
                 })
             else
                 this.$router.push({
                     name: 'Search',
+                    query: { section: 'projects' },
                 })
         },
     },
