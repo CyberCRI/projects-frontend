@@ -100,6 +100,9 @@ export default {
     },
 
     computed: {
+        rawSearch() {
+            return JSON.parse(JSON.stringify(this.search))
+        },
         tabs() {
             const query = { ...this.search }
             return [
@@ -110,7 +113,7 @@ export default {
                         : this.$t('search.all'),
                     view: { name: 'GlobalSearch', query },
                     condition: this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'projects-list-tab',
@@ -120,7 +123,7 @@ export default {
                     view: { name: 'ProjectSearch', query },
                     condition:
                         this.selectedSection === 'projects' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'groups-list-tab',
@@ -129,7 +132,7 @@ export default {
                         : this.$t('search.groups'),
                     view: { name: 'GroupSearch', query },
                     condition: this.selectedSection === 'groups' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'people-list-tab',
@@ -138,7 +141,7 @@ export default {
                         : this.$t('search.peoples'),
                     view: { name: 'PeopleSearch', query },
                     condition: this.selectedSection === 'people' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
             ].filter((tab) => tab.condition)
         },

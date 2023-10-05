@@ -14,7 +14,7 @@
                 />
             </div>
 
-            <PeopleSearchTab :search="search" />
+            <PeopleSearchTab :search="rawSearch" />
         </div>
     </div>
 </template>
@@ -68,6 +68,12 @@ export default {
             ],
             selectedSection: 'all',
         }
+    },
+
+    computed: {
+        rawSearch() {
+            return JSON.parse(JSON.stringify(this.search))
+        },
     },
 
     async mounted() {

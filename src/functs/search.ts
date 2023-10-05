@@ -1,3 +1,5 @@
+import { toRaw } from 'vue'
+
 function routeQueryToArray(queryStringOrQueryArray) {
     // this.$route.query returns a string or an array of strings
     // this makes sure we always get array of strings or an empty array if undefined
@@ -78,9 +80,8 @@ export function searchEquals(search_a, search_b, ignoredKeys = null) {
 
 export function updateSearchQuery(that, filterKeys) {
     // cleanup
-    const search = {
-        ...that.search,
-    }
+    const search = JSON.parse(JSON.stringify(that.search))
+
     // keep only keys we are interested in
     for (const key in search) {
         if (!filterKeys || !filterKeys.includes(key)) delete search[key]
