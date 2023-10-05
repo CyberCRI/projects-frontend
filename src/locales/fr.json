@@ -223,7 +223,7 @@
         "edit": "Modifier ce compte",
         "create-success": "Le compte a été créé",
         "update-success": "Le compte a été modifié",
-        "delete-success": "Le compte a été supprimer",
+        "delete-success": "Le compte a été supprimé",
         "delete-account": "Supprimer ce compte",
         "reset-password": "Changer le mot de passe",
         "reset-delete": "Changer le mot de passe & supprimer le compte",
