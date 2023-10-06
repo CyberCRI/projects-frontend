@@ -40,7 +40,7 @@
 <script>
 import ProfileHeader from '@/components/lpikit/FullProfile/ProfileHeader.vue'
 import permissions from '@/mixins/permissions.ts'
-import ProfileTabs from '@/components/Layouts/Profile/Tabs/ProfileTabs.vue'
+import ProfileTabs from '@/pages/UserProfilePage/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'

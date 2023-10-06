@@ -65,8 +65,8 @@
 
 <script>
 import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
-import UserDescriptions from '@/components/Layouts/Profile/Tabs/UserDescriptions.vue'
-import SkillSummary from '@/components/Layouts/Profile/Tabs/SkillSummary.vue'
+import UserDescriptions from '@/components/Profile/UserDescriptions.vue'
+import SkillSummary from '@/components/Profile/SkillSummary.vue'
 import { getUserFollows } from '@/api/follows.service'
 
 export default {

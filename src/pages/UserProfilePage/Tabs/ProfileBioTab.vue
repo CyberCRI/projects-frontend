@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import UserDescriptions from '@/components/Layouts/Profile/Tabs/UserDescriptions.vue'
+import UserDescriptions from '@/components/Profile/UserDescriptions.vue'
 
 export default {
     name: 'ProfileBioTab',

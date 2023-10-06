@@ -26,7 +26,7 @@
 
 <script>
 import UserSkills from '@/components/lpikit/UserSkills/UserSkills.vue'
-import SkillLevelTip from '@/components/Layouts/ProfileEdit/SkillLevelTip.vue'
+import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {

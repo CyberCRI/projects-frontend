@@ -223,7 +223,7 @@ import analytics from '@/analytics'
 import { getAnnouncements } from '@/api/announcements.service'
 
 export default {
-    name: 'HomeLayout',
+    name: 'HomePage',
 
     mixins: [imageMixin, permissions],
 

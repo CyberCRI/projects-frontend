@@ -10,11 +10,11 @@
 
 <script>
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
-import ProfileSummaryTab from '@/components/Layouts/Profile/Tabs/ProfileSummaryTab.vue'
-import ProfileBioTab from '@/components/Layouts/Profile/Tabs/ProfileBioTab.vue'
-import ProfileProjectTab from '@/components/Layouts/Profile/Tabs/ProfileProjectTab.vue'
-import ProfileGroupsTab from '@/components/Layouts/Profile/Tabs/ProfileGroupsTab.vue'
-import ProfileSkillTab from '@/components/Layouts/Profile/Tabs/ProfileSkillTab.vue'
+import ProfileSummaryTab from '@/pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'
+import ProfileBioTab from '@/pages/UserProfilePage/Tabs/ProfileBioTab.vue'
+import ProfileProjectTab from '@/pages/UserProfilePage/Tabs/ProfileProjectTab.vue'
+import ProfileGroupsTab from '@/pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'
+import ProfileSkillTab from '@/pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
 
 export default {
     name: 'ProfileTabs',

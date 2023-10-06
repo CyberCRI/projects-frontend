@@ -16,7 +16,7 @@
 import { getUser } from '@/api/people.service.ts'
 import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
 export default {
-    name: 'ProfileEditLayout',
+    name: 'ProfileEditPage',
 
     components: {
         ProfileEditTabs,

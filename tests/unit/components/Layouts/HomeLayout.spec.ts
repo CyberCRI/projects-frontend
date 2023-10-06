@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import HomeLayout from '@/components/Layouts/HomeLayout.vue'
+import HomePage from '@/pages/HomePage/HomePage.vue'
 import english from '@/locales/en.json'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
@@ -68,8 +68,8 @@ describe('Button', () => {
         }
     })
 
-    it('should render HomeLayout component', () => {
-        wrapper = lpiShallowMount(HomeLayout, defaultParams)
+    it('should render HomePage component', () => {
+        wrapper = lpiShallowMount(HomePage, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })

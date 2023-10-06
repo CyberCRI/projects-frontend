@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import HomeLayout from '@/components/Layouts/HomeLayout.vue'
+import HomePage from '@/pages/HomePage/HomePage.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: HomeLayout,
+        component: HomePage,
         meta: {
             resetScroll: true,
         },
@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: HomeLayout,
+        component: HomePage,
         meta: {
             resetScroll: true,
         },
@@ -55,7 +55,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Profile',
         component: () =>
             import(
-                /* webpackChunkName: "UserProfileLayout" */ '../components/Layouts/Profile/UserProfileLayout.vue'
+                /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
             ),
         props: {
             userKId: null,
@@ -72,7 +72,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileSummaryTab" */ '../components/Layouts/Profile/Tabs/ProfileSummaryTab.vue'
+                        /* webpackChunkName: "ProfileSummaryTab" */ '../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'
                     ),
             },
             {
@@ -80,7 +80,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileBio',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileBioTab" */ '../components/Layouts/Profile/Tabs/ProfileBioTab.vue'
+                        /* webpackChunkName: "ProfileBioTab" */ '../pages/UserProfilePage/Tabs/ProfileBioTab.vue'
                     ),
             },
             {
@@ -88,7 +88,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileProjectTab" */ '../components/Layouts/Profile/Tabs/ProfileProjectTab.vue'
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'
                     ),
             },
             {
@@ -96,7 +96,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileGroups',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileGroupsTab" */ '../components/Layouts/Profile/Tabs/ProfileGroupsTab.vue'
+                        /* webpackChunkName: "ProfileGroupsTab" */ '../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'
                     ),
             },
             {
@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileSkills',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileSkillTab" */ '../components/Layouts/Profile/Tabs/ProfileSkillTab.vue'
+                        /* webpackChunkName: "ProfileSkillTab" */ '../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
                     ),
             },
         ],
@@ -114,7 +114,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEdit',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditLayout" */ '../components/Layouts/ProfileEdit/ProfileEditLayout.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEdit/ProfileEditPage.vue'
             ),
         meta: {
             resetScroll: true,
@@ -128,7 +128,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileOtherUser',
         component: () =>
             import(
-                /* webpackChunkName: "UserProfileLayout" */ '../components/Layouts/Profile/UserProfileLayout.vue'
+                /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
             ),
         props: true,
         meta: {
@@ -143,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEditOtherUser',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditLayout" */ '../components/Layouts/ProfileEdit/ProfileEditLayout.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEdit/ProfileEditPage.vue'
             ),
         props: true,
         meta: {

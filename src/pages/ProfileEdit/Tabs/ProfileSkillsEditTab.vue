@@ -97,7 +97,7 @@
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import SkillItem from '@/components/lpikit/SkillItem/SkillItem.vue'
 import SkillsEditDrawer from '@/components/lpikit/SkillsEditDrawer/SkillsEditDrawer.vue'
-import SkillLevelTip from '@/components/Layouts/ProfileEdit/SkillLevelTip.vue'
+import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {

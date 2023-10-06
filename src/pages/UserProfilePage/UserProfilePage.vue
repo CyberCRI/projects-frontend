@@ -13,7 +13,7 @@
 import UserProfile from '@/components/Profile/UserProfile.vue'
 
 export default {
-    name: 'UserProfileLayout',
+    name: 'UserProfilePage',
 
     components: {
         UserProfile,
