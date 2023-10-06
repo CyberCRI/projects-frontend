@@ -10,7 +10,7 @@ import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
 
 export default {
-    name: 'HelpPage',
+    name: 'HelpTab',
 
     components: { LpiLoader },
 

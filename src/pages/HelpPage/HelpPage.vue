@@ -11,7 +11,7 @@ import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { defineAsyncComponent } from 'vue'
 
 export default {
-    name: 'HelpLayout',
+    name: 'HelpPage',
 
     components: {
         LpiLoader,
@@ -42,12 +42,12 @@ export default {
             res.push({
                 key: 'help-help',
                 label: this.$t('faq.portal'),
-                component: defineAsyncComponent(() => import('./HelpPage.vue')),
+                component: defineAsyncComponent(() => import('./Tabs/HelpTab.vue')),
             })
             res.push({
                 key: 'help-video',
                 label: this.$t('faq.video'),
-                component: defineAsyncComponent(() => import('./VideoPage.vue')),
+                component: defineAsyncComponent(() => import('./Tabs/VideoTab.vue')),
             })
             return res
         },
@@ -68,7 +68,7 @@ export default {
                     this.customTab = {
                         label: this.faq.title,
                         key: 'help-template',
-                        component: defineAsyncComponent(() => import('./OnBoardingPage.vue')),
+                        component: defineAsyncComponent(() => import('./Tabs/OnBoardingTab.vue')),
                     }
                 }
             } catch (error) {

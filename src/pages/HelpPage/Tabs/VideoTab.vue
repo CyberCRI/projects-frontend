@@ -6,7 +6,7 @@
 import TheVideoPlayer from '@/components/shrcomponents/TheVideoPlayer.vue'
 
 export default {
-    name: 'VideoPage',
+    name: 'VideoTab',
 
     components: {
         TheVideoPlayer,

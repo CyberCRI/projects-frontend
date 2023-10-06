@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/help',
         name: 'Help',
         component: () =>
-            import(/* webpackChunkName: "About" */ '../components/Layouts/Help/HelpLayout.vue'),
+            import(/* webpackChunkName: "HelpPage" */ '../pages/HelpPage/HelpPage.vue'),
         meta: {
             resetScroll: true,
         },
