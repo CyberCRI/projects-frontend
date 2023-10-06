@@ -114,7 +114,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEdit',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEdit/ProfileEditPage.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
         meta: {
             resetScroll: true,
@@ -143,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEditOtherUser',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEdit/ProfileEditPage.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
         props: true,
         meta: {
@@ -288,16 +288,14 @@ const routes: Array<RouteRecordRaw> = [
         path: '/portal',
         name: 'Portal',
         component: () =>
-            import(
-                /* webpackChunkName: "PortalLayout" */ '@/components/Layouts/Portal/PortalLayout.vue'
-            ),
+            import(/* webpackChunkName: "PortalPage" */ '../pages/PortalPage/PortalPage.vue'),
     },
     {
         path: '/categories/',
         name: 'Categories',
         component: () =>
             import(
-                /* webpackChunkName: "Category" */ '../components/Layouts/Categories/CategoriesLayout.vue'
+                /* webpackChunkName: "CategoriesPage" */ '../pages/CategoriesPage/CategoriesPage.vue'
             ),
         meta: {
             resetScroll: true,

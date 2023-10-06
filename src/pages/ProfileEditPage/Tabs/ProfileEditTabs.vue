@@ -13,12 +13,12 @@
 
 <script>
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
-import ProfileGeneralEditTab from '@/pages/ProfileEdit/Tabs/ProfileGeneralEditTab.vue'
-import ProfileBioEditTab from '@/pages/ProfileEdit/Tabs/ProfileBioEditTab.vue'
-import ProfileProjectsEditTab from '@/pages/ProfileEdit/Tabs/ProfileProjectsEditTab.vue'
-import ProfileGroupsEditTab from '@/pages/ProfileEdit/Tabs/ProfileGroupsEditTab.vue'
-import ProfileSkillsEditTab from '@/pages/ProfileEdit/Tabs/ProfileSkillsEditTab.vue'
-import ProfilePrivacyEditTab from '@/pages/ProfileEdit/Tabs/ProfilePrivacyEditTab.vue'
+import ProfileGeneralEditTab from '@/pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'
+import ProfileBioEditTab from '@/pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'
+import ProfileProjectsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'
+import ProfileGroupsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileGroupsEditTab.vue'
+import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
+import ProfilePrivacyEditTab from '@/pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'
 import permissions from '@/mixins/permissions.ts'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {

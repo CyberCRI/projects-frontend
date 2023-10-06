@@ -60,7 +60,7 @@ import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
-    name: 'CategoriesLayout',
+    name: 'CategoriesPage',
 
     mixins: [permissions],
 

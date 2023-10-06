@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-    name: 'PortalLayout',
+    name: 'PortalPage',
 
     async mounted() {
         await this.$store.dispatch('organizations/getAllOrganizations')

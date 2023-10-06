@@ -42,7 +42,7 @@
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import ProjectSelection from '@/pages/ProfileEdit/ProjectSelection.vue'
+import ProjectSelection from '@/pages/ProfileEditPage/ProjectSelection.vue'
 
 export default {
     name: 'FollowProjectDrawer',
