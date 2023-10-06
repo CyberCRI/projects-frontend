@@ -41,7 +41,7 @@
         "@tiptap/extension-collaboration": "2.0.4",
         "@tiptap/extension-collaboration-cursor": "2.0.4",
         "@tiptap/extension-color": "^2.0.4",
-        "@tiptap/extension-history": "2.0.4",
+        "@tiptap/extension-history": "2.1.10",
         "@tiptap/extension-image": "^2.0.4",
         "@tiptap/extension-link": "^2.0.4",
         "@tiptap/extension-table": "^2.0.4",
