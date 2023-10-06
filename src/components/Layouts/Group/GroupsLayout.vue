@@ -152,12 +152,13 @@ export default {
         updateSearchQuery(searchButton) {
             if (searchButton)
                 this.$router.push({
-                    name: 'Search',
-                    query: this.searchFilter,
+                    name: 'GroupSearch',
+                    query: { ...this.searchFilter, section: 'groups' },
                 })
             else
                 this.$router.push({
-                    name: 'Search',
+                    name: 'GroupSearch',
+                    query: { section: 'groups' },
                 })
         },
 
