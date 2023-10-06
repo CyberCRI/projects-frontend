@@ -28,7 +28,7 @@ import {
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
 
-import PeopleSearchTab from '@/components/Layouts/Search/Tabs/PeopleSearchTab.vue'
+import PeopleSearchTab from '@/pages/SearchPage/Tabs/PeopleSearchTab.vue'
 
 export default {
     name: 'PeoplePage',

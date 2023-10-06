@@ -390,7 +390,8 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Search',
         redirect: { name: 'GlobalSearch' },
 
-        component: () => import(/* webpackChunkName: "Browse" */ '../views/SearchPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "SearchPage" */ '../pages/SearchPage/SearchPage.vue'),
         meta: {
             resetScroll: true,
         },
@@ -400,7 +401,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'GlobalSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/GlobalSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GlobalSearchTab.vue'
                     ),
             },
             {
@@ -408,7 +409,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProjectSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/ProjectSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/ProjectSearchTab.vue'
                     ),
             },
             {
@@ -416,7 +417,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'GroupSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/GroupSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GroupSearchTab.vue'
                     ),
             },
             {
@@ -424,7 +425,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'PeopleSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/PeopleSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/PeopleSearchTab.vue'
                     ),
             },
         ],
