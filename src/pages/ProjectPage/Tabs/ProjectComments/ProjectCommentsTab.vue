@@ -20,13 +20,13 @@
 <script>
 import CommentItem from './CommentItem.vue'
 import NoItem from '@/components/shrcomponents/NoItem.vue'
-import MakeComment from '@/components/lpikit/ProjectComments/MakeComment.vue'
+import MakeComment from './MakeComment.vue'
 import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 
 export default {
-    name: 'ProjectComments',
+    name: 'ProjectCommentsTab',
 
     mixins: [ProjectTab],
 

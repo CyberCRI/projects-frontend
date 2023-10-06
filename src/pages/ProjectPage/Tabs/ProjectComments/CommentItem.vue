@@ -114,7 +114,7 @@
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
 import ExternalLabelButton from '@/components/lpikit/LpiButton/ExternalLabelButton.vue'
-import MakeComment from '@/components/lpikit/ProjectComments/MakeComment.vue'
+import MakeComment from './MakeComment.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'

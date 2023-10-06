@@ -47,7 +47,7 @@ import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 
 export default {
-    name: 'ProjectDescription',
+    name: 'ProjectDescriptionTab',
 
     components: {
         DescriptionDrawer,

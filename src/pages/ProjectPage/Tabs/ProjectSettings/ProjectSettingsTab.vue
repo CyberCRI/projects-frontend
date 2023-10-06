@@ -233,7 +233,7 @@ import ReviewDrawer from '@/components/lpikit/ReviewDrawer/ReviewDrawer.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 
 export default {
-    name: 'ProjectSettings',
+    name: 'ProjectSettingsTab',
 
     emits: ['asyncing'],
 

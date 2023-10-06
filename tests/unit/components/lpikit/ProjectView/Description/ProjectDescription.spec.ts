@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectDescription from '@/pages/ProjectPage/Tabs/Description/ProjectDescription.vue'
+import ProjectDescriptionTab from '@/pages/ProjectPage/Tabs/Description/ProjectDescriptionTab.vue'
 import { ProjectFactory } from '../../../../../factories/project.factory'
 import { UserFactory } from '../../../../../factories/user.factory'
 import permissions from '@/mixins/permissions'
@@ -40,9 +40,9 @@ const store = {
     },
 }
 
-describe('ProjectDescription.vue', () => {
+describe('ProjectDescriptionTab.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(ProjectDescription, {
+        const wrapper = lpiShallowMount(ProjectDescriptionTab, {
             props: {
                 project: ProjectFactory.generate(),
             },

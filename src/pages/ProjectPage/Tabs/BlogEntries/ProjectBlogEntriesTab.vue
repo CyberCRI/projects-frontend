@@ -50,7 +50,7 @@ import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
-    name: 'ProjectBlogEntries',
+    name: 'ProjectBlogEntriesTab',
 
     mixins: [permissions, ProjectTab],
 

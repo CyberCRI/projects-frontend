@@ -72,7 +72,7 @@ import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
-    name: 'ProjectResources',
+    name: 'ProjectResourcesTab',
 
     mixins: [permissions, ProjectTab],
 

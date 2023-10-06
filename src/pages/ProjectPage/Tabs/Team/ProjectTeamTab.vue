@@ -150,7 +150,7 @@ import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.v
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
-    name: 'ProjectTeam',
+    name: 'ProjectTeamTab',
 
     components: {
         UserProfile,

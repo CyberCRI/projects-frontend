@@ -478,7 +478,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSummary" */ '../pages/ProjectPage/Tabs/Summary/ProjectSummary.vue'
+                        /* webpackChunkName: "ProjectSummaryTab" */ '../pages/ProjectPage/Tabs/Summary/ProjectSummaryTab.vue'
                     ),
             },
             {
@@ -490,7 +490,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectDescription',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectDescription" */ '../pages/ProjectPage/Tabs/Description/ProjectDescription.vue'
+                        /* webpackChunkName: "ProjectDescriptionTab" */ '../pages/ProjectPage/Tabs/Description/ProjectDescriptionTab.vue'
                     ),
             },
             {
@@ -502,7 +502,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectBlog',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectBlogEntries" */ '../pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntries.vue'
+                        /* webpackChunkName: "ProjectBlogEntriesTab" */ '../pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'
                     ),
             },
             {
@@ -510,7 +510,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectGoals',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectGoals" */ '../components/lpikit/ProjectGoals/ProjectGoals.vue'
+                        /* webpackChunkName: "ProjectGoalsTab" */ '../pages/ProjectPage/Tabs/ProjectGoals/ProjectGoalsTab.vue'
                     ),
             },
             {
@@ -518,7 +518,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectTeam',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectTeam" */ '../pages/ProjectPage/Tabs/Team/ProjectTeam.vue'
+                        /* webpackChunkName: "ProjectTeamTab" */ '../pages/ProjectPage/Tabs/Team/ProjectTeamTab.vue'
                     ),
             },
             {
@@ -530,7 +530,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectResources',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectResources" */ '../pages/ProjectPage/Tabs/Resources/ProjectResources.vue'
+                        /* webpackChunkName: "ProjectResourcesTab" */ '../pages/ProjectPage/Tabs/Resources/ProjectResourcesTab.vue'
                     ),
             },
             {
@@ -538,7 +538,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectLinkedProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectLinkedProjects" */ '../pages/ProjectPage/Tabs/LinkedProjects/ProjectLinkedProjects.vue'
+                        /* webpackChunkName: "ProjectLinkedProjectsTab" */ '../pages/ProjectPage/Tabs/LinkedProjects/ProjectLinkedProjectsTab.vue'
                     ),
             },
             {
@@ -546,7 +546,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectComments',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectComments" */ '../components/lpikit/ProjectComments/ProjectComments.vue'
+                        /* webpackChunkName: "ProjectCommentsTab" */ '../pages/ProjectPage/Tabs/ProjectComments/ProjectCommentsTab.vue'
                     ),
             },
             {
@@ -554,7 +554,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectAnnouncements',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectAnnouncements" */ '../components/lpikit/ProjectAnnouncements/ProjectAnnouncements.vue'
+                        /* webpackChunkName: "ProjectAnnouncementsTab" */ '../pages/ProjectPage/Tabs/ProjectAnnouncements/ProjectAnnouncementsTab.vue'
                     ),
             },
             {
@@ -562,7 +562,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProjectSettings',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSettings" */ '../components/lpikit/ProjectSettings/ProjectSettings.vue'
+                        /* webpackChunkName: "ProjectSettingsTab" */ '../pages/ProjectPage/Tabs/ProjectSettings/ProjectSettingsTab.vue'
                     ),
             },
         ],

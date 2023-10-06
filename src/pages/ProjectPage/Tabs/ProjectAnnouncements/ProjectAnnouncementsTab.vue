@@ -46,7 +46,7 @@ import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import utils from '@/functs/functions.ts'
 
 export default {
-    name: 'ProjectAnnouncements',
+    name: 'ProjectAnnouncementsTab',
 
     mixins: [permissions, ProjectTab],
 

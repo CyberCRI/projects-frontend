@@ -96,7 +96,7 @@ import DescriptionPlaceholder from '@/pages/ProjectPage/Tabs/Description/Descrip
 import permissions from '@/mixins/permissions.ts'
 
 export default {
-    name: 'ProjectSummary',
+    name: 'ProjectSummaryTab',
 
     mixins: [ProjectTab, permissions],
 
