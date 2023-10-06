@@ -85,7 +85,7 @@ export default {
             this.showChild = !this.showChild
         },
         goTo(group) {
-            this.$router.push(`/group/${group.id}`)
+            this.$router.push({ name: 'Group', params: { groupId: group.slug || group.id } })
         },
         addGroup(group) {
             this.$emit('add', group)

@@ -126,7 +126,7 @@ export default {
 
                 this.groupHierarchy = groupData.hierarchy.map((group) => ({
                     name: group.name,
-                    route: { name: 'Group', params: { groupId: group.id } },
+                    route: { name: 'Group', params: { groupId: group.slug || group.id } },
                 }))
                 this.groupChildren = groupData.children
             } catch (e) {

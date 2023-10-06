@@ -155,7 +155,10 @@ export default {
         },
 
         goToProfile() {
-            this.$router.push({ name: 'ProfileOtherUser', params: { userKId: this.kid } })
+            this.$router.push({
+                name: 'ProfileOtherUser',
+                params: { userKId: this.user?.slug || this.kid },
+            })
         },
     },
 }

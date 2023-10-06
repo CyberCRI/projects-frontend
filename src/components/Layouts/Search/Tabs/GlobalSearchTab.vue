@@ -75,7 +75,10 @@ export default {
         },
 
         goToProfile(user) {
-            this.$router.push({ name: 'ProfileOtherUser', params: { userKId: user.keycloak_id } })
+            this.$router.push({
+                name: 'ProfileOtherUser',
+                params: { userKId: user.slug || user.keycloak_id },
+            })
         },
     },
 }
