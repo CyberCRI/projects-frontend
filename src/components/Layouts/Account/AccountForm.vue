@@ -191,7 +191,7 @@
                 <ConfirmModal
                     v-if="showRemoveUserQuit"
                     :content="$t('common.remove-user')"
-                    :title="$t('project.remove-user')"
+                    :title="$t('project.remove-user-title')"
                     :cancel-button-label="'common.cancel'"
                     :confirm-button-label="'project.remove-user'"
                     @cancel="toggleShowRemoveUserVisible"
