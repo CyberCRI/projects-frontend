@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectBlogEntries from '@/components/lpikit/ProjectView/BlogEntries/ProjectBlogEntries.vue'
+import ProjectBlogEntries from '@/pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntries.vue'
 import utils from '@/functs/functions'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

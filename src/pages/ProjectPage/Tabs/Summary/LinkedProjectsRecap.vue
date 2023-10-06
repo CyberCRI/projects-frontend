@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import LinkedProjects from '@/components/lpikit/LinkedProjects/LinkedProjects.vue'
 
 export default {

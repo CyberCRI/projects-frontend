@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ResourcesRecap from '@/components/lpikit/ProjectView/Summary/ResourcesRecap.vue'
+import ResourcesRecap from '@/pages/ProjectPage/Tabs/Summary/ResourcesRecap.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

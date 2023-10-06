@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import ResourceCount from '@/components/lpikit/ResourceCount/ResourceCount.vue'
 
 export default {

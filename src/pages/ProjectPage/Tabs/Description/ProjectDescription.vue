@@ -43,7 +43,7 @@ import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import DescriptionPlaceholder from '@/components/lpikit/ProjectView/Description/DescriptionPlaceholder.vue'
+import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 
 export default {

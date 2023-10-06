@@ -88,7 +88,7 @@ import { HocuspocusProvider } from '@hocuspocus/provider'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
-    name: 'ProjectLayout',
+    name: 'ProjectPage',
 
     mixins: [permissions],
 

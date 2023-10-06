@@ -92,7 +92,7 @@ import GroupMemberSection from '@/components/lpikit/GroupMemberSection/GroupMemb
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
-import DescriptionPlaceholder from '@/components/lpikit/ProjectView/Description/DescriptionPlaceholder.vue'
+import DescriptionPlaceholder from '@/pages/ProjectPage/Tabs/Description/DescriptionPlaceholder.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {

@@ -470,9 +470,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'pageProject',
         redirect: { name: 'projectSummary' },
         component: () =>
-            import(
-                /* webpackChunkName: "ProjectLayout" */ '../components/Layouts/Project/ProjectLayout.vue'
-            ),
+            import(/* webpackChunkName: "ProjectPage" */ '../pages/ProjectPage/ProjectPage.vue'),
         // dont reset scroll here it is done in the component as it handle complex scroll behavior for tabs
         children: [
             {
@@ -480,7 +478,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSummary" */ '../components/lpikit/ProjectView/Summary/ProjectSummary.vue'
+                        /* webpackChunkName: "ProjectSummary" */ '../pages/ProjectPage/Tabs/Summary/ProjectSummary.vue'
                     ),
             },
             {
@@ -492,7 +490,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectDescription',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectDescription" */ '../components/lpikit/ProjectView/Description/ProjectDescription.vue'
+                        /* webpackChunkName: "ProjectDescription" */ '../pages/ProjectPage/Tabs/Description/ProjectDescription.vue'
                     ),
             },
             {
@@ -504,7 +502,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectBlog',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectBlogEntries" */ '../components/lpikit/ProjectView/BlogEntries/ProjectBlogEntries.vue'
+                        /* webpackChunkName: "ProjectBlogEntries" */ '../pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntries.vue'
                     ),
             },
             {
@@ -520,7 +518,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectTeam',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectTeam" */ '../components/lpikit/ProjectView/Team/ProjectTeam.vue'
+                        /* webpackChunkName: "ProjectTeam" */ '../pages/ProjectPage/Tabs/Team/ProjectTeam.vue'
                     ),
             },
             {
@@ -532,7 +530,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectResources',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectResources" */ '../components/lpikit/ProjectView/Resources/ProjectResources.vue'
+                        /* webpackChunkName: "ProjectResources" */ '../pages/ProjectPage/Tabs/Resources/ProjectResources.vue'
                     ),
             },
             {
@@ -540,7 +538,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectLinkedProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectLinkedProjects" */ '../components/lpikit/ProjectView/LinkedProjects/ProjectLinkedProjects.vue'
+                        /* webpackChunkName: "ProjectLinkedProjects" */ '../pages/ProjectPage/Tabs/LinkedProjects/ProjectLinkedProjects.vue'
                     ),
             },
             {

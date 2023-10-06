@@ -31,7 +31,7 @@
 
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 
 import UserItem from './UserItem.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'

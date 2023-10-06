@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
-import ProjectSummary from '@/components/lpikit/ProjectView/Summary/ProjectSummary.vue'
+import ProjectSummary from '@/pages/ProjectPage/Tabs/Summary/ProjectSummary.vue'
 import { ProjectOutputFactory } from '../../../../../factories/project.factory'
 import { CommentFactory } from '../../../../../factories/comment.factory'
 import { OrganizationOutputFactory } from '../../../../../factories/organization.factory'

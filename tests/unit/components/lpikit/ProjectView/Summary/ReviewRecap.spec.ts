@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ReviewRecap from '@/components/lpikit/ProjectView/Summary/ReviewRecap.vue'
+import ReviewRecap from '@/pages/ProjectPage/Tabs/Summary/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '../../../../../factories/organization.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

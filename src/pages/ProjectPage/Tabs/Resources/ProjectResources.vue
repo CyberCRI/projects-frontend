@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import ResourceCard from '@/components/lpikit/ResourceCard/ResourceCard.vue'
 import permissions from '@/mixins/permissions.ts'

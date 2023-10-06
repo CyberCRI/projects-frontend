@@ -140,13 +140,13 @@
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import UserCard from '@/components/peopleKit/UserCard.vue'
 import GroupCard from '@/components/peopleKit/GroupCard.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
-import ProjectTeamEditor from '@/components/lpikit/ProjectView/Team/ProjectTeamEditor.vue'
+import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {

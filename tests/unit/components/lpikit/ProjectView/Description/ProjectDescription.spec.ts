@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectDescription from '@/components/lpikit/ProjectView/Description/ProjectDescription.vue'
+import ProjectDescription from '@/pages/ProjectPage/Tabs/Description/ProjectDescription.vue'
 import { ProjectFactory } from '../../../../../factories/project.factory'
 import { UserFactory } from '../../../../../factories/user.factory'
 import permissions from '@/mixins/permissions'

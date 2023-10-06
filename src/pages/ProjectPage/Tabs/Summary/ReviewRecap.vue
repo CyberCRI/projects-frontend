@@ -30,9 +30,9 @@
 </template>
 <script>
 import ReviewDrawer from '@/components/lpikit/ReviewDrawer/ReviewDrawer.vue'
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import ReviewItem from '@/components/lpikit/ProjectView/Summary/ReviewItem.vue'
+import ReviewItem from '@/pages/ProjectPage/Tabs/Summary/ReviewItem.vue'
 export default {
     name: 'ReviewRecap',
 

@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 import TeamCard from '@/components/lpikit/TeamCard/TeamCard.vue'
 
 export default {

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/lpikit/ProjectView/shared/SectionHeader.vue'
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
 
 export default {
     name: 'PublicationRecap',
