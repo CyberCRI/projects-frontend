@@ -92,6 +92,7 @@ function defaultFilters() {
         sdgs: [],
         tags: [],
         skills: [],
+        wikipedia_tags: [],
         section: '',
     }
 }
@@ -406,9 +407,9 @@ export default {
 
         selectedSection: function () {
             this.$emit('filter-section-update', this.selectedSection)
-            const copySearch = { search: this.selectedFilters.search }
-            this.clearSelectedFilters()
-            this.selectedFilters.search = copySearch.search
+            // const copySearch = { search: this.selectedFilters.search }
+            // this.clearSelectedFilters()
+            // this.selectedFilters.search = copySearch.search
         },
 
         selectedFilters: {

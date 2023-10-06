@@ -68,18 +68,7 @@ export default {
             filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
-            filterQueryParams: [
-                'search',
-                'categories',
-                'organization_tags',
-                'wikipedia_tags',
-                'members',
-                'sdgs',
-                'languages',
-                'skills',
-                'page',
-                'section',
-            ],
+
             selectedSection: 'all',
         }
     },
@@ -91,15 +80,37 @@ export default {
     },
 
     async mounted() {
+        // selectedSection must be inited first as it determines filterQueryParams
+        this.selectedSection = this.$route.query.section
         Object.assign(
             this.search,
             await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
         )
         this.searchOptionsInitiated = true
-        this.selectedSection = this.$route.query.section
     },
 
     computed: {
+        filterQueryParams() {
+            // compute allowed filters according to current section
+            // so that filter of one section (ie skills on people) dont persist on other section (ie skills on project)
+            const map = {
+                search: true,
+                categories: this.selectedSection === 'projects',
+                organization_tags: this.selectedSection === 'projects',
+                wikipedia_tags: this.selectedSection === 'projects',
+                members: false,
+                sdgs: this.selectedSection === 'projects' || this.selectedSection === 'people',
+                languages: this.selectedSection === 'projects',
+                skills: this.selectedSection === 'people',
+                page: true,
+                section: true,
+            }
+
+            return Object.keys(map).filter((key) => map[key])
+        },
+        rawSearch() {
+            return JSON.parse(JSON.stringify(this.search))
+        },
         tabs() {
             const query = { ...this.search }
             return [
@@ -110,7 +121,7 @@ export default {
                         : this.$t('search.all'),
                     view: { name: 'GlobalSearch', query },
                     condition: this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'projects-list-tab',
@@ -120,7 +131,7 @@ export default {
                     view: { name: 'ProjectSearch', query },
                     condition:
                         this.selectedSection === 'projects' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'groups-list-tab',
@@ -129,7 +140,7 @@ export default {
                         : this.$t('search.groups'),
                     view: { name: 'GroupSearch', query },
                     condition: this.selectedSection === 'groups' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
                 {
                     key: 'people-list-tab',
@@ -138,7 +149,7 @@ export default {
                         : this.$t('search.peoples'),
                     view: { name: 'PeopleSearch', query },
                     condition: this.selectedSection === 'people' || this.selectedSection === 'all',
-                    props: { search: this.search },
+                    props: { search: this.rawSearch },
                 },
             ].filter((tab) => tab.condition)
         },
@@ -150,16 +161,15 @@ export default {
         },
 
         updateTabs(section) {
-            console.log('UPDATE TABS', section)
-
             this.selectedSection = section && section.type ? section.type : 'all'
             this.search.section = section && section.type ? section.type : 'all'
 
-            const query = { ...this.search }
-            // next line not needed and in fact dangerous
-            // beacuse it make each tabs redirect to "all" tab
-            // TODO: investigate why
-            // if (this.selectedSection === 'all') this.$router.push({ name: 'GlobalSearch', query })
+            if (!section || !section.type || section.type === (this.$route.query.section || 'all'))
+                return
+
+            const query = { ...this.$route.query, section: section.type }
+
+            if (this.selectedSection === 'all') this.$router.push({ name: 'GlobalSearch', query })
             if (this.selectedSection === 'projects')
                 this.$router.push({ name: 'ProjectSearch', query })
             if (this.selectedSection === 'groups') this.$router.push({ name: 'GroupSearch', query })
