@@ -403,7 +403,7 @@
         "publish": "publier",
         "read": "lire",
         "reply": "répondre",
-        "remove-group": "Êtes-vous sûr(e) de vouloir Supprimer ce groupe ?",
+        "remove-group": "Êtes-vous sûr(e) de vouloir supprimer ce groupe ?",
         "remove-user": "Êtes-vous sûr(e) de vouloir supprimer cet utilisateur ?",
         "save": "enregistrer",
         "send": "Envoyer",
@@ -2052,7 +2052,7 @@
         "others-members": "autres membres",
         "project": "l'équipe",
         "remove-user-confirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur du projet ?",
-        "remove-group-confirm": "Êtes-vous sûr de vouloir retirer ce groupe du projet ?",
+        "remove-group-confirm": "Êtes-vous sûr de vouloir supprimer ce groupe du projet ?",
         "team": "Équipe",
         "see": "Voir le profil"
     },
