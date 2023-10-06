@@ -30,12 +30,11 @@ export async function createInvitaionLink(page) {
         .nth(2)
         .click()
     await page.locator('[data-test="save-link"]').click()
-    await page
+    const jose = await page
         .getByRole('row', {
             name: 'Google sync test protocol (dev) auto2 test dev tester en e2e Copier le lien 04/10/2024',
         })
         .locator('[data-test="cpy-link"]')
         .click()
-    await page.locator('[data-test="dropdown-user-account"]').click()
-    await page.locator('[data-test="disconnect"]').click()
+    console.log(jose)
 }
