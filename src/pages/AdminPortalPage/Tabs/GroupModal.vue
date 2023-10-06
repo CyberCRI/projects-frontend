@@ -30,7 +30,7 @@
     </div>
 </template>
 <script>
-import GroupsElementRadio from '@/components/Layouts/Admin/Tabs/GroupsElementRadio.vue'
+import GroupsElementRadio from '@/pages/AdminPortalPage/Tabs/GroupsElementRadio.vue'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import { searchGroups } from '@/api/projects.service.ts'
 

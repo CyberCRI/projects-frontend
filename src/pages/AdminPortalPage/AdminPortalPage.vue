@@ -9,7 +9,7 @@
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 
 export default {
-    name: 'AdminPortalLayout',
+    name: 'AdminPortalPage',
 
     components: {
         TabsLayout,

@@ -160,7 +160,7 @@ const routes: Array<RouteRecordRaw> = [
         redirect: { name: 'general' },
         component: () =>
             import(
-                /* webpackChunkName: "PAgeAdmin" */ '../components/Layouts/Admin/AdminPortalLayout.vue'
+                /* webpackChunkName: "PAgeAdmin" */ '../pages/AdminPortalPage/AdminPortalPage.vue'
             ),
         children: [
             {
@@ -168,7 +168,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'general',
                 component: () =>
                     import(
-                        /* webpackChunkName: "PortalGeneralAdmin" */ '../components/Layouts/Admin/Tabs/InformationTab.vue'
+                        /* webpackChunkName: "PortalGeneralAdmin" */ '../pages/AdminPortalPage/Tabs/InformationTab.vue'
                     ),
             },
             {
@@ -176,7 +176,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'tags',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TagsAdmin" */ '../components/Layouts/Admin/Tabs/TagsTab.vue'
+                        /* webpackChunkName: "TagsAdmin" */ '../pages/AdminPortalPage/Tabs/TagsTab.vue'
                     ),
             },
             {
@@ -184,7 +184,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'categories',
                 component: () =>
                     import(
-                        /* webpackChunkName: "CategoriesAdmin" */ '../components/Layouts/Admin/Tabs/CategoriesTab.vue'
+                        /* webpackChunkName: "CategoriesAdmin" */ '../pages/AdminPortalPage/Tabs/CategoriesTab.vue'
                     ),
             },
             {
@@ -192,7 +192,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'faq',
                 component: () =>
                     import(
-                        /* webpackChunkName: "FaqAdmin" */ '../components/Layouts/Admin/Tabs/HelpTab.vue'
+                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpTab.vue'
                     ),
             },
             {
@@ -200,7 +200,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'templates',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/TemplatesTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/TemplatesTab.vue'
                     ),
             },
             {
@@ -208,7 +208,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Accounts',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/AccountsTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/AccountsTab.vue'
                     ),
             },
             {
@@ -217,7 +217,7 @@ const routes: Array<RouteRecordRaw> = [
                 redirect: { name: 'linksList' },
                 component: () =>
                     import(
-                        /* webpackChunkName: "LinksTab" */ '../components/Layouts/Admin/Tabs/LinksTab.vue'
+                        /* webpackChunkName: "LinksTab" */ '../pages/AdminPortalPage/Tabs/LinksTab.vue'
                     ),
                 children: [
                     {
@@ -225,7 +225,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinksList" */ '../components/Layouts/Admin/Tabs/LinksList.vue'
+                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksList.vue'
                             ),
                     },
                     {
@@ -233,7 +233,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksCreate',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinkCreate" */ '../components/Layouts/Admin/Tabs/LinkCreate.vue'
+                                /* webpackChunkName: "LinkCreate" */ '../pages/AdminPortalPage/Tabs/LinkCreate.vue'
                             ),
                     },
                 ],
@@ -244,7 +244,7 @@ const routes: Array<RouteRecordRaw> = [
                 redirect: { name: 'groupsList' },
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/GroupsTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/GroupsTab.vue'
                     ),
                 children: [
                     {
@@ -252,7 +252,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'groupsList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "groupsList" */ '../components/Layouts/Admin/Tabs/GroupsList.vue'
+                                /* webpackChunkName: "groupsListTab" */ '../pages/AdminPortalPage/Tabs/GroupsListTab.vue'
                             ),
                     },
                     {
@@ -260,7 +260,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'adminCreateGroup',
                         component: () =>
                             import(
-                                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
                             ),
                     },
                     // maybe we'll need this later
@@ -270,7 +270,7 @@ const routes: Array<RouteRecordRaw> = [
                     //     props: true,
                     //     component: () =>
                     //         import(
-                    //             /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                    //             /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
                     //         ),
                     // },
                 ],
@@ -388,7 +388,7 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
         component: () =>
             import(
-                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
             ),
     },
     {
@@ -448,7 +448,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'createGroup',
         component: () =>
             import(
-                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
             ),
 
         meta: {

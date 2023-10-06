@@ -76,7 +76,7 @@ import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesU
 import isEqual from 'lodash.isequal'
 
 export default {
-    name: 'CreateEditGroupLayout',
+    name: 'CreateEditGroupPage',
 
     mixins: [permissions],
 

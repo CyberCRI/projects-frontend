@@ -49,7 +49,7 @@ import PickGroupDrawer from '@/components/lpikit/PickGroupDrawer/PickGroupDrawer
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 
 export default {
-    name: 'GroupsList',
+    name: 'GroupsListTab',
     components: {
         LpiButton,
         GroupsElement,
