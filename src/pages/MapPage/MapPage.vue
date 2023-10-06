@@ -34,7 +34,7 @@ import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
 import { getLocations } from '@/api/locations.services'
 
 export default {
-    name: 'PageMap',
+    name: 'MapPage',
 
     mixins: [imageMixin, pageTitle],
 

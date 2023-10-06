@@ -59,7 +59,7 @@ import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 
 export default {
-    name: 'CreateProjectLayout',
+    name: 'CreateProjectPage',
 
     mixins: [permissions],
 

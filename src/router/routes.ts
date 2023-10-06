@@ -433,7 +433,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/map',
         name: 'map',
-        component: () => import(/* webpackChunkName: "ProjectMap" */ '../views/PageMap.vue'),
+        component: () => import(/* webpackChunkName: "MapPage" */ '../pages/MapPage/MapPage.vue'),
         meta: {
             resetScroll: true,
         },
@@ -456,7 +456,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'createProject',
         component: () =>
             import(
-                /* webpackChunkName: "CreateProjectLayout" */ '../components/Layouts/CreateProjectLayout.vue'
+                /* webpackChunkName: "CreateProjectPage" */ '../pages/CreateProjectPage/CreateProjectPage.vue'
             ),
 
         meta: {
