@@ -31,7 +31,7 @@ import {
 import PeopleSearchTab from '@/components/Layouts/Search/Tabs/PeopleSearchTab.vue'
 
 export default {
-    name: 'PeopleLayout',
+    name: 'PeoplePage',
 
     components: {
         SearchOptions,

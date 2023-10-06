@@ -291,6 +291,15 @@ const routes: Array<RouteRecordRaw> = [
             import(/* webpackChunkName: "PortalPage" */ '../pages/PortalPage/PortalPage.vue'),
     },
     {
+        path: '/people/',
+        name: 'People',
+        component: () =>
+            import(/* webpackChunkName: "PeoplePage" */ '../pages/PeoplePage/PeoplePage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
         path: '/categories/',
         name: 'Categories',
         component: () =>
@@ -302,20 +311,10 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: '/people/',
-        name: 'People',
-        component: () =>
-            import(
-                /* webpackChunkName: "PeopleLayout" */ '../components/Layouts/People/PeopleLayout.vue'
-            ),
-        meta: {
-            resetScroll: true,
-        },
-    },
-    {
         path: '/category/:id',
         name: 'Category',
-        component: () => import(/* webpackChunkName: "Category" */ '../views/CategoryPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "CategoryPage" */ '../pages/CategoryPage/CategoryPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
@@ -324,7 +323,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/register/:token',
         name: 'Register',
-        component: () => import(/* webpackChunkName: "Register" */ '../views/RegisterPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "RegisterPage" */ '../pages/RegisterPage/RegisterPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
