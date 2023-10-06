@@ -57,7 +57,7 @@ import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
-    name: 'GroupLayout',
+    name: 'GroupPage',
     components: {
         BreadCrumbs,
         SubGroups,

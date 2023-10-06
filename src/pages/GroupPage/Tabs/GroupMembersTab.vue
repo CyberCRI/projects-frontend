@@ -55,7 +55,7 @@ import { axios } from '@/api/api.config'
 import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
 
 export default {
-    name: 'GroupMembers',
+    name: 'GroupMembersTab',
 
     components: {
         UserItem,

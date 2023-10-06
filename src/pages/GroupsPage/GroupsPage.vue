@@ -69,7 +69,7 @@ import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
 import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
 
 export default {
-    name: 'GroupsLayout',
+    name: 'GroupsPage',
 
     mixins: [permissions],
 

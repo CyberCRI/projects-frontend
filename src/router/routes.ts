@@ -335,9 +335,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/groups/:groupId?',
         name: 'Groups',
         component: () =>
-            import(
-                /* webpackChunkName: "GroupsLayout" */ '@/components/Layouts/Group/GroupsLayout.vue'
-            ),
+            import(/* webpackChunkName: "GroupsPage" */ '../pages/GroupsPage/GroupsPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
@@ -349,16 +347,14 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Group',
         redirect: { name: 'groupSnapshot' },
         component: () =>
-            import(
-                /* webpackChunkName: "GroupLayout" */ '../components/Layouts/Group/GroupLayout.vue'
-            ),
+            import(/* webpackChunkName: "GroupPage" */ '../pages/GroupPage/GroupPage.vue'),
         children: [
             {
                 path: 'snapshot',
                 name: 'groupSnapshot',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupSnapshot" */ '../components/lpikit/GroupView/Snapshot/GroupSnapshot.vue'
+                        /* webpackChunkName: "GroupSnapshotTab" */ '../pages/GroupPage/Tabs/GroupSnapshotTab.vue'
                     ),
             },
             {
@@ -366,7 +362,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'groupMembers',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupMembers" */ '../components/lpikit/GroupView/Members/GroupMembers.vue'
+                        /* webpackChunkName: "GroupMembersTab" */ '../pages/GroupPage/Tabs/GroupMembersTab.vue'
                     ),
             },
             {
@@ -374,7 +370,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'groupProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupProjects" */ '../components/lpikit/GroupView/Projects/GroupProjects.vue'
+                        /* webpackChunkName: "GroupProjectsTab" */ '../pages/GroupPage/Tabs/GroupProjectsTab.vue'
                     ),
             },
         ],

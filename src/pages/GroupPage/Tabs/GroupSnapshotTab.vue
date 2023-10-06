@@ -110,7 +110,7 @@ import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.
 import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
 
 export default {
-    name: 'GroupSnapshot',
+    name: 'GroupSnapshotTab',
 
     components: {
         SkeletonComponent,

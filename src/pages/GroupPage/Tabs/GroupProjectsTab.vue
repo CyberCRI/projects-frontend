@@ -44,7 +44,7 @@ import { axios } from '@/api/api.config'
 import ProjectListSkeleton from '@/components/lpikit/Skeleton/ProjectListSkeleton.vue'
 
 export default {
-    name: 'GroupProjects',
+    name: 'GroupProjectsTab',
 
     components: {
         CardList,
