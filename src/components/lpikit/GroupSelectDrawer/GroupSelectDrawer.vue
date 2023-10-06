@@ -20,6 +20,7 @@
                 :disabled="!queryString || isLoading"
                 class="select-btn"
                 left-icon="Search"
+                data-test="search-btn"
                 @click="launchSearch"
             />
         </section>

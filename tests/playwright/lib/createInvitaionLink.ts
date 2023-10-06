@@ -7,7 +7,6 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function createInvitaionLink(page) {
     logger.info('Wait 20 sec')
-
     await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
     await page.locator('[data-test="dropdown-user-account"]').click()
     await page.locator('[data-test="admin"]').waitFor(20000)
@@ -20,7 +19,7 @@ export async function createInvitaionLink(page) {
     await page.locator('[data-test="add-group"]').click()
     await page.locator('[data-test="search-input"]').click()
     await page.locator('[data-test="search-input"]').fill('google')
-    await page.locator('[data-test="search-input"]').press('Enter')
+    await page.locator('[data-test="search-btn"]').click()
     await page
         .getByRole('main')
         .locator('div')
@@ -30,11 +29,12 @@ export async function createInvitaionLink(page) {
         .nth(2)
         .click()
     await page.locator('[data-test="save-link"]').click()
-    const jose = await page
-        .getByRole('row', {
-            name: 'Google sync test protocol (dev) auto2 test dev tester en e2e Copier le lien 04/10/2024',
-        })
-        .locator('[data-test="cpy-link"]')
-        .click()
-    console.log(jose)
+    const copyLinkButtons = await page.locator('[data-test^="cpy-link-"]')
+    logger.info(copyLinkButtons)
+    const lastCopyLinkButton = copyLinkButtons.slice(-1)[0]
+    logger.info(lastCopyLinkButton)
+    await lastCopyLinkButton.click()
+    let clipboardText1 = await page.evaluate('navigator.clipboard.readText()')
+    logger.info('Link from clipboard')
+    logger.info(clipboardText1)
 }

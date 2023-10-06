@@ -84,7 +84,7 @@
                                 class="btn copy-link"
                                 :label="$t('invitation.copy-link')"
                                 secondary
-                                data-test="cpy-link"
+                                :data-test="`cpy-link-${link.id}`"
                                 :no-border="true"
                                 :no-margin="true"
                                 @click="copyLink(link.token)"
