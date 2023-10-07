@@ -6,6 +6,18 @@ import { ProjectCategoryOutputFactory } from '../../../factories/project-categor
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+
+import { axios, configFormData } from '@/api/api.config'
+
+// fix unhnadled rejection due to invalid url
+vi.mock('@/api/api.config', () => {
+    return {
+        axios: {
+            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
+        },
+    }
+})
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
