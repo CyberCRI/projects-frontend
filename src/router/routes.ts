@@ -571,7 +571,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/stats',
         name: 'stats',
         component: () =>
-            import(/* webpackChunkName: "Stat" */ '../components/lpikit/Stats/StatsLayout.vue'),
+            import(/* webpackChunkName: "StatPage" */ '../pages/StatsPage/StatsPage.vue'),
         meta: { requiresAuth: true, resetScroll: true },
     },
     {
@@ -579,7 +579,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'settings',
         component: () =>
             import(
-                /* webpackChunkName: "SettingsLayout" */ '../components/lpikit/Settings/SettingsLayout.vue'
+                /* webpackChunkName: "NotificationSettingsPage" */ '../pages/NotificationSettingsPage/NotificationSettingsPage.vue'
             ),
         meta: {
             requiresAuth: true,
@@ -595,7 +595,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'tos',
         component: () =>
             import(
-                /* webpackChunkName: "TermsOfService" */ '../components/lpikit/TermsOfService/TermsOfService.vue'
+                /* webpackChunkName: "TermsOfServicePage" */ '../pages/TermsOfServicePage/TermsOfServicePage.vue'
             ),
 
         meta: {
@@ -607,7 +607,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'legal-notices',
         component: () =>
             import(
-                /* webpackChunkName: "LegalNotices" */ '../components/lpikit/Legal/LegalNotices.vue'
+                /* webpackChunkName: "LegalNoticesPage" */ '../pages/LegalNoticesPage/LegalNoticesPage.vue'
             ),
 
         meta: {
@@ -618,7 +618,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/cookies',
         name: 'cookies',
         component: () =>
-            import(/* webpackChunkName: "Cookies" */ '../components/lpikit/Legal/CookiesPage.vue'),
+            import(/* webpackChunkName: "CookiesPage" */ '../pages/CookiesPage/CookiesPage.vue'),
 
         meta: {
             resetScroll: true,
@@ -629,7 +629,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'accessibility',
         component: () =>
             import(
-                /* webpackChunkName: "Accessibility" */ '../components/lpikit/Legal/AccessibilityPage.vue'
+                /* webpackChunkName: "AccessibilityPage" */ '../pages/AccessibilityPage/AccessibilityPage.vue'
             ),
 
         meta: {
@@ -641,7 +641,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'personal-data',
         component: () =>
             import(
-                /* webpackChunkName: "PersonalData" */ '../components/lpikit/Legal/PersonalData.vue'
+                /* webpackChunkName: "PersonalDataPage" */ '../pages/PersonalDataPage/PersonalDataPage.vue'
             ),
 
         meta: {
@@ -651,7 +651,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/:pathMatch(.*)*',
         name: 'page404',
-        component: () => import(/* webpackChunkName: "ErrorPage" */ '../views/ErrorPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "ErrorPage" */ '../pages/ErrorPage/ErrorPage.vue'),
         meta: {
             resetScroll: true,
         },

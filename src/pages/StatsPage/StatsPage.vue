@@ -7,7 +7,7 @@ import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 
 export default {
-    name: 'StatsLayout',
+    name: 'StatsPage',
 
     components: {
         TabsLayout,
@@ -19,19 +19,19 @@ export default {
                 {
                     key: 'stats-all',
                     label: this.$t('home.all-projects'),
-                    component: defineAsyncComponent(() => import('./StatsByTab.vue')),
+                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'all' },
                 },
                 {
                     key: 'stats-public',
                     label: this.$t('project.public'),
-                    component: defineAsyncComponent(() => import('./StatsByTab.vue')),
+                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'public' },
                 },
                 {
                     key: 'stats-private',
                     label: this.$t('project.private'),
-                    component: defineAsyncComponent(() => import('./StatsByTab.vue')),
+                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'private' },
                 },
             ],

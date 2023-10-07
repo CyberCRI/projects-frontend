@@ -1084,7 +1084,7 @@
 
 <script>
 export default {
-    name: 'TermsOfService',
+    name: 'TermsOfServicePage',
 }
 </script>
 

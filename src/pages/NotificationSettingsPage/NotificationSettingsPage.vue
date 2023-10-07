@@ -11,7 +11,7 @@ import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 
 export default {
-    name: 'SettingsLayout',
+    name: 'NotificationSettingsPage',
     components: { TabsLayout },
 
     computed: {
@@ -20,7 +20,9 @@ export default {
                 {
                     key: 'notifications-settings',
                     label: this.$t('notifications.tabs.email'),
-                    component: defineAsyncComponent(() => import('./NotificationsSettings.vue')),
+                    component: defineAsyncComponent(() =>
+                        import('./Tabs/NotificationsSettingsTab.vue')
+                    ),
                 },
             ]
         },

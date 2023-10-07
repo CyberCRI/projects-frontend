@@ -21,7 +21,7 @@ import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 
 export default {
-    name: 'NotificationsSettings',
+    name: 'NotificationsSettingsTab',
 
     components: {
         LpiLoader,

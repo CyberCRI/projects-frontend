@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import StatsLayout from '@/components/lpikit/Stats/StatsLayout.vue'
+import StatsPage from '@/pages/StatsPage/StatsPage.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
@@ -250,9 +250,9 @@ const stats = {
     ],
 }
 
-describe('StatsLayout.vue', () => {
+describe('StatsPage.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(StatsLayout, {
+        const wrapper = lpiShallowMount(StatsPage, {
             props: {
                 stats,
             },

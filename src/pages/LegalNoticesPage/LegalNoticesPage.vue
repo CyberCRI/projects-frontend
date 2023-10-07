@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    name: 'LegalNotices',
+    name: 'LegalNoticesPage',
 }
 </script>
 

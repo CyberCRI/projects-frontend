@@ -556,7 +556,7 @@
 
 <script>
 export default {
-    name: 'PersonalData',
+    name: 'PersonalDataPage',
 }
 </script>
 

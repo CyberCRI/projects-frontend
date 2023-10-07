@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import StatsByTab from '@/components/lpikit/Stats/StatsByTab.vue'
+import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

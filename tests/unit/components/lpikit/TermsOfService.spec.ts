@@ -1,10 +1,10 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import TermsOfService from '@/components/lpikit/TermsOfService/TermsOfService.vue'
+import TermsOfServicePage from '@/pages/TermsOfServicePage/TermsOfServicePage.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-describe('TermsOfService.vue', () => {
+describe('TermsOfServicePage.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(TermsOfService, {})
+        const wrapper = lpiShallowMount(TermsOfServicePage, {})
         expect(wrapper.exists()).toBe(true)
     })
 })
