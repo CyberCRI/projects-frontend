@@ -51,7 +51,7 @@
 import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
 import SubGroups from '@/components/lpikit/SubGroups/SubGroups.vue'
 import GroupHeader from '@/components/lpikit/GroupHeader/GroupHeader.vue'
-import GroupTabs from '@/components/lpikit/GroupTabs/GroupTabs.vue'
+import GroupTabs from './Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
 import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
