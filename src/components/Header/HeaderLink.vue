@@ -1,5 +1,7 @@
 <template>
-    <button
+    <component
+        :is="to ? 'router-link' : 'button'"
+        :to="to"
         class="header-link"
         :class="{ underlined }"
         @click="$emit('click')"
@@ -16,7 +18,7 @@
                 {{ label }}
             </slot>
         </span>
-    </button>
+    </component>
 </template>
 
 <script>
@@ -55,6 +57,10 @@ export default {
             type: String,
             default: null,
         },
+        to: {
+            type: [String, Object],
+            default: null,
+        },
     },
 
     computed: {
@@ -66,7 +72,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header-link {
+.header-link,
+a.header-link:visited {
     display: flex;
     justify-content: center;
     align-items: center;

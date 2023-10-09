@@ -22,25 +22,25 @@
                         'PeopleSearch',
                         'GroupSearch',
                     ]"
-                    @click="goTo('Search')"
+                    :to="{ name: 'Search' }"
                 />
                 <!--TODO: put this back once the new page is created-->
-                <!--                <HeaderLink :label="$t('search.peoples')" route="people" @click="goTo('People')" />-->
+                <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
                 <HeaderLink
                     v-if="$store.getters['projectCategories/all'].length"
                     :label="$t('projects')"
                     :routes="['Categories']"
-                    @click="goTo('Categories')"
+                    :to="{ name: 'Categories' }"
                 />
                 <HeaderLink
                     :label="$t('common.people')"
                     :routes="['People']"
-                    @click="goTo('People')"
+                    :to="{ name: 'People' }"
                 />
                 <HeaderLink
                     :label="$t('common.groups')"
                     :routes="['Groups']"
-                    @click="goTo('Groups')"
+                    :to="{ name: 'Groups' }"
                 />
                 <HeaderDropDown
                     :label="$t('common.more')"
