@@ -103,6 +103,7 @@
                                 left-icon="TrashCanOutline"
                                 secondary
                                 :no-border="true"
+                                :data-test="`delete-cpy-link-${link.id}`"
                                 @click="deleteLink(link.id)"
                             />
                         </td>

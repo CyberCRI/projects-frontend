@@ -194,7 +194,7 @@ export default {
             try {
                 await postInvitation(this.$store.state.organizations.current.code, this.form)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('invitation.create.success'),
+                    message: this.$t('invitation.create.create-success'),
                     type: 'success',
                 })
                 this.$router.push('/admin/links/list')

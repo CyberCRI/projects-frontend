@@ -34,6 +34,7 @@
                 :group="group"
                 :has-add-icon="true"
                 @add="selectGroup(group)"
+                :data-test="`drawer-group-card-${group.id}`"
             />
         </section>
     </DrawerLayout>

@@ -1,7 +1,5 @@
-import { expect } from '@playwright/test'
 import { LogLevel, Logger } from '../logger'
 import { delay } from './delay'
-import { organizationCode } from '../variables'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -20,28 +18,31 @@ export async function createInvitaionLink(page) {
     await page.locator('[data-test="search-input"]').click()
     await page.locator('[data-test="search-input"]').fill('google')
     await page.locator('[data-test="search-btn"]').click()
-    await page
-        .getByRole('main')
-        .locator('div')
-        .filter({
-            hasText: '1Google sync test protocol (dev)Google sync test protocol group (dev)',
-        })
-        .nth(2)
-        .click()
+    await delay(1000)
+    const groups = await page.locator('[data-test^="drawer-group-card-"]').all()
+    if (groups.length > 0) {
+        await groups[0].click()
+        await delay(1000)
+    } else {
+        logger.error('No groups found')
+    }
     await page.locator('[data-test="save-link"]').click()
-    await delay(5000)
-    const count = await page.locator('[data-test^="cpy-link-"]').count()
-    logger.info('count')
-    logger.info(count)
+    await delay(10000)
     const links = await page.locator('[data-test^="cpy-link-"]').all()
-    const lastLink = links[links.length - 1]
-    logger.info('lastLink')
-    logger.info(lastLink)
-    await lastLink.click()
-    await delay(2000)
-    logger.info('Get the link from clipboard')
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText())
-    // let clipboardText1 = await page.evaluate("navigator.clipboard.readText()");
-    logger.info('link from clipboard')
-    console.log(clipboardText)
+    if (links.length > 0) {
+        const lastLink = links[links.length - 1]
+        await lastLink.click()
+        logger.info('last link')
+        logger.info(lastLink)
+        const clipboardText = await page.evaluate(() => navigator.clipboard.readText())
+        logger.info('link from clipboard')
+        console.log(clipboardText)
+    } else {
+        logger.error('Did not find any links')
+    }
+    const deleteBtns = await page.locator('[data-test^="delete-cpy-link-"]').all()
+    const deleteBtn = deleteBtns[deleteBtns.length - 1]
+    await deleteBtn.click()
+    await delay(1000)
+    await page.locator('[data-test="confirm-destroy"]').click()
 }

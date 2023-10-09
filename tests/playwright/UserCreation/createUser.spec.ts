@@ -1,5 +1,5 @@
 import { test } from '@playwright/test'
-import { users, usersDict } from '../variables'
+import { usersDict } from '../variables'
 import { logIn, logOut, createInvitaionLink } from '../lib'
 import { LogLevel, Logger } from '../logger'
 
