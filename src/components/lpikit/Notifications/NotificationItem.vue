@@ -130,7 +130,11 @@
                         <router-link
                             :to="{
                                 name: 'Group',
-                                params: { groupId: notification.context.group.slug },
+                                params: {
+                                    groupId:
+                                        notification.context.group.slug ||
+                                        notification.context.group.id,
+                                },
                             }"
                             >{{ notification.context.group.name }}</router-link
                         >
