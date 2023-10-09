@@ -121,6 +121,26 @@
                     </span>
                 </template>
 
+                <template #group>
+                    <span
+                        v-if="notification.context && notification.context.group"
+                        class="strong"
+                        place="group"
+                    >
+                        <router-link
+                            :to="{
+                                name: 'Group',
+                                params: {
+                                    groupId:
+                                        notification.context.group.slug ||
+                                        notification.context.group.id,
+                                },
+                            }"
+                            >{{ notification.context.group.name }}</router-link
+                        >
+                    </span>
+                </template>
+
                 <template #link>
                     <span
                         v-if="notification.type === 'invitation_today_reminder'"
