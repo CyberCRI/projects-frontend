@@ -52,10 +52,6 @@ spec:
             - configMapRef:
                 name: {{ tpl .Values.fullName . }}
             {{- end }}
-            {{- if .Values.injectedEnv.sensitive }}
-            - secretRef:
-                name: {{ tpl .Values.fullName . }}
-            {{- end }}
           resources: {{- .Values.resources |toYaml | nindent 12 }}
           livenessProbe:
             initialDelaySeconds: 1
@@ -79,3 +75,11 @@ spec:
               scheme: HTTP
               path: /
               port: http
+          volumeMounts:
+          - name: secrets
+            mountPath: "/secrets"
+            readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: {{ tpl $.Values.fullName $ }}

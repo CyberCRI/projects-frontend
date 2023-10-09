@@ -21,6 +21,7 @@ jobs:
       registry-name: ${{ vars.DOCKER_PROD_REGISTRY }}
       image-name: projects-front
       image-tag: ${{ github.sha }}
+      recursive-submodule-checkout: true
       build-args: |
         VITE_APP_API_ORG_CODE=$DOCKER_INJECT_ORG_CODE
         VITE_APP_API_URL=$DOCKER_INJECT_VITE_APP_API_URL
@@ -38,6 +39,7 @@ jobs:
         VITE_APP_WSS_HOST=$DOCKER_INJECT_VITE_APP_WSS_HOST
         VITE_APP_VERSION=$DOCKER_INJECT_VITE_APP_VERSION
     secrets:
+      submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
 

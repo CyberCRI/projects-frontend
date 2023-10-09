@@ -2,7 +2,8 @@
 
 set -e
 
-EXISTING_VARS=$(printenv | awk -F= '{print $1}'| grep DOCKER_INJECT_ | sed 's/^/\$/g' | paste -sd,);
+# Set the secrets as env vars
+EXISTING_VARS=$(printenv | awk -F= '{print $1}'| grep DOCKER_INJECT_ | sed 's/^/\$/g' | paste -sd,)
 export EXISTING_VARS;
 
 for file in /usr/share/nginx/html/*.html /usr/share/nginx/html/assets/*.js;
