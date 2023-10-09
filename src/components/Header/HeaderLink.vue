@@ -73,6 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 .header-link,
+button.header-link,
 a.header-link:visited {
     display: flex;
     justify-content: center;
@@ -83,7 +84,6 @@ a.header-link:visited {
     cursor: pointer;
     will-change: transform;
     overflow: hidden;
-    height: 42px;
     background-color: transparent;
     color: $primary-dark;
     border: 0 none;
@@ -119,6 +119,7 @@ a.header-link:visited {
             right: 0;
             height: pxToRem(6px);
             background-color: $primary-dark;
+            bottom: pxToRem(-8px);
         }
     }
 }
