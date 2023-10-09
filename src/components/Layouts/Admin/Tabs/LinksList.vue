@@ -166,12 +166,12 @@ export default {
             try {
                 await navigator.clipboard.writeText(link)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Link copied',
+                    message: this.$t('common.link-copied'),
                     type: 'success',
                 })
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Failed to copy link',
+                    message: this.$t('common.link-copied-failed'),
                     type: 'success',
                 })
                 console.error('Failed to copy: ', err)
@@ -194,13 +194,13 @@ export default {
             try {
                 await deleteInvitation(this.$store.state.organizations.current.code, linkId)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Invitation deleted',
+                    message: this.$t('common.invitation-deleted'),
                     type: 'success',
                 })
                 this.loadInvitations()
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `Error while deleting invitation (${error})`,
+                    message: `${this.$t('common.invitation-deleted-failed')} (${error})`,
                     type: 'error',
                 })
                 console.error(error)
