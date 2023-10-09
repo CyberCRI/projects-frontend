@@ -32,7 +32,7 @@
             <div class="announcement-project horizontal-padding top-padding bottom-padding">
                 <div
                     :style="{
-                        'background-image': `url(${announcement.project.header_image.variations.small})`,
+                        'background-image': projectImage,
                     }"
                     class="picto"
                 ></div>
@@ -62,6 +62,14 @@ export default {
         announcement: {
             type: Object,
             required: true,
+        },
+    },
+
+    computed: {
+        projectImage() {
+            return `url(${this.announcement.project?.header_image?.variations?.small}), url(${
+                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+            }/patatoids-project/Patatoid-1.png)`
         },
     },
 }
