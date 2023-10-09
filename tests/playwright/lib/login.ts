@@ -4,7 +4,7 @@ import { LogLevel, Logger } from '../logger'
 const logger = new Logger(LogLevel.Debug)
 
 export async function logIn(page, user: User) {
-    await page.goto('')
+    await page.goto('/')
     await page.locator('[data-test="test-login-button"]').click()
     logger.info('Click on login button')
     await page.getByLabel('Username or email').click()

@@ -32,11 +32,9 @@ export async function createInvitaionLink(page) {
     if (links.length > 0) {
         const lastLink = links[links.length - 1]
         await lastLink.click()
-        logger.info('last link')
-        logger.info(lastLink)
         const clipboardText = await page.evaluate(() => navigator.clipboard.readText())
         logger.info('link from clipboard')
-        console.log(clipboardText)
+        logger.info(clipboardText)
     } else {
         logger.error('Did not find any links')
     }
