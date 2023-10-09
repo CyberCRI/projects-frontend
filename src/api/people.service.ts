@@ -1,4 +1,4 @@
-import { axios } from './api.config'
+import { axios, axiosNoToken } from './api.config'
 import a from 'axios'
 import { APIResponseList } from '@/api/types'
 import { PeopleModel, UserPostData } from '@/models/people.model'
@@ -33,8 +33,9 @@ export async function postUserWithInvitation(
             Authorization: `Invite ${inviteToken}`,
         },
     }
+    // dont override with eventual curretn user token
     return (
-        await axios.post(
+        await axiosNoToken.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
                 store.state.organizations?.current?.code || ''
             }`,
