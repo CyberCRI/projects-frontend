@@ -9,6 +9,15 @@ export const axios = a.create({
     withCredentials: true, // allow to set cookie from response
 })
 
+// this is a special version of axios
+// that doesn't use an interceptor to inject the user token as authorization header
+// it is currently needed by regiter links
+// as there user token need to be replaced with invitation token
+export const axiosNoToken = a.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+    withCredentials: true, // allow to set cookie from response
+})
+
 export const configFormData = {
     headers: {
         'content-type': 'multipart/form-data',
@@ -24,6 +33,10 @@ const request = (config: AxiosRequestConfig) => {
         config.headers['Authorization'] = `Bearer ${accessToken}`
     }
 
+    return config
+}
+
+const requestNoToken = (config: AxiosRequestConfig) => {
     return config
 }
 
@@ -81,6 +94,8 @@ const responseError = (error: AxiosError) => {
 // Interceptors
 axios.interceptors.request.use(request, requestError)
 axios.interceptors.response.use(response, responseError)
+axiosNoToken.interceptors.request.use(requestNoToken, requestError)
+axiosNoToken.interceptors.response.use(response, responseError)
 
 // TODO: remove functions below once we moved everything to new API
 export const getAxiosConfig = (etag?) => {
