@@ -96,15 +96,17 @@
         <template v-if="isAddMode && hasGoogleSync">
             <div class="sub-section">
                 <h2 class="title">{{ $t('account.form.google') }}</h2>
-                <input
-                    type="checkbox"
-                    id="google-checkbox"
-                    name="google"
-                    @change="setGoogleCheckbox($event)"
-                />
-                <label for="google-checkbox" class="list-label">{{
-                    $t('account.form.create-google')
-                }}</label>
+                <div>
+                    <input
+                        type="checkbox"
+                        id="google-checkbox"
+                        name="google"
+                        @change="setGoogleCheckbox($event)"
+                    />
+                    <label for="google-checkbox" class="list-label google-checkbox-label">{{
+                        $t('account.form.create-google')
+                    }}</label>
+                </div>
             </div>
 
             <div class="spacer" />
@@ -391,7 +393,7 @@ export default {
             ]
 
             // user created in google can't have "none" role
-            if (!this.form.create_in_google) {
+            if (!this.form.create_in_google && !this.isAddMode) {
                 res.push(this.roleNone)
             }
             res.push(...roles)
@@ -402,7 +404,7 @@ export default {
     async mounted() {
         if (this.selectedUser) await this.setFormFromSelectedUser()
         else {
-            this.selectedRole = this.roleNone
+            this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
             this.form.profile_picture = await utils.getPatatoidFile(this.currentPatatoidIndex)
             this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
         }
@@ -841,5 +843,8 @@ export default {
         margin-left: $space-m;
         text-transform: capitalize;
     }
+}
+.google-checkbox-label {
+    display: inline;
 }
 </style>
