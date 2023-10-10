@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test'
 import { LogLevel, Logger } from '../logger'
+import { organizationCode } from '../variables'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -11,7 +12,7 @@ export async function createProject(page, projectName, projId) {
     await page.locator('[data-test="create-project"]').click()
 
     //add category
-    if (process.env.VITE_APP_APIBASEORGID == 'CRI') {
+    if (organizationCode == 'CRI') {
         logger.info('Click to add category (the first of the list)')
         await page
             .locator('[data-test="select-project-category"] div')

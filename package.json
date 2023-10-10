@@ -12,7 +12,7 @@
         "build:report": "trash report && vue-cli-service build",
         "test:unit:ci": "node --expose-gc --gc_global ./node_modules/.bin/vitest --logHeapUsage",
         "test:unit": "vitest",
-        "test:gen": "npx playwright codegen --ignore-https-errors https://localhost:8080",
+        "test:gen": "npx playwright codegen --ignore-https-errors http://localhost:8080",
         "test:play": "npx playwright test",
         "test:play:chrome": "npx playwright test --project=chrome",
         "test:play:webkit": "npx playwright test --project=webkit",

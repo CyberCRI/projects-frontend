@@ -42,7 +42,6 @@
                                 class="drop-down-menu-item-content"
                                 @click="menuAction(item)"
                                 :data-test="item.dataTest"
-                                :data-test-id="item.dataTest"
                             >
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
                                     <IconImage :name="item.leftIcon" />

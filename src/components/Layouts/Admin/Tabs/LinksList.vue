@@ -84,7 +84,7 @@
                                 class="btn copy-link"
                                 :label="$t('invitation.copy-link')"
                                 secondary
-                                data-test="cpy-link"
+                                :data-test="`cpy-link-${link.id}`"
                                 :no-border="true"
                                 :no-margin="true"
                                 @click="copyLink(link.token)"
@@ -102,8 +102,8 @@
                                 class="btn"
                                 left-icon="TrashCanOutline"
                                 secondary
-                                data-test="create-link"
                                 :no-border="true"
+                                :data-test="`delete-cpy-link-${link.id}`"
                                 @click="deleteLink(link.id)"
                             />
                         </td>
@@ -167,12 +167,12 @@ export default {
             try {
                 await navigator.clipboard.writeText(link)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Link copied',
+                    message: this.$t('common.link-copied-success'),
                     type: 'success',
                 })
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Failed to copy link',
+                    message: this.$t('common.link-copied-failed'),
                     type: 'success',
                 })
                 console.error('Failed to copy: ', err)
@@ -195,13 +195,13 @@ export default {
             try {
                 await deleteInvitation(this.$store.state.organizations.current.code, linkId)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: 'Invitation deleted',
+                    message: this.$t('invitation.delete.delete-success'),
                     type: 'success',
                 })
                 this.loadInvitations()
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `Error while deleting invitation (${error})`,
+                    message: `${this.$t('invitation.delete.deleted-failed')} (${error})`,
                     type: 'error',
                 })
                 console.error(error)

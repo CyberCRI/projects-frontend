@@ -280,6 +280,10 @@
             "notice": "Fields marked with * are mandatory.",
             "title": "Create a register link"
         },
+        "delete": {
+            "deleted-success": "Invitation deleted",
+            "deleted-failed": "Error while deleting invitation"
+        },
         "delete-confirm-title": "Delete this link?",
         "generate-link": "Generate link",
         "list": {
@@ -381,6 +385,8 @@
         "insert": "insert",
         "less": "less",
         "link": "link",
+        "link-copied-success": "Link copied",
+        "link-copied-failed": "Failed to copy link",
         "learn-more": "learn more",
         "loading": "Loading",
         "login": "login",

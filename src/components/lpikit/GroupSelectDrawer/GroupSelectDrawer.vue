@@ -20,6 +20,7 @@
                 :disabled="!queryString || isLoading"
                 class="select-btn"
                 left-icon="Search"
+                data-test="search-btn"
                 @click="launchSearch"
             />
         </section>
@@ -33,6 +34,7 @@
                 :group="group"
                 :has-add-icon="true"
                 @add="selectGroup(group)"
+                :data-test="`drawer-group-card-${group.id}`"
             />
         </section>
     </DrawerLayout>

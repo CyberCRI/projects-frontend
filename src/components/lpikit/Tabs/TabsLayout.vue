@@ -38,7 +38,7 @@
                             :id="tab.id"
                             :key="index"
                             :ref="'tab-' + index"
-                            :data-test="tab.dataTest"
+                            :data-test="tab.key"
                             :class="{
                                 selected: routerView
                                     ? currentViewIndex === index

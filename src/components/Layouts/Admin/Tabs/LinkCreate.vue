@@ -31,7 +31,12 @@
                             {{ $t('invitation.create.field.validity.pick-date') }}
                         </button>
 
-                        <button type="button" @click="setValidOneYear" class="validity-type-btn">
+                        <button
+                            type="button"
+                            @click="setValidOneYear"
+                            class="validity-type-btn"
+                            data-test="one-year"
+                        >
                             <IconImage
                                 v-if="form.expire_at && validityType == 'one-year'"
                                 class="icon"
@@ -189,7 +194,7 @@ export default {
             try {
                 await postInvitation(this.$store.state.organizations.current.code, this.form)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('invitation.create.success'),
+                    message: this.$t('invitation.create.create-success'),
                     type: 'success',
                 })
                 this.$router.push('/admin/links/list')

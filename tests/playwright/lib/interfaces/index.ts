@@ -1,5 +1,5 @@
-import { User } from './user'
+import { User, UserType } from './user'
 import { Admin } from './admin'
 import { Community } from './community'
 
-export { User, Admin, Community }
+export { User, UserType, Admin, Community }
