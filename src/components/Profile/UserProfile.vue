@@ -61,7 +61,7 @@ export default {
 
     props: {
         kid: {
-            type: Object,
+            type: String,
             default: null,
         },
         showPageLink: {

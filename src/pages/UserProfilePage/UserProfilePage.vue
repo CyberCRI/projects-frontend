@@ -21,7 +21,7 @@ export default {
 
     props: {
         userKId: {
-            type: Object,
+            type: String,
             default: null,
         },
     },

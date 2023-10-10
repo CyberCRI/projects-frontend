@@ -2,7 +2,7 @@
     <BasicCard
         :button-label="$t('project.card.link')"
         @click="userAction($event)"
-        @go-to="userAction($event)"
+        :to-link="!isPrivateUser ? toLink : null"
     >
         <template #actions-right>
             <slot name="actions">
@@ -38,7 +38,7 @@ import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 export default {
     name: 'UserCard',
 
-    emits: ['go-to'],
+    emits: ['click'],
 
     mixins: [imageMixin],
 
@@ -52,6 +52,10 @@ export default {
         user: {
             type: Object,
             required: true,
+        },
+        toLink: {
+            type: [String, Object],
+            default: null,
         },
     },
 
@@ -74,7 +78,7 @@ export default {
         },
         isPrivateUser() {
             // Private users do not return an iD from API call
-            return !!this.user.id
+            return !this.user.id
         },
         userGroups() {
             // TODO: use first group name plus groups number (ex: "Staff (+4)")
@@ -91,9 +95,9 @@ export default {
             this.imageError = true
         },
         userAction(event) {
-            if (!this.isPrivateUser) return
+            if (this.isPrivateUser) return
 
-            this.$emit('go-to', event)
+            this.$emit('click', event)
         },
     },
 }

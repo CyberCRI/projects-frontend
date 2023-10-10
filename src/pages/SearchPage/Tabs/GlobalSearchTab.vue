@@ -28,7 +28,14 @@
                 <template #peoples="projectListSlotProps">
                     <UserCard
                         :user="projectListSlotProps.user"
-                        @go-to="goToProfile(projectListSlotProps.user)"
+                        :to-link="{
+                            name: 'ProfileOtherUser',
+                            params: {
+                                userKId:
+                                    projectListSlotProps.user.slug ||
+                                    projectListSlotProps.user.keycloak_id,
+                            },
+                        }"
                     />
                 </template>
             </CardList>
@@ -71,13 +78,6 @@ export default {
             this.$router.push({
                 path: this.$route.path,
                 query: { ...this.$route.query, page: pagination.currentPage },
-            })
-        },
-
-        goToProfile(user) {
-            this.$router.push({
-                name: 'ProfileOtherUser',
-                params: { userKId: user.slug || user.keycloak_id },
             })
         },
     },

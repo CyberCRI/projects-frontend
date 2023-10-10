@@ -25,7 +25,7 @@
                     projectLayoutToggleAddModal('teamMember', { user: owner, role: 'owners' })
                 "
             >
-                <UserCard :user="owner" @go-to="openProfileDrawer(owner)" />
+                <UserCard :user="owner" @click="openProfileDrawer(owner)" />
             </ProjectTeamEditor>
         </div>
 
@@ -46,7 +46,7 @@
                     projectLayoutToggleAddModal('teamMember', { user: member, role: 'members' })
                 "
             >
-                <UserCard :user="member" @go-to="openProfileDrawer(member)" />
+                <UserCard :user="member" @click="openProfileDrawer(member)" />
             </ProjectTeamEditor>
         </div>
 
@@ -67,7 +67,7 @@
                     projectLayoutToggleAddModal('teamMember', { user: reviewer, role: 'reviewers' })
                 "
             >
-                <UserCard :user="reviewer" @go-to="openProfileDrawer(reviewer)" />
+                <UserCard :user="reviewer" @click="openProfileDrawer(reviewer)" />
             </ProjectTeamEditor>
         </div>
 
