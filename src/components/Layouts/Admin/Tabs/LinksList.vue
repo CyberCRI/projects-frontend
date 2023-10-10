@@ -167,7 +167,7 @@ export default {
             try {
                 await navigator.clipboard.writeText(link)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('common.link-copied'),
+                    message: this.$t('common.link-copied-success'),
                     type: 'success',
                 })
             } catch (err) {
@@ -195,7 +195,7 @@ export default {
             try {
                 await deleteInvitation(this.$store.state.organizations.current.code, linkId)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('common.invitation-deleted'),
+                    message: this.$t('common.invitation-deleted-success'),
                     type: 'success',
                 })
                 this.loadInvitations()
