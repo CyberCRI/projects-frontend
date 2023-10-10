@@ -195,13 +195,13 @@ export default {
             try {
                 await deleteInvitation(this.$store.state.organizations.current.code, linkId)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('common.invitation-deleted-success'),
+                    message: this.$t('invitation.delete.delete-success'),
                     type: 'success',
                 })
                 this.loadInvitations()
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('common.invitation-deleted-failed')} (${error})`,
+                    message: `${this.$t('invitation.delete.deleted-failed')} (${error})`,
                     type: 'error',
                 })
                 console.error(error)

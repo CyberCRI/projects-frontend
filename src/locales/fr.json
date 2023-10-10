@@ -280,6 +280,10 @@
             "notice": "Les champs marqués avec * sont obligatoires.",
             "title": "Créer un lien d'enregistrement"
         },
+        "delete": {
+            "deleted-success": "Invitation supprimer",
+            "deleted-failed": "Erreur pendant la suppression de l'invitation"
+        },
         "delete-confirm-title": "Supprimer ce lien ?",
         "generate-link": "Créer un lien",
         "list": {
@@ -379,8 +383,6 @@
         "groups": "Groupes",
         "index": "Index",
         "insert": "insérer",
-        "invitation-deleted-success": "Invitation supprimer",
-        "invitation-deleted-failed": "Erreur pendant la suppression de l'invitation",
         "less": "moins",
         "link": "lien",
         "link-copied-success": "Lien copié",
