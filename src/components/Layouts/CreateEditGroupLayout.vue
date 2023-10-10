@@ -473,15 +473,10 @@ export default {
                 await postGroupProjects(this.orgCode, groupId, payloadProjects)
             }
             if (projectsToRemove.length > 0) {
-                // TODO ask Santa Claus for a batch removal endpoint
-                await Promise.all(
-                    projectsToRemove.map((project) => {
-                        const payloadProject = {
-                            project: project.id,
-                        }
-                        return removeGroupProject(this.orgCode, groupId, payloadProject)
-                    })
-                )
+                const payloadProjects = {
+                    featured_projects: projectsToRemove.map((project) => project.id),
+                }
+                await removeGroupProject(this.orgCode, groupId, payloadProjects)
             }
         },
     },
