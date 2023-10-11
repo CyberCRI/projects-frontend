@@ -19,15 +19,6 @@ image:
     path: projects-front
     tag: '{{ .Values.application.revision }}'
 
-hostname: dummy-hostname
-
-prefix: dummy-prefix
-instanceName: dummy-instance
-
-application:
-  revision: dummy-revision
-  sourceTargetRevision: dummy-sourceTargetRevision
-
 resourceName: frontend
 fullName: '{{ join "-" (list .Values.instanceName .Values.resourceName) }}'
 
@@ -41,7 +32,6 @@ injectedEnv:
       VITE_APP_BASE_URL: '{{ .Values.hostname }}'
       VITE_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
 
-domain: dummy.domain
 
 resources:
   requests:

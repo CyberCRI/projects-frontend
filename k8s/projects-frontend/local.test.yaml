@@ -1,0 +1,12 @@
+# This file is meant for local templating with dummy values
+
+domain: dummy.domain
+
+hostname: dummy-hostname
+
+prefix: dummy-prefix
+instanceName: dummy-instance
+
+application:
+  revision: dummy-revision
+  sourceTargetRevision: dummy-sourceTargetRevision
