@@ -7,3 +7,5 @@ injectedEnv:
     VITE_APP_VERSION: "{{ .Values.application.sourceTargetRevision }}"
 
 certManagerClusterIssuer: letsencrypt-prod
+
+domain: lp-i.org
