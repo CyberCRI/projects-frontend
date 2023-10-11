@@ -47,7 +47,7 @@ import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 export default {
     name: 'GroupCard',
 
-    emits: ['add', 'unselect', 'click', 'get-info', 'navigated-away'],
+    emits: ['add', 'unselect', 'click', 'navigated-away'],
 
     mixins: [imageMixin],
 

@@ -128,22 +128,6 @@
         </Transition>
 
         <DrawerLayout
-            :has-footer="false"
-            :is-opened="fullProfileVisible"
-            :title="fullProfileVisible ? $t('me.page-title') : ''"
-            confirm-action-name=""
-            @close="closeDrawer"
-        >
-            <UserProfile
-                v-if="fullUserData && fullProfileVisible"
-                :is-edit-mode="isEditMode"
-                :user="fullUserData"
-                @edit-profile="editProfile"
-                @navigated-away="closeDrawer"
-            />
-        </DrawerLayout>
-
-        <DrawerLayout
             :custom-style="customNotificationStyle"
             :has-footer="false"
             :is-opened="showNotificationDrawer"
@@ -186,7 +170,6 @@ import HeaderLink from '@/components/Header/HeaderLink.vue'
 import HeaderDropDown from '@/components/Header/HeaderDropDown.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import NotificationIcon from '@/components/lpikit/NotificationIcon/NotificationIcon.vue'
-import UserProfile from '@/components/lpikit/UserProfile/UserProfile.vue'
 import NotificationList from '@/components/lpikit/Notifications/NotificationList.vue'
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -205,7 +188,6 @@ export default {
         HeaderItemList,
         BadgeItem,
         NotificationList,
-        UserProfile,
         LpiButton,
         HeaderLink,
         HeaderDropDown,
@@ -220,10 +202,7 @@ export default {
             categoriesModalActive: false,
             openPortalNav: false,
             faqModalActive: false,
-            fullProfileVisible: false,
-            fullUserData: undefined,
             isLoading: true,
-            isEditMode: false,
             showNotificationDrawer: false,
             showContactUsDrawer: false,
             customNotificationStyle: {
@@ -286,12 +265,7 @@ export default {
             this.isLoading = false
         },
 
-        editProfile() {
-            this.$router.push({ name: 'ProfileEdit' })
-        },
-
         closeDrawer() {
-            this.fullProfileVisible = false
             this.showNotificationDrawer = false
             this.showContactUsDrawer = false
         },

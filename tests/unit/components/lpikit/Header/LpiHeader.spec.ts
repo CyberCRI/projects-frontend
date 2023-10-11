@@ -122,9 +122,8 @@ describe('LpiHeader.vue', () => {
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 
         const drawers = wrapper.findAll('drawer-layout-stub')
-        /* Notifications and user profile */
-
-        expect(drawers.length).toEqual(3)
+        // Notifications and contact form
+        expect(drawers.length).toEqual(2)
     })
 
     it('should find the user menu content to equal only 2 as not connected', () => {
