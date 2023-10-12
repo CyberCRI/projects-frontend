@@ -1,6 +1,6 @@
 injectedEnv:
   nonSensitive:
-    VITE_APP_KEYCLOAK_URL: https://id.lp-i.dev/auth
+    VITE_APP_KEYCLOAK_URL: https://lpi-dev.cloud-iam.com/auth
     VITE_APP_VERSION: '{{ .Values.application.revision }}'
 
 domain: k8s.lp-i.dev
