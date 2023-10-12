@@ -51,7 +51,7 @@ jobs:
       - build-docker
     uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@deploy-fast
   e2e:
-    if: github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/auto_staging'
     uses: ./.github/workflows/e2e.yml
     secrets: inherit
     needs:
