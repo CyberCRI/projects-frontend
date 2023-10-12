@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectResources from '@/components/lpikit/ProjectView/Resources/ProjectResources.vue'
+import ProjectResourcesTab from '@/pages/ProjectPage/Tabs/Resources/ProjectResourcesTab.vue'
 import { OrganizationOutputFactory } from '../../../../../factories/organization.factory'
 import utils from '@/functs/functions'
 
@@ -36,9 +36,9 @@ const store = {
     },
 }
 
-describe('ProjectResources.vue', () => {
+describe('ProjectResourcesTab.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(ProjectResources, {
+        const wrapper = lpiShallowMount(ProjectResourcesTab, {
             store,
             i18n,
             provide: {

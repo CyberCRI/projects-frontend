@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
-import ProjectSummary from '@/components/lpikit/ProjectView/Summary/ProjectSummary.vue'
+import ProjectSummaryTab from '@/pages/ProjectPage/Tabs/Summary/ProjectSummaryTab.vue'
 import { ProjectOutputFactory } from '../../../../../factories/project.factory'
 import { CommentFactory } from '../../../../../factories/comment.factory'
 import { OrganizationOutputFactory } from '../../../../../factories/organization.factory'
@@ -43,9 +43,9 @@ const store = {
     },
 }
 
-describe('ProjectSummary.vue', () => {
+describe('Tab.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(ProjectSummary, {
+        const wrapper = lpiShallowMount(ProjectSummaryTab, {
             propsData: {
                 project: ProjectOutputFactory.generate(),
             },

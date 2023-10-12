@@ -1,0 +1,371 @@
+<template>
+    <div class="project-team">
+        <div v-if="canEditProject" class="add-user">
+            <LpiButton
+                :label="$filters.capitalize($t('team.add'))"
+                class="add-user-btn"
+                @click="projectLayoutToggleAddModal('teamMember')"
+            />
+        </div>
+
+        <SectionHeader
+            v-if="owners && owners.length"
+            :has-button="false"
+            :quantity="owners.length"
+            :title="$filters.capitalize($t('role.editors'))"
+        />
+        <div class="user-card-ctn">
+            <ProjectTeamEditor
+                v-for="owner in owners"
+                :key="owner.keycloak_id"
+                :can-be-edited="canEditProject"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(owner, 'owners')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', { user: owner, role: 'owners' })
+                "
+            >
+                <UserCard :user="owner" @go-to="openProfileDrawer(owner)" />
+            </ProjectTeamEditor>
+        </div>
+
+        <SectionHeader
+            v-if="members && members.length"
+            :has-button="false"
+            :quantity="members.length"
+            :title="$filters.capitalize($t('role.teammates'))"
+        />
+        <div class="user-card-ctn">
+            <ProjectTeamEditor
+                v-for="member in members"
+                :key="member.keycloak_id"
+                :can-be-edited="canEditProject"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(member, 'members')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', { user: member, role: 'members' })
+                "
+            >
+                <UserCard :user="member" @go-to="openProfileDrawer(member)" />
+            </ProjectTeamEditor>
+        </div>
+
+        <SectionHeader
+            v-if="reviewers && reviewers.length"
+            :has-button="false"
+            :quantity="reviewers.length"
+            :title="$filters.capitalize($t('role.reviewers'))"
+        />
+        <div class="user-card-ctn">
+            <ProjectTeamEditor
+                v-for="reviewer in reviewers"
+                :key="reviewer.keycloak_id"
+                :can-be-edited="canEditProject"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(reviewer, 'reviewers')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', { user: reviewer, role: 'reviewers' })
+                "
+            >
+                <UserCard :user="reviewer" @go-to="openProfileDrawer(reviewer)" />
+            </ProjectTeamEditor>
+        </div>
+
+        <SectionHeader
+            v-if="groups && groups.length"
+            :has-button="false"
+            :quantity="groups.length"
+            :title="$filters.capitalize($t('role.group'))"
+        />
+        <div class="user-card-ctn">
+            <ProjectTeamEditor
+                v-for="group in groups"
+                :key="group.id"
+                :can-be-edited="false"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(group, 'groups')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', { user: group, role: 'reviewers' })
+                "
+            >
+                <GroupCard :group="group" @go-to="openProfileDrawer(group)" />
+            </ProjectTeamEditor>
+        </div>
+
+        <ConfirmModal
+            v-if="confirmModalVisible"
+            :content="$t('team.remove-user-confirm')"
+            :title="$t('common.delete-user')"
+            @cancel="confirmModalVisible = false"
+            @confirm="removeUser('user')"
+            :confirm-button-label="$t('common.delete-user')"
+            :asyncing="asyncingRemoveUser"
+        />
+
+        <ConfirmModal
+            v-if="confirmGroupModalVisible"
+            :content="$t('team.remove-group-confirm')"
+            :title="$t('common.delete')"
+            @cancel="confirmGroupModalVisible = false"
+            @confirm="removeUser('group')"
+            :asyncing="asyncingRemoveUser"
+        />
+
+        <ConfirmModal
+            v-if="showQuitIsImposible"
+            :content="$t('common.cant-quit-other')"
+            :title="$t('project.quit')"
+            :has-second-button="false"
+            :cancel-button-label="'common.ok'"
+            @cancel="toggleShowQuitIsImposibleVisible"
+        />
+
+        <DrawerLayout
+            :has-footer="false"
+            :is-opened="profileDrawer.isOpened"
+            :title="$t('profile.drawer_title')"
+            @close="closeProfileDrawer"
+        >
+            <UserProfile
+                v-if="profileDrawer.isOpened"
+                ref="profile-user"
+                :can-edit="false"
+                :kid="profileDrawer.user_kid"
+            />
+        </DrawerLayout>
+    </div>
+</template>
+
+<script>
+import permissions from '@/mixins/permissions.ts'
+import ProjectTab from '@/mixins/ProjectTab.ts'
+
+import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
+import UserCard from '@/components/peopleKit/UserCard.vue'
+import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
+import UserProfile from '@/components/Profile/UserProfile.vue'
+import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.vue'
+import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+
+export default {
+    name: 'ProjectTeamTab',
+
+    components: {
+        UserProfile,
+        SectionHeader,
+        UserCard,
+        GroupCard,
+        ConfirmModal,
+        DrawerLayout,
+        ProjectTeamEditor,
+        LpiButton,
+    },
+
+    inject: ['projectLayoutToggleAddModal'],
+
+    mixins: [permissions, ProjectTab],
+
+    data() {
+        return {
+            userToBeDeleted: null,
+            confirmModalVisible: false,
+            confirmGroupModalVisible: false,
+            profileDrawer: {
+                isOpened: false,
+                user_kid: null,
+            },
+            isEditMode: false,
+            showQuitIsImposible: false,
+            asyncingRemoveUser: false,
+        }
+    },
+
+    computed: {
+        project() {
+            return this.$store.getters['projects/project']
+        },
+
+        owners() {
+            return this.project.team.owners
+        },
+
+        members() {
+            return this.project.team.members
+        },
+
+        reviewers() {
+            return this.project.team.reviewers
+        },
+
+        groups() {
+            return this.project.team.people_groups
+        },
+    },
+
+    methods: {
+        launchConfirmModal(user, role) {
+            this.userToBeDeleted = { ...user }
+            if (role === 'groups') {
+                this.confirmGroupModalVisible = true
+            } else {
+                // a project must have at least one owner
+                if (role === 'owners' && this.owners.length === 1) {
+                    this.showQuitIsImposible = true
+                    return
+                }
+
+                this.userToBeDeleted.group = role
+                this.confirmModalVisible = true
+            }
+        },
+
+        toggleShowQuitIsImposibleVisible() {
+            this.showQuitIsImposible = !this.showQuitIsImposible
+        },
+
+        async removeUser(memberType) {
+            let projectNoMoreVisible = false
+            try {
+                this.asyncingRemoveUser = true
+                let body = null
+                if (memberType === 'user') {
+                    body = {
+                        users: [this.userToBeDeleted.keycloak_id],
+                    }
+                } else {
+                    body = {
+                        people_groups: [this.userToBeDeleted.id],
+                    }
+                }
+                await this.$store.dispatch('projectMembers/deleteProjectMember', body)
+
+                try {
+                    const project = await this.$store.dispatch(
+                        'projects/getProject',
+                        this.project.id
+                    )
+
+                    await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                } catch {
+                    // if the project is not visible anymore, we get a 404
+                    projectNoMoreVisible = true
+                }
+
+                if (memberType === 'user') {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.team-member-delete.success'),
+                        type: 'success',
+                    })
+                } else {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.team-group-delete.success'),
+                        type: 'success',
+                    })
+                }
+            } catch (error) {
+                console.error(error)
+                /**
+                 * we might have a race condition where thre was only two members
+                 * and they quit at the same time
+                 * so check error and display a "nice" message if this is the case
+                 */
+                if (error.response?.data?.users) {
+                    try {
+                        const project = await this.$store.dispatch(
+                            'projects/getProject',
+                            this.project.id
+                        )
+                        await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                    } finally {
+                        this.showQuitIsImposible = true
+                    }
+                } else {
+                    /**
+                     * here this is just a "standard" error, so display it
+                     */
+                    if (memberType === 'user') {
+                        this.$store.dispatch('notifications/pushToast', {
+                            message: `${this.$t('toasts.team-member-delete.error')} (${error})`,
+                            type: 'error',
+                        })
+                    } else {
+                        this.$store.dispatch('notifications/pushToast', {
+                            message: `${this.$t('toasts.team-group-delete.error')} (${error})`,
+                            type: 'error',
+                        })
+                    }
+                }
+            } finally {
+                this.asyncingRemoveUser = false
+                this.confirmModalVisible = false
+                this.confirmGroupModalVisible = false
+                // if we got a 404, we redirect to dashboard
+                if (projectNoMoreVisible) this.$router.push({ name: 'HomeRoot' })
+            }
+        },
+
+        async openProfileDrawer(user) {
+            this.profileDrawer.user_kid = user.keycloak_id
+            this.profileDrawer.isOpened = true
+        },
+
+        closeProfileDrawer() {
+            this.profileDrawer.isOpened = false
+            this.profileDrawer.user_kid = null
+        },
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+.project-team {
+    padding: $space-xl $space-l;
+
+    .user-card-ctn {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: $space-l;
+
+        .project-team-editor {
+            flex-basis: 0;
+        }
+    }
+
+    .user-card-ctn:not(:last-of-type) {
+        margin-bottom: $space-l;
+    }
+}
+
+.add-user {
+    display: flex;
+    justify-content: flex-end;
+    padding: $space-l 0;
+}
+
+@media screen and (min-width: $min-tablet) and (max-width: $max-tablet) {
+    .project-team .user-card-ctn > div {
+        flex-basis: calc(50% - 2 * $space-s);
+    }
+}
+
+@media screen and (min-width: $max-tablet) {
+    .project-team .user-card-ctn > div {
+        flex-basis: calc(33% - 2 * $space-s);
+    }
+}
+
+@media screen and (min-width: $min-desktop) and (max-width: $max-desktop) {
+    .project-team .user-card-ctn > div {
+        flex-basis: calc(25% - 2 * $space-s);
+    }
+}
+
+@media screen and (min-width: $max-desktop) {
+    .project-team .user-card-ctn > div {
+        flex-basis: calc(20% - 2 * $space-s);
+    }
+}
+</style>

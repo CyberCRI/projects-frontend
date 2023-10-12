@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TeamRecap from '@/components/lpikit/ProjectView/Summary/TeamRecap.vue'
+import TeamRecap from '@/pages/ProjectPage/Tabs/Summary/TeamRecap.vue'
 import { ProjectOutputFactory } from '../../../../../factories/project.factory'
 import MockComponent from '../../../../../helpers/MockComponent.vue'
 

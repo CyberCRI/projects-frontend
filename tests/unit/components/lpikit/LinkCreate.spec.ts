@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import LinkCreate from '@/components/Layouts/Admin/Tabs/LinkCreate.vue'
+import LinkCreate from '@/pages/AdminPortalPage/Tabs/LinkCreate.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
