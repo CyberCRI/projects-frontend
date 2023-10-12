@@ -34,10 +34,6 @@ export default {
             type: [String, Object],
             default: null,
         },
-        buttonLabel: {
-            type: String,
-            default: '',
-        },
     },
 }
 </script>

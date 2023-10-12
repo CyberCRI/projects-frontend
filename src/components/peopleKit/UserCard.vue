@@ -1,9 +1,5 @@
 <template>
-    <BasicCard
-        :button-label="$t('project.card.link')"
-        @click="userAction($event)"
-        :to-link="!isPrivateUser ? toLink : null"
-    >
+    <BasicCard @click="userAction($event)" :to-link="!isPrivateUser ? toLink : null">
         <template #actions-right>
             <slot name="actions">
                 <IconImage class="icon" name="EmailOutline" @click="mailTo" />

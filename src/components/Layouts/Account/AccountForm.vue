@@ -844,6 +844,7 @@ export default {
         text-transform: capitalize;
     }
 }
+
 .google-checkbox-label {
     display: inline;
 }
