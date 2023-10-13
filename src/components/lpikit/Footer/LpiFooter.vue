@@ -248,9 +248,7 @@ export default {
         isConnected: {
             handler: function (neo, old) {
                 if (neo && !old) {
-                    // TODO: also check if it is first login from user data
-                    // when api will be ready
-                    this.showWelcomeModal = true
+                    this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
                 }
             },
             immediate: true,
