@@ -238,6 +238,8 @@ export default {
                     formData.append(key, this.form[key])
                 })
 
+                formData.append('language', this.$store.getters['languages/current'])
+
                 await postUserWithInvitation(this.token, formData)
 
                 this.confirm = true
