@@ -1814,6 +1814,7 @@
     },
     "register": {
         "title": "Create an account",
+        "title-confirm": "Email confirmation needed",
         "email": {
             "label": "Email *",
             "placeholder": "Enter your email",
@@ -1821,25 +1822,29 @@
             "is-invalid": "This is not a valid email"
         },
         "given_name": {
-            "label": "Firstname *",
+            "label": "First name *",
             "placeholder": "Enter your firstname",
             "is-required": "Firstname is required"
         },
         "family_name": {
-            "label": "Lastname *",
+            "label": "Last name *",
             "placeholder": "Enter your lastname",
             "is-required": "Lastname is required"
         },
-        "job": {
-            "label": "Job *",
-            "placeholder": "Enter your job",
-            "is-required": "Job is required"
+        "password": {
+            "label": "Password *",
+            "placeholder": "********",
+            "is-required": "Password is required"
         },
-        "confirmation": "You will receive a confirmation mail to the address you provided. Please click on the link in the mail to activate your account.",
+        "confirmation": "We sent you a confirmation email in your inbox. Once you have confirmed that {email} is your email, we’ll help you get started on the platform.",
         "save-error": "A technical problem occured. Please retry later.",
         "tos": "By continuing, you agree to our {term} and {privacy}",
         "term": "term of service",
-        "privacy": "privacy policy"
+        "privacy": "privacy policy",
+        "have-account": "Already an account?",
+        "login": "Login",
+        "need-help": "Need help?",
+        "contact-us": "Contact us"
     },
     "role": {
         "choose-role": "Choose from the following roles :",
@@ -2425,5 +2430,13 @@
     },
     "portal": {
         "sub-title": "Discover portals that belong to other organisations. Browse, get inspired, and get in touch!"
+    },
+    "welcome-modal": {
+        "title": "Welcome to the Projects portal of {organization}",
+        "success": "🎉 Your account has been successfully created!",
+        "instruction": "Before you can start enjoying the platform, you need to complete your profile.",
+        "guidance": "This will only take a couple of minutes and we’ll guide you along the way.",
+        "complete-later": "I’ll do this later",
+        "complete-now": "Let’s go!"
     }
 }

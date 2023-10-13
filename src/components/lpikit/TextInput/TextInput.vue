@@ -3,43 +3,53 @@
         <label v-if="label" :for="inputId || randomId">{{ label }}</label>
         <slot v-else></slot>
 
-        <input
-            v-if="inputType === 'input' || inputType === 'email'"
+        <textarea
+            v-if="inputType === 'textarea'"
             :id="inputId || (label ? randomId : null)"
             v-model="model"
             :placeholder="placeholder"
-            :type="inputType === 'email' ? 'email' : 'text'"
             @keydown.enter="$emit('enter')"
             v-disable-focus="unfocusable"
-            :disabled="disabled"
             @focus="$emit('focus', $event)"
             @blur="$emit('blur', $event)"
             :data-test="dataTest"
             :maxlength="maxLength"
         />
 
-        <textarea
-            v-else-if="inputType === 'textarea'"
-            :id="inputId || (label ? randomId : null)"
-            v-model="model"
-            :placeholder="placeholder"
-            @keydown.enter="$emit('enter')"
-            v-disable-focus="unfocusable"
-            @focus="$emit('focus', $event)"
-            @blur="$emit('blur', $event)"
-            :data-test="dataTest"
-            :maxlength="maxLength"
-        />
+        <span class="input-wrapper" :class="{ 'is-password': inputType == 'password' }" v-else>
+            <input
+                :id="inputId || (label ? randomId : null)"
+                v-model="model"
+                :placeholder="placeholder"
+                :type="typeOverride || inputType || 'text'"
+                @keydown.enter="$emit('enter')"
+                v-disable-focus="unfocusable"
+                :disabled="disabled"
+                @focus="$emit('focus', $event)"
+                @blur="$emit('blur', $event)"
+                :data-test="dataTest"
+                :maxlength="maxLength"
+            />
+            <IconImage
+                v-if="inputType === 'password'"
+                class="show-password"
+                @click="typeOverride = typeOverride ? null : 'text'"
+                :name="typeOverride ? 'EyeSlash' : 'Eye'"
+            />
+        </span>
 
         <small v-if="bottomText">{{ bottomText }}</small>
     </div>
 </template>
 
 <script>
+import IconImage from '@/components/svgs/IconImage.vue'
 export default {
     name: 'TextInput',
 
     emits: ['update:modelValue', 'enter', 'focus', 'blur'],
+
+    components: { IconImage },
 
     props: {
         modelValue: {
@@ -69,7 +79,7 @@ export default {
 
         inputType: {
             type: String,
-            default: 'input',
+            default: 'text',
         },
 
         bigInput: {
@@ -98,6 +108,7 @@ export default {
     data() {
         return {
             randomId: (Math.random() + 1).toString(36).substring(7),
+            typeOverride: null,
         }
     },
 
@@ -119,6 +130,26 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    .input-wrapper {
+        width: 100%;
+        &.is-password {
+            position: relative;
+            input {
+                padding-right: 2rem;
+            }
+            .show-password {
+                position: absolute;
+                z-index: 10;
+                right: 0;
+                top: 50%;
+                transform: translate(-20%, -50%);
+                height: 60%;
+                fill: $primary-dark;
+                cursor: pointer;
+            }
+        }
+    }
 
     input,
     textarea {

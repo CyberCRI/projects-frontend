@@ -190,6 +190,7 @@
             >
                 <ReportForm type="bug" @close="reportBugOpen = false" />
             </DrawerLayout>
+            <WelcomeModal v-if="showWelcomeModal" @close="showWelcomeModal = false" />
         </div>
     </footer>
 </template>
@@ -200,6 +201,7 @@ import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
+import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 
 export default {
     name: 'LpiFooter',
@@ -210,11 +212,13 @@ export default {
         ReportForm,
         DrawerLayout,
         ProjectLogo,
+        WelcomeModal,
     },
 
     data() {
         return {
             reportBugOpen: false,
+            showWelcomeModal: false,
         }
     },
 
@@ -235,6 +239,21 @@ export default {
         },
         appVersion() {
             return import.meta.env.VITE_APP_VERSION
+        },
+        isConnected() {
+            return this.$store.getters['users/isConnected']
+        },
+    },
+    watch: {
+        isConnected: {
+            handler: function (neo, old) {
+                if (neo && !old) {
+                    // TODO: also check if it is first login from user data
+                    // when api will be ready
+                    this.showWelcomeModal = true
+                }
+            },
+            immediate: true,
         },
     },
 }
