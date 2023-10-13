@@ -92,7 +92,7 @@
         "vuex": "^4.0.2",
         "y-prosemirror": "1.0.20",
         "y-protocols": "^1.0.5",
-        "yjs": "13.5.52"
+        "yjs": "13.6.8"
     },
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",
