@@ -133,11 +133,14 @@ export default {
 
     .input-wrapper {
         width: 100%;
+
         &.is-password {
             position: relative;
+
             input {
                 padding-right: 2rem;
             }
+
             .show-password {
                 position: absolute;
                 z-index: 10;

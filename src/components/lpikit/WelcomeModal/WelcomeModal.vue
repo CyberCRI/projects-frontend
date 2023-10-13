@@ -72,6 +72,7 @@ export default {
 .portal-logo-ctn {
     text-align: center;
 }
+
 .portal-logo {
     max-width: 20rem;
 }
@@ -88,6 +89,7 @@ export default {
     font-size: $font-size-m;
     line-height: 1.6;
 }
+
 .footer {
     width: 100%;
     display: flex;

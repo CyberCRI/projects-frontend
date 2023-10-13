@@ -267,8 +267,9 @@ $form-max-width: pxToRem(326px);
 $form-horizontal-padding: pxToRem(62px);
 $column-gap: $space-2xl;
 $container-horizontal-padding: $space-xl;
-
 $form-max-total-width: $form-max-width + 2 * $form-horizontal-padding;
+
+/* stylelint-disable-next-line  scss/operator-no-newline-after */
 $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     $container-horizontal-padding;
 
@@ -300,9 +301,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 @media all and (min-width: $min-width-horizontal-layout) {
     .left,
     .right {
-        flex-basis: 50%;
-        flex-grow: 0;
-        flex-shrink: 0;
+        flex: 0 0 50%;
         max-width: $form-max-total-width;
     }
 }
@@ -341,6 +340,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 .confirm-message {
     line-height: 1.5;
     font-size: $font-size-m;
+
     @media all and (max-width: $min-width-horizontal-layout) {
         max-width: 30rem;
     }
@@ -376,19 +376,24 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     display: flex;
     flex-flow: row nowrap;
     gap: $space-unit;
+
     .extra-link {
         flex-basis: 50%;
     }
+
     .extra-login {
         text-align: left;
     }
+
     .extra-help {
         text-align: right;
     }
+
     &.is-confirm {
         .extra-link {
             flex-basis: 100%;
         }
+
         .extra-help {
             text-align: center;
         }
@@ -398,9 +403,9 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 .link {
     display: inline-block; // avoid breaking link on new line
     color: $primary-dark;
-    font-weight: bold;
     text-decoration: underline;
     font-weight: 400;
+
     &:hover {
         text-decoration: none;
     }
