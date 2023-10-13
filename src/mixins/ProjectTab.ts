@@ -6,7 +6,7 @@ function scrollToTab() {
 
 export default {
     beforeRouteEnter(to, _from, next) {
-        let cb = (_vm) => {}
+        let cb = (_: any /* eslint-disable-line @typescript-eslint/no-unused-vars */) => {}
         const hash = to.hash
         if (hash && hash === '#tab') {
             cb = (vm) => vm.$nextTick(scrollToTab)

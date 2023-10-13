@@ -16,7 +16,7 @@ const getters = {
 
 const actions = {
     async addTag(
-        { commit, state, rootState },
+        { commit, state },
         tag: OrganizationTagOutput
     ): Promise<APIResponseList<OrganizationTagOutput>> {
         try {

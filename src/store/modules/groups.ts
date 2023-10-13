@@ -1,7 +1,6 @@
-import { GroupModel, GroupOuput, AddParentGroupModelInput } from '@/models/group.model'
+import { GroupModel, GroupOuput } from '@/models/group.model'
 import { getGroups, addParentGroup } from '@/api/groups.service'
 import { APIResponseList } from '@/api/types'
-import store from '@/store'
 
 export interface GroupsState {
     all: Array<GroupModel>

@@ -21,10 +21,7 @@ const getters = {
 }
 
 const actions = {
-    async getLocations(
-        { commit, rootState },
-        page: number
-    ): Promise<APIResponseList<LocationOutput>> {
+    async getLocations({ rootState }, page: number): Promise<APIResponseList<LocationOutput>> {
         try {
             return await getLocations(
                 {
@@ -37,7 +34,7 @@ const actions = {
         }
     },
 
-    async postLocations({ commit, rootState }, location: LocationInput): Promise<LocationOutput> {
+    async postLocations({ rootState }, location: LocationInput): Promise<LocationOutput> {
         try {
             const result = await postLocations(location)
 
@@ -54,7 +51,7 @@ const actions = {
         }
     },
 
-    async patchLocation({ commit, rootState }, location: LocationInput): Promise<LocationOutput> {
+    async patchLocation({ rootState }, location: LocationInput): Promise<LocationOutput> {
         try {
             const result = await patchLocation(location)
 
@@ -71,7 +68,7 @@ const actions = {
         }
     },
 
-    async deleteLocation({ commit }, location: LocationInput): Promise<LocationOutput> {
+    async deleteLocation(_, location: LocationInput): Promise<LocationOutput> {
         try {
             return await deleteLocation(location)
         } catch (err) {

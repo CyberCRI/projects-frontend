@@ -1,5 +1,3 @@
-import { toRaw } from 'vue'
-
 function routeQueryToArray(queryStringOrQueryArray) {
     // this.$route.query returns a string or an array of strings
     // this makes sure we always get array of strings or an empty array if undefined

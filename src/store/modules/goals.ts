@@ -4,7 +4,7 @@ import { APIResponseList } from '@/api/types'
 import analytics from '@/analytics'
 
 const actions = {
-    async getAllGoals({ commit, rootState }, id: string): Promise<APIResponseList<GoalOutput>> {
+    async getAllGoals({ commit }, id: string): Promise<APIResponseList<GoalOutput>> {
         try {
             const result = await getAllGoals(id)
 

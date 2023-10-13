@@ -1,6 +1,6 @@
-import { axios, configFormData } from '@/api/api.config'
+import { axios } from '@/api/api.config'
 import { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
-import { APIParams, APIResponseList } from '@/api/types'
+import { APIResponseList } from '@/api/types'
 
 export async function getInvitations(
     organization: String
