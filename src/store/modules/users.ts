@@ -129,7 +129,7 @@ const actions = {
     },
 
     async logIn(
-        { commit, dispatch },
+        { commit },
         { access_token, refresh_token, refresh_token_exp, parsedToken, id_token }: AuthResult
     ): Promise<string> {
         const keycloakID = parsedToken.sub

@@ -11,8 +11,7 @@ import { HierarchyGroupModel } from '@/models/group.model'
 import { APIResponseList } from '@/api/types'
 
 export async function getHierarchyGroups(
-    org: string,
-    groupId: string
+    org: string
 ): Promise<APIResponseList<HierarchyGroupModel>> {
     return (
         await axios.get(

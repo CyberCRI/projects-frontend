@@ -192,7 +192,7 @@ export default {
                     formData.append(key, this.form[key])
                 })
 
-                const user = await postUserWithInvitation(this.token, formData)
+                await postUserWithInvitation(this.token, formData)
 
                 this.confirm = true
             } catch (error) {

@@ -11,7 +11,7 @@ const getters = {}
 
 const actions = {
     async addProjectMembers(
-        { commit },
+        _,
         { projectId, projectMembers }: { projectId: string; projectMembers: ProjectMembersAddInput }
     ): Promise<ProjectOutput> {
         try {
@@ -31,7 +31,7 @@ const actions = {
     },
 
     async deleteProjectMember(
-        { commit, rootState },
+        { rootState },
         membersIds: ProjectMembersDeleteInput
     ): Promise<ProjectOutput> {
         const result = await deleteProjectMembers(rootState.projects.project.id, membersIds)

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '@/store'
-import imageMixin from '@/mixins/imageMixin'
 
 export default {
     copyObject(obj) {

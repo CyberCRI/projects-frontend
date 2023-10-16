@@ -68,14 +68,12 @@ const actions = {
         {
             id,
             project,
-            scope,
         }: {
             id: string
             project: ProjectPatchInput | FormData
-            scope?: string
         }
     ) {
-        const result = await patchProject(id, project, scope)
+        const result = await patchProject(id, project)
 
         commit('SET_CURRENT_PROJECT', result)
 

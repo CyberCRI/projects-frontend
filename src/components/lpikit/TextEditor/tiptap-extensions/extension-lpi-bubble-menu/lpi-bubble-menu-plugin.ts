@@ -163,7 +163,6 @@ export class LpiBubbleMenuView {
     }
 
     update(view: EditorView, oldState?: EditorState) {
-        const { state } = view
         const hasValidSelection = true // WAS : state.selection.$from.pos !== state.selection.$to.pos
 
         if (this.updateDelay > 0 && hasValidSelection) {

@@ -9,10 +9,7 @@ import { APIResponseList } from '@/api/types'
 import analytics from '@/analytics'
 
 const actions = {
-    async getBlogEntries(
-        { commit, rootState },
-        projectId: string
-    ): Promise<APIResponseList<BlogEntryOutput>> {
+    async getBlogEntries({ commit }, projectId: string): Promise<APIResponseList<BlogEntryOutput>> {
         try {
             const result = await getBlogEntries(projectId)
 

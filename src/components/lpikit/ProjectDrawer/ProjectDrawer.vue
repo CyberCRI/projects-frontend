@@ -219,7 +219,6 @@ export default {
                 await this.$store.dispatch('projects/updateProject', {
                     id: this.currentProject.id,
                     project: payload,
-                    scope: 'updated.basics',
                 })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.project-edit.success'),

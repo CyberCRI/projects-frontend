@@ -66,8 +66,7 @@ export async function createProject(project): Promise<ProjectOutput> {
 
 export async function patchProject(
     id: string,
-    project: ProjectPatchInput | FormData,
-    scope?: string
+    project: ProjectPatchInput | FormData
 ): Promise<ProjectOutput> {
     return (
         await axios.patch(

@@ -616,7 +616,7 @@ export default {
 
                     imageSizesFormDataPost(formData, this.form.imageSizes)
 
-                    const user = await postUser(formData)
+                    await postUser(formData)
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('account.create-success'),

@@ -1,7 +1,6 @@
 import { axios, axiosNoToken } from './api.config'
-import a from 'axios'
 import { APIResponseList } from '@/api/types'
-import { PeopleModel, UserPostData } from '@/models/people.model'
+import { PeopleModel } from '@/models/people.model'
 import { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import store from '@/store'
