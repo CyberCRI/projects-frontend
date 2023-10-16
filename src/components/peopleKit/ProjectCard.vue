@@ -1,11 +1,5 @@
 <template>
-    <BasicCard
-        :buton-label="$t('project.card.link')"
-        :to-link="toLink"
-        class="project-card"
-        @click="toProject"
-        @get-info="getProject"
-    >
+    <BasicCard :to-link="toLink" class="project-card" @click="toProject">
         <template #actions-left>
             <IconImage class="icon passive" :name="visibilityIcon" />
         </template>
@@ -59,19 +53,11 @@
                 {{ project.purpose }}
             </div>
         </div>
-        <template #fullDescription>
-            <LpiLoader v-if="isLoading" class="loader" type="simple"></LpiLoader>
-            <div v-if="fullProject && !isLoading">
-                <p v-html="fullProject.description"></p>
-            </div>
-        </template>
     </BasicCard>
 </template>
 
 <script>
 import BasicCard from '@/components/peopleKit/BasicCard.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import { getProject } from '@/api/projects.service'
 import { postFollow as addFollow, deleteFollow } from '@/api/follows.service'
 import IconImage from '@/components/svgs/IconImage.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
@@ -93,7 +79,6 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        LpiLoader,
         BasicCard,
         IconImage,
         CroppedImage,
@@ -225,17 +210,6 @@ export default {
     },
 
     methods: {
-        getProject() {
-            getProject(this.project.id)
-                .then((project) => {
-                    this.fullProject = project
-                    this.isLoading = false
-                })
-                .catch((err) => {
-                    console.error(err)
-                })
-        },
-
         toProject() {
             // this is a quick and dirty fix to make whole card clickable for selection
             if (this.hasAddIcon) this.$emit('add')
@@ -265,12 +239,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loader {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 25%;
-}
-
 .sub-title {
     font-weight: 400;
     font-size: $font-size-s;

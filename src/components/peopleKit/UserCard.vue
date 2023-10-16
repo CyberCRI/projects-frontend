@@ -1,9 +1,5 @@
 <template>
-    <BasicCard
-        :button-label="$t('project.card.link')"
-        @click="userAction($event)"
-        :to-link="!isPrivateUser ? toLink : null"
-    >
+    <BasicCard @click="userAction($event)" :to-link="!isPrivateUser ? toLink : null">
         <template #actions-right>
             <slot name="actions">
                 <IconImage class="icon" name="EmailOutline" @click="mailTo" />
@@ -21,11 +17,6 @@
             <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
             <div class="card-description">{{ user.job }}</div>
         </div>
-        <template #fullDescription>
-            <p class="short-description">{{ user.short_description }}</p>
-            <span>icon + projects</span>
-            <span>icon + groups</span>
-        </template>
     </BasicCard>
 </template>
 <script>
@@ -104,12 +95,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.short-description {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 22px;
-}
-
 .picture {
     border-radius: 100%;
 }

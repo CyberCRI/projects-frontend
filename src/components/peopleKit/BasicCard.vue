@@ -13,60 +13,26 @@
             :to="toLink"
             @click="$emit('click')"
         >
-            <!-- Closed Content -->
-            <div v-if="!isDetailOpen" class="content">
+            <!-- Content -->
+            <div class="content">
                 <slot></slot>
             </div>
             <!-- Footer -->
-            <slot name="footer">
-                <div :class="{ 'icon-footer--open': isDetailOpen }" class="icon-footer">
-                    <div v-if="isDetailOpen" class="button-container">
-                        <IconImage
-                            class="icon"
-                            name="Close"
-                            @click="isDetailOpen = !isDetailOpen"
-                        />
-                        <LinkButton :label="buttonLabel" class="link-button" @click="goTo" />
-                    </div>
-                </div>
-            </slot>
+            <slot name="footer"> </slot>
         </component>
     </div>
 </template>
 
 <script>
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
-
 export default {
     name: 'BasicCard',
 
-    emits: ['click', 'go-to', 'get-info'],
-
-    components: {
-        LinkButton,
-        IconImage,
-    },
+    emits: ['click'],
 
     props: {
         toLink: {
             type: [String, Object],
             default: null,
-        },
-        buttonLabel: {
-            type: String,
-            default: '',
-        },
-    },
-
-    data() {
-        return {
-            isDetailOpen: false,
-        }
-    },
-    methods: {
-        goTo() {
-            this.$emit('go-to')
         },
     },
 }
@@ -185,41 +151,6 @@ export default {
     margin-top: $space-xs;
     font-size: $font-size-s;
     line-height: 18px;
-}
-
-:deep(.full-description) {
-    font-weight: 400;
-    font-size: $font-size-xs;
-    line-height: 22px;
-    text-align: start;
-}
-
-:deep(.icon-footer) {
-    display: flex;
-    justify-content: center;
-    padding: $space-s;
-
-    .button-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-direction: row;
-        width: 100%;
-    }
-}
-
-:deep(.icon-footer--user) {
-    justify-content: space-between;
-}
-
-:deep(.icon-footer--open) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-top: $border-width-s solid $green-dark;
-    background-color: $primary-lighter;
-    border-end-end-radius: $border-radius-m;
-    border-end-start-radius: $border-radius-m;
 }
 
 :deep(.action-right-wrapper),
