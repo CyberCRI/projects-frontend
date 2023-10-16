@@ -246,7 +246,6 @@ export default {
             await this.$store.dispatch('projects/updateProject', {
                 id: this.project.id,
                 project: projectData,
-                scope: 'updated.review',
             })
 
             this.closeDrawerNoConfirm()

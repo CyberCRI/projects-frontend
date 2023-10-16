@@ -71,7 +71,6 @@ const actions = {
         }: {
             id: string
             project: ProjectPatchInput | FormData
-            scope?: string // TODO probably useless now but need to check with backend
         }
     ) {
         const result = await patchProject(id, project)

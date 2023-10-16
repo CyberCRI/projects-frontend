@@ -142,7 +142,6 @@ export default {
                     project: {
                         title: `${this.project.title} ${this.$t('project.copy')}`,
                     },
-                    scope: 'updated.duplicate',
                 })
 
                 this.$router.push(`/projects/${project.slug}/summary`)
@@ -224,7 +223,6 @@ export default {
                                 project: {
                                     organizations_codes: this.selected.organizations,
                                 },
-                                scope: 'updated.organization',
                             })
                             this.$store.dispatch('notifications/pushToast', {
                                 message: this.$t('toasts.project-organizations-update.success'),
@@ -255,7 +253,6 @@ export default {
                             project: {
                                 project_categories_ids: this.selected.categories,
                             },
-                            scope: 'updated.category',
                         })
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.project-categories-update.success'),

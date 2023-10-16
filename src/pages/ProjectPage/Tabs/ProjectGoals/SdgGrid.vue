@@ -43,7 +43,6 @@ export default {
                 await this.$store.dispatch('projects/updateProject', {
                     id: this.project.id,
                     project: { sdgs },
-                    scope: 'updated.sdg',
                 })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.sdgs-update.success'),

@@ -303,7 +303,6 @@ export default {
                     const response = await this.$store.dispatch('projects/updateProject', {
                         id: this.project.id,
                         project: { publication_status: status },
-                        scope: 'updated.status',
                     })
 
                     this.$store.dispatch('projects/updateProjectVisibility', response)
@@ -330,7 +329,6 @@ export default {
                     await this.$store.dispatch('projects/updateProject', {
                         id: this.project.id,
                         project: { life_status: status },
-                        scope: 'updated.life',
                     })
 
                     this.$store.dispatch('notifications/pushToast', {
@@ -453,7 +451,6 @@ export default {
                     project: {
                         organizations_codes: payload,
                     },
-                    scope: 'updated.organization',
                 })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.project-organizations-update.success'),
@@ -477,7 +474,6 @@ export default {
                     project: {
                         project_categories_ids: [value.id],
                     },
-                    scope: 'updated.category',
                 })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.project-categories-update.success'),
@@ -505,7 +501,6 @@ export default {
                     project: {
                         title: `${this.project.title} ${this.$t('project.copy')}`,
                     },
-                    scope: 'updated.duplicate',
                 })
 
                 this.$router.push(`/projects/${project.slug}/summary`)

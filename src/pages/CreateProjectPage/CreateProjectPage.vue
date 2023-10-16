@@ -195,7 +195,6 @@ export default {
                             ),
                             organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
                         },
-                        scope: 'updated.basics',
                     })
                 }
                 this.$router.push(`/projects/${project.slug}/description`)
