@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ loading: isLoading }" class="help-layout narrow-body">
+    <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout">
         <LpiLoader v-if="isLoading" type="simple" />
         <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs"></TabsLayout>
     </div>

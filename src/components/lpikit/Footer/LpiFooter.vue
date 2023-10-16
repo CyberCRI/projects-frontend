@@ -1,5 +1,5 @@
 <template>
-    <footer id="footer">
+    <footer id="footer" class="page-section-full">
         <div class="directory-ctn" v-if="!isRegisterPage && showDirectoryLink">
             <p v-if="showDirectoryLink" class="content">
                 {{ $t('footer.directory') }}
@@ -242,17 +242,13 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     color: $dark;
-    flex-direction: column;
 
     .footer-content {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 90%;
+
         margin: pxToRem(42px) auto;
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-portal-layout narrow-body">
+    <div class="admin-portal-layout page-section-wide">
         <h1>{{ $t('admin.portal.management') }}</h1>
         <TabsLayout :tabs="tabs" :border="false" align-left router-view />
     </div>
@@ -70,7 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 .admin-portal-layout {
-    max-width: unset;
     font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
     padding: 0 $space-xl;
     margin: auto;
@@ -80,11 +79,8 @@ export default {
         font-size: $font-size-7xl;
         font-weight: 700;
         text-align: center;
-        margin: 98px 0 $space-2xl;
-    }
-
-    @media (min-width: $min-tablet) {
-        max-width: 1250px;
+        margin-top: 98px;
+        margin-bottom: $space-2xl;
     }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="announcements-list">
+    <DynamicGrid :min-gap="20" class="announcements-list">
         <template v-if="!isMoreToggled">
             <AnnouncementCard
                 v-for="(announcement, index) in showedAnnouncements"
@@ -16,17 +16,18 @@
             :announcement="announcement"
             @know-more-clicked="linkToAnnouncement(announcement)"
         />
-    </div>
+    </DynamicGrid>
 </template>
 
 <script>
 import AnnouncementCard from '@/components/lpikit/AnnouncementCard/AnnouncementCard.vue'
-
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 export default {
     name: 'AnnouncementCardList',
 
     components: {
         AnnouncementCard,
+        DynamicGrid,
     },
     data() {
         return {
@@ -53,7 +54,7 @@ export default {
 
     computed: {
         showedAnnouncements() {
-            return this.isMoreToggled ? this.announcements : this.announcements.slice(0, 3)
+            return this.isMoreToggled ? this.announcements : this.announcements.slice(0, 6)
         },
     },
 }
@@ -61,19 +62,9 @@ export default {
 
 <style lang="scss" scoped>
 .announcements-list {
-    display: grid;
-    grid-gap: pxToRem(50px);
-    grid-template-columns: 1fr;
-
-    @media (min-width: $min-tablet) {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    @media (min-width: $min-desktop) {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+    width: 100%;
+    justify-content: center;
 }
-
 :deep(.announcement-card) {
     cursor: pointer;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="project-layout">
+    <div class="page-section-extra-wide project-layout">
         <ProjectHeader
             :project="project"
             :similar-projects="similarProjects"
@@ -361,22 +361,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$project-layout-padding: 48px;
-
 .project-layout {
-    margin-top: 40px;
+    margin-top: pxToRem(48px);
 
     .project-header {
         width: 100%;
-        padding-bottom: $project-layout-padding;
-        padding-top: $project-layout-padding;
         display: block;
         flex-direction: column;
         align-items: center;
 
         @media (min-width: $min-tablet) {
             width: 100%;
-            padding-bottom: $project-layout-padding;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -387,12 +382,6 @@ $project-layout-padding: 48px;
 @media (max-width: $min-tablet) {
     .tabs-wrapper {
         padding: 0 $space-xs;
-    }
-}
-
-@media (min-width: $min-tablet) {
-    .project-layout {
-        padding: $project-layout-padding;
     }
 }
 </style>

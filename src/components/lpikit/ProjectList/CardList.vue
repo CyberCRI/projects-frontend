@@ -181,6 +181,7 @@ export default {
 
 <style lang="scss" scoped>
 .card-list {
+    justify-content: space-between;
     &__empty {
         display: flex;
         flex-direction: column;

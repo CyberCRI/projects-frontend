@@ -1,5 +1,5 @@
 <template>
-    <div class="accessibility">
+    <div class="page-section-narrow legal-page accessibility">
         <h1>Accessibilité</h1>
 
         <section>
@@ -11,8 +11,10 @@
                 2005.
             </p>
             <p>À cette fin, elle met en œuvre la stratégie et les actions suivantes :</p>
-            <li>Schéma pluriannuel de mise en accessibilité 2023 - 2026</li>
-            <li>Plan d’actions 2023</li>
+            <ul>
+                <li>Schéma pluriannuel de mise en accessibilité 2023 - 2026</li>
+                <li>Plan d’actions 2023</li>
+            </ul>
             <p>
                 Cette déclaration d’accessibilité s’applique à la plateforme
                 https://projects.directory et tous ses sous-portails, ci-après nommée “la Plateforme
@@ -41,9 +43,11 @@
                 doléances ou une demande de saisine au Défenseur des droits.
             </p>
             <p>Plusieurs moyens sont à votre disposition :</p>
-            <li>Écrire un message au Défenseur des droits</li>
-            <li>Contacter le délégué du Défenseur des droits dans votre région</li>
-            <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre)</li>
+            <ul>
+                <li>Écrire un message au Défenseur des droits</li>
+                <li>Contacter le délégué du Défenseur des droits dans votre région</li>
+                <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre)</li>
+            </ul>
             <ul class="list">
                 <li>Défenseur des droits</li>
                 <li>Libre réponse 71120</li>
@@ -87,15 +91,17 @@
             </p>
             <h3>Organisation de la prise en compte de l’accessibilité numérique</h3>
             <p>La prise en compte de l’accessibilité numérique nécessite :</p>
-            <li>la réalisation d’un audit de conformité ;</li>
-            <li>la modification de la plateforme Projects selon les résultats de l’audit</li>
-            <li>
-                l’accompagnement des agents par des actions de sensibilisation et de formation ;
-            </li>
-            <li>
-                la prise en charge des personnes en situation de handicap lorsqu’elles signalent des
-                difficultés.
-            </li>
+            <ul>
+                <li>la réalisation d’un audit de conformité ;</li>
+                <li>la modification de la plateforme Projects selon les résultats de l’audit</li>
+                <li>
+                    l’accompagnement des agents par des actions de sensibilisation et de formation ;
+                </li>
+                <li>
+                    la prise en charge des personnes en situation de handicap lorsqu’elles signalent
+                    des difficultés.
+                </li>
+            </ul>
             <p>
                 Les éléments ci-dessous décrivent les points importants sur lesquels la Direction
                 interministérielle du numérique s’appuiera pour améliorer l’accessibilité numérique
@@ -220,106 +226,3 @@ export default {
     name: 'AccessibilityPage',
 }
 </script>
-
-<style lang="scss" scoped>
-.accessibility {
-    color: $black;
-    margin-top: calc(30px + $navbar-height);
-
-    @media screen and (min-width: $max-tablet) {
-        .accessibility {
-            margin-top: calc(90px + $navbar-height);
-        }
-    }
-
-    h1 {
-        text-align: center;
-        font-size: $font-size-6xl;
-        font-weight: 700;
-    }
-
-    li {
-        text-align: justify;
-    }
-
-    .list {
-        list-style-type: none;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
-
-    th,
-    td {
-        padding: 5px;
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    p {
-        text-align: justify;
-    }
-
-    section {
-        border-radius: $border-radius-l;
-        background: $primary-lighter;
-        padding: $space-l;
-        max-width: 760px;
-        margin: $space-xl auto;
-
-        h2 {
-            text-transform: uppercase;
-            font-size: $space-l;
-            font-weight: 700;
-            margin: $space-xl auto;
-        }
-
-        h3 {
-            font-size: $space-l;
-            font-weight: 700;
-            margin-bottom: $space-m;
-        }
-
-        h4 {
-            font-size: $space-l;
-            font-weight: 500;
-            margin-bottom: $space-s;
-        }
-
-        h5 {
-            font-size: $space-l;
-            margin-bottom: $space-xs;
-        }
-
-        p {
-            margin: $space-l 0;
-        }
-
-        a {
-            color: $black;
-        }
-
-        ol {
-            margin-left: $space-xl;
-            list-style-type: auto;
-        }
-
-        ul {
-            margin-left: $space-xl;
-            list-style-type: disc;
-        }
-
-        .underlined {
-            font-weight: 400;
-            text-decoration: underline;
-        }
-
-        span {
-            font-weight: 600;
-        }
-    }
-}
-</style>

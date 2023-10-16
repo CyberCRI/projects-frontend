@@ -38,7 +38,7 @@
             </div>
         </header>
 
-        <div class="category-body narrow-body">
+        <div class="category-body page-section-extra-wide">
             <div class="category-search-header">
                 <LpiButton
                     v-if="canCreateProject"
@@ -306,6 +306,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0 $space-l;
         }
 
         &-title {
