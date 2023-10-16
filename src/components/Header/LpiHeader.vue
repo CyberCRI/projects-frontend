@@ -22,25 +22,25 @@
                         'PeopleSearch',
                         'GroupSearch',
                     ]"
-                    @click="goTo('Search')"
+                    :to="{ name: 'Search' }"
                 />
                 <!--TODO: put this back once the new page is created-->
-                <!--                <HeaderLink :label="$t('search.peoples')" route="people" @click="goTo('People')" />-->
+                <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
                 <HeaderLink
                     v-if="$store.getters['projectCategories/all'].length"
                     :label="$t('projects')"
                     :routes="['Categories']"
-                    @click="goTo('Categories')"
+                    :to="{ name: 'Categories' }"
                 />
                 <HeaderLink
                     :label="$t('common.people')"
                     :routes="['People']"
-                    @click="goTo('People')"
+                    :to="{ name: 'People' }"
                 />
                 <HeaderLink
                     :label="$t('common.groups')"
                     :routes="['Groups']"
-                    @click="goTo('Groups')"
+                    :to="{ name: 'Groups' }"
                 />
                 <HeaderDropDown
                     :label="$t('common.more')"
@@ -330,10 +330,6 @@ export default {
             }, 500)
         },
 
-        toPortalPage() {
-            this.$router.push({ name: 'Portal' })
-        },
-
         async getGlobalAnnouncements() {
             try {
                 const announcements = await getAnnouncements({
@@ -376,35 +372,37 @@ export default {
             return [
                 {
                     label: this.$t('me.page-title').toUpperCase(),
-                    action: () => this.$router.push(`/profile/summary`),
+                    to: { name: 'ProfileSummary' },
                     leftIcon: 'Account',
                     condition: true,
                     dataTest: 'my-profile',
                 },
                 {
                     label: this.$t('me.my-projects').toUpperCase(),
-                    action: () => this.$router.push('/profile/projects'),
+                    to: { name: 'ProfileProjects' },
                     leftIcon: 'Briefcase',
                     condition: this.isConnected,
                     dataTest: 'my-projects',
                 },
                 {
                     label: this.$t('notifications.header').toUpperCase(),
-                    action: () => this.$router.push('/notifications-settings'),
+                    to: { name: 'settings' },
                     leftIcon: 'Cog',
                     condition: this.isConnected,
                     dataTest: 'notifications',
                 },
                 {
                     label: this.$t('stats.page-title').toUpperCase(),
-                    action: () => this.$router.push('/stats'),
+                    to: {
+                        name: 'stats',
+                    },
                     leftIcon: 'Poll',
                     condition: this.isAdmin,
                     dataTest: 'stats',
                 },
                 {
                     label: this.$t('admin.page-title').toUpperCase(),
-                    action: () => this.$router.push('/admin'),
+                    to: { name: 'Admin' },
                     leftIcon: 'Tune',
                     condition: this.isAdmin,
                     dataTest: 'admin',
@@ -430,14 +428,14 @@ export default {
                 },
                 {
                     label: this.$t('home.communities').toUpperCase(),
-                    action: () => this.toPortalPage(),
+                    to: { name: 'Portal' },
                     leftIcon: 'Globe',
                     condition: true,
                     dataTest: 'portals',
                 },
                 {
                     label: this.$t('faq.portal').toUpperCase(),
-                    action: () => this.$router.push('/help'),
+                    to: { name: 'Help' },
                     leftIcon: 'Lifebuoy',
                     condition: true,
                     dataTest: 'help',

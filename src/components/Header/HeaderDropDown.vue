@@ -38,9 +38,10 @@
                             class="drop-down-menu-item"
                         >
                             <Component
-                                :is="item.action ? 'button' : 'p'"
+                                :is="item.to ? 'router-link' : item.action ? 'button' : 'p'"
                                 class="drop-down-menu-item-content"
                                 @click="menuAction(item)"
+                                :to="item.to"
                                 :data-test="item.dataTest"
                             >
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
@@ -212,7 +213,7 @@ export default {
         cursor: pointer;
         will-change: transform;
         overflow: hidden;
-        height: pxToRem(42px);
+        height: pxToRem(56px);
         color: $primary-dark;
         text-transform: uppercase;
         border-top-left-radius: $border-radius-s;
@@ -247,7 +248,6 @@ export default {
 
     .drop-down-menu-wrapper {
         position: absolute;
-        top: 100%;
         left: 0;
         min-width: 100%;
         transform: scale3d(1, 1, 1); // fix rounding pixel width issue
@@ -368,10 +368,11 @@ export default {
     transform: translateY(0);
     transition:
         0.15s transform ease-in-out,
-        0.1s border-top-right-radius ease-in-out 0.05s;
+        0.1s border-top-right-radius ease-in-out 0.05s,
+        0.1s opacity ease-in-out 0.05s;
 }
 
-.menu-fade-enter,
+.menu-fade-enter-from,
 .menu-fade-leave-to {
     opacity: 0;
     transform: translateY(-100%);
