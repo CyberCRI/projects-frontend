@@ -8,8 +8,14 @@ jobs:
     timeout-minutes: 10
     runs-on: [self-hosted, default-runner]
     env:
-      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
+      USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
+      USER_TEST_PASSWORD: ${{ secrets.USER_TEST_PASSWORD }}
+      USER_ADMIN_EMAIL: ${{ vars.USER_ADMIN_EMAIL }}
+      USER_ADMIN_PASSWORD: ${{ secrets.USER_ADMIN_PASSWORD }}
+      USER_FACILITATOR_EMAIL: ${{ vars.USER_FACILITATOR_EMAIL }}
+      USER_FACILITATOR_PASSWORD: ${{ secrets.USER_FACILITATOR_PASSWORD }}
       PLAYWRIGHT_TEST_EMAIL: ${{vars.PLAYWRIGHT_TEST_EMAIL}}
+      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
       FRONTEND_URL: ${{vars.FRONTEND_URL}}
     steps:
       - uses: actions/checkout@v3
