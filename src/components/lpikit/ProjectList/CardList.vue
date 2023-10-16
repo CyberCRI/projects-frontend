@@ -32,7 +32,7 @@
                         @click="goTo({ name: 'ProjectSearch', query: seeMoreQuery })"
                     />
                 </div>
-                <DynamicGrid :minGap="gridGap" class="card-list">
+                <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="project in projects" :key="project.id" class="card-list__content">
                         <slot name="projects" :project="project"></slot>
                     </div>
@@ -52,7 +52,7 @@
                         @click="goTo({ name: 'GroupSearch', query: seeMoreQuery })"
                     />
                 </div>
-                <DynamicGrid :minGap="gridGap" class="card-list">
+                <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="group in groups" :key="group.id" class="card-list__content">
                         <slot name="groups" :group="group"></slot>
                     </div>
@@ -72,7 +72,7 @@
                         @click="goTo({ name: 'PeopleSearch', query: seeMoreQuery })"
                     />
                 </div>
-                <DynamicGrid :minGap="gridGap" class="card-list">
+                <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="people in peoples" :key="people.id" class="card-list__content">
                         <slot name="peoples" :user="people"></slot>
                     </div>
