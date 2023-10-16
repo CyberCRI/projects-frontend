@@ -50,7 +50,7 @@ export default {
 
     props: {
         toLink: {
-            type: String,
+            type: [String, Object],
             default: null,
         },
         buttonLabel: {
