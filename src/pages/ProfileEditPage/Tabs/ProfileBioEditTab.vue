@@ -93,6 +93,14 @@ export default {
             confirmActionDisabled: false,
         }
     },
+
+    computed: {
+        isSelf() {
+            const connectedUser = this.$store.getters['users/userFromApi']
+            return connectedUser && this.user.keycloak_id === connectedUser.keycloak_id
+        },
+    },
+
     watch: {
         user: {
             handler(neo) {
@@ -117,7 +125,8 @@ export default {
 
                 await patchUser(this.user.keycloak_id, data)
 
-                this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                // update store if self
+                if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('profile.edit.bio.save-success'),
                     type: 'success',

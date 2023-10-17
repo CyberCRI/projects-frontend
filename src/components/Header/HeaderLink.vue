@@ -114,7 +114,6 @@ a.header-link:visited {
         & .link-label::after {
             content: '';
             position: absolute;
-            bottom: -$space-xs;
             left: 0;
             right: 0;
             height: pxToRem(6px);

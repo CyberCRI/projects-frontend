@@ -533,8 +533,8 @@ export default {
                             )
                         }
                     }
-                    // reload user
-                    this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                    // reload user if self to update store info
+                    if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)
                     // confirm success
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('profile.edit.general.save-success'),
