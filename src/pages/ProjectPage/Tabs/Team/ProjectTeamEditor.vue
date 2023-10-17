@@ -58,6 +58,7 @@ export default {
 .project-team-editor {
     display: inline-block;
     position: relative;
+    width: min-content;
 
     .actions {
         display: flex;

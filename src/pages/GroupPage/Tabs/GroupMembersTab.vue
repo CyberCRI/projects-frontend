@@ -7,17 +7,16 @@
                     <span v-if="!isLoading">( {{ membersCount }} )</span>
                 </h2>
             </div>
-            <div class="members-container">
-                <MemberListSkeleton v-if="isLoading" :desktop-columns-number="6" />
+            <MemberListSkeleton :min-gap="90" v-if="isLoading" />
+            <DynamicGrid :min-gap="90" v-else class="members-container">
                 <UserItem
-                    v-else
                     v-for="member in members"
                     :key="member.id"
                     :user="member"
                     @user-click="openProfileDrawer"
                     class="cursor-pointer shadow-drop"
                 />
-            </div>
+            </DynamicGrid>
         </div>
         <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
             <PaginationButtons
@@ -53,6 +52,7 @@ import UserProfile from '@/components/Profile/UserProfile.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
     name: 'GroupMembersTab',
@@ -63,6 +63,7 @@ export default {
         UserProfile,
         PaginationButtons,
         MemberListSkeleton,
+        DynamicGrid,
     },
 
     props: {
@@ -180,11 +181,7 @@ export default {
 
         &-container {
             width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: $space-m;
-            grid-gap: $space-l;
-
+            justify-content: space-between;
             .cursor-pointer {
                 cursor: pointer;
             }

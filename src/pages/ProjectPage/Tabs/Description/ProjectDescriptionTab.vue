@@ -101,16 +101,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     .description-content {
         background: $white;
         border-radius: $border-radius-l;
-        padding: $space-l;
+        padding: $space-l 0;
         padding-top: 0;
         word-break: break-word;
         color: $gray-3;
-        max-width: 700px;
         flex-grow: 1;
     }
 

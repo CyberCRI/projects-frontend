@@ -1,9 +1,5 @@
 <template>
-    <ProjectListSkeleton
-        v-if="isLoading"
-        :desktop-columns-number="desktopColumnsNumber"
-        :limit="limit"
-    />
+    <ProjectListSkeleton class="card-list" v-if="isLoading" :min-gap="gridGap" :limit="limit" />
 
     <div v-else>
         <template v-if="noProjects">
@@ -165,9 +161,6 @@ export default {
                 !this.groups.length &&
                 !this.peoples.length
             )
-        },
-        desktopColumnsNumber() {
-            return 6 // TODO compute this
         },
     },
 

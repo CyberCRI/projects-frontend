@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../helpers/LpiMount'
+import { lpiMount } from '../../../helpers/LpiMount'
 import CardList from '@/components/lpikit/ProjectList/CardList.vue'
 import { ProjectFactory } from '../../../factories/project.factory'
 import english from '@/locales/en.json'
@@ -15,7 +15,7 @@ const i18n = {
 }
 
 const factory = (props?) => {
-    return lpiShallowMount(CardList, {
+    return lpiMount(CardList, {
         props,
         i18n,
     })
@@ -28,7 +28,7 @@ describe('CardList.vue', () => {
         expect(wrapper.exists()).toBeTruthy()
         expect(vm.projects).toStrictEqual([])
         expect(vm.isLoading).toBe(false)
-        expect(vm.desktopColumnsNumber).toBe(4)
+        expect(vm.desktopColumnsNumber).toBe(6)
     })
 
     it('should show an empty box image and not show projects if there are no projects', () => {

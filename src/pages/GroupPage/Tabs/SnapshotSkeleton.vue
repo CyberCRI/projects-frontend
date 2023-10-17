@@ -11,7 +11,7 @@
         <h2 class="title">{{ $t('group.members') }}</h2>
         <MemberListSkeleton :desktop-columns-number="6" />
         <h2 class="title">{{ $t('group.projects') }}</h2>
-        <ProjectListSkeleton :desktop-columns-number="6" />
+        <ProjectListSkeleton />
     </div>
 </template>
 

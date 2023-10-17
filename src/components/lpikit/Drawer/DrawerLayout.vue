@@ -227,14 +227,10 @@ $slide-duration: 400ms;
     &.drawer-slide-enter-active,
     &.drawer-slide-leave-active {
         transition: transform $slide-duration;
-    }
-
-    &.drawer-slide-leave,
-    &.drawer-slide-enter-to {
         transform: translate(0, -50%);
     }
 
-    &.drawer-slide-enter,
+    &.drawer-slide-enter-from,
     &.drawer-slide-leave-to {
         transform: translate(100%, -50%);
     }
@@ -252,12 +248,12 @@ $slide-duration: 400ms;
             flex-flow: column nowrap;
         }
 
-        &.drawer-slide-leave,
-        &.drawer-slide-enter-to {
+        &.drawer-slide-leave-active,
+        &.drawer-slide-enter-active {
             transform: translateX(0);
         }
 
-        &.drawer-slide-enter,
+        &.drawer-slide-enter-from,
         &.drawer-slide-leave-to {
             transform: translateX(100%);
         }

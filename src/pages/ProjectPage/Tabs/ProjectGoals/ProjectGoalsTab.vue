@@ -94,7 +94,7 @@ export default {
 
 <style lang="scss" scoped>
 .project-goals {
-    padding: $space-2xl $space-l;
+    padding: $space-2xl 0;
 
     > div:not(:first-of-type) {
         margin-top: $space-l;
