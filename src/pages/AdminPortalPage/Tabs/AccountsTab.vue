@@ -238,7 +238,7 @@ export default {
 .role-tab {
     display: flex;
     flex-direction: column;
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     .search-input-container {
         display: flex;

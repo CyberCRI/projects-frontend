@@ -325,14 +325,14 @@ export default {
 .information-tab {
     display: flex;
     flex-direction: column;
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     section:last-of-type {
         margin-top: $space-l;
     }
 
     .block-container {
-        padding: $space-l;
+        padding: $space-l 0;
         background: $white;
         border-radius: $border-radius-l;
 

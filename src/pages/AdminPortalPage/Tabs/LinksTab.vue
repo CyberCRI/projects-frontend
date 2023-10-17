@@ -10,6 +10,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .links-tab {
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 }
 </style>

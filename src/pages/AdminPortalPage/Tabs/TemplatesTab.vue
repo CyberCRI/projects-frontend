@@ -1,6 +1,6 @@
 <template>
     <div class="templates-tab">
-        <LpiSnackbar border icon="QuestionMark" type="info">
+        <LpiSnackbar border icon="QuestionMark" type="info" class="snackbar">
             <div v-html="$t('template.info')"></div>
         </LpiSnackbar>
 
@@ -409,7 +409,7 @@ export default {
 <style lang="scss" scoped>
 .templates-tab {
     .snackbar {
-        margin: $space-l;
+        margin: $space-l auto;
     }
 
     .error-description {
@@ -427,8 +427,8 @@ export default {
     }
 
     .block-container {
-        padding: $space-l;
-        margin: $space-l;
+        padding: $space-l 0;
+        margin: $space-l 0;
         background: $white;
         border-radius: $border-radius-l;
 

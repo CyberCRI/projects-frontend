@@ -229,14 +229,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tags-tab {
-    display: flex;
-    flex-direction: column;
-}
-
 .block-container {
-    padding: $space-l;
-    margin: $space-l;
+    padding: $space-l 0;
+    margin: $space-l 0;
     background: $white;
     border-radius: $border-radius-l;
 
@@ -288,7 +283,7 @@ export default {
 
 @media (min-width: $min-desktop) {
     .block-container {
-        margin: $space-l;
+        margin: $space-l 0;
     }
 
     .input-container {

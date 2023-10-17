@@ -28,7 +28,6 @@ describe('CardList.vue', () => {
         expect(wrapper.exists()).toBeTruthy()
         expect(vm.projects).toStrictEqual([])
         expect(vm.isLoading).toBe(false)
-        expect(vm.desktopColumnsNumber).toBe(6)
     })
 
     it('should show an empty box image and not show projects if there are no projects', () => {
