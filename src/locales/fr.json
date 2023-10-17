@@ -1809,6 +1809,7 @@
     },
     "register": {
         "title": "Créer un compte",
+        "title-confirm": "Vérification de l'email requise",
         "email": {
             "label": "Email *",
             "placeholder": "Entrez votre email",
@@ -1825,16 +1826,20 @@
             "placeholder": "Entrez votre nom",
             "is-required": "Le nom est requis"
         },
-        "job": {
-            "label": "Titre *",
-            "placeholder": "Entrez votre titre",
-            "is-required": "Le titre est requis"
+        "password": {
+            "label": "Mot de passe *",
+            "placeholder": "********",
+            "is-required": "Le mot de passe est requis"
         },
-        "confirmation": "Vous recevrez un e-mail de confirmation à l'adresse que vous avez fournie. Veuillez cliquer sur le lien dans l'e-mail pour activer votre compte.",
+        "confirmation": "Nous vous avons envoyé un email de vérification. Une fois que vous aurez confirmé que {email} est bien votre adresse, nous vous aiderons à débuter sur la plateforme.",
         "save-error": "Un problème technique est survenu. Veuillez réessayer plus tard.",
         "tos": "En continuant, vous acceptez nos  {term} et notre {privacy}",
         "term": "conditions d'utilisation",
-        "privacy": "politique de confidentialité"
+        "privacy": "politique de confidentialité",
+        "have-account": "Déjà un compte ?",
+        "login": "Se connecter",
+        "need-help": "Besoin d'aide ?",
+        "contact-us": "Nous contacter"
     },
     "role": {
         "choose-role": "Choisissez parmi les roles suivants :",
@@ -2421,5 +2426,14 @@
     },
     "portal": {
         "sub-title": "Découvrez les portails qui appartiennent à d’autres organisations. Parcourez, inspirez-vous et entrez en contact !"
+    },
+
+    "welcome-modal": {
+        "title": "Bienvenue sur le portail Projetcs de {organization}",
+        "success": "🎉 Votre compte a bien été créé !",
+        "instruction": "Avant de commencer à profiter de la plateforme, il faut compléter votre profil.",
+        "guidance": "Cela ne prendra que quelques minutes et nous vous guiderons en chemin.",
+        "complete-later": "Je ferais ça plus tard",
+        "complete-now": "Allons-y !"
     }
 }

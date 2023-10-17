@@ -1,6 +1,6 @@
 <template>
     <div id="APP" :class="[themeclass, currentRouteName, { 'has-open-drawer': isLoading }]">
-        <LpiHeader v-if="!isRegisterPage" @is-loading="setLoading" />
+        <LpiHeader @is-loading="setLoading" />
 
         <div id="scrollview" ref="scrollview" data-test="scrollview">
             <div v-if="isLoading" class="global-loader">
@@ -58,10 +58,6 @@ export default {
             if (this.$route.name === 'tags') return ''
 
             return this.$route.name
-        },
-
-        isRegisterPage() {
-            return this.currentRouteName === 'Register'
         },
     },
 
