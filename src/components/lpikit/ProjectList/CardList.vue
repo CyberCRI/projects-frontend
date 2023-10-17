@@ -175,6 +175,7 @@ export default {
 <style lang="scss" scoped>
 .card-list {
     justify-content: space-between;
+
     &__empty {
         display: flex;
         flex-direction: column;
@@ -193,6 +194,7 @@ export default {
             width: 200px;
         }
     }
+
     &__content {
         width: min-content;
     }

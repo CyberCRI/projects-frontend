@@ -81,6 +81,7 @@ $annoucement-padding: pxToRem(20px);
 
 .announcement-wrapper {
     width: min-content;
+
     .announcement-card {
         position: relative;
         border: $border-width-s solid $green;

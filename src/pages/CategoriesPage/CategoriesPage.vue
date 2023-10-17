@@ -154,6 +154,7 @@ export default {
 
     .action-ctn {
         text-align: right;
+
         button {
             margin-left: auto;
         }

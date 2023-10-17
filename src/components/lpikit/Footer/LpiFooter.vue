@@ -248,7 +248,6 @@ footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         margin: pxToRem(42px) auto;
     }
 

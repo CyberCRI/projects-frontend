@@ -186,6 +186,7 @@ export default {
 .group-layout {
     margin-top: pxToRem(48px);
 }
+
 .loader {
     display: flex;
     justify-content: center;

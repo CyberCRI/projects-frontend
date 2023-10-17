@@ -65,6 +65,7 @@ export default {
     width: 100%;
     justify-content: center;
 }
+
 :deep(.announcement-card) {
     cursor: pointer;
 }

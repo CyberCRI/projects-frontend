@@ -465,8 +465,8 @@ export default {
     justify-content: center;
     margin-bottom: $space-3xl;
     align-items: center;
-
     gap: $space-2xs;
+
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
         margin-top: $space-l;
@@ -523,6 +523,7 @@ export default {
     justify-content: space-between;
     margin-bottom: $space-3xl;
     gap: $community-card-gap;
+
     // + 2 * $space-xl is the .page-section-medium padding
     @media screen and (max-width: (2 * $community-card-width + $community-card-gap + 2 * $space-xl)) {
         justify-content: center;

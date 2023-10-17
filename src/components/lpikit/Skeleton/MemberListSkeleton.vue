@@ -38,6 +38,7 @@ export default {
 .member-list {
     justify-content: space-between;
     width: 100%;
+
     .card {
         height: pxToRem(196px);
         width: pxToRem(120px);
