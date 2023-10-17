@@ -36,6 +36,7 @@
 <script>
 import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import { patchUser } from '@/api/people.service.ts'
 export default {
     name: 'WelcomeModal',
 
@@ -44,14 +45,22 @@ export default {
     components: { BaseModal, LpiButton },
 
     methods: {
-        completeLater() {
-            // TODO: register choice
+        async completeLater() {
+            await this.patchUser()
             this.$emit('close')
         },
 
-        completeNow() {
+        async completeNow() {
+            await this.patchUser()
             this.$emit('close')
             this.$router.push({ name: 'ProfileEdit' })
+        },
+
+        async patchUser() {
+            // register that the user has seen the welcome modal
+            await patchUser(this.$store.getters['users/kid'], {
+                show_welcome: false,
+            })
         },
     },
 
