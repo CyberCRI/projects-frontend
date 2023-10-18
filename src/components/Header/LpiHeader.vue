@@ -29,17 +29,49 @@
                 <HeaderLink
                     v-if="$store.getters['projectCategories/all'].length"
                     :label="$t('projects')"
-                    :routes="['Categories']"
+                    :routes="[
+                        'Categories',
+                        'Category',
+                        'pageProject',
+                        'projectSummary',
+                        'projectDescription',
+                        'projectBlog',
+                        'projectGoals',
+                        'projectTeam',
+                        'projectResources',
+                        'projectLinkedProjects',
+                        'projectComments',
+                        'projectAnnouncements',
+                        'ProjectSettings',
+                    ]"
                     :to="{ name: 'Categories' }"
                 />
                 <HeaderLink
                     :label="$t('common.people')"
-                    :routes="['People']"
+                    :routes="[
+                        'People',
+                        'Profile',
+                        'ProfileSummary',
+                        'ProfileBio',
+                        'ProfileProjects',
+                        'ProfileGroups',
+                        'ProfileSkills',
+                        'ProfileEdit',
+                        'ProfileOtherUser',
+                        'ProfileEditOtherUser',
+                    ]"
                     :to="{ name: 'People' }"
                 />
                 <HeaderLink
                     :label="$t('common.groups')"
-                    :routes="['Groups']"
+                    :routes="[
+                        'Groups',
+                        'Group',
+                        'groupSnapshot',
+                        'groupMembers',
+                        'groupProjects',
+                        'frontEditGroup',
+                    ]"
                     :to="{ name: 'Groups' }"
                 />
                 <HeaderDropDown
