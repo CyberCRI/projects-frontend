@@ -92,10 +92,12 @@ export default {
             overflow: hidden;
             margin: $space-l;
             width: pxToRem(290px);
-            height: pxToRem(250px);
+            // put back pxToRem(250px); for height when content is displayed again (see .org-content)
+            height: pxToRem(96px);
 
             .org-image-container {
-                min-height: pxToRem(100px);
+                // re-enable when content is displayed again (see .org-content)
+                // min-height: pxToRem(100px);
                 width: inherit;
                 display: flex;
                 align-items: center;
@@ -113,6 +115,7 @@ export default {
             .org-content {
                 padding: pxToRem(20px);
                 height: 100%;
+                display: none; // hide for now as data is too poor yet
 
                 .org-title {
                     font-size: $font-size-2xl;
