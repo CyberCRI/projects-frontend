@@ -128,7 +128,7 @@ export default {
     .search-input-container {
         display: flex;
         padding: $space-l;
-        background: #ebfffa;
+        background: $primary-lighter;
         align-items: center;
         border-radius: $border-radius-17;
         flex-direction: column;

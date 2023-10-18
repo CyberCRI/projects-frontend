@@ -214,7 +214,7 @@ export default {
             display: flex;
             padding: $space-l;
             margin: $space-xl 0;
-            background: #ebfffa;
+            background: $primary-lighter;
             align-items: center;
             border-radius: $border-radius-17;
             flex-direction: column;

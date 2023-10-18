@@ -436,7 +436,7 @@ export default {
     padding: $space-l;
     margin-top: $space-l;
     margin-bottom: $space-l;
-    background: #ebfffa;
+    background: $primary-lighter;
     align-items: center;
     border-radius: $border-radius-17;
     flex-direction: column;
@@ -489,7 +489,7 @@ export default {
 .search {
     margin: $space-2xl $space-2xl $space-l $space-2xl;
     padding: $space-xl;
-    background: #ebfffa;
+    background: $primary-lighter;
     border-radius: 16px;
 }
 

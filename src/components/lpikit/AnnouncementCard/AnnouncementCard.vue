@@ -181,7 +181,7 @@ $annoucement-padding: pxToRem(20px);
         .announcement-project {
             flex: 0 0 0;
             display: flex;
-            background-color: #ebfffa;
+            background-color: $primary-lighter;
             border-bottom-left-radius: $border-radius-m;
             border-bottom-right-radius: $border-radius-m;
 
