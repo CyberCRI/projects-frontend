@@ -1,8 +1,8 @@
 <template>
-    <div class="groups-layout">
+    <div class="page-section-extra-wide groups-layout">
         <h1 class="title">{{ $filters.capitalize($t('common.groups')) }}</h1>
 
-        <div class="search-groups-ctn narrow-body">
+        <div class="search-groups-ctn">
             <div class="search-input-container">
                 <SearchInput
                     v-model="searchFilter.search"
@@ -19,7 +19,7 @@
                 />
             </div>
         </div>
-        <div class="current-group-ctn narrow-body">
+        <div class="current-group-ctn">
             <div class="breadcrumb">
                 <BreadCrumbs
                     v-if="hierarchy?.length"
@@ -197,10 +197,6 @@ export default {
 
 <style lang="scss" scoped>
 .groups-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     margin-top: $space-2xl;
 
     .btn-ctn {

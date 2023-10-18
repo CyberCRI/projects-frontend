@@ -1,5 +1,5 @@
 <template>
-    <div :class="gridLayout" class="member-list">
+    <DynamicGrid :min-gap="minGap" class="member-list">
         <div v-for="(item, index) in limit" :key="index" class="card">
             <div class="content">
                 <div class="image-placeholder" />
@@ -9,31 +9,26 @@
                 <div class="text-placeholder" />
             </div>
         </div>
-    </div>
+    </DynamicGrid>
 </template>
 
 <script>
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 export default {
     name: 'MemberListSkeleton',
 
-    props: {
-        desktopColumnsNumber: {
-            type: [String, Number],
-            default: 4,
-            validator(value) {
-                return [1, 3, 4, 6].includes(parseInt(value))
-            },
-        },
+    components: {
+        DynamicGrid,
+    },
 
+    props: {
         limit: {
             type: Number,
             default: 12,
         },
-    },
-
-    computed: {
-        gridLayout() {
-            return `desktop-col--${this.desktopColumnsNumber}`
+        minGap: {
+            type: Number,
+            default: 0,
         },
     },
 }
@@ -41,13 +36,12 @@ export default {
 
 <style lang="scss" scoped>
 .member-list {
-    display: grid;
-    gap: $space-m;
-    justify-items: center;
+    justify-content: space-between;
+    width: 100%;
 
     .card {
-        height: pxToRem(256px);
-        width: pxToRem(185px);
+        height: pxToRem(196px);
+        width: pxToRem(120px);
         overflow: hidden;
     }
 
@@ -62,7 +56,7 @@ export default {
         width: pxToRem(120px);
         height: pxToRem(120px);
         background: $gray-10;
-        margin-bottom: $space-l;
+        margin-bottom: $space-m;
         border-radius: 50%;
         animation: skeleton-loading 1s linear infinite alternate;
     }
@@ -71,8 +65,8 @@ export default {
         background: $gray-10;
         border-radius: $border-radius-xs;
         width: 100%;
-        height: pxToRem(16px);
-        margin-bottom: pxToRem(16px);
+        height: pxToRem(8px);
+        margin-bottom: pxToRem(8px);
         animation: skeleton-loading 1s linear infinite alternate;
     }
 
@@ -82,48 +76,6 @@ export default {
 
     .footer {
         margin-top: $space-l;
-    }
-}
-
-.desktop-col--1 {
-    @media screen and (min-width: $min-tablet) {
-        grid-template-columns: 1fr;
-    }
-}
-
-.desktop-col--3 {
-    @media screen and (min-width: $max-tablet) {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-.desktop-col--4 {
-    @media screen and (min-width: $min-tablet) {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    @media screen and (min-width: $min-desktop) {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-}
-
-.desktop-col--6 {
-    grid-template-columns: 1fr;
-
-    @media screen and (min-width: $max-mobile) {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    @media screen and (min-width: $min-tablet) {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-
-    @media screen and (min-width: $max-tablet) {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
-
-    @media screen and (min-width: $min-desktop) {
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     }
 }
 </style>

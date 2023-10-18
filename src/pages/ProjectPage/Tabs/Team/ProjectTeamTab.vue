@@ -14,7 +14,7 @@
             :quantity="owners.length"
             :title="$filters.capitalize($t('role.editors'))"
         />
-        <div class="user-card-ctn">
+        <DynamicGrid v-if="owners && owners.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="owner in owners"
                 :key="owner.keycloak_id"
@@ -27,7 +27,7 @@
             >
                 <UserCard :user="owner" @click="openProfileDrawer(owner)" />
             </ProjectTeamEditor>
-        </div>
+        </DynamicGrid>
 
         <SectionHeader
             v-if="members && members.length"
@@ -35,7 +35,7 @@
             :quantity="members.length"
             :title="$filters.capitalize($t('role.teammates'))"
         />
-        <div class="user-card-ctn">
+        <DynamicGrid v-if="members && members.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="member in members"
                 :key="member.keycloak_id"
@@ -48,7 +48,7 @@
             >
                 <UserCard :user="member" @click="openProfileDrawer(member)" />
             </ProjectTeamEditor>
-        </div>
+        </DynamicGrid>
 
         <SectionHeader
             v-if="reviewers && reviewers.length"
@@ -56,7 +56,7 @@
             :quantity="reviewers.length"
             :title="$filters.capitalize($t('role.reviewers'))"
         />
-        <div class="user-card-ctn">
+        <DynamicGrid v-if="reviewers && reviewers.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="reviewer in reviewers"
                 :key="reviewer.keycloak_id"
@@ -69,7 +69,7 @@
             >
                 <UserCard :user="reviewer" @click="openProfileDrawer(reviewer)" />
             </ProjectTeamEditor>
-        </div>
+        </DynamicGrid>
 
         <SectionHeader
             v-if="groups && groups.length"
@@ -77,7 +77,7 @@
             :quantity="groups.length"
             :title="$filters.capitalize($t('role.group'))"
         />
-        <div class="user-card-ctn">
+        <DynamicGrid v-if="groups && groups.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="group in groups"
                 :key="group.id"
@@ -90,7 +90,7 @@
             >
                 <GroupCard :group="group" @go-to="openProfileDrawer(group)" />
             </ProjectTeamEditor>
-        </div>
+        </DynamicGrid>
 
         <ConfirmModal
             v-if="confirmModalVisible"
@@ -148,6 +148,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
 import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
     name: 'ProjectTeamTab',
@@ -161,6 +162,7 @@ export default {
         DrawerLayout,
         ProjectTeamEditor,
         LpiButton,
+        DynamicGrid,
     },
 
     inject: ['projectLayoutToggleAddModal'],
@@ -179,6 +181,7 @@ export default {
             isEditMode: false,
             showQuitIsImposible: false,
             asyncingRemoveUser: false,
+            gridGap: 20,
         }
     },
 
@@ -324,14 +327,7 @@ export default {
     padding: $space-xl $space-l;
 
     .user-card-ctn {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: $space-l;
-
-        .project-team-editor {
-            flex-basis: 0;
-        }
+        justify-content: space-between;
     }
 
     .user-card-ctn:not(:last-of-type) {

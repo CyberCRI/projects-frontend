@@ -169,7 +169,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: $space-2xl $space-l;
+    padding: $space-2xl 0;
     position: relative;
 
     .blog-entries-ctn {

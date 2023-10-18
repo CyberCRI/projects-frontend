@@ -1,5 +1,5 @@
 <template>
-    <div class="people-layout">
+    <div class="page-section-extra-wide people-layout">
         <h1 class="title">{{ $filters.capitalize($t('common.people')) }}</h1>
         <div class="main-ctn">
             <div v-if="searchOptionsInitiated" class="search-input-container">
@@ -104,10 +104,6 @@ export default {
 
 <style lang="scss" scoped>
 .people-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     margin-top: $space-2xl;
 
     @media screen and (min-width: $min-tablet) {
@@ -128,12 +124,10 @@ export default {
 .main-ctn {
     display: flex;
     flex-direction: column;
-    max-width: 1400px;
 
     .search-input-container {
         display: flex;
         padding: $space-l;
-        margin: $space-xl;
         background: #ebfffa;
         align-items: center;
         border-radius: $border-radius-17;

@@ -8,19 +8,9 @@
                 </h2>
             </div>
             <div class="projects-container">
-                <ProjectListSkeleton v-if="isLoading" :desktop-columns-number="6" />
-                <CardList
-                    v-else
-                    :desktop-columns-number="6"
-                    :is-loading="isLoading"
-                    :limit="4"
-                    :projects="projects"
-                >
+                <CardList :is-loading="isLoading" :projects="projects">
                     <template #projects="projectListSlotProps">
-                        <ProjectCard
-                            :horizontal-display="true"
-                            :project="projectListSlotProps.project"
-                        />
+                        <ProjectCard :project="projectListSlotProps.project" />
                     </template>
                 </CardList>
             </div>
@@ -41,7 +31,6 @@ import CardList from '@/components/lpikit/ProjectList/CardList.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
-import ProjectListSkeleton from '@/components/lpikit/Skeleton/ProjectListSkeleton.vue'
 
 export default {
     name: 'GroupProjectsTab',
@@ -50,7 +39,6 @@ export default {
         CardList,
         ProjectCard,
         PaginationButtons,
-        ProjectListSkeleton,
     },
 
     props: {

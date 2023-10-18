@@ -1,38 +1,39 @@
 <template>
-    <div class="groups-layout">
-        <BreadCrumbs
-            v-if="groupHierarchy"
-            :breadcrumbs="groupHierarchy"
-            :group-name="groupName"
-            :is-loading="isLoading"
-        />
+    <div class="group-layout">
+        <div class="page-section-extra-wide">
+            <BreadCrumbs
+                v-if="groupHierarchy"
+                :breadcrumbs="groupHierarchy"
+                :group-name="groupName"
+                :is-loading="isLoading"
+            />
 
-        <SubGroups
-            v-if="groupChildren.length > 0"
-            :subgroups="groupChildren"
-            :is-loading="isLoading"
-        />
+            <SubGroups
+                v-if="groupChildren.length > 0"
+                :subgroups="groupChildren"
+                :is-loading="isLoading"
+            />
 
-        <LpiButton
-            v-if="!isLoading && canEditGroup"
-            class="edit-btn"
-            left-icon="Pen"
-            :secondary="true"
-            :no-border="true"
-            :label="editGroupLabel"
-            @click="editGroup"
-        />
+            <LpiButton
+                v-if="!isLoading && canEditGroup"
+                class="edit-btn"
+                left-icon="Pen"
+                :secondary="true"
+                :no-border="true"
+                :label="editGroupLabel"
+                @click="editGroup"
+            />
 
-        <GroupHeader
-            :title="groupName"
-            :image="groupImage"
-            :visibility="groupVisibility"
-            :email="groupEmail"
-            :short-description="groupShortDescription"
-            :is-loading="isLoading"
-        />
-
-        <div class="tabs-wrapper">
+            <GroupHeader
+                :title="groupName"
+                :image="groupImage"
+                :visibility="groupVisibility"
+                :email="groupEmail"
+                :short-description="groupShortDescription"
+                :is-loading="isLoading"
+            />
+        </div>
+        <div class="page-section-extra-wide tabs-wrapper">
             <GroupTabs
                 :description="groupDescription"
                 :projects-initial-request="projectsInitialRequest"
@@ -182,6 +183,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.group-layout {
+    margin-top: pxToRem(48px);
+}
+
 .loader {
     display: flex;
     justify-content: center;
@@ -196,21 +201,7 @@ export default {
     padding-bottom: 24px;
 }
 
-.groups-layout {
-    padding: $space-3xl $space-m;
-}
-
 .recommandations {
     margin-top: $space-2xl;
-}
-
-@media screen and (min-width: $med-tablet) {
-    .groups-layout {
-        padding: $space-3xl $space-2xl;
-    }
-
-    .tabs-wrapper {
-        padding: 0 $space-xs;
-    }
 }
 </style>

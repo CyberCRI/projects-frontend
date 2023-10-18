@@ -92,6 +92,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: min-content;
 
     .picture {
         width: pxToRem(120px);

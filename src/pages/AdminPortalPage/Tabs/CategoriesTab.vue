@@ -232,14 +232,11 @@ export default {
     .info-snackbar {
         border: 1px solid $primary-dark;
         line-height: $font-size-l;
+        margin: $space-l auto;
     }
 
     > button {
         margin: 0 auto $space-l;
-    }
-
-    .snackbar {
-        margin: $space-l;
     }
 
     svg {

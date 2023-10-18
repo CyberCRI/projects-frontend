@@ -2,7 +2,7 @@
     <div v-if="categories.length > 0" class="categories-layout">
         <h1 class="title">{{ $filters.capitalize($t('projects')) }}</h1>
 
-        <div class="search-categories-ctn narrow-body">
+        <div class="search-categories-ctn page-section-extra-wide">
             <div class="search-input-container">
                 <SearchInput
                     v-model="searchFilter.search"
@@ -18,37 +18,38 @@
                     @click="updateSearchQuery(true)"
                 />
             </div>
+        </div>
 
-            <div class="title-ctn">
-                <h2 class="sub-title">
-                    {{ $filters.capitalize($t('home.categories.title')) }}
-                </h2>
+        <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
+            <LpiButton
+                :label="$t('project.create-project')"
+                size="link"
+                class="button"
+                left-icon="Plus"
+                secondary
+                @click="$router.push({ name: 'createProject' })"
+                data-test="create-project"
+            />
+        </div>
 
-                <LpiButton
-                    v-if="canCreateProject"
-                    :label="$t('project.create-project')"
-                    size="link"
-                    class="button"
-                    left-icon="Plus"
-                    secondary
-                    @click="$router.push({ name: 'createProject' })"
-                    data-test="create-project"
-                />
-            </div>
-            <div class="categories">
-                <LpiCategoryCard
-                    v-for="(category, index) in categories"
-                    :key="index"
-                    :category="category"
-                    class="category"
-                    size="small"
-                    @click="goTo"
-                />
-            </div>
+        <div class="title-ctn page-section-wide">
+            <h2 class="sub-title">
+                {{ $filters.capitalize($t('home.categories.title')) }}
+            </h2>
+        </div>
+        <div class="categories page-section-wide">
+            <LpiCategoryCard
+                v-for="(category, index) in categories"
+                :key="index"
+                :category="category"
+                class="category"
+                size="small"
+                @click="goTo"
+            />
+        </div>
 
-            <div class="btn-ctn">
-                <LpiButton :label="$t('category.all-projects')" @click="updateSearchQuery" />
-            </div>
+        <div class="btn-ctn">
+            <LpiButton :label="$t('category.all-projects')" @click="updateSearchQuery" />
         </div>
     </div>
 </template>
@@ -108,10 +109,6 @@ export default {
 
 <style lang="scss" scoped>
 .categories-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     margin-top: $space-2xl;
 
     .btn-ctn {
@@ -128,7 +125,7 @@ export default {
         .search-input-container {
             display: flex;
             padding: $space-l;
-            margin: $space-xl;
+            margin: $space-xl 0;
             background: #ebfffa;
             align-items: center;
             border-radius: $border-radius-17;
@@ -153,6 +150,14 @@ export default {
 
     @media screen and (min-width: $min-tablet) {
         margin-top: calc($space-2xl * 2);
+    }
+
+    .action-ctn {
+        text-align: right;
+
+        button {
+            margin-left: auto;
+        }
     }
 
     .title {
@@ -185,16 +190,11 @@ export default {
         }
     }
 
-    .button {
-        padding: 0;
-        width: 100%;
-        flex-shrink: 1.5;
-    }
-
     .categories {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
+        align-items: stretch;
 
         .category {
             margin: $space-xs;

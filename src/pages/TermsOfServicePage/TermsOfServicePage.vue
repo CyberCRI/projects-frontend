@@ -1,5 +1,5 @@
 <template>
-    <div class="terms-of-service">
+    <div class="page-section-narrow legal-page terms-of-service">
         <h1>Conditions générales d’utilisation</h1>
 
         <section>
@@ -1087,85 +1087,3 @@ export default {
     name: 'TermsOfServicePage',
 }
 </script>
-
-<style lang="scss" scoped>
-.terms-of-service {
-    color: $black;
-    margin-top: calc(30px + $navbar-height);
-
-    @media screen and (min-width: $max-tablet) {
-        .terms-of-service {
-            margin-top: calc(90px + $navbar-height);
-        }
-    }
-
-    h1 {
-        text-align: center;
-        font-size: $font-size-6xl;
-        font-weight: 700;
-    }
-
-    p {
-        text-align: justify;
-    }
-
-    section {
-        border-radius: $border-radius-l;
-        background: $primary-lighter;
-        padding: $space-l;
-        max-width: 760px;
-        margin: $space-xl auto;
-
-        h2 {
-            text-transform: uppercase;
-            font-size: $space-l;
-            font-weight: 700;
-            margin: $space-xl auto;
-        }
-
-        h3 {
-            font-size: $space-l;
-            font-weight: 700;
-            margin-bottom: $space-m;
-        }
-
-        h4 {
-            font-size: $space-l;
-            font-weight: 500;
-            margin-bottom: $space-s;
-        }
-
-        h5 {
-            font-size: $space-l;
-            margin-bottom: $space-xs;
-        }
-
-        p {
-            margin: $space-l 0;
-        }
-
-        a {
-            color: $black;
-        }
-
-        ol {
-            margin-left: $space-xl;
-            list-style-type: auto;
-        }
-
-        ul {
-            margin-left: $space-xl;
-            list-style-type: disc;
-        }
-
-        .underlined {
-            font-weight: 400;
-            text-decoration: underline;
-        }
-
-        span {
-            font-weight: 600;
-        }
-    }
-}
-</style>

@@ -190,7 +190,7 @@ export default {
 }
 
 .project-resources {
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     .resource-ctn {
         display: flex;

@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 .project-linked-projects {
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 }
 
 .add-linked-project {

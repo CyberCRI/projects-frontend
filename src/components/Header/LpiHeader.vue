@@ -1,6 +1,6 @@
 <template>
     <div :class="{ scrolled }" class="header">
-        <header class="header__container">
+        <header class="header__container page-section-full">
             <div :class="{ 'header__arrows--nav-open': isNavOpen }" class="header__directory">
                 <router-link to="/" data-test="lpi-logo">
                     <img
@@ -540,7 +540,8 @@ export default {
     }
 
     &__container {
-        padding: $space-m;
+        padding-top: $space-m;
+        padding-bottom: $space-m;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -662,10 +663,10 @@ export default {
 
 .slide-fade-leave-active,
 .slide-fade-enter-active {
-    transition: 1s;
+    transition: 400ms;
 }
 
-.slide-fade-enter {
+.slide-fade-enter-from {
     transform: translateX(100%);
 }
 

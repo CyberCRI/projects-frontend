@@ -1,5 +1,5 @@
 <template>
-    <div class="browse-layout">
+    <div class="page-section-extra-wide browse-layout">
         <div v-if="searchOptionsInitiated" class="browse-header">
             <SearchOptions
                 :limit="30"
@@ -203,10 +203,6 @@ export default {
 <style lang="scss" scoped>
 .browse-layout {
     padding-top: pxToRem(74px);
-    width: 100%;
-    max-width: 85rem;
-    margin: 0 auto;
-    box-sizing: border-box;
 
     .tab {
         margin-top: $space-l;

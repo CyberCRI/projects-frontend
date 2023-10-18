@@ -1,5 +1,5 @@
 <template>
-    <TabsLayout :tabs="tabs" :align-left="true" class="stats-tab narrow-body" />
+    <TabsLayout :tabs="tabs" :align-left="true" class="page-section-wide stats-tab" />
 </template>
 
 <script>

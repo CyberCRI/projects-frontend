@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-page">
+    <div class="page-section-extra-wide profile-page">
         <UserProfile
             :key="userKId"
             :kid="userKId"

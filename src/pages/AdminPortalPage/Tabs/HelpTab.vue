@@ -204,12 +204,10 @@ export default {
 .help-tab {
     display: flex;
     flex-direction: column-reverse;
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     .block-container {
         background: $white;
-        border-radius: $border-radius-l;
-        border: $space-l solid $white;
         box-sizing: border-box;
 
         label {
@@ -244,6 +242,8 @@ export default {
 
     .snackbar-container {
         margin-bottom: $space-l;
+        display: flex;
+        justify-content: center;
     }
 }
 

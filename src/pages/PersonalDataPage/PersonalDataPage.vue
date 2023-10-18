@@ -1,5 +1,5 @@
 <template>
-    <div class="personal-data">
+    <div class="page-section-narrow legal-page personal-data">
         <h1>Politique de protection des données personnelles</h1>
 
         <section>
@@ -28,42 +28,46 @@
                     une majuscule ont la définition qui leur est donnée ci-après. Les termes ont la
                     même définition qu’ils soient employés au singulier ou au pluriel :
                 </p>
-                <li>
-                    Les « Responsables du traitement » désigne le LPI, dont le siège social est
-                    situé au 8 bis rue Charles V, 75 004 Paris, ainsi que l’organisme responsable de
-                    ce portail. Ce dernier est la personne morale qui détermine les finalités et les
-                    moyens des Traitements;
-                </li>
-                <li>
-                    Une « Donnée à caractère personnel » est toute information relative à une
-                    personne physique susceptible d'être identifiée, directement ou indirectement.
-                </li>
-                <li>
-                    Le « Sous-traitant » s’entend de toute personne physique ou morale qui traite
-                    des données à caractère personnel pour le compte du responsable du traitement.
-                    Il s’agit en pratique des prestataires avec lesquels le LPI travaille et qui
-                    interviennent sur les données à caractère personnel;
-                </li>
-                <li>
-                    Les « Personnes concernées » sont les personnes qui peuvent être identifiées,
-                    directement ou indirectement, et leurs données à caractère personnel font
-                    l’objet d’une collecte par le Responsable du traitement, en l'occurrence, au
-                    titre des présentes, l’ensemble des Utilisateurdu LPI, Alumni ou Candidats du
-                    LPI. Dans le cadre des recherches menées par le LPI, les sujets dont les données
-                    seront traitées sont considérées in fine comme des Personnes concernées.
-                </li>
-                <li>
-                    Les « Utilisateurs » sont les usagers de la plateforme, dans le but de partager
-                    leurs projets, profils et compétences au sein de leur organisation et
-                    potentiellement auprès du grand public.
-                </li>
-                <li>
-                    Les « Destinataires » des données s’entendent des personnes physiques ou morales
-                    qui reçoivent communication des données à caractère personnel. Les destinataires
-                    des données peuvent donc être aussi bien des membres du personnels du LPI,que
-                    des organismes extérieurs (établissements, organismes sociaux, gestionnaire de
-                    bourse, etc.).
-                </li>
+                <ul>
+                    <li>
+                        Les « Responsables du traitement » désigne le LPI, dont le siège social est
+                        situé au 8 bis rue Charles V, 75 004 Paris, ainsi que l’organisme
+                        responsable de ce portail. Ce dernier est la personne morale qui détermine
+                        les finalités et les moyens des Traitements;
+                    </li>
+                    <li>
+                        Une « Donnée à caractère personnel » est toute information relative à une
+                        personne physique susceptible d'être identifiée, directement ou
+                        indirectement.
+                    </li>
+                    <li>
+                        Le « Sous-traitant » s’entend de toute personne physique ou morale qui
+                        traite des données à caractère personnel pour le compte du responsable du
+                        traitement. Il s’agit en pratique des prestataires avec lesquels le LPI
+                        travaille et qui interviennent sur les données à caractère personnel;
+                    </li>
+                    <li>
+                        Les « Personnes concernées » sont les personnes qui peuvent être
+                        identifiées, directement ou indirectement, et leurs données à caractère
+                        personnel font l’objet d’une collecte par le Responsable du traitement, en
+                        l'occurrence, au titre des présentes, l’ensemble des Utilisateurdu LPI,
+                        Alumni ou Candidats du LPI. Dans le cadre des recherches menées par le LPI,
+                        les sujets dont les données seront traitées sont considérées in fine comme
+                        des Personnes concernées.
+                    </li>
+                    <li>
+                        Les « Utilisateurs » sont les usagers de la plateforme, dans le but de
+                        partager leurs projets, profils et compétences au sein de leur organisation
+                        et potentiellement auprès du grand public.
+                    </li>
+                    <li>
+                        Les « Destinataires » des données s’entendent des personnes physiques ou
+                        morales qui reçoivent communication des données à caractère personnel. Les
+                        destinataires des données peuvent donc être aussi bien des membres du
+                        personnels du LPI,que des organismes extérieurs (établissements, organismes
+                        sociaux, gestionnaire de bourse, etc.).
+                    </li>
+                </ul>
                 <p></p>
             </div>
             <h3>2. Objet</h3>
@@ -94,19 +98,21 @@
             </p>
             <h3>4. Opposabilité</h3>
             <p>Le présent document est opposable :</p>
-            <li>
-                LPI et le responsable du Portail en leur qualité de « co-responsable du traitement »
-                au sens du RGPD ;
-            </li>
-            <li>Aux Utilisateurs du tels que définis au paragraphe 1 des présentes;</li>
-            <li>
-                Aux personnes à qui sont communiquées ces Données (ci-après « Destinataire des
-                données ») ;
-            </li>
-            <li>
-                Aux prestataires du LPI qui traitent des données pour son compte (ci-après les «
-                sous-traitants »).
-            </li>
+            <ul>
+                <li>
+                    LPI et le responsable du Portail en leur qualité de « co-responsable du
+                    traitement » au sens du RGPD ;
+                </li>
+                <li>Aux Utilisateurs du tels que définis au paragraphe 1 des présentes;</li>
+                <li>
+                    Aux personnes à qui sont communiquées ces Données (ci-après « Destinataire des
+                    données ») ;
+                </li>
+                <li>
+                    Aux prestataires du LPI qui traitent des données pour son compte (ci-après les «
+                    sous-traitants »).
+                </li>
+            </ul>
             <p></p>
 
             <h3>5. Principes généraux</h3>
@@ -124,13 +130,15 @@
                 La collecte et le traitement des données des Personnes concernées par la Présente
                 Politique sont fondés sur les bases légales suivantes :
             </p>
-            <li>D’un consentement explicite;</li>
-            <li>
-                L’exécution des missions relevant de l’intérêt légitime du responsable de
-                traitement;
-            </li>
-            <li>Dans le cadre du respect d’obligations légales;</li>
-            <li>L’exécution d’un contrat.</li>
+            <ul>
+                <li>D’un consentement explicite;</li>
+                <li>
+                    L’exécution des missions relevant de l’intérêt légitime du responsable de
+                    traitement;
+                </li>
+                <li>Dans le cadre du respect d’obligations légales;</li>
+                <li>L’exécution d’un contrat.</li>
+            </ul>
             <p></p>
 
             <h3>6. Finalités</h3>
@@ -145,60 +153,68 @@
             </p>
 
             <h4>6.1 Partage de projets</h4>
-            <li>
-                Documentation de projets par leurs participants, dans le but de les faire connaître
-                à d’autres équipes.
-            </li>
-            <li>
-                Partage d’information sur ces projets sur le Web en vue de promouvoir ceux-ci et les
-                activités des membres de l’équipe, sous le contrôle total de chaque contributeur à
-                la plateforme.
-            </li>
-            <li>
-                Selon les cas, la finalité peut-être pédagogique, de vulgarisation scientifique ou
-                pour faire connaître les activités de la structure.
-            </li>
-            <li>
-                Traitements statistiques des données des projets, en vue de regrouper ceux-ci pour
-                les présenter aux Utilisateurs par thématiques spécifiques.
-            </li>
+            <ul>
+                <li>
+                    Documentation de projets par leurs participants, dans le but de les faire
+                    connaître à d’autres équipes.
+                </li>
+                <li>
+                    Partage d’information sur ces projets sur le Web en vue de promouvoir ceux-ci et
+                    les activités des membres de l’équipe, sous le contrôle total de chaque
+                    contributeur à la plateforme.
+                </li>
+                <li>
+                    Selon les cas, la finalité peut-être pédagogique, de vulgarisation scientifique
+                    ou pour faire connaître les activités de la structure.
+                </li>
+                <li>
+                    Traitements statistiques des données des projets, en vue de regrouper ceux-ci
+                    pour les présenter aux Utilisateurs par thématiques spécifiques.
+                </li>
+            </ul>
             <p></p>
 
             <h4>6.2 Partage de profil d’Utilisateur</h4>
-            <li>
-                Partage volontaire, optionnel et sous son contrôle des données de profil de
-                l’Utilisateur, qui décide de leur visibilité : nom, prénom, titre, biographie
-                succinte, lieu de travail, principales activités, centres d’intérêt, comptes de
-                réseaux sociaux professionnels et personnels.
-            </li>
-            <li>
-                Affichage des compétences et centre d’intérêt de l’Utilisateur, sous son contrôle,
-                en vue d’un apprentissage ou de la mise en avant de son portfolio de compétences.
-            </li>
-            <li>
-                L’objectif des Utilisateurs est de promouvoir leur profil et leurs activités, au
-                sein de leur communauté locale ou sur le web, de façon totalement volontaire et sous
-                leur contrôle personnel.
-            </li>
+            <ul>
+                <li>
+                    Partage volontaire, optionnel et sous son contrôle des données de profil de
+                    l’Utilisateur, qui décide de leur visibilité : nom, prénom, titre, biographie
+                    succinte, lieu de travail, principales activités, centres d’intérêt, comptes de
+                    réseaux sociaux professionnels et personnels.
+                </li>
+                <li>
+                    Affichage des compétences et centre d’intérêt de l’Utilisateur, sous son
+                    contrôle, en vue d’un apprentissage ou de la mise en avant de son portfolio de
+                    compétences.
+                </li>
+                <li>
+                    L’objectif des Utilisateurs est de promouvoir leur profil et leurs activités, au
+                    sein de leur communauté locale ou sur le web, de façon totalement volontaire et
+                    sous leur contrôle personnel.
+                </li>
+            </ul>
             <p></p>
 
             <h4>6.3 Gestion de la plateforme</h4>
-            <li>
-                Permettre à l’Utilisateur de créer un compte Utilisateur en vue d’accéder à la
-                plateforme;
-            </li>
-            <li>
-                Analyser les usages faits de la plateforme pour optimiser celle-ci, et pour
-                développer de nouvelles fonctionnalités;
-            </li>
-            <li>
-                Permettre la sauvegarde de documents et travaux scolaires via l’ENT et/ou
-                l’intranet;
-            </li>
-            <li>
-                Analyser les données internes à la plateforme pour proposer au sein de celle-ci des
-                recommandations personnalisées de personnes, contenus ou projets aux Utilisateurs.
-            </li>
+            <ul>
+                <li>
+                    Permettre à l’Utilisateur de créer un compte Utilisateur en vue d’accéder à la
+                    plateforme;
+                </li>
+                <li>
+                    Analyser les usages faits de la plateforme pour optimiser celle-ci, et pour
+                    développer de nouvelles fonctionnalités;
+                </li>
+                <li>
+                    Permettre la sauvegarde de documents et travaux scolaires via l’ENT et/ou
+                    l’intranet;
+                </li>
+                <li>
+                    Analyser les données internes à la plateforme pour proposer au sein de celle-ci
+                    des recommandations personnalisées de personnes, contenus ou projets aux
+                    Utilisateurs.
+                </li>
+            </ul>
             <p></p>
 
             <h3>7. Destinataires des données - habilitation et traçabilité</h3>
@@ -214,15 +230,17 @@
                 finalités telles que décrites au point 6 des présentes. Dans ce cadre, peuvent être
                 considérés comme Destinataires :
             </p>
-            <li>
-                Les services internes au LPI amenés à traiter les Données dans le cadre de leurs
-                activités et habilités à cet effet;
-            </li>
-            <li>Les administrateurs du portail;</li>
-            <li>
-                Les sous-traitants du LPI, dans le cadre du traitement technique des certaines
-                données, soumis à une stricte exigence de confidentialité.
-            </li>
+            <ul>
+                <li>
+                    Les services internes au LPI amenés à traiter les Données dans le cadre de leurs
+                    activités et habilités à cet effet;
+                </li>
+                <li>Les administrateurs du portail;</li>
+                <li>
+                    Les sous-traitants du LPI, dans le cadre du traitement technique des certaines
+                    données, soumis à une stricte exigence de confidentialité.
+                </li>
+            </ul>
             <p>
                 Les prestataires commerciaux des plateformes d&#39;enseignement en ligne ne seront
                 destinataires d&#39;aucune Donnée à caractère personnel. Aucune des Données à
@@ -246,11 +264,13 @@
                 Passés ces délais, ou lors de la suppression explicite des données par un
                 utilisateur, ces données peuvent être, soit :
             </p>
-            <li>Supprimées immédiatement de l’interface de l’application ;</li>
-            <li>
-                Archivées à titre conservatoire un an, notamment pour des raisons de sécurité et de
-                sauvegarde ;
-            </li>
+            <ul>
+                <li>Supprimées immédiatement de l’interface de l’application ;</li>
+                <li>
+                    Archivées à titre conservatoire un an, notamment pour des raisons de sécurité et
+                    de sauvegarde ;
+                </li>
+            </ul>
             <p>
                 Il est rappelé que la suppression ou l’anonymisation sont des opérations
                 irréversibles et que le LPI n’est plus, par la suite, en mesure de les restaurer.
@@ -261,27 +281,33 @@
                 La Personne concernée par un traitement dans le cadre des présentes dispose d’un
                 ensemble de droits prévus par le Règlement Générale sur la Protection des Données:
             </p>
-            <li>Droit à l’information préalable</li>
-            <li>Droit d’accès</li>
-            <li>Droit de rectification</li>
-            <li>Droit d’effacement et droit à l’oubli</li>
-            <li>Droit d’opposition</li>
-            <li>Droit à la portabilité</li>
-            <li>Droit à la limitation</li>
-
+            <ul>
+                <li>Droit à l’information préalable</li>
+                <li>Droit d’accès</li>
+                <li>Droit de rectification</li>
+                <li>Droit d’effacement et droit à l’oubli</li>
+                <li>Droit d’opposition</li>
+                <li>Droit à la portabilité</li>
+                <li>Droit à la limitation</li>
+            </ul>
             <p>
                 En cas de demande, les responsables de traitement s’engagent à répondre dans les
                 meilleurs délais (un mois maximum par défaut, étendu à 2 mois en cas de difficultés
                 techniques particulières) aux demandes légitimes d’exercice des droits.
             </p>
             <p>Les modalités d’exercice de droits sont les suivantes :</p>
-            <li>
-                La demande doit émaner de la personne elle-même. En cas de doute raisonnable sur
-                l’identité du demandeur et pour éviter les usurpations d’identité, les responsables
-                de traitement peuvent être amenés à demander de joindre tout document permettant de
-                prouver son identité (par exemple une copie de la carte d’identité);
-            </li>
-            <li>Être formulée par écrit à l’adresse suivante : dpo@learningplanetinstitute.org</li>
+            <ul>
+                <li>
+                    La demande doit émaner de la personne elle-même. En cas de doute raisonnable sur
+                    l’identité du demandeur et pour éviter les usurpations d’identité, les
+                    responsables de traitement peuvent être amenés à demander de joindre tout
+                    document permettant de prouver son identité (par exemple une copie de la carte
+                    d’identité);
+                </li>
+                <li>
+                    Être formulée par écrit à l’adresse suivante : dpo@learningplanetinstitute.org
+                </li>
+            </ul>
             <p>
                 En cas de demande de copie supplémentaire, le LPI pourra exiger la prise en charge
                 financière de ce coût par la personne concernée.
@@ -322,30 +348,35 @@
                 En dehors de cette situation, la Personne concernée pourra demander l’effacement de
                 ses données dans les cas limitatifs suivants :
             </p>
-            <li>
-                Les données à caractère personnel ne sont plus nécessaires au regard des finalités
-                pour lesquelles elles ont été collectées ou traitées d’une autre manière ;
-            </li>
-            <li>
-                Lorsque la Personne concernée retire le consentement sur lequel est fondé le
-                traitement et qu’il n’existe pas d’autre fondement juridique au traitement ;
-            </li>
-            <li>
-                La Personne concernée s’oppose à un traitement fondé sur l’exécution d’une mission
-                d’intérêt public ou nécessaire aux fins des intérêts légitimes poursuivis par les
-                responsables de traitement s’il n’existe pas de motif légitime impérieux pour le
-                Traitement ;
-            </li>
-            <li>
-                La Personne concernée s’oppose à un Traitement de ses données à caractère personnel
-                à des fins de prospection, y compris au profilage ;
-            </li>
-            <li>Les Données à caractère personnel ont fait l’objet d’un traitement illicite ;</li>
-            <li>
-                Les Données à caractère personnel doivent être effacées pour respecter une
-                obligation légale qui est prévue par le droit de l’Union ou par le droit de l’État
-                membre auquel les responsables de traitement sont soumis.
-            </li>
+            <ul>
+                <li>
+                    Les données à caractère personnel ne sont plus nécessaires au regard des
+                    finalités pour lesquelles elles ont été collectées ou traitées d’une autre
+                    manière ;
+                </li>
+                <li>
+                    Lorsque la Personne concernée retire le consentement sur lequel est fondé le
+                    traitement et qu’il n’existe pas d’autre fondement juridique au traitement ;
+                </li>
+                <li>
+                    La Personne concernée s’oppose à un traitement fondé sur l’exécution d’une
+                    mission d’intérêt public ou nécessaire aux fins des intérêts légitimes
+                    poursuivis par les responsables de traitement s’il n’existe pas de motif
+                    légitime impérieux pour le Traitement ;
+                </li>
+                <li>
+                    La Personne concernée s’oppose à un Traitement de ses données à caractère
+                    personnel à des fins de prospection, y compris au profilage ;
+                </li>
+                <li>
+                    Les Données à caractère personnel ont fait l’objet d’un traitement illicite ;
+                </li>
+                <li>
+                    Les Données à caractère personnel doivent être effacées pour respecter une
+                    obligation légale qui est prévue par le droit de l’Union ou par le droit de
+                    l’État membre auquel les responsables de traitement sont soumis.
+                </li>
+            </ul>
             <p>
                 Conformément à la législation sur la protection des données à caractère personnel,
                 la Personne concernée est informée qu’il s'agit d'un droit individuel qui ne peut
@@ -414,42 +445,48 @@
 
             <h3>17. Origine des données collectées</h3>
             <p>Les données collectées par le LPI sont soit :</p>
-            <li>Collectées directement auprès des Personnes concernées;</li>
-            <li>Collectées de manière indirecte.</li>
+            <ul>
+                <li>Collectées directement auprès des Personnes concernées;</li>
+                <li>Collectées de manière indirecte.</li>
+            </ul>
             <p></p>
 
             <h3>17.1 Données collectées directement</h3>
             <p>La collecte directe des données prend différentes formes :</p>
-            <li>
-                Données collectées lors de l’inscription ou de la réinscription d’un Utilisateur sur
-                la plateforme (nom, prénom, organisation, email);
-            </li>
-            <li>
-                Données saisies directement par un Utilisateur sur son profil, ses projets ou ses
-                compétences;
-            </li>
-            <li>
-                Données techniques (données de connexion ou de trafic) liées à l’usage des services
-                informatique ou numérique du LPI;
-            </li>
-            <li>
-                Données collectées lors des événements ou opérations organisées par les responsables
-                de traitement;
-            </li>
-            <li>...</li>
+            <ul>
+                <li>
+                    Données collectées lors de l’inscription ou de la réinscription d’un Utilisateur
+                    sur la plateforme (nom, prénom, organisation, email);
+                </li>
+                <li>
+                    Données saisies directement par un Utilisateur sur son profil, ses projets ou
+                    ses compétences;
+                </li>
+                <li>
+                    Données techniques (données de connexion ou de trafic) liées à l’usage des
+                    services informatique ou numérique du LPI;
+                </li>
+                <li>
+                    Données collectées lors des événements ou opérations organisées par les
+                    responsables de traitement;
+                </li>
+                <li>...</li>
+            </ul>
             <p></p>
 
             <h3>17.2 Données collectées de manière indirecte</h3>
             <p>La collecte indirecte des données peuvent prendre différentes formes :</p>
-            <li>
-                Données collectées via la connexion de plateformes tierces dans des cadres
-                spécifiquement encadrés : connexion à Moodle d’un portail d’apprentissage, connexion
-                à la base de comptes d’une entreprise.
-            </li>
-            <li>
-                Le cas échéant, ces cas de figure seront encadrés par des documents spécifiques au
-                cas par cas.
-            </li>
+            <ul>
+                <li>
+                    Données collectées via la connexion de plateformes tierces dans des cadres
+                    spécifiquement encadrés : connexion à Moodle d’un portail d’apprentissage,
+                    connexion à la base de comptes d’une entreprise.
+                </li>
+                <li>
+                    Le cas échéant, ces cas de figure seront encadrés par des documents spécifiques
+                    au cas par cas.
+                </li>
+            </ul>
             <p></p>
 
             <h3>18. Sécurité</h3>
@@ -559,93 +596,3 @@ export default {
     name: 'PersonalDataPage',
 }
 </script>
-
-<style lang="scss" scoped>
-.personal-data {
-    color: $black;
-    margin-top: calc(30px + $navbar-height);
-
-    @media screen and (min-width: $max-tablet) {
-        .personal-data {
-            margin-top: calc(90px + $navbar-height);
-        }
-    }
-
-    h1 {
-        text-align: center;
-        font-size: $font-size-6xl;
-        font-weight: 700;
-    }
-
-    p {
-        text-align: justify;
-    }
-
-    li {
-        text-align: justify;
-    }
-
-    .list {
-        list-style-type: none;
-    }
-
-    section {
-        border-radius: $border-radius-l;
-        background: $primary-lighter;
-        padding: $space-l;
-        max-width: 760px;
-        margin: $space-xl auto;
-
-        h2 {
-            text-transform: uppercase;
-            font-size: $space-l;
-            font-weight: 700;
-            margin: $space-xl auto;
-        }
-
-        h3 {
-            font-size: $space-l;
-            font-weight: 700;
-            margin-bottom: $space-m;
-        }
-
-        h4 {
-            font-size: $space-l;
-            font-weight: 500;
-            margin-bottom: $space-s;
-        }
-
-        h5 {
-            font-size: $space-l;
-            margin-bottom: $space-xs;
-        }
-
-        p {
-            margin: $space-l 0;
-        }
-
-        a {
-            color: $black;
-        }
-
-        ol {
-            margin-left: $space-xl;
-            list-style-type: auto;
-        }
-
-        ul {
-            margin-left: $space-xl;
-            list-style-type: disc;
-        }
-
-        .underlined {
-            font-weight: 400;
-            text-decoration: underline;
-        }
-
-        span {
-            font-weight: 600;
-        }
-    }
-}
-</style>

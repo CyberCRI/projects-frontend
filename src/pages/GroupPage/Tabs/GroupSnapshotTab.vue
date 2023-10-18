@@ -34,9 +34,9 @@
             </div>
 
             <div class="members-container" v-if="isMembersLoading">
-                <MemberListSkeleton :desktop-columns-number="6" />
+                <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
             </div>
-            <div class="members-container" v-else>
+            <DynamicGrid :min-gap="90" class="members-container" v-else>
                 <UserItem
                     v-for="member in members.slice(0, totalDisplayed)"
                     :key="member.id"
@@ -46,7 +46,7 @@
                     class="cursor-pointer shadow-drop"
                     @close="closeProfileDrawer"
                 />
-            </div>
+            </DynamicGrid>
         </div>
 
         <div v-if="projectsCount > 0 || isProjectsLoading" class="projects">
@@ -66,9 +66,7 @@
             </div>
             <div class="projects-container">
                 <CardList
-                    :desktop-columns-number="6"
                     :is-loading="isProjectsLoading"
-                    :limit="4"
                     :projects="projects.slice(0, totalDisplayed)"
                 >
                     <template #projects="projectListSlotProps">
@@ -108,6 +106,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
 import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
 import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
     name: 'GroupSnapshotTab',
@@ -122,6 +121,7 @@ export default {
         ProjectCard,
         DrawerLayout,
         UserProfile,
+        DynamicGrid,
     },
 
     props: {
@@ -231,10 +231,7 @@ export default {
 
     &-container {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: $space-m;
-        grid-gap: $space-l;
+        justify-content: space-between;
 
         .cursor-pointer {
             cursor: pointer;

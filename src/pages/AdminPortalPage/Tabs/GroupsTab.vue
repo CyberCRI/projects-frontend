@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss" scoped>
 .groups-tab {
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 }
 </style>

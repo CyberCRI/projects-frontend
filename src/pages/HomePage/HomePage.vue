@@ -9,7 +9,7 @@
         <PotatoIcon4 class="potato potato--potato4" />
 
         <!-- Logo and text -->
-        <div class="logo-container">
+        <div class="page-section-medium logo-container">
             <img
                 v-if="organization && organization.logo_image"
                 :src="organization.logo_image.url"
@@ -19,62 +19,64 @@
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
 
-        <!-- Search -->
-        <div class="search-input-container">
-            <SearchInput
-                v-model="searchFilter.search"
-                :full="true"
-                :placeholder="$t('browse.placeholder')"
-                class="search-input"
-                @enter="updateSearchQuery"
-                @delete-query="searchFilter.search = ''"
-            />
-            <LpiButton
-                :label="$t('browse.page-title')"
-                :secondary="false"
-                @click="updateSearchQuery"
-                data-test="search-input-button"
-            ></LpiButton>
-        </div>
+        <div class="page-section-medium">
+            <!-- Search -->
+            <div class="search-input-container">
+                <SearchInput
+                    v-model="searchFilter.search"
+                    :full="true"
+                    :placeholder="$t('browse.placeholder')"
+                    class="search-input"
+                    @enter="updateSearchQuery"
+                    @delete-query="searchFilter.search = ''"
+                />
+                <LpiButton
+                    :label="$t('browse.page-title')"
+                    :secondary="false"
+                    @click="updateSearchQuery"
+                    data-test="search-input-button"
+                ></LpiButton>
+            </div>
 
-        <!-- Buttons list -->
-        <div class="projects-buttons">
-            <LpiButton
-                v-if="announcements.length > 0"
-                :label="$filters.capitalize($t('home.announcements'))"
-                class="btn link"
-                left-icon="Search"
-                size="link"
-                @click="scrollTo('announcements')"
-            />
-            <LpiButton
-                :label="$filters.capitalize($t('home.all-projects'))"
-                class="btn link"
-                left-icon="ChartBox"
-                size="link"
-                @click="scrollTo('projectList')"
-            />
-            <LpiButton
-                :label="$filters.capitalize($t('map.projects'))"
-                class="btn"
-                left-icon="Map"
-                secondary
-                size="link"
-                @click="$router.push('map')"
-            />
-            <LpiButton
-                v-if="canCreateProject"
-                :label="$t('project.create-project')"
-                class="btn"
-                left-icon="Plus"
-                secondary
-                @click="$router.push({ name: 'createProject' })"
-                data-test="create-project"
-            />
+            <!-- Buttons list -->
+            <div class="projects-buttons">
+                <LpiButton
+                    v-if="announcements.length > 0"
+                    :label="$filters.capitalize($t('home.announcements'))"
+                    class="btn link"
+                    left-icon="Search"
+                    size="link"
+                    @click="scrollTo('announcements')"
+                />
+                <LpiButton
+                    :label="$filters.capitalize($t('home.all-projects'))"
+                    class="btn link"
+                    left-icon="ChartBox"
+                    size="link"
+                    @click="scrollTo('projectList')"
+                />
+                <LpiButton
+                    :label="$filters.capitalize($t('map.projects'))"
+                    class="btn"
+                    left-icon="Map"
+                    secondary
+                    size="link"
+                    @click="$router.push('map')"
+                />
+                <LpiButton
+                    v-if="canCreateProject"
+                    :label="$t('project.create-project')"
+                    class="btn"
+                    left-icon="Plus"
+                    secondary
+                    @click="$router.push({ name: 'createProject' })"
+                    data-test="create-project"
+                />
+            </div>
         </div>
 
         <!-- User's projects -->
-        <div v-if="isConnected" class="users-project">
+        <div v-if="isConnected" class="page-section-extra-wide users-project">
             <h2 class="sub-title project-title">{{ $filters.capitalize($t('me.my-projects')) }}</h2>
             <ProjectListSearch
                 :privacy-icon-visible="true"
@@ -86,7 +88,7 @@
                 }"
                 mode="projects"
                 :show-pagination="true"
-                class="project-list-search narrow-body"
+                class="project-list-search"
             >
                 <template #default="ProjectListSearchSlotProps">
                     <CardList
@@ -104,13 +106,13 @@
         </div>
 
         <!-- Onboarding carousel -->
-        <div v-else class="carousel">
+        <div v-else class="carousel page-section-medium">
             <h2 class="sub-title">{{ $filters.capitalize($t('onboarding.title')) }}</h2>
             <HomeCarousel />
         </div>
 
         <!-- Categories -->
-        <div v-if="categories.length > 0" class="categories-container narrow-body">
+        <div v-if="categories.length > 0" class="categories-container page-section-medium">
             <h2 class="sub-title">{{ $filters.capitalize($t('home.categories.title')) }}</h2>
             <div class="categories">
                 <CategoryCard
@@ -125,10 +127,10 @@
         </div>
 
         <!-- Communities -->
-        <div v-if="showCommunities">
+        <div v-if="showCommunities" class="page-section-medium">
             <h2 class="sub-title">{{ $filters.capitalize($t('home.communities')) }}</h2>
 
-            <div class="communities-container narrow-body">
+            <div class="communities-container">
                 <CommunityCard
                     v-for="org in filteredOrganizations"
                     :key="org.id"
@@ -139,7 +141,7 @@
         </div>
 
         <!-- Project list -->
-        <div ref="projectList" class="all-projects-container narrow-body">
+        <div ref="projectList" class="all-projects-container page-section-extra-wide">
             <h2 class="sub-title">{{ $filters.capitalize($t('home.all-projects')) }}</h2>
 
             <div class="project-list-search__header">
@@ -175,7 +177,7 @@
         <div
             v-if="announcements.length > 0"
             ref="announcements"
-            class="announcements-container narrow-body"
+            class="announcements-container page-section-medium"
         >
             <h2 class="sub-title">{{ $filters.capitalize($t('home.announcements')) }}</h2>
 
@@ -184,7 +186,7 @@
                 :announcements="announcements"
                 :is-more-toggled="isMoreToggled"
             />
-            <div class="announcement-more">
+            <div class="announcement-more" v-if="announcements.length > 6">
                 <LpiButton
                     :label="
                         $filters.capitalize(isMoreToggled ? $t('common.less') : $t('common.more'))
@@ -356,8 +358,6 @@ export default {
 
 <style lang="scss" scoped>
 .home-page {
-    flex-direction: column;
-    align-items: center;
     overflow: hidden;
 
     .potato-ctn {
@@ -407,12 +407,6 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-bottom: $space-3xl;
-    padding: $space-s;
-
-    @media screen and (min-width: $min-desktop) {
-        margin-right: 25%;
-        margin-left: 25%;
-    }
 
     .organization-logo {
         z-index: -1;
@@ -440,7 +434,8 @@ export default {
 .search-input-container {
     display: flex;
     padding: $space-l;
-    margin: $space-l;
+    margin-top: $space-l;
+    margin-bottom: $space-l;
     background: #ebfffa;
     align-items: center;
     border-radius: $border-radius-17;
@@ -451,9 +446,9 @@ export default {
     }
 
     @media screen and (min-width: $min-tablet) {
-        width: 50%;
         padding: $space-xl 84px $space-xl 84px;
-        margin: $space-2xl auto 0 auto;
+        margin-top: $space-2xl;
+        margin-bottom: 0;
         border-radius: $border-radius-17;
         flex-direction: row;
 
@@ -470,17 +465,16 @@ export default {
     justify-content: center;
     margin-bottom: $space-3xl;
     align-items: center;
+    gap: $space-2xs;
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
-        margin: $space-l auto $space-3xl auto;
-        width: calc(50% + (2 * 84px));
+        margin-top: $space-l;
+        margin-bottom: $space-3xl;
         justify-content: space-between;
     }
 
     .btn {
-        margin: $space-2xs;
-
         &.link {
             padding-left: 0 !important;
             padding-right: 0 !important;
@@ -504,29 +498,41 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-end;
-    margin: $space-xl auto $space-3xl;
+    margin-top: $space-xl;
+    margin-bottom: $space-3xl;
 
     .categories {
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
-
-        .category {
-            margin: calc($space-s * 2);
-        }
+        gap: calc($space-s * 2);
 
         @media screen and (min-width: $min-tablet) {
-            margin: $space-2xl;
+            gap: $space-2xl;
         }
     }
 }
 
 .communities-container {
+    $community-card-width: pxToRem(280px);
+    $community-card-gap: $space-m;
+
     display: flex;
     align-content: center;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: $space-3xl;
+    gap: $community-card-gap;
+
+    // + 2 * $space-xl is the .page-section-medium padding
+    @media screen and (max-width: (2 * $community-card-width + $community-card-gap + 2 * $space-xl)) {
+        justify-content: center;
+    }
+
+    .community {
+        width: $community-card-width;
+        height: pxToRem(100px);
+    }
 }
 
 .sub-title {
@@ -540,19 +546,11 @@ export default {
 }
 
 .all-projects-container {
-    width: 100%;
     margin-bottom: $space-3xl;
-}
-
-.community {
-    margin: $space-m;
-    width: pxToRem(280px);
-    height: pxToRem(100px);
 }
 
 .announcements-container {
     display: flex;
-    width: 100%;
     flex-direction: column;
     align-items: center;
     margin-bottom: $space-3xl;
@@ -561,10 +559,12 @@ export default {
 .carousel {
     display: flex;
     flex-direction: column;
-    margin: $space-xl;
+    margin-top: $space-xl;
+    margin-bottom: $space-xl;
 
     @media screen and (min-width: $min-tablet) {
-        margin: $space-xl pxToRem(150px) $space-3xl;
+        margin-top: $space-xl;
+        margin-bottom: $space-3xl;
     }
 
     .carousel-title {
