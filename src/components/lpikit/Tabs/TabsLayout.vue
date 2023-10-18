@@ -445,6 +445,9 @@ export default {
             align-items: center;
             margin-left: $space-m;
             margin-bottom: 0;
+            &:empty {
+                display: none;
+            }
 
             @media screen and (max-width: $min-tablet) {
                 order: -1;
