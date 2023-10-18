@@ -265,7 +265,6 @@ export default {
 
     data() {
         return {
-            advancedOptionsVisible: false,
             confirmDestroyVisible: false,
             showConfirmQuit: false,
             showQuitIsImposible: false,
