@@ -54,7 +54,6 @@ export default {
 
     data() {
         return {
-            step: 'projectSelection',
             selectedProject: null,
             selectedReason: undefined,
             listProjects: [],
@@ -78,11 +77,9 @@ export default {
         isOpened: {
             handler: function () {
                 if (this.editedLinkedProject) {
-                    this.step = 'reasonSelection'
                     this.selectedProject = this.editedLinkedProject.project
                     this.selectedReason = this.editedLinkedProject.reason
                 } else {
-                    this.step = 'projectSelection'
                     this.selectedProject = null
                     this.selectedReason = undefined
                 }
