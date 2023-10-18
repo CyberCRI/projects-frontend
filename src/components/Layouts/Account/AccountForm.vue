@@ -652,7 +652,7 @@ export default {
                     }
 
                     const user = await patchUser(this.selectedUser.keycloak_id, payload)
-                    console.log('USER', user)
+
                     if (payload.profile_picture instanceof File) {
                         const image = await postUserPicture(user.keycloak_id, formData)
 
