@@ -130,6 +130,9 @@ export default {
                     route: { name: 'Group', params: { groupId: group.slug || group.id } },
                 }))
                 this.groupChildren = groupData.children
+
+                // we can't use "this.groupId" because it might be a slug and not an id....
+                this.$store.dispatch('peopleGroups/setCurrentId', groupData.id)
             } catch (e) {
                 this.$router.replace({
                     name: 'page404',
@@ -174,7 +177,9 @@ export default {
     watch: {
         groupId: {
             handler: function (neo, old) {
-                if (neo && neo != old) this.load()
+                if (neo && neo != old) {
+                    this.load()
+                }
             },
             immediate: true,
         },
