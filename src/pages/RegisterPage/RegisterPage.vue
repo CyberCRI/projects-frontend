@@ -1,7 +1,7 @@
 <template>
     <div class="register-page">
         <div class="logos-ctn left">
-            <img :src="organizationLogo" :alt="organizationName" />
+            <img class="organization-logo" :src="organizationLogo" :alt="organizationName" />
             <hr class="separator" />
             <ProjectLogo class="directory-logo" />
         </div>
@@ -413,6 +413,9 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     }
 }
 
+.organization-logo {
+    max-width: 100%;
+}
 .directory-logo {
     width: pxToRem(200px);
     height: auto;
