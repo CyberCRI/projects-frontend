@@ -9,4 +9,4 @@ instanceName: dummy-instance
 
 application:
   revision: dummy-revision
-  sourceTargetRevision: dummy-sourceTargetRevision
+  sourceTargetRevision: dummy-sourceTargetRevision_deploy
