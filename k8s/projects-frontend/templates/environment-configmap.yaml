@@ -8,6 +8,6 @@ data:
   {{- if $key | contains "DOCKER_INJECT_" }}
     {{- fail (printf "DOCKER_INJECT_ prefix will be added automatically, remove it from %s" $key) }}
   {{- end }}
-  {{ printf "DOCKER_INJECT_%s" $key }}: {{ tpl $val $ }}
+  {{- printf "DOCKER_INJECT_%s: %s" $key (tpl $val $) | nindent 2 -}}
 {{ end -}}
 {{ end -}}
