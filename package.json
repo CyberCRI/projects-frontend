@@ -74,7 +74,7 @@
         "prosemirror-schema-basic": "^1.2.0",
         "prosemirror-state": "^1.4.1",
         "prosemirror-transform": "^1.7.3",
-        "prosemirror-view": "^1.31.4",
+        "prosemirror-view": "^1.32.0",
         "remixicon": "^2",
         "vue": "^3.2.47",
         "vue-axios": "^3.5.2",
