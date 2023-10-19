@@ -392,21 +392,22 @@ export default {
                         leadersToAdd.push(member.keycloak_id)
                     }
                 } else {
-                    // add or remove leader role if necesserary (independant from other roles)
+                    // old roles are now removed automacally on backend
+                    // when adding a new one
+
                     if (member.is_leader && !previous.is_leader) {
                         leadersToAdd.push(member.keycloak_id)
-                    } else if (!member.is_leader && previous.is_leader) {
-                        leadersToRemove.push(member.keycloak_id)
                     }
 
-                    // if manager status changed
                     if (member.is_manager && !previous.is_manager) {
-                        // if now manager remove from regular members and add as manager
-                        membersToRemove.push(member.keycloak_id)
                         managersToAdd.push(member.keycloak_id)
-                    } else if (!member.is_manager && previous.is_manager) {
-                        // if not manager anymore remove from managers but add as a member
-                        managersToRemove.push(member.keycloak_id)
+                    }
+
+                    if (
+                        !member.is_leader &&
+                        !member.is_manager &&
+                        (previous.is_leader || previous.is_manager)
+                    ) {
                         membersToAdd.push(member.keycloak_id)
                     }
                 }
@@ -422,16 +423,7 @@ export default {
                 }
             })
 
-            if (membersToAdd.length > 0 || leadersToAdd.length > 0 || managersToAdd.length > 0) {
-                const payloadMembers = {
-                    members: membersToAdd,
-                    leaders: leadersToAdd,
-                    managers: managersToAdd,
-                }
-                await postGroupMembers(this.orgCode, groupId, payloadMembers)
-            }
-
-            // TODO ask Santa Claus for a batch removal endpoint
+            // remove before adding to accomodate for role changes
             if (
                 membersToRemove.length > 0 ||
                 leadersToRemove.length > 0 ||
@@ -442,6 +434,15 @@ export default {
                     users: toRemove,
                 }
                 await removeGroupMember(this.orgCode, groupId, body)
+            }
+
+            if (membersToAdd.length > 0 || leadersToAdd.length > 0 || managersToAdd.length > 0) {
+                const payloadMembers = {
+                    members: membersToAdd,
+                    leaders: leadersToAdd,
+                    managers: managersToAdd,
+                }
+                await postGroupMembers(this.orgCode, groupId, payloadMembers)
             }
         },
 
