@@ -570,7 +570,7 @@ export default {
                 /* This data is adapted so we can have the origin of the current user */
 
                 this.asyncing = true
-                const result = await deleteProjectMembersSelf(this.project.id)
+                await deleteProjectMembersSelf(this.project.id)
                 analytics.project.removeTeamMember({
                     project: {
                         id: this.project.id,
