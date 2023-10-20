@@ -244,10 +244,20 @@ export default {
 
                 this.confirm = true
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('register.save-error')}`,
-                    type: 'error',
-                })
+                if (error?.response?.status === 409) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('register.email-already-exists')}`,
+                        type: 'error',
+                    })
+                } else {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('register.save-error')} ${
+                            error?.response?.data?.error || ''
+                        }`,
+                        type: 'error',
+                    })
+                }
+
                 console.error(error)
             } finally {
                 this.asyncing = false
