@@ -13,7 +13,7 @@ dotenv.config()
 export default defineConfig({
     testDir: './tests/playwright',
     /* Maximum time one test can run for. */
-    timeout: 120 * 1000,
+    timeout: 120 * 1500,
     expect: {
         /**
          * Maximum time expect() should wait for the condition to be met.

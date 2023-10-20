@@ -5,8 +5,8 @@ import { LogLevel, Logger } from '../logger'
 
 const logger = new Logger(LogLevel.Debug)
 
-test(`test-user-creation`, async ({ page }) => {
-    logger.info(` User creation test `)
+test(`test-user-creation ${usersDict.admin.email}`, async ({ page }) => {
+    logger.info(` User creation test ${usersDict.admin.email}`)
     try {
         await logIn(page, usersDict.admin)
         logger.info('Login successful')
