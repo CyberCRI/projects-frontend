@@ -1833,6 +1833,7 @@
         },
         "confirmation": "Nous vous avons envoyé un email de vérification. Une fois que vous aurez confirmé que {email} est bien votre adresse, nous vous aiderons à débuter sur la plateforme.",
         "save-error": "Un problème technique est survenu. Veuillez réessayer plus tard.",
+        "email-already-exists": "Cet email est déjà enregistré.",
         "tos": "En continuant, vous acceptez nos  {term} et notre {privacy}",
         "term": "conditions d'utilisation",
         "privacy": "politique de confidentialité",
