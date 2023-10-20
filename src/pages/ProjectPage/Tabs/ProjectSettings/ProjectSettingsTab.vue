@@ -231,6 +231,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import ReviewDrawer from '@/components/lpikit/ReviewDrawer/ReviewDrawer.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import { deleteProjectMembersSelf } from '@/api/project-members.service'
 
 export default {
     name: 'ProjectSettingsTab',
@@ -567,11 +568,17 @@ export default {
             let projectNoMoreVisible = false
             try {
                 /* This data is adapted so we can have the origin of the current user */
-                this.asyncing = true
-                await this.$store.dispatch('projectMembers/deleteProjectMember', {
-                    users: [this.$store.getters['users/kid']],
-                })
 
+                this.asyncing = true
+                const result = await deleteProjectMembersSelf(this.project.id)
+                analytics.project.removeTeamMember({
+                    project: {
+                        id: this.project.id,
+                    },
+                })
+                if (this.project.publication_status == 'private') {
+                    this.$router.push({ name: 'HomeRoot' })
+                }
                 try {
                     const project = await this.$store.dispatch(
                         'projects/getProject',
