@@ -72,7 +72,7 @@
         "prosemirror-model": "^1.18.1",
         "prosemirror-schema-basic": "^1.2.0",
         "prosemirror-state": "^1.4.1",
-        "prosemirror-transform": "^1.7.3",
+        "prosemirror-transform": "^1.8.0",
         "prosemirror-view": "^1.31.4",
         "remixicon": "^2",
         "vue": "^3.2.47",
