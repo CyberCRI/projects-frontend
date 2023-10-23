@@ -185,7 +185,7 @@
             :title="$t('footer.contact')"
             @close="closeDrawer"
         >
-            <ContactDrawer v-if="showContactUsDrawer" @close="closeDrawer" />
+            <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
         </DrawerLayout>
     </div>
 </template>
@@ -206,7 +206,7 @@ import NotificationList from '@/components/lpikit/Notifications/NotificationList
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import HeaderItemList from '@/components/Header/HeaderItemList.vue'
-import ContactDrawer from '@/components/Drawers/ContactDrawer.vue'
+import ContactForm from '@/components/Drawers/ContactForm.vue'
 
 export default {
     name: 'LpiHeader',
@@ -214,7 +214,7 @@ export default {
     mixins: [permissions],
 
     components: {
-        ContactDrawer,
+        ContactForm,
         HeaderItemList,
         BadgeItem,
         NotificationList,
