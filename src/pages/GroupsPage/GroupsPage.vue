@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-extra-wide groups-layout">
-        <h1 class="title">{{ $filters.capitalize($t('common.groups')) }}</h1>
+    <div class="page-section-extra-wide groups-layout page-top">
+        <h1 class="page-title">{{ $filters.capitalize($t('common.groups')) }}</h1>
 
         <div class="search-groups-ctn">
             <div class="search-input-container">
@@ -197,8 +197,6 @@ export default {
 
 <style lang="scss" scoped>
 .groups-layout {
-    margin-top: $space-2xl;
-
     .btn-ctn {
         display: flex;
         align-items: center;
@@ -234,20 +232,6 @@ export default {
                 }
             }
         }
-    }
-
-    @media screen and (min-width: $min-tablet) {
-        margin-top: calc($space-2xl * 2);
-    }
-
-    .title {
-        text-align: center;
-        font-weight: 700;
-        font-size: $font-size-5xl;
-        line-height: 50px;
-        color: $black;
-        width: 100%;
-        margin-bottom: $space-m;
     }
 
     .title-ctn {

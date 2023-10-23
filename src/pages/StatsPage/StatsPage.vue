@@ -1,5 +1,8 @@
 <template>
-    <TabsLayout :tabs="tabs" :align-left="true" class="page-section-wide stats-tab" />
+    <div class="page-section-wide page-top">
+        <h1 class="page-title">{{ $t('stats.page-title') }}</h1>
+        <TabsLayout :tabs="tabs" :align-left="true" class="stats-tab" />
+    </div>
 </template>
 
 <script>

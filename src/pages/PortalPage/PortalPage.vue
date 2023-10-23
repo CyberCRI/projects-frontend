@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-extra-wide portal-layout">
-        <h1 class="title">{{ $t('home.communities') }}</h1>
+    <div class="page-section-extra-wide portal-layout page-top">
+        <h1 class="page-title">{{ $t('home.communities') }}</h1>
         <p class="sub-title">
             {{ $t('portal.sub-title') }}
         </p>
@@ -61,16 +61,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: $space-2xl;
     margin-bottom: $space-2xl;
-
-    .title {
-        font-size: $font-size-5xl;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 50px;
-        margin-bottom: $space-l;
-    }
 
     .sub-title {
         font-size: $font-size-m;
@@ -138,8 +129,6 @@ export default {
 
 @media (min-width: $min-tablet) {
     .portal-layout {
-        margin-top: $space-3xl;
-
         .org-card-ctn {
             flex-direction: row;
             justify-content: center;

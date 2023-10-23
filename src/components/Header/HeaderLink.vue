@@ -92,6 +92,17 @@ a.header-link:visited {
     .link-label {
         display: flex;
         position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: pxToRem(6px);
+            background-color: $primary-dark;
+            bottom: pxToRem(-8px);
+            transform: scale(0);
+            transition: transform 0.15s ease-in-out;
+        }
     }
 
     .icon {
@@ -112,13 +123,7 @@ a.header-link:visited {
         position: relative;
 
         & .link-label::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: pxToRem(6px);
-            background-color: $primary-dark;
-            bottom: pxToRem(-8px);
+            transform: scale(1);
         }
     }
 }

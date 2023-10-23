@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-narrow legal-page personal-data">
-        <h1>Politique de protection des données personnelles</h1>
+    <div class="page-section-narrow legal-page personal-data page-top">
+        <h1 class="page-title">Politique de protection des données personnelles</h1>
 
         <section>
             <h3>1. Préambule</h3>
