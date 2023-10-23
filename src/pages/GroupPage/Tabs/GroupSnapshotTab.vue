@@ -205,7 +205,7 @@ export default {
 
 <style lang="scss" scoped>
 .description {
-    padding: $space-2xl $space-2xl 0 $space-2xl;
+    padding-top: $space-2xl;
 }
 
 .members {
