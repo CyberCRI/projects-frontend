@@ -15,10 +15,6 @@ export default {
         TabsLayout,
     },
 
-    mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
-    },
-
     computed: {
         tabs() {
             return [

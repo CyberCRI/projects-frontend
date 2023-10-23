@@ -211,8 +211,6 @@ import ContactDrawer from '@/components/Drawers/ContactDrawer.vue'
 export default {
     name: 'LpiHeader',
 
-    emits: ['is-loading'],
-
     mixins: [permissions],
 
     components: {

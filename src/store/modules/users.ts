@@ -117,7 +117,6 @@ const actions = {
     logOut({ commit, dispatch }): Promise<any> {
         return new Promise(function (resolve) {
             commit('UPDATE_LOGIN_LOCK', true)
-            dispatch('app/updateLoading', { visible: true }, { root: true })
             removeApiCookie()
                 .catch(console.error)
                 .finally(function () {

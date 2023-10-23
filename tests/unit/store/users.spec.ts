@@ -359,11 +359,6 @@ describe('Store module | users | actions', () => {
         expect(logoutFromKeycloakMock).toHaveBeenCalled()
         expect(commit).toHaveBeenNthCalledWith(1, 'UPDATE_LOGIN_LOCK', true)
         expect(commit).toHaveBeenNthCalledWith(2, 'RESET_USER')
-        expect(dispatch).toHaveBeenCalledWith(
-            'app/updateLoading',
-            { visible: true },
-            { root: true }
-        )
     })
 
     it('logIn', async () => {

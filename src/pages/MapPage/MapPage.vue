@@ -77,7 +77,6 @@ export default {
     async mounted() {
         document.getElementsByTagName('body')[0].classList.add('map-no-scroll')
         await this.getLocations()
-        this.$store.dispatch('app/updateLoading', { visible: false })
     },
 
     methods: {

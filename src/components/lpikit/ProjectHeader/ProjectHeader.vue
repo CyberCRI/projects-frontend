@@ -13,7 +13,7 @@
         <div :class="{ loading, moreInfo }" class="project-header-ctn">
             <div class="img-position">
                 <div class="img-mobile-ctn">
-                    <SkeletonComponent v-if="loading || !imageLoaded" height="100%" />
+                    <SkeletonComponent v-if="loading || !imageLoaded" height="100%" width="100%" />
 
                     <CroppedImage
                         v-if="
@@ -42,7 +42,11 @@
                 >
                     <div class="img-block">
                         <div class="img-ctn">
-                            <SkeletonComponent v-if="loading || !imageLoaded" height="100%" />
+                            <SkeletonComponent
+                                v-if="loading || !imageLoaded"
+                                height="100%"
+                                width="100%"
+                            />
 
                             <CroppedImage
                                 v-if="
@@ -398,6 +402,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        loading: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     mounted() {
@@ -445,10 +453,6 @@ export default {
     },
 
     computed: {
-        loading() {
-            return this.$store.getters['app/loading']
-        },
-
         organizationTags() {
             return this.project.organization_tags
         },
