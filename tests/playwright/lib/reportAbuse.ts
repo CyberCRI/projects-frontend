@@ -1,4 +1,4 @@
-import { frontURL, emailToReport } from '../variables'
+import { emailToReport } from '../variables'
 import { LogLevel, Logger } from '../logger'
 
 const logger = new Logger(LogLevel.Debug)
