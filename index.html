@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
 
 
@@ -79,6 +79,13 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                position: relative;
+            }
+            .app-version {
+                position: absolute;
+                bottom: 1rem;
+                right: 1rem;
+                font-size: 0.8rem;
             }
             .app-loader svg {
                 width: min(75vw, 75vh);
@@ -142,6 +149,7 @@
                         fill="#00DBA7"
                     />
                 </svg>
+                <span class="app-version"><%- APP_VERSION %></span>
             </div>
         </div>
         <script type="module" src="/src/main.ts"></script>
