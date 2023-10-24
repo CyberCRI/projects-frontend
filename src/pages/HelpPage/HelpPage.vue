@@ -86,6 +86,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-title {
+    text-align: center;
+    margin-bottom: $space-xl;
+    font-weight: 700;
+    font-size: $font-size-5xl;
+    line-height: 50px;
+    color: $black;
+    width: 100%;
+}
+
 .intro-ctn {
     margin-bottom: $space-xl;
     background: $primary-lighter;
