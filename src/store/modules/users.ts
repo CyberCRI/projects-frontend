@@ -114,7 +114,7 @@ const getters = {
 }
 
 const actions = {
-    logOut({ commit, dispatch }): Promise<any> {
+    logOut({ commit }): Promise<any> {
         return new Promise(function (resolve) {
             commit('UPDATE_LOGIN_LOCK', true)
             removeApiCookie()

@@ -92,6 +92,7 @@ export default {
             overflow: hidden;
             margin: $space-l;
             width: pxToRem(290px);
+
             // put back pxToRem(250px); for height when content is displayed again (see .org-content)
             height: pxToRem(96px);
 
