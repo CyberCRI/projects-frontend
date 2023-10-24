@@ -92,6 +92,7 @@ a.header-link:visited {
     .link-label {
         display: flex;
         position: relative;
+
         &::after {
             content: '';
             position: absolute;

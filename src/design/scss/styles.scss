@@ -190,6 +190,7 @@ body.has-open-drawer {
 
 .page-top {
     margin-top: calc($navbar-height + $space-xl);
+
     @media screen and (min-width: $min-tablet) {
         margin-top: calc($navbar-height + $space-xl * 2);
     }
