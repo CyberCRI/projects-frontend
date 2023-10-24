@@ -146,20 +146,24 @@ export default {
     color: $black;
     width: 100%;
 }
+
 .intro-ctn {
     margin-bottom: $space-xl;
     background: $primary-lighter;
     padding: $space-l;
     border-radius: $border-radius-17;
+
     .action-list {
         list-style-type: disc;
         list-style-position: inside;
         font-size: $font-size-l;
+
         li {
             padding: $space-m 0;
         }
     }
 }
+
 .help-layout {
     margin-top: calc($navbar-height + $space-m);
     display: flex;
