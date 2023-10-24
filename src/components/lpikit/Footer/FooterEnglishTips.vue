@@ -20,6 +20,7 @@ export default {
     components: {
         ToolTip,
     },
+
     props: {
         itemTitle: {
             type: String,
