@@ -32,7 +32,7 @@ jobs:
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
-        run:  npm run test:play:chrome # todo: add other browsers
+        run:  npm run test:play # Chrome only
       # - name: Run Playwright read
       #   run: npm run test:play:read # todo: add other browsers
       # - name: Run Playwright write
