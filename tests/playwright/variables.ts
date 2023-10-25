@@ -4,10 +4,14 @@ export const users: User[] = [
     {
         email: process.env.USER_ADMIN_EMAIL as string,
         password: process.env.USER_ADMIN_PASSWORD as string,
+        firstName: 'pw_admin',
+        lastName: 'pw_test',
     },
     {
         email: process.env.PLAYWRIGHT_TEST_EMAIL as string,
         password: process.env.PLAYWRIGHT_TEST_PASSWORD as string,
+        firstName: 'pw_playwright',
+        lastName: 'pw_test',
     },
     // {
     //     email: process.env.USER_FACILITATOR_EMAIL as string,

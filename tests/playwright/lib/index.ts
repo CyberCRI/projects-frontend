@@ -14,6 +14,7 @@ import { reportBug } from './reportBug'
 import { search } from './search'
 import { editProjectInfos } from './editProjectInfos'
 import { createInvitaionLink } from './createInvitaionLink'
+import { createUserFromInvitationLink } from './createUserFromInvitationLink'
 
 export {
     logIn,
@@ -32,4 +33,5 @@ export {
     search,
     editProjectInfos,
     createInvitaionLink,
+    createUserFromInvitationLink,
 }
