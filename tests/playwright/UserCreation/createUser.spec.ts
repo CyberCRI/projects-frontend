@@ -27,11 +27,4 @@ test(`test-user-creation ${usersDict.admin.email}`, async ({ context }) => {
     }
     const pageTwo = await context.newPage()
     await createUserFromInvitationLink(pageTwo, clipboardText, usersDict.playwright)
-    // try{
-    //     logger.info('Create user successful')
-    // } catch (err) {
-    //     logger.error('Create user has failed')
-    //     logger.error(err)
-    //     throw err
-    // }
 })
