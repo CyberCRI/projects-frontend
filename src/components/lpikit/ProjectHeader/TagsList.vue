@@ -147,7 +147,7 @@ export default {
                      * if it doesn't, we hide it and add it to the more tags
                      * we do this for both org and wiki tags
                      */
-                    if (this.$el) {
+                    if (this && this.$el) {
                         const wrapperRight = this.$el.getBoundingClientRect().right
                         const wrapperBottom = this.$el.getBoundingClientRect().bottom
                         let hideNext = false

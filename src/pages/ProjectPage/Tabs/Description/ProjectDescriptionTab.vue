@@ -1,31 +1,31 @@
 <template>
     <div>
         <div v-if="project" class="project-description">
-            <DescriptionPlaceholder
-                v-if="canEditProject && showDescriptionPlaceHolder"
-                :project="project"
-            ></DescriptionPlaceholder>
-
-            <div v-else class="description-content" v-html="description" />
-
             <aside>
                 <div v-if="canEditProject && !showDescriptionPlaceHolder" class="description-edit">
                     <LpiButton
                         :label="$filters.capitalize($t('description.edit-title'))"
                         :secondary="true"
-                        class="read-description-button"
+                        class="edit-description-button white-bg"
                         left-icon="Pen"
                         @click="editDescriptionModalActive = !editDescriptionModalActive"
                         data-test="edit-description"
                     />
                 </div>
-                <SummaryBlock
+                <DescriptionSummaryBlock
                     :description="true"
                     class="summary"
                     summary-text-container=".description-content"
                     @item-clicked="scrollToSection"
                 />
             </aside>
+
+            <DescriptionPlaceholder
+                v-if="canEditProject && showDescriptionPlaceHolder"
+                :project="project"
+            ></DescriptionPlaceholder>
+
+            <div v-else class="description-content" v-html="description" />
         </div>
 
         <DescriptionDrawer
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import SummaryBlock from '@/components/lpikit/Summary/SummaryBlock.vue'
+import DescriptionSummaryBlock from '@/components/lpikit/Summary/DescriptionSummaryBlock.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
@@ -52,7 +52,7 @@ export default {
     components: {
         DescriptionDrawer,
         LpiButton,
-        SummaryBlock,
+        DescriptionSummaryBlock,
         DescriptionPlaceholder,
     },
 
@@ -113,9 +113,6 @@ export default {
 
 <style lang="scss" scoped>
 .project-description {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     padding: $space-xl 0;
 
     .description-content {
@@ -136,15 +133,28 @@ export default {
     aside {
         padding-top: $space-l;
         position: sticky;
+        z-index: 100;
         top: $navbar-height;
+        display: flex;
+        justify-content: flex-end;
+        background-color: rgba(255, 255, 255, 0.7);
     }
 }
 
-.description-edit {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-bottom: $space-l;
+:deep(.description-content > p),
+:deep(.description-content > h1),
+:deep(.description-content > h2),
+:deep(.description-content > h3),
+:deep(.description-content > h4),
+:deep(.description-content > h5),
+:deep(.description-content > h6),
+:deep(.description-content > ul),
+:deep(.description-content > ol),
+:deep(.description-content > blockquote),
+:deep(.description-content > .custom-video-ctn) {
+    max-width: pxToRem(800px);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media screen and (min-width: $min-tablet) {
