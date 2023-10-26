@@ -4,7 +4,7 @@ on:
 jobs:
   e2e-tests:
     environment:
-      name: ${{ github.ref == 'refs/heads/staging' && 'Staging' || 'Dev' }}
+      name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
     timeout-minutes: 18
     runs-on: [self-hosted, default-runner]
     env:
