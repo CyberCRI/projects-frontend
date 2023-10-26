@@ -23,7 +23,7 @@ ARG VITE_APP_API_DEFAULT_VERSION=/v1 \
     VITE_APP_META_PORTAL_URL=https://projects.directory \
     VITE_APP_MIXPANEL_API_URL \
     VITE_APP_MIXPANEL_PROJECT_TOKEN \
-    VITE_APP_PUBLIC_BINARIES_PREFIX \
+    VITE_APP_PUBLIC_BINARIES_PREFIX=https://criparisprodprodassets.blob.core.windows.net/assets/public \
     VITE_APP_VERSION\
     VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
     VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev
