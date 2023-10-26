@@ -445,6 +445,7 @@ export default {
             align-items: center;
             margin-left: $space-m;
             margin-bottom: 0;
+
             &:empty {
                 display: none;
             }
