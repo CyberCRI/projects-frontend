@@ -431,6 +431,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 .organization-logo {
     max-width: 100%;
 }
+
 .directory-logo {
     width: pxToRem(200px);
     height: auto;

@@ -38,7 +38,7 @@ jobs:
       - name: Check that prettier has been run on all files
         run: yarn format:check
       - name: Run the linter
-        run: yarn lint
+        run: yarn lint:ci
       # - name: Run unit tests with coverage
       #   uses: artiomtr/jest-coverage-report-action@v2.0-rc.5
       #   with:
