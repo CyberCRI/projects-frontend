@@ -11,10 +11,15 @@
 .category-description,
 .comment-content,
 .editor-content {
+    .tiptap-table-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+        position: relative;
+    }
+
     table {
         border-collapse: collapse;
         table-layout: fixed;
-        width: 100%;
         overflow: hidden;
         margin: 0 auto;
         padding: 0;
@@ -22,6 +27,7 @@
         font: inherit;
         font-size: 100%;
         vertical-align: baseline;
+        width: fit-content;
 
         th {
             background-color: $gray-2;
