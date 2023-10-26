@@ -14,21 +14,14 @@
             <div class="description-content" v-html="fullDescription"></div>
         </div>
         <div class="see-more" v-if="isLimited">
-            <LpiButton
-                :label="$filters.capitalize($t('common.see-more'))"
-                :secondary="true"
-                right-icon="ArrowRight"
-                size="link"
-                @click="goToProfileBio"
-                data-test="see-more-bio"
-            />
+            <SeeMoreArrow @click.prevent="goToProfileBio" data-test="see-more-bio" />
         </div>
     </div>
 </template>
 
 <script>
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 export default {
     name: 'UserDescriptions',
 
@@ -40,7 +33,7 @@ export default {
     },
     components: {
         HtmlLimiter,
-        LpiButton,
+        SeeMoreArrow,
     },
 
     props: {

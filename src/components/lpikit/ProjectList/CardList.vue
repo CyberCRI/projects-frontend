@@ -19,14 +19,13 @@
                 <div class="title-ctn" v-if="withTitle">
                     <h3 class="title">
                         {{ $t('search.projects-tab', { count: totalCount.projects }) }}
+
+                        <SeeMoreArrow
+                            class="see-more-arrow"
+                            v-if="displaySeeMoreButton"
+                            :to="{ name: 'ProjectSearch', query: seeMoreQuery }"
+                        />
                     </h3>
-                    <LpiButton
-                        v-if="displaySeeMoreButton"
-                        :label="$filters.capitalize($t('common.see-more'))"
-                        size="link"
-                        right-icon="ArrowRight"
-                        @click="goTo({ name: 'ProjectSearch', query: seeMoreQuery })"
-                    />
                 </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="project in projects" :key="project.id" class="card-list__content">
@@ -40,12 +39,9 @@
                     <h3 class="title">
                         {{ $t('search.group-tab', { count: totalCount.groups }) }}
                     </h3>
-                    <LpiButton
+                    <SeeMoreArrow
                         v-if="displaySeeMoreButton"
-                        :label="$filters.capitalize($t('common.see-more'))"
-                        size="link"
-                        right-icon="ArrowRight"
-                        @click="goTo({ name: 'GroupSearch', query: seeMoreQuery })"
+                        :to="{ name: 'GroupSearch', query: seeMoreQuery }"
                     />
                 </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
@@ -60,12 +56,9 @@
                     <h3 class="title">
                         {{ $t('search.people-tab', { count: totalCount.peoples }) }}
                     </h3>
-                    <LpiButton
+                    <SeeMoreArrow
                         v-if="displaySeeMoreButton"
-                        :label="$filters.capitalize($t('common.see-more'))"
-                        size="link"
-                        right-icon="ArrowRight"
-                        @click="goTo({ name: 'PeopleSearch', query: seeMoreQuery })"
+                        :to="{ name: 'PeopleSearch', query: seeMoreQuery }"
                     />
                 </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
@@ -81,7 +74,7 @@
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
 import ProjectListSkeleton from '@/components/lpikit/Skeleton/ProjectListSkeleton.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 
 import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
@@ -91,7 +84,7 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        LpiButton,
+        SeeMoreArrow,
         ProjectListSkeleton,
         DynamicGrid,
     },
@@ -163,12 +156,6 @@ export default {
             )
         },
     },
-
-    methods: {
-        goTo(route) {
-            this.$router.push(route)
-        },
-    },
 }
 </script>
 
@@ -198,6 +185,10 @@ export default {
     &__content {
         width: min-content;
     }
+}
+
+.see-more-arrow {
+    font-size: $font-size-m;
 }
 
 .card-container {

@@ -4,13 +4,9 @@
             <h4 class="title" v-if="label">
                 {{ label }} <span>({{ allProjectCount }})</span>
             </h4>
-            <LpiButton
+            <SeeMoreArrow
                 v-if="isPreview && allProjectCount > limit"
-                :label="$filters.capitalize($t('common.see-more'))"
-                :secondary="true"
-                right-icon="ArrowRight"
-                size="link"
-                @click="goToProfileProjects"
+                @click.prevent="goToProfileProjects"
                 data-test="see-more"
             />
         </div>
@@ -95,7 +91,7 @@
 import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
 import CardList from '@/components/lpikit/ProjectList/CardList.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 import EmptyCard from './EmptyCard.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 
@@ -108,7 +104,7 @@ export default {
         ProjectListSearch,
         CardList,
         ProjectCard,
-        LpiButton,
+        SeeMoreArrow,
         EmptyCard,
         PaginationButtons,
     },
