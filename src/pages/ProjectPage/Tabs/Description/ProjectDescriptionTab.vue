@@ -93,6 +93,55 @@ export default {
             return this.project.description.length === 0 || this.project.description === '<p></p>'
         },
     },
+
+    watch: {
+        description: {
+            // dirty fix for tiptap / prosemirror bug
+            // (see https://github.com/ueberdosis/tiptap/issues/721 for the open issue on github)
+            // that prevent column width from being applied outside the editor
+            // the idea is to convert each column width from pixel value to a percentage and aplly it to the cell
+            // while keeping a min content width for cells without a width
+            handler: function (neo, old) {
+                return
+                if (neo != old) {
+                    this.$nextTick(() => {
+                        const tables = this.$el.querySelectorAll('.description-content table')
+                        // iterate over each table individually beacause sizing may vary
+                        ;[...tables].forEach((table) => {
+                            // proceed only if there's some manually sized cell
+                            const one_sized_cell = table.querySelector('[colwidth]')
+
+                            if (one_sized_cell) {
+                                // fetch a row and calculate total 'manual' width
+                                const tr = one_sized_cell.parentNode
+                                const tr_cells = tr.children
+                                const total_width = [...tr_cells].reduce((acc, cell) => {
+                                    const w = cell.getAttribute('colwidth')
+                                    if (w) acc += parseInt(w)
+                                    return acc
+                                }, 0)
+                                // safeguard aginst division by zero
+                                if (total_width == 0) return
+
+                                // apply width as percentage to each cell
+                                const other_cells = table.querySelectorAll('th, td')
+                                ;[...other_cells].forEach(function (e) {
+                                    const w = parseInt(e.getAttribute('colwidth'))
+
+                                    // if no manual width, use min-content to at least have a column
+                                    if (w) {
+                                        const percent = (w / total_width) * 100 + '%'
+                                        e.style.width = percent
+                                    } else e.style.width = 'min-content'
+                                })
+                            }
+                        })
+                    })
+                }
+            },
+            immediate: true,
+        },
+    },
 }
 </script>
 

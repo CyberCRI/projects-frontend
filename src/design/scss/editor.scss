@@ -11,6 +11,77 @@
 .category-description,
 .comment-content,
 .editor-content {
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+
+        th {
+            background-color: $gray-2;
+            padding: $space-s $space-m;
+            color: $gray-3;
+            font-weight: bold;
+        }
+
+        td,
+        th {
+            border: 1px solid $gray-4 !important;
+            min-width: 1em;
+            padding: 3px 5px;
+            vertical-align: top;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        td {
+            border: 1px solid $gray-4;
+            padding: $space-m calc(2 * $space-s);
+        }
+
+        > * {
+            margin-bottom: 0;
+        }
+
+        .selectedCell::after {
+            z-index: 2;
+            position: absolute;
+            content: '';
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(200, 200, 255, 0.4);
+            pointer-events: none;
+        }
+
+        .column-resize-handle {
+            position: absolute;
+            right: -2px;
+            top: 0;
+            bottom: -2px;
+            width: 4px;
+            background-color: #adf;
+            pointer-events: none;
+        }
+    }
+
+    .tableWrapper {
+        padding: 1rem 0;
+        overflow-x: auto;
+    }
+
+    .resize-cursor {
+        cursor: ew-resize;
+        cursor: col-resize;
+    }
+
     a {
         color: $primary-dark !important;
         cursor: pointer;
@@ -71,24 +142,6 @@
         border-left: 4px solid $primary-dark;
         padding-left: 20px;
         color: $gray-1;
-    }
-
-    table {
-        margin: auto;
-        padding: 0;
-        border: 0;
-        font: inherit;
-        font-size: 100%;
-        vertical-align: baseline;
-
-        tr {
-            border: 1px solid $gray-4;
-        }
-
-        td {
-            border: 1px solid $gray-4;
-            padding: $space-m calc(2 * $space-s);
-        }
     }
 
     img {
