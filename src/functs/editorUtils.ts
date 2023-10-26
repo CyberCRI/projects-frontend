@@ -11,10 +11,18 @@ export function fixTables(contentNode) {
 
     // wrap table in a container for scrolling
     ;[...tables].forEach((table) => {
-        const wrapper = document.createElement('div')
-        wrapper.classList.add('tiptap-table-wrapper')
-        table.parentNode.insertBefore(wrapper, table)
-        wrapper.appendChild(table)
+        table.classList.remove('auto-width')
+        if (!table.parentNode?.classList.contains('tiptap-table-wrapper')) {
+            // avoir re-entrance
+            const wrapper = document.createElement('div')
+            wrapper.classList.add('tiptap-table-wrapper')
+
+            table.parentNode.insertBefore(wrapper, table)
+            wrapper.appendChild(table)
+        }
+        if (table.offsetWidth <= table.parentNode?.offsetWidth) {
+            table.classList.add('auto-width')
+        }
     })
 }
 

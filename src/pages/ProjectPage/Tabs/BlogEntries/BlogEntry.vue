@@ -21,7 +21,7 @@
             {{ $t('blog.last-publication') }}
         </div>
 
-        <div v-if="isExpanded" class="entry-body" v-html="blogEntry.content"></div>
+        <div v-show="isExpanded" class="entry-body" v-html="blogEntry.content"></div>
 
         <div
             v-if="canEdit || canDelete"
@@ -49,6 +49,7 @@
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {
     name: 'BlogEntry',
@@ -90,6 +91,21 @@ export default {
     methods: {
         toggleExpand() {
             this.$emit('toggle-expand', this.blogEntry)
+        },
+    },
+
+    watch: {
+        'blogEntry.content': {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = this.$el.querySelector('.entry-body')
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
         },
     },
 }

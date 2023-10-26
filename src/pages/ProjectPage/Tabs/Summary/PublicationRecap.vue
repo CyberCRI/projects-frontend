@@ -32,6 +32,7 @@
 
 <script>
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
+import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {
     name: 'PublicationRecap',
@@ -66,6 +67,21 @@ export default {
         redirectToPage() {
             const path = this.isBlog ? 'blog-entries' : 'comments'
             this.$router.push(`/projects/${this.$route.params.slugOrId}/${path}#tab`)
+        },
+    },
+
+    watch: {
+        'lastPublication.content': {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = this.$el.querySelector('.publication-content')
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
         },
     },
 }
