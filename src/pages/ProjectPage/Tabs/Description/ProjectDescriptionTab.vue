@@ -93,6 +93,7 @@ export default {
         },
         computeAnchorOffset: debounce(
             function () {
+                if (!this) return // safeguard for debounced behavior when the component is unmounted
                 const aside = this?.$el?.querySelector('aside')
                 const asideHeight = aside ? aside.offsetHeight : 0
                 const anchorOffset = asideHeight + 20
