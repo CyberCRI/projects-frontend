@@ -69,7 +69,7 @@
             </div>
             <div class="btn-ctn">
                 <LpiButton
-                    v-if="!isMobile && seeMoreTabs.length > 0"
+                    v-if="!layouting && !isMobile && seeMoreTabs.length > 0"
                     :label="showMoreButtonLabel"
                     class="more-btn"
                     left-icon="DotsHorizontal"
@@ -160,6 +160,7 @@ export default {
             showTabList: false,
             displayedTabs: [],
             seeMoreTabs: [],
+            layouting: false,
         }
     },
 
@@ -215,16 +216,16 @@ export default {
                 /* for each tab, we check if it fit in the wrapper
                  * if it doesn't, we hide it and add it to the more tabs
                  */
-                const tabs = this.$el.getElementsByClassName('tabs-slider')
+                const tabsNode = this.$el.querySelector('.tabs-slider')
 
-                if (tabs.length) {
-                    const wrapperRight = tabs[0]?.getBoundingClientRect()?.right
+                if (tabsNode) {
                     // reset the arrays
                     this.displayedTabs.splice(0)
                     this.seeMoreTabs.splice(0)
 
                     // for code factorization
                     const iterate = async (tabs, displayed, otherTab) => {
+                        const wrapperRight = tabsNode.getBoundingClientRect()?.right
                         let skipOthers = false
                         for (let i = 0; i < tabs.length; i++) {
                             // add the tag to the displayed tags to compute its size
@@ -251,8 +252,38 @@ export default {
                         }
                     }
 
+                    const postIterate = async (tabs, displayed, otherTab) => {
+                        const wrapperRight = tabsNode.getBoundingClientRect()?.right
+                        let skipOthers = false
+                        for (let i = displayed.length - 1; i > 0; i--) {
+                            await this.$nextTick()
+                            // get the last badge and check if it fits
+                            const tabsHtmlElement = this.$el.querySelectorAll('.tab')
+                            if (tabsHtmlElement.length) {
+                                const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
+                                const lastTabRight = lastTab.getBoundingClientRect().right
+                                if (lastTabRight > wrapperRight) {
+                                    // if it doesn't, we hide it and add it to the more tags
+                                    displayed.pop()
+                                    otherTab.unshift({ ...tabs[i], index: i })
+                                } else {
+                                    break // at this point all remaining tabs fit
+                                }
+                            }
+                        }
+                    }
+
                     // do the actual job
-                    await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
+                    this.layouting = true
+                    await this.$nextTick(async () => {
+                        await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
+                        this.layouting = false
+                        if (this.seeMoreTabs.length) {
+                            await this.$nextTick()
+                            // now available space might be shorter withe the see more button so re-iterate
+                            await postIterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
+                        }
+                    })
                 } // end of if (tabs.length)
             },
             42,
