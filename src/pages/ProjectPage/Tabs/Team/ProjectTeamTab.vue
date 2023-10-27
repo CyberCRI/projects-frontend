@@ -324,7 +324,7 @@ export default {
 
 <style lang="scss" scoped>
 .project-team {
-    padding: $space-xl $space-l;
+    padding: $space-xl 0;
 
     .user-card-ctn {
         justify-content: space-between;
@@ -339,29 +339,5 @@ export default {
     display: flex;
     justify-content: flex-end;
     padding: $space-l 0;
-}
-
-@media screen and (min-width: $min-tablet) and (max-width: $max-tablet) {
-    .project-team .user-card-ctn > div {
-        flex-basis: calc(50% - 2 * $space-s);
-    }
-}
-
-@media screen and (min-width: $max-tablet) {
-    .project-team .user-card-ctn > div {
-        flex-basis: calc(33% - 2 * $space-s);
-    }
-}
-
-@media screen and (min-width: $min-desktop) and (max-width: $max-desktop) {
-    .project-team .user-card-ctn > div {
-        flex-basis: calc(25% - 2 * $space-s);
-    }
-}
-
-@media screen and (min-width: $max-desktop) {
-    .project-team .user-card-ctn > div {
-        flex-basis: calc(20% - 2 * $space-s);
-    }
 }
 </style>
