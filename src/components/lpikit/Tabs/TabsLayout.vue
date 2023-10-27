@@ -254,7 +254,6 @@ export default {
 
                     const postIterate = async (tabs, displayed, otherTab) => {
                         const wrapperRight = tabsNode.getBoundingClientRect()?.right
-                        let skipOthers = false
                         for (let i = displayed.length - 1; i > 0; i--) {
                             await this.$nextTick()
                             // get the last badge and check if it fits
@@ -275,15 +274,14 @@ export default {
 
                     // do the actual job
                     this.layouting = true
-                    await this.$nextTick(async () => {
-                        await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
-                        this.layouting = false
-                        if (this.seeMoreTabs.length) {
-                            await this.$nextTick()
-                            // now available space might be shorter withe the see more button so re-iterate
-                            await postIterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
-                        }
-                    })
+                    await this.$nextTick()
+                    await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
+                    this.layouting = false
+                    if (this.seeMoreTabs.length) {
+                        // now available space might be shorter withe the see more button so re-iterate
+                        await this.$nextTick()
+                        await postIterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
+                    }
                 } // end of if (tabs.length)
             },
             42,
