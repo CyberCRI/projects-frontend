@@ -192,7 +192,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'faq',
                 component: () =>
                     import(
-                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpTab.vue'
+                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'
                     ),
             },
             {
