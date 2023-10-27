@@ -110,9 +110,4 @@ export default {
     align-items: center;
     flex-grow: 1;
 }
-
-.profile-edit-tabs {
-    max-width: pxToRem(800px);
-    margin: 0 auto;
-}
 </style>
