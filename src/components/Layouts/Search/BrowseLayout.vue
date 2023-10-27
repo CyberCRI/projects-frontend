@@ -80,8 +80,26 @@ export default {
     },
 
     async mounted() {
+        const section = this.$route.query.section
+
+        // safeguard against smartpants who play with their URL and risk section / routes mismatch
+        const routesFromSection = {
+            projects: 'ProjectSearch',
+            groups: 'GroupSearch',
+            people: 'PeopleSearch',
+        }
+        if (
+            section &&
+            routesFromSection[section] &&
+            routesFromSection[section] !== this.$route.name
+        ) {
+            // section does not match current route, redirect to correct route
+            this.$router.push({ name: routesFromSection[section], query: this.$route.query })
+        }
+
         // selectedSection must be inited first as it determines filterQueryParams
-        this.selectedSection = this.$route.query.section
+        this.selectedSection = section
+
         Object.assign(
             this.search,
             await updateFiltersFromURL(this.$route.query, this.filterQueryParams)

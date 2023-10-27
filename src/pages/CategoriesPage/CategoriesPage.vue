@@ -99,7 +99,7 @@ export default {
                 })
             else
                 this.$router.push({
-                    name: 'Search',
+                    name: 'ProjectSearch',
                     query: { section: 'projects' },
                 })
         },

@@ -164,9 +164,7 @@ export default {
         // (i.e. in category page search we should not reset the category filter)
         filters.section = this.$route.query.section || this.section || 'all'
 
-        this.selectedSection = this.sectionFilters.find(
-            (sectionFilter) => filters.section === sectionFilter.type
-        )
+        this.selectedSection = this.getSection(filters.section)
 
         filters.search = rawFilters.search || ''
 
@@ -398,6 +396,13 @@ export default {
             this.selectedFilters.search = ''
             this.$emit('enter', this.adaptToParent(this.selectedFilters))
         },
+
+        getSection(sectionType) {
+            return (
+                this.sectionFilters.find((sec) => sec.type === sectionType) ||
+                this.sectionFilters[0]
+            )
+        },
     },
 
     watch: {
@@ -422,9 +427,9 @@ export default {
         },
         'search.section': {
             handler: function (neo) {
-                this.selectedSection =
-                    this.sectionFilters.find((sec) => sec.type === neo) || this.sectionFilters[0]
+                this.selectedSection = this.getSection(neo)
             },
+            immediate: true,
         },
     },
 }
