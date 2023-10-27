@@ -203,6 +203,7 @@ export default {
             // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
             background-color: $white;
         }
+
         svg {
             transition: 0.15s fill ease-in-out;
             fill: $primary-dark;

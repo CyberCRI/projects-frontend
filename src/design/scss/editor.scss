@@ -15,6 +15,7 @@
         max-width: 100%;
         overflow-x: auto;
         position: relative;
+
         table.auto-width {
             width: auto;
         }
@@ -62,11 +63,8 @@
             z-index: 2;
             position: absolute;
             content: '';
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            background: rgba(200, 200, 255, 0.4);
+            inset: 0;
+            background: rgb(200 200 255 / 40%);
             pointer-events: none;
         }
 

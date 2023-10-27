@@ -51,7 +51,7 @@ import IconImage from '@/components/svgs/IconImage.vue'
 export default {
     name: 'DescriptionSummaryBlock',
 
-    emits: ['item-clicked'],
+    emits: ['item-clicked', 'decription-summary-rendered'],
 
     components: { IconImage },
 
@@ -114,7 +114,10 @@ export default {
                         const anchor = document.createElement('span')
                         anchor.id = `anchor-${i}`
                         anchor.classList.add('anchor-element')
-                        if (this.anchorOffset) anchor.style.top = `-${this.anchorOffset}px`
+                        if (this.anchorOffset) {
+                            anchor.style.transform = `translateY(-${this.anchorOffset}px)`
+                        }
+
                         element.prepend(anchor)
 
                         this.summary.push({
@@ -146,6 +149,21 @@ export default {
             },
             deep: true,
         },
+
+        anchorOffset: {
+            handler(neo, old) {
+                if (old != neo) this.loadSummary()
+            },
+            deep: true,
+        },
+
+        summary: {
+            handler() {
+                this.$emit('decription-summary-rendered', !!this.summary.length)
+            },
+            deep: true,
+            immediate: true,
+        },
     },
 }
 </script>
@@ -162,12 +180,11 @@ export default {
     fill: $black;
     display: inline-block;
 }
+
 .summary {
     background: $primary-lighter;
     border-radius: $border-radius-l;
     border: $border-width-s solid $green;
-    position: relative;
-    overflow: hidden;
     position: relative;
     overflow: visible;
 

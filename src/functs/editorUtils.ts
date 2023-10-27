@@ -1,5 +1,8 @@
 export function fixTables(contentNode) {
     const tables = contentNode?.querySelectorAll('table')
+    if (!tables) {
+        return // tables is undefined if contentNode DNE
+    }
     // fix prosemirror/tiptpap bug on cell sizing
     ;[...tables].forEach((table) => {
         const sizedCells = table.querySelectorAll('[colwidth]')
@@ -26,6 +29,25 @@ export function fixTables(contentNode) {
     })
 }
 
+export function patchVideos(contentNode) {
+    // transitioal fix for videos still lacking a 'custom-video-ctn' wrapper
+    // following redesign of project description page and tiptap table fix
+    const videos = contentNode?.querySelectorAll('.custom-video-wrapper')
+    if (!videos) {
+        return // videos is undefined if contentNode DNE
+    }
+
+    ;[...videos].forEach((video) => {
+        if (!video.parentNode?.classList.contains('custom-video-ctn')) {
+            const wrapper = document.createElement('div')
+            wrapper.classList.add('custom-video-ctn')
+            video.parentNode.insertBefore(wrapper, video)
+            wrapper.appendChild(video)
+        }
+    })
+}
+
 export default function fixEditorContent(contentNode) {
     fixTables(contentNode)
+    patchVideos(contentNode)
 }

@@ -2,7 +2,7 @@
     <div>
         <div v-if="project" class="project-description">
             <aside>
-                <div v-if="canEditProject && !showDescriptionPlaceHolder" class="description-edit">
+                <div v-if="showEditButton" class="description-edit">
                     <LpiButton
                         :label="$filters.capitalize($t('description.edit-title'))"
                         :secondary="true"
@@ -17,6 +17,8 @@
                     class="summary"
                     summary-text-container=".description-content"
                     @item-clicked="scrollToSection"
+                    :anchor-offset="anchorOffset"
+                    @decription-summary-rendered="onSummaryRendered"
                 />
             </aside>
 
@@ -46,6 +48,7 @@ import ProjectTab from '@/mixins/ProjectTab.ts'
 import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
+import debounce from 'lodash.debounce'
 export default {
     name: 'ProjectDescriptionTab',
 
@@ -68,7 +71,17 @@ export default {
     data() {
         return {
             editDescriptionModalActive: false,
+            anchorOffset: 0,
         }
+    },
+
+    mounted() {
+        this.computeAnchorOffset()
+        window.addEventListener('resize', this.computeAnchorOffset)
+    },
+
+    beforeUnmount() {
+        window.removeEventListener('resize', this.computeAnchorOffset)
     },
 
     methods: {
@@ -77,6 +90,19 @@ export default {
         },
         scrollToSection(target) {
             utils.scrollTo(document.getElementById(`anchor-${target}`))
+        },
+        computeAnchorOffset: debounce(
+            function () {
+                const aside = this?.$el?.querySelector('aside')
+                const asideHeight = aside ? aside.offsetHeight : 0
+                const anchorOffset = asideHeight + 20
+                this.anchorOffset = anchorOffset
+            },
+            100,
+            { leading: false, trailing: true }
+        ),
+        onSummaryRendered() {
+            this.computeAnchorOffset()
         },
     },
 
@@ -91,6 +117,9 @@ export default {
 
         showDescriptionPlaceHolder() {
             return this.project.description.length === 0 || this.project.description === '<p></p>'
+        },
+        showEditButton() {
+            return this.canEditProject && !this.showDescriptionPlaceHolder
         },
     },
 
@@ -107,13 +136,29 @@ export default {
             },
             immediate: true,
         },
+
+        showEditButton: {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        this.computeAnchorOffset()
+                    })
+                }
+            },
+            immediate: true,
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
 .project-description {
-    padding: $space-xl 0;
+    padding: $space-l 0;
+
+    @media screen and (min-width: $min-tablet) {
+        padding: $space-xl 0;
+    }
 
     .description-content {
         background: $white;
@@ -132,12 +177,22 @@ export default {
 
     aside {
         padding-top: $space-l;
-        position: sticky;
-        z-index: 100;
-        top: $navbar-height;
+        position: static;
         display: flex;
-        justify-content: flex-end;
-        background-color: rgba(255, 255, 255, 0.7);
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        background-color: rgb(255 255 255 / 70%);
+
+        @media screen and (min-width: $min-tablet) {
+            flex-flow: row;
+            justify-content: flex-end;
+            align-items: flex-start;
+            position: sticky;
+            z-index: 100;
+            top: $navbar-height;
+        }
     }
 }
 
@@ -157,29 +212,29 @@ export default {
     margin-right: auto;
 }
 
-@media screen and (min-width: $min-tablet) {
-    .project-description {
-        .description-edit,
-        .summary {
-            margin-left: 3.75rem;
-        }
-    }
+:deep(.anchor-element) {
+    display: inline-block;
 }
 
-@media screen and (max-width: $max-tablet) {
-    .project-description {
-        flex-direction: column-reverse;
-        padding: $space-l $space-s;
+// @media screen and (min-width: $min-tablet) {
+//     .project-description {
+//         .description-edit,
+//         .summary {
+//             margin-left: 3.75rem;
+//         }
+//     }
+// }
 
-        aside {
-            padding-left: $space-l;
-            position: static;
-            margin-left: auto;
+// @media screen and (max-width: $max-tablet) {
+//     .project-description {
+//         aside {
+//             padding-left: $space-l;
+//             margin-left: auto;
 
-            .summary {
-                margin-bottom: $space-l;
-            }
-        }
-    }
-}
+//             .summary {
+//                 margin-bottom: $space-l;
+//             }
+//         }
+//     }
+// }
 </style>
