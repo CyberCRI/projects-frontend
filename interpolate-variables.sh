@@ -6,6 +6,8 @@ set -e
 EXISTING_VARS=$(printenv | awk -F= '{print $1}'| grep DOCKER_INJECT_ | sed 's/^/\$/g' | paste -sd,)
 export EXISTING_VARS;
 
+echo "Interpolating variables $EXISTING_VARS"
+
 for file in /usr/share/nginx/html/*.html /usr/share/nginx/html/assets/*.js;
 do
   cat "$file" | envsubst "$EXISTING_VARS" > "$file.tmp" && cp "$file.tmp" "$file"
