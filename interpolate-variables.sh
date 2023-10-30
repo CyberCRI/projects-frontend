@@ -7,7 +7,7 @@ EXISTING_VARS=$(printenv | awk -F= '{print $1}'| grep DOCKER_INJECT_ | sed 's/^/
 export EXISTING_VARS;
 
 echo "Interpolating variables in static files:"
-echo -e "$EXISTING_VARS" | sed s/\$//g | sed s/,/\\n/g
+echo -e "$EXISTING_VARS" | sed s/\\$//g | sed s/,/\\n/g
 
 for file in /usr/share/nginx/html/*.html /usr/share/nginx/html/assets/*.js;
 do
