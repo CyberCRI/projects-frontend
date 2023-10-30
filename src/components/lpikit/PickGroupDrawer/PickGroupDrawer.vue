@@ -22,7 +22,7 @@
 </template>
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import GroupModal from '@/components/Layouts/Admin/Tabs/GroupModal.vue'
+import GroupModal from '@/pages/AdminPortalPage/Tabs/GroupModal.vue'
 
 export default {
     name: 'PickGroupDrawer',

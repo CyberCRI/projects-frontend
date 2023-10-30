@@ -7,10 +7,7 @@ export interface PeopleState {}
 const state = (): PeopleState => ({})
 
 const actions = {
-    async searchPeopleProject(
-        { commit },
-        { search, org_id, param }
-    ): Promise<APIResponseList<PeopleModel>> {
+    async searchPeopleProject(_, { search, org_id, param }): Promise<APIResponseList<PeopleModel>> {
         try {
             return await searchPeopleProject({ search, org_id }, param)
         } catch (err) {

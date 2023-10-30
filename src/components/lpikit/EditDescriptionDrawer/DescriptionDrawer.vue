@@ -106,7 +106,6 @@ export default {
                                     project: {
                                         description: this.editorDescription.savedContent,
                                     },
-                                    scope: 'updated.description',
                                 })
 
                                 await this.$store.dispatch(

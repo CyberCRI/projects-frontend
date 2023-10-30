@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import LinkList from '@/components/Layouts/Admin/Tabs/LinksList.vue'
+import LinkList from '@/pages/AdminPortalPage/Tabs/LinksList.vue'
 import english from '@/locales/en.json'
 import * as invitationSrv from '@/api/invitations.service'
 import flushPromises from 'flush-promises'

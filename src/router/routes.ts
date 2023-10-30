@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import HomeLayout from '@/components/Layouts/HomeLayout.vue'
+import HomePage from '@/pages/HomePage/HomePage.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: HomeLayout,
+        component: HomePage,
         meta: {
             resetScroll: true,
         },
@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/help',
         name: 'Help',
         component: () =>
-            import(/* webpackChunkName: "About" */ '../components/Layouts/Help/HelpLayout.vue'),
+            import(/* webpackChunkName: "HelpPage" */ '../pages/HelpPage/HelpPage.vue'),
         meta: {
             resetScroll: true,
         },
@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: HomeLayout,
+        component: HomePage,
         meta: {
             resetScroll: true,
         },
@@ -55,7 +55,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Profile',
         component: () =>
             import(
-                /* webpackChunkName: "UserProfileLayout" */ '../components/Layouts/Profile/UserProfileLayout.vue'
+                /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
             ),
         props: {
             userKId: null,
@@ -72,7 +72,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileSummaryTab" */ '../components/Layouts/Profile/Tabs/ProfileSummaryTab.vue'
+                        /* webpackChunkName: "ProfileSummaryTab" */ '../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'
                     ),
             },
             {
@@ -80,7 +80,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileBio',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileBioTab" */ '../components/Layouts/Profile/Tabs/ProfileBioTab.vue'
+                        /* webpackChunkName: "ProfileBioTab" */ '../pages/UserProfilePage/Tabs/ProfileBioTab.vue'
                     ),
             },
             {
@@ -88,7 +88,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileProjectTab" */ '../components/Layouts/Profile/Tabs/ProfileProjectTab.vue'
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'
                     ),
             },
             {
@@ -96,7 +96,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileGroups',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileGroupsTab" */ '../components/Layouts/Profile/Tabs/ProfileGroupsTab.vue'
+                        /* webpackChunkName: "ProfileGroupsTab" */ '../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'
                     ),
             },
             {
@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProfileSkills',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProfileSkillTab" */ '../components/Layouts/Profile/Tabs/ProfileSkillTab.vue'
+                        /* webpackChunkName: "ProfileSkillTab" */ '../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
                     ),
             },
         ],
@@ -114,7 +114,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEdit',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditLayout" */ '../components/Layouts/ProfileEdit/ProfileEditLayout.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
         meta: {
             resetScroll: true,
@@ -128,7 +128,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileOtherUser',
         component: () =>
             import(
-                /* webpackChunkName: "UserProfileLayout" */ '../components/Layouts/Profile/UserProfileLayout.vue'
+                /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
             ),
         props: true,
         meta: {
@@ -143,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileEditOtherUser',
         component: () =>
             import(
-                /* webpackChunkName: "ProfileEditLayout" */ '../components/Layouts/ProfileEdit/ProfileEditLayout.vue'
+                /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
         props: true,
         meta: {
@@ -160,7 +160,7 @@ const routes: Array<RouteRecordRaw> = [
         redirect: { name: 'general' },
         component: () =>
             import(
-                /* webpackChunkName: "PAgeAdmin" */ '../components/Layouts/Admin/AdminPortalLayout.vue'
+                /* webpackChunkName: "PAgeAdmin" */ '../pages/AdminPortalPage/AdminPortalPage.vue'
             ),
         children: [
             {
@@ -168,7 +168,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'general',
                 component: () =>
                     import(
-                        /* webpackChunkName: "PortalGeneralAdmin" */ '../components/Layouts/Admin/Tabs/InformationTab.vue'
+                        /* webpackChunkName: "PortalGeneralAdmin" */ '../pages/AdminPortalPage/Tabs/InformationTab.vue'
                     ),
             },
             {
@@ -176,7 +176,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'tags',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TagsAdmin" */ '../components/Layouts/Admin/Tabs/TagsTab.vue'
+                        /* webpackChunkName: "TagsAdmin" */ '../pages/AdminPortalPage/Tabs/TagsTab.vue'
                     ),
             },
             {
@@ -184,7 +184,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'categories',
                 component: () =>
                     import(
-                        /* webpackChunkName: "CategoriesAdmin" */ '../components/Layouts/Admin/Tabs/CategoriesTab.vue'
+                        /* webpackChunkName: "CategoriesAdmin" */ '../pages/AdminPortalPage/Tabs/CategoriesTab.vue'
                     ),
             },
             {
@@ -192,7 +192,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'faq',
                 component: () =>
                     import(
-                        /* webpackChunkName: "FaqAdmin" */ '../components/Layouts/Admin/Tabs/HelpTab.vue'
+                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpTab.vue'
                     ),
             },
             {
@@ -200,7 +200,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'templates',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/TemplatesTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/TemplatesTab.vue'
                     ),
             },
             {
@@ -208,7 +208,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Accounts',
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/AccountsTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/AccountsTab.vue'
                     ),
             },
             {
@@ -217,7 +217,7 @@ const routes: Array<RouteRecordRaw> = [
                 redirect: { name: 'linksList' },
                 component: () =>
                     import(
-                        /* webpackChunkName: "LinksTab" */ '../components/Layouts/Admin/Tabs/LinksTab.vue'
+                        /* webpackChunkName: "LinksTab" */ '../pages/AdminPortalPage/Tabs/LinksTab.vue'
                     ),
                 children: [
                     {
@@ -225,7 +225,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinksList" */ '../components/Layouts/Admin/Tabs/LinksList.vue'
+                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksList.vue'
                             ),
                     },
                     {
@@ -233,7 +233,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksCreate',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinkCreate" */ '../components/Layouts/Admin/Tabs/LinkCreate.vue'
+                                /* webpackChunkName: "LinkCreate" */ '../pages/AdminPortalPage/Tabs/LinkCreate.vue'
                             ),
                     },
                 ],
@@ -244,7 +244,7 @@ const routes: Array<RouteRecordRaw> = [
                 redirect: { name: 'groupsList' },
                 component: () =>
                     import(
-                        /* webpackChunkName: "TemplateAdmin" */ '../components/Layouts/Admin/Tabs/GroupsTab.vue'
+                        /* webpackChunkName: "TemplateAdmin" */ '../pages/AdminPortalPage/Tabs/GroupsTab.vue'
                     ),
                 children: [
                     {
@@ -252,7 +252,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'groupsList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "groupsList" */ '../components/Layouts/Admin/Tabs/GroupsList.vue'
+                                /* webpackChunkName: "groupsListTab" */ '../pages/AdminPortalPage/Tabs/GroupsListTab.vue'
                             ),
                     },
                     {
@@ -260,7 +260,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'adminCreateGroup',
                         component: () =>
                             import(
-                                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
                             ),
                     },
                     // maybe we'll need this later
@@ -270,7 +270,7 @@ const routes: Array<RouteRecordRaw> = [
                     //     props: true,
                     //     component: () =>
                     //         import(
-                    //             /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                    //             /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
                     //         ),
                     // },
                 ],
@@ -288,27 +288,23 @@ const routes: Array<RouteRecordRaw> = [
         path: '/portal',
         name: 'Portal',
         component: () =>
-            import(
-                /* webpackChunkName: "PortalLayout" */ '@/components/Layouts/Portal/PortalLayout.vue'
-            ),
+            import(/* webpackChunkName: "PortalPage" */ '../pages/PortalPage/PortalPage.vue'),
+    },
+    {
+        path: '/people/',
+        name: 'People',
+        component: () =>
+            import(/* webpackChunkName: "PeoplePage" */ '../pages/PeoplePage/PeoplePage.vue'),
+        meta: {
+            resetScroll: true,
+        },
     },
     {
         path: '/categories/',
         name: 'Categories',
         component: () =>
             import(
-                /* webpackChunkName: "Category" */ '../components/Layouts/Categories/CategoriesLayout.vue'
-            ),
-        meta: {
-            resetScroll: true,
-        },
-    },
-    {
-        path: '/people/',
-        name: 'People',
-        component: () =>
-            import(
-                /* webpackChunkName: "PeopleLayout" */ '../components/Layouts/People/PeopleLayout.vue'
+                /* webpackChunkName: "CategoriesPage" */ '../pages/CategoriesPage/CategoriesPage.vue'
             ),
         meta: {
             resetScroll: true,
@@ -317,7 +313,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/category/:id',
         name: 'Category',
-        component: () => import(/* webpackChunkName: "Category" */ '../views/CategoryPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "CategoryPage" */ '../pages/CategoryPage/CategoryPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
@@ -326,7 +323,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/register/:token',
         name: 'Register',
-        component: () => import(/* webpackChunkName: "Register" */ '../views/RegisterPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "RegisterPage" */ '../pages/RegisterPage/RegisterPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
@@ -337,9 +335,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/groups/:groupId?',
         name: 'Groups',
         component: () =>
-            import(
-                /* webpackChunkName: "GroupsLayout" */ '@/components/Layouts/Group/GroupsLayout.vue'
-            ),
+            import(/* webpackChunkName: "GroupsPage" */ '../pages/GroupsPage/GroupsPage.vue'),
         props: true,
         meta: {
             resetScroll: true,
@@ -351,16 +347,14 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Group',
         redirect: { name: 'groupSnapshot' },
         component: () =>
-            import(
-                /* webpackChunkName: "GroupLayout" */ '../components/Layouts/Group/GroupLayout.vue'
-            ),
+            import(/* webpackChunkName: "GroupPage" */ '../pages/GroupPage/GroupPage.vue'),
         children: [
             {
                 path: 'snapshot',
                 name: 'groupSnapshot',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupSnapshot" */ '../components/lpikit/GroupView/Snapshot/GroupSnapshot.vue'
+                        /* webpackChunkName: "GroupSnapshotTab" */ '../pages/GroupPage/Tabs/GroupSnapshotTab.vue'
                     ),
             },
             {
@@ -368,7 +362,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'groupMembers',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupMembers" */ '../components/lpikit/GroupView/Members/GroupMembers.vue'
+                        /* webpackChunkName: "GroupMembersTab" */ '../pages/GroupPage/Tabs/GroupMembersTab.vue'
                     ),
             },
             {
@@ -376,7 +370,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'groupProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GroupProjects" */ '../components/lpikit/GroupView/Projects/GroupProjects.vue'
+                        /* webpackChunkName: "GroupProjectsTab" */ '../pages/GroupPage/Tabs/GroupProjectsTab.vue'
                     ),
             },
         ],
@@ -388,7 +382,7 @@ const routes: Array<RouteRecordRaw> = [
         props: true,
         component: () =>
             import(
-                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
             ),
     },
     {
@@ -396,7 +390,8 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Search',
         redirect: { name: 'GlobalSearch' },
 
-        component: () => import(/* webpackChunkName: "Browse" */ '../views/SearchPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "SearchPage" */ '../pages/SearchPage/SearchPage.vue'),
         meta: {
             resetScroll: true,
         },
@@ -406,7 +401,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'GlobalSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/GlobalSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GlobalSearchTab.vue'
                     ),
             },
             {
@@ -414,7 +409,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProjectSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/ProjectSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/ProjectSearchTab.vue'
                     ),
             },
             {
@@ -422,7 +417,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'GroupSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/GroupSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GroupSearchTab.vue'
                     ),
             },
             {
@@ -430,7 +425,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'PeopleSearch',
                 component: () =>
                     import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../components/Layouts/Search/Tabs/PeopleSearchTab.vue'
+                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/PeopleSearchTab.vue'
                     ),
             },
         ],
@@ -438,7 +433,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/map',
         name: 'map',
-        component: () => import(/* webpackChunkName: "ProjectMap" */ '../views/PageMap.vue'),
+        component: () => import(/* webpackChunkName: "MapPage" */ '../pages/MapPage/MapPage.vue'),
         meta: {
             resetScroll: true,
         },
@@ -448,7 +443,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'createGroup',
         component: () =>
             import(
-                /* webpackChunkName: "CreateEditGroupLayout" */ '../components/Layouts/CreateEditGroupLayout.vue'
+                /* webpackChunkName: "CreateEditGroupPage" */ '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
             ),
 
         meta: {
@@ -461,7 +456,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'createProject',
         component: () =>
             import(
-                /* webpackChunkName: "CreateProjectLayout" */ '../components/Layouts/CreateProjectLayout.vue'
+                /* webpackChunkName: "CreateProjectPage" */ '../pages/CreateProjectPage/CreateProjectPage.vue'
             ),
 
         meta: {
@@ -475,9 +470,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'pageProject',
         redirect: { name: 'projectSummary' },
         component: () =>
-            import(
-                /* webpackChunkName: "ProjectLayout" */ '../components/Layouts/Project/ProjectLayout.vue'
-            ),
+            import(/* webpackChunkName: "ProjectPage" */ '../pages/ProjectPage/ProjectPage.vue'),
         // dont reset scroll here it is done in the component as it handle complex scroll behavior for tabs
         children: [
             {
@@ -485,7 +478,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSummary" */ '../components/lpikit/ProjectView/Summary/ProjectSummary.vue'
+                        /* webpackChunkName: "ProjectSummaryTab" */ '../pages/ProjectPage/Tabs/Summary/ProjectSummaryTab.vue'
                     ),
             },
             {
@@ -497,7 +490,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectDescription',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectDescription" */ '../components/lpikit/ProjectView/Description/ProjectDescription.vue'
+                        /* webpackChunkName: "ProjectDescriptionTab" */ '../pages/ProjectPage/Tabs/Description/ProjectDescriptionTab.vue'
                     ),
             },
             {
@@ -509,7 +502,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectBlog',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectBlogEntries" */ '../components/lpikit/ProjectView/BlogEntries/ProjectBlogEntries.vue'
+                        /* webpackChunkName: "ProjectBlogEntriesTab" */ '../pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'
                     ),
             },
             {
@@ -517,7 +510,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectGoals',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectGoals" */ '../components/lpikit/ProjectGoals/ProjectGoals.vue'
+                        /* webpackChunkName: "ProjectGoalsTab" */ '../pages/ProjectPage/Tabs/ProjectGoals/ProjectGoalsTab.vue'
                     ),
             },
             {
@@ -525,7 +518,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectTeam',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectTeam" */ '../components/lpikit/ProjectView/Team/ProjectTeam.vue'
+                        /* webpackChunkName: "ProjectTeamTab" */ '../pages/ProjectPage/Tabs/Team/ProjectTeamTab.vue'
                     ),
             },
             {
@@ -537,7 +530,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectResources',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectResources" */ '../components/lpikit/ProjectView/Resources/ProjectResources.vue'
+                        /* webpackChunkName: "ProjectResourcesTab" */ '../pages/ProjectPage/Tabs/Resources/ProjectResourcesTab.vue'
                     ),
             },
             {
@@ -545,7 +538,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectLinkedProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectLinkedProjects" */ '../components/lpikit/ProjectView/LinkedProjects/ProjectLinkedProjects.vue'
+                        /* webpackChunkName: "ProjectLinkedProjectsTab" */ '../pages/ProjectPage/Tabs/LinkedProjects/ProjectLinkedProjectsTab.vue'
                     ),
             },
             {
@@ -553,7 +546,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectComments',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectComments" */ '../components/lpikit/ProjectComments/ProjectComments.vue'
+                        /* webpackChunkName: "ProjectCommentsTab" */ '../pages/ProjectPage/Tabs/ProjectComments/ProjectCommentsTab.vue'
                     ),
             },
             {
@@ -561,7 +554,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectAnnouncements',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectAnnouncements" */ '../components/lpikit/ProjectAnnouncements/ProjectAnnouncements.vue'
+                        /* webpackChunkName: "ProjectAnnouncementsTab" */ '../pages/ProjectPage/Tabs/ProjectAnnouncements/ProjectAnnouncementsTab.vue'
                     ),
             },
             {
@@ -569,7 +562,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProjectSettings',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSettings" */ '../components/lpikit/ProjectSettings/ProjectSettings.vue'
+                        /* webpackChunkName: "ProjectSettingsTab" */ '../pages/ProjectPage/Tabs/ProjectSettings/ProjectSettingsTab.vue'
                     ),
             },
         ],
@@ -578,7 +571,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/stats',
         name: 'stats',
         component: () =>
-            import(/* webpackChunkName: "Stat" */ '../components/lpikit/Stats/StatsLayout.vue'),
+            import(/* webpackChunkName: "StatPage" */ '../pages/StatsPage/StatsPage.vue'),
         meta: { requiresAuth: true, resetScroll: true },
     },
     {
@@ -586,7 +579,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'settings',
         component: () =>
             import(
-                /* webpackChunkName: "SettingsLayout" */ '../components/lpikit/Settings/SettingsLayout.vue'
+                /* webpackChunkName: "NotificationSettingsPage" */ '../pages/NotificationSettingsPage/NotificationSettingsPage.vue'
             ),
         meta: {
             requiresAuth: true,
@@ -602,7 +595,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'tos',
         component: () =>
             import(
-                /* webpackChunkName: "TermsOfService" */ '../components/lpikit/TermsOfService/TermsOfService.vue'
+                /* webpackChunkName: "TermsOfServicePage" */ '../pages/TermsOfServicePage/TermsOfServicePage.vue'
             ),
 
         meta: {
@@ -614,7 +607,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'legal-notices',
         component: () =>
             import(
-                /* webpackChunkName: "LegalNotices" */ '../components/lpikit/Legal/LegalNotices.vue'
+                /* webpackChunkName: "LegalNoticesPage" */ '../pages/LegalNoticesPage/LegalNoticesPage.vue'
             ),
 
         meta: {
@@ -625,7 +618,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/cookies',
         name: 'cookies',
         component: () =>
-            import(/* webpackChunkName: "Cookies" */ '../components/lpikit/Legal/CookiesPage.vue'),
+            import(/* webpackChunkName: "CookiesPage" */ '../pages/CookiesPage/CookiesPage.vue'),
 
         meta: {
             resetScroll: true,
@@ -636,7 +629,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'accessibility',
         component: () =>
             import(
-                /* webpackChunkName: "Accessibility" */ '../components/lpikit/Legal/AccessibilityPage.vue'
+                /* webpackChunkName: "AccessibilityPage" */ '../pages/AccessibilityPage/AccessibilityPage.vue'
             ),
 
         meta: {
@@ -648,7 +641,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'personal-data',
         component: () =>
             import(
-                /* webpackChunkName: "PersonalData" */ '../components/lpikit/Legal/PersonalData.vue'
+                /* webpackChunkName: "PersonalDataPage" */ '../pages/PersonalDataPage/PersonalDataPage.vue'
             ),
 
         meta: {
@@ -658,7 +651,8 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/:pathMatch(.*)*',
         name: 'page404',
-        component: () => import(/* webpackChunkName: "ErrorPage" */ '../views/ErrorPage.vue'),
+        component: () =>
+            import(/* webpackChunkName: "ErrorPage" */ '../pages/ErrorPage/ErrorPage.vue'),
         meta: {
             resetScroll: true,
         },

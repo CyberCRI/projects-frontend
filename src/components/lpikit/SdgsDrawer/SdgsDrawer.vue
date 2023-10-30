@@ -13,7 +13,7 @@
 
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import SdgGrid from '@/components/lpikit/ProjectGoals/SdgGrid.vue'
+import SdgGrid from '@/pages/ProjectPage/Tabs/ProjectGoals/SdgGrid.vue'
 
 export default {
     name: 'SdgsDrawer',

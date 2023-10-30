@@ -280,6 +280,10 @@
             "notice": "Les champs marqués avec * sont obligatoires.",
             "title": "Créer un lien d'enregistrement"
         },
+        "delete": {
+            "deleted-success": "Invitation supprimer",
+            "deleted-failed": "Erreur pendant la suppression de l'invitation"
+        },
         "delete-confirm-title": "Supprimer ce lien ?",
         "generate-link": "Créer un lien",
         "list": {
@@ -362,7 +366,7 @@
         "delete-selection": "Effacer la sélection",
         "delete-user": "Supprimer",
         "description": "description",
-        "destroy": "détruire",
+        "destroy": "Supprimer",
         "destroy-confirm": "Etes vous sûr(e) de vouloir supprimer ce projet? Cette action ne pourra pas être annulée.",
         "cant-quit-self": "Vous êtes le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de quitter le projet, soit supprimer le projet depuis l’onglet Configuration.",
         "cant-quit-other": "C'est le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de supprimer celui-ci, soit supprimer le projet depuis l’onglet Configuration.",
@@ -381,6 +385,8 @@
         "insert": "insérer",
         "less": "moins",
         "link": "lien",
+        "link-copied-success": "Lien copié",
+        "link-copied-failed": "La copie du lien a échoué",
         "learn-more": "voir plus",
         "loading": "Chargement",
         "login": "connexion",
@@ -1532,7 +1538,7 @@
         },
         "description": "la description",
         "description_summary": "La description de votre projet serait plus claire avec un sommaire.",
-        "destroy": "Détruire ce projet",
+        "destroy": "Supprimer ce projet",
         "duplicate": "dupliquer ce projet",
         "duplicate-hint": "Dupliquer ce projet créera une exacte copie avec un nouvel identifiant",
         "duplicating": "Projet en cours de duplication",
@@ -1803,6 +1809,7 @@
     },
     "register": {
         "title": "Créer un compte",
+        "title-confirm": "Vérification de l'email requise",
         "email": {
             "label": "Email *",
             "placeholder": "Entrez votre email",
@@ -1819,16 +1826,21 @@
             "placeholder": "Entrez votre nom",
             "is-required": "Le nom est requis"
         },
-        "job": {
-            "label": "Titre *",
-            "placeholder": "Entrez votre titre",
-            "is-required": "Le titre est requis"
+        "password": {
+            "label": "Mot de passe *",
+            "placeholder": "********",
+            "is-required": "Le mot de passe est requis"
         },
-        "confirmation": "Vous recevrez un e-mail de confirmation à l'adresse que vous avez fournie. Veuillez cliquer sur le lien dans l'e-mail pour activer votre compte.",
+        "confirmation": "Nous vous avons envoyé un email de vérification. Une fois que vous aurez confirmé que {email} est bien votre adresse, nous vous aiderons à débuter sur la plateforme.",
         "save-error": "Un problème technique est survenu. Veuillez réessayer plus tard.",
+        "email-already-exists": "Cet email est déjà enregistré.",
         "tos": "En continuant, vous acceptez nos  {term} et notre {privacy}",
         "term": "conditions d'utilisation",
-        "privacy": "politique de confidentialité"
+        "privacy": "politique de confidentialité",
+        "have-account": "Déjà un compte ?",
+        "login": "Se connecter",
+        "need-help": "Besoin d'aide ?",
+        "contact-us": "Nous contacter"
     },
     "role": {
         "choose-role": "Choisissez parmi les roles suivants :",
@@ -2415,5 +2427,14 @@
     },
     "portal": {
         "sub-title": "Découvrez les portails qui appartiennent à d’autres organisations. Parcourez, inspirez-vous et entrez en contact !"
+    },
+
+    "welcome-modal": {
+        "title": "Bienvenue sur le portail Projetcs de {organization}",
+        "success": "🎉 Votre compte a bien été créé !",
+        "instruction": "Avant de commencer à profiter de la plateforme, il faut compléter votre profil.",
+        "guidance": "Cela ne prendra que quelques minutes et nous vous guiderons en chemin.",
+        "complete-later": "Je ferais ça plus tard",
+        "complete-now": "Allons-y !"
     }
 }

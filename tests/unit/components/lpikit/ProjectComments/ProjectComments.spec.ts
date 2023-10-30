@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
-import ProjectComments from '@/components/lpikit/ProjectComments/ProjectComments.vue'
+import ProjectCommentsTab from '@/pages/ProjectPage/Tabs/ProjectComments/ProjectCommentsTab.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
@@ -17,7 +17,7 @@ const store = {
     },
 }
 
-describe('ProjectComments', () => {
+describe('ProjectCommentsTab', () => {
     let wrapper
     let defaultParams
 
@@ -29,7 +29,7 @@ describe('ProjectComments', () => {
     })
 
     it('should render ProjectComments component', () => {
-        wrapper = lpiShallowMount(ProjectComments, defaultParams)
+        wrapper = lpiShallowMount(ProjectCommentsTab, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })

@@ -11,7 +11,7 @@ export async function search(page, projId) {
     await page.locator('[data-test="search-input"]').click()
     await page.locator('[data-test="search-input"]').fill(projId)
     logger.info('Wait 15 sec to load results')
-    await delay(15000)
+    await delay(10000)
     logger.info('Click to launch the search')
     await page.locator('[data-test="search-input-button"]').click()
     logger.info('Check to have the right project ID')

@@ -1,6 +1,6 @@
 <template>
     <div :class="{ scrolled }" class="header">
-        <header class="header__container">
+        <header class="header__container page-section-full">
             <div :class="{ 'header__arrows--nav-open': isNavOpen }" class="header__directory">
                 <router-link to="/" data-test="lpi-logo">
                     <img
@@ -22,25 +22,57 @@
                         'PeopleSearch',
                         'GroupSearch',
                     ]"
-                    @click="goTo('Search')"
+                    :to="{ name: 'Search' }"
                 />
                 <!--TODO: put this back once the new page is created-->
-                <!--                <HeaderLink :label="$t('search.peoples')" route="people" @click="goTo('People')" />-->
+                <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
                 <HeaderLink
                     v-if="$store.getters['projectCategories/all'].length"
                     :label="$t('projects')"
-                    :routes="['Categories']"
-                    @click="goTo('Categories')"
+                    :routes="[
+                        'Categories',
+                        'Category',
+                        'pageProject',
+                        'projectSummary',
+                        'projectDescription',
+                        'projectBlog',
+                        'projectGoals',
+                        'projectTeam',
+                        'projectResources',
+                        'projectLinkedProjects',
+                        'projectComments',
+                        'projectAnnouncements',
+                        'ProjectSettings',
+                    ]"
+                    :to="{ name: 'Categories' }"
                 />
                 <HeaderLink
                     :label="$t('common.people')"
-                    :routes="['People']"
-                    @click="goTo('People')"
+                    :routes="[
+                        'People',
+                        'Profile',
+                        'ProfileSummary',
+                        'ProfileBio',
+                        'ProfileProjects',
+                        'ProfileGroups',
+                        'ProfileSkills',
+                        'ProfileEdit',
+                        'ProfileOtherUser',
+                        'ProfileEditOtherUser',
+                    ]"
+                    :to="{ name: 'People' }"
                 />
                 <HeaderLink
                     :label="$t('common.groups')"
-                    :routes="['Groups']"
-                    @click="goTo('Groups')"
+                    :routes="[
+                        'Groups',
+                        'Group',
+                        'groupSnapshot',
+                        'groupMembers',
+                        'groupProjects',
+                        'frontEditGroup',
+                    ]"
+                    :to="{ name: 'Groups' }"
                 />
                 <HeaderDropDown
                     :label="$t('common.more')"
@@ -128,22 +160,6 @@
         </Transition>
 
         <DrawerLayout
-            :has-footer="false"
-            :is-opened="fullProfileVisible"
-            :title="fullProfileVisible ? $t('me.page-title') : ''"
-            confirm-action-name=""
-            @close="closeDrawer"
-        >
-            <UserProfile
-                v-if="fullUserData && fullProfileVisible"
-                :is-edit-mode="isEditMode"
-                :user="fullUserData"
-                @edit-profile="editProfile"
-                @navigated-away="closeDrawer"
-            />
-        </DrawerLayout>
-
-        <DrawerLayout
             :custom-style="customNotificationStyle"
             :has-footer="false"
             :is-opened="showNotificationDrawer"
@@ -186,7 +202,6 @@ import HeaderLink from '@/components/Header/HeaderLink.vue'
 import HeaderDropDown from '@/components/Header/HeaderDropDown.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import NotificationIcon from '@/components/lpikit/NotificationIcon/NotificationIcon.vue'
-import UserProfile from '@/components/lpikit/UserProfile/UserProfile.vue'
 import NotificationList from '@/components/lpikit/Notifications/NotificationList.vue'
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -205,7 +220,6 @@ export default {
         HeaderItemList,
         BadgeItem,
         NotificationList,
-        UserProfile,
         LpiButton,
         HeaderLink,
         HeaderDropDown,
@@ -220,10 +234,7 @@ export default {
             categoriesModalActive: false,
             openPortalNav: false,
             faqModalActive: false,
-            fullProfileVisible: false,
-            fullUserData: undefined,
             isLoading: true,
-            isEditMode: false,
             showNotificationDrawer: false,
             showContactUsDrawer: false,
             customNotificationStyle: {
@@ -286,12 +297,7 @@ export default {
             this.isLoading = false
         },
 
-        editProfile() {
-            this.$router.push({ name: 'ProfileEdit' })
-        },
-
         closeDrawer() {
-            this.fullProfileVisible = false
             this.showNotificationDrawer = false
             this.showContactUsDrawer = false
         },
@@ -328,10 +334,6 @@ export default {
                 const el = document.getElementById('announcements')
                 if (el) el.scrollIntoView({ behavior: 'smooth' })
             }, 500)
-        },
-
-        toPortalPage() {
-            this.$router.push({ name: 'Portal' })
         },
 
         async getGlobalAnnouncements() {
@@ -376,35 +378,37 @@ export default {
             return [
                 {
                     label: this.$t('me.page-title').toUpperCase(),
-                    action: () => this.$router.push(`/profile/summary`),
+                    to: { name: 'ProfileSummary' },
                     leftIcon: 'Account',
                     condition: true,
                     dataTest: 'my-profile',
                 },
                 {
                     label: this.$t('me.my-projects').toUpperCase(),
-                    action: () => this.$router.push('/profile/projects'),
+                    to: { name: 'ProfileProjects' },
                     leftIcon: 'Briefcase',
                     condition: this.isConnected,
                     dataTest: 'my-projects',
                 },
                 {
                     label: this.$t('notifications.header').toUpperCase(),
-                    action: () => this.$router.push('/notifications-settings'),
+                    to: { name: 'settings' },
                     leftIcon: 'Cog',
                     condition: this.isConnected,
                     dataTest: 'notifications',
                 },
                 {
                     label: this.$t('stats.page-title').toUpperCase(),
-                    action: () => this.$router.push('/stats'),
+                    to: {
+                        name: 'stats',
+                    },
                     leftIcon: 'Poll',
                     condition: this.isAdmin,
                     dataTest: 'stats',
                 },
                 {
                     label: this.$t('admin.page-title').toUpperCase(),
-                    action: () => this.$router.push('/admin'),
+                    to: { name: 'Admin' },
                     leftIcon: 'Tune',
                     condition: this.isAdmin,
                     dataTest: 'admin',
@@ -430,14 +434,14 @@ export default {
                 },
                 {
                     label: this.$t('home.communities').toUpperCase(),
-                    action: () => this.toPortalPage(),
+                    to: { name: 'Portal' },
                     leftIcon: 'Globe',
                     condition: true,
                     dataTest: 'portals',
                 },
                 {
                     label: this.$t('faq.portal').toUpperCase(),
-                    action: () => this.$router.push('/help'),
+                    to: { name: 'Help' },
                     leftIcon: 'Lifebuoy',
                     condition: true,
                     dataTest: 'help',
@@ -568,7 +572,8 @@ export default {
     }
 
     &__container {
-        padding: $space-m;
+        padding-top: $space-m;
+        padding-bottom: $space-m;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -690,10 +695,10 @@ export default {
 
 .slide-fade-leave-active,
 .slide-fade-enter-active {
-    transition: 1s;
+    transition: 400ms;
 }
 
-.slide-fade-enter {
+.slide-fade-enter-from {
     transform: translateX(100%);
 }
 

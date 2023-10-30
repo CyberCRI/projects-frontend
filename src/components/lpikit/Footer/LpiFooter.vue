@@ -1,5 +1,5 @@
 <template>
-    <footer id="footer">
+    <footer id="footer" class="page-section-full">
         <div class="directory-ctn" v-if="!isRegisterPage && showDirectoryLink">
             <p v-if="showDirectoryLink" class="content">
                 {{ $t('footer.directory') }}
@@ -190,6 +190,7 @@
             >
                 <ReportForm type="bug" @close="reportBugOpen = false" />
             </DrawerLayout>
+            <WelcomeModal v-if="showWelcomeModal" @close="showWelcomeModal = false" />
         </div>
     </footer>
 </template>
@@ -200,6 +201,7 @@ import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
+import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 
 export default {
     name: 'LpiFooter',
@@ -210,11 +212,13 @@ export default {
         ReportForm,
         DrawerLayout,
         ProjectLogo,
+        WelcomeModal,
     },
 
     data() {
         return {
             reportBugOpen: false,
+            showWelcomeModal: false,
         }
     },
 
@@ -236,23 +240,31 @@ export default {
         appVersion() {
             return import.meta.env.VITE_APP_VERSION
         },
+        isConnected() {
+            return this.$store.getters['users/isConnected']
+        },
+    },
+    watch: {
+        isConnected: {
+            handler: function (neo, old) {
+                if (neo && !old) {
+                    this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
+                }
+            },
+            immediate: true,
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
 footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     color: $dark;
-    flex-direction: column;
 
     .footer-content {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 90%;
         margin: pxToRem(42px) auto;
     }
 

@@ -2,7 +2,11 @@
     <div class="project-tabs">
         <TabsLayout :align-left="true" :border="false" :tabs="projectTabs" router-view>
             <template #button-1>
-                <div v-click-outside="() => (addToProjectMenuVisible = false)" class="dropdown-ctn">
+                <div
+                    v-click-outside="() => (addToProjectMenuVisible = false)"
+                    class="dropdown-ctn"
+                    v-if="canEditProject"
+                >
                     <LpiButton
                         v-if="canEditProject"
                         :animation="false"

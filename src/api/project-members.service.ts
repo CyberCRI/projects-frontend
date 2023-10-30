@@ -25,3 +25,11 @@ export async function deleteProjectMembers(
         )
     ).data
 }
+
+export async function deleteProjectMembersSelf(projectId: string): Promise<ProjectOutput> {
+    return (
+        await axios.delete(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/quit/`
+        )
+    ).data
+}

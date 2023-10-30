@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GoalSummaryItem from '@/components/lpikit/ProjectView/Summary/GoalSummaryItem.vue'
+import GoalSummaryItem from '@/pages/ProjectPage/Tabs/Summary/GoalSummaryItem.vue'
 import { GoalFactory } from '../../../../factories/goal.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

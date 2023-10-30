@@ -153,8 +153,7 @@ export default {
                 this.codeVerifier.get()
             )
 
-            let challenges: oauth.WWWAuthenticateChallenge[] | undefined
-            if ((challenges = oauth.parseWwwAuthenticateChallenges(response))) {
+            if (oauth.parseWwwAuthenticateChallenges(response)) {
                 console.error('keycloak challenge error')
                 this.onLoginError()
                 return Promise.resolve()

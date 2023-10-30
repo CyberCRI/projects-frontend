@@ -75,7 +75,7 @@ const actions = {
         }
     },
 
-    async addGroupMember({ commit }, { org_id, body }) {
+    async addGroupMember(_, { org_id, body }) {
         try {
             return await addGroupMember({ org_id, body })
         } catch (err) {
@@ -83,7 +83,7 @@ const actions = {
         }
     },
 
-    async removeGroupMember({ commit }, { org_id, body }) {
+    async removeGroupMember(_, { org_id, body }) {
         try {
             return await removeGroupMember({ org_id, body })
         } catch (err) {

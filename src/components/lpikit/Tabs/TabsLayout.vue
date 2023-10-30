@@ -38,7 +38,7 @@
                             :id="tab.id"
                             :key="index"
                             :ref="'tab-' + index"
-                            :data-test="tab.dataTest"
+                            :data-test="tab.key"
                             :class="{
                                 selected: routerView
                                     ? currentViewIndex === index
@@ -445,6 +445,10 @@ export default {
             align-items: center;
             margin-left: $space-m;
             margin-bottom: 0;
+
+            &:empty {
+                display: none;
+            }
 
             @media screen and (max-width: $min-tablet) {
                 order: -1;

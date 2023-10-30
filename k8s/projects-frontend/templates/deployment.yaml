@@ -19,7 +19,6 @@ spec:
       {{- if .Values.injectedEnv.sensitive }}
         checksum/secret: {{ include (print $.Template.BasePath "/environment-secret.yaml") . | sha256sum }}
       {{- end }}
-      annotations:
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
@@ -60,7 +59,6 @@ spec:
             successThreshold: 1
             failureThreshold: 5
             httpGet:
-              host:
               scheme: HTTP
               path: /
               port: http
@@ -71,7 +69,6 @@ spec:
             successThreshold: 1
             failureThreshold: 1
             httpGet:
-              host:
               scheme: HTTP
               path: /
               port: http

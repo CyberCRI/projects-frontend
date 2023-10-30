@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
-import SdgRecap from '@/components/lpikit/ProjectGoals/SdgRecap.vue'
+import SdgRecap from '@/pages/ProjectPage/Tabs/ProjectGoals/SdgRecap.vue'
 import english from '@/locales/en.json'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 

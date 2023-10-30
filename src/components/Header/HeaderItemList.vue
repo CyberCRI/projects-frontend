@@ -20,7 +20,7 @@
                 />
             </ul>
         </AccordionItem>
-        <a v-else :data-test="item.dataTest" @click="menuAction(item.action)" class="link">
+        <a v-else @click="menuAction(item.action)" class="link">
             <IconImage v-if="item.leftIcon" :name="item.leftIcon" class="icon" />
             {{ item.label }}
         </a>

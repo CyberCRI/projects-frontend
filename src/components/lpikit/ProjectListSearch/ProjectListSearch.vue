@@ -153,7 +153,7 @@ export default {
             const query = encodeURIComponent(filters.search)
             delete filters.search
 
-            // if we forced a page (on page load only see BrowseProjectList)
+            // if we forced a page (on page load only)
             // manually compute offset
             if (this.search.page && this.search.page > 1) {
                 filters['offset'] = (this.search.page - 1) * filters.limit

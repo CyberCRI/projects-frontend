@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectBlogEntries from '@/components/lpikit/ProjectView/BlogEntries/ProjectBlogEntries.vue'
+import ProjectBlogEntriesTab from '@/pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'
 import utils from '@/functs/functions'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -39,9 +39,9 @@ const store = {
     },
 }
 
-describe('ProjectBlogEntries.vue', () => {
+describe('ProjectBlogEntriesTab.vue', () => {
     it('should render component', () => {
-        const wrapper = lpiShallowMount(ProjectBlogEntries, {
+        const wrapper = lpiShallowMount(ProjectBlogEntriesTab, {
             store,
             i18n,
             provide: {

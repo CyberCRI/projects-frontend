@@ -30,7 +30,7 @@ const actions = {
         }
     },
 
-    async postProjectReviewer({ commit }, body): Promise<ProjectReviewerModel> {
+    async postProjectReviewer(_, body): Promise<ProjectReviewerModel> {
         try {
             return await postProjectReviewer(body)
         } catch (err) {
@@ -38,7 +38,7 @@ const actions = {
         }
     },
 
-    async deleteProjectReviewer({ commit }, id): Promise<void> {
+    async deleteProjectReviewer(_, id): Promise<void> {
         try {
             return await deleteProjectReviewer(id)
         } catch (err) {

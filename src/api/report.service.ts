@@ -15,5 +15,5 @@ export async function reportAbuse(formData: ReportCreateModel): Promise<AxiosRes
 }
 
 export async function contactUs(formData: ContactModel): Promise<AxiosResponse> {
-    return await axios.post(`${process.env.VUE_APP_API_DEFAULT_VERSION}/contact/us/`, formData)
+    return await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/contact/us/`, formData)
 }

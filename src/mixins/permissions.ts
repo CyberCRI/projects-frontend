@@ -273,7 +273,7 @@ export default {
             return (
                 this.isAdmin ||
                 this.hasPermission(
-                    'peoplegroup',
+                    'accounts',
                     'change_peoplegroup',
                     this.$store.getters['peopleGroups/currentId'] || null
                 ) ||

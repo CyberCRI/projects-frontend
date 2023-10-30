@@ -4,12 +4,18 @@ on:
 jobs:
   e2e-tests:
     environment:
-      name: ${{ github.ref == 'refs/heads/staging' && 'Staging' || 'Dev' }}
-    timeout-minutes: 10
+      name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
+    timeout-minutes: 18
     runs-on: [self-hosted, default-runner]
     env:
-      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
+      USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
+      USER_TEST_PASSWORD: ${{ secrets.USER_TEST_PASSWORD }}
+      USER_ADMIN_EMAIL: ${{ vars.USER_ADMIN_EMAIL }}
+      USER_ADMIN_PASSWORD: ${{ secrets.USER_ADMIN_PASSWORD }}
+      USER_FACILITATOR_EMAIL: ${{ vars.USER_FACILITATOR_EMAIL }}
+      USER_FACILITATOR_PASSWORD: ${{ secrets.USER_FACILITATOR_PASSWORD }}
       PLAYWRIGHT_TEST_EMAIL: ${{vars.PLAYWRIGHT_TEST_EMAIL}}
+      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
       FRONTEND_URL: ${{vars.FRONTEND_URL}}
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +32,7 @@ jobs:
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
-        run:  npm run test:play:chrome # todo: add other browsers
+        run:  npm run test:play # Only Chrome
       # - name: Run Playwright read
       #   run: npm run test:play:read # todo: add other browsers
       # - name: Run Playwright write

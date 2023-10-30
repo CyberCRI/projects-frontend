@@ -1,9 +1,5 @@
 <template>
-    <BasicCard
-        :button-label="$t('project.card.link')"
-        @click="userAction($event)"
-        @go-to="userAction($event)"
-    >
+    <BasicCard @click="userAction($event)" :to-link="!isPrivateUser ? toLink : null">
         <template #actions-right>
             <slot name="actions">
                 <IconImage class="icon" name="EmailOutline" @click="mailTo" />
@@ -21,11 +17,6 @@
             <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
             <div class="card-description">{{ user.job }}</div>
         </div>
-        <template #fullDescription>
-            <p class="short-description">{{ user.short_description }}</p>
-            <span>icon + projects</span>
-            <span>icon + groups</span>
-        </template>
     </BasicCard>
 </template>
 <script>
@@ -38,7 +29,7 @@ import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 export default {
     name: 'UserCard',
 
-    emits: ['go-to'],
+    emits: ['click'],
 
     mixins: [imageMixin],
 
@@ -52,6 +43,10 @@ export default {
         user: {
             type: Object,
             required: true,
+        },
+        toLink: {
+            type: [String, Object],
+            default: null,
         },
     },
 
@@ -74,7 +69,7 @@ export default {
         },
         isPrivateUser() {
             // Private users do not return an iD from API call
-            return !!this.user.id
+            return !this.user.id
         },
         userGroups() {
             // TODO: use first group name plus groups number (ex: "Staff (+4)")
@@ -91,21 +86,15 @@ export default {
             this.imageError = true
         },
         userAction(event) {
-            if (!this.isPrivateUser) return
+            if (this.isPrivateUser) return
 
-            this.$emit('go-to', event)
+            this.$emit('click', event)
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-.short-description {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 22px;
-}
-
 .picture {
     border-radius: 100%;
 }

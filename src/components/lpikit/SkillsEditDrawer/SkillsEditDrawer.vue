@@ -88,7 +88,7 @@ import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vu
 import { toRaw } from 'vue'
 import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
-import SkillLevelTip from '@/components/Layouts/ProfileEdit/SkillLevelTip.vue'
+import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
 
 export default {
     name: 'SkillsEditDrawer',

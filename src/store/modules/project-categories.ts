@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 import {
     ProjectCategoryCreateInput,
     ProjectCategoryOutput,
@@ -64,7 +62,7 @@ const actions = {
         })
     },
     updateProjectCategory(
-        { commit, dispatch },
+        { commit },
         {
             categoryId,
             newCategory,
@@ -83,7 +81,7 @@ const actions = {
     },
 
     updateProjectCategoriesOrder(
-        { commit, dispatch },
+        { dispatch },
         { reordered }: { reordered: Array<{ categoryId: number; index: number }> }
     ): Promise<Array<ProjectCategoryOutput>> {
         return new Promise((resolve, reject) => {

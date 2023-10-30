@@ -114,7 +114,7 @@ describe('Store module | projects | actions', () => {
             { id: project.id, project, scope: 'scope' }
         )
 
-        expect(patchProjectMock).toHaveBeenCalledWith(project.id, project, 'scope')
+        expect(patchProjectMock).toHaveBeenCalledWith(project.id, project)
         expect(result).toBe(project)
         expect(commit).toHaveBeenCalledWith('SET_CURRENT_PROJECT', result)
     })

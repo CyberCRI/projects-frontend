@@ -616,7 +616,7 @@ export default {
 
                     imageSizesFormDataPost(formData, this.form.imageSizes)
 
-                    const user = await postUser(formData)
+                    await postUser(formData)
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('account.create-success'),
@@ -652,7 +652,7 @@ export default {
                     }
 
                     const user = await patchUser(this.selectedUser.keycloak_id, payload)
-                    console.log('USER', user)
+
                     if (payload.profile_picture instanceof File) {
                         const image = await postUserPicture(user.keycloak_id, formData)
 
@@ -844,6 +844,7 @@ export default {
         text-transform: capitalize;
     }
 }
+
 .google-checkbox-label {
     display: inline;
 }

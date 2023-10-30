@@ -1,24 +1,22 @@
 <template>
     <div class="linked-projects">
-        <div class="linked-projects-ctn">
-            <div v-for="project in linkedProjectsReordered" :key="project.id">
-                <!--                <div class="reason-label">-->
-                <!--                    {{-->
-                <!--                        project.reason === ''-->
-                <!--                            ? $t('project.linked-project-other-reason')-->
-                <!--                            : project.reason-->
-                <!--                    }}-->
-                <!--                </div>-->
+        <DynamicGrid
+            :min-gap="20"
+            class="linked-projects-ctn"
+            v-if="linkedProjectsReordered?.length"
+        >
+            <div
+                class="linked-project-card"
+                v-for="project in linkedProjectsReordered"
+                :key="project.id"
+            >
+                <ProjectCard :project="project.project" />
 
-                <div class="linked-project-card">
-                    <ProjectCard :project="project.project" />
-
-                    <div v-if="canEditAndDelete" class="actions-ctn">
-                        <LpiButton left-icon="Close" size="small" @click="confirmDelete(project)" />
-                    </div>
+                <div v-if="canEditAndDelete" class="actions-ctn">
+                    <LpiButton left-icon="Close" size="small" @click="confirmDelete(project)" />
                 </div>
             </div>
-        </div>
+        </DynamicGrid>
 
         <ConfirmModal
             v-if="confirmModalVisible"
@@ -35,6 +33,7 @@ import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
+import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
     name: 'LinkedProjects',
@@ -47,6 +46,7 @@ export default {
         ProjectCard,
         LpiButton,
         ConfirmModal,
+        DynamicGrid,
     },
 
     props: {
@@ -115,10 +115,7 @@ export default {
     .linked-projects-ctn {
         position: relative;
         width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: $space-l $space-m;
-        justify-content: flex-start;
+        justify-content: space-between;
 
         //.linked-project-ctn {
         //    flex-basis: calc(50% - #{$space-l});
@@ -126,6 +123,7 @@ export default {
 
         .linked-project-card {
             position: relative;
+            width: min-content;
         }
 
         .actions-ctn {
