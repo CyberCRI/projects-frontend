@@ -35,6 +35,6 @@ jobs:
       - name: Run the linter
         run: yarn lint:ci
       - name: Run the tests
-        run: yarn test:unit
+        run: yarn test:unit:ci
       - name: Uninstall Yarn
         run: npm uninstall -g yarn
