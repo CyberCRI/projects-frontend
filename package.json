@@ -10,7 +10,6 @@
         "serve": "vite --host localhost",
         "build": "vite build",
         "build:report": "trash report && vue-cli-service build",
-        "test:unit:ci": "vitest --coverage",
         "test:unit": "vitest",
         "test:gen": "npx playwright codegen --ignore-https-errors http://localhost:8080",
         "test:play": "npx playwright test --project=chrome",
