@@ -56,8 +56,9 @@ EXPOSE 8080
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html
 RUN chown -R nginx:nginx  /usr/share/nginx/html
-COPY ./docker-inject.sh /docker-entrypoint.d/40-docker-inject.sh
-RUN chown nginx:nginx /docker-entrypoint.d/40-docker-inject.sh
-RUN chmod +x /docker-entrypoint.d/40-docker-inject.sh
+
+COPY --chown=nginx:nginx interpolate-variables.sh ./interpolate-variables.sh
+COPY --chown=nginx:nginx devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
+COPY --chown=nginx:nginx ./nginx-entrypoint-interpolate-variables.sh /docker-entrypoint.d/40-interpolate-variables.sh
 
 USER nginx
