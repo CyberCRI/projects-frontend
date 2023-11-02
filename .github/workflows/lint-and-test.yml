@@ -40,9 +40,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           skip-step: install
-          test-script: yarn test:unit
+          test-script: yarn test:unit:ci
           annotations: failed-tests
-      - name: Run the tests
-        run: yarn test:unit:ci
       - name: Uninstall Yarn
         run: npm uninstall -g yarn
