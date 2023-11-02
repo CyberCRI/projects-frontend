@@ -34,13 +34,7 @@ jobs:
         run: yarn format:check
       - name: Run the linter
         run: yarn lint:ci
-      - name: Run unit tests with coverage
-        uses: artiomtr/jest-coverage-report-action@v2.0-rc.5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          package-manager: yarn
-          skip-step: install
-          test-script: yarn test:unit:ci
-          annotations: failed-tests
+      - name: Run the tests
+        run: yarn test:unit:ci
       - name: Uninstall Yarn
         run: npm uninstall -g yarn
