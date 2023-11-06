@@ -9,7 +9,7 @@
         @close="$emit('close')"
         @confirm="$emit('confirm', selectedGroup)"
     >
-        <GroupModal
+        <PickGroup
             :subtitle="subtitle"
             :groups="groups"
             :initial-group="initialGroup"
@@ -17,19 +17,19 @@
             :forbidden-ids="forbiddenIds"
             :rooted="rooted"
         >
-        </GroupModal>
+        </PickGroup>
     </DrawerLayout>
 </template>
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import GroupModal from '@/pages/AdminPortalPage/Tabs/GroupModal.vue'
+import PickGroup from '@/pages/AdminPortalPage/Tabs/PickGroup.vue'
 
 export default {
     name: 'PickGroupDrawer',
     emits: ['close', 'confirm'],
     components: {
         DrawerLayout,
-        GroupModal,
+        PickGroup,
     },
     props: {
         drawerTitle: {
