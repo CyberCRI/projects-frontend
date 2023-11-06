@@ -1094,15 +1094,17 @@ export default {
                 width: $sdg-size;
                 height: $sdg-size;
                 display: inline-block;
-
                 transition: all 0.2s ease-in-out;
+
                 @media screen and (max-width: $min-tablet) {
                     margin-bottom: $space-l;
                 }
+
                 &:hover {
                     transform: scale(1.2);
                 }
             }
+
             .sdg {
                 width: 100%;
                 height: 100%;
