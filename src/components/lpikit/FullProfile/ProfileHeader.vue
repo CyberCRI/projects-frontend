@@ -165,7 +165,6 @@ export default {
 .profile-header {
     box-sizing: border-box;
     position: relative;
-    padding: 0 $space-20;
 
     .img-block {
         overflow: hidden;
@@ -328,7 +327,6 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 0;
 
         .profile-content {
             display: flex;
