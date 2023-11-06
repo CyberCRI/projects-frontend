@@ -6,13 +6,13 @@
                 class="sdg-logo"
             />
 
-            <div class="current-list">
+            <TransitionGroup tag="div" name="sdg" class="current-list">
                 <div
                     v-for="sdg in sdgs"
                     :key="sdg"
                     :style="`background-image: url('${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdg}.svg')`"
                 ></div>
-            </div>
+            </TransitionGroup>
         </div>
 
         <LpiButton
@@ -60,6 +60,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sdg-enter-active,
+.sdg-leave-active {
+    transition: all 0.4s ease;
+}
+
+.sdg-enter-from,
+.sdg-leave-to {
+    transform: scale(0) translateY(200%);
+}
+
 .sdg-recap {
     display: flex;
     align-items: center;

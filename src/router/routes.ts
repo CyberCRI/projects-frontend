@@ -44,15 +44,16 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/me', // back compatibility with old routes
-        redirect: 'profile',
+        redirect: { name: 'ProfileSummary' },
     },
     {
         path: '/me/*', // back compatibility with old routes
-        redirect: 'profile',
+        redirect: { name: 'ProfileSummary' },
     },
     {
         path: '/profile',
         name: 'Profile',
+        redirect: { name: 'ProfileSummary' },
         component: () =>
             import(
                 /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
