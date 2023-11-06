@@ -1,4 +1,3 @@
-import app, { AppState } from '@/store/modules/app'
 import attachmentFiles from '@/store/modules/attachment-files'
 import attachmentLinks from '@/store/modules/attachment-links'
 import blogEntries from '@/store/modules/blog-entries'
@@ -27,7 +26,6 @@ import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
 
 export interface State {
-    app: AppState
     faqs: FaqsState
     projectCategories: ProjectCategoriesState
     projectMembers: ProjectMembersState
@@ -50,7 +48,6 @@ export interface State {
 export default createStore({
     strict: import.meta.env.NODE_ENV !== 'production',
     modules: {
-        app,
         attachmentFiles,
         attachmentLinks,
         blogEntries,

@@ -197,10 +197,6 @@ export default {
         this.searchOptionsInited = true
     },
 
-    mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
-    },
-
     beforeUnmount() {
         document.title = 'Projects'
     },

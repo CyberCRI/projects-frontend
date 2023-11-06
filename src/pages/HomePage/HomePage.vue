@@ -263,7 +263,6 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
         this.getAnnouncements()
     },
 

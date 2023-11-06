@@ -487,8 +487,6 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
-
         this.toggleTopBtn = debounce(
             () => {
                 this.currentOffset = document.querySelector('#scrollview').scrollTop
