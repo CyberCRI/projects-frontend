@@ -27,6 +27,7 @@ export default defineConfig(({ command, mode }) => {
                     data: {
                         API_URL: env.VITE_APP_API_URL,
                         IMAGES_BUCKET: env.VITE_APP_PUBLIC_BINARIES_PREFIX,
+                        APP_VERSION: env.VITE_APP_VERSION,
                     },
                 },
             }),
