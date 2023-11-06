@@ -59,7 +59,7 @@ import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 
 export default {
-    name: 'HelpTab',
+    name: 'HelpAdminTab',
 
     components: { TipTapEditor, TextInput, LpiSnackbar, LpiButton, ConfirmModal },
 
