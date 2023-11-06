@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-narrow legal-page terms-of-service">
-        <h1>Conditions générales d’utilisation</h1>
+    <div class="page-section-narrow legal-page terms-of-service page-top">
+        <h1 class="page-title">Conditions générales d’utilisation</h1>
 
         <section>
             <h3>1. Objet</h3>

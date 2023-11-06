@@ -1,6 +1,6 @@
 <template>
-    <div v-if="categories.length > 0" class="categories-layout">
-        <h1 class="title">{{ $filters.capitalize($t('projects')) }}</h1>
+    <div v-if="categories.length > 0" class="categories-layout page-top">
+        <h1 class="page-title">{{ $filters.capitalize($t('projects')) }}</h1>
 
         <div class="search-categories-ctn page-section-extra-wide">
             <div class="search-input-container">
@@ -109,8 +109,6 @@ export default {
 
 <style lang="scss" scoped>
 .categories-layout {
-    margin-top: $space-2xl;
-
     .btn-ctn {
         display: flex;
         align-items: center;
@@ -148,26 +146,12 @@ export default {
         }
     }
 
-    @media screen and (min-width: $min-tablet) {
-        margin-top: calc($space-2xl * 2);
-    }
-
     .action-ctn {
         text-align: right;
 
         button {
             margin-left: auto;
         }
-    }
-
-    .title {
-        text-align: center;
-        font-weight: 700;
-        font-size: $font-size-5xl;
-        line-height: 50px;
-        color: $black;
-        width: 100%;
-        margin-bottom: $space-m;
     }
 
     .sub-title {
@@ -180,14 +164,8 @@ export default {
     }
 
     .title-ctn {
-        display: inline-flex;
-        flex-direction: column;
         margin-bottom: $space-xl;
         width: 100%;
-
-        @media screen and (min-width: $min-tablet) {
-            flex-direction: row;
-        }
     }
 
     .categories {

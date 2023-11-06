@@ -177,3 +177,21 @@ body.has-open-drawer {
 .page-section-narrow {
     width: pxToRem(800px);
 }
+
+.page-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: $font-size-5xl;
+    line-height: 50px;
+    color: $black;
+    width: 100%;
+    margin-bottom: $space-m;
+}
+
+.page-top {
+    margin-top: calc($navbar-height + $space-xl);
+
+    @media screen and (min-width: $min-tablet) {
+        margin-top: calc($navbar-height + $space-xl * 2);
+    }
+}

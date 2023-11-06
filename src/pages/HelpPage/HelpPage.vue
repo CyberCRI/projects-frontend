@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout">
+    <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
         <div>
             <h1 class="page-title">{{ $filters.capitalize($t('faq.portal')) }}</h1>
         </div>
@@ -86,16 +86,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-title {
-    text-align: center;
-    margin-bottom: $space-xl;
-    font-weight: 700;
-    font-size: $font-size-5xl;
-    line-height: 50px;
-    color: $black;
-    width: 100%;
-}
-
 .intro-ctn {
     margin-bottom: $space-xl;
     background: $primary-lighter;
@@ -114,7 +104,6 @@ export default {
 }
 
 .help-layout {
-    margin-top: calc($navbar-height + $space-m);
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
