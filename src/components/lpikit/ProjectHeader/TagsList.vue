@@ -443,6 +443,7 @@ export default {
     transition: transform 0.3s ease-in-out;
     transform-origin: center bottom;
     display: inline-block;
+
     &:hover {
         transform: scaleY(1.3);
     }
