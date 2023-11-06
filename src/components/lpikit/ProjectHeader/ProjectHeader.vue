@@ -206,7 +206,7 @@
                             class="sdg-ctn"
                         >
                             <router-link
-                                v-for="sdg in project.sdgs"
+                                v-for="sdg in project?.sdgs || []"
                                 :key="sdg"
                                 :to="browsePageWithQuery('sdgs', sdg)"
                                 class="sdg-link"
