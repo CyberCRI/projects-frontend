@@ -61,7 +61,7 @@ import { contactUs } from '@/api/report.service'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
-    name: 'ContactDrawer',
+    name: 'ContactForm',
 
     emits: ['close'],
 

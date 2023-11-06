@@ -127,7 +127,7 @@
         :title="$t('footer.contact')"
         @close="closeDrawer"
     >
-        <ContactDrawer v-if="showContactUsDrawer" @close="closeDrawer" />
+        <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
     </DrawerLayout>
 </template>
 <script>
@@ -140,7 +140,7 @@ import utils from '@/functs/functions.ts'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
-import ContactDrawer from '@/components/Drawers/ContactDrawer.vue'
+import ContactForm from '@/components/Drawers/ContactForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
@@ -153,7 +153,7 @@ export default {
         ProjectLogo,
         TextInput,
         LpiButton,
-        ContactDrawer,
+        ContactForm,
         DrawerLayout,
     },
 
