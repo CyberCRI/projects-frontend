@@ -113,7 +113,7 @@
                 :title="$t('footer.contact')"
                 @close="showContactUsDrawer = false"
             >
-                <ContactDrawer v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
+                <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
             </DrawerLayout>
             <DrawerLayout
                 v-if="reportBugOpen"
@@ -136,7 +136,7 @@
 import LpiLogo from '@/components/lpikit/Footer/LpiLogo.vue'
 import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import ContactDrawer from '@/components/Drawers/ContactDrawer.vue'
+import ContactForm from '@/components/Drawers/ContactForm.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
 import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 import FooterEnglishTips from './FooterEnglishTips.vue'
@@ -146,7 +146,7 @@ export default {
     components: {
         LpiLogo,
         ReportForm,
-        ContactDrawer,
+        ContactForm,
         DrawerLayout,
         ProjectLogo,
         WelcomeModal,
