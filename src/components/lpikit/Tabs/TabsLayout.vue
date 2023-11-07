@@ -475,6 +475,7 @@ export default {
             user-select: none; // avoid text selection while clicking on tab
             transition: transform 0.3s ease-in-out;
             transform-origin: bottom center;
+
             &--no-border {
                 border-bottom: none;
             }
