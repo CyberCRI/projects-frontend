@@ -5,15 +5,15 @@
                 v-for="tag in displayedOrgTags || []"
                 :key="prefix + tag.id"
                 :to="browsePageWithQuery('organization_tags', tag.id)"
-                class="tag-elt"
+                class="tag-elt tag-elt-anim"
             >
                 <BadgeItem v-if="tag.name" :key="prefix + tag.id" :label="tag.name" size="small" />
             </router-link>
             <router-link
                 v-for="tag in displayedWikiTags || []"
                 :key="tag.wikipedia_qid"
-                :to="browsePageWithWikiQuery('wikipedia_tags', tag.wikipedia_qid)"
-                class="tag-elt"
+                :to="browsePageWithQuery('wikipedia_tags', tag.wikipedia_qid)"
+                class="tag-elt tag-elt-anim"
             >
                 <BadgeItem
                     v-if="tag[`name_${currentLang}`] || tag.name"
@@ -72,7 +72,7 @@
                 v-for="tag in moreOrgTags || []"
                 :key="tag.id"
                 :to="browsePageWithQuery('organization_tags', tag.id)"
-                class="extra-tag-elt"
+                class="extra-tag-elt tag-elt-anim"
             >
                 <BadgeItem v-if="tag.name" :label="tag.name" size="small" />
             </router-link>
@@ -80,7 +80,7 @@
                 v-for="tag in moreWikiTags || []"
                 :key="tag.wikipedia_qid"
                 :to="browsePageWithQuery('wikipedia_tags', tag.wikipedia_qid)"
-                class="extra-tag-elt"
+                class="extra-tag-elt tag-elt-anim"
             >
                 <BadgeItem
                     v-if="tag[`name_${currentLang}`] || tag.name"
@@ -371,18 +371,10 @@ export default {
 
         browsePageWithQuery(queryField, queryValue) {
             return {
-                path: '/search',
+                name: 'ProjectSearch',
                 query: {
                     [queryField]: queryValue,
-                },
-            }
-        },
-
-        browsePageWithWikiQuery(queryField, queryValue) {
-            return {
-                path: '/search',
-                query: {
-                    [queryField]: queryValue,
+                    section: 'projects',
                 },
             }
         },
@@ -422,7 +414,6 @@ export default {
         display: flex;
         flex-wrap: nowrap;
         gap: $space-xs;
-        overflow: hidden;
         height: 22px;
     }
 }
@@ -445,6 +436,16 @@ export default {
 
     &.straight-corner {
         border-top-right-radius: 0;
+    }
+}
+
+.tag-elt-anim {
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center bottom;
+    display: inline-block;
+
+    &:hover {
+        transform: scaleY(1.3);
     }
 }
 
