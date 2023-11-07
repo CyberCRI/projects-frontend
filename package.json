@@ -35,7 +35,7 @@
     },
     "dependencies": {
         "@ckpack/vue-color": "^1.5.0",
-        "@hocuspocus/provider": "^2.2.1",
+        "@hocuspocus/provider": "^2.7.0",
         "@intlify/vue-i18n-loader": "^4.2.0",
         "@mdi/font": "^6",
         "@panva/oauth4webapi": "^1.0.4",

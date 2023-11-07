@@ -547,22 +547,22 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.50.0.tgz#9e93b850f0f3fa35f5fa59adfd03adae8488e484"
   integrity sha512-NCC3zz2+nvYd+Ckfh87rA47zfu2QsQpvc6k1yzTk+b9KzRj0wkGa8LSoGOXN6Zv4lRf/EIoZ80biDh9HOI+RNQ==
 
-"@hocuspocus/common@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.5.0.tgz#adfbaa770d1e8eda0a811ad93b427cdf89960e3d"
-  integrity sha512-TpnQAb1Rtff1trwURFWaUEYZwqykaIGo6NNnMr6ZISdDZFWNHMAMUmy7dwJDS9ECnEtcjXhpPxXeLV+MVQXVnw==
+"@hocuspocus/common@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.7.1.tgz#96ef32ecd07f86ec182f9bad929f890943e2bd9c"
+  integrity sha512-mnwBn7b2g23rUmYA1+X+FrIwU9aODmRMWe7ypQdjL/MgzlZWrwqFFr0b9u4AhBrwqRTg+L8KCp8SDkpkt2OTtQ==
   dependencies:
     lib0 "^0.2.47"
 
-"@hocuspocus/provider@^2.2.1":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/provider/-/provider-2.5.0.tgz#2c56184082f835c7a0c07c8962a6e5dcafebe847"
-  integrity sha512-Du/q0kcVhaSQiKPBha19f+mnFOl4sFybARRWsGp4JIoDG+Vt3r73ZqjalIJmp9h4mBr2tGtS5zK/oQ/Vrv5/Bw==
+"@hocuspocus/provider@^2.7.0":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/provider/-/provider-2.7.1.tgz#d970b77f4f6f180462a10969ce334a4ad9a44db6"
+  integrity sha512-C+NcY1fcOR/su8kkr1wgd75euKMcC4+yBL/x8G8Oxz18zb5uFrNsAnTvaBa6J/iQazWQZdyrDzUhwLOT0id37Q==
   dependencies:
-    "@hocuspocus/common" "^2.5.0"
+    "@hocuspocus/common" "^2.7.1"
     "@lifeomic/attempt" "^3.0.2"
     lib0 "^0.2.47"
-    ws "^7.5.9"
+    ws "^8.14.2"
 
 "@humanwhocodes/config-array@^0.11.11":
   version "0.11.11"
@@ -6705,10 +6705,10 @@ write-file-atomic@^5.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
 
-ws@^7.5.9:
-  version "7.5.9"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
-  integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
+ws@^8.14.2:
+  version "8.14.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.14.2.tgz#6c249a806eb2db7a20d26d51e7709eab7b2e6c7f"
+  integrity sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
