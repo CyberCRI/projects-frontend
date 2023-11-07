@@ -370,6 +370,7 @@ export default {
                 display: flex;
                 align-items: flex-end;
                 justify-content: flex-start;
+                padding-top: pxToRem(4px); // room for the tab upper border not to be cropped
 
                 .mobile-tab-ctn {
                     width: 100%;
@@ -391,7 +392,7 @@ export default {
                 box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
                 border-radius: 8px;
                 padding: 24px;
-                z-index: 11;
+                z-index: 110;
 
                 @media screen and (max-width: $min-tablet) {
                     width: 87%;
@@ -472,9 +473,15 @@ export default {
             font-size: $font-size-m;
             box-sizing: border-box;
             user-select: none; // avoid text selection while clicking on tab
+            transition: transform 0.3s ease-in-out;
+            transform-origin: bottom center;
 
             &--no-border {
                 border-bottom: none;
+            }
+
+            &:hover {
+                transform: scaleY(1.15);
             }
 
             &.selected {
@@ -485,6 +492,10 @@ export default {
                 border-top-left-radius: $border-radius-l;
                 border-top-right-radius: $border-radius-l;
                 border-bottom: $border-width-s solid $primary-lighter; // mask parent pseudo border-bottom with background color
+
+                &:hover {
+                    transform: none;
+                }
             }
         }
     }
