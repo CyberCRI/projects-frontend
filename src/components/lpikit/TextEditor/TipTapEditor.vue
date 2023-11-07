@@ -853,19 +853,6 @@ export default {
 // TODO: this  break vue 3 compilation fix this later
 :deep(.content),
 :deep(.editor-content) {
-    table {
-        th {
-            background-color: $gray-2;
-            padding: $space-s $space-m;
-            color: $gray-3;
-        }
-
-        td,
-        th {
-            border: 1px solid $gray-4 !important;
-        }
-    }
-
     /* Give a remote user a caret */
     .collaboration-cursor__caret {
         position: relative;
@@ -894,111 +881,6 @@ export default {
         white-space: nowrap;
         opacity: 0.7;
         pointer-events: none;
-    }
-
-    .custom-image-small {
-        width: 25%;
-    }
-
-    .custom-image-medium {
-        width: 50%;
-    }
-
-    .custom-image-large {
-        width: 75%;
-    }
-
-    .custom-image-full {
-        width: 100%;
-    }
-
-    .custom-image-original {
-        width: initial;
-        max-width: 100%;
-    }
-
-    .custom-video-wrapper {
-        margin: 0 auto;
-        height: 0;
-        padding-bottom: 100% * calc(9 / 16);
-        position: relative;
-
-        &.custom-video-wrapper-left {
-            margin-left: 0;
-        }
-
-        &.custom-video-wrapper-right {
-            margin-right: 0;
-        }
-
-        &::after {
-            content: '';
-            position: absolute;
-            width: 100% !important;
-            height: 100% !important;
-            z-index: 100;
-            inset: 0;
-        }
-    }
-
-    .ProseMirror-focused .custom-video-wrapper.ProseMirror-selectednode::after {
-        color: white;
-        font-size: 16px;
-        text-align: center;
-        padding: 15%;
-        background-color: rgb(0 0 0 / 50%);
-        pointer-events: none;
-        box-sizing: border-box;
-    }
-
-    .custom-video {
-        position: absolute;
-        z-index: 1;
-        inset: 0;
-        background: black
-            url('data:image/gif;base64,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')
-            center center no-repeat;
-    }
-
-    .custom-video-wrapper-small,
-    .custom-video-wrapper-medium,
-    .custom-video-wrapper-large,
-    .custom-video-wrapper-full {
-        .custom-video {
-            width: 100% !important;
-            height: 100% !important;
-        }
-    }
-
-    .custom-video-wrapper-small {
-        width: 25%;
-        padding-bottom: 25% * calc(9 / 16);
-    }
-
-    .custom-video-wrapper-medium {
-        width: 50%;
-        padding-bottom: 50% * calc(9 / 16);
-    }
-
-    .custom-video-wrapper-large {
-        width: 75%;
-        padding-bottom: 75% * calc(9 / 16);
-    }
-
-    .custom-video-wrapper-full {
-        width: 100%;
-        padding-bottom: 100% * calc(9 / 16);
-    }
-
-    .custom-video-wrapper.custom-video-wrapper-custom {
-        position: relative;
-        display: inline-block;
-        width: auto;
-        padding-bottom: 0;
-
-        .custom-video {
-            position: static;
-        }
     }
 
     .not-synced {

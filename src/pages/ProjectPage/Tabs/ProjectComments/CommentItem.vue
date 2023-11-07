@@ -119,6 +119,7 @@ import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {
     name: 'CommentItem',
@@ -230,6 +231,20 @@ export default {
             )
         },
     },
+    watch: {
+        'comment.content': {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = this.$el.querySelector('.comment-content')
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
+        },
+    },
 }
 </script>
 
@@ -258,6 +273,7 @@ $comment-pic-size: pxToRem(72px);
         flex-grow: 1;
         padding-bottom: $space-l;
         border-bottom: $border-width-s solid $green;
+        width: 20rem; // dummy value to fix layout issue
 
         .comment-meta {
             display: flex;

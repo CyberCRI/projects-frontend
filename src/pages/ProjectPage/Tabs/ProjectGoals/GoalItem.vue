@@ -20,8 +20,8 @@
                         </span>
                     </div>
 
-                    <div v-if="descriptionVisible" class="goal-description-content">
-                        <span v-html="goal.description"></span>
+                    <div v-show="descriptionVisible" class="goal-description-wrapper">
+                        <div class="goal-description-content" v-html="goal.description" />
                     </div>
                 </div>
             </div>
@@ -38,6 +38,7 @@
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
+import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {
     name: 'GoalItem',
@@ -104,6 +105,33 @@ export default {
             return this.goal.description && this.goal.description != '<p></p>'
         },
     },
+
+    watch: {
+        'goal.description': {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = this.$el.querySelector('.goal-description-content')
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
+        },
+        descriptionVisible: {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = this.$el.querySelector('.goal-description-content')
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
+        },
+    },
 }
 </script>
 
@@ -153,7 +181,8 @@ export default {
             .right {
                 padding: $space-s $space-l;
                 box-sizing: border-box;
-                width: 100%;
+                width: 20rem; // dummy value to fix layout issues
+                flex-grow: 1;
 
                 .main-content {
                     display: flex;
@@ -212,5 +241,9 @@ export default {
             }
         }
     }
+}
+
+.goal-description-wrapper {
+    padding-right: 2rem; // dirty fix for table overlow. TODO: fix in a cleaner way
 }
 </style>

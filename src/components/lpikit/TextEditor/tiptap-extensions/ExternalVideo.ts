@@ -172,14 +172,20 @@ export default Node.create({
         return [
             'div',
             {
-                class:
-                    'custom-video-wrapper custom-video-wrapper-' +
-                    size +
-                    ' ' +
-                    'custom-video-wrapper-' +
-                    align,
+                class: 'custom-video-ctn',
             },
-            ['iframe', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)],
+            [
+                'div',
+                {
+                    class:
+                        'custom-video-wrapper custom-video-wrapper-' +
+                        size +
+                        ' ' +
+                        'custom-video-wrapper-' +
+                        align,
+                },
+                ['iframe', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)],
+            ],
         ]
     },
 
