@@ -25,10 +25,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
-      - name: Install Yarn
-        run: npm install -g yarn
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
@@ -50,6 +46,6 @@ jobs:
         uses: ravsamhq/notify-slack-action@v1
         with:
           status: ${{ job.status }}
-          notify_when: 'failure'
+          notify_when: 'failure,cancelled'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
