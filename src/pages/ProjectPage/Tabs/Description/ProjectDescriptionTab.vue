@@ -77,11 +77,13 @@ export default {
 
     mounted() {
         this.computeAnchorOffset()
-        window.addEventListener('resize', this.computeAnchorOffset)
+        // in unit tests, window might be undefined
+        window?.addEventListener('resize', this.computeAnchorOffset)
     },
 
     beforeUnmount() {
-        window.removeEventListener('resize', this.computeAnchorOffset)
+        // in unit tests, window might be undefined
+        window?.removeEventListener('resize', this.computeAnchorOffset)
     },
 
     methods: {
