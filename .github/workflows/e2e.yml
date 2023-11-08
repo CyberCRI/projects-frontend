@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
+      - name: Install playwright
+        run: npm install -g playwright
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
@@ -46,5 +48,6 @@ jobs:
         with:
           status: ${{ job.status }}
           notify_when: 'failure'
+          notification_title: "Les e2e Playright viennent d'échouer"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
