@@ -189,9 +189,8 @@ export default {
     overflow: visible;
 
     .summary-header {
-        padding: $space-l;
-        padding-top: $space-m;
-        font-size: 24px;
+        padding: $space-s $space-l;
+        font-size: 18px;
         font-weight: 700;
         display: flex;
         justify-content: space-between;
@@ -211,7 +210,7 @@ export default {
         border-right: $border-width-s solid $green;
         border-bottom: $border-width-s solid $green;
         position: absolute;
-        transform: translateY(-#{$border-radius-l});
+        transform: translateY(-1rem);
         top: 100%;
         left: -$border-width-s;
         right: -$border-width-s;

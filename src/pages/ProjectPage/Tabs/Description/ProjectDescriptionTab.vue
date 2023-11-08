@@ -2,15 +2,15 @@
     <div>
         <div v-if="project" class="project-description">
             <aside>
+                <h1 class="project-title-recall" v-if="isSummarySticked">{{ project.title }}</h1>
                 <div v-if="showEditButton" class="description-edit">
-                    <LpiButton
-                        :label="$filters.capitalize($t('description.edit-title'))"
-                        :secondary="true"
+                    <span
                         class="edit-description-button white-bg"
-                        left-icon="Pen"
                         @click="editDescriptionModalActive = !editDescriptionModalActive"
                         data-test="edit-description"
-                    />
+                    >
+                        <IconImage class="icon" name="Pen" />
+                    </span>
                 </div>
                 <DescriptionSummaryBlock
                     :description="true"
@@ -49,6 +49,7 @@ import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
 import debounce from 'lodash.debounce'
+import IconImage from '@/components/svgs/IconImage.vue'
 export default {
     name: 'ProjectDescriptionTab',
 
@@ -57,6 +58,7 @@ export default {
         LpiButton,
         DescriptionSummaryBlock,
         DescriptionPlaceholder,
+        IconImage,
     },
 
     mixins: [permissions, ProjectTab],
@@ -72,6 +74,7 @@ export default {
         return {
             editDescriptionModalActive: false,
             anchorOffset: 0,
+            isSummarySticked: false,
         }
     },
 
@@ -79,11 +82,15 @@ export default {
         this.computeAnchorOffset()
         // in unit tests, window might be undefined
         window?.addEventListener('resize', this.computeAnchorOffset)
+        window?.addEventListener('resize', this.checkIfSummaryIsSticked)
+        window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
     },
 
     beforeUnmount() {
         // in unit tests, window might be undefined
         window?.removeEventListener('resize', this.computeAnchorOffset)
+        window?.addEventListener('resize', this.checkIfSummaryIsSticked)
+        window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
     },
 
     methods: {
@@ -106,6 +113,13 @@ export default {
         ),
         onSummaryRendered() {
             this.computeAnchorOffset()
+        },
+
+        checkIfSummaryIsSticked() {
+            const summary = this.$el.querySelector('aside')
+            this.isSummarySticked =
+                summary?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
+                window?.innerWidth > 768 /* $min-tablet */
         },
     },
 
@@ -191,11 +205,20 @@ export default {
         @media screen and (min-width: $min-tablet) {
             flex-flow: row;
             justify-content: flex-end;
-            align-items: flex-start;
+            align-items: center;
             position: sticky;
             z-index: 100;
             top: $navbar-height;
         }
+    }
+
+    .project-title-recall {
+        flex-grow: 1;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: $font-size-2xl;
     }
 }
 
@@ -217,6 +240,39 @@ export default {
 
 :deep(.anchor-element) {
     display: inline-block;
+}
+
+.edit-description-button {
+    display: inline-block;
+    padding: $space-s;
+    border-radius: 100%;
+    background-color: $primary-dark;
+    cursor: pointer;
+    .icon {
+        width: $font-size-xl;
+        fill: $white;
+    }
+    &:hover {
+        .icon {
+            animation: rotate-pen 0.5s ease-in-out infinite;
+            transform-origin: bottom left;
+        }
+    }
+}
+
+@keyframes rotate-pen {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(10deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 // @media screen and (min-width: $min-tablet) {
