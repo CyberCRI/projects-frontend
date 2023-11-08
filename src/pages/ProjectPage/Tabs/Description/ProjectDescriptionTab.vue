@@ -41,7 +41,6 @@
 
 <script>
 import DescriptionSummaryBlock from '@/components/lpikit/Summary/DescriptionSummaryBlock.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
@@ -55,7 +54,6 @@ export default {
 
     components: {
         DescriptionDrawer,
-        LpiButton,
         DescriptionSummaryBlock,
         DescriptionPlaceholder,
         IconImage,
@@ -248,10 +246,12 @@ export default {
     border-radius: 100%;
     background-color: $primary-dark;
     cursor: pointer;
+
     .icon {
         width: $font-size-xl;
         fill: $white;
     }
+
     &:hover {
         .icon {
             animation: rotate-pen 0.5s ease-in-out infinite;
@@ -264,36 +264,17 @@ export default {
     0% {
         transform: rotate(0deg);
     }
+
     25% {
         transform: rotate(10deg);
     }
+
     75% {
         transform: rotate(-10deg);
     }
+
     100% {
         transform: rotate(0deg);
     }
 }
-
-// @media screen and (min-width: $min-tablet) {
-//     .project-description {
-//         .description-edit,
-//         .summary {
-//             margin-left: 3.75rem;
-//         }
-//     }
-// }
-
-// @media screen and (max-width: $max-tablet) {
-//     .project-description {
-//         aside {
-//             padding-left: $space-l;
-//             margin-left: auto;
-
-//             .summary {
-//                 margin-bottom: $space-l;
-//             }
-//         }
-//     }
-// }
 </style>
