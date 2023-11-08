@@ -5,7 +5,6 @@ jobs:
   e2e-tests:
     environment:
       name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
-    timeout-minutes: 1
     runs-on: [self-hosted, default-runner]
     env:
       USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
@@ -46,6 +45,6 @@ jobs:
         uses: ravsamhq/notify-slack-action@v1
         with:
           status: ${{ job.status }}
-          notify_when: 'failure,cancelled'
+          notify_when: 'failure'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
