@@ -5,7 +5,7 @@ jobs:
   e2e-tests:
     environment:
       name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
-    timeout-minutes: 18
+    timeout-minutes: 1
     runs-on: [self-hosted, default-runner]
     env:
       USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
