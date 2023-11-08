@@ -145,7 +145,10 @@ export default {
 
     computed: {
         formNotEmpty() {
-            if (this.$store.getters['organizations/isDefault']) {
+            if (
+                this.$store.getters['organizations/isDefault'] ||
+                this.$store.getters['projectCategories/all']
+            ) {
                 return !!this.form.title && !!this.form.purpose
             }
             return !!this.form.title && !!this.form.category && !!this.form.purpose
