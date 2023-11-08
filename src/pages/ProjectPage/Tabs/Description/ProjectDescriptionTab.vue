@@ -47,7 +47,7 @@ import ProjectTab from '@/mixins/ProjectTab.ts'
 import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
-import debounce from 'lodash.debounce'
+import throttle from 'lodash.throttle'
 import IconImage from '@/components/svgs/IconImage.vue'
 export default {
     name: 'ProjectDescriptionTab',
@@ -98,27 +98,23 @@ export default {
         scrollToSection(target) {
             utils.scrollTo(document.getElementById(`anchor-${target}`))
         },
-        computeAnchorOffset: debounce(
-            function () {
-                if (!this) return // safeguard for debounced behavior when the component is unmounted
-                const aside = this?.$el?.querySelector('aside')
-                const asideHeight = aside ? aside.offsetHeight : 0
-                const anchorOffset = asideHeight + 20
-                this.anchorOffset = anchorOffset
-            },
-            100,
-            { leading: false, trailing: true }
-        ),
+        computeAnchorOffset: throttle(function () {
+            if (!this) return // safeguard for debounced behavior when the component is unmounted
+            const aside = this?.$el?.querySelector('aside')
+            const asideHeight = aside ? aside.offsetHeight : 0
+            const anchorOffset = asideHeight + 20
+            this.anchorOffset = anchorOffset
+        }, 100),
         onSummaryRendered() {
             this.computeAnchorOffset()
         },
 
-        checkIfSummaryIsSticked() {
+        checkIfSummaryIsSticked: throttle(function () {
             const summary = this.$el.querySelector('aside')
             this.isSummarySticked =
                 summary?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
                 window?.innerWidth > 768 /* $min-tablet */
-        },
+        }, 16),
     },
 
     computed: {
