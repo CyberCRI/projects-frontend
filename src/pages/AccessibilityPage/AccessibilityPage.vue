@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-narrow legal-page accessibility">
-        <h1>Accessibilité</h1>
+    <div class="page-section-narrow legal-page accessibility page-top">
+        <h1 class="page-title">Accessibilité</h1>
 
         <section>
             <h3>Déclaration d'accessibilité</h3>

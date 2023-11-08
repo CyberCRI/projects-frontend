@@ -27,20 +27,22 @@
 
                     <div v-if="displayableGroups.length" class="group-ctn">
                         <div v-for="group in displayableGroups" :key="group.id">
-                            <BadgeItem
-                                @click="
-                                    $router.push({
-                                        name: 'Group',
-                                        params: {
-                                            groupId: group.id,
-                                        },
-                                    })
-                                "
-                                v-if="group && group.name"
-                                :label="group.name"
-                                class="group"
-                                size="small"
-                            />
+                            <RouterLink
+                                :to="{
+                                    name: 'Group',
+                                    params: {
+                                        groupId: group.id,
+                                    },
+                                }"
+                                class="group-anim"
+                            >
+                                <BadgeItem
+                                    v-if="group && group.name"
+                                    :label="group.name"
+                                    class="group"
+                                    size="small"
+                                />
+                            </RouterLink>
                         </div>
                     </div>
 
@@ -165,7 +167,6 @@ export default {
 .profile-header {
     box-sizing: border-box;
     position: relative;
-    padding: 0 $space-20;
 
     .img-block {
         overflow: hidden;
@@ -247,9 +248,19 @@ export default {
 
             .group-ctn {
                 display: flex;
-                gap: $space-s;
+                gap: $space-m;
                 flex-wrap: wrap;
                 margin-bottom: $space-l;
+            }
+
+            .group-anim {
+                transition: transform 0.3s ease-in-out;
+                transform-origin: center bottom;
+                display: inline-block;
+
+                &:hover {
+                    transform: scaleY(1.3);
+                }
             }
 
             .group {
@@ -328,7 +339,6 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 0;
 
         .profile-content {
             display: flex;

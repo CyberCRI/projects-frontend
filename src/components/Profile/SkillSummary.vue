@@ -2,12 +2,8 @@
     <div class="skill-summary">
         <div class="skill-header">
             <h4 class="title">{{ $t('profile.skills') }} ({{ allSkills.length }})</h4>
-            <LpiButton
+            <SeeMoreArrow
                 v-if="allSkills.length > maxSkills"
-                :label="$filters.capitalize($t('common.see-more'))"
-                :secondary="true"
-                right-icon="ArrowRight"
-                size="link"
                 @click="goToSkillTab"
                 data-test="see-more-skills"
             />
@@ -29,13 +25,13 @@
 
 <script>
 import SkillItem from '@/components/lpikit/SkillItem/SkillItem.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 
 export default {
     name: 'SkillSummary',
 
     components: {
-        LpiButton,
+        SeeMoreArrow,
         SkillItem,
     },
     inject: {

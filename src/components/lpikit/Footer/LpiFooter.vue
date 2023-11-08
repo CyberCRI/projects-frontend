@@ -20,27 +20,11 @@
                         </RouterLink>
                     </li>
                     <li v-else>
-                        <ToolTip
-                            ref="copy-link-tooltip"
-                            :hover="true"
-                            :interactive="false"
-                            :secondary="true"
-                            :is-text-content="false"
-                        >
-                            <template #custom-content>
-                                <p class="tos-tooltip-content">
-                                    The English version of the legal notices is coming soon. If you
-                                    need the English version, contact us at
-                                    <a href="mailto: projects@learningplanetinstitute.org">
-                                        projects@learningplanetinstitute.org
-                                    </a>
-                                </p>
-                            </template>
-
+                        <FooterEnglishTips ref="copy-link-tooltip" item-title="legal notices">
                             <RouterLink to="/legal-notices"
                                 >{{ $t('footer.legal-notices') }}
                             </RouterLink>
-                        </ToolTip>
+                        </FooterEnglishTips>
                     </li>
 
                     <li v-if="canOpen" class="list-item">
@@ -49,27 +33,11 @@
                         </RouterLink>
                     </li>
                     <li v-else>
-                        <ToolTip
-                            ref="copy-link-tooltip"
-                            :hover="true"
-                            :interactive="false"
-                            :secondary="true"
-                            :is-text-content="false"
-                        >
-                            <template #custom-content>
-                                <p class="tos-tooltip-content">
-                                    The English version of the protection policy of personal data is
-                                    coming soon. If you need the English version, contact us at
-                                    <a href="mailto: projects@learningplanetinstitute.org">
-                                        projects@learningplanetinstitute.org
-                                    </a>
-                                </p>
-                            </template>
-
+                        <FooterEnglishTips ref="copy-link-tooltip" item-title="protection policy">
                             <RouterLink to="/personal-data"
                                 >{{ $t('footer.personal-data') }}
                             </RouterLink>
-                        </ToolTip>
+                        </FooterEnglishTips>
                     </li>
                 </ul>
 
@@ -80,51 +48,20 @@
                         </RouterLink>
                     </li>
                     <li v-else>
-                        <ToolTip
-                            ref="copy-link-tooltip"
-                            :hover="true"
-                            :interactive="false"
-                            :secondary="true"
-                        >
-                            <template #custom-content>
-                                <p class="tos-tooltip-content">
-                                    The English version of the terms of use is coming soon. If you
-                                    need the English version, contact us at
-                                    <a href="mailto: projects@learningplanetinstitute.org">
-                                        projects@learningplanetinstitute.org
-                                    </a>
-                                </p>
-                            </template>
-
+                        <FooterEnglishTips ref="copy-link-tooltip" item-title="terms of use">
                             <RouterLink to="/terms-of-service"
                                 >{{ $t('footer.terms-of-service') }}
                             </RouterLink>
-                        </ToolTip>
+                        </FooterEnglishTips>
                     </li>
 
                     <li v-if="canOpen" class="list-item">
                         <RouterLink to="/cookies">{{ $t('footer.cookies') }}</RouterLink>
                     </li>
                     <li v-else>
-                        <ToolTip
-                            ref="copy-link-tooltip"
-                            :hover="true"
-                            :interactive="false"
-                            :secondary="true"
-                            :is-text-content="false"
-                        >
-                            <template #custom-content>
-                                <p class="tos-tooltip-content">
-                                    The English version of the cookies is coming soon. If you need
-                                    the English version, contact us at
-                                    <a href="mailto: projects@learningplanetinstitute.org">
-                                        projects@learningplanetinstitute.org
-                                    </a>
-                                </p>
-                            </template>
-
+                        <FooterEnglishTips ref="copy-link-tooltip" item-title="cookies">
                             <RouterLink to="/cookies">{{ $t('footer.cookies') }}</RouterLink>
-                        </ToolTip>
+                        </FooterEnglishTips>
                     </li>
                 </ul>
 
@@ -135,35 +72,25 @@
                         </RouterLink>
                     </li>
                     <li v-else>
-                        <ToolTip
-                            ref="copy-link-tooltip"
-                            :hover="true"
-                            :interactive="false"
-                            :secondary="true"
-                            :is-text-content="false"
-                        >
-                            <template #custom-content>
-                                <p class="tos-tooltip-content">
-                                    The English version of the policy of accessibility is coming
-                                    soon. If you need the English version, contact us at
-                                    <a href="mailto: projects@learningplanetinstitute.org">
-                                        projects@learningplanetinstitute.org
-                                    </a>
-                                </p>
-                            </template>
-
+                        <FooterEnglishTips ref="copy-link-tooltip" item-title="accessibility">
                             <RouterLink to="/accessibility"
                                 >{{ $t('footer.accessibility') }}
                             </RouterLink>
-                        </ToolTip>
+                        </FooterEnglishTips>
                     </li>
 
                     <li class="list-item">
                         <RouterLink to="/help">{{ $t('footer.help') }}</RouterLink>
                     </li>
-
+                </ul>
+                <ul class="footer-links">
                     <li class="list-item">
                         <a @click.prevent="reportBugOpen = true">{{ $t('report.bug') }}</a>
+                    </li>
+                    <li class="list-item">
+                        <a href="#" @click.prevent="showContactUsDrawer = true">{{
+                            $t('footer.contact')
+                        }}</a>
                     </li>
                 </ul>
             </div>
@@ -177,7 +104,17 @@
 
                 <LpiLogo class="lpi-logo" />
             </div>
-
+            <DrawerLayout
+                :custom-style="customNotificationStyle"
+                :is-opened="showContactUsDrawer"
+                :has-footer="false"
+                class="medium"
+                confirm-action-name=""
+                :title="$t('footer.contact')"
+                @close="showContactUsDrawer = false"
+            >
+                <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
+            </DrawerLayout>
             <DrawerLayout
                 v-if="reportBugOpen"
                 :confirm-action-name="$t('common.submit')"
@@ -197,28 +134,34 @@
 
 <script>
 import LpiLogo from '@/components/lpikit/Footer/LpiLogo.vue'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
+import ContactForm from '@/components/Drawers/ContactForm.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
 import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
-
+import FooterEnglishTips from './FooterEnglishTips.vue'
 export default {
     name: 'LpiFooter',
 
     components: {
         LpiLogo,
-        ToolTip,
         ReportForm,
+        ContactForm,
         DrawerLayout,
         ProjectLogo,
         WelcomeModal,
+        FooterEnglishTips,
     },
 
     data() {
         return {
-            reportBugOpen: false,
             showWelcomeModal: false,
+            reportBugOpen: false,
+            showContactUsDrawer: false,
+            customNotificationStyle: {
+                maxHeight: 'unset',
+                padding: 'unset',
+            },
         }
     },
 
@@ -269,17 +212,25 @@ footer {
     }
 
     .footer-lists {
-        display: flex;
+        display: grid;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: flex-start;
-        width: 60%;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+
+        @media screen and (min-width: $min-tablet) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media screen and (min-width: $min-desktop) {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
     }
 
     .footer-links {
         font-size: $font-size-m;
         font-weight: 400;
-        padding-right: 50px;
+        flex-basis: 100%;
 
         li {
             cursor: pointer;
@@ -341,20 +292,6 @@ footer {
             color: $primary-dark;
             font-weight: bold;
         }
-    }
-}
-
-.tos-tooltip-content {
-    //background: $primary-dark;
-    //color: $white;
-    //border-radius: $border-radius-m;
-    //padding: $space-xs;
-    //border: none;
-    //box-shadow: none;
-
-    a {
-        color: $white;
-        text-decoration: underline;
     }
 }
 

@@ -1,12 +1,11 @@
 <template>
     <div id="APP" :class="[themeclass, currentRouteName, { 'has-open-drawer': isLoading }]">
-        <LpiHeader @is-loading="setLoading" />
+        <LpiHeader />
 
         <div id="scrollview" ref="scrollview" data-test="scrollview">
-            <div v-if="isLoading" class="global-loader">
-                <LpiLoader class="loader" type="simple" />
+            <div class="main-view">
+                <RouterView />
             </div>
-            <RouterView class="main-view" />
             <LpiFooter @on-click="toggleReportBugModal" />
         </div>
 
@@ -21,7 +20,6 @@ import debounce from 'lodash.debounce'
 import LpiFooter from '@/components/lpikit/Footer/LpiFooter.vue'
 import AppToastList from '@/components/App/AppToastList.vue'
 import LpiHeader from '@/components/Header/LpiHeader.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
 
 import keycloak from '@/api/auth/keycloak.ts'
@@ -30,7 +28,6 @@ export default {
     name: 'App',
 
     components: {
-        LpiLoader,
         LpiHeader,
         LpiFooter,
         AppToastList,
@@ -50,7 +47,6 @@ export default {
         ...mapGetters({
             toastList: 'notifications/getToastList',
             isLoggedIn: 'users/isLoggedIn',
-            appLoading: 'app/loading',
         }),
 
         currentRouteName() {
@@ -113,8 +109,6 @@ export default {
 
             const _logout = () => {
                 this.resetUser()
-                // close all wins
-                this.$store.dispatch('app/updateLoading', { visible: false })
                 this.closeModal()
                 // navigate to /dashboard
                 if (!this.$route || this.$route.name !== 'Home') {
@@ -138,12 +132,6 @@ export default {
 
         closeModal() {
             this.modalErrorOpen = false
-        },
-
-        setLoading(value) {
-            if (value) document.querySelector('body').classList.add('has-open-drawer')
-            else document.querySelector('body').classList.remove('has-open-drawer')
-            this.isLoading = value
         },
     },
 }
@@ -170,21 +158,6 @@ export default {
         #footer {
             flex-shrink: 0;
         }
-    }
-}
-
-.global-loader {
-    position: fixed;
-    background-color: rgb(255 255 255 / 80%);
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-
-    .loader {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     }
 }
 

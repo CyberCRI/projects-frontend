@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-narrow legal-page cookies">
-        <h1>Politique Cookies</h1>
+    <div class="page-section-narrow legal-page cookies page-top">
+        <h1 class="page-title">Politique Cookies</h1>
 
         <section>
             <h3>1. Introduction</h3>

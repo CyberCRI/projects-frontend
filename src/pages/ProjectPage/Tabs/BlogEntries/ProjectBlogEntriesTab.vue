@@ -91,7 +91,7 @@ export default {
                 return {
                     id: blogEntry.id,
                     label: blogEntry.title,
-                    date: blogEntry.updated_at,
+                    date: blogEntry.created_at,
                 }
             })
         },

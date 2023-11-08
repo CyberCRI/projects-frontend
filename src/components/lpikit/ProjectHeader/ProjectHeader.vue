@@ -13,7 +13,7 @@
         <div :class="{ loading, moreInfo }" class="project-header-ctn">
             <div class="img-position">
                 <div class="img-mobile-ctn">
-                    <SkeletonComponent v-if="loading || !imageLoaded" height="100%" />
+                    <SkeletonComponent v-if="loading || !imageLoaded" height="100%" width="100%" />
 
                     <CroppedImage
                         v-if="
@@ -42,7 +42,11 @@
                 >
                     <div class="img-block">
                         <div class="img-ctn">
-                            <SkeletonComponent v-if="loading || !imageLoaded" height="100%" />
+                            <SkeletonComponent
+                                v-if="loading || !imageLoaded"
+                                height="100%"
+                                width="100%"
+                            />
 
                             <CroppedImage
                                 v-if="
@@ -195,14 +199,17 @@
                             <SkeletonComponent border-radius="50%" height="30px" width="30px" />
                         </div>
 
-                        <div
-                            v-else-if="project && project.sdgs && project.sdgs.length"
+                        <TransitionGroup
+                            name="sdg"
+                            tag="div"
+                            v-show="project && project.sdgs && project.sdgs.length"
                             class="sdg-ctn"
                         >
                             <router-link
-                                v-for="sdg in project.sdgs"
+                                v-for="sdg in project?.sdgs || []"
                                 :key="sdg"
                                 :to="browsePageWithQuery('sdgs', sdg)"
+                                class="sdg-link"
                             >
                                 <img
                                     :alt="sdg"
@@ -210,7 +217,7 @@
                                     class="sdg"
                                 />
                             </router-link>
-                        </div>
+                        </TransitionGroup>
 
                         <div
                             v-if="project && project.categories && project.categories.length"
@@ -398,6 +405,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        loading: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     mounted() {
@@ -445,10 +456,6 @@ export default {
     },
 
     computed: {
-        loading() {
-            return this.$store.getters['app/loading']
-        },
-
         organizationTags() {
             return this.project.organization_tags
         },
@@ -1081,18 +1088,36 @@ export default {
                 overflow: hidden;
             }
 
-            .sdg {
-                width: 38px;
-                height: 38px;
-                transition: all 0.2s ease-in-out;
+            $sdg-size: pxToRem(38px);
 
-                &:hover {
-                    transform: scale(1.2);
-                }
+            .sdg-link {
+                width: $sdg-size;
+                height: $sdg-size;
+                display: inline-block;
+                transition: all 0.2s ease-in-out;
 
                 @media screen and (max-width: $min-tablet) {
                     margin-bottom: $space-l;
                 }
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+
+            .sdg {
+                width: 100%;
+                height: 100%;
+            }
+
+            .sdg-enter-active,
+            .sdg-leave-active {
+                transition: all 0.4s ease;
+            }
+
+            .sdg-enter-from,
+            .sdg-leave-to {
+                transform: scale(0) translateY(200%);
             }
 
             .tag-list {

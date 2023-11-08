@@ -5,6 +5,7 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function createInvitaionLink(page) {
     logger.info('Wait 20 sec')
+    let clipboardText: string
     await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
     await page.locator('[data-test="dropdown-user-account"]').click()
     await page.locator('[data-test="admin"]').waitFor(20000)
@@ -26,13 +27,14 @@ export async function createInvitaionLink(page) {
     } else {
         logger.error('No groups found')
     }
+    await delay(1000)
     await page.locator('[data-test="save-link"]').click()
-    await delay(10000)
+    await delay(5000)
     const links = await page.locator('[data-test^="cpy-link-"]').all()
     if (links.length > 0) {
         const lastLink = links[links.length - 1]
         await lastLink.click()
-        const clipboardText = await page.evaluate(() => navigator.clipboard.readText())
+        clipboardText = await page.evaluate(() => navigator.clipboard.readText())
         logger.info('link from clipboard')
         logger.info(clipboardText)
     } else {
@@ -43,4 +45,5 @@ export async function createInvitaionLink(page) {
     await deleteBtn.click()
     await delay(1000)
     await page.locator('[data-test="confirm-destroy"]').click()
+    return clipboardText
 }

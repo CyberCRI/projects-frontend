@@ -222,7 +222,12 @@
                 </a>
                 {{ $t('profile.edit.general.sdgs.notice-end') }}
             </p>
-            <div class="sdgs-list" v-if="form.sdgs && form.sdgs.length">
+            <TransitionGroup
+                tag="div"
+                name="sdg"
+                class="sdgs-list"
+                v-if="form.sdgs && form.sdgs.length"
+            >
                 <img
                     v-for="sdg in form.sdgs"
                     :key="sdg"
@@ -230,7 +235,7 @@
                     :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
                     class="sdg-picture"
                 />
-            </div>
+            </TransitionGroup>
         </div>
 
         <hr class="form-separator" />
@@ -295,7 +300,7 @@
         :confirm-action-name="$t('common.confirm')"
         :is-opened="showSdgsDrawer"
         :title="$t('profile.edit.general.sdgs.label')"
-        class="medium"
+        class="small"
         @close="showSdgsDrawer = false"
         @confirm="selectSdgs"
     >
@@ -686,18 +691,30 @@ export default {
     }
 }
 
+$sdg-size: $font-size-4xl;
+
 .tags-list,
 .sdgs-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($sdg-size, 1fr));
     gap: $space-m;
     margin-top: $space-m;
 }
 
 .sdg-picture {
     display: inline-block;
-    width: $font-size-4xl;
-    height: $font-size-4xl;
+    width: $sdg-size;
+    height: $sdg-size;
+}
+
+.sdg-enter-active,
+.sdg-leave-active {
+    transition: all 0.4s ease;
+}
+
+.sdg-enter-from,
+.sdg-leave-to {
+    transform: scale(0) translateY(200%);
 }
 
 .form-actions {

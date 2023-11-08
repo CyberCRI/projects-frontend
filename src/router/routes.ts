@@ -44,15 +44,16 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/me', // back compatibility with old routes
-        redirect: 'profile',
+        redirect: { name: 'ProfileSummary' },
     },
     {
         path: '/me/*', // back compatibility with old routes
-        redirect: 'profile',
+        redirect: { name: 'ProfileSummary' },
     },
     {
         path: '/profile',
         name: 'Profile',
+        redirect: { name: 'ProfileSummary' },
         component: () =>
             import(
                 /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
@@ -192,7 +193,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'faq',
                 component: () =>
                     import(
-                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpTab.vue'
+                        /* webpackChunkName: "FaqAdmin" */ '../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'
                     ),
             },
             {

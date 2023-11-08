@@ -12,9 +12,5 @@ import BrowseLayout from '@/components/Layouts/Search/BrowseLayout.vue'
 export default {
     name: 'SearchPage',
     components: { BrowseLayout },
-
-    mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
-    },
 }
 </script>

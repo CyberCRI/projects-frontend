@@ -28,13 +28,8 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
       - name: Install the dependencies
         run: yarn install --frozen-lockfile
-
-      - uses: wagoid/commitlint-github-action@v5
-        env:
-          NODE_PATH: ${{ github.workspace }}/node_modules
       - name: Check that prettier has been run on all files
         run: yarn format:check
       - name: Run the linter
@@ -47,6 +42,7 @@ jobs:
       #     skip-step: install
       #     test-script: yarn test:unit
       #     annotations: failed-tests
+
       - name: Run the tests
         run: yarn test:unit:ci
       - name: Uninstall Yarn

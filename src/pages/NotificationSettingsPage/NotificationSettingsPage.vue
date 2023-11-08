@@ -1,6 +1,6 @@
 <template>
-    <div class="settings-layout narrow-body">
-        <h1>{{ $t('notifications.title') }}</h1>
+    <div class="settings-layout page-section-extra-wide page-top">
+        <h1 class="page-title">{{ $t('notifications.title') }}</h1>
 
         <TabsLayout :align-left="true" :border="false" :tabs="tabs"></TabsLayout>
     </div>
@@ -29,22 +29,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.settings-layout {
-    max-width: unset;
-    margin: auto;
-
-    h1 {
-        font-size: $font-size-7xl;
-        font-weight: 700;
-        text-align: center;
-        margin: pxToRem(98px) 0 $space-2xl;
-    }
-
-    @media (min-width: $min-tablet) {
-        padding: 0 $space-xl;
-        max-width: 1200px;
-    }
-}
-</style>

@@ -23,13 +23,10 @@
                     <span v-if="membersCount">( {{ membersCount }} )</span>
                 </h2>
 
-                <LpiButton
+                <SeeMoreArrow
                     v-if="!isMembersLoading"
-                    :label="$filters.capitalize($t('group.see-more'))"
                     class="see-more-button"
-                    right-icon="ArrowRight"
-                    size="link"
-                    @click="toMembers"
+                    :to="{ name: 'groupMembers', params: { groupId: this.$route.params.groupId } }"
                 />
             </div>
 
@@ -55,13 +52,13 @@
                     {{ $t('group.projects') }}
                     <span v-if="projectsCount">( {{ projectsCount }} )</span>
                 </h2>
-                <LpiButton
+                <SeeMoreArrow
                     v-if="!isProjectsLoading"
-                    :label="$filters.capitalize($t('group.see-more'))"
                     class="see-more-button"
-                    right-icon="ArrowRight"
-                    size="link"
-                    @click="toProjects"
+                    :to="{
+                        name: 'groupProjects',
+                        params: { groupId: $route.params.groupId },
+                    }"
                 />
             </div>
             <div class="projects-container">
@@ -97,7 +94,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 import DescriptionExpandable from '@/components/lpikit/AnnouncementCard/DescriptionExpandable.vue'
 import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
 import CardList from '@/components/lpikit/ProjectList/CardList.vue'
@@ -114,7 +111,7 @@ export default {
     components: {
         SkeletonComponent,
         MemberListSkeleton,
-        LpiButton,
+        SeeMoreArrow,
         DescriptionExpandable,
         UserItem,
         CardList,
@@ -183,12 +180,6 @@ export default {
     },
 
     methods: {
-        toMembers() {
-            this.$router.push(`/group/${this.$route.params.groupId}/members`)
-        },
-        toProjects() {
-            this.$router.push(`/group/${this.$route.params.groupId}/projects`)
-        },
         async openProfileDrawer(user) {
             this.profileDrawer.user_kid = user.keycloak_id
             this.profileDrawer.isOpened = true
@@ -205,7 +196,7 @@ export default {
 
 <style lang="scss" scoped>
 .description {
-    padding: $space-2xl $space-2xl 0 $space-2xl;
+    padding-top: $space-2xl;
 }
 
 .members {

@@ -12,18 +12,15 @@
             />
         </div>
 
-        <LpiButton
-            :label="$filters.capitalize($t('common.see-more'))"
+        <SeeMoreArrow
             class="read-description-button"
-            right-icon="ArrowRight"
-            size="link"
-            @click="toDescription"
+            :to="{ name: 'projectDescription', hash: '#tab' }"
         />
     </div>
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 
 export default {
@@ -42,12 +39,9 @@ export default {
         }
     },
 
-    components: { LpiButton, HtmlLimiter },
+    components: { SeeMoreArrow, HtmlLimiter },
 
     methods: {
-        toDescription() {
-            this.$router.push(`/projects/${this.$route.params.slugOrId}/description#tab`)
-        },
         computeLayout() {
             this.style = {}
         },

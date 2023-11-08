@@ -3,6 +3,7 @@
         <ProjectHeader
             :project="project"
             :similar-projects="similarProjects"
+            :loading="loading"
             class="project-header"
             @show-project-announcements="goToTab('announcements')"
         />
@@ -203,6 +204,7 @@ export default {
             similarProjects: [],
             sockerserver: import.meta.env.VITE_APP_WSS_HOST,
             provider: null,
+            loading: true,
         }
     },
 
@@ -227,10 +229,6 @@ export default {
 
         project() {
             return this.$store.getters['projects/project']
-        },
-
-        loading() {
-            return this.$store.getters['app/loading']
         },
 
         accessToken() {
@@ -281,14 +279,14 @@ export default {
         // },
 
         setProject(projectSlugOrId = this.$route.params.slugOrId) {
-            this.$store.dispatch('app/updateLoading', { visible: true })
+            this.loading = true
             this.$store
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
-                    this.$store.dispatch('app/updateLoading', { visible: false })
                     await this.$store.dispatch('comments/getComments', project.id)
                     this.getSimilarProjects()
                     this.connectToSocket(project.id)
+                    this.loading = false
                 })
                 .catch(() => {
                     this.$router.replace({

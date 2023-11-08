@@ -35,7 +35,7 @@ import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import { searchGroups } from '@/api/projects.service.ts'
 
 export default {
-    name: 'GroupModal',
+    name: 'PickGroup',
     emits: ['select-group'],
     components: {
         GroupsElementRadio,
@@ -93,9 +93,7 @@ export default {
     watch: {
         listGroups: {
             handler: function (neo) {
-                for (const group of neo) {
-                    this.listGroupsIds.push(group.id)
-                }
+                this.listGroupsIds = neo.map((group) => group.id)
 
                 for (const id of this.listGroupsIds) {
                     let found = false

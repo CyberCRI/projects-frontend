@@ -1,17 +1,10 @@
 .legal-page {
     color: $black;
-    margin-top: calc(30px + $navbar-height);
 
     @media screen and (min-width: $max-tablet) {
         .legal-notices {
             margin-top: calc(90px + $navbar-height);
         }
-    }
-
-    h1 {
-        text-align: center;
-        font-size: $font-size-6xl;
-        font-weight: 700;
     }
 
     p {

@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-extra-wide people-layout">
-        <h1 class="title">{{ $filters.capitalize($t('common.people')) }}</h1>
+    <div class="page-section-extra-wide page-top">
+        <h1 class="page-title">{{ $filters.capitalize($t('common.people')) }}</h1>
         <div class="main-ctn">
             <div v-if="searchOptionsInitiated" class="search-input-container">
                 <SearchOptions
@@ -103,24 +103,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.people-layout {
-    margin-top: $space-2xl;
-
-    @media screen and (min-width: $min-tablet) {
-        margin-top: calc($space-2xl * 2);
-    }
-}
-
-.title {
-    text-align: center;
-    font-weight: 700;
-    font-size: $font-size-5xl;
-    line-height: 50px;
-    color: $black;
-    width: 100%;
-    margin-bottom: $space-m;
-}
-
 .main-ctn {
     display: flex;
     flex-direction: column;
@@ -132,6 +114,7 @@ export default {
         align-items: center;
         border-radius: $border-radius-17;
         flex-direction: column;
+        margin: $space-xl 0;
 
         .search-input {
             margin-bottom: pxToRem(16px);

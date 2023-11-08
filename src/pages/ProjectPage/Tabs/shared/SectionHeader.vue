@@ -5,20 +5,17 @@
             >&nbsp;<span v-if="quantity">({{ quantity }})</span>
         </div>
 
-        <LpiButton
+        <SeeMoreArrow
             v-if="hasButton"
-            :label="$filters.capitalize(buttonLabel ? buttonLabel : null)"
-            :left-icon="buttonLabel ? null : 'ArrowRight'"
-            :right-icon="buttonLabel ? 'ArrowRight' : null"
+            :label="buttonLabel"
             class="section-button"
-            size="link"
-            @click="$emit('redirect-button-clicked')"
+            @click.prevent="$emit('redirect-button-clicked')"
         />
     </div>
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
 
 export default {
     name: 'SectionHeader',
@@ -26,7 +23,7 @@ export default {
     emits: ['redirect-button-clicked'],
 
     components: {
-        LpiButton,
+        SeeMoreArrow,
     },
 
     props: {

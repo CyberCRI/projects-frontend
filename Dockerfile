@@ -23,7 +23,7 @@ ARG VITE_APP_API_DEFAULT_VERSION=/v1 \
     VITE_APP_META_PORTAL_URL=https://projects.directory \
     VITE_APP_MIXPANEL_API_URL \
     VITE_APP_MIXPANEL_PROJECT_TOKEN \
-    VITE_APP_PUBLIC_BINARIES_PREFIX \
+    VITE_APP_PUBLIC_BINARIES_PREFIX=https://criparisprodprodassets.blob.core.windows.net/assets/public \
     VITE_APP_VERSION\
     VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
     VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev
@@ -33,7 +33,7 @@ COPY . /app/
 RUN NODE_ENV=production yarn build &&\
     rm -rf node_modules/.cache
 
-FROM nginx:1.25.2-alpine
+FROM nginx:1.25.3-alpine
 
 RUN apk update && \
     apk upgrade --no-cache && \
@@ -56,8 +56,9 @@ EXPOSE 8080
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html
 RUN chown -R nginx:nginx  /usr/share/nginx/html
-COPY ./docker-inject.sh /docker-entrypoint.d/40-docker-inject.sh
-RUN chown nginx:nginx /docker-entrypoint.d/40-docker-inject.sh
-RUN chmod +x /docker-entrypoint.d/40-docker-inject.sh
+
+COPY --chown=nginx:nginx interpolate-variables.sh ./interpolate-variables.sh
+COPY --chown=nginx:nginx devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
+COPY --chown=nginx:nginx ./nginx-entrypoint-interpolate-variables.sh /docker-entrypoint.d/40-interpolate-variables.sh
 
 USER nginx

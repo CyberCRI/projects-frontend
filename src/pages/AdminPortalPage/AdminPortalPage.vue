@@ -1,6 +1,6 @@
 <template>
-    <div class="admin-portal-layout page-section-wide">
-        <h1>{{ $t('admin.portal.management') }}</h1>
+    <div class="admin-portal-layout page-section-wide page-top">
+        <h1 class="page-title">{{ $t('admin.portal.management') }}</h1>
         <TabsLayout :tabs="tabs" :border="false" align-left router-view />
     </div>
 </template>
@@ -13,10 +13,6 @@ export default {
 
     components: {
         TabsLayout,
-    },
-
-    mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
     },
 
     computed: {
@@ -71,16 +67,10 @@ export default {
 <style lang="scss" scoped>
 .admin-portal-layout {
     font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
-    padding: 0 $space-xl;
-    margin: auto;
     margin-bottom: $space-2xl;
 
-    h1 {
-        font-size: $font-size-7xl;
-        font-weight: 700;
-        text-align: center;
-        margin-top: 98px;
-        margin-bottom: $space-2xl;
+    .page-title {
+        margin-bottom: $space-xl;
     }
 }
 </style>

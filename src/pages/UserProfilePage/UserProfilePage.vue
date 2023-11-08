@@ -37,15 +37,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .profile-page {
-    padding: 6.5rem 0;
+    padding-top: 6.5rem;
+    padding-bottom: 6.5rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: stretch;
-}
-
-@media screen and (min-width: $min-tablet) {
-    .profile-page {
-        padding: 6.5rem $space-2xl;
-    }
 }
 </style>

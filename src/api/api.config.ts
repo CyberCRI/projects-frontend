@@ -1,4 +1,4 @@
-import a, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import a, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
 import store from '@/store'
 
@@ -25,7 +25,7 @@ export const configFormData = {
 }
 
 // Handle all requests
-const request = (config: AxiosRequestConfig) => {
+const request = (config: InternalAxiosRequestConfig) => {
     // additional headers if needed
     const accessToken = localStorage.getItem('ACCESS_TOKEN')
 
@@ -36,7 +36,7 @@ const request = (config: AxiosRequestConfig) => {
     return config
 }
 
-const requestNoToken = (config: AxiosRequestConfig) => {
+const requestNoToken = (config: InternalAxiosRequestConfig) => {
     return config
 }
 

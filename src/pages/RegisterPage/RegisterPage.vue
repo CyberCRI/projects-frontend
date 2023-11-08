@@ -7,7 +7,7 @@
         </div>
         <div class="right">
             <div class="box-ctn">
-                <h1 class="title">
+                <h1 class="title" data-test="register-confirm">
                     {{ confirm ? $t('register.title-confirm') : $t('register.title') }}
                 </h1>
                 <div class="box confirm-message" v-if="confirm">
@@ -20,6 +20,7 @@
                             :label="$t('register.given_name.label')"
                             :placeholder="$t('register.given_name.placeholder')"
                             @blur="v$.form.given_name.$validate"
+                            data-test="first-name"
                         />
                         <p
                             v-for="error of v$.form.given_name.$errors"
@@ -35,6 +36,7 @@
                             :label="$t('register.family_name.label')"
                             :placeholder="$t('register.family_name.placeholder')"
                             @blur="v$.form.family_name.$validate"
+                            data-test="last-name"
                         />
                         <p
                             v-for="error of v$.form.family_name.$errors"
@@ -51,6 +53,7 @@
                             input-type="email"
                             :placeholder="$t('register.email.placeholder')"
                             @blur="v$.form.email.$validate"
+                            data-test="email"
                         />
                         <p
                             v-for="error of v$.form.email.$errors"
@@ -67,6 +70,7 @@
                             :label="$t('register.password.label')"
                             :placeholder="$t('register.password.placeholder')"
                             @blur="v$.form.password.$validate"
+                            data-test="password"
                         />
                         <p
                             v-for="error of v$.form.password.$errors"
@@ -83,6 +87,7 @@
                             :label="$t('common.confirm')"
                             :left-icon="asyncing ? 'LoaderSimple' : null"
                             class="register-btn"
+                            data-test="register-btn"
                         />
                         <i18n-t keypath="register.tos" tag="p" class="tos">
                             <template #term>
@@ -122,7 +127,7 @@
         :title="$t('footer.contact')"
         @close="closeDrawer"
     >
-        <ContactDrawer v-if="showContactUsDrawer" @close="closeDrawer" />
+        <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
     </DrawerLayout>
 </template>
 <script>
@@ -135,7 +140,7 @@ import utils from '@/functs/functions.ts'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
-import ContactDrawer from '@/components/Drawers/ContactDrawer.vue'
+import ContactForm from '@/components/Drawers/ContactForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
@@ -148,7 +153,7 @@ export default {
         ProjectLogo,
         TextInput,
         LpiButton,
-        ContactDrawer,
+        ContactForm,
         DrawerLayout,
     },
 

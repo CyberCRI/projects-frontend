@@ -1,6 +1,6 @@
 <template>
-    <div class="page-section-narrow legal-page legal-notices">
-        <h1>Mentions légales</h1>
+    <div class="page-section-narrow legal-page legal-notices page-top">
+        <h1 class="page-title">Mentions légales</h1>
 
         <section>
             <h3>1. Identification</h3>

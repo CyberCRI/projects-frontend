@@ -45,10 +45,6 @@ export default {
         return this.$t('page404.page-title')
     },
 
-    mounted() {
-        this.$store.dispatch('app/updateLoading', { visible: false })
-    },
-
     beforeUnmount() {
         document.title = 'Projects'
     },
