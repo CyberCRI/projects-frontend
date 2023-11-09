@@ -27,7 +27,7 @@ jobs:
       - name: Install playwright
         run: npm install -g playwright
       - name: Overwrite package.json
-        run: newPackageJson=`jq 'del(.dependencies) | .devDependencies |= {"@playwright/test":."@playwright/test"}' package.json` && echo "$newPackageJson" > package.json
+        run: newPackageJson=`jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' package.json` && echo "$newPackageJson" >| package.json
       - name: Install playwright tests
         run: npm install
       - name: Install playwright Browsers
