@@ -19,7 +19,7 @@
             <div class="selected-list">
                 <FilterValue
                     v-for="skill in selection"
-                    :key="skill.id"
+                    :key="skill.wikipedia_tag.wikipedia_qid"
                     :label="skill.wikipedia_tag.name"
                     icon="Close"
                     type="actionable"
@@ -54,7 +54,11 @@
                 </SkillLevelTip>
             </p>
             <div class="level-editor-list">
-                <div class="entry" v-for="skill in selection" :key="skill.id">
+                <div
+                    class="entry"
+                    v-for="skill in selection"
+                    :key="skill.wikipedia_tag.wikipedia_qid"
+                >
                     <h4 class="skill-name">{{ skill.wikipedia_tag.name }}</h4>
                     <div class="level-editor">
                         <label
@@ -293,7 +297,9 @@ export default {
             this.$emit('close')
         },
         removeFromSelection(skill) {
-            this.selection = this.selection.filter((s) => s.id !== skill.id)
+            this.selection = this.selection.filter(
+                (s) => s.wikipedia_tag.wikipedia_qid !== skill.wikipedia_tag.wikipedia_qid
+            )
         },
         addToSelection(tag) {
             const skill = {
