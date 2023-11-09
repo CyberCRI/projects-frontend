@@ -1,6 +1,6 @@
 <template>
     <div class="project-tab">
-        <div v-if="isMyProfile" class="create-project">
+        <div v-if="isMyProfileAndCanCreateProject" class="create-project">
             <LpiButton
                 :label="$t('project.create-project')"
                 class="btn"
@@ -80,9 +80,9 @@ export default {
     },
 
     computed: {
-        isMyProfile() {
+        isMyProfileAndCanCreateProject() {
             const loggedAsKID = this.$store.getters['users/kid']
-            return loggedAsKID && this.user.keycloak_id === loggedAsKID
+            return loggedAsKID && this.user.keycloak_id === loggedAsKID && this.canCreateProject
         },
 
         isCurrentUser() {
