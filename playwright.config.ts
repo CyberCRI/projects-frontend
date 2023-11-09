@@ -11,6 +11,8 @@ dotenv.config()
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+    /* Maximum time the whole test suite can run for. */
+    globalTimeout: 15 * 60 * 1000,
     testDir: './tests/playwright',
     /* Maximum time one test can run for. */
     timeout: 180 * 1000,

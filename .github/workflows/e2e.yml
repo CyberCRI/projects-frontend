@@ -5,7 +5,6 @@ jobs:
   e2e-tests:
     environment:
       name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
-    timeout-minutes: 18
     runs-on: [self-hosted, default-runner]
     env:
       USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
@@ -25,10 +24,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
-      - name: Install Yarn
-        run: npm install -g yarn
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install playwright
+        run: npm install -g playwright
+      - name: Overwrite package.json
+        run: newPackageJson=`jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' package.json` && echo "$newPackageJson" >| package.json
+      - name: Install playwright tests
+        run: npm install
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
@@ -46,10 +47,11 @@ jobs:
           path: playwright-report/
           retention-days: 7
       - name: Report Status
-        if: always()
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
         uses: ravsamhq/notify-slack-action@v1
         with:
           status: ${{ job.status }}
           notify_when: 'failure'
+          notification_title: "Les e2e Playwright viennent d'échouer"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
