@@ -9,6 +9,8 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
         lastname: faker.name.lastName(),
     },
     email: faker.internet.email(),
+    personal_description: faker.lorem.paragraph(),
+    professional_description: faker.lorem.paragraph(),
     roles: [
         '/ClientsAdmin',
         '/projects/ClientsAdmin',
@@ -18,6 +20,9 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     ],
     orgs: ['CRI', 'OTHER_ORG'],
     permissions: [''],
+    people_groups: [], // TODO: generate this
+    skills: [], // TODO: generate this
+    hobbies: [], // TODO: generate this
 }))
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({
