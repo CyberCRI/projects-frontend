@@ -48,6 +48,7 @@ export type GroupOuput = Required<GroupModel> & {
     projects: any
     header_image: any
     logo_image: any
+    publication_status: string // TODO: public | ...
 }
 
 export interface PostGroupData {

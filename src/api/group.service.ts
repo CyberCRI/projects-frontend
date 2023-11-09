@@ -1,6 +1,7 @@
 import { axios } from '@/api/api.config'
 import {
     GroupModel,
+    GroupOuput,
     PostGroupData,
     AddGroupMembers,
     RemoveGroupMember,
@@ -22,7 +23,7 @@ export async function getHierarchyGroups(
     ).data
 }
 
-export async function getGroup(org: string, groupId: string): Promise<GroupModel> {
+export async function getGroup(org: string, groupId: string): Promise<GroupOuput> {
     return (
         await axios.get(
             `${
