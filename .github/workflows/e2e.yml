@@ -25,7 +25,11 @@ jobs:
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
       - name: Install playwright
-        run: npm install -g playwright @playwright/test
+        run: npm install -g playwright
+      - name: Overwrite package.json
+        run: newPackageJson=`jq 'del(.dependencies) | .devDependencies |= {"@playwright/test":."@playwright/test"}' package.json` && echo "$newPackageJson" > package.json
+      - name: Install playwright tests
+        run: npm install
       - name: Install playwright Browsers
         run: npx playwright install chrome --with-deps # todo: add other browsers
       - name: Run Playwright tests
@@ -50,4 +54,5 @@ jobs:
           notify_when: 'failure'
           notification_title: "Les e2e Playwright viennent d'échouer"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
+          # SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_TEST_STAN_WEBHOOK }}
