@@ -215,11 +215,10 @@ export default {
                 /* for each tab, we check if it fit in the wrapper
                  * if it doesn't, we hide it and add it to the more tabs
                  */
-                const tabs = document.getElementsByClassName('tabs-slider')
+                const tabs = this.$el.getElementsByClassName('tabs-slider')
 
                 if (tabs.length) {
                     const wrapperRight = tabs[0]?.getBoundingClientRect()?.right
-
                     // reset the arrays
                     this.displayedTabs.splice(0)
                     this.seeMoreTabs.splice(0)
