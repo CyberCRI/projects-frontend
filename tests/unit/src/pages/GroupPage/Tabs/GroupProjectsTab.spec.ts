@@ -1,7 +1,7 @@
-import GroupSnapshotTab from '@/pages/GroupPage/Tabs/GroupSnapshotTab.vue'
+import GroupProjectsTab from '@/pages/GroupPage/Tabs/GroupProjectsTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
-import { flushPromises } from '@vue/test-utils'
+import { DOMWrapper, flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -47,31 +47,15 @@ const store = {
 }
 
 const protoPropsLoading = () => ({
-    description: '',
-
     projectsInitialRequest: {},
 
-    membersInitialRequest: {},
-
     isProjectsLoading: true,
-
-    isMembersLoading: true,
-
-    isLoading: true,
 })
 
-const protoPropsLoaded = (members = [], projects = []) => ({
-    description: '<p>lorem ipsum</p>',
-
+const protoPropsLoaded = (projects = []) => ({
     projectsInitialRequest: { count: projects.length, results: projects },
 
-    membersInitialRequest: { count: members.length, results: members },
-
     isProjectsLoading: false,
-
-    isMembersLoading: false,
-
-    isLoading: false,
 })
 
 const buildParams = (props) => ({
@@ -84,34 +68,26 @@ const buildParams = (props) => ({
     props,
 })
 
-describe('GroupSnapshotTab', () => {
-    it('should render GroupSnapshotTab component', () => {
-        let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
+describe('GroupProjectsTab', () => {
+    it('should render GroupProjectsTab component', () => {
+        let wrapper = lpiShallowMount(GroupProjectsTab, buildParams(protoPropsLoading()))
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should display loading state then render', async () => {
-        let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
+    it('should display project count when loaded', async () => {
+        let wrapper = lpiShallowMount(GroupProjectsTab, buildParams(protoPropsLoading()))
 
-        expect(wrapper.find('.skeleton').exists()).toBe(true)
-        expect(wrapper.find('.projects .see-more-button').exists()).toBe(false)
-        expect(wrapper.find('.members .see-more-button').exists()).toBe(false)
+        expect(wrapper.find('.projects-header .title span').exists()).toBe(false)
 
-        wrapper.setProps(protoPropsLoaded([{ id: 1 }], [{ id: 2 }]))
+        wrapper.setProps(protoPropsLoaded([{ id: 1 }, { id: 2 }]))
 
         await wrapper.vm.$nextTick()
 
-        expect(wrapper.find('.skeleton').exists()).toBe(false)
-        expect(wrapper.find('.projects .see-more-button').exists()).toBe(true)
-        expect(wrapper.find('.members .see-more-button').exists()).toBe(true)
-    })
+        let counter = wrapper.find('.projects-header .title span')
 
-    it("should not display list section when there's no project or member", async () => {
-        let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoaded([], [])))
+        expect(counter.exists()).toBe(true)
 
-        expect(wrapper.find('.skeleton').exists()).toBe(false)
-        expect(wrapper.find('.projects').exists()).toBe(false)
-        expect(wrapper.find('.members').exists()).toBe(false)
+        expect(counter.html()).toContain('2')
     })
 })
