@@ -88,7 +88,7 @@
                     projectLayoutToggleAddModal('teamMember', { user: group, role: 'reviewers' })
                 "
             >
-                <GroupCard :group="group" @go-to="openProfileDrawer(group)" />
+                <GroupCard :group="group" />
             </ProjectTeamEditor>
         </DynamicGrid>
 
