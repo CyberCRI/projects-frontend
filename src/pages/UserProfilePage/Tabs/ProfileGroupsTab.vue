@@ -19,11 +19,11 @@
                         <GroupCard
                             v-if="groupListSlotProps.group"
                             :group="groupListSlotProps.group"
-                            @navigated-away="goToGroupPage(groupListSlotProps.group)"
+                            @navigated-away="$emit('close')"
                         />
                     </template>
                     <template #empty>
-                        <div class="empty-ctn" :class="gridLayout">
+                        <div class="empty-ctn">
                             <EmptyCard class="empty-card" :label="noGroupLabel" />
                         </div>
                     </template>
@@ -95,13 +95,6 @@ export default {
 
         noGroupLabel() {
             return this.isCurrentUser ? this.$t('me.no-group') : this.$t('you.no-group')
-        },
-    },
-
-    methods: {
-        goToGroupPage(group) {
-            this.$emit('close')
-            this.$router.push(`/group/${group.id}`)
         },
     },
 }
