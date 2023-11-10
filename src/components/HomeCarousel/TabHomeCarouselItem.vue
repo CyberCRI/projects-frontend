@@ -1,5 +1,5 @@
 <template>
-    <div class="tab">
+    <div class="tab-home-carousel-item">
         <picture v-for="source in tab.image.sources" :key="source.type">
             <source :sizes="source.sizes" :srcset="source.srcset" :type="source.type" />
             <img :alt="tab.title" :src="tab.image.default" />
@@ -33,16 +33,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tab {
+.tab-home-carousel-item {
     display: flex;
     flex-direction: column-reverse;
     align-items: stretch;
+    background-color: $white;
 
     img {
+        width: 100%;
         max-width: 100%;
     }
 
-    @media (min-width: $min-desktop) {
+    @media (min-width: $min-tablet) {
         flex-direction: row;
         align-items: stretch;
 
@@ -61,7 +63,6 @@ export default {
     }
 
     .tab-text-container {
-        background-color: $white;
         padding: $space-l;
 
         .title {

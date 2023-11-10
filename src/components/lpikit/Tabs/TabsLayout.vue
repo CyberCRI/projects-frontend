@@ -215,11 +215,11 @@ export default {
                 /* for each tab, we check if it fit in the wrapper
                  * if it doesn't, we hide it and add it to the more tabs
                  */
-                const tabs = document.getElementsByClassName('tabs-slider')
+                const tabs = this.$el.getElementsByClassName('tabs-slider')
 
                 if (tabs.length) {
                     const wrapperRight = tabs[0]?.getBoundingClientRect()?.right
-
+                    console.log('wrapperRight', wrapperRight)
                     // reset the arrays
                     this.displayedTabs.splice(0)
                     this.seeMoreTabs.splice(0)
@@ -228,6 +228,7 @@ export default {
                     const iterate = async (tabs, displayed, otherTab) => {
                         let skipOthers = false
                         for (let i = 0; i < tabs.length; i++) {
+                            console.log('tabs[i]', i)
                             // add the tag to the displayed tags to compute its size
                             displayed.push(tabs[i])
                             await this.$nextTick()
@@ -238,8 +239,10 @@ export default {
                                 otherTab.push({ ...tabs[i], index: i })
                             } else if (tabsHtmlElement.length) {
                                 const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
+                                console.log('lastTab', lastTab, lastTab.getBoundingClientRect())
                                 const lastTabRight = lastTab.getBoundingClientRect().right
                                 if (lastTabRight > wrapperRight) {
+                                    console.log('over')
                                     // if it doesn't, we hide it and add it to the more tags
                                     displayed.pop()
                                     otherTab.push({ ...tabs[i], index: i })
