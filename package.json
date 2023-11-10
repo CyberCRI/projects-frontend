@@ -78,7 +78,7 @@
         "prosemirror-transform": "^1.7.3",
         "prosemirror-view": "^1.31.4",
         "remixicon": "^2",
-        "vue": "^3.2.47",
+        "vue": "^3.3.6",
         "vue-axios": "^3.5.2",
         "vue-chart-3": "^3.1.8",
         "vue-class-component": "^7",
