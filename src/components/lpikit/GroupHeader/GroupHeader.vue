@@ -96,7 +96,7 @@ export default {
             required: true,
         },
         image: {
-            type: Object,
+            type: [Object, null],
             required: true,
         },
         visibility: {
