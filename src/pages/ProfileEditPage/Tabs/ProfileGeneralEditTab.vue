@@ -472,14 +472,13 @@ export default {
             if (this.hasFormChanged) {
                 this.showCancelConfirmModal = true
             } else {
-                this.resetForm()
-                this.$router.push('/profile')
+                this.resetAndLeaveEditPage()
             }
         },
 
         resetAndLeaveEditPage() {
             this.resetForm()
-            this.$router.push('/profile')
+            this.redirectToProfile()
         },
 
         async save() {
@@ -555,15 +554,20 @@ export default {
             } finally {
                 this.asyncing = false
                 if (isValid) {
-                    if (this.isSelf) this.$router.push({ name: 'Profile' })
-                    else
-                        this.$router.push({
-                            name: 'ProfileOtherUser',
-                            params: { userKId: this.user.keycloak_id },
-                        })
+                    this.redirectToProfile()
                 }
             }
         },
+
+        redirectToProfile() {
+            if (this.isSelf) this.$router.push({ name: 'Profile' })
+            else
+                this.$router.push({
+                    name: 'ProfileOtherUser',
+                    params: { userKId: this.user.keycloak_id },
+                })
+        },
+
         async resetForm() {
             if (this.user) {
                 this.form = {
