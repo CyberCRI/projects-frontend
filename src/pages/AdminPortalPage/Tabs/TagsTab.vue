@@ -75,6 +75,7 @@ import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
+import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
 
@@ -90,7 +91,7 @@ export default {
     },
 
     async created() {
-        await this.$store.dispatch('organizationTags/getAllTags')
+        await this.loadOrgTags()
         await this.loadWikiTags()
     },
 
@@ -103,16 +104,13 @@ export default {
             tagSearchIsOpened: false,
             ambiguousTagsOpen: false,
             wikipediaTags: [],
+            organizationTags: [],
         }
     },
 
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
-        },
-
-        organizationTags() {
-            return this.$store.getters['organizationTags/all']
         },
 
         currentLang() {
@@ -129,13 +127,22 @@ export default {
             ).results
         },
 
+        async loadOrgTags() {
+            this.organizationTags = await (
+                await getAllOrgTags({
+                    organization: this.$store.state.organizations.current.code,
+                })
+            ).results
+        },
+
         async addOrganizationTag() {
             if (this.newOrganizationTag.length) {
                 try {
-                    await this.$store.dispatch('organizationTags/addTag', {
+                    await createOrgTag({
                         name: this.newOrganizationTag,
                         organization: this.organization.code,
                     })
+                    await this.loadOrgTags()
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.organization-tag-create.success'),
@@ -185,7 +192,8 @@ export default {
 
         async deleteOrganizationTag(tag) {
             try {
-                await this.$store.dispatch('organizationTags/deleteTag', tag.id)
+                await deleteOrgTag(tag.id)
+                await this.loadOrgTags()
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.organization-tag-delete.success'),
                     type: 'success',

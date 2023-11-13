@@ -15,15 +15,6 @@ function buildStore() {
                     },
                 },
             },
-            organizationTags: {
-                namespaced: true,
-                getters: {
-                    all: () => [],
-                },
-                actions: {
-                    getAllTags: vi.fn(),
-                },
-            },
         },
     }
 }
