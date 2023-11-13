@@ -57,7 +57,7 @@ describe('TagsFilterEditor', () => {
     })
 
     it('should fetch orgs and wikipedia tags', () => {
-        wrapper = lpiShallowMount(FilterTags, defaultParams)
+        wrapper = lpiMount(TagsFilterEditor, defaultParams)
 
         expect(getAllOrgTags).toHaveBeenCalled()
         expect(getAllWikiTags).toHaveBeenCalled()
