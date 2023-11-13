@@ -6,9 +6,12 @@ describe('MapRecap.vue', () => {
     it('should render component', () => {
         const wrapper = lpiShallowMount(MapRecap, {
             store: {
-                state: {
-                    maps: {
-                        attribution: '',
+                modules: {
+                    projects: {
+                        module: true,
+                        getters: {
+                            project: () => ({ id: 1 }),
+                        },
                     },
                 },
             },

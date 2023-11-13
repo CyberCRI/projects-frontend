@@ -8,7 +8,6 @@ import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
 import languages, { LanguageState } from '@/store/modules/languages'
 import locations, { LocationsState } from '@/store/modules/locations'
-import maps from '@/store/modules/maps'
 import notifications, { NotificationsState } from '@/store/modules/notifications'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
 import people, { PeopleState } from '@/store/modules/people'
@@ -58,7 +57,6 @@ export default createStore({
         groups,
         languages,
         locations,
-        maps,
         notifications,
         organizations,
         people,

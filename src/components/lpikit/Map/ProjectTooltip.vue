@@ -26,9 +26,9 @@
 
         <div class="project-tooltip__content">
             <img
-                :alt="project.header_image.name"
+                :alt="project.header_image?.name"
                 loading="lazy"
-                :src="project.header_image.variations.small"
+                :src="project.header_image?.variations?.small"
                 class="project-tooltip__image"
             />
             <div>
