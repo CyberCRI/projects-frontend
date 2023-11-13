@@ -37,7 +37,7 @@ import FilterSearchInput from '@/components/peopleKit/Filters/FilterSearchInput.
 import CurrentTags from '@/components/lpikit/FilterTags/CurrentTags.vue'
 import SuggestedTags from '@/components/lpikit/FilterTags/SuggestedTags.vue'
 import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vue'
-
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 export default {
     name: 'TagsFilterEditor',
 
@@ -87,12 +87,17 @@ export default {
             isAddMode: true,
             queryString: '',
             tags: [],
+            wikipediaTags: [],
         }
     },
 
     async created() {
         await this.$store.dispatch('organizationTags/getAllTags')
-        await this.$store.dispatch('wikipediaTags/getAllTags')
+        this.wikipediaTags = (
+            await getAllWikiTags({
+                organization: this.$store.state.organizations.current.code,
+            })
+        ).results
 
         this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
     },
@@ -104,10 +109,6 @@ export default {
     computed: {
         organizationTags() {
             return this.$store.getters['organizationTags/all']
-        },
-
-        wikipediaTags() {
-            return this.$store.getters['wikipediaTags/all']
         },
     },
 

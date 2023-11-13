@@ -57,9 +57,6 @@ describe('Store module | organizations | actions', () => {
         )
 
         expect(commit).toHaveBeenCalledWith('SET_CURRENT_ORGANIZATION', organization)
-        expect(commit).toHaveBeenCalledWith('wikipediaTags/SET_TAGS', organization.wikipedia_tags, {
-            root: true,
-        })
         expect(setOrganizationPropertiesMock).toHaveBeenCalled()
     })
 
@@ -86,13 +83,6 @@ describe('Store module | organizations | actions', () => {
         )
 
         expect(commit).toHaveBeenCalledWith('SET_CURRENT_ORGANIZATION', currentOrganization)
-        expect(commit).toHaveBeenCalledWith(
-            'wikipediaTags/SET_TAGS',
-            currentOrganization.wikipedia_tags,
-            {
-                root: true,
-            }
-        )
     })
 })
 

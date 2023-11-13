@@ -20,7 +20,6 @@ import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
 import reviews from '@/store/modules/reviews'
 import sdgs from '@/store/modules/sdgs'
 import templates, { TemplatesState } from '@/store/modules/templates'
-import wikipediaTags, { WikipediaTagsState } from '@/store/modules/wikipedia-tags'
 import organizationTags, { OrganizationTagsState } from '@/store/modules/organization-tags'
 import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
@@ -33,7 +32,6 @@ export interface State {
     organizations: OrganizationsState
     languages: LanguageState
     users: UsersState
-    wikipediaTags: WikipediaTagsState
     organizationTags: OrganizationTagsState
     templates: TemplatesState
     comments: CommentsState
@@ -68,7 +66,6 @@ export default createStore({
         announcements,
         reviews,
         sdgs,
-        wikipediaTags,
         organizationTags,
         templates,
         users,

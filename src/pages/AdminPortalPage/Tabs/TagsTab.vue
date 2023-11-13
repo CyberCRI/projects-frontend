@@ -74,7 +74,7 @@
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
-
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
 
@@ -91,7 +91,7 @@ export default {
 
     async created() {
         await this.$store.dispatch('organizationTags/getAllTags')
-        await this.$store.dispatch('wikipediaTags/getAllTags')
+        await this.loadWikiTags()
     },
 
     data() {
@@ -102,6 +102,7 @@ export default {
             wikiConfirmModalVisible: false,
             tagSearchIsOpened: false,
             ambiguousTagsOpen: false,
+            wikipediaTags: [],
         }
     },
 
@@ -114,16 +115,20 @@ export default {
             return this.$store.getters['organizationTags/all']
         },
 
-        wikipediaTags() {
-            return this.$store.getters['wikipediaTags/all']
-        },
-
         currentLang() {
             return this.$store.getters['languages/current']
         },
     },
 
     methods: {
+        async loadWikiTags() {
+            this.wikipediaTags = (
+                await getAllWikiTags({
+                    organization: this.$store.state.organizations.current.code,
+                })
+            ).results
+        },
+
         async addOrganizationTag() {
             if (this.newOrganizationTag.length) {
                 try {
@@ -156,6 +161,7 @@ export default {
                 await this.$store.dispatch('organizations/updateCurrentOrganization', {
                     wikipedia_tags_ids: newWikiIds,
                 })
+                await this.loadWikiTags()
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.organization-tag-create.success'),
@@ -202,6 +208,7 @@ export default {
                 await this.$store.dispatch('organizations/updateCurrentOrganization', {
                     wikipedia_tags_ids: updatedWikipediaTagsIds,
                 })
+                await this.loadWikiTags()
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.organization-tag-delete.success'),
                     type: 'success',

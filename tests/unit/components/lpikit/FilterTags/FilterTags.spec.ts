@@ -7,16 +7,15 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 function buildStore() {
     return {
         modules: {
-            organizationTags: {
+            organizations: {
                 namespaced: true,
-                actions: {
-                    getAllTags: vi.fn(() => []),
-                },
-                getters: {
-                    all: vi.fn(() => []),
+                state: {
+                    current: {
+                        code: 'test',
+                    },
                 },
             },
-            wikipediaTags: {
+            organizationTags: {
                 namespaced: true,
                 actions: {
                     getAllTags: vi.fn(() => []),

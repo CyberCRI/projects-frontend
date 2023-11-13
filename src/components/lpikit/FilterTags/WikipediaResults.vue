@@ -41,7 +41,7 @@ import { getWikiTagDisambiguate } from '@/api/wikipedia-tags.service'
 import SearchResults from './SearchResults.vue'
 import AmbiguousResults from './AmbiguousResults.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-
+import { searchWikiTags } from '@/api/wikipedia-tags.service'
 export default {
     name: 'WikipediaResults',
 
@@ -128,9 +128,7 @@ export default {
 
         launchSearch: debounce(async function () {
             this.isLoading = true
-            const results = await this.$store
-                .dispatch('wikipediaTags/searchWikiTags', this.queryString)
-                .catch(() => [])
+            const results = await searchWikiTags(this.queryString).catch(() => [])
 
             // Filter existing tags
             let filteredResults = results

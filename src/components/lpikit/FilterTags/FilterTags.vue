@@ -40,7 +40,7 @@ import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import CurrentTags from './CurrentTags.vue'
 import SuggestedTags from './SuggestedTags.vue'
 import WikipediaResults from './WikipediaResults.vue'
-
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 export default {
     name: 'FilterTags',
 
@@ -76,6 +76,7 @@ export default {
             isAddMode: true,
             queryString: '',
             tags: [],
+            wikipediaTags: [],
         }
     },
 
@@ -83,8 +84,11 @@ export default {
         this.tags = [...this.preselection]
 
         await this.$store.dispatch('organizationTags/getAllTags')
-        await this.$store.dispatch('wikipediaTags/getAllTags')
-
+        this.wikipediaTags = (
+            await getAllWikiTags({
+                organization: this.$store.state.organizations.current.code,
+            })
+        ).results
         this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
     },
 
@@ -94,10 +98,6 @@ export default {
         // },
         organizationTags() {
             return this.$store.getters['organizationTags/all']
-        },
-
-        wikipediaTags() {
-            return this.$store.getters['wikipediaTags/all']
         },
     },
 
