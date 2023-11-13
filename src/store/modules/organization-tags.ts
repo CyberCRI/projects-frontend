@@ -1,5 +1,5 @@
 import { OrganizationTagOutput } from '@/models/organization-tag.model'
-import { createTag, getAllTags, deleteTag } from '@/api/organization-tags.service'
+import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import { APIResponseList } from '@/api/types'
 
 export interface OrganizationTagsState {
@@ -20,7 +20,7 @@ const actions = {
         tag: OrganizationTagOutput
     ): Promise<APIResponseList<OrganizationTagOutput>> {
         try {
-            const response = await createTag(tag)
+            const response = await createOrgTag(tag)
             const updatedTags = [...state.all, response]
             commit('SET_TAGS', updatedTags)
 
@@ -31,7 +31,7 @@ const actions = {
     },
     async getAllTags({ commit, rootState }): Promise<APIResponseList<OrganizationTagOutput>> {
         try {
-            const response = await getAllTags({
+            const response = await getAllOrgTags({
                 organization: rootState.organizations.current.code,
             })
             commit('SET_TAGS', response.results)
@@ -46,7 +46,7 @@ const actions = {
         id: number
     ): Promise<APIResponseList<OrganizationTagOutput>> {
         try {
-            const response = await deleteTag(id)
+            const response = await deleteOrgTag(id)
             const updatedTags = state.all.filter((tag) => tag.id !== id)
 
             commit('SET_TAGS', updatedTags)

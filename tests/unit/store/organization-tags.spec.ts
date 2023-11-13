@@ -1,5 +1,5 @@
 import organizationTagsStore from '@/store/modules/organization-tags'
-import { createTag, getAllTags } from '@/api/organization-tags.service'
+import { createOrgTag, getAllOrgTags } from '@/api/organization-tags.service'
 
 import { OrganizationOutputFactory } from '../../factories/organization.factory'
 import OrganizationTagFactory from '../../factories/organization-tag.factory'
@@ -32,7 +32,7 @@ describe('Store module | organization tags | actions', () => {
 
     it('addTag', async () => {
         const tag = OrganizationTagFactory.generate()
-        const createTagMock = createTag as Mock
+        const createTagMock = createOrgTag as Mock
 
         createTagMock.mockResolvedValue(tag)
 
@@ -43,7 +43,7 @@ describe('Store module | organization tags | actions', () => {
 
     it('getAllTags', async () => {
         const tags = OrganizationTagFactory.generateMany(2)
-        const getAllTagsMock = getAllTags as Mock
+        const getAllTagsMock = getAllOrgTags as Mock
 
         getAllTagsMock.mockResolvedValue({ results: tags })
 

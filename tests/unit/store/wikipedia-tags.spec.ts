@@ -1,5 +1,5 @@
 import wikipediaTagsStore from '@/store/modules/wikipedia-tags'
-import { getAllTags, searchWikiTags } from '@/api/wikipedia-tags.service'
+import { getAllWikiTags, searchWikiTags } from '@/api/wikipedia-tags.service'
 
 import { OrganizationOutputFactory } from '../../factories/organization.factory'
 import TagFactory from '../../factories/wikipedia-tag.factory'
@@ -32,10 +32,10 @@ describe('Store module | wikipedia tags | actions', () => {
     const rootState = { organizations: { current: organization } }
 
     // TODO: recheck this (ambiguous rebase stuff removed from store)
-    // it('getWikiTag', async () => {
+    // it('getWikiTagDisambiguate', async () => {
     //     const tag = TagFactory.generate()
     //     const title = 'test'
-    //     const getWikiTagMock = getWikiTag as Mock
+    //     const getWikiTagMock = getWikiTagDisambiguate as Mock
 
     //     getWikiTagMock.mockResolvedValue(tag)
 
@@ -59,7 +59,7 @@ describe('Store module | wikipedia tags | actions', () => {
     it('searchTags', async () => {
         const tags = TagFactory.generateMany(2)
         const search = 'test'
-        const getAllTagsMock = getAllTags as Mock
+        const getAllTagsMock = getAllWikiTags as Mock
 
         getAllTagsMock.mockResolvedValue({ results: tags })
 
@@ -70,7 +70,7 @@ describe('Store module | wikipedia tags | actions', () => {
 
     it('getAllTags', async () => {
         const tags = TagFactory.generateMany(2)
-        const getAllTagsMock = getAllTags as Mock
+        const getAllTagsMock = getAllWikiTags as Mock
 
         getAllTagsMock.mockResolvedValue({ results: tags })
 

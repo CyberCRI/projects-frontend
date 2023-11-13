@@ -36,7 +36,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import { getWikiTag } from '@/api/wikipedia-tags.service'
+import { getWikiTagDisambiguate } from '@/api/wikipedia-tags.service'
 
 import SearchResults from './SearchResults.vue'
 import AmbiguousResults from './AmbiguousResults.vue'
@@ -105,7 +105,7 @@ export default {
         async handleResultClicked(result) {
             if (result.ambiguous) {
                 this.ambiguousTerm = result.name
-                const ambiguousResults = await getWikiTag(result.pageid)
+                const ambiguousResults = await getWikiTagDisambiguate(result.pageid)
 
                 this.ambiguousResults = ambiguousResults
                     .filter((result) => !!result.pageprops)

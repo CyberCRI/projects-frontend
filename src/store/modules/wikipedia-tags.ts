@@ -1,5 +1,5 @@
 import { WikipediaTagOutput } from '@/models/wikipedia-tag.model'
-import { getAllTags, searchWikiTags } from '@/api/wikipedia-tags.service'
+import { getAllWikiTags, searchWikiTags } from '@/api/wikipedia-tags.service'
 import { APIResponseList } from '@/api/types'
 
 export interface WikipediaTagsState {
@@ -25,7 +25,7 @@ const actions = {
 
     async searchTags(store, search: string): Promise<APIResponseList<WikipediaTagOutput>> {
         try {
-            return await getAllTags({ search })
+            return await getAllWikiTags({ search })
         } catch (err) {
             throw new Error(err)
         }
@@ -33,7 +33,7 @@ const actions = {
 
     async getAllTags({ commit, rootState }): Promise<APIResponseList<WikipediaTagOutput>> {
         try {
-            const response = await getAllTags({
+            const response = await getAllWikiTags({
                 organization: rootState.organizations.current.code,
             })
             commit('SET_TAGS', response.results)
