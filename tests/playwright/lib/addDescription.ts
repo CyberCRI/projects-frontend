@@ -9,12 +9,8 @@ export async function addDescription(page) {
     await page.locator('[data-test="add-description-button"]').click()
     // add description
     logger.info('Fill the input editor')
-    await page.locator('[data-test="input-editor-content-connected"] div').click()
-    await page.locator('[data-test="input-editor-content-connected"] div').press('Enter')
     logger.info('Add description to project')
-    await page
-        .locator('[data-test="input-editor-content-connected"] div')
-        .fill('Veuillez décrire votre projet\n\ntest')
+    await page.locator('.ProseMirror').first().fill('Veuillez décrire votre projet\n\ntest')
     await page.locator('[data-test="button-tiptap-multieditor\\.heading_1"]').click()
     logger.info('Title added')
     await page.getByText('Veuillez décrire votre projettest').press('Enter')
