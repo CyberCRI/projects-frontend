@@ -81,8 +81,6 @@ export default {
 
         // handle multiple tabs browsing for auth
         window.addEventListener('focus', this.onFocus)
-
-        this.$store.dispatch('faqs/getFaq', this.$store.getters['organizations/current'].code)
     },
 
     beforeUnmount() {

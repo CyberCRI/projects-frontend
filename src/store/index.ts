@@ -2,7 +2,6 @@ import attachmentFiles from '@/store/modules/attachment-files'
 import attachmentLinks from '@/store/modules/attachment-links'
 import blogEntries from '@/store/modules/blog-entries'
 import comments, { CommentsState } from '@/store/modules/comments'
-import faqs, { FaqsState } from '@/store/modules/faqs'
 import follows from '@/store/modules/follows'
 import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
@@ -26,7 +25,6 @@ import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
 
 export interface State {
-    faqs: FaqsState
     projectCategories: ProjectCategoriesState
     projectMembers: ProjectMembersState
     projects: ProjectState
@@ -52,7 +50,6 @@ export default createStore({
         attachmentLinks,
         blogEntries,
         comments,
-        faqs,
         follows,
         goals,
         groups,

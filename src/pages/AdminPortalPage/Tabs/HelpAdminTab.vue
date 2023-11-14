@@ -57,6 +57,19 @@ import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import { getFaq, createFaq, putFaq, deleteFaq } from '@/api/faqs.service'
+
+function defaultFaq() {
+    return {
+        content: undefined,
+        title: undefined,
+        id: undefined,
+        created_at: undefined,
+        updated_at: undefined,
+        deleted_at: undefined,
+        images: undefined,
+    }
+}
 
 export default {
     name: 'HelpAdminTab',
@@ -70,11 +83,12 @@ export default {
             deleteLoading: false,
             deleteConfirmVisible: false,
             editorKey: 0,
+            faq: null,
         }
     },
 
-    created() {
-        this.$store.dispatch('faqs/getFaq', this.currentOrgCode)
+    async created() {
+        await this.loadFaq()
     },
 
     computed: {
@@ -82,16 +96,12 @@ export default {
             return this.$store.getters['organizations/current'].code
         },
 
-        faq() {
-            return this.$store.getters['faqs/current']
-        },
-
         faqTitle: {
             get() {
                 return this.faq ? this.faq.title : ''
             },
             set(value) {
-                this.$store.dispatch('faqs/updateFaqTitle', value)
+                if (this.faq) this.faq.title = value
             },
         },
 
@@ -100,22 +110,28 @@ export default {
         },
 
         isAddMode() {
-            return (
-                this.$store.getters['faqs/current'] === null ||
-                this.$store.getters['faqs/current'].id === undefined
-            )
+            return !this.faq || !this.faq.id
         },
     },
 
     methods: {
+        async loadFaq() {
+            try {
+                this.faq = await getFaq(this.currentOrgCode)
+            } catch (err) {
+                console.log(err)
+                this.faq = defaultFaq()
+            }
+        },
         async deleteFaq() {
             this.hideConfirmModal()
             this.deleteLoading = true
 
             try {
-                await this.$store.dispatch('faqs/deleteFaq', {
+                await await deleteFaq({
                     orgCode: this.currentOrgCode,
                 })
+                await this.loadFaq()
                 this.editorKey += 1
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.faq-delete.success'),
@@ -144,11 +160,12 @@ export default {
             this.addOrEditLoading = true
             if (this.isAddMode) {
                 try {
-                    await this.$store.dispatch('faqs/createFaq', {
+                    await createFaq({
                         ...this.faq,
                         organization_code: this.currentOrgCode,
                         images_ids: this.addedImages,
                     })
+                    await this.loadFaq()
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.faq-create.success'),
                         type: 'success',
@@ -164,11 +181,13 @@ export default {
                 }
             } else {
                 try {
-                    await this.$store.dispatch('faqs/updateFaq', {
+                    await putFaq({
                         ...this.faq,
                         organization_code: this.currentOrgCode,
                         images_ids: this.addedImages,
                     })
+
+                    await this.loadFaq()
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.faq-update.success'),
                         type: 'success',
@@ -187,7 +206,7 @@ export default {
 
         updateContent(htmlContent) {
             const cursorPosition = this.$refs['faq-editor'].editor.view.state.selection.anchor
-            this.$store.dispatch('faqs/updateFaqContent', htmlContent)
+            if (this.faq) this.faq.content = htmlContent
 
             this.$nextTick(() => {
                 // Store dispatch makes the editor lose focus,
