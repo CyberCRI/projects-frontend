@@ -73,16 +73,22 @@ export default {
     },
 
     async created() {
-        this.isLoading = true
-        this.filters = {
-            limit: 12,
-            organizations: this.$store.getters['organizations/current']?.code,
-        }
-        this.completeListGroups = this.listGroups = (await searchGroups(null, this.filters)).results
-        this.isLoading = false
+        await this.init()
     },
 
     methods: {
+        async init() {
+            this.queryString = ''
+            this.isLoading = true
+            this.filters = {
+                limit: 12,
+                organizations: this.$store.getters['organizations/current']?.code,
+            }
+            this.completeListGroups = this.listGroups = (
+                await searchGroups(null, this.filters)
+            ).results
+            this.isLoading = false
+        },
         async launchSearch() {
             if (this.queryString) {
                 this.isLoading = true
@@ -110,9 +116,9 @@ export default {
         },
     },
     watch: {
-        isOpened(neo) {
-            this.queryString = ''
+        async isOpened(neo) {
             if (neo) {
+                await this.init()
                 this.$nextTick(() =>
                     this.$refs['search-input'] &&
                     this.$refs['search-input'].$el.querySelector('.search-input').focus()
