@@ -1,9 +1,11 @@
 <template>
     <div class="register-page">
         <div class="logos-ctn left">
-            <img class="organization-logo" :src="organizationLogo" :alt="organizationName" />
+            <div class="organization-logo" :style="orgLogoStyle"></div>
             <hr class="separator" />
-            <ProjectLogo class="directory-logo" />
+            <div class="projects-logo-ctn">
+                <ProjectLogo class="directory-logo" />
+            </div>
         </div>
         <div class="right">
             <div class="box-ctn">
@@ -214,8 +216,8 @@ export default {
         organizationLogo() {
             return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
         },
-        organizationName() {
-            return this.$store.getters['organizations/current']?.name || ''
+        orgLogoStyle() {
+            return { 'background-image': `url(${this.organizationLogo})` }
         },
     },
     methods: {
@@ -428,8 +430,26 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     }
 }
 
+.projects-logo-ctn,
 .organization-logo {
-    max-width: 100%;
+    width: 100%;
+    height: 15rem;
+}
+
+.projects-logo-ctn {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    @media all and (max-width: $min-width-horizontal-layout) {
+        height: auto;
+    }
+}
+
+.organization-logo {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
 }
 
 .directory-logo {
