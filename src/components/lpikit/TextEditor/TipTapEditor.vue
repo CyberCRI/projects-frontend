@@ -285,7 +285,17 @@ export default {
         color: {
             type: String,
             // choose a random color for every user
-            default: '#' + Math.floor(Math.random() * Math.pow(2, 24)).toString(16),
+            default: () => {
+                function randomIntInRange(fromInclusive, toInclusive) {
+                    return Math.floor(
+                        Math.random() * (toInclusive - fromInclusive + 1) + fromInclusive
+                    )
+                }
+                const hue = randomIntInRange(0, 360) // any tint
+                const saturation = randomIntInRange(50, 100) // not too grey
+                const lightness = randomIntInRange(20, 60) // neither too dark nor too light
+                return `hsl(${hue}deg ${saturation}% ${lightness}%)`
+            },
         },
         mode: {
             // mode supports 3 values 'simple' | 'medium' | 'full'
