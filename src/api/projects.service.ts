@@ -190,15 +190,28 @@ export async function searchProjects(
     ).data
 }
 
-export async function searchGroups(
+export async function searchGroupsAlgolia(
     search: string,
     params: SearchParams
 ): Promise<APIResponseList<ProjectOutput>> {
     const url = search ? `search/people-group/${search}/` : 'search/people-group/'
-
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/${url}`,
+            _adaptParamsToGetQuery(params)
+        )
+    ).data
+}
+
+export async function searchGroups(
+    organization: string,
+    params: SearchParams
+): Promise<APIResponseList<ProjectOutput>> {
+    return (
+        await axios.get(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${organization}/people-group/`,
             _adaptParamsToGetQuery(params)
         )
     ).data
