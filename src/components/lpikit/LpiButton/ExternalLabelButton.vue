@@ -14,7 +14,6 @@
                 :reversed="reversed"
                 :no-border="noBorder"
                 :no-margin="noMargin"
-                :no-flex="noFlex"
                 :size="size"
                 :button-size="buttonSize"
             />
@@ -28,7 +27,7 @@
             />
         </div>
 
-        <span :class="{ disabled, bold }">{{ label }}</span>
+        <span class="btn-label" :class="{ disabled }">{{ label }}</span>
 
         <div v-if="leftIcon" class="over-button">
             <LpiButton
@@ -40,7 +39,6 @@
                 :reversed="reversed"
                 :no-border="noBorder"
                 :no-margin="noMargin"
-                :no-flex="noFlex"
                 :size="size"
                 :button-size="buttonSize"
             />
@@ -109,16 +107,6 @@ export default {
             default: false,
         },
 
-        bold: {
-            type: Boolean,
-            default: false,
-        },
-
-        noFlex: {
-            type: Boolean,
-            default: false,
-        },
-
         nbButton: {
             type: String,
             default: null,
@@ -158,7 +146,7 @@ export default {
         opacity: 0.7;
     }
 
-    .bold {
+    .btn-label {
         font-weight: 700;
     }
 

@@ -256,8 +256,6 @@
                                 :right-icon="followed ? 'Heart' : 'HeartOutline'"
                                 :top-icon="true"
                                 :no-border="true"
-                                :bold="true"
-                                button-size="mbutton"
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
@@ -269,7 +267,6 @@
                                 right-icon="Article"
                                 :top-icon="true"
                                 :no-border="true"
-                                :bold="true"
                                 :nb-button="project.announcements.length.toString()"
                                 button-size="mbutton"
                                 @click="$emit('show-project-announcements')"
@@ -280,7 +277,6 @@
                                 right-icon="ChatBubble"
                                 :top-icon="true"
                                 :no-border="true"
-                                :bold="true"
                                 button-size="mbutton"
                                 @click="goToCommentView"
                             />
@@ -308,7 +304,6 @@
                                     right-icon="Share"
                                     :top-icon="true"
                                     :no-border="true"
-                                    :bold="true"
                                     button-size="mbutton"
                                 />
                             </ToolTip>
@@ -319,7 +314,6 @@
                                 right-icon="ChevronUp"
                                 :no-border="true"
                                 :no-margin="true"
-                                :bold="true"
                                 @click="displayLessInfo"
                             />
                             <ExternalLabelButton
@@ -330,7 +324,6 @@
                                 right-icon="ChevronDown"
                                 :no-border="true"
                                 :no-margin="true"
-                                :bold="true"
                                 @click="displayMoreInfo"
                             />
                         </div>
@@ -354,7 +347,6 @@
                     left-icon="Close"
                     :no-border="true"
                     :no-margin="true"
-                    :bold="true"
                     @click="displayLessInfo"
                 />
             </div>

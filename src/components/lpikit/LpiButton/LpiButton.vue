@@ -2,15 +2,14 @@
     <button
         :class="[
             size,
-            { secondary, disabled, text, opacity, over },
+            { secondary, disabled, opacity, over },
             { 'icon-only': iconOnly },
             { 'no-border': noBorder },
             { 'no-margin': noMargin },
-            { 'no-flex': noFlex },
             { padding: padding },
         ]"
         :disabled="disabled"
-        :type="buttonType"
+        type="button"
         class="lpi-button"
         @click="$emit('click')"
     >
@@ -23,18 +22,7 @@
 
         <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
 
-        <IconImage
-            v-if="rightIcon && !cloud"
-            :name="rightIcon"
-            class="right-icon"
-            :class="buttonSize"
-        />
-        <img
-            v-else-if="rightIcon"
-            class="right-icon img-format"
-            :class="buttonSize"
-            :src="rightIcon"
-        />
+        <IconImage v-if="rightIcon" :name="rightIcon" class="right-icon" :class="buttonSize" />
     </button>
 </template>
 
@@ -96,16 +84,6 @@ export default {
             default: false,
         },
 
-        text: {
-            type: Boolean,
-            default: false,
-        },
-
-        buttonType: {
-            type: String,
-            default: 'button', // avoid submiting form by default
-        },
-
         noBorder: {
             type: Boolean,
             default: false,
@@ -121,17 +99,7 @@ export default {
             default: false,
         },
 
-        noFlex: {
-            type: Boolean,
-            default: false,
-        },
-
         over: {
-            type: Boolean,
-            default: false,
-        },
-
-        cloud: {
             type: Boolean,
             default: false,
         },
@@ -251,10 +219,6 @@ export default {
         }
     }
 
-    .img-format {
-        display: block;
-    }
-
     &.no-border {
         border: 0;
     }
@@ -331,10 +295,6 @@ export default {
         &.icon-only {
             width: 100px;
         }
-    }
-
-    &.no-flex {
-        display: inline-block;
     }
 
     &.over {

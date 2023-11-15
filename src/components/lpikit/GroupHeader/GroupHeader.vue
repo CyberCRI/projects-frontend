@@ -41,7 +41,6 @@
                     right-icon="EmailOutline"
                     :top-icon="true"
                     :no-border="true"
-                    :bold="true"
                 />
             </ToolTip>
             <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
@@ -63,7 +62,6 @@
                     right-icon="Share"
                     :top-icon="true"
                     :no-border="true"
-                    :bold="true"
                 />
             </ToolTip>
         </div>
