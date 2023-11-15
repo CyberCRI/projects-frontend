@@ -112,9 +112,9 @@ export default {
         },
     },
     watch: {
-        isOpened(neo) {
-            this.queryString = ''
+        async isOpened(neo) {
             if (neo) {
+                await this.init()
                 this.$nextTick(() =>
                     this.$refs['search-input'] &&
                     this.$refs['search-input'].$el.querySelector('.search-input').focus()
