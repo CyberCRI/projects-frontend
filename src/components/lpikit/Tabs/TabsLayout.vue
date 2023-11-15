@@ -254,6 +254,7 @@ export default {
 
                     const postIterate = async (tabs, displayed, otherTab) => {
                         const wrapperRight = tabsNode.getBoundingClientRect()?.right
+                        // iterate in reverse order until all remaining tabs fit
                         for (let i = displayed.length - 1; i > 0; i--) {
                             await this.$nextTick()
                             // get the last badge and check if it fits
@@ -278,7 +279,7 @@ export default {
                     await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
                     this.layouting = false
                     if (this.seeMoreTabs.length) {
-                        // now available space might be shorter withe the see more button so re-iterate
+                        // now available space might be shorter with the see more button displayed so re-iterate
                         await this.$nextTick()
                         await postIterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
                     }
