@@ -21,7 +21,6 @@
                 v-if="members.length > totalDisplayed"
                 :label="additionalMembersLabel"
                 class="see-more-btn"
-                color="primary-dark"
                 thin-border
                 @click="goTo"
             />

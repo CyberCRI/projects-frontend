@@ -122,48 +122,43 @@
                 <div class="section section--green">
                     <h3 class="label">{{ $t('project.actions') }}</h3>
 
-                    <LpiButton
+                    <LinkButton
                         :label="$filters.capitalize($t('project.duplicate'))"
                         class="button"
                         left-icon="Copy"
-                        size="link"
                         @click="duplicateProject"
                     />
                     <div class="separator"></div>
-                    <LpiButton
+                    <LinkButton
                         :label="$t('report.bug')"
                         class="button"
                         left-icon="Bug"
-                        size="link"
                         @click="toggleReportForm('bug')"
                         data-test="report-bug"
                     />
-                    <LpiButton
+                    <LinkButton
                         :label="$t('report.abuse')"
                         class="button"
                         left-icon="Flag"
-                        size="link"
                         @click="toggleReportForm('abuse')"
                         data-test="report-abuse"
                     />
 
                     <div v-if="canDestroyProject" class="separator"></div>
-                    <LpiButton
+                    <LinkButton
                         v-if="canDestroyProject"
                         :label="$t('project.destroy')"
                         class="button"
                         left-icon="TrashCanOutline"
-                        size="link"
                         @click="toggleConfirmDestroyVisible"
                         data-test="destroy-project"
                     />
                     <div v-if="isMember" class="separator"></div>
-                    <LpiButton
+                    <LinkButton
                         v-if="isMember"
                         :label="$t('project.quit')"
                         class="button"
                         left-icon="Logout"
-                        size="link"
                         @click="openConfirmOrQuit"
                     />
                 </div>
@@ -226,6 +221,7 @@ import viewportWidth from '@/mixins/viewportWidth.ts'
 import LpiCheckbox from '@/components/lpikit/Checkbox/LpiCheckbox.vue'
 import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
@@ -243,6 +239,7 @@ export default {
     components: {
         LpiLoader,
         LpiButton,
+        LinkButton,
         LpiCheckbox,
         GroupButton,
         LpiSnackbar,

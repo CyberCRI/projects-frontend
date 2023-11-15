@@ -11,11 +11,10 @@
             />
         </div>
 
-        <LpiButton
+        <LinkButton
             v-if="selectedUsers.length > 5"
             class="see-more-btn"
             :label="$filters.capitalize($t(seeMoreLabel))"
-            size="link"
             @click="isSeeMore = !isSeeMore"
         />
 
@@ -50,8 +49,9 @@
 import debounce from 'lodash.debounce'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import { searchGroupsAlgolia } from '@/api/projects.service.ts'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import TeamResultList from '@/components/lpikit/TeamDrawer/TeamResultList.vue'
 import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
@@ -63,7 +63,7 @@ export default {
     emits: ['select-user'],
 
     components: {
-        LpiButton,
+        LinkButton,
         SearchInput,
         LoaderSimple,
         TabsLayout,

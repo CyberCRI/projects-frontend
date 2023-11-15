@@ -116,25 +116,20 @@
                 />
             </div>
             <div class="header__group-buttons-mobile">
-                <LpiButton
+                <LinkButton
                     v-if="!isConnected"
-                    :border="false"
                     :class="{ 'header__close-icon': isNavOpen }"
                     :label="$filters.capitalize($t('common.login'))"
                     class="header__mobile-btn"
-                    size="link"
                     data-test="login-button"
                     @click="login"
                 />
 
-                <LpiButton
-                    :border="false"
+                <LinkButton
                     :class="{ 'header__open-icon': !isNavOpen, 'header__close-icon': isNavOpen }"
-                    :color="isNavOpen ? 'white' : 'light-green'"
                     :data-test="isNavOpen ? 'close-menu-button' : 'open-menu-button'"
                     :left-icon="isNavOpen ? 'Close' : 'BarsStaggered'"
                     class="header__mobile-btn"
-                    size="link"
                     @click="toggleNav"
                 />
             </div>
@@ -197,7 +192,7 @@ import { getAnnouncements } from '@/api/announcements.service'
 
 import permissions from '@/mixins/permissions.ts'
 
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HeaderLink from '@/components/Header/HeaderLink.vue'
 import HeaderDropDown from '@/components/Header/HeaderDropDown.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
@@ -218,7 +213,7 @@ export default {
         HeaderItemList,
         BadgeItem,
         NotificationList,
-        LpiButton,
+        LinkButton,
         HeaderLink,
         HeaderDropDown,
         NotificationIcon,

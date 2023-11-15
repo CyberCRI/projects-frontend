@@ -19,7 +19,6 @@
                         :label="$filters.capitalize($t('common.delete'))"
                         :left-icon="deleteLoading ? 'LoaderSimple' : null"
                         class="delete-button"
-                        color="salmon"
                         @click="showDeleteConfirm"
                     />
 

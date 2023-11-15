@@ -8,7 +8,6 @@
             <LpiButton
                 class="btn"
                 :right-icon="rightIcon"
-                color="primary-dark"
                 secondary
                 :disabled="disabled"
                 :reversed="reversed"
@@ -33,7 +32,6 @@
             <LpiButton
                 class="btn"
                 :left-icon="leftIcon"
-                color="primary-dark"
                 secondary
                 :disabled="disabled"
                 :reversed="reversed"

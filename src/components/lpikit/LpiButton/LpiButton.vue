@@ -11,33 +11,23 @@
         :disabled="disabled"
         type="button"
         class="lpi-button"
-        @click="$emit('click')"
     >
-        <IconImage
-            v-if="leftIcon && leftIcon !== 'LoaderSimple'"
-            :name="leftIcon"
-            class="left-icon"
+        <ButtonContent
+            :label="label"
+            :right-icon="rightIcon"
+            :left-icon="leftIcon"
+            :button-size="buttonSize"
         />
-        <LoaderSimple v-if="leftIcon && leftIcon === 'LoaderSimple'" class="left-icon loader" />
-
-        <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
-
-        <IconImage v-if="rightIcon" :name="rightIcon" class="right-icon" :class="buttonSize" />
     </button>
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-
+import ButtonContent from '@/components/lpikit/LpiButton/ButtonContent.vue'
 export default {
     name: 'LpiButton',
 
-    emits: ['click'],
-
     components: {
-        IconImage,
-        LoaderSimple,
+        ButtonContent,
     },
 
     props: {
@@ -119,14 +109,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.label {
-    text-transform: lowercase;
-}
-
-.label::first-letter {
-    text-transform: capitalize;
-}
-
 .lpi-button {
     display: flex;
     justify-content: center;
@@ -149,17 +131,8 @@ export default {
         cursor: not-allowed;
     }
 
-    &.text {
-        cursor: text;
-    }
-
     &.opacity {
         opacity: 1;
-    }
-
-    svg {
-        transition: 0.15s fill ease-in-out;
-        fill: $white;
     }
 
     &.secondary {
@@ -171,31 +144,6 @@ export default {
             // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
             background-color: $white;
         }
-
-        svg {
-            transition: 0.15s fill ease-in-out;
-            fill: $primary-dark;
-        }
-    }
-
-    .left-icon {
-        margin-right: $space-s;
-        height: pxToRem(18px);
-    }
-
-    :deep(.left-icon.loader) {
-        path {
-            fill: $primary;
-        }
-    }
-
-    .right-icon {
-        margin-left: $space-s;
-        height: pxToRem(18px);
-
-        &.mbutton {
-            height: pxToRem(25px);
-        }
     }
 
     &.icon-only {
@@ -203,14 +151,6 @@ export default {
         width: 42px;
         height: 42px;
         padding: 0;
-
-        .left-icon {
-            margin-right: 0;
-        }
-
-        .right-icon {
-            margin-left: 0;
-        }
 
         &.no-centered {
             width: 24px;
@@ -313,31 +253,13 @@ export default {
     }
 }
 
-.link {
-    border: none;
-    background: transparent;
-    color: $primary-dark;
-    padding: 0 0 0 $space-l;
-
-    &.icon-only {
-        padding: 0;
-    }
-
-    svg {
-        transition: 0.15s fill ease-in-out;
-        fill: $primary-dark;
-    }
+.lpi-button :deep(svg) {
+    transition: 0.15s fill ease-in-out;
+    fill: $white;
 }
-</style>
 
-<style lang="scss">
-.lpi-button .loader-simple {
-    width: 22px;
-    height: 22px;
-    margin-right: $space-s;
-
-    path {
-        fill: $primary-dark;
-    }
+.lpi-button.secondary :deep(svg),
+.link :deep(svg) {
+    fill: $primary-dark;
 }
 </style>

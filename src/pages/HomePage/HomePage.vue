@@ -40,28 +40,26 @@
 
             <!-- Buttons list -->
             <div class="projects-buttons">
-                <LpiButton
+                <LinkButton
                     v-if="announcements.length > 0"
                     :label="$filters.capitalize($t('home.announcements'))"
                     class="btn link"
                     left-icon="Search"
-                    size="link"
                     @click="scrollTo('announcements')"
                 />
-                <LpiButton
+                <LinkButton
                     :label="$filters.capitalize($t('home.all-projects'))"
                     class="btn link"
                     left-icon="ChartBox"
-                    size="link"
                     @click="scrollTo('projectList')"
                 />
-                <LpiButton
+                <LinkButton
                     :label="$filters.capitalize($t('map.projects'))"
                     class="btn"
                     left-icon="Map"
-                    secondary
-                    size="link"
-                    @click="$router.push('map')"
+                    :to="{
+                        name: 'map',
+                    }"
                 />
                 <LpiButton
                     v-if="canCreateProject"
@@ -202,6 +200,7 @@
 <script>
 import CategoryCard from '@/components/lpikit/CategoryCard/CategoryCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import AnnouncementCardList from '@/components/lpikit/AnnouncementCard/AnnouncementCardList.vue'
 import HomeCarousel from '@/components/HomeCarousel/HomeCarousel.vue'
 import CommunityCard from '@/components/lpikit/CommunityCard/CommunityCard.vue'
@@ -240,6 +239,7 @@ export default {
         CategoryCard,
         CommunityCard,
         LpiButton,
+        LinkButton,
         ProjectListSearch,
         CardList,
         ProjectCard,

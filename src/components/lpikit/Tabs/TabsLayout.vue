@@ -56,24 +56,22 @@
                         <div :id="currentTab.id" ref="tab-0" class="tab selected">
                             {{ currentTab.label }}
                         </div>
-                        <LpiButton
+                        <LinkButton
                             v-if="isMobile"
                             :label="$filters.capitalize(showMoreButtonLabel)"
                             class="more-btn"
                             left-icon="DotsHorizontal"
-                            size="link"
                             @click="showTabList = !showTabList"
                         />
                     </div>
                 </div>
             </div>
             <div class="btn-ctn">
-                <LpiButton
+                <LinkButton
                     v-if="!layouting && !isMobile && seeMoreTabs.length > 0"
                     :label="showMoreButtonLabel"
                     class="more-btn"
                     left-icon="DotsHorizontal"
-                    size="link"
                     @click="showTabList = !showTabList"
                 />
                 <slot name="button-1"></slot>
@@ -107,7 +105,7 @@
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import debounce from 'lodash.debounce'
 
 export default {
@@ -115,7 +113,7 @@ export default {
 
     emits: ['close'],
 
-    components: { LpiButton, IconImage },
+    components: { LinkButton, IconImage },
 
     mixins: [viewportWidth],
 

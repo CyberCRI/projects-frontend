@@ -23,8 +23,6 @@
         <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
             <LpiButton
                 :label="$t('project.create-project')"
-                size="link"
-                class="button"
                 left-icon="Plus"
                 secondary
                 @click="$router.push({ name: 'createProject' })"

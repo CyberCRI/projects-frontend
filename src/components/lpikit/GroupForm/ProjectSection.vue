@@ -26,12 +26,10 @@
             />
         </div>
         <div class="show-more">
-            <LpiButton
+            <LinkButton
                 v-if="shortList?.length < modelValue?.length"
                 class="see-more-btn"
                 :label="$filters.capitalize($t(seeMoreLabel))"
-                size="link"
-                thin-border
                 @click="showFullList = !showFullList"
             />
         </div>
@@ -51,7 +49,7 @@
 import PickProjectsDrawer from '@/components/lpikit/PickProjectsDrawer/PickProjectsDrawer.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'ProjectSection',
@@ -62,7 +60,7 @@ export default {
         ProjectCard,
         PickProjectsDrawer,
         IconImage,
-        LpiButton,
+        LinkButton,
     },
 
     props: {

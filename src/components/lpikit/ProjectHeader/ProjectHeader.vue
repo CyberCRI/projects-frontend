@@ -1,11 +1,10 @@
 <template>
     <div class="whole-content">
         <div class="edit-button-ctn">
-            <LpiButton
+            <LinkButton
                 v-if="!loading && canEditProject"
                 :label="$t('project.edit')"
                 left-icon="Pen"
-                size="link"
                 @click="editProject"
                 data-test="header-project-button"
             />
@@ -256,6 +255,7 @@
                                 :right-icon="followed ? 'Heart' : 'HeartOutline'"
                                 :top-icon="true"
                                 :no-border="true"
+                                button-size="mbutton"
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
@@ -356,7 +356,7 @@
 
 <script>
 import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import ExternalLabelButton from '@/components/lpikit/LpiButton/ExternalLabelButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
@@ -380,7 +380,7 @@ export default {
         TagsList,
         CroppedImage,
         InfoSentence,
-        LpiButton,
+        LinkButton,
     },
 
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],

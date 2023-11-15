@@ -11,10 +11,9 @@
             />
         </div>
         <div class="show-more" v-if="selectedUsers.length > listLimit">
-            <LpiButton
+            <LinkButton
                 class="see-more-btn"
                 :label="$filters.capitalize($t(seeMoreLabel))"
-                size="link"
                 @click="isSeeMore = !isSeeMore"
             />
         </div>
@@ -69,6 +68,7 @@ import debounce from 'lodash.debounce'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
@@ -79,7 +79,14 @@ export default {
 
     emits: ['select-user'],
 
-    components: { LpiButton, SearchInput, LoaderSimple, UserCardInline, PaginationButtons },
+    components: {
+        LpiButton,
+        SearchInput,
+        LoaderSimple,
+        UserCardInline,
+        PaginationButtons,
+        LinkButton,
+    },
 
     mounted() {
         this.$refs['search-input-ctn'].$refs['search-input'].focus()

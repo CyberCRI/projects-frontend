@@ -15,12 +15,11 @@
                 {{ $filters.capitalize(location.description) }}
             </p>
 
-            <LpiButton
+            <LinkButton
                 :label="$filters.capitalize($t('project.view'))"
                 class="project-tooltip__button"
                 left-icon="ArrowRight"
-                size="link"
-                @click="goToProject"
+                :to="{ name: 'pageProject', params: { slugOrId: project.id } }"
             />
         </div>
 
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'ProjectTooltip',
@@ -53,7 +52,7 @@ export default {
     },
 
     components: {
-        LpiButton,
+        LinkButton,
     },
 
     computed: {
@@ -78,10 +77,6 @@ export default {
         cropIfTooLong(text, length) {
             if (text) return text.length > length ? text.substring(0, length) + '...' : text
             return ''
-        },
-
-        goToProject() {
-            this.$router.push(`/projects/${this.project.id}/summary`)
         },
     },
 }

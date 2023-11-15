@@ -114,7 +114,6 @@
                     :label="$filters.capitalize($t('common.save'))"
                     :left-icon="isLoading ? 'LoaderSimple' : null"
                     class="save-button"
-                    color="green"
                     @click="saveData"
                 />
             </div>

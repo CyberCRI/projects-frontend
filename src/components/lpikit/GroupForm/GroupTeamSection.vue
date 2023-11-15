@@ -32,12 +32,10 @@
             ></TeamCardInline>
         </div>
         <div class="show-more">
-            <LpiButton
+            <LinkButton
                 v-if="shortList?.length < modelValue?.length"
                 class="see-more-btn"
                 :label="$filters.capitalize($t(seeMoreLabel))"
-                size="link"
-                thin-border
                 @click="showFullList = !showFullList"
             />
         </div>
@@ -59,7 +57,7 @@ import GroupTeamDrawer from '@/components/lpikit/GroupTeamDrawer/GroupTeamDrawer
 import IconImage from '@/components/svgs/IconImage.vue'
 import { mapGetters } from 'vuex'
 import TeamCardInline from '@/components/lpikit/TeamCard/TeamCardInline.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'GroupTeamSection',
@@ -70,7 +68,7 @@ export default {
         TeamCardInline,
         GroupTeamDrawer,
         IconImage,
-        LpiButton,
+        LinkButton,
     },
 
     props: {
