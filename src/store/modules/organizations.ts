@@ -37,7 +37,6 @@ const actions = {
             const organization = await getOrganizationByCode(code)
 
             commit('SET_CURRENT_ORGANIZATION', organization)
-            commit('wikipediaTags/SET_TAGS', organization.wikipedia_tags, { root: true })
             analytics.setOrganizationProperties()
 
             return organization
@@ -65,10 +64,6 @@ const actions = {
             const result = await patchOrganization(state.current.code, organization)
             const currentOrganization = { ...state.current, ...organization, ...result }
             commit('SET_CURRENT_ORGANIZATION', currentOrganization)
-            commit('wikipediaTags/SET_TAGS', currentOrganization.wikipedia_tags, { root: true })
-            // @TODO uncomment when API is ready to update its tag property
-            // commit('organizationTags/SET_TAGS', currentOrganization.tags, { root: true })
-
             return currentOrganization
         } catch (err) {
             throw new Error(err)

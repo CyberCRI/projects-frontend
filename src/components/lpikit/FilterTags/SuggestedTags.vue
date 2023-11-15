@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div v-if="displayableTags.length" class="suggested-tags-ctn">
+        <div v-if="loading" class="loader-ctn">
+            <LoaderSimple />
+        </div>
+        <div v-else-if="displayableTags.length" class="suggested-tags-ctn">
             <div v-for="(tag, index) in displayableTags" :key="index">
                 <FilterValue
                     v-if="tagLabel(tag)"
@@ -15,13 +18,14 @@
 
 <script>
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
+import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 
 export default {
     name: 'SuggestedTags',
 
     emits: ['add-tag'],
 
-    components: { FilterValue },
+    components: { FilterValue, LoaderSimple },
 
     props: {
         currentTags: {
@@ -32,6 +36,11 @@ export default {
         suggestedTags: {
             type: Array,
             default: () => [],
+        },
+
+        loading: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -63,5 +72,12 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: $space-s;
+}
+
+.loader-ctn {
+    padding: $space-m;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

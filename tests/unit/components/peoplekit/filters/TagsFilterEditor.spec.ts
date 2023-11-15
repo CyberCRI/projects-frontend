@@ -3,26 +3,27 @@ import english from '@/locales/en.json'
 import waitForExpect from 'wait-for-expect'
 import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
 
+import { getAllOrgTags } from '@/api/organization-tags.service'
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
+
+vi.mock('@/api/organization-tags.service', () => ({
+    getAllOrgTags: vi.fn().mockResolvedValue({ results: [] }),
+}))
+
+vi.mock('@/api/wikipedia-tags.service', () => ({
+    getAllWikiTags: vi.fn().mockResolvedValue({ results: [] }),
+}))
+
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 function buildStore() {
     return {
         modules: {
-            organizationTags: {
+            organizations: {
                 namespaced: true,
-                getters: {
-                    all: () => [],
-                },
-                actions: {
-                    getAllTags: vi.fn(),
-                },
-            },
-            wikipediaTags: {
-                namespaced: true,
-                getters: {
-                    all: () => [],
-                },
-                actions: {
-                    getAllTags: vi.fn(),
+                state: {
+                    current: {
+                        code: 'test',
+                    },
                 },
             },
         },
@@ -53,6 +54,13 @@ describe('TagsFilterEditor', () => {
         wrapper = lpiMount(TagsFilterEditor, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
+    })
+
+    it('should fetch orgs and wikipedia tags', () => {
+        wrapper = lpiMount(TagsFilterEditor, defaultParams)
+
+        expect(getAllOrgTags).toHaveBeenCalled()
+        expect(getAllWikiTags).toHaveBeenCalled()
     })
 
     it('goes back to add mode', () => {
