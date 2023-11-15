@@ -79,10 +79,17 @@ export default {
         ).results
         this.isLoading = false
     },
-
+    
     methods: {
         getOrganizationCode() {
             return this.$store.getters['organizations/current']?.code
+        },
+        async init () {
+            this.isLoading = true
+            this.completeListGroups = this.listGroups = (
+                await searchGroups(this.getOrganizationCode(), {})
+            ).results
+            this.isLoading = false
         },
         async launchSearch() {
             if (this.queryString) {
