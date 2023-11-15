@@ -76,7 +76,8 @@
 
 <script>
 import { getProjectCategory } from '@/api/project-categories.service'
-import { getOrgTag, getTag } from '@/api/wikipedia-tags.service'
+import { getWikiTag } from '@/api/wikipedia-tags.service'
+import { getOrgTag } from '@/api/organization-tags.service'
 import { mapGetters } from 'vuex'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
@@ -173,7 +174,7 @@ export default {
         )
 
         const wikipediaTags = await Promise.all(
-            (rawFilters.wikipedia_tags || []).map(async (wikiTagId) => await getTag(wikiTagId))
+            (rawFilters.wikipedia_tags || []).map(async (wikiTagId) => await getWikiTag(wikiTagId))
         )
 
         const organizationTags = await Promise.all(
@@ -187,7 +188,7 @@ export default {
         filters.languages = rawFilters.languages || []
 
         filters.skills = await Promise.all(
-            (rawFilters.skills || []).map(async (skillId) => await getTag(skillId))
+            (rawFilters.skills || []).map(async (skillId) => await getWikiTag(skillId))
         )
 
         this.selectedFilters = filters

@@ -23,6 +23,7 @@
             :current-tags="tags"
             :suggested-tags="suggestedTags"
             @add-tag="addTag"
+            :loading="suggestedTagsisLoading"
         />
 
         <WikipediaResults
@@ -40,7 +41,8 @@ import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import CurrentTags from './CurrentTags.vue'
 import SuggestedTags from './SuggestedTags.vue'
 import WikipediaResults from './WikipediaResults.vue'
-
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
+import { getAllOrgTags } from '@/api/organization-tags.service'
 export default {
     name: 'FilterTags',
 
@@ -76,29 +78,36 @@ export default {
             isAddMode: true,
             queryString: '',
             tags: [],
+            wikipediaTags: [],
+            organizationTags: [],
+            suggestedTagsisLoading: true,
         }
     },
 
     async created() {
         this.tags = [...this.preselection]
-
-        await this.$store.dispatch('organizationTags/getAllTags')
-        await this.$store.dispatch('wikipediaTags/getAllTags')
+        await Promise.all([
+            getAllOrgTags({
+                organization: this.$store.state.organizations.current.code,
+            }).then(({ results }) => {
+                this.organizationTags = results
+            }),
+            getAllWikiTags({
+                organization: this.$store.state.organizations.current.code,
+            }).then(({ results }) => {
+                this.wikipediaTags = results
+            }),
+        ])
 
         this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
+
+        this.suggestedTagsisLoading = false
     },
 
     computed: {
         // tagSearchTitle() {
         //     return this.isAddMode ? this.$t('search.add-a-tag') : this.$t('search.search-for-a-tag')
         // },
-        organizationTags() {
-            return this.$store.getters['organizationTags/all']
-        },
-
-        wikipediaTags() {
-            return this.$store.getters['wikipediaTags/all']
-        },
     },
 
     methods: {

@@ -36,12 +36,12 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import { getWikiTag } from '@/api/wikipedia-tags.service'
+import { getWikiTagDisambiguate } from '@/api/wikipedia-tags.service'
 
 import SearchResults from './SearchResults.vue'
 import AmbiguousResults from './AmbiguousResults.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-
+import { searchWikiTags } from '@/api/wikipedia-tags.service'
 export default {
     name: 'WikipediaResults',
 
@@ -105,7 +105,7 @@ export default {
         async handleResultClicked(result) {
             if (result.ambiguous) {
                 this.ambiguousTerm = result.name
-                const ambiguousResults = await getWikiTag(result.pageid)
+                const ambiguousResults = await getWikiTagDisambiguate(result.pageid)
 
                 this.ambiguousResults = ambiguousResults
                     .filter((result) => !!result.pageprops)
@@ -128,9 +128,7 @@ export default {
 
         launchSearch: debounce(async function () {
             this.isLoading = true
-            const results = await this.$store
-                .dispatch('wikipediaTags/searchWikiTags', this.queryString)
-                .catch(() => [])
+            const results = await searchWikiTags(this.queryString).catch(() => [])
 
             // Filter existing tags
             let filteredResults = results

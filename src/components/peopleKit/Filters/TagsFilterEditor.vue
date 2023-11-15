@@ -17,6 +17,7 @@
             :current-tags="tags"
             :suggested-tags="suggestedTags"
             @add-tag="addTag"
+            :loading="suggestedTagsisLoading"
         />
 
         <WikipediaResults
@@ -37,7 +38,8 @@ import FilterSearchInput from '@/components/peopleKit/Filters/FilterSearchInput.
 import CurrentTags from '@/components/lpikit/FilterTags/CurrentTags.vue'
 import SuggestedTags from '@/components/lpikit/FilterTags/SuggestedTags.vue'
 import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vue'
-
+import { getAllWikiTags } from '@/api/wikipedia-tags.service'
+import { getAllOrgTags } from '@/api/organization-tags.service'
 export default {
     name: 'TagsFilterEditor',
 
@@ -87,28 +89,32 @@ export default {
             isAddMode: true,
             queryString: '',
             tags: [],
+            wikipediaTags: [],
+            organizationTags: [],
+            suggestedTagsisLoading: true,
         }
     },
 
     async created() {
-        await this.$store.dispatch('organizationTags/getAllTags')
-        await this.$store.dispatch('wikipediaTags/getAllTags')
+        await Promise.all([
+            getAllOrgTags({
+                organization: this.$store.state.organizations.current.code,
+            }).then(({ results }) => {
+                this.organizationTags = results
+            }),
+            getAllWikiTags({
+                organization: this.$store.state.organizations.current.code,
+            }).then(({ results }) => {
+                this.wikipediaTags = results
+            }),
+        ])
 
         this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
+        this.suggestedTagsisLoading = false
     },
 
     mounted() {
         this.focusInput()
-    },
-
-    computed: {
-        organizationTags() {
-            return this.$store.getters['organizationTags/all']
-        },
-
-        wikipediaTags() {
-            return this.$store.getters['wikipediaTags/all']
-        },
     },
 
     methods: {
