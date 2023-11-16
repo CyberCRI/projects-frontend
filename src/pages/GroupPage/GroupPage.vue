@@ -14,14 +14,15 @@
                 :is-loading="isLoading"
             />
 
-            <LpiButton
+            <LinkButton
                 v-if="!isLoading && canEditGroup"
                 class="edit-btn"
                 left-icon="Pen"
-                :secondary="true"
-                :no-border="true"
                 :label="editGroupLabel"
-                @click="editGroup"
+                :to="{
+                    name: 'frontEditGroup',
+                    params: { groupId: this.groupSlug || this.groupId },
+                }"
             />
 
             <GroupHeader
@@ -55,7 +56,7 @@ import GroupHeader from '@/components/lpikit/GroupHeader/GroupHeader.vue'
 import GroupTabs from './Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
 import permissions from '@/mixins/permissions.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'GroupPage',
@@ -64,7 +65,7 @@ export default {
         SubGroups,
         GroupHeader,
         GroupTabs,
-        LpiButton,
+        LinkButton,
     },
     mixins: [permissions],
     props: {
@@ -76,6 +77,7 @@ export default {
 
     data() {
         return {
+            groupSlug: '',
             groupName: '',
             groupImage: null,
             groupEmail: '',
@@ -121,6 +123,7 @@ export default {
                 this.groupImage = groupData.header_image
                 this.groupEmail = groupData.email
                 this.groupVisibility = groupData.publication_status
+                this.groupSlug = groupData.slug
 
                 this.groupDescription = groupData.description
                 this.groupShortDescription = groupData.short_description
@@ -169,9 +172,6 @@ export default {
             } finally {
                 this.isProjectsLoading = false
             }
-        },
-        editGroup() {
-            this.$router.push({ name: 'frontEditGroup', params: { groupId: this.groupId } })
         },
     },
     watch: {

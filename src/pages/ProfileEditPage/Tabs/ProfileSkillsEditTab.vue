@@ -25,40 +25,31 @@
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
                 <template v-if="user[key] && user[key].length">
                     <div class="actions">
-                        <LpiButton
+                        <LinkButton
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-items`))
                             "
                             left-icon="Pen"
-                            :secondary="true"
-                            :no-margin="true"
-                            :no-border="true"
                             @click="openDrawer(key, 'add')"
                             data-test="edit-skills-button"
                         />
-                        <LpiButton
+                        <LinkButton
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-levels`))
                             "
                             left-icon="Pen"
-                            :secondary="true"
-                            :no-margin="true"
-                            :no-border="true"
                             @click="openDrawer(key, 'edit')"
                             data-test="edit-levels-button"
                         />
 
                         <SkillLevelTip>
-                            <LpiButton
+                            <LinkButton
                                 :label="
                                     $filters.capitalize(
                                         $t(`profile.edit.skills.${key}.levels-help`)
                                     )
                                 "
                                 left-icon="HelpCircle"
-                                :secondary="true"
-                                :no-margin="true"
-                                :no-border="true"
                                 data-test="skill-levels-help-button"
                             />
                         </SkillLevelTip>
@@ -95,6 +86,7 @@
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import SkillItem from '@/components/lpikit/SkillItem/SkillItem.vue'
 import SkillsEditDrawer from '@/components/lpikit/SkillsEditDrawer/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
@@ -105,6 +97,7 @@ export default {
         SkillItem,
         SkillsEditDrawer,
         SkillLevelTip,
+        LinkButton,
     },
     props: {
         user: {

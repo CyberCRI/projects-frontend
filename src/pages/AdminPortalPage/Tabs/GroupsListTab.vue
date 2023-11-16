@@ -5,14 +5,14 @@
                 <p>{{ $t('admin.groups.intro') }}</p>
             </div>
             <div class="action">
-                <LpiButton
+                <LinkButton
                     :label="$t('admin.groups.create-group')"
                     class="btn btn-create-link"
                     left-icon="Plus"
-                    secondary
                     data-test="create-group"
-                    :no-border="true"
-                    @click="$router.push('/admin/groups/create')"
+                    :to="{
+                        name: adminCreateGroup,
+                    }"
                 />
             </div>
         </div>
@@ -43,7 +43,7 @@
 
 <script>
 import { getHierarchyGroups } from '@/api/group.service.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import GroupsElement from './GroupsElement.vue'
 import PickGroupDrawer from '@/components/lpikit/PickGroupDrawer/PickGroupDrawer.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
@@ -51,7 +51,7 @@ import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {
     name: 'GroupsListTab',
     components: {
-        LpiButton,
+        LinkButton,
         GroupsElement,
         PickGroupDrawer,
         LoaderSimple,

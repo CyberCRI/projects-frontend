@@ -6,14 +6,12 @@
                 <p>{{ $t('invitation.list.intro') }}</p>
             </div>
             <div class="action">
-                <LpiButton
+                <LinkButton
                     :label="$t('invitation.generate-link')"
                     class="btn btn-create-link"
                     left-icon="Plus"
-                    secondary
                     data-test="create-link"
-                    :no-border="true"
-                    @click="$router.push('/admin/links/create')"
+                    :to="{ name: 'linksCreate' }"
                 />
             </div>
         </div>
@@ -80,13 +78,10 @@
                         <td>{{ userName(link.owner) }}</td>
                         <td>{{ link.description }}</td>
                         <td>
-                            <LpiButton
+                            <LinkButton
                                 class="btn copy-link"
                                 :label="$t('invitation.copy-link')"
-                                secondary
                                 :data-test="`cpy-link-${link.id}`"
-                                :no-border="true"
-                                :no-margin="true"
                                 @click="copyLink(link.token)"
                             />
                         </td>
@@ -98,11 +93,9 @@
                             />
                         </td>
                         <td>
-                            <LpiButton
+                            <LinkButton
                                 class="btn"
                                 left-icon="TrashCanOutline"
-                                secondary
-                                :no-border="true"
                                 :data-test="`delete-cpy-link-${link.id}`"
                                 @click="deleteLink(link.id)"
                             />
@@ -121,7 +114,7 @@
 </template>
 <script>
 import { getInvitations, deleteInvitation } from '@/api/invitations.service.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -129,7 +122,7 @@ import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {
     name: 'LinksList',
     components: {
-        LpiButton,
+        LinkButton,
         BadgeItem,
         ConfirmModal,
         IconImage,

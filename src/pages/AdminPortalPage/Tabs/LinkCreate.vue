@@ -77,15 +77,12 @@
                 <div class="form-section">
                     <div class="section-header">
                         <h3 class="label">{{ $t('invitation.create.field.group.label') }}</h3>
-                        <LpiButton
+                        <LinkButton
                             :label="$t('invitation.create.field.group.add')"
                             class="btn"
                             left-icon="Plus"
-                            secondary
                             data-test="add-group"
-                            :no-border="true"
                             @click="addGroup"
-                            :no-margin="true"
                         />
                     </div>
                     <p class="notice">
@@ -134,6 +131,7 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import { postInvitation } from '@/api/invitations.service.ts'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import useValidate from '@vuelidate/core'
@@ -149,6 +147,7 @@ export default {
         VueDatePicker,
         GroupSelectDrawer,
         GroupCard,
+        LinkButton,
     },
 
     data() {

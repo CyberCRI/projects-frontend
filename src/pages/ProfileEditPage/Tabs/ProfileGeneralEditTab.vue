@@ -206,11 +206,8 @@
                     }})</label
                 >
 
-                <LpiButton
+                <LinkButton
                     :label="$t('profile.edit.general.sdgs.add')"
-                    :secondary="true"
-                    :no-border="true"
-                    :no-margin="true"
                     left-icon="Plus"
                     @click="openSdgsDrawer"
                 />
@@ -318,6 +315,7 @@
 <script>
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
@@ -368,6 +366,7 @@ export default {
         TagsFilterEditor,
         DrawerLayout,
         SdgsFilter,
+        LinkButton,
     },
     mixins: [imageMixin],
     props: {
@@ -733,5 +732,9 @@ $sdg-size: $font-size-4xl;
     text-decoration: underline;
     color: $primary-dark;
     cursor: pointer;
+}
+
+.notice {
+    line-height: 1.6;
 }
 </style>
