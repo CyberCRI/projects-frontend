@@ -95,6 +95,8 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
+import { searchPeopleProject } from '@/api/people.service'
+
 export default {
     name: 'AccountsTab',
 
@@ -181,12 +183,14 @@ export default {
             this.isLoading = true
 
             const activeFilter = this.filters.find((filter) => filter.isActive)
-            const param = activeFilter ? { ordering: activeFilter.order + activeFilter.filter } : {}
+            const params = activeFilter
+                ? { ordering: activeFilter.order + activeFilter.filter }
+                : {}
 
-            this.request = await this.$store.dispatch('people/searchPeopleProject', {
+            this.request = await searchPeopleProject({
                 search: this.searchFilter,
                 org_id: this.organization.id,
-                param,
+                params,
             })
 
             this.isLoading = false
@@ -210,7 +214,7 @@ export default {
                 else if (filter.order === '-') filter.order = ''
             }
             this.isLoading = true
-            this.request = await this.$store.dispatch('people/searchPeopleProject', {
+            this.request = await searchPeopleProject({
                 search: this.searchFilter,
                 org_id: this.organization.id,
                 param: {

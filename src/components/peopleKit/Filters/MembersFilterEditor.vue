@@ -35,7 +35,7 @@
 <script>
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import FilterSearchInput from '@/components/peopleKit/Filters/FilterSearchInput.vue'
-import { mapActions } from 'vuex'
+import { searchPeopleProject } from '@/api/people.service'
 
 export default {
     name: 'MembersFilterEditor',
@@ -76,15 +76,11 @@ export default {
             this.focusInput()
         },
 
-        ...mapActions({
-            searchPeopleProject: 'people/searchPeopleProject',
-        }),
-
         async getPeople(searchString) {
-            const results = await this.searchPeopleProject(
-                searchString,
-                this.$store.getters['organizations/current'].id
-            )
+            const results = await searchPeopleProject({
+                search: searchString,
+                org_id: this.$store.getters['organizations/current'].id,
+            })
             const filteredResults = results.filter(
                 (result) => !this.selection.some((member) => member.kid == result.kid)
             )

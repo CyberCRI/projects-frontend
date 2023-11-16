@@ -72,6 +72,7 @@ import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
+import { searchPeopleProject } from '@/api/people.service'
 
 export default {
     name: 'GroupUserSelection',
@@ -149,7 +150,7 @@ export default {
 
         searchUser: debounce(async function () {
             this.isLoading = true
-            this.request = await this.$store.dispatch('people/searchPeopleProject', {
+            this.request = await searchPeopleProject({
                 search: this.queryString,
                 org_id: this.$store.getters['organizations/current'].id,
                 params: {},
