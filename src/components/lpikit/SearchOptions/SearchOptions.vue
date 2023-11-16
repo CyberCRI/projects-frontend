@@ -78,7 +78,6 @@
 import { getProjectCategory } from '@/api/project-categories.service'
 import { getWikiTag } from '@/api/wikipedia-tags.service'
 import { getOrgTag } from '@/api/organization-tags.service'
-import { mapGetters } from 'vuex'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import FiltersDrawer from '@/components/peopleKit/Filters/FiltersDrawer.vue'
@@ -196,8 +195,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters({ sdgs: 'sdgs/all' }),
-
         searchOptionDropDownLabel() {
             return this.$t(`search.${this.selectedSection.type}-section`)
         },

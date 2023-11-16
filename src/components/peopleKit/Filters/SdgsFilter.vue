@@ -12,6 +12,7 @@
 
 <script>
 import SdgIcon from '@/components/peopleKit/Filters/SdgIcon.vue'
+import allSdgs from '@/data/sdgs.json'
 
 export default {
     name: 'SdgsFilter',
@@ -29,7 +30,7 @@ export default {
 
     computed: {
         sdgsFilters() {
-            return this.$store.getters['sdgs/all'].reduce((acc, sdg) => {
+            return allSdgs.reduce((acc, sdg) => {
                 acc[sdg.id] = this.modelValue.some((selected_id) => selected_id == sdg.id)
                 return acc
             }, {})
