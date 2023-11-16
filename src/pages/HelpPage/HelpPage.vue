@@ -13,6 +13,7 @@
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { defineAsyncComponent } from 'vue'
+import { getFaq } from '@/api/faqs.service'
 
 export default {
     name: 'HelpPage',
@@ -26,18 +27,25 @@ export default {
         return {
             isLoading: true,
             customTab: null,
+            faq: null,
         }
     },
 
-    mounted() {
+    async mounted() {
+        try {
+            this.faq = await getFaq(this.$store.getters['organizations/current'].code)
+        } catch (err) {
+            console.error(err)
+            // ignore 404 error
+        }
         this.setOnboardData()
     },
 
     computed: {
-        faq() {
-            return this.$store.getters['faqs/current']
+        hasFaq() {
+            let faq = this.faq
+            return faq && faq.title && faq.content && faq.content !== '<p></p>'
         },
-
         tabs() {
             const res = []
 
@@ -59,20 +67,15 @@ export default {
 
     methods: {
         async setOnboardData() {
-            let faq = this.faq
             try {
-                if (!faq) {
-                    faq = await this.$store.dispatch(
-                        'faqs/getFaq',
-                        this.$store.getters['organizations/current'].code
-                    )
-                }
-
-                if (faq && faq.title && faq.content && faq.content !== '<p></p>') {
+                if (this.hasFaq) {
                     this.customTab = {
                         label: this.faq.title,
                         key: 'help-template',
                         component: defineAsyncComponent(() => import('./Tabs/OnBoardingTab.vue')),
+                        props: {
+                            faq: this.faq,
+                        },
                     }
                 }
             } catch (error) {
