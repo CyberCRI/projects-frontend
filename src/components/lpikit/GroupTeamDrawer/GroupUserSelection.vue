@@ -153,7 +153,9 @@ export default {
             this.request = await searchPeopleProject({
                 search: this.queryString,
                 org_id: this.$store.getters['organizations/current'].id,
-                params: {},
+                params: {
+                    organizations: [this.$store.getters['organizations/current'].code], // return only users from current org
+                },
             })
 
             this.isLoading = false

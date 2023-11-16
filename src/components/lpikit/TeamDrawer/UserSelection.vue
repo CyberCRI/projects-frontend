@@ -180,6 +180,7 @@ export default {
 
             const userFilters = {
                 limit: 30,
+                organizations: [this.$store.getters['organizations/current'].code], // return only users from current org
             }
             this.userRequest = await searchPeopleProject({
                 search: this.queryString,
