@@ -40,7 +40,6 @@
                     :label="$t('group.contact')"
                     right-icon="EmailOutline"
                     :top-icon="true"
-                    :no-border="true"
                 />
             </ToolTip>
             <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
@@ -61,7 +60,6 @@
                     :label="$t('group.share')"
                     right-icon="Share"
                     :top-icon="true"
-                    :no-border="true"
                 />
             </ToolTip>
         </div>
@@ -225,7 +223,7 @@ export default {
         align-items: center;
         gap: $space-m;
 
-        button {
+        .share-ctn button {
             border: none;
             background: white;
         }

@@ -254,8 +254,6 @@
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
                                 :right-icon="followed ? 'Heart' : 'HeartOutline'"
                                 :top-icon="true"
-                                :no-border="true"
-                                button-size="mbutton"
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
@@ -266,9 +264,7 @@
                                 :label="$t('group.news')"
                                 right-icon="Article"
                                 :top-icon="true"
-                                :no-border="true"
                                 :nb-button="project.announcements.length.toString()"
-                                button-size="mbutton"
                                 @click="$emit('show-project-announcements')"
                             />
                             <ExternalLabelButton
@@ -276,8 +272,6 @@
                                 :label="$filters.capitalize($t('comment.comment-verb'))"
                                 right-icon="ChatBubble"
                                 :top-icon="true"
-                                :no-border="true"
-                                button-size="mbutton"
                                 @click="goToCommentView"
                             />
                             <ToolTip
@@ -303,8 +297,6 @@
                                     :label="$t('group.share')"
                                     right-icon="Share"
                                     :top-icon="true"
-                                    :no-border="true"
-                                    button-size="mbutton"
                                 />
                             </ToolTip>
                             <ExternalLabelButton
@@ -312,8 +304,6 @@
                                 class="space-button"
                                 :label="$t('group.less')"
                                 right-icon="ChevronUp"
-                                :no-border="true"
-                                :no-margin="true"
                                 @click="displayLessInfo"
                             />
                             <ExternalLabelButton
@@ -322,8 +312,6 @@
                                 class="space-button"
                                 :label="$t('group.more')"
                                 right-icon="ChevronDown"
-                                :no-border="true"
-                                :no-margin="true"
                                 @click="displayMoreInfo"
                             />
                         </div>
@@ -345,8 +333,6 @@
                     class="close-button"
                     :label="$t('header.close')"
                     left-icon="Close"
-                    :no-border="true"
-                    :no-margin="true"
                     @click="displayLessInfo"
                 />
             </div>
@@ -733,6 +719,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:deep(.share-tip > div) {
+    display: flex;
+    justify-content: center;
+}
+
 :deep(.share-tip .trigger) {
     text-align: right;
 }

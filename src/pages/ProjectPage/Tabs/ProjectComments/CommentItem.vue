@@ -47,6 +47,7 @@
                                 :reversed="true"
                                 right-icon="Reply"
                                 @click="toggleReply"
+                                :has-border="true"
                             />
                         </div>
 
@@ -55,6 +56,7 @@
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.edit'))"
                                 :reversed="true"
+                                :has-border="true"
                                 right-icon="Pen"
                                 @click="toggleEdit"
                             />
@@ -63,6 +65,7 @@
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.delete'))"
                                 :reversed="true"
+                                :has-border="true"
                                 right-icon="TrashCanOutline"
                                 @click="openConfirmModal"
                             />
@@ -270,10 +273,10 @@ $comment-pic-size: pxToRem(72px);
     }
 
     .comment-body {
+        width: 100%;
         flex-grow: 1;
         padding-bottom: $space-l;
         border-bottom: $border-width-s solid $green;
-        width: 20rem; // dummy value to fix layout issue
 
         .comment-meta {
             display: flex;
