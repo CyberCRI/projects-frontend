@@ -62,7 +62,8 @@ export default {
 
         map.on('contextmenu', (e) => this.$emit('contextmenu', e))
         L.tileLayer(this.config.mapUrl, {
-            attribution: this.$store.state.maps.attribution,
+            attribution:
+                '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
         }).addTo(map)
 
         this.$nextTick(this.centerMap)
