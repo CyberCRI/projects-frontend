@@ -11,6 +11,13 @@ export default {
 
     components: {},
 
+    props: {
+        faq: {
+            type: Object,
+            required: true,
+        },
+    },
+
     data() {
         return {
             onBoardingData: {},
@@ -19,12 +26,6 @@ export default {
 
     mounted() {
         this.getCustomData()
-    },
-
-    computed: {
-        faq() {
-            return this.$store.getters['faqs/current']
-        },
     },
 
     watch: {
