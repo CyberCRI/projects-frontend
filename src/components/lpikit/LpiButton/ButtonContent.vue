@@ -4,7 +4,7 @@
 
     <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
 
-    <IconImage v-if="rightIcon" :name="rightIcon" class="right-icon" :class="buttonSize" />
+    <IconImage v-if="rightIcon" :name="rightIcon" class="right-icon" />
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -32,14 +32,6 @@ export default {
             type: [String, Object],
             default: null,
         },
-
-        buttonSize: {
-            type: String,
-            default: 'sbutton',
-            validator(value) {
-                return ['mbutton', 'sbutton'].includes(value)
-            },
-        },
     },
 }
 </script>
@@ -59,10 +51,6 @@ export default {
 
 .right-icon {
     height: pxToRem(18px);
-
-    &.mbutton {
-        height: pxToRem(25px);
-    }
 }
 
 .loader-simple + .left-icon,

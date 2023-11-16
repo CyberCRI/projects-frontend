@@ -1,23 +1,11 @@
 <template>
     <button
-        :class="[
-            size,
-            { secondary, disabled, opacity, over },
-            { 'icon-only': iconOnly },
-            { 'no-border': noBorder },
-            { 'no-margin': noMargin },
-            { padding: padding },
-        ]"
+        :class="[size, { secondary, disabled, 'icon-only': iconOnly }]"
         :disabled="disabled"
         type="button"
         class="lpi-button"
     >
-        <ButtonContent
-            :label="label"
-            :right-icon="rightIcon"
-            :left-icon="leftIcon"
-            :button-size="buttonSize"
-        />
+        <ButtonContent :label="label" :right-icon="rightIcon" :left-icon="leftIcon" />
     </button>
 </template>
 
@@ -40,17 +28,7 @@ export default {
             type: String,
             default: 'medium',
             validator(value) {
-                return ['large', 'link', 'medium', 'small', 'extra-small', 'xx-small'].includes(
-                    value
-                )
-            },
-        },
-
-        buttonSize: {
-            type: String,
-            default: 'sbutton',
-            validator(value) {
-                return ['mbutton', 'sbutton'].includes(value)
+                return ['large', 'medium', 'small', 'extra-small'].includes(value)
             },
         },
 
@@ -70,31 +48,6 @@ export default {
         },
 
         disabled: {
-            type: Boolean,
-            default: false,
-        },
-
-        noBorder: {
-            type: Boolean,
-            default: false,
-        },
-
-        noMargin: {
-            type: Boolean,
-            default: false,
-        },
-
-        opacity: {
-            type: Boolean,
-            default: false,
-        },
-
-        over: {
-            type: Boolean,
-            default: false,
-        },
-
-        padding: {
             type: Boolean,
             default: false,
         },
@@ -131,10 +84,6 @@ export default {
         cursor: not-allowed;
     }
 
-    &.opacity {
-        opacity: 1;
-    }
-
     &.secondary {
         background: transparent;
         color: $primary-dark;
@@ -163,10 +112,6 @@ export default {
         border: 0;
     }
 
-    &.no-margin {
-        margin: 0;
-    }
-
     &.extra-small {
         border: none;
         font-size: $font-size-xs;
@@ -176,20 +121,6 @@ export default {
 
         &.icon-only {
             width: 22px;
-            padding: 0;
-        }
-    }
-
-    &.xx-small {
-        border: none;
-        font-size: $font-size-2xs;
-        padding: $space-s;
-        height: 7px;
-        width: 7px;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 7px;
             padding: 0;
         }
     }
@@ -236,21 +167,6 @@ export default {
             width: 100px;
         }
     }
-
-    &.over {
-        position: absolute;
-        left: 50%;
-    }
-
-    @media screen and (max-width: $min-tablet) {
-        &.over {
-            right: 400px;
-        }
-
-        &.padding {
-            display: contents;
-        }
-    }
 }
 
 .lpi-button :deep(svg) {
@@ -258,8 +174,7 @@ export default {
     fill: $white;
 }
 
-.lpi-button.secondary :deep(svg),
-.link :deep(svg) {
+.lpi-button.secondary :deep(svg) {
     fill: $primary-dark;
 }
 </style>

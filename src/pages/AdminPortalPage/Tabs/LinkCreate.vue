@@ -106,7 +106,6 @@
                         secondary
                         data-test="cancel-link"
                         @click="cancel"
-                        :no-margin="true"
                     />
                     <LpiButton
                         :disabled="!formNotEmpty || isSaving"
@@ -114,7 +113,6 @@
                         class="btn"
                         data-test="save-link"
                         @click="save"
-                        :no-margin="true"
                     />
                 </div>
             </form>

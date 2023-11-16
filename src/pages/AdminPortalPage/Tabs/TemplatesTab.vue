@@ -28,7 +28,6 @@
                         <h4 class="title">{{ $t('template.tags') }}</h4>
                         <LpiButton
                             :label="$filters.capitalize($t('tag.edit'))"
-                            class="no-margin"
                             @click="tagSearchIsOpened = true"
                         />
                     </div>
