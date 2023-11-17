@@ -137,7 +137,7 @@
                 <LpiButton
                     :disabled="otherFieldDisabled"
                     :label="$filters.capitalize($t('common.save'))"
-                    :left-icon="isLoading ? 'LoaderSimple' : null"
+                    :btn-icon="isLoading ? 'LoaderSimple' : null"
                     color="green"
                     @click="submit"
                 />

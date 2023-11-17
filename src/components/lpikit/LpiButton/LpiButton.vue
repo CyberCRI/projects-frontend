@@ -1,11 +1,11 @@
 <template>
     <button
-        :class="{ secondary, disabled, 'icon-only': iconOnly }"
+        :class="{ secondary, disabled, 'icon-only': iconOnly, 'reversed-order': reversedOrder }"
         :disabled="disabled"
         type="button"
         class="lpi-button"
     >
-        <ButtonContent :label="label" :right-icon="rightIcon" :left-icon="leftIcon" />
+        <ButtonContent :label="label" :btn-icon="btnIcon" />
     </button>
 </template>
 
@@ -29,12 +29,7 @@ export default {
             default: false,
         },
 
-        leftIcon: {
-            type: [String, Object],
-            default: null,
-        },
-
-        rightIcon: {
+        btnIcon: {
             type: [String, Object],
             default: null,
         },
@@ -43,11 +38,16 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        reversedOrder: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     computed: {
         iconOnly() {
-            return (!this.label || !this.label.length) && (this.leftIcon || this.rightIcon)
+            return (!this.label || !this.label.length) && this.btnIcon
         },
     },
 }
@@ -56,6 +56,7 @@ export default {
 <style lang="scss" scoped>
 .lpi-button {
     display: flex;
+    flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     border: $border-width-s solid $primary-dark;
@@ -72,6 +73,11 @@ export default {
     height: 35px;
     padding: $space-s $space-l;
     box-sizing: border-box;
+    gap: $space-s;
+
+    &.reversed-order {
+        flex-flow: row-reverse nowrap;
+    }
 
     &.disabled {
         opacity: 0.4;

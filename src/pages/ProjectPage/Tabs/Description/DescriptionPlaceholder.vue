@@ -6,7 +6,8 @@
 
         <LpiButton
             :label="$filters.capitalize($t('description.add'))"
-            right-icon="ArrowRight"
+            btn-icon="ArrowRight"
+            :reversed-order="true"
             @click="editDescriptionModalActive = !editDescriptionModalActive"
             data-test="add-description-button"
         />

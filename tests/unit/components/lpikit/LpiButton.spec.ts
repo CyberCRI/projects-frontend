@@ -35,17 +35,20 @@ describe('LpiButton', () => {
         expect(secondary.exists()).toBeTruthy()
     })
 
-    it('should show a left icon', () => {
-        defaultParams.props.leftIcon = 'Plus'
+    it('should show an icon', () => {
+        defaultParams.props.btnIcon = 'Plus'
         wrapper = lpiMount(LpiButton, defaultParams)
-        const leftIcon = wrapper.find('.left-icon')
-        expect(leftIcon.exists()).toBeTruthy()
+        const btnIcon = wrapper.find('.btn-icon')
+        expect(btnIcon.exists()).toBeTruthy()
     })
 
     it('should show a right icon', () => {
-        defaultParams.props.rightIcon = 'Plus'
+        defaultParams.props.btnIcon = 'Plus'
+        defaultParams.props.reversedOrder = true
         wrapper = lpiMount(LpiButton, defaultParams)
-        const rightIcon = wrapper.find('.right-icon')
-        expect(rightIcon.exists()).toBeTruthy()
+        const btnIcon = wrapper.find('.btn-icon')
+        const reversed = wrapper.find('.reversed-order')
+        expect(btnIcon.exists()).toBeTruthy()
+        expect(reversed.exists()).toBeTruthy()
     })
 })

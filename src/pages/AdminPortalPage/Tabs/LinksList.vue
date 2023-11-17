@@ -9,7 +9,7 @@
                 <LinkButton
                     :label="$t('invitation.generate-link')"
                     class="btn btn-create-link"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     data-test="create-link"
                     :to="{ name: 'linksCreate' }"
                 />
@@ -95,7 +95,7 @@
                         <td>
                             <LinkButton
                                 class="btn"
-                                left-icon="TrashCanOutline"
+                                btn-icon="TrashCanOutline"
                                 :data-test="`delete-cpy-link-${link.id}`"
                                 @click="deleteLink(link.id)"
                             />

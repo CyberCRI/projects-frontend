@@ -163,7 +163,7 @@
                         :label="$t('profile.edit.general.picture.resize-image')"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="Pen"
+                        btn-icon="Pen"
                         @click="openImageResizer"
                     />
                 </div>
@@ -208,7 +208,7 @@
 
                 <LinkButton
                     :label="$t('profile.edit.general.sdgs.add')"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     @click="openSdgsDrawer"
                 />
             </div>
@@ -253,8 +253,7 @@
             <LpiButton
                 :disabled="v$.$errors.length || asyncing"
                 :label="$filters.capitalize($t('common.confirm'))"
-                :left-icon="asyncing ? 'LoaderSimple' : null"
-                :secondary="false"
+                :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
                 @click="save"
                 data-test="confirm-button"

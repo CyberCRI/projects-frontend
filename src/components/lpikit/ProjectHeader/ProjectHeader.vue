@@ -4,7 +4,7 @@
             <LinkButton
                 v-if="!loading && canEditProject"
                 :label="$t('project.edit')"
-                left-icon="Pen"
+                btn-icon="Pen"
                 @click="editProject"
                 data-test="header-project-button"
             />

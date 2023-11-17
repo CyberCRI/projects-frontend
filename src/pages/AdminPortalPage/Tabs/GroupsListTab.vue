@@ -8,7 +8,7 @@
                 <LinkButton
                     :label="$t('admin.groups.create-group')"
                     class="btn btn-create-link"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     data-test="create-group"
                     :to="{
                         name: adminCreateGroup,

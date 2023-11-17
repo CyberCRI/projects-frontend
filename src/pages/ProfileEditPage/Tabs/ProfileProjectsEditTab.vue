@@ -27,7 +27,7 @@
                 >
                 <LinkButton
                     :label="$t('profile.edit.projects.followed.add')"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     @click="openFollowProjectDrawer"
                 />
             </div>

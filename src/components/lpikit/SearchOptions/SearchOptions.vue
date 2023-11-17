@@ -53,7 +53,7 @@
                     <LinkButton
                         :label="$t('common.delete-selection')"
                         class="clear-selection-button"
-                        left-icon="Close"
+                        btn-icon="Close"
                         @click="clearSelectedFilters"
                     />
                 </div>

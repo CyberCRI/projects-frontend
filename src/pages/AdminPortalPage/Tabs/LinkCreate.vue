@@ -80,7 +80,7 @@
                         <LinkButton
                             :label="$t('invitation.create.field.group.add')"
                             class="btn"
-                            left-icon="Plus"
+                            btn-icon="Plus"
                             data-test="add-group"
                             @click="addGroup"
                         />

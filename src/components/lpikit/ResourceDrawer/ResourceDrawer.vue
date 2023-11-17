@@ -14,7 +14,7 @@
             <div v-if="isAddMode && selectedType === null" class="select-resource">
                 <LpiButton
                     :label="$filters.capitalize($t('resource.add-link'))"
-                    left-icon="LinkRotated"
+                    btn-icon="LinkRotated"
                     @click="selectType('link')"
                     data-test="add-link"
                     class="button-select"
@@ -22,7 +22,7 @@
                 </LpiButton>
                 <LpiButton
                     :label="$filters.capitalize($t('resource.add-file'))"
-                    left-icon="File"
+                    btn-icon="File"
                     @click="selectType('file')"
                     data-test="add-file"
                     class="button-select"

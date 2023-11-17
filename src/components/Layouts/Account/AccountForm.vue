@@ -68,7 +68,7 @@
                         :label="$filters.capitalize($t('project.random-image'))"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="RotateRight"
+                        btn-icon="RotateRight"
                         @click="showNextPatatoid"
                         data-test="random-image-button"
                     />
@@ -83,7 +83,7 @@
                         :label="$t('project.form.resize-image')"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="Pen"
+                        btn-icon="Pen"
                         @click="openImageResizer"
                     />
                 </div>
@@ -180,12 +180,12 @@
             <div class="password-btn-ctn">
                 <LpiButton
                     @click="resetPassword"
-                    left-icon="Lock"
+                    btn-icon="Lock"
                     :label="$t('account.reset-password')"
                     :secondary="true"
                 ></LpiButton>
                 <LpiButton
-                    left-icon="TrashCanOutline"
+                    btn-icon="TrashCanOutline"
                     :label="$t('account.delete-account')"
                     :secondary="true"
                     @click="toggleShowRemoveUserVisible"
@@ -216,7 +216,7 @@
                 <LpiButton
                     :disabled="asyncSave"
                     :label="$filters.capitalize($t('common.confirm'))"
-                    :left-icon="asyncSave ? 'LoaderSimple' : null"
+                    :btn-icon="asyncSave ? 'LoaderSimple' : null"
                     :secondary="false"
                     class="footer__right-button"
                     @click="confirm"

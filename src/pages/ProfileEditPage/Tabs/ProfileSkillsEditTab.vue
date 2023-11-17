@@ -7,15 +7,13 @@
             <div class="actions">
                 <LpiButton
                     :label="$filters.capitalize($t('profile.edit.skills.skills.add'))"
-                    left-icon="Plus"
-                    :secondary="false"
+                    btn-icon="Plus"
                     @click="openDrawer('skills', 'add')"
                     data-test="add-skills-button"
                 />
                 <LpiButton
                     :label="$filters.capitalize($t('profile.edit.skills.hobbies.add'))"
-                    left-icon="Plus"
-                    :secondary="false"
+                    btn-icon="Plus"
                     @click="openDrawer('hobbies', 'add')"
                     data-test="add-hobbies-button"
                 />
@@ -29,7 +27,7 @@
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-items`))
                             "
-                            left-icon="Pen"
+                            btn-icon="Pen"
                             @click="openDrawer(key, 'add')"
                             data-test="edit-skills-button"
                         />
@@ -37,7 +35,7 @@
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-levels`))
                             "
-                            left-icon="Pen"
+                            btn-icon="Pen"
                             @click="openDrawer(key, 'edit')"
                             data-test="edit-levels-button"
                         />
@@ -49,7 +47,7 @@
                                         $t(`profile.edit.skills.${key}.levels-help`)
                                     )
                                 "
-                                left-icon="HelpCircle"
+                                btn-icon="HelpCircle"
                                 data-test="skill-levels-help-button"
                             />
                         </SkillLevelTip>
@@ -66,7 +64,7 @@
                 <div v-else class="add-action">
                     <LpiButton
                         :label="$filters.capitalize($t(`profile.edit.skills.${key}.add`))"
-                        left-icon="Plus"
+                        btn-icon="Plus"
                         :secondary="false"
                         @click="openDrawer(key, 'add')"
                         :data-test="`add-${key}-button`"

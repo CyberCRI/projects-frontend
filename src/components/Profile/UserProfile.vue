@@ -7,7 +7,7 @@
             <LinkButton
                 v-if="showPageLink"
                 class="page-btn"
-                left-icon="Eye"
+                btn-icon="Eye"
                 :label="$t('profile.go-to-page')"
                 :to="{
                     name: 'ProfileOtherUser',
@@ -18,7 +18,7 @@
             <LinkButton
                 v-if="isSelf || canEditUser"
                 class="edit-btn"
-                left-icon="Pen"
+                btn-icon="Pen"
                 :label="editButtonLabel"
                 :to="editProfileLink"
             />

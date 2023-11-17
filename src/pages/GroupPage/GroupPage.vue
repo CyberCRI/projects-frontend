@@ -17,7 +17,7 @@
             <LinkButton
                 v-if="!isLoading && canEditGroup"
                 class="edit-btn"
-                left-icon="Pen"
+                btn-icon="Pen"
                 :label="editGroupLabel"
                 :to="{
                     name: 'frontEditGroup',

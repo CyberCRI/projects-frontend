@@ -44,19 +44,19 @@
                     v-if="announcements.length > 0"
                     :label="$filters.capitalize($t('home.announcements'))"
                     class="btn link"
-                    left-icon="Search"
+                    btn-icon="Search"
                     @click="scrollTo('announcements')"
                 />
                 <LinkButton
                     :label="$filters.capitalize($t('home.all-projects'))"
                     class="btn link"
-                    left-icon="ChartBox"
+                    btn-icon="ChartBox"
                     @click="scrollTo('projectList')"
                 />
                 <LinkButton
                     :label="$filters.capitalize($t('map.projects'))"
                     class="btn"
-                    left-icon="Map"
+                    btn-icon="Map"
                     :to="{
                         name: 'map',
                     }"
@@ -65,7 +65,7 @@
                     v-if="canCreateProject"
                     :label="$t('project.create-project')"
                     class="btn"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     secondary
                     @click="$router.push({ name: 'createProject' })"
                     data-test="create-project"
@@ -189,7 +189,7 @@
                     :label="
                         $filters.capitalize(isMoreToggled ? $t('common.less') : $t('common.more'))
                     "
-                    :left-icon="PlusOrMinusIcon"
+                    :btn-icon="PlusOrMinusIcon"
                     @click="isMoreToggled = !isMoreToggled"
                 />
             </div>

@@ -6,7 +6,7 @@
         type="button"
         class="link-button"
     >
-        <ButtonContent :label="label" :right-icon="rightIcon" :left-icon="leftIcon" />
+        <ButtonContent :label="label" :btn-icon="btnIcon" />
     </component>
 </template>
 
@@ -33,7 +33,7 @@ export default {
             },
         },
 
-        leftIcon: {
+        btnIcon: {
             type: [String, Object],
             default: null,
         },
@@ -68,6 +68,7 @@ export default {
     background: transparent;
     color: $primary-dark;
     padding: 0 0 0 $space-l;
+    gap: $space-s;
 
     &.icon-only {
         border-radius: 50%;

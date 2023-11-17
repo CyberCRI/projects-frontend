@@ -84,7 +84,7 @@
                         :label="$filters.capitalize($t('group.random-image'))"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="RotateRight"
+                        btn-icon="RotateRight"
                         @click="showNextPatatoid"
                         data-test="random-image-button"
                     />
@@ -99,7 +99,7 @@
                         :label="$t('group.form.resize-image')"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="Pen"
+                        btn-icon="Pen"
                         @click="openImageResizer"
                     />
                 </div>
@@ -201,7 +201,7 @@
             <label>{{ $t('group.form.delete') }}</label>
             <LpiButton
                 :label="$t('group.form.delete')"
-                left-icon="TrashCanOutline"
+                btn-icon="TrashCanOutline"
                 :secondary="true"
                 @click="openRemoveOrQuit"
             />

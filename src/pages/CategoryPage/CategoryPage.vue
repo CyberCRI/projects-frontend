@@ -44,7 +44,7 @@
                     v-if="canCreateProject"
                     :label="$t('project.create-project')"
                     class="button"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     secondary
                     @click="
                         $router.push({

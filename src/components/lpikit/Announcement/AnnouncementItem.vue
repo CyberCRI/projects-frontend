@@ -15,13 +15,21 @@
         <div class="description" v-html="announcement.description" />
 
         <div class="action-buttons" v-if="canEditAndDelete">
-            <LpiButton left-icon="Pen" class="udpate-btn" @click="$emit('update-announcement')" />
-            <LpiButton left-icon="Close" class="udpate-btn" @click="$emit('open-confirm-modal')" />
+            <ContextActionButton
+                action-icon="Pen"
+                class="udpate-btn"
+                @click="$emit('update-announcement')"
+            />
+            <ContextActionButton
+                action-icon="Close"
+                class="udpate-btn"
+                @click="$emit('open-confirm-modal')"
+            />
         </div>
 
         <div v-if="showApplyAction && !outdated" class="actions">
             <LpiButton
-                left-icon="EmailOutline"
+                btn-icon="EmailOutline"
                 class="apply-btn"
                 :secondary="true"
                 :label="$t('recruit.apply')"
@@ -33,6 +41,7 @@
 </template>
 
 <script>
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
@@ -46,6 +55,7 @@ export default {
 
     components: {
         LpiButton,
+        ContextActionButton,
     },
 
     props: {

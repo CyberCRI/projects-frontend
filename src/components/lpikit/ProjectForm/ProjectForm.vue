@@ -106,7 +106,7 @@
                         :label="$filters.capitalize($t('project.random-image'))"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="RotateRight"
+                        btn-icon="RotateRight"
                         @click="showNextPatatoid"
                         data-test="random-image-button"
                     />
@@ -123,7 +123,7 @@
                         :label="$t('project.form.resize-image')"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="Pen"
+                        btn-icon="Pen"
                         @click="openImageResizer"
                     />
                 </div>

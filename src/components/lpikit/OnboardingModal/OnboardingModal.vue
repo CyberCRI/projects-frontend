@@ -29,7 +29,7 @@
                         v-show="hasPrevious"
                         class="button-footer"
                         :label="$t('onboarding-modal.previous')"
-                        left-icon="Previous"
+                        btn-icon="Previous"
                         :secondary="true"
                         @click="previous()"
                     >
@@ -40,7 +40,8 @@
                         v-show="hasNext"
                         class="button-footer"
                         :label="$t('onboarding-modal.next')"
-                        right-icon="Next"
+                        btn-icon="Next"
+                        :reversed-order="true"
                         :secondary="true"
                         @click="next()"
                     >

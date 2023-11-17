@@ -60,7 +60,7 @@
                             v-if="isMobile"
                             :label="$filters.capitalize(showMoreButtonLabel)"
                             class="more-btn"
-                            left-icon="DotsHorizontal"
+                            btn-icon="DotsHorizontal"
                             @click="showTabList = !showTabList"
                         />
                     </div>
@@ -71,7 +71,7 @@
                     v-if="!layouting && !isMobile && seeMoreTabs.length > 0"
                     :label="showMoreButtonLabel"
                     class="more-btn"
-                    left-icon="DotsHorizontal"
+                    btn-icon="DotsHorizontal"
                     @click="showTabList = !showTabList"
                 />
                 <slot name="button-1"></slot>

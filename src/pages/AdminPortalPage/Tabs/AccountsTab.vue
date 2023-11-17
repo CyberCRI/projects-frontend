@@ -55,7 +55,7 @@
                     <td>
                         <LinkButton
                             :label="$t('account.edit')"
-                            left-icon="Pen"
+                            btn-icon="Pen"
                             @click="createAccountDrawer(user)"
                         />
                     </td>

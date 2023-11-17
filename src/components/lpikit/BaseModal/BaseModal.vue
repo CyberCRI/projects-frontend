@@ -22,13 +22,12 @@
 
                                 <div class="dismiss-button">
                                     <slot name="dismiss-button">
-                                        <LpiButton
+                                        <ContextActionButton
                                             v-if="canClose"
-                                            :border="false"
-                                            :secondary="true"
+                                            secondary
                                             aria-label="Close modal"
                                             class="btn-close"
-                                            left-icon="Close"
+                                            action-icon="Close"
                                             @click="close"
                                         />
                                     </slot>
@@ -50,12 +49,12 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 
 export default {
     name: 'BaseModal',
 
-    components: { LpiButton },
+    components: { ContextActionButton },
 
     props: {
         width: {

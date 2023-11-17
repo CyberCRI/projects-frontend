@@ -9,7 +9,7 @@
                 :label="$filters.capitalize($t(item.label))"
                 :secondary="true"
                 class="add-to-project__button"
-                left-icon="Plus"
+                btn-icon="Plus"
                 @click="item.onClick()"
             />
         </div>

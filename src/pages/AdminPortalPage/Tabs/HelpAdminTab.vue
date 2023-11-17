@@ -17,7 +17,7 @@
                     <LpiButton
                         v-if="!isAddMode"
                         :label="$filters.capitalize($t('common.delete'))"
-                        :left-icon="deleteLoading ? 'LoaderSimple' : null"
+                        :btn-icon="deleteLoading ? 'LoaderSimple' : null"
                         class="delete-button"
                         @click="showDeleteConfirm"
                     />
@@ -27,7 +27,7 @@
                         :label="
                             $filters.capitalize(isAddMode ? $t('common.add') : $t('common.edit'))
                         "
-                        :left-icon="addOrEditLoading ? 'LoaderSimple' : null"
+                        :btn-icon="addOrEditLoading ? 'LoaderSimple' : null"
                         @click="submitFaq"
                     />
                 </div>

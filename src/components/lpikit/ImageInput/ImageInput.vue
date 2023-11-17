@@ -2,7 +2,7 @@
     <div class="image-input-ctn">
         <label :for="id" ref="label" class="image-button" data-test="upload-image-button">
             <LpiButton
-                left-icon="Upload"
+                btn-icon="Upload"
                 :secondary="true"
                 :label="displayedLabel"
                 class="passive"

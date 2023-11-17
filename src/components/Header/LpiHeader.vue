@@ -128,7 +128,7 @@
                 <LinkButton
                     :class="{ 'header__open-icon': !isNavOpen, 'header__close-icon': isNavOpen }"
                     :data-test="isNavOpen ? 'close-menu-button' : 'open-menu-button'"
-                    :left-icon="isNavOpen ? 'Close' : 'BarsStaggered'"
+                    :btn-icon="isNavOpen ? 'Close' : 'BarsStaggered'"
                     class="header__mobile-btn"
                     @click="toggleNav"
                 />

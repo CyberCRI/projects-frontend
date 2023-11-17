@@ -112,7 +112,7 @@
                 <LpiButton
                     :disabled="v$.$errors && v$.$errors.length"
                     :label="$filters.capitalize($t('common.save'))"
-                    :left-icon="isLoading ? 'LoaderSimple' : null"
+                    :btn-icon="isLoading ? 'LoaderSimple' : null"
                     class="save-button"
                     @click="saveData"
                 />

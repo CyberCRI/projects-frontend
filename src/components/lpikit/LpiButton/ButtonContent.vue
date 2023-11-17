@@ -1,10 +1,8 @@
 <template>
-    <IconImage v-if="leftIcon && leftIcon !== 'LoaderSimple'" :name="leftIcon" class="left-icon" />
-    <LoaderSimple v-if="leftIcon && leftIcon === 'LoaderSimple'" class="left-icon loader" />
+    <IconImage v-if="btnIcon && btnIcon !== 'LoaderSimple'" :name="btnIcon" class="btn-icon" />
+    <LoaderSimple v-if="btnIcon && btnIcon === 'LoaderSimple'" class="btn-icon loader" />
 
     <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
-
-    <IconImage v-if="rightIcon" :name="rightIcon" class="right-icon" />
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -23,12 +21,7 @@ export default {
             default: null,
         },
 
-        leftIcon: {
-            type: [String, Object],
-            default: null,
-        },
-
-        rightIcon: {
+        btnIcon: {
             type: [String, Object],
             default: null,
         },
@@ -45,27 +38,13 @@ export default {
     }
 }
 
-.left-icon {
+.btn-icon {
     height: pxToRem(18px);
-}
-
-.right-icon {
-    height: pxToRem(18px);
-}
-
-.loader-simple + .left-icon,
-.loader-simple + .right-icon,
-.loader-simple + .label,
-.left-icon + .right-icon,
-.left-icon + .label,
-.label + .right-icon {
-    margin-left: $space-s;
 }
 
 .loader-simple {
     width: 22px;
     height: 22px;
-    margin-right: $space-s;
 
     path {
         fill: $primary-dark;

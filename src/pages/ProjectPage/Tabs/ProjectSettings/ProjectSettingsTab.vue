@@ -125,21 +125,21 @@
                     <LinkButton
                         :label="$filters.capitalize($t('project.duplicate'))"
                         class="button"
-                        left-icon="Copy"
+                        btn-icon="Copy"
                         @click="duplicateProject"
                     />
                     <div class="separator"></div>
                     <LinkButton
                         :label="$t('report.bug')"
                         class="button"
-                        left-icon="Bug"
+                        btn-icon="Bug"
                         @click="toggleReportForm('bug')"
                         data-test="report-bug"
                     />
                     <LinkButton
                         :label="$t('report.abuse')"
                         class="button"
-                        left-icon="Flag"
+                        btn-icon="Flag"
                         @click="toggleReportForm('abuse')"
                         data-test="report-abuse"
                     />
@@ -149,7 +149,7 @@
                         v-if="canDestroyProject"
                         :label="$t('project.destroy')"
                         class="button"
-                        left-icon="TrashCanOutline"
+                        btn-icon="TrashCanOutline"
                         @click="toggleConfirmDestroyVisible"
                         data-test="destroy-project"
                     />
@@ -158,7 +158,7 @@
                         v-if="isMember"
                         :label="$t('project.quit')"
                         class="button"
-                        left-icon="Logout"
+                        btn-icon="Logout"
                         @click="openConfirmOrQuit"
                     />
                 </div>

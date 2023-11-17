@@ -18,7 +18,7 @@
             <LinkButton
                 :label="$filters.capitalize($t('project.view'))"
                 class="project-tooltip__button"
-                left-icon="ArrowRight"
+                btn-icon="ArrowRight"
                 :to="{ name: 'pageProject', params: { slugOrId: project.id } }"
             />
         </div>

@@ -5,7 +5,7 @@
                 <SkillLevelTip>
                     <LinkButton
                         :label="$t(`me.levels-help-link`)"
-                        left-icon="HelpCircle"
+                        btn-icon="HelpCircle"
                         data-test="skill-levels-help-button"
                     />
                 </SkillLevelTip>
