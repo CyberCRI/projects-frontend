@@ -16,7 +16,6 @@ import projects, { ProjectState } from '@/store/modules/projects'
 import announcements, { AnnouncementsState } from '@/store/modules/announcements'
 import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
 import reviews from '@/store/modules/reviews'
-import templates, { TemplatesState } from '@/store/modules/templates'
 import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
 
@@ -27,7 +26,6 @@ export interface State {
     organizations: OrganizationsState
     languages: LanguageState
     users: UsersState
-    templates: TemplatesState
     comments: CommentsState
     locations: LocationsState
     announcements: AnnouncementsState
@@ -57,7 +55,6 @@ export default createStore({
         projects,
         announcements,
         reviews,
-        templates,
         users,
         peopleGroups,
     },
