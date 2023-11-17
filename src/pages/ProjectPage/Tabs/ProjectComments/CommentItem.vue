@@ -44,8 +44,7 @@
                             <ExternalLabelButton
                                 v-if="!isReply"
                                 :label="$filters.capitalize($t('common.reply'))"
-                                :reversed="true"
-                                right-icon="Reply"
+                                btn-icon="Reply"
                                 @click="toggleReply"
                                 :has-border="true"
                             />
@@ -55,18 +54,16 @@
                             <ExternalLabelButton
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.edit'))"
-                                :reversed="true"
                                 :has-border="true"
-                                right-icon="Pen"
+                                btn-icon="Pen"
                                 @click="toggleEdit"
                             />
 
                             <ExternalLabelButton
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.delete'))"
-                                :reversed="true"
                                 :has-border="true"
-                                right-icon="TrashCanOutline"
+                                btn-icon="TrashCanOutline"
                                 @click="openConfirmModal"
                             />
                         </div>

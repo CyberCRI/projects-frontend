@@ -252,8 +252,8 @@
                                 v-if="$store.getters['users/isLoggedIn']"
                                 class="space-button"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
-                                :right-icon="followed ? 'Heart' : 'HeartOutline'"
-                                :top-icon="true"
+                                :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+                                vertical-layout
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
@@ -262,16 +262,16 @@
                                 "
                                 class="space-button article-button"
                                 :label="$t('group.news')"
-                                right-icon="Article"
-                                :top-icon="true"
+                                btn-icon="Article"
+                                vertical-layout
                                 :nb-button="project.announcements.length.toString()"
                                 @click="$emit('show-project-announcements')"
                             />
                             <ExternalLabelButton
                                 class="space-button"
                                 :label="$filters.capitalize($t('comment.comment-verb'))"
-                                right-icon="ChatBubble"
-                                :top-icon="true"
+                                btn-icon="ChatBubble"
+                                vertical-layout
                                 @click="goToCommentView"
                             />
                             <ToolTip
@@ -295,15 +295,15 @@
                                 <ExternalLabelButton
                                     class="space-button"
                                     :label="$t('group.share')"
-                                    right-icon="Share"
-                                    :top-icon="true"
+                                    btn-icon="Share"
+                                    vertical-layout
                                 />
                             </ToolTip>
                             <ExternalLabelButton
                                 v-if="moreInfo"
                                 class="space-button"
                                 :label="$t('group.less')"
-                                right-icon="ChevronUp"
+                                btn-icon="ChevronUp"
                                 @click="displayLessInfo"
                             />
                             <ExternalLabelButton
@@ -311,7 +311,7 @@
                                 id="more-info-btn"
                                 class="space-button"
                                 :label="$t('group.more')"
-                                right-icon="ChevronDown"
+                                btn-icon="ChevronDown"
                                 @click="displayMoreInfo"
                             />
                         </div>
@@ -332,7 +332,8 @@
                 <ExternalLabelButton
                     class="close-button"
                     :label="$t('header.close')"
-                    left-icon="Close"
+                    btn-icon="Close"
+                    reverse
                     @click="displayLessInfo"
                 />
             </div>

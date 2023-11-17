@@ -11,7 +11,7 @@
                     btn-icon="Plus"
                     data-test="create-group"
                     :to="{
-                        name: adminCreateGroup,
+                        name: 'adminCreateGroup',
                     }"
                 />
             </div>

@@ -38,8 +38,8 @@
                 </template>
                 <ExternalLabelButton
                     :label="$t('group.contact')"
-                    right-icon="EmailOutline"
-                    :top-icon="true"
+                    btn-icon="EmailOutline"
+                    vertical-layout
                 />
             </ToolTip>
             <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
@@ -56,11 +56,7 @@
                         </button>
                     </div>
                 </template>
-                <ExternalLabelButton
-                    :label="$t('group.share')"
-                    right-icon="Share"
-                    :top-icon="true"
-                />
+                <ExternalLabelButton :label="$t('group.share')" btn-icon="Share" vertical-layout />
             </ToolTip>
         </div>
     </div>

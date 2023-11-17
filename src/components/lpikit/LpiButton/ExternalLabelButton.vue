@@ -1,21 +1,20 @@
 <template>
-    <button class="external-btn" :class="{ reversed, topIcon, 'has-border': hasBorder }">
-        <div v-if="rightIcon" class="over-button">
-            <IconImage :name="rightIcon" class="btn" />
-
+    <button
+        class="external-btn"
+        :class="{
+            'reversed-order': reversedOrder,
+            'vertical-layout': verticalLayout,
+            'has-border': hasBorder,
+        }"
+    >
+        <div v-if="btnIcon" class="over-button">
+            <IconImage :name="btnIcon" class="btn" />
             <span class="number over" v-if="nbButton"
                 ><span>{{ nbButton }}</span></span
             >
         </div>
 
         <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
-
-        <div v-if="leftIcon" class="over-button">
-            <IconImage :name="leftIcon" class="btn" />
-            <span class="number over" v-if="nbButton"
-                ><span>{{ nbButton }}</span></span
-            >
-        </div>
     </button>
 </template>
 
@@ -35,22 +34,17 @@ export default {
             default: '',
         },
 
-        rightIcon: {
+        btnIcon: {
             type: String,
             default: null,
         },
 
-        leftIcon: {
-            type: String,
-            default: null,
-        },
-
-        topIcon: {
+        verticalLayout: {
             type: Boolean,
             default: false,
         },
 
-        reversed: {
+        reversedOrder: {
             type: Boolean,
             default: false,
         },
@@ -71,13 +65,28 @@ export default {
 <style lang="scss" scoped>
 .external-btn {
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: $space-s;
     align-items: center;
     justify-content: center;
     border: none;
     background: transparent;
     color: $primary-dark;
+    cursor: pointer;
+
+    &.reversed {
+        flex-direction: row-reverse;
+    }
+
+    &.vertical-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &.reversed-order {
+            flex-direction: column-reverse;
+        }
+    }
 
     .label {
         font-size: $font-size-s;
@@ -140,23 +149,6 @@ export default {
 
         .over {
             pointer-events: none;
-        }
-    }
-}
-
-@media screen and (min-width: $min-tablet) {
-    .external-btn {
-        flex-direction: row-reverse;
-        cursor: pointer;
-
-        &.reversed {
-            flex-direction: row;
-        }
-
-        &.topIcon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
     }
 }
