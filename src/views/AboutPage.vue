@@ -42,7 +42,6 @@
                         :label="$t('about.WHY.button_blog.text')"
                         href="https://projects.cri-paris.org/projects/PyimxKq5"
                         level="primary"
-                        size="large"
                         target="_blank"
                     />
                 </div>
@@ -73,7 +72,6 @@
                         :label="$t('about.GOAL.button_community.text')"
                         href="https://forms.gle/hVYD1751YaGh7cmD7"
                         level="primary"
-                        size="large"
                         target="_blank"
                     />
                 </div>
@@ -158,14 +156,12 @@
                         :label="$t('about.JOBS.button_jobboard.text')"
                         href="https://www.welcometothejungle.com/fr/companies/cri"
                         level="primary"
-                        size="large"
                         target="_blank"
                     />
                     <LpiButton
                         :label="$t('about.JOBS.button_contact.text')"
                         href="mailto:projects.platform@learningplanetinstitute.org"
                         level="primary"
-                        size="large"
                         target="_blank"
                     />
                 </div>

@@ -1,6 +1,6 @@
 <template>
     <button
-        :class="[size, { secondary, disabled, 'icon-only': iconOnly }]"
+        :class="{ secondary, disabled, 'icon-only': iconOnly }"
         :disabled="disabled"
         type="button"
         class="lpi-button"
@@ -22,14 +22,6 @@ export default {
         label: {
             type: String,
             default: null,
-        },
-
-        size: {
-            type: String,
-            default: 'medium',
-            validator(value) {
-                return ['large', 'medium', 'small', 'extra-small'].includes(value)
-            },
         },
 
         secondary: {
@@ -68,7 +60,6 @@ export default {
     align-items: center;
     border: $border-width-s solid $primary-dark;
     border-radius: $border-radius-50;
-    padding: $space-m $space-l;
     font-weight: 700;
     font-size: $font-size-m;
     line-height: 18px;
@@ -78,6 +69,9 @@ export default {
     overflow: hidden;
     background: $primary-dark;
     color: $white;
+    height: 35px;
+    padding: $space-s $space-l;
+    box-sizing: border-box;
 
     &.disabled {
         opacity: 0.4;
@@ -97,75 +91,8 @@ export default {
 
     &.icon-only {
         border-radius: 50%;
-        width: 42px;
-        height: 42px;
+        width: 35px;
         padding: 0;
-
-        &.no-centered {
-            width: 24px;
-            height: 24px;
-            justify-content: left;
-        }
-    }
-
-    &.no-border {
-        border: 0;
-    }
-
-    &.extra-small {
-        border: none;
-        font-size: $font-size-xs;
-        padding: pxToRem(10px) pxToRem(14px);
-        height: 22px;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 22px;
-            padding: 0;
-        }
-    }
-
-    &.small {
-        border: none;
-        height: 30px;
-        padding: $space-s $space-l;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 30px;
-            padding: 0;
-        }
-    }
-
-    &.medium {
-        height: 35px;
-        padding: $space-s $space-l;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 35px;
-            padding: 0;
-        }
-    }
-
-    &.large {
-        height: 46px;
-        padding: 15px $space-l;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 46px;
-        }
-    }
-
-    &.extra-large {
-        height: 46px;
-        padding: 15px $space-l;
-        box-sizing: border-box;
-
-        &.icon-only {
-            width: 100px;
-        }
     }
 }
 

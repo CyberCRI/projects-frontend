@@ -50,13 +50,10 @@
                             @click="removeFilter(key, index)"
                         />
                     </template>
-                    <LpiButton
-                        :border="false"
+                    <LinkButton
                         :label="$t('common.delete-selection')"
-                        :secondary="true"
                         class="clear-selection-button"
                         left-icon="Close"
-                        size="small"
                         @click="clearSelectedFilters"
                     />
                 </div>
@@ -79,7 +76,7 @@ import { getProjectCategory } from '@/api/project-categories.service'
 import { getWikiTag } from '@/api/wikipedia-tags.service'
 import { getOrgTag } from '@/api/organization-tags.service'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import FiltersDrawer from '@/components/peopleKit/Filters/FiltersDrawer.vue'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import SearchOptionDropDown from '@/components/lpikit/Dropdown/SearchOptionDropDown.vue'
@@ -127,7 +124,7 @@ export default {
     components: {
         SearchOptionDropDown,
         SearchInput,
-        LpiButton,
+        LinkButton,
         FiltersDrawer,
         FilterValue,
     },

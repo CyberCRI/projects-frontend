@@ -16,7 +16,7 @@
             </template>
 
             <template #dismiss-button="{ close }">
-                <LpiButton label="SKIP" size="small" :border="false" @click="close()"></LpiButton>
+                <LpiButton label="SKIP" @click="close()"></LpiButton>
             </template>
 
             <template #content>
@@ -29,10 +29,8 @@
                         v-show="hasPrevious"
                         class="button-footer"
                         :label="$t('onboarding-modal.previous')"
-                        size="small"
                         left-icon="Previous"
                         :secondary="true"
-                        :border="false"
                         @click="previous()"
                     >
                     </LpiButton>
@@ -42,10 +40,8 @@
                         v-show="hasNext"
                         class="button-footer"
                         :label="$t('onboarding-modal.next')"
-                        size="small"
                         right-icon="Next"
                         :secondary="true"
-                        :border="false"
                         @click="next()"
                     >
                     </LpiButton>

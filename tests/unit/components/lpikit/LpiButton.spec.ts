@@ -28,20 +28,6 @@ describe('LpiButton', () => {
         expect(label.exists()).toBeTruthy()
     })
 
-    it('should find the large size selector', () => {
-        defaultParams.props.size = 'large'
-        wrapper = lpiMount(LpiButton, defaultParams)
-        const size = wrapper.find('.large')
-        expect(size.exists()).toBeTruthy()
-    })
-
-    it('should find the small size selector', () => {
-        defaultParams.props.size = 'link'
-        wrapper = lpiMount(LpiButton, defaultParams)
-        const size = wrapper.find('.link')
-        expect(size.exists()).toBeTruthy()
-    })
-
     it('should find the secondary selector', () => {
         defaultParams.props.secondary = true
         wrapper = lpiMount(LpiButton, defaultParams)

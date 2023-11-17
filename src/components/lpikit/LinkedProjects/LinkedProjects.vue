@@ -13,7 +13,7 @@
                 <ProjectCard :project="project.project" />
 
                 <div v-if="canEditAndDelete" class="actions-ctn">
-                    <LpiButton left-icon="Close" size="small" @click="confirmDelete(project)" />
+                    <ContextActionButton action-icon="Close" @click="confirmDelete(project)" />
                 </div>
             </div>
         </DynamicGrid>
@@ -30,7 +30,7 @@
 
 <script>
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
@@ -44,7 +44,7 @@ export default {
 
     components: {
         ProjectCard,
-        LpiButton,
+        ContextActionButton,
         ConfirmModal,
         DynamicGrid,
     },
