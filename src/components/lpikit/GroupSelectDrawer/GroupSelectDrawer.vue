@@ -73,18 +73,14 @@ export default {
     },
 
     async created() {
-        this.isLoading = true
-        this.completeListGroups = this.listGroups = (
-            await searchGroups(this.getOrganizationCode(), {})
-        ).results
-        this.isLoading = false
+        await this.init()
     },
-    
+
     methods: {
         getOrganizationCode() {
             return this.$store.getters['organizations/current']?.code
         },
-        async init () {
+        async init() {
             this.isLoading = true
             this.completeListGroups = this.listGroups = (
                 await searchGroups(this.getOrganizationCode(), {})
