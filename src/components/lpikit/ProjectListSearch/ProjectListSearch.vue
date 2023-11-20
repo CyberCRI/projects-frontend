@@ -33,7 +33,7 @@ import {
     getAllRecommendedProjects,
     searchProjects,
     searchUser,
-    searchGroups,
+    searchGroupsAlgolia,
     searchAll,
 } from '@/api/projects.service'
 
@@ -180,7 +180,8 @@ export default {
                         organizations: this.organisation.code,
                     })
                 else if (this.mode === 'projects') response = await searchProjects(query, filters)
-                else if (this.mode === 'groups') response = await searchGroups(query, filters)
+                else if (this.mode === 'groups')
+                    response = await searchGroupsAlgolia(query, filters)
                 else if (this.mode === 'peoples') response = await searchUser(query, filters)
                 // if this.search.search is undefined, query will be string "undefined"
                 // that's why we check on this.search.search and not query
@@ -202,7 +203,7 @@ export default {
                     } else {
                         response = await searchProjects(null, filters)
                     }
-                else if (this.mode === 'groups') response = await searchGroups(null, filters)
+                else if (this.mode === 'groups') response = await searchGroupsAlgolia(null, filters)
                 else if (this.mode === 'peoples') response = await searchUser(null, filters)
                 else
                     response = await getAllProjects(

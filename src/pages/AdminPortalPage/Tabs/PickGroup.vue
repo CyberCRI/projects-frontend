@@ -32,7 +32,7 @@
 <script>
 import GroupsElementRadio from '@/pages/AdminPortalPage/Tabs/GroupsElementRadio.vue'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
-import { searchGroups } from '@/api/projects.service.ts'
+import { searchGroupsAlgolia } from '@/api/projects.service.ts'
 
 export default {
     name: 'PickGroup',
@@ -142,7 +142,7 @@ export default {
                     organizations: this.$store.getters['organizations/current'].code,
                 }
                 this.listGroups = (
-                    await searchGroups(encodeURIComponent(this.queryString), filters)
+                    await searchGroupsAlgolia(encodeURIComponent(this.queryString), filters)
                 ).results
                 this.isLoading = false
             }

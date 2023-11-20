@@ -51,7 +51,7 @@ import debounce from 'lodash.debounce'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import { searchGroups } from '@/api/projects.service.ts'
+import { searchGroupsAlgolia } from '@/api/projects.service.ts'
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import TeamResultList from '@/components/lpikit/TeamDrawer/TeamResultList.vue'
 import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
@@ -192,7 +192,7 @@ export default {
                 limit: 30,
                 organizations: this.$store.getters['organizations/current'].code,
             }
-            this.groupRequest = await searchGroups(
+            this.groupRequest = await searchGroupsAlgolia(
                 encodeURIComponent(this.queryString),
                 groupFilters
             )

@@ -77,26 +77,25 @@ export default {
     },
 
     methods: {
+        getOrganizationCode() {
+            return this.$store.getters['organizations/current']?.code
+        },
         async init() {
-            this.queryString = ''
             this.isLoading = true
-            this.filters = {
-                limit: 12,
-                organizations: this.$store.getters['organizations/current']?.code,
-            }
             this.completeListGroups = this.listGroups = (
-                await searchGroups(null, this.filters)
+                await searchGroups(this.getOrganizationCode(), {})
             ).results
             this.isLoading = false
         },
         async launchSearch() {
             if (this.queryString) {
                 this.isLoading = true
-
+                this.filter = {
+                    search: encodeURIComponent(this.queryString),
+                }
                 this.listGroups = (
-                    await searchGroups(encodeURIComponent(this.queryString), this.filters)
+                    await searchGroups(this.getOrganizationCode(), this.filter)
                 ).results
-
                 this.isLoading = false
             }
         },
