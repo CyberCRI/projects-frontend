@@ -3,17 +3,16 @@ import MembersFilterEditor from '@/components/peopleKit/Filters/MembersFilterEdi
 import PeopleFactory from '../../../../factories/people.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import english from '@/locales/en.json'
-
+import { searchPeopleProject } from '@/api/people.service'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+
+vi.mock('@/api/people.service.ts', () => ({
+    searchPeopleProject: () => PeopleFactory.generateMany(8),
+}))
+
 function buildStore() {
     return {
         modules: {
-            people: {
-                namespaced: true,
-                actions: {
-                    searchPeopleProject: () => PeopleFactory.generateMany(8),
-                },
-            },
             organizations: {
                 namespaced: true,
                 getters: {

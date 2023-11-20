@@ -9,7 +9,6 @@ import languages, { LanguageState } from '@/store/modules/languages'
 import locations, { LocationsState } from '@/store/modules/locations'
 import notifications, { NotificationsState } from '@/store/modules/notifications'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
-import people, { PeopleState } from '@/store/modules/people'
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
 import projectMembers, { ProjectMembersState } from '@/store/modules/project-members'
 import projects, { ProjectState } from '@/store/modules/projects'
@@ -31,7 +30,6 @@ export interface State {
     announcements: AnnouncementsState
     groups: GroupsState
     notifications: NotificationsState
-    people: PeopleState
     peopleGroups: PeopleGroupsState
 }
 
@@ -49,7 +47,6 @@ export default createStore({
         locations,
         notifications,
         organizations,
-        people,
         projectCategories,
         projectMembers,
         projects,

@@ -55,6 +55,7 @@ import { searchGroups } from '@/api/projects.service.ts'
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import TeamResultList from '@/components/lpikit/TeamDrawer/TeamResultList.vue'
 import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
+import { searchPeopleProject } from '@/api/people.service'
 
 export default {
     name: 'UserSelection',
@@ -179,11 +180,12 @@ export default {
 
             const userFilters = {
                 limit: 30,
+                organizations: [this.$store.getters['organizations/current'].code], // return only users from current org
             }
-            this.userRequest = await this.$store.dispatch('people/searchPeopleProject', {
+            this.userRequest = await searchPeopleProject({
                 search: this.queryString,
                 org_id: this.$store.getters['organizations/current'].id,
-                param: userFilters,
+                params: userFilters,
             })
 
             const groupFilters = {

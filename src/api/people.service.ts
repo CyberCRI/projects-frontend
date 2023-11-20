@@ -44,10 +44,11 @@ export async function postUserWithInvitation(
     ).data
 }
 
-export async function searchPeopleProject(
-    { search, org_id },
-    params
-): Promise<APIResponseList<PeopleModel>> {
+export async function searchPeopleProject({
+    search,
+    org_id,
+    params,
+}): Promise<APIResponseList<PeopleModel>> {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
 
     return (
