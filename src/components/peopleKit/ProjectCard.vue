@@ -1,5 +1,10 @@
 <template>
-    <BasicCard :to-link="toLink" class="project-card" @click="toProject">
+    <BasicCard
+        :to-link="toLink"
+        class="project-card"
+        @click="toProject"
+        :data-test="`project-card-${project.id}`"
+    >
         <template #actions-left>
             <IconImage class="icon passive" :name="visibilityIcon" />
         </template>
