@@ -199,25 +199,25 @@
                             <SkeletonComponent border-radius="50%" height="30px" width="30px" />
                         </div>
 
-                        <TransitionGroup
-                            name="sdg"
-                            tag="div"
-                            v-show="project && project.sdgs && project.sdgs.length"
+                        <div
                             class="sdg-ctn"
+                            v-show="!loading && project && project.sdgs && project.sdgs.length"
                         >
-                            <router-link
-                                v-for="sdg in project?.sdgs || []"
-                                :key="sdg"
-                                :to="browsePageWithQuery('sdgs', sdg)"
-                                class="sdg-link"
-                            >
-                                <img
-                                    :alt="sdg"
-                                    :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
-                                    class="sdg"
-                                />
-                            </router-link>
-                        </TransitionGroup>
+                            <TransitionGroup name="sdg" tag="div">
+                                <router-link
+                                    v-for="sdg in project?.sdgs || []"
+                                    :key="sdg"
+                                    :to="browsePageWithQuery('sdgs', sdg)"
+                                    class="sdg-link"
+                                >
+                                    <img
+                                        :alt="sdg"
+                                        :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
+                                        class="sdg"
+                                    />
+                                </router-link>
+                            </TransitionGroup>
+                        </div>
 
                         <div
                             v-if="project && project.categories && project.categories.length"
@@ -1112,7 +1112,9 @@ export default {
 
             .sdg-enter-active,
             .sdg-leave-active {
-                transition: all 0.4s ease;
+                transition: transform 0.4s ease;
+                transform-origin: center center;
+                transform: scale(1) translateY(0);
             }
 
             .sdg-enter-from,
