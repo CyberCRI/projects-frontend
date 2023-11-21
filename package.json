@@ -7,7 +7,7 @@
         "name": "LPI IT team"
     },
     "scripts": {
-        "serve": "vite --host localhost",
+        "serve": "vite",
         "build": "vite build",
         "build:report": "trash report && vue-cli-service build",
         "test:unit": "vitest",
