@@ -9,7 +9,7 @@
             <a
                 v-for="organisation in organisations"
                 :key="organisation.id"
-                class="org-card"
+                class="org-card shadow-box"
                 :href="organisation.website_url"
             >
                 <div
