@@ -34,7 +34,8 @@ export async function goToKeycloakLoginPage(): Promise<void> {
         }/protocol/openid-connect/auth`
     )
 
-    const fromUrl = window.location.pathname === '/login' ? window.location.origin : window.location.href
+    const fromUrl =
+        window.location.pathname === '/login' ? window.location.origin : window.location.href
 
     url.searchParams.append('client_id', keycloak.client.get().client_id)
     url.searchParams.append('client_secret', import.meta.env.VITE_APP_KEYCLOAK_CLIENT_SECRET)

@@ -43,9 +43,10 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: "/login",
-        name: "LoginPseudoPage",
-        component: () => import(/* webpackChunkName: "LoginPseudoPage" */ '../pages/LoginPage/LoginPage.vue'),
+        path: '/login',
+        name: 'LoginPseudoPage',
+        component: () =>
+            import(/* webpackChunkName: "LoginPseudoPage" */ '../pages/LoginPage/LoginPage.vue'),
     },
     {
         path: '/me', // back compatibility with old routes

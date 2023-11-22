@@ -18,7 +18,6 @@ import Meta from 'vue-meta'
 
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
-
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({
@@ -30,7 +29,7 @@ Icon.Default.mergeOptions({
 window['socket'] = { connected: false }
 
 // speedy redirect to keycloak login without loading the whole app
-if (window.location.pathname === '/login') { 
+if (window.location.pathname === '/login') {
     goToKeycloakLoginPage()
 }
 
