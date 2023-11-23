@@ -56,6 +56,19 @@ const routes: Array<RouteRecordRaw> = [
         path: '/me/*', // back compatibility with old routes
         redirect: { name: 'ProfileSummary' },
     },
+
+    {
+        path: '/complete-profile',
+        name: 'CompleteProfilePage',
+        component: () =>
+            import(
+                /* webpackChunkName: "CompleteProfilePage" */ '../pages/CompleteProfilePage/CompleteProfilePage.vue'
+            ),
+        meta: {
+            resetScroll: true,
+            requiresAuth: true,
+        },
+    },
     {
         path: '/profile',
         name: 'Profile',

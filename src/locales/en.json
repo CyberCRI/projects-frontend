@@ -434,6 +434,56 @@
         "role": "Role",
         "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved."
     },
+    "complete-profile": {
+        "bio": {
+            "title": "Bio",
+            "notice": "Bio allow people to understand who you are, what you do and stand for. Need some inspiration? Here are examples for a researcher, a professional or a student.",
+            "long-bio": "Long bio",
+            "long-bio-placeholder": "Start here",
+            "long-bio-notice": "You can take as long as you want to present your professional endeavours",
+            "personal-bio": "Personal bio",
+            "personal-bio-notice": "We believe our personal interests belong to the workplace to facilitate encounters!",
+            "personal-bio-placeholder": "Start here",
+            "short-bio": "Short bio",
+            "short-bio-notice": "One sentence to present you:",
+            "short-bio-placeholder": "Ex. I am a seasoned researcher specialised in bio engineering"
+        },
+        "cancel": "Cancel",
+        "notice": {
+            "help": "We’re here to help.",
+            "intro": "Fields marked with * are mandatory. You can always modify this in your profile later.",
+            "no-idea": "No idea what you should do?"
+        },
+        "personal": {
+            "email": "email",
+            "email-placeholder": "you@example.com",
+            "firstname": "First Name",
+            "firstname-placeholder": "First Name",
+            "headline": "Title / Headline",
+            "headline-placeholder": "Student M1 Sustainability, Director of Research...",
+            "lastname": "Last Name",
+            "lastname-placeholder": "Last Name",
+            "picture": "Profile picture",
+            "picture-notice": "(120px x 120px mini; formats jpg, png or pdf)",
+            "picture-modify": "Modify",
+            "title": "Personal Information"
+        },
+        "resources": {
+            "add": "Add resources",
+            "notice": "Link publications to your profile (they need to be accessible online)",
+            "title": "Resources"
+        },
+        "save-and-next": "Save and go to next",
+        "skills": {
+            "sdg": "SDG",
+            "sdg-notice": "SDGs you want to contribute to. This will help members of your community find you for mentoring or help.",
+            "skills": "skills",
+            "skills-placeholder": "Type the first letters",
+            "skills-notice": "Pick the skills that will allow people in your community to get in touch with you.",
+            "title": "Interests & skills"
+        },
+        "title": "Complete your profile"
+    },
     "crikit": {
         "image-upload": {
             "upload": "Drop your image here or click to browse."
