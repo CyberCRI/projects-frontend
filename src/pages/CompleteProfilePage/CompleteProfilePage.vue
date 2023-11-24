@@ -206,9 +206,19 @@
             </ProfileEditBlock>
         </main>
         <footer>
-            <LpiButton secondary :label="$t('complete-profile.cancel')"></LpiButton>
+            <LpiButton
+                @click="cancel"
+                secondary
+                :label="$t('complete-profile.cancel')"
+                :disabled="saving"
+            ></LpiButton>
 
-            <LpiButton :label="$t('complete-profile.save-and-next')"></LpiButton>
+            <LpiButton
+                @click="save"
+                :label="$t('complete-profile.save-and-next')"
+                :left-icon="saving ? 'LoaderSimple' : undefined"
+                :disabled="saving"
+            ></LpiButton>
         </footer>
     </div>
 </template>
@@ -219,8 +229,9 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import allSdgs from '@/data/sdgs.json'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-import { getUser } from '@/api/people.service.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
+import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import isEqual from 'lodash.isequal'
 
 export default {
     name: 'CompleteProfilePage',
@@ -237,6 +248,7 @@ export default {
     data() {
         return {
             user: null,
+            saving: false,
             sdgs: allSdgs.map((sdg) => ({ ...sdg, selected: false })),
             skills: [
                 'Skill 1',
@@ -305,6 +317,83 @@ export default {
             } catch (error) {
                 console.error(error)
             }
+        },
+
+        async cancel() {
+            // TODO: specify and implement
+        },
+
+        async save() {
+            this.saving = true
+            const isValid = true // await this.v$.$validate() TODO: validation
+            try {
+                if (isValid) {
+                    const data = {
+                        given_name: this.form.given_name,
+                        family_name: this.form.family_name,
+                        email: this.form.email,
+                        job: this.form.job,
+                        sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
+                        professional_description: this.form.professional_description,
+                        personal_description: this.form.personal_description,
+                        short_description: this.form.short_description,
+                        // TODO: tags
+                        // TODO: reources,
+                    }
+
+                    await patchUser(this.user.keycloak_id, data)
+
+                    // patch user picture if changed
+
+                    if (
+                        this.form.picture != this.user.profile_picture?.url ||
+                        !isEqual(
+                            this.form.imageSizes,
+                            pictureApiToImageSizes(this.user.profile_picture)
+                        )
+                    ) {
+                        const formData = new FormData()
+                        imageSizesFormData(formData, this.form.imageSizes)
+
+                        if (this.form.picture instanceof File) {
+                            formData.append('file', this.form.picture, this.form.picture.name)
+                            const picture_id = (
+                                await postUserPicture(this.user.keycloak_id, formData)
+                            ).id
+
+                            // TODO: make this in POST when backend allows it
+                            formData.delete('file')
+                            await patchUserPicture(this.user.keycloak_id, picture_id, formData)
+                        } else if (this.user.profile_picture && this.user.profile_picture.id) {
+                            await patchUserPicture(
+                                this.user.keycloak_id,
+                                this.user.profile_picture.id,
+                                formData
+                            )
+                        }
+                    }
+                    // reload user
+                    this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                    // confirm success
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('profile.edit.general.save-success'),
+                        type: 'success',
+                    })
+                }
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('profile.edit.general.save-error')} (${error})`,
+                    type: 'error',
+                })
+                console.error(error)
+            } finally {
+                this.saving = false
+                if (isValid) {
+                    // TODO: next step + save progression
+                    // this.redirectToProfile()
+                }
+            }
+            this.saving = false
         },
     },
 }
