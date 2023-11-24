@@ -456,7 +456,7 @@
         },
         "personal": {
             "email": "email",
-            "email-placeholder": "you@example.com",
+            "email-placeholder": "you{'@'}example.com",
             "firstname": "First Name",
             "firstname-placeholder": "First Name",
             "headline": "Title / Headline",
@@ -477,7 +477,7 @@
         "skills": {
             "sdg": "SDG",
             "sdg-notice": "SDGs you want to contribute to. This will help members of your community find you for mentoring or help.",
-            "skills": "skills",
+            "skills": "Skills",
             "skills-placeholder": "Type the first letters",
             "skills-notice": "Pick the skills that will allow people in your community to get in touch with you.",
             "title": "Interests & skills"
