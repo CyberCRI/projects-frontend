@@ -285,6 +285,8 @@
             "deleted-failed": "Error while deleting invitation"
         },
         "delete-confirm-title": "Delete this link?",
+        "expired-link-image": "Sorry, the invitation link you used is either expired or invalid.",
+        "expired-link": "It appears that the link you received has expired or is simply invalid. To obtain a new link, please contact the administrator:",
         "generate-link": "Generate link",
         "list": {
             "created-by-column": "Created by",

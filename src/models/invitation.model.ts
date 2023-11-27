@@ -56,6 +56,7 @@ export interface InvitationModel {
     organization: string
     description: string
     ownner: InvitationUserModel
+    expire_at: Date
 }
 
 export interface InvitationModelInput {
