@@ -454,6 +454,7 @@
             "intro": "Les champs marqués d'un * sont obligatoires. Vous pouvez toujours modifier cela dans votre profil plus tard.",
             "no-idea": "Aucune idée de ce que vous devriez faire ?"
         },
+        "onboarding": "Embarquement",
         "personal": {
             "email": "email",
             "email-placeholder": "vous{'@'}example.com",
@@ -472,6 +473,7 @@
             "notice": "Lien vers des publications sur votre profil (elles doivent être accessibles en ligne)",
             "title": "Ressources"
         },
+        "save-and-finish": "Enregistrer et terminer",
         "save-and-next": "Enregistrer et passer à l'étape suivante",
         "skills": {
             "hobbies": "Hobbies",

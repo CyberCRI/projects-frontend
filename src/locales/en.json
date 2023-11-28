@@ -455,6 +455,7 @@
             "intro": "Fields marked with * are mandatory. You can always modify this in your profile later.",
             "no-idea": "No idea what you should do?"
         },
+        "onboarding": "Onboarding",
         "personal": {
             "email": "email",
             "email-placeholder": "you{'@'}example.com",
@@ -473,6 +474,7 @@
             "notice": "Link publications to your profile (they need to be accessible online)",
             "title": "Resources"
         },
+        "save-and-finish": "Save and finish",
         "save-and-next": "Save and go to next",
         "skills": {
             "hobbies": "Hobbies",

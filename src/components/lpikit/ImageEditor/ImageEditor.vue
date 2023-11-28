@@ -114,7 +114,7 @@ export default {
         displayedImage() {
             return this.picture instanceof File
                 ? this.displayableImage
-                : this.picture?.variations?.small
+                : this.picture?.variations?.small || null
         },
     },
 
