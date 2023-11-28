@@ -88,46 +88,14 @@
         <!-- Picture -->
         <FieldDisabler :disabled="otherFieldDisabled" class="img-ctn">
             <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
-            <div class="img-inner">
-                <div class="img-preview">
-                    <div class="preview-wrapper-outer">
-                        <CroppedImage
-                            :alt="`${form.title} image`"
-                            :contain="true"
-                            :image-sizes="form.imageSizes"
-                            :src="displayedImage"
-                            class="preview-wrapper-inner"
-                        />
-                    </div>
-                </div>
-                <div class="img-actions">
-                    <LpiButton
-                        v-disable-focus="otherFieldDisabled"
-                        :label="$filters.capitalize($t('project.random-image'))"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="RotateRight"
-                        @click="showNextPatatoid"
-                        data-test="random-image-button"
-                    />
-
-                    <ImageInput
-                        id="header_image"
-                        :label="$t('project.form.upload-image')"
-                        :unfocusable="otherFieldDisabled"
-                        @upload-image="uploadImage"
-                    />
-
-                    <LpiButton
-                        v-disable-focus="otherFieldDisabled"
-                        :label="$t('project.form.resize-image')"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="Pen"
-                        @click="openImageResizer"
-                    />
-                </div>
-            </div>
+            <ImageEditor
+                :picture-alt="`${form.last_name} image`"
+                :contain="true"
+                v-model:imageSizes="form.imageSizes"
+                v-model:picture="form.header_image"
+                :default-picture="defaultPictures"
+                :disabled="otherFieldDisabled"
+            ></ImageEditor>
         </FieldDisabler>
 
         <!-- Language -->
@@ -160,40 +128,20 @@
                 @update-tags="updateTagsInProcess"
             />
         </DrawerLayout>
-
-        <DrawerLayout
-            :confirm-action-name="$t('common.confirm')"
-            :is-opened="showImageResizer"
-            :title="$t('project.form.resize-image')"
-            class="medium"
-            @close="showImageResizer = false"
-            @confirm="saveImageSizes"
-        >
-            <ImageResizer
-                v-if="showImageResizer"
-                ref="imageResizer"
-                :image="displayedImage"
-                :image-sizes="form.imageSizes"
-            />
-        </DrawerLayout>
     </form>
 </template>
 
 <script>
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiSelect from '@/components/lpikit/LpiSelect/LpiSelect.vue'
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
 import TeamSection from './TeamSection.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import utils from '@/functs/functions.ts'
 import FieldDisabler from './FieldDisabler.vue'
 import TagsFilterSummary from '@/components/peopleKit/Filters/TagsFilterSummary.vue'
 import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
 export default {
     name: 'ProjectForm',
@@ -206,15 +154,12 @@ export default {
         TextInput,
         TeamSection,
         LpiSelect,
-        ImageInput,
-        LpiButton,
         FieldDisabler,
         TagsFilterEditor,
         IconImage,
         TagsFilterSummary,
         DrawerLayout,
-        ImageResizer,
-        CroppedImage,
+        ImageEditor,
     },
 
     props: {
@@ -226,10 +171,6 @@ export default {
             type: Object,
             required: true,
         },
-        currentProject: {
-            type: Object,
-            default: null,
-        },
         validation: {
             type: Object,
             default: () => {},
@@ -237,10 +178,15 @@ export default {
     },
 
     data() {
+        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
+            return `${
+                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+            }/patatoids-project/Patatoid-${index}.png`
+        })
+
         return {
             loading: false,
             displayedImage: '',
-            currentPatatoidIndex: 1,
             selectedCategory: undefined,
             form: JSON.parse(JSON.stringify(this.modelValue)),
             ambiguousTagsOpen: false,
@@ -248,15 +194,12 @@ export default {
             tagSearchIsOpened: false,
             showImageResizer: false,
             tagsInProcess: [],
+            defaultPictures,
         }
     },
 
     async mounted() {
         if (this.isAddMode) {
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-
-            this.form.header_image = await utils.getPatatoidFile(this.currentPatatoidIndex)
-
             if (!this.categories.length) {
                 await this.$store.dispatch('projectCategories/getAllProjectCategories')
             }
@@ -266,10 +209,6 @@ export default {
             if (this.$route.query.category) {
                 this.form.category = parseInt(this.$route.query.category)
             }
-        } else {
-            this.displayedImage = this.currentProject.header_image
-                ? this.currentProject.header_image.variations.small
-                : null
         }
     },
 
@@ -366,16 +305,6 @@ export default {
             this.tagSearchIsOpened = false
         },
 
-        async showNextPatatoid() {
-            if (this.currentPatatoidIndex !== 6) this.currentPatatoidIndex += 1
-            else this.currentPatatoidIndex = 1
-
-            this.form.header_image = await utils.getPatatoidFile(this.currentPatatoidIndex)
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-            // reinit image cropping data
-            this.form.imageSizes = null
-        },
-
         updateTags() {
             this.form.organization_tags = this.tags.filter((tag) => tag.organization)
 
@@ -391,36 +320,6 @@ export default {
                 /* This condition let us skip the first user (connected user) */
                 if (user.user.keycloak_id) this.form.team[user.role].push(user.user.keycloak_id)
             })
-        },
-
-        uploadImage(image) {
-            this.displayedImage = ''
-
-            const fileReader = new FileReader()
-            fileReader.readAsDataURL(image)
-
-            fileReader.onload = (fileReaderEvent) => {
-                this.displayedImage = fileReaderEvent.target.result
-            }
-
-            this.form.header_image = image
-            // reinit image cropping data
-            this.form.imageSizes = null
-        },
-
-        saveImageSizes() {
-            this.form.imageSizes = {
-                scaleX: this.$refs.imageResizer.scaleX,
-                scaleY: this.$refs.imageResizer.scaleY,
-                left: this.$refs.imageResizer.left,
-                top: this.$refs.imageResizer.top,
-                naturalRatio: this.$refs.imageResizer.naturalRatio,
-            }
-            this.showImageResizer = false
-        },
-
-        openImageResizer() {
-            this.showImageResizer = true
         },
 
         updateTagsInProcess(tags) {
@@ -471,43 +370,6 @@ export default {
 
         label {
             align-self: flex-start;
-        }
-
-        .img-inner {
-            width: 100%;
-            display: flex;
-            gap: $space-m;
-
-            .img-preview,
-            .img-actions {
-                flex-basis: 50%;
-                flex-grow: 1;
-            }
-
-            .img-actions {
-                display: flex;
-                flex-flow: column;
-                gap: $space-m;
-                align-items: flex-start;
-            }
-
-            .img-preview {
-                border-radius: $border-radius-m;
-                border: $border-width-s solid $green;
-                background-color: $white;
-                overflow: hidden;
-            }
-        }
-
-        .preview-wrapper-outer {
-            width: 100%;
-            padding-bottom: 100%;
-            position: relative;
-        }
-
-        .preview-wrapper-inner {
-            position: absolute;
-            inset: 0;
         }
     }
 

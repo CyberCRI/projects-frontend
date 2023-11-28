@@ -51,43 +51,14 @@
         <!-- Picture -->
         <div class="sub-section">
             <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
-            <div class="img-inner">
-                <div class="img-preview">
-                    <div class="preview-wrapper-outer">
-                        <CroppedImage
-                            :alt="`${form.name} image`"
-                            :contain="true"
-                            :image-sizes="form.imageSizes"
-                            :src="displayedImage"
-                            class="preview-wrapper-inner"
-                        />
-                    </div>
-                </div>
-                <div class="img-actions">
-                    <LpiButton
-                        :label="$filters.capitalize($t('project.random-image'))"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="RotateRight"
-                        @click="showNextPatatoid"
-                        data-test="random-image-button"
-                    />
-
-                    <ImageInput
-                        id="profile_picture_image"
-                        :label="$t('project.form.upload-image')"
-                        @upload-image="uploadImage"
-                    />
-
-                    <LpiButton
-                        :label="$t('project.form.resize-image')"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="Pen"
-                        @click="openImageResizer"
-                    />
-                </div>
-            </div>
+            <ImageEditor
+                :picture-alt="`${form.name} image`"
+                :contain="true"
+                :round-picture="true"
+                v-model:imageSizes="form.imageSizes"
+                v-model:picture="form.profile_picture"
+                :default-picture="defaultPictures"
+            ></ImageEditor>
         </div>
 
         <div class="spacer" />
@@ -225,30 +196,10 @@
             </div>
         </div>
     </form>
-
-    <DrawerLayout
-        :confirm-action-name="$t('common.confirm')"
-        :is-opened="showImageResizer"
-        :title="$t('project.form.resize-image')"
-        class="medium"
-        @close="showImageResizer = false"
-        @confirm="saveImageSizes"
-    >
-        <ImageResizer
-            v-if="showImageResizer"
-            ref="imageResizer"
-            :image="displayedImage"
-            :image-sizes="form.imageSizes"
-        />
-    </DrawerLayout>
 </template>
 
 <script>
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
-import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import RadioButton from '@/components/lpikit/RadioInput/RadioButton.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import useValidate from '@vuelidate/core'
@@ -258,7 +209,6 @@ import {
     imageSizesFormDataPost,
     pictureApiToImageSizes,
 } from '@/functs/imageSizesUtils.ts'
-import utils from '@/functs/functions.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 import GroupHierarchyList from '@/components/Layouts/Account/GroupHierarchyList.vue'
 import {
@@ -272,6 +222,7 @@ import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import { resetUserPassword } from '@/api/people.service.ts'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
 export default {
     name: 'AccountForm',
@@ -284,13 +235,10 @@ export default {
         FilterValue,
         TextInput,
         RadioButton,
-        CroppedImage,
         LpiButton,
-        DrawerLayout,
-        ImageResizer,
-        ImageInput,
         ConfirmModal,
         GroupHierarchyList,
+        ImageEditor,
     },
 
     props: {
@@ -306,6 +254,11 @@ export default {
     },
 
     data() {
+        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
+            return `${
+                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+            }/patatoids-project/Patatoid-${index}.png`
+        })
         return {
             v$: useValidate(),
             form: {
@@ -319,10 +272,6 @@ export default {
                 create_in_google: false,
                 imageSizes: null,
             },
-
-            displayedImage: '',
-            currentPatatoidIndex: 1,
-            showImageResizer: false,
             showRemoveUserQuit: false,
             selectedRole: {},
             roles: [], // TODO this doesn't seem realy used
@@ -336,6 +285,7 @@ export default {
 
             isLoading: false,
             asyncSave: false,
+            defaultPictures,
         }
     },
 
@@ -405,8 +355,6 @@ export default {
         if (this.selectedUser) await this.setFormFromSelectedUser()
         else {
             this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
-            this.form.profile_picture = await utils.getPatatoidFile(this.currentPatatoidIndex)
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
         }
 
         if (this.isAddMode) await this.setSelectedHierarchyGroups()
@@ -438,18 +386,13 @@ export default {
                 )
             } else this.selectedRole = this.roleOptions[0]
 
-            this.displayedImage =
-                this.selectedUser && this.selectedUser.profile_picture
-                    ? this.selectedUser.profile_picture.variations.medium
-                    : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-
             this.form = {
                 ...this.form,
                 given_name: this.selectedUser.given_name,
                 family_name: this.selectedUser.family_name,
                 job: this.selectedUser.job,
                 email: this.selectedUser.email,
-                profile_picture: this.displayedImage,
+                profile_picture: this.selectedUser.profile_picture,
                 imageSizes: pictureApiToImageSizes(this.selectedUser.profile_picture),
             }
         },
@@ -473,42 +416,6 @@ export default {
                 }))
 
             return []
-        },
-
-        async showNextPatatoid() {
-            if (this.currentPatatoidIndex !== 6) this.currentPatatoidIndex += 1
-            else this.currentPatatoidIndex = 1
-            this.form.profile_picture = await utils.getPatatoidFile(this.currentPatatoidIndex)
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-            // re-init image cropping data
-            this.form.imageSizes = null
-        },
-
-        uploadImage(image) {
-            this.displayedImage = ''
-            const fileReader = new FileReader()
-            fileReader.readAsDataURL(image)
-            fileReader.onload = (fileReaderEvent) => {
-                this.displayedImage = fileReaderEvent.target.result
-            }
-            this.form.profile_picture = image
-            // re-init image cropping data
-            this.form.imageSizes = null
-        },
-
-        openImageResizer() {
-            this.showImageResizer = true
-        },
-
-        saveImageSizes() {
-            this.form.imageSizes = {
-                scaleX: this.$refs.imageResizer.scaleX,
-                scaleY: this.$refs.imageResizer.scaleY,
-                left: this.$refs.imageResizer.left,
-                top: this.$refs.imageResizer.top,
-                naturalRatio: this.$refs.imageResizer.naturalRatio,
-            }
-            this.showImageResizer = false
         },
 
         setGoogleCheckbox(e) {
@@ -744,43 +651,6 @@ export default {
             font-size: $font-size-m;
             line-height: 18px;
             padding-bottom: $space-m;
-        }
-
-        .img-inner {
-            width: 100%;
-            display: flex;
-            gap: $space-m;
-
-            .img-preview,
-            .img-actions {
-                flex-basis: 50%;
-                flex-grow: 1;
-            }
-
-            .img-actions {
-                display: flex;
-                flex-flow: column;
-                gap: $space-m;
-                align-items: flex-start;
-            }
-
-            .img-preview {
-                border-radius: 50%;
-                border: $border-width-s solid $green;
-                background-color: $white;
-                overflow: hidden;
-            }
-        }
-
-        .preview-wrapper-outer {
-            width: 100%;
-            padding-bottom: 100%;
-            position: relative;
-        }
-
-        .preview-wrapper-inner {
-            position: absolute;
-            inset: 0;
         }
 
         .role-options-ctn {

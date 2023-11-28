@@ -141,40 +141,13 @@
         <div class="form-group img-ctn">
             <label>{{ $filters.capitalize($t('profile.edit.general.picture.label')) }}</label>
             <ImageEditor
-                :alt="`${form.last_name} image`"
+                :picture-alt="`${form.last_name} image`"
                 :contain="true"
-                v-model:image-sizes="form.imageSizes"
+                :round-picture="true"
+                v-model:imageSizes="form.imageSizes"
                 v-model:picture="form.picture"
                 :default-picture="`${PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`"
             ></ImageEditor>
-            <!--div class="img-inner">
-                <div class="img-preview">
-                    <div class="preview-wrapper-outer">
-                        <CroppedImage
-                            :alt="`${form.last_name} image`"
-                            :contain="true"
-                            :image-sizes="form.imageSizes"
-                            :src="displayedImage"
-                            class="preview-wrapper-inner"
-                        />
-                    </div>
-                </div>
-                <div class="img-actions">
-                    <ImageInput
-                        id="header_image"
-                        :label="$t('profile.edit.general.picture.upload-image')"
-                        @upload-image="uploadImage"
-                    />
-
-                    <LpiButton
-                        :label="$t('profile.edit.general.picture.resize-image')"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="Pen"
-                        @click="openImageResizer"
-                    />
-                </div>
-            </div-->
         </div>
 
         <hr class="form-separator" />
@@ -267,23 +240,6 @@
             />
         </div>
     </div>
-    <!-- image resizer -->
-    <!--DrawerLayout
-        :confirm-action-name="$t('common.confirm')"
-        :is-opened="showImageResizer"
-        :title="$t('project.form.resize-image')"
-        class="medium"
-        @close="showImageResizer = false"
-        @confirm="saveImageSizes"
-    >
-        <ImageResizer
-            v-if="showImageResizer"
-            ref="imageResizer"
-            :image="displayedImage"
-            :image-sizes="form.imageSizes"
-        />
-    </DrawerLayout-->
-    <!-- tags selector -->
     <DrawerLayout
         :confirm-action-name="$t('common.confirm')"
         :is-opened="showTagsDrawer"
@@ -322,23 +278,16 @@
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-// import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
-// import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-// import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import SdgsFilter from '@/components/peopleKit/Filters/SdgsFilter.vue'
-
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
-
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import utils from '@/functs/functions.ts'
-
 import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
 function defaultForm() {
@@ -368,9 +317,6 @@ export default {
         ConfirmModal,
         TextInput,
         LpiButton,
-        // ImageResizer,
-        // CroppedImage,
-        // ImageInput,
         TagsFilterEditor,
         DrawerLayout,
         SdgsFilter,
@@ -390,8 +336,6 @@ export default {
         return {
             form: defaultForm(),
             asyncing: false,
-            // displayedImage: '',
-            // showImageResizer: false,
             showTagsDrawer: false,
             tagsSelection: [],
             showSdgsDrawer: false,
@@ -591,52 +535,18 @@ export default {
                     personal_webpage: this.user.website || '',
                     linkedin: this.user.linkedin || '',
                     twitter: this.user.twitter || '',
-                    picture: this.user.profile_picture?.url || (await utils.getPatatoidFile(1)),
                     imageSizes: pictureApiToImageSizes(this.user.profile_picture),
 
                     title: this.user.job || '',
                     location: this.user.location || '',
                     tags: [], // TODO
                     sdgs: this.user.sdgs || [],
-
-                    picture: this.user.profile_picture?.url,
+                    picture: this.user.profile_picture,
                 }
-                // this.displayedImage =
-                //     this.user.profile_picture?.url ||
-                //     `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
             } else {
                 this.form = defaultForm()
             }
         },
-        // uploadImage(image) {
-        //     this.displayedImage = ''
-
-        //     const fileReader = new FileReader()
-        //     fileReader.readAsDataURL(image)
-
-        //     fileReader.onload = (fileReaderEvent) => {
-        //         this.displayedImage = fileReaderEvent.target.result
-        //     }
-
-        //     this.form.picture = image
-        //     // reinit image cropping data
-        //     this.form.imageSizes = null
-        // },
-
-        // saveImageSizes() {
-        //     this.form.imageSizes = {
-        //         scaleX: this.$refs.imageResizer.scaleX,
-        //         scaleY: this.$refs.imageResizer.scaleY,
-        //         left: this.$refs.imageResizer.left,
-        //         top: this.$refs.imageResizer.top,
-        //         naturalRatio: this.$refs.imageResizer.naturalRatio,
-        //     }
-        //     this.showImageResizer = false
-        // },
-
-        // openImageResizer() {
-        //     this.showImageResizer = true
-        // },
 
         selectTags() {
             this.form.tags = [...this.tagsSelection]
@@ -667,44 +577,6 @@ export default {
     label {
         align-self: flex-start;
     }
-    /*
-    .img-inner {
-        width: 100%;
-        display: flex;
-        gap: $space-m;
-
-        .img-preview,
-        .img-actions {
-            flex-basis: 50%;
-            flex-grow: 1;
-        }
-
-        .img-actions {
-            display: flex;
-            flex-flow: column;
-            gap: $space-m;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .img-preview {
-            border-radius: 100%;
-            border: $border-width-s solid $green;
-            background-color: $white;
-            overflow: hidden;
-        }
-    }
-
-    .preview-wrapper-outer {
-        width: 100%;
-        padding-bottom: 100%;
-        position: relative;
-    }
-
-    .preview-wrapper-inner {
-        position: absolute;
-        inset: 0;
-    }*/
 }
 
 $sdg-size: $font-size-4xl;

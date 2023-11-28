@@ -18,7 +18,6 @@
                 v-model="form"
                 :value="form"
                 :is-add-mode="false"
-                :current-project="currentProject"
                 @close="$emit('close')"
                 :validation="v$"
             />

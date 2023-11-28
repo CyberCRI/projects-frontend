@@ -478,6 +478,7 @@ export default {
     gap: pxToRem(130px);
     justify-content: stretch;
     align-items: center;
+
     @media (max-width: $med-tablet) {
         flex-direction: column;
         align-items: stretch;
@@ -547,6 +548,7 @@ textarea {
 
 .sdg-grid {
     $sdg-size: pxToRem(50px);
+
     margin-top: pxToRem(20px);
     display: grid;
     grid-template-columns: repeat(auto-fill, $sdg-size);
@@ -560,10 +562,12 @@ textarea {
         appearance: none;
         cursor: pointer;
         transition: transform 200ms ease-in-out;
+
         &:hover {
             transform: scale(1.1);
         }
     }
+
     .sdg-pic {
         display: inline-block;
         width: $sdg-size;
@@ -594,10 +598,12 @@ textarea {
         transform: scale(0);
         opacity: 0;
         position: absolute;
+
         &:checked + .sdg-pic {
             box-shadow: 0 0 0 $border-width-m $green;
             transition: box-shadow 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
         }
+
         &:checked ~ .sdg-checkmark {
             transform: translate(50%, -50%) scale(1);
             transition: transform 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
@@ -634,6 +640,7 @@ textarea {
 }
 
 $img-preview-size: pxToRem(120px);
+
 .img-preview {
     width: $img-preview-size;
     height: $img-preview-size;

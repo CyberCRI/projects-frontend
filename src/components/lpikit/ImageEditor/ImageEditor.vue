@@ -1,9 +1,9 @@
 <template>
-    <div class="img-inner">
+    <div class="img-inner" :class="{ 'round-picture': roundPicture }">
         <div class="img-preview">
             <div class="preview-wrapper-outer">
                 <CroppedImage
-                    alt="image"
+                    :alt="pictureAlt"
                     :contain="true"
                     :image-sizes="imageSizes"
                     :src="displayedImage"
@@ -12,13 +12,26 @@
             </div>
         </div>
         <div class="img-actions">
+            <LpiButton
+                v-if="defaultPictureFiles?.length > 1"
+                v-disable-focus="disabled"
+                :label="$filters.capitalize($t('project.random-image'))"
+                :secondary="true"
+                class="next-patatoid-btn"
+                left-icon="RotateRight"
+                @click="nextDefaultPicture"
+                data-test="random-image-button"
+            />
+
             <ImageInput
                 id="header_image"
+                :unfocusable="disabled"
                 :label="$t('profile.edit.general.picture.upload-image')"
                 @upload-image="uploadImage"
             />
 
             <LpiButton
+                v-disable-focus="disabled"
                 :label="$t('profile.edit.general.picture.resize-image')"
                 :secondary="true"
                 class="next-patatoid-btn"
@@ -45,6 +58,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
@@ -62,12 +76,12 @@ export default {
 
     props: {
         imageSizes: {
-            type: Object,
+            type: [Object, null],
             required: true,
         },
 
         picture: {
-            type: String,
+            type: [Object, File, null],
             required: true,
         },
         defaultPicture: {
@@ -75,28 +89,66 @@ export default {
             required: false,
             default: '',
         },
+        pictureAlt: {
+            type: String,
+            required: false,
+            default: 'Image',
+        },
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
+        roundPicture: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
 
     data() {
         return {
             showImageResizer: false,
+            defaultPictureFiles: [],
+            defaultPictureIndex: 0,
+            displayableImage: '',
         }
     },
 
     computed: {
         displayedImage() {
-            return this.picture || this.defaultPicture
+            return this.picture instanceof File
+                ? this.displayableImage
+                : this.picture?.variations?.small
         },
     },
-    methods: {
-        uploadImage(image) {
-            this.displayedImage = ''
 
+    async mounted() {
+        const urlArray = Array.isArray(this.defaultPicture)
+            ? this.defaultPicture
+            : [this.defaultPicture]
+
+        this.defaultPictureFiles = await Promise.all(urlArray.map(this.getFilesFromUrl))
+
+        if (!this.picture && this.defaultPictureFiles.length) {
+            this.uploadImage(this.defaultPictureFiles[0])
+        }
+    },
+
+    methods: {
+        async getFilesFromUrl(url) {
+            const filename = url.split('/').pop() || 'default-image'
+            const result = await axios.get(url, { responseType: 'blob' })
+            return new File([result.data], filename)
+        },
+
+        uploadImage(image) {
+            this.displayableImage = ''
             const fileReader = new FileReader()
             fileReader.readAsDataURL(image)
-
+            console.log('blej')
             fileReader.onload = (fileReaderEvent) => {
-                this.displayedImage = fileReaderEvent.target.result
+                this.displayableImage = fileReaderEvent.target.result
             }
 
             this.$emit('update:picture', image)
@@ -117,6 +169,14 @@ export default {
                 naturalRatio: this.$refs.imageResizer.naturalRatio,
             })
             this.showImageResizer = false
+        },
+
+        nextDefaultPicture() {
+            if (this.defaultPictureFiles.length) {
+                this.defaultPictureIndex =
+                    (this.defaultPictureIndex + 1) % this.defaultPictureFiles.length
+                this.uploadImage(this.defaultPictureFiles[this.defaultPictureIndex])
+            }
         },
     },
 }
@@ -142,10 +202,13 @@ export default {
     }
 
     .img-preview {
-        border-radius: 100%;
         border: $border-width-s solid $green;
         background-color: $white;
         overflow: hidden;
+    }
+
+    &.round-picture .img-preview {
+        border-radius: 100%;
     }
 }
 
