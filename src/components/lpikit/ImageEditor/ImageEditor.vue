@@ -16,7 +16,8 @@
                 v-if="defaultPictureFiles?.length > 1"
                 v-disable-focus="disabled"
                 :label="$filters.capitalize($t('project.random-image'))"
-                :secondary="true"
+                secondary
+                no-border
                 class="next-patatoid-btn"
                 left-icon="RotateRight"
                 @click="nextDefaultPicture"
@@ -26,6 +27,7 @@
             <ImageInput
                 id="header_image"
                 :unfocusable="disabled"
+                no-border
                 :label="$t('profile.edit.general.picture.upload-image')"
                 @upload-image="uploadImage"
             />
@@ -33,7 +35,8 @@
             <LpiButton
                 v-disable-focus="disabled"
                 :label="$t('profile.edit.general.picture.resize-image')"
-                :secondary="true"
+                secondary
+                no-border
                 class="next-patatoid-btn"
                 left-icon="Pen"
                 @click="openImageResizer"
@@ -185,6 +188,7 @@ export default {
 .img-inner {
     width: 100%;
     display: flex;
+    align-items: center;
     gap: $space-m;
 
     .img-preview,

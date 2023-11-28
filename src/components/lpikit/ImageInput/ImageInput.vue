@@ -3,7 +3,7 @@
         <label :for="id" ref="label" class="image-button" data-test="upload-image-button">
             <LpiButton
                 btn-icon="Upload"
-                :secondary="true"
+                secondary
                 :label="displayedLabel"
                 class="passive"
                 v-disable-focus="unfocusable"
@@ -44,6 +44,14 @@ export default {
         label: {
             type: String,
             default: null,
+        },
+        secondary: {
+            type: Boolean,
+            default: true,
+        },
+        noBorder: {
+            type: Boolean,
+            default: false,
         },
     },
 

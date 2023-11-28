@@ -54,34 +54,22 @@
                         />
                     </div>
                     <div class="column">
+                        <label class="field-title">{{
+                            $t('complete-profile.personal.picture')
+                        }}</label>
+                        <p class="field-notice">
+                            {{ $t('complete-profile.personal.picture-notice') }}
+                        </p>
                         <!-- picture-->
-                        <div class="picture-block">
-                            <div class="img-preview">
-                                <div class="preview-wrapper-outer">
-                                    <CroppedImage
-                                        :alt="`Profile picture`"
-                                        :contain="true"
-                                        :image-sizes="form.imageSizes"
-                                        :src="displayedImage"
-                                        class="preview-wrapper-inner"
-                                    />
-                                </div>
-                            </div>
-                            <div class="text">
-                                <label class="field-title">{{
-                                    $t('complete-profile.personal.picture')
-                                }}</label>
-                                <p class="field-notice">
-                                    {{ $t('complete-profile.personal.picture-notice') }}
-                                </p>
-                                <LpiButton
-                                    secondary
-                                    no-border
-                                    left-icon="Pen"
-                                    :label="$t('complete-profile.personal.picture-modify')"
-                                ></LpiButton>
-                            </div>
-                        </div>
+                        <ImageEditor
+                            :picture-alt="`${form.given_name} image`"
+                            :contain="true"
+                            :round-picture="true"
+                            v-model:imageSizes="form.imageSizes"
+                            v-model:picture="form.picture"
+                            :default-picture="`${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`"
+                        >
+                        </ImageEditor>
                     </div>
                 </div>
             </ProfileEditBlock>
@@ -228,10 +216,10 @@ import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import allSdgs from '@/data/sdgs.json'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
+import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
 export default {
     name: 'CompleteProfilePage',
@@ -240,7 +228,7 @@ export default {
         ProfileEditBlock,
         LpiButton,
         IconImage,
-        CroppedImage,
+        ImageEditor,
     },
 
     mixins: [imageMixin],
@@ -280,12 +268,6 @@ export default {
         lang() {
             return this.$store.getters['languages/current']
         },
-        displayedImage() {
-            return (
-                this.form.picture ||
-                `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-            )
-        },
     },
 
     async mounted() {
@@ -296,7 +278,7 @@ export default {
         async loadUser() {
             try {
                 this.user = await getUser(this.$store.getters['users/kid'])
-                this.form.picture = this.user.profile_picture?.url
+                this.form.picture = this.user.profile_picture
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
                     : null
@@ -346,7 +328,8 @@ export default {
                     // patch user picture if changed
 
                     if (
-                        this.form.picture != this.user.profile_picture?.url ||
+                        !this.form.picture?.url ||
+                        this.form.picture?.url != this.user.profile_picture?.url ||
                         !isEqual(
                             this.form.imageSizes,
                             pictureApiToImageSizes(this.user.profile_picture)
