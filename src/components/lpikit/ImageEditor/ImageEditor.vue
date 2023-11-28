@@ -1,8 +1,9 @@
 <template>
     <div class="img-inner" :class="{ 'round-picture': roundPicture }">
         <div class="img-preview">
-            <div class="preview-wrapper-outer">
+            <div class="preview-wrapper-outer" :class="{ active: !disabled }">
                 <CroppedImage
+                    @click="imageOnClick"
                     :alt="pictureAlt"
                     :contain="true"
                     :image-sizes="imageSizes"
@@ -15,7 +16,7 @@
             <LpiButton
                 v-if="defaultPictureFiles?.length > 1"
                 v-disable-focus="disabled"
-                :label="$filters.capitalize($t('project.random-image'))"
+                :label="$t('project.random-image')"
                 secondary
                 no-border
                 class="next-patatoid-btn"
@@ -25,21 +26,12 @@
             />
 
             <ImageInput
+                ref="imageInput"
                 id="header_image"
                 :unfocusable="disabled"
                 no-border
-                :label="$t('profile.edit.general.picture.upload-image')"
+                :label="$t('common.modify')"
                 @upload-image="uploadImage"
-            />
-
-            <LpiButton
-                v-disable-focus="disabled"
-                :label="$t('profile.edit.general.picture.resize-image')"
-                secondary
-                no-border
-                class="next-patatoid-btn"
-                left-icon="Pen"
-                @click="openImageResizer"
             />
         </div>
         <!-- image resizer -->
@@ -134,7 +126,7 @@ export default {
         this.defaultPictureFiles = await Promise.all(urlArray.map(this.getFilesFromUrl))
 
         if (!this.picture && this.defaultPictureFiles.length) {
-            this.uploadImage(this.defaultPictureFiles[0])
+            this.setImage(this.defaultPictureFiles[0])
         }
     },
 
@@ -145,11 +137,10 @@ export default {
             return new File([result.data], filename)
         },
 
-        uploadImage(image) {
+        setImage(image) {
             this.displayableImage = ''
             const fileReader = new FileReader()
             fileReader.readAsDataURL(image)
-            console.log('blej')
             fileReader.onload = (fileReaderEvent) => {
                 this.displayableImage = fileReaderEvent.target.result
             }
@@ -157,6 +148,11 @@ export default {
             this.$emit('update:picture', image)
             // reinit image cropping data
             this.$emit('update:imageSizes', null)
+        },
+
+        uploadImage(image) {
+            this.setImage(image)
+            this.$nextTick(this.openImageResizer)
         },
 
         openImageResizer() {
@@ -178,8 +174,11 @@ export default {
             if (this.defaultPictureFiles.length) {
                 this.defaultPictureIndex =
                     (this.defaultPictureIndex + 1) % this.defaultPictureFiles.length
-                this.uploadImage(this.defaultPictureFiles[this.defaultPictureIndex])
+                this.setImage(this.defaultPictureFiles[this.defaultPictureIndex])
             }
+        },
+        imageOnClick() {
+            if (!this.disabled) this.$refs.imageInput?.$refs?.header_image?.click()
         },
     },
 }
@@ -220,6 +219,10 @@ export default {
     width: 100%;
     padding-bottom: 100%;
     position: relative;
+
+    &.active {
+        cursor: pointer;
+    }
 }
 
 .preview-wrapper-inner {

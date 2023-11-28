@@ -393,6 +393,7 @@
         "loading": "Loading",
         "login": "login",
         "logout": "logout",
+        "modify": "Modify",
         "more": "more",
         "more-info": "more information",
         "next": "next",
@@ -464,8 +465,7 @@
             "lastname": "Last Name",
             "lastname-placeholder": "Last Name",
             "picture": "Profile picture",
-            "picture-notice": "(120px x 120px mini; formats jpg, png or pdf)",
-            "picture-modify": "Modify",
+            "picture-notice": "(120px x 120px mini; formats jpg or png)",
             "title": "Personal Information"
         },
         "resources": {
@@ -1690,7 +1690,7 @@
         "quit-hint": "You can quit the project. The project will disappear from your personal list. You will not be able to edit it anymore.",
         "quit-message-error": "Error during the modification of the project team",
         "quit-message-success": "You are not part of the project anymore",
-        "random-image": "random image",
+        "random-image": "Random image",
         "read-description": "Read description",
         "resource": "Resource | Resources",
         "review": "review",
