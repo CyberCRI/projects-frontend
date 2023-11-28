@@ -2,6 +2,15 @@ import { axios } from '@/api/api.config'
 import { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
 import { APIResponseList } from '@/api/types'
 
+export async function getInvitation(organization: String, uuid: String): Promise<InvitationModel> {
+    return (
+        await axios.get(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${organization}/invitation/${uuid}/`
+        )
+    ).data
+}
 export async function getInvitations(
     organization: String
 ): Promise<APIResponseList<InvitationModel>> {

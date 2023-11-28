@@ -285,6 +285,8 @@
             "deleted-failed": "Erreur pendant la suppression de l'invitation"
         },
         "delete-confirm-title": "Supprimer ce lien ?",
+        "expired-link-image": "Désolé, ce lien d'invitation est expiré ou invalide.",
+        "expired-link": "Il semble que le lien que vous avez reçu a expiré ou est tout simplement invalide. Pour obtenir un nouveau lien, veuillez contacter l'administrateur:",
         "generate-link": "Créer un lien",
         "list": {
             "created-by-column": "Créé par",
