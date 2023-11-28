@@ -75,8 +75,8 @@
             </ProfileEditBlock>
             <ProfileEditBlock>
                 <h2 class="section-title">{{ $t('complete-profile.skills.title') }}</h2>
-                <div class="two-columns">
-                    <!-- sdg -->
+
+                <div class="one-column">
                     <div class="column">
                         <label class="field-title">{{ $t('complete-profile.skills.sdg') }} *</label>
                         <p class="field-notice">{{ $t('complete-profile.skills.sdg-notice') }}</p>
@@ -100,6 +100,8 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="two-columns">
                     <!-- skills -->
                     <div class="column">
                         <label class="field-title"
@@ -118,6 +120,27 @@
                         <div class="skill-list">
                             <span class="capsule" v-for="skill in skills" :key="skill">{{
                                 skill
+                            }}</span>
+                        </div>
+                    </div>
+                    <!-- hobbies -->
+                    <div class="column">
+                        <label class="field-title"
+                            >{{ $t('complete-profile.skills.hobbies') }} *</label
+                        >
+                        <p class="field-notice">
+                            {{ $t('complete-profile.skills.hobbies-notice') }}
+                        </p>
+                        <input
+                            type="text"
+                            :placeholder="$t('complete-profile.skills.hobbies-placeholder')"
+                        />
+                        <div class="no-skill">
+                            <span class="capsule grey">No tag yet</span>
+                        </div>
+                        <div class="skill-list">
+                            <span class="capsule" v-for="hobby in hobbies" :key="hobby">{{
+                                hobby
                             }}</span>
                         </div>
                     </div>
@@ -149,11 +172,21 @@
                             {{ $t('complete-profile.bio.personal-bio-notice') }}
                         </p>
 
-                        <textarea
+                        <TipTapEditor
+                            :key="personalBioKey"
+                            :save-icon-visible="false"
+                            :socket="false"
+                            :ws-data="personalBio"
+                            class="html-input"
+                            mode="none"
+                            @update="updatePersonalBio"
+                        />
+
+                        <!--textarea
                             rows="8"
                             :placeholder="$t('complete-profile.bio.personal-bio-placeholder')"
                             v-model="form.personal_description"
-                        ></textarea>
+                        ></textarea-->
                     </div>
                     <div class="column">
                         <!-- long bio -->
@@ -163,32 +196,20 @@
                         <p class="field-notice">
                             {{ $t('complete-profile.bio.long-bio-notice') }}
                         </p>
-                        <textarea
+                        <!--textarea
                             rows="15"
                             :placeholder="$t('complete-profile.bio.long-bio-placeholder')"
                             v-model="form.professional_description"
-                        ></textarea>
-                    </div>
-                </div>
-            </ProfileEditBlock>
-            <ProfileEditBlock>
-                <!-- resources -->
-                <div class="three-columns">
-                    <div class="column">
-                        <h2 class="section-title">
-                            {{ $t('complete-profile.resources.title') }} (0)
-                        </h2>
-                    </div>
-                    <div class="column">
-                        <p class="section-notice">{{ $t('complete-profile.resources.notice') }}</p>
-                    </div>
-                    <div class="column">
-                        <LpiButton
-                            secondary
-                            no-border
-                            left-icon="Plus"
-                            :label="$t('complete-profile.resources.add')"
-                        ></LpiButton>
+                        ></textarea-->
+                        <TipTapEditor
+                            :key="longBioKey"
+                            :save-icon-visible="false"
+                            :socket="false"
+                            :ws-data="longBio"
+                            class="html-input"
+                            mode="none"
+                            @update="updateLongBio"
+                        />
                     </div>
                 </div>
             </ProfileEditBlock>
@@ -221,6 +242,8 @@ import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesU
 import isEqual from 'lodash.isequal'
 import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
+import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
+
 export default {
     name: 'CompleteProfilePage',
 
@@ -229,6 +252,7 @@ export default {
         LpiButton,
         IconImage,
         ImageEditor,
+        TipTapEditor,
     },
 
     mixins: [imageMixin],
@@ -251,6 +275,19 @@ export default {
                 'Long Skill 10',
                 'Long Skill 11',
             ],
+            hobbies: [
+                'Hobby 1',
+                'Hobby 2',
+                'Hobby 3',
+                'Hobby 4',
+                'Long Hobby 5',
+                'Hobby 6',
+                'Hobby 7',
+                'Hobby 8',
+                'Hobby 9',
+                'Long Hobby 10',
+                'Long Hobby 11',
+            ],
             form: {
                 picture: null,
                 imageSizes: null,
@@ -260,6 +297,16 @@ export default {
                 short_description: '',
                 personal_description: '',
                 professional_description: '',
+            },
+            longBioKey: 0,
+            longBio: {
+                originalContent: '',
+                savedContent: '',
+            },
+            personalBioKey: 0,
+            personalBio: {
+                originalContent: '',
+                savedContent: '',
             },
         }
     },
@@ -287,11 +334,20 @@ export default {
                     'family_name',
                     'job',
                     'short_description',
-                    'personal_description',
-                    'professional_description',
+                    // 'personal_description',
+                    // 'professional_description',
                 ].forEach((field) => {
                     this.form[field] = this.user[field]
                 })
+
+                this.personalBio = {
+                    originalContent: this.user.personal_description,
+                    savedContent: this.user.personal_description,
+                }
+                this.longBio = {
+                    originalContent: this.user.professional_description,
+                    savedContent: this.user.professional_description,
+                }
 
                 this.sdgs.forEach((sdg) => {
                     sdg.selected = this.user.sdgs.includes(sdg.id)
@@ -299,6 +355,13 @@ export default {
             } catch (error) {
                 console.error(error)
             }
+        },
+
+        updateLongBio(content) {
+            this.longBio.savedContent = content
+        },
+        updatePersonalBio(content) {
+            this.personalBio.savedContent = content
         },
 
         async cancel() {
@@ -316,8 +379,8 @@ export default {
                         email: this.form.email,
                         job: this.form.job,
                         sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
-                        professional_description: this.form.professional_description,
-                        personal_description: this.form.personal_description,
+                        professional_description: this.longBio.savedContent,
+                        personal_description: this.personalBio.savedContent,
                         short_description: this.form.short_description,
                         // TODO: tags
                         // TODO: reources,
@@ -487,6 +550,7 @@ export default {
     margin-bottom: pxToRem(13px);
 }
 
+.html-input,
 input,
 textarea {
     display: block;
@@ -496,6 +560,7 @@ textarea {
     padding: 11px;
     border: $border-width-s solid $gray-10;
     box-sizing: border-box;
+    border-radius: 0;
 
     &::placeholder {
         color: $gray-10;

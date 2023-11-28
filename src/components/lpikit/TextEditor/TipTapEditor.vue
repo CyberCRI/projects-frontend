@@ -114,13 +114,13 @@
                         class="editortablemenu"
                     />
                     <LinkMenuBar
-                        v-if="disconnectionGrace"
+                        v-if="mode !== 'none' && disconnectionGrace"
                         :editor="editor"
                         :open-link-modal="openLinkModal"
                         class="editorlinkmenu"
                     />
-                    <VideoMenuBar v-if="disconnectionGrace" :editor="editor" />
-                    <ImageMenuBar v-if="disconnectionGrace" :editor="editor" />
+                    <VideoMenuBar v-if="mode !== 'none' && disconnectionGrace" :editor="editor" />
+                    <ImageMenuBar v-if="mode !== 'none' && disconnectionGrace" :editor="editor" />
                     <EditorContent
                         ref="editorContent"
                         :class="{ 'editor-frozen': !disconnectionGrace }"
@@ -179,6 +179,7 @@
             />
 
             <MenuBar
+                v-if="mode !== 'none'"
                 :editor="editor"
                 :mode="mode"
                 :open-color-modal="openColorModal"
@@ -195,14 +196,15 @@
                 <TableMenuBar v-if="mode === 'full'" :editor="editor" class="editortablemenu" />
 
                 <LinkMenuBar
+                    v-if="mode !== 'none'"
                     :editor="editor"
                     :open-link-modal="openLinkModal"
                     class="editorlinkmenu"
                 />
 
-                <ImageMenuBar :editor="editor" />
+                <ImageMenuBar :editor="editor" v-if="mode !== 'none'" />
 
-                <VideoMenuBar :editor="editor" />
+                <VideoMenuBar :editor="editor" v-if="mode !== 'none'" />
 
                 <EditorContent
                     ref="editorContent"
@@ -298,7 +300,7 @@ export default {
             },
         },
         mode: {
-            // mode supports 3 values 'simple' | 'medium' | 'full'
+            // mode supports 4 values 'none' | 'simple' | 'medium' | 'full'
             type: String,
             default: 'simple',
         },

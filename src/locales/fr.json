@@ -474,6 +474,9 @@
         },
         "save-and-next": "Enregistrer et passer à l'étape suivante",
         "skills": {
+            "hobbies": "Hobbies",
+            "hobbies-placeholder": "Tapez les premières lettres",
+            "hobbies-notice": "Choisissez les hobbies qui permettront aux personnes de votre communauté de vous contacter.",
             "sdg": "ODD",
             "sdg-notice": "ODD auxquels vous souhaitez contribuer. Cela aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
             "skills": "Compétences",

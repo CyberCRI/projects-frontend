@@ -475,6 +475,9 @@
         },
         "save-and-next": "Save and go to next",
         "skills": {
+            "hobbies": "Hobbies",
+            "hobbies-placeholder": "Type the first letters",
+            "hobbies-notice": "Pick the hobbies that will allow people in your community to get in touch with you.",
             "sdg": "SDG",
             "sdg-notice": "SDGs you want to contribute to. This will help members of your community find you for mentoring or help.",
             "skills": "Skills",
