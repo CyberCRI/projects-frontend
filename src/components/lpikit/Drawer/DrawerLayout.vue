@@ -8,7 +8,6 @@
                 v-if="isOpened"
                 :class="{
                     'no-footer': !hasFooter,
-                    'full-height': fullHeight,
                     padding: padding,
                 }"
                 class="drawer"
@@ -99,11 +98,6 @@ export default {
             default: true,
         },
 
-        fullHeight: {
-            type: Boolean,
-            default: true,
-        },
-
         customStyle: {
             type: Object,
             default: () => {},
@@ -174,8 +168,7 @@ $slide-duration: 400ms;
 .background {
     z-index: $zindex-drawer;
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     height: 100vh;
     width: 100vw;
     background-color: $gray-1;
@@ -206,11 +199,32 @@ $slide-duration: 400ms;
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 50%;
     right: 0;
-    transform: translate(0, -50%);
-    border-top-left-radius: $border-radius-m;
-    border-bottom-left-radius: $border-radius-m;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    border-radius: 0;
+    transform: translateX(0);
+
+    .drawer__main {
+        padding: $space-l $space-l $space-xl $space-l;
+        overflow: auto;
+        overflow-x: hidden;
+        flex-grow: 1;
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    &.drawer-slide-leave-active,
+    &.drawer-slide-enter-active {
+        transition: transform $slide-duration;
+        transform: translateX(0);
+    }
+
+    &.drawer-slide-enter-from,
+    &.drawer-slide-leave-to {
+        transform: translateX(100%);
+    }
 
     .results-ctn {
         display: flex;
@@ -221,41 +235,6 @@ $slide-duration: 400ms;
 
         .selected-card {
             background-color: $primary-lighter;
-        }
-    }
-
-    &.drawer-slide-enter-active,
-    &.drawer-slide-leave-active {
-        transition: transform $slide-duration;
-        transform: translate(0, -50%);
-    }
-
-    &.drawer-slide-enter-from,
-    &.drawer-slide-leave-to {
-        transform: translate(100%, -50%);
-    }
-
-    &.full-height {
-        height: 100vh;
-        top: 0;
-        bottom: 0;
-        border-radius: 0;
-        transform: translateX(0);
-
-        .drawer__main {
-            flex-grow: 1;
-            display: flex;
-            flex-flow: column nowrap;
-        }
-
-        &.drawer-slide-leave-active,
-        &.drawer-slide-enter-active {
-            transform: translateX(0);
-        }
-
-        &.drawer-slide-enter-from,
-        &.drawer-slide-leave-to {
-            transform: translateX(100%);
         }
     }
 
@@ -289,13 +268,6 @@ $slide-duration: 400ms;
         &.scrolled {
             box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
         }
-    }
-
-    &__main {
-        padding: $space-l $space-l $space-xl $space-l;
-        overflow: auto;
-        overflow-x: hidden;
-        max-height: calc(100vh - $space-l - $header-height - $footer-height);
     }
 
     &__footer {

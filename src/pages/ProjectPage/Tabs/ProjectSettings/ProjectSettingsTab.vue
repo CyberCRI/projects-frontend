@@ -199,7 +199,6 @@
         />
 
         <DrawerLayout
-            :full-height="false"
             :has-footer="false"
             :is-opened="reportForm.visible"
             :title="reportForm.type ? $t(`report.${reportForm.type}`) : ''"
