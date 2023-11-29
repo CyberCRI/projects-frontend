@@ -118,7 +118,6 @@
             <DrawerLayout
                 v-if="reportBugOpen"
                 :confirm-action-name="$t('common.submit')"
-                :full-height="false"
                 :has-footer="false"
                 :is-opened="reportBugOpen"
                 :title="$t(`report.bug`)"
