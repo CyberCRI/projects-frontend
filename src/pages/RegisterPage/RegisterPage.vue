@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLinkValid" class="link-expired">
+    <div v-if="!isLinkValid" class="link-expired">
         <div>
             <h1 class="title">
                 {{ $t('page404.title') }}
