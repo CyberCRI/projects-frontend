@@ -104,9 +104,10 @@ describe('GroupPage', () => {
     it('should display a 404 if no group found', async () => {
         vi.mocked(getGroup).mockRejectedValueOnce({ response: { status: 404 } })
         let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
-        vi.spyOn(wrapper.vm.$router, 'replace')
+        await (wrapper.vm as any).$nextTick() // Wait for component to be fully mounted
+        vi.spyOn((wrapper.vm as any).$router, 'replace')
         await flushPromises()
-        expect(wrapper.vm.$router.replace).toHaveBeenCalledWith({
+        expect((wrapper.vm as any).$router.replace).toHaveBeenCalledWith({
             name: 'page404',
             params: {
                 pathMatch: [''],
