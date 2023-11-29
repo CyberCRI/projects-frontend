@@ -23,6 +23,7 @@ export default {
     border-radius: pxToRem(21px);
     border: $border-width-m solid $gray-10;
 }
+
 .section-title {
     font-size: $font-size-2xl;
     font-weight: 700;

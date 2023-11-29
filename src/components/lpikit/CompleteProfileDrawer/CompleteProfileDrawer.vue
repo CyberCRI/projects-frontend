@@ -50,6 +50,7 @@ import CompleteProfileStep2 from '@/components/lpikit/CompleteProfileDrawer/Comp
 export default {
     name: 'CompleteProfileDrawer',
     components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, DrawerLayout },
+    emits: ['close'],
     data() {
         return {
             stepComponents: [CompleteProfileStep1, CompleteProfileStep2],

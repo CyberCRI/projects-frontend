@@ -231,11 +231,9 @@ export default {
             this.personalBio.savedContent = content
         },
 
-        async cancel() {
-            // TODO: specify and implement
-        },
-
+        /* eslint-disable-next-line vue/no-unused-properties */
         async save() {
+            // this called by CompleteProfileDrawer.vue
             let success = true
             this.$emit('saving', true)
             const isValid = true // await this.v$.$validate() TODO: validation
@@ -321,10 +319,12 @@ export default {
     color: $primary-dark;
     font-weight: 700;
     text-decoration: underline;
+
     &:hover {
         text-decoration: none;
     }
 }
+
 .two-columns {
     display: flex;
     justify-content: stretch;
@@ -340,10 +340,12 @@ export default {
     .column {
         flex-grow: 1;
         flex-basis: 50%;
+
         &.flexed-column {
             display: flex;
             flex-direction: column;
             justify-content: stretch;
+
             .flex-grow {
                 flex-grow: 1;
             }
