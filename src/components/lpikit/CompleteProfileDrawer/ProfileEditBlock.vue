@@ -1,6 +1,6 @@
 <template>
     <section class="profile-edit-block">
-        <h2 class="section-title">{{ blockTitle }}</h2>
+        <h2 v-if="blockTitle" class="section-title">{{ blockTitle }}</h2>
         <slot></slot>
     </section>
 </template>

@@ -438,7 +438,12 @@
     "complete-profile": {
         "bio": {
             "title": "Bio",
-            "notice": "Bio allow people to understand who you are, what you do and stand for. Need some inspiration? Here are examples for a researcher, a professional or a student.",
+            "notice": "Bio allow people to understand who you are, what you do and stand for. Need some inspiration? Here are examples for {0}, {1} or {2}.",
+            "exemples": {
+                "researcher": "a researcher",
+                "professional": "a professional",
+                "student": "a student"
+            },
             "long-bio": "Long bio",
             "long-bio-placeholder": "Start here",
             "long-bio-notice": "You can take as long as you want to present your professional endeavours",

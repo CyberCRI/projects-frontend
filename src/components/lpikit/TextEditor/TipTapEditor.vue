@@ -396,7 +396,7 @@ export default {
     methods: {
         focusEditor() {
             if (this.editor) {
-                this.editor.commands.focus('start')
+                this.editor.commands.focus('end')
             }
         },
 

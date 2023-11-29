@@ -14,6 +14,8 @@
                 <LpiButton
                     :label="$filters.capitalize($t('welcome-modal.complete-later'))"
                     :secondary="true"
+                    :disabled="asyncing"
+                    :left-icon="asyncing == 'skip' ? 'LoaderSimple' : undefined"
                     class="footer__left-button"
                     @click="completeLater"
                     data-test="close-button"
@@ -24,6 +26,7 @@
                     :label="
                         $filters.capitalize(confirmActionName || $t('welcome-modal.complete-now'))
                     "
+                    :left-icon="asyncing == 'proceed' ? 'LoaderSimple' : undefined"
                     :secondary="false"
                     class="footer__right-button"
                     @click="completeNow"
@@ -40,27 +43,34 @@ import { patchUser } from '@/api/people.service.ts'
 export default {
     name: 'WelcomeModal',
 
-    emits: ['close'],
+    emits: ['close', 'complete-profile'],
 
     components: { BaseModal, LpiButton },
 
+    data() {
+        return {
+            asyncing: false,
+        }
+    },
+
     methods: {
         async completeLater() {
-            await this.patchUser()
+            await this.patchUser('skip')
             this.$emit('close')
         },
 
         async completeNow() {
-            await this.patchUser()
-            this.$emit('close')
-            this.$router.push({ name: 'ProfileEdit' })
+            await this.patchUser('proceed')
+            this.$emit('complete-profile')
         },
 
-        async patchUser() {
+        async patchUser(choice) {
+            this.asyncing = choice
             // register that the user has seen the welcome modal
             await patchUser(this.$store.getters['users/kid'], {
                 show_welcome: false,
             })
+            this.asyncing = false
         },
     },
 

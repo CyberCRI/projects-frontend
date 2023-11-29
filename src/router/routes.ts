@@ -57,13 +57,18 @@ const routes: Array<RouteRecordRaw> = [
         redirect: { name: 'ProfileSummary' },
     },
 
+    // Keeping this route for debug purpose
+    // TODO: remove when no longer needed
     {
         path: '/complete-profile',
         name: 'CompleteProfilePage',
         component: () =>
             import(
-                /* webpackChunkName: "CompleteProfilePage" */ '../pages/CompleteProfilePage/CompleteProfilePage.vue'
+                /* webpackChunkName: "CompleteProfilePage" */ '../components/lpikit/CompleteProfileDrawer/CompleteProfileDrawer.vue'
             ),
+        props: {
+            isOpened: true,
+        },
         meta: {
             resetScroll: true,
             requiresAuth: true,

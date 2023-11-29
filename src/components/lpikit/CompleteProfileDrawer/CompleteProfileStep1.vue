@@ -74,9 +74,17 @@
         </div>
     </ProfileEditBlock>
     <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
-        <p class="section-notice">
-            {{ $t('complete-profile.bio.notice') }}
-        </p>
+        <i18n-t tag="p" keypath="complete-profile.bio.notice" class="section-notice">
+            <a class="link bio-exemple-link" href="#">{{
+                $t('complete-profile.bio.exemples.researcher')
+            }}</a>
+            <a class="link bio-exemple-link" href="#">{{
+                $t('complete-profile.bio.exemples.professional')
+            }}</a>
+            <a class="link bio-exemple-link" href="#">{{
+                $t('complete-profile.bio.exemples.student')
+            }}</a>
+        </i18n-t>
         <div class="two-columns">
             <!-- short bios -->
             <div class="column">
@@ -103,30 +111,19 @@
                     mode="none"
                     @update="updatePersonalBio"
                 />
-
-                <!--textarea
-                            rows="8"
-                            :placeholder="$t('complete-profile.bio.personal-bio-placeholder')"
-                            v-model="form.personal_description"
-                        ></textarea-->
             </div>
-            <div class="column">
+            <div class="column flexed-column">
                 <!-- long bio -->
                 <label class="field-title">{{ $t('complete-profile.bio.long-bio') }} </label>
                 <p class="field-notice">
                     {{ $t('complete-profile.bio.long-bio-notice') }}
                 </p>
-                <!--textarea
-                            rows="15"
-                            :placeholder="$t('complete-profile.bio.long-bio-placeholder')"
-                            v-model="form.professional_description"
-                        ></textarea-->
                 <TipTapEditor
                     :key="longBioKey"
                     :save-icon-visible="false"
                     :socket="false"
                     :ws-data="longBio"
-                    class="html-input"
+                    class="html-input flex-grow"
                     mode="none"
                     @update="updateLongBio"
                 />
@@ -135,7 +132,7 @@
     </ProfileEditBlock>
 </template>
 <script>
-import ProfileEditBlock from './ProfileEditBlock.vue'
+import ProfileEditBlock from '@/components/lpikit/CompleteProfileDrawer/ProfileEditBlock.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import allSdgs from '@/data/sdgs.json'
@@ -320,6 +317,14 @@ export default {
     margin-bottom: pxToRem(23px);
 }
 
+.link {
+    color: $primary-dark;
+    font-weight: 700;
+    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
+}
 .two-columns {
     display: flex;
     justify-content: stretch;
@@ -335,6 +340,14 @@ export default {
     .column {
         flex-grow: 1;
         flex-basis: 50%;
+        &.flexed-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            .flex-grow {
+                flex-grow: 1;
+            }
+        }
     }
 
     @media (min-width: $med-tablet) {

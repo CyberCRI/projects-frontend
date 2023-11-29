@@ -1,10 +1,10 @@
 <template>
     <ProfileEditBlock :block-title="$t('complete-profile.skills.title')">
-        <ProfileSkillsEditTab v-if="user" :user="user" />
+        <ProfileSkillsEditTab v-if="user" :user="user" @edited="loadUser" />
     </ProfileEditBlock>
 </template>
 <script>
-import ProfileEditBlock from './ProfileEditBlock.vue'
+import ProfileEditBlock from '@/components/lpikit/CompleteProfileDrawer/ProfileEditBlock.vue'
 import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '@/api/people.service.ts'
 

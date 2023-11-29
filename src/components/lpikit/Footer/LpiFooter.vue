@@ -126,7 +126,18 @@
             >
                 <ReportForm type="bug" @close="reportBugOpen = false" />
             </DrawerLayout>
-            <WelcomeModal v-if="showWelcomeModal" @close="showWelcomeModal = false" />
+
+            <template v-if="isConnected">
+                <WelcomeModal
+                    v-if="showWelcomeModal"
+                    @close="showWelcomeModal = false"
+                    @complete-profile="onCompleteProfile"
+                />
+                <CompleteProfileDrawer
+                    :is-opened="showCompleteProfileDrawer"
+                    @close="showCompleteProfileDrawer = false"
+                />
+            </template>
         </div>
     </footer>
 </template>
@@ -139,6 +150,7 @@ import ContactForm from '@/components/Drawers/ContactForm.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
 import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 import FooterEnglishTips from './FooterEnglishTips.vue'
+import CompleteProfileDrawer from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileDrawer.vue'
 export default {
     name: 'LpiFooter',
 
@@ -150,11 +162,13 @@ export default {
         ProjectLogo,
         WelcomeModal,
         FooterEnglishTips,
+        CompleteProfileDrawer,
     },
 
     data() {
         return {
             showWelcomeModal: false,
+            showCompleteProfileDrawer: false,
             reportBugOpen: false,
             showContactUsDrawer: false,
             customNotificationStyle: {
@@ -194,6 +208,13 @@ export default {
                 }
             },
             immediate: true,
+        },
+    },
+
+    methods: {
+        onCompleteProfile() {
+            this.showWelcomeModal = false
+            this.showCompleteProfileDrawer = true
         },
     },
 }

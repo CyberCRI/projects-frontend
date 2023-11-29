@@ -55,7 +55,7 @@
                     <div class="skill-list">
                         <SkillItem
                             v-for="skill in user[key]"
-                            :key="skill.id"
+                            :key="`${skill.id}-${skill.level}`"
                             :label="skill.wikipedia_tag.name"
                             :level="Number(skill.level)"
                         />
@@ -97,6 +97,9 @@ export default {
         SkillLevelTip,
         LinkButton,
     },
+
+    emits: ['edited'],
+
     props: {
         user: {
             type: Object,
@@ -128,6 +131,7 @@ export default {
         },
         closeDrawer() {
             this.drawerIsOpen = false
+            this.$emit('edited')
         },
     },
 }
