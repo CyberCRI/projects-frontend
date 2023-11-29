@@ -168,10 +168,7 @@ $slide-duration: 400ms;
 .background {
     z-index: $zindex-drawer;
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     height: 100vh;
     width: 100vw;
     background-color: $gray-1;
@@ -228,6 +225,7 @@ $slide-duration: 400ms;
     &.drawer-slide-leave-to {
         transform: translateX(100%);
     }
+
     .results-ctn {
         display: flex;
         flex-wrap: wrap;
