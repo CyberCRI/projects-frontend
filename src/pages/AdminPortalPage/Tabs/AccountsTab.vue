@@ -218,7 +218,7 @@ export default {
             this.request = await searchPeopleProject({
                 search: this.searchFilter,
                 org_id: this.organization.id,
-                param: {
+                params: {
                     ordering: filter.order + filter.filter,
                 },
             })
