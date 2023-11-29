@@ -13,14 +13,11 @@
             </div>
         </div>
         <div class="img-actions">
-            <LpiButton
+            <LinkButton
                 v-if="defaultPictureFiles?.length > 1"
                 v-disable-focus="disabled"
                 :label="$t('project.random-image')"
-                secondary
-                no-border
-                class="next-patatoid-btn"
-                left-icon="RotateRight"
+                btn-icon="RotateRight"
                 @click="nextDefaultPicture"
                 data-test="random-image-button"
             />
@@ -29,7 +26,7 @@
                 ref="imageInput"
                 id="header_image"
                 :unfocusable="disabled"
-                no-border
+                is-link
                 :label="$t('common.modify')"
                 @upload-image="uploadImage"
             />
@@ -58,7 +55,7 @@ import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 export default {
     name: 'ImageEditor',
@@ -67,7 +64,7 @@ export default {
 
     mixins: [imageMixin],
 
-    components: { CroppedImage, ImageResizer, ImageInput, LpiButton, DrawerLayout },
+    components: { CroppedImage, ImageResizer, ImageInput, LinkButton, DrawerLayout },
 
     props: {
         imageSizes: {

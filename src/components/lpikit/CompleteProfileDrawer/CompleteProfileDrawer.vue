@@ -35,7 +35,7 @@
             <LpiButton
                 @click="save"
                 :label="$t(saveLabel)"
-                :left-icon="saving ? 'LoaderSimple' : undefined"
+                :btn-icon="saving ? 'LoaderSimple' : undefined"
                 :disabled="saving"
             ></LpiButton>
         </template>
