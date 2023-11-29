@@ -44,9 +44,9 @@
                             <ExternalLabelButton
                                 v-if="!isReply"
                                 :label="$filters.capitalize($t('common.reply'))"
-                                :reversed="true"
-                                right-icon="Reply"
+                                btn-icon="Reply"
                                 @click="toggleReply"
+                                :has-border="true"
                             />
                         </div>
 
@@ -54,16 +54,16 @@
                             <ExternalLabelButton
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.edit'))"
-                                :reversed="true"
-                                right-icon="Pen"
+                                :has-border="true"
+                                btn-icon="Pen"
                                 @click="toggleEdit"
                             />
 
                             <ExternalLabelButton
                                 v-if="canEdit"
                                 :label="$filters.capitalize($t('common.delete'))"
-                                :reversed="true"
-                                right-icon="TrashCanOutline"
+                                :has-border="true"
+                                btn-icon="TrashCanOutline"
                                 @click="openConfirmModal"
                             />
                         </div>
@@ -270,10 +270,10 @@ $comment-pic-size: pxToRem(72px);
     }
 
     .comment-body {
+        width: 100%;
         flex-grow: 1;
         padding-bottom: $space-l;
         border-bottom: $border-width-s solid $green;
-        width: 20rem; // dummy value to fix layout issue
 
         .comment-meta {
             display: flex;

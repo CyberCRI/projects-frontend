@@ -45,7 +45,7 @@
                     <LpiButton
                         :disabled="confirmActionDisabled || asyncing"
                         :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
-                        :left-icon="asyncing ? 'LoaderSimple' : null"
+                        :btn-icon="asyncing ? 'LoaderSimple' : null"
                         :secondary="false"
                         class="footer__right-button"
                         @click="confirm"

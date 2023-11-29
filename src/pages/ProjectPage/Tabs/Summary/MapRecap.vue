@@ -18,18 +18,17 @@
             </div>
         </div>
 
-        <LpiButton
+        <ContextActionButton
             :secondary="true"
             class="map-button"
-            left-icon="Expand"
-            size="small"
+            action-icon="Expand"
             @click="projectLayoutToggleAddModal('location')"
         />
     </div>
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
 import BaseMap from '@/components/lpikit/Map/BaseMap.vue'
@@ -42,7 +41,7 @@ export default {
     inject: ['projectLayoutToggleAddModal'],
 
     components: {
-        LpiButton,
+        ContextActionButton,
         MapPointer,
         BaseMap,
     },

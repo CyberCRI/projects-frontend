@@ -19,7 +19,7 @@
             <LpiButton
                 :disabled="!queryString || isLoading"
                 class="select-btn"
-                left-icon="Search"
+                btn-icon="Search"
                 data-test="search-btn"
                 @click="launchSearch"
             />

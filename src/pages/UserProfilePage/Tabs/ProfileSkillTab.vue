@@ -3,12 +3,9 @@
         <template v-if="allSkills.length">
             <div class="help">
                 <SkillLevelTip>
-                    <LpiButton
+                    <LinkButton
                         :label="$t(`me.levels-help-link`)"
-                        left-icon="HelpCircle"
-                        :secondary="true"
-                        :no-margin="true"
-                        :no-border="true"
+                        btn-icon="HelpCircle"
                         data-test="skill-levels-help-button"
                     />
                 </SkillLevelTip>
@@ -27,7 +24,7 @@
 <script>
 import UserSkills from '@/components/lpikit/UserSkills/UserSkills.vue'
 import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'ProfileSkillTab',
@@ -35,7 +32,7 @@ export default {
     components: {
         UserSkills,
         SkillLevelTip,
-        LpiButton,
+        LinkButton,
     },
 
     props: {

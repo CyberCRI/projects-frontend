@@ -1,16 +1,16 @@
 <template>
     <div class="review">
         <div class="actions">
-            <LpiButton
+            <ContextActionButton
                 v-if="canDestroyReview"
-                left-icon="Close"
+                action-icon="Close"
                 class="delete-btn"
                 @click="$emit('delete-review', review)"
                 data-test="project-window-review-button-delete"
             />
-            <LpiButton
+            <ContextActionButton
                 v-if="canAddReview"
-                left-icon="Pen"
+                action-icon="Pen"
                 class="edit-btn"
                 @click="$emit('edit-review', review)"
                 data-test="button-edit-project-review"
@@ -44,7 +44,7 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 
 export default {
     name: 'ReviewItem',
@@ -55,7 +55,7 @@ export default {
 
     components: {
         CroppedImage,
-        LpiButton,
+        ContextActionButton,
     },
 
     props: {

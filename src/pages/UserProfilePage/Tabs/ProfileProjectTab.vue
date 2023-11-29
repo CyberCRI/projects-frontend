@@ -4,7 +4,7 @@
             <LpiButton
                 :label="$t('project.create-project')"
                 class="btn"
-                left-icon="Plus"
+                btn-icon="Plus"
                 secondary
                 @click="$router.push({ name: 'createProject' })"
             />

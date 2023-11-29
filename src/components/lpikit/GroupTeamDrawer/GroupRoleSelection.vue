@@ -6,7 +6,7 @@
             :label="$t('common.back')"
             :secondary="true"
             class="back-btn"
-            left-icon="ArrowLeft"
+            btn-icon="ArrowLeft"
             @click="$emit('back-to-user-selection')"
         />
         <div class="tooltip-ctn">

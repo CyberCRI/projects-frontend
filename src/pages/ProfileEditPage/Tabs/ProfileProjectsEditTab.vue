@@ -25,12 +25,9 @@
                         followedProjects ? followedProjects.length : 0
                     }})</label
                 >
-                <LpiButton
+                <LinkButton
                     :label="$t('profile.edit.projects.followed.add')"
-                    :secondary="true"
-                    :no-border="true"
-                    :no-margin="true"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     @click="openFollowProjectDrawer"
                 />
             </div>
@@ -81,7 +78,7 @@
 </template>
 <script>
 import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import PickProjectsDrawer from '@/components/lpikit/PickProjectsDrawer/PickProjectsDrawer.vue'
 import { postFollow as deleteFollow, getUserFollows } from '@/api/follows.service'
 
@@ -89,7 +86,7 @@ export default {
     name: 'ProfileProjectsEditTab',
     components: {
         UserProjectList,
-        LpiButton,
+        LinkButton,
         PickProjectsDrawer,
     },
     props: {

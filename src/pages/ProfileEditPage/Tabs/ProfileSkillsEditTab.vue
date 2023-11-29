@@ -7,15 +7,13 @@
             <div class="actions">
                 <LpiButton
                     :label="$filters.capitalize($t('profile.edit.skills.skills.add'))"
-                    left-icon="Plus"
-                    :secondary="false"
+                    btn-icon="Plus"
                     @click="openDrawer('skills', 'add')"
                     data-test="add-skills-button"
                 />
                 <LpiButton
                     :label="$filters.capitalize($t('profile.edit.skills.hobbies.add'))"
-                    left-icon="Plus"
-                    :secondary="false"
+                    btn-icon="Plus"
                     @click="openDrawer('hobbies', 'add')"
                     data-test="add-hobbies-button"
                 />
@@ -25,40 +23,31 @@
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
                 <template v-if="user[key] && user[key].length">
                     <div class="actions">
-                        <LpiButton
+                        <LinkButton
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-items`))
                             "
-                            left-icon="Pen"
-                            :secondary="true"
-                            :no-margin="true"
-                            :no-border="true"
+                            btn-icon="Pen"
                             @click="openDrawer(key, 'add')"
                             data-test="edit-skills-button"
                         />
-                        <LpiButton
+                        <LinkButton
                             :label="
                                 $filters.capitalize($t(`profile.edit.skills.${key}.edit-levels`))
                             "
-                            left-icon="Pen"
-                            :secondary="true"
-                            :no-margin="true"
-                            :no-border="true"
+                            btn-icon="Pen"
                             @click="openDrawer(key, 'edit')"
                             data-test="edit-levels-button"
                         />
 
                         <SkillLevelTip>
-                            <LpiButton
+                            <LinkButton
                                 :label="
                                     $filters.capitalize(
                                         $t(`profile.edit.skills.${key}.levels-help`)
                                     )
                                 "
-                                left-icon="HelpCircle"
-                                :secondary="true"
-                                :no-margin="true"
-                                :no-border="true"
+                                btn-icon="HelpCircle"
                                 data-test="skill-levels-help-button"
                             />
                         </SkillLevelTip>
@@ -75,7 +64,7 @@
                 <div v-else class="add-action">
                     <LpiButton
                         :label="$filters.capitalize($t(`profile.edit.skills.${key}.add`))"
-                        left-icon="Plus"
+                        btn-icon="Plus"
                         :secondary="false"
                         @click="openDrawer(key, 'add')"
                         :data-test="`add-${key}-button`"
@@ -95,6 +84,7 @@
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import SkillItem from '@/components/lpikit/SkillItem/SkillItem.vue'
 import SkillsEditDrawer from '@/components/lpikit/SkillsEditDrawer/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
@@ -105,6 +95,7 @@ export default {
         SkillItem,
         SkillsEditDrawer,
         SkillLevelTip,
+        LinkButton,
     },
     props: {
         user: {

@@ -15,11 +15,10 @@
             </div>
         </div>
         <div v-if="canEdit || canDelete" class="actions-ctn">
-            <LpiButton v-if="canEdit" left-icon="Pen" size="small" @click="$emit('edit-clicked')" />
-            <LpiButton
+            <ContextActionButton v-if="canEdit" action-icon="Pen" @click="$emit('edit-clicked')" />
+            <ContextActionButton
                 v-if="canDelete"
-                left-icon="Close"
-                size="small"
+                action-icon="Close"
                 @click="$emit('delete-clicked')"
             />
         </div>
@@ -27,7 +26,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 
 export default {
@@ -35,7 +34,7 @@ export default {
 
     emits: ['delete-clicked', 'edit-clicked'],
 
-    components: { IconImage, LpiButton },
+    components: { IconImage, ContextActionButton },
 
     props: {
         title: {

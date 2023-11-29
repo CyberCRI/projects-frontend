@@ -34,7 +34,8 @@
                         allProjectsVisible ? $t('common.see-less') : $t('common.see-more')
                     )
                 "
-                :right-icon="allProjectsVisible ? 'ArrowLeft' : 'ArrowRight'"
+                :btn-icon="allProjectsVisible ? 'ArrowLeft' : 'ArrowRight'"
+                :reversed-order="true"
                 class="see-more-btn"
                 @click="toggleAllVisible"
             />

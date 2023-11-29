@@ -1,11 +1,10 @@
 <template>
     <div class="whole-content">
         <div class="edit-button-ctn">
-            <LpiButton
+            <LinkButton
                 v-if="!loading && canEditProject"
                 :label="$t('project.edit')"
-                left-icon="Pen"
-                size="link"
+                btn-icon="Pen"
                 @click="editProject"
                 data-test="header-project-button"
             />
@@ -253,11 +252,8 @@
                                 v-if="$store.getters['users/isLoggedIn']"
                                 class="space-button"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
-                                :right-icon="followed ? 'Heart' : 'HeartOutline'"
-                                :top-icon="true"
-                                :no-border="true"
-                                :bold="true"
-                                button-size="mbutton"
+                                :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+                                vertical-layout
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
@@ -266,22 +262,16 @@
                                 "
                                 class="space-button article-button"
                                 :label="$t('group.news')"
-                                right-icon="Article"
-                                :top-icon="true"
-                                :no-border="true"
-                                :bold="true"
+                                btn-icon="Article"
+                                vertical-layout
                                 :nb-button="project.announcements.length.toString()"
-                                button-size="mbutton"
                                 @click="$emit('show-project-announcements')"
                             />
                             <ExternalLabelButton
                                 class="space-button"
                                 :label="$filters.capitalize($t('comment.comment-verb'))"
-                                right-icon="ChatBubble"
-                                :top-icon="true"
-                                :no-border="true"
-                                :bold="true"
-                                button-size="mbutton"
+                                btn-icon="ChatBubble"
+                                vertical-layout
                                 @click="goToCommentView"
                             />
                             <ToolTip
@@ -305,21 +295,15 @@
                                 <ExternalLabelButton
                                     class="space-button"
                                     :label="$t('group.share')"
-                                    right-icon="Share"
-                                    :top-icon="true"
-                                    :no-border="true"
-                                    :bold="true"
-                                    button-size="mbutton"
+                                    btn-icon="Share"
+                                    vertical-layout
                                 />
                             </ToolTip>
                             <ExternalLabelButton
                                 v-if="moreInfo"
                                 class="space-button"
                                 :label="$t('group.less')"
-                                right-icon="ChevronUp"
-                                :no-border="true"
-                                :no-margin="true"
-                                :bold="true"
+                                btn-icon="ChevronUp"
                                 @click="displayLessInfo"
                             />
                             <ExternalLabelButton
@@ -327,10 +311,7 @@
                                 id="more-info-btn"
                                 class="space-button"
                                 :label="$t('group.more')"
-                                right-icon="ChevronDown"
-                                :no-border="true"
-                                :no-margin="true"
-                                :bold="true"
+                                btn-icon="ChevronDown"
                                 @click="displayMoreInfo"
                             />
                         </div>
@@ -351,10 +332,8 @@
                 <ExternalLabelButton
                     class="close-button"
                     :label="$t('header.close')"
-                    left-icon="Close"
-                    :no-border="true"
-                    :no-margin="true"
-                    :bold="true"
+                    btn-icon="Close"
+                    reverse
                     @click="displayLessInfo"
                 />
             </div>
@@ -364,7 +343,7 @@
 
 <script>
 import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import ExternalLabelButton from '@/components/lpikit/LpiButton/ExternalLabelButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
@@ -388,7 +367,7 @@ export default {
         TagsList,
         CroppedImage,
         InfoSentence,
-        LpiButton,
+        LinkButton,
     },
 
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
@@ -741,6 +720,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:deep(.share-tip > div) {
+    display: flex;
+    justify-content: center;
+}
+
 :deep(.share-tip .trigger) {
     text-align: right;
 }

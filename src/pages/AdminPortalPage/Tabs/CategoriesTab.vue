@@ -23,7 +23,7 @@
             </draggable>
         </div>
 
-        <LpiButton :label="$t('admin.portal.categories.add')" color="green" @click="addCategory" />
+        <LpiButton :label="$t('admin.portal.categories.add')" @click="addCategory" />
 
         <LpiSnackbar
             v-if="showMessage"

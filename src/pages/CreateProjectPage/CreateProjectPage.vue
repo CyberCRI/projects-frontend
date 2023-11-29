@@ -39,7 +39,7 @@
                 <LpiButton
                     :disabled="!formNotEmpty || isSaving"
                     :label="$t('project.form.create-project')"
-                    :left-icon="isSaving ? 'LoaderSimple' : null"
+                    :btn-icon="isSaving ? 'LoaderSimple' : null"
                     class="submit-btn"
                     @click="submit"
                     data-test="project-create-button"

@@ -23,10 +23,9 @@
             />
         </div>
         <div class="show-more" v-if="listProjects?.length > listLimit">
-            <LpiButton
+            <LinkButton
                 class="see-more-btn"
                 :label="$filters.capitalize($t(seeMoreLabel))"
-                size="link"
                 @click="isSeeMore = !isSeeMore"
             />
         </div>
@@ -42,14 +41,14 @@
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import PickProjectSelection from './PickProjectSelection.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'PickProjectsDrawer',
 
     emits: ['close', 'picked-projects'],
 
-    components: { DrawerLayout, PickProjectSelection, ProjectCard, LpiButton },
+    components: { DrawerLayout, PickProjectSelection, ProjectCard, LinkButton },
 
     props: {
         drawerTitle: {

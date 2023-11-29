@@ -1,71 +1,31 @@
 <template>
-    <div
+    <button
         class="external-btn"
-        :class="{ reversed, disabled, topIcon, noMargin }"
-        @click="$emit('click')"
+        :class="{
+            'reversed-order': reversedOrder,
+            'vertical-layout': verticalLayout,
+            'has-border': hasBorder,
+        }"
     >
-        <div v-if="rightIcon" class="over-button">
-            <LpiButton
-                class="btn"
-                :right-icon="rightIcon"
-                color="primary-dark"
-                secondary
-                :disabled="disabled"
-                :reversed="reversed"
-                :no-border="noBorder"
-                :no-margin="noMargin"
-                :no-flex="noFlex"
-                :size="size"
-                :button-size="buttonSize"
-            />
-            <LpiButton
-                v-if="nbButton"
-                :label="nbButton"
-                :disabled="true"
-                size="xx-small"
-                :over="true"
-                :opacity="true"
-            />
+        <div v-if="btnIcon" class="over-button">
+            <IconImage :name="btnIcon" class="btn" />
+            <span class="number over" v-if="nbButton"
+                ><span>{{ nbButton }}</span></span
+            >
         </div>
 
-        <span :class="{ disabled, bold }">{{ label }}</span>
-
-        <div v-if="leftIcon" class="over-button">
-            <LpiButton
-                class="btn"
-                :left-icon="leftIcon"
-                color="primary-dark"
-                secondary
-                :disabled="disabled"
-                :reversed="reversed"
-                :no-border="noBorder"
-                :no-margin="noMargin"
-                :no-flex="noFlex"
-                :size="size"
-                :button-size="buttonSize"
-            />
-            <LpiButton
-                v-if="nbButton"
-                :label="nbButton"
-                :disabled="true"
-                size="xx-small"
-                :over="true"
-                :opacity="true"
-            />
-        </div>
-    </div>
+        <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
+    </button>
 </template>
 
 <script>
-import LpiButton from './LpiButton.vue'
+import IconImage from '@/components/svgs/IconImage.vue'
 
 export default {
     name: 'ExternalLabelButton',
 
-    emits: ['click'],
-
     components: {
-        LpiButton,
+        IconImage,
     },
 
     props: {
@@ -74,60 +34,27 @@ export default {
             default: '',
         },
 
-        rightIcon: {
+        btnIcon: {
             type: String,
             default: null,
         },
 
-        leftIcon: {
-            type: String,
-            default: null,
-        },
-
-        topIcon: {
+        verticalLayout: {
             type: Boolean,
             default: false,
         },
 
-        disabled: {
+        reversedOrder: {
             type: Boolean,
             default: false,
         },
 
-        reversed: {
-            type: Boolean,
-            default: false,
-        },
-
-        noBorder: {
-            type: Boolean,
-            default: false,
-        },
-
-        noMargin: {
-            type: Boolean,
-            default: false,
-        },
-
-        bold: {
-            type: Boolean,
-            default: false,
-        },
-
-        noFlex: {
+        hasBorder: {
             type: Boolean,
             default: false,
         },
 
         nbButton: {
-            type: String,
-            default: null,
-        },
-        size: {
-            type: String,
-            default: null,
-        },
-        buttonSize: {
             type: String,
             default: null,
         },
@@ -138,91 +65,90 @@ export default {
 <style lang="scss" scoped>
 .external-btn {
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: $space-s;
     align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: $primary-dark;
+    cursor: pointer;
 
-    span {
+    &.reversed {
+        flex-direction: row-reverse;
+    }
+
+    &.vertical-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &.reversed-order {
+            flex-direction: column-reverse;
+        }
+    }
+
+    .label {
         font-size: $font-size-s;
         font-weight: 400;
         color: $primary-dark;
         text-align: center;
     }
 
-    &.disabled,
-    &.disabled * {
-        pointer-events: none;
-        cursor: default;
+    .number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-2xs;
+        padding: $space-s;
+        height: 7px;
+        width: 7px;
+        box-sizing: border-box;
+        background: $primary-dark;
+        color: $white;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 0;
+
+        @media screen and (max-width: $min-tablet) {
+            right: 400px; // TODO: ???
+        }
     }
 
-    &.disabled span {
-        opacity: 0.7;
-    }
-
-    .bold {
+    .btn-label {
         font-weight: 700;
     }
 
     .btn {
-        width: 32px;
-        height: 32px;
-        border-width: $border-width-m;
+        width: pxToRem(32px);
+        height: pxToRem(32px);
+        color: $primary-dark;
+        fill: $primary-dark;
+    }
+
+    &.has-border {
+        .over-button {
+            border: $border-width-m solid $primary-dark;
+            border-radius: $border-radius-50;
+            width: pxToRem(32px);
+            height: pxToRem(32px);
+        }
+
+        .btn {
+            width: pxToRem(24px);
+            height: pxToRem(24px);
+        }
     }
 
     .over-button {
-        display: flex;
-        flex-direction: row;
         position: relative;
-
-        .below-text {
-            position: absolute;
-            top: 37px;
-            width: 100%;
-
-            @media screen and (max-width: $min-tablet) {
-                top: 32px;
-            }
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .over {
             pointer-events: none;
-        }
-    }
-}
-
-@media screen and (min-width: $min-tablet) {
-    .external-btn {
-        flex-direction: row-reverse;
-        cursor: pointer;
-
-        .btn {
-            margin-left: $space-m;
-        }
-
-        &.noMargin {
-            .btn {
-                margin-left: 0;
-            }
-        }
-
-        &.reversed {
-            flex-direction: row;
-
-            .btn {
-                margin-left: 0;
-                margin-right: $space-m;
-            }
-        }
-
-        &.topIcon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .btn {
-                margin-left: 0;
-                margin-right: 0;
-                margin-bottom: 5px;
-            }
         }
     }
 }

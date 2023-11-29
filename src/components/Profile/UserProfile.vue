@@ -4,24 +4,23 @@
     </div>
     <div v-else class="user-profile">
         <div class="profile-links" v-if="showPageLink || isSelf || canEditUser">
-            <LpiButton
+            <LinkButton
                 v-if="showPageLink"
                 class="page-btn"
-                left-icon="Eye"
-                :secondary="true"
-                :no-border="true"
+                btn-icon="Eye"
                 :label="$t('profile.go-to-page')"
-                @click="goToProfile"
+                :to="{
+                    name: 'ProfileOtherUser',
+                    params: { userKId: user?.slug || kid },
+                }"
             />
 
-            <LpiButton
+            <LinkButton
                 v-if="isSelf || canEditUser"
                 class="edit-btn"
-                left-icon="Pen"
-                :secondary="true"
-                :no-border="true"
+                btn-icon="Pen"
                 :label="editButtonLabel"
-                @click="editProfile"
+                :to="editProfileLink"
             />
         </div>
 
@@ -43,7 +42,7 @@ import permissions from '@/mixins/permissions.ts'
 import ProfileTabs from '@/pages/UserProfilePage/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'UserProfile',
@@ -53,7 +52,7 @@ export default {
     emits: ['user-not-found', 'close'],
 
     components: {
-        LpiButton,
+        LinkButton,
         LoaderSimple,
         ProfileTabs,
         ProfileHeader,
@@ -125,6 +124,11 @@ export default {
                 ? this.$t('profile.edit.edit-your-profile')
                 : this.$t('profile.edit.edit')
         },
+        editProfileLink() {
+            return this.isSelf
+                ? { name: 'ProfileEdit' }
+                : { name: 'ProfileEditOtherUser', params: { userKId: this.user?.slug || this.kid } }
+        },
     },
 
     methods: {
@@ -148,18 +152,6 @@ export default {
         // updateContent(selectedEditor, htmlContent) {
         //     this.payload[selectedEditor].savedContent = htmlContent
         // },
-        editProfile() {
-            this.isSelf
-                ? this.$router.push({ name: 'ProfileEdit' })
-                : this.$router.push({ name: 'ProfileEditOtherUser', params: { userKId: this.kid } })
-        },
-
-        goToProfile() {
-            this.$router.push({
-                name: 'ProfileOtherUser',
-                params: { userKId: this.user?.slug || this.kid },
-            })
-        },
     },
 }
 </script>

@@ -12,10 +12,8 @@
                         :animation="false"
                         :class="{ active: addToProjectMenuVisible }"
                         :label="$t('common.add')"
-                        :secondary="false"
                         class="add-to-project-button"
-                        left-icon="Plus"
-                        size="medium"
+                        btn-icon="Plus"
                         @click="toggleAddToProject"
                         data-test="add-to-project"
                     />

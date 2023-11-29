@@ -44,10 +44,9 @@
 
         <LpiButton
             :label="$filters.capitalize($t('common.send'))"
-            color="green"
             class="save-button"
             @click="submit"
-            :left-icon="isLoading ? 'LoaderSimple' : null"
+            :btn-icon="isLoading ? 'LoaderSimple' : null"
             data-test="report-button"
         />
     </form>

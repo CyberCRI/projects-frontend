@@ -27,8 +27,6 @@
 
                 <LpiButton
                     :label="$filters.capitalize($t('project.image-alert.upload'))"
-                    :left-icon="null"
-                    :secondary="false"
                     class="footer__right-button"
                     @click="$emit('edit')"
                 />

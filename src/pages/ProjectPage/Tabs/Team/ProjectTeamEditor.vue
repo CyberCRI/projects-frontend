@@ -1,18 +1,16 @@
 <template>
     <div class="project-team-editor">
         <div class="actions">
-            <LpiButton
+            <ContextActionButton
                 v-if="canBeRemoved"
-                left-icon="Close"
-                class="remove-btn"
-                size="extra-small"
+                action-icon="Close"
+                class="remove-btn small"
                 @click="$emit('remove-user')"
             />
-            <LpiButton
+            <ContextActionButton
                 v-if="canBeEdited"
-                left-icon="Pen"
-                class="edit-btn"
-                size="extra-small"
+                action-icon="Pen"
+                class="edit-btn small"
                 @click="$emit('edit-user')"
             />
         </div>
@@ -23,7 +21,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 
 export default {
     name: 'ProjectTeamEditor',
@@ -31,7 +29,7 @@ export default {
     emits: ['remove-user', 'edit-user'],
 
     components: {
-        LpiButton,
+        ContextActionButton,
     },
 
     props: {

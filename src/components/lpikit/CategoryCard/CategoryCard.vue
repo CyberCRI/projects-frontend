@@ -9,7 +9,12 @@
                 <IconImage class="icon" name="Check" />
             </span>
 
-            <LpiButton v-if="editable" class="edit-button" left-icon="Pen" @click="editCategory" />
+            <ContextActionButton
+                v-if="editable"
+                class="edit-button"
+                action-icon="Pen"
+                @click="editCategory"
+            />
 
             <CategoryCardImage
                 :background-color="category.background_color"
@@ -26,7 +31,7 @@
 <script>
 import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 
 export default {
     name: 'CategoryCard',
@@ -36,7 +41,7 @@ export default {
     components: {
         CategoryCardImage,
         IconImage,
-        LpiButton,
+        ContextActionButton,
     },
 
     props: {

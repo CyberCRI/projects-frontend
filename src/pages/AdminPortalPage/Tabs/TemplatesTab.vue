@@ -28,7 +28,6 @@
                         <h4 class="title">{{ $t('template.tags') }}</h4>
                         <LpiButton
                             :label="$filters.capitalize($t('tag.edit'))"
-                            class="no-margin"
                             @click="tagSearchIsOpened = true"
                         />
                     </div>
@@ -138,7 +137,7 @@
                 <LpiButton
                     :disabled="otherFieldDisabled"
                     :label="$filters.capitalize($t('common.save'))"
-                    :left-icon="isLoading ? 'LoaderSimple' : null"
+                    :btn-icon="isLoading ? 'LoaderSimple' : null"
                     color="green"
                     @click="submit"
                 />

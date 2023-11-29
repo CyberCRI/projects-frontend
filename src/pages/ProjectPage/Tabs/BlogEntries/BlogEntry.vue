@@ -28,18 +28,16 @@
             :class="{ 'button-ctn--expanded': isExpanded }"
             class="button-ctn"
         >
-            <LpiButton
+            <ContextActionButton
                 v-if="canEdit"
-                class="button"
-                left-icon="Pen"
-                size="extra-small"
+                class="button small"
+                action-icon="Pen"
                 @click="$emit('edit-clicked')"
             />
-            <LpiButton
+            <ContextActionButton
                 v-if="canDelete"
-                class="button"
-                left-icon="Close"
-                size="extra-small"
+                class="button small"
+                action-icon="Close"
                 @click="$emit('delete-clicked')"
             />
         </div>
@@ -48,7 +46,7 @@
 
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {
@@ -58,7 +56,7 @@ export default {
 
     components: {
         IconImage,
-        LpiButton,
+        ContextActionButton,
     },
 
     props: {
@@ -187,13 +185,10 @@ export default {
 
     .button-ctn {
         position: absolute;
-        top: -13px;
-        right: 100px;
+        top: 0;
+        right: 110px;
         display: flex;
-
-        &--expanded {
-            right: 106px;
-        }
+        transform: translateY(-60%);
 
         .button {
             margin: 0 4px;

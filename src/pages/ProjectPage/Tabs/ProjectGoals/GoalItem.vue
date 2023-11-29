@@ -27,16 +27,16 @@
             </div>
 
             <div class="actions-btns">
-                <LpiButton v-if="canEditGoal" @click="editGoal" left-icon="Pen" />
+                <ContextActionButton v-if="canEditGoal" @click="editGoal" action-icon="Pen" />
 
-                <LpiButton v-if="canDeleteGoal" @click="deleteGoal" left-icon="Close" />
+                <ContextActionButton v-if="canDeleteGoal" @click="deleteGoal" action-icon="Close" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
@@ -64,7 +64,7 @@ export default {
 
     mixins: ['permissions'],
 
-    components: { LpiButton, IconImage },
+    components: { ContextActionButton, IconImage },
 
     data() {
         return {

@@ -163,7 +163,7 @@
                         :label="$t('profile.edit.general.picture.resize-image')"
                         :secondary="true"
                         class="next-patatoid-btn"
-                        left-icon="Pen"
+                        btn-icon="Pen"
                         @click="openImageResizer"
                     />
                 </div>
@@ -206,12 +206,9 @@
                     }})</label
                 >
 
-                <LpiButton
+                <LinkButton
                     :label="$t('profile.edit.general.sdgs.add')"
-                    :secondary="true"
-                    :no-border="true"
-                    :no-margin="true"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     @click="openSdgsDrawer"
                 />
             </div>
@@ -256,8 +253,7 @@
             <LpiButton
                 :disabled="v$.$errors.length || asyncing"
                 :label="$filters.capitalize($t('common.confirm'))"
-                :left-icon="asyncing ? 'LoaderSimple' : null"
-                :secondary="false"
+                :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
                 @click="save"
                 data-test="confirm-button"
@@ -318,6 +314,7 @@
 <script>
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
@@ -368,6 +365,7 @@ export default {
         TagsFilterEditor,
         DrawerLayout,
         SdgsFilter,
+        LinkButton,
     },
     mixins: [imageMixin],
     props: {
@@ -733,5 +731,9 @@ $sdg-size: $font-size-4xl;
     text-decoration: underline;
     color: $primary-dark;
     cursor: pointer;
+}
+
+.notice {
+    line-height: 1.6;
 }
 </style>

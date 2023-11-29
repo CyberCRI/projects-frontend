@@ -40,34 +40,32 @@
 
             <!-- Buttons list -->
             <div class="projects-buttons">
-                <LpiButton
+                <LinkButton
                     v-if="announcements.length > 0"
                     :label="$filters.capitalize($t('home.announcements'))"
                     class="btn link"
-                    left-icon="Search"
-                    size="link"
+                    btn-icon="Search"
                     @click="scrollTo('announcements')"
                 />
-                <LpiButton
+                <LinkButton
                     :label="$filters.capitalize($t('home.all-projects'))"
                     class="btn link"
-                    left-icon="ChartBox"
-                    size="link"
+                    btn-icon="ChartBox"
                     @click="scrollTo('projectList')"
                 />
-                <LpiButton
+                <LinkButton
                     :label="$filters.capitalize($t('map.projects'))"
                     class="btn"
-                    left-icon="Map"
-                    secondary
-                    size="link"
-                    @click="$router.push('map')"
+                    btn-icon="Map"
+                    :to="{
+                        name: 'map',
+                    }"
                 />
                 <LpiButton
                     v-if="canCreateProject"
                     :label="$t('project.create-project')"
                     class="btn"
-                    left-icon="Plus"
+                    btn-icon="Plus"
                     secondary
                     @click="$router.push({ name: 'createProject' })"
                     data-test="create-project"
@@ -191,7 +189,7 @@
                     :label="
                         $filters.capitalize(isMoreToggled ? $t('common.less') : $t('common.more'))
                     "
-                    :left-icon="PlusOrMinusIcon"
+                    :btn-icon="PlusOrMinusIcon"
                     @click="isMoreToggled = !isMoreToggled"
                 />
             </div>
@@ -202,6 +200,7 @@
 <script>
 import CategoryCard from '@/components/lpikit/CategoryCard/CategoryCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import AnnouncementCardList from '@/components/lpikit/AnnouncementCard/AnnouncementCardList.vue'
 import HomeCarousel from '@/components/HomeCarousel/HomeCarousel.vue'
 import CommunityCard from '@/components/lpikit/CommunityCard/CommunityCard.vue'
@@ -240,6 +239,7 @@ export default {
         CategoryCard,
         CommunityCard,
         LpiButton,
+        LinkButton,
         ProjectListSearch,
         CardList,
         ProjectCard,

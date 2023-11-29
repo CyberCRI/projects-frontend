@@ -53,10 +53,9 @@
                         />
                     </td>
                     <td>
-                        <LpiButton
+                        <LinkButton
                             :label="$t('account.edit')"
-                            left-icon="Pen"
-                            size="link"
+                            btn-icon="Pen"
                             @click="createAccountDrawer(user)"
                         />
                     </td>
@@ -85,6 +84,7 @@
 <script>
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import AccountDrawer from '@/components/Layouts/Account/AccountDrawer.vue'
@@ -108,6 +108,7 @@ export default {
         LpiButton,
         AccountDrawer,
         PaginationButtons,
+        LinkButton,
     },
 
     data() {

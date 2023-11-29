@@ -29,7 +29,6 @@
                     <LpiButton
                         :label="$t('discover.HEADER.button_discover')"
                         level="primary"
-                        size="large"
                         to="/dashboard"
                     />
 
@@ -37,7 +36,6 @@
                         :label="$t('discover.HEADER.button_access')"
                         href="#get-access"
                         level="primary"
-                        size="large"
                         @click.prevent="goTo('#get-access')"
                     />
                 </div>

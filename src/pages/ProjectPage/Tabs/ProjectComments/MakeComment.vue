@@ -30,7 +30,7 @@
                 <LpiButton :label="$t('common.cancel')" :secondary="true" @click="checkCancel" />
                 <LpiButton
                     :disabled="!canSubmitComment || asyncing"
-                    :left-icon="asyncing ? 'LoaderSimple' : null"
+                    :btn-icon="asyncing ? 'LoaderSimple' : null"
                     :label="$t('comment.publish')"
                     @click="submit"
                 />
