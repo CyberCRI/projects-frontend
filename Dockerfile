@@ -26,7 +26,10 @@ ARG VITE_APP_API_DEFAULT_VERSION=/v1 \
     VITE_APP_PUBLIC_BINARIES_PREFIX=https://criparisprodprodassets.blob.core.windows.net/assets/public \
     VITE_APP_VERSION\
     VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
-    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev
+    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
+    VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID \
+    VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID \
+    VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID
 
 COPY . /app/
 

@@ -74,40 +74,47 @@
         </div>
     </ProfileEditBlock>
     <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
-        <i18n-t tag="p" keypath="complete-profile.bio.notice" class="section-notice">
-            <a class="link bio-exemple-link" href="#">{{
-                $t('complete-profile.bio.exemples.researcher')
-            }}</a>
-            <a class="link bio-exemple-link" href="#">{{
-                $t('complete-profile.bio.exemples.professional')
-            }}</a>
-            <a class="link bio-exemple-link" href="#">{{
-                $t('complete-profile.bio.exemples.student')
-            }}</a>
-        </i18n-t>
+        <p class="section-notice">
+            <span>{{ $t('complete-profile.bio.notice') }} </span>
+            <i18n-t
+                v-if="hasBioExemple"
+                tag="span"
+                keypath="complete-profile.bio.notice-exemples"
+                class="section-notice"
+            >
+                <a
+                    class="link bio-exemple-link"
+                    href="#"
+                    @click="exempleToShow = resercherSlugOrId"
+                    >{{ $t('complete-profile.bio.exemples.researcher') }}</a
+                >
+                <a
+                    class="link bio-exemple-link"
+                    href="#"
+                    @click="exempleToShow = professionalSlugOrId"
+                    >{{ $t('complete-profile.bio.exemples.professional') }}</a
+                >
+                <a
+                    class="link bio-exemple-link"
+                    href="#"
+                    @click="exempleToShow = studentSlugOrId"
+                    >{{ $t('complete-profile.bio.exemples.student') }}</a
+                >
+            </i18n-t>
+        </p>
         <div class="two-columns">
-            <!-- short bios -->
+            <!-- personal bio -->
             <div class="column">
-                <label class="field-title">{{ $t('complete-profile.bio.short-bio') }} </label>
-                <p class="field-notice">
-                    {{ $t('complete-profile.bio.short-bio-notice') }}
-                </p>
-                <textarea
-                    rows="2"
-                    :placeholder="$t('complete-profile.bio.short-bio-placeholder')"
-                    v-model="form.short_description"
-                ></textarea>
                 <label class="field-title">{{ $t('complete-profile.bio.personal-bio') }} </label>
                 <p class="field-notice">
                     {{ $t('complete-profile.bio.personal-bio-notice') }}
                 </p>
-
                 <TipTapEditor
                     :key="personalBioKey"
                     :save-icon-visible="false"
                     :socket="false"
                     :ws-data="personalBio"
-                    class="html-input"
+                    class="html-input flex-grow"
                     mode="none"
                     @update="updatePersonalBio"
                 />
@@ -130,6 +137,19 @@
             </div>
         </div>
     </ProfileEditBlock>
+    <DrawerLayout
+        :has-footer="false"
+        :is-opened="exempleToShow"
+        :title="$t('profile.drawer_title')"
+        @close="exempleToShow = null"
+    >
+        <UserProfile
+            v-if="exempleToShow"
+            ref="profile-user"
+            :can-edit="false"
+            :kid="exempleToShow"
+        />
+    </DrawerLayout>
 </template>
 <script>
 import ProfileEditBlock from '@/components/lpikit/CompleteProfileDrawer/ProfileEditBlock.vue'
@@ -140,7 +160,8 @@ import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/peo
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
 import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
-
+import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
+import UserProfile from '@/components/Profile/UserProfile.vue'
 import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 
 export default {
@@ -153,6 +174,8 @@ export default {
         IconImage,
         ImageEditor,
         TipTapEditor,
+        UserProfile,
+        DrawerLayout,
     },
 
     mixins: [imageMixin],
@@ -168,7 +191,6 @@ export default {
                 given_name: '',
                 family_name: '',
                 job: '',
-                short_description: '',
                 personal_description: '',
                 professional_description: '',
             },
@@ -182,12 +204,25 @@ export default {
                 originalContent: '',
                 savedContent: '',
             },
+            exempleToShow: null,
         }
     },
 
     computed: {
         lang() {
             return this.$store.getters['languages/current']
+        },
+        hasBioExemple() {
+            return this.resercherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId
+        },
+        resercherSlugOrId() {
+            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID
+        },
+        professionalSlugOrId() {
+            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID
+        },
+        studentSlugOrId() {
+            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID
         },
     },
 
@@ -203,7 +238,7 @@ export default {
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
                     : null
-                ;['given_name', 'family_name', 'job', 'short_description'].forEach((field) => {
+                ;['given_name', 'family_name', 'job'].forEach((field) => {
                     this.form[field] = this.user[field]
                 })
 
@@ -247,7 +282,6 @@ export default {
                         sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
                         professional_description: this.longBio.savedContent,
                         personal_description: this.personalBio.savedContent,
-                        short_description: this.form.short_description,
                     }
 
                     await patchUser(this.user.keycloak_id, data)
@@ -424,6 +458,10 @@ textarea {
         background-color: $gray-9;
         cursor: not-allowed;
     }
+}
+
+.html-input {
+    height: pxToRem(280px);
 }
 
 .picture-block {

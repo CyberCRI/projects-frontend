@@ -438,7 +438,8 @@
     "complete-profile": {
         "bio": {
             "title": "Bio",
-            "notice": "Bio allow people to understand who you are, what you do and stand for. Need some inspiration? Here are examples for {0}, {1} or {2}.",
+            "notice": "Bio allow people to understand who you are, what you do and stand for.",
+            "notice-exemples": "Need some inspiration? Here are examples for {0}, {1} or {2}.",
             "exemples": {
                 "researcher": "a researcher",
                 "professional": "a professional",
