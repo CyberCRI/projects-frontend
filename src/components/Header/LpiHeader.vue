@@ -703,7 +703,7 @@ a:visited {
     color: $white;
 }
 
-@media (min-width: pxToRem(1120px   )) {
+@media (min-width: pxToRem(1120px)) {
     .header {
         position: fixed;
 
