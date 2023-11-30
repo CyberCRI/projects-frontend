@@ -5,7 +5,7 @@
                 {{ $t('complete-profile.onboarding') }} {{ step + 1 }}/{{ stepComponents.length }}
             </h3>
         </template>
-        <div class="complete-profile-page page-section-wide">
+        <div class="complete-profile-content page-section-wide">
             <header>
                 <h1 class="title">{{ $t('complete-profile.title') }}</h1>
                 <p class="notice">
@@ -20,6 +20,7 @@
                 <component
                     ref="currentStepComponent"
                     @saving="saving = $event"
+                    @loading="loading = $event"
                     :is="stepComponent"
                 ></component>
             </main>
@@ -36,7 +37,7 @@
                 @click="save"
                 :label="$t(saveLabel)"
                 :btn-icon="saving ? 'LoaderSimple' : undefined"
-                :disabled="saving"
+                :disabled="loading || saving"
             ></LpiButton>
         </template>
     </DrawerLayout>
@@ -56,6 +57,7 @@ export default {
             stepComponents: [CompleteProfileStep1, CompleteProfileStep2],
             step: 0,
             saving: false,
+            loading: false,
         }
     },
     props: {
@@ -96,8 +98,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.complete-profile-page {
-    margin-top: $navbar-height;
+.complete-profile-content {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: stretch;
+
+    main {
+        flex-grow: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: stretch;
+    }
 }
 
 .progression {

@@ -5,7 +5,9 @@
                 class="portal-logo-ctn"
                 :style="{ 'background-image': `url(${organizationLogo})` }"
             ></div>
-            <h2 class="welcome-title">{{ organizationTitle }}</h2>
+            <i18n-t keypath="welcome-modal.title" tag="h2" class="welcome-title">
+                <span>{{ organizationTitle }}</span>
+            </i18n-t>
             <p class="notice">{{ $t('welcome-modal.success') }}</p>
             <p class="notice">{{ $t('welcome-modal.instruction') }}</p>
             <p class="notice">{{ $t('welcome-modal.guidance') }}</p>

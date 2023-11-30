@@ -1196,6 +1196,12 @@
         "add-picture": "Ajouter une image",
         "change-picture": "Changer l'image"
     },
+    "plateform-tour-modal": {
+        "intro": "Voici une visite rapide des principales fonctionnalités de Projects. Vous pouvez toujours y revenir (ainsi qu'à de nombreux tutoriels) dans le menu “Plus / Aide”.",
+        "notice-tutorial": "Vous pouvez également apprendre les tenants et aboutissants de Projects avec nos {0}",
+        "title": "Visite de la plateforme : qu'est-ce que Projects",
+        "tutorial": "tutoriels"
+    },
     "print": {
         "blog-entries": "imprimer le blog",
         "description": "imprimer la description",
@@ -1569,6 +1575,13 @@
         },
         "cancel-title": "Annuler la modification du profil",
         "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue."
+    },
+    "profile-completed-modal": {
+        "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
+        "notice-tour": "Pour faciliter votre intégration, nous vous recommandons de faire un rapide tour des principales fonctionnalités de Projects. Ce sont probablement 2 minutes bien dépensées de votre temps ;)",
+        "title": "Félicitations, vous êtes prêt ! Que diriez-vous d'une visite rapide ?",
+        "skip": "Passer",
+        "take-tour": "Faire le tour maintenant"
     },
     "project": {
         "add": "Ajouter un projet",
@@ -2502,7 +2515,7 @@
     },
 
     "welcome-modal": {
-        "title": "Bienvenue sur le portail Projetcs de {organization}",
+        "title": "Bienvenue sur le portail Projects de {0}",
         "success": "🎉 Votre compte a bien été créé !",
         "instruction": "Avant de commencer à profiter de la plateforme, il faut compléter votre profil.",
         "guidance": "Cela ne prendra que quelques minutes et nous vous guiderons en chemin.",

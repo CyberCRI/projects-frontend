@@ -2518,7 +2518,7 @@
         "sub-title": "Discover portals that belong to other organisations. Browse, get inspired, and get in touch!"
     },
     "welcome-modal": {
-        "title": "Welcome to the Projects portal of {organization}",
+        "title": "Welcome to the Projects portal of {0}",
         "success": "🎉 Your account has been successfully created!",
         "instruction": "Before you can start enjoying the platform, you need to complete your profile.",
         "guidance": "This will only take a couple of minutes and we’ll guide you along the way.",

@@ -1,155 +1,168 @@
 <template>
-    <ProfileEditBlock :block-title="$t('complete-profile.personal.title')">
-        <div class="two-columns">
-            <!-- personal -->
-            <div class="column">
-                <label class="field-title">{{ $t('complete-profile.personal.firstname') }} *</label>
-                <input
-                    type="text"
-                    :placeholder="$t('complete-profile.personal.firstname-placeholder')"
-                    v-model="form.given_name"
-                />
-                <label class="field-title">{{ $t('complete-profile.personal.lastname') }} *</label>
-                <input
-                    type="text"
-                    :placeholder="$t('complete-profile.personal.lastname-placeholder')"
-                    v-model="form.family_name"
-                />
+    <div class="loader" v-if="loading">
+        <LoaderSimple />
+    </div>
+    <template v-else>
+        <ProfileEditBlock :block-title="$t('complete-profile.personal.title')">
+            <div class="two-columns">
+                <!-- personal -->
+                <div class="column">
+                    <label class="field-title"
+                        >{{ $t('complete-profile.personal.firstname') }} *</label
+                    >
+                    <input
+                        type="text"
+                        :placeholder="$t('complete-profile.personal.firstname-placeholder')"
+                        v-model="form.given_name"
+                    />
+                    <label class="field-title"
+                        >{{ $t('complete-profile.personal.lastname') }} *</label
+                    >
+                    <input
+                        type="text"
+                        :placeholder="$t('complete-profile.personal.lastname-placeholder')"
+                        v-model="form.family_name"
+                    />
 
-                <label class="field-title">{{ $t('complete-profile.personal.email') }} *</label>
-                <input
-                    type="email"
-                    œ
-                    :placeholder="$t('complete-profile.personal.email-placeholder')"
-                    :value="user?.email"
-                    disabled
-                />
+                    <label class="field-title">{{ $t('complete-profile.personal.email') }} *</label>
+                    <input
+                        type="email"
+                        œ
+                        :placeholder="$t('complete-profile.personal.email-placeholder')"
+                        :value="user?.email"
+                        disabled
+                    />
 
-                <label class="field-title">{{ $t('complete-profile.personal.headline') }} *</label>
-                <input
-                    type="text"
-                    :placeholder="$t('complete-profile.personal.headline-placeholder')"
-                    v-model="form.job"
-                />
-            </div>
-            <div class="column">
-                <label class="field-title">{{ $t('complete-profile.personal.picture') }}</label>
-                <p class="field-notice">
-                    {{ $t('complete-profile.personal.picture-notice') }}
-                </p>
-                <!-- picture-->
-                <ImageEditor
-                    :picture-alt="`${form.given_name} image`"
-                    :contain="true"
-                    :round-picture="true"
-                    v-model:imageSizes="form.imageSizes"
-                    v-model:picture="form.picture"
-                    :default-picture="`${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`"
-                >
-                </ImageEditor>
-            </div>
-        </div>
-    </ProfileEditBlock>
-    <ProfileEditBlock :block-title="$t('complete-profile.skills.title')">
-        <div class="one-column">
-            <div class="column">
-                <label class="field-title">{{ $t('complete-profile.skills.sdg') }} *</label>
-                <p class="field-notice">{{ $t('complete-profile.skills.sdg-notice') }}</p>
-
-                <div class="sdg-grid">
-                    <label class="sdg" v-for="sdg in sdgs" :key="sdg.id">
-                        <input type="checkbox" class="sdg-checkbox" v-model="sdg.selected" />
-                        <span
-                            class="sdg-pic"
-                            :style="{
-                                'background-image': `url(${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdg.id}.svg)`,
-                            }"
-                            @click="toggle"
-                        >
-                        </span>
-                        <IconImage class="sdg-checkmark" name="Check" />
-                    </label>
+                    <label class="field-title"
+                        >{{ $t('complete-profile.personal.headline') }} *</label
+                    >
+                    <input
+                        type="text"
+                        :placeholder="$t('complete-profile.personal.headline-placeholder')"
+                        v-model="form.job"
+                    />
+                </div>
+                <div class="column">
+                    <label class="field-title">{{ $t('complete-profile.personal.picture') }}</label>
+                    <p class="field-notice">
+                        {{ $t('complete-profile.personal.picture-notice') }}
+                    </p>
+                    <!-- picture-->
+                    <ImageEditor
+                        :picture-alt="`${form.given_name} image`"
+                        :contain="true"
+                        :round-picture="true"
+                        v-model:imageSizes="form.imageSizes"
+                        v-model:picture="form.picture"
+                        :default-picture="`${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`"
+                    >
+                    </ImageEditor>
                 </div>
             </div>
-        </div>
-    </ProfileEditBlock>
-    <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
-        <p class="section-notice">
-            <span>{{ $t('complete-profile.bio.notice') }} </span>
-            <i18n-t
-                v-if="hasBioExemple"
-                tag="span"
-                keypath="complete-profile.bio.notice-exemples"
-                class="section-notice"
-            >
-                <a
-                    class="link bio-exemple-link"
-                    href="#"
-                    @click="exempleToShow = resercherSlugOrId"
-                    >{{ $t('complete-profile.bio.exemples.researcher') }}</a
-                >
-                <a
-                    class="link bio-exemple-link"
-                    href="#"
-                    @click="exempleToShow = professionalSlugOrId"
-                    >{{ $t('complete-profile.bio.exemples.professional') }}</a
-                >
-                <a
-                    class="link bio-exemple-link"
-                    href="#"
-                    @click="exempleToShow = studentSlugOrId"
-                    >{{ $t('complete-profile.bio.exemples.student') }}</a
-                >
-            </i18n-t>
-        </p>
-        <div class="two-columns">
-            <!-- personal bio -->
-            <div class="column">
-                <label class="field-title">{{ $t('complete-profile.bio.personal-bio') }} </label>
-                <p class="field-notice">
-                    {{ $t('complete-profile.bio.personal-bio-notice') }}
-                </p>
-                <TipTapEditor
-                    :key="personalBioKey"
-                    :save-icon-visible="false"
-                    :socket="false"
-                    :ws-data="personalBio"
-                    class="html-input flex-grow"
-                    mode="none"
-                    @update="updatePersonalBio"
-                />
+        </ProfileEditBlock>
+        <ProfileEditBlock :block-title="$t('complete-profile.skills.title')">
+            <div class="one-column">
+                <div class="column">
+                    <label class="field-title">{{ $t('complete-profile.skills.sdg') }} *</label>
+                    <p class="field-notice">{{ $t('complete-profile.skills.sdg-notice') }}</p>
+
+                    <div class="sdg-grid">
+                        <label class="sdg" v-for="sdg in sdgs" :key="sdg.id">
+                            <input type="checkbox" class="sdg-checkbox" v-model="sdg.selected" />
+                            <span
+                                class="sdg-pic"
+                                :style="{
+                                    'background-image': `url(${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdg.id}.svg)`,
+                                }"
+                                @click="toggle"
+                            >
+                            </span>
+                            <IconImage class="sdg-checkmark" name="Check" />
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="column flexed-column">
-                <!-- long bio -->
-                <label class="field-title">{{ $t('complete-profile.bio.long-bio') }} </label>
-                <p class="field-notice">
-                    {{ $t('complete-profile.bio.long-bio-notice') }}
-                </p>
-                <TipTapEditor
-                    :key="longBioKey"
-                    :save-icon-visible="false"
-                    :socket="false"
-                    :ws-data="longBio"
-                    class="html-input flex-grow"
-                    mode="none"
-                    @update="updateLongBio"
-                />
+        </ProfileEditBlock>
+        <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
+            <p class="section-notice">
+                <span>{{ $t('complete-profile.bio.notice') }} </span>
+                <i18n-t
+                    v-if="hasBioExemple"
+                    tag="span"
+                    keypath="complete-profile.bio.notice-exemples"
+                    class="section-notice"
+                >
+                    <a
+                        class="link bio-exemple-link"
+                        href="#"
+                        @click="exempleToShow = resercherSlugOrId"
+                        >{{ $t('complete-profile.bio.exemples.researcher') }}</a
+                    >
+                    <a
+                        class="link bio-exemple-link"
+                        href="#"
+                        @click="exempleToShow = professionalSlugOrId"
+                        >{{ $t('complete-profile.bio.exemples.professional') }}</a
+                    >
+                    <a
+                        class="link bio-exemple-link"
+                        href="#"
+                        @click="exempleToShow = studentSlugOrId"
+                        >{{ $t('complete-profile.bio.exemples.student') }}</a
+                    >
+                </i18n-t>
+            </p>
+            <div class="two-columns">
+                <!-- personal bio -->
+                <div class="column">
+                    <label class="field-title"
+                        >{{ $t('complete-profile.bio.personal-bio') }}
+                    </label>
+                    <p class="field-notice">
+                        {{ $t('complete-profile.bio.personal-bio-notice') }}
+                    </p>
+                    <TipTapEditor
+                        :key="personalBioKey"
+                        :save-icon-visible="false"
+                        :socket="false"
+                        :ws-data="personalBio"
+                        class="html-input flex-grow"
+                        mode="none"
+                        @update="updatePersonalBio"
+                    />
+                </div>
+                <div class="column flexed-column">
+                    <!-- long bio -->
+                    <label class="field-title">{{ $t('complete-profile.bio.long-bio') }} </label>
+                    <p class="field-notice">
+                        {{ $t('complete-profile.bio.long-bio-notice') }}
+                    </p>
+                    <TipTapEditor
+                        :key="longBioKey"
+                        :save-icon-visible="false"
+                        :socket="false"
+                        :ws-data="longBio"
+                        class="html-input flex-grow"
+                        mode="none"
+                        @update="updateLongBio"
+                    />
+                </div>
             </div>
-        </div>
-    </ProfileEditBlock>
-    <DrawerLayout
-        :has-footer="false"
-        :is-opened="exempleToShow"
-        :title="$t('profile.drawer_title')"
-        @close="exempleToShow = null"
-    >
-        <UserProfile
-            v-if="exempleToShow"
-            ref="profile-user"
-            :can-edit="false"
-            :kid="exempleToShow"
-        />
-    </DrawerLayout>
+        </ProfileEditBlock>
+        <DrawerLayout
+            :has-footer="false"
+            :is-opened="exempleToShow"
+            :title="$t('profile.drawer_title')"
+            @close="exempleToShow = null"
+        >
+            <UserProfile
+                v-if="exempleToShow"
+                ref="profile-user"
+                :can-edit="false"
+                :kid="exempleToShow"
+            />
+        </DrawerLayout>
+    </template>
 </template>
 <script>
 import ProfileEditBlock from '@/components/lpikit/CompleteProfileDrawer/ProfileEditBlock.vue'
@@ -163,11 +176,11 @@ import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
 import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
-
+import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {
     name: 'CompleteProfileStep1',
 
-    emits: ['saving'],
+    emits: ['saving', 'loading'],
 
     components: {
         ProfileEditBlock,
@@ -176,6 +189,7 @@ export default {
         TipTapEditor,
         UserProfile,
         DrawerLayout,
+        LoaderSimple,
     },
 
     mixins: [imageMixin],
@@ -205,6 +219,7 @@ export default {
                 savedContent: '',
             },
             exempleToShow: null,
+            loading: false,
         }
     },
 
@@ -227,7 +242,16 @@ export default {
     },
 
     async mounted() {
-        await this.loadUser()
+        this.loading = true
+        this.$emit('loading', true)
+        try {
+            await this.loadUser()
+        } catch (error) {
+            console.error(error)
+        } finally {
+            this.loading = false
+            this.$emit('loading', false)
+        }
     },
 
     methods: {
@@ -339,6 +363,13 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.loader {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .profile-edit-block + .profile-edit-block {
     margin-top: 2rem;
 }
