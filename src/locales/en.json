@@ -1199,6 +1199,12 @@
         "add-picture": "Add a picture",
         "change-picture": "Change picture"
     },
+    "plateform-tour-modal": {
+        "intro": "Here is a quick tour of Projects main features. You can always come back to it (along with many tutorials) in the “More / Help” menu.",
+        "notice-tutorial": "You can also learn the ins and outs of Projects with our {0}",
+        "title": "Platform tour: what is Projects",
+        "tutorial": "tutorials"
+    },
     "print": {
         "blog-entries": "print blog entries",
         "description": "print description",
@@ -1573,6 +1579,13 @@
         },
         "cancel-title": "Cancel profile editing",
         "cancel-content": "Are you sure you want to cancel your profile edition. Any change made will be lost."
+    },
+    "profile-completed-modal": {
+        "notice-congratulation": "You are now ready to use the projects platform.",
+        "notice-tour": "To facilitate your onboarding, we recommend you take a quick tour of the main features of Projects. These are 2 minutes of your time probably well spent ;)",
+        "title": "Congratulations, you’re all set! What about a quick tour?",
+        "skip": "Skip this",
+        "take-tour": "Take the tour now"
     },
     "project": {
         "add": "Add project",

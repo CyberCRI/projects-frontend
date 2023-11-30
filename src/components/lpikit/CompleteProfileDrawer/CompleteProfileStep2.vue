@@ -34,9 +34,6 @@ export default {
         /* eslint-disable-next-line vue/no-unused-properties */
         async save() {
             // this called by CompleteProfileDrawer.vue
-            this.$emit('saving', true)
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            this.$emit('saving', false)
             return true
         },
     },

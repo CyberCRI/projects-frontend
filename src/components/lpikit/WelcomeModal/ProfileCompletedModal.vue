@@ -1,34 +1,33 @@
 <template>
-    <BaseModal @close="completeLater">
+    <BaseModal @close="skip">
         <template #content>
             <div
                 class="portal-logo-ctn"
                 :style="{ 'background-image': `url(${organizationLogo})` }"
             ></div>
-            <h2 class="welcome-title">{{ organizationTitle }}</h2>
-            <p class="notice">{{ $t('welcome-modal.success') }}</p>
-            <p class="notice">{{ $t('welcome-modal.instruction') }}</p>
-            <p class="notice">{{ $t('welcome-modal.guidance') }}</p>
+            <h2 class="welcome-title">{{ $t('profile-completed-modal.title') }}</h2>
+            <p class="notice">{{ $t('profile-completed-modal.notice-congratulation') }}</p>
+            <p class="notice">{{ $t('profile-completed-modal.notice-tour') }}</p>
         </template>
         <template #footer>
             <div class="footer">
                 <LpiButton
-                    :disabled="!!asyncing"
-                    :label="$t('welcome-modal.complete-later')"
-                    :btn-icon="asyncing == 'skip' ? 'LoaderSimple' : undefined"
+                    :label="$t('profile-completed-modal.skip')"
                     :secondary="true"
+                    :disabled="asyncing"
+                    :btn-icon="asyncing == 'skip' ? 'LoaderSimple' : undefined"
                     class="footer__left-button"
-                    @click="completeLater"
+                    @click="skip"
                     data-test="close-button"
                 />
 
                 <LpiButton
-                    :disabled="!!asyncing"
-                    :label="$t('welcome-modal.complete-now')"
+                    :disabled="asyncing"
+                    :label="$t('profile-completed-modal.take-tour')"
                     :btn-icon="asyncing == 'proceed' ? 'LoaderSimple' : undefined"
                     :secondary="false"
                     class="footer__right-button"
-                    @click="completeNow"
+                    @click="takeTour"
                     data-test="confirm-button"
                 />
             </div>
@@ -38,11 +37,10 @@
 <script>
 import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import { patchUser } from '@/api/people.service.ts'
 export default {
-    name: 'WelcomeModal',
+    name: 'ProfileCompletedModal',
 
-    emits: ['close', 'complete-profile'],
+    emits: ['close', 'take-tour'],
 
     components: { BaseModal, LpiButton },
 
@@ -53,32 +51,18 @@ export default {
     },
 
     methods: {
-        async completeLater() {
-            await this.patchUser('skip')
+        async skip() {
             this.$emit('close')
         },
 
-        async completeNow() {
-            await this.patchUser('proceed')
-            this.$emit('complete-profile')
-        },
-
-        async patchUser(choice) {
-            this.asyncing = choice
-            // register that the user has seen the welcome modal
-            await patchUser(this.$store.getters['users/kid'], {
-                show_welcome: false,
-            })
-            this.asyncing = false
+        async takeTour() {
+            this.$emit('take-tour')
         },
     },
 
     computed: {
         organizationLogo() {
             return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
-        },
-        organizationTitle() {
-            return this.$store.getters['organizations/current']?.dashboard_title || ''
         },
     },
 }

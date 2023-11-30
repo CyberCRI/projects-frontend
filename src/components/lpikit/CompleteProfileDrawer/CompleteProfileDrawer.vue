@@ -50,7 +50,7 @@ import CompleteProfileStep2 from '@/components/lpikit/CompleteProfileDrawer/Comp
 export default {
     name: 'CompleteProfileDrawer',
     components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, DrawerLayout },
-    emits: ['close'],
+    emits: ['close', 'completed'],
     data() {
         return {
             stepComponents: [CompleteProfileStep1, CompleteProfileStep2],
@@ -88,7 +88,7 @@ export default {
                     this.step++
                 } else {
                     // TODO: end of the game
-                    this.$emit('close')
+                    this.$emit('completed')
                 }
             }
         },
