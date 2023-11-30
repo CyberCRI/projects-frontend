@@ -8,7 +8,7 @@
 
 <script>
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
-import { defineAsyncComponent } from 'vue'
+import NotificationsSettingsTab from './Tabs/NotificationsSettingsTab.vue'
 
 export default {
     name: 'NotificationSettingsPage',
@@ -20,9 +20,7 @@ export default {
                 {
                     key: 'notifications-settings',
                     label: this.$t('notifications.tabs.email'),
-                    component: defineAsyncComponent(() =>
-                        import('./Tabs/NotificationsSettingsTab.vue')
-                    ),
+                    component: NotificationsSettingsTab,
                 },
             ]
         },
