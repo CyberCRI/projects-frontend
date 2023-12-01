@@ -1,5 +1,5 @@
 <template>
-    <BaseModal @close="skip">
+    <BaseModal @close="skip" data-test="profile-completed-modal">
         <template #content>
             <div
                 class="portal-logo-ctn"

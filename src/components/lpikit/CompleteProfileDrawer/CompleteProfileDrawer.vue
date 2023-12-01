@@ -1,5 +1,12 @@
 <template>
-    <DrawerLayout :is-opened="isOpened" title="" @close="cancel" class="full" :padding="false">
+    <DrawerLayout
+        :is-opened="isOpened"
+        title=""
+        @close="cancel"
+        class="full"
+        :padding="false"
+        :data-test="`onboarding-step-${step}`"
+    >
         <template #header_prefix>
             <h3 class="progression">
                 {{ $t('complete-profile.onboarding') }} {{ step + 1 }}/{{ stepComponents.length }}
@@ -21,6 +28,7 @@
                     ref="currentStepComponent"
                     @saving="saving = $event"
                     @loading="loading = $event"
+                    @invalid="invalid = $event"
                     :is="stepComponent"
                 ></component>
             </main>
@@ -31,13 +39,15 @@
                 secondary
                 :label="$t('complete-profile.cancel')"
                 :disabled="saving"
+                data-test="skip-button"
             ></LpiButton>
 
             <LpiButton
                 @click="save"
                 :label="$t(saveLabel)"
                 :btn-icon="saving ? 'LoaderSimple' : undefined"
-                :disabled="loading || saving"
+                :disabled="invalid || loading || saving"
+                data-test="confirm-button"
             ></LpiButton>
         </template>
     </DrawerLayout>
@@ -58,6 +68,7 @@ export default {
             step: 0,
             saving: false,
             loading: false,
+            invalid: false,
         }
     },
     props: {

@@ -475,6 +475,7 @@
             "picture-notice": "(120px x 120px mini; formats jpg or png)",
             "title": "Personal Information"
         },
+        "required": "This field is required",
         "resources": {
             "add": "Add resources",
             "notice": "Link publications to your profile (they need to be accessible online)",

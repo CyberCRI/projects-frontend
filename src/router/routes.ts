@@ -30,9 +30,36 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Help',
         component: () =>
             import(/* webpackChunkName: "HelpPage" */ '../pages/HelpPage/HelpPage.vue'),
+
+        redirect: { name: 'HelpFaqTab' },
         meta: {
             resetScroll: true,
         },
+
+        children: [
+            {
+                path: 'faq',
+                name: 'HelpFaqTab',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "OnBoardingTab" */ '../pages/HelpPage/Tabs/OnBoardingTab.vue'
+                    ),
+            },
+            {
+                path: 'help',
+                name: 'HelpHelpTab',
+                component: () =>
+                    import(/* webpackChunkName: "HelpTab" */ '../pages/HelpPage/Tabs/HelpTab.vue'),
+            },
+            {
+                path: 'tutorials',
+                name: 'HelpVideoTab',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "VideoTab" */ '../pages/HelpPage/Tabs/VideoTab.vue'
+                    ),
+            },
+        ],
     },
     {
         path: '/dashboard',

@@ -1,5 +1,5 @@
 <template>
-    <BaseModal @close="$emit('close')">
+    <BaseModal @close="$emit('close')" data-test="take-tour-modal">
         <template #content>
             <h2 class="welcome-title">{{ $t('plateform-tour-modal.title') }}</h2>
             <p class="notice">{{ $t('plateform-tour-modal.intro') }}</p>
@@ -13,7 +13,14 @@
                 ></iframe>
             </div>
             <i18n-t keypath="plateform-tour-modal.notice-tutorial" tag="p" class="notice">
-                <a class="link" href="#"> {{ $t('plateform-tour-modal.tutorial') }} </a>
+                <RouterLink
+                    class="link"
+                    :to="{ name: 'HelpVideoTab' }"
+                    data-test="link-to-tutorials"
+                    @click="$emit('close')"
+                >
+                    {{ $t('plateform-tour-modal.tutorial') }}
+                </RouterLink>
             </i18n-t>
         </template>
         <template #footer><!-- empty --></template>

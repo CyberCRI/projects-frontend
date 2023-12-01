@@ -37,7 +37,7 @@ export default {
     },
 
     created() {
-        this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
+        this.showWelcomeModal = true || !!this.$store.getters['users/userFromApi']?.show_welcome
     },
 
     computed: {},
@@ -45,7 +45,7 @@ export default {
     methods: {
         skipCompleteProfile() {
             this.showWelcomeModal = false
-            this.showProfileCompletedModal = false // can also be called during complete profile process
+            this.showCompleteProfileDrawer = false // can also be called during complete profile process
             this.showTakeTourModal = true
         },
 

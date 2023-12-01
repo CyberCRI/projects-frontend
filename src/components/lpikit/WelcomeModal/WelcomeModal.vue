@@ -1,5 +1,5 @@
 <template>
-    <BaseModal @close="completeLater">
+    <BaseModal @close="completeLater" data-test="welcome-modal">
         <template #content>
             <div
                 class="portal-logo-ctn"

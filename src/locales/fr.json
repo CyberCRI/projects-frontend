@@ -473,6 +473,7 @@
             "picture-notice": "(miniature 120px x 120px ; formats jpg ou png)",
             "title": "Informations personnelles"
         },
+        "required": "Ce champ est requis",
         "resources": {
             "add": "Ajouter des ressources",
             "notice": "Lien vers des publications sur votre profil (elles doivent être accessibles en ligne)",

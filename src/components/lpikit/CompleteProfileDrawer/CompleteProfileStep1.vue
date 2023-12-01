@@ -10,38 +10,111 @@
                     <label class="field-title"
                         >{{ $t('complete-profile.personal.firstname') }} *</label
                     >
-                    <input
-                        type="text"
-                        :placeholder="$t('complete-profile.personal.firstname-placeholder')"
-                        v-model="form.given_name"
-                    />
+                    <div
+                        class="field-with-validation"
+                        :class="{
+                            valid: !v$.form.given_name.$errors.length,
+                            invalid: v$.form.given_name.$errors.length,
+                        }"
+                    >
+                        <div class="field-decorator">
+                            <input
+                                type="text"
+                                :placeholder="$t('complete-profile.personal.firstname-placeholder')"
+                                v-model="form.given_name"
+                                @blur="v$.form.given_name.$validate"
+                            />
+                        </div>
+                        <p
+                            v-for="error of v$.form.given_name.$errors"
+                            :key="error.$uid"
+                            class="error-description"
+                        >
+                            {{ error.$message }}
+                        </p>
+                    </div>
+
                     <label class="field-title"
                         >{{ $t('complete-profile.personal.lastname') }} *</label
                     >
-                    <input
-                        type="text"
-                        :placeholder="$t('complete-profile.personal.lastname-placeholder')"
-                        v-model="form.family_name"
-                    />
+                    <div
+                        class="field-with-validation"
+                        :class="{
+                            valid: !v$.form.family_name.$errors.length,
+                            invalid: v$.form.family_name.$errors.length,
+                        }"
+                    >
+                        <div class="field-decorator">
+                            <input
+                                type="text"
+                                :placeholder="$t('complete-profile.personal.lastname-placeholder')"
+                                v-model="form.family_name"
+                                @blur="v$.form.family_name.$validate"
+                            />
+                        </div>
+                        <p
+                            v-for="error of v$.form.family_name.$errors"
+                            :key="error.$uid"
+                            class="error-description"
+                        >
+                            {{ error.$message }}
+                        </p>
+                    </div>
 
                     <label class="field-title">{{ $t('complete-profile.personal.email') }} *</label>
-                    <input
-                        type="email"
-                        œ
-                        :placeholder="$t('complete-profile.personal.email-placeholder')"
-                        :value="user?.email"
-                        disabled
-                    />
+                    <div
+                        class="field-with-validation"
+                        :class="{
+                            valid: !v$.user.email.$errors.length,
+                            invalid: v$.user.email.$errors.length,
+                        }"
+                    >
+                        <div class="field-decorator">
+                            <input
+                                type="email"
+                                :placeholder="$t('complete-profile.personal.email-placeholder')"
+                                :value="user?.email"
+                                disabled
+                                @blur="v$.user.email.$validate"
+                            />
+                        </div>
+                        <p
+                            v-for="error of v$.user.email.$errors"
+                            :key="error.$uid"
+                            class="error-description"
+                        >
+                            {{ error.$message }}
+                        </p>
+                    </div>
 
                     <label class="field-title"
                         >{{ $t('complete-profile.personal.headline') }} *</label
                     >
-                    <input
-                        type="text"
-                        :placeholder="$t('complete-profile.personal.headline-placeholder')"
-                        v-model="form.job"
-                    />
+                    <div
+                        class="field-with-validation"
+                        :class="{
+                            valid: !v$.form.job.$errors.length,
+                            invalid: v$.form.job.$errors.length,
+                        }"
+                    >
+                        <div class="field-decorator">
+                            <input
+                                type="text"
+                                :placeholder="$t('complete-profile.personal.headline-placeholder')"
+                                v-model="form.job"
+                                @blur="v$.form.job.$validate"
+                            />
+                        </div>
+                        <p
+                            v-for="error of v$.form.job.$errors"
+                            :key="error.$uid"
+                            class="error-description"
+                        >
+                            {{ error.$message }}
+                        </p>
+                    </div>
                 </div>
+
                 <div class="column">
                     <label class="field-title">{{ $t('complete-profile.personal.picture') }}</label>
                     <p class="field-notice">
@@ -177,10 +250,12 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import UserProfile from '@/components/Profile/UserProfile.vue'
 import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import useVuelidate from '@vuelidate/core'
+import { helpers, required } from '@vuelidate/validators'
 export default {
     name: 'CompleteProfileStep1',
 
-    emits: ['saving', 'loading'],
+    emits: ['saving', 'loading', 'invalid'],
 
     components: {
         ProfileEditBlock,
@@ -196,6 +271,7 @@ export default {
 
     data() {
         return {
+            v$: useVuelidate(),
             user: null,
             sdgs: allSdgs.map((sdg) => ({ ...sdg, selected: false })),
 
@@ -220,6 +296,28 @@ export default {
             },
             exempleToShow: null,
             loading: false,
+        }
+    },
+
+    validations() {
+        return {
+            form: {
+                given_name: {
+                    required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                },
+                family_name: {
+                    required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                },
+
+                job: {
+                    required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                },
+            },
+            user: {
+                email: {
+                    required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                },
+            },
         }
     },
 
@@ -252,6 +350,16 @@ export default {
             this.loading = false
             this.$emit('loading', false)
         }
+    },
+
+    watch: {
+        'v$.$invalid': {
+            handler(neo) {
+                console.log('invalid', neo)
+                this.$emit('invalid', neo)
+            },
+            immediate: true,
+        },
     },
 
     methods: {
@@ -488,6 +596,47 @@ textarea {
         color: $gray-8;
         background-color: $gray-9;
         cursor: not-allowed;
+    }
+}
+
+.field-with-validation {
+    margin-bottom: pxToRem(21px);
+
+    .field-decorator {
+        position: relative;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            width: 1.6rem;
+            height: 1.6rem;
+            position: absolute;
+            top: 50%;
+            right: 0.2rem;
+            transform: translate(0, -50%);
+        }
+    }
+
+    input {
+        margin-bottom: $space-s;
+        padding-right: 2rem;
+    }
+
+    &.valid {
+        .field-decorator::after {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>check-circle</title><path fill="%2300dba7" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" /></svg>');
+        }
+    }
+
+    &.invalid {
+        .field-decorator::after {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-circle</title><path fill="%23ff9473" d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" /></svg>');
+        }
+    }
+
+    .error-description {
+        text-align: right;
+        color: $salmon;
     }
 }
 
