@@ -8,6 +8,9 @@
         <PotatoIcon3 class="potato potato--potato3" />
         <PotatoIcon4 class="potato potato--potato4" />
 
+        <!-- oboarding todos -->
+        <OnboardingTodoBlock v-if="isConnected" />
+
         <!-- Logo and text -->
         <div class="page-section-medium logo-container">
             <img
@@ -223,6 +226,8 @@ import analytics from '@/analytics'
 
 import { getAnnouncements } from '@/api/announcements.service'
 
+import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+
 export default {
     name: 'HomePage',
 
@@ -245,6 +250,7 @@ export default {
         ProjectCard,
         SearchInput,
         LpiSelect,
+        OnboardingTodoBlock,
     },
 
     data() {

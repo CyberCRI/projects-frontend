@@ -1107,6 +1107,22 @@
         "next": "Suivant",
         "previous": "Précédent"
     },
+    "onboarding-todo": {
+        "platform-tour": "Visite de la plateforme",
+        "welcome": "Bienvenue {0} ! Voici les étapes pour commencer sur la plateforme.",
+        "complete-profile": "Complétez votre profil",
+        "complete-profile-help": "Laissez-moi {0} maintenant !",
+        "complete-profile-go": "me présenter",
+        "explore-projects": "Explorez d'autres projets",
+        "explore-projects-help": "Emmenez-moi vers {0} !",
+        "explore-projects-go": "un monde de merveilles",
+        "create-project": "Créez votre premier projet",
+        "create-project-help": "Oui, je veux {0} maintenant !",
+        "create-project-go": "créer mon projet",
+        "take-tour": "Faire la visite de la plateforme",
+        "take-tour-help": "Allez et {0} maintenant !",
+        "take-tour-go": "faire la visite"
+    },
     "page404": {
         "contact": "Perdu ? Vous pouvez nous contacter ici : {0}",
         "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",

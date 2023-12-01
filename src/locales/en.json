@@ -1110,6 +1110,22 @@
         "next": "Next",
         "previous": "Previous"
     },
+    "onboarding-todo": {
+        "platform-tour": "Paltform tour",
+        "welcome": "Welcome {0}! Here are your steps to get started on the platform.",
+        "complete-profile": "Complete your profile",
+        "complete-profile-help": "Let me {0} now!",
+        "complete-profile-go": "introduce myself",
+        "explore-projects": "Explore other projects",
+        "explore-projects-help": "Take me to {0}!",
+        "explore-projects-go": "a land of wonders",
+        "create-project": "Create your first project",
+        "create-project-help": "Yes, I want to {0} now!",
+        "create-project-go": "create my project",
+        "take-tour": "Take the platform tour",
+        "take-tour-help": "Go and {0} now!",
+        "take-tour-go": "take the tour"
+    },
     "page404": {
         "contact": "Kinda lost? You can contact us at {0}",
         "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",
