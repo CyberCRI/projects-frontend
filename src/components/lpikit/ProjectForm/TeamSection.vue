@@ -72,15 +72,15 @@ export default {
         }),
 
         adaptedCurrentUser() {
-            /* Only selecting what we need for the card and also not selecting
-             ** the keycloak_id, so we don't add this user to the API call
-             */
+            /* Only selecting what we need for the card */
             return {
+                id: this.currentUser.id,
                 family_name: this.currentUser.family_name,
                 given_name: this.currentUser.given_name,
                 job: this.currentUser.job,
                 people_id: this.currentUser.people_id,
                 profile_picture: this.currentUser.profile_picture,
+                keycloak_id: this.currentUser.keycloak_id,
             }
         },
     },
@@ -108,10 +108,14 @@ export default {
         addUser(payload) {
             payload.forEach((user) => {
                 if (user.keycloak_id) {
-                    this.projectUsers.push({
-                        user: user,
-                        role: user.role,
-                    })
+                    // current user is automatically added as owner
+                    // so dont duplicate him
+                    if (user.keycloak_id !== this.currentUser.keycloak_id) {
+                        this.projectUsers.push({
+                            user: user,
+                            role: user.role,
+                        })
+                    }
                 } else {
                     this.projectUsers.push({
                         user: user,
