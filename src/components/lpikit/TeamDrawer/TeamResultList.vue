@@ -83,14 +83,12 @@ export default {
                             ? this.team.some(
                                   // group have a type, user don't
                                   (projectMember) =>
-                                      !projectMember.type &&
-                                      projectMember.keycloak_id === result.keycloak_id
+                                      !projectMember.type && projectMember.id === result.id
                               )
                             : this.currentUsers.some(
                                   // group have a type, user don't
                                   (currentUser) =>
-                                      !currentUser.user.type &&
-                                      currentUser.user.people_id === result.people_id
+                                      !currentUser.user.type && currentUser.user.id === result.id
                               )),
                 }))
             } else {

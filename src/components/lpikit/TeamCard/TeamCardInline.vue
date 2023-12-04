@@ -1,5 +1,9 @@
 <template>
-    <div class="team-card-small" @click="iconName ? $emit('user-clicked') : null">
+    <div
+        class="team-card-small"
+        :class="{ passive: !iconName }"
+        @click="iconName ? $emit('user-clicked') : null"
+    >
         <div class="user-container">
             <CroppedImage
                 :alt="
@@ -88,7 +92,7 @@ export default {
 
         iconName() {
             if (this.icon) return this.icon
-            return this.user.people_id !== this.currentUser.people_id ? 'Close' : null
+            return this.user.id !== this.currentUser.id ? 'Close' : null
         },
     },
 
@@ -114,6 +118,11 @@ export default {
     position: relative;
     justify-content: space-between;
     cursor: pointer;
+
+    &.passive {
+        cursor: default;
+        pointer-events: none;
+    }
 
     .user-container {
         display: flex;
