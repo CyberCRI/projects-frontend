@@ -19,7 +19,7 @@
                 :label="$t('account.button')"
                 class="create-account"
                 :secondary="false"
-                @click="createAccountDrawer"
+                @click="createAccountDrawer(null)"
             ></LpiButton>
         </div>
 
