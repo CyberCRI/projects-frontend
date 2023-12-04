@@ -120,6 +120,7 @@ export default {
         font-weight: 700;
         padding-right: 3rem;
     }
+
     .arrow-btn {
         display: inline-block;
         position: absolute;
@@ -130,6 +131,7 @@ export default {
         width: 2rem;
         background-color: white;
         border-radius: 100%;
+
         svg {
             height: 1.6rem;
             width: 1.6rem;
@@ -140,6 +142,7 @@ export default {
             fill: $primary-dark;
         }
     }
+
     &:hover {
         svg {
             animation-name: arrowbounce;
@@ -156,6 +159,7 @@ export default {
     0% {
         transform: scale(1, 1) translate(-50%, -50%);
     }
+
     30% {
         transform: scale(0.7, 1) translate(-70%, -50%);
     }
@@ -172,6 +176,7 @@ export default {
         transform: scale(1, 1) translate(-50%, -50%);
     }
 }
+
 .onboarding-todos {
     display: flex;
     flex-flow: column nowrap;
