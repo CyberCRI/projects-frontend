@@ -62,6 +62,7 @@
                                 class="sort-icon"
                                 :class="{ active: sortOn == 'expire_at' }"
                                 @click="sortLinks('expire_at')"
+                                data-test="sort-expire"
                             />
                         </th>
                         <th></th>
