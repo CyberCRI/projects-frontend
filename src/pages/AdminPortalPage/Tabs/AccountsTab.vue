@@ -1,26 +1,28 @@
 <template>
     <div class="role-tab">
-        <div class="search-input-container">
-            <SearchInput
-                v-model="searchFilter"
-                :full="true"
-                :placeholder="$t('browse.placeholder')"
-                class="search-input"
-                @enter="searchUser"
-                @delete-query="deleteQuery"
-            />
-            <LpiButton
-                :label="$t('browse.page-title')"
-                :secondary="false"
-                @click="searchUser"
-            ></LpiButton>
+        <div class="controls-wrapper">
+            <div class="search-input-container">
+                <SearchInput
+                    v-model="searchFilter"
+                    :full="true"
+                    :placeholder="$t('browse.placeholder')"
+                    class="search-input"
+                    @enter="searchUser"
+                    @delete-query="deleteQuery"
+                />
+                <LpiButton
+                    :label="$t('browse.page-title')"
+                    :secondary="false"
+                    @click="searchUser"
+                ></LpiButton>
+            </div>
 
-            <LpiButton
+            <LinkButton
                 :label="$t('account.button')"
+                btn-icon="Plus"
                 class="create-account"
-                :secondary="false"
                 @click="createAccountDrawer(null)"
-            ></LpiButton>
+            ></LinkButton>
         </div>
 
         <LpiLoader v-if="isLoading" class="loader" type="simple" />
@@ -44,20 +46,41 @@
                     <td>{{ $filters.capitalize(user.family_name) }}</td>
                     <td>{{ $filters.capitalize(user.given_name) }}</td>
                     <td>{{ $filters.capitalize(user.job) }}</td>
-                    <td>
-                        <BadgeItem
-                            v-if="user.current_org_role"
-                            :label="
-                                $filters.capitalize($t(`groups.roles.${user.current_org_role}`))
-                            "
-                        />
+                    <td class="has-more">
+                        {{
+                            user.current_org_role
+                                ? $t(`groups.roles.${user.current_org_role}`)
+                                : '-'
+                        }}
+                    </td>
+                    <td class="has-more">
+                        <span class="first-item">{{
+                            people_groups?.length ? people_groups[0] : '-'
+                        }}</span>
+                        <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
+                            <span class="more-items" v-if="people_groups?.length > 1">
+                                + {{ people_groups.length - 1 }}
+                            </span>
+
+                            <template #custom-content>
+                                <div class="tooltip-div">
+                                    {{ people_groups?.slice(1).join(', ') }}
+                                </div>
+                            </template>
+                        </ToolTip>
                     </td>
                     <td>
-                        <LinkButton
-                            :label="$t('account.edit')"
-                            btn-icon="Pen"
-                            @click="createAccountDrawer(user)"
-                        />
+                        {{ user.inscription }}
+                    </td>
+                    <td>
+                        {{
+                            user.email_verified
+                                ? $t('admin.accounts.table.activation-yes')
+                                : $t('admin.accounts.table.activation-no')
+                        }}
+                    </td>
+                    <td>
+                        <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
                     </td>
                 </tr>
             </table>
@@ -86,7 +109,6 @@ import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 import AccountDrawer from '@/components/Layouts/Account/AccountDrawer.vue'
 
 import debounce from 'lodash.debounce'
@@ -95,20 +117,21 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
-import { searchPeopleProject } from '@/api/people.service'
+import { searchPeopleAdmin } from '@/api/people.service'
+import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 
 export default {
     name: 'AccountsTab',
 
     components: {
         IconImage,
-        BadgeItem,
         LpiLoader,
         SearchInput,
         LpiButton,
         AccountDrawer,
         PaginationButtons,
         LinkButton,
+        ToolTip,
     },
 
     data() {
@@ -122,30 +145,50 @@ export default {
             request: {},
             filters: [
                 {
-                    label: 'common.last-name',
+                    label: 'admin.accounts.table.last-name',
                     isActive: true,
                     filter: 'family_name',
                     order: '',
                 },
                 {
-                    label: 'common.first-name',
+                    label: 'admin.accounts.table.first-name',
                     isActive: false,
                     filter: 'given_name',
                     order: '',
                 },
                 {
-                    label: 'common.title',
+                    label: 'admin.accounts.table.title',
                     isActive: false,
                     filter: 'job',
                     order: '',
                 },
                 {
-                    label: 'common.role',
+                    label: 'admin.accounts.table.roles',
                     isActive: false,
                     filter: 'current_org_role',
                     order: '',
                 },
+                {
+                    label: 'admin.accounts.table.groups',
+                    isActive: false,
+                    filter: 'people_groups',
+                    order: '',
+                },
+                {
+                    label: 'admin.accounts.table.inscription',
+                    isActive: false,
+                    filter: 'inscription',
+                    order: '',
+                },
+                {
+                    label: 'admin.accounts.table.activation',
+                    isActive: false,
+                    filter: 'email_verified',
+                    order: '',
+                },
             ],
+
+            people_groups: [], // TODO: use API data when available
         }
     },
 
@@ -171,6 +214,10 @@ export default {
         },
     },
 
+    mounted() {
+        this.searchUser()
+    },
+
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
@@ -188,7 +235,7 @@ export default {
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
 
-            this.request = await searchPeopleProject({
+            this.request = await searchPeopleAdmin({
                 search: this.searchFilter,
                 org_id: this.organization.id,
                 params,
@@ -215,7 +262,7 @@ export default {
                 else if (filter.order === '-') filter.order = ''
             }
             this.isLoading = true
-            this.request = await searchPeopleProject({
+            this.request = await searchPeopleAdmin({
                 search: this.searchFilter,
                 org_id: this.organization.id,
                 params: {
@@ -245,12 +292,27 @@ export default {
     flex-direction: column;
     padding: $space-xl 0;
 
+    .controls-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+
+        @media screen and (max-width: $max-tablet) {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+    }
+
     .search-input-container {
         display: flex;
-        padding: $space-l;
-        background: $primary-lighter;
         align-items: center;
-        border-radius: $border-radius-17;
+        flex-basis: 40rem;
+
+        @media screen and (max-width: $max-tablet) {
+            flex-basis: auto;
+        }
 
         .search-input {
             margin-right: $space-l;
@@ -318,5 +380,43 @@ table {
     justify-content: center;
     padding-top: $space-xl;
     padding-bottom: $space-xl;
+}
+
+.has-more {
+    white-space: nowrap;
+}
+
+.first-item,
+.more-items {
+    line-height: 1;
+    vertical-align: baseline;
+}
+
+.more-items {
+    display: inline-block;
+    margin-left: 1rem;
+    background-color: $primary-dark;
+    color: $white;
+    font-weight: 700;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    width: 3rem;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 0.1rem 0.5rem;
+}
+
+.color-tip {
+    color: $black !important;
+}
+
+.tooltip-div {
+    max-width: 20rem;
+    white-space: break-spaces;
+    padding: $space-m;
+    text-align: center;
+    line-height: 1.3;
+    color: $black;
 }
 </style>

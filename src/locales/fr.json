@@ -112,6 +112,19 @@
         }
     },
     "admin": {
+        "accounts": {
+            "table": {
+                "last-name": "Nom",
+                "first-name": "Prénom",
+                "title": "Titre",
+                "roles": "Rôle(s)",
+                "groups": "Groupe(s)",
+                "inscription": "Inscription",
+                "activation": "Activation",
+                "activation-yes": "Oui",
+                "activation-no": "Non"
+            }
+        },
         "title": "Mon Interface Administrateur",
         "menu": {
             "full-profile": "profil complet",

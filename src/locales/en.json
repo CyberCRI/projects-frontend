@@ -112,6 +112,19 @@
         }
     },
     "admin": {
+        "accounts": {
+            "table": {
+                "last-name": "Last name",
+                "first-name": "First name",
+                "title": "Title",
+                "roles": "Role(s)",
+                "groups": "Group(s)",
+                "inscription": "Inscription",
+                "activation": "Activation",
+                "activation-yes": "Yes",
+                "activation-no": "No"
+            }
+        },
         "title": "My Admin Panel",
         "menu": {
             "full-profile": "full profile",
