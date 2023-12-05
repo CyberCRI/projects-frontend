@@ -208,6 +208,7 @@
                 :label="$t('group.form.delete')"
                 btn-icon="TrashCanOutline"
                 :secondary="true"
+                data-test="delete-group-button"
                 @click="openRemoveOrQuit"
             />
         </div>

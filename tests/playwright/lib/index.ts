@@ -16,6 +16,7 @@ import { editProjectInfos } from './editProjectInfos'
 import { createInvitaionLink } from './createInvitaionLink'
 import { createUserFromInvitationLink } from './createUserFromInvitationLink'
 import { createGroup } from './createGroup'
+import { deleteGroup } from './deleteGroup'
 
 export {
     logIn,
@@ -36,4 +37,5 @@ export {
     createInvitaionLink,
     createUserFromInvitationLink,
     createGroup,
+    deleteGroup,
 }

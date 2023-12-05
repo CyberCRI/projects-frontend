@@ -1,5 +1,10 @@
 <template>
-    <BasicCard :group="group" :to-link="toLink" @click="toGroupPage">
+    <BasicCard
+        :group="group"
+        :to-link="toLink"
+        @click="toGroupPage"
+        :data-test="`group-card-${group.name}`"
+    >
         <template #actions-right>
             <IconImage class="icon" name="EmailOutline" @click="mailTo" />
             <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />

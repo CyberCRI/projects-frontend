@@ -19,6 +19,7 @@
                 class="edit-btn"
                 btn-icon="Pen"
                 :label="editGroupLabel"
+                data-test="edit-group"
                 :to="{
                     name: 'frontEditGroup',
                     params: { groupId: this.groupSlug || this.groupId },
