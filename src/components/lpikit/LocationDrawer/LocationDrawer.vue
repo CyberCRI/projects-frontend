@@ -25,7 +25,11 @@
                             ref="map"
                             :config="config"
                             v-if="isOpened"
-                            @contextmenu="openAddModal"
+                            @contextmenu="
+                                $event?.isEdit
+                                    ? openEditModal($event.location)
+                                    : openAddModal($event)
+                            "
                         >
                             <template #default="slotProps">
                                 <template v-if="slotProps.map">

@@ -87,7 +87,20 @@ export default {
             })
 
             const marker = L.marker([location.lat, location.lng], { icon })
-            if (tooltip) marker.bindPopup(tooltip.$el)
+            if (tooltip) {
+                // fix right click not triggering edit location
+                // in project map edition
+                tooltip.$el.addEventListener('contextmenu', (e) => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                    this.$emit('contextmenu', {
+                        isEdit: true,
+                        location,
+                        latlng: [location.lat, location.lng],
+                    })
+                })
+                marker.bindPopup(tooltip.$el)
+            }
             if (eventHandlers) {
                 for (const entry of Object.entries(eventHandlers)) {
                     marker.on(entry[0], entry[1])
