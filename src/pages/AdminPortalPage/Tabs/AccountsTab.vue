@@ -41,8 +41,8 @@
                     <th></th>
                 </tr>
                 <tr v-for="(user, index) in filteredUsers" :key="index">
-                    <td>{{ $filters.capitalize(user.given_name) }}</td>
                     <td>{{ $filters.capitalize(user.family_name) }}</td>
+                    <td>{{ $filters.capitalize(user.given_name) }}</td>
                     <td>{{ $filters.capitalize(user.job) }}</td>
                     <td>
                         <BadgeItem
@@ -124,13 +124,13 @@ export default {
                 {
                     label: 'common.last-name',
                     isActive: true,
-                    filter: 'given_name',
+                    filter: 'family_name',
                     order: '',
                 },
                 {
                     label: 'common.first-name',
                     isActive: false,
-                    filter: 'family_name',
+                    filter: 'given_name',
                     order: '',
                 },
                 {
