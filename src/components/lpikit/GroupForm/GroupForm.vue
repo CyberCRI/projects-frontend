@@ -52,6 +52,7 @@
                 v-model="form.short_description"
                 :placeholder="shortDescriptionPlaceholder"
                 space-below-label="large-space"
+                data-test="group-short-desciption"
                 @blur="validation.form.short_description.$validate"
                 ><label>{{ $t('group.form.short-description-label') }}</label>
             </TextInput>
@@ -128,7 +129,11 @@
         <div class="description">
             <label>
                 {{ $filters.capitalize($t('group.form.description-label')) }}
-                <span class="add-btn" @click="descriptionIsOpened = true" data-test="description">
+                <span
+                    class="add-btn"
+                    @click="descriptionIsOpened = true"
+                    data-test="add-description"
+                >
                     <IconImage v-if="!form.description" name="Plus" />
                     <IconImage v-else name="Pen" />
                     <span v-if="!form.description">{{
@@ -168,7 +173,7 @@
 
         <!-- Visibility -->
         <div class="visibility">
-            <label>{{ $filters.capitalize($t('group.form.visibility.title')) }} *</label>
+            <label>{{ $filters.capitalize($t('group.form.visibility.title')) }}</label>
             <div class="visibility-options">
                 <template v-for="visibility in visibilities" :key="visibility.id">
                     <label
@@ -181,7 +186,7 @@
                                 :value="visibility.id"
                                 type="radio"
                                 name="visibility"
-                                @blur="validation.form.publication_status.$validate"
+                                :data-test="`visibility-${visibility.name.toLowerCase()}`"
                             />{{ visibility.name }}
                         </span>
                     </label>

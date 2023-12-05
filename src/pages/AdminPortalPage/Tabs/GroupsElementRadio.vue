@@ -12,6 +12,7 @@
                         @change="setGroup(group)"
                         :checked="group.id === initialGroup?.id"
                         :disabled="isDisabled"
+                        :data-test="`group-${group.id}`"
                     />
 
                     <span

@@ -15,6 +15,7 @@ import { search } from './search'
 import { editProjectInfos } from './editProjectInfos'
 import { createInvitaionLink } from './createInvitaionLink'
 import { createUserFromInvitationLink } from './createUserFromInvitationLink'
+import { createGroup } from './createGroup'
 
 export {
     logIn,
@@ -34,4 +35,5 @@ export {
     editProjectInfos,
     createInvitaionLink,
     createUserFromInvitationLink,
+    createGroup,
 }

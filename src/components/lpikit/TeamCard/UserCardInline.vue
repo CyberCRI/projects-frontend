@@ -3,6 +3,7 @@
         class="user-card-small"
         @click="$emit('user-clicked')"
         :class="{ selected: selected, passive: passive }"
+        :data-test="`user-card-${user.given_name}`"
     >
         <div class="user-container">
             <CroppedImage

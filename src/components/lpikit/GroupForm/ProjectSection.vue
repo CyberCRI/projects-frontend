@@ -5,7 +5,7 @@
                 {{ $filters.capitalize($t('group.form.project-label')) }}
                 <span v-if="modelValue.length">({{ modelValue.length }})</span>
             </span>
-            <span class="add-user-card" @click="drawerIsOpen = true">
+            <span class="add-project-card" @click="drawerIsOpen = true" data-test="add-project">
                 <IconImage v-if="!modelValue.length" name="Plus" />
                 <IconImage v-else name="Pen" />
                 <span v-if="!modelValue.length">{{
@@ -124,7 +124,7 @@ export default {
         gap: $space-l;
     }
 
-    .add-user-card {
+    .add-project-card {
         display: inline-flex;
         justify-content: center;
         align-items: center;
