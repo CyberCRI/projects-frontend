@@ -54,23 +54,32 @@
                         }}
                     </td>
                     <td class="has-more">
-                        <span class="first-item">{{
-                            people_groups?.length ? people_groups[0] : '-'
-                        }}</span>
+                        <span class="first-item">
+                            <template v-if="user.people_groups?.length">
+                                <span
+                                    :title="user.people_groups[0]"
+                                    v-if="user.people_groups[0].length > 28"
+                                >
+                                    {{ user.people_groups[0].substring(0, 25) + '...' }}
+                                </span>
+                                <span v-else>{{ user.people_groups[0] }}</span>
+                            </template>
+                            <template v-else> - </template>
+                        </span>
                         <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
-                            <span class="more-items" v-if="people_groups?.length > 1">
-                                + {{ people_groups.length - 1 }}
+                            <span class="more-items" v-if="user.people_groups?.length > 1">
+                                + {{ user.people_groups.length - 1 }}
                             </span>
 
                             <template #custom-content>
                                 <div class="tooltip-div">
-                                    {{ people_groups?.slice(1).join(', ') }}
+                                    {{ user.people_groups.slice(1).join(', ') }}
                                 </div>
                             </template>
                         </ToolTip>
                     </td>
                     <td>
-                        {{ user.inscription }}
+                        {{ user.created_at ? new Date(user.created_at).toLocaleDateString() : '-' }}
                     </td>
                     <td>
                         {{
@@ -146,7 +155,7 @@ export default {
             filters: [
                 {
                     label: 'admin.accounts.table.last-name',
-                    isActive: true,
+                    isActive: false,
                     filter: 'family_name',
                     order: '',
                 },
@@ -187,8 +196,6 @@ export default {
                     order: '',
                 },
             ],
-
-            people_groups: [], // TODO: use API data when available
         }
     },
 
@@ -198,7 +205,15 @@ export default {
         },
 
         filteredUsers() {
-            return this.request && this.request.results ? this.request.results : []
+            return this.request && this.request.results
+                ? this.request.results.map((u) => ({
+                      ...u,
+                      people_groups: (u.people_groups || [])
+                          .map((g) => g.name)
+                          .filter((n) => !!n)
+                          .sort(),
+                  }))
+                : []
         },
 
         pagination() {
