@@ -18,9 +18,9 @@
                 <p class="notice">
                     {{ $t('complete-profile.notice.intro') }}<br />
                     {{ $t('complete-profile.notice.no-idea') }}
-                    <RouterLink class="link" :to="{ name: 'Help' }">{{
+                    <a class="link" href="#" @click="helpOpened = true">{{
                         $t('complete-profile.notice.help')
-                    }}</RouterLink>
+                    }}</a>
                 </p>
             </header>
             <main>
@@ -51,6 +51,16 @@
             ></LpiButton>
         </template>
     </DrawerLayout>
+    <DrawerLayout
+        :is-opened="helpOpened"
+        :title="$t('faq.portal')"
+        @close="helpOpened = false"
+        @confirm="helpOpened = false"
+        :padding="false"
+    >
+        <LpiLoader v-if="helpIsLoading" class="help-loader" type="simple" />
+        <iframe :src="docUrl" @load="helpIsLoading = false" />
+    </DrawerLayout>
 </template>
 <script>
 import { toRaw } from 'vue'
@@ -58,9 +68,10 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import CompleteProfileStep1 from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileStep1.vue'
 import CompleteProfileStep2 from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileStep2.vue'
+import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 export default {
     name: 'CompleteProfileDrawer',
-    components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, DrawerLayout },
+    components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, DrawerLayout, LpiLoader },
     emits: ['close', 'completed'],
     data() {
         return {
@@ -69,6 +80,8 @@ export default {
             saving: false,
             loading: false,
             invalid: false,
+            helpOpened: false,
+            helpIsLoading: false,
         }
     },
     props: {
@@ -86,6 +99,13 @@ export default {
             return this.step < this.stepComponents.length - 1
                 ? 'complete-profile.save-and-next'
                 : 'complete-profile.save-and-finish'
+        },
+        docUrl() {
+            const url = new URL(import.meta.env.VITE_APP_DOC)
+            // uppercase lang code are mandatory for this service
+            url.searchParams.append('lang', this.$store.state.languages.current)
+
+            return url
         },
     },
     methods: {
@@ -106,9 +126,25 @@ export default {
             }
         },
     },
+    watch: {
+        helpOpened: function () {
+            this.helpIsLoading = true
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
+iframe {
+    width: 100%;
+
+    // height: calc(100vh - 100px);
+    flex-grow: 1;
+}
+
+.help-loader {
+    align-self: center;
+}
+
 .complete-profile-content {
     flex-grow: 1;
     display: flex;

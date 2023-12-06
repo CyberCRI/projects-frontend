@@ -168,7 +168,7 @@
                     <a
                         class="link bio-exemple-link"
                         href="#"
-                        @click="exempleToShow = resercherSlugOrId"
+                        @click="exempleToShow = researcherSlugOrId"
                         >{{ $t('complete-profile.bio.exemples.researcher') }}</a
                     >
                     <a
@@ -326,9 +326,9 @@ export default {
             return this.$store.getters['languages/current']
         },
         hasBioExemple() {
-            return this.resercherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId
+            return this.researcherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId
         },
-        resercherSlugOrId() {
+        researcherSlugOrId() {
             return import.meta.env.VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID
         },
         professionalSlugOrId() {
@@ -355,7 +355,6 @@ export default {
     watch: {
         'v$.$invalid': {
             handler(neo) {
-                console.log('invalid', neo)
                 this.$emit('invalid', neo)
             },
             immediate: true,

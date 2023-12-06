@@ -437,7 +437,8 @@
     "complete-profile": {
         "bio": {
             "title": "Biographie",
-            "notice": "La biographie permet aux gens de comprendre qui vous êtes, ce que vous faites et ce que vous défendez. Besoin d'inspiration ? Voici des exemples pour {0}, {1} ou {2}.",
+            "notice": "La biographie permet aux gens de comprendre qui vous êtes, ce que vous faites et ce que vous défendez.",
+            "notice-exemples": "Besoin d'inspiration ? Voici des exemples pour {0}, {1} ou {2}.",
             "exemples": {
                 "researcher": "un chercheur",
                 "professional": "un professionnel",
