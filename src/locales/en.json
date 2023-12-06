@@ -1948,6 +1948,44 @@
         "need-help": "Need help?",
         "contact-us": "Contact us"
     },
+    "request-access": {
+        "title": "Access request",
+        "title-confirm": "Request sent",
+        "email": {
+            "label": "Email *",
+            "placeholder": "Enter your email",
+            "is-required": "Email is required",
+            "is-invalid": "This is not a valid email"
+        },
+        "given_name": {
+            "label": "First name *",
+            "placeholder": "Enter your firstname",
+            "is-required": "Firstname is required"
+        },
+        "family_name": {
+            "label": "Last name *",
+            "placeholder": "Enter your lastname",
+            "is-required": "Lastname is required"
+        },
+        "profile-title": {
+            "label": "Profile title / Headline *",
+            "placeholder": "Ie. Student in computer science"
+        },
+        "message": {
+            "label": "Message",
+            "placeholder": "Can you please tell us why you need access?"
+        },
+        "confirmation": "We sent you a confirmation email in your inbox. Once you have confirmed that {0} is your email, we’ll help you get started on the platform.",
+        "save-error": "A technical problem occured. Please retry later.",
+        "email-already-exists": "This email is already registred.",
+        "tos": "By continuing, you agree to our {term} and {privacy}",
+        "term": "term of service",
+        "privacy": "privacy policy",
+        "have-account": "Already an account?",
+        "login": "Login",
+        "need-help": "Need help?",
+        "contact-us": "Contact us"
+    },
     "role": {
         "choose-role": "Choose from the following roles :",
         "role-editor": "Has all edit rights for this group.",

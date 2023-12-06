@@ -1,7 +1,9 @@
 <template>
-    <SignUpWrapper :sign-up-title="confirm ? $t('register.title-confirm') : $t('register.title')">
+    <SignUpWrapper
+        :sign-up-title="confirm ? $t('request.title-confirm') : $t('request-access.title')"
+    >
         <div class="confirm-message" v-if="confirm">
-            <i18n-t keypath="register.confirmation" tag="p">
+            <i18n-t keypath="request-access.confirmation" tag="p">
                 <strong>{{ form.email }}</strong>
             </i18n-t>
         </div>
@@ -9,8 +11,8 @@
             <div class="form-group">
                 <TextInput
                     v-model="form.given_name"
-                    :label="$t('register.given_name.label')"
-                    :placeholder="$t('register.given_name.placeholder')"
+                    :label="$t('request-access.given_name.label')"
+                    :placeholder="$t('request-access.given_name.placeholder')"
                     @blur="v$.form.given_name.$validate"
                     data-test="first-name"
                 />
@@ -25,8 +27,8 @@
             <div class="form-group">
                 <TextInput
                     v-model="form.family_name"
-                    :label="$t('register.family_name.label')"
-                    :placeholder="$t('register.family_name.placeholder')"
+                    :label="$t('request-access.family_name.label')"
+                    :placeholder="$t('request-access.family_name.placeholder')"
                     @blur="v$.form.family_name.$validate"
                     data-test="last-name"
                 />
@@ -41,9 +43,9 @@
             <div class="form-group">
                 <TextInput
                     v-model="form.email"
-                    :label="$t('register.email.label')"
+                    :label="$t('request-access.email.label')"
                     input-type="email"
-                    :placeholder="$t('register.email.placeholder')"
+                    :placeholder="$t('request-access.email.placeholder')"
                     @blur="v$.form.email.$validate"
                     data-test="email"
                 />
@@ -53,21 +55,23 @@
             </div>
             <div class="form-group">
                 <TextInput
-                    input-type="password"
-                    v-model="form.password"
-                    :label="$t('register.password.label')"
-                    :placeholder="$t('register.password.placeholder')"
-                    @blur="v$.form.password.$validate"
-                    data-test="password"
+                    v-model="form.email"
+                    :label="$t('request-access.profile-title.label')"
+                    input-type="email"
+                    :placeholder="$t('request-access.profile-title.placeholder')"
+                    data-test="title"
                 />
-                <p
-                    v-for="error of v$.form.password.$errors"
-                    :key="error.$uid"
-                    class="error-message"
-                >
-                    {{ error.$message }}
-                </p>
             </div>
+            <div class="form-group">
+                <TextInput
+                    v-model="form.message"
+                    :label="$t('request-access.message.label')"
+                    input-type="textarea"
+                    :placeholder="$t('request-access.message.placeholder')"
+                    data-test="message"
+                />
+            </div>
+
             <div class="action">
                 <LpiButton
                     :disabled="v$.form.$error || asyncing"
@@ -77,16 +81,16 @@
                     class="register-btn"
                     data-test="register-btn"
                 />
-                <i18n-t keypath="register.tos" tag="p" class="tos">
+                <i18n-t keypath="request-access.tos" tag="p" class="tos">
                     <template #term>
                         <router-link to="/terms-of-service" class="link"
-                            >{{ $t('register.term') }}
+                            >{{ $t('request-access.term') }}
                         </router-link>
                     </template>
 
                     <template #privacy>
                         <router-link to="/personal-data" class="link"
-                            >{{ $t('register.privacy') }}
+                            >{{ $t('request-access.privacy') }}
                         </router-link>
                     </template>
                 </i18n-t>
@@ -95,13 +99,15 @@
         <template #post-box>
             <div class="extra-links" :class="{ 'is-confirm': confirm }">
                 <p v-if="!confirm" class="extra-link extra-login">
-                    {{ $t('register.have-account') }}
-                    <a href="#" @click.prevent="login" class="link">{{ $t('register.login') }}</a>
+                    {{ $t('request-access.have-account') }}
+                    <a href="#" @click.prevent="login" class="link">{{
+                        $t('request-access.login')
+                    }}</a>
                 </p>
                 <p class="extra-link extra-help">
-                    {{ $t('register.need-help') }}
+                    {{ $t('request-access.need-help') }}
                     <a href="#" @click.prevent="showContactUsDrawer = true" class="link">{{
-                        $t('register.contact-us')
+                        $t('request-access.contact-us')
                     }}</a>
                 </p>
             </div>
@@ -144,8 +150,9 @@ export default {
                 email: '',
                 given_name: '',
                 family_name: '',
-                password: '',
                 profile_picture: '',
+                title: '',
+                message: '',
             },
             asyncing: false,
             confirm: false,
@@ -170,12 +177,6 @@ export default {
                 family_name: {
                     required: helpers.withMessage(
                         this.$t('register.family_name.is-required'),
-                        required
-                    ),
-                },
-                password: {
-                    required: helpers.withMessage(
-                        this.$t('register.password.is-required'),
                         required
                     ),
                 },
