@@ -186,7 +186,7 @@ export default {
                 {
                     label: 'admin.accounts.table.inscription',
                     isActive: false,
-                    filter: 'inscription',
+                    filter: 'created_at',
                     order: '',
                 },
                 {
