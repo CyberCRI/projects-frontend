@@ -37,7 +37,7 @@ export default {
     },
 
     created() {
-        this.showWelcomeModal = true || !!this.$store.getters['users/userFromApi']?.show_welcome
+        this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
     },
 
     computed: {},
