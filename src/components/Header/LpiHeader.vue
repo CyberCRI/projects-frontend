@@ -251,6 +251,13 @@ export default {
     },
 
     methods: {
+        async resetOnboardingStatus() {
+            const payload = { onboarding_status: {} }
+            const keycloak_id = this.$store.getters['users/userFromApi'].keycloak_id
+            await patchUser(keycloak_id, payload)
+            await this.$store.dispatch('users/getUser', keycloak_id)
+        },
+
         onScroll() {
             this.scrolled = window.scrollY > 10
         },
@@ -413,6 +420,14 @@ export default {
                     condition: true,
                     dataTest: 'disconnect',
                 },
+                // {
+                //     // TODO comment out
+                //     label: 'Reset onboarding',
+                //     action: () => this.resetOnboardingStatus(),
+                //     leftIcon: 'Check',
+                //     condition: true,
+                //     dataTest: 'reset-onboarding',
+                // },
             ].filter((menu) => menu.condition)
         },
 

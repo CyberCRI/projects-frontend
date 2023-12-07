@@ -23,48 +23,48 @@
                 <ul class="todo-list">
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.complete-profile')"
-                        :todo-done="true"
+                        :todo-done="!!profile_completed"
+                        :asyncing="asyncing.profile_completed"
+                        :passive="anyAsyncing"
+                        @click="completeProfile"
                     >
-                        <i18n-t keypath="onboarding-todo.complete-profile-help" tag="p">
-                            <RouterLink class="action-link" :to="{ name: 'ProfileEdit' }">
-                                {{ $t('onboarding-todo.complete-profile-go') }}
-                            </RouterLink>
-                        </i18n-t>
                     </OnboardingTodo>
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.explore-projects')"
-                        :todo-done="false"
+                        :todo-done="!!projects_explored"
+                        :asyncing="asyncing.projects_explored"
+                        :passive="anyAsyncing"
+                        @click="exploreProjects"
                     >
-                        <i18n-t keypath="onboarding-todo.explore-projects-help" tag="p">
-                            <RouterLink class="action-link" :to="{ name: 'Categories' }">
-                                {{ $t('onboarding-todo.explore-projects-go') }}
-                            </RouterLink>
-                        </i18n-t>
                     </OnboardingTodo>
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.create-project')"
-                        :todo-done="false"
+                        :todo-done="!!project_created"
+                        :asyncing="asyncing.project_created"
+                        :passive="anyAsyncing"
+                        @click="createProject"
                     >
-                        <i18n-t keypath="onboarding-todo.create-project-help" tag="p">
-                            <RouterLink class="action-link" :to="{ name: 'createProject' }">
-                                {{ $t('onboarding-todo.create-project-go') }}
-                            </RouterLink>
-                        </i18n-t>
                     </OnboardingTodo>
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.take-tour')"
-                        :todo-done="false"
+                        :todo-done="!!tour_taken"
+                        :asyncing="asyncing.tour_taken"
+                        :passive="anyAsyncing"
+                        @click="takeTour"
                     >
-                        <i18n-t keypath="onboarding-todo.take-tour-help" tag="p">
-                            <RouterLink class="action-link" :to="{ name: 'Help' }">
-                                {{ $t('onboarding-todo.take-tour-go') }}
-                            </RouterLink>
-                        </i18n-t>
                     </OnboardingTodo>
                 </ul>
+
+                <div class="extra-actions">
+                    <LinkButton
+                        :label="$t('onboarding-todo.dont-show-again')"
+                        @click="dontShowAgain"
+                        :btn-icon="dont_show_async ? 'LoaderSimple' : ''"
+                    ></LinkButton>
+                </div>
             </div>
         </transition>
     </div>
@@ -72,7 +72,10 @@
 <script>
 import OnboardingTodo from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodo.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
+import { patchUser } from '@/api/people.service.ts'
+
 export default {
     name: 'OnboardingTodoBlock',
 
@@ -80,17 +83,96 @@ export default {
         OnboardingTodo,
         LpiButton,
         IconImage,
+        LinkButton,
     },
 
     data() {
         return {
             collapsed: false,
+            asyncing: {
+                profile_completed: false,
+                projects_explored: false,
+                project_created: false,
+                tour_taken: false,
+            },
+            dont_show_async: false,
         }
     },
 
     computed: {
+        user() {
+            return this.$store.getters['users/userFromApi']
+        },
+
         username() {
-            return this.$store.getters['users/userFromApi'].given_name
+            this.user?.given_name
+        },
+
+        isConnected() {
+            return this.$store.getters['users/isConnected']
+        },
+        status() {
+            return (this.isConnected && this.user?.onboarding_status) || {}
+        },
+        profile_completed() {
+            return this.status.profile_completed
+        },
+        projects_explored() {
+            return this.status.projects_explored
+        },
+        project_created() {
+            return this.status.project_created
+        },
+        tour_taken() {
+            return this.status.tour_taken
+        },
+
+        anyAsyncing() {
+            return Object.values(this.asyncing).some((v) => v)
+        },
+    },
+
+    methods: {
+        async updateStatus(key, val) {
+            this.asyncing[key] = true
+            const payload = { onboarding_status: { ...this.status, [key]: val } }
+            try {
+                await patchUser(this.user.keycloak_id, payload)
+                await this.$store.dispatch('users/getUser', this.user.keycloak_id)
+            } catch (err) {
+                console.error(err)
+            } finally {
+                this.asyncing[key] = false
+            }
+        },
+
+        async completeProfile() {
+            if (this.anyAsyncing) return
+            await this.updateStatus('profile_completed', true)
+            this.$router.push({ name: 'ProfileEdit' })
+        },
+
+        async exploreProjects() {
+            if (this.anyAsyncing) return
+            await this.updateStatus('projects_explored', true)
+            this.$router.push({ name: 'Categories' })
+        },
+
+        async createProject() {
+            if (this.anyAsyncing) return
+            await this.updateStatus('project_created', true)
+            this.$router.push({ name: 'createProject' })
+        },
+
+        async takeTour() {
+            if (this.anyAsyncing) return
+            await this.updateStatus('tour_taken', true)
+            //this.$router.push({ name: 'Help' })
+        },
+
+        async dontShowAgain() {
+            this.dont_show_async = true
+            await this.updateStatus('dont_show', true)
         },
     },
 }
@@ -101,6 +183,11 @@ export default {
     margin-top: $navbar-height;
 }
 
+.extra-actions {
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+}
 .plateform-tour-button {
     appearance: none;
     background-color: $white;

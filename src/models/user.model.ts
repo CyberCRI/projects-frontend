@@ -65,6 +65,7 @@ export interface UserPatchModel {
     roles_to_add?: number[]
     roles_to_remove?: number[]
     permissions_ids?: number[]
+    onboarding_status?: object
 }
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'

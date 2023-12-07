@@ -57,11 +57,12 @@ import permissions from '@/mixins/permissions.ts'
 
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 
 export default {
     name: 'CreateProjectPage',
 
-    mixins: [permissions],
+    mixins: [permissions, onboardingStatusMixin],
 
     emits: ['close'],
 
@@ -141,6 +142,10 @@ export default {
                 purpose: rules,
             },
         }
+    },
+
+    mounted() {
+        this.onboardingTrap('project_created', true)
     },
 
     computed: {

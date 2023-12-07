@@ -15,12 +15,15 @@
 <script>
 import { getUser } from '@/api/people.service.ts'
 import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'ProfileEditPage',
 
     components: {
         ProfileEditTabs,
     },
+
+    mixins: [onboardingStatusMixin],
 
     provide() {
         return {
@@ -49,6 +52,10 @@ export default {
         async loadUser() {
             try {
                 this.user = await getUser(this.userKId || this.$store.getters['users/kid'])
+                // safe check for isSelf beacuse this.userKId might be a slug in fact
+                if (this.user?.keycloak_id == this.$store.getters['users/kid']) {
+                    this.onboardingTrap('profile_completed', true)
+                }
             } catch (error) {
                 console.error(error)
             }

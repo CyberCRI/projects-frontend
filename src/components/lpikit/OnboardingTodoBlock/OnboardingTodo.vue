@@ -1,30 +1,21 @@
 <template>
-    <div class="onboarding-todo">
+    <button class="onboarding-todo" :class="{ done: todoDone, passive }">
         <span class="todo-label">{{ todoLabel }}</span>
-        <ToolTip arrow class="color-tip" :interactive="true" :hover="true">
-            <button class="question-mark tooltip">
-                <IconImage name="QuestionMark" />
-            </button>
-            <template #custom-content>
-                <div class="tooltip-div">
-                    <slot></slot>
-                </div>
-            </template>
-        </ToolTip>
-        <span class="toto-state" :class="{ done: todoDone }">
+        <LoaderSimple class="loader" v-if="asyncing" />
+        <span v-else class="toto-state">
             <IconImage class="checkmark" name="Check" />
         </span>
-    </div>
+    </button>
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {
     name: 'OnboardingTodo',
 
     components: {
         IconImage,
-        ToolTip,
+        LoaderSimple,
     },
 
     props: {
@@ -36,11 +27,20 @@ export default {
             type: Boolean,
             required: true,
         },
+        asyncing: {
+            type: Boolean,
+            default: false,
+        },
+        passive: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>
 <style lang="scss" scoped>
 .onboarding-todo {
+    appearance: none;
     flex-basis: 25%;
     display: flex;
     align-items: center;
@@ -48,14 +48,39 @@ export default {
     background-color: $white;
     padding: $space-m $space-unit;
     border: $dark-blue solid $border-width-s;
-    border-radius: $border-radius-8;
+    border-radius: 4rem;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+
+    &:hover {
+        transform: scale(1.03);
+    }
+
+    &.passive,
+    &.passive:hover {
+        cursor: wait;
+        transform: none;
+    }
+
+    &.done {
+        pointer-events: none;
+        background-color: $gray-9;
+        cursor: default;
+    }
 }
 
 .todo-label {
     font-weight: 700;
+    font-size: $font-size-m;
+    color: $primary-dark;
 }
 
 $checkbox-size: pxToRem(20px);
+
+.loader {
+    height: $checkbox-size;
+    width: $checkbox-size;
+}
 
 .toto-state {
     margin-left: auto;
@@ -64,57 +89,20 @@ $checkbox-size: pxToRem(20px);
     border: $border-width-m solid $primary-dark;
     border-radius: $border-radius-xs;
     flex-shrink: 0;
+    background-color: $white;
 
     .checkmark {
         display: none;
         object-fit: contain;
         fill: $white;
     }
+}
 
-    &.done {
-        background-color: $primary-dark;
+.done .toto-state {
+    background-color: $primary-dark;
 
-        .checkmark {
-            display: inline-block;
-        }
+    .checkmark {
+        display: inline-block;
     }
-}
-
-$question-mark-size: pxToRem(20px);
-
-.question-mark {
-    appearance: none;
-    display: inline-block;
-    position: relative;
-    width: $question-mark-size;
-    height: $question-mark-size;
-    background-color: $white;
-    vertical-align: text-top;
-    margin-left: $space-m;
-    border-radius: 100%;
-    border: $primary-dark solid $border-width-s;
-    cursor: pointer;
-
-    svg {
-        width: 100%;
-        fill: $primary-dark;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.color-tip {
-    color: $black !important;
-}
-
-.tooltip-div {
-    max-width: 20rem;
-    white-space: break-spaces;
-    padding: $space-m;
-    text-align: center;
-    line-height: 1.3;
-    color: $black;
 }
 </style>
