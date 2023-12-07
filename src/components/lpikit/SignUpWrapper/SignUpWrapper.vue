@@ -89,6 +89,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 @media all and (min-width: $min-width-horizontal-layout) {

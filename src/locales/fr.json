@@ -1947,6 +1947,7 @@
     "request-access": {
         "title": "Demande d'accès",
         "title-confirm": "Demande envoyée",
+        "notice": "Votre compte doit être approuvé par l'administrateur avant que vous ne puissiez créer votre propre compte. Veuillez remplir ce formulaire :",
         "email": {
             "label": "E-mail *",
             "placeholder": "Entrez votre e-mail",
@@ -1964,21 +1965,18 @@
             "is-required": "Le nom de famille est obligatoire"
         },
         "profile-title": {
-            "label": "Titre du profil / Titre principal *",
+            "label": "Titre",
             "placeholder": "Ex. Étudiant en informatique"
         },
         "message": {
             "label": "Message",
             "placeholder": "Pouvez-vous nous dire pourquoi vous avez besoin d'accéder?"
         },
-        "confirmation": "Nous vous avons envoyé un e-mail de confirmation dans votre boîte de réception. Une fois que vous avez confirmé que {0} est votre e-mail, nous vous aiderons à démarrer sur la plateforme.",
+        "confirmation": "Nous avons envoyé votre demande aux administrateurs de la plateforme. Veuillez vérifier votre boite mail ({0}) pour la réponse.",
         "save-error": "Un problème technique est survenu. Veuillez réessayer plus tard.",
         "email-already-exists": "Cet e-mail est déjà enregistré.",
-        "tos": "En continuant, vous acceptez nos {termes} et {confidentialite}",
-        "term": "conditions d'utilisation",
-        "confidentialite": "politique de confidentialité",
         "have-account": "Déjà un compte?",
-        "login": "Connexion",
+        "login": "Se connecter",
         "need-help": "Besoin d'aide?",
         "contact-us": "Contactez-nous"
     },

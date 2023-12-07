@@ -1951,6 +1951,7 @@
     "request-access": {
         "title": "Access request",
         "title-confirm": "Request sent",
+        "notice": "Your account needs to be approved by the admin before you can create your own account. Please complete this form:",
         "email": {
             "label": "Email *",
             "placeholder": "Enter your email",
@@ -1968,19 +1969,16 @@
             "is-required": "Lastname is required"
         },
         "profile-title": {
-            "label": "Profile title / Headline *",
+            "label": "Headline *",
             "placeholder": "Ie. Student in computer science"
         },
         "message": {
             "label": "Message",
             "placeholder": "Can you please tell us why you need access?"
         },
-        "confirmation": "We sent you a confirmation email in your inbox. Once you have confirmed that {0} is your email, we’ll help you get started on the platform.",
+        "confirmation": "We sent your request to the platform's admins. Please check your mail box ({0}) for the response.",
         "save-error": "A technical problem occured. Please retry later.",
         "email-already-exists": "This email is already registred.",
-        "tos": "By continuing, you agree to our {term} and {privacy}",
-        "term": "term of service",
-        "privacy": "privacy policy",
         "have-account": "Already an account?",
         "login": "Login",
         "need-help": "Need help?",

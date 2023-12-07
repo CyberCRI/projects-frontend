@@ -1,101 +1,103 @@
 <template>
     <SignUpWrapper
-        :sign-up-title="confirm ? $t('request.title-confirm') : $t('request-access.title')"
+        :sign-up-title="confirm ? $t('request-access.title-confirm') : $t('request-access.title')"
     >
-        <div class="confirm-message" v-if="confirm">
-            <i18n-t keypath="request-access.confirmation" tag="p">
-                <strong>{{ form.email }}</strong>
-            </i18n-t>
-        </div>
-        <template v-else>
-            <div class="form-group">
-                <TextInput
-                    v-model="form.given_name"
-                    :label="$t('request-access.given_name.label')"
-                    :placeholder="$t('request-access.given_name.placeholder')"
-                    @blur="v$.form.given_name.$validate"
-                    data-test="first-name"
-                />
-                <p
-                    v-for="error of v$.form.given_name.$errors"
-                    :key="error.$uid"
-                    class="error-message"
-                >
-                    {{ error.$message }}
-                </p>
-            </div>
-            <div class="form-group">
-                <TextInput
-                    v-model="form.family_name"
-                    :label="$t('request-access.family_name.label')"
-                    :placeholder="$t('request-access.family_name.placeholder')"
-                    @blur="v$.form.family_name.$validate"
-                    data-test="last-name"
-                />
-                <p
-                    v-for="error of v$.form.family_name.$errors"
-                    :key="error.$uid"
-                    class="error-message"
-                >
-                    {{ error.$message }}
-                </p>
-            </div>
-            <div class="form-group">
-                <TextInput
-                    v-model="form.email"
-                    :label="$t('request-access.email.label')"
-                    input-type="email"
-                    :placeholder="$t('request-access.email.placeholder')"
-                    @blur="v$.form.email.$validate"
-                    data-test="email"
-                />
-                <p v-for="error of v$.form.email.$errors" :key="error.$uid" class="error-message">
-                    {{ error.$message }}
-                </p>
-            </div>
-            <div class="form-group">
-                <TextInput
-                    v-model="form.email"
-                    :label="$t('request-access.profile-title.label')"
-                    input-type="email"
-                    :placeholder="$t('request-access.profile-title.placeholder')"
-                    data-test="title"
-                />
-            </div>
-            <div class="form-group">
-                <TextInput
-                    v-model="form.message"
-                    :label="$t('request-access.message.label')"
-                    input-type="textarea"
-                    :placeholder="$t('request-access.message.placeholder')"
-                    data-test="message"
-                />
-            </div>
-
-            <div class="action">
-                <LpiButton
-                    :disabled="v$.form.$error || asyncing"
-                    @click="register"
-                    :label="$t('common.confirm')"
-                    :left-icon="asyncing ? 'LoaderSimple' : null"
-                    class="register-btn"
-                    data-test="register-btn"
-                />
-                <i18n-t keypath="request-access.tos" tag="p" class="tos">
-                    <template #term>
-                        <router-link to="/terms-of-service" class="link"
-                            >{{ $t('request-access.term') }}
-                        </router-link>
-                    </template>
-
-                    <template #privacy>
-                        <router-link to="/personal-data" class="link"
-                            >{{ $t('request-access.privacy') }}
-                        </router-link>
-                    </template>
+        <transition name="fade" mode="out-in">
+            <div class="confirm-message" v-if="confirm">
+                <i18n-t keypath="request-access.confirmation" tag="p">
+                    <strong>{{ form.email }}</strong>
                 </i18n-t>
             </div>
-        </template>
+            <div v-else class="form">
+                <p class="notice">{{ $t('request-access.notice') }}</p>
+                <div class="form-group">
+                    <TextInput
+                        v-model="form.given_name"
+                        :label="$t('request-access.given_name.label')"
+                        :placeholder="$t('request-access.given_name.placeholder')"
+                        @blur="v$.form.given_name.$validate"
+                        data-test="first-name"
+                    />
+                    <p
+                        v-for="error of v$.form.given_name.$errors"
+                        :key="error.$uid"
+                        class="error-message"
+                    >
+                        {{ error.$message }}
+                    </p>
+                </div>
+                <div class="form-group">
+                    <TextInput
+                        v-model="form.family_name"
+                        :label="$t('request-access.family_name.label')"
+                        :placeholder="$t('request-access.family_name.placeholder')"
+                        @blur="v$.form.family_name.$validate"
+                        data-test="last-name"
+                    />
+                    <p
+                        v-for="error of v$.form.family_name.$errors"
+                        :key="error.$uid"
+                        class="error-message"
+                    >
+                        {{ error.$message }}
+                    </p>
+                </div>
+                <div class="form-group">
+                    <TextInput
+                        v-model="form.email"
+                        :label="$t('request-access.email.label')"
+                        input-type="email"
+                        :placeholder="$t('request-access.email.placeholder')"
+                        @blur="v$.form.email.$validate"
+                        data-test="email"
+                    />
+                    <p
+                        v-for="error of v$.form.email.$errors"
+                        :key="error.$uid"
+                        class="error-message"
+                    >
+                        {{ error.$message }}
+                    </p>
+                </div>
+                <div class="form-group">
+                    <TextInput
+                        v-model="form.title"
+                        :label="$t('request-access.profile-title.label')"
+                        :placeholder="$t('request-access.profile-title.placeholder')"
+                        data-test="title"
+                    />
+                </div>
+                <div class="form-group">
+                    <TextInput
+                        v-model="form.message"
+                        :label="$t('request-access.message.label')"
+                        input-type="textarea"
+                        :placeholder="$t('request-access.message.placeholder')"
+                        data-test="message"
+                    />
+                </div>
+
+                <div class="action">
+                    <LpiButton
+                        :disabled="asyncing"
+                        @click="cancel"
+                        secondary
+                        :label="$t('common.cancel')"
+                        :btn-icon="asyncing ? 'LoaderSimple' : null"
+                        class="cancel-btn"
+                        data-test="cancel-btn"
+                    />
+                    <LpiButton
+                        :disabled="v$.form.$error || asyncing"
+                        @click="requestAccess"
+                        :label="$t('common.confirm')"
+                        :btn-icon="asyncing ? 'LoaderSimple' : null"
+                        class="register-btn"
+                        data-test="register-btn"
+                    />
+                </div>
+            </div>
+        </transition>
         <template #post-box>
             <div class="extra-links" :class="{ 'is-confirm': confirm }">
                 <p v-if="!confirm" class="extra-link extra-login">
@@ -165,18 +167,21 @@ export default {
         return {
             form: {
                 email: {
-                    required: helpers.withMessage(this.$t('register.email.is-required'), required),
-                    email: helpers.withMessage(this.$t('register.email.is-invalid'), email),
+                    required: helpers.withMessage(
+                        this.$t('request-access.email.is-required'),
+                        required
+                    ),
+                    email: helpers.withMessage(this.$t('request-access.email.is-invalid'), email),
                 },
                 given_name: {
                     required: helpers.withMessage(
-                        this.$t('register.given_name.is-required'),
+                        this.$t('request-access.given_name.is-required'),
                         required
                     ),
                 },
                 family_name: {
                     required: helpers.withMessage(
-                        this.$t('register.family_name.is-required'),
+                        this.$t('request-access.family_name.is-required'),
                         required
                     ),
                 },
@@ -220,6 +225,10 @@ export default {
             }
         },
 
+        cancel() {
+            this.$router.push({ name: 'HomeRoot' })
+        },
+
         login() {
             goToKeycloakLoginPage()
         },
@@ -242,20 +251,22 @@ export default {
     font-size: $font-size-s;
 }
 
+.notice {
+    font-size: $font-size-m;
+    line-height: 1.5;
+    margin-bottom: $space-l;
+}
+
 .action {
     display: flex;
     padding-bottom: pxToRem(24px);
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: $space-l;
 
-    .tos {
-        font-size: pxToRem(12px);
-        line-height: pxToRem(18px);
-        padding-top: pxToRem(12px);
-    }
-
-    .register-btn {
-        width: 100%;
+    .register-btn,
+    .cancel-btn {
         text-transform: capitalize;
     }
 }
@@ -358,5 +369,20 @@ export default {
 .confirm-message strong {
     font-weight: 700;
     color: $primary-dark;
+}
+
+.fade-leave-active,
+.fade-enter-active {
+    transition:
+        transform 200ms ease-in-out,
+        opacity 200ms ease-in-out;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    transform: scale(0);
+    $opacity: 0;
 }
 </style>
