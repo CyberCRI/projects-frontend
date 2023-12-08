@@ -167,7 +167,7 @@ export default {
         async takeTour() {
             if (this.anyAsyncing) return
             await this.updateStatus('tour_taken', true)
-            //this.$router.push({ name: 'Help' })
+            this.$router.push({ name: 'HelpVideoTab' })
         },
 
         async dontShowAgain() {
