@@ -57,11 +57,12 @@ import LpiCategoryCard from '@/components/lpikit/CategoryCard/LpiCategoryCard.vu
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import permissions from '@/mixins/permissions.ts'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 
 export default {
     name: 'CategoriesPage',
 
-    mixins: [permissions],
+    mixins: [permissions, onboardingStatusMixin],
 
     components: {
         SearchInput,
@@ -76,6 +77,10 @@ export default {
                 section: 'projects',
             },
         }
+    },
+
+    mounted() {
+        this.onboardingTrap('projects_explored', true)
     },
 
     computed: {

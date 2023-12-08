@@ -14,6 +14,7 @@ import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { defineAsyncComponent } from 'vue'
 import { getFaq } from '@/api/faqs.service'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 
 export default {
     name: 'HelpPage',
@@ -22,6 +23,8 @@ export default {
         LpiLoader,
         TabsLayout,
     },
+
+    mixins: [onboardingStatusMixin],
 
     data() {
         return {
@@ -39,6 +42,8 @@ export default {
             // ignore 404 error
         }
         this.setOnboardData()
+
+        this.onboardingTrap('tour_taken', true)
     },
 
     computed: {
