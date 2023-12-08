@@ -71,7 +71,7 @@
         "lodash.debounce": "^4",
         "lodash.isequal": "^4",
         "lodash.throttle": "^4.1.1",
-        "mixpanel-browser": "^2",
+        "mixpanel-browser": "^2.48.1",
         "prosemirror-model": "^1.18.1",
         "prosemirror-schema-basic": "^1.2.0",
         "prosemirror-state": "^1.4.1",
