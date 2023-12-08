@@ -5,16 +5,16 @@
         </div>
 
         <LpiLoader v-if="isLoading" type="simple" />
-        <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs"></TabsLayout>
+        <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs" router-view></TabsLayout>
     </div>
 </template>
 
 <script>
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import { defineAsyncComponent } from 'vue'
 import { getFaq } from '@/api/faqs.service'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import { computed } from 'vue'
 
 export default {
     name: 'HelpPage',
@@ -25,6 +25,12 @@ export default {
     },
 
     mixins: [onboardingStatusMixin],
+    provide() {
+        return {
+            helpPageHasFaq: computed(() => this.hasFaq),
+            helpPageFaq: computed(() => this.faq),
+        }
+    },
 
     data() {
         return {
@@ -59,12 +65,12 @@ export default {
             res.push({
                 key: 'help-help',
                 label: this.$t('faq.portal'),
-                component: defineAsyncComponent(() => import('./Tabs/HelpTab.vue')),
+                view: { name: 'HelpHelpTab' },
             })
             res.push({
                 key: 'help-video',
                 label: this.$t('faq.video'),
-                component: defineAsyncComponent(() => import('./Tabs/VideoTab.vue')),
+                view: { name: 'HelpVideoTab' },
             })
             return res
         },
@@ -77,10 +83,7 @@ export default {
                     this.customTab = {
                         label: this.faq.title,
                         key: 'help-template',
-                        component: defineAsyncComponent(() => import('./Tabs/OnBoardingTab.vue')),
-                        props: {
-                            faq: this.faq,
-                        },
+                        view: { name: 'HelpFaqTab' },
                     }
                 }
             } catch (error) {

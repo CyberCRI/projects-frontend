@@ -62,7 +62,7 @@
                     <LinkButton
                         :label="$t('onboarding-todo.dont-show-again')"
                         @click="dontShowAgain"
-                        :btn-icon="dont_show_async ? 'LoaderSimple' : ''"
+                        :btn-icon="asyncing.dont_show_progress ? 'LoaderSimple' : ''"
                     ></LinkButton>
                 </div>
             </div>
@@ -94,8 +94,8 @@ export default {
                 projects_explored: false,
                 project_created: false,
                 tour_taken: false,
+                dont_show_progress: false,
             },
-            dont_show_async: false,
         }
     },
 
@@ -148,31 +148,35 @@ export default {
 
         async completeProfile() {
             if (this.anyAsyncing) return
-            await this.updateStatus('profile_completed', true)
+            // TODO check with and remove eventually
+            // await this.updateStatus('profile_completed', true)
             this.$router.push({ name: 'ProfileEdit' })
         },
 
         async exploreProjects() {
             if (this.anyAsyncing) return
-            await this.updateStatus('projects_explored', true)
+            // TODO check with and remove eventually
+            // await this.updateStatus('projects_explored', true)
             this.$router.push({ name: 'Categories' })
         },
 
         async createProject() {
             if (this.anyAsyncing) return
-            await this.updateStatus('project_created', true)
+            // TODO check with and remove eventually
+            // await this.updateStatus('project_created', true)
             this.$router.push({ name: 'createProject' })
         },
 
         async takeTour() {
             if (this.anyAsyncing) return
-            await this.updateStatus('tour_taken', true)
-            //this.$router.push({ name: 'Help' })
+            // TODO check with and remove eventually
+            // await this.updateStatus('tour_taken', true)
+            this.$router.push({ name: 'HelpVideoTab' })
         },
 
         async dontShowAgain() {
             this.dont_show_async = true
-            await this.updateStatus('dont_show', true)
+            await this.updateStatus('dont_show_progress', true)
         },
     },
 }

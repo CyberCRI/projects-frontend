@@ -1,9 +1,18 @@
 <template>
     <div class="image-input-ctn">
         <label :for="id" ref="label" class="image-button" data-test="upload-image-button">
-            <LpiButton
+            <LinkButton
+                v-if="isLink"
                 btn-icon="Upload"
-                :secondary="true"
+                :label="displayedLabel"
+                class="passive"
+                v-disable-focus="unfocusable"
+            />
+
+            <LpiButton
+                v-else
+                btn-icon="Upload"
+                secondary
                 :label="displayedLabel"
                 class="passive"
                 v-disable-focus="unfocusable"
@@ -16,6 +25,7 @@
 
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 
 export default {
     name: 'ImageInput',
@@ -24,6 +34,7 @@ export default {
 
     components: {
         LpiButton,
+        LinkButton,
     },
 
     props: {
@@ -44,6 +55,10 @@ export default {
         label: {
             type: String,
             default: null,
+        },
+        isLink: {
+            type: Boolean,
+            default: false,
         },
     },
 

@@ -126,7 +126,8 @@
             >
                 <ReportForm type="bug" @close="reportBugOpen = false" />
             </DrawerLayout>
-            <WelcomeModal v-if="showWelcomeModal" @close="showWelcomeModal = false" />
+
+            <OnboardingScreens v-if="isConnected"> </OnboardingScreens>
         </div>
     </footer>
 </template>
@@ -137,8 +138,8 @@ import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import ContactForm from '@/components/Drawers/ContactForm.vue'
 import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
-import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 import FooterEnglishTips from './FooterEnglishTips.vue'
+import OnboardingScreens from '@/components/lpikit/Footer/OnboardingScreens.vue'
 export default {
     name: 'LpiFooter',
 
@@ -148,13 +149,12 @@ export default {
         ContactForm,
         DrawerLayout,
         ProjectLogo,
-        WelcomeModal,
+        OnboardingScreens,
         FooterEnglishTips,
     },
 
     data() {
         return {
-            showWelcomeModal: false,
             reportBugOpen: false,
             showContactUsDrawer: false,
             customNotificationStyle: {
@@ -184,16 +184,6 @@ export default {
         },
         isConnected() {
             return this.$store.getters['users/isConnected']
-        },
-    },
-    watch: {
-        isConnected: {
-            handler: function (neo, old) {
-                if (neo && !old) {
-                    this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
-                }
-            },
-            immediate: true,
         },
     },
 }

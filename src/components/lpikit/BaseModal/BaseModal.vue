@@ -210,6 +210,7 @@ export default {
         top: 50%;
         right: 14px; /* modal padding + scrollbar width */
         transform: translate(0, -50%);
+        z-index: 10;
     }
 }
 

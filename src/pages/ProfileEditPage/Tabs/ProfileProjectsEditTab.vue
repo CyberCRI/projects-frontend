@@ -89,6 +89,7 @@ export default {
         LinkButton,
         PickProjectsDrawer,
     },
+    emits: ['profile-edited'],
     props: {
         user: {
             type: Object,
@@ -170,7 +171,7 @@ export default {
                 id: this.user.keycloak_id,
                 body: body,
             })
-
+            this.$emit('profile-edited')
             await this.setFollowedProject()
             this.showFollowProjectDrawer = false
         },

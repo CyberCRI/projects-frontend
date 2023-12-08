@@ -144,10 +144,6 @@ export default {
         }
     },
 
-    mounted() {
-        this.onboardingTrap('project_created', true)
-    },
-
     computed: {
         formNotEmpty() {
             if (this.$store.getters['organizations/isDefault']) {
@@ -202,7 +198,11 @@ export default {
                         },
                     })
                 }
-                this.$router.push(`/projects/${project.slug}/description`)
+                await this.onboardingTrap('project_created', true)
+                this.$router.push({
+                    name: 'projectDescription',
+                    params: { slugOrId: project.slug },
+                })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.project-create.success'),
                     type: 'success',

@@ -33,24 +33,25 @@
                 </main>
 
                 <footer v-if="hasFooter" class="drawer__footer">
-                    <LpiButton
-                        :disabled="asyncing"
-                        :label="$filters.capitalize($t('common.cancel'))"
-                        :secondary="true"
-                        class="footer__left-button"
-                        @click="close"
-                        data-test="close-button"
-                    />
+                    <slot name="footer">
+                        <LpiButton
+                            :disabled="asyncing"
+                            :label="$filters.capitalize($t('common.cancel'))"
+                            secondary
+                            class="footer__left-button"
+                            @click="close"
+                            data-test="close-button"
+                        />
 
-                    <LpiButton
-                        :disabled="confirmActionDisabled || asyncing"
-                        :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
-                        :btn-icon="asyncing ? 'LoaderSimple' : null"
-                        :secondary="false"
-                        class="footer__right-button"
-                        @click="confirm"
-                        data-test="confirm-button"
-                    />
+                        <LpiButton
+                            :disabled="confirmActionDisabled || asyncing"
+                            :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
+                            :left-icon="asyncing ? 'LoaderSimple' : null"
+                            class="footer__right-button"
+                            @click="confirm"
+                            data-test="confirm-button"
+                        />
+                    </slot>
                 </footer>
             </div>
         </Transition>
@@ -283,9 +284,9 @@ $slide-duration: 400ms;
         position: sticky;
         bottom: 0;
         background: $white;
+        gap: $space-l;
 
         button ~ button {
-            margin-left: $space-m;
             text-transform: capitalize;
         }
     }

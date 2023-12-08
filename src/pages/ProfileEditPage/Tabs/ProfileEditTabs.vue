@@ -26,6 +26,8 @@ export default {
 
     mixins: [permissions],
 
+    emits: ['profile-edited'],
+
     components: {
         TabsLayout,
         LoaderSimple,
@@ -51,6 +53,9 @@ export default {
                     component: ProfileGeneralEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
                 {
@@ -60,6 +65,9 @@ export default {
                     component: ProfileBioEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
                 {
@@ -69,6 +77,9 @@ export default {
                     component: ProfileProjectsEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
                 {
@@ -78,6 +89,9 @@ export default {
                     component: ProfileGroupsEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
                 {
@@ -87,6 +101,9 @@ export default {
                     component: ProfileSkillsEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
                 {
@@ -96,6 +113,9 @@ export default {
                     component: ProfilePrivacyEditTab,
                     props: {
                         user: this.user,
+                        onProfileEdited: () => {
+                            this.$emit('profile-edited')
+                        },
                     },
                 },
             ]

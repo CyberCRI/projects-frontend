@@ -322,7 +322,7 @@ export default {
             const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
 
             return (
-                !status.dont_show &&
+                !status.dont_show_progress &&
                 (!status.profile_completed ||
                     !status.projects_explored ||
                     !status.project_created ||

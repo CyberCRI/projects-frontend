@@ -68,60 +68,15 @@
         <!-- Image -->
         <div class="img-ctn">
             <label>{{ $filters.capitalize($t('group.image-header')) }}</label>
-            <div class="img-inner">
-                <div class="img-preview">
-                    <div class="preview-wrapper-outer">
-                        <CroppedImage
-                            :alt="`${form.name} image`"
-                            :contain="true"
-                            :image-sizes="form.imageSizes"
-                            :src="displayedImage"
-                            class="preview-wrapper-inner"
-                        />
-                    </div>
-                </div>
-                <div class="img-actions">
-                    <LpiButton
-                        :label="$filters.capitalize($t('group.random-image'))"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="RotateRight"
-                        @click="showNextPatatoid"
-                        data-test="random-image-button"
-                    />
-
-                    <ImageInput
-                        id="header_image"
-                        :label="$t('group.form.upload-image')"
-                        @upload-image="uploadImage"
-                    />
-
-                    <LpiButton
-                        :label="$t('group.form.resize-image')"
-                        :secondary="true"
-                        class="next-patatoid-btn"
-                        btn-icon="Pen"
-                        @click="openImageResizer"
-                    />
-                </div>
-            </div>
+            <ImageEditor
+                :picture-alt="`${form.name} image`"
+                :contain="true"
+                :round-picture="true"
+                v-model:imageSizes="form.imageSizes"
+                v-model:picture="form.header_image"
+                :default-picture="defaultPictures"
+            ></ImageEditor>
         </div>
-
-        <DrawerLayout
-            :confirm-action-name="$t('common.confirm')"
-            :is-opened="showImageResizer"
-            :title="$t('group.form.resize-image')"
-            class="medium"
-            @close="showImageResizer = false"
-            @confirm="saveImageSizes"
-        >
-            <ImageResizer
-                v-if="showImageResizer"
-                ref="imageResizer"
-                :image="displayedImage"
-                :image-sizes="form.imageSizes"
-            />
-        </DrawerLayout>
 
         <div class="spacer"></div>
 
@@ -213,22 +168,6 @@
             />
         </div>
 
-        <DrawerLayout
-            :confirm-action-name="$t('common.confirm')"
-            :is-opened="showImageResizer"
-            :title="$t('group.form.resize-image')"
-            class="medium"
-            @close="showImageResizer = false"
-            @confirm="saveImageSizes"
-        >
-            <ImageResizer
-                v-if="showImageResizer"
-                ref="imageResizer"
-                :image="displayedImage"
-                :image-sizes="form.imageSizes"
-            />
-        </DrawerLayout>
-
         <GroupDescriptionDrawer
             :original-description="form.description"
             :is-add-mode="isAddMode"
@@ -251,22 +190,18 @@
 
 <script>
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
 import GroupTeamSection from './GroupTeamSection.vue'
 import ProjectSection from './ProjectSection.vue'
 import ParentGroupSection from './ParentGroupSection.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import utils from '@/functs/functions.ts'
 import GroupDescriptionDrawer from './GroupDescriptionDrawer.vue'
 import IconImage from '@/components/svgs/IconImage.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import ImageResizer from '@/components/lpikit/ImageResizer/ImageResizer.vue'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import { getHierarchyGroups } from '@/api/group.service.ts'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import { deleteGroup } from '@/api/groups.service'
+import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 
 export default {
     name: 'GroupForm',
@@ -280,15 +215,12 @@ export default {
         GroupTeamSection,
         ProjectSection,
         ParentGroupSection,
-        ImageInput,
         LpiButton,
         IconImage,
         GroupDescriptionDrawer,
-        DrawerLayout,
-        ImageResizer,
-        CroppedImage,
         LoaderSimple,
         ConfirmModal,
+        ImageEditor,
     },
 
     props: {
@@ -308,9 +240,13 @@ export default {
     },
 
     data() {
+        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
+            return `${
+                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+            }/patatoids-project/Patatoid-${index}.png`
+        })
         return {
             loading: false,
-            displayedImage: '',
             currentPatatoidIndex: 1,
             visibilities: [
                 {
@@ -345,24 +281,15 @@ export default {
             },
 
             descriptionIsOpened: false,
-            showImageResizer: false,
             showRemoveQuit: false,
             groups: [],
+            defaultPictures,
         }
     },
 
     async mounted() {
         // lopad groups tree
         await this.loadGroups()
-        // initialize header image
-        if (!this.modelValue.header_image) {
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-
-            this.form.header_image = await utils.getPatatoidFile(this.currentPatatoidIndex)
-        } else {
-            this.displayedImage = this.modelValue.header_image
-        }
-        // udpate form with eventual edited group data
         this.form = {
             ...this.form,
             ...this.modelValue,
@@ -405,45 +332,6 @@ export default {
             this.loading = false
         },
 
-        async showNextPatatoid() {
-            if (this.currentPatatoidIndex !== 6) this.currentPatatoidIndex += 1
-            else this.currentPatatoidIndex = 1
-
-            this.form.header_image = await utils.getPatatoidFile(this.currentPatatoidIndex)
-            this.displayedImage = `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-${this.currentPatatoidIndex}.png`
-            // reinit image cropping data
-            this.form.imageSizes = null
-        },
-
-        uploadImage(image) {
-            this.displayedImage = ''
-
-            const fileReader = new FileReader()
-            fileReader.readAsDataURL(image)
-
-            fileReader.onload = (fileReaderEvent) => {
-                this.displayedImage = fileReaderEvent.target.result
-            }
-
-            this.form.header_image = image
-            // reinit image cropping data
-            this.form.imageSizes = null
-        },
-
-        saveImageSizes() {
-            this.form.imageSizes = {
-                scaleX: this.$refs.imageResizer.scaleX,
-                scaleY: this.$refs.imageResizer.scaleY,
-                left: this.$refs.imageResizer.left,
-                top: this.$refs.imageResizer.top,
-                naturalRatio: this.$refs.imageResizer.naturalRatio,
-            }
-            this.showImageResizer = false
-        },
-
-        openImageResizer() {
-            this.showImageResizer = true
-        },
         openRemoveOrQuit() {
             this.showRemoveQuit = true
         },
@@ -635,41 +523,6 @@ export default {
 
         label {
             align-self: flex-start;
-        }
-
-        .img-inner {
-            width: 100%;
-            display: flex;
-            gap: $space-m;
-
-            .img-actions {
-                width: 100%;
-                display: flex;
-                flex-flow: column;
-                gap: $space-m;
-                align-items: flex-end;
-            }
-
-            .img-preview {
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                flex-shrink: 0;
-                border: $border-width-s solid $green;
-                background-color: $white;
-                overflow: hidden;
-            }
-        }
-
-        .preview-wrapper-outer {
-            width: 100%;
-            padding-bottom: 100%;
-            position: relative;
-        }
-
-        .preview-wrapper-inner {
-            position: absolute;
-            inset: 0;
         }
     }
 

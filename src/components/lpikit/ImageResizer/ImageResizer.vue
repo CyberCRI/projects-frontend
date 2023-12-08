@@ -1,6 +1,6 @@
 <template>
     <div class="image-resizer">
-        <img :src="image" alt="" id="cropper" @load="init" />
+        <img :src="image" alt="" class="cropper-image" @load="init" />
     </div>
 </template>
 <script>
@@ -22,6 +22,7 @@ export default {
         },
 
         ratio: {
+            // crop area aspect ratio
             type: Number,
             default: 1,
         },
@@ -60,14 +61,14 @@ export default {
     methods: {
         reinit() {
             // reinit croppr on resize
-            // beacause resize invalidate all size data
+            // because resize invalidate all size data
             this.croppr.destroy()
             this.init()
         },
 
         init() {
             // get image natural size and aspect ration
-            const img = document.getElementById('cropper')
+            const img = this.$el.querySelector('.cropper-image')
             this.naturalWidth = img.naturalWidth
             this.naturalHeight = img.naturalHeight
             this.naturalRatio = img.naturalWidth / this.naturalHeight
@@ -89,22 +90,19 @@ export default {
             }
 
             // get image bounding box size and scale from natural size
-            // beacuse croppr data are in natural sizes
+            // because croppr data are in natural sizes
             const bbox = img.getBoundingClientRect()
             this.bboxWidth = bbox.width
             this.bboxHeight = bbox.height
-            if (this.bboxWidth > this.naturalWidth || this.bboxHeight > this.naturalHeight) {
-                this.bboxWidth = this.naturalWidth
-                this.bboxHeight = this.naturalHeight
-            }
             this.bboxScale = this.bboxWidth / this.naturalWidth
 
             // again croppr gets lost on vertical pictures
             // and we cant set this via js because croppr is not yet initialized and after it is too late
             // so hack this with css custom properties
             this.$el.style.setProperty('--croppr-width', `${this.bboxWidth}px`)
+            this.$el.style.setProperty('--croppr-height', `${this.bboxHeight}px`)
 
-            // set maximum cropping area accordiang to aspect ratio
+            // set maximum cropping area accordiang to aspect crop ratio
             this.maxWidth = this.bboxWidth
             this.maxHeight = this.bboxHeight
             if (this.naturalRatio > this.ratio) {
@@ -132,7 +130,7 @@ export default {
 
             // init croppr
 
-            this.croppr = new Croppr('#cropper', {
+            this.croppr = new Croppr(img, {
                 aspectRatio: this.ratio,
                 onCropEnd: (data) => {
                     this.updateData(data)
@@ -171,6 +169,7 @@ export default {
         display: block;
         height: auto;
         width: auto;
+        object-fit: cover;
     }
 
     &.limit-width img {
@@ -185,6 +184,7 @@ export default {
 :deep(.croppr),
 :deep(.croppr-container) {
     width: 100%;
+    height: 100%;
 }
 
 :deep(img),
@@ -196,7 +196,7 @@ export default {
 
 .limit-width {
     :deep(.croppr) {
-        width: 100%;
+        height: var(--croppr-height); // set in init()
     }
 
     :deep(img),
@@ -208,12 +208,11 @@ export default {
 
 .limit-height {
     :deep(.croppr) {
-        height: 100%;
         width: var(--croppr-width); // set in init()
     }
 
-    :deep(img),
-    :deep(.croppr-container img) {
+    .limit-height :deep(img),
+    .limit-height :deep(.croppr-container img) {
         height: 100%;
         width: auto;
     }

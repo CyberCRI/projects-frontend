@@ -37,16 +37,11 @@ export default {
             type: [String, Object],
             default: null,
         },
-
-        rightIcon: {
-            type: [String, Object],
-            default: null,
-        },
     },
 
     computed: {
         iconOnly() {
-            return (!this.label || !this.label.length) && (this.leftIcon || this.rightIcon)
+            return (!this.label || !this.label.length) && this.btnIcon
         },
     },
 }

@@ -97,7 +97,7 @@ import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
 export default {
     name: 'SkillsEditDrawer',
 
-    emits: ['close', 'switch-mode', 'confirm'],
+    emits: ['close', 'switch-mode', 'confirm', 'skills-updated'],
 
     inject: {
         reloadUser: {
@@ -288,6 +288,7 @@ export default {
             this.reloadUser()
             // confirm success
             if (!errorDuringSave) {
+                this.$emit('skills-updated')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('profile.edit.skills.save-success'),
                     type: 'success',

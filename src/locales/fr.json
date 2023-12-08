@@ -393,6 +393,7 @@
         "loading": "Chargement",
         "login": "connexion",
         "logout": "se déconnecter",
+        "modify": "Modifier",
         "more": "plus",
         "more-info": "en savoir plus",
         "next": "Suivant",
@@ -431,6 +432,68 @@
         "first-name": "Prénom",
         "last-name": "Nom",
         "role": "Rôle"
+    },
+
+    "complete-profile": {
+        "bio": {
+            "title": "Biographie",
+            "notice": "La biographie permet aux gens de comprendre qui vous êtes, ce que vous faites et ce que vous défendez.",
+            "notice-exemples": "Besoin d'inspiration ? Voici des exemples pour {0}, {1} ou {2}.",
+            "exemples": {
+                "researcher": "un chercheur",
+                "professional": "un professionnel",
+                "student": "un étudiant"
+            },
+            "long-bio": "Biographie longue",
+            "long-bio-placeholder": "Commencez ici",
+            "long-bio-notice": "Vous pouvez prendre autant de temps que vous le souhaitez pour présenter vos réalisations professionnelles",
+            "personal-bio": "Biographie personnelle",
+            "personal-bio-notice": "Nous pensons que nos centres d'intérêt personnels appartiennent au lieu de travail pour faciliter les rencontres !",
+            "personal-bio-placeholder": "Commencez ici",
+            "short-bio": "Biographie courte",
+            "short-bio-notice": "Une phrase pour vous présenter :",
+            "short-bio-placeholder": "Ex. Je suis un chercheur chevronné spécialisé en bio-ingénierie"
+        },
+        "cancel": "Annuler",
+        "notice": {
+            "help": "Nous sommes là pour aider.",
+            "intro": "Les champs marqués d'un * sont obligatoires. Vous pouvez toujours modifier cela dans votre profil plus tard.",
+            "no-idea": "Aucune idée de ce que vous devriez faire ?"
+        },
+        "onboarding": "Embarquement",
+        "personal": {
+            "email": "email",
+            "email-placeholder": "vous{'@'}example.com",
+            "firstname": "Prénom",
+            "firstname-placeholder": "Prénom",
+            "headline": "Titre / Titre principal",
+            "headline-placeholder": "Étudiant en M1 en durabilité, Directeur de recherche...",
+            "lastname": "Nom de famille",
+            "lastname-placeholder": "Nom de famille",
+            "picture": "Photo de profil",
+            "picture-notice": "(miniature 120px x 120px ; formats jpg ou png)",
+            "title": "Informations personnelles"
+        },
+        "required": "Ce champ est requis",
+        "resources": {
+            "add": "Ajouter des ressources",
+            "notice": "Lien vers des publications sur votre profil (elles doivent être accessibles en ligne)",
+            "title": "Ressources"
+        },
+        "save-and-finish": "Enregistrer et terminer",
+        "save-and-next": "Enregistrer et passer à l'étape suivante",
+        "skills": {
+            "hobbies": "Hobbies",
+            "hobbies-placeholder": "Tapez les premières lettres",
+            "hobbies-notice": "Choisissez les hobbies qui permettront aux personnes de votre communauté de vous contacter.",
+            "sdg": "ODD",
+            "sdg-notice": "ODD auxquels vous souhaitez contribuer. Cela aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
+            "skills": "Compétences",
+            "skills-placeholder": "Tapez les premières lettres",
+            "skills-notice": "Choisissez les compétences qui permettront aux personnes de votre communauté de vous contacter.",
+            "title": "Centres d'intérêt et compétences"
+        },
+        "title": "Complétez votre profil"
     },
     "crikit": {
         "image-upload": {
@@ -1135,6 +1198,12 @@
         "add-picture": "Ajouter une image",
         "change-picture": "Changer l'image"
     },
+    "plateform-tour-modal": {
+        "intro": "Voici une visite rapide des principales fonctionnalités de Projects. Vous pouvez toujours y revenir (ainsi qu'à de nombreux tutoriels) dans le menu “Plus / Aide”.",
+        "notice-tutorial": "Vous pouvez également apprendre les tenants et aboutissants de Projects avec nos {0}",
+        "title": "Visite de la plateforme : qu'est-ce que Projects",
+        "tutorial": "tutoriels"
+    },
     "print": {
         "blog-entries": "imprimer le blog",
         "description": "imprimer la description",
@@ -1509,6 +1578,13 @@
         "cancel-title": "Annuler la modification du profil",
         "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue."
     },
+    "profile-completed-modal": {
+        "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
+        "notice-tour": "Pour faciliter votre intégration, nous vous recommandons de faire un rapide tour des principales fonctionnalités de Projects. Ce sont probablement 2 minutes bien dépensées de votre temps ;)",
+        "title": "Félicitations, vous êtes prêt ! Que diriez-vous d'une visite rapide ?",
+        "skip": "Passer",
+        "take-tour": "Faire le tour maintenant"
+    },
     "project": {
         "add": "Ajouter un projet",
         "add-linked-project": "Ajouter un projet lié",
@@ -1635,7 +1711,7 @@
         "quit-hint": "Vous pouvez quitter ce projet. Ce projet disparaîtra de votre liste personnelle et vous ne pourrez plus le modifier.",
         "quit-message-error": "Erreur lors de la modification de l'équipe du projet",
         "quit-message-success": "Vous ne faites plus partie du projet",
-        "random-image": "image aléatoire",
+        "random-image": "Image aléatoire",
         "read-description": "Lire la description",
         "remove-user-title": "Supprimer l'utilisateur ?",
         "remove-user": "Supprimer",
@@ -2441,7 +2517,7 @@
     },
 
     "welcome-modal": {
-        "title": "Bienvenue sur le portail Projetcs de {organization}",
+        "title": "Bienvenue sur le portail Projects de {0}",
         "success": "🎉 Votre compte a bien été créé !",
         "instruction": "Avant de commencer à profiter de la plateforme, il faut compléter votre profil.",
         "guidance": "Cela ne prendra que quelques minutes et nous vous guiderons en chemin.",

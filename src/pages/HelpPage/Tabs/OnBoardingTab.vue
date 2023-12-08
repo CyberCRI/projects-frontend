@@ -11,11 +11,9 @@ export default {
 
     components: {},
 
-    props: {
-        faq: {
-            type: Object,
-            required: true,
-        },
+    inject: {
+        hasFaq: { from: 'helpPageHasFaq', default: false },
+        faq: { from: 'helpPageFaq', default: {} },
     },
 
     data() {
@@ -25,6 +23,9 @@ export default {
     },
 
     mounted() {
+        if (!this.hasFaq) {
+            this.$router.replace({ name: 'HelpHelpTab' })
+        }
         this.getCustomData()
     },
 
@@ -45,7 +46,12 @@ export default {
 
     methods: {
         async getCustomData() {
-            if (this.faq && this.faq.title && this.faq.content && this.faq.content !== '<p></p>') {
+            if (
+                this.hasFaq &&
+                this.faq.title &&
+                this.faq.content &&
+                this.faq.content !== '<p></p>'
+            ) {
                 this.onBoardingData = this.faq
             }
         },

@@ -7,7 +7,7 @@
                 <a href="/help">{{ $t('profile.edit.help') }}</a>
             </p>
             <div class="body">
-                <ProfileEditTabs :user="user" />
+                <ProfileEditTabs :user="user" @profile-edited="onProfileEdited" />
             </div>
         </div>
     </div>
@@ -53,11 +53,14 @@ export default {
             try {
                 this.user = await getUser(this.userKId || this.$store.getters['users/kid'])
                 // safe check for isSelf beacuse this.userKId might be a slug in fact
-                if (this.user?.keycloak_id == this.$store.getters['users/kid']) {
-                    this.onboardingTrap('profile_completed', true)
-                }
             } catch (error) {
                 console.error(error)
+            }
+        },
+
+        async onProfileEdited() {
+            if (this.user?.keycloak_id == this.$store.getters['users/kid']) {
+                this.onboardingTrap('profile_completed', true)
             }
         },
     },
