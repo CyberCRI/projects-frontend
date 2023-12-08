@@ -324,6 +324,8 @@ export default {
         ImageEditor,
     },
 
+    emits: ['profile-edited'],
+
     mixins: [imageMixin],
 
     props: {
@@ -491,6 +493,9 @@ export default {
                             )
                         }
                     }
+                    this.$emit('profile-edited')
+                    // give extra time for profile-edited event to be consumed
+                    await new Promise((resolve) => setTimeout(resolve, 50))
                     // reload user if self to update store info
                     if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)
                     // confirm success

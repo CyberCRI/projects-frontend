@@ -80,6 +80,7 @@
         :type="drawerType"
         @close="closeDrawer"
         @switch-mode="drawerMode = $event"
+        @skills-updated="$emit('profile-edited')"
     />
 </template>
 <script>
@@ -98,7 +99,7 @@ export default {
         LinkButton,
     },
 
-    emits: ['edited'],
+    emits: ['edited', 'profile-edited'],
 
     props: {
         user: {

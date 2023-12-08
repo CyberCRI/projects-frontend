@@ -132,7 +132,7 @@ function dataMapping() {
 export default {
     name: 'ProfilePrivacyEditTab',
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'profile-edited'],
 
     components: {
         GroupButton,
@@ -214,6 +214,8 @@ export default {
                 if (this.user.keycloak_id === this.$store.getters['users/kid'])
                     this.$store.dispatch('users/getUser', this.user.keycloak_id)
                 else getUser(this.user.keycloak_id)
+
+                this.$emit('profile-edited')
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('profile.edit.privacy.save-success'),

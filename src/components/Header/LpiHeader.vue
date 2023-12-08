@@ -252,12 +252,12 @@ export default {
 
     methods: {
         // keep this for debugging purposes
-        // async resetOnboardingStatus() {
-        //     const payload = { onboarding_status: { show_welcome: true } }
-        //     const keycloak_id = this.$store.getters['users/userFromApi'].keycloak_id
-        //     await patchUser(keycloak_id, payload)
-        //     await this.$store.dispatch('users/getUser', keycloak_id)
-        // },
+        async resetOnboardingStatus() {
+            const payload = { onboarding_status: { show_welcome: true } }
+            const keycloak_id = this.$store.getters['users/userFromApi'].keycloak_id
+            await patchUser(keycloak_id, payload)
+            await this.$store.dispatch('users/getUser', keycloak_id)
+        },
 
         onScroll() {
             this.scrolled = window.scrollY > 10
@@ -421,14 +421,14 @@ export default {
                     condition: true,
                     dataTest: 'disconnect',
                 },
-                // {
-                //     // keep this for debugging purposes
-                //     label: 'Reset onboarding',
-                //     action: () => this.resetOnboardingStatus(),
-                //     leftIcon: 'Check',
-                //     condition: true,
-                //     dataTest: 'reset-onboarding',
-                // },
+                {
+                    // keep this for debugging purposes
+                    label: 'Reset onboarding',
+                    action: () => this.resetOnboardingStatus(),
+                    leftIcon: 'Check',
+                    condition: true,
+                    dataTest: 'reset-onboarding',
+                },
             ].filter((menu) => menu.condition)
         },
 

@@ -78,6 +78,8 @@ export default {
         LpiButton,
         TipTapEditor,
     },
+
+    emits: ['profile-edited'],
     props: {
         user: {
             type: Object,
@@ -124,6 +126,7 @@ export default {
                 }
 
                 await patchUser(this.user.keycloak_id, data)
+                this.$emit('profile-edited')
 
                 // update store if self
                 if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)

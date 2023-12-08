@@ -10,7 +10,7 @@ export default {
                 if (status[key] !== val) {
                     const payload = { onboarding_status: { ...status, [key]: val } }
                     await patchUser(user.keycloak_id, payload)
-                    this.$store.dispatch('users/getUser', user.keycloak_id)
+                    await this.$store.dispatch('users/getUser', user.keycloak_id)
                 }
             }
         },
