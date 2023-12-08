@@ -319,7 +319,7 @@ export default {
 
         showOnbordingTodos() {
             if (!this.isConnected) return false
-            const status = this.$store.getters['users/userFromApi'].onboarding_status || {}
+            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
 
             return (
                 !status.dont_show &&

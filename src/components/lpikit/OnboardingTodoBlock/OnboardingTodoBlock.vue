@@ -105,7 +105,7 @@ export default {
         },
 
         username() {
-            this.user?.given_name
+            return this.user?.given_name
         },
 
         isConnected() {
@@ -188,6 +188,7 @@ export default {
     right: 2rem;
     bottom: 1rem;
 }
+
 .plateform-tour-button {
     appearance: none;
     background-color: $white;
