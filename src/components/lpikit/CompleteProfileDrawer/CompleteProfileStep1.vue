@@ -252,6 +252,7 @@ import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -267,7 +268,7 @@ export default {
         LoaderSimple,
     },
 
-    mixins: [imageMixin],
+    mixins: [imageMixin, onboardingStatusMixin],
 
     data() {
         return {
@@ -446,6 +447,9 @@ export default {
                             )
                         }
                     }
+
+                    await this.onboardingTrap('profile_completed', true)
+
                     // reload user
                     this.$store.dispatch('users/getUser', this.user.keycloak_id)
                     // confirm success

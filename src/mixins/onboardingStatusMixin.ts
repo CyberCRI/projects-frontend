@@ -7,7 +7,7 @@ export default {
             if (connected) {
                 const user = this.$store.getters['users/userFromApi']
                 const status = user?.onboarding_status || {}
-                if (!status[key]) {
+                if (status[key] !== val) {
                     const payload = { onboarding_status: { ...status, [key]: val } }
                     await patchUser(user.keycloak_id, payload)
                     this.$store.dispatch('users/getUser', user.keycloak_id)

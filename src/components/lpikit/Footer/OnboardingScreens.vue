@@ -37,7 +37,8 @@ export default {
     },
 
     created() {
-        this.showWelcomeModal = !!this.$store.getters['users/userFromApi']?.show_welcome
+        this.showWelcomeModal =
+            !!this.$store.getters['users/userFromApi']?.onboarding_status?.show_welcome
     },
 
     computed: {},

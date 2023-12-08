@@ -28,12 +28,19 @@
 </template>
 <script>
 import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'TakeTourModal',
 
     emits: ['close'],
 
     components: { BaseModal },
+
+    mixins: [onboardingStatusMixin],
+
+    mounted() {
+        this.onboardingTrap('tour_taken', true)
+    },
 
     computed: {
         videoSrc() {

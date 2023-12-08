@@ -40,13 +40,15 @@
 <script>
 import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import { patchUser } from '@/api/people.service.ts'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'WelcomeModal',
 
     emits: ['close', 'complete-profile'],
 
     components: { BaseModal, LpiButton },
+
+    mixins: [onboardingStatusMixin],
 
     data() {
         return {
@@ -68,9 +70,9 @@ export default {
         async patchUser(choice) {
             this.asyncing = choice
             // register that the user has seen the welcome modal
-            await patchUser(this.$store.getters['users/kid'], {
-                show_welcome: false,
-            })
+
+            await this.onboardingTrap('show_welcome', false)
+
             this.asyncing = false
         },
     },

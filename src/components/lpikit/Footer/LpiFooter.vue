@@ -186,17 +186,6 @@ export default {
             return this.$store.getters['users/isConnected']
         },
     },
-    watch: {
-        isConnected: {
-            handler: function (neo, old) {
-                if (neo && !old) {
-                    this.showWelcomeModal =
-                        true || !!this.$store.getters['users/userFromApi']?.show_welcome
-                }
-            },
-            immediate: true,
-        },
-    },
 }
 </script>
 

@@ -13,6 +13,7 @@ import ProfileEditBlock from '@/components/lpikit/CompleteProfileDrawer/ProfileE
 import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '@/api/people.service.ts'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 
 export default {
     name: 'CompleteProfileStep2',
@@ -20,6 +21,8 @@ export default {
     emits: ['saving', 'loading'],
 
     components: { ProfileSkillsEditTab, ProfileEditBlock, LoaderSimple },
+
+    mixins: [onboardingStatusMixin],
 
     data() {
         return { user: null, loading: false }
@@ -49,6 +52,8 @@ export default {
         /* eslint-disable-next-line vue/no-unused-properties */
         async save() {
             // this called by CompleteProfileDrawer.vue
+            await this.onboardingTrap('profile_completed', true)
+
             return true
         },
     },

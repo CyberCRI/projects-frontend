@@ -115,7 +115,6 @@ export default {
         },
         async save() {
             const success = await this.$refs.currentStepComponent.save()
-
             if (success) {
                 if (this.step < this.stepComponents.length - 1) {
                     this.step++
