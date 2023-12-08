@@ -5,12 +5,17 @@
                 {{ $filters.capitalize($t('team.group-members')) }}
                 <span v-if="modelValue.length">({{ modelValue.length }})</span>
             </span>
-            <span v-if="!modelValue.length" class="add-user-card" @click="openDrawer('select')">
+            <span
+                v-if="!modelValue.length"
+                class="add-user-card"
+                @click="openDrawer('select')"
+                data-test="add-members"
+            >
                 <IconImage name="Plus" />
                 <span>{{ $filters.capitalize($t('group.form.add')) }}</span>
             </span>
             <template v-else>
-                <span class="add-user-card" @click="openDrawer('select')">
+                <span class="add-user-card" @click="openDrawer('select')" data-test="add-members">
                     <IconImage name="Pen" />
                     <span>{{ $filters.capitalize($t('group.form.edit-members')) }}</span>
                 </span>

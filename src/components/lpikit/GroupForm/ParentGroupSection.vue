@@ -4,7 +4,11 @@
             <span class="section-title">
                 {{ $filters.capitalize($t('group.form.parent-group-label')) }}
             </span>
-            <span class="add-user-card" @click="drawerIsOpen = true">
+            <span
+                class="add-parent-group-card"
+                @click="drawerIsOpen = true"
+                data-test="add-parent-group-card"
+            >
                 <IconImage v-if="!modelValue" name="Plus" />
                 <IconImage v-else name="Pen" />
                 <span v-if="!modelValue">{{ $filters.capitalize($t('group.form.add')) }}</span>
@@ -101,7 +105,7 @@ export default {
         gap: $space-l;
     }
 
-    .add-user-card {
+    .add-parent-group-card {
         display: inline-flex;
         justify-content: center;
         align-items: center;
