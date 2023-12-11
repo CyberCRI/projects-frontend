@@ -77,11 +77,7 @@ export default {
                 title: '',
                 purpose: '',
                 category: undefined,
-                header_image: {
-                    variations: {
-                        small: undefined,
-                    },
-                },
+                header_image: null,
 
                 language: this.$store.state.languages.current,
 
