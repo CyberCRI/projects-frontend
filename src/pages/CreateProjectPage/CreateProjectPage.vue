@@ -198,7 +198,7 @@ export default {
                         },
                     })
                 }
-                await this.onboardingTrap('project_created', true)
+                await this.onboardingTrap('create_project', false)
                 this.$router.push({
                     name: 'projectDescription',
                     params: { slugOrId: project.slug },

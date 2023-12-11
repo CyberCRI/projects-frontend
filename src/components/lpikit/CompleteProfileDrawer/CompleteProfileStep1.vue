@@ -448,7 +448,7 @@ export default {
                         }
                     }
 
-                    await this.onboardingTrap('profile_completed', true)
+                    await this.onboardingTrap('complete_profile', false)
 
                     // reload user
                     this.$store.dispatch('users/getUser', this.user.keycloak_id)

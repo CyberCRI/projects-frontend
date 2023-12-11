@@ -70,8 +70,15 @@ export default {
         async patchUser(choice) {
             this.asyncing = choice
             // register that the user has seen the welcome modal
-
-            await this.onboardingTrap('show_welcome', false)
+            // and set the next todos
+            await this.onboardingTrapAll({
+                show_welcome: false,
+                show_progress: true,
+                complete_profile: true,
+                explore_projects: true,
+                create_project: true,
+                take_tour: true,
+            })
 
             this.asyncing = false
         },
