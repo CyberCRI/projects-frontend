@@ -80,7 +80,7 @@ export default {
     },
 
     mounted() {
-        this.onboardingTrap('projects_explored', true)
+        this.onboardingTrap('explore_projects', false)
     },
 
     computed: {

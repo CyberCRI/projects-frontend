@@ -52,7 +52,7 @@ export default {
         /* eslint-disable-next-line vue/no-unused-properties */
         async save() {
             // this called by CompleteProfileDrawer.vue
-            await this.onboardingTrap('profile_completed', true)
+            await this.onboardingTrap('complete_profile', false)
 
             return true
         },

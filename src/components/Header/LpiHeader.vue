@@ -253,7 +253,7 @@ export default {
     methods: {
         // keep this for debugging purposes
         // async resetOnboardingStatus() {
-        //     const payload = { onboarding_status: { show_welcome: true } }
+        //     const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
         //     const keycloak_id = this.$store.getters['users/userFromApi'].keycloak_id
         //     await patchUser(keycloak_id, payload)
         //     await this.$store.dispatch('users/getUser', keycloak_id)

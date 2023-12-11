@@ -23,8 +23,8 @@
                 <ul class="todo-list">
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.complete-profile')"
-                        :todo-done="!!profile_completed"
-                        :asyncing="asyncing.profile_completed"
+                        :todo-done="!complete_profile"
+                        :asyncing="asyncing.complete_profile"
                         :passive="anyAsyncing"
                         @click="completeProfile"
                     >
@@ -32,8 +32,8 @@
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.explore-projects')"
-                        :todo-done="!!projects_explored"
-                        :asyncing="asyncing.projects_explored"
+                        :todo-done="!explore_projects"
+                        :asyncing="asyncing.explore_projects"
                         :passive="anyAsyncing"
                         @click="exploreProjects"
                     >
@@ -41,8 +41,8 @@
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.create-project')"
-                        :todo-done="!!project_created"
-                        :asyncing="asyncing.project_created"
+                        :todo-done="!create_project"
+                        :asyncing="asyncing.create_project"
                         :passive="anyAsyncing"
                         @click="createProject"
                     >
@@ -50,8 +50,8 @@
 
                     <OnboardingTodo
                         :todo-label="$t('onboarding-todo.take-tour')"
-                        :todo-done="!!tour_taken"
-                        :asyncing="asyncing.tour_taken"
+                        :todo-done="!take_tour"
+                        :asyncing="asyncing.take_tour"
                         :passive="anyAsyncing"
                         @click="takeTour"
                     >
@@ -62,7 +62,7 @@
                     <LinkButton
                         :label="$t('onboarding-todo.dont-show-again')"
                         @click="dontShowAgain"
-                        :btn-icon="asyncing.dont_show_progress ? 'LoaderSimple' : ''"
+                        :btn-icon="asyncing.show_progress ? 'LoaderSimple' : ''"
                     ></LinkButton>
                 </div>
             </div>
@@ -90,11 +90,11 @@ export default {
         return {
             collapsed: false,
             asyncing: {
-                profile_completed: false,
-                projects_explored: false,
-                project_created: false,
-                tour_taken: false,
-                dont_show_progress: false,
+                complete_profile: false,
+                explore_projects: false,
+                create_project: false,
+                take_tour: false,
+                show_progress: false,
             },
         }
     },
@@ -114,17 +114,17 @@ export default {
         status() {
             return (this.isConnected && this.user?.onboarding_status) || {}
         },
-        profile_completed() {
-            return this.status.profile_completed
+        complete_profile() {
+            return this.status.complete_profile
         },
-        projects_explored() {
-            return this.status.projects_explored
+        explore_projects() {
+            return this.status.explore_projects
         },
-        project_created() {
-            return this.status.project_created
+        create_project() {
+            return this.status.create_project
         },
-        tour_taken() {
-            return this.status.tour_taken
+        take_tour() {
+            return this.status.take_tour
         },
 
         anyAsyncing() {
@@ -149,34 +149,34 @@ export default {
         async completeProfile() {
             if (this.anyAsyncing) return
             // TODO check with and remove eventually
-            // await this.updateStatus('profile_completed', true)
+            // await this.updateStatus('complete_profile', false)
             this.$router.push({ name: 'ProfileEdit' })
         },
 
         async exploreProjects() {
             if (this.anyAsyncing) return
             // TODO check with and remove eventually
-            // await this.updateStatus('projects_explored', true)
+            // await this.updateStatus('explore_projects', false)
             this.$router.push({ name: 'Categories' })
         },
 
         async createProject() {
             if (this.anyAsyncing) return
             // TODO check with and remove eventually
-            // await this.updateStatus('project_created', true)
+            // await this.updateStatus('create_project', false)
             this.$router.push({ name: 'createProject' })
         },
 
         async takeTour() {
             if (this.anyAsyncing) return
             // TODO check with and remove eventually
-            // await this.updateStatus('tour_taken', true)
+            // await this.updateStatus('take_tour', false)
             this.$router.push({ name: 'HelpVideoTab' })
         },
 
         async dontShowAgain() {
-            this.dont_show_async = true
-            await this.updateStatus('dont_show_progress', true)
+            this.show_progress = true
+            await this.updateStatus('show_progress', false)
         },
     },
 }

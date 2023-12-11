@@ -39,7 +39,7 @@ export default {
     mixins: [onboardingStatusMixin],
 
     mounted() {
-        this.onboardingTrap('tour_taken', true)
+        this.onboardingTrap('take_tour', false)
     },
 
     computed: {

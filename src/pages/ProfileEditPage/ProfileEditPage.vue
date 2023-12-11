@@ -60,7 +60,7 @@ export default {
 
         async onProfileEdited() {
             if (this.user?.keycloak_id == this.$store.getters['users/kid']) {
-                this.onboardingTrap('profile_completed', true)
+                this.onboardingTrap('complete_profile', false)
             }
         },
     },
