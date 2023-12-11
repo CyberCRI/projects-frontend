@@ -31,9 +31,14 @@
             <table>
                 <tr>
                     <th v-for="(filter, index) in filters" :key="index">
-                        <button class="button" @click="sortBy(filter)">
+                        <button
+                            class="button"
+                            @click="sortBy(filter)"
+                            :class="{ unsortable: filter.unsortable }"
+                        >
                             {{ $filters.capitalize($t(filter.label)) }}
                             <IconImage
+                                v-if="!filter.unsortable"
                                 :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
                                 class="icon"
                                 :style="{ opacity: filter.isActive ? 1 : 0.33 }"
@@ -158,42 +163,49 @@ export default {
                     isActive: false,
                     filter: 'family_name',
                     order: '',
+                    unsortable: false,
                 },
                 {
                     label: 'admin.accounts.table.first-name',
                     isActive: false,
                     filter: 'given_name',
                     order: '',
+                    unsortable: false,
                 },
                 {
                     label: 'admin.accounts.table.title',
                     isActive: false,
                     filter: 'job',
                     order: '',
+                    unsortable: false,
                 },
                 {
                     label: 'admin.accounts.table.roles',
                     isActive: false,
                     filter: 'current_org_role',
                     order: '',
+                    unsortable: false,
                 },
                 {
                     label: 'admin.accounts.table.groups',
                     isActive: false,
                     filter: 'people_groups',
                     order: '',
+                    unsortable: true,
                 },
                 {
                     label: 'admin.accounts.table.inscription',
                     isActive: false,
                     filter: 'created_at',
                     order: '',
+                    unsortable: false,
                 },
                 {
                     label: 'admin.accounts.table.activation',
                     isActive: false,
                     filter: 'email_verified',
                     order: '',
+                    unsortable: false,
                 },
             ],
         }
@@ -265,6 +277,7 @@ export default {
         },
 
         async sortBy(filter) {
+            if (filter.unsortable) return
             if (!filter.isActive) {
                 this.filters.forEach((filter) => {
                     filter.isActive = false
@@ -340,6 +353,8 @@ export default {
 
     .user-list {
         margin-top: $space-xl;
+        width: 100%;
+        overflow-x: auto;
     }
 
     .loader {
@@ -357,6 +372,11 @@ export default {
         line-height: 16px;
         color: $black-1;
         cursor: pointer;
+
+        &.unsotable {
+            pointer-events: none;
+            cursor: default;
+        }
 
         .icon {
             width: 20px;
