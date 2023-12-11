@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-portal-layout page-section-wide page-top">
+    <div class="admin-portal-layout page-section-extra-wide page-top">
         <h1 class="page-title">{{ $t('admin.portal.management') }}</h1>
         <TabsLayout :tabs="tabs" :border="false" align-left router-view />
     </div>

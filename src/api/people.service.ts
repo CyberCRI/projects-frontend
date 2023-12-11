@@ -61,6 +61,23 @@ export async function searchPeopleProject({
     ).data
 }
 
+export async function searchPeopleAdmin({
+    search,
+    org_id,
+    params,
+}): Promise<APIResponseList<PeopleModel>> {
+    const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
+
+    return (
+        await axios.get(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/user/admin-list/?search=${search}&current_org_pk=${org_id}`,
+            adaptedParams
+        )
+    ).data
+}
+
 export async function patchUser(keycloak_id: string, body: UserPatchModel): Promise<PeopleModel> {
     return (
         await axios.patch(
