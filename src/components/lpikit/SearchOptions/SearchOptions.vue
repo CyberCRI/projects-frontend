@@ -67,6 +67,7 @@
             @close="currentDrawer = null"
             @confirm="confirm"
             :selected-section="selectedSection.type"
+            :filter-black-list="filterBlackList"
         />
     </div>
 </template>
@@ -118,6 +119,12 @@ export default {
         section: {
             type: String,
             default: 'all',
+        },
+
+        filterBlackList: {
+            // filters we dont want to show/edit but are still active (i.e. categories in category page)
+            type: Array,
+            default: () => [],
         },
     },
 
@@ -241,28 +248,38 @@ export default {
                     label: this.$t('search.tag'),
                     count: this.selectedFiltersNames.tags.length,
                     action: (key) => this.openDrawer(key),
-                    condition: this.selectedSection && this.selectedSection.type === 'projects',
+                    condition:
+                        this.selectedSection &&
+                        this.selectedSection.type === 'projects' &&
+                        !this.filterBlackList.includes('tags'),
                 },
                 sdgs: {
                     label: this.$t('search.sdg'),
                     count: this.selectedFiltersNames.sdgs.length,
                     action: (key) => this.openDrawer(key),
                     condition:
-                        (this.selectedSection && this.selectedSection.type === 'projects') ||
-                        (this.selectedSection && this.selectedSection.type === 'people'),
+                        ((this.selectedSection && this.selectedSection.type === 'projects') ||
+                            (this.selectedSection && this.selectedSection.type === 'people')) &&
+                        !this.filterBlackList.includes('sdgs'),
                 },
                 languages: {
                     label: this.$t('search.language'),
                     count: this.selectedFiltersNames.languages.length,
                     action: (key) => this.openDrawer(key),
-                    condition: this.selectedSection && this.selectedSection.type === 'projects',
+                    condition:
+                        this.selectedSection &&
+                        this.selectedSection.type === 'projects' &&
+                        !this.filterBlackList.includes('languages'),
                 },
 
                 skills: {
                     label: this.$t('search.skills'),
                     count: this.selectedFiltersNames.skills.length,
                     action: (key) => this.openDrawer(key),
-                    condition: this.selectedSection && this.selectedSection.type === 'people',
+                    condition:
+                        this.selectedSection &&
+                        this.selectedSection.type === 'people' &&
+                        !this.filterBlackList.includes('skills'),
                 },
                 ...(this.$store.getters['projectCategories/all'].length
                     ? {
@@ -271,7 +288,9 @@ export default {
                               count: this.selectedFiltersNames.categories.length,
                               action: (key) => this.openDrawer(key),
                               condition:
-                                  this.selectedSection && this.selectedSection.type === 'projects',
+                                  this.selectedSection &&
+                                  this.selectedSection.type === 'projects' &&
+                                  !this.filterBlackList.includes('categories'),
                           },
                       }
                     : {}),
@@ -290,14 +309,15 @@ export default {
             function safeArrayLength(arr) {
                 return arr ? arr.length : 0
             }
-
-            return (
-                safeArrayLength(this.selectedFilters.languages) +
-                safeArrayLength(this.selectedFilters.sdgs) +
-                safeArrayLength(this.selectedFilters.categories) +
-                safeArrayLength(this.selectedFilters.tags) +
-                safeArrayLength(this.selectedFilters.skills)
+            const count = ['languages', 'sdgs', 'categories', 'tags', 'skills'].reduce(
+                (acc, filter) =>
+                    acc +
+                    (this.filterBlackList.includes(filter)
+                        ? 0
+                        : safeArrayLength(this.selectedFilters[filter])),
+                0
             )
+            return count
         },
 
         wikipediaTags() {
@@ -319,23 +339,31 @@ export default {
         },
 
         languageNames() {
-            return this.selectedFilters.languages.map((language) =>
-                this.$t(`language.label-${language}`)
-            )
+            return this.filterBlackList.includes('languages')
+                ? []
+                : this.selectedFilters.languages.map((language) =>
+                      this.$t(`language.label-${language}`)
+                  )
         },
 
         sdgNames() {
-            return this.selectedFilters.sdgs.map((sdg) => {
-                if (typeof sdg === 'string') return this.$t(`sdg.${sdg}.title`)
-                return this.$t(`sdg.${sdg.id}.title`)
-            })
+            return this.filterBlackList.includes('sdgs')
+                ? []
+                : this.selectedFilters.sdgs.map((sdg) => {
+                      if (typeof sdg === 'string') return this.$t(`sdg.${sdg}.title`)
+                      return this.$t(`sdg.${sdg.id}.title`)
+                  })
         },
 
         categoryNames() {
-            return this.selectedFilters.categories.map((cat) => cat.name)
+            return this.filterBlackList.includes('categories')
+                ? []
+                : this.selectedFilters.categories.map((cat) => cat.name)
         },
 
         tagNames() {
+            if (this.filterBlackList.includes('tags')) return []
+
             const wikipediaTagsNames = this.wikipediaTags.map(
                 (wikiTag) =>
                     wikiTag[`name_${this.$store.state.languages.current}`] || wikiTag['name']
@@ -346,7 +374,9 @@ export default {
         },
 
         skillsName() {
-            return this.selectedFilters.skills.map((skill) => skill.name)
+            return this.filterBlackList.includes('skills')
+                ? []
+                : this.selectedFilters.skills.map((skill) => skill.name)
         },
     },
 
@@ -355,8 +385,8 @@ export default {
             const adaptedFilters = {
                 search: filters.search,
                 categories: filters.categories.map((cat) => cat.id),
-                languages: filters.languages,
-                sdgs: filters.sdgs,
+                languages: [...filters.languages], // need to deconstruct to avoid reactivity issue when removing language
+                sdgs: [...filters.sdgs], // need to deconstruct to avoid reactivity issue when removing sdg
                 wikipedia_tags: this.wikipediaTags.map((tag) => tag.wikipedia_qid),
                 organization_tags: this.organizationTags.map((tag) => tag.id),
                 organizations: [this.$store.state.organizations.current.code],
