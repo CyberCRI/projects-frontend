@@ -1,148 +1,156 @@
 <template>
-    <div v-if="!isLinkValid" class="link-expired">
-        <div>
-            <h1 class="title">
-                {{ $t('page404.title') }}
-            </h1>
-            <p class="extra-informations">
-                {{ $t('invitation.expired-link') }}
-                <a :href="`mailto:${contactEmail}`">
-                    {{ contactEmail }}
-                </a>
-            </p>
-            <div class="illustration" :style="{ backgroundImage: `url(${backgroundImageUrl})` }">
-                <p class="expired-text">
-                    {{ $t('invitation.expired-link-image') }}
+    <div v-if="verifyingLink" class="loader">
+        <LoaderSimple />
+    </div>
+    <template v-else>
+        <div v-if="!isLinkValid" class="link-expired">
+            <div>
+                <h1 class="title">
+                    {{ $t('page404.title') }}
+                </h1>
+                <p class="extra-informations">
+                    {{ $t('invitation.expired-link') }}
+                    <a :href="`mailto:${contactEmail}`">
+                        {{ contactEmail }}
+                    </a>
                 </p>
-            </div>
-        </div>
-    </div>
-    <div v-else>
-        <div class="register-page">
-            <div class="logos-ctn left">
-                <div class="organization-logo" :style="orgLogoStyle"></div>
-                <hr class="separator" />
-                <div class="projects-logo-ctn">
-                    <ProjectLogo class="directory-logo" />
+                <div
+                    class="illustration"
+                    :style="{ backgroundImage: `url(${backgroundImageUrl})` }"
+                >
+                    <p class="expired-text">
+                        {{ $t('invitation.expired-link-image') }}
+                    </p>
                 </div>
             </div>
-            <div class="right">
-                <div class="box-ctn">
-                    <h1 class="title" data-test="register-confirm">
-                        {{ confirm ? $t('register.title-confirm') : $t('register.title') }}
-                    </h1>
-                    <div class="box confirm-message" v-if="confirm">
-                        <p>{{ $t('register.confirmation', { email: form.email }) }}</p>
+        </div>
+        <div v-else>
+            <div class="register-page">
+                <div class="logos-ctn left">
+                    <div class="organization-logo" :style="orgLogoStyle"></div>
+                    <hr class="separator" />
+                    <div class="projects-logo-ctn">
+                        <ProjectLogo class="directory-logo" />
                     </div>
-                    <div class="box form" v-else>
-                        <div class="form-group">
-                            <TextInput
-                                v-model="form.given_name"
-                                :label="$t('register.given_name.label')"
-                                :placeholder="$t('register.given_name.placeholder')"
-                                @blur="v$.form.given_name.$validate"
-                                data-test="first-name"
-                            />
-                            <p
-                                v-for="error of v$.form.given_name.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
+                </div>
+                <div class="right">
+                    <div class="box-ctn">
+                        <h1 class="title" data-test="register-confirm">
+                            {{ confirm ? $t('register.title-confirm') : $t('register.title') }}
+                        </h1>
+                        <div class="box confirm-message" v-if="confirm">
+                            <p>{{ $t('register.confirmation', { email: form.email }) }}</p>
                         </div>
-                        <div class="form-group">
-                            <TextInput
-                                v-model="form.family_name"
-                                :label="$t('register.family_name.label')"
-                                :placeholder="$t('register.family_name.placeholder')"
-                                @blur="v$.form.family_name.$validate"
-                                data-test="last-name"
-                            />
-                            <p
-                                v-for="error of v$.form.family_name.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <TextInput
-                                v-model="form.email"
-                                :label="$t('register.email.label')"
-                                input-type="email"
-                                :placeholder="$t('register.email.placeholder')"
-                                @blur="v$.form.email.$validate"
-                                data-test="email"
-                            />
-                            <p
-                                v-for="error of v$.form.email.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <TextInput
-                                input-type="password"
-                                v-model="form.password"
-                                :label="$t('register.password.label')"
-                                :placeholder="$t('register.password.placeholder')"
-                                @blur="v$.form.password.$validate"
-                                data-test="password"
-                            />
-                            <p
-                                v-for="error of v$.form.password.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
-                        </div>
-                        <div class="action">
-                            <LpiButton
-                                :disabled="v$.form.$error || asyncing"
-                                @click="register"
-                                :label="$t('common.confirm')"
-                                :left-icon="asyncing ? 'LoaderSimple' : null"
-                                class="register-btn"
-                                data-test="register-btn"
-                            />
-                            <i18n-t keypath="register.tos" tag="p" class="tos">
-                                <template #term>
-                                    <router-link to="/terms-of-service" class="link"
-                                        >{{ $t('register.term') }}
-                                    </router-link>
-                                </template>
+                        <div class="box form" v-else>
+                            <div class="form-group">
+                                <TextInput
+                                    v-model="form.given_name"
+                                    :label="$t('register.given_name.label')"
+                                    :placeholder="$t('register.given_name.placeholder')"
+                                    @blur="v$.form.given_name.$validate"
+                                    data-test="first-name"
+                                />
+                                <p
+                                    v-for="error of v$.form.given_name.$errors"
+                                    :key="error.$uid"
+                                    class="error-message"
+                                >
+                                    {{ error.$message }}
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <TextInput
+                                    v-model="form.family_name"
+                                    :label="$t('register.family_name.label')"
+                                    :placeholder="$t('register.family_name.placeholder')"
+                                    @blur="v$.form.family_name.$validate"
+                                    data-test="last-name"
+                                />
+                                <p
+                                    v-for="error of v$.form.family_name.$errors"
+                                    :key="error.$uid"
+                                    class="error-message"
+                                >
+                                    {{ error.$message }}
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <TextInput
+                                    v-model="form.email"
+                                    :label="$t('register.email.label')"
+                                    input-type="email"
+                                    :placeholder="$t('register.email.placeholder')"
+                                    @blur="v$.form.email.$validate"
+                                    data-test="email"
+                                />
+                                <p
+                                    v-for="error of v$.form.email.$errors"
+                                    :key="error.$uid"
+                                    class="error-message"
+                                >
+                                    {{ error.$message }}
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <TextInput
+                                    input-type="password"
+                                    v-model="form.password"
+                                    :label="$t('register.password.label')"
+                                    :placeholder="$t('register.password.placeholder')"
+                                    @blur="v$.form.password.$validate"
+                                    data-test="password"
+                                />
+                                <p
+                                    v-for="error of v$.form.password.$errors"
+                                    :key="error.$uid"
+                                    class="error-message"
+                                >
+                                    {{ error.$message }}
+                                </p>
+                            </div>
+                            <div class="action">
+                                <LpiButton
+                                    :disabled="v$.form.$error || asyncing"
+                                    @click="register"
+                                    :label="$t('common.confirm')"
+                                    :left-icon="asyncing ? 'LoaderSimple' : null"
+                                    class="register-btn"
+                                    data-test="register-btn"
+                                />
+                                <i18n-t keypath="register.tos" tag="p" class="tos">
+                                    <template #term>
+                                        <router-link to="/terms-of-service" class="link"
+                                            >{{ $t('register.term') }}
+                                        </router-link>
+                                    </template>
 
-                                <template #privacy>
-                                    <router-link to="/personal-data" class="link"
-                                        >{{ $t('register.privacy') }}
-                                    </router-link>
-                                </template>
-                            </i18n-t>
+                                    <template #privacy>
+                                        <router-link to="/personal-data" class="link"
+                                            >{{ $t('register.privacy') }}
+                                        </router-link>
+                                    </template>
+                                </i18n-t>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="extra-links" :class="{ 'is-confirm': confirm }">
-                    <p v-if="!confirm" class="extra-link extra-login">
-                        {{ $t('register.have-account') }}
-                        <a href="#" @click.prevent="login" class="link">{{
-                            $t('register.login')
-                        }}</a>
-                    </p>
-                    <p class="extra-link extra-help">
-                        {{ $t('register.need-help') }}
-                        <a href="#" @click.prevent="showContactUsDrawer = true" class="link">{{
-                            $t('register.contact-us')
-                        }}</a>
-                    </p>
+                    <div class="extra-links" :class="{ 'is-confirm': confirm }">
+                        <p v-if="!confirm" class="extra-link extra-login">
+                            {{ $t('register.have-account') }}
+                            <a href="#" @click.prevent="login" class="link">{{
+                                $t('register.login')
+                            }}</a>
+                        </p>
+                        <p class="extra-link extra-help">
+                            {{ $t('register.need-help') }}
+                            <a href="#" @click.prevent="showContactUsDrawer = true" class="link">{{
+                                $t('register.contact-us')
+                            }}</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <DrawerLayout
         :is-opened="showContactUsDrawer"
@@ -169,6 +177,7 @@ import ContactForm from '@/components/Drawers/ContactForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
+import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 
 export default {
     name: 'RegisterPage',
@@ -181,6 +190,7 @@ export default {
         LpiButton,
         ContactForm,
         DrawerLayout,
+        LoaderSimple,
     },
 
     props: {
@@ -206,6 +216,7 @@ export default {
             showContactUsDrawer: false,
             isLinkValid: false,
             contactEmail: '',
+            verifyingLink: true,
         }
     },
 
@@ -239,6 +250,7 @@ export default {
     },
     async mounted() {
         this.isLinkValid = await this.validateToken()
+        this.verifyingLink = false
         this.contactEmail = this.$store.getters['organizations/current']?.contact_email
     },
     computed: {
@@ -338,6 +350,13 @@ $form-max-total-width: $form-max-width + 2 * $form-horizontal-padding;
 /* stylelint-disable-next-line  scss/operator-no-newline-after */
 $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     $container-horizontal-padding;
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
 
 .register-page {
     display: flex;
