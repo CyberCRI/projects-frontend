@@ -13,7 +13,7 @@
             {{ $t('role.select') }}
 
             <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
-                <button class="question-mark tooltip">
+                <button type="button" class="question-mark tooltip">
                     <IconImage name="HelpCircle" />
                 </button>
                 <template #custom-content>
