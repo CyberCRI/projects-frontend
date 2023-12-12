@@ -80,7 +80,7 @@
 import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import PickProjectsDrawer from '@/components/lpikit/PickProjectsDrawer/PickProjectsDrawer.vue'
-import { postFollow as deleteFollow, getUserFollows } from '@/api/follows.service'
+import { deleteFollow, getUserFollows } from '@/api/follows.service'
 
 export default {
     name: 'ProfileProjectsEditTab',
