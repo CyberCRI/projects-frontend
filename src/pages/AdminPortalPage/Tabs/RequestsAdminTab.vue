@@ -1,29 +1,8 @@
 <template>
-    <div class="role-tab">
-        <div class="controls-wrapper">
-            <div class="search-input-container">
-                <SearchInput
-                    v-model="searchFilter"
-                    :full="true"
-                    :placeholder="$t('browse.placeholder')"
-                    class="search-input"
-                    @enter="searchUser"
-                    @delete-query="deleteQuery"
-                />
-                <LpiButton
-                    :label="$t('browse.page-title')"
-                    :secondary="false"
-                    @click="searchUser"
-                ></LpiButton>
-            </div>
-
-            <LinkButton
-                :label="$t('account.button')"
-                btn-icon="Plus"
-                class="create-account"
-                @click="createAccountDrawer(null)"
-            ></LinkButton>
-        </div>
+    <div class="requests-admin-tab">
+        <p class="intro">
+            {{ $t('admin.requests.intro') }}
+        </p>
 
         <LpiLoader v-if="isLoading" class="loader" type="simple" />
 
@@ -45,56 +24,39 @@
                             ></IconImage>
                         </button>
                     </th>
-                    <th></th>
+                    <th>
+                        <input type="checkbox" />
+                        {{ $t('admin.requests.table.action') }}
+                    </th>
                 </tr>
                 <tr v-for="(user, index) in filteredUsers" :key="index">
                     <td>{{ $filters.capitalize(user.family_name) }}</td>
                     <td>{{ $filters.capitalize(user.given_name) }}</td>
+                    <td>{{ $filters.capitalize(user.email) }}</td>
                     <td>{{ $filters.capitalize(user.job) }}</td>
                     <td class="has-more">
-                        {{
-                            user.current_org_role
-                                ? $t(`groups.roles.${user.current_org_role}`)
-                                : '-'
-                        }}
-                    </td>
-                    <td class="has-more">
-                        <span class="first-item">
-                            <template v-if="user.people_groups?.length">
-                                <span
-                                    :title="user.people_groups[0]"
-                                    v-if="user.people_groups[0].length > 28"
-                                >
-                                    {{ user.people_groups[0].substring(0, 25) + '...' }}
-                                </span>
-                                <span v-else>{{ user.people_groups[0] }}</span>
-                            </template>
-                            <template v-else> - </template>
-                        </span>
-                        <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
-                            <span class="more-items" v-if="user.people_groups?.length > 1">
-                                + {{ user.people_groups.length - 1 }}
+                        <ToolTip
+                            arrow
+                            class="color-tip"
+                            :hover="true"
+                            :interactive="false"
+                            v-if="user.message?.length > 36"
+                        >
+                            <span class="more-items">
+                                {{ user.message.substring(0, 33) + '...' }}
                             </span>
 
                             <template #custom-content>
                                 <div class="tooltip-div">
-                                    {{ user.people_groups.slice(1).join(', ') }}
+                                    {{ user.message }}
                                 </div>
                             </template>
                         </ToolTip>
+                        <span v-else>{{ user.message }}</span>
                     </td>
                     <td>
-                        {{ user.created_at ? new Date(user.created_at).toLocaleDateString() : '-' }}
-                    </td>
-                    <td>
-                        {{
-                            user.email_verified
-                                ? $t('admin.accounts.table.activation-yes')
-                                : $t('admin.accounts.table.activation-no')
-                        }}
-                    </td>
-                    <td>
-                        <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
+                        <LinkButton btn-icon="Close" :label="$t('admin.requests.table.decline')" />
+                        <LinkButton btn-icon="Check" :label="$t('admin.requests.table.accept')" />
                     </td>
                 </tr>
             </table>
@@ -159,53 +121,39 @@ export default {
             request: {},
             filters: [
                 {
-                    label: 'admin.accounts.table.last-name',
+                    label: 'admin.requests.table.last-name',
                     isActive: false,
                     filter: 'family_name',
                     order: '',
                     unsortable: false,
                 },
                 {
-                    label: 'admin.accounts.table.first-name',
+                    label: 'admin.requests.table.first-name',
                     isActive: false,
                     filter: 'given_name',
                     order: '',
                     unsortable: false,
                 },
                 {
-                    label: 'admin.accounts.table.title',
+                    label: 'admin.requests.table.email',
+                    isActive: false,
+                    filter: 'email',
+                    order: '',
+                    unsortable: false,
+                },
+                {
+                    label: 'admin.requests.table.title',
                     isActive: false,
                     filter: 'job',
-                    order: '',
-                    unsortable: false,
-                },
-                {
-                    label: 'admin.accounts.table.roles',
-                    isActive: false,
-                    filter: 'current_org_role',
-                    order: '',
-                    unsortable: false,
-                },
-                {
-                    label: 'admin.accounts.table.groups',
-                    isActive: false,
-                    filter: 'people_groups',
                     order: '',
                     unsortable: true,
                 },
                 {
-                    label: 'admin.accounts.table.inscription',
+                    label: 'admin.requests.table.message',
                     isActive: false,
-                    filter: 'created_at',
+                    filter: 'message',
                     order: '',
-                    unsortable: false,
-                },
-                {
-                    label: 'admin.accounts.table.activation',
-                    isActive: false,
-                    filter: 'email_verified',
-                    order: '',
-                    unsortable: false,
+                    unsortable: true,
                 },
             ],
         }
@@ -315,22 +263,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.role-tab {
+.requests-admin-tab {
     display: flex;
     flex-direction: column;
     padding: $space-xl 0;
 
-    .controls-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-
-        @media screen and (max-width: $max-tablet) {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-end;
-        }
+    .intro {
+        font-size: $font-size-m;
+        line-height: 1.5;
+        margin: 2.2rem 0;
     }
 
     .search-input-container {
@@ -363,6 +304,7 @@ export default {
     }
 
     .button {
+        appearance: none;
         display: flex;
         width: 100%;
         align-items: center;

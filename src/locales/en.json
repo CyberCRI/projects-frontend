@@ -210,6 +210,21 @@
             "subtitle-add-child": "Select in the list the child group. You can only select one.",
             "edit-modal-title": "Add parent group",
             "subtitle-edit-child": "Select in the list the parent group. You can only select one."
+        },
+        "requests": {
+            "intro": "Here is the list of people who requested access to your portal. You can accept or decline their request.",
+            "table": {
+                "last-name": "Last name",
+                "first-name": "First name",
+                "title": "Title",
+                "email": "Email",
+                "message": "Message",
+                "action": "Show pending only",
+                "decline": "Decline",
+                "declined": "Declined",
+                "accept": "Accept",
+                "accepted": "Accepted"
+            }
         }
     },
     "account": {
