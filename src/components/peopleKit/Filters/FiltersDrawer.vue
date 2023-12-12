@@ -88,6 +88,11 @@ export default {
             type: String,
             default: 'all',
         },
+        filterBlackList: {
+            // filters we dont want to show/edit but are still active (i.e. categories in category page)
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -107,7 +112,9 @@ export default {
                     componentSummary: TagsFilterSummary,
                     componentEditor: TagsFilterEditor,
                     hasFilters: this.selection['tags'].length > 0,
-                    condition: this.selectedSection === 'projects',
+                    condition:
+                        this.selectedSection === 'projects' &&
+                        !this.filterBlackList.includes('tags'),
                 },
                 sdgs: {
                     title: 'sdg',
@@ -115,7 +122,7 @@ export default {
                     componentEditor: SdgsFilter,
                     toggleable: false,
                     hasFilters: true,
-                    condition: true,
+                    condition: !this.filterBlackList.includes('sdgs'),
                 },
                 skills: {
                     title: 'skills',
@@ -123,7 +130,9 @@ export default {
                     componentSummary: SkillsFilterSummary,
                     componentEditor: SkillsFilterEditor,
                     hasFilters: this.selection['skills'].length > 0,
-                    condition: this.selectedSection === 'people',
+                    condition:
+                        this.selectedSection === 'people' &&
+                        !this.filterBlackList.includes('skills'),
                 },
                 languages: {
                     title: 'language',
@@ -131,7 +140,9 @@ export default {
                     componentEditor: LanguageFilter,
                     toggleable: false,
                     hasFilters: true,
-                    condition: this.selectedSection === 'projects',
+                    condition:
+                        this.selectedSection === 'projects' &&
+                        !this.filterBlackList.includes('languages'),
                 },
                 // TODO
                 // localization: {
@@ -146,7 +157,9 @@ export default {
                               componentSummary: CategoriesFilterSummary,
                               componentEditor: CategoriesFilterEditor,
                               hasFilters: this.selection['categories'].length > 0,
-                              condition: this.selectedSection === 'projects',
+                              condition:
+                                  this.selectedSection === 'projects' &&
+                                  !this.filterBlackList.includes('categories'),
                           },
                       }
                     : {}),

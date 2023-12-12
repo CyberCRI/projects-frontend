@@ -22,16 +22,11 @@
                             ref="searchOptions"
                             v-if="searchOptionsInited"
                             :search="search"
-                            :show-filters="false"
                             class="container inline stretch"
-                            @enter="updateSearch($event)"
+                            @filter-total-changed="updateFilterTotal($event)"
+                            @filters-updated="updateSearch($event)"
                             section="projects"
-                        />
-                        <LpiButton
-                            :label="$t('search.search-title')"
-                            class="button"
-                            @click="updateSearch($refs.searchOptions.selectedFilters)"
-                            data-test="create-project-from-category"
+                            :filter-black-list="['categories']"
                         />
                     </div>
                 </div>
@@ -55,31 +50,7 @@
                     data-test="create-project-from-category"
                 />
             </div>
-            <ProjectListSearch
-                v-if="searchOptionsInited"
-                :page="search.page"
-                :search="search"
-                :show-pagination="true"
-                :show-search-slot="true"
-                class="project-list-search"
-                mode="projects"
-                @pagination-changed="onPaginationChange"
-            >
-                <template #default="ProjectListSearchSlotProps">
-                    <CardList
-                        :is-loading="ProjectListSearchSlotProps.isLoading"
-                        :limit="ProjectListSearchSlotProps.limit"
-                        :projects="ProjectListSearchSlotProps.projects"
-                        :total-count="ProjectListSearchSlotProps.totalCount"
-                        :with-title="true"
-                        desktop-columns-number="6"
-                    >
-                        <template #projects="projectListSlotProps">
-                            <ProjectCard :project="projectListSlotProps.project" />
-                        </template>
-                    </CardList>
-                </template>
-            </ProjectListSearch>
+            <ProjectSearchTab :search="search" />
         </div>
     </div>
 </template>
@@ -93,9 +64,6 @@ import pageTitle from '@/mixins/pageTitle.ts'
 
 import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
 import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
-import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import {
@@ -105,6 +73,8 @@ import {
 } from '@/functs/search.ts'
 import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
 
+import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
+
 export default {
     name: 'CategoryPage',
 
@@ -112,12 +82,10 @@ export default {
 
     components: {
         LpiButton,
-        ProjectListSearch,
-        CardList,
         SearchOptions,
-        ProjectCard,
         CategoryCardImage,
         BreadCrumbs,
+        ProjectSearchTab,
     },
 
     pageTitle() {
@@ -138,8 +106,16 @@ export default {
                 limit: 30,
                 page: this.$route.query.page || 1,
             },
+            filterTotal: 0,
             searchOptionsInited: false,
-            filterQueryParams: ['search', 'page'],
+            filterQueryParams: [
+                'search',
+                'sdgs',
+                'organization_tags',
+                'wikipedia_tags',
+                'languages',
+                'page',
+            ],
             query: '',
         }
     },
@@ -202,17 +178,8 @@ export default {
     },
 
     methods: {
-        onPaginationChange(pagination) {
-            if (
-                this.search.page == pagination.currentPage ||
-                (!this.search.page && pagination.currentPage == 1)
-            )
-                return
-            this.search.page = pagination.currentPage
-            this.$router.push({
-                path: this.$route.path,
-                query: { ...this.$route.query, page: pagination.currentPage },
-            })
+        updateFilterTotal(filterTotal) {
+            this.filterTotal = filterTotal
         },
 
         updateSearch(newSearch) {

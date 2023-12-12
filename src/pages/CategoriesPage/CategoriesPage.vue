@@ -1,21 +1,17 @@
 <template>
     <div v-if="categories.length > 0" class="categories-layout page-top">
-        <h1 class="page-title">{{ $filters.capitalize($t('projects')) }}</h1>
+        <div class="page-section-extra-wide">
+            <h1 class="page-title">{{ $filters.capitalize($t('projects')) }}</h1>
 
-        <div class="search-categories-ctn page-section-extra-wide">
-            <div class="search-input-container">
-                <SearchInput
-                    v-model="searchFilter.search"
-                    :full="true"
-                    :placeholder="$t('browse.placeholder')"
-                    class="search-input"
-                    @enter="updateSearchQuery(true)"
-                    @delete-query="searchFilter.search = ''"
-                />
-                <LpiButton
-                    :label="$t('browse.page-title')"
-                    :secondary="false"
-                    @click="updateSearchQuery(true)"
+            <div v-if="searchOptionsInitiated" class="search-input-container">
+                <SearchOptions
+                    :limit="30"
+                    :show-section-filter="false"
+                    :search="search"
+                    section="projects"
+                    :show-filters="true"
+                    @filter-total-changed="updateFilterTotal($event)"
+                    @filters-updated="updateSearch($event)"
                 />
             </div>
         </div>
@@ -30,62 +26,114 @@
             />
         </div>
 
-        <div class="title-ctn page-section-wide">
-            <h2 class="sub-title">
-                {{ $filters.capitalize($t('home.categories.title')) }}
-            </h2>
+        <div class="page-section-wide" v-if="hasSearch">
+            <ProjectSearchTab :search="search" />
         </div>
-        <div class="categories page-section-wide">
-            <LpiCategoryCard
-                v-for="(category, index) in categories"
-                :key="index"
-                :category="category"
-                class="category"
-                size="small"
-                @click="goTo"
-            />
-        </div>
+        <template v-else>
+            <div class="title-ctn page-section-wide">
+                <h2 class="sub-title">
+                    {{ $filters.capitalize($t('home.categories.title')) }}
+                </h2>
+            </div>
+            <div class="categories page-section-wide">
+                <LpiCategoryCard
+                    v-for="(category, index) in categories"
+                    :key="index"
+                    :category="category"
+                    class="category"
+                    size="small"
+                    @click="goTo"
+                />
+            </div>
 
-        <div class="btn-ctn">
-            <LpiButton :label="$t('category.all-projects')" @click="updateSearchQuery" />
-        </div>
+            <div class="btn-ctn">
+                <LpiButton :label="$t('category.all-projects')" @click="updateSearchQuery" />
+            </div>
+        </template>
     </div>
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import LpiCategoryCard from '@/components/lpikit/CategoryCard/LpiCategoryCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 import permissions from '@/mixins/permissions.ts'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-
+import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
+import {
+    updateFiltersFromURL,
+    updateSearchQuery,
+    resetPaginationIfNeeded,
+} from '@/functs/search.ts'
+import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
 export default {
     name: 'CategoriesPage',
 
     mixins: [permissions, onboardingStatusMixin],
 
     components: {
-        SearchInput,
         LpiButton,
         LpiCategoryCard,
+        SearchOptions,
+        ProjectSearchTab,
     },
 
     data() {
         return {
-            searchFilter: {
+            search: {
                 search: '',
-                section: 'projects',
+                categories: [],
+                organization_tags: [],
+                wikipedia_tags: [],
+                members: [],
+                sdgs: [],
+                languages: [],
+                skills: [],
+                section: 'all',
+                organizations: [this.$store.state.organizations.current.code],
+                ordering: '-updated_at',
+                limit: 30,
+                page: 1,
             },
+            filterTotal: 0,
+            projectsCount: 0,
+            searchOptionsInitiated: false,
+            filterQueryParams: [
+                'search',
+                'sdgs',
+                'categories',
+                'organization_tags',
+                'wikipedia_tags',
+                'languages',
+                'page',
+            ],
+            selectedSection: 'all',
         }
     },
 
-    mounted() {
+    async mounted() {
         this.onboardingTrap('explore_projects', false)
+        Object.assign(
+            this.search,
+            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
+        )
+        this.searchOptionsInitiated = true
+        this.selectedSection = this.$route.query.section
     },
 
     computed: {
         categories() {
             return this.$store.getters['projectCategories/allOrderedByOrderId']
+        },
+
+        hasSearch() {
+            return (
+                !!this.search.search ||
+                ['sdgs', 'categories', 'organization_tags', 'wikipedia_tags', 'languages'].reduce(
+                    (acc, key) => acc || this.search[key].length > 0,
+                    false
+                )
+            )
         },
     },
 
@@ -94,17 +142,24 @@ export default {
             this.$router.push({ name: 'Category', params: { id } })
         },
 
-        updateSearchQuery(searchButton) {
-            if (searchButton)
-                this.$router.push({
-                    name: 'ProjectSearch',
-                    query: { ...this.searchFilter, section: 'projects' },
-                })
-            else
-                this.$router.push({
-                    name: 'ProjectSearch',
-                    query: { section: 'projects' },
-                })
+        updateFilterTotal(filterTotal) {
+            this.filterTotal = filterTotal
+        },
+
+        updateSearch: debounce(function (newSearch) {
+            // reset pagination to page 1 if other criterion have changed
+            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
+            // and so seem always different than this.search
+            const search = resetPaginationIfNeeded(this.search, {
+                ...this.search,
+                ...newSearch,
+            })
+            this.search = search
+            this.updateSearchQuery()
+        }, 500),
+
+        updateSearchQuery() {
+            return updateSearchQuery(this, this.filterQueryParams)
         },
     },
 }
@@ -119,34 +174,34 @@ export default {
         margin: $space-2xl 0;
     }
 
-    .search-categories-ctn {
+    .search-input-container {
         display: flex;
+        padding: $space-l;
+        background: $primary-lighter;
+        align-items: center;
+        border-radius: $border-radius-17;
         flex-direction: column;
+        margin: $space-xl 0;
 
-        .search-input-container {
-            display: flex;
-            padding: $space-l;
-            margin: $space-xl 0;
-            background: $primary-lighter;
-            align-items: center;
-            border-radius: $border-radius-17;
-            flex-direction: column;
+        .search-input {
+            margin-bottom: pxToRem(16px);
+        }
+
+        @media screen and (min-width: $min-tablet) {
+            padding: pxToRem(32px) pxToRem(84px);
+            border-radius: 17px;
+            flex-direction: row;
 
             .search-input {
-                margin-bottom: pxToRem(16px);
-            }
-
-            @media screen and (min-width: $min-tablet) {
-                padding: pxToRem(32px) pxToRem(84px);
-                border-radius: 17px;
-                flex-direction: row;
-
-                .search-input {
-                    margin-right: $space-l;
-                    margin-bottom: 0;
-                }
+                margin-right: $space-l;
+                margin-bottom: 0;
             }
         }
+    }
+
+    :deep(.search-input-ctn),
+    :deep(.search-block) {
+        flex-grow: 1;
     }
 
     .action-ctn {
