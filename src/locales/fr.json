@@ -140,6 +140,7 @@
             "links": "Liens",
             "templates": "Templates",
             "users": "Utilisateurs",
+            "requests": "Demandes",
             "groups": "Groupes"
         },
         "page-title": "Admin",

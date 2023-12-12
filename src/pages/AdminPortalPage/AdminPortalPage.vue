@@ -21,42 +21,47 @@ export default {
                 {
                     key: 'admin-infos',
                     label: this.$t('admin.tabs.information'),
-                    view: '/admin/general',
+                    view: { name: 'general' },
                 },
                 {
                     key: 'admin-categories',
                     label: this.$t('admin.tabs.categories'),
-                    view: '/admin/categories',
+                    view: { name: 'categories' },
                 },
                 {
                     key: 'admin-tags',
                     label: this.$t('admin.tabs.tags'),
-                    view: '/admin/tags',
+                    view: { name: 'tags' },
                 },
                 {
                     key: 'admin-help',
                     label: this.$t('admin.tabs.help'),
-                    view: '/admin/faq',
+                    view: { name: 'faq' },
                 },
                 {
                     key: 'admin-templates',
                     label: this.$t('admin.tabs.templates'),
-                    view: '/admin/templates',
+                    view: { name: 'templates' },
                 },
                 {
                     key: 'admin-roles',
                     label: this.$t('admin.tabs.users'),
-                    view: '/admin/accounts',
+                    view: { name: 'Accounts' },
                 },
                 {
                     key: 'admin-links',
                     label: this.$t('admin.tabs.links'),
-                    view: '/admin/links',
+                    view: { name: 'links' },
+                },
+                {
+                    key: 'admin-requests',
+                    label: this.$t('admin.tabs.requests'),
+                    view: { name: 'RequestsAdminTab' },
                 },
                 {
                     key: 'admin-groups',
                     label: this.$t('admin.tabs.groups'),
-                    view: '/admin/groups',
+                    view: { name: 'groups' },
                 },
             ]
         },
