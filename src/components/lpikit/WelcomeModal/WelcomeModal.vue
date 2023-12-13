@@ -73,6 +73,8 @@ export default {
             // and set the next todos
             await this.onboardingTrapAll({
                 show_welcome: false,
+                // use 1 for step insted of 0 to have a truthy value
+                show_complete_profile_modal: choice == 'proceed' ? 1 : false,
                 show_progress: true,
                 complete_profile: true,
                 explore_projects: true,
