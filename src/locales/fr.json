@@ -1185,7 +1185,7 @@
     },
     "onboarding-todo": {
         "platform-tour": "Visite de la plateforme",
-        "welcome": "Bienvenue {0} ! Voici les étapes pour commencer sur la plateforme.",
+        "welcome": "Bienvenue {0}, démarrez sur la plateforme avec ces étapes.",
         "complete-profile": "Complétez votre profil",
         "explore-projects": "Explorez d'autres projets",
         "create-project": "Créez votre premier projet",
