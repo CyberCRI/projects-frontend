@@ -13,8 +13,8 @@
                     <div
                         class="field-with-validation"
                         :class="{
-                            valid: !v$.form.given_name.$errors.length,
-                            invalid: v$.form.given_name.$errors.length,
+                            valid: !v$.form.given_name.$invalid,
+                            invalid: v$.form.given_name.$invalid,
                         }"
                     >
                         <div class="field-decorator">
@@ -40,8 +40,8 @@
                     <div
                         class="field-with-validation"
                         :class="{
-                            valid: !v$.form.family_name.$errors.length,
-                            invalid: v$.form.family_name.$errors.length,
+                            valid: !v$.form.family_name.$invalid,
+                            invalid: v$.form.family_name.$invalid,
                         }"
                     >
                         <div class="field-decorator">
@@ -65,8 +65,8 @@
                     <div
                         class="field-with-validation"
                         :class="{
-                            valid: !v$.user.email.$errors.length,
-                            invalid: v$.user.email.$errors.length,
+                            valid: !v$.user.email.$invalid,
+                            invalid: v$.user.email.$invalid,
                         }"
                     >
                         <div class="field-decorator">
@@ -93,8 +93,8 @@
                     <div
                         class="field-with-validation"
                         :class="{
-                            valid: !v$.form.job.$errors.length,
-                            invalid: v$.form.job.$errors.length,
+                            valid: !v$.form.job.$invalid,
+                            invalid: v$.form.job.$invalid,
                         }"
                     >
                         <div class="field-decorator">
@@ -403,7 +403,7 @@ export default {
             // this called by CompleteProfileDrawer.vue
             let success = true
             this.$emit('saving', true)
-            const isValid = true // await this.v$.$validate() TODO: validation
+            const isValid = await this.v$.$validate()
             try {
                 if (isValid) {
                     const data = {
@@ -457,6 +457,9 @@ export default {
                         message: this.$t('profile.edit.general.save-success'),
                         type: 'success',
                     })
+                } else {
+                    // invalid
+                    success = false
                 }
             } catch (error) {
                 success = false
