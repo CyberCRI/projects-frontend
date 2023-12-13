@@ -75,6 +75,7 @@ export default {
     data() {
         return {
             scrolled: false,
+            uniqueId: (Math.random() + 1).toString(36).substring(7),
         }
     },
 
@@ -137,14 +138,20 @@ export default {
             handler: function (neo, old) {
                 if (neo !== old) {
                     if (neo) {
-                        document.querySelector('body').classList.add('has-open-drawer')
+                        console.log('oooooo')
+                        document
+                            .querySelector('body')
+                            .classList.add(`has-open-drawer-${this.uniqueId}`)
                         this.$nextTick(() =>
                             this.$refs.main
                                 ? this.$refs.main.addEventListener('scroll', this.onScroll)
                                 : null
                         )
                     } else {
-                        document.querySelector('body').classList.remove('has-open-drawer')
+                        console.log('xxxx')
+                        document
+                            .querySelector('body')
+                            .classList.remove(`has-open-drawer-${this.uniqueId}`)
                         if (this.$refs.main)
                             this.$refs.main.removeEventListener('scroll', this.onScroll)
                     }
@@ -156,7 +163,7 @@ export default {
 
     unmounted() {
         // if destroyed before closing, need to cleanup un-scrollable body
-        document.querySelector('body').classList.remove('has-open-drawer')
+        document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
     },
 }
 </script>

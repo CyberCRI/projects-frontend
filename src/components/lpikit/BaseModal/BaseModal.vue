@@ -56,6 +56,12 @@ export default {
 
     components: { ContextActionButton },
 
+    data() {
+        return {
+            uniqueId: (Math.random() + 1).toString(36).substring(7),
+        }
+    },
+
     props: {
         width: {
             type: String,
@@ -84,6 +90,14 @@ export default {
     },
 
     emits: ['close', 'submit'],
+
+    mounted() {
+        document.querySelector('body').classList.add(`has-open-modal-${this.uniqueId}`)
+    },
+
+    unmounted() {
+        document.querySelector('body').classList.remove(`has-open-modal-${this.uniqueId}`)
+    },
 
     methods: {
         close() {

@@ -122,7 +122,8 @@ ul {
 }
 
 // global
-body.has-open-drawer {
+body[class*='has-open-drawer-'],
+body[class*='has-open-modal-'] {
     // prevent scrolling behind drawers
     overflow: hidden;
 }
