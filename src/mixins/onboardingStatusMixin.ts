@@ -7,8 +7,12 @@ type OnboardingKey =
     | 'explore_projects'
     | 'complete_profile'
     | 'show_progress'
+    | 'show_complete_profile_modal'
+    | 'show_profile_completed_modal'
+    | 'show_take_tour_modal'
+
 export type OnboardingStatusType = {
-    [key in OnboardingKey]: boolean
+    [key in OnboardingKey]: boolean | number
 }
 
 export default {

@@ -69,14 +69,31 @@ import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import CompleteProfileStep1 from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileStep1.vue'
 import CompleteProfileStep2 from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'CompleteProfileDrawer',
+
     components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, DrawerLayout, LpiLoader },
+
     emits: ['close', 'completed'],
+
+    mixins: [onboardingStatusMixin],
+
+    props: {
+        isOpened: {
+            type: Boolean,
+            default: false,
+        },
+        initialStep: {
+            type: Number,
+            required: true,
+        },
+    },
+
     data() {
         return {
             stepComponents: [CompleteProfileStep1, CompleteProfileStep2],
-            step: 0,
+            step: this.initialStep,
             saving: false,
             loading: false,
             invalid: false,
@@ -84,12 +101,7 @@ export default {
             helpIsLoading: false,
         }
     },
-    props: {
-        isOpened: {
-            type: Boolean,
-            default: false,
-        },
-    },
+
     computed: {
         stepComponent() {
             return toRaw(this.stepComponents[this.step])
@@ -109,8 +121,7 @@ export default {
         },
     },
     methods: {
-        cancel() {
-            // TODO: specify and implement
+        async cancel() {
             this.$emit('close')
         },
         async save() {
@@ -118,8 +129,11 @@ export default {
             if (success) {
                 if (this.step < this.stepComponents.length - 1) {
                     this.step++
+                    await this.onboardingTrapAll({
+                        // +1 because 1-indexed here and 0-indexed in the component
+                        show_complete_profile_modal: this.step + 1,
+                    })
                 } else {
-                    // TODO: end of the game
                     this.$emit('completed')
                 }
             }
