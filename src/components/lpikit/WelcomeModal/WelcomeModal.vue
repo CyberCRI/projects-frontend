@@ -89,7 +89,7 @@ export default {
             return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
         },
         organizationTitle() {
-            return this.$store.getters['organizations/current']?.dashboard_title || ''
+            return this.$store.getters['organizations/current']?.name || ''
         },
     },
 }
