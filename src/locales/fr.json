@@ -1234,6 +1234,7 @@
             "notice": "Les champs marqués * sont obligatoires.",
             "help": "Besoin d'aide ? On est là.",
             "edit": "Modifier",
+            "search": "Chercher",
             "general": {
                 "tab": "Infos Générales",
                 "form-has-error": "Il y a des champs manquants ou invalides dans le formulaires.",
@@ -1375,7 +1376,7 @@
                     "drawer": {
                         "add": {
                             "title": "Ajouter des compétences professionnelles",
-                            "notice": "Tapez les premières lettres de la compétence et sélectionnez celle qui vous convient",
+                            "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
                             "placeholder": "Taper une compétence",
                             "confirm": "Suivant"
                         },
@@ -2013,7 +2014,7 @@
         "search-all": "Rechercher dans toutes les communautés",
         "search-group": "Tapez les premières lettres du groupe",
         "search-tag": "Tapez les premières lettres du tag",
-        "search-skill": "Tapez les premières lettres de la compétence",
+        "search-skill": "Tapez l'intitulé de la compétence",
         "search-user": "Tapez les premières lettres du nom",
         "search-in": "Rechercher dans la communauté",
         "specific-tags": "choisissez parmi les tags de {organizationName}",
@@ -2026,7 +2027,7 @@
         "tag-map-description": "Découvrez les projets sur une carte des tags Wikipédia",
         "open-map": "Ouvrir la carte",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
-        "current-skill-description": "Tapez les premières lettres de la compétence et sélectionnez la bonne compétence",
+        "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
         "disambiguate": "(HOMONYMIE)"
     },
     "sdg": {

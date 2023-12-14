@@ -138,7 +138,6 @@ export default {
             handler: function (neo, old) {
                 if (neo !== old) {
                     if (neo) {
-                        console.log('oooooo')
                         document
                             .querySelector('body')
                             .classList.add(`has-open-drawer-${this.uniqueId}`)
@@ -148,7 +147,6 @@ export default {
                                 : null
                         )
                     } else {
-                        console.log('xxxx')
                         document
                             .querySelector('body')
                             .classList.remove(`has-open-drawer-${this.uniqueId}`)

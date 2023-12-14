@@ -1369,6 +1369,7 @@
                 "intro": "You have not selected skills yet. Professional skills and hobbies allow your colleagues and your community to find you based on what you’re good at, what you’re interested in and what you care about.",
                 "save-error": "Error while saving profile.",
                 "save-success": "Profile saved.",
+                "search": "search",
                 "skills": {
                     "add": "Add professional skills",
                     "edit-items": "Edit skills",
@@ -1378,7 +1379,7 @@
                     "drawer": {
                         "add": {
                             "title": "Add professional skills",
-                            "notice": "Type the first letters of your skill, and select the right one for you among suggestions.",
+                            "notice": "Type the label of your skill, and select the right one for you among suggestions.",
                             "placeholder": "Type a skill",
                             "confirm": "Next"
                         },
@@ -1399,7 +1400,7 @@
                     "drawer": {
                         "add": {
                             "title": "Add personal hobbies",
-                            "notice": "Type the first letters of your hobby, and select the right one for you among suggestions.",
+                            "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
                             "placeholder": "Type a hobby",
                             "confirm": "Next"
                         },
@@ -2016,7 +2017,7 @@
         "search-all": "Search in all communities",
         "search-group": "Type group's first letters",
         "search-tag": "Type tag's first letters",
-        "search-skill": "Type skill's first letters",
+        "search-skill": "Type skill's label",
         "search-user": "Type person's name first letters",
         "search-in": "Search projects in",
         "specific-tags": "choose from {organizationName} tags",
@@ -2029,7 +2030,7 @@
         "tag-map-description": "Discover projetcs on a Wikipédia tag map",
         "open-map": "Open the map",
         "current-tag-description": "Type tag’s first letters and select the right tag",
-        "current-skill-description": "Type skill’s first letters and select the right skill",
+        "current-skill-description": "Type skill’s label and select the right skill",
         "disambiguate": "(DISAMBIGUATION)"
     },
     "sdg": {
