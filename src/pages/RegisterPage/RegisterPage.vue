@@ -399,7 +399,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 }
 
 .title {
-    font-size: $font-size-2xl;
+    font-size: pxToRem(24px);
     margin-bottom: $space-l;
     text-align: center;
 }
@@ -529,16 +529,6 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     justify-content: center;
     align-items: center;
     margin: 90px auto;
-
-    // padding-top: pxToRem(20px);
-}
-
-.title {
-    font-size: pxToRem(40px);
-    font-weight: 900;
-    color: $primary-dark;
-    line-height: 1.125;
-    margin-bottom: pxToRem(15px);
 }
 
 .expired-text {
