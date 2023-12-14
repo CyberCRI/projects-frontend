@@ -4,6 +4,7 @@
             <h2 class="welcome-title">{{ $t('plateform-tour-modal.title') }}</h2>
             <p class="notice">{{ $t('plateform-tour-modal.intro') }}</p>
             <div class="video-wrapper">
+                <LoaderSimple class="loader" />
                 <iframe
                     class="video"
                     :src="videoSrc"
@@ -29,12 +30,13 @@
 <script>
 import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 export default {
     name: 'TakeTourModal',
 
     emits: ['close'],
 
-    components: { BaseModal },
+    components: { BaseModal, LoaderSimple },
 
     mixins: [onboardingStatusMixin],
 
@@ -96,13 +98,21 @@ export default {
     height: 0;
     padding-bottom: 100% * calc(9 / 16);
     position: relative;
-}
 
-.video {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    .loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+    .video {
+        position: absolute;
+        z-index: 10;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>
