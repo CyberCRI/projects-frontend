@@ -58,7 +58,6 @@ import debounce from 'lodash.debounce'
 import LpiCategoryCard from '@/components/lpikit/CategoryCard/LpiCategoryCard.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
 import {
     updateFiltersFromURL,
@@ -69,7 +68,7 @@ import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
 export default {
     name: 'CategoriesPage',
 
-    mixins: [permissions, onboardingStatusMixin],
+    mixins: [permissions],
 
     components: {
         LpiButton,
@@ -112,7 +111,6 @@ export default {
     },
 
     async mounted() {
-        this.onboardingTrap('explore_projects', false)
         Object.assign(
             this.search,
             await updateFiltersFromURL(this.$route.query, this.filterQueryParams)

@@ -32,9 +32,12 @@ import {
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
+import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 
 export default {
     name: 'BrowseLayout',
+
+    mixins: [onboardingStatusMixin],
 
     inject: {
         browseLayoutUpdateProjectQuantity: {
@@ -105,6 +108,8 @@ export default {
             await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
         )
         this.searchOptionsInitiated = true
+
+        this.onboardingTrap('explore_projects', false)
     },
 
     computed: {
