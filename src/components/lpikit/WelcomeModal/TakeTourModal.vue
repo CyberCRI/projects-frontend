@@ -106,6 +106,7 @@ export default {
         transform: translate(-50%, -50%);
         z-index: 1;
     }
+
     .video {
         position: absolute;
         z-index: 10;
