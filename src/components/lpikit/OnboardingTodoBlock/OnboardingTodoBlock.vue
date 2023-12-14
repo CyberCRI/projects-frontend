@@ -157,7 +157,7 @@ export default {
             if (this.anyAsyncing) return
             // TODO check with and remove eventually
             // await this.updateStatus('explore_projects', false)
-            this.$router.push({ name: 'Categories' })
+            this.$router.push({ name: 'Search' })
         },
 
         async createProject() {
