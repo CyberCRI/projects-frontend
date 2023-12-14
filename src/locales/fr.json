@@ -473,7 +473,7 @@
             "intro": "Les champs marqués d'un * sont obligatoires. Vous pouvez toujours modifier cela dans votre profil plus tard.",
             "no-idea": "Aucune idée de ce que vous devriez faire ?"
         },
-        "onboarding": "Embarquement",
+        "onboarding": "Prise en main",
         "personal": {
             "email": "email",
             "email-placeholder": "vous{'@'}example.com",
