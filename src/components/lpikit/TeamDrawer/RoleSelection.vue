@@ -136,10 +136,10 @@ export default {
             const categories = this.addToCurrentProject
                 ? this.project.categories
                 : [this.selectedCategory]
-
             // keep only categroies from current organization
             let orgCategories = (categories || []).filter(
-                (cat) => this.$store.getters['organizations/current'].code === cat.organization
+                (cat) =>
+                    !!cat && this.$store.getters['organizations/current'].code === cat.organization
             )
 
             // reviewable by default (ie if there is no category)
