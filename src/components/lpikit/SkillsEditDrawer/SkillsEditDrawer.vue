@@ -29,12 +29,15 @@
             <div class="search-field">
                 <SearchInput
                     v-model="search"
+                    @delete-query="onDeleteQuery"
+                    @enter="doSearch"
                     :placeholder="$t(`profile.edit.skills.${type}.drawer.add.placeholder`)"
                 />
+                <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
             </div>
             <WikipediaResults
-                v-if="search"
-                :query-string="search"
+                v-if="confirmedSearch"
+                :query-string="confirmedSearch"
                 :existing-tags="selectionAsTags"
                 :ambiguous-results-visible="ambiguousTagsOpen"
                 @add-tag="addToSelection"
@@ -93,6 +96,7 @@ import { toRaw } from 'vue'
 import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
 import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
+import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
     name: 'SkillsEditDrawer',
@@ -113,6 +117,7 @@ export default {
         FilterValue,
         WikipediaResults,
         SkillLevelTip,
+        LpiButton,
     },
 
     props: {
@@ -136,6 +141,7 @@ export default {
     data() {
         return {
             search: '',
+            confirmedSearch: '',
             selection: [],
             searchResults: [],
             isSearching: false,
@@ -178,11 +184,27 @@ export default {
                         ? this.user[this.type].map((item) => ({ ...toRaw(item) }))
                         : []
                 this.searchResults = []
+                this.$nextTick(this.focusInput)
             }
         },
     },
-
     methods: {
+        focusInput() {
+            const searchInput = this.$el.querySelector('.search-field input')
+            this.$nextTick(() => {
+                searchInput?.focus()
+            })
+        },
+
+        doSearch() {
+            this.confirmedSearch = this.search
+        },
+
+        onDeleteQuery() {
+            this.search = ''
+            this.confirmedSearch = ''
+        },
+
         clampLevel(level) {
             return Math.min(
                 Math.max(level, this.skillLevels[0].value),
@@ -336,6 +358,16 @@ export default {
         margin-top: $space-m;
         display: flex;
         justify-content: stretch;
+        align-items: center;
+        gap: 1rem;
+
+        .search-input-ctn {
+            flex-grow: 1;
+
+            :deep(.search-input) {
+                width: 100%;
+            }
+        }
     }
 
     .search-results {

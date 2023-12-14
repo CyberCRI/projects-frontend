@@ -6,20 +6,22 @@
             {{ $t('search.current-skill-description') }}
         </p>
 
-        <FilterSearchInput
-            v-show="!ambiguousTagsOpen"
-            ref="search-input-component"
-            v-model="queryString"
-            :placeholder="$t('search.search-skill')"
-            class="search-input-ctn"
-        />
+        <div class="search-field">
+            <SearchInput
+                v-model="queryString"
+                @delete-query="onDeleteQuery"
+                @enter="doSearch"
+                :placeholder="$t('search.search-skill')"
+            />
+            <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
+        </div>
 
         <WikipediaResults
-            v-if="queryString"
+            v-if="confirmedSearch"
             :ambiguous-results-visible="ambiguousTagsOpen"
             :existing-tags="skills"
             :inline="inline"
-            :query-string="queryString"
+            :query-string="confirmedSearch"
             @add-tag="onAddSkill"
             @go-back="goBackToAddMode"
             @ambiguous-menu="setAmbiguousMenuValue"
@@ -28,9 +30,10 @@
 </template>
 
 <script>
-import FilterSearchInput from '@/components/peopleKit/Filters/FilterSearchInput.vue'
 import CurrentTags from '@/components/lpikit/FilterTags/CurrentTags.vue'
 import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vue'
+import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
 
 export default {
     name: 'SkillsFilterEditor',
@@ -38,9 +41,10 @@ export default {
     emits: ['update:modelValue', 'ambiguous-menu'],
 
     components: {
-        FilterSearchInput,
         CurrentTags,
         WikipediaResults,
+        LpiButton,
+        SearchInput,
     },
 
     props: {
@@ -68,6 +72,7 @@ export default {
         return {
             isAddMode: true,
             queryString: '',
+            confirmedSearch: '',
             skills: [],
         }
     },
@@ -77,21 +82,31 @@ export default {
     },
 
     methods: {
+        doSearch() {
+            this.confirmedSearch = this.queryString
+        },
+
+        onDeleteQuery() {
+            this.confirmedSearch = ''
+            this.queryString = ''
+        },
+
         addSkill(skill) {
             this.skills.push(skill)
             this.$emit('update:modelValue', this.skills)
         },
 
         focusInput() {
-            const searchInput = this.$refs['search-input-component'].$refs['search-input']
+            const searchInput = this.$el.querySelector('.search-field input')
             this.$nextTick(() => {
-                searchInput.focus()
+                searchInput?.focus()
             })
         },
 
         goBackToAddMode() {
             this.isAddMode = true
             this.queryString = ''
+            this.confirmedSearch = ''
             this.focusInput()
         },
 
@@ -99,6 +114,7 @@ export default {
             this.addSkill(result)
             this.isAddMode = true
             this.queryString = ''
+            this.confirmedSearch = ''
             this.focusInput()
         },
 
@@ -156,6 +172,22 @@ export default {
 
     input {
         width: 100%;
+    }
+}
+
+.search-field {
+    margin-top: $space-m;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    gap: 1rem;
+
+    .search-input-ctn {
+        flex-grow: 1;
+
+        :deep(.search-input) {
+            width: 100%;
+        }
     }
 }
 </style>
