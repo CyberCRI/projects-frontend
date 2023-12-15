@@ -184,7 +184,7 @@ export default {
             this.form.type = groupData.type
             this.form.publication_status = groupData.publication_status
             // header image
-            this.form.header_image = groupData.header_image?.url
+            this.form.header_image = groupData.header_image
             this.form.imageSizes = pictureApiToImageSizes(groupData.header_image)
 
             // fetch members

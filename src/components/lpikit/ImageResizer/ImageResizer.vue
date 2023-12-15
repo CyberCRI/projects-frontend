@@ -26,6 +26,12 @@ export default {
             type: Number,
             default: 1,
         },
+
+        roundShape: {
+            // is crop area a circle
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -130,10 +136,27 @@ export default {
 
             // init croppr
 
+            const cropCircle = this.roundShape
+                ? (data) => {
+                      const c = this.$el.querySelector('.croppr-imageClipped')
+                      let x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
+                      let y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
+                      // strangely it is always bboxHeight that works
+                      let radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
+                      setTimeout(() => {
+                          if (c?.style) c.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
+                      }, 1)
+                  }
+                : () => {}
+
             this.croppr = new Croppr(img, {
                 aspectRatio: this.ratio,
                 onCropEnd: (data) => {
                     this.updateData(data)
+                    cropCircle(data)
+                },
+                onCropMove: (data) => {
+                    cropCircle(data)
                 },
                 onInitialize: (instance) => {
                     // set initial cropping area (order of op matters !)

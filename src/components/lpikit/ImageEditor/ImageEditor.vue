@@ -30,6 +30,14 @@
                 :label="$t('common.modify')"
                 @upload-image="uploadImage"
             />
+
+            <LinkButton
+                v-disable-focus="disabled"
+                :label="$t('project.form.resize-image')"
+                btn-icon="CropFree"
+                @click="openImageResizer"
+                data-test="resize-image-button"
+            />
         </div>
         <!-- image resizer -->
         <DrawerLayout
@@ -45,6 +53,7 @@
                 ref="imageResizer"
                 :image="displayedImage"
                 :image-sizes="imageSizes"
+                :roundShape="roundPicture"
             />
         </DrawerLayout>
     </div>

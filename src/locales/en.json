@@ -925,7 +925,7 @@
             "short-description-label": "Headline",
             "short-description-placeholder": "Describe your group in one sentence",
             "ready-to-present": "Are you ready to present your group?",
-            "resize-image": "Reframe the image",
+            "resize-image": "Reframe",
             "some-tag-ideas": "Some ideas among our popular tags:",
             "tag-hint": "1 tag minimum, 3 recommended",
             "name-label": "Group name",
@@ -1296,7 +1296,7 @@
                     "label": "Profile picture",
                     "notice": "(120 x 120 px mini - format jpg, png)",
                     "upload-image": "Upload an image",
-                    "resize-image": "resize your image"
+                    "resize-image": "Reframe"
                 },
                 "title": {
                     "label": "Title *",
@@ -1669,7 +1669,7 @@
             "purpose-label": "Project's goal",
             "purpose-placeholder": "What is the goal of your project?",
             "ready-to-present": "Are you ready to present your project?",
-            "resize-image": "Reframe the image",
+            "resize-image": "Reframe",
             "some-tag-ideas": "Some ideas among our popular tags:",
             "tag-hint": "1 tag minimum, 3 recommended",
             "title-label": "Add a title",

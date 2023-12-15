@@ -924,7 +924,7 @@
             "short-description-label": "Titre du groupe",
             "short-description-placeholder": "Décrivez votre groupe en une phrase",
             "ready-to-present": "Vous êtes prêt à présenter votre groupe ?",
-            "resize-image": "Recadrer l'image",
+            "resize-image": "Recadrer",
             "some-tag-ideas": "Quelques idées parmis les tags populaires :",
             "tag-hint": "1 tag minimum, 3 recommandés",
             "name-label": "Nom du groupe",
@@ -1295,7 +1295,7 @@
                     "label": "Photo de profil",
                     "notice": "(120 x 120 px mini - format jpg, png)",
                     "upload-image": "Télécharger une image",
-                    "resize-image": "Cadrer votre photo"
+                    "resize-image": "Recadrer"
                 },
                 "title": {
                     "label": "Titre *",
@@ -1665,7 +1665,7 @@
             "purpose-label": "Votre mission",
             "purpose-placeholder": "Quel est l’objectif de votre projet ?",
             "ready-to-present": "Vous êtes prêt à présenter votre projet ?",
-            "resize-image": "Recadrer l'image",
+            "resize-image": "Recadrer",
             "some-tag-ideas": "Quelques idées parmis les tags populaires :",
             "tag-hint": "1 tag minimum, 3 recommandés",
             "title-label": "Ajouter un titre",
