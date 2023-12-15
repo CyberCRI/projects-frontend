@@ -1,6 +1,6 @@
 <template>
     <div :class="{ 'in-modal': inModal, inline }" class="search-results">
-        <div class="search-results-ctn">
+        <div class="search-results-ctn" v-if="tagResults?.length">
             <div
                 v-for="(tag, index) in tagResults"
                 :key="`${tag.name}-${index}`"
@@ -10,6 +10,9 @@
             >
                 <TagResult :is-ambiguous="tag.ambiguous" :label="tag.name" />
             </div>
+        </div>
+        <div v-else class="no-result">
+            {{ $t('common.no-result') }}
         </div>
     </div>
 </template>
@@ -51,6 +54,15 @@ export default {
 .search-results {
     .back-btn {
         margin-left: auto;
+    }
+
+    .no-result {
+        width: 100%;
+        text-align: center;
+        font-size: $font-size-l;
+        padding-top: $space-2xl;
+        font-style: italic;
+        color: $gray-8;
     }
 
     .search-results-ctn {
