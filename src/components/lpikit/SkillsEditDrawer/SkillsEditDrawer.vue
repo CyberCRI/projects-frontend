@@ -179,6 +179,7 @@ export default {
         isOpen(neo) {
             if (neo) {
                 this.search = ''
+                this.confirmedSearch = ''
                 this.selection =
                     this.user && this.user[this.type]
                         ? this.user[this.type].map((item) => ({ ...toRaw(item) }))
