@@ -53,7 +53,7 @@
                 ref="imageResizer"
                 :image="displayedImage"
                 :image-sizes="imageSizes"
-                :roundShape="roundPicture"
+                :round-shape="roundPicture"
             />
         </DrawerLayout>
     </div>

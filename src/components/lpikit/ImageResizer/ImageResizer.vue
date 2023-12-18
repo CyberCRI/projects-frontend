@@ -138,13 +138,14 @@ export default {
 
             const cropCircle = this.roundShape
                 ? (data) => {
-                      const c = this.$el.querySelector('.croppr-imageClipped')
+                      const imageClipped = this.$el.querySelector('.croppr-imageClipped')
                       let x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
                       let y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
                       // strangely it is always bboxHeight that works
                       let radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
                       setTimeout(() => {
-                          if (c?.style) c.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
+                          if (imageClipped?.style)
+                              imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
                       }, 1)
                   }
                 : () => {}
