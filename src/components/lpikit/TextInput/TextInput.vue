@@ -34,7 +34,7 @@
                 v-if="inputType === 'password'"
                 class="show-password"
                 @click="typeOverride = typeOverride ? null : 'text'"
-                :name="typeOverride ? 'EyeSlash' : 'Eye'"
+                :name="typeOverride ? 'Eye' : 'EyeSlash'"
             />
         </span>
 
