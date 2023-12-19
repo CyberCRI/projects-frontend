@@ -27,7 +27,14 @@ export async function createGroup(page: Page, GroupName: string) {
     await page.locator('[data-test="confirm-button"]').click()
     logger.info("let's add parent group to the group")
     await page.locator('[data-test="add-parent-group-card"]').click()
-    await page.locator('[data-test="group-81"]').click()
+
+    // available parent groups depends on current organization
+    if (process.env.VITE_APP_API_ORG_CODE == 'CRI') {
+        await page.locator('[data-test="group-725"]').click()
+    } else {
+        // DEFAULT
+        await page.locator('[data-test="group-81"]').click()
+    }
     await page.locator('[data-test="confirm-button"]').click()
 
     logger.info("let's create the group")

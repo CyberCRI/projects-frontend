@@ -5,6 +5,10 @@ import { organizationCode } from '../variables'
 const logger = new Logger(LogLevel.Debug)
 
 export async function createProject(page, projectName, projId) {
+    const currentLang = await page
+        .locator('[data-test="dropdown-lang"] [data-test="current-label"]')
+        .textContent()
+
     logger.info('Wait for 30 sec and click on LPI logo')
     await page.locator('[data-test="lpi-logo"]').waitFor(30000)
     await page.locator('[data-test="lpi-logo"]').click()
@@ -35,14 +39,26 @@ export async function createProject(page, projectName, projId) {
     logger.info('Click to add a tag')
     await page.locator('[data-test="tags"]').click()
     await page.locator('[data-test="search-input"]').click()
-    logger.info('Search for test tag')
-    await page.locator('[data-test="search-input"]').fill('test')
-    await page.getByRole('main').getByText('Test', { exact: true }).click()
-    logger.info('Add test tag')
-    logger.info('Search for tag voiture')
-    await page.locator('[data-test="search-input"]').fill('voiture')
-    await page.getByText('Voiture électrique').click()
-    logger.info('Add voiture éléctrique tag')
+    // tags results depends on current language.....
+    if (currentLang == 'FR') {
+        logger.info('Search for test tag')
+        await page.locator('[data-test="search-input"]').fill('test')
+        await page.getByRole('main').getByText('Test', { exact: true }).click()
+        logger.info('Add test tag')
+        logger.info('Search for tag voiture')
+        await page.locator('[data-test="search-input"]').fill('voiture')
+        await page.getByText('Voiture électrique').click()
+        logger.info('Add voiture éléctrique tag')
+    } else {
+        logger.info('Search for test cricket tag')
+        await page.locator('[data-test="search-input"]').fill('test cricket')
+        await page.getByRole('main').getByText('Test cricket', { exact: true }).click()
+        logger.info('Add Test cricket tag')
+        logger.info('Search for tag self-driving')
+        await page.locator('[data-test="search-input"]').fill('self-driving car')
+        await page.getByText('Self-driving car', { exact: true }).click()
+        logger.info('Add self-driving car tag')
+    }
     await page.locator('[data-test="confirm-button"]').click()
     logger.info('Tag added')
 
@@ -60,6 +76,10 @@ export async function createProject(page, projectName, projId) {
         .locator('[data-test="upload-image-button"]')
         .setInputFiles('tests/playwright/fixtures/png/pinguinmoon.png')
     logger.info('Add custom img from local folder')
+
+    await page.locator('[data-test="image-resizer-drawer"] [data-test="confirm-button"]').click()
+    logger.info('Image resizer opened and closed')
+
     await page.locator('[data-test="project-create-button"]').click()
     logger.info('Custom image added')
 

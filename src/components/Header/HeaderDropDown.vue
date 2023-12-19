@@ -9,7 +9,7 @@
                     :name="icon"
                     class="icon"
                 />
-                <span v-if="label">{{ label }}</span>
+                <span v-if="label" data-test="current-label">{{ label }}</span>
                 <span class="icon caret"><IconImage name="MenuDown" /></span>
             </slot>
         </button>
