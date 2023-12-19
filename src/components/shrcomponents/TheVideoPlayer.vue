@@ -112,6 +112,7 @@ export default {
 .custom-video-wrapper-full {
     padding-bottom: 57.6307363927428%;
 }
+
 .video-title {
     margin-bottom: 20px;
 
