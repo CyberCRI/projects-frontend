@@ -47,6 +47,7 @@
             class="medium"
             @close="showImageResizer = false"
             @confirm="saveImageSizes"
+            data-test="image-resizer-drawer"
         >
             <ImageResizer
                 v-if="showImageResizer"

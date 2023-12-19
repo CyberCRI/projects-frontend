@@ -113,6 +113,7 @@
                 <HeaderDropDown
                     :label="$store.getters['languages/current'].toUpperCase()"
                     :menu-items="langMenu"
+                    data-test="dropdown-lang"
                 />
             </div>
             <div class="header__group-buttons-mobile">
