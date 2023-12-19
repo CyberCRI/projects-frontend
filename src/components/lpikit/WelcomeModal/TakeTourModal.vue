@@ -47,8 +47,8 @@ export default {
     computed: {
         videoSrc() {
             return this.$store.state.languages.current === 'fr'
-                ? 'https://player.vimeo.com/video/525574857'
-                : 'https://player.vimeo.com/video/525597321'
+                ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
+                : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
         },
     },
 }
@@ -96,7 +96,7 @@ export default {
     margin: 2rem auto;
     width: 100%;
     height: 0;
-    padding-bottom: 100% * calc(9 / 16);
+    padding-bottom: 57.6307363927428%;
     position: relative;
 
     .loader {
