@@ -1185,7 +1185,7 @@
         "previous": "Précédent"
     },
     "onboarding-todo": {
-        "platform-tour": "Visite de la plateforme",
+        "platform-tour": "Premiers pas",
         "welcome": "Bienvenue {0}, démarrez sur la plateforme avec ces étapes.",
         "complete-profile": "Complétez votre profil",
         "explore-projects": "Explorez Projects",
@@ -2536,7 +2536,7 @@
         "success": "🎉 Votre compte a bien été créé !",
         "instruction": "Avant de commencer à profiter de la plateforme, il faut compléter votre profil.",
         "guidance": "Cela ne prendra que quelques minutes et nous vous guiderons en chemin.",
-        "complete-later": "Je ferais ça plus tard",
+        "complete-later": "Je ferai ça plus tard",
         "complete-now": "Allons-y !"
     }
 }
