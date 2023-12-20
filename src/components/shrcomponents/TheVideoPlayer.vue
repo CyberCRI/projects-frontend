@@ -88,8 +88,8 @@ export default {
     computed: {
         videoSrc() {
             return this.$store.state.languages.current === 'fr'
-                ? 'https://player.vimeo.com/video/525574857'
-                : 'https://player.vimeo.com/video/525597321'
+                ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
+                : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
         },
     },
 }
@@ -98,15 +98,19 @@ export default {
 <style lang="scss" scoped>
 .video-container {
     display: flex;
+    padding: 20px 0;
 }
 
 .video-player {
-    margin: 20px;
     width: 100%;
 
     iframe {
         width: 100%;
     }
+}
+
+.custom-video-wrapper-full {
+    padding-bottom: 57.6307363927428%;
 }
 
 .video-title {
