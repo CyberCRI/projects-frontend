@@ -1,5 +1,6 @@
 import { emailToReport } from '../variables'
 import { LogLevel, Logger } from '../logger'
+import { expect } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -26,4 +27,6 @@ export async function reportBug(page) {
     logger.info('Description added')
     await page.locator('[data-test="report-button"]').click()
     logger.info('Click to confirm report')
+    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
+    logger.info('Checked if drawer is closed')
 }

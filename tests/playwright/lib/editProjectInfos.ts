@@ -1,4 +1,5 @@
 import { LogLevel, Logger } from '../logger'
+import { expect } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -10,4 +11,6 @@ export async function editProjectInfos(page, projId2) {
     await page.locator('[data-test="purpose-input"]').fill(projId2)
     await page.locator('[data-test="confirm-button"]').click()
     logger.info('Click to save edit')
+    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
+    logger.info('Checked if drawer is closed')
 }
