@@ -2,7 +2,7 @@
     <div>
         <teleport to="body">
             <transition name="modal-fade">
-                <div class="modal-backdrop">
+                <div class="modal-backdrop" data-test="modal-backdrop">
                     <div class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
                         <div v-if="$slots.topping" class="modal-topping">
                             <slot name="topping"></slot>

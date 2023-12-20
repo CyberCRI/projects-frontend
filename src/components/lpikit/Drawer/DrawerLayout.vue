@@ -1,7 +1,12 @@
 <template>
     <div>
         <Transition appear name="background-appear">
-            <div v-if="isOpened" class="background" @click="close"></div>
+            <div
+                v-if="isOpened"
+                class="background"
+                @click="close"
+                data-test="drawer-background"
+            ></div>
         </Transition>
         <Transition appear name="drawer-slide">
             <div
@@ -11,6 +16,7 @@
                     padding: padding,
                 }"
                 class="drawer"
+                data-test="drawer-layout-container"
             >
                 <header :class="{ scrolled }" class="drawer__header">
                     <div class="header-text">
