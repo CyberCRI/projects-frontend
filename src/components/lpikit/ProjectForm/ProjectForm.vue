@@ -298,6 +298,7 @@ export default {
     methods: {
         closeTagSearchTags() {
             this.tagSearchIsOpened = false
+            this.ambiguousTagsOpen = false
         },
 
         saveTags() {
