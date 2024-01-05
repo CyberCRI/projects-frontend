@@ -195,9 +195,7 @@ export default {
             // fetch featured projects
             // TODO this is paginated
             // so if there's more than 100 featured projects we're screwed
-            const groupProjectData = (
-                await getGroupProject(this.orgCode, this.groupId)
-            ).results.filter((project) => project.is_featured) // projects are mix of featured and member's projects, so filter out non featured
+            const groupProjectData = (await getGroupProject(this.orgCode, this.groupId)).results
             this.groupProjectData = groupProjectData.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
             this.form.featuredProjects = groupProjectData.map((project) => ({ ...project })) // this.groupProjectData  will serve as reference for add/delete ops
         }
