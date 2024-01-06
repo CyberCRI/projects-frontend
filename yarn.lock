@@ -552,22 +552,22 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.50.0.tgz#9e93b850f0f3fa35f5fa59adfd03adae8488e484"
   integrity sha512-NCC3zz2+nvYd+Ckfh87rA47zfu2QsQpvc6k1yzTk+b9KzRj0wkGa8LSoGOXN6Zv4lRf/EIoZ80biDh9HOI+RNQ==
 
-"@hocuspocus/common@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.5.0.tgz#adfbaa770d1e8eda0a811ad93b427cdf89960e3d"
-  integrity sha512-TpnQAb1Rtff1trwURFWaUEYZwqykaIGo6NNnMr6ZISdDZFWNHMAMUmy7dwJDS9ECnEtcjXhpPxXeLV+MVQXVnw==
+"@hocuspocus/common@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/common/-/common-2.9.0.tgz#0647c1f8e240565fb9593b498821b968261391f8"
+  integrity sha512-VHqxf1Qov4PULmoevRV4hEyxfEGNtdCMDQTU0C1C6ZR6ImDAqnpuzzcxH5ppkZZiiSZwDWxMxxegFt2e3alDEA==
   dependencies:
-    lib0 "^0.2.47"
+    lib0 "^0.2.87"
 
-"@hocuspocus/provider@^2.2.1":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@hocuspocus/provider/-/provider-2.5.0.tgz#2c56184082f835c7a0c07c8962a6e5dcafebe847"
-  integrity sha512-Du/q0kcVhaSQiKPBha19f+mnFOl4sFybARRWsGp4JIoDG+Vt3r73ZqjalIJmp9h4mBr2tGtS5zK/oQ/Vrv5/Bw==
+"@hocuspocus/provider@^2.8.1":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@hocuspocus/provider/-/provider-2.9.0.tgz#fc53919f3e88f39c774009b4fe43404e10418dd9"
+  integrity sha512-ZMXX0+jbmB5V7n9RVTtxgWexOs3uwMUxTz9JcGNyUWpLGebSHQppT36eR0cNUhhqO3Kz5HBv2dg8egwGKpT5aQ==
   dependencies:
-    "@hocuspocus/common" "^2.5.0"
+    "@hocuspocus/common" "^2.9.0"
     "@lifeomic/attempt" "^3.0.2"
-    lib0 "^0.2.47"
-    ws "^7.5.9"
+    lib0 "^0.2.87"
+    ws "^8.14.2"
 
 "@humanwhocodes/config-array@^0.11.11":
   version "0.11.11"
@@ -4301,10 +4301,10 @@ lib0@^0.2.42, lib0@^0.2.74, lib0@^0.2.85:
   dependencies:
     isomorphic.js "^0.2.4"
 
-lib0@^0.2.47:
-  version "0.2.86"
-  resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.86.tgz#86ccc3366ca3b6f8b5d8713c03f2a67ed7bc5f3e"
-  integrity sha512-kxigQTM4Q7NwJkEgdqQvU21qiR37twcqqLmh+/SbiGbRLfPlLVbHyY9sWp7PwXh0Xus9ELDSjsUOwcrdt5yZ4w==
+lib0@^0.2.87:
+  version "0.2.88"
+  resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.88.tgz#18618e0c3b63f6260255eb760f9247d9cc6c6a5b"
+  integrity sha512-KyroiEvCeZcZEMx5Ys+b4u4eEBbA1ch7XUaBhYpwa/nPMrzTjUhI4RfcytmQfYoTBPcdyx+FX6WFNIoNuJzJfQ==
   dependencies:
     isomorphic.js "^0.2.4"
 
@@ -6837,10 +6837,10 @@ write-file-atomic@^5.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
 
-ws@^7.5.9:
-  version "7.5.9"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.9.tgz#54fa7db29f4c7cec68b1ddd3a89de099942bb591"
-  integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
+ws@^8.14.2:
+  version "8.16.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.16.0.tgz#d1cd774f36fbc07165066a60e40323eab6446fd4"
+  integrity sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
