@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                     <TextInput
-                        v-model="form.title"
+                        v-model="form.job"
                         :label="$t('request-access.profile-title.label')"
                         :placeholder="$t('request-access.profile-title.placeholder')"
                         data-test="title"
@@ -128,13 +128,13 @@
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
-import utils from '@/functs/functions.ts'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import ContactForm from '@/components/Drawers/ContactForm.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import SignUpWrapper from '@/components/lpikit/SignUpWrapper/SignUpWrapper.vue'
 import { helpers, required, email } from '@vuelidate/validators'
+import { postAccessRequest } from '@/api/organizations.service.ts'
 export default {
     name: 'RequestAccessPage',
 
@@ -152,8 +152,7 @@ export default {
                 email: '',
                 given_name: '',
                 family_name: '',
-                profile_picture: '',
-                title: '',
+                job: '',
                 message: '',
             },
             asyncing: false,
@@ -200,8 +199,12 @@ export default {
             }
             this.asyncing = true
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-
+                const org_code = this.$store.getters['organizations/current']?.code
+                const payload = {
+                    ...this.form,
+                    organization: org_code,
+                }
+                await postAccessRequest(org_code, payload)
                 this.confirm = true
             } catch (error) {
                 if (error?.response?.status === 409) {
@@ -366,6 +369,7 @@ export default {
         text-decoration: underline;
     }
 }
+
 .confirm-message strong {
     font-weight: 700;
     color: $primary-dark;
@@ -383,6 +387,7 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
     transform: scale(0);
+
     $opacity: 0;
 }
 </style>

@@ -442,6 +442,7 @@ export default {
         text-decoration: underline;
     }
 }
+
 .confirm-message strong {
     font-weight: 700;
     color: $primary-dark;
@@ -459,6 +460,7 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
     transform: scale(0);
+
     $opacity: 0;
 }
 </style>
