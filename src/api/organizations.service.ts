@@ -141,3 +141,14 @@ export async function getPeopleGroupById(org_code, group_id) {
         )
     ).data
 }
+
+export async function postAccessRequest(org_code, body) {
+    return (
+        await axios.post(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/access-request/`,
+            body
+        )
+    ).data
+}

@@ -382,6 +382,17 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
+    {
+        path: '/request-access',
+        name: 'RequestAccess',
+        component: () =>
+            import(
+                /* webpackChunkName: "RequestAccess" */ '../pages/RequestAccessPage/RequestAccessPage.vue'
+            ),
+        meta: {
+            resetScroll: true,
+        },
+    },
 
     {
         path: '/groups/:groupId?',
