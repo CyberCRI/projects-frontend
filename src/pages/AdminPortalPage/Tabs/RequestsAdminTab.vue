@@ -387,6 +387,7 @@ table {
     td {
         padding: 16px 24px;
         text-align: start;
+
         label {
             color: $black-1 !important;
             font-weight: 700 !important;
@@ -410,6 +411,7 @@ table {
     display: inline-block;
     margin: auto;
 }
+
 .pagination-container {
     width: 100%;
     display: flex;
