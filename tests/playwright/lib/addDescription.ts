@@ -1,4 +1,5 @@
 import { LogLevel, Logger } from '../logger'
+import { expect } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -35,4 +36,6 @@ export async function addDescription(page) {
     logger.info('Table added')
     await page.locator('[data-test="confirm-button"]').click()
     logger.info('Description added')
+    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
+    logger.info('Checked if drawer is closed')
 }
