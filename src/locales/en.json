@@ -224,7 +224,11 @@
                 "declined": "Declined",
                 "accept": "Accept",
                 "accepted": "Accepted"
-            }
+            },
+            "accept-succes": "Request successfuly accepted",
+            "accept-error": "Error while accepting request",
+            "decline-sucess": "Request successfuly declined",
+            "decline-error": "Error while declining request"
         }
     },
     "account": {

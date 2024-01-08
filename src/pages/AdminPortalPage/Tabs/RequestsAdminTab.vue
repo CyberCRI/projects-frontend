@@ -55,8 +55,38 @@
                         <span v-else>{{ user.message }}</span>
                     </td>
                     <td>
-                        <LinkButton btn-icon="Close" :label="$t('admin.requests.table.decline')" />
-                        <LinkButton btn-icon="Check" :label="$t('admin.requests.table.accept')" />
+                        <div
+                            class="status-wrapper refused-wrapper"
+                            v-if="user.status == 'declined'"
+                        >
+                            <span class="status-widget action-status declined">
+                                <IconImage name="Close" /> {{ $t('admin.requests.table.declined') }}
+                            </span>
+                        </div>
+                        <div
+                            class="status-wrapper accepted-wrapper"
+                            v-else-if="user.status == 'accepted'"
+                        >
+                            <span class="status-widget action-status accepted">
+                                <IconImage name="Check" /> {{ $t('admin.requests.table.accepted') }}
+                            </span>
+                        </div>
+                        <div class="status-wrapper pending-wrapper" v-else>
+                            <button
+                                type="button"
+                                class="status-widget action-button decline-action"
+                                @click="declineRequest(user)"
+                            >
+                                <IconImage name="Close" /> {{ $t('admin.requests.table.decline') }}
+                            </button>
+                            <button
+                                type="button"
+                                class="status-widget action-button accept-action"
+                                @click="acceptRequest(user)"
+                            >
+                                <IconImage name="Check" /> {{ $t('admin.requests.table.accept') }}
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -69,23 +99,11 @@
                 />
             </div>
         </div>
-
-        <AccountDrawer
-            v-if="isOpenAccountDrawer"
-            :is-opened="isOpenAccountDrawer"
-            :is-add-mode="!selectedUser"
-            :selected-user="selectedUser"
-            @close="closeAccountDrawer"
-        />
     </div>
 </template>
 
 <script>
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import AccountDrawer from '@/components/Layouts/Account/AccountDrawer.vue'
 
 import debounce from 'lodash.debounce'
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -93,7 +111,11 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
-import { searchPeopleAdmin } from '@/api/people.service'
+import {
+    getAccessRequests,
+    acceptAccessRequest,
+    declineAccessRequest,
+} from '@/api/organizations.service.ts'
 import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 
 export default {
@@ -102,11 +124,7 @@ export default {
     components: {
         IconImage,
         LpiLoader,
-        SearchInput,
-        LpiButton,
-        AccountDrawer,
         PaginationButtons,
-        LinkButton,
         ToolTip,
     },
 
@@ -190,7 +208,7 @@ export default {
     },
 
     mounted() {
-        this.searchUser()
+        this.searchRequest()
     },
 
     methods: {
@@ -202,7 +220,7 @@ export default {
             if (el) el.scrollIntoView({ behavior: 'smooth' })
         },
 
-        searchUser: debounce(async function () {
+        searchRequest: debounce(async function () {
             this.isLoading = true
 
             const activeFilter = this.filters.find((filter) => filter.isActive)
@@ -210,19 +228,13 @@ export default {
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
 
-            this.request = await searchPeopleAdmin({
+            this.request = await getAccessRequests(this.organization.code, {
                 search: this.searchFilter,
-                org_id: this.organization.id,
-                params,
+                ...params,
             })
 
             this.isLoading = false
         }, 500),
-
-        deleteQuery() {
-            this.searchFilter = ''
-            this.filteredUsers = []
-        },
 
         async sortBy(filter) {
             if (filter.unsortable) return
@@ -248,15 +260,38 @@ export default {
             this.isLoading = false
         },
 
-        createAccountDrawer(user) {
-            if (user) this.selectedUser = user
-            this.isOpenAccountDrawer = true
+        async declineRequest(request) {
+            try {
+                await declineAccessRequest(this.organization.code, {
+                    access_requests: [request.id],
+                })
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.requests.decline-success'),
+                    type: 'success',
+                })
+                await this.searchRequest()
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('admin.requests.decline-failed')} (${error})`,
+                    type: 'error',
+                })
+            }
         },
 
-        closeAccountDrawer() {
-            this.isOpenAccountDrawer = false
-            this.selectedUser = null
-            this.searchUser()
+        async acceptRequest(request) {
+            try {
+                await acceptAccessRequest(this.organization.code, { access_requests: [request.id] })
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.requests.accept-success'),
+                    type: 'success',
+                })
+                await this.searchRequest()
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('admin.requests.accept-failed')} (${error})`,
+                    type: 'error',
+                })
+            }
         },
     },
 }
@@ -395,5 +430,75 @@ table {
     text-align: center;
     line-height: 1.3;
     color: $black;
+}
+
+.status-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.refused-wrapper {
+    justify-content: flex-end;
+}
+
+.accepted-wrapper {
+    justify-content: flex-start;
+}
+
+.pending-wrapper {
+    justify-content: space-between;
+}
+
+.status-widget {
+    display: inline-flex;
+    gap: $space-xs;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: $font-size-s;
+
+    svg {
+        $icon-dim: $font-size-m;
+
+        width: $icon-dim;
+        height: $icon-dim;
+        border-radius: $icon-dim;
+        fill: $white;
+        padding: 0.1rem;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+}
+
+.action-button {
+    color: $primary-dark;
+    background: none;
+    border: 0 none;
+    cursor: pointer;
+    transition: transform 200ms ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &.decline-action {
+        svg {
+            background-color: $salmon;
+        }
+    }
+
+    &.accept-action {
+        svg {
+            background-color: $green;
+        }
+    }
+}
+
+.action-status {
+    color: $gray-8;
+
+    svg {
+        background-color: $gray-8;
+    }
 }
 </style>

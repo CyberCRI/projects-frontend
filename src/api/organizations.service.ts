@@ -152,3 +152,36 @@ export async function postAccessRequest(org_code, body) {
         )
     ).data
 }
+
+export async function getAccessRequests(org_code, params) {
+    return (
+        await axios.get(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/access-request/`,
+            _adaptParamsToGetQuery(params)
+        )
+    ).data
+}
+
+export async function declineAccessRequest(org_code, params) {
+    return (
+        await axios.post(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/access-request/decline/`,
+            params
+        )
+    ).data
+}
+
+export async function acceptAccessRequest(org_code, params) {
+    return (
+        await axios.post(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/access-request/accept/`,
+            params
+        )
+    ).data
+}

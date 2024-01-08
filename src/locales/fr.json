@@ -219,12 +219,16 @@
                 "title": "Titre",
                 "email": "E-mail",
                 "message": "Message",
-                "action": "Afficher uniquement les demandes en attente",
+                "action": "Uniquement en attente",
                 "decline": "Refuser",
                 "declined": "Refusé",
                 "accept": "Accepter",
                 "accepted": "Accepté"
-            }
+            },
+            "accept-success": "Demande acceptée avec succès",
+            "accept-error": "Erreur lors de l'acceptation de la demande",
+            "decline-success": "Demande refusée avec succès",
+            "decline-error": "Erreur lors du refus de la demande"
         }
     },
     "account": {
