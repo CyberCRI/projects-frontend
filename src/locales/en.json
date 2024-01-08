@@ -223,7 +223,8 @@
                 "decline": "Decline",
                 "declined": "Declined",
                 "accept": "Accept",
-                "accepted": "Accepted"
+                "accepted": "Accepted",
+                "no-result": "No result"
             },
             "accept-succes": "Request successfuly accepted",
             "accept-error": "Error while accepting request",

@@ -4,9 +4,7 @@
             {{ $t('admin.requests.intro') }}
         </p>
 
-        <LpiLoader v-if="isLoading" class="loader" type="simple" />
-
-        <div v-if="filteredUsers.length && !isLoading" class="user-list">
+        <div class="user-list">
             <table>
                 <tr>
                     <th v-for="(filter, index) in filters" :key="index">
@@ -25,14 +23,28 @@
                         </button>
                     </th>
                     <th>
-                        <input type="checkbox" />
-                        {{ $t('admin.requests.table.action') }}
+                        <LpiCheckbox
+                            v-model="showPendingOnly"
+                            :label="$t('admin.requests.table.action')"
+                        />
                     </th>
                 </tr>
-                <tr v-for="(user, index) in filteredUsers" :key="index">
+                <tr v-if="isLoading">
+                    <td class="pseudo-td" colspan="6">
+                        <LpiLoader class="loader" type="simple" />
+                    </td>
+                </tr>
+                <tr v-else-if="!filteredUsers.length">
+                    <td class="pseudo-td" colspan="6">
+                        {{ $t('admin.requests.table.no-result') }}
+                    </td>
+                </tr>
+                <tr v-else v-for="(user, index) in filteredUsers" :key="index">
                     <td>{{ $filters.capitalize(user.family_name) }}</td>
                     <td>{{ $filters.capitalize(user.given_name) }}</td>
-                    <td>{{ $filters.capitalize(user.email) }}</td>
+                    <td>
+                        <a class="mail-link" :href="`mailto:${user.email}`">{{ user.email }}</a>
+                    </td>
                     <td>{{ $filters.capitalize(user.job) }}</td>
                     <td class="has-more">
                         <ToolTip
@@ -111,6 +123,8 @@ import IconImage from '@/components/svgs/IconImage.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
+import LpiCheckbox from '@/components/lpikit/Checkbox/LpiCheckbox.vue'
+
 import {
     getAccessRequests,
     acceptAccessRequest,
@@ -126,17 +140,14 @@ export default {
         LpiLoader,
         PaginationButtons,
         ToolTip,
+        LpiCheckbox,
     },
 
     data() {
         return {
-            isOpenEditRoleDrawer: false,
-            isOpenAccountDrawer: false,
             isLoading: false,
-            searchFilter: '',
-            selectedUser: null,
-            selectedRole: {},
             request: {},
+            showPendingOnly: false,
             filters: [
                 {
                     label: 'admin.requests.table.last-name',
@@ -211,6 +222,15 @@ export default {
         this.searchRequest()
     },
 
+    watch: {
+        showPendingOnly: function (neo, old) {
+            if (neo != old) {
+                // TODO: add filter to API
+                this.searchRequest()
+            }
+        },
+    },
+
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
@@ -250,13 +270,7 @@ export default {
                 else if (filter.order === '-') filter.order = ''
             }
             this.isLoading = true
-            this.request = await searchPeopleAdmin({
-                search: this.searchFilter,
-                org_id: this.organization.id,
-                params: {
-                    ordering: filter.order + filter.filter,
-                },
-            })
+            this.searchRequest()
             this.isLoading = false
         },
 
@@ -333,11 +347,6 @@ export default {
         overflow-x: auto;
     }
 
-    .loader {
-        margin: auto;
-        padding-top: $space-l;
-    }
-
     .button {
         appearance: none;
         display: flex;
@@ -378,6 +387,13 @@ table {
     td {
         padding: 16px 24px;
         text-align: start;
+        label {
+            color: $black-1 !important;
+            font-weight: 700 !important;
+            font-size: $font-size-s !important;
+            display: flex;
+            align-items: center;
+        }
     }
 
     tr td {
@@ -385,6 +401,15 @@ table {
     }
 }
 
+.pseudo-td {
+    text-align: center;
+    padding: 1rem;
+}
+
+.loader {
+    display: inline-block;
+    margin: auto;
+}
 .pagination-container {
     width: 100%;
     display: flex;
@@ -406,17 +431,8 @@ table {
 
 .more-items {
     display: inline-block;
-    margin-left: 1rem;
-    background-color: $primary-dark;
-    color: $white;
-    font-weight: 700;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    width: 3rem;
-    text-align: center;
-    box-sizing: border-box;
+    color: inherit;
     cursor: pointer;
-    padding: 0.1rem 0.5rem;
 }
 
 .color-tip {
@@ -433,20 +449,17 @@ table {
 }
 
 .status-wrapper {
-    display: flex;
-    align-items: center;
-}
-
-.refused-wrapper {
-    justify-content: flex-end;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-m;
+    justify-items: start;
 }
 
 .accepted-wrapper {
-    justify-content: flex-start;
-}
-
-.pending-wrapper {
-    justify-content: space-between;
+    .status-widget {
+        grid-column: 2;
+    }
 }
 
 .status-widget {
@@ -471,11 +484,16 @@ table {
 }
 
 .action-button {
+    appearance: none;
+    margin: 0;
+    padding: 0;
     color: $primary-dark;
     background: none;
     border: 0 none;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
+    transform-origin: center bottom;
+    transform: scale(1);
 
     &:hover {
         transform: scale(1.05);
@@ -499,6 +517,12 @@ table {
 
     svg {
         background-color: $gray-8;
+    }
+}
+
+.mail-link {
+    &:hover {
+        text-decoration: underline;
     }
 }
 </style>
