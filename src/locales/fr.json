@@ -460,9 +460,9 @@
             },
             "long-bio": "Biographie longue",
             "long-bio-placeholder": "Commencez ici",
-            "long-bio-notice": "Vous pouvez prendre autant de temps que vous le souhaitez pour présenter vos réalisations professionnelles",
+            "long-bio-notice": "Présentez ici vos réalisations professionnelles .",
             "personal-bio": "Biographie personnelle",
-            "personal-bio-notice": "Nous pensons que nos centres d'intérêt personnels appartiennent au lieu de travail pour faciliter les rencontres !",
+            "personal-bio-notice": "Presentez ici vos centres d'intérêt personnels.",
             "personal-bio-placeholder": "Commencez ici",
             "short-bio": "Biographie courte",
             "short-bio-notice": "Une phrase pour vous présenter :",
@@ -476,11 +476,11 @@
         },
         "onboarding": "Prise en main",
         "personal": {
-            "email": "email",
+            "email": "Email",
             "email-placeholder": "vous{'@'}example.com",
             "firstname": "Prénom",
             "firstname-placeholder": "Prénom",
-            "headline": "Titre / Titre principal",
+            "headline": "Titre",
             "headline-placeholder": "Étudiant en M1 en durabilité, Directeur de recherche...",
             "lastname": "Nom de famille",
             "lastname-placeholder": "Nom de famille",
@@ -500,12 +500,15 @@
             "hobbies": "Hobbies",
             "hobbies-placeholder": "Tapez les premières lettres",
             "hobbies-notice": "Choisissez les hobbies qui permettront aux personnes de votre communauté de vous contacter.",
-            "sdg": "ODD",
-            "sdg-notice": "ODD auxquels vous souhaitez contribuer. Cela aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
             "skills": "Compétences",
             "skills-placeholder": "Tapez les premières lettres",
             "skills-notice": "Choisissez les compétences qui permettront aux personnes de votre communauté de vous contacter.",
             "title": "Centres d'intérêt et compétences"
+        },
+        "sdgs": {
+            "sdg": "ODD",
+            "sdg-notice": "Les objectif de développemt durable (ODD) constituent un appel à l'action pour relever une série de défis mondiaux. Indiquer les obbjectifs auxquels vous souhaitez contribuer aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
+            "title": "Objectifs de développement durable"
         },
         "title": "Complétez votre profil"
     },

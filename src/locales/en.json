@@ -461,9 +461,9 @@
             },
             "long-bio": "Long bio",
             "long-bio-placeholder": "Start here",
-            "long-bio-notice": "You can take as long as you want to present your professional endeavours",
+            "long-bio-notice": "Present here your professional endeavours",
             "personal-bio": "Personal bio",
-            "personal-bio-notice": "We believe our personal interests belong to the workplace to facilitate encounters!",
+            "personal-bio-notice": "Present here your personal interests.",
             "personal-bio-placeholder": "Start here",
             "short-bio": "Short bio",
             "short-bio-notice": "One sentence to present you:",
@@ -477,11 +477,11 @@
         },
         "onboarding": "Onboarding",
         "personal": {
-            "email": "email",
+            "email": "Email",
             "email-placeholder": "you{'@'}example.com",
             "firstname": "First Name",
             "firstname-placeholder": "First Name",
-            "headline": "Title / Headline",
+            "headline": "Title",
             "headline-placeholder": "Student M1 Sustainability, Director of Research...",
             "lastname": "Last Name",
             "lastname-placeholder": "Last Name",
@@ -501,12 +501,15 @@
             "hobbies": "Hobbies",
             "hobbies-placeholder": "Type the first letters",
             "hobbies-notice": "Pick the hobbies that will allow people in your community to get in touch with you.",
-            "sdg": "SDG",
-            "sdg-notice": "SDGs you want to contribute to. This will help members of your community find you for mentoring or help.",
             "skills": "Skills",
             "skills-placeholder": "Type the first letters",
             "skills-notice": "Pick the skills that will allow people in your community to get in touch with you.",
             "title": "Interests & skills"
+        },
+        "sdgs": {
+            "sdg": "SDG",
+            "sdg-notice": "The Sustainable Development Goals (SDGs) are a call to action to address a range of global challenges. Indicating the goals you want to contribute to will help people in your community find you for mentoring or assistance.",
+            "title": "Sustainable development goals"
         },
         "title": "Complete your profile"
     },
