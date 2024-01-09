@@ -94,6 +94,14 @@ export default {
         },
     },
 
+    watch: {
+        'project.description': function (neo, old) {
+            if (neo != old) {
+                this.editorDescription.originalContent = neo
+            }
+        },
+    },
+
     methods: {
         async patchProject(closeWindowAfterPatch = true) {
             if (this.editorDescription) {
