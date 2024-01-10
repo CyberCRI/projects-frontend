@@ -135,7 +135,7 @@ export default {
             if (this.existingTags.length) {
                 const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
                 filteredResults = results.filter(
-                    (tag) => !tagsQid.includes(tag.pageprops.wikibase_item)
+                    (tag) => tag.pageprops && !tagsQid.includes(tag.pageprops.wikibase_item)
                 )
             }
 
