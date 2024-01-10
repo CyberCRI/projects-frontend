@@ -127,7 +127,7 @@
                 <ReportForm type="bug" @close="reportBugOpen = false" />
             </DrawerLayout>
 
-            <OnboardingScreens v-if="isConnected"> </OnboardingScreens>
+            <OnboardingScreens v-if="showOnboardingScreen && isConnected"> </OnboardingScreens>
         </div>
     </footer>
 </template>
@@ -184,6 +184,9 @@ export default {
         },
         isConnected() {
             return this.$store.getters['users/isConnected']
+        },
+        showOnboardingScreen() {
+            return this.$store.getters['organizations/current']?.onboarding_enabled
         },
     },
 }
