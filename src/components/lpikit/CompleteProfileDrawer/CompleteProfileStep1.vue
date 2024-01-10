@@ -118,7 +118,7 @@
                 <div class="column">
                     <label class="field-title">{{ $t('complete-profile.personal.picture') }}</label>
                     <p class="field-notice">
-                        {{ $t('complete-profile.personal.picture-notice') }}
+                        <!-- {{ $t('complete-profile.personal.picture-notice') }} -->
                     </p>
                     <!-- picture-->
                     <ImageEditor
@@ -133,12 +133,10 @@
                 </div>
             </div>
         </ProfileEditBlock>
-        <ProfileEditBlock :block-title="$t('complete-profile.skills.title')">
+        <ProfileEditBlock :block-title="$t('complete-profile.sdgs.title')">
+            <p class="section-notice">{{ $t('complete-profile.sdgs.sdg-notice') }}</p>
             <div class="one-column">
                 <div class="column">
-                    <label class="field-title">{{ $t('complete-profile.skills.sdg') }} *</label>
-                    <p class="field-notice">{{ $t('complete-profile.skills.sdg-notice') }}</p>
-
                     <div class="sdg-grid">
                         <label class="sdg" v-for="sdg in sdgs" :key="sdg.id">
                             <input type="checkbox" class="sdg-checkbox" v-model="sdg.selected" />
@@ -158,8 +156,8 @@
         </ProfileEditBlock>
         <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
             <p class="section-notice">
-                <span>{{ $t('complete-profile.bio.notice') }} </span>
-                <i18n-t
+                <span>{{ $t('complete-profile.bio.notice') }}</span
+                >&nbsp;<i18n-t
                     v-if="hasBioExemple"
                     tag="span"
                     keypath="complete-profile.bio.notice-exemples"
