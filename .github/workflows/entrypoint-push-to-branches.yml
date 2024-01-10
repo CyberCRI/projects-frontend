@@ -47,11 +47,11 @@ jobs:
     needs:
       - build-docker
       - lint-and-test
-    uses: CyberCRI/github-workflows/.github/workflows/tag-deploy.yaml@deploy-fast
+    uses: CyberCRI/github-workflows/.github/workflows/tag-deploy.yaml@main
   tag-deploy-fast:
     needs:
       - build-docker
-    uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@deploy-fast
+    uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@main
   e2e:
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
     uses: ./.github/workflows/e2e.yml
