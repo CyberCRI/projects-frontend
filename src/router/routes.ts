@@ -291,6 +291,14 @@ const routes: Array<RouteRecordRaw> = [
                 ],
             },
             {
+                path: 'requests',
+                name: 'RequestsAdminTab',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "RequestsAdminTab" */ '../pages/AdminPortalPage/Tabs/RequestsAdminTab.vue'
+                    ),
+            },
+            {
                 path: 'groups',
                 name: 'groups',
                 redirect: { name: 'groupsList' },

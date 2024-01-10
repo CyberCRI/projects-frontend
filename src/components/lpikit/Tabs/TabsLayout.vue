@@ -178,7 +178,7 @@ export default {
         currentViewIndex() {
             return this.tabs.findIndex((tab) =>
                 tab.view?.name
-                    ? this.$route.name === tab.view?.name
+                    ? this.$route.matched.some((r) => r.name === tab.view?.name)
                     : this.$route.path.indexOf(tab.view) === 0
             )
         },

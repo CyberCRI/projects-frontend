@@ -140,6 +140,7 @@
             "links": "Liens",
             "templates": "Templates",
             "users": "Utilisateurs",
+            "requests": "Demandes",
             "groups": "Groupes"
         },
         "page-title": "Admin",
@@ -209,6 +210,26 @@
             "subtitle-add-child": "Sélectionner dans la liste le groupe enfant. Vous ne pouvez en sélectionner qu'un.",
             "edit-modal-title": "Ajouter un groupe parent",
             "subtitle-edit-child": "Sélectionner dans la liste le groupe parent. Vous ne pouvez en sélectionner qu'un."
+        },
+        "requests": {
+            "intro": "Voici la liste des personnes qui ont demandé l'accès à votre portail. Vous pouvez accepter ou refuser leur demande.",
+            "table": {
+                "last-name": "Nom de famille",
+                "first-name": "Prénom",
+                "title": "Titre",
+                "email": "E-mail",
+                "message": "Message",
+                "action": "Uniquement en attente",
+                "decline": "Refuser",
+                "declined": "Refusé",
+                "accept": "Accepter",
+                "accepted": "Accepté",
+                "no-result": "Pas de résultat"
+            },
+            "accept-success": "Demande acceptée avec succès",
+            "accept-error": "Erreur lors de l'acceptation de la demande",
+            "decline-success": "Demande refusée avec succès",
+            "decline-error": "Erreur lors du refus de la demande"
         }
     },
     "account": {
