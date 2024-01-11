@@ -319,8 +319,8 @@ export default {
 
         showOnbordingTodos() {
             if (!this.isConnected) return false
+            if (!this.organization?.onboarding_enabled) return false
             const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
-
             return (
                 status.show_progress &&
                 (status.complete_profile ||
