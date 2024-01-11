@@ -20,7 +20,9 @@ spec:
               service:
                 name: {{ tpl .Values.fullName . }}
                 port:
-                {{- if .Values.maintenance.enabled }}
+                {{- /* Allow passing a boolean as a string, for applicationset */}}
+                {{- /* https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/GoTemplate/#limitations*/}}
+                {{- if eq "true" (.Values.maintenance.enabled | toString) }}
                   number: {{ .Values.maintenance.portNumber }}
                 {{- else }}
                   name: http

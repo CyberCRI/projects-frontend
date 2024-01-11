@@ -4,8 +4,13 @@ metadata:
   labels:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
   name: {{ tpl .Values.fullName . }}
+{{- /* Allow passing a boolean as a string, for applicationset */}}
+{{- /* https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/GoTemplate/#limitations*/}}\
 spec:
-{{- if not .Values.maintenance.enabled }}
+{{- if eq "true" (.Values.maintenance.enabled | toString) }}
+  type: ExternalName
+  externalName: {{ printf "%s.%s" .Values.maintenance.serviceName .Values.maintenance.namespace }}
+{{- else }}
   selector:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
   ports:
@@ -13,7 +18,4 @@ spec:
       port: 80
       targetPort: http
       name: http
-{{- else }}
-  type: ExternalName
-  externalName: {{ printf "%s.%s" .Values.maintenance.serviceName .Values.maintenance.namespace }}
 {{- end }}
