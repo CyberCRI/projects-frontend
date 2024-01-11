@@ -42,3 +42,8 @@ resources:
     memory: 30Mi
   limits:
     memory: 50Mi
+
+maintenance:
+  enabled: false
+  namespace: maintenance
+  serviceName: maintenance
