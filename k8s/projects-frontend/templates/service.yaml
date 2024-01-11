@@ -5,7 +5,7 @@ metadata:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
   name: {{ tpl .Values.fullName . }}
 {{- /* Allow passing a boolean as a string, for applicationset */}}
-{{- /* https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/GoTemplate/#limitations*/}}\
+{{- /* https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/GoTemplate/#limitations*/}}
 spec:
 {{- if eq "true" (.Values.maintenance.enabled | toString) }}
   type: ExternalName
