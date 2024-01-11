@@ -20,7 +20,11 @@ spec:
               service:
                 name: {{ tpl .Values.fullName . }}
                 port:
+                {{- if .Values.maintenance.enabled }}
+                  number: {{ .Values.maintenance.portNumber }}
+                {{- else }}
                   name: http
+                {{- end }}
   tls:
     - hosts:
         - {{.Values.hostname }}

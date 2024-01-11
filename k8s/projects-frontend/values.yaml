@@ -47,3 +47,4 @@ maintenance:
   enabled: false
   namespace: maintenance
   serviceName: maintenance
+  portNumber: 80
