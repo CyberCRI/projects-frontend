@@ -56,24 +56,6 @@
             </p>
         </div>
 
-        <!-- personal email -->
-        <div class="form-group">
-            <TextInput
-                v-model="form.personal_email"
-                :label="$t('profile.edit.general.personal-email.label')"
-                :placeholder="$t('profile.edit.general.personal-email.placeholder')"
-                @blur="v$.form.personal_email.$validate"
-                input-type="email"
-            ></TextInput>
-            <p
-                v-for="error of v$.form.personal_email.$errors"
-                :key="error.$uid"
-                class="error-message"
-            >
-                {{ error.$message }}
-            </p>
-        </div>
-
         <!-- pro number -->
         <div class="form-group">
             <TextInput
@@ -296,7 +278,6 @@ function defaultForm() {
         first_name: '',
         last_name: '',
         professional_email: '',
-        personal_email: '',
         professional_number: '',
         personal_number: '',
         personal_webpage: '',
@@ -372,16 +353,6 @@ export default {
                         email
                     ),
                 },
-                personal_email: {
-                    required: helpers.withMessage(
-                        this.$t('profile.edit.general.personal-email.is-required'),
-                        required
-                    ),
-                    email: helpers.withMessage(
-                        this.$t('profile.edit.general.personal-email.is-email'),
-                        email
-                    ),
-                },
                 title: {
                     required: helpers.withMessage(
                         this.$t('profile.edit.general.title.is-required'),
@@ -447,7 +418,6 @@ export default {
                         given_name: this.form.first_name,
                         family_name: this.form.last_name,
                         email: this.form.professional_email,
-                        personal_email: this.form.personal_email,
                         landline_phone: this.form.professional_number,
                         mobile_phone: this.form.personal_number,
                         website: this.form.personal_webpage,
@@ -534,7 +504,6 @@ export default {
                     first_name: this.user.given_name,
                     last_name: this.user.family_name,
                     professional_email: this.user.email,
-                    personal_email: this.user.personal_email || '',
                     professional_number: this.user.landline_phone || '',
                     personal_number: this.user.mobile_phone || '',
                     personal_webpage: this.user.website || '',
