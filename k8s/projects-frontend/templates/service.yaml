@@ -5,6 +5,7 @@ metadata:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
   name: {{ tpl .Values.fullName . }}
 spec:
+{{- if not .Values.maintenance.enabled }}
   selector:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
   ports:
@@ -12,3 +13,7 @@ spec:
       port: 80
       targetPort: http
       name: http
+{{- else }}
+  type: ExternalName
+  externalName: {{ printf "%s.%s" .Values.maintenance.serviceName .Values.maintenance.namespace }}
+{{- end }}
