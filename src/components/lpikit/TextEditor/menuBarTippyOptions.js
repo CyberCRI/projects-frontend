@@ -1,4 +1,4 @@
-export default function (mebuBarComponent) {
+export default function (mebuBarComponent, selector) {
     return {
         inlinePositioning: true,
         popperOptions: {
@@ -10,7 +10,9 @@ export default function (mebuBarComponent) {
                         offset: ({ popper }) => {
                             const wrapper = mebuBarComponent.$el.closest('.content-wrapper')
                             if (wrapper) {
-                                const selection = wrapper.querySelector('.ProseMirror-selectednode')
+                                const selection = wrapper.querySelector(
+                                    selector || '.ProseMirror-selectednode'
+                                )
                                 if (selection) {
                                     const wrapperBbox = wrapper.getBoundingClientRect()
                                     const selectionBbox = selection.getBoundingClientRect()

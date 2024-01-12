@@ -4,6 +4,7 @@
         :should-show="({ editor }) => editor.isActive('external-video')"
         class="videomenu"
         :tippy-options="tippyOptions"
+        deep-selector="iframe"
     >
         <div class="video-menu-bar">
             <button
@@ -92,7 +93,7 @@ export default {
         return {
             labeled_items: labeled_items,
             items: items,
-            tippyOptions: menuBarTippyOptions(this),
+            tippyOptions: menuBarTippyOptions(this, '.ProseMirror-selectednode iframe'),
         }
     },
 }

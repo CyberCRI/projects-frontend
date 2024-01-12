@@ -42,13 +42,18 @@ export const LpiBubbleMenu = defineComponent({
             >,
             default: null,
         },
+
+        deepSelector: {
+            type: String as PropType<LpiBubbleMenuPluginProps['deepSelector']>,
+            default: undefined,
+        },
     },
 
     setup(props, { slots }) {
         const root = ref<HTMLElement | null>(null)
 
         onMounted(() => {
-            const { updateDelay, editor, pluginKey, shouldShow, tippyOptions } = props
+            const { updateDelay, editor, pluginKey, shouldShow, tippyOptions, deepSelector } = props
 
             editor.registerPlugin(
                 LpiBubbleMenuPlugin({
@@ -58,6 +63,7 @@ export const LpiBubbleMenu = defineComponent({
                     pluginKey,
                     shouldShow,
                     tippyOptions,
+                    deepSelector,
                 })
             )
         })
