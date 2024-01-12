@@ -225,7 +225,6 @@ export default {
     watch: {
         showPendingOnly: function (neo, old) {
             if (neo != old) {
-                // TODO: add filter to API
                 this.searchRequest()
             }
         },
@@ -247,6 +246,10 @@ export default {
             const params = activeFilter
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
+
+            if (this.showPendingOnly) {
+                params.status = 'pending'
+            }
 
             this.request = await getAccessRequests(this.organization.code, {
                 search: this.searchFilter,
