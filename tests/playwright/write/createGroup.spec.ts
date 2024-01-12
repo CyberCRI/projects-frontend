@@ -26,9 +26,9 @@ test(`test-${users.admin}`, async ({ page }) => {
     }
     try {
         await deleteGroup(page, groupName)
-        logger.info(`Group Created`)
+        logger.info(`Group Deleted`)
     } catch (err) {
-        logger.error('Group creation has failed')
+        logger.error('Group deletion has failed')
         logger.error(err)
         throw err
     }
