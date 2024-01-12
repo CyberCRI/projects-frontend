@@ -6,8 +6,8 @@ import { logIn, createGroup, deleteGroup, makeid } from '../lib'
 const logger = new Logger(LogLevel.Debug)
 const groupName = makeid(5)
 
-test(`test-${users.admin}`, async ({ page }) => {
-    logger.info(` PROJECT CREATION TEST : ${users.admin} `)
+test(`test-${users.admin.email}`, async ({ page }) => {
+    logger.info(` PROJECT CREATION TEST : ${users.admin.email} `)
     try {
         await logIn(page, users.admin)
         logger.info('Login successful')
