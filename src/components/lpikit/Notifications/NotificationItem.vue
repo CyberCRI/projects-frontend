@@ -152,6 +152,16 @@
                         }}</router-link>
                     </span>
                 </template>
+
+                <template #access_request_nb>
+                    <span
+                        v-if="notification.type === 'access_request'"
+                        class="strong"
+                        place="access_request_nb"
+                    >
+                        {{ notification.context.access_request_nb }}
+                    </span>
+                </template>
             </i18n-t>
             <span class="date">{{ timePassed }}</span>
         </div>

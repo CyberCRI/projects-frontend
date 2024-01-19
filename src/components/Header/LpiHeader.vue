@@ -311,8 +311,11 @@ export default {
                 notification.type === 'invitation_today_reminder'
             ) {
                 return
+            } else if (notification.type === 'access_request') {
+                this.$router.push(`/admin/requests`)
+            } else {
+                this.$router.push(`/projects/${notification.project.slug}/summary`)
             }
-            this.$router.push(`/projects/${notification.project.slug}/summary`)
         },
 
         async updateLanguage(lang) {
