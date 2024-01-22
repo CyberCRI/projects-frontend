@@ -2577,7 +2577,8 @@
             "blog_entry": "{sender} published a new blog entry in the project {project}",
             "invitation_today_reminder": "A {link} you created for the group {today_group} will expire today",
             "invitation_week_reminder": "A {link} you created for the group {week_group} will expire in a week",
-            "register-link": "register link"
+            "register-link": "register link",
+            "access_request": "Respond to {access_request_nb} pending access request(s)!"
         },
         "empty": "You have no notifications"
     },
