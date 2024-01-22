@@ -6,8 +6,8 @@ import { logIn, createGroup, deleteGroup, makeid } from '../lib'
 const logger = new Logger(LogLevel.Debug)
 const groupName = makeid(5)
 
-test(`test-${users.admin}`, async ({ page }) => {
-    logger.info(` PROJECT CREATION TEST : ${users.admin} `)
+test(`test-${users.admin.email}`, async ({ page }) => {
+    logger.info(` PROJECT CREATION TEST : ${users.admin.email} `)
     try {
         await logIn(page, users.admin)
         logger.info('Login successful')
@@ -26,9 +26,9 @@ test(`test-${users.admin}`, async ({ page }) => {
     }
     try {
         await deleteGroup(page, groupName)
-        logger.info(`Group Created`)
+        logger.info(`Group Deleted`)
     } catch (err) {
-        logger.error('Group creation has failed')
+        logger.error('Group deletion has failed')
         logger.error(err)
         throw err
     }
