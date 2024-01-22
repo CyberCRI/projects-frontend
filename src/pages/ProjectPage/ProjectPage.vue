@@ -327,7 +327,10 @@ export default {
         },
 
         async getSimilarProjects() {
-            this.similarProjects = await getSuggestedProjects(this.project.id)
+            this.similarProjects = await getSuggestedProjects(
+                this.project.id,
+                this.$store.getters['organizations/current']?.code
+            )
         },
 
         cleanupProvider() {
