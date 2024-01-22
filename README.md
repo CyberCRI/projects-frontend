@@ -85,13 +85,13 @@ yarn test:play
 Running one test :
 
 ```bash
-yarn test:play <folder>
+yarn test:play <file>
 ```
 
 Running test with specific browser:
 
 ```bash
-yarn test:play:<browser> <folder>
+yarn test:play:<browser> <file>
 ```
 
 browser options : chrome, edge, mobilesafari, mobilechrome, webkit, firefox, chromium.
