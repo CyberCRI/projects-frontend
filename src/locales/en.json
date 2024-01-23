@@ -1282,16 +1282,10 @@
                     "is-required": "The last name field is required."
                 },
                 "professional-email": {
-                    "label": "Professional email *",
+                    "label": "Email *",
                     "placeholder": "Ex. jane.doe{'@'}yourcompany.com",
-                    "is-required": "The professional email field is required.",
-                    "is-email": "The professional email must be a valid email."
-                },
-                "personal-email": {
-                    "label": "Personal email *",
-                    "placeholder": "Ex. jane.doe{'@'}youremailprovide.com",
-                    "is-required": "The personal email field is required.",
-                    "is-email": "The personal email must be a valid email."
+                    "is-required": "The email field is required.",
+                    "is-email": "The email must be a valid email."
                 },
                 "professional-number": {
                     "label": "Professional number",

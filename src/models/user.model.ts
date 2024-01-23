@@ -52,7 +52,6 @@ export interface UserPatchModel {
     linkedin?: string
     medium?: string
     website?: string
-    personal_email?: string
     skype?: string
     landline_phone?: string
     twitter?: string
