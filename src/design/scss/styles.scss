@@ -154,12 +154,12 @@ body[class*='has-open-modal-'] {
     padding-left: $space-xl;
     padding-right: $space-xl;
     box-sizing: border-box;
-    max-width: 100vw;
+    max-width: 100%;
     margin: 0 auto;
 }
 
 .page-section-full {
-    width: 100vw;
+    width: 100%;
 }
 
 .page-section-extra-wide {
