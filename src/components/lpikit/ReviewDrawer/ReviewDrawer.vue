@@ -352,7 +352,6 @@ label {
 .error-description {
     color: $salmon-dark;
     margin-top: $space-s;
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     font-size: $font-size-s;
 }
 </style>

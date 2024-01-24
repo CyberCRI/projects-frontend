@@ -355,7 +355,6 @@ export default {
 
 .error-description {
     color: $salmon-dark;
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     font-size: $font-size-s;
     margin-left: $space-l;
 }

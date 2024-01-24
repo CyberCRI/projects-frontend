@@ -19,6 +19,9 @@ export default defineConfig(({ command, mode }) => {
             withCredentials: true,
         },
     }
+
+    const fontFile = env.VITE_APP_FONT_OVERRIDE || 'fonts-default'
+
     return {
         plugins: [
             vue(),
@@ -46,6 +49,7 @@ export default defineConfig(({ command, mode }) => {
                     @use 'sass:math';
                     @import '@/design/scss/variables.scss';
                     $PUBLIC_BINARIES_PREFIX: '${env.VITE_APP_PUBLIC_BINARIES_PREFIX}';
+                    @import '@/design/scss/fonts/${fontFile}.scss';
                 `,
                 },
             },

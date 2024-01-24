@@ -90,7 +90,6 @@ video {
     font: inherit;
     font-size: 100%;
     vertical-align: baseline;
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     color: unset;
     text-decoration: none;
 }
@@ -138,42 +137,4 @@ table {
 
 svg {
     display: block;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.title,
-.titlebar,
-.name,
-.button,
-.rightbutton,
-.date,
-.seemore,
-.cat,
-.tag,
-.status,
-.projecttag,
-.maintag,
-.catbox,
-.selectedtag,
-.tip,
-.switchlabel,
-.sectiontitle,
-.label,
-.toplabel,
-.boxlabl,
-.peopleline,
-.bannertitle,
-.dessummary,
-.bannersubtitle {
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
-    font-weight: 700;
-}
-
-.browse-layout {
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
 }

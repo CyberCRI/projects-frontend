@@ -78,7 +78,6 @@ export default {
 
 <style lang="scss" scoped>
 .admin-portal-layout {
-    font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
     margin-bottom: $space-2xl;
 
     .page-title {

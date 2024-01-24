@@ -281,7 +281,6 @@ export default {
                 font-size: $font-size-s;
                 display: flex;
                 align-items: center;
-                font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
 
                 .menu-icon {
                     &.left-icon {
