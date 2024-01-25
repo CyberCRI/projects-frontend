@@ -757,6 +757,28 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
+    ...(import.meta.env.VITE_APP_SHOW_DEBUG
+        ? [
+              {
+                  path: '/debug',
+                  name: 'debug',
+                  component: () => import('../pages/DebugPage/DebugPage.vue'),
+                  redirect: { name: 'DebugIcons' },
+                  children: [
+                      {
+                          path: 'icons',
+                          name: 'DebugIcons',
+                          component: () => import('../pages/DebugPage/Tabs/DebugIcons.vue'),
+                      },
+                      {
+                          path: 'onboarding',
+                          name: 'DebugOnboarding',
+                          component: () => import('../pages/DebugPage/Tabs/DebugOnboarding.vue'),
+                      },
+                  ],
+              },
+          ]
+        : []),
 ]
 
 export default routes

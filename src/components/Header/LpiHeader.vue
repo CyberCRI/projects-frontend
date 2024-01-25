@@ -252,14 +252,6 @@ export default {
     },
 
     methods: {
-        // keep this for debugging purposes
-        // async resetOnboardingStatus() {
-        //     const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
-        //     const id = this.$store.getters['users/userFromApi'].id
-        //     await patchUser(id, payload)
-        //     await this.$store.dispatch('users/getUser', id)
-        // },
-
         onScroll() {
             this.scrolled = window.scrollY > 10
         },
@@ -428,14 +420,6 @@ export default {
                     condition: true,
                     dataTest: 'disconnect',
                 },
-                // {
-                //     // keep this for debugging purposes
-                //     label: 'Reset onboarding',
-                //     action: () => this.resetOnboardingStatus(),
-                //     leftIcon: 'Check',
-                //     condition: true,
-                //     dataTest: 'reset-onboarding',
-                // },
             ].filter((menu) => menu.condition)
         },
 
