@@ -904,7 +904,7 @@ export default {
     }
 
     .editor * {
-        word-break: break-word;
+        overflow-wrap: break-word;
         hyphens: auto;
     }
 

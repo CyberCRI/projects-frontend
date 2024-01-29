@@ -93,7 +93,7 @@
         color: $primary-dark !important;
         cursor: pointer;
         text-decoration: none;
-        word-break: break-all;
+        overflow-wrap: break-word;
 
         &:hover {
             color: $gray-3;
