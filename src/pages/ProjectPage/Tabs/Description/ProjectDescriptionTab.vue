@@ -175,7 +175,7 @@ export default {
         background: $white;
         padding: $space-l 0;
         padding-top: 0;
-        word-break: break-word;
+        overflow-wrap: break-word;
         color: $gray-3;
         flex-grow: 1;
         overflow: auto;
