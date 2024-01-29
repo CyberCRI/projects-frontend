@@ -511,6 +511,7 @@ export default {
                     ExternalVideo,
                     Table.configure({
                         resizable: true,
+                        cellMinWidth: 300,
                     }),
                     TableRow,
                     TableHeader,
