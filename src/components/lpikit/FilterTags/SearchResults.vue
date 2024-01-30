@@ -8,7 +8,11 @@
                 tabindex="0"
                 @click="tagClicked(tag)"
             >
-                <TagResult :is-ambiguous="tag.ambiguous" :label="tag.name" />
+                <TagResult
+                    :is-ambiguous="tag.ambiguous"
+                    :label="tag.name"
+                    :description="tag.description"
+                />
             </div>
         </div>
         <div v-else class="no-result">
