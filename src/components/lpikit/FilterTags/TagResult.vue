@@ -1,5 +1,5 @@
 <template>
-    <div class="tag-label">
+    <div class="tag-label" :title="description">
         {{ label }}
         <span v-if="isAmbiguous && !hasDisambiguationTerm"
             >&nbsp;{{ $t('search.disambiguate') }}</span
@@ -20,6 +20,11 @@ export default {
         isAmbiguous: {
             type: Boolean,
             required: true,
+        },
+
+        description: {
+            type: String,
+            default: '',
         },
     },
 

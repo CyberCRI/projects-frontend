@@ -35,11 +35,8 @@ export async function getWikiTagDisambiguate(pageid: string): Promise<GetWikiTag
 export async function searchWikiTags(search: string): Promise<WikipediaTagOutput[]> {
     const lang = store.state.languages.current
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/wikipedia-tag/wikipedia/`,
-            {
-                params: { q: search, lang: lang },
-            }
-        )
-    ).data[lang]
+        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/wikibase-item/`, {
+            params: { query: search, lang: lang, limit: 100, offset: 0 },
+        })
+    ).data
 }
