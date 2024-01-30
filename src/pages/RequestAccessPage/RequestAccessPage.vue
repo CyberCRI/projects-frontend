@@ -135,6 +135,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import SignUpWrapper from '@/components/lpikit/SignUpWrapper/SignUpWrapper.vue'
 import { helpers, required, email } from '@vuelidate/validators'
 import { postAccessRequest } from '@/api/organizations.service.ts'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 export default {
     name: 'RequestAccessPage',
 
