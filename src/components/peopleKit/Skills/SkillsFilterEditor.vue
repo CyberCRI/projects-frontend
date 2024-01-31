@@ -12,6 +12,8 @@
                 @delete-query="onDeleteQuery"
                 @enter="doSearch"
                 :placeholder="$t('search.search-skill')"
+                :suggestions="suggestions"
+                @keyup="suggest"
             />
             <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
         </div>
@@ -34,6 +36,8 @@ import CurrentTags from '@/components/lpikit/FilterTags/CurrentTags.vue'
 import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import debounce from 'lodash.debounce'
+import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
 
 export default {
     name: 'SkillsFilterEditor',
@@ -74,6 +78,7 @@ export default {
             queryString: '',
             confirmedSearch: '',
             skills: [],
+            suggestions: [],
         }
     },
 
@@ -82,6 +87,15 @@ export default {
     },
 
     methods: {
+        suggest: debounce(async function () {
+            this.suggestions = []
+            try {
+                this.suggestions = await wikiAutocomplete(this.queryString)
+            } catch (e) {
+                console.error(e)
+            }
+        }, 100),
+
         doSearch() {
             this.confirmedSearch = this.queryString
         },

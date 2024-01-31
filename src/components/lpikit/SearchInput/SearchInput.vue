@@ -9,10 +9,15 @@
             type="text"
             @keyup.enter="onEnter"
             data-test="search-input"
+            :list="listId"
+            @keyup="$emit('keyup', $event)"
         />
         <span class="right-icon delete" v-if="model.length" @click="deleteValue">
             <IconImage name="Close" />
         </span>
+        <datalist :id="listId">
+            <option v-for="suggestion in suggestions" :value="suggestion"></option>
+        </datalist>
     </div>
 </template>
 
@@ -22,7 +27,7 @@ import IconImage from '@/components/svgs/IconImage.vue'
 export default {
     name: 'SearchInput',
 
-    emits: ['update:modelValue', 'delete-query', 'enter'],
+    emits: ['update:modelValue', 'delete-query', 'enter', 'keyup'],
 
     components: {
         IconImage,
@@ -43,11 +48,17 @@ export default {
             type: String,
             default: '',
         },
+
+        suggestions: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
         return {
             model: this.modelValue,
+            listId: 'search-suggestions-' + (Math.random() + 1).toString(36).substring(7),
         }
     },
 
