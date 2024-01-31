@@ -19,6 +19,7 @@ export interface LpiBubbleMenuPluginProps {
               to: number
           }) => boolean)
         | null
+    deepSelector?: string
 }
 
 export type LpiBubbleMenuViewProps = LpiBubbleMenuPluginProps & {
@@ -39,6 +40,8 @@ export class LpiBubbleMenuView {
     public tippyOptions?: Partial<Props>
 
     public updateDelay: number
+
+    public deepSelector: string | undefined
 
     private updateDebounceTimer: number | undefined
 
@@ -78,11 +81,13 @@ export class LpiBubbleMenuView {
         tippyOptions = {},
         updateDelay = 250,
         shouldShow,
+        deepSelector,
     }: LpiBubbleMenuViewProps) {
         this.editor = editor
         this.element = element
         this.view = view
         this.updateDelay = updateDelay
+        this.deepSelector = deepSelector
 
         if (shouldShow) {
             this.shouldShow = shouldShow
@@ -243,6 +248,10 @@ export class LpiBubbleMenuView {
 
                         if (nodeViewWrapper) {
                             node = nodeViewWrapper.firstChild as HTMLElement
+                        }
+
+                        if (this.deepSelector) {
+                            node = node.querySelector(this.deepSelector) as HTMLElement
                         }
 
                         if (node) {

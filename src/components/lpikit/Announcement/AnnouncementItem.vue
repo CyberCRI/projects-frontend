@@ -131,7 +131,7 @@ export default {
         margin: $space-xs 0 $space-s;
         color: $primary-dark;
         font-weight: 700;
-        word-break: break-all;
+        overflow-wrap: break-word;
     }
 
     .description {

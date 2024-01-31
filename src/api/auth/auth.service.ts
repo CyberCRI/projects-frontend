@@ -53,6 +53,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
             fromURL: fromUrl,
             // Store appSecret into keycloak state to verify keycloak authenticity when getting back the state
             appSecret: keycloak.appSecret.get(),
+            org: store.getters['organizations/current']?.code,
         })
     )
 

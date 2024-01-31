@@ -8,19 +8,9 @@
             <table>
                 <tr>
                     <th v-for="(filter, index) in filters" :key="index">
-                        <button
-                            class="button"
-                            @click="sortBy(filter)"
-                            :class="{ unsortable: filter.unsortable }"
-                        >
+                        <span class="button">
                             {{ $filters.capitalize($t(filter.label)) }}
-                            <IconImage
-                                v-if="!filter.unsortable"
-                                :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
-                                class="icon"
-                                :style="{ opacity: filter.isActive ? 1 : 0.33 }"
-                            ></IconImage>
-                        </button>
+                        </span>
                     </th>
                     <th>
                         <LpiCheckbox
@@ -67,19 +57,13 @@
                         <span v-else>{{ user.message }}</span>
                     </td>
                     <td>
-                        <div
-                            class="status-wrapper refused-wrapper"
-                            v-if="user.status == 'declined'"
-                        >
-                            <span class="status-widget action-status declined">
+                        <div v-if="user.status == 'declined'">
+                            <span class="status-widget action-status declined-or-accepted">
                                 <IconImage name="Close" /> {{ $t('admin.requests.table.declined') }}
                             </span>
                         </div>
-                        <div
-                            class="status-wrapper accepted-wrapper"
-                            v-else-if="user.status == 'accepted'"
-                        >
-                            <span class="status-widget action-status accepted">
+                        <div v-else-if="user.status == 'accepted'">
+                            <span class="status-widget action-status declined-or-accepted">
                                 <IconImage name="Check" /> {{ $t('admin.requests.table.accepted') }}
                             </span>
                         </div>
@@ -154,35 +138,30 @@ export default {
                     isActive: false,
                     filter: 'family_name',
                     order: '',
-                    unsortable: false,
                 },
                 {
                     label: 'admin.requests.table.first-name',
                     isActive: false,
                     filter: 'given_name',
                     order: '',
-                    unsortable: false,
                 },
                 {
                     label: 'admin.requests.table.email',
                     isActive: false,
                     filter: 'email',
                     order: '',
-                    unsortable: false,
                 },
                 {
                     label: 'admin.requests.table.title',
                     isActive: false,
                     filter: 'job',
                     order: '',
-                    unsortable: true,
                 },
                 {
                     label: 'admin.requests.table.message',
                     isActive: false,
                     filter: 'message',
                     order: '',
-                    unsortable: true,
                 },
             ],
         }
@@ -225,7 +204,6 @@ export default {
     watch: {
         showPendingOnly: function (neo, old) {
             if (neo != old) {
-                // TODO: add filter to API
                 this.searchRequest()
             }
         },
@@ -248,6 +226,10 @@ export default {
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
 
+            if (this.showPendingOnly) {
+                params.status = 'pending'
+            }
+
             this.request = await getAccessRequests(this.organization.code, {
                 search: this.searchFilter,
                 ...params,
@@ -255,24 +237,6 @@ export default {
 
             this.isLoading = false
         }, 500),
-
-        async sortBy(filter) {
-            if (filter.unsortable) return
-            if (!filter.isActive) {
-                this.filters.forEach((filter) => {
-                    filter.isActive = false
-                    filter.order = ''
-                })
-                filter.isActive = !filter.isActive
-                filter.order = ''
-            } else {
-                if (filter.order === '') filter.order = '-'
-                else if (filter.order === '-') filter.order = ''
-            }
-            this.isLoading = true
-            this.searchRequest()
-            this.isLoading = false
-        },
 
         async declineRequest(request) {
             try {
@@ -357,18 +321,6 @@ export default {
         font-size: $font-size-s;
         line-height: 16px;
         color: $black-1;
-        cursor: pointer;
-
-        &.unsotable {
-            pointer-events: none;
-            cursor: default;
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            fill: $black-1;
-        }
     }
 }
 
@@ -458,12 +410,6 @@ table {
     justify-items: start;
 }
 
-.accepted-wrapper {
-    .status-widget {
-        grid-column: 2;
-    }
-}
-
 .status-widget {
     display: inline-flex;
     gap: $space-xs;
@@ -520,6 +466,10 @@ table {
     svg {
         background-color: $gray-8;
     }
+}
+
+.declined-or-accepted {
+    width: 100%;
 }
 
 .mail-link {

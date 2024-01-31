@@ -42,6 +42,11 @@ import SearchResults from './SearchResults.vue'
 import AmbiguousResults from './AmbiguousResults.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import { searchWikiTags } from '@/api/wikipedia-tags.service'
+
+/**
+ * TODO: remove ambiguous tag handling logic, it is not needed anymore
+ */
+
 export default {
     name: 'WikipediaResults',
 
@@ -89,7 +94,6 @@ export default {
     data() {
         return {
             ambiguousResults: [],
-            // ambiguousResultsVisible: false,
             ambiguousTerm: '',
             foundTags: [],
             isLoading: true,
@@ -128,39 +132,37 @@ export default {
 
         launchSearch: debounce(async function () {
             this.isLoading = true
-            const results = await searchWikiTags(this.queryString).catch(() => [])
-
-            // Filter existing tags
-            let filteredResults = results
-            if (this.existingTags.length) {
-                const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
-                filteredResults = results.filter(
-                    (tag) => tag.pageprops && !tagsQid.includes(tag.pageprops.wikibase_item)
-                )
-            }
-
-            // Put ambiguous tags first
-            let orderedResults = [
-                ...filteredResults.filter((tag) => tag.is_ambiguous),
-                ...filteredResults.filter((tag) => !tag.is_ambiguous),
-            ]
-
-            // Format results
-            this.tagResults = orderedResults.map((result) => {
-                return {
-                    name: result.title,
-                    description: result.extract
-                        ? result.extract
-                        : result.terms && result.terms.description
-                        ? result.terms.description[0]
-                        : '',
-                    ambiguous: !!result.is_ambiguous,
-                    links: result.is_ambiguous ? result.links : null,
-                    wikipedia_qid: result.pageprops.wikibase_item,
-                    pageid: result.pageid,
+            try {
+                const req = await searchWikiTags(this.queryString).catch(() => [])
+                const results = req.results
+                // Filter existing tags
+                let filteredResults = results
+                console.log('results', results)
+                if (this.existingTags.length) {
+                    const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
+                    filteredResults = results.filter((tag) => !tagsQid.includes(tag.wikipedia_qid))
                 }
-            })
-            this.isLoading = false
+                console.log('filteredResults', filteredResults)
+                // Put ambiguous tags first
+                let orderedResults = [
+                    ...filteredResults.filter((tag) => tag.is_ambiguous),
+                    ...filteredResults.filter((tag) => !tag.is_ambiguous),
+                ]
+
+                // Format results
+                this.tagResults = orderedResults.map((result) => {
+                    return {
+                        name: result.name,
+                        description: result.description || '',
+                        ambiguous: !!result.is_ambiguous,
+                        wikipedia_qid: result.wikipedia_qid,
+                    }
+                })
+            } catch (e) {
+                console.error(e)
+            } finally {
+                this.isLoading = false
+            }
         }, 500),
     },
 

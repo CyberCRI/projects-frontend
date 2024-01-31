@@ -1281,16 +1281,10 @@
                     "is-required": "Le champ nom de famille est requis."
                 },
                 "professional-email": {
-                    "label": "Email professionnel *",
+                    "label": "Email *",
                     "placeholder": "Ex. jane.doe{'@'}yourcompany.com",
-                    "is-required": "Le champ email professionnel est requis.",
-                    "is-email": "Le champ email professionnel doit être un email valide."
-                },
-                "personal-email": {
-                    "label": "Email personnel *",
-                    "placeholder": "Ex. jane.doe{'@'}youremailprovide.com",
-                    "is-required": "Le champ email personnel est requis.",
-                    "is-email": "Le champ email personnel doit être un email valid."
+                    "is-required": "Le champ email est requis.",
+                    "is-email": "Le champ email doit être un email valide."
                 },
                 "professional-number": {
                     "label": "Numéro professionnel",

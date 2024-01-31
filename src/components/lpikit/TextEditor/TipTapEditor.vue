@@ -511,6 +511,7 @@ export default {
                     ExternalVideo,
                     Table.configure({
                         resizable: true,
+                        cellMinWidth: 300,
                     }),
                     TableRow,
                     TableHeader,
@@ -904,7 +905,7 @@ export default {
     }
 
     .editor * {
-        word-break: break-word;
+        overflow-wrap: break-word;
         hyphens: auto;
     }
 
