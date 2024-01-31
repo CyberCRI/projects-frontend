@@ -116,6 +116,9 @@ export default {
                     message: this.$t('resource.invalid-image'),
                     type: 'error',
                 })
+                this.imageSrc = ''
+                this.$emit('closeModal')
+                return
             }
 
             if (!this.validImageSize) {
@@ -123,6 +126,9 @@ export default {
                     message: this.$t(`crikit.errors.too-big-file-size`, { sizeMax }),
                     type: 'error',
                 })
+                this.imageSrc = ''
+                this.$emit('closeModal')
+                return
             }
 
             this.displayedImage = undefined
