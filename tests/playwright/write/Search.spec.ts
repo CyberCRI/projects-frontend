@@ -1,10 +1,10 @@
 import { test } from '@playwright/test'
 import { users } from '../variables'
 import { LogLevel, Logger } from '../logger'
-import { logIn, delay, createProject, search, makeid, destroyProject } from '../lib'
+import { logIn, delay, createProject, search, makeId, destroyProject } from '../lib'
 
 const logger = new Logger(LogLevel.Debug)
-const projId = makeid(5)
+const projId = makeId(5)
 for (let i = 0; i < users.length; i++) {
     test(`test-${users[i].email}`, async ({ page }) => {
         logger.info(` SEARCH TEST : ${users[i].email} `)

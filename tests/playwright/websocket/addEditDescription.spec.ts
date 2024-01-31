@@ -9,11 +9,11 @@ import {
     createProject,
     addDescription,
     editDescription,
-    makeid,
+    makeId,
 } from '../lib'
 
 const logger = new Logger(LogLevel.Debug)
-const projId = makeid(5)
+const projId = makeId(5)
 for (let i = 0; i < users.length; i++) {
     test(`test-${users[i].email}`, async ({ page }) => {
         logger.info(` ADD/EDIT DESCRIPTION TEST : ${users[i].email} `)

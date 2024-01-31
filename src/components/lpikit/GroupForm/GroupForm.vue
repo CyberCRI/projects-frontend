@@ -133,6 +133,7 @@
                 <template v-for="visibility in visibilities" :key="visibility.id">
                     <label
                         class="checkbox-item"
+                        :data-test="`${visibility.name}`"
                         :class="{ selected: form.publication_status == visibility.id }"
                     >
                         <span class="label form-control">

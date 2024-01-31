@@ -50,7 +50,7 @@
                                 <input
                                     v-model="user.role"
                                     :value="roleOption.value"
-                                    :data-test="roleOption.dataTest"
+                                    :data-test="roleOption.value"
                                     type="radio"
                                     @change="selectRole(user, roleOption.value)"
                                 />{{ $filters.capitalize(roleOption.label) }}</label
@@ -126,6 +126,7 @@ export default {
                     value: 'members',
                     label: this.$filters.capitalize(this.$t('group.role.members.label')),
                     tip: this.$t('group.role.members.help'),
+                    dataTest: 'button-role-members',
                     userKey: 'is_member',
                 },
             ]

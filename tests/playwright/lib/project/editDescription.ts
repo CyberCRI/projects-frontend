@@ -1,5 +1,5 @@
-import { LogLevel, Logger } from '../logger'
 import { expect } from '@playwright/test'
+import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
 

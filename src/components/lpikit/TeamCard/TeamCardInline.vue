@@ -3,6 +3,7 @@
         class="team-card-small"
         :class="{ passive: !iconName }"
         @click="iconName ? $emit('user-clicked') : null"
+        :data-test="`user-card-${user.id}`"
     >
         <div class="user-container">
             <CroppedImage

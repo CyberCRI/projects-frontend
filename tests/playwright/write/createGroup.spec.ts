@@ -1,10 +1,10 @@
 import { test } from '@playwright/test'
 import { usersDict as users } from '../variables'
 import { LogLevel, Logger } from '../logger'
-import { logIn, createGroup, deleteGroup, makeid } from '../lib'
+import { logIn, createGroup, deleteGroup, makeId } from '../lib'
 
 const logger = new Logger(LogLevel.Debug)
-const groupName = makeid(5)
+const groupName = makeId(5)
 
 test(`test-${users.admin.email}`, async ({ page }) => {
     logger.info(` PROJECT CREATION TEST : ${users.admin.email} `)

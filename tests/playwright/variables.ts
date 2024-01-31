@@ -10,7 +10,7 @@ export const users: User[] = [
     {
         email: process.env.PLAYWRIGHT_TEST_EMAIL as string,
         password: process.env.PLAYWRIGHT_TEST_PASSWORD as string,
-        firstName: 'pw_playwright',
+        firstName: 'playwright',
         lastName: 'pw_test',
     },
     // {
@@ -26,8 +26,8 @@ export const users: User[] = [
 export const usersDict: UserType = {
     admin: users[0],
     playwright: users[1],
-    baseUser: users[0],
-    community: users[2],
+    // baseUser: users[0],
+    // community: users[2],
 }
 
 export const frontURL: string | undefined = process.env.FRONTEND_URL
