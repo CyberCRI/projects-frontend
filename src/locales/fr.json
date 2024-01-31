@@ -528,7 +528,7 @@
         },
         "sdgs": {
             "sdg": "ODD",
-            "sdg-notice": "Les objectif de développemt durable (ODD) constituent un appel à l'action pour relever une série de défis mondiaux. Indiquer les obbjectifs auxquels vous souhaitez contribuer aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
+            "sdg-notice": "Les objectifs de développemt durable (ODD) constituent un appel à l'action pour relever une série de défis mondiaux. Indiquer les objectifs auxquels vous souhaitez contribuer aidera les membres de votre communauté à vous trouver pour mentorat ou assistance.",
             "title": "Objectifs de développement durable"
         },
         "title": "Complétez votre profil"
@@ -2574,7 +2574,8 @@
             "blog_entry": "{sender} a publié une nouvelle publication sur {project}",
             "invitation_today_reminder": "Un {link} que vous avez créé pour le groupe {today_group} arrive à expiration aujourd'hui",
             "invitation_week_reminder": "Un {link} que vous avez créé pour le groupe {week_group} arrivera à expiration dans une semaine",
-            "register-link": "lien d’enregistrement"
+            "register-link": "lien d’enregistrement",
+            "access_request": "Répondez à {access_request_nb} demande(s) d'accès en attente!"
         },
         "empty": "Vous n’avez aucune notification"
     },

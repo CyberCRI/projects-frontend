@@ -11,7 +11,9 @@
             @error="placeHolderImg"
             class="picture"
         />
-        <span class="badge" v-if="user.is_leader">{{ $t('userItem.teamLeader') }}</span>
+        <span class="badge" v-if="user.is_leader" data-test="leader-badge">{{
+            $t('userItem.teamLeader')
+        }}</span>
 
         <!--        TODO: ask Api to send information-->
         <div v-if="user.role" class="role">{{ user.role }}</div>

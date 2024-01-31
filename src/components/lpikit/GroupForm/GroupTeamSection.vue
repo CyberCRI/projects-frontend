@@ -19,7 +19,7 @@
                     <IconImage name="Pen" />
                     <span>{{ $filters.capitalize($t('group.form.edit-members')) }}</span>
                 </span>
-                <span class="add-user-card" @click="openDrawer('roles')">
+                <span class="add-user-card" @click="openDrawer('roles')" data-test="edit-roles">
                     <IconImage name="Pen" />
                     <span>{{ $filters.capitalize($t('group.form.edit-roles')) }}</span>
                 </span>

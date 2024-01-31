@@ -1,6 +1,6 @@
-import { emailToReport } from '../variables'
-import { LogLevel, Logger } from '../logger'
 import { expect } from '@playwright/test'
+import { emailToReport } from '../../variables'
+import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
 

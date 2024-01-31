@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test'
-import { LogLevel, Logger } from '../logger'
+import { delay } from '../delay'
+import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -20,23 +21,21 @@ export async function createGroup(page: Page, GroupName: string) {
 
     logger.info("let's add members to the group")
     await page.locator('[data-test="add-members"]').click()
-    await page.locator('[data-test="search-input"]').fill('iryna')
-    const user = await page.locator('[data-test^="user-card-"]').first()
-    await user.click()
+    await page.locator('[data-test="search-input"]').fill('playwright')
+    await delay(1000)
+    await page.locator('[data-test^="user-card-"]').first().click()
+    await delay(1000)
     await page.locator('[data-test="confirm-button"]').click()
+    await delay(3000)
     await page.locator('[data-test="confirm-button"]').click()
+    await delay(1000)
     logger.info("let's add parent group to the group")
     await page.locator('[data-test="add-parent-group-card"]').click()
-
-    // available parent groups depends on current organization
-    if (process.env.VITE_APP_API_ORG_CODE == 'CRI') {
-        await page.locator('[data-test="group-725"]').click()
-    } else {
-        // DEFAULT
-        await page.locator('[data-test="group-81"]').click()
-    }
+    await delay(1000)
     await page.locator('[data-test="confirm-button"]').click()
 
     logger.info("let's create the group")
     await page.locator('[data-test="group-create-button"]').click()
+    // Creation group is made in 2 requests wait the the second request to be sent
+    await delay(5000)
 }

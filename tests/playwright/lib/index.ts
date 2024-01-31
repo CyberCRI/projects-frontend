@@ -1,28 +1,30 @@
-import { logIn } from './login'
-import { logOut } from './logout'
 import { delay } from './delay'
-import { makeid } from './makeId'
-import { findProject } from './findProject'
-import { destroyProject } from './destroyProject'
-import { createProject } from './createProject'
-import { addDescription } from './addDescription'
-import { editDescription } from './editDescription'
-import { addRessources } from './addRessources'
-import { addBlogEntry } from './addBlogEntry'
-import { reportAbuse } from './reportAbuse'
-import { reportBug } from './reportBug'
+import { makeId } from './makeId'
 import { search } from './search'
-import { editProjectInfos } from './editProjectInfos'
+import { logIn } from './login/login'
+import { logOut } from './login/logout'
 import { createInvitaionLink } from './createInvitaionLink'
 import { createUserFromInvitationLink } from './createUserFromInvitationLink'
-import { createGroup } from './createGroup'
-import { deleteGroup } from './deleteGroup'
+import { findProject } from './project/findProject'
+import { destroyProject } from './project/destroy'
+import { createProject } from './project/create'
+import { addDescription } from './project/addDescription'
+import { editDescription } from './project/editDescription'
+import { addRessources } from './project/addRessources'
+import { addBlogEntry } from './project/addBlogEntry'
+import { reportAbuse } from './project/reportAbuse'
+import { reportBug } from './project/reportBug'
+import { editProjectInfos } from './project/editProjectInfos'
+import { createGroup } from './group/create'
+import { deleteGroup } from './group/delete'
+import { setRights } from './group/setRights'
+import { testRights } from './group/testRights'
 
 export {
     logIn,
     logOut,
     delay,
-    makeid,
+    makeId,
     findProject,
     destroyProject,
     createProject,
@@ -38,4 +40,6 @@ export {
     createUserFromInvitationLink,
     createGroup,
     deleteGroup,
+    setRights,
+    testRights,
 }

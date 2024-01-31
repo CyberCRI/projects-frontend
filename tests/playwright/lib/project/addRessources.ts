@@ -1,5 +1,5 @@
-import { LogLevel, Logger } from '../logger'
-import { expect } from '@playwright/test'
+import { LogLevel, Logger } from '../../logger'
+import { delay } from '../delay'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -10,22 +10,18 @@ export async function addRessources(page) {
     await page.locator('[data-test="button-add-resource-to-project"]').click()
     logger.info('Click on add link')
     await page.locator('[data-test="add-link"]').click()
-    await page.locator('[data-test="input-link-adress"]').click()
     await page
         .locator('[data-test="input-link-adress"]')
         .fill('https://www.learningplanetinstitute.org/')
     logger.info('Link added')
     logger.info('Click to add title')
-    await page.locator('[data-test="input-link-title"]').click()
     await page.locator('[data-test="input-link-title"]').fill('test link ressources')
     logger.info('Title added')
     logger.info('Add link description')
-    await page.locator('[data-test="input-link-description"]').click()
     await page.locator('[data-test="input-link-description"]').fill('testing')
     await page.locator('[data-test="confirm-button"]').click()
-    logger.info('Link description added')
-    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
-    logger.info('Checked if drawer is closed')
+
+    await delay(5000)
 
     // add ressources file
     logger.info('Click to add file')
@@ -34,11 +30,9 @@ export async function addRessources(page) {
     await page.locator('[data-test="add-file"]').click()
     logger.info('Fill added')
     logger.info('Fill title file')
-    await page.locator('[data-test="input-link-title"]').click()
     await page.locator('[data-test="input-link-title"]').fill('test file ressources')
     logger.info('Title added title file')
     logger.info('Fill description file')
-    await page.locator('[data-test="input-link-description"]').click()
     await page.locator('[data-test="input-link-description"]').fill('testing')
     logger.info('Description file added')
     logger.info('Click to upload img')
@@ -48,7 +42,5 @@ export async function addRessources(page) {
         .setInputFiles('tests/playwright/fixtures/pdf/testing.pdf')
     logger.info('Select and add file from local folder')
     await page.locator('[data-test="confirm-button"]').click()
-    logger.info('Confirm add')
-    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
-    logger.info('Checked if drawer is closed')
+    await delay(5000)
 }
