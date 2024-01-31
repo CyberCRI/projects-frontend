@@ -1,5 +1,16 @@
 import { RouteRecordRaw } from 'vue-router'
 import HomePage from '@/pages/HomePage/HomePage.vue'
+import store from '@/store'
+
+const checkAccessRequestEnabled = (to, _from, next) => {
+    if (!store.getters['organizations/current']?.access_request_enabled) {
+        next({
+            name: 'page404',
+            params: { pathMatch: to.path.substring(1).split('/') },
+        })
+    }
+    next()
+}
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -297,6 +308,7 @@ const routes: Array<RouteRecordRaw> = [
                     import(
                         /* webpackChunkName: "RequestsAdminTab" */ '../pages/AdminPortalPage/Tabs/RequestsAdminTab.vue'
                     ),
+                beforeEnter: checkAccessRequestEnabled,
             },
             {
                 path: 'groups',
@@ -400,6 +412,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             resetScroll: true,
         },
+        // redirct to 404 if request access is not enabled
+        beforeEnter: checkAccessRequestEnabled,
     },
 
     {
