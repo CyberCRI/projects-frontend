@@ -16,7 +16,11 @@
             <IconImage name="Close" />
         </span>
         <datalist :id="listId">
-            <option v-for="suggestion in suggestions" :value="suggestion"></option>
+            <option
+                v-for="suggestion in suggestions"
+                :key="suggestion"
+                :value="suggestion"
+            ></option>
         </datalist>
     </div>
 </template>
