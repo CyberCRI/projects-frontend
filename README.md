@@ -1,6 +1,6 @@
 # Projects
 
-![](https://assets.projects.lp-i.org/projects/organization/logo/d5ddb4a6-7eac-4178-9813-52b3c0ea7fbe2eaa6790-9cdd-443a-98af-bb47abd276_uv0HCns.medium.png?se=2023-10-03T14%3A01%3A34Z&sp=r&sv=2022-11-02&sr=b&sig=X/vk1QhXw8Wat1jrIBl9BphWooYlyU%2BtHoh7Th0BIMI%3D)
+![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
 - [Projects](#projects)
   - [stack](#stack)
