@@ -181,12 +181,10 @@ export default {
 <style lang="scss" scoped>
 .search-mode-ctn {
     position: relative;
-    height: 100%;
     width: 100%;
 
     > div {
         position: absolute;
-        height: 100%;
         width: 100%;
     }
 

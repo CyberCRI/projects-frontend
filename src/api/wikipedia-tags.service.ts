@@ -36,7 +36,19 @@ export async function searchWikiTags(search: string): Promise<WikipediaTagOutput
     const lang = store.state.languages.current
     return (
         await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/wikibase-item/`, {
-            params: { query: search, lang: lang, limit: 100, offset: 0 },
+            params: { query: search, language: lang, limit: 100, offset: 0 },
         })
+    ).data
+}
+
+export async function wikiAutocomplete(search: string): Promise<WikipediaTagOutput[]> {
+    const lang = store.state.languages.current
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/wikibase-item/autocomplete/`,
+            {
+                params: { query: search, language: lang, limit: 10, offset: 0 },
+            }
+        )
     ).data
 }

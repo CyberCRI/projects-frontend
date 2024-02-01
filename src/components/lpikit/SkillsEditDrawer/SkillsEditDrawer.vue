@@ -31,6 +31,8 @@
                     v-model="search"
                     @delete-query="onDeleteQuery"
                     @enter="doSearch"
+                    :suggestions="suggestions"
+                    @keyup="suggest"
                     :placeholder="$t(`profile.edit.skills.${type}.drawer.add.placeholder`)"
                 />
                 <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
@@ -97,6 +99,8 @@ import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.ser
 import isEqual from 'lodash.isequal'
 import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import debounce from 'lodash.debounce'
+import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
 
 export default {
     name: 'SkillsEditDrawer',
@@ -147,6 +151,7 @@ export default {
             isSearching: false,
             ambiguousTagsOpen: false,
             asyncing: false,
+            suggestions: [],
         }
     },
     computed: {
@@ -196,6 +201,15 @@ export default {
                 searchInput?.focus()
             })
         },
+
+        suggest: debounce(async function () {
+            this.suggestions = []
+            try {
+                this.suggestions = await wikiAutocomplete(this.search)
+            } catch (e) {
+                console.error(e)
+            }
+        }, 100),
 
         doSearch() {
             this.confirmedSearch = this.search
