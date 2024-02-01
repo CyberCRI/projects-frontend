@@ -17,6 +17,17 @@ export default {
 
     computed: {
         tabs() {
+            const requestAdminTab = this.$store.getters['organizations/current']
+                ?.access_request_enabled
+                ? [
+                      {
+                          key: 'admin-requests',
+                          label: this.$t('admin.tabs.requests'),
+                          view: { name: 'RequestsAdminTab' },
+                      },
+                  ]
+                : []
+
             return [
                 {
                     key: 'admin-infos',
@@ -53,11 +64,7 @@ export default {
                     label: this.$t('admin.tabs.links'),
                     view: { name: 'links' },
                 },
-                {
-                    key: 'admin-requests',
-                    label: this.$t('admin.tabs.requests'),
-                    view: { name: 'RequestsAdminTab' },
-                },
+                ...requestAdminTab,
                 {
                     key: 'admin-groups',
                     label: this.$t('admin.tabs.groups'),
