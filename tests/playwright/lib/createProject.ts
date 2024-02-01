@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test'
-import { LogLevel, Logger } from '../../logger'
-import { organizationCode } from '../../variables'
+import { LogLevel, Logger } from '../logger'
+import { organizationCode } from '../variables'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -39,15 +39,28 @@ export async function createProject(page, projectName, projId) {
     logger.info('Click to add a tag')
     await page.locator('[data-test="tags"]').click()
     await page.locator('[data-test="search-input"]').click()
-
     // tags results depends on current language.....
-    const tagTerms = currentLang == 'FR' ? 'biologie' : 'biology'
-    logger.info(`Search for tag ${tagTerms}`)
-    await page.locator('[data-test="search-input"]').fill(tagTerms)
-    await page.locator('[data-test^="tag-label-"]').first().click()
-    logger.info(`Add ${tagTerms} tag`)
+    if (currentLang == 'FR') {
+        logger.info('Search for test tag')
+        await page.locator('[data-test="search-input"]').fill('test')
+        await page.getByRole('main').getByText('Test', { exact: true }).click()
+        logger.info('Add test tag')
+        logger.info('Search for tag voiture')
+        await page.locator('[data-test="search-input"]').fill('voiture')
+        await page.getByText('Voiture électrique').click()
+        logger.info('Add voiture éléctrique tag')
+    } else {
+        logger.info('Search for test cricket tag')
+        await page.locator('[data-test="search-input"]').fill('test cricket')
+        await page.getByRole('main').getByText('Test cricket', { exact: true }).click()
+        logger.info('Add Test cricket tag')
+        logger.info('Search for tag biology')
+        await page.locator('[data-test="search-input"]').fill('biology')
+        await page.getByText('Self-driving car', { exact: true }).click()
+        logger.info('Add biology tag')
+    }
     await page.locator('[data-test="confirm-button"]').click()
-    logger.info(`Tag ${tagTerms} added`)
+    logger.info('Tag added')
 
     // check random img
     logger.info('Click 3 times on random img')
