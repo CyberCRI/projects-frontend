@@ -52,7 +52,7 @@ describe('CommentItem', () => {
 
         expect(wrapper.exists()).toBeTruthy()
         expect(vm.canEdit).toBe(true)
-        expect(vm.currentUserId).toBe('123')
+        expect(vm.currentUserId).toBe(123)
         expect(vm.isConnected).toBe(true)
     })
 })

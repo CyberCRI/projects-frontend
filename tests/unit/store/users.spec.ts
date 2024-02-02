@@ -362,7 +362,6 @@ describe('Store module | users | actions', () => {
     })
 
     it('logIn', async () => {
-        const pid = '4e134c1a-bd53-436d-ad11-02982b19cd9c'
         const keycloakID = 'e55f9554-e1b2-487e-8d88-ec18c99a388a'
         const identifyUserMock = analytics.identifyUser as Mock
         const refresh_token =
@@ -394,13 +393,9 @@ describe('Store module | users | actions', () => {
             email_verified: true,
             name: 'test auto',
             roles: ['/projects/portals/CY/users', '/projects/portals/CATI/users'],
-            pid: '4e134c1a-bd53-436d-ad11-02982b19cd9c',
             preferred_username: 'test.auto@external.cri-paris.org',
             given_name: 'test',
             family_name: 'auto',
-            user: {
-                id: '4e134c1a-bd53-436d-ad11-02982b19cd9c',
-            },
             email: 'test.auto.cri@yopmail.com',
         }
 
@@ -425,7 +420,7 @@ describe('Store module | users | actions', () => {
             loginLocked: false,
             userFromToken: parsedToken,
         })
-        expect(identifyUserMock).toHaveBeenCalledWith(pid)
+        expect(identifyUserMock).toHaveBeenCalledWith(keycloakID)
     })
 
     it('refreshToken', async () => {
@@ -498,7 +493,6 @@ describe('Store module | users | mutations', () => {
         const state = {
             refreshToken: 'randomRefreshToken',
             accessToken: 'randomSessionToken',
-            id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
             id_token: 'foobar',
             keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
             loginLocked: false,
@@ -526,7 +520,6 @@ describe('Store module | users | mutations', () => {
         expect(state).toEqual({
             refreshToken: '',
             accessToken: '',
-            id: '',
             id_token: '',
             keycloak_id: '',
             loginLocked: false,
