@@ -24,8 +24,8 @@ export default {
                 const status = user?.onboarding_status || {}
                 if (status[key] !== val) {
                     const payload = { onboarding_status: { ...status, [key]: val } }
-                    await patchUser(user.keycloak_id, payload)
-                    await this.$store.dispatch('users/getUser', user.keycloak_id)
+                    await patchUser(user.id, payload)
+                    await this.$store.dispatch('users/getUser', user.id)
                 }
             }
         },
@@ -42,8 +42,8 @@ export default {
 
                 if (statusIsDifferent) {
                     const payload = { onboarding_status: { ...status, ...newStatus } }
-                    await patchUser(user.keycloak_id, payload)
-                    await this.$store.dispatch('users/getUser', user.keycloak_id)
+                    await patchUser(user.id, payload)
+                    await this.$store.dispatch('users/getUser', user.id)
                 }
             }
         },

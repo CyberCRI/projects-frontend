@@ -19,9 +19,9 @@ describe('MembersFilterSummary.vue', () => {
     it('should display initial selection', async () => {
         const wrapper = factory({
             modelValue: [
-                { kid: 'aze', name: { fullname: 'random' } },
-                { kid: 'zer', name: { fullname: 'random' } },
-                { kid: 'ert', name: { fullname: 'random' } },
+                { id: 'aze', name: { fullname: 'random' } },
+                { id: 'zer', name: { fullname: 'random' } },
+                { id: 'ert', name: { fullname: 'random' } },
             ],
         })
 
@@ -35,9 +35,9 @@ describe('MembersFilterSummary.vue', () => {
     it('should show emit input when removing a person', async () => {
         const wrapper = factory({
             modelValue: [
-                { kid: 'aze', name: { fullname: 'random' } },
-                { kid: 'zer', name: { fullname: 'random' } },
-                { kid: 'ert', name: { fullname: 'random' } },
+                { id: 'aze', name: { fullname: 'random' } },
+                { id: 'zer', name: { fullname: 'random' } },
+                { id: 'ert', name: { fullname: 'random' } },
             ],
         })
         const vm: any = wrapper.vm

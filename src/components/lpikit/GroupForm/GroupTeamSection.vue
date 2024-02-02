@@ -29,7 +29,7 @@
         <div class="team-grid">
             <TeamCardInline
                 v-for="user in showFullList ? modelValue : shortList"
-                :key="user.keycloak_id"
+                :key="user.id"
                 icon="Close"
                 :role-label="roleLabel(user)"
                 :user="user"
@@ -139,7 +139,7 @@ export default {
             //     return projectUser.user.id === user.user.id
             // })
             // this.groupMembers.splice(userIndexToDelete, 1)
-            const team = this.modelValue.filter((member) => user.keycloak_id !== member.keycloak_id)
+            const team = this.modelValue.filter((member) => user.id !== member.id)
             this.$emit('update:model-value', team)
         },
         roleLabel(user) {

@@ -136,7 +136,7 @@ const routes: Array<RouteRecordRaw> = [
                 /* webpackChunkName: "UserProfilePage" */ '../pages/UserProfilePage/UserProfilePage.vue'
             ),
         props: {
-            userKId: null,
+            userId: null,
         },
         meta: {
             resetScroll: true,
@@ -202,7 +202,7 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: '/profile/:userKId',
+        path: '/profile/:userId',
         name: 'ProfileOtherUser',
         component: () =>
             import(
@@ -217,7 +217,7 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: '/profile/edit/:userKId',
+        path: '/profile/edit/:userId',
         name: 'ProfileEditOtherUser',
         component: () =>
             import(

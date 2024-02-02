@@ -351,7 +351,7 @@ export default {
                 level_to_reach: 1,
                 type: this.type == 'hobbies' ? 'hobby' : 'skill',
                 category: '', // TODO: check what this is
-                user: this.user.keycloak_id,
+                user: this.user.id,
             }
             this.selection = [...this.selection, skill]
         },

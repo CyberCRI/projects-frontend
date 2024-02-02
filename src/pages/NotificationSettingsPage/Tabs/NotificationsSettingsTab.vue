@@ -45,7 +45,7 @@ export default {
     },
 
     async mounted() {
-        await this.$store.dispatch('users/getNotifications', this.$store.getters['users/kid'])
+        await this.$store.dispatch('users/getNotifications', this.$store.getters['users/id'])
         this.initNotificationSettings()
     },
 
@@ -136,7 +136,7 @@ export default {
             payload[setting] = !this.notifications[setting]
 
             const body = {
-                kid: this.$store.state.users.keycloak_id,
+                id: this.$store.getters['users/id'],
                 payload: payload,
             }
 

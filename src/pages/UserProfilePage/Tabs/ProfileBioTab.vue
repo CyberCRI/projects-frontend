@@ -28,7 +28,7 @@ export default {
 
     computed: {
         isCurrentUser() {
-            return this.$store.getters['users/kid'] === this.user.keycloak_id
+            return this.$store.getters['users/id'] === this.user.id
         },
 
         noDescription() {

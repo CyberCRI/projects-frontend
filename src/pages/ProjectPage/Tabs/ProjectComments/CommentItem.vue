@@ -197,13 +197,13 @@ export default {
     computed: {
         canEdit() {
             return (
-                this.comment.author.keycloak_id === this.currentUserId ||
+                this.comment.author.id === this.currentUserId ||
                 this.$store.getters['users/isSuperAdmin']
             )
         },
 
         currentUserId() {
-            return this.$store.state.users.keycloak_id ? this.$store.state.users.keycloak_id : null
+            return this.$store.getters['users/id'] ? this.$store.getters['users/id'] : null
         },
 
         isConnected() {

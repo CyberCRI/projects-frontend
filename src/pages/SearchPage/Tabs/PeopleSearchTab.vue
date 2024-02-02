@@ -21,9 +21,8 @@
                         :to-link="{
                             name: 'ProfileOtherUser',
                             params: {
-                                userKId:
-                                    projectListSlotProps.user.slug ||
-                                    projectListSlotProps.user.keycloak_id,
+                                userId:
+                                    projectListSlotProps.user.slug || projectListSlotProps.user.id,
                             },
                         }"
                     />

@@ -1,11 +1,7 @@
 <template>
     <div class="user" @click="$emit('user-click', user)">
         <CroppedImage
-            :alt="
-                user.keycloak_id
-                    ? `${user.given_name} ${user.family_name} image`
-                    : `${user.name} image`
-            "
+            :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
             :image-sizes="imageSizes"
             :src="imageError ? defaultImage : userImage"
             @error="placeHolderImg"
@@ -18,14 +14,14 @@
         <!--        TODO: ask Api to send information-->
         <div v-if="user.role" class="role">{{ user.role }}</div>
 
-        <div v-if="user.keycloak_id" class="name-ctn">
+        <div v-if="user.id" class="name-ctn">
             <h4 class="user-name">{{ userName }}</h4>
         </div>
 
         <!--        TODO: ask Api to send information-->
-        <div v-if="user.keycloak_id" class="job">{{ user.job }}</div>
+        <div v-if="user.id" class="job">{{ user.job }}</div>
 
-        <div v-if="!user.keycloak_id" class="name-ctn">
+        <div v-if="!user.id" class="name-ctn">
             <h4 class="user-name">{{ user.name }}</h4>
         </div>
     </div>
@@ -68,7 +64,7 @@ export default {
 
     computed: {
         userImage() {
-            if (this.user.keycloak_id) {
+            if (this.user.id) {
                 return this.user.profile_picture
                     ? this.user.profile_picture.variations.medium
                     : null

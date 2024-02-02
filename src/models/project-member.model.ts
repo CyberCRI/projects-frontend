@@ -9,8 +9,6 @@ export interface ProjectMemberModel extends BaseModel {
     project: string
     user: {
         id: number
-        keycloak_id: string
-        people_id: string
     }
     group: ProjectMemberRoleType
 }

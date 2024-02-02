@@ -52,12 +52,12 @@ const getters = {
 }
 
 const actions = {
-    async addProject({ dispatch, rootState }, project): Promise<ProjectOutput> {
+    async addProject({ dispatch, getters }, project): Promise<ProjectOutput> {
         try {
             const result = await createProject(project)
 
             // fetch updated project list from user so permissions as set correctly
-            dispatch('users/getUser', rootState.users.keycloak_id, { root: true })
+            dispatch('users/getUser', getters['users/id'], { root: true })
 
             analytics.project.create({ id: result.id, title: result.title })
 
@@ -96,12 +96,12 @@ const actions = {
         }
     },
 
-    async duplicateProject({ dispatch, rootState }, id: string) {
+    async duplicateProject({ dispatch, getters }, id: string) {
         try {
             const result = await duplicateProject(id)
 
             // fetch updated project list from user so permissions as set correctly
-            dispatch('users/getUser', rootState.users.keycloak_id, { root: true })
+            dispatch('users/getUser', getters['users/id'], { root: true })
 
             analytics.project.duplicate(id, result.id)
 

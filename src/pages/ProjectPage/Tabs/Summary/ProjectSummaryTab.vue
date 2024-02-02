@@ -73,7 +73,7 @@
                 v-if="profileDrawer.isOpened"
                 ref="profile-user"
                 :can-edit="false"
-                :kid="profileDrawer.user_kid"
+                :user-id="profileDrawer.user_id"
             />
         </DrawerLayout>
     </div>
@@ -132,7 +132,7 @@ export default {
             editDescriptionModalActive: false,
             profileDrawer: {
                 isOpened: false,
-                user_kid: null,
+                user_id: null,
             },
         }
     },
@@ -168,8 +168,8 @@ export default {
     },
     methods: {
         async openProfileDrawer(user) {
-            if (user.keycloak_id) {
-                this.profileDrawer.user_kid = user.keycloak_id
+            if (user.id) {
+                this.profileDrawer.user_id = user.id
                 this.profileDrawer.isOpened = true
             } else {
                 this.$router.push({ name: 'Group', params: { groupId: user.id } })
@@ -179,7 +179,7 @@ export default {
         closeProfileDrawer() {
             this.isEditMode = false
             this.profileDrawer.isOpened = false
-            this.profileDrawer.user_kid = null
+            this.profileDrawer.user_id = null
         },
     },
 }

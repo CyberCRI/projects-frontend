@@ -19,7 +19,7 @@
             />
 
             <div class="user-info">
-                <div class="name" v-if="user.keycloak_id || user.people_id">
+                <div class="name" v-if="user.id">
                     {{ $filters.capitalize(user.given_name) }}
                     {{ $filters.capitalize(user.family_name) }}
                 </div>

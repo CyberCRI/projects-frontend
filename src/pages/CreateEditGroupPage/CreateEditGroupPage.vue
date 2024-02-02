@@ -356,12 +356,12 @@ export default {
 
         async updateGroupMembers(groupId) {
             const previousMembersIndex = (this.groupMemberData || []).reduce((acc, curr) => {
-                acc[curr.keycloak_id] = curr
+                acc[curr.id] = curr
                 return acc
             }, {})
 
             const currentMembersIndex = (this.form.members || []).reduce((acc, curr) => {
-                acc[curr.keycloak_id] = curr
+                acc[curr.id] = curr
                 return acc
             }, {})
 
@@ -376,29 +376,29 @@ export default {
             // in both case it can ALSO be leader
 
             ;(this.form.members || []).forEach((member) => {
-                const previous = previousMembersIndex[member.keycloak_id]
+                const previous = previousMembersIndex[member.id]
                 // if its a new user
                 if (!previous) {
                     // add it as manager OR just member
                     if (member.is_manager) {
-                        managersToAdd.push(member.keycloak_id)
+                        managersToAdd.push(member.id)
                     } else {
-                        membersToAdd.push(member.keycloak_id)
+                        membersToAdd.push(member.id)
                     }
                     // also add it as leader if it is
                     if (member.is_leader) {
-                        leadersToAdd.push(member.keycloak_id)
+                        leadersToAdd.push(member.id)
                     }
                 } else {
                     // old roles are now removed automacally on backend
                     // when adding a new one
 
                     if (member.is_leader && !previous.is_leader) {
-                        leadersToAdd.push(member.keycloak_id)
+                        leadersToAdd.push(member.id)
                     }
 
                     if (member.is_manager && !previous.is_manager) {
-                        managersToAdd.push(member.keycloak_id)
+                        managersToAdd.push(member.id)
                     }
 
                     if (
@@ -406,18 +406,18 @@ export default {
                         !member.is_manager &&
                         (previous.is_leader || previous.is_manager)
                     ) {
-                        membersToAdd.push(member.keycloak_id)
+                        membersToAdd.push(member.id)
                     }
                 }
             })
             ;(this.groupMemberData || []).forEach((member) => {
                 // if user is to be removed
-                if (!currentMembersIndex[member.keycloak_id]) {
+                if (!currentMembersIndex[member.id]) {
                     // if was leader remove from leaders independently of other roles
-                    if (member.is_leader) leadersToRemove.push(member.keycloak_id)
+                    if (member.is_leader) leadersToRemove.push(member.id)
                     // if was manager remove from managers else remove from members
-                    if (member.is_manager) managersToRemove.push(member.keycloak_id)
-                    else membersToRemove.push(member.keycloak_id)
+                    if (member.is_manager) managersToRemove.push(member.id)
+                    else membersToRemove.push(member.id)
                 }
             })
 

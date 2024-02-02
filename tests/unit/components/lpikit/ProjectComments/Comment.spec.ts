@@ -26,9 +26,7 @@ const store = {
                 isSuperAdmin: vi.fn(() => true),
                 user: vi.fn(() => true),
                 isConnected: vi.fn(() => true),
-            },
-            state: {
-                keycloak_id: '123',
+                id: () => 123,
             },
         },
     },

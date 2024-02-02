@@ -209,11 +209,11 @@ export default {
             this.asyncing = true
             try {
                 const apiData = this.adaptFormToApi()
-                await patchUserPrivacy(this.user.keycloak_id, apiData)
+                await patchUserPrivacy(this.user.id, apiData)
 
-                if (this.user.keycloak_id === this.$store.getters['users/kid'])
-                    this.$store.dispatch('users/getUser', this.user.keycloak_id)
-                else getUser(this.user.keycloak_id)
+                if (this.user.id === this.$store.getters['users/id'])
+                    this.$store.dispatch('users/getUser', this.user.id)
+                else getUser(this.user.id)
 
                 this.$emit('profile-edited')
 

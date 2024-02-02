@@ -255,9 +255,9 @@ export default {
         // keep this for debugging purposes
         // async resetOnboardingStatus() {
         //     const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
-        //     const keycloak_id = this.$store.getters['users/userFromApi'].keycloak_id
-        //     await patchUser(keycloak_id, payload)
-        //     await this.$store.dispatch('users/getUser', keycloak_id)
+        //     const id = this.$store.getters['users/userFromApi'].id
+        //     await patchUser(id, payload)
+        //     await this.$store.dispatch('users/getUser', id)
         // },
 
         onScroll() {
@@ -328,7 +328,7 @@ export default {
                 }
                 // dont wait for termination, user update take a while
                 // and we dont want the UI to freeze meanwhile
-                patchUser(this.$store.getters['users/kid'], body)
+                patchUser(this.$store.getters['users/id'], body)
             }
 
             await this.$store.dispatch('languages/updateCurrentLanguage', lang)

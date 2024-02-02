@@ -7,7 +7,6 @@ import BaseModel from '@/models/base.model'
 export interface FollowModel extends BaseModel {
     follower: {
         id: number
-        keycloak_id: string
         email: string
         given_name: string
         family_name: string

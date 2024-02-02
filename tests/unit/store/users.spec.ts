@@ -421,7 +421,6 @@ describe('Store module | users | actions', () => {
             refreshTokenExp: 1646876100,
             accessToken: access_token,
             id_token: id_token,
-            id: pid,
             keycloak_id: keycloakID,
             loginLocked: false,
             userFromToken: parsedToken,
@@ -485,7 +484,6 @@ describe('Store module | users | actions', () => {
             refreshToken: refresh_token,
             refreshTokenExp: 123456,
             accessToken: access_token,
-            id: pid,
             keycloak_id: keycloakID,
             loginLocked: false,
             userFromToken: parsedToken,
@@ -546,7 +544,6 @@ describe('Store module | users | mutations', () => {
         const state = {
             refreshToken: '',
             accessToken: '',
-            id: '',
             id_token: '',
             keycloak_id: '',
             loginLocked: false,
@@ -571,7 +568,6 @@ describe('Store module | users | mutations', () => {
         const payload = {
             refreshToken: 'randomRefreshToken',
             accessToken: 'randomSessionToken',
-            id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
             keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
             id_token: 'foobar',
             loginLocked: false,
@@ -600,7 +596,6 @@ describe('Store module | users | mutations', () => {
         expect(state).toEqual({
             refreshToken: 'randomRefreshToken',
             accessToken: 'randomSessionToken',
-            id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
             keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
             id_token: 'foobar',
             loginLocked: false,

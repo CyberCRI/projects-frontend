@@ -32,8 +32,6 @@ export interface ProfilePictureModel {
 export default interface InvitationUserModel {
     owner: {
         id: number
-        keycloak_id: string
-        people_id: string
         given_name: string
         email: string
         family_name: string

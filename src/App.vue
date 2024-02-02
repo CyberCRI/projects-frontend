@@ -91,7 +91,7 @@ export default {
     methods: {
         ...mapMutations({
             resetUser: 'users/RESET_USER',
-            setUser: 'users/SET_USER',
+            setUser: 'users/SET_USER', // TODO: dead code ?
         }),
 
         ...mapActions({

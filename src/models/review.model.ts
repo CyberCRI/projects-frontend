@@ -9,8 +9,6 @@ export interface ReviewModel extends BaseModel {
     title: string
     reviewer: {
         id: number
-        keycloak_id: string
-        people_id: string
         email: string
         given_name: string
         family_name: string
@@ -18,6 +16,6 @@ export interface ReviewModel extends BaseModel {
 }
 
 export type ReviewModelInput = Required<ReviewModel> & {
-    reviewer_id: string // keycloak_id
+    reviewer_id: string
     project_id: string
 }

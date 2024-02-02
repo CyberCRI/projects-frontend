@@ -3,7 +3,7 @@
         <div v-if="selectedUsers.length" class="selected-users-grid">
             <UserCardInline
                 v-for="(user, index) in filteredUsers"
-                :key="user.keycloak_id"
+                :key="user.id"
                 :user="user"
                 :selected="true"
                 icon="Close"
@@ -202,7 +202,7 @@ export default {
 
         selectUser(user) {
             this.selectedUsers.push(user)
-            if (user.keycloak_id) {
+            if (user.id) {
                 user.role = 'owners'
             }
 

@@ -23,7 +23,7 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                kid: vi.fn(),
+                id: vi.fn(),
                 userFromApi: vi.fn(),
                 getPermissions: vi.fn().mockReturnValue({}),
                 isConnected: vi.fn().mockReturnValue(true),
@@ -81,11 +81,11 @@ describe('ProfileProjectTab', () => {
     })
 
     it('should display a create project button if on self profile and has persimission', async () => {
-        const keycloak_id = '123'
+        const id = 123
         const user: any = UserFactory.generate()
-        user.keycloak_id = keycloak_id
+        user.id = id
 
-        store.modules.users.getters.kid.mockReturnValue(keycloak_id)
+        store.modules.users.getters.id.mockReturnValue(id)
         let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
 
         await flushPromises()

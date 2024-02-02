@@ -22,7 +22,7 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                kid: vi.fn(),
+                id: vi.fn(),
                 userFromApi: vi.fn(),
                 getPermissions: vi.fn().mockReturnValue({}),
             },
@@ -39,18 +39,18 @@ const store = {
     },
 }
 
-const buildParams = (kid, showPageLink) => ({
+const buildParams = (userId, showPageLink) => ({
     i18n,
     store,
     props: {
-        kid, // UserFactory.generate(),
+        userId, // UserFactory.generate(),
         showPageLink,
     },
 })
 
 describe('UserProfile', () => {
     it('should render UserProfile component', () => {
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
 
         expect(wrapper.exists()).toBeTruthy()
     })
@@ -64,17 +64,17 @@ describe('UserProfile', () => {
     it("should emit 'user-not-found' if no user found", async () => {
         vi.mocked(getUser).mockRejectedValue(null)
 
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         await flushPromises()
         expect(wrapper.emitted()['user-not-found']).toBeTruthy()
     })
 
     it('should see that current user is the logged one', async () => {
         const user: any = UserFactory.generate()
-        user.keycloak_id = '123'
+        user.id = 123
         vi.mocked(getUser).mockResolvedValue(user)
         store.modules.users.getters.userFromApi.mockReturnValue(user)
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         let vm: any = wrapper.vm
         await flushPromises()
         expect(vm.isSelf).toBeTruthy()
@@ -82,14 +82,14 @@ describe('UserProfile', () => {
 
     it('should see that current user is not the logged one', async () => {
         const user: any = UserFactory.generate()
-        user.keycloak_id = '123'
+        user.id = 123
         vi.mocked(getUser).mockResolvedValue(user)
 
         const user2: any = UserFactory.generate()
-        user.keycloak_id = '456'
+        user.id = 456
         store.modules.users.getters.userFromApi.mockReturnValue(user2)
 
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         let vm: any = wrapper.vm
         await flushPromises()
         expect(vm.isSelf).toBeFalsy()
@@ -97,30 +97,30 @@ describe('UserProfile', () => {
 
     it('should allow edition of self profile', async () => {
         const user: any = UserFactory.generate()
-        user.keycloak_id = '123'
+        user.id = 123
         vi.mocked(getUser).mockResolvedValue(user)
         store.modules.users.getters.userFromApi.mockReturnValue(user)
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         await flushPromises()
         expect(wrapper.find('.edit-btn').exists()).toBe(true)
     })
 
     it('should not allow edition of other profile without specific rights', async () => {
         const user: any = UserFactory.generate()
-        user.keycloak_id = '123'
+        user.id = 123
         vi.mocked(getUser).mockResolvedValue(user)
 
         const user2: any = UserFactory.generate()
-        user.keycloak_id = '456'
+        user.id = 456
         store.modules.users.getters.userFromApi.mockReturnValue(user2)
 
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         await flushPromises()
         expect(wrapper.find('.edit-btn').exists()).toBe(false)
     })
 
     it('should display a loader first then the content', async () => {
-        let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
+        let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))
         let vm: any = wrapper.vm
 
         expect(vm.isLoading).toBe(true)

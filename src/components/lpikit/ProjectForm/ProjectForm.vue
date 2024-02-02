@@ -319,7 +319,7 @@ export default {
 
             team.forEach((user) => {
                 /* This condition let us skip the first user (connected user) */
-                if (user.user.keycloak_id) this.form.team[user.role].push(user.user.keycloak_id)
+                if (user.user.id) this.form.team[user.role].push(user.user.id)
             })
         },
 

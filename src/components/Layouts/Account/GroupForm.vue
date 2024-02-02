@@ -166,7 +166,7 @@ export default {
                     this.$store.getters['organizations/current'].code,
                     group.id,
                     {
-                        users: [this.selectedUser.keycloak_id],
+                        users: [this.selectedUser.id],
                     }
                 )
                 this.selectedPeopleGroups.splice(index, 1)
@@ -175,7 +175,7 @@ export default {
                     this.$store.getters['organizations/current'].code,
                     group.id,
                     {
-                        members: [this.selectedUser.keycloak_id],
+                        members: [this.selectedUser.id],
                     }
                 )
                 this.selectedPeopleGroups.push({
@@ -208,7 +208,7 @@ export default {
                         this.$store.getters['organizations/current'].code,
                         group.id,
                         {
-                            members: [this.selectedUser.keycloak_id],
+                            members: [this.selectedUser.id],
                         }
                     )
                 } else {
@@ -216,7 +216,7 @@ export default {
                         roles_to_remove: [role],
                     }
                     await this.$store.dispatch('users/patchUser', {
-                        kid: this.selectedUser.keycloak_id,
+                        id: this.selectedUser.id,
                         body,
                     })
                 }
@@ -226,7 +226,7 @@ export default {
                         this.$store.getters['organizations/current'].code,
                         group.id,
                         {
-                            managers: [this.selectedUser.keycloak_id],
+                            managers: [this.selectedUser.id],
                         }
                     )
                 } else {
@@ -234,13 +234,13 @@ export default {
                         this.$store.getters['organizations/current'].code,
                         group.id,
                         {
-                            leaders: [this.selectedUser.keycloak_id],
+                            leaders: [this.selectedUser.id],
                         }
                     )
                 }
             }
 
-            getUser(this.selectedUser.keycloak_id).then((user) => {
+            getUser(this.selectedUser.id).then((user) => {
                 this.setAdaptedUserPeopleGroupsRoles(user)
             })
         },

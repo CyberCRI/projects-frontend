@@ -16,9 +16,10 @@ describe('Store module | Follows | actions', () => {
         projects: {
             project: ProjectFactory.generate(),
         },
-        users: {
-            keycloak_id: '',
-        },
+        // TODO: needed ?
+        // users: {
+        //     keycloak_id: '',
+        // },
     }
 
     // TODO: recheck this ambiguous nrebase stuff (removed from store)
