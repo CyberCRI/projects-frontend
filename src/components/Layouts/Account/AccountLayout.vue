@@ -3,7 +3,7 @@
         <LpiLoader type="simple" />
     </div>
     <div class="account-layout">
-        <AccountFormTitleBlock :is-add-mode="isAddMode" @scroll-to="scrollTo" />
+        <AccountFormTitleBlock :is-add-mode="isAddMode" />
 
         <TabsLayout
             :align-left="true"
@@ -21,7 +21,7 @@ import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/Layouts/Account/AccountFormTitleBlock.vue'
 import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
 import AccountForm from '@/components/Layouts/Account/AccountForm.vue'
-import GroupFrom from '@/components/Layouts/Account/GroupFrom.vue'
+import GroupForm from '@/components/Layouts/Account/GroupForm.vue'
 
 export default {
     name: 'AccountLayout',
@@ -76,7 +76,7 @@ export default {
                 {
                     key: 'form-group-account',
                     label: this.$t('profile.edit.groups.tab'),
-                    component: GroupFrom,
+                    component: GroupForm,
                     props: {
                         isAddMode: this.isAddMode,
                         selectedUser: this.currentUser,

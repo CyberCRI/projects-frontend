@@ -77,7 +77,7 @@ import {
 import { getUser } from '@/api/people.service.ts'
 
 export default {
-    name: 'GroupFrom',
+    name: 'GroupForm',
     components: { GroupHierarchyList, FilterValue },
 
     props: {

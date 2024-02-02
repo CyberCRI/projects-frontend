@@ -23,6 +23,14 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     people_groups: [], // TODO: generate this
     skills: [], // TODO: generate this
     hobbies: [], // TODO: generate this
+    profile_picture: {
+        scale_x: faker.datatype.number(),
+        scale_y: faker.datatype.number(),
+        left: faker.datatype.number(),
+        top: faker.datatype.number(),
+        natural_ratio: faker.datatype.number(),
+        variations: { medium: 'string.jpeg' },
+    },
 }))
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({

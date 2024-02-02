@@ -1,0 +1,84 @@
+import { lpiMount } from '../../../helpers/LpiMount'
+import english from '@/locales/en.json'
+import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
+
+import { describe, expect, it } from 'vitest'
+import { ProjectFactory, ProjectOutputFactory } from '../../../../tests/factories/project.factory'
+import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'
+
+const i18n = {
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: {
+        en: english,
+    },
+}
+
+const project = ProjectOutputFactory.generate()
+
+const store = {
+    modules: {
+        projects: {
+            namespaced: true,
+            getters: {
+                project: () => ({
+                    ...ProjectOutputFactory.generate(),
+                    files: [],
+                    links: [],
+                }),
+                currentProjectSlug: vi.fn(() => project.slug),
+                currentProjectId: vi.fn(() => project.id),
+            },
+            actions: {
+                updateProject: vi.fn(),
+            },
+        },
+        organizations: {
+            namespaced: true,
+            getters: {
+                current: () => OrganizationOutputFactory.generate(),
+            },
+        },
+        users: {
+            namespaced: true,
+            getters: {
+                userFromApi: vi.fn().mockReturnValue({}),
+                accessToken: vi.fn(),
+            },
+        },
+        languages: {
+            namespaced: true,
+            state: {
+                current: 'en',
+                all: ['en', 'fr'],
+            },
+        },
+    },
+}
+
+describe('DescriptionDrawer.vue', () => {
+    let wrapper
+    let defaultParams
+
+    beforeEach(() => {
+        defaultParams = {
+            i18n,
+            props: {
+                project: {
+                    ...ProjectFactory.generate(),
+                    organizations: [OrganizationOutputFactory.generate()],
+                },
+                isOpened: true,
+            },
+            store,
+            provide: {
+                projectLayoutProjectPatched: vi.fn(),
+            },
+        }
+    })
+
+    it('should render DescriptionDrawer component', () => {
+        wrapper = lpiMount(DescriptionDrawer, defaultParams)
+        expect(wrapper.exists()).toBe(true)
+    })
+})
