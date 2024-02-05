@@ -13,7 +13,12 @@
                     allowfullscreen="allowfullscreen"
                 ></iframe>
             </div>
-            <i18n-t keypath="plateform-tour-modal.notice-tutorial" tag="p" class="notice">
+            <i18n-t
+                keypath="plateform-tour-modal.notice-tutorial"
+                tag="p"
+                class="notice"
+                scope="global"
+            >
                 <RouterLink
                     class="link"
                     :to="{ name: 'HelpVideoTab' }"

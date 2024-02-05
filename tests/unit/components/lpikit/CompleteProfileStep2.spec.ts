@@ -1,14 +1,12 @@
-import { lpiMount, lpiShallowMount } from '../../../helpers/LpiMount'
-import english from '@/locales/en.json'
+import { lpiShallowMount } from '../../../helpers/LpiMount'
 import CompleteProfileStep2 from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileStep2.vue'
-
 import { describe, expect, it } from 'vitest'
+import { loadLocaleMessages } from '@/locales/i18n'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+    messages: loadLocaleMessages(),
 }
 
 const store = {

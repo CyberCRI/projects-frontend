@@ -1,17 +1,14 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import english from '@/locales/en.json'
 import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
-
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '../../../../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'
+import { loadLocaleMessages } from '@/locales/i18n'
 
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+    messages: loadLocaleMessages(),
 }
 
 const project = ProjectOutputFactory.generate()

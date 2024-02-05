@@ -5,6 +5,8 @@ import 'regenerator-runtime/runtime'
 // that needs a TextEncoder
 // see https://github.com/inrupt/solid-client-authn-js/issues/1676
 import { TextEncoder, TextDecoder } from 'util'
+import { afterEach } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
 
 // crypto is not in jsdom
 // window.crypto =
@@ -21,4 +23,7 @@ beforeAll(() => {
 afterAll(() => {
     // delete global.TextEncoder
     // delete global.TextDecoder
+})
+afterEach(async () => {
+    await flushPromises() // Wait for all pending promises to resolve
 })

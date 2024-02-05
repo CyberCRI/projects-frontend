@@ -1,17 +1,14 @@
 import { lpiMount, lpiShallowMount } from '../../../helpers/LpiMount'
-import english from '@/locales/en.json'
 import BlogDrawer from '@/components/lpikit/BlogDrawer/BlogDrawer.vue'
-
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
+import { loadLocaleMessages } from '@/locales/i18n'
 
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+    messages: loadLocaleMessages(),
 }
 
 const store = {

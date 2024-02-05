@@ -1,15 +1,13 @@
-import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
-import english from '@/locales/en.json'
+import { lpiMount } from '../../../../helpers/LpiMount'
 import WelcomedModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import { loadLocaleMessages } from '@/locales/i18n'
 
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+    messages: loadLocaleMessages(),
 }
 
 const store = {
