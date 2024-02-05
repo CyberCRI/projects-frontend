@@ -72,8 +72,7 @@ export default {
             if (this.type == 'users') {
                 return this.results.map((result) => ({
                     ...result,
-                    // TODO : refacto using iod instead of people_id and keycloak_id
-                    // however watch out for current (logged) user (in create project) : it has no id yet !
+                    // watch out for current (logged) user (in create project) : it has no id yet !
                     selected:
                         this.selectedUsers.some(
                             // group have a type, user don't

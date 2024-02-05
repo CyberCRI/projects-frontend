@@ -84,7 +84,7 @@
                 :search="{
                     limit: 12,
                     ordering: '-updated_at',
-                    members: [$store.state.getters['users/id']],
+                    members: [$store.getters['users/id']],
                     member_role: ['owners', 'members', 'reviewers'],
                 }"
                 mode="projects"

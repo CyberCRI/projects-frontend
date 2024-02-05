@@ -19,7 +19,7 @@
             />
 
             <div class="user-info">
-                <div class="name" v-if="user.id">
+                <div class="name" v-if="$filters.isNotGroup(user)">
                     {{ $filters.capitalize(user.given_name) }}
                     {{ $filters.capitalize(user.family_name) }}
                 </div>

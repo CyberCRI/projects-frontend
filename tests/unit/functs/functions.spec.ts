@@ -119,7 +119,6 @@ describe('Function projectCanBeEdited', () => {
         expect(store.getters['users/user']).toBe(user)
     })
 
-    // TODO Projects: FIX ONCE API USES KEYCLOAK_ID
     test("that project can be edited if user is one of project's owners and project is not locked", () => {
         const user = UserFactory.generate()
         const project = ProjectOutputFactory.generate()

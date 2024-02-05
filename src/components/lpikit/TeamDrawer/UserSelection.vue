@@ -202,7 +202,7 @@ export default {
 
         selectUser(user) {
             this.selectedUsers.push(user)
-            if (user.id) {
+            if (this.$filters.isNotGroup(user)) {
                 user.role = 'owners'
             }
 

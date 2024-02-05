@@ -118,13 +118,11 @@ export default {
 
     mounted() {
         if (this.selectedRole && this.isEditMode) this.role = this.selectedRole
-        this.userList = this.selectedUsers
-            .filter((user) => user.id)
-            .map((user) => ({
-                ...user,
-                role: this.selectedRole || 'owners',
-            }))
-        this.groupList = this.selectedUsers.filter((user) => !user.id)
+        this.userList = this.selectedUsers.filter(this.$filters.isNotGroup).map((user) => ({
+            ...user,
+            role: this.selectedRole || 'owners',
+        }))
+        this.groupList = this.selectedUsers.filter(this.$filters.isGroup)
         /* This is call is here to set up and update the user status on all parents */
         /* Also this used to be a watcher */
         this.$emit('select-role', this.userList.concat(this.groupList))

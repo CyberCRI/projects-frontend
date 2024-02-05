@@ -319,7 +319,8 @@ export default {
 
             team.forEach((user) => {
                 /* This condition let us skip the first user (connected user) */
-                if (user.user.id) this.form.team[user.role].push(user.user.id)
+                if (this.$filters.isNotGroup(user.user))
+                    this.form.team[user.role].push(user.user.id)
             })
         },
 

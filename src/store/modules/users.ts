@@ -38,7 +38,7 @@ const state = (): UsersState => {
         userFromToken: null,
         userFromApi: null,
         accessToken: localStorage.getItem('ACCESS_TOKEN'),
-        keycloak_id: '', // localStorage.getItem('KEYCLOAK_ID'),
+        keycloak_id: '',
         loginLocked: false,
         permissions: {},
         id_token: localStorage.getItem('ID_TOKEN'),
@@ -51,10 +51,6 @@ const state = (): UsersState => {
 const getters = {
     isLoggedIn: (state: UsersState) => {
         return !!state.accessToken
-    },
-
-    kid(state: UsersState) {
-        return state.keycloak_id
     },
 
     id(state: UsersState) {
@@ -175,7 +171,7 @@ const actions = {
     },
 
     async getUser({ commit }, id) {
-        // id is keycloak_id OR django user id
+        // id is keycloak_id OR django user id OR slug
         try {
             const user = await getUser(id)
 

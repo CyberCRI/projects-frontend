@@ -7,3 +7,8 @@ export const capitalize = (value) => {
 export const toLocaleDateString = (date) => new Date(date).toLocaleDateString()
 
 export const stripTags = (str) => (str ? str.replace(/(<([^>]+)>)/gi, '') : str)
+
+// project members can  be group or user
+// group have a type attribute, user don't
+export const isNotGroup = (groupOrUser) => !groupOrUser.type
+export const isGroup = (groupOrUser) => !isNotGroup(groupOrUser)

@@ -18,7 +18,7 @@
                 class="img-container"
             />
             <div class="user-info">
-                <div v-if="user.id" class="name">
+                <div v-if="$filters.isNotGroup(user)" class="name">
                     {{ $filters.capitalize(user.given_name) }}
                     {{ $filters.capitalize(user.family_name) }}
                 </div>

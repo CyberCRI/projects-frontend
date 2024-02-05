@@ -106,7 +106,7 @@ export default {
     methods: {
         addUser(payload) {
             payload.forEach((user) => {
-                if (user.id) {
+                if (this.$filters.isNotGroup(user)) {
                     // current user is automatically added as owner
                     // so dont duplicate him
                     if (user.id !== this.currentUser.id) {
