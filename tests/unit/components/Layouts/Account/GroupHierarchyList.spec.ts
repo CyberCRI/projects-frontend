@@ -1,4 +1,4 @@
-import GroupHierarchyList from '@/components/Layouts/Account/GroupHierarchylist.vue'
+import GroupHierarchyList from '@/components/Layouts/Account/GroupHierarchyList.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

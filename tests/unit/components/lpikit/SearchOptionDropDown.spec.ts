@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import SearchOptionDropDown from '@/components/lpikit/DropDown/SearchOptionDropDown.vue'
+import SearchOptionDropDown from '@/components/lpikit/Dropdown/SearchOptionDropDown.vue'
 
 import { describe, expect, it } from 'vitest'
 const i18n = {
