@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount } from '../../../helpers/LpiMount'
 import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '../../../../tests/factories/project.factory'
@@ -75,7 +75,7 @@ describe('DescriptionDrawer.vue', () => {
     })
 
     it('should render DescriptionDrawer component', () => {
-        wrapper = lpiMount(DescriptionDrawer, defaultParams)
+        wrapper = lpiShallowMount(DescriptionDrawer, defaultParams)
         expect(wrapper.exists()).toBe(true)
     })
 })
