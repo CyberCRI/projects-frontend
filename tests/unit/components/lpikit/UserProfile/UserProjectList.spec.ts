@@ -4,6 +4,7 @@ import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue
 import { describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '../../../../factories/project-member.factory'
 import PeopleFactory from '../../../../factories/people.factory'
+import MockComponent from '../../../../helpers/MockComponent.vue'
 
 const i18n = {
     locale: 'en',
@@ -24,6 +25,7 @@ const store = {
     },
 }
 
+const router = [{ name: 'Home', path: '/', component: MockComponent }]
 describe('UserProjectList.vue', () => {
     let wrapper
     let defaultParams
@@ -35,6 +37,7 @@ describe('UserProjectList.vue', () => {
                 user: PeopleFactory.generate(),
             },
             store,
+            router,
         }
     })
 
