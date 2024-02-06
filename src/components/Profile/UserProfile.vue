@@ -21,6 +21,7 @@
                 btn-icon="Pen"
                 :label="editButtonLabel"
                 :to="editProfileLink"
+                data-test="edit-profile"
             />
         </div>
 

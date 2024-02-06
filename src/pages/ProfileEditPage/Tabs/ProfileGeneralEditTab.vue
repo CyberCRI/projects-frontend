@@ -7,6 +7,7 @@
                 :label="$t('profile.edit.general.first-name.label')"
                 :placeholder="$t('profile.edit.general.first-name.placeholder')"
                 @blur="v$.form.first_name.$validate"
+                data-test="first-name-input"
             ></TextInput>
             <p v-for="error of v$.form.first_name.$errors" :key="error.$uid" class="error-message">
                 {{ error.$message }}
@@ -20,6 +21,7 @@
                 :label="$t('profile.edit.general.last-name.label')"
                 :placeholder="$t('profile.edit.general.last-name.placeholder')"
                 @blur="v$.form.last_name.$validate"
+                data-test="last-name-input"
             ></TextInput>
             <p v-for="error of v$.form.last_name.$errors" :key="error.$uid" class="error-message">
                 {{ error.$message }}
@@ -31,6 +33,7 @@
             <TextInput
                 v-model="form.pronouns"
                 :placeholder="$t('profile.edit.general.pronouns.placeholder')"
+                data-test="pronouns-input"
             >
                 <label>{{ $t('profile.edit.general.pronouns.label') }}</label>
                 <p class="notice">{{ $t('profile.edit.general.pronouns.notice') }}</p>
@@ -62,6 +65,7 @@
                 v-model="form.professional_number"
                 :label="$t('profile.edit.general.professional-number.label')"
                 :placeholder="$t('profile.edit.general.professional-number.placeholder')"
+                data-test="professional-number-input"
             ></TextInput>
         </div>
 
@@ -71,6 +75,7 @@
                 v-model="form.personal_number"
                 :label="$t('profile.edit.general.personal-number.label')"
                 :placeholder="$t('profile.edit.general.personal-number.placeholder')"
+                data-test="personal-number-input"
             ></TextInput>
         </div>
 
@@ -81,6 +86,7 @@
                 :label="$t('profile.edit.general.personal-webpage.label')"
                 :placeholder="$t('profile.edit.general.personal-webpage.placeholder')"
                 @blur="v$.form.personal_webpage.$validate"
+                data-test="personal-webpage-input"
             ></TextInput>
             <p
                 v-for="error of v$.form.personal_webpage.$errors"
@@ -98,6 +104,7 @@
                 :label="$t('profile.edit.general.linkedin.label')"
                 :placeholder="$t('profile.edit.general.linkedin.placeholder')"
                 @blur="v$.form.linkedin.$validate"
+                data-test="linkedin-input"
             ></TextInput>
             <p v-for="error of v$.form.linkedin.$errors" :key="error.$uid" class="error-message">
                 {{ error.$message }}
@@ -111,6 +118,7 @@
                 :label="$t('profile.edit.general.twitter.label')"
                 :placeholder="$t('profile.edit.general.twitter.placeholder')"
                 @blur="v$.form.twitter.$validate"
+                data-test="twitter-input"
             ></TextInput>
             <p v-for="error of v$.form.twitter.$errors" :key="error.$uid" class="error-message">
                 {{ error.$message }}
@@ -141,6 +149,7 @@
                 :label="$t('profile.edit.general.title.label')"
                 :placeholder="$t('profile.edit.general.title.placeholder')"
                 @blur="v$.form.title.$validate"
+                data-test="title-input"
             ></TextInput>
             <p v-for="error of v$.form.title.$errors" :key="error.$uid" class="error-message">
                 {{ error.$message }}
@@ -154,6 +163,7 @@
                 :label="$t('profile.edit.general.organization-address.label')"
                 :placeholder="$t('profile.edit.general.organization-address.placeholder')"
                 input-type="textarea"
+                data-test="location-input"
             ></TextInput>
         </div>
 
@@ -172,6 +182,7 @@
                     :label="$t('profile.edit.general.sdgs.add')"
                     btn-icon="Plus"
                     @click="openSdgsDrawer"
+                    data-test="sdg-add"
                 />
             </div>
             <p class="notice">
@@ -202,7 +213,7 @@
             {{ $t('profile.edit.general.form-has-error') }}
         </p>
         <!-- actions -->
-        <div class="form-actions">
+        <div class="form-actions" data-test="main-form">
             <LpiButton
                 :disabled="asyncing"
                 :label="$filters.capitalize($t('common.cancel'))"
@@ -244,6 +255,7 @@
         class="small"
         @close="showSdgsDrawer = false"
         @confirm="selectSdgs"
+        data-test="sdgs-drawer"
     >
         <SdgsFilter v-if="showSdgsDrawer" v-model="sdgsSelection" />
     </DrawerLayout>

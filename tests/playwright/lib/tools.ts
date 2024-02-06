@@ -7,3 +7,5 @@ export function makeId(length) {
     }
     return `testing_${result}`
 }
+
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

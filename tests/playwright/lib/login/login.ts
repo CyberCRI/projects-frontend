@@ -1,9 +1,10 @@
 import type { User } from '../interfaces'
 import { LogLevel, Logger } from '../../logger'
+import { Page } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 
-export async function logIn(page, user: User) {
+export async function logIn(page: Page, user: User) {
     logger.info('Click on login button')
     await page.goto('/')
     await page.locator('[data-test="test-login-button"]').click()

@@ -1,7 +1,6 @@
 <template>
-    <div class="tag-label" :data-test="`tag-label-${label}`">
-        <span class="tag-name">{{ label }}</span>
-        <span class="tag-description">{{ description }}</span>
+    <div class="tag-label" :title="description" :data-test="`tag-label-${label}`">
+        {{ label }}
         <span v-if="isAmbiguous && !hasDisambiguationTerm"
             >&nbsp;{{ $t('search.disambiguate') }}</span
         >

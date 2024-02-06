@@ -4,6 +4,7 @@
         :style="{ 'background-image': `url(${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdgId}.svg)` }"
         class="sdg"
         @click="toggle"
+        :data-test="`sdg-${sdgId}`"
     >
         <IconImage v-if="selected" class="check-icon" name="Check" />
     </div>

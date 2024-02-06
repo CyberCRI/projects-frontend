@@ -1,10 +1,10 @@
-import { delay } from './delay'
-import { makeId } from './makeId'
-import { search } from './search'
+import { delay } from './tools'
+import { makeId } from './tools'
 import { logIn } from './login/login'
 import { logOut } from './login/logout'
-import { createInvitaionLink } from './createInvitaionLink'
-import { createUserFromInvitationLink } from './createUserFromInvitationLink'
+import { createInvitaionLink } from './user/createInvitaionLink'
+import { createUserFromInvitationLink } from './user/createUserFromInvitationLink'
+import { search } from './project/search'
 import { findProject } from './project/findProject'
 import { destroyProject } from './project/destroy'
 import { createProject } from './project/create'
@@ -19,12 +19,14 @@ import { createGroup } from './group/create'
 import { deleteGroup } from './group/delete'
 import { setRights } from './group/setRights'
 import { testRights } from './group/testRights'
+import { generalInfo } from './user/generalInfo'
+import { editBio } from './user/editBio'
 
 export {
-    logIn,
-    logOut,
     delay,
     makeId,
+    logIn,
+    logOut,
     findProject,
     destroyProject,
     createProject,
@@ -41,5 +43,7 @@ export {
     createGroup,
     deleteGroup,
     setRights,
+    generalInfo,
+    editBio,
     testRights,
 }

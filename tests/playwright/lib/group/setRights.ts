@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test'
-import { delay } from '../delay'
+import { delay } from '../index'
 import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
