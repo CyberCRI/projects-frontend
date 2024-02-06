@@ -9,7 +9,7 @@
                 @computing="computeLayout"
             />
         </div>
-        <div v-else class="full - description">
+        <div v-else class="full-description">
             <!-- work description -->
             <div class="description-content" v-html="fullDescription"></div>
         </div>
@@ -60,9 +60,9 @@ export default {
                     <h4 v-if="descriptions.professional_description" class="title">
                         ${this.$t('profile.bio_pro')}
                     </h4>
-                    <p class="professional-description">
+                    <div class="professional-description">
                         ${this.user.professional_description}
-                    </p>
+                    </div>
             `
                 : ''
         },
@@ -73,9 +73,9 @@ export default {
                     <h4 class="title">
                         ${this.$t('profile.bio_personal')}
                     </h4>
-                    <p class="personal-description">
+                    <div class="personal-description">
                         ${this.user.personal_description}
-                    </p>
+                    </div>
             `
                 : ''
         },
