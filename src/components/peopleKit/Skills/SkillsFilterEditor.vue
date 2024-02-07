@@ -17,7 +17,9 @@
             />
             <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
         </div>
-
+        <p v-if="confirmedSearch" class="skill-description">
+            {{ $t('search.choose-skill') }}
+        </p>
         <WikipediaResults
             v-if="confirmedSearch"
             :ambiguous-results-visible="ambiguousTagsOpen"

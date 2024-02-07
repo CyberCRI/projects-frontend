@@ -2083,7 +2083,9 @@
         "open-map": "Ouvrir la carte",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
         "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
-        "disambiguate": "(HOMONYMIE)"
+        "disambiguate": "(HOMONYMIE)",
+        "suggestions": "Suggestions",
+        "choose-skill": "Cliquez sur la compétence de votre choix :"
     },
     "sdg": {
         "add-short": "ajouter un ODD",

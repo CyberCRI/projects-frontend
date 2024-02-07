@@ -9,19 +9,23 @@
             type="text"
             @keyup.enter="onEnter"
             data-test="search-input"
-            :list="listId"
             @keyup="$emit('keyup', $event)"
         />
         <span class="right-icon delete" v-if="model.length" @click="deleteValue">
             <IconImage name="Close" />
         </span>
-        <datalist :id="listId">
-            <option
-                v-for="suggestion in suggestions"
-                :key="suggestion"
-                :value="suggestion"
-            ></option>
-        </datalist>
+        <div class="suggestions" v-if="suggestions?.length && !hideSuggestions">
+            <h6 class="suggestions-label">{{ $t('search.suggestions') }}</h6>
+            <ul>
+                <li
+                    v-for="suggestion in suggestions"
+                    :key="suggestion"
+                    @click="acceptSuggestion(suggestion)"
+                >
+                    {{ suggestion }}
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -62,7 +66,7 @@ export default {
     data() {
         return {
             model: this.modelValue,
-            listId: 'search-suggestions-' + (Math.random() + 1).toString(36).substring(7),
+            hideSuggestions: false,
         }
     },
 
@@ -74,6 +78,12 @@ export default {
         onEnter() {
             this.$emit('enter')
         },
+
+        acceptSuggestion(suggestion) {
+            this.model = suggestion
+            this.hideSuggestions = true
+            this.$nextTick(this.onEnter)
+        },
     },
 
     watch: {
@@ -82,6 +92,10 @@ export default {
         },
         model(value) {
             this.$emit('update:modelValue', value)
+        },
+
+        suggestions() {
+            this.hideSuggestions = false
         },
     },
 }
@@ -153,6 +167,37 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+    }
+
+    .suggestions {
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 10rem;
+        background-color: $white;
+        border: $border-width-s solid $green;
+        border-radius: $border-radius-l;
+        display: flex;
+        flex-flow: column nowrap;
+        .suggestions-label {
+            font-size: 1rem;
+            padding: 0.5rem $border-radius-l;
+            text-align: center;
+            font-weight: normal;
+        }
+        ul {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        li {
+            padding: 0.5rem $border-radius-l;
+            cursor: pointer;
+            &:hover {
+                background-color: $primary-lighter;
+            }
         }
     }
 }
