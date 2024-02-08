@@ -104,31 +104,31 @@
 
                 <LpiLogo class="lpi-logo" />
             </div>
-            <DrawerLayout
-                :custom-style="customNotificationStyle"
-                :is-opened="showContactUsDrawer"
-                :has-footer="false"
-                class="medium"
-                confirm-action-name=""
-                :title="$t('footer.contact')"
-                @close="showContactUsDrawer = false"
-            >
-                <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
-            </DrawerLayout>
-            <DrawerLayout
-                v-if="reportBugOpen"
-                :confirm-action-name="$t('common.submit')"
-                :has-footer="false"
-                :is-opened="reportBugOpen"
-                :title="$t(`report.bug`)"
-                class="report-form"
-                @close="reportBugOpen = false"
-            >
-                <ReportForm type="bug" @close="reportBugOpen = false" />
-            </DrawerLayout>
-
-            <OnboardingScreens v-if="showOnboardingScreen && isConnected"> </OnboardingScreens>
         </div>
+        <DrawerLayout
+            :custom-style="customNotificationStyle"
+            :is-opened="showContactUsDrawer"
+            :has-footer="false"
+            class="medium"
+            confirm-action-name=""
+            :title="$t('footer.contact')"
+            @close="showContactUsDrawer = false"
+        >
+            <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
+        </DrawerLayout>
+        <DrawerLayout
+            v-if="reportBugOpen"
+            :confirm-action-name="$t('common.submit')"
+            :has-footer="false"
+            :is-opened="reportBugOpen"
+            :title="$t(`report.bug`)"
+            class="report-form"
+            @close="reportBugOpen = false"
+        >
+            <ReportForm type="bug" @close="reportBugOpen = false" />
+        </DrawerLayout>
+
+        <OnboardingScreens v-if="showOnboardingScreen && isConnected"> </OnboardingScreens>
     </footer>
 </template>
 
