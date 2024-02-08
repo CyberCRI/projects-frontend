@@ -313,6 +313,7 @@
         "add-entry": "add blog entry",
         "entry": "blog entry",
         "last-publication": "last blog entry",
+        "no-entry": "No entry yet ...",
         "posts": "blog entries",
         "title": "blog"
     },

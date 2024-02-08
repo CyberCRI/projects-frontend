@@ -315,6 +315,7 @@
         "add-entry": "ajouter une entrée de blog",
         "entry": "entrée de blog",
         "last-publication": "dernière publication",
+        "no-entry": "Pas encore d'entrée ...",
         "posts": "entrées de blog",
         "title": "blog"
     },
