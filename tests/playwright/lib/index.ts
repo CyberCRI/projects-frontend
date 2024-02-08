@@ -21,6 +21,7 @@ import { setRights } from './group/setRights'
 import { testRights } from './group/testRights'
 import { generalInfo } from './user/generalInfo'
 import { editBio } from './user/editBio'
+import { handleSkills } from './user/skills'
 
 export {
     delay,
@@ -46,4 +47,5 @@ export {
     generalInfo,
     editBio,
     testRights,
+    handleSkills,
 }
