@@ -1386,6 +1386,7 @@
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
                 "save-error": "Erreur lors de la sauvegarde du profil.",
                 "save-success": "Le profil a été sauvegardé.",
+                "search": "recherche",
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
                     "edit-items": "Éditer les compétences",
