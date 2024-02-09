@@ -5,6 +5,7 @@
 
             <div v-if="searchOptionsInitiated" class="search-input-container">
                 <SearchOptions
+                    ref="searchOptions"
                     :limit="30"
                     :show-section-filter="false"
                     :search="search"
@@ -26,8 +27,11 @@
             />
         </div>
 
-        <div class="page-section-wide" v-if="hasSearch">
+        <div class="page-section-wide" v-if="hasSearch || forceSearch">
             <ProjectSearchTab :search="search" />
+            <div class="btn-ctn">
+                <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
+            </div>
         </div>
         <template v-else>
             <div class="title-ctn page-section-wide">
@@ -47,7 +51,7 @@
             </div>
 
             <div class="btn-ctn">
-                <LpiButton :label="$t('category.all-projects')" @click="updateSearchQuery" />
+                <LpiButton :label="$t('category.all-projects')" @click="forceSearch = true" />
             </div>
         </template>
     </div>
@@ -107,6 +111,7 @@ export default {
                 'page',
             ],
             selectedSection: 'all',
+            forceSearch: false,
         }
     },
 
@@ -158,6 +163,13 @@ export default {
 
         updateSearchQuery() {
             return updateSearchQuery(this, this.filterQueryParams)
+        },
+        showCategories() {
+            this.$refs['searchOptions']?.clearSelectedFilters()
+            this.forceSearch = false
+            this.$nextTick(() => {
+                this.$el?.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
+            })
         },
     },
 }
