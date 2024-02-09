@@ -14,8 +14,8 @@ export async function handleSkills(page) {
     await page.locator('[data-test="skills"]').click()
     logger.info('Add Skills')
     const addSkillBtn = await page.locator('[data-test="add-skills-button"]')
-    console.log(addSkillBtn.length)
-    if (addSkillBtn.length > 0) {
+    logger.info(await addSkillBtn.count())
+    if ((await addSkillBtn.count()) > 0) {
         addSkillBtn.click()
         await addSkills(page)
         await page.locator('[data-test="edit-skills-button"]').click()
@@ -42,15 +42,23 @@ async function addSkills(page) {
     await page.locator('[data-test="search-input"]').fill('bio')
     await page.locator('[data-test="search-input"]').press('Enter')
     await delay(5000)
-    await page.locator('[data-test^="tag-label-"]').first().click()
-    logger.info('Confirm Skills')
+    const inputs = await page.locator('[data-test^="tag-label-"]').all()
+    for (let i = 0; i < 5; i++) {
+        await inputs[i].click()
+    }
+    // const addedTags = await page.locator('[data-test^="tag-label"]').all()
+    // logger.info('Confirm Skills')
+    // logger.info(addedTags.length)
+    // for (const tag of addedTags) {
+    //     tag.click();
+    // }
     await page.locator('[data-test="confirm-button"]').click()
     await page.locator('[data-test="confirm-button"]').click()
 }
 
 async function editSkills(page) {
     await delay(5000)
-    const addedTags = await page.locator('[data-test^="filter-value-"]')
+    const addedTags = await page.locator('[data-test^="filter-value-"]').all()
     logger.info(addedTags)
     for (const tag of addedTags) {
         tag.getByRole('img').click()
