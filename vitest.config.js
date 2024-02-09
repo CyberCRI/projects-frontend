@@ -15,6 +15,7 @@ export default defineConfig({
             // './.vitest/register-context.ts',
             './.vitest/mockApiCookie.ts',
             './.vitest/mockOauth.ts',
+            './.vitest/mockAxios.ts',
         ],
     },
     resolve: {

@@ -30,7 +30,7 @@ export default {
         },
 
         modelValue: {
-            type: Boolean,
+            type: [Boolean, Object],
             default: false,
         },
 

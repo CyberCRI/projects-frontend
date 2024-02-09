@@ -27,6 +27,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
     ...restBaseFactory,
     id: faker.datatype.string(),
     category_id: faker.datatype.number(),
+    categories: ProjectCategoryOutputFactory.generateMany(2),
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraphs(),
     header_image: {
