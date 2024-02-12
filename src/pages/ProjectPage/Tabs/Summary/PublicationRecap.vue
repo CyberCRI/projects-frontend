@@ -65,8 +65,12 @@ export default {
 
     methods: {
         redirectToPage() {
-            const path = this.isBlog ? 'blog-entries' : 'comments'
-            this.$router.push(`/projects/${this.$route.params.slugOrId}/${path}#tab`)
+            const routeName = this.isBlog ? 'projectBlog' : 'projectComments'
+            this.$router.push({
+                name: routeName,
+                params: { slugOrId: this.$route.params.slugOrId },
+                hash: '#tab',
+            })
         },
     },
 

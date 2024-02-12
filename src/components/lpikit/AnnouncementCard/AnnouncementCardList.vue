@@ -48,7 +48,11 @@ export default {
     },
     methods: {
         linkToAnnouncement(announcement) {
-            this.$router.push(`/projects/${announcement.project.slug}/announcements#tab`)
+            this.$router.push({
+                name: 'projectAnnouncements',
+                params: { slugOrId: announcement.project.slug },
+                hash: '#tab',
+            })
         },
     },
 

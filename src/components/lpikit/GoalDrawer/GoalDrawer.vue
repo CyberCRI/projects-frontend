@@ -260,7 +260,10 @@ export default {
                             type: 'success',
                         })
                         if (this.$route.name !== 'projectGoals') {
-                            this.$router.push(`/projects/${this.projectSlug}/goals`)
+                            this.$router.push({
+                                name: 'projectGoals',
+                                params: { slugOrId: this.projectSlug },
+                            })
                         }
                     } catch (error) {
                         this.$store.dispatch('notifications/pushToast', {

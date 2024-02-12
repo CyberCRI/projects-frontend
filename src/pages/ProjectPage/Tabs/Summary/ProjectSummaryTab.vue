@@ -172,7 +172,7 @@ export default {
                 this.profileDrawer.user_kid = user.keycloak_id
                 this.profileDrawer.isOpened = true
             } else {
-                this.$router.push(`/group/${user.id}`)
+                this.$router.push({ name: 'Group', params: { groupId: user.id } })
             }
         },
 

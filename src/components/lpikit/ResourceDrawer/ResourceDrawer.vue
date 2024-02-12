@@ -262,7 +262,10 @@ export default {
                     })
 
                     if (this.$route && this.$route.name !== 'projectResources') {
-                        this.$router.push(`/projects/${this.projectSlug}/resources`)
+                        this.$router.push({
+                            name: 'projectResources',
+                            params: { slugOrId: this.projectSlug },
+                        })
                     }
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
@@ -298,7 +301,10 @@ export default {
                 })
 
                 if (this.$route.name !== 'projectResources') {
-                    this.$router.push(`/projects/${this.projectSlug}/resources`)
+                    this.$router.push({
+                        name: 'projectResources',
+                        params: { slugOrId: this.projectSlug },
+                    })
                 }
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {

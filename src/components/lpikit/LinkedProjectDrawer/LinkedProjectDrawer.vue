@@ -142,9 +142,12 @@ export default {
                 })
 
                 if (this.$route.name !== 'projectLinkedProjects') {
-                    this.$router.push(
-                        `/projects/${this.$store.getters['projects/currentProjectSlug']}/linked-projects`
-                    )
+                    this.$router.push({
+                        name: 'projectLinkedProjects',
+                        params: {
+                            slugOrId: this.$store.getters['projects/currentProjectSlug'],
+                        },
+                    })
                 }
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {

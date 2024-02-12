@@ -151,7 +151,10 @@ export default {
                     })
 
                     if (this.$route.name !== 'projectTeam') {
-                        this.$router.push(`/projects/${this.projectSlug}/team`)
+                        this.$router.push({
+                            name: 'projectTeam',
+                            params: { slugOrId: this.projectSlug },
+                        })
                     }
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {

@@ -235,7 +235,10 @@ export default {
                 if (closeWindowAfterCreate) this.closeDrawer()
 
                 if (this.$route.name !== 'projectBlog')
-                    this.$router.push(`/projects/${this.project.slug}/blog-entries`)
+                    this.$router.push({
+                        name: 'projectBlog',
+                        params: { slugOrId: this.project.slug },
+                    })
             } catch (error) {
                 // Notification is handled in the axios config.
                 console.error(error)

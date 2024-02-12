@@ -163,7 +163,7 @@ export default {
         goToCategory(category) {
             if (!this.editable) {
                 this.$emit('close')
-                this.$router.push(`/category/${category.id}`)
+                this.$router.push({ name: 'Category', params: { id: category.id } })
             }
         },
 

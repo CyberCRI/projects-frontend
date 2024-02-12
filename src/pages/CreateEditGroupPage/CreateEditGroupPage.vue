@@ -222,7 +222,7 @@ export default {
             if (this.groupId) {
                 this.$router.push({ name: 'Group', params: { groupId: this.groupId } })
             } else {
-                this.$router.push('/admin/groups')
+                this.$router.push({ name: 'groups' })
             }
         },
 

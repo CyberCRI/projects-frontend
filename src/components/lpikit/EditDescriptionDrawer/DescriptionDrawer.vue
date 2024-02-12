@@ -164,7 +164,10 @@ export default {
                 analytics.project.updateDescription({ id: this.project.id })
 
                 if (this.$route.name !== 'projectDescription') {
-                    this.$router.push(`/projects/${this.projectSlug}/description`)
+                    this.$router.push({
+                        name: 'projectDescription',
+                        params: { slugOrId: this.projectSlug },
+                    })
                 }
             }
 
