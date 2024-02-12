@@ -336,7 +336,7 @@ export default {
 
         async toAnnouncements() {
             /* TODO: Rework this once we have skeletons on all components */
-            await this.$router.push(`/dashboard`)
+            await this.$router.push({ name: 'Home' })
 
             setTimeout(() => {
                 const el = document.getElementById('announcements')
