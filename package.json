@@ -135,7 +135,7 @@
         "stylelint-scss": "^5.2.1",
         "trash-cli": "^5.0.0",
         "typescript": "^5.0.2",
-        "vite": "^4.4.12",
+        "vite": "^4.5.2",
         "vite-plugin-html": "^3.2.0",
         "vitest": "0.34.5",
         "vitest-fetch-mock": "^0.2.2",
