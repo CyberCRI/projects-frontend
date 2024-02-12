@@ -182,19 +182,23 @@ export default {
         border-radius: $border-radius-l;
         display: flex;
         flex-flow: column nowrap;
+
         .suggestions-label {
             font-size: 1rem;
             padding: 0.5rem $border-radius-l;
             text-align: center;
             font-weight: normal;
         }
+
         ul {
             flex-grow: 1;
             overflow-y: auto;
         }
+
         li {
             padding: 0.5rem $border-radius-l;
             cursor: pointer;
+
             &:hover {
                 background-color: $primary-lighter;
             }
