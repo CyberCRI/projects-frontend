@@ -2087,7 +2087,9 @@
         "open-map": "Open the map",
         "current-tag-description": "Type tag’s first letters and select the right tag",
         "current-skill-description": "Type skill’s label and select the right skill",
-        "disambiguate": "(DISAMBIGUATION)"
+        "disambiguate": "(DISAMBIGUATION)",
+        "suggestions": "Suggestions",
+        "choose-skill": "Click on the chosen skill:"
     },
     "sdg": {
         "add-short": "add a SDG",
