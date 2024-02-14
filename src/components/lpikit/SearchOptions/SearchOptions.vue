@@ -1,22 +1,32 @@
 <template>
     <div class="search-block">
         <div class="search-container">
-            <SearchOptionDropDown
-                v-if="showSectionFilter"
-                v-model="selectedSection"
-                :menu-items="sectionFilters"
-                :label="searchOptionDropDownLabel"
-                :icon="searchOptionDropDownIcon"
-            />
-            <SearchInput
-                class="search-input"
-                :class="{ 'search-input--no-section': !showSectionFilter }"
-                v-model="selectedFilters.search"
-                :full="true"
-                :placeholder="$t('browse.placeholder')"
-                @delete-query="deleteQuery"
-                @keyup.enter="$emit('enter', adaptToParent(selectedFilters))"
-            />
+            <div class="search-group">
+                <SearchOptionDropDown
+                    v-if="showSectionFilter"
+                    v-model="selectedSection"
+                    :menu-items="sectionFilters"
+                    :label="searchOptionDropDownLabel"
+                    :icon="searchOptionDropDownIcon"
+                />
+                <SearchInput
+                    class="search-input"
+                    :class="{ 'search-input--no-section': !showSectionFilter }"
+                    v-model="selectedFilters.search"
+                    :full="true"
+                    :placeholder="$t('browse.placeholder')"
+                    @delete-query="deleteQuery"
+                    @keyup.enter="$emit('enter', adaptToParent(selectedFilters))"
+                />
+            </div>
+            <div v-if="searchButton" class="search-button">
+                <LpiButton
+                    :label="$t('browse.page-title')"
+                    :secondary="false"
+                    @click="$emit('search', selectedSection.type, adaptToParent(selectedFilters))"
+                >
+                </LpiButton>
+            </div>
         </div>
 
         <div v-if="showFilters">
@@ -81,6 +91,7 @@ import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import FiltersDrawer from '@/components/peopleKit/Filters/FiltersDrawer.vue'
 import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
 import SearchOptionDropDown from '@/components/lpikit/Dropdown/SearchOptionDropDown.vue'
+import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 function defaultFilters() {
     return {
@@ -98,7 +109,7 @@ function defaultFilters() {
 export default {
     name: 'SearchOptions',
 
-    emits: ['filters-updated', 'filter-total-changed', 'filter-section-update', 'enter'],
+    emits: ['filters-updated', 'filter-total-changed', 'filter-section-update', 'enter', 'search'],
 
     props: {
         showFilters: {
@@ -126,6 +137,11 @@ export default {
             type: Array,
             default: () => [],
         },
+
+        searchButton: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     components: {
@@ -134,6 +150,7 @@ export default {
         LinkButton,
         FiltersDrawer,
         FilterValue,
+        LpiButton,
     },
 
     data() {
@@ -462,9 +479,9 @@ export default {
 
 <style lang="scss" scoped>
 .search-block {
-    max-width: pxToRem(800px);
-    margin: 0 auto;
+    margin: 0;
     padding: $space-m 0;
+    width: 100%;
 }
 
 .search-block.inline {
@@ -498,7 +515,7 @@ export default {
         background: $white;
         border: $border-width-s solid $green;
         padding: $space-s $space-m;
-        height: 32px;
+        height: pxToRem(32px);
         box-sizing: border-box;
         border-radius: $border-radius-l;
         text-transform: uppercase;
@@ -571,9 +588,23 @@ export default {
 }
 
 .search-container {
-    display: flex;
-    flex-flow: column-reverse wrap;
-    align-items: center;
+    @media (min-width: $min-tablet) {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .search-group {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+
+        @media (min-width: $min-tablet) {
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+        }
+    }
 
     .search-button {
         border-top-right-radius: 0;
@@ -581,6 +612,9 @@ export default {
         border-right-width: 0;
         background: $white;
         border-color: $green;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .search-input {
@@ -614,7 +648,7 @@ export default {
 
 :deep(.search-input-ctn--full) {
     width: pxToRem(350px);
-    margin-bottom: 24px;
+    margin-bottom: $space-m;
 
     @media (min-width: $min-tablet) {
         margin-bottom: 0;

@@ -624,6 +624,9 @@
         "tab": "Name of the tab",
         "video": "Video tutorial"
     },
+    "feed": {
+        "see-all": "See all"
+    },
     "file": {
         "add-image": "add an image",
         "add-video": "add a video",
@@ -826,7 +829,9 @@
         "home": "Home",
         "categories": {
             "title": "Projects Categories"
-        }
+        },
+        "login": "Login",
+        "account-request": "Request an account"
     },
     "language": {
         "label-en": "English",
