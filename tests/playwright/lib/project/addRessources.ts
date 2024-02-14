@@ -1,5 +1,5 @@
 import { LogLevel, Logger } from '../../logger'
-import { delay } from '../delay'
+import { delay } from '../index'
 
 const logger = new Logger(LogLevel.Debug)
 

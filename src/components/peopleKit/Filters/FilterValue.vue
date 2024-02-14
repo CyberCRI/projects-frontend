@@ -1,5 +1,5 @@
 <template>
-    <div :class="type" class="filter-value">
+    <div :class="type" class="filter-value" :data-test="`filter-value-${label}`">
         <div class="filter-value-label">{{ label }}</div>
 
         <span v-if="icon" class="icon-ctn">

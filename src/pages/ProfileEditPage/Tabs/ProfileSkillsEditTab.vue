@@ -29,7 +29,7 @@
                             "
                             btn-icon="Pen"
                             @click="openDrawer(key, 'add')"
-                            data-test="edit-skills-button"
+                            :data-test="`edit-${key}-button`"
                         />
                         <LinkButton
                             :label="

@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test'
-import { delay } from '../delay'
+import { delay } from '../index'
 import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
@@ -11,6 +11,7 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
     logger.info(`wait for algolia to index ${groupName}`)
     await delay(2000)
     await page.locator('[data-test="search-input-button"]').click()
+    await delay(3000) // wait for the different search page redirections (query string building)
     await page.locator(`[data-test="group-card-${groupName}"]`).click()
     await page.locator(`[data-test="edit-group"]`).click()
     await page.locator(`[data-test="edit-roles"]`).click()

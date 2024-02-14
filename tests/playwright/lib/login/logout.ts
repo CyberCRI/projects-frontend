@@ -1,8 +1,10 @@
+import { Page } from '@playwright/test'
 import { LogLevel, Logger } from '../../logger'
-import { delay } from '../delay'
+import { delay } from '../index'
 
 const logger = new Logger(LogLevel.Debug)
-export async function logOut(page) {
+
+export async function logOut(page: Page) {
     await page.locator('[data-test="lpi-logo"]').click()
     await delay(3000)
     await page.locator('[data-test="dropdown-user-account"]').click()

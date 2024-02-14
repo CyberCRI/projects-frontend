@@ -7,6 +7,7 @@
                 :label="$t('profile.edit.bio.short-bio.label')"
                 :placeholder="$t('profile.edit.bio.short-bio.placeholder')"
                 :max-length="300"
+                data-test="short-bio-input"
             ></TextInput>
         </div>
         <!-- professional bio -->
@@ -19,6 +20,7 @@
                 :ws-data="form.professionalBio"
                 mode="simple"
                 @update="updateProfessionalBio"
+                data-test="professional-bio-editor"
             />
         </div>
         <!-- personal bio -->
@@ -31,6 +33,7 @@
                 :ws-data="form.personalBio"
                 mode="simple"
                 @update="updatePersonalBio"
+                data-test="personal-bio-editor"
             />
         </div>
         <hr class="form-separator" />
