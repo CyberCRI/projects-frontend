@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 import HomePage from '@/pages/HomePage/HomePage.vue'
+import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
 import store from '@/store'
 
 const checkAccessRequestEnabled = (to, _from, next) => {
@@ -21,7 +22,13 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: HomePage,
+        component: () => {
+            if (`${import.meta.env.VITE_HOME}` === 'new') {
+                return NewHomePage
+            } else {
+                return HomePage
+            }
+        },
         meta: {
             resetScroll: true,
         },
@@ -75,7 +82,13 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: HomePage,
+        component: () => {
+            if (`${import.meta.env.VITE_HOME}` === 'new') {
+                return NewHomePage
+            } else {
+                return HomePage
+            }
+        },
         meta: {
             resetScroll: true,
         },

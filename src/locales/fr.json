@@ -625,6 +625,9 @@
         "portal": "Aide",
         "video": "Présentation video"
     },
+    "feed": {
+        "see-all": "Tout voir"
+    },
     "file": {
         "add-image": "ajouter une image",
         "add-video": "ajouter une vidéo",
@@ -825,7 +828,9 @@
         "home": "Accueil",
         "categories": {
             "title": "Catégories de projets"
-        }
+        },
+        "login": "Se connecter",
+        "account-request": "Demander un compte"
     },
     "language": {
         "label-en": "English",

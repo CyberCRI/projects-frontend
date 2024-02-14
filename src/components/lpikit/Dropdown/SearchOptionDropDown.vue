@@ -120,6 +120,11 @@ export default {
 <style lang="scss" scoped>
 .header-drop-down {
     position: relative;
+    margin-bottom: $space-m;
+
+    @media (min-width: $min-tablet) {
+        margin-bottom: 0;
+    }
 
     button {
         border: 0 none;
@@ -147,6 +152,7 @@ export default {
         background: $white;
         border-radius: 24px;
         box-shadow: 0 0 0 1px $green;
+        width: 344px;
 
         .icon {
             fill: $primary-dark;
@@ -158,6 +164,7 @@ export default {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
             border-right: none;
+            width: auto;
         }
 
         .label-ctn {
@@ -185,13 +192,17 @@ export default {
     .drop-down-menu {
         background-color: $white;
         padding-bottom: $border-radius-l;
-        border-bottom-left-radius: $border-radius-l;
-        border-top-left-radius: $border-radius-l;
+        border-radius: $border-radius-l;
         max-height: pxToRem(450px);
         overflow-y: auto;
         overflow-x: hidden;
         border: 1px solid $green;
         box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
+
+        @media (min-width: $min-tablet) {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
 
         &.round-corner {
             border-top-right-radius: $border-radius-s;
