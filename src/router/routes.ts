@@ -1,6 +1,4 @@
 import { RouteRecordRaw } from 'vue-router'
-import HomePage from '@/pages/HomePage/HomePage.vue'
-import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
 import store from '@/store'
 
 const checkAccessRequestEnabled = (to, _from, next) => {
@@ -24,9 +22,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'HomeRoot',
         component: () => {
             if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                return NewHomePage
+                return import(
+                    /* webpackChunkName: "NewHomePage" */ '../pages/NewHomePage/NewHomePage.vue'
+                )
             } else {
-                return HomePage
+                return import(/* webpackChunkName: "HomePage" */ '../pages/HomePage/HomePage.vue')
             }
         },
         meta: {
@@ -84,9 +84,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: () => {
             if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                return NewHomePage
+                return import(
+                    /* webpackChunkName: "NewHomePage" */ '../pages/NewHomePage/NewHomePage.vue'
+                )
             } else {
-                return HomePage
+                return import(/* webpackChunkName: "HomePage" */ '../pages/HomePage/HomePage.vue')
             }
         },
         meta: {

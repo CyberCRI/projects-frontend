@@ -1,4 +1,4 @@
-import { axios, configFormData } from './api.config'
+import { axios, configFormData } from '@/api/api.config'
 import {
     AddLinkedProjectInput,
     AddManyLinkedProjectInput,
