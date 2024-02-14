@@ -17,29 +17,32 @@ export async function handleSkills(page) {
     logger.info(await addSkillBtn.count())
     if ((await addSkillBtn.count()) > 0) {
         addSkillBtn.click()
-        await addSkills(page)
+        await addSkills(page, 'bio')
         await page.locator('[data-test="edit-skills-button"]').click()
         await editSkills(page)
     } else {
         await page.locator('[data-test="edit-skills-button"]').click()
         await editSkills(page)
         await page.locator('[data-test="add-skills-button"]')
-        await addSkills(page)
+        await addSkills(page, 'bio')
     }
     logger.info('Add Hobby')
-    const addHobbyBtn = await page.locator('[data-test="add-hobby-button"]')
-    if (addHobbyBtn.lengh > 0) {
+    const addHobbyBtn = await page.locator('[data-test="add-hobbies-button"]')
+    logger.info(await addHobbyBtn.count())
+    if ((await addHobbyBtn.count()) > 0) {
         addHobbyBtn.click()
-        await addSkills(page)
-        await page.locator('[data-test="edit-hobby-button"]').click()
+        await addSkills(page, 'test')
+        await page.locator('[data-test="edit-hobbies-button"]').click()
     } else {
-        await page.locator('[data-test="edit-hobby-button"]').click()
+        await page.locator('[data-test="edit-hobbies-button"]').click()
         await editSkills(page)
+        await page.locator('[data-test="add-hobbies-button]')
+        await addSkills(page, 'test')
     }
 }
 
-async function addSkills(page) {
-    await page.locator('[data-test="search-input"]').fill('bio')
+async function addSkills(page, query) {
+    await page.locator('[data-test="search-input"]').fill(query)
     await page.locator('[data-test="search-input"]').press('Enter')
     await delay(5000)
     const inputs = await page.locator('[data-test^="tag-label-"]').all()
@@ -63,5 +66,6 @@ async function editSkills(page) {
     for (const tag of addedTags) {
         tag.getByRole('img').click()
     }
-    await page.locator('[data-test="confirm-button"]').click()
+    // dont close yet because we're adding skills after that
+    // await page.locator('[data-test="confirm-button"]').click()
 }

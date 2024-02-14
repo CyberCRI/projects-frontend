@@ -1,6 +1,7 @@
 import { test } from '@playwright/test'
 import { usersDict as users } from '../variables'
 import { LogLevel, Logger } from '../logger'
+import { delay } from '../lib/index'
 import { logIn, logOut, createGroup, deleteGroup, setRights, testRights, makeId } from '../lib'
 
 const logger = new Logger(LogLevel.Debug)
@@ -44,6 +45,7 @@ test(`test-${users.admin.email}`, async ({ page }) => {
         }
         try {
             await logIn(page, users.playwright)
+            await delay(5000)
             await testRights(page, groupName, right)
             logger.info(`Right "${right}" tested for "${groupName}"`)
         } catch (err) {
