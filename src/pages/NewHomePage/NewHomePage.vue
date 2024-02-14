@@ -101,7 +101,6 @@ export default {
 
     methods: {
         goTo(section, filters) {
-            console.log(filters)
             this.$router.push({ name: 'Search', query: { section, ...filters } })
         },
     },
@@ -230,7 +229,7 @@ export default {
 
     .summary-container {
         border: 1px solid red;
-        height: 240px;
+        height: pxToRem(240px);
         background-color: $green-lighter;
     }
 }
@@ -254,7 +253,7 @@ export default {
 }
 
 .search-options {
-    padding-top: 15px;
+    padding-top: $space-unit;
 }
 
 .bottom-page {
@@ -280,7 +279,7 @@ export default {
 
     .categories {
         border: 1px solid purple;
-        height: 50px;
+        height: pxToRem(50px);
 
         @media (min-width: $min-tablet) {
             margin-top: $space-l;
@@ -288,13 +287,13 @@ export default {
     }
 
     .new-project {
-        height: 72px;
+        height: pxToRem(72px);
         margin-top: $space-l;
         border: 1px solid blue;
     }
 
     .recommandations {
-        height: 793px;
+        height: pxToRem(793px);
         margin-top: $space-l;
         border: 1px solid pink;
     }
@@ -319,12 +318,12 @@ export default {
         height: fit-content;
 
         .top-news {
-            height: 274px;
+            height: pxToRem(274px);
             border: 1px solid red;
         }
 
         .other-news {
-            height: 160px;
+            height: pxToRem(160px);
             margin-top: $space-l;
             border: 1px solid orange;
         }

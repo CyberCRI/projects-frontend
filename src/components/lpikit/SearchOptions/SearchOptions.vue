@@ -515,7 +515,7 @@ export default {
         background: $white;
         border: $border-width-s solid $green;
         padding: $space-s $space-m;
-        height: 32px;
+        height: pxToRem(32px);
         box-sizing: border-box;
         border-radius: $border-radius-l;
         text-transform: uppercase;

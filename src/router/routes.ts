@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
 
         name: 'HomeRoot',
         component: () => {
-            if (`${import.meta.env.VITE_HOME}` === 'new') {
+            if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
                 return NewHomePage
             } else {
                 return HomePage
@@ -83,7 +83,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/dashboard',
         name: 'Home',
         component: () => {
-            if (`${import.meta.env.VITE_HOME}` === 'new') {
+            if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
                 return NewHomePage
             } else {
                 return HomePage

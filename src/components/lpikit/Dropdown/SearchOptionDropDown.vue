@@ -133,7 +133,7 @@ export default {
     .caret {
         margin-left: $space-l;
         fill: $primary-dark;
-        width: 20px;
+        width: pxToRem(20px);
     }
 
     .drop-down-toggle {
@@ -150,9 +150,9 @@ export default {
         min-width: pxToRem(250px);
         color: $primary-dark;
         background: $white;
-        border-radius: 24px;
+        border-radius: $border-radius-24;
         box-shadow: 0 0 0 1px $green;
-        width: 344px;
+        width: pxToRem(344px);
 
         .icon {
             fill: $primary-dark;
@@ -224,7 +224,7 @@ export default {
 
                 &--selected {
                     background: $aquamarine;
-                    border-radius: 4px;
+                    border-radius: $border-radius-xs;
                 }
 
                 .menu-icon {
