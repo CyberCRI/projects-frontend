@@ -89,7 +89,8 @@ export default {
     },
 
     methods: {
-        suggest: debounce(async function () {
+        suggest: debounce(async function (evt) {
+            if (evt.key === 'Enter') return // dont show suggestion when triggering search
             this.suggestions = []
             try {
                 this.suggestions = await wikiAutocomplete(this.queryString)
@@ -99,6 +100,7 @@ export default {
         }, 100),
 
         doSearch() {
+            this.suggestions = []
             this.confirmedSearch = this.queryString
         },
 
