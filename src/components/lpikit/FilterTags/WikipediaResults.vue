@@ -98,6 +98,7 @@ export default {
             foundTags: [],
             isLoading: true,
             tagResults: [],
+            results: [],
         }
     },
 
@@ -106,6 +107,16 @@ export default {
     },
 
     methods: {
+        filterTags() {
+            if (this.existingTags.length) {
+                const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
+                let filteredResults = this.results.filter(
+                    (tag) => !tagsQid.includes(tag.wikipedia_qid)
+                )
+                return filteredResults
+            }
+            return this.results
+        },
         async handleResultClicked(result) {
             if (result.ambiguous) {
                 this.ambiguousTerm = result.name
@@ -134,23 +145,16 @@ export default {
             this.isLoading = true
             try {
                 const req = await searchWikiTags(this.queryString).catch(() => [])
-                const results = req.results
-                // Filter existing tags
-                let filteredResults = results
-                console.log('results', results)
-                if (this.existingTags.length) {
-                    const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
-                    filteredResults = results.filter((tag) => !tagsQid.includes(tag.wikipedia_qid))
-                }
-                console.log('filteredResults', filteredResults)
+                let rawResults = req.results
+
                 // Put ambiguous tags first
                 let orderedResults = [
-                    ...filteredResults.filter((tag) => tag.is_ambiguous),
-                    ...filteredResults.filter((tag) => !tag.is_ambiguous),
+                    ...rawResults.filter((tag) => tag.is_ambiguous),
+                    ...rawResults.filter((tag) => !tag.is_ambiguous),
                 ]
 
                 // Format results
-                this.tagResults = orderedResults.map((result) => {
+                this.results = orderedResults.map((result) => {
                     return {
                         name: result.name,
                         description: result.description || '',
@@ -158,6 +162,9 @@ export default {
                         wikipedia_qid: result.wikipedia_qid,
                     }
                 })
+
+                // Filter existing tags
+                this.tagResults = this.filterTags()
             } catch (e) {
                 console.error(e)
             } finally {
@@ -173,6 +180,10 @@ export default {
 
         ambiguousResultsVisible() {
             this.$emit('ambiguous-menu', this.ambiguousResultsVisible)
+        },
+
+        existingTags() {
+            this.tagResults = this.filterTags()
         },
     },
 }
