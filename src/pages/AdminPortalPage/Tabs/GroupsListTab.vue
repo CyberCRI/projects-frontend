@@ -104,11 +104,6 @@ export default {
             this.forbiddenIds = [group.id] // cant be a child of itself
         },
 
-        // keeping this (edit group) for future needs
-        // editGroup(group) {
-        //     this.$router.push(`/admin/groups/edit/${group.id}`)
-        // },
-
         closeDrawer() {
             this.groupToBeAdded = false
             this.groupToBeEdited = false

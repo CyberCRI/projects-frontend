@@ -351,7 +351,7 @@ export default {
         },
 
         goTo(id) {
-            this.$router.push(`/category/${id}`)
+            this.$router.push({ name: 'Category', params: { id: id } })
         },
 
         scrollTo(id) {
@@ -362,7 +362,7 @@ export default {
 
         updateSearchQuery() {
             this.$router.push({
-                path: '/search',
+                name: 'Search',
                 query: this.searchFilter,
             })
         },

@@ -126,7 +126,10 @@ export default {
             handler: function () {
                 // Router needs to be tested, if it's not set right away it might create an error
                 if (this.$router && this.blogEntriesLength === 0)
-                    this.$router.push(`/projects/${this.project.slug}/summary`)
+                    this.$router.push({
+                        name: 'projectSummary',
+                        params: { slugOrId: this.project.slug },
+                    })
                 if (!this.expandedEntry) {
                     this.expandedEntry =
                         (this.blogEntries.length &&

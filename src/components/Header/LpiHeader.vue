@@ -312,9 +312,12 @@ export default {
             ) {
                 return
             } else if (notification.type === 'access_request') {
-                this.$router.push(`/admin/requests`)
+                this.$router.push({ name: 'RequestsAdminTab' })
             } else {
-                this.$router.push(`/projects/${notification.project.slug}/summary`)
+                this.$router.push({
+                    name: 'projectSummary',
+                    params: { slugOrId: notification.project.slug },
+                })
             }
         },
 
@@ -333,7 +336,7 @@ export default {
 
         async toAnnouncements() {
             /* TODO: Rework this once we have skeletons on all components */
-            await this.$router.push(`/dashboard`)
+            await this.$router.push({ name: 'Home' })
 
             setTimeout(() => {
                 const el = document.getElementById('announcements')

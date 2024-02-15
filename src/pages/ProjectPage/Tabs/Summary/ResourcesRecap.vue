@@ -49,7 +49,11 @@ export default {
 
     methods: {
         goToResourcesPage() {
-            this.$router.push(`/projects/${this.$route.params.slugOrId}/resources#tab`)
+            this.$router.push({
+                name: 'projectResources',
+                params: { slugOrId: this.$route.params.slugOrId },
+                hash: '#tab',
+            })
         },
     },
 }

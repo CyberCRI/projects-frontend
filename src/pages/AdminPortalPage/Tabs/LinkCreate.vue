@@ -184,7 +184,7 @@ export default {
     },
     methods: {
         cancel() {
-            this.$router.push('/admin/links/list')
+            this.$router.push({ name: 'linksList' })
         },
         async save() {
             this.isSaving = true
@@ -194,7 +194,7 @@ export default {
                     message: this.$t('invitation.create.create-success'),
                     type: 'success',
                 })
-                this.$router.push('/admin/links/list')
+                this.$router.push({ name: 'linksList' })
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('invitation.create.create-error')} (${error})`,

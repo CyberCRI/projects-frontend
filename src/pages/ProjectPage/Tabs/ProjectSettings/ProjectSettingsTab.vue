@@ -499,7 +499,10 @@ export default {
                     },
                 })
 
-                this.$router.push(`/projects/${project.slug}/summary`)
+                this.$router.push({
+                    name: 'projectSummary',
+                    params: { slugOrId: project.slug },
+                })
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.project-duplication.success'),

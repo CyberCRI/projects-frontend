@@ -65,7 +65,11 @@ export default {
 
     methods: {
         goTo() {
-            this.$router.push(`/projects/${this.$route.params.slugOrId}/team#tab`)
+            this.$router.push({
+                name: 'projectTeam',
+                params: { slugOrId: this.$route.params.slugOrId },
+                hash: '#tab',
+            })
         },
     },
 }

@@ -40,7 +40,11 @@ export default {
 
     methods: {
         goToGoalPage() {
-            this.$router.push(`/projects/${this.$route.params.slugOrId}/goals#tab`)
+            this.$router.push({
+                name: 'projectGoals',
+                params: { slugOrId: this.$route.params.slugOrId },
+                hash: '#tab',
+            })
         },
     },
 }
