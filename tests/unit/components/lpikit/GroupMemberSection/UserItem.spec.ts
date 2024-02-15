@@ -2,7 +2,7 @@ import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
 import { describe, expect, it } from 'vitest'
-import ProjectMemberFactory from '../../../../factories/project-member.factory'
+import GroupMemberFactory from '../../../../factories/group-member.factory'
 
 const i18n = {
     locale: 'en',
@@ -20,7 +20,7 @@ describe('UserItem.vue', () => {
         defaultParams = {
             i18n,
             props: {
-                user: ProjectMemberFactory.generate(),
+                user: GroupMemberFactory.generate(),
             },
         }
     })
