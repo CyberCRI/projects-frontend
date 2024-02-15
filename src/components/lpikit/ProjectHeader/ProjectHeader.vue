@@ -655,7 +655,7 @@ export default {
                 this.follow.is_followed = false
             } else {
                 const result = await addFollow({
-                    follower_id: this.$store.state.users.keycloak_id,
+                    follower_id: this.$store.getters['users/id'],
                     project_id: this.project.id,
                 })
                 this.follow = result.project.is_followed

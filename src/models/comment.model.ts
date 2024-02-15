@@ -11,7 +11,6 @@ export interface CommentModel extends BaseModel {
         family_name: string
         given_name: string
         id: number
-        keycloak_id: string
         people_id: string
     }
     deleted_at: Date

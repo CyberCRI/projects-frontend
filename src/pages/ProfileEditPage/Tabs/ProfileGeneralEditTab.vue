@@ -402,7 +402,7 @@ export default {
         },
         isSelf() {
             const connectedUser = this.$store.getters['users/userFromApi']
-            return connectedUser && this.user.keycloak_id === connectedUser.keycloak_id
+            return connectedUser && this.user.id === connectedUser.id
         },
     },
 
@@ -444,7 +444,7 @@ export default {
                         // TODO: "skype": "string",
                     }
 
-                    await patchUser(this.user.keycloak_id, data)
+                    await patchUser(this.user.id, data)
 
                     // patch user picture if changed
 
@@ -460,16 +460,14 @@ export default {
 
                         if (this.form.picture instanceof File) {
                             formData.append('file', this.form.picture, this.form.picture.name)
-                            const picture_id = (
-                                await postUserPicture(this.user.keycloak_id, formData)
-                            ).id
+                            const picture_id = (await postUserPicture(this.user.id, formData)).id
 
                             // TODO: make this in POST when backend allows it
                             formData.delete('file')
-                            await patchUserPicture(this.user.keycloak_id, picture_id, formData)
+                            await patchUserPicture(this.user.id, picture_id, formData)
                         } else if (this.user.profile_picture && this.user.profile_picture.id) {
                             await patchUserPicture(
-                                this.user.keycloak_id,
+                                this.user.id,
                                 this.user.profile_picture.id,
                                 formData
                             )
@@ -479,7 +477,7 @@ export default {
                     // give extra time for profile-edited event to be consumed
                     await new Promise((resolve) => setTimeout(resolve, 50))
                     // reload user if self to update store info
-                    if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                    if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
                     // confirm success
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('profile.edit.general.save-success'),
@@ -505,7 +503,7 @@ export default {
             else
                 this.$router.push({
                     name: 'ProfileOtherUser',
-                    params: { userKId: this.user.keycloak_id },
+                    params: { userId: this.user.id },
                 })
         },
 

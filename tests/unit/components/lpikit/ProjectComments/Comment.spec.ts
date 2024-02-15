@@ -26,9 +26,7 @@ const store = {
                 isSuperAdmin: vi.fn(() => true),
                 user: vi.fn(() => true),
                 isConnected: vi.fn(() => true),
-            },
-            state: {
-                keycloak_id: '123',
+                id: () => 123,
             },
         },
     },
@@ -54,7 +52,7 @@ describe('CommentItem', () => {
 
         expect(wrapper.exists()).toBeTruthy()
         expect(vm.canEdit).toBe(true)
-        expect(vm.currentUserId).toBe('123')
+        expect(vm.currentUserId).toBe(123)
         expect(vm.isConnected).toBe(true)
     })
 })

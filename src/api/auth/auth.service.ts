@@ -142,18 +142,18 @@ export async function refreshAccessToken(): Promise<any> {
     }
 }
 
-export async function getNotifications(kid) {
+export async function getNotifications(id) {
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${kid}/`
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`
         )
     ).data
 }
 
-export async function patchNotifications({ kid, payload }) {
+export async function patchNotifications({ id, payload }) {
     return (
         await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${kid}/`,
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`,
             payload
         )
     ).data

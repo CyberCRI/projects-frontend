@@ -7,7 +7,6 @@ export const FollowFactory = createFactory<FollowModel>((faker) => ({
     ...BaseFactory.generate(),
     follower: {
         id: faker.datatype.number(),
-        keycloak_id: faker.datatype.string(),
         email: faker.datatype.string(),
         given_name: faker.datatype.string(),
         family_name: faker.datatype.string(),

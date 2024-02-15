@@ -198,7 +198,7 @@ export default {
                         },
                     }
                 }
-                this.newReview.data.reviewer = this.$store.state.users.keycloak_id
+                this.newReview.data.reviewer = this.$store.getters['users/id']
 
                 this.wsdata = {
                     originalContent: this.newReview.data.description,
@@ -284,7 +284,7 @@ export default {
                 description: this.newReview.data.description,
                 title: this.newReview.data.title,
                 project_id: this.projectId,
-                reviewer_id: this.newReview.data.reviewer.keycloak_id,
+                reviewer_id: this.newReview.data.reviewer.id,
                 id: this.newReview.id,
             }
 

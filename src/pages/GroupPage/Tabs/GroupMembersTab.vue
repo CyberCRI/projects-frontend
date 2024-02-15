@@ -39,7 +39,7 @@
             v-if="profileDrawer.isOpened"
             ref="profile-user"
             :can-edit="false"
-            :kid="profileDrawer.user_kid"
+            :user-id="profileDrawer.user_id"
             @close="closeProfileDrawer"
         />
     </DrawerLayout>
@@ -82,7 +82,7 @@ export default {
             style: {},
             profileDrawer: {
                 isOpened: false,
-                user_kid: null,
+                user_id: null,
             },
             pagination: {
                 currentPage: 1,
@@ -111,14 +111,14 @@ export default {
 
     methods: {
         async openProfileDrawer(user) {
-            this.profileDrawer.user_kid = user.keycloak_id
+            this.profileDrawer.user_id = user.id
             this.profileDrawer.isOpened = true
         },
 
         closeProfileDrawer() {
             this.isEditMode = false
             this.profileDrawer.isOpened = false
-            this.profileDrawer.user_kid = null
+            this.profileDrawer.user_id = null
         },
 
         async onClickPagination(requestedPage) {

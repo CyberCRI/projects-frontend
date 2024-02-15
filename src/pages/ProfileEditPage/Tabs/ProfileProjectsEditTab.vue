@@ -118,7 +118,7 @@ export default {
             this.followedProjectLoading = true
             try {
                 await getUserFollows({
-                    follower_id: this.user.keycloak_id,
+                    follower_id: this.user.id,
                 }).then((resp) => {
                     this.followedProjects = resp.results.map((follow) => follow.project)
                 })
@@ -168,7 +168,7 @@ export default {
             }
             let body = { follows: listFollowedProjects }
             await this.$store.dispatch('follows/addFollowMany', {
-                id: this.user.keycloak_id,
+                id: this.user.id,
                 body: body,
             })
             this.$emit('profile-edited')

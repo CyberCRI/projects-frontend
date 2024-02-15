@@ -1,8 +1,8 @@
 <template>
     <div class="page-section-extra-wide profile-page">
         <UserProfile
-            :key="userKId"
-            :kid="userKId"
+            :key="userId"
+            :user-id="userId"
             :show-page-link="false"
             @user-not-found="display404"
         />
@@ -20,8 +20,8 @@ export default {
     },
 
     props: {
-        userKId: {
-            type: String,
+        userId: {
+            type: [String, Number],
             default: null,
         },
     },

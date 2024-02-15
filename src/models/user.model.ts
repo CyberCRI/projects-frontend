@@ -56,8 +56,6 @@ export interface UserPatchModel {
     landline_phone?: string
     twitter?: string
     language?: string
-    keycloak_id?: string
-    people_id?: string
     email?: string
     given_name?: string
     family_name?: string

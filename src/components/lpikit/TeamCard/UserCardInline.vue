@@ -18,7 +18,7 @@
                 class="img-container"
             />
             <div class="user-info">
-                <div v-if="user.keycloak_id" class="name">
+                <div v-if="$filters.isNotGroup(user)" class="name">
                     {{ $filters.capitalize(user.given_name) }}
                     {{ $filters.capitalize(user.family_name) }}
                 </div>
@@ -96,7 +96,7 @@ export default {
         },
 
         userImage() {
-            if (this.user.keycloak_id) {
+            if (this.user.id) {
                 return this.user.profile_picture
                     ? this.user.profile_picture.variations.medium
                     : null

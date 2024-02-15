@@ -365,7 +365,7 @@ export default {
     methods: {
         async resetPassword() {
             try {
-                await resetUserPassword(this.selectedUser.keycloak_id)
+                await resetUserPassword(this.selectedUser.id)
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('account.password-reset.success'),
                     type: 'success',
@@ -455,7 +455,7 @@ export default {
 
         async deleteUser() {
             try {
-                await deleteUser(this.selectedUser.keycloak_id)
+                await deleteUser(this.selectedUser.id)
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('account.delete-success'),
                     type: 'success',
@@ -558,17 +558,17 @@ export default {
                         )
                     }
 
-                    const user = await patchUser(this.selectedUser.keycloak_id, payload)
+                    const user = await patchUser(this.selectedUser.id, payload)
 
                     if (payload.profile_picture instanceof File) {
-                        const image = await postUserPicture(user.keycloak_id, formData)
+                        const image = await postUserPicture(user.id, formData)
 
                         formData.delete('file')
                         payload.profile_picture.id = image.id
 
-                        await patchUserPicture(user.keycloak_id, image.id, formData)
+                        await patchUserPicture(user.id, image.id, formData)
                     } else if (user && user.profile_picture) {
-                        await patchUserPicture(user.keycloak_id, user.profile_picture.id, formData)
+                        await patchUserPicture(user.id, user.profile_picture.id, formData)
                     }
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('account.update-success'),

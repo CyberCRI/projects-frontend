@@ -230,7 +230,7 @@
                 v-if="exempleToShow"
                 ref="profile-user"
                 :can-edit="false"
-                :kid="exempleToShow"
+                :user-id="exempleToShow"
             />
         </DrawerLayout>
     </template>
@@ -363,7 +363,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/kid'])
+                this.user = await getUser(this.$store.getters['users/id'])
                 this.form.picture = this.user.profile_picture
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
@@ -414,7 +414,7 @@ export default {
                         personal_description: this.personalBio.savedContent,
                     }
 
-                    await patchUser(this.user.keycloak_id, data)
+                    await patchUser(this.user.id, data)
 
                     // patch user picture if changed
                     if (
@@ -430,16 +430,14 @@ export default {
 
                         if (this.form.picture instanceof File) {
                             formData.append('file', this.form.picture, this.form.picture.name)
-                            const picture_id = (
-                                await postUserPicture(this.user.keycloak_id, formData)
-                            ).id
+                            const picture_id = (await postUserPicture(this.user.id, formData)).id
 
                             // TODO: make this in POST when backend allows it
                             formData.delete('file')
-                            await patchUserPicture(this.user.keycloak_id, picture_id, formData)
+                            await patchUserPicture(this.user.id, picture_id, formData)
                         } else if (this.user.profile_picture && this.user.profile_picture.id) {
                             await patchUserPicture(
-                                this.user.keycloak_id,
+                                this.user.id,
                                 this.user.profile_picture.id,
                                 formData
                             )
@@ -449,7 +447,7 @@ export default {
                     await this.onboardingTrap('complete_profile', false)
 
                     // reload user
-                    this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                    this.$store.dispatch('users/getUser', this.user.id)
                     // confirm success
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('profile.edit.general.save-success'),

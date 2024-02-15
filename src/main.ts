@@ -6,7 +6,7 @@ import keycloak from './api/auth/keycloak'
 import { checkExpiredToken } from './api/auth/keycloakUtils'
 import i18n from './locales/i18n'
 import store from './store'
-import { capitalize } from '@/filters'
+import { capitalize, isNotGroup, isGroup } from '@/filters'
 import App from './App.vue'
 import { axios } from './api/api.config'
 import { clickOutside, disableFocus } from '@/directives'
@@ -111,6 +111,8 @@ async function main(): Promise<void> {
 
     app.config.globalProperties.$filters = {
         capitalize,
+        isNotGroup,
+        isGroup,
     }
 
     app.use(VueAxios, axios)

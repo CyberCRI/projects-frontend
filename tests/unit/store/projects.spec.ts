@@ -40,10 +40,12 @@ const rootState = {
             linked_projects: [{ id: 1, project: ProjectFactory.generate(), reason: 'Inspiré de' }],
         },
     },
-    users: {
-        keycloak_id: '98392092029xezhxeiuz',
-    },
+
     organizations: { current: OrganizationOutputFactory.generate() },
+}
+
+const getters = {
+    'users/id': () => 123,
 }
 
 describe('Store module | projects | getters', () => {
@@ -96,7 +98,7 @@ describe('Store module | projects | actions', () => {
 
         createProjectMock.mockResolvedValue(project)
 
-        const result = await projectsStore.actions.addProject({ dispatch, rootState }, formData)
+        const result = await projectsStore.actions.addProject({ dispatch, getters }, formData)
 
         expect(createProjectMock).toHaveBeenCalledWith(formData)
         expect(result).toBe(project)
@@ -141,7 +143,7 @@ describe('Store module | projects | actions', () => {
         duplicateProjectMock.mockResolvedValue(project)
 
         const result = await projectsStore.actions.duplicateProject(
-            { dispatch, rootState },
+            { dispatch, getters },
             project.id
         )
 

@@ -28,8 +28,8 @@ export function checkExpiredToken(): boolean {
         localStorage.removeItem('REFRESH_TOKEN_EXP')
         localStorage.removeItem('ACCESS_TOKEN')
         localStorage.removeItem('USER_ID')
-        localStorage.removeItem('ID_TOKEN')
-        localStorage.removeItem('KEYCLOAK_ID')
+        localStorage.removeItem('ID_TOKEN') // keep to allow old timer cleanup
+        localStorage.removeItem('KEYCLOAK_ID') // keep to allow old timer cleanup
         try {
             await removeApiCookie()
         } catch (e) {

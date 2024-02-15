@@ -17,7 +17,7 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                kid: vi.fn(),
+                id: vi.fn(),
                 userFromApi: vi.fn(),
                 getPermissions: vi.fn().mockReturnValue({}),
             },
@@ -50,11 +50,11 @@ describe('ProfileBioTab', () => {
     })
 
     it('should see that current user is the logged one', () => {
-        const keycloak_id = '123'
+        const id = '123'
         const user: any = UserFactory.generate()
-        user.keycloak_id = keycloak_id
+        user.id = id
 
-        store.modules.users.getters.kid.mockReturnValue(keycloak_id)
+        store.modules.users.getters.id.mockReturnValue(id)
         let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(vm.isCurrentUser).toBeTruthy()
@@ -62,9 +62,9 @@ describe('ProfileBioTab', () => {
 
     it('should see that current user is not the logged one', () => {
         const user: any = UserFactory.generate()
-        user.keycloak_id = '123'
+        user.id = '123'
 
-        store.modules.users.getters.kid.mockReturnValue('456')
+        store.modules.users.getters.id.mockReturnValue('456')
 
         let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
         let vm: any = wrapper.vm

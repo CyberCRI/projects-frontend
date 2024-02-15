@@ -81,12 +81,12 @@ export default {
 
     computed: {
         isMyProfileAndCanCreateProject() {
-            const loggedAsKID = this.$store.getters['users/kid']
-            return loggedAsKID && this.user.keycloak_id === loggedAsKID && this.canCreateProject
+            const loggedAsID = this.$store.getters['users/id']
+            return loggedAsID && this.user.id === loggedAsID && this.canCreateProject
         },
 
         isCurrentUser() {
-            return this.$store.getters['users/kid'] === this.user.keycloak_id
+            return this.$store.getters['users/id'] === this.user.id
         },
 
         noFollowLabel() {
@@ -109,7 +109,7 @@ export default {
     methods: {
         setFollowedProject() {
             getUserFollows({
-                follower_id: this.user.keycloak_id,
+                follower_id: this.user.id,
             }).then((resp) => {
                 this.followedProjects = resp.results
                 this.sortFollows()

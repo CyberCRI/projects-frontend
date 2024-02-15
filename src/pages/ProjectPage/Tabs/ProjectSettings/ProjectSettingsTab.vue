@@ -426,7 +426,7 @@ export default {
                 ...this.project.team.owners,
                 ...this.project.team.reviewers,
             ]
-            return members.find((user) => this.$store.getters['users/kid'] === user.keycloak_id)
+            return members.find((user) => this.$store.getters['users/id'] === user.id)
         },
     },
 
@@ -538,9 +538,7 @@ export default {
             if (
                 this.project.team.owners &&
                 this.project.team.owners.length === 1 &&
-                this.project.team.owners.find(
-                    (user) => this.$store.getters['users/kid'] === user.keycloak_id
-                )
+                this.project.team.owners.find((user) => this.$store.getters['users/id'] === user.id)
             )
                 this.showQuitIsImposible = true
             else this.showConfirmQuit = true

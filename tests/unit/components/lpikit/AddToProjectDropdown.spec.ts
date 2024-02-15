@@ -38,9 +38,7 @@ const store = {
             namespaced: true,
             getters: {
                 isConnected: () => true,
-            },
-            state: {
-                keycloak_id: '123',
+                id: () => 123,
             },
         },
     },

@@ -90,7 +90,7 @@ export default {
 
     methods: {
         async setFormFromSelectedUser() {
-            await getUser(this.selectedUser.keycloak_id).then((user) => {
+            await getUser(this.selectedUser.id).then((user) => {
                 this.currentUser = {
                     ...user,
                     current_org_role: this.selectedUser.current_org_role,

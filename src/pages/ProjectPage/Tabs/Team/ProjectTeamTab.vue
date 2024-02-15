@@ -17,7 +17,7 @@
         <DynamicGrid v-if="owners && owners.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="owner in owners"
-                :key="owner.keycloak_id"
+                :key="owner.id"
                 :can-be-edited="canEditProject"
                 :can-be-removed="canEditProject"
                 @remove-user="launchConfirmModal(owner, 'owners')"
@@ -38,7 +38,7 @@
         <DynamicGrid v-if="members && members.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="member in members"
-                :key="member.keycloak_id"
+                :key="member.id"
                 :can-be-edited="canEditProject"
                 :can-be-removed="canEditProject"
                 @remove-user="launchConfirmModal(member, 'members')"
@@ -59,7 +59,7 @@
         <DynamicGrid v-if="reviewers && reviewers.length" :min-gap="gridGap" class="user-card-ctn">
             <ProjectTeamEditor
                 v-for="reviewer in reviewers"
-                :key="reviewer.keycloak_id"
+                :key="reviewer.id"
                 :can-be-edited="canEditProject"
                 :can-be-removed="canEditProject"
                 @remove-user="launchConfirmModal(reviewer, 'reviewers')"
@@ -130,7 +130,7 @@
                 v-if="profileDrawer.isOpened"
                 ref="profile-user"
                 :can-edit="false"
-                :kid="profileDrawer.user_kid"
+                :user-id="profileDrawer.user_id"
             />
         </DrawerLayout>
     </div>
@@ -176,7 +176,7 @@ export default {
             confirmGroupModalVisible: false,
             profileDrawer: {
                 isOpened: false,
-                user_kid: null,
+                user_id: null,
             },
             isEditMode: false,
             showQuitIsImposible: false,
@@ -235,7 +235,7 @@ export default {
                 let body = null
                 if (memberType === 'user') {
                     body = {
-                        users: [this.userToBeDeleted.keycloak_id],
+                        users: [this.userToBeDeleted.id],
                     }
                 } else {
                     body = {
@@ -310,13 +310,13 @@ export default {
         },
 
         async openProfileDrawer(user) {
-            this.profileDrawer.user_kid = user.keycloak_id
+            this.profileDrawer.user_id = user.id
             this.profileDrawer.isOpened = true
         },
 
         closeProfileDrawer() {
             this.profileDrawer.isOpened = false
-            this.profileDrawer.user_kid = null
+            this.profileDrawer.user_id = null
         },
     },
 }

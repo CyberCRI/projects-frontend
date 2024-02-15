@@ -14,8 +14,6 @@ export interface PeopleModel {
     hobbies: Array<Object>
     id: number
     language: string
-    keycloak_id: string // Keycloak user id
-    people_id: string // user id
     email: string
     given_name: string
     family_name: string

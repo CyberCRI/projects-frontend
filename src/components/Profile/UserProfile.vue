@@ -11,7 +11,7 @@
                 :label="$t('profile.go-to-page')"
                 :to="{
                     name: 'ProfileOtherUser',
-                    params: { userKId: user?.slug || kid },
+                    params: { userId: user?.slug || userId },
                 }"
             />
 
@@ -31,7 +31,7 @@
         <ProfileTabs
             v-if="user && !isLoading"
             :user="user"
-            :is-current-user="kid === null"
+            :is-current-user="userId === null"
             @close="$emit('close')"
         />
     </div>
@@ -60,7 +60,7 @@ export default {
     },
 
     props: {
-        kid: {
+        userId: {
             type: String,
             default: null,
         },
@@ -96,15 +96,15 @@ export default {
 
     async mounted() {
         try {
-            if (!this.kid) {
+            if (!this.userId) {
                 // get the connected user
                 this.user = await this.$store.dispatch(
                     'users/getUser',
-                    this.$store.getters['users/kid']
+                    this.$store.getters['users/id']
                 )
             } else {
                 // get another user
-                this.user = await getUser(this.kid)
+                this.user = await getUser(this.userId)
             }
         } catch (err) {
             console.error(err)
@@ -117,7 +117,7 @@ export default {
     computed: {
         isSelf() {
             const connectedUser = this.$store.getters['users/userFromApi']
-            return connectedUser && this.user.keycloak_id === connectedUser.keycloak_id
+            return connectedUser && this.user.id === connectedUser.id
         },
 
         editButtonLabel() {
@@ -128,7 +128,10 @@ export default {
         editProfileLink() {
             return this.isSelf
                 ? { name: 'ProfileEdit' }
-                : { name: 'ProfileEditOtherUser', params: { userKId: this.user?.slug || this.kid } }
+                : {
+                      name: 'ProfileEditOtherUser',
+                      params: { userId: this.user?.slug || this.userId },
+                  }
         },
     },
 

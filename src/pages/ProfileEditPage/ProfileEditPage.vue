@@ -37,8 +37,8 @@ export default {
     },
 
     props: {
-        userKId: {
-            type: [String, null],
+        userId: {
+            type: [String, Number, null],
             required: false,
             default: null,
         },
@@ -51,15 +51,15 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.userKId || this.$store.getters['users/kid'])
-                // safe check for isSelf beacuse this.userKId might be a slug in fact
+                this.user = await getUser(this.userId || this.$store.getters['users/id'])
+                // safe check for isSelf beacuse this.userId might be a slug in fact
             } catch (error) {
                 console.error(error)
             }
         },
 
         async onProfileEdited() {
-            if (this.user?.keycloak_id == this.$store.getters['users/kid']) {
+            if (this.user?.id == this.$store.getters['users/id']) {
                 this.onboardingTrap('complete_profile', false)
             }
         },

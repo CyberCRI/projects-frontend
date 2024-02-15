@@ -186,7 +186,7 @@ export default {
         },
 
         selectAction() {
-            let only_groups = this.selectedUsers.some((user) => user.keycloak_id) ? false : true
+            let only_groups = this.selectedUsers.every(this.$filters.isGroup)
             if (this.isSelectingRoles || only_groups) {
                 this.isSelectingUser = false
                 this.updateTeam()
@@ -206,8 +206,8 @@ export default {
             this.form.team.people_groups = []
 
             this.selectedUsers.forEach((user) => {
-                if (user.keycloak_id) {
-                    this.form.team[user.role].push(user.keycloak_id)
+                if (this.$filters.isNotGroup(user)) {
+                    this.form.team[user.role].push(user.id)
                 } else {
                     this.form.team.people_groups.push(user.id)
                 }

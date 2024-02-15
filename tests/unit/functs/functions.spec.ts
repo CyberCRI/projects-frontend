@@ -119,15 +119,12 @@ describe('Function projectCanBeEdited', () => {
         expect(store.getters['users/user']).toBe(user)
     })
 
-    // TODO Projects: FIX ONCE API USES KEYCLOAK_ID
     test("that project can be edited if user is one of project's owners and project is not locked", () => {
         const user = UserFactory.generate()
         const project = ProjectOutputFactory.generate()
         project.team.members[0].group = 'owners'
         project.team.members[0].user = {
-            id: 0,
-            keycloak_id: '',
-            people_id: '',
+            id: 1,
         }
         project.is_locked = false
 
@@ -137,9 +134,7 @@ describe('Function projectCanBeEdited', () => {
         const _store = {
             getters: {
                 'users/user': userDefined,
-            },
-            state: {
-                users: { keycloak_id: user.id },
+                id: () => user.id,
             },
         }
         const { wrapper, store } = lpiMountExtra(FunctionImporter, {

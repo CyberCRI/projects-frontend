@@ -46,7 +46,7 @@ async function addSkills(page, query) {
     await page.locator('[data-test="search-input"]').press('Enter')
     await delay(5000)
     const inputs = await page.locator('[data-test^="tag-label-"]').all()
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < Math.min(5, inputs.length); i++) {
         await inputs[i].click()
     }
     // const addedTags = await page.locator('[data-test^="tag-label"]').all()

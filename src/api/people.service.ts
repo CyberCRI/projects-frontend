@@ -78,17 +78,13 @@ export async function searchPeopleAdmin({
     ).data
 }
 
-export async function patchUser(keycloak_id: string, body: UserPatchModel): Promise<PeopleModel> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${keycloak_id}/`,
-            body
-        )
-    ).data
+export async function patchUser(id: string | number, body: UserPatchModel): Promise<PeopleModel> {
+    return (await axios.patch(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`, body))
+        .data
 }
 
 export async function patchUserPicture(
-    keycloak_id: string,
+    id: string | number,
     pictureId: string,
     body: FormData
 ): Promise<PeopleModel> {
@@ -96,32 +92,32 @@ export async function patchUserPicture(
         await axios.patch(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/user/${keycloak_id}/profile-picture/${pictureId}/`,
+            }/user/${id}/profile-picture/${pictureId}/`,
             body
         )
     ).data
 }
 
-export async function deleteUser(kid: string) {
-    return await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${kid}/`)
+export async function deleteUser(id: string) {
+    return await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`)
 }
 
-export async function postUserPicture(keycloak_id: string, body: FormData): Promise<PeopleModel> {
+export async function postUserPicture(id: string, body: FormData): Promise<PeopleModel> {
     return (
         await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${keycloak_id}/profile-picture/`,
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/profile-picture/`,
             body
         )
     ).data
 }
 
 export async function patchUserPrivacy(
-    keycloak_id: string,
+    id: string | number,
     body: UserPrivacyPatchModel
 ): Promise<PeopleModel> {
     return (
         await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/privacy-settings/${keycloak_id}/`,
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/privacy-settings/${id}/`,
             body
         )
     ).data
@@ -149,12 +145,12 @@ export async function deleteUserSkill(skill_id: number): Promise<PeopleModel> {
     ).data
 }
 
-export async function resetUserPassword(keycloak_id: string): Promise<PeopleModel> {
+export async function resetUserPassword(id: string | number): Promise<PeopleModel> {
     return (
         await axios.get(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/user/${keycloak_id}/reset-password/?organization=${
+            }/user/${id}/reset-password/?organization=${
                 store.state.organizations?.current?.code || ''
             }`
         )

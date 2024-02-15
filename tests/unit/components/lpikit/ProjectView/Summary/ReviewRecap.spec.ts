@@ -53,8 +53,6 @@ const project = {
             updated_at: '2022-10-25T12:53:23.830479Z',
             reviewer: {
                 id: 1133,
-                keycloak_id: 'e55f9554-e1b2-487e-8d88-ec18c99a388a',
-                people_id: '4e134c1a-bd53-436d-ad11-02982b19cd9c',
                 given_name: 'test',
                 email: 'test.auto@external.cri-paris.org',
                 family_name: 'auto',
@@ -69,8 +67,6 @@ const project = {
             updated_at: '2022-10-26T12:53:23.830479Z',
             reviewer: {
                 id: 1133,
-                keycloak_id: 'e55f9554-e1b2-487e-8d88-ec18c99a388a',
-                people_id: '4e134c1a-bd53-436d-ad11-02982b19cd9c',
                 given_name: 'test',
                 email: 'test.auto@external.cri-paris.org',
                 family_name: 'auto',

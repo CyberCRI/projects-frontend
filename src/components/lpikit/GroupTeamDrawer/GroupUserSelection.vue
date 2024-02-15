@@ -3,7 +3,7 @@
         <div v-if="selectedUsers.length" class="selected-users-grid">
             <UserCardInline
                 v-for="(user, index) in filteredUsers"
-                :key="user.keycloak_id"
+                :key="user.id"
                 :user="user"
                 :selected="true"
                 icon="Close"
@@ -41,7 +41,7 @@
             <div v-else-if="userResults.length" class="user-grid">
                 <UserCardInline
                     v-for="user in userResults"
-                    :key="user.keycloak_id"
+                    :key="user.id"
                     :user="user"
                     :icon="user.selected ? 'Check' : 'Plus'"
                     :selected="user.selected"
@@ -128,7 +128,7 @@ export default {
                 ? this.request.results.map((user) => ({
                       ...user,
                       selected: this.selectedUsers.some(
-                          (currentUser) => currentUser.keycloak_id === user.keycloak_id
+                          (currentUser) => currentUser.id === user.id
                       ),
                   }))
                 : []

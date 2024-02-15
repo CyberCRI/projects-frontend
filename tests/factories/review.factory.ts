@@ -8,7 +8,6 @@ export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
     title: faker.datatype.string(),
     reviewer: {
         id: faker.datatype.number(),
-        keycloak_id: faker.datatype.string(),
         people_id: faker.datatype.string(),
         email: faker.datatype.string(),
         given_name: faker.datatype.string(),

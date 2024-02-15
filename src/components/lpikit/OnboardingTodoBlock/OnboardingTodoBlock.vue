@@ -137,8 +137,8 @@ export default {
             this.asyncing[key] = true
             const payload = { onboarding_status: { ...this.status, [key]: val } }
             try {
-                await patchUser(this.user.keycloak_id, payload)
-                await this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                await patchUser(this.user.id, payload)
+                await this.$store.dispatch('users/getUser', this.user.id)
             } catch (err) {
                 console.error(err)
             } finally {

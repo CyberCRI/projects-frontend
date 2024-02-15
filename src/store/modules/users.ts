@@ -38,8 +38,7 @@ const state = (): UsersState => {
         userFromToken: null,
         userFromApi: null,
         accessToken: localStorage.getItem('ACCESS_TOKEN'),
-        id: localStorage.getItem('USER_ID'),
-        keycloak_id: localStorage.getItem('KEYCLOAK_ID'),
+        keycloak_id: '',
         loginLocked: false,
         permissions: {},
         id_token: localStorage.getItem('ID_TOKEN'),
@@ -54,8 +53,8 @@ const getters = {
         return !!state.accessToken
     },
 
-    kid(state: UsersState) {
-        return state.keycloak_id
+    id(state: UsersState) {
+        return state.userFromApi?.id
     },
 
     user: (state: UsersState): UserModel | null => {
@@ -132,18 +131,16 @@ const actions = {
         { access_token, refresh_token, refresh_token_exp, parsedToken, id_token }: AuthResult
     ): Promise<string> {
         const keycloakID = parsedToken.sub
-        const peopleID = parsedToken.pid
         commit('SET_USER', {
             refreshToken: refresh_token,
             refreshTokenExp: refresh_token_exp,
             accessToken: access_token,
-            id: peopleID,
             keycloak_id: keycloakID,
             loginLocked: false,
             userFromToken: parsedToken,
             id_token: id_token,
         })
-        analytics.identifyUser(peopleID)
+        analytics.identifyUser(keycloakID)
 
         return access_token
     },
@@ -153,12 +150,10 @@ const actions = {
             .then(({ refresh_token, access_token, parsedToken, refresh_token_exp, id_token }) => {
                 if (refresh_token && access_token && parsedToken) {
                     const keycloakID = parsedToken.sub
-                    const peopleID = parsedToken.pid
                     commit('SET_USER', {
                         refreshToken: refresh_token,
                         refreshTokenExp: refresh_token_exp,
                         accessToken: access_token,
-                        id: peopleID,
                         id_token,
                         keycloak_id: keycloakID,
                         loginLocked: false,
@@ -175,9 +170,10 @@ const actions = {
             })
     },
 
-    async getUser({ commit }, kid) {
+    async getUser({ commit }, id) {
+        // id is keycloak_id OR django user id OR slug
         try {
-            const user = await getUser(kid)
+            const user = await getUser(id)
 
             commit('SET_USER_PERMISSIONS', user.permissions)
             commit('SET_USER_ROLES', user.roles)
@@ -196,9 +192,9 @@ const actions = {
         commit('UPDATE_LOGIN_LOCK', lock)
     },
 
-    async getNotifications({ commit }, kid) {
+    async getNotifications({ commit }, id) {
         try {
-            const result = await getNotifications(kid)
+            const result = await getNotifications(id)
 
             commit('SET_NOTIFICATIONS_SETTINGS', result)
 
@@ -208,9 +204,9 @@ const actions = {
         }
     },
 
-    async patchNotifications({ commit }, { kid, payload }) {
+    async patchNotifications({ commit }, { id, payload }) {
         try {
-            const result = await patchNotifications({ kid, payload })
+            const result = await patchNotifications({ id, payload })
 
             commit('SET_NOTIFICATIONS_SETTINGS', result)
 
@@ -226,12 +222,11 @@ const mutations = {
         localStorage.removeItem('REFRESH_TOKEN')
         localStorage.removeItem('REFRESH_TOKEN_EXP')
         localStorage.removeItem('ACCESS_TOKEN')
-        localStorage.removeItem('USER_ID')
-        localStorage.removeItem('KEYCLOAK_ID')
+        localStorage.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
+        localStorage.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
         localStorage.removeItem('ID_TOKEN')
         state.refreshToken = ''
         state.accessToken = ''
-        state.id = ''
         state.keycloak_id = ''
         state.userFromToken = null
         state.id_token = ''
@@ -248,12 +243,9 @@ const mutations = {
         localStorage.setItem('REFRESH_TOKEN', payload.refreshToken)
         localStorage.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
         localStorage.setItem('ACCESS_TOKEN', payload.accessToken)
-        localStorage.setItem('USER_ID', payload.id)
-        localStorage.setItem('KEYCLOAK_ID', payload.keycloak_id)
         localStorage.setItem('ID_TOKEN', payload.id_token)
         state.refreshToken = payload.refreshToken
         state.accessToken = payload.accessToken
-        state.id = payload.id
         state.keycloak_id = payload.keycloak_id
         state.loginLocked = payload.loginLocked || false
         state.userFromToken = payload.userFromToken

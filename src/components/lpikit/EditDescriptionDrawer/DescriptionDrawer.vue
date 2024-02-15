@@ -129,7 +129,7 @@ export default {
                                 const connectedUser = this.$store.getters['users/userFromApi']
 
                                 this.notifyPatch({
-                                    pid: this.$store.state.users.keycloak_id,
+                                    pid: this.$store.state.users.id,
                                     author_name: connectedUser
                                         ? connectedUser.given_name + ' ' + connectedUser.family_name
                                         : '',

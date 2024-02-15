@@ -10,7 +10,6 @@ export const CommentFactory = createFactory<CommentOutput>((faker) => ({
         family_name: faker.datatype.string(),
         given_name: faker.datatype.string(),
         id: faker.datatype.number(),
-        keycloak_id: faker.datatype.string(),
         people_id: faker.datatype.string(),
     },
     content: faker.datatype.string(),

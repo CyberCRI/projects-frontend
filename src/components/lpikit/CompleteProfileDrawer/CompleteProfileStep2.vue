@@ -44,7 +44,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/kid'])
+                this.user = await getUser(this.$store.getters['users/id'])
             } catch (error) {
                 console.error(error)
             }

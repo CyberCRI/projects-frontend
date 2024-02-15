@@ -54,7 +54,7 @@
                 limit: limit,
                 ordering: '-updated_at',
                 member_role: memberRole,
-                members: [user.keycloak_id],
+                members: [user.id],
             }"
             mode="projects"
             :show-pagination="true"

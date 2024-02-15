@@ -111,7 +111,7 @@ export default {
                         org_id: this.organization.code,
                         body: {
                             name: this.selectedRole.name,
-                            user: this.selectedUser.keycloak_id,
+                            user: this.selectedUser.id,
                         },
                     })
                     .then(async () => {
@@ -122,7 +122,7 @@ export default {
                     .dispatch('organizations/removeGroupMember', {
                         org_id: this.organization.code,
                         body: {
-                            users: [this.selectedUser.keycloak_id],
+                            users: [this.selectedUser.id],
                         },
                     })
                     .then(async () => {

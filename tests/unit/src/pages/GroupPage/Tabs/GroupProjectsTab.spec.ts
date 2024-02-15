@@ -17,7 +17,7 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                kid: vi.fn(),
+                id: vi.fn(),
                 userFromApi: vi.fn(),
                 getPermissions: vi.fn().mockReturnValue({}),
             },

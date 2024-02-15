@@ -37,7 +37,7 @@
             </ToolTip>
         </div>
         <div class="role-option-list">
-            <div v-for="user in userList" :key="user.keycloak_id" class="role-options-item">
+            <div v-for="user in userList" :key="user.id" class="role-options-item">
                 <div>{{ user.given_name }} {{ user.family_name }}</div>
                 <div class="role-block">
                     <div

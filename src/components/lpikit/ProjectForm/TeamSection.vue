@@ -80,7 +80,6 @@ export default {
                 job: this.currentUser.job,
                 people_id: this.currentUser.people_id,
                 profile_picture: this.currentUser.profile_picture,
-                keycloak_id: this.currentUser.keycloak_id,
             }
         },
     },
@@ -107,10 +106,10 @@ export default {
     methods: {
         addUser(payload) {
             payload.forEach((user) => {
-                if (user.keycloak_id) {
+                if (this.$filters.isNotGroup(user)) {
                     // current user is automatically added as owner
                     // so dont duplicate him
-                    if (user.keycloak_id !== this.currentUser.keycloak_id) {
+                    if (user.id !== this.currentUser.id) {
                         this.projectUsers.push({
                             user: user,
                             role: user.role,

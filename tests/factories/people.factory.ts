@@ -15,7 +15,6 @@ export const PeopleFactory = createFactory<PeopleModel>((faker) => ({
     id: faker.datatype.number(),
     language: faker.datatype.string(),
     keycloak_id: faker.datatype.uuid(), // Keycloak user id
-    people_id: faker.datatype.uuid(), // user id
     email: faker.internet.email(),
     given_name: faker.name.firstName(),
     family_name: faker.name.lastName(),

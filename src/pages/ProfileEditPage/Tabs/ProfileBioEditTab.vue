@@ -102,7 +102,7 @@ export default {
     computed: {
         isSelf() {
             const connectedUser = this.$store.getters['users/userFromApi']
-            return connectedUser && this.user.keycloak_id === connectedUser.keycloak_id
+            return connectedUser && this.user.id === connectedUser.id
         },
     },
 
@@ -128,11 +128,11 @@ export default {
                     personal_description: this.form.personalBio.savedContent,
                 }
 
-                await patchUser(this.user.keycloak_id, data)
+                await patchUser(this.user.id, data)
                 this.$emit('profile-edited')
 
                 // update store if self
-                if (this.isSelf) this.$store.dispatch('users/getUser', this.user.keycloak_id)
+                if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('profile.edit.bio.save-success'),
                     type: 'success',

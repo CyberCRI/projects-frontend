@@ -24,7 +24,7 @@
             <FilterValue
                 v-for="user in usersList"
                 @click="addMember(user)"
-                :key="user.kid"
+                :key="user.id"
                 :label="user.given_name + ' ' + user.family_name"
                 class="actionable suggested"
             />
@@ -82,7 +82,7 @@ export default {
                 org_id: this.$store.getters['organizations/current'].id,
             })
             const filteredResults = results.filter(
-                (result) => !this.selection.some((member) => member.kid == result.kid)
+                (result) => !this.selection.some((member) => member.id == result.id)
             )
             this.usersList = filteredResults
         },

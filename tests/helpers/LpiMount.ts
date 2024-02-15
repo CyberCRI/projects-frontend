@@ -2,13 +2,14 @@ import { createStore } from 'vuex'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { config, mount, shallowMount } from '@vue/test-utils'
-
-import { capitalize } from '@/filters'
+import { capitalize, isNotGroup, isGroup } from '@/filters'
 import { clickOutside, disableFocus } from '@/directives'
 
 config.global.mocks = {
     $filters: {
         capitalize,
+        isNotGroup,
+        isGroup,
     },
 }
 
