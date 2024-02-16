@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
 import { describe, expect, it } from 'vitest'
@@ -42,7 +42,7 @@ describe('UserProjectList.vue', () => {
     })
 
     it('should render UserProjectList component', () => {
-        wrapper = lpiMount(UserProjectList, defaultParams)
+        wrapper = lpiShallowMount(UserProjectList, defaultParams)
         expect(wrapper.exists()).toBe(true)
     })
 })

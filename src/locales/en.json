@@ -811,6 +811,9 @@
         }
     },
     "header": {
+        "private": "Private: visible only to team members",
+        "org": "Only visible to the members of your portal",
+        "public": "Public: visible to any visitor of the website",
         "similar-project": "similar project",
         "similar-projects": "similar projects",
         "portals-start": "Belongs to ",

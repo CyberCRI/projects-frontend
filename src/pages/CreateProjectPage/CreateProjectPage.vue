@@ -195,6 +195,10 @@ export default {
                     })
                 }
                 await this.onboardingTrap('create_project', false)
+                // reload current to user to get new permissions
+                // maybe set a endpoint to fetch only permission ?
+                const user = this.$store.getters['users/userFromApi']
+                if (user) this.$store.dispatch('users/getUser', user.id)
                 this.$router.push({
                     name: 'projectDescription',
                     params: { slugOrId: project.slug },
