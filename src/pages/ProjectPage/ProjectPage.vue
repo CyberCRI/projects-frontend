@@ -238,8 +238,10 @@ export default {
 
     methods: {
         projectPatched(data) {
-            const projectUpdates = this.provider.document.getMap('projectUpdates')
-            projectUpdates.set('data', { ...data, clientID: this.provider.document.clientID })
+            if (this.provider?.document) {
+                const projectUpdates = this.provider.document.getMap('projectUpdates')
+                projectUpdates.set('data', { ...data, clientID: this.provider.document.clientID })
+            }
         },
 
         async onProjectUpdate() {
