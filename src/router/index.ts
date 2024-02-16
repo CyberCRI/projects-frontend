@@ -60,11 +60,12 @@ router.beforeEach((to, _from, next) => {
         }
         // if we didn't login, redirect to an authorized page
         if (proceed) {
-            if (import.meta.env.VITE_APP_APIBASEORGID === '') next('/discover')
-            else next('/dashboard')
+            // if (import.meta.env.VITE_APP_API_ORG_CODE === '') next('/discover')
+            // else next('/dashboard')
+            next({ name: 'Home' })
         }
     } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin(store))
-        next('/dashboard')
+        next({ name: 'Home' })
     else {
         next()
     }

@@ -14,14 +14,14 @@
         <!--        TODO: ask Api to send information-->
         <div v-if="user.role" class="role">{{ user.role }}</div>
 
-        <div v-if="user.id" class="name-ctn">
+        <div v-if="$filters.isNotGroup(user)" class="name-ctn">
             <h4 class="user-name">{{ userName }}</h4>
         </div>
 
         <!--        TODO: ask Api to send information-->
-        <div v-if="user.id" class="job">{{ user.job }}</div>
+        <div v-if="$filters.isNotGroup(user)" class="job">{{ user.job }}</div>
 
-        <div v-if="!user.id" class="name-ctn">
+        <div v-if="$filters.isGroup(user)" class="name-ctn">
             <h4 class="user-name">{{ user.name }}</h4>
         </div>
     </div>
@@ -79,7 +79,7 @@ export default {
         },
 
         userName() {
-            return `${this.user.given_name.toLowerCase()} ${this.user.family_name.toLowerCase()}`
+            return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
         },
     },
 }

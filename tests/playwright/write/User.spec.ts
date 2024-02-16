@@ -18,7 +18,7 @@ for (const user of users) {
             throw err
         }
         try {
-            await generalInfo(page)
+            await generalInfo(page, user)
             logger.info('User general info successful')
         } catch (err) {
             logger.error('Edit general info has failed')

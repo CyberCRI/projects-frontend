@@ -917,6 +917,7 @@
         "offline": "Offline",
         "redo": "Redo",
         "remove_link": "Remove Link",
+        "server-connected": "Server is connected.",
         "server-connecting": "Server is connecting...",
         "server-disconnected": "Server is disconnected.",
         "server-unconnectable": "Cannot connect to server. Please retry later.",
@@ -980,6 +981,7 @@
         "not-connected": {
             "title": "Try to login",
             "illustration-text": "TO ENTER YOU NEED TO LOGIN",
+            "connect": "We cannot find the page you’re looking for. To reach it, you might {0}.",
             "login": "need to login"
         }
     },

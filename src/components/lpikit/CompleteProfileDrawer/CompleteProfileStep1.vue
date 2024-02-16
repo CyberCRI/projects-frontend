@@ -382,7 +382,7 @@ export default {
                 }
 
                 this.sdgs.forEach((sdg) => {
-                    sdg.selected = this.user.sdgs.includes(sdg.id)
+                    sdg.selected = (this.user.sdgs || []).includes(sdg.id)
                 })
             } catch (error) {
                 console.error(error)

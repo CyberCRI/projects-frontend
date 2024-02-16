@@ -61,6 +61,8 @@ export async function createProject(page, projectName, projId) {
     }
     await page.locator('[data-test="confirm-button"]').click()
     logger.info('Tag added')
+    await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
+    logger.info('Checked if drawer is closed')
 
     // check random img
     logger.info('Click 3 times on random img')
