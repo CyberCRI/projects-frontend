@@ -916,6 +916,7 @@
         "offline": "Hors-ligne",
         "redo": "Restaurer",
         "remove_link": "Supprimer le lien",
+        "server-connected": "Le serveur est connecté.",
         "server-connecting": "Le serveur est en cours de connexion...",
         "server-disconnected": "Le serveur est déconnecté.",
         "server-unconnectable": "Impossible de se connecter au serveur. Veuillez réessayer plus tard.",
@@ -978,6 +979,7 @@
         "not-connected": {
             "title": "Essayez de vous connecter",
             "illustration-text": "POUR ENTRER VOUS DEVEZ VOUS CONNECTER",
+            "connect": "Nous ne pouvons pas trouver la page que vous recherchez. Pour y accéder, vous devrez peut-être {0}.",
             "login": "vous connecter"
         }
     },

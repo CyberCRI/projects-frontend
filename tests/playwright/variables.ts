@@ -16,10 +16,14 @@ export const users: User[] = [
     // {
     //     email: process.env.USER_FACILITATOR_EMAIL as string,
     //     password: process.env.USER_FACILITATOR_PASSWORD as string,
+    // firstName: 'pw_facilitator',
+    // lastName: 'pw_facilitator',
     // },
     // {
     //     email: process.env.USER_TEST_EMAIL as string,
     //     password: process.env.USER_TEST_PASSWORD as string,
+    // firstName: 'test.auto',
+    // lastName: 'tets.auto',
     // },
 ]
 
@@ -32,4 +36,4 @@ export const usersDict: UserType = {
 
 export const frontURL: string | undefined = process.env.FRONTEND_URL
 export const emailToReport: string = 'test.report@gmail.com'
-export const organizationCode: string | undefined = process.env.VITE_APP_APIBASEORGID
+export const organizationCode: string | undefined = process.env.VITE_APP_API_ORG_CODE

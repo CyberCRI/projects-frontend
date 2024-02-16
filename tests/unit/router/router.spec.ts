@@ -15,11 +15,12 @@ vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 
 vi.mock('@/router/routes', () => ({
     default: [
-        {
-            path: '/discover',
-            name: 'Discover',
-            component: {},
-        },
+        // not used anymore, maybe later ? see routes.ts
+        // {
+        //     path: '/discover',
+        //     name: 'Discover',
+        //     component: {},
+        // },
         {
             path: '/dashboard',
             name: 'Home',
@@ -47,19 +48,20 @@ describe('Router redirections on routes requiring auth', () => {
         })
     })
 
-    it('should redirect user without organization trying to access auth-required route to /discover', async () => {
-        // Temporary save env's api-base-org-id
-        const initialApiBaseOrgId = process.env.VITE_APP_APIBASEORGID
-        // Mock user with no organization
-        process.env.VITE_APP_APIBASEORGID = ''
+    // not used anymore, maybe later ? see routes.ts
+    // it('should redirect user without organization trying to access auth-required route to /discover', async () => {
+    //     // Temporary save env's api-base-org-id
+    //     const initialApiBaseOrgId = process.env.VITE_APP_API_ORG_CODE
+    //     // Mock user with no organization
+    //     process.env.VITE_APP_API_ORG_CODE = ''
 
-        router.push('/restricted').catch(() => {})
+    //     router.push('/restricted').catch(() => {})
 
-        await waitForExpect(() => {
-            expect(router.currentRoute.value.path).toEqual('/discover')
-        })
+    //     await waitForExpect(() => {
+    //         expect(router.currentRoute.value.path).toEqual('/discover')
+    //     })
 
-        // Reset env's api-base-org-id for next tests
-        process.env.VITE_APP_APIBASEORGID = initialApiBaseOrgId
-    })
+    //     // Reset env's api-base-org-id for next tests
+    //     process.env.VITE_APP_API_ORG_CODE = initialApiBaseOrgId
+    // })
 })

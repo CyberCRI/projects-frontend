@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         // beforeEnter(_to, _from, next) {
-        //     if (import.meta.env.VITE_APP_APIBASEORGID === '') next('/discover')
+        //     if (import.meta.env.VITE_APP_API_ORG_CODE === '') next('/discover')
         //     else next('/dashboard')
         // },
 
