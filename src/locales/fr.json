@@ -810,6 +810,9 @@
         }
     },
     "header": {
+        "private": "Privée: visible uniquement par les membres de l’équipe",
+        "org": "Visible uniquement par les membres de votre portail",
+        "public": "Publique : visible par tout visiteur",
         "similar-project": "projet similaire",
         "similar-projects": "projets similaires",
         "portals-start": "Appartient à ",
