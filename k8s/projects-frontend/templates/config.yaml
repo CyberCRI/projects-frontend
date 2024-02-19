@@ -1,7 +1,0 @@
-{{- $configGenerator := dict
-"config" .Values.config
-"root" $
-"commonLabels" .Values.commonLabels
-"name" (tpl .Values.fullName .) }}
-
-{{- include "common.config" $configGenerator}}
