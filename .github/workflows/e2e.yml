@@ -5,7 +5,7 @@ jobs:
   e2e-tests:
     environment:
       name: ${{ github.ref == 'refs/heads/auto_staging' && 'Staging' || 'Dev' }}
-    runs-on: [self-hosted, default-runner]
+    runs-on: [self-hosted, m2c3-runner]
     env:
       USER_TEST_EMAIL: ${{ vars.USER_TEST_EMAIL }}
       USER_TEST_PASSWORD: ${{ secrets.USER_TEST_PASSWORD }}
