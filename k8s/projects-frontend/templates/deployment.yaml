@@ -13,12 +13,7 @@ spec:
       labels:
         {{- tpl (.Values.commonLabels  | toYaml | nindent 8) $ }}
       annotations:
-      {{- if .Values.injectedEnv.nonSensitive }}
-        checksum/configmap: {{ include (print $.Template.BasePath "/environment-configmap.yaml") . | sha256sum }}
-      {{- end }}
-      {{- if .Values.injectedEnv.sensitive }}
-        checksum/secret: {{ include (print $.Template.BasePath "/environment-secret.yaml") . | sha256sum }}
-      {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
