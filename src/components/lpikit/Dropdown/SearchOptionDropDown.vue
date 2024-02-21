@@ -194,8 +194,7 @@ export default {
         padding-bottom: $border-radius-l;
         border-radius: $border-radius-l;
         max-height: pxToRem(450px);
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden auto;
         border: 1px solid $green;
         box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
 

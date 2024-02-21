@@ -536,9 +536,8 @@ export default {
     $community-card-gap: $space-m;
 
     display: flex;
-    align-content: center;
+    place-content: center space-between;
     flex-wrap: wrap;
-    justify-content: space-between;
     margin-bottom: $space-3xl;
     gap: $community-card-gap;
 

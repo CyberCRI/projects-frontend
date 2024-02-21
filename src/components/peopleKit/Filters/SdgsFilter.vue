@@ -55,8 +55,7 @@ export default {
 .sdg-filter-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: pxToRem(16px);
-    row-gap: pxToRem(16px);
+    gap: pxToRem(16px) pxToRem(16px);
     justify-items: center;
 }
 

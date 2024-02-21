@@ -2,7 +2,7 @@
     <div>
         <teleport to="body">
             <transition name="modal-fade">
-                <div class="modal-backdrop" data-test="modal-backdrop">
+                <div class="modal-backdrop" data-test="modal-backdrop" v-show="open">
                     <div class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
                         <div v-if="$slots.topping" class="modal-topping">
                             <slot name="topping"></slot>
@@ -59,6 +59,7 @@ export default {
     data() {
         return {
             uniqueId: (Math.random() + 1).toString(36).substring(7),
+            open: false,
         }
     },
 
@@ -93,6 +94,9 @@ export default {
 
     mounted() {
         document.querySelector('body').classList.add(`has-open-modal-${this.uniqueId}`)
+        this.$nextTick(() => {
+            this.open = true
+        })
     },
 
     unmounted() {
@@ -100,7 +104,9 @@ export default {
     },
 
     methods: {
-        close() {
+        async close() {
+            this.open = false
+            await new Promise((resolve) => setTimeout(resolve, 500))
             this.$emit('close')
         },
     },
@@ -188,8 +194,7 @@ export default {
 
 .modal-footer {
     display: flex;
-    align-content: space-between;
-    justify-content: center;
+    place-content: space-between center;
     padding: $space-xl;
 
     button {
@@ -228,7 +233,7 @@ export default {
     }
 }
 
-.modal-fade-enter,
+.modal-fade-enter-from,
 .modal-fade-leave-to {
     opacity: 0;
 }

@@ -245,8 +245,7 @@ export default {
 
     .header__title {
         grid-column: 2 / 3;
-        justify-self: center;
-        align-self: center;
+        place-self: center center;
         font-size: $font-size-3xl;
         font-weight: 700;
         margin: $space-m 0 $space-m 0;
