@@ -258,6 +258,8 @@ import { toRaw } from 'vue'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
+import Gapcursor from '@tiptap/extension-gapcursor'
+
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
 const DISCONNECTION_GRACE_DURATION =
@@ -517,6 +519,7 @@ export default {
                     TableHeader,
                     CustomTableCell,
                     CustomImage,
+                    Gapcursor,
                 ]
 
                 if (this.socket) {

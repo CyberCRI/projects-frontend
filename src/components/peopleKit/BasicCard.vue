@@ -127,8 +127,7 @@ export default {
     text-align: start;
     display: block;
     word-break: break-word;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
 }
 
 :deep(.text-limit) {

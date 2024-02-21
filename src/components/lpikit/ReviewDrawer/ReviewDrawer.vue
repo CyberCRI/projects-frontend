@@ -173,7 +173,6 @@ export default {
 
     computed: {
         ...mapGetters({
-            user: 'users/user',
             projectId: 'projects/currentProjectId',
         }),
     },

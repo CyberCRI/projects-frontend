@@ -18,11 +18,11 @@ describe('BaseModal', () => {
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should emit the close event', () => {
+    it('should emit the close event', async () => {
         wrapper = lpiShallowMount(BaseModal, defaultParams)
         const vm: any = wrapper.vm
 
-        vm.close()
+        await vm.close()
         expect(wrapper.emitted('close')).toBeTruthy()
     })
 })

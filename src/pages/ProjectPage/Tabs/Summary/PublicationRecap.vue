@@ -189,8 +189,7 @@ export default {
     .publication-body {
         padding: $space-m $space-l;
         flex-grow: 1;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden auto;
         margin-right: $space-2xs;
 
         .publication-meta {
@@ -222,8 +221,7 @@ export default {
             color: $text-body;
             position: relative;
             flex-grow: 1;
-            overflow-y: hidden;
-            overflow-x: hidden;
+            overflow: hidden hidden;
 
             .gradient {
                 position: absolute;

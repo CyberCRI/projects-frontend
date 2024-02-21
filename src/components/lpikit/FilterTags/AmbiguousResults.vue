@@ -26,8 +26,8 @@
                         tag.extract
                             ? tag.extract
                             : tag.terms && tag.terms.description
-                            ? tag.terms.description[0]
-                            : ''
+                              ? tag.terms.description[0]
+                              : ''
                     }}
                 </div>
             </div>

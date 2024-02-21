@@ -124,8 +124,7 @@ export default {
 
     .modal-footer {
         display: flex;
-        align-content: space-between;
-        justify-content: center;
+        place-content: space-between center;
 
         button {
             cursor: pointer;
