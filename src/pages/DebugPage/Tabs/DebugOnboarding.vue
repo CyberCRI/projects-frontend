@@ -15,7 +15,7 @@
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
 export default {
-    name: 'DebugIcons',
+    name: 'DebugOnboarding',
     components: { LpiButton },
     data() {
         return {
@@ -51,6 +51,7 @@ export default {
 .debug-onboarding {
     margin: 1rem;
     text-align: center;
+
     .reset-button {
         margin: 1rem auto;
         text-align: center;

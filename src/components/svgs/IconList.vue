@@ -151,11 +151,13 @@ export default {
     text-align: center;
     padding: 1rem;
 }
+
 .search-bar {
     padding: 1rem;
     display: flex;
     justify-content: stretch;
     align-items: center;
+
     input {
         flex-grow: 1;
         padding: 0.5rem;
