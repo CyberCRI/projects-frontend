@@ -17,6 +17,7 @@ import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
 import reviews from '@/store/modules/reviews'
 import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
+import recommendations, { RecommendationsState } from '@/store/modules/recommendations'
 
 export interface State {
     projectCategories: ProjectCategoriesState
@@ -31,6 +32,7 @@ export interface State {
     groups: GroupsState
     notifications: NotificationsState
     peopleGroups: PeopleGroupsState
+    recommendations: RecommendationsState
 }
 
 export default createStore({
@@ -54,5 +56,6 @@ export default createStore({
         reviews,
         users,
         peopleGroups,
+        recommendations,
     },
 })

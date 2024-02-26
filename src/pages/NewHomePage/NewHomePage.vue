@@ -1,5 +1,5 @@
 <template>
-    <div v-if="$store.getters['users/isLoggedIn']">
+    <div v-if="loggedIn">
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
@@ -59,9 +59,11 @@
     </div>
     <div class="page-section-wide bottom-page">
         <div class="projects-and-people">
-            <div class="categories"></div>
-            <div class="new-project"></div>
-            <div class="recommandations"></div>
+            <ProjectCategoriesDropdown />
+            <div v-if="loggedIn" class="new-project"></div>
+            <div class="recommandations">
+                <RecommendationBlock :organization="organization" :logged-in="loggedIn" />
+            </div>
         </div>
         <div class="all-news">
             <div class="select-news"></div>
@@ -79,9 +81,10 @@
 <script>
 import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-
+import ProjectCategoriesDropdown from '@/components/lpikit/Dropdown/ProjectCategoriesDropdown.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
+import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
 
 export default {
     name: 'NewHomePage',
@@ -91,12 +94,26 @@ export default {
     components: {
         SearchOptions,
         LpiButton,
+        ProjectCategoriesDropdown,
+        RecommendationBlock,
     },
 
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
         },
+
+        loggedIn() {
+            return this.$store.getters['users/isLoggedIn']
+        },
+    },
+
+    data() {
+        return {
+            open_categories: false,
+            recommendations: [],
+            isLoading: true,
+        }
     },
 
     methods: {
@@ -129,7 +146,6 @@ export default {
 
     .banner-image {
         display: flex;
-        border: 1px solid red;
         flex-direction: column;
 
         @media screen and (min-width: $min-tablet) {
@@ -268,7 +284,6 @@ export default {
 }
 
 .projects-and-people {
-    border: 1px solid red;
     margin-bottom: $space-xl;
 
     @media (min-width: $min-tablet) {
@@ -277,12 +292,35 @@ export default {
         margin-bottom: 0;
     }
 
+    button {
+        background-color: $white;
+        cursor: pointer;
+    }
+
     .categories {
-        border: 1px solid purple;
+        border: 1px solid $gray-10;
+        border-radius: $border-radius-s;
         height: pxToRem(50px);
+        display: flex;
+        justify-content: space-between;
+        padding-inline: $space-m;
+        align-items: center;
+        width: 100%;
 
         @media (min-width: $min-tablet) {
             margin-top: $space-l;
+        }
+
+        .categories-btn {
+            color: $primary-dark;
+            font-size: $font-size-m;
+            font-weight: 700;
+        }
+
+        .caret {
+            margin-left: $space-l;
+            fill: $primary-dark;
+            width: pxToRem(20px);
         }
     }
 
@@ -293,9 +331,9 @@ export default {
     }
 
     .recommandations {
-        height: pxToRem(793px);
         margin-top: $space-l;
-        border: 1px solid pink;
+        border: 1px solid $green;
+        border-radius: $border-radius-s;
     }
 }
 

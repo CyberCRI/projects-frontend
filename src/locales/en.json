@@ -1263,6 +1263,7 @@
         "announcement-create": "Create announcement",
         "announcements": "announcement | announcements",
         "at-coordinates": "at coordinates",
+        "categories": "Projects categories",
         "create-project": "Create a project",
         "create": {
             "choose-category-first": "Please choose a category first",
@@ -2046,5 +2047,12 @@
             "access_request": "Respond to {access_request_nb} pending access request(s)!"
         },
         "empty": "You have no notifications"
+    },
+    "recommendations": {
+        "empty": "You have no recommendations",
+        "title": "Recommended for you",
+        "is-featured": "(Featured)",
+        "more-projects": "Discover more projects",
+        "more-profiles": "Discover more profiles"
     }
 }
