@@ -1701,14 +1701,14 @@
     "tips": {
         "background-color": "This color will be displayed behind the text.",
         "category-delete": "You can only delete a category if the category does not contain any projects. Please transfer all the projects in the category to other categories.",
-        "category-image": "Image used to illustrate a category. It is not required if you would rather simply display a colour. Minimum width: 1024pxpx, Minimum height: 400pxpx",
+        "category-image": "Image used to illustrate a category. It is not required if you would rather simply display a color. Minimum width: 1024px, Minimum height: 400px",
         "limit-publication-to-reviewers": "Do you want to limit the publication of projects to reviewers ?",
         "organization-name": "This name will be used to identify your community in community-specific pages (e.g: statistics page).",
         "organization-title": "The title of your portal will appear on the banner of your welcome page. Preview above.",
         "organization-email": "Contact email of your portal.",
         "organization-language": "The language by default of your portal.",
         "organization-visibility": "Do you want a link to your portal from the main portal of Projects?",
-        "organization-logo": "Your logo will appear on the parent portal on a white background. If the logo you previously uploaded is not compatible with a white background, please choose a background colour below."
+        "organization-logo": "Your logo will appear on the parent portal on a white background. If the logo you previously uploaded is not compatible with a white background, please choose a background color below."
     },
     "toasts": {
         "abuse-report": {
