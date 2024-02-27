@@ -1,3 +1,5 @@
+import hljs from 'highlight.js'
+
 export function fixTables(contentNode) {
     const tables = contentNode?.querySelectorAll('table')
     if (!tables) {
@@ -47,7 +49,12 @@ export function patchVideos(contentNode) {
     })
 }
 
+export function fixCodeBlock() {
+    hljs.highlightAll()
+}
+
 export default function fixEditorContent(contentNode) {
     fixTables(contentNode)
     patchVideos(contentNode)
+    fixCodeBlock()
 }

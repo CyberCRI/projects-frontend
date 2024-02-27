@@ -113,6 +113,7 @@
                         :editor="editor"
                         class="editortablemenu"
                     />
+
                     <LinkMenuBar
                         v-if="mode !== 'none' && disconnectionGrace"
                         :editor="editor"
@@ -248,6 +249,7 @@ import MenuBar from './MenuBar.vue'
 import TableMenuBar from './TableMenuBar.vue'
 import LinkMenuBar from './LinkMenuBar.vue'
 
+import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.ts'
 import CustomImage from './tiptap-extensions/CustomImage.ts'
 import ImageMenuBar from './ImageMenuBar.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
@@ -260,6 +262,7 @@ import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 import Gapcursor from '@tiptap/extension-gapcursor'
 
+import lowlight from '@/functs/lowlight.ts'
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
 const DISCONNECTION_GRACE_DURATION =
@@ -520,6 +523,9 @@ export default {
                     CustomTableCell,
                     CustomImage,
                     Gapcursor,
+                    LpiCodeBlock.configure({
+                        lowlight,
+                    }),
                 ]
 
                 if (this.socket) {

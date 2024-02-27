@@ -878,6 +878,20 @@
         "bold": "bold",
         "bullet_list": "Bullet List",
         "click-to-play-video": "Click again to start/stop video",
+        "code": {
+            "label": "Code",
+            "language": {
+                "label": "Language:"
+            },
+            "theme": {
+                "label": "Theme:",
+                "light": "Light",
+                "dark": "Dark"
+            },
+            "tabs": {
+                "label": "Tabs:"
+            }
+        },
         "color": {
             "change-color": "Change color",
             "choose": "Or choose a custom one",

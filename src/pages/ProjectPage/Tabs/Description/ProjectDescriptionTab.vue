@@ -226,6 +226,7 @@ export default {
 :deep(.description-content > ul),
 :deep(.description-content > ol),
 :deep(.description-content > blockquote),
+:deep(.description-content > pre),
 :deep(.description-content > .custom-video-ctn) {
     max-width: pxToRem(800px);
     margin-left: auto;

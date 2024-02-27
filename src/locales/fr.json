@@ -877,6 +877,20 @@
         "bold": "bold",
         "bullet_list": "Liste à points",
         "click-to-play-video": "Cliquez encore pour démarrer/arrêter la vidéo",
+        "code": {
+            "label": "Code",
+            "language": {
+                "label": "Language :"
+            },
+            "theme": {
+                "label": "Thème :",
+                "light": "Clair",
+                "dark": "Sombre"
+            },
+            "tabs": {
+                "label": "Tabs :"
+            }
+        },
         "color": {
             "change-color": "Changer la couleur",
             "choose": "Ou choisir une couleur personnalisée",

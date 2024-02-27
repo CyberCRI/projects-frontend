@@ -232,6 +232,13 @@ export default {
                     isDisabled: false,
                 },
                 {
+                    icon: 'code-s-slash-line',
+                    title: 'multieditor.code.label',
+                    action: () => this.editor.chain().focus().toggleCodeBlock().run(),
+                    isActive: () => this.editor.isActive('codeBlock'),
+                    isDisabled: false,
+                },
+                {
                     type: 'divider',
                 },
             ]
