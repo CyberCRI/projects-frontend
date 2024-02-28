@@ -993,6 +993,7 @@
         "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",
         "illustration-text": "YES, THIS IS AN ERROR 404 AND NOW YOU’RE LOST IN THIS JUNGLE...",
         "page-title": "Page not found",
+        "search": "This is not what you were looking for right? Same player want to {0}?",
         "search-again": "search again",
         "title": "Oops....",
         "not-connected": {

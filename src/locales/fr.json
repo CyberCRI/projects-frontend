@@ -991,6 +991,7 @@
         "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",
         "illustration-text": "OUI, C'EST UNE ERREUR 404 ET MAINTENANT VOUS ÊTES PERDU DANS CETTE JUNGLE...",
         "page-title": "Page non trouvée",
+        "search": "Ce n'est pas ce à quoi vous vous attendiez, n'est-ce pas ? Le même joueur tente {0} ?",
         "search-again": "une nouvelle recherche",
         "title": "Oups....",
         "not-connected": {
