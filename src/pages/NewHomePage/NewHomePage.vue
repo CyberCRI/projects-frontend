@@ -60,7 +60,9 @@
     <div class="page-section-wide bottom-page">
         <div class="projects-and-people">
             <ProjectCategoriesDropdown />
-            <div v-if="loggedIn" class="new-project"></div>
+            <div v-if="loggedIn" class="home-buttons">
+                <HomeButtons :buttons="homeButtons" />
+            </div>
             <div class="recommandations">
                 <RecommendationBlock :organization="organization" :logged-in="loggedIn" />
             </div>
@@ -68,11 +70,10 @@
         <div class="all-news">
             <div class="select-news"></div>
             <div class="news">
-                <div class="top-news"></div>
-                <div class="other-news"></div>
-            </div>
-            <div class="see-all">
-                <LpiButton :label="$t('feed.see-all')" :secondary="false"> </LpiButton>
+                <div v-if="topNews" class="top-news"></div>
+                <div class="other-news">
+                    <HomeNews :organization="organization" />
+                </div>
             </div>
         </div>
     </div>
@@ -85,6 +86,8 @@ import ProjectCategoriesDropdown from '@/components/lpikit/Dropdown/ProjectCateg
 import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
 import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
+import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
+import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
 
 export default {
     name: 'NewHomePage',
@@ -96,6 +99,8 @@ export default {
         LpiButton,
         ProjectCategoriesDropdown,
         RecommendationBlock,
+        HomeButtons,
+        HomeNews,
     },
 
     computed: {
@@ -113,6 +118,13 @@ export default {
             open_categories: false,
             recommendations: [],
             isLoading: true,
+            homeButtons: [
+                {
+                    label: this.$t('home.new-project'),
+                    action: () => this.$router.push({ name: 'createProject' }),
+                },
+            ],
+            topNews: null,
         }
     },
 
@@ -277,9 +289,11 @@ export default {
     margin-bottom: $space-l;
     border-radius: $border-radius-17;
     flex-direction: column;
+    padding-inline: 5px;
 
     @media (min-width: $min-tablet) {
         flex-direction: row;
+        padding: $space-l;
     }
 }
 
@@ -287,7 +301,7 @@ export default {
     margin-bottom: $space-xl;
 
     @media (min-width: $min-tablet) {
-        width: 30%;
+        width: 35%;
         margin-right: $space-l;
         margin-bottom: 0;
     }
@@ -324,10 +338,14 @@ export default {
         }
     }
 
-    .new-project {
-        height: pxToRem(72px);
+    .home-buttons {
         margin-top: $space-l;
-        border: 1px solid blue;
+        background-color: $primary-lighter;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding-block: $space-s;
     }
 
     .recommandations {
@@ -338,39 +356,24 @@ export default {
 }
 
 .all-news {
-    border: 1px solid green;
     height: fit-content;
 
     @media (min-width: $min-tablet) {
-        width: 70%;
+        width: 65%;
         margin-left: $space-l;
     }
 
     .select-news {
         height: $space-l;
-        border: 1px solid blue;
     }
 
     .news {
-        border: 1px solid green;
         height: fit-content;
 
         .top-news {
             height: pxToRem(274px);
             border: 1px solid red;
         }
-
-        .other-news {
-            height: pxToRem(160px);
-            margin-top: $space-l;
-            border: 1px solid orange;
-        }
-    }
-
-    .see-all {
-        display: flex;
-        justify-content: center;
-        margin-top: $space-l;
     }
 }
 </style>

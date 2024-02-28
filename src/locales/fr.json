@@ -833,7 +833,8 @@
             "title": "Catégories de projets"
         },
         "login": "Se connecter",
-        "account-request": "Demander un compte"
+        "account-request": "Demander un compte",
+        "new-project": "Nouveau projet"
     },
     "language": {
         "label-en": "English",
@@ -954,6 +955,9 @@
             "sdg": "Objectifs de Développement Durable",
             "link": "https://fr.unesco.org/sdgs"
         }
+    },
+    "news": {
+        "read": "Lire"
     },
     "onboarding": {
         "step": "étape",
@@ -2051,6 +2055,7 @@
         "empty": "Vous n'avez aucune recommandation",
         "title": "Recommandé pour vous",
         "is-featured": "(Favori)",
-        "more-projects": "Découvrez plus de projets"
+        "more-projects": "Découvrez plus de projets",
+        "more-profiles": "Découvrez plus de profils"
     }
 }

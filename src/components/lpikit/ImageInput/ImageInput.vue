@@ -74,8 +74,8 @@ export default {
             return this.label
                 ? this.label
                 : this.existingImage
-                  ? this.$t('picture.change-picture')
-                  : this.$t('picture.add-picture')
+                ? this.$t('picture.change-picture')
+                : this.$t('picture.add-picture')
         },
     },
 }

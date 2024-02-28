@@ -1,6 +1,11 @@
 <template>
     <li v-if="recommendation" class="recommendation-item">
-        <div class="recommendation" @click="goTo">
+        <div
+            class="recommendation"
+            @click="goTo"
+            @mouseover="showExtraTags = true"
+            @mouseout="showExtraTags = false"
+        >
             <CroppedImage
                 v-if="recommendation"
                 ref="userImg"
@@ -21,6 +26,41 @@
                 <span v-if="recommendation.job" class="job">
                     {{ $filters.capitalize(recommendation.job) }}
                 </span>
+                <div class="skills">
+                    <BadgeItem
+                        v-for="(skill, index) in displayedSkills"
+                        :key="index"
+                        :label="skill.wikipedia_tag.name"
+                        size="small"
+                        colors="primary-light"
+                        class="skill-badge"
+                    />
+                    <span
+                        class="tag-elt-show-more"
+                        @click="showExtraTags = !showExtraTags"
+                        :class="{ hidden: !hasMoreTags || showExtraTags }"
+                    >
+                        <BadgeItem
+                            v-if="moreSkills && !showExtraTags"
+                            :label="`+${moreSkills.length}`"
+                            size="small"
+                            colors="primary-dark"
+                            class="skill-badge"
+                            @mouseover="showExtraTags = true"
+                            @mouseout="showExtraTags = false"
+                        />
+                    </span>
+                </div>
+                <div v-if="showExtraTags">
+                    <BadgeItem
+                        v-for="(skill, index) in moreSkills"
+                        :key="index"
+                        :label="skill.wikipedia_tag.name"
+                        size="small"
+                        colors="primary-light"
+                        class="skill-badge"
+                    />
+                </div>
             </div>
         </div>
     </li>
@@ -29,6 +69,7 @@
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
 
 export default {
     name: 'UserRecommendationItem',
@@ -37,7 +78,7 @@ export default {
 
     mixins: [imageMixin],
 
-    components: { CroppedImage },
+    components: { CroppedImage, BadgeItem },
 
     props: {
         recommendation: {
@@ -49,12 +90,33 @@ export default {
     data() {
         return {
             imageError: false,
+            showExtraTags: false,
         }
     },
 
     computed: {
         defaultImage() {
             return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
+        },
+
+        displayedSkills() {
+            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
+                return this.recommendation.skills.slice(0, 3)
+            } else {
+                return this.recommendation.skills
+            }
+        },
+
+        moreSkills() {
+            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
+                return this.recommendation.skills.slice(3)
+            } else {
+                return []
+            }
+        },
+
+        hasMoreTags() {
+            return this.moreSkills.length > 0
         },
     },
 
@@ -118,6 +180,25 @@ export default {
 .job {
     font-size: $font-size-s;
     color: $black;
-    padding-top: $space-xs;
+    padding-block: $space-xs;
+}
+
+.skill-badge {
+    margin-right: $space-3xs;
+    margin-bottom: $space-3xs;
+}
+
+.tag-elt-show-more {
+    cursor: pointer;
+
+    &.hidden {
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+.is-showing-more {
+    position: relative;
+    z-index: 2;
 }
 </style>

@@ -6,8 +6,8 @@
             editedLinkedProject
                 ? $t('project.edit-linked-project')
                 : listProjects.length
-                  ? $t('project.add-linked-project') + ' (' + listProjects.length + ')'
-                  : $t('project.add-linked-project')
+                ? $t('project.add-linked-project') + ' (' + listProjects.length + ')'
+                : $t('project.add-linked-project')
         "
         :selected-projects="listProjects"
         :padding="true"

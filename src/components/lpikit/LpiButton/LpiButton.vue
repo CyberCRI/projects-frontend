@@ -1,6 +1,12 @@
 <template>
     <button
-        :class="{ secondary, disabled, 'icon-only': iconOnly, 'reversed-order': reversedOrder }"
+        :class="{
+            secondary,
+            disabled,
+            'icon-only': iconOnly,
+            'reversed-order': reversedOrder,
+            'white-bg': whiteBg,
+        }"
         :disabled="disabled"
         type="button"
         class="lpi-button"
@@ -25,6 +31,11 @@ export default {
         },
 
         secondary: {
+            type: Boolean,
+            default: false,
+        },
+
+        whiteBg: {
             type: Boolean,
             default: false,
         },
