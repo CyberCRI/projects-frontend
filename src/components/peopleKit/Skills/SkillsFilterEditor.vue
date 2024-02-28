@@ -90,8 +90,9 @@ export default {
 
     methods: {
         suggest: debounce(async function (evt) {
-            if (evt.key === 'Enter') return // dont show suggestion when triggering search
             this.suggestions = []
+            if (evt.key === 'Enter') return // dont show suggestion when triggering search
+            if (!this.queryString || this.queryString.length < 3) return
             try {
                 this.suggestions = await wikiAutocomplete(this.queryString)
             } catch (e) {
