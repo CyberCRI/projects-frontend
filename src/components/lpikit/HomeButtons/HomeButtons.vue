@@ -31,8 +31,7 @@ export default {
 <style lang="scss" scoped>
 .home-btn-container {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    place-content: center center;
 
     .individual-button {
         margin-block: $space-xs;

@@ -94,8 +94,7 @@ export default {
 .home-news-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    place-content: center center;
 }
 
 .see-all {

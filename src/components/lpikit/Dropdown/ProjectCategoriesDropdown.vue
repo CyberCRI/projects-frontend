@@ -5,21 +5,19 @@
             <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
         </button>
         <div v-if="open" class="choose-project-categories">
-            <Transition name="menu-fade">
-                <div class="drop-down-menu custom-scrollbar">
-                    <ul>
-                        <li
-                            v-for="(item, index) in categories"
-                            :key="index"
-                            class="drop-down-menu-item"
-                        >
-                            <div class="drop-down-menu-item-content" @click="goTo(item)">
-                                <span class="label">{{ $filters.capitalize(item.name) }}</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </Transition>
+            <div class="drop-down-menu custom-scrollbar">
+                <ul>
+                    <li
+                        v-for="(item, index) in categories"
+                        :key="index"
+                        class="drop-down-menu-item"
+                    >
+                        <div class="drop-down-menu-item-content" @click="goTo(item)">
+                            <span class="label">{{ $filters.capitalize(item.name) }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -152,20 +150,5 @@ export default {
 .custom-scrollbar::-webkit-scrollbar-track {
     border: solid 3px $primary-dark;
     border-radius: $scrollbar-radius;
-}
-
-.menu-fade-leave-active,
-.menu-fade-enter-active {
-    transform: translateY(0);
-    transition:
-        0.15s transform ease-in-out,
-        0.1s border-top-right-radius ease-in-out 0.05s,
-        0.1s opacity ease-in-out 0.05s;
-}
-
-.menu-fade-enter-from,
-.menu-fade-leave-to {
-    opacity: 0;
-    transform: translateY(-100%);
 }
 </style>
