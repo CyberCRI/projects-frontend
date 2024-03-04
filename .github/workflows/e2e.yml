@@ -54,4 +54,4 @@ jobs:
           notify_when: 'failure'
           notification_title: "Les e2e Playwright viennent d'échouer"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_BUGS_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_GITHUB_REPORTER_IT_PROJECTS_FRONTEND_WEBHOOK }}
