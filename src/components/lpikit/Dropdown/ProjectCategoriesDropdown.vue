@@ -12,9 +12,12 @@
                         :key="index"
                         class="drop-down-menu-item"
                     >
-                        <div class="drop-down-menu-item-content" @click="goTo(item)">
+                        <router-link
+                            class="drop-down-menu-item-content"
+                            :to="{ name: 'Category', params: { id: item.id } }"
+                        >
                             <span class="label">{{ $filters.capitalize(item.name) }}</span>
-                        </div>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -46,9 +49,6 @@ export default {
     },
 
     methods: {
-        goTo(item) {
-            this.$router.push(`/category/${item.id}`)
-        },
         close() {
             this.open = false
         },

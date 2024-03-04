@@ -24,11 +24,12 @@
                     {{ organization.dashboard_subtitle }}
                 </div>
                 <div class="image-account-buttons">
-                    <LpiButton :label="$t('home.login')" :secondary="false" />
+                    <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
                     <LpiButton
                         :label="$t('home.account-request')"
                         :secondary="true"
                         class="login-button"
+                        @click="$router.push({ name: 'RequestAccess' })"
                     />
                 </div>
             </div>
@@ -94,6 +95,7 @@ import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
 import SummaryCardsList from '@/components/lpikit/SummaryCards/SummaryCardsList.vue'
 import { searchProjects } from '@/api/projects.service'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 export default {
     name: 'NewHomePage',
@@ -157,6 +159,10 @@ export default {
     methods: {
         goTo(section, filters) {
             this.$router.push({ name: 'Search', query: { section, ...filters } })
+        },
+
+        logInUser() {
+            goToKeycloakLoginPage()
         },
     },
 }

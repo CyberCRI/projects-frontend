@@ -61,8 +61,8 @@ export default {
             this.$router.push({ name: 'Search' })
         },
 
-        getAnnouncements() {
-            getAnnouncements({
+        async getAnnouncements() {
+            await getAnnouncements({
                 organizations: [this.organization.code],
                 ordering: '-updated_at',
             })

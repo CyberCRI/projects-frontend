@@ -5,7 +5,6 @@
             disabled,
             'icon-only': iconOnly,
             'reversed-order': reversedOrder,
-            'white-bg': whiteBg,
         }"
         :disabled="disabled"
         type="button"
@@ -31,11 +30,6 @@ export default {
         },
 
         secondary: {
-            type: Boolean,
-            default: false,
-        },
-
-        whiteBg: {
             type: Boolean,
             default: false,
         },
