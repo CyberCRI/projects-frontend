@@ -1,0 +1,25 @@
+name: Build e2e Docker image
+
+on:
+  push:
+    paths:
+      - 'tests/playwright/**'
+      - playwright.config.ts
+      - package.json
+      - e2e.Dockerfile
+      - e2e.Dockerfile.dockerignore
+
+
+jobs:
+  build-docker:
+    if: github.ref == 'refs/heads/main'
+    uses: CyberCRI/github-workflows/.github/workflows/build-push.yaml@main
+    with:
+      registry-name: ${{ vars.DOCKER_PROD_REGISTRY }}
+      image-name: projects-frontend-e2e
+      image-tag: ${{ github.sha }}
+      recursive-submodule-checkout: true
+    secrets:
+      submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
+      registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
+      registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}

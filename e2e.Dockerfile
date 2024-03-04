@@ -1,13 +1,16 @@
-FROM node:20
+FROM node:20-alpine
 
 WORKDIR /app
-
-ARG PLAYWRIGHT_VERSION=1.42.0
 
 COPY playwright.config.ts playwright.config.ts
 
 COPY tests/playwright tests/playwright
+COPY package.json source-package.json
 
-RUN npx -y "playwright@${PLAYWRIGHT_VERSION}" install --with-deps \
-  && npx -y "playwright@${PLAYWRIGHT_VERSION}" install-deps
+RUN apk update && \
+    apk upgrade --no-cache && \
+    apk add --no-cache jq bash
 
+RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
+    npm install -D && \
+    rm source-package.json
