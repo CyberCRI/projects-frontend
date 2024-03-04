@@ -17,10 +17,11 @@
                     v-for="(childItem, indexItem) in item.childItems"
                     :key="indexItem"
                     :item="childItem"
+                    @close="$emit('close')"
                 />
             </ul>
         </AccordionItem>
-        <a v-else @click="menuAction(item.action)" class="link">
+        <a v-else @click="menuAction(item)" class="link">
             <IconImage v-if="item.leftIcon" :name="item.leftIcon" class="icon" />
             {{ item.label }}
         </a>
@@ -53,9 +54,12 @@ export default {
     },
 
     methods: {
-        menuAction(action) {
+        menuAction(item) {
             this.$emit('close')
-            if (action) action()
+            if (item.action) item.action()
+            else if (item.to) {
+                this.$router.push(item.to)
+            }
         },
 
         setActive(e) {
