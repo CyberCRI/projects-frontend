@@ -89,7 +89,6 @@ export default {
 
     .announcement-img-container {
         align-self: center;
-        width: fill-available;
         background-size: cover;
         background-position: top center;
         height: pxToRem(200px);

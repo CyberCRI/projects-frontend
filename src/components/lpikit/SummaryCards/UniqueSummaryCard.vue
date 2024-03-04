@@ -97,6 +97,11 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-inline: $space-xs;
+
+    @media screen and (min-width: $min-tablet) {
+        padding-inline: $space-xl;
+    }
 }
 
 .top-title {
@@ -107,8 +112,7 @@ export default {
 }
 
 .three-column-wrapper {
-    width: -webkit-fill-available;
-    margin-inline: $space-xs;
+    width: 100%;
     margin-bottom: $space-l;
     margin-top: $space-m;
     background-color: $white;
@@ -119,7 +123,6 @@ export default {
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
-        margin-inline: $space-xl;
         margin-top: $space-m;
         padding-top: 0;
     }
@@ -191,9 +194,11 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-inline: $space-xs;
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
+        padding-inline: $space-xl;
     }
 }
 
@@ -212,8 +217,7 @@ export default {
 .column-wrapper {
     display: flex;
     flex-direction: column;
-    width: fill-available;
-    margin-inline: $space-xs;
+    width: 100%;
     margin-block: $space-l;
     background-color: $white;
     border: 1px solid $primary-dark;
@@ -222,7 +226,6 @@ export default {
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
         padding-top: 0;
-        margin-inline: $space-xl;
     }
 
     &.one-col-wrapper {
