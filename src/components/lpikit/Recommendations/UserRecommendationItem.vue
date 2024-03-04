@@ -16,7 +16,7 @@
                         : recommendation?.profile_picture?.variations?.small || ''
                 "
                 @error="placeHolderImg"
-                :class="['img-container', { 'img-container--error': imageError }]"
+                class="img-container"
             />
             <div class="text-container">
                 <span class="name">
@@ -195,10 +195,5 @@ export default {
         visibility: hidden;
         pointer-events: none;
     }
-}
-
-.is-showing-more {
-    position: relative;
-    z-index: 2;
 }
 </style>

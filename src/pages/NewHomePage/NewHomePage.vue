@@ -3,9 +3,12 @@
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
-        <div class="page-section-wide summary-cards">
-            <div class="summary-container"></div>
+        <div v-if="summaryCardsExist && !isLoading" class="page-section-wide summary-cards">
+            <div class="summary-container">
+                <SummaryCardsList :projects="projects" />
+            </div>
         </div>
+        <LpiLoader v-else class="loading" type="simple" />
     </div>
     <div v-else class="page-section-wide introduction">
         <div v-if="organization && organization.banner_image" class="banner-image">
@@ -88,6 +91,9 @@ import permissions from '@/mixins/permissions.ts'
 import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
 import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
 import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
+import SummaryCardsList from '@/components/lpikit/SummaryCards/SummaryCardsList.vue'
+import { searchProjects } from '@/api/projects.service'
+import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 
 export default {
     name: 'NewHomePage',
@@ -101,6 +107,8 @@ export default {
         RecommendationBlock,
         HomeButtons,
         HomeNews,
+        SummaryCardsList,
+        LpiLoader,
     },
 
     computed: {
@@ -125,7 +133,25 @@ export default {
                 },
             ],
             topNews: null,
+            projects: [],
+            summaryCardsExist: false,
         }
+    },
+
+    async mounted() {
+        const filters = {
+            limit: 3,
+            ordering: '-updated_at',
+            members: [this.$store.getters['users/id']],
+            member_role: ['owners', 'members', 'reviewers'],
+            organizations: this.$store.getters['organizations/current'].code,
+        }
+        const response = await searchProjects('', filters)
+        this.projects = response.results
+
+        this.summaryCardsExist = this.loggedIn && this.projects.length > 0
+
+        this.isLoading = false
     },
 
     methods: {
@@ -140,6 +166,12 @@ export default {
 .title-container {
     margin-top: $space-3xl;
     margin-bottom: $space-l;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding-top: $space-l;
 }
 
 .introduction {
@@ -256,8 +288,6 @@ export default {
     }
 
     .summary-container {
-        border: 1px solid red;
-        height: pxToRem(240px);
         background-color: $green-lighter;
     }
 }

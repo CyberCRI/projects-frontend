@@ -835,7 +835,14 @@
         },
         "login": "Login",
         "account-request": "Request an account",
-        "new-project": "New project"
+        "new-project": "New project",
+        "short-title": {
+            "projects": "projects"
+        },
+        "long-title": {
+            "projects": "my projects"
+        },
+        "create-project": "Create a project"
     },
     "language": {
         "label-en": "English",
@@ -957,9 +964,6 @@
             "sdgAbbr": "Sustainable Development Goals",
             "link": "https://en.unesco.org/sustainabledevelopmentgoals"
         }
-    },
-    "news": {
-        "read": "Read"
     },
     "onboarding": {
         "step": "step",

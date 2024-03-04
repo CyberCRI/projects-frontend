@@ -11,7 +11,7 @@
                 :alt="`${recommendation.title} image`"
                 :src="imageError ? defaultImage : recommendation.header_image.variations.small"
                 @error="placeHolderImg"
-                :class="['img-container', { 'img-container--error': imageError }]"
+                class="img-container"
             />
             <div class="text-container">
                 <span class="project-title">
@@ -58,10 +58,6 @@ export default {
     methods: {
         placeHolderImg() {
             this.imageError = true
-        },
-
-        goTo() {
-            this.$router.push(`/projects/${this.recommendation.slug}/summary`)
         },
     },
 }

@@ -31,6 +31,7 @@
                         : $t('recommendations.more-projects')
                 "
                 :secondary="true"
+                @click="goToMoreRecommendations"
             >
             </LpiButton>
         </div>
@@ -56,6 +57,12 @@ export default {
         userRecommendation: {
             type: Boolean,
             default: false,
+        },
+    },
+
+    methods: {
+        goToMoreRecommendations() {
+            this.$router.push({ name: 'Search' })
         },
     },
 }
