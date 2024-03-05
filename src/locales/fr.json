@@ -2076,5 +2076,90 @@
         "is-featured": "(A la Une)",
         "more-projects": "Découvrez plus de projets",
         "more-profiles": "Découvrez plus de profils"
+    },
+    "event": {
+        "calendar": {
+            "title": "Calendrier",
+            "future": "A venir",
+            "past": "Passés",
+            "month": {
+                "01": {
+                    "short": "Jan",
+                    "long": "Janvier"
+                },
+                "02": {
+                    "short": "Fév",
+                    "long": "Février"
+                },
+                "03": {
+                    "short": "Mar",
+                    "long": "Mars"
+                },
+                "04": {
+                    "short": "Avr",
+                    "long": "Avril"
+                },
+                "05": {
+                    "short": "Mai",
+                    "long": "Mai"
+                },
+                "06": {
+                    "short": "Juin",
+                    "long": "Juin"
+                },
+                "07": {
+                    "short": "Juil",
+                    "long": "Juillet"
+                },
+                "08": {
+                    "short": "Août",
+                    "long": "Août"
+                },
+                "09": {
+                    "short": "Sep",
+                    "long": "Septembre"
+                },
+                "10": {
+                    "short": "Oct",
+                    "long": "Octobre"
+                },
+                "11": {
+                    "short": "Nov",
+                    "long": "Novembre"
+                },
+                "12": {
+                    "short": "Déc",
+                    "long": "Décembre"
+                }
+            }
+        },
+        "create": {
+            "title": "Ajouter un événement au calendrier"
+        },
+        "drawer": {
+            "create": "Ajouter un événement au calendrier",
+            "edit": "Éditer un événement du calendrier"
+        },
+        "form": {
+            "name": {
+                "label": "Nom de l'événement *",
+                "placeholder": "Ex. Examen du 1er semestre"
+            },
+            "information": {
+                "label": "Information",
+                "placeholder": "Ajoutez des informations sur cet événement"
+            },
+            "date": {
+                "label": "Date de l'événement *",
+                "placeholder": "Sélectionnez la date"
+            },
+            "groups": {
+                "label": "Groupe(s) cible(s)",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "select-all": "Tout sélectionner"
+            }
+        },
+        "group-label": "Groupe :",
+        "groups-label": "Groupes :"
     }
 }
