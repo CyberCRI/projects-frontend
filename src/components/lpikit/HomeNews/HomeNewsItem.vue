@@ -1,6 +1,6 @@
 <template>
     <div class="home-news-item">
-        <h1 class="news-title-mobile">{{ $filters.capitalize(news.title) }}</h1>
+        <h3 class="news-title-mobile">{{ $filters.capitalize(news.title) }}</h3>
 
         <div class="news-img-container">
             <img
@@ -16,7 +16,7 @@
             />
         </div>
         <div class="news-content">
-            <h1 class="news-title-desktop">{{ $filters.capitalize(news.title) }}</h1>
+            <h3 class="news-title-desktop">{{ $filters.capitalize(news.title) }}</h3>
             <p class="news-description">{{ news.purpose }}</p>
             <div class="more-info" @click="readMore">
                 <IconImage class="arrow" name="ArrowRight" />

@@ -1,13 +1,13 @@
 <template>
     <div class="home-announcement-item">
-        <h1 class="announcement-title-mobile">{{ $filters.capitalize(announcement.title) }}</h1>
+        <h3 class="announcement-title-mobile">{{ $filters.capitalize(announcement.title) }}</h3>
         <div class="announcement-img-container">
             <img :alt="`announcement image`" :src="announcementImage" class="announcement-img" />
         </div>
         <div class="announcement-content">
-            <h1 class="announcement-title-desktop">
+            <h3 class="announcement-title-desktop">
                 {{ $filters.capitalize(announcement.title) }}
-            </h1>
+            </h3>
             <div class="announcement-infos">
                 <span class="date-ctn">
                     {{ new Date(announcement.updated_at).toLocaleDateString() }}

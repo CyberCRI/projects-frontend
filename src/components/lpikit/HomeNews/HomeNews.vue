@@ -43,7 +43,7 @@ export default {
         })
         this.news = projects.results
 
-        this.getAnnouncements()
+        await this.getAnnouncements()
 
         this.isLoading = false
     },
@@ -61,8 +61,8 @@ export default {
             this.$router.push({ name: 'Search' })
         },
 
-        async getAnnouncements() {
-            await getAnnouncements({
+        getAnnouncements() {
+            return getAnnouncements({
                 organizations: [this.organization.code],
                 ordering: '-updated_at',
             })

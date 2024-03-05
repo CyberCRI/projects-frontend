@@ -16,6 +16,7 @@
 <script>
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import RecommendationList from '@/components/lpikit/Recommendations/RecommendationList.vue'
+import { getProjectsRecommendations, getUsersRecommendations } from '@/api/recommendations.service'
 
 export default {
     name: 'RecommendationBlock',
@@ -43,21 +44,17 @@ export default {
     },
 
     async mounted() {
-        this.projectRecommendations = await this.$store.dispatch(
-            'recommendations/getProjectsRecommendations',
-            {
-                organization: this.organization.code,
-                params: { limit: 4 },
-            }
-        )
+        let recommendedProjects = await getProjectsRecommendations({
+            organization: this.organization.code,
+            params: { limit: 4 },
+        })
+        this.projectRecommendations = recommendedProjects.results
 
-        this.userRecommendations = await this.$store.dispatch(
-            'recommendations/getUsersRecommendations',
-            {
-                organization: this.organization.code,
-                params: { limit: 3 },
-            }
-        )
+        let recommendedUsers = await getUsersRecommendations({
+            organization: this.organization.code,
+            params: { limit: 3 },
+        })
+        this.userRecommendations = recommendedUsers.results
 
         this.isLoading = false
     },

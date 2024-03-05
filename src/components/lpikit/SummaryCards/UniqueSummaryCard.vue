@@ -211,6 +211,7 @@ export default {
 
     @media screen and (min-width: $min-tablet) {
         margin-top: 0;
+        margin-right: $space-l;
     }
 }
 

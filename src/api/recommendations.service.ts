@@ -19,7 +19,7 @@ export async function getProjectsRecommendations(
             }/recommended-project/`,
             _adaptParamsToGetQuery(body.params)
         )
-    ).data.results
+    ).data
 }
 
 export async function getUsersRecommendations(body): Promise<UserModel[]> {
@@ -30,5 +30,5 @@ export async function getUsersRecommendations(body): Promise<UserModel[]> {
             }/recommended-user/`,
             _adaptParamsToGetQuery(body.params)
         )
-    ).data.results
+    ).data
 }

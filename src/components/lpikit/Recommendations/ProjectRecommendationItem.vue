@@ -1,6 +1,12 @@
 <template>
     <li v-if="recommendation" class="recommendation-item">
-        <div class="recommendation" @click="goTo">
+        <router-link
+            class="recommendation"
+            :to="{
+                name: 'projectSummary',
+                params: { slugOrId: recommendation.slug },
+            }"
+        >
             <CroppedImage
                 v-if="
                     recommendation &&
@@ -21,7 +27,7 @@
                     {{ $t('recommendations.is-featured') }}
                 </span>
             </div>
-        </div>
+        </router-link>
     </li>
 </template>
 

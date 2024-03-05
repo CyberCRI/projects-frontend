@@ -1,10 +1,10 @@
 <template>
     <li v-if="recommendation" class="recommendation-item">
-        <div
+        <router-link
             class="recommendation"
-            @click="goTo"
             @mouseover="showExtraTags = true"
             @mouseout="showExtraTags = false"
+            :to="{ name: 'ProfileOtherUser', params: { userId: recommendation.slug } }"
         >
             <CroppedImage
                 v-if="recommendation"
@@ -62,7 +62,7 @@
                     />
                 </div>
             </div>
-        </div>
+        </router-link>
     </li>
 </template>
 
@@ -123,10 +123,6 @@ export default {
     methods: {
         placeHolderImg() {
             this.imageError = true
-        },
-
-        goTo() {
-            this.$router.push(`/profile/${this.recommendation.slug}`)
         },
     },
 }
