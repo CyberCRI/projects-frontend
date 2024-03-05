@@ -833,7 +833,15 @@
             "title": "Catégories de projets"
         },
         "login": "Se connecter",
-        "account-request": "Demander un compte"
+        "account-request": "Demander un compte",
+        "new-project": "Nouveau projet",
+        "short-title": {
+            "projects": "projets"
+        },
+        "long-title": {
+            "projects": "mes projets"
+        },
+        "create-project": "Créer un projet"
     },
     "language": {
         "label-en": "English",
@@ -1275,6 +1283,7 @@
         "announcement-create": "Créer une annonce",
         "announcements": "annonce | annonces",
         "at-coordinates": "aux coordonnées",
+        "categories": "Catégories de projets",
         "create-project": "Créer un projet",
         "create": {
             "choose-category-first": "Choisissez d'abord une catégorie",
@@ -2060,5 +2069,12 @@
             "access_request": "Répondez à {access_request_nb} demande(s) d'accès en attente!"
         },
         "empty": "Vous n’avez aucune notification"
+    },
+    "recommendations": {
+        "empty": "Vous n'avez aucune recommandation",
+        "title": "Recommandé pour vous",
+        "is-featured": "(A la Une)",
+        "more-projects": "Découvrez plus de projets",
+        "more-profiles": "Découvrez plus de profils"
     }
 }

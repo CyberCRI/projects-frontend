@@ -121,9 +121,11 @@ export default {
 .header-drop-down {
     position: relative;
     margin-bottom: $space-m;
+    width: 100%;
 
     @media (min-width: $min-tablet) {
         margin-bottom: 0;
+        width: auto;
     }
 
     button {
@@ -152,7 +154,7 @@ export default {
         background: $white;
         border-radius: $border-radius-24;
         box-shadow: 0 0 0 1px $green;
-        width: pxToRem(344px);
+        width: 100%;
 
         .icon {
             fill: $primary-dark;

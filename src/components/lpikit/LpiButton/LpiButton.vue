@@ -1,6 +1,11 @@
 <template>
     <button
-        :class="{ secondary, disabled, 'icon-only': iconOnly, 'reversed-order': reversedOrder }"
+        :class="{
+            secondary,
+            disabled,
+            'icon-only': iconOnly,
+            'reversed-order': reversedOrder,
+        }"
         :disabled="disabled"
         type="button"
         class="lpi-button"

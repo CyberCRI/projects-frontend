@@ -1,11 +1,14 @@
 <template>
-    <div v-if="$store.getters['users/isLoggedIn']">
+    <div v-if="loggedIn">
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
-        <div class="page-section-wide summary-cards">
-            <div class="summary-container"></div>
+        <div v-if="summaryCardsExist && !isLoading" class="page-section-wide summary-cards">
+            <div class="summary-container">
+                <SummaryCardsList :projects="projects" />
+            </div>
         </div>
+        <LpiLoader v-else class="loading" type="simple" />
     </div>
     <div v-else class="page-section-wide introduction">
         <div v-if="organization && organization.banner_image" class="banner-image">
@@ -21,11 +24,12 @@
                     {{ organization.dashboard_subtitle }}
                 </div>
                 <div class="image-account-buttons">
-                    <LpiButton :label="$t('home.login')" :secondary="false" />
+                    <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
                     <LpiButton
                         :label="$t('home.account-request')"
                         :secondary="true"
                         class="login-button"
+                        @click="$router.push({ name: 'RequestAccess' })"
                     />
                 </div>
             </div>
@@ -59,18 +63,21 @@
     </div>
     <div class="page-section-wide bottom-page">
         <div class="projects-and-people">
-            <div class="categories"></div>
-            <div class="new-project"></div>
-            <div class="recommandations"></div>
+            <ProjectCategoriesDropdown />
+            <div v-if="loggedIn" class="home-buttons">
+                <HomeButtons :buttons="homeButtons" />
+            </div>
+            <div class="recommandations">
+                <RecommendationBlock :organization="organization" :logged-in="loggedIn" />
+            </div>
         </div>
         <div class="all-news">
             <div class="select-news"></div>
             <div class="news">
-                <div class="top-news"></div>
-                <div class="other-news"></div>
-            </div>
-            <div class="see-all">
-                <LpiButton :label="$t('feed.see-all')" :secondary="false"> </LpiButton>
+                <div v-if="topNews" class="top-news"></div>
+                <div class="other-news">
+                    <HomeNews :organization="organization" />
+                </div>
             </div>
         </div>
     </div>
@@ -79,9 +86,16 @@
 <script>
 import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-
+import ProjectCategoriesDropdown from '@/components/lpikit/Dropdown/ProjectCategoriesDropdown.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
+import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
+import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
+import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
+import SummaryCardsList from '@/components/lpikit/SummaryCards/SummaryCardsList.vue'
+import { searchProjects } from '@/api/projects.service'
+import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 export default {
     name: 'NewHomePage',
@@ -91,17 +105,64 @@ export default {
     components: {
         SearchOptions,
         LpiButton,
+        ProjectCategoriesDropdown,
+        RecommendationBlock,
+        HomeButtons,
+        HomeNews,
+        SummaryCardsList,
+        LpiLoader,
     },
 
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
         },
+
+        loggedIn() {
+            return this.$store.getters['users/isLoggedIn']
+        },
+    },
+
+    data() {
+        return {
+            open_categories: false,
+            recommendations: [],
+            isLoading: true,
+            homeButtons: [
+                {
+                    label: this.$t('home.new-project'),
+                    action: () => this.$router.push({ name: 'createProject' }),
+                },
+            ],
+            topNews: null,
+            projects: [],
+            summaryCardsExist: false,
+        }
+    },
+
+    async mounted() {
+        const filters = {
+            limit: 3,
+            ordering: '-updated_at',
+            members: [this.$store.getters['users/id']],
+            member_role: ['owners', 'members', 'reviewers'],
+            organizations: this.$store.getters['organizations/current'].code,
+        }
+        const response = await searchProjects('', filters)
+        this.projects = response.results
+
+        this.summaryCardsExist = this.loggedIn && this.projects.length > 0
+
+        this.isLoading = false
     },
 
     methods: {
         goTo(section, filters) {
             this.$router.push({ name: 'Search', query: { section, ...filters } })
+        },
+
+        logInUser() {
+            goToKeycloakLoginPage()
         },
     },
 }
@@ -111,6 +172,12 @@ export default {
 .title-container {
     margin-top: $space-3xl;
     margin-bottom: $space-l;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding-top: $space-l;
 }
 
 .introduction {
@@ -129,7 +196,6 @@ export default {
 
     .banner-image {
         display: flex;
-        border: 1px solid red;
         flex-direction: column;
 
         @media screen and (min-width: $min-tablet) {
@@ -228,8 +294,6 @@ export default {
     }
 
     .summary-container {
-        border: 1px solid red;
-        height: pxToRem(240px);
         background-color: $green-lighter;
     }
 }
@@ -261,78 +325,91 @@ export default {
     margin-bottom: $space-l;
     border-radius: $border-radius-17;
     flex-direction: column;
+    padding-inline: 5px;
 
     @media (min-width: $min-tablet) {
         flex-direction: row;
+        padding: $space-l;
     }
 }
 
 .projects-and-people {
-    border: 1px solid red;
     margin-bottom: $space-xl;
 
     @media (min-width: $min-tablet) {
-        width: 30%;
+        width: 35%;
         margin-right: $space-l;
         margin-bottom: 0;
     }
 
+    button {
+        background-color: $white;
+        cursor: pointer;
+    }
+
     .categories {
-        border: 1px solid purple;
+        border: 1px solid $gray-10;
+        border-radius: $border-radius-s;
         height: pxToRem(50px);
+        display: flex;
+        justify-content: space-between;
+        padding-inline: $space-m;
+        align-items: center;
+        width: 100%;
 
         @media (min-width: $min-tablet) {
             margin-top: $space-l;
         }
+
+        .categories-btn {
+            color: $primary-dark;
+            font-size: $font-size-m;
+            font-weight: 700;
+        }
+
+        .caret {
+            margin-left: $space-l;
+            fill: $primary-dark;
+            width: pxToRem(20px);
+        }
     }
 
-    .new-project {
-        height: pxToRem(72px);
+    .home-buttons {
         margin-top: $space-l;
-        border: 1px solid blue;
+        background-color: $primary-lighter;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding-block: $space-s;
     }
 
     .recommandations {
-        height: pxToRem(793px);
         margin-top: $space-l;
-        border: 1px solid pink;
+        border: 1px solid $green;
+        border-radius: $border-radius-s;
     }
 }
 
 .all-news {
-    border: 1px solid green;
     height: fit-content;
 
     @media (min-width: $min-tablet) {
-        width: 70%;
+        width: 65%;
         margin-left: $space-l;
     }
 
     .select-news {
         height: $space-l;
-        border: 1px solid blue;
     }
 
     .news {
-        border: 1px solid green;
         height: fit-content;
 
         .top-news {
             height: pxToRem(274px);
             border: 1px solid red;
         }
-
-        .other-news {
-            height: pxToRem(160px);
-            margin-top: $space-l;
-            border: 1px solid orange;
-        }
-    }
-
-    .see-all {
-        display: flex;
-        justify-content: center;
-        margin-top: $space-l;
     }
 }
 </style>
