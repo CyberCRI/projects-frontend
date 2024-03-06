@@ -10,6 +10,7 @@ on:
       - e2e.Dockerfile.dockerignore
     branches:
       - main
+      - e2e-wf
 
 
 jobs:
