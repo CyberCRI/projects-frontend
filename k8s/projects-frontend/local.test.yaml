@@ -10,3 +10,6 @@ instanceName: dummy-instance
 application:
   revision: dummy-revision
   sourceTargetRevision: dummy-sourceTargetRevision_deploy
+
+e2e:
+  enabled: true

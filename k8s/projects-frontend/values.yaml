@@ -30,6 +30,11 @@ injectedEnv:
     VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ''
     VITE_APP_KEYCLOAK_REALM: lp
 
+e2eEnv:
+  nonSensitive:
+    USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
+    PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
+    FRONTEND_URL: "{{ .Values.hostname }}"
 
 resources:
   requests:
@@ -43,3 +48,22 @@ maintenance:
   namespace: maintenance
   serviceName: maintenance
   portNumber: 80
+
+workflowRbac:
+  executorClusterRoleName: executor
+  serviceAccountName: workflow
+
+e2e:
+  name: '{{ join "-" (list .Values.instanceName "e2e") }}'
+  enabled: false
+  image:
+    repository: criprodprod.azurecr.io
+    path: projects-frontend-e2e
+    tag: '{{ .Values.application.revision }}'
+  commonLabels:
+    app.kubernetes.io/name: projects-frontend
+    app.kubernetes.io/component: e2e-tests
+    app.kubernetes.io/instance: '{{ .Values.instanceName }}'
+    app.kubernetes.io/part-of: projects
+    app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'

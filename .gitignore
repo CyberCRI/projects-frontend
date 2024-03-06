@@ -49,3 +49,6 @@ playwight-report/
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# helm
+charts/

@@ -1,0 +1,46 @@
+{{- if .Values.e2e.enabled }}
+kind: CronWorkflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: {{ tpl .Values.e2e.name . }}
+spec:
+  workflowSpec:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 10000
+      runAsGroup: 10000
+      fsGroup: 10000
+      seccompProfile:
+        type: RuntimeDefault
+    templates:
+      - name: run
+        container:
+        {{- with $.Values.e2e.image }}
+          image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
+        {{- end }}
+          command: ["/bin/sh"]
+          args: ["-c", "npm run test:play"]
+          envFrom:
+          - configMapRef:
+              name: {{ tpl .Values.e2e.name . }}
+        volumeMounts:
+        - name: secrets
+          mountPath: "/secrets"
+          readOnly: true
+    volumes:
+    - name: secrets
+      secret:
+        secretName: {{ tpl .Values.e2e.name . }}
+    entrypoint: run
+    serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
+  schedule:  0 */1 * * *
+---
+
+{{- $configGenerator := dict
+"config" .Values.e2eEnv
+"root" $
+"commonLabels" .Values.e2e.commonLabels
+"name" (tpl .Values.e2e.name .) }}
+
+{{- include "common.config" $configGenerator}}
+{{- end}}
