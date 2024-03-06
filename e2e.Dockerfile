@@ -3,7 +3,6 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY playwright.config.ts playwright.config.ts
-
 COPY tests/playwright tests/playwright
 COPY package.json source-package.json
 COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
