@@ -2170,5 +2170,28 @@
         },
         "group-label": "Groupe :",
         "groups-label": "Groupes :"
+    },
+    "news": {
+        "create": {
+            "title": "Créer une actualité"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Titre *",
+                "required": "Le titre est requis",
+                "placeholder": "Le titre de l'actualité"
+            },
+            "content": {
+                "label": "Contenu *",
+                "required": "Le contenu est requis"
+            }
+        },
+        "list": {
+            "title": "Actualités",
+            "create": "Créer un article"
+        }
     }
 }

@@ -2171,5 +2171,28 @@
         },
         "group-label": "Group:",
         "groups-label": "Groups:"
+    },
+    "news": {
+        "create": {
+            "title": "Create a news"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Title *",
+                "required": "The title is required",
+                "placeholder": "the title of the news"
+            },
+            "content": {
+                "label": "Content *",
+                "required": "The content is required"
+            }
+        },
+        "list": {
+            "title": "News",
+            "create": "Create an article"
+        }
     }
 }

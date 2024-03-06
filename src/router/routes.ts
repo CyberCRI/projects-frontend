@@ -812,6 +812,35 @@ const routes: Array<RouteRecordRaw> = [
               },
           ]
         : []),
+    ...(import.meta.env.VITE_APP_SHOW_NEWS
+        ? [
+              {
+                  path: '/create-news',
+                  name: 'CreateNewsPage',
+                  component: () => import('../pages/CreateNewsPage/CreateNewsPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+              {
+                  path: '/news',
+                  name: 'NewsListPage',
+                  component: () => import('../pages/NewsListPage/NewsListPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+              {
+                  path: '/news/:slugOrId',
+                  name: 'NewsPage',
+                  component: () => import('../pages/NewsPage/NewsPage.vue'),
+                  props: true,
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+          ]
+        : []),
 ]
 
 export default routes
