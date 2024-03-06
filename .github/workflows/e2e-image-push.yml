@@ -2,16 +2,9 @@ name: Build e2e Docker image
 
 on:
   push:
-    paths:
-      - 'tests/playwright/**'
-      - playwright.config.ts
-      - package.json
-      - e2e.Dockerfile
-      - e2e.Dockerfile.dockerignore
     branches:
       - main
       - e2e-wf
-
 
 jobs:
   build-docker:
