@@ -8,11 +8,12 @@ on:
       - package.json
       - e2e.Dockerfile
       - e2e.Dockerfile.dockerignore
+    branches:
+      - main
 
 
 jobs:
   build-docker:
-    if: github.ref == 'refs/heads/main'
     uses: CyberCRI/github-workflows/.github/workflows/build-push.yaml@main
     with:
       registry-name: ${{ vars.DOCKER_PROD_REGISTRY }}
