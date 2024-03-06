@@ -2144,7 +2144,8 @@
         "form": {
             "name": {
                 "label": "Name of event *",
-                "placeholder": "Ex. 1st sem. exam"
+                "placeholder": "Ex. 1st sem. exam",
+                "required": "The name is required"
             },
             "information": {
                 "label": "information",
@@ -2152,12 +2153,14 @@
             },
             "date": {
                 "label": "Event date *",
-                "placeholder": "Select date"
+                "placeholder": "Select date",
+                "required": "The date is required"
             },
             "groups": {
                 "label": "Targeted group(s)",
                 "notice": "Select the group(s) that will see this instruction",
-                "select-all": "Select all"
+                "select-all": "Select all",
+                "filter": "Filter groups"
             }
         },
         "group-label": "Group:",

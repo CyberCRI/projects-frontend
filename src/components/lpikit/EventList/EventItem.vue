@@ -109,6 +109,7 @@ export default {
 
     &.editable:hover {
         background: $primary-lighter;
+
         .event-controls {
             display: flex;
         }
@@ -121,16 +122,20 @@ export default {
         gap: $space-2xs;
         justify-content: flex-start;
         align-items: center;
+
         .icon {
             width: $font-size-3xl;
             fill: $primary-dark;
         }
+
         .day-month {
             color: $primary-dark;
             font-weight: 900;
+
             .day {
                 font-size: 1rem;
             }
+
             .month {
                 font-size: $font-size-xs;
             }
@@ -146,14 +151,17 @@ export default {
             background-color: $salmon;
         }
     }
+
     .texts {
         flex-grow: 1;
         color: $primary-dark;
+
         .event-name {
             font-size: 1rem;
             font-weight: 400;
             margin-bottom: $space-2xs;
         }
+
         .event-information {
             font-size: $font-size-xs;
         }

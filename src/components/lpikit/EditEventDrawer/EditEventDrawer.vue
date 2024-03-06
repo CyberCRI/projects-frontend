@@ -1,14 +1,14 @@
 <template>
     <DrawerLayout
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="false"
+        :confirm-action-disabled="$refs?.eventForm?.v$?.$invalid"
         :is-opened="isOpened"
         :title="form.id ? $t('event.drawer.edit') : $t('event.drawer.create')"
         class="small"
         @close="closeDrawer"
         @confirm="saveEvent"
     >
-        <EventForm v-model="form" v-if="form" />
+        <EventForm ref="eventForm" v-model="form" v-if="form" />
     </DrawerLayout>
 </template>
 <script>
@@ -26,6 +26,8 @@ function defaultForm() {
 
 export default {
     name: 'EditEventDrawer',
+
+    emits: ['close'],
 
     components: {
         EventForm,
@@ -70,8 +72,21 @@ export default {
     },
 
     methods: {
-        saveEvent() {
-            console.log('saveEvent', this.form)
+        async saveEvent() {
+            const isValid = await this.$refs.eventForm.v$.$validate()
+            if (!isValid) {
+                return
+            }
+
+            const formData = {
+                ...this.form,
+                data: this.form.date.toISOString(),
+                groups: Object.entries(this.form.groups)
+                    .filter(([, value]) => value)
+                    .map(([id]) => id),
+            }
+
+            console.log('saveEvent', formData)
             this.closeDrawer()
         },
         closeDrawer() {

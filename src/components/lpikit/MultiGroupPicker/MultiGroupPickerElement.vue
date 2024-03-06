@@ -1,32 +1,32 @@
 <template>
-    <ul>
-        <li class="sub-list">
-            <div class="top-list">
-                <div class="texts" @click="showChildren">
-                    <div>
-                        <LpiCheckbox
-                            label=""
-                            :model-value="selectedGroups[group.id]"
-                            @update:model-value="toggleGroup(group)"
-                            class="checkbox"
-                            @click.stop
-                        />
-                    </div>
-                    <div class="name" :class="{ 'green-color': group.children?.length }">
-                        {{ group.name }}
-                    </div>
+    <li class="sub-list" v-if="!group.hidden">
+        <div class="top-list">
+            <div class="texts" @click="showChildren">
+                <div>
+                    <LpiCheckbox
+                        label=""
+                        :model-value="selectedGroups[group.id]"
+                        @update:model-value="toggleGroup(group)"
+                        class="checkbox"
+                        @click.stop
+                    />
+                </div>
+                <div class="name" :class="{ 'green-color': hasDisplayableChildren }">
+                    {{ group.name }}
+                </div>
 
-                    <div class="icon-td">
-                        <IconImage
-                            v-if="group.children?.length"
-                            class="icon green-color"
-                            :name="this.showChild ? 'ChevronUp' : 'ChevronDown'"
-                        />
-                    </div>
+                <div class="icon-td">
+                    <IconImage
+                        v-if="hasDisplayableChildren"
+                        class="icon green-color"
+                        :name="this.showChild ? 'ChevronUp' : 'ChevronDown'"
+                    />
                 </div>
             </div>
-            <div v-if="group.children && this.showChild" class="child-list">
-                <EventGroupsElement
+        </div>
+        <div v-if="group.children && this.showChild" class="child-list">
+            <ul>
+                <MultiGroupPickerElement
                     v-for="child in group.children"
                     :key="child.id"
                     :group="child"
@@ -34,18 +34,18 @@
                     :selected-groups="selectedGroups"
                     @toggle-group="toggleGroup"
                 />
-            </div>
-        </li>
-    </ul>
+            </ul>
+        </div>
+    </li>
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
 import LpiCheckbox from '@/components/lpikit/Checkbox/LpiCheckbox.vue'
 
 export default {
-    name: 'EventGroupsElement',
+    name: 'MultiGroupPickerElement',
 
-    emits: ['move', 'add', 'edit'],
+    emits: ['toggle-group'],
 
     components: {
         IconImage,
@@ -69,6 +69,12 @@ export default {
         }
     },
 
+    computed: {
+        hasDisplayableChildren() {
+            return this.group.children?.some((child) => !child.hidden)
+        },
+    },
+
     methods: {
         showChildren() {
             this.showChild = !this.showChild
@@ -84,6 +90,7 @@ export default {
     width: pxToRem(25px);
     padding: 7px;
 }
+
 .top-list {
     display: flex;
     justify-content: space-between;

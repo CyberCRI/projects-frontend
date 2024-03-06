@@ -66,6 +66,7 @@ export default {
 .event-list {
     margin-bottom: 2rem;
 }
+
 .month-title {
     margin-bottom: $space-l;
     margin-top: $space-xl;
@@ -76,8 +77,7 @@ export default {
 
 .events-wrapper {
     display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-flow: column nowrap;
     gap: $space-l;
     padding: $space-m;
     border: $border-width-s solid $gray-10;

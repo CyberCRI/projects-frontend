@@ -2143,7 +2143,8 @@
         "form": {
             "name": {
                 "label": "Nom de l'événement *",
-                "placeholder": "Ex. Examen du 1er semestre"
+                "placeholder": "Ex. Examen du 1er semestre",
+                "required": "Le nom est requis"
             },
             "information": {
                 "label": "Information",
@@ -2151,12 +2152,14 @@
             },
             "date": {
                 "label": "Date de l'événement *",
-                "placeholder": "Sélectionnez la date"
+                "placeholder": "Sélectionnez la date",
+                "required": "La date est requise"
             },
             "groups": {
                 "label": "Groupe(s) cible(s)",
                 "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
-                "select-all": "Tout sélectionner"
+                "select-all": "Tout sélectionner",
+                "filter": "Filtrer les groupes"
             }
         },
         "group-label": "Groupe :",
