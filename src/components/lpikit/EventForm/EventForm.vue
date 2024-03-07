@@ -73,6 +73,16 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import '@vuepic/vue-datepicker/dist/main.css'
 import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPicker.vue'
+
+export function defaultForm() {
+    return {
+        name: '',
+        information: '',
+        date: '',
+        groups: {},
+    }
+}
+
 export default {
     name: 'EventForm',
 
@@ -165,9 +175,9 @@ export default {
 }
 
 label {
-    font-size: 0.875rem;
-    font-weight: bold;
-    color: #000;
+    font-size: $font-size-s;
+    font-weight: 700;
+    color: $black;
     display: block;
 }
 

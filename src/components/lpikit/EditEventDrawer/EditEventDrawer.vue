@@ -13,16 +13,7 @@
 </template>
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import EventForm from '@/components/lpikit/EventForm/EventForm.vue'
-
-function defaultForm() {
-    return {
-        name: '',
-        information: '',
-        date: '',
-        groups: {},
-    }
-}
+import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 
 export default {
     name: 'EditEventDrawer',
@@ -58,6 +49,7 @@ export default {
                 if (event) {
                     this.form = {
                         ...event,
+                        date: new Date(event.date),
                         groups: event.groups.reduce((acc, group) => {
                             acc[group.id] = true
                             return acc
@@ -85,12 +77,11 @@ export default {
                     .filter(([, value]) => value)
                     .map(([id]) => id),
             }
-
+            // TODO: save event and remove log
             console.log('saveEvent', formData)
             this.closeDrawer()
         },
         closeDrawer() {
-            console.log('closeDrawer')
             this.$emit('close')
         },
     },

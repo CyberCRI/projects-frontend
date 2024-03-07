@@ -25,16 +25,7 @@
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import EventForm from '@/components/lpikit/EventForm/EventForm.vue'
-
-function defaultForm() {
-    return {
-        name: '',
-        information: '',
-        date: '',
-        groups: {},
-    }
-}
+import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 
 export default {
     name: 'CreateEventPage',

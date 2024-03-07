@@ -88,7 +88,7 @@ export default {
 <style lang="scss" scoped>
 .icon-td {
     width: pxToRem(25px);
-    padding: 7px;
+    padding: $space-xs;
 }
 
 .top-list {
