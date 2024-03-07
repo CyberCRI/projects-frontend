@@ -2192,6 +2192,12 @@
         "list": {
             "title": "Actualités",
             "create": "Créer un article"
+        },
+        "page": {
+            "others": "Autres actualités"
+        },
+        "drawer": {
+            "title": "Éditer une actualité"
         }
     }
 }

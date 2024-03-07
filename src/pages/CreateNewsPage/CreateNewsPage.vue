@@ -1,5 +1,5 @@
 <template>
-    <div class="create-news-page page-section-medium">
+    <div class="create-news-page page-section-narrow">
         <h1 class="page-title">{{ $t('news.create.title') }}</h1>
 
         <NewsForm ref="newsForm" v-model="form" />

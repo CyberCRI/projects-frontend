@@ -2193,6 +2193,12 @@
         "list": {
             "title": "News",
             "create": "Create an article"
+        },
+        "page": {
+            "others": "Other news"
+        },
+        "drawer": {
+            "title": "Edit news"
         }
     }
 }
