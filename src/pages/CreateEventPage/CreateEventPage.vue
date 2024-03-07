@@ -56,7 +56,7 @@ export default {
             this.asyncing = true
             const formData = {
                 ...this.form,
-                data: this.form.date.toISOString(),
+                date: this.form.date.toISOString(),
                 groups: Object.entries(this.form.groups)
                     .filter(([, value]) => value)
                     .map(([id]) => id),

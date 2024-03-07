@@ -32,9 +32,35 @@
         </div>
 
         <div class="form-section">
+            <label>{{ $t('news.form.date_publication.label') }}</label>
+            <button type="button" @click="showDatePicker = true" class="date-btn">
+                <IconImage class="icon" name="Calendar" />
+                {{ $t('invitation.create.field.validity.pick-date') }}
+            </button>
+
+            <span class="date-preview" v-if="modelValue.date_publication">{{ displayedDate }}</span>
+            <VueDatePicker
+                v-if="showDatePicker"
+                :on-click-outside="() => (showDatePicker = false)"
+                :inline="true"
+                :auto-apply="true"
+                :model-value="modelValue.date_publication"
+                :enable-time-picker="false"
+                @update:model-value="onDateSelected"
+            />
+
+            <p
+                v-for="error of v$.modelValue.date_publication.$errors"
+                :key="error.$uid"
+                class="error-description"
+            >
+                {{ error.$message }}
+            </p>
+        </div>
+
+        <div class="form-section">
             <label>{{ $filters.capitalize($t('news.form.content.label')) }}</label>
             <TipTapEditor
-                :key="editorKey"
                 ref="tiptapEditor"
                 :ws-data="wsData"
                 class="input-field content-editor no-max-height"
@@ -52,6 +78,15 @@
                 {{ error.$message }}
             </p>
         </div>
+        <div class="form-section">
+            <label>{{ $t('news.form.groups.label') }}</label>
+            <p class="notice">{{ $t('news.form.groups.notice') }}</p>
+
+            <MultiGroupPicker
+                :model-value="modelValue.groups"
+                @update:model-value="updateForm({ groups: $event })"
+            />
+        </div>
     </form>
 </template>
 
@@ -62,6 +97,10 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import IconImage from '@/components/svgs/IconImage.vue'
+import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPicker.vue'
 
 export function defaultForm() {
     return {
@@ -69,6 +108,8 @@ export function defaultForm() {
         imageSizes: null,
         title: '',
         content: '',
+        date_publication: '',
+        groups: {},
     }
 }
 
@@ -83,6 +124,9 @@ export default {
         TextInput,
         TipTapEditor,
         ImageEditor,
+        VueDatePicker,
+        IconImage,
+        MultiGroupPicker,
     },
 
     props: {
@@ -105,6 +149,7 @@ export default {
                 savedContent: this.modelValue.content,
                 originalContent: this.modelValue.content,
             },
+            showDatePicker: false,
         }
     },
 
@@ -117,11 +162,30 @@ export default {
                 content: {
                     required: helpers.withMessage(this.$t('news.form.content.required'), required),
                 },
+                date_publication: {
+                    required: helpers.withMessage(
+                        this.$t('event.form.date_publication.required'),
+                        required
+                    ),
+                },
             },
         }
     },
 
+    computed: {
+        displayedDate() {
+            return this.modelValue.date_publication
+                ? new Date(this.modelValue.date_publication).toLocaleDateString()
+                : ''
+        },
+    },
+
     methods: {
+        onDateSelected(modelData) {
+            this.updateForm({ date_publication: modelData })
+            this.showDatePicker = false
+        },
+
         updateContent(htmlContent) {
             this.updateForm({ content: htmlContent === '<p></p>' ? null : htmlContent })
         },
@@ -144,9 +208,15 @@ export default {
     min-height: pxToRem(300px);
 }
 
+.date-preview {
+    margin-left: $space-l;
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
 .error-description {
     color: $salmon-dark;
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     font-size: $font-size-s;
     margin-left: $space-l;
 }
@@ -182,5 +252,23 @@ label,
 :deep(.input-ctn),
 :deep(.input-field) {
     margin: 0;
+}
+
+.date-btn {
+    padding: $space-s;
+    background-color: $white;
+    border: $border-width-s solid $primary-dark;
+    border-radius: $border-radius-s;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    gap: $space-m;
+    color: $primary-dark;
+    font-weight: 700;
+
+    .icon {
+        width: $font-size-2xl;
+        fill: $primary-dark;
+    }
 }
 </style>

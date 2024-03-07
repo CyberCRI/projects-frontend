@@ -2187,6 +2187,16 @@
             "content": {
                 "label": "Contenu *",
                 "required": "Le contenu est requis"
+            },
+            "date_publication": {
+                "label": "Date de publication",
+                "required": "La date de publication est requise"
+            },
+            "groups": {
+                "label": "Groupe(s) cible(s)",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "select-all": "Tout sélectionner",
+                "filter": "Filtrer les groupes"
             }
         },
         "list": {

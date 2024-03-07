@@ -26,7 +26,7 @@ export default {
 
     props: {
         news: {
-            type: Object,
+            type: [Object, null],
             required: true,
         },
         isOpened: {
@@ -48,8 +48,13 @@ export default {
                 if (news)
                     this.form = {
                         ...news,
+                        date_publication: new Date(news.date_publication),
                         header_image: news.header_image || null,
                         imageSizes: news.header_image?.imageSizes || null,
+                        groups: news.groups.reduce((acc, group) => {
+                            acc[group.id] = true
+                            return acc
+                        }, {}),
                     }
             },
             immediate: true,
@@ -66,8 +71,13 @@ export default {
                 return
             }
             this.asyncing = true
+            // TODO handle image
             const formData = {
                 ...this.form,
+                date_publication: this.form.date_publication.toISOString(),
+                groups: Object.entries(this.form.groups)
+                    .filter(([, value]) => value)
+                    .map(([id]) => id),
             }
             await new Promise((resolve) => setTimeout(resolve, 1000))
             console.log('saveNews', formData)

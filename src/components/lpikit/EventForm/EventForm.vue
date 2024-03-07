@@ -30,7 +30,7 @@
         </div>
         <div class="form-section">
             <label>{{ $t('event.form.date.label') }}</label>
-            <button type="button" @click="showDatePicker = true" class="validity-type-btn">
+            <button type="button" @click="showDatePicker = true" class="date-btn">
                 <IconImage class="icon" name="Calendar" />
                 {{ $t('invitation.create.field.validity.pick-date') }}
             </button>
@@ -68,10 +68,10 @@
 <script>
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/svgs/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import '@vuepic/vue-datepicker/dist/main.css'
 import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPicker.vue'
 
 export function defaultForm() {
@@ -148,7 +148,7 @@ export default {
     padding: 5rem 0;
 }
 
-.validity-type-btn {
+.date-btn {
     padding: $space-s;
     background-color: $white;
     border: $border-width-s solid $primary-dark;
@@ -159,10 +159,6 @@ export default {
     gap: $space-m;
     color: $primary-dark;
     font-weight: 700;
-
-    & + .validity-type-btn {
-        margin-left: $space-unit;
-    }
 
     .icon {
         width: $font-size-2xl;

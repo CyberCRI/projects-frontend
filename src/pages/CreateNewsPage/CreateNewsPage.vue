@@ -51,9 +51,13 @@ export default {
                 return
             }
             this.asyncing = true
+            // TODO: handle header_image and imageSize
             const formData = {
                 ...this.form,
-                // TODO: handle header_image and imageSize
+                date_publication: this.form.date_publication.toISOString(),
+                groups: Object.entries(this.form.groups)
+                    .filter(([, value]) => value)
+                    .map(([id]) => id),
             }
             await new Promise((resolve) => setTimeout(resolve, 1000))
             console.log('saveNews', formData)

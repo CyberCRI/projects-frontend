@@ -2188,6 +2188,16 @@
             "content": {
                 "label": "Content *",
                 "required": "The content is required"
+            },
+            "date_publication": {
+                "label": "Publication date *",
+                "required": "The publication date is required"
+            },
+            "groups": {
+                "label": "Targeted group(s)",
+                "notice": "Select the group(s) that will see this instruction",
+                "select-all": "Select all",
+                "filter": "Filter groups"
             }
         },
         "list": {
