@@ -1,0 +1,183 @@
+<template>
+    <div class="event" :class="{ editable: canEditEvents, 'is-new': isNew }">
+        <div class="date">
+            <IconImage name="Calendar" class="icon" />
+            <div class="day-month">
+                <div class="day">
+                    {{ getDayFromDate(event.date) }}
+                </div>
+                <div class="month">
+                    {{ $t(`event.calendar.month.${getMonthFromDate(event.date)}.short`) }}
+                </div>
+            </div>
+        </div>
+        <div class="novelty-wrapper" v-if="isNew">
+            <span class="novelty-marker"></span>
+        </div>
+        <div class="texts">
+            <h4 class="event-name">{{ event.name }}</h4>
+            <p class="event-information">{{ event.information }}</p>
+            <p class="event-groups" v-if="event.groups.length">
+                <span>{{
+                    event.groups.length > 1 ? $t('event.groups-label') : $t('event.group-label')
+                }}</span>
+                {{ event.groups.map((group) => group.name).join(', ') }}
+            </p>
+        </div>
+        <div class="event-controls" v-if="canEditEvents">
+            <ContextActionButton
+                action-icon="Pen"
+                class="edit-btn small"
+                @click="editEvent(event)"
+            />
+            <ContextActionButton
+                action-icon="Close"
+                class="remove-btn small"
+                @click="deleteEvent(event)"
+            />
+        </div>
+    </div>
+</template>
+<script>
+import IconImage from '@/components/svgs/IconImage.vue'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+export default {
+    name: 'EventItem',
+
+    emits: ['delete-event', 'edit-event'],
+
+    components: {
+        IconImage,
+        ContextActionButton,
+    },
+
+    props: {
+        event: {
+            type: Object,
+            default: () => ({}),
+        },
+    },
+
+    computed: {
+        canEditEvents() {
+            // TODO: implement logic
+            return true
+        },
+        isNew() {
+            return Date.now() - new Date(this.event.date_edited).getTime() < 7 * 24 * 60 * 60 * 1000
+        },
+    },
+
+    methods: {
+        getMonthFromDate(yearMonth) {
+            return yearMonth.split('-')[1]
+        },
+        getDayFromDate(date) {
+            return date.split('-')[2]
+        },
+
+        deleteEvent(event) {
+            this.$emit('delete-event', event)
+        },
+
+        editEvent(event) {
+            this.$emit('edit-event', event)
+        },
+    },
+}
+</script>
+<style lang="scss" scoped>
+.event {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: $space-l;
+    align-items: flex-start;
+    justify-content: stretch;
+    position: relative;
+    padding: $space-m;
+    border-radius: $border-radius-m;
+
+    .event-controls {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        display: none;
+        flex-wrap: nowrap;
+        gap: $space-2xs;
+        justify-content: flex-end;
+    }
+
+    &.editable:hover {
+        background: $primary-lighter;
+
+        .event-controls {
+            display: flex;
+        }
+    }
+
+    .date {
+        flex-shrink: 0;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: $space-2xs;
+        justify-content: flex-start;
+        align-items: center;
+
+        .icon {
+            width: $font-size-3xl;
+            fill: $primary-dark;
+        }
+
+        .day-month {
+            color: $primary-dark;
+            font-weight: 900;
+
+            .day {
+                font-size: 1rem;
+            }
+
+            .month {
+                font-size: $font-size-xs;
+            }
+        }
+    }
+
+    .novelty-wrapper {
+        .novelty-marker {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 1rem;
+            background-color: $salmon;
+        }
+    }
+
+    .texts {
+        flex-grow: 1;
+        color: $primary-dark;
+
+        .event-name {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: $space-2xs;
+        }
+
+        .event-information {
+            font-size: $font-size-xs;
+        }
+
+        .event-groups {
+            font-size: $font-size-xs;
+            margin-top: $space-2xs;
+        }
+    }
+
+    &.is-new {
+        .event-name,
+        .event-information,
+        .event-groups {
+            font-weight: 900;
+        }
+    }
+}
+</style>

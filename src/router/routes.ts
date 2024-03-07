@@ -779,6 +779,47 @@ const routes: Array<RouteRecordRaw> = [
               },
           ]
         : []),
+    ...(import.meta.env.VITE_APP_SHOW_EVENT
+        ? [
+              {
+                  path: '/create-event',
+                  name: 'CreateEvent',
+                  component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                      requiresAuth: true,
+                  },
+              },
+
+              {
+                  path: '/calendar',
+                  name: 'CalendarPage',
+                  component: () => import('../pages/CalendarPage/CalendarPage.vue'),
+                  redirect: { name: 'FutureEvents' },
+                  meta: {
+                      resetScroll: true,
+                  },
+                  children: [
+                      {
+                          path: 'future',
+                          name: 'FutureEvents',
+                          component: () => import('../pages/CalendarPage/Tabs/FutureEvents.vue'),
+                          meta: {
+                              resetScroll: true,
+                          },
+                      },
+                      {
+                          path: 'past',
+                          name: 'PastEvents',
+                          component: () => import('../pages/CalendarPage/Tabs/PastEvents.vue'),
+                          meta: {
+                              resetScroll: true,
+                          },
+                      },
+                  ],
+              },
+          ]
+        : []),
 ]
 
 export default routes

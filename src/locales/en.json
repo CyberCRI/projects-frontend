@@ -2077,5 +2077,93 @@
         "is-featured": "(Featured)",
         "more-projects": "Discover more projects",
         "more-profiles": "Discover more profiles"
+    },
+    "event": {
+        "calendar": {
+            "title": "Calendar",
+            "future": "Future",
+            "past": "Past",
+            "month": {
+                "01": {
+                    "short": "Jan",
+                    "long": "January"
+                },
+                "02": {
+                    "short": "Feb",
+                    "long": "February"
+                },
+                "03": {
+                    "short": "Mar",
+                    "long": "March"
+                },
+                "04": {
+                    "short": "Apr",
+                    "long": "April"
+                },
+                "05": {
+                    "short": "May",
+                    "long": "May"
+                },
+                "06": {
+                    "short": "Jun",
+                    "long": "June"
+                },
+                "07": {
+                    "short": "Jul",
+                    "long": "July"
+                },
+                "08": {
+                    "short": "Aug",
+                    "long": "August"
+                },
+                "09": {
+                    "short": "Sep",
+                    "long": "September"
+                },
+                "10": {
+                    "short": "Oct",
+                    "long": "October"
+                },
+                "11": {
+                    "short": "Nov",
+                    "long": "November"
+                },
+                "12": {
+                    "short": "Dec",
+                    "long": "December"
+                }
+            }
+        },
+        "create": {
+            "title": "Add a calendar event"
+        },
+        "drawer": {
+            "create": "Add a calendar event",
+            "edit": "Edit a calendar event"
+        },
+        "form": {
+            "name": {
+                "label": "Name of event *",
+                "placeholder": "Ex. 1st sem. exam",
+                "required": "The name is required"
+            },
+            "information": {
+                "label": "information",
+                "placeholder": "Add information about this event"
+            },
+            "date": {
+                "label": "Event date *",
+                "placeholder": "Select date",
+                "required": "The date is required"
+            },
+            "groups": {
+                "label": "Targeted group(s)",
+                "notice": "Select the group(s) that will see this instruction",
+                "select-all": "Select all",
+                "filter": "Filter groups"
+            }
+        },
+        "group-label": "Group:",
+        "groups-label": "Groups:"
     }
 }
