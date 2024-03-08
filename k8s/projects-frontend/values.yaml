@@ -35,6 +35,7 @@ e2eEnv:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
     PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
     FRONTEND_URL: "{{ .Values.hostname }}"
+    CI: true
 
 resources:
   requests:
