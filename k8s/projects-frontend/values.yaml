@@ -34,7 +34,7 @@ e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
     PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
-    FRONTEND_URL: "{{ .Values.hostname }}"
+    FRONTEND_URL: '{{ printf "https://%s/" .Values.hostname }}'
     CI: "true"
 
 resources:
