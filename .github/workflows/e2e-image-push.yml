@@ -14,6 +14,7 @@ jobs:
       image-name: projects-frontend-e2e
       image-tag: ${{ github.sha }}
       recursive-submodule-checkout: true
+      file: e2e.Dockerfile
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
