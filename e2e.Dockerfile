@@ -15,8 +15,6 @@ RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDepende
   npm install -D && \
   rm source-package.json
 
-RUN chown -R 10000:10000 "/.npm"
-
 USER 10000
 
 ENTRYPOINT [ "./secrets-entrypoint.sh" ]

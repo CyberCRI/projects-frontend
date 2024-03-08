@@ -27,10 +27,14 @@ spec:
         - name: secrets
           mountPath: "/secrets"
           readOnly: true
+        - name: npm-cache
+          mountPath: "/.npm"
     volumes:
     - name: secrets
       secret:
         secretName: {{ tpl .Values.e2e.name . }}
+    - name: npm-cache
+      emptyDir: {}
     entrypoint: run
     serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
   schedule: {{ .Values.e2e.schedule }}
