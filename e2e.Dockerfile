@@ -13,7 +13,12 @@ RUN apk update && \
 
 RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
   npm install -D && \
-  rm source-package.json
+  rm source-package.json && \
+  # Bug with npm cache
+  npm cache clean --force && \
+  mkdir -p /.npm && \
+  chown -R 10000:10000 /.npm && \
+  chown -R 10000:10000 /app
 
 USER 10000
 
