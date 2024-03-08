@@ -1,7 +1,6 @@
 FROM node:20-alpine
 
 WORKDIR /app
-USER 10000
 
 COPY playwright.config.ts playwright.config.ts
 COPY tests/playwright tests/playwright
@@ -15,5 +14,9 @@ RUN apk update && \
 RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
   npm install -D && \
   rm source-package.json
+
+RUN chown -R 10000:10000 "/.npm"
+
+USER 10000
 
 ENTRYPOINT [ "./secrets-entrypoint.sh" ]
