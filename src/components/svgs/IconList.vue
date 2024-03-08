@@ -104,6 +104,8 @@ export default {
                 'CheckBoxOutline',
                 'CheckBoxBlankOutline',
                 'CropFree',
+                'SquareRounded',
+                'SquareRoundedOutline',
             ],
         }
     },

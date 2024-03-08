@@ -2234,6 +2234,11 @@
                 "notice": "Select the group(s) that will see this instruction",
                 "select-all": "Select all",
                 "filter": "Filter groups"
+            },
+            "notify": {
+                "label": "Notification",
+                "notice": "If selected, everyone will be notified of the new instruction",
+                "button": "Send a notification"
             }
         },
         "list": {

@@ -74,6 +74,18 @@
                 @update:model-value="updateForm({ groups: $event })"
             />
         </div>
+        <div class="form-section">
+            <label>{{ $t('instructions.form.notify.label') }}</label>
+            <p class="notice">{{ $t('instructions.form.notify.notice') }}</p>
+
+            <button type="button" @click="toggleNotify" class="date-btn">
+                <IconImage
+                    class="icon"
+                    :name="modelValue.notify ? 'SquareRounded' : 'SquareRoundedOutline'"
+                />
+                {{ $t('instructions.form.notify.button') }}
+            </button>
+        </div>
     </form>
 </template>
 
@@ -174,6 +186,9 @@ export default {
         updateForm(data) {
             this.$emit('update:modelValue', { ...this.modelValue, ...data })
         },
+        toggleNotify() {
+            this.updateForm({ notify: !this.modelValue.notify })
+        },
     },
 }
 </script>
@@ -246,7 +261,7 @@ label,
     gap: $space-m;
     color: $primary-dark;
     font-weight: 700;
-
+    cursor: pointer;
     .icon {
         width: $font-size-2xl;
         fill: $primary-dark;

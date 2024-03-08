@@ -2236,6 +2236,11 @@
                 "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
                 "select-all": "Tout sélectionner",
                 "filter": "Filtrer les groupes"
+            },
+            "notify": {
+                "label": "Notification",
+                "notice": "Si sélectionné, tout le monde sera notifié de la nouvelle instruction",
+                "button": "Envoyer une notification"
             }
         },
         "list": {
