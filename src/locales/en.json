@@ -2189,7 +2189,7 @@
                 "label": "Content *",
                 "required": "The content is required"
             },
-            "date_publication": {
+            "publication_date": {
                 "label": "Publication date *",
                 "required": "The publication date is required"
             },

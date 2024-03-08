@@ -32,25 +32,25 @@
         </div>
 
         <div class="form-section">
-            <label>{{ $t('news.form.date_publication.label') }}</label>
+            <label>{{ $t('news.form.publication_date.label') }}</label>
             <button type="button" @click="showDatePicker = true" class="date-btn">
                 <IconImage class="icon" name="Calendar" />
                 {{ $t('invitation.create.field.validity.pick-date') }}
             </button>
 
-            <span class="date-preview" v-if="modelValue.date_publication">{{ displayedDate }}</span>
+            <span class="date-preview" v-if="modelValue.publication_date">{{ displayedDate }}</span>
             <VueDatePicker
                 v-if="showDatePicker"
                 :on-click-outside="() => (showDatePicker = false)"
                 :inline="true"
                 :auto-apply="true"
-                :model-value="modelValue.date_publication"
+                :model-value="modelValue.publication_date"
                 :enable-time-picker="false"
                 @update:model-value="onDateSelected"
             />
 
             <p
-                v-for="error of v$.modelValue.date_publication.$errors"
+                v-for="error of v$.modelValue.publication_date.$errors"
                 :key="error.$uid"
                 class="error-description"
             >
@@ -108,7 +108,7 @@ export function defaultForm() {
         imageSizes: null,
         title: '',
         content: '',
-        date_publication: '',
+        publication_date: '',
         groups: {},
     }
 }
@@ -162,9 +162,9 @@ export default {
                 content: {
                     required: helpers.withMessage(this.$t('news.form.content.required'), required),
                 },
-                date_publication: {
+                publication_date: {
                     required: helpers.withMessage(
-                        this.$t('event.form.date_publication.required'),
+                        this.$t('event.form.publication_date.required'),
                         required
                     ),
                 },
@@ -174,15 +174,15 @@ export default {
 
     computed: {
         displayedDate() {
-            return this.modelValue.date_publication
-                ? new Date(this.modelValue.date_publication).toLocaleDateString()
+            return this.modelValue.publication_date
+                ? new Date(this.modelValue.publication_date).toLocaleDateString()
                 : ''
         },
     },
 
     methods: {
         onDateSelected(modelData) {
-            this.updateForm({ date_publication: modelData })
+            this.updateForm({ publication_date: modelData })
             this.showDatePicker = false
         },
 

@@ -2188,7 +2188,7 @@
                 "label": "Contenu *",
                 "required": "Le contenu est requis"
             },
-            "date_publication": {
+            "publication_date": {
                 "label": "Date de publication",
                 "required": "La date de publication est requise"
             },

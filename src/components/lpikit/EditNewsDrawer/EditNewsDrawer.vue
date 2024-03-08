@@ -48,7 +48,7 @@ export default {
                 if (news)
                     this.form = {
                         ...news,
-                        date_publication: new Date(news.date_publication),
+                        publication_date: new Date(news.publication_date),
                         header_image: news.header_image || null,
                         imageSizes: news.header_image?.imageSizes || null,
                         groups: news.groups.reduce((acc, group) => {
@@ -74,7 +74,7 @@ export default {
             // TODO handle image
             const formData = {
                 ...this.form,
-                date_publication: this.form.date_publication.toISOString(),
+                publication_date: this.form.publication_date.toISOString(),
                 groups: Object.entries(this.form.groups)
                     .filter(([, value]) => value)
                     .map(([id]) => id),

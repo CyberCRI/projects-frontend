@@ -72,7 +72,7 @@ export default {
                 {
                     id: 1,
                     title: 'News 1',
-                    date_publication: '2024-03-01T16:09:34.882Z',
+                    publication_date: '2024-03-01T16:09:34.882Z',
                     groups: [
                         {
                             id: 159,
@@ -106,7 +106,7 @@ export default {
                 {
                     id: 2,
                     title: 'News 2',
-                    date_publication: '2024-03-01T16:09:34.882Z',
+                    publication_date: '2024-03-01T16:09:34.882Z',
                     groups: [
                         {
                             id: 3,

@@ -54,7 +54,7 @@ export default {
             // TODO: handle header_image and imageSize
             const formData = {
                 ...this.form,
-                date_publication: this.form.date_publication.toISOString(),
+                publication_date: this.form.publication_date.toISOString(),
                 groups: Object.entries(this.form.groups)
                     .filter(([, value]) => value)
                     .map(([id]) => id),
