@@ -56,6 +56,7 @@ workflowRbac:
 e2e:
   name: '{{ join "-" (list .Values.instanceName "e2e") }}'
   enabled: false
+  schedule: 0 9,15 * * *
   image:
     repository: criprodprod.azurecr.io
     path: projects-frontend-e2e

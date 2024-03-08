@@ -33,7 +33,7 @@ spec:
         secretName: {{ tpl .Values.e2e.name . }}
     entrypoint: run
     serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
-  schedule:  0 */1 * * *
+  schedule: {{ .Values.e2e.schedule }}
 ---
 
 {{- $configGenerator := dict
