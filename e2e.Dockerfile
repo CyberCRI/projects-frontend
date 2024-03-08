@@ -1,6 +1,7 @@
 FROM node:20-alpine
 
 WORKDIR /app
+USER 10000
 
 COPY playwright.config.ts playwright.config.ts
 COPY tests/playwright tests/playwright
