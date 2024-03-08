@@ -1,0 +1,145 @@
+<template>
+    <div class="instruction-list-item">
+        <div class="instruction-title-ctn">
+            <h3 class="instruction-title">{{ instruction.title }}</h3>
+            <div class="instruction-actions" v-if="canEditInstruction">
+                <ContextActionButton
+                    action-icon="Close"
+                    class="remove-btn small"
+                    @click="$emit('remove-instruction', instruction)"
+                />
+                <ContextActionButton
+                    action-icon="Pen"
+                    class="edit-btn small"
+                    @click="$emit('edit-instruction', instruction)"
+                />
+            </div>
+        </div>
+        <div class="instruction-excerpt" :style="style">
+            <HtmlLimiter
+                :html="instruction.content"
+                :striped-tags="['table']"
+                class="description-content"
+                @computed="layoutComputed"
+                @computing="computeLayout"
+            />
+        </div>
+        <div class="instruction-see-more-ctn">
+            <SeeMoreArrow
+                class="read-description-button"
+                :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
+            />
+        </div>
+    </div>
+</template>
+<script>
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
+import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+
+export default {
+    name: 'InstructionListItem',
+
+    emits: ['remove-instruction', 'edit-instruction'],
+
+    components: {
+        SeeMoreArrow,
+        HtmlLimiter,
+        ContextActionButton,
+    },
+
+    props: {
+        instruction: {
+            type: Object,
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            style: {},
+        }
+    },
+
+    computed: {
+        canEditInstruction() {
+            // TODO: implement logic
+            return true
+        },
+    },
+
+    methods: {
+        computeLayout() {
+            this.style = {}
+        },
+        layoutComputed(event) {
+            this.style = { height: event.height + 'px' }
+        },
+    },
+}
+</script>
+<style scoped lang="scss">
+.instruction-list-item {
+    --instruction-dimension: 13rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    height: var(--instruction-dimension);
+    overflow: hidden;
+    padding: 1rem;
+    border: $border-width-s solid $gray-10;
+    border-radius: 1rem;
+}
+
+.instruction-title-ctn {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.instruction-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.instruction-title {
+    font-size: $font-size-xl;
+}
+
+.instruction-excerpt {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+
+    h1 {
+        font-size: $font-size-2xl;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: $font-size-xl;
+        font-weight: 500;
+    }
+
+    h3 {
+        font-size: $font-size-l;
+        font-weight: 500;
+    }
+
+    h4 {
+        font-size: $font-size-m;
+        font-weight: 500;
+    }
+}
+
+.instruction-see-more-ctn {
+    text-align: right;
+    flex-shrink: 0;
+    padding: 1rem 0;
+}
+</style>

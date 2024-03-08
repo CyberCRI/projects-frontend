@@ -771,7 +771,7 @@ const routes: Array<RouteRecordRaw> = [
               },
           ]
         : []),
-    ...(import.meta.env.VITE_APP_SHOW_EVENT
+    ...(import.meta.env.VITE_APP_SHOW_EVENTS
         ? [
               {
                   path: '/create-event',
@@ -834,6 +834,36 @@ const routes: Array<RouteRecordRaw> = [
                   path: '/news/:slugOrId',
                   name: 'NewsPage',
                   component: () => import('../pages/NewsPage/NewsPage.vue'),
+                  props: true,
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+          ]
+        : []),
+    ...(import.meta.env.VITE_APP_SHOW_INSTRUCTIONS
+        ? [
+              {
+                  path: '/create-intructions',
+                  name: 'CreateInstructionPage',
+                  component: () =>
+                      import('../pages/CreateInstructionPage/CreateInstructionPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+              {
+                  path: '/instructions',
+                  name: 'InstructionListPage',
+                  component: () => import('../pages/InstructionListPage/InstructionListPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                  },
+              },
+              {
+                  path: '/instructions/:slugOrId',
+                  name: 'InstructionPage',
+                  component: () => import('../pages/InstructionPage/InstructionPage.vue'),
                   props: true,
                   meta: {
                       resetScroll: true,

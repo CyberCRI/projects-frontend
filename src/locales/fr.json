@@ -2163,7 +2163,7 @@
             },
             "groups": {
                 "label": "Groupe(s) cible(s)",
-                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
                 "select-all": "Tout sélectionner",
                 "filter": "Filtrer les groupes"
             }
@@ -2194,7 +2194,7 @@
             },
             "groups": {
                 "label": "Groupe(s) cible(s)",
-                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette actualité",
                 "select-all": "Tout sélectionner",
                 "filter": "Filtrer les groupes"
             }
@@ -2208,6 +2208,42 @@
         },
         "drawer": {
             "title": "Éditer une actualité"
+        }
+    },
+    "instructions": {
+        "create": {
+            "title": "Ajouter une instruction"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Titre *",
+                "required": "Le titre est requis",
+                "placeholder": "Le titre de l'instruction"
+            },
+            "content": {
+                "label": "Contenu *",
+                "required": "Le contenu est requis"
+            },
+            "publication_date": {
+                "label": "Date de publication",
+                "required": "La date de publication est requise"
+            },
+            "groups": {
+                "label": "Groupe(s) cible(s)",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "select-all": "Tout sélectionner",
+                "filter": "Filtrer les groupes"
+            }
+        },
+        "list": {
+            "title": "Instructions",
+            "create": "Ajouter une instruction"
+        },
+        "drawer": {
+            "title": "Éditer une instruction"
         }
     }
 }

@@ -1,24 +1,11 @@
 <template>
     <form>
-        <div class="form-section img-ctn">
-            <label>{{ $filters.capitalize($t('news.form.image.label')) }}</label>
-            <ImageEditor
-                picture-alt="news image"
-                :contain="true"
-                :image-sizes="modelValue.imageSizes"
-                :picture="modelValue.header_image"
-                @update:header_image="updateForm({ imageSizes: $event })"
-                @update:picture="updateForm({ header_image: $event })"
-                :default-picture="defaultPictures"
-            ></ImageEditor>
-        </div>
-
         <div class="form-section">
             <TextInput
                 :model-value="modelValue.title"
                 @update:model-value="updateForm({ title: $event })"
-                :label="$filters.capitalize($t('news.form.title.label'))"
-                :placeholder="$filters.capitalize($t('news.form.title.placeholder'))"
+                :label="$filters.capitalize($t('instructions.form.title.label'))"
+                :placeholder="$filters.capitalize($t('instructions.form.title.placeholder'))"
                 class="input-field"
                 @blur="v$.modelValue.title.$validate"
             />
@@ -32,7 +19,7 @@
         </div>
 
         <div class="form-section">
-            <label>{{ $t('news.form.publication_date.label') }}</label>
+            <label>{{ $t('instructions.form.publication_date.label') }}</label>
             <button type="button" @click="showDatePicker = true" class="date-btn">
                 <IconImage class="icon" name="Calendar" />
                 {{ $t('invitation.create.field.validity.pick-date') }}
@@ -59,7 +46,7 @@
         </div>
 
         <div class="form-section">
-            <label>{{ $filters.capitalize($t('news.form.content.label')) }}</label>
+            <label>{{ $filters.capitalize($t('instructions.form.content.label')) }}</label>
             <TipTapEditor
                 ref="tiptapEditor"
                 :ws-data="wsData"
@@ -79,8 +66,8 @@
             </p>
         </div>
         <div class="form-section">
-            <label>{{ $t('news.form.groups.label') }}</label>
-            <p class="notice">{{ $t('news.form.groups.notice') }}</p>
+            <label>{{ $t('instructions.form.groups.label') }}</label>
+            <p class="notice">{{ $t('instructions.form.groups.notice') }}</p>
 
             <MultiGroupPicker
                 :model-value="modelValue.groups"
@@ -95,8 +82,6 @@ import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -104,26 +89,22 @@ import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPic
 
 export function defaultForm() {
     return {
-        header_image: null,
-        imageSizes: null,
         title: '',
         content: '',
         publication_date: '',
         groups: {},
+        notify: false,
     }
 }
 
 export default {
-    name: 'NewsForm',
+    name: 'InstructionForm',
 
     emits: ['update:modelValue'],
-
-    mixins: [imageMixin],
 
     components: {
         TextInput,
         TipTapEditor,
-        ImageEditor,
         VueDatePicker,
         IconImage,
         MultiGroupPicker,
@@ -137,14 +118,8 @@ export default {
     },
 
     data() {
-        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-            return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
-            }/patatoids-project/Patatoid-${index}.png`
-        })
         return {
             v$: useVuelidate(),
-            defaultPictures,
             wsData: {
                 savedContent: this.modelValue.content,
                 originalContent: this.modelValue.content,
@@ -157,14 +132,20 @@ export default {
         return {
             modelValue: {
                 title: {
-                    required: helpers.withMessage(this.$t('news.form.title.required'), required),
+                    required: helpers.withMessage(
+                        this.$t('instructions.form.title.required'),
+                        required
+                    ),
                 },
                 content: {
-                    required: helpers.withMessage(this.$t('news.form.content.required'), required),
+                    required: helpers.withMessage(
+                        this.$t('instructions.form.content.required'),
+                        required
+                    ),
                 },
                 publication_date: {
                     required: helpers.withMessage(
-                        this.$t('news.form.publication_date.required'),
+                        this.$t('instructions.form.publication_date.required'),
                         required
                     ),
                 },
