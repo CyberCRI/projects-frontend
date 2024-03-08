@@ -24,17 +24,19 @@
                 @computing="computeLayout"
             />
         </div>
-        <div class="instruction-see-more-ctn">
-            <SeeMoreArrow
-                class="read-description-button"
+        <div class="read-more-ctn">
+            <LinkButton
+                class="read-button"
+                btn-icon="ArrowRight"
                 :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
+                :label="$t('instructions.list.read-more')"
             />
         </div>
     </div>
 </template>
 <script>
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
-import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
+import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 
 export default {
@@ -43,7 +45,7 @@ export default {
     emits: ['remove-instruction', 'edit-instruction'],
 
     components: {
-        SeeMoreArrow,
+        LinkButton,
         HtmlLimiter,
         ContextActionButton,
     },
@@ -137,9 +139,13 @@ export default {
     }
 }
 
-.instruction-see-more-ctn {
-    text-align: right;
+.read-more-ctn {
     flex-shrink: 0;
     padding: 1rem 0;
+
+    .read-button {
+        width: min-content;
+        padding-left: 0;
+    }
 }
 </style>

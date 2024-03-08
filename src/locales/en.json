@@ -2202,7 +2202,8 @@
         },
         "list": {
             "title": "News",
-            "create": "Create an article"
+            "create": "Create an article",
+            "read-more": "Read"
         },
         "page": {
             "others": "Other news"
@@ -2243,7 +2244,8 @@
         },
         "list": {
             "title": "Instructions",
-            "create": "Add an instruction"
+            "create": "Add an instruction",
+            "read-more": "Read"
         },
         "drawer": {
             "title": "Edit instruction"

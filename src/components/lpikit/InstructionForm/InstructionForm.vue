@@ -262,6 +262,7 @@ label,
     color: $primary-dark;
     font-weight: 700;
     cursor: pointer;
+
     .icon {
         width: $font-size-2xl;
         fill: $primary-dark;
