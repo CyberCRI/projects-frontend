@@ -30,7 +30,6 @@ injectedEnv:
     VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ''
     VITE_APP_KEYCLOAK_REALM: lp
 
-
 resources:
   requests:
     cpu: 1m
