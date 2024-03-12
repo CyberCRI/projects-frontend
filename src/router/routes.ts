@@ -21,13 +21,13 @@ const routes: Array<RouteRecordRaw> = [
 
         name: 'HomeRoot',
         component: () => {
+            let homeComponent = 'HomePage'
             if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                return import(
-                    /* webpackChunkName: "NewHomePage" */ '../pages/NewHomePage/NewHomePage.vue'
-                )
-            } else {
-                return import(/* webpackChunkName: "HomePage" */ '../pages/HomePage/HomePage.vue')
+                homeComponent = 'NewHomePage'
             }
+            return import(
+                /* webpackChunkName: "HomePage" */ `../pages/${homeComponent}/${homeComponent}.vue`
+            )
         },
         meta: {
             resetScroll: true,
