@@ -21,6 +21,8 @@ export default defineConfig(({ command, mode }) => {
     }
 
     const fontFile = env.VITE_APP_FONT_OVERRIDE || 'fonts-default'
+    console.log('VITE_APP_FONT_OVERRIDE', env.VITE_APP_FONT_OVERRIDE)
+    console.log('fontFile', fontFile)
 
     return {
         plugins: [
