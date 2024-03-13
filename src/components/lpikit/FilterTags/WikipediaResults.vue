@@ -133,7 +133,7 @@ export default {
         launchSearch: debounce(async function () {
             this.isLoading = true
             try {
-                const req = await searchWikiTags(this.queryString).catch(() => [])
+                const req = await searchWikiTags(this.queryString).catch(() => ({ results: [] }))
                 const results = req.results
                 // Filter existing tags
                 let filteredResults = results
