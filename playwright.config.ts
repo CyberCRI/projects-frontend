@@ -12,7 +12,8 @@ dotenv.config()
  */
 export default defineConfig({
     /* Maximum time the whole test suite can run for. */
-    globalTimeout: 20 * 60 * 1000,
+    // globalTimeout: 300000,
+    globalTimeout: 1000,
     testDir: './tests/playwright',
     /* Maximum time one test can run for. */
     timeout: 300 * 1000,
@@ -32,7 +33,7 @@ export default defineConfig({
     /* Opt out of parallel tests on CI. */
     workers: 1,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: process.env.CI ? 'line' : 'html',
+    reporter: 'html',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
@@ -42,7 +43,7 @@ export default defineConfig({
         permissions: ['clipboard-read', 'clipboard-write'],
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: process.env.CI ? 'on' : 'on-first-retry',
-        video: process.env.CI ? 'retain-on-failure' : 'off',
+        video: process.env.CI ? 'on' : 'off',
     },
 
     /* Configure projects for major browsers */

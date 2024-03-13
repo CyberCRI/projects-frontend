@@ -29,6 +29,10 @@ spec:
           readOnly: true
         - name: npm-cache
           mountPath: "/.npm"
+        outputs:
+          artifacts:
+          - name: output_wlsc_fd
+            path: /app/playwright-report
     volumes:
     - name: secrets
       secret:
