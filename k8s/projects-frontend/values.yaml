@@ -69,3 +69,5 @@ e2e:
     app.kubernetes.io/part-of: projects
     app.kubernetes.io/managed-by: helm
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+  blobName: playwright
+  storageAccountName: criparisdevlabproje2e
