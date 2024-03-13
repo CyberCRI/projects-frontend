@@ -18,9 +18,6 @@ import Meta from 'vue-meta'
 
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
-// TODO: remove this
-console.log(`VITE_APP_HOME=${import.meta.env.VITE_APP_HOME}`)
-
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({

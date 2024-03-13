@@ -9,6 +9,7 @@
     "scripts": {
         "serve": "vite",
         "build": "vite build",
+        "preview": "vite preview",
         "build:report": "trash report && vue-cli-service build",
         "test:unit": "vitest",
         "test:unit:ci": "node --expose-gc --gc_global ./node_modules/.bin/vitest --logHeapUsage",
