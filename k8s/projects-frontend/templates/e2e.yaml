@@ -50,6 +50,9 @@ spec:
               name: upload-to-blob-storage
               template: upload-to-blob-storage
               clusterScope: true
+            inputs:
+              artifacts:
+              - name: report
             arguments:
               parameters:
               - name: file_path
@@ -60,7 +63,8 @@ spec:
                 value: {{ tpl .Values.e2e.storageAccountName . }}
               artifacts:
               - name: report
-                path: /tmp/playwright-report
+                from: {{ print "{{inputs.artifacts.report}}" | quote }}
+
     volumes:
     - name: secrets
       secret:
