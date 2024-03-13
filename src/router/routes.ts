@@ -2,9 +2,6 @@ import { RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 
 export const HomePages = {
-    $DOCKER_INJECT_VITE_APP_HOME: import(
-        /* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`
-    ),
     old: import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`),
     new: import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`),
 }
@@ -28,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: () => HomePages[import.meta.env.VITE_APP_HOME],
+        component: () => HomePages[import.meta.env.VITE_APP_HOME] || HomePages.old,
         meta: {
             resetScroll: true,
         },
@@ -82,7 +79,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: () => HomePages[import.meta.env.VITE_APP_HOME],
+        component: () => HomePages[import.meta.env.VITE_APP_HOME] || HomePages.old,
         meta: {
             resetScroll: true,
         },
