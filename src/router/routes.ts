@@ -5,7 +5,7 @@ export const HomePages = {
     $DOCKER_INJECT_VITE_APP_HOME: import(
         /* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`
     ),
-    '': import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`),
+    old: import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`),
     new: import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`),
 }
 
