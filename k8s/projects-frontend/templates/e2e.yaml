@@ -44,15 +44,15 @@ spec:
           - name: report
             path: /app/playwright-report
       - name: upload-report
+        inputs:
+          artifacts:
+          - name: report
         steps:
         - - name: upload
             templateRef:
               name: upload-to-blob-storage
               template: upload-to-blob-storage
               clusterScope: true
-            inputs:
-              artifacts:
-              - name: report
             arguments:
               parameters:
               - name: file_path
