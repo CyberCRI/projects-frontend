@@ -13,6 +13,16 @@ spec:
       seccompProfile:
         type: RuntimeDefault
     templates:
+      - name: all
+        steps:
+        - - name: run
+            template: run
+        - - name: upload-report
+            template: upload-report
+            arguments:
+              artifacts:
+              - name: report
+                from: {{ print "{{steps.run.outputs.artifacts.report}}" | quote }}
       - name: run
         container:
         {{- with $.Values.e2e.image }}
@@ -31,14 +41,14 @@ spec:
           mountPath: "/.npm"
         outputs:
           artifacts:
-          - name: output_wlsc_fd
+          - name: report
             path: /app/playwright-report
       - name: upload-report
         templateRef:
           name: upload-to-blob-storage
           template: upload-to-blob-storage
           clusterScope: true
-        arguments:
+        inputs:
           parameters:
           - name: file_path
             value: /tmp/playwright-report
@@ -46,13 +56,16 @@ spec:
             value: {{  join "/" (list  (tpl .Values.e2e.blobName .) "test-stan") }}
           - name: storage_account_name
             value: {{ tpl .Values.e2e.storageAccountName . }}
+          artifacts:
+          - name: report
+            path: /tmp/playwright-report
     volumes:
     - name: secrets
       secret:
         secretName: {{ tpl .Values.e2e.name . }}
     - name: npm-cache
       emptyDir: {}
-    entrypoint: run
+    entrypoint: all
     serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
   schedule: {{ .Values.e2e.schedule }}
 ---
