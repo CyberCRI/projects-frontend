@@ -21,13 +21,13 @@ const routes: Array<RouteRecordRaw> = [
 
         name: 'HomeRoot',
         component: () => {
+            let homeComponent = 'HomePage'
             if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                return import(
-                    /* webpackChunkName: "NewHomePage" */ '../pages/NewHomePage/NewHomePage.vue'
-                )
-            } else {
-                return import(/* webpackChunkName: "HomePage" */ '../pages/HomePage/HomePage.vue')
+                homeComponent = 'NewHomePage'
             }
+            return import(
+                /* webpackChunkName: "HomePage" */ `../pages/${homeComponent}/${homeComponent}.vue`
+            )
         },
         meta: {
             resetScroll: true,
@@ -774,6 +774,47 @@ const routes: Array<RouteRecordRaw> = [
                           path: 'onboarding',
                           name: 'DebugOnboarding',
                           component: () => import('../pages/DebugPage/Tabs/DebugOnboarding.vue'),
+                      },
+                  ],
+              },
+          ]
+        : []),
+    ...(import.meta.env.VITE_APP_SHOW_EVENT
+        ? [
+              {
+                  path: '/create-event',
+                  name: 'CreateEvent',
+                  component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),
+                  meta: {
+                      resetScroll: true,
+                      requiresAuth: true,
+                  },
+              },
+
+              {
+                  path: '/calendar',
+                  name: 'CalendarPage',
+                  component: () => import('../pages/CalendarPage/CalendarPage.vue'),
+                  redirect: { name: 'FutureEvents' },
+                  meta: {
+                      resetScroll: true,
+                  },
+                  children: [
+                      {
+                          path: 'future',
+                          name: 'FutureEvents',
+                          component: () => import('../pages/CalendarPage/Tabs/FutureEvents.vue'),
+                          meta: {
+                              resetScroll: true,
+                          },
+                      },
+                      {
+                          path: 'past',
+                          name: 'PastEvents',
+                          component: () => import('../pages/CalendarPage/Tabs/PastEvents.vue'),
+                          meta: {
+                              resetScroll: true,
+                          },
                       },
                   ],
               },

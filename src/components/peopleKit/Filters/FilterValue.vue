@@ -62,6 +62,7 @@ $filter-value-icon-size: 16px;
     }
 
     .icon-ctn {
+        flex-shrink: 0;
         margin-left: $space-m;
         display: inline-block;
         width: pxToRem($filter-value-icon-size);
