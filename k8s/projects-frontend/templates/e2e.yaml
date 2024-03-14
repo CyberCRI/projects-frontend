@@ -60,7 +60,7 @@ spec:
               - name: file_path
                 value: /tmp/playwright-report
               - name: blob_prefix
-                value: {{  join "/" (list  (tpl .Values.e2e.blobName .) "test-stan") }}
+                value: {{  join "/" (list  (tpl .Values.e2e.blobName .) (print "{{workflow.uid}}")) | quote }}
               - name: storage_account_name
                 value: {{ tpl .Values.e2e.storageAccountName . }}
               artifacts:

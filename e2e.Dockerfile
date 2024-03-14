@@ -14,7 +14,7 @@ RUN apt-get update && \
 RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
   npm install -D && \
   npx playwright install chrome --with-deps && \
-  && npx playwright install  && \
+  npx playwright install  && \
   rm source-package.json && \
   # Bug with npm cache
   npm cache clean --force && \
