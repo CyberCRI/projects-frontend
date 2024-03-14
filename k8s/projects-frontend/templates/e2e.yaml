@@ -17,6 +17,8 @@ spec:
         steps:
         - - name: run
             template: run
+            continueOn:
+              failed: true
         - - name: upload-report
             template: upload-report
             arguments:
