@@ -137,12 +137,10 @@ export default {
                 const results = req.results
                 // Filter existing tags
                 let filteredResults = results
-                console.log('results', results)
                 if (this.existingTags.length) {
                     const tagsQid = this.existingTags.map((tag) => tag.wikipedia_qid)
                     filteredResults = results.filter((tag) => !tagsQid.includes(tag.wikipedia_qid))
                 }
-                console.log('filteredResults', filteredResults)
                 // Put ambiguous tags first
                 let orderedResults = [
                     ...filteredResults.filter((tag) => tag.is_ambiguous),

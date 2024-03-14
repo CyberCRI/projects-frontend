@@ -1,10 +1,14 @@
 import { RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 
-const HomePage = import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`)
-const NewHomePage = import(
-    /* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`
+export const HomePages = new Map()
+
+HomePages.set('old', import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`))
+HomePages.set(
+    'new',
+    import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`)
 )
+
 const checkAccessRequestEnabled = (to, _from, next) => {
     if (!store.getters['organizations/current']?.access_request_enabled) {
         next({
@@ -24,8 +28,7 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: import.meta.env.VITE_APP_HOME === 'new' ? () => NewHomePage : () => HomePage,
-
+        component: () => HomePages.get(import.meta.env.VITE_APP_HOME) || HomePages.get('old'),
         meta: {
             resetScroll: true,
         },
@@ -79,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: import.meta.env.VITE_APP_HOME === 'new' ? () => NewHomePage : () => HomePage,
+        component: () => HomePages.get(import.meta.env.VITE_APP_HOME) || HomePages.get('old'),
         meta: {
             resetScroll: true,
         },
