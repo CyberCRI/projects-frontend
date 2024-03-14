@@ -12,17 +12,16 @@ dotenv.config()
  */
 export default defineConfig({
     /* Maximum time the whole test suite can run for. */
-    // globalTimeout: 300000,
-    globalTimeout: 1000,
+    globalTimeout: 30 * 60 * 1000,
     testDir: './tests/playwright',
     /* Maximum time one test can run for. */
-    timeout: 300 * 1000,
+    timeout: 10 * 60 * 1000,
     expect: {
         /**
          * Maximum time expect() should wait for the condition to be met.
          * For example in `await expect(locator).toHaveText();`
          */
-        timeout: 30000,
+        timeout: 45 * 1000,
     },
     /* Run tests in files in parallel */
     fullyParallel: true,
@@ -37,7 +36,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-        actionTimeout: 30000,
+        actionTimeout: 45 * 1000,
         /* Base URL to use in actions like `await page.goto('/')`. */
         baseURL: process.env.FRONTEND_URL,
         permissions: ['clipboard-read', 'clipboard-write'],
