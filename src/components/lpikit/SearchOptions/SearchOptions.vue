@@ -24,6 +24,7 @@
                     :label="$t('browse.page-title')"
                     :secondary="false"
                     @click="$emit('search', selectedSection.type, adaptToParent(selectedFilters))"
+                    data-test="search-input-button"
                 >
                 </LpiButton>
             </div>

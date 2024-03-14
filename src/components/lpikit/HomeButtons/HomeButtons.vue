@@ -7,6 +7,7 @@
             btn-icon="Plus"
             @click="button.action"
             class="individual-button"
+            :data-test="button.dataTest"
         />
     </div>
 </template>
