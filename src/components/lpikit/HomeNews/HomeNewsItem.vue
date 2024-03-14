@@ -8,7 +8,7 @@
                 :src="
                     imageError
                         ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                        : news.header_image.variations.small
+                        : news.header_image?.variations?.small
                 "
                 @error="placeHolderImg"
                 @load="onImageLoaded"

@@ -132,6 +132,7 @@ export default {
                 {
                     label: this.$t('home.new-project'),
                     action: () => this.$router.push({ name: 'createProject' }),
+                    dataTest: 'create-project',
                 },
             ],
             topNews: null,
