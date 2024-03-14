@@ -12,9 +12,8 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
-  npm install -D && \
-  npx playwright install chrome --with-deps && \
-  npx playwright install  && \
+  yarn --frozen-lockfile && \
+  yarn run playwright install chrome --with-deps && \
   rm source-package.json && \
   # Bug with npm cache
   npm cache clean --force && \
