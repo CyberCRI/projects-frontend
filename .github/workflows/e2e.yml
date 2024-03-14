@@ -17,11 +17,11 @@ jobs:
       PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
       FRONTEND_URL: ${{vars.FRONTEND_URL}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Read node and npm versions from package.json
-        uses: skjnldsv/read-package-engines-version-actions@v2
+        uses: skjnldsv/read-package-engines-version-actions@v3
         id: package-engines-versions
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
       - name: Install playwright
@@ -40,7 +40,7 @@ jobs:
       #   run: npm run test:play:write # todo: add other browsers
       # - name: Run Playwright socket
       #   run: npm run test:play:websocket # todo: add other browsers
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report

@@ -64,7 +64,7 @@ spec:
               - name: storage_account_name
                 value: {{ tpl .Values.e2e.storageAccountName . }}
               artifacts:
-              - name: artifact_to_upload
+              - name: to_upload
                 from: {{ print "{{inputs.artifacts.report}}" | quote }}
 
     volumes:
