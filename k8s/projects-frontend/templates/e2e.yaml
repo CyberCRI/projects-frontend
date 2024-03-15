@@ -5,6 +5,19 @@ metadata:
   name: {{ tpl .Values.e2e.name . }}
 spec:
   workflowSpec:
+    hooks:
+      failed:
+        expression: workflow.status == "Error" || workflow.status == "Failed"
+        templateRef:
+          name: notify-slack
+          template: send-request
+          clusterScope: true
+        arguments:
+          parameters:
+          - name: message
+            value: Today's Projects backup is missing ! {{ print "https://e2e.output.k8s.lp-i.dev/playwright/{{workflow.uid}}/index.html" }}
+          - name: slackChannel
+            value: {{ .Values.e2e.errorSlackChannel | quote }}
     securityContext:
       runAsNonRoot: true
       runAsUser: 10000
