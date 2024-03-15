@@ -11,7 +11,8 @@ RUN apt-get update && \
   apt-get install -y jq bash && \
   rm -rf /var/lib/apt/lists/*
 
-RUN npx -y playwright@${PLAYWRIGHT_VERSION} install --with-deps && \
+RUN npm install @playwright/tests  && \
+  npx -y playwright@${PLAYWRIGHT_VERSION} install --with-deps && \
   chown -R 10000:10000 /app && \
   # Bug with npm cache
   npm cache clean --force && \
