@@ -15,11 +15,6 @@ RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDepende
   yarn --frozen-lockfile && \
   yarn run playwright install chrome --with-deps && \
   rm source-package.json && \
-  # Bug with npm cache
-  npm cache clean --force && \
-  mkdir -p /.npm && \
-  chown -R 10000:10000 /.npm && \
-  # /Bug with npm cache
   chown -R 10000:10000 /app
 
 USER 10000
