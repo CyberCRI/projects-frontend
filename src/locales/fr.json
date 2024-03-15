@@ -241,7 +241,13 @@
         "delete-account": "Supprimer ce compte",
         "reset-password": "Changer le mot de passe",
         "reset-delete": "Changer le mot de passe & supprimer le compte",
-        "error": "Une erreur s'est produite."
+        "error": "Une erreur s'est produite.",
+        "role": {
+            "none": "Aucun",
+            "user": "Utilisateur",
+            "facilitator": "Facilitateur",
+            "admin": "Org admin"
+        }
     },
     "userItem": {
         "teamLeader": "Chef du groupe"

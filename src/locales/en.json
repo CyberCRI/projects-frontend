@@ -239,7 +239,13 @@
         "delete-account": "Delete account",
         "reset-password": "Reset password",
         "reset-delete": "Reset password & delete account",
-        "error": "An error ocurred."
+        "error": "An error ocurred.",
+        "role": {
+            "none": "None",
+            "user": "User",
+            "facilitator": "Facilitator",
+            "admin": "Org admin"
+        }
     },
     "userItem": {
         "teamLeader": "Group Leader"
