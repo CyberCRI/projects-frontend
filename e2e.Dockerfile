@@ -15,7 +15,7 @@ COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
 # RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
 #   yarn && \
 #   yarn --list && \
-RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} && \
+RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} dotenv  && \
   npx -y playwright install --with-deps && \
   npx -y playwright install chrome --with-deps && \
   chown -R 10000:10000 /app && \

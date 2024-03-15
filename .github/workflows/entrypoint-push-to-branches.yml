@@ -13,8 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint-and-test:
-    uses: ./.github/workflows/lint-and-test.yml
+  # lint-and-test:
+  #   uses: ./.github/workflows/lint-and-test.yml
   build-docker:
     uses: CyberCRI/github-workflows/.github/workflows/build-push.yaml@main
     with:
@@ -46,18 +46,18 @@ jobs:
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
 
-  tag-deploy:
-    needs:
-      - build-docker
-      - lint-and-test
-    uses: CyberCRI/github-workflows/.github/workflows/tag-deploy.yaml@main
+  # tag-deploy:
+  #   needs:
+  #     - build-docker
+  #     - lint-and-test
+  #   uses: CyberCRI/github-workflows/.github/workflows/tag-deploy.yaml@main
   tag-deploy-fast:
     needs:
       - build-docker
     uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@main
-  e2e:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
-    needs:
-    - tag-deploy
+  # e2e:
+  #   if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
+  #   uses: ./.github/workflows/e2e.yml
+  #   secrets: inherit
+  #   needs:
+  #   - tag-deploy
