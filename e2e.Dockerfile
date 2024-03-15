@@ -16,7 +16,8 @@ RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDepende
   # yarn playwright install chrome --with-deps && \
   npx playwright install chrome --with-deps && \
   rm source-package.json && \
-  chown -R 10000:10000 /app
+  chown -R 10000:10000 /app && \
+  chown -R 10000:10000 /.cache
 
 COPY tests/playwright tests/playwright
 
