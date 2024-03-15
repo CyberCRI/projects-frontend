@@ -882,7 +882,7 @@
     },
     "multieditor": {
         "blockquote": "Citation",
-        "bold": "bold",
+        "bold": "gras",
         "bullet_list": "Liste à points",
         "click-to-play-video": "Cliquez encore pour démarrer/arrêter la vidéo",
         "code": {
