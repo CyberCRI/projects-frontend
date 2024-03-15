@@ -5,7 +5,7 @@ ARG PLAYWRIGHT_VERSION=1.42.1
 WORKDIR /app
 
 COPY playwright.config.ts playwright.config.ts
-COPY package.json source-package.json
+# COPY package.json source-package.json
 COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
 
 # RUN apt-get update && \
@@ -15,16 +15,21 @@ COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
 # RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
 #   yarn && \
 #   yarn --list && \
+
 RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} dotenv  && \
-  npx -y playwright install --with-deps && \
-  npx -y playwright install chrome --with-deps && \
-  chown -R 10000:10000 /app && \
   # Bug with npm cache
   npm cache clean --force && \
   mkdir -p /.npm && \
   chown -R 10000:10000 /.npm && \
   # /Bug with npm cache
-  rm /app/source-package.json
+  chown -R 10000:10000 /app
+
+RUN npx -y playwright install chrome --with-deps
+
+# Legendary switcheroo
+RUN mkdir /.cache &&\
+  mv /root/.cache/ms-playwright /.cache/ &&\
+  chown -R 10000:10000 /.cache/
 
 COPY tests/playwright tests/playwright
 
