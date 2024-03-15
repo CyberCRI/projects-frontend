@@ -49,8 +49,11 @@ spec:
         {{- with $.Values.e2e.image }}
           image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
         {{- end }}
-          command: ["/bin/sh"]
-          args: ["-c", "npx playwright test --project=chrome"]
+          args:
+          - npx
+          - playwright
+          - test
+          - --project=chrome
           envFrom:
           - configMapRef:
               name: {{ tpl .Values.e2e.name . }}
@@ -90,7 +93,7 @@ spec:
         container:
           image: alpine:3.12
           command: ["sh", "-c"]
-          args: ["if {{ print "{{inputs.parameters.status}}" }} == 'Succeeded'; then exit 0; else exit 1; fi"]
+          args: ["if [ {{ print "{{inputs.parameters.status}}" }} == 'Succeeded' ]; then exit 0; else exit 1; fi"]
 
     volumes:
     - name: secrets
