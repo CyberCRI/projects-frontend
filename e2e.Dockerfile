@@ -16,7 +16,7 @@ RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDepende
   yarn && \
   yarn --list && \
   npx -y playwright install --with-deps && \
-  npx -y playwright install chrome && \
+  npx -y playwright install chrome --with-deps && \
   chown -R 10000:10000 /app && \
   # Bug with npm cache
   npm cache clean --force && \
