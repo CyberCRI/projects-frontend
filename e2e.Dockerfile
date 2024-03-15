@@ -12,8 +12,12 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN npx -y playwright@${PLAYWRIGHT_VERSION} install --with-deps && \
-  chown -R 10000:10000 /app
-
+  chown -R 10000:10000 /app && \
+  # Bug with npm cache
+  npm cache clean --force && \
+  mkdir -p /.npm && \
+  chown -R 10000:10000 /.npm
+# /Bug with npm cache
 COPY tests/playwright tests/playwright
 
 USER 10000
