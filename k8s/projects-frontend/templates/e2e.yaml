@@ -38,6 +38,12 @@ spec:
               artifacts:
               - name: report
                 from: {{ print "{{steps.run.outputs.artifacts.report}}" | quote }}
+        - - name: report-status
+            template: report-status
+            arguments:
+              parameters:
+              - name: status
+                value: {{ print "{{steps.run.status}}" | quote }}
       - name: run
         container:
         {{- with $.Values.e2e.image }}
@@ -79,6 +85,14 @@ spec:
               artifacts:
               - name: to_upload
                 from: {{ print "{{inputs.artifacts.report}}" | quote }}
+      - name: report-status
+        inputs:
+          parameters:
+          - name: status
+        container:
+          image: alpine:3.12
+          command: ["sh", "-c"]
+          args: ["echo {{ print "{{inputs.parameters.status}}" }}"]
 
     volumes:
     - name: secrets
