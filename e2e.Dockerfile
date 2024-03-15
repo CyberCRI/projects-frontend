@@ -13,15 +13,17 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
-  yarn config set cache-folder /app/.yarn-cache && \
-  yarn --frozen-lockfile && \
+  yarn && \
+  yarn --list && \
   npx -y playwright install --with-deps && \
+  npx -y playwright install chrome && \
   chown -R 10000:10000 /app && \
   # Bug with npm cache
   npm cache clean --force && \
   mkdir -p /.npm && \
-  chown -R 10000:10000 /.npm
-# /Bug with npm cache
+  chown -R 10000:10000 /.npm && \
+  # /Bug with npm cache
+  rm /app/source-package.json
 
 COPY tests/playwright tests/playwright
 
