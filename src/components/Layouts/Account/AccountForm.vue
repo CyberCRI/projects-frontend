@@ -275,10 +275,6 @@ export default {
             showRemoveUserQuit: false,
             selectedRole: {},
             roles: [], // TODO this doesn't seem realy used
-            roleNone: {
-                value: 0,
-                name: 'none',
-            },
 
             selectedGroups: [],
             peopleGroupsTree: [],
@@ -325,19 +321,26 @@ export default {
             // whether to give option to create user in google too
             return this.$store.getters['organizations/current'].google_sync_enabled
         },
+        roleNone() {
+            return {
+                value: 0,
+                name: this.$t('account.role.none'),
+            }
+        },
+
         roleOptions() {
             const res = []
             const roles = [
                 {
-                    name: 'users',
+                    name: this.$t('account.role.user'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:users`,
                 },
                 {
-                    name: 'facilitators',
+                    name: this.$t('account.role.facilitator'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:facilitators`,
                 },
                 {
-                    name: 'admins',
+                    name: this.$t('account.role.admin'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:admins`,
                 },
             ]
