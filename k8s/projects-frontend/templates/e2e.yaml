@@ -54,12 +54,10 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ tpl .Values.e2e.name . }}
-        volumeMounts:
-        - name: secrets
-          mountPath: "/secrets"
-          readOnly: true
-        - name: npm-cache
-          mountPath: "/.npm"
+          volumeMounts:
+          - name: secrets
+            mountPath: "/secrets"
+            readOnly: true
         outputs:
           artifacts:
           - name: report
@@ -92,7 +90,7 @@ spec:
         container:
           image: alpine:3.12
           command: ["sh", "-c"]
-          args: ["echo {{ print "{{inputs.parameters.status}}" }}"]
+          args: ["if {{ print "{{inputs.parameters.status}}" }} == 'Succeeded'; then exit 0; else exit 1; fi"]
 
     volumes:
     - name: secrets
