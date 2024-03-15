@@ -31,7 +31,7 @@ spec:
           image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
         {{- end }}
           command: ["/bin/sh"]
-          args: ["-c", "npm run test:play"]
+          args: ["-c", "npx playwright test --project=chrome"]
           envFrom:
           - configMapRef:
               name: {{ tpl .Values.e2e.name . }}
