@@ -74,7 +74,7 @@ e2e:
   notify:
     failure:
       enabled: true
-      slackChannel: workflows-default
+      slackChannel: it-projects-frontend
     success:
       enabled: true
-      slackChannel: workflows-default
+      slackChannel: it-projects-frontend
