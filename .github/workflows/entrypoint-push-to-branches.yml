@@ -53,9 +53,3 @@ jobs:
     needs:
       - build-docker
     uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@main
-  e2e:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
-    needs:
-    - tag-deploy

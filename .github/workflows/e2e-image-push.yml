@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - e2e-wf
 
 jobs:
   build-docker:
