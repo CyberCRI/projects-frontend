@@ -332,7 +332,6 @@ export default {
     h4,
     h5,
     h6 {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-weight: bold;
         letter-spacing: 1px;
         line-height: 1;
@@ -556,7 +555,6 @@ export default {
     }
 
     .person .name {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-weight: bold;
         letter-spacing: 0.8px;
         margin-bottom: 5px;

@@ -220,7 +220,6 @@ export default {
                 display: flex;
                 align-items: center;
                 background: transparent;
-                font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
                 width: 100%;
 
                 &--selected {

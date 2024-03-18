@@ -43,7 +43,6 @@ export default {
 </script>
 <style lang="scss">
 .v-calendar .content {
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     cursor: pointer;
 }
 </style>

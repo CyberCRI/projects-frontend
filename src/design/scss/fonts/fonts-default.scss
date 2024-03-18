@@ -135,3 +135,14 @@ $uniqId: unique_id();
         url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
             format('truetype');
 }
+
+html,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+* {
+    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
+}

@@ -19,6 +19,7 @@ export default defineConfig(({ command, mode }) => {
             withCredentials: true,
         },
     }
+
     return {
         plugins: [
             vue(),

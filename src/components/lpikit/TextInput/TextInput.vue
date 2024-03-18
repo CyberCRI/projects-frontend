@@ -160,7 +160,6 @@ export default {
         font-size: 1em;
         box-sizing: border-box;
         width: 100%;
-        font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
         border-radius: $border-radius-s;
         background: $white;
         border: $border-width-s solid $gray-7;

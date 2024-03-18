@@ -77,16 +77,11 @@ h6,
 .bannertitle,
 .dessummary,
 .bannersubtitle {
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     font-weight: 700;
 }
 
 input {
     box-sizing: border-box;
-}
-
-ul {
-    list-style-type: none;
 }
 
 .form {
@@ -116,7 +111,6 @@ ul {
     .error-description {
         color: $salmon-dark;
         margin-top: $space-s;
-        font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
         font-size: $font-size-s;
     }
 }

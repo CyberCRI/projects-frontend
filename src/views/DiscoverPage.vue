@@ -556,7 +556,6 @@ export default {
     h4,
     h5,
     h6 {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-weight: bold;
         letter-spacing: 1px;
         line-height: 1;
@@ -725,7 +724,6 @@ export default {
     }
 
     .intro {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-weight: bold;
         overflow: hidden;
         padding: 60px 0 160px;
@@ -829,7 +827,6 @@ export default {
         color: darkgrey;
         cursor: pointer;
         display: block;
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         padding: 5px;
         text-transform: uppercase;
     }
@@ -1038,7 +1035,6 @@ export default {
     }
 
     .projects-item p {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-size: 13px;
         font-weight: 500;
         letter-spacing: normal;
@@ -1178,7 +1174,6 @@ export default {
     .quote-content::before,
     .quote-content::after {
         display: block;
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
         font-size: 300px;
         line-height: 0.5;
         opacity: 0.3;
@@ -1195,10 +1190,6 @@ export default {
         bottom: -135px;
         content: '\201D';
         right: -90px;
-    }
-
-    .quote-content p {
-        font-family: 'Archivo Narrow', 'Noto Sans SC', helvetica, arial, sans-serif;
     }
 
     .quote-author {
