@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .no-item {
     padding-bottom: 100px;
 

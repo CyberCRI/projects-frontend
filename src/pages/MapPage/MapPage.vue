@@ -106,8 +106,11 @@ export default {
 </script>
 
 <style lang="scss">
+// do NOT scope this style, it will break the map
 @import '@/design/scss/map';
+</style>
 
+<style lang="scss" scoped>
 #projects-map {
     height: calc(100vh - $navbar-height);
     margin-top: $navbar-height;

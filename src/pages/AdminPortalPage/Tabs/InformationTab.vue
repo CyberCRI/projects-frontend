@@ -401,16 +401,3 @@ export default {
     }
 }
 </style>
-
-<style lang="scss">
-.information-tab {
-    .text-input {
-        width: 100%;
-
-        input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    }
-}
-</style>
