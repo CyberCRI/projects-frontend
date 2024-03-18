@@ -21,7 +21,7 @@ spec:
           - name: workflowId
             value: {{ print "{{workflow.uid}}" | quote }}
           - name: slackChannel
-            value: {{ .Values.e2e.errorSlackChannel | quote }}
+            value: {{ .Values.e2e.notify.failure.slackChannel | quote }}
       {{- end }}
       {{- if .Values.e2e.notify.success.enabled }}
       succeeded:
