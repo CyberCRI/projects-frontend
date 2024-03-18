@@ -91,10 +91,10 @@
             <div class="role-options-ctn">
                 <div v-for="roleOption in roleOptions" :key="roleOption.id" class="role-options">
                     <RadioButton
-                        :label="roleOption.name"
+                        :label="roleOption.label"
                         v-model="selectedRole"
                         @update:model-value="updateRole(roleOption)"
-                        :checked="selectedRole.name === roleOption.name"
+                        :checked="selectedRole?.name === roleOption.name"
                     />
                 </div>
             </div>
@@ -324,7 +324,8 @@ export default {
         roleNone() {
             return {
                 value: 0,
-                name: this.$t('account.role.none'),
+                name: 'none',
+                label: this.$t('account.role.none'),
             }
         },
 
@@ -332,15 +333,18 @@ export default {
             const res = []
             const roles = [
                 {
-                    name: this.$t('account.role.user'),
+                    name: 'users',
+                    label: this.$t('account.role.user'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:users`,
                 },
                 {
-                    name: this.$t('account.role.facilitator'),
+                    name: 'facilitators',
+                    label: this.$t('account.role.facilitator'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:facilitators`,
                 },
                 {
-                    name: this.$t('account.role.admin'),
+                    name: 'admins',
+                    label: this.$t('account.role.admin'),
                     value: `organization:#${this.$store.getters['organizations/current'].id}:admins`,
                 },
             ]
