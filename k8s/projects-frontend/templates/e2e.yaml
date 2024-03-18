@@ -12,12 +12,14 @@ spec:
         expression: workflow.status == "Error" || workflow.status == "Failed"
         templateRef:
           name: notify-slack
-          template: send-request
+          template: send-request-playwright
           clusterScope: true
         arguments:
           parameters:
-          - name: message
-            value: E2e just failed ! Check out the <{{ print "https://e2e.output.k8s.lp-i.dev/playwright/{{workflow.uid}}/index.html" }}|report>
+          - name: status
+            value: failure
+          - name: workflowId
+            value: {{ print "{{workflow.uid}}" | quote }}
           - name: slackChannel
             value: {{ .Values.e2e.errorSlackChannel | quote }}
       {{- end }}
@@ -26,12 +28,14 @@ spec:
         expression: workflow.status == "Succeeded"
         templateRef:
           name: notify-slack
-          template: send-request
+          template: send-request-playwright
           clusterScope: true
         arguments:
           parameters:
-          - name: message
-            value: E2e just succeeded ! Check out the <{{ print "https://e2e.output.k8s.lp-i.dev/playwright/{{workflow.uid}}/index.html" }}|report>
+          - name: status
+            value: success
+          - name: workflowId
+            value: {{ print "{{workflow.uid}}" | quote }}
           - name: slackChannel
             value: {{ .Values.e2e.notify.success.slackChannel | quote }}
       {{- end }}
