@@ -1,6 +1,14 @@
 import { RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 
+export const HomePages = new Map()
+
+HomePages.set('old', import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`))
+HomePages.set(
+    'new',
+    import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`)
+)
+
 const checkAccessRequestEnabled = (to, _from, next) => {
     if (!store.getters['organizations/current']?.access_request_enabled) {
         next({
@@ -20,15 +28,7 @@ const routes: Array<RouteRecordRaw> = [
         // },
 
         name: 'HomeRoot',
-        component: () => {
-            let homeComponent = 'HomePage'
-            if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                homeComponent = 'NewHomePage'
-            }
-            return import(
-                /* webpackChunkName: "HomePage" */ `../pages/${homeComponent}/${homeComponent}.vue`
-            )
-        },
+        component: () => HomePages.get(import.meta.env.VITE_APP_HOME) || HomePages.get('old'),
         meta: {
             resetScroll: true,
         },
@@ -82,15 +82,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/dashboard',
         name: 'Home',
-        component: () => {
-            if (`${import.meta.env.VITE_APP_HOME}` === 'new') {
-                return import(
-                    /* webpackChunkName: "NewHomePage" */ '../pages/NewHomePage/NewHomePage.vue'
-                )
-            } else {
-                return import(/* webpackChunkName: "HomePage" */ '../pages/HomePage/HomePage.vue')
-            }
-        },
+        component: () => HomePages.get(import.meta.env.VITE_APP_HOME) || HomePages.get('old'),
         meta: {
             resetScroll: true,
         },
