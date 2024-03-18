@@ -50,4 +50,5 @@ playwight-report/
 /playwright-report/
 /playwright/.cache/
 
+# helm
 charts/

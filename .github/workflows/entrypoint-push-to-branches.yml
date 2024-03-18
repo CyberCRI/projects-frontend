@@ -39,8 +39,6 @@ jobs:
         VITE_APP_PUBLIC_BINARIES_PREFIX=${{ vars.PUBLIC_BINARIES_PREFIX }}
         VITE_APP_WSS_HOST=$DOCKER_INJECT_VITE_APP_WSS_HOST
         VITE_APP_VERSION=$DOCKER_INJECT_VITE_APP_VERSION
-        VITE_APP_HOME=$DOCKER_INJECT_VITE_APP_HOME
-
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
@@ -55,9 +53,3 @@ jobs:
     needs:
       - build-docker
     uses: CyberCRI/github-workflows/.github/workflows/tag-deploy-fast.yaml@main
-  e2e:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/tags/auto_staging' }}
-    uses: ./.github/workflows/e2e.yml
-    secrets: inherit
-    needs:
-    - tag-deploy

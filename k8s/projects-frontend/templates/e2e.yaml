@@ -1,0 +1,134 @@
+{{- if .Values.e2e.enabled }}
+kind: CronWorkflow
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: {{ tpl .Values.e2e.name . }}
+spec:
+  workflowSpec:
+    {{- if or .Values.e2e.notify.failure.enabled .Values.e2e.notify.success.enabled }}
+    hooks:
+      {{- if .Values.e2e.notify.failure.enabled }}
+      failed:
+        expression: workflow.status == "Error" || workflow.status == "Failed"
+        templateRef:
+          name: notify-slack
+          template: send-request
+          clusterScope: true
+        arguments:
+          parameters:
+          - name: message
+            value: E2e just failed ! Check out the <{{ print "https://e2e.output.k8s.lp-i.dev/playwright/{{workflow.uid}}/index.html" }}|report>
+          - name: slackChannel
+            value: {{ .Values.e2e.errorSlackChannel | quote }}
+      {{- end }}
+      {{- if .Values.e2e.notify.success.enabled }}
+      succeeded:
+        expression: workflow.status == "Succeeded"
+        templateRef:
+          name: notify-slack
+          template: send-request
+          clusterScope: true
+        arguments:
+          parameters:
+          - name: message
+            value: E2e just succeeded ! Check out the <{{ print "https://e2e.output.k8s.lp-i.dev/playwright/{{workflow.uid}}/index.html" }}|report>
+          - name: slackChannel
+            value: {{ .Values.e2e.notify.success.slackChannel | quote }}
+      {{- end }}
+    {{- end }}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 10000
+      runAsGroup: 10000
+      fsGroup: 10000
+      seccompProfile:
+        type: RuntimeDefault
+    templates:
+      - name: all
+        steps:
+        - - name: run
+            template: run
+            continueOn:
+              failed: true
+        - - name: upload-report
+            template: upload-report
+            arguments:
+              artifacts:
+              - name: report
+                from: {{ print "{{steps.run.outputs.artifacts.report}}" | quote }}
+        - - name: report-status
+            template: report-status
+            arguments:
+              parameters:
+              - name: status
+                value: {{ print "{{steps.run.status}}" | quote }}
+      - name: run
+        container:
+        {{- with $.Values.e2e.image }}
+          image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
+        {{- end }}
+          args:
+          - npx
+          - playwright
+          - test
+          - --project=chrome
+          envFrom:
+          - configMapRef:
+              name: {{ tpl .Values.e2e.name . }}
+          volumeMounts:
+          - name: secrets
+            mountPath: "/secrets"
+            readOnly: true
+        outputs:
+          artifacts:
+          - name: report
+            path: /app/playwright-report
+      - name: upload-report
+        inputs:
+          artifacts:
+          - name: report
+        steps:
+        - - name: upload
+            templateRef:
+              name: upload-to-blob-storage
+              template: upload-to-blob-storage
+              clusterScope: true
+            arguments:
+              parameters:
+              - name: file_path
+                value: /tmp/playwright-report
+              - name: blob_prefix
+                value: {{  join "/" (list  (tpl .Values.e2e.blobName .) (print "{{workflow.uid}}")) | quote }}
+              - name: storage_account_name
+                value: {{ tpl .Values.e2e.storageAccountName . }}
+              artifacts:
+              - name: to_upload
+                from: {{ print "{{inputs.artifacts.report}}" | quote }}
+      - name: report-status
+        inputs:
+          parameters:
+          - name: status
+        container:
+          image: alpine:3.12
+          command: ["sh", "-c"]
+          args: ["if [ {{ print "{{inputs.parameters.status}}" }} == 'Succeeded' ]; then exit 0; else exit 1; fi"]
+
+    volumes:
+    - name: secrets
+      secret:
+        secretName: {{ tpl .Values.e2e.name . }}
+    - name: npm-cache
+      emptyDir: {}
+    entrypoint: all
+    serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
+  schedule: {{ .Values.e2e.schedule }}
+---
+
+{{- $configGenerator := dict
+"config" .Values.e2eEnv
+"root" $
+"commonLabels" .Values.e2e.commonLabels
+"name" (tpl .Values.e2e.name .) }}
+
+{{- include "common.config" $configGenerator}}
+{{- end}}

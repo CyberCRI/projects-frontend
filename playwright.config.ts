@@ -28,9 +28,9 @@ export default defineConfig({
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on CI only */
-    retries: process.env.CI ? 1 : 1,
+    retries: 1,
     /* Opt out of parallel tests on CI. */
-    workers: process.env.CI ? 1 : 1,
+    workers: 1,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: 'html',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -41,24 +41,25 @@ export default defineConfig({
         baseURL: process.env.FRONTEND_URL,
         permissions: ['clipboard-read', 'clipboard-write'],
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        trace: 'on-first-retry',
+        trace: process.env.CI ? 'on' : 'on-first-retry',
+        video: process.env.CI ? 'on' : 'off',
     },
 
     /* Configure projects for major browsers */
     projects: [
-        {
-            name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
-        },
-        {
-            name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
-        },
+        // {
+        //     name: 'chromium',
+        //     use: { ...devices['Desktop Chrome'] },
+        // },
+        // {
+        //     name: 'firefox',
+        //     use: { ...devices['Desktop Firefox'] },
+        // },
 
-        {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
-        },
+        // {
+        //     name: 'webkit',
+        //     use: { ...devices['Desktop Safari'] },
+        // },
 
         /* Test against mobile viewports. */
         // {
@@ -71,10 +72,10 @@ export default defineConfig({
         // },
 
         /* Test against branded browsers. */
-        {
-            name: 'edge',
-            use: { channel: 'msedge' },
-        },
+        // {
+        //     name: 'edge',
+        //     use: { channel: 'msedge' },
+        // },
         {
             name: 'chrome',
             use: { channel: 'chrome' },

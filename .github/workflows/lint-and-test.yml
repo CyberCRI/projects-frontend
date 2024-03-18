@@ -5,13 +5,13 @@ jobs:
   lint-and-test:
     runs-on: [self-hosted, m2c4-runner]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Necessary for https://github.com/wagoid/commitlint-github-action
       - name: Read node and npm versions from package.json
-        uses: skjnldsv/read-package-engines-version-actions@v2
+        uses: skjnldsv/read-package-engines-version-actions@v3
         id: package-engines-versions
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '${{ steps.package-engines-versions.outputs.nodeVersion }}'
       - name: Install Yarn
@@ -20,7 +20,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Cache node_modules
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
