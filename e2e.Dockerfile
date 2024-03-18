@@ -5,16 +5,7 @@ ARG PLAYWRIGHT_VERSION=1.42.1
 WORKDIR /app
 
 COPY playwright.config.ts playwright.config.ts
-# COPY package.json source-package.json
 COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
-
-# RUN apt-get update && \
-#   apt-get install -y jq bash && \
-#   rm -rf /var/lib/apt/lists/*
-
-# RUN jq 'del(.dependencies,.husky,."lint-staged",.scripts.prepare)  | .devDependencies |= {"@playwright/test":."@playwright/test", "dotenv":.dotenv}' source-package.json > package.json && \
-#   yarn && \
-#   yarn --list && \
 
 RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} dotenv  && \
   # Bug with npm cache

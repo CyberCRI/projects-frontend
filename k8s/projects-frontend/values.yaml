@@ -71,4 +71,10 @@ e2e:
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
   blobName: playwright
   storageAccountName: criparisdevlabproje2e
-  errorSlackChannel: workflows-default
+  notify:
+    failure:
+      enabled: true
+      slackChannel: workflows-default
+    success:
+      enabled: true
+      slackChannel: workflows-default
