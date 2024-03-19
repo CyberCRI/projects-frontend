@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test'
 import { LogLevel, Logger } from '../../logger'
-import { organizationCode } from '../../variables'
 
 const logger = new Logger(LogLevel.Debug)
 
@@ -15,16 +14,18 @@ export async function createProject(page, projectName, projId) {
     logger.info('Click to create project')
     await page.locator('[data-test="create-project"]').click()
 
-    //add category
-    if (organizationCode == 'CRI') {
+    // add category if needed
+    const categorySelector = await page.locator('[data-test="select-project-category"]')
+    try {
+        await categorySelector.waitFor({ timeout: 10 * 1000 })
         logger.info('Click to add category (the first of the list)')
-        await page
-            .locator('[data-test="select-project-category"] div')
-            .filter({ hasText: 'Select' })
-            .click()
-        await page.locator('[data-test*=project-form]').first().click()
+        categorySelector.click()
+        await categorySelector.locator('[data-test*=project-form]').first().click()
         logger.info('Category selected')
+    } catch (e) {
+        logger.info('Organization has no category.')
     }
+
     logger.info('Click to add title')
     // add title
     await page.locator('[data-test="title-input"]').click()
