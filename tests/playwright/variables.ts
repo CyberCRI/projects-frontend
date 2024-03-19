@@ -36,4 +36,3 @@ export const usersDict: UserType = {
 
 export const frontURL: string | undefined = process.env.FRONTEND_URL
 export const emailToReport: string = 'test.report@gmail.com'
-export const organizationCode: string | undefined = process.env.VITE_APP_API_ORG_CODE

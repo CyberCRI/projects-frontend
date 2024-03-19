@@ -1,10 +1,5 @@
 <template>
-    <div
-        class="lpi-select"
-        :class="{ active: isOpen }"
-        v-click-outside="clickOutside"
-        data-test="select-project-category"
-    >
+    <div class="lpi-select" :class="{ active: isOpen }" v-click-outside="clickOutside">
         <div
             class="menu-header"
             :class="{ placeholder: !selected, 'placeholder--open': isOpen }"
