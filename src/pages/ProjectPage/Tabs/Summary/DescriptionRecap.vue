@@ -114,12 +114,10 @@ export default {
             pointer-events: none;
         }
     }
-}
-</style>
 
-<style lang="scss">
-.description-recap .read-description-button {
-    font-size: $font-size-m;
-    padding: 0;
+    .read-description-button {
+        font-size: $font-size-m;
+        padding: 0;
+    }
 }
 </style>

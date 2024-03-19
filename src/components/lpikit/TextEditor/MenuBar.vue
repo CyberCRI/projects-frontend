@@ -298,7 +298,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .divider {
     width: 2px;
     height: 1.25rem;

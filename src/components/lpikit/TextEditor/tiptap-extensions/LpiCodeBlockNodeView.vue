@@ -109,7 +109,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .code-menu-bar {
     display: flex;
     gap: 1rem;

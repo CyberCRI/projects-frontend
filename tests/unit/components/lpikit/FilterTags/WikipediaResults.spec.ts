@@ -4,6 +4,15 @@ import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vu
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it } from 'vitest'
+import { axios } from '@/api/api.config'
+vi.mock('@/api/api.config', function () {
+    return {
+        axios: {
+            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
+        },
+    }
+})
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

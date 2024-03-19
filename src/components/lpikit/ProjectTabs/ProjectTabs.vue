@@ -184,7 +184,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .project-tabs {
     .dropdown-ctn {
         position: relative;

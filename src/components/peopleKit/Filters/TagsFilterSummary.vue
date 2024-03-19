@@ -63,32 +63,3 @@ export default {
     margin-bottom: 24px;
 }
 </style>
-
-<style lang="scss">
-.input-ctn {
-    width: 100%;
-
-    label {
-        align-self: flex-start;
-    }
-
-    input {
-        width: 100%;
-    }
-}
-
-.add-modal .s-modal-wrapper .s-modal-content {
-    max-height: 526px;
-}
-
-.search-modal .s-modal-wrapper .s-modal-content {
-    max-height: 660px;
-}
-
-.tag-search-label {
-    font-size: $font-size-m;
-    color: $primary-dark;
-    font-weight: 700;
-    margin: 0 0 $space-s $space-l;
-}
-</style>

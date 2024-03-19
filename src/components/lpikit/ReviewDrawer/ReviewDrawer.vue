@@ -323,7 +323,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .review-switch {
     display: flex;
     flex-direction: row;

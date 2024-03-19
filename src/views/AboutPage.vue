@@ -309,7 +309,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #APP.About #maintopbar {
     background: rgb(0 0 0 / 30%);
 }

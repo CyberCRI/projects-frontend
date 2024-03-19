@@ -62,9 +62,3 @@ export default {
     }
 }
 </style>
-
-<style lang="scss">
-.linked-projects-recap .section-header .s-button {
-    text-transform: uppercase;
-}
-</style>
