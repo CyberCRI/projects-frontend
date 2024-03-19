@@ -631,7 +631,8 @@
         "video": "Video tutorial"
     },
     "feed": {
-        "see-all": "See all"
+        "see-all": "See all",
+        "title": "Newsfeed"
     },
     "file": {
         "add-image": "add an image",

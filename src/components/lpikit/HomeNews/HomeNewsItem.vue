@@ -86,6 +86,7 @@ export default {
         height: pxToRem(200px);
         flex: none;
         margin-bottom: $space-m;
+        width: 100%;
 
         @media screen and (min-width: $min-tablet) {
             margin-right: $space-xl;
