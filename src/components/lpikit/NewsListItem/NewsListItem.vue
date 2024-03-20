@@ -119,8 +119,8 @@ export default {
 }
 
 .news-img-ctn {
-    flex-basis: var(--news-dimension);
-    height: calc(var(--news-dimension) / var(--picture-ratio, 1));
+    flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
+    height: var(--news-dimension);
     flex-shrink: 0;
 }
 
