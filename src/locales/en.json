@@ -2164,12 +2164,91 @@
             },
             "groups": {
                 "label": "Targeted group(s)",
-                "notice": "Select the group(s) that will see this instruction",
+                "notice": "Select the group(s) that will see this event",
                 "select-all": "Select all",
                 "filter": "Filter groups"
             }
         },
         "group-label": "Group:",
         "groups-label": "Groups:"
+    },
+    "news": {
+        "create": {
+            "title": "Create a news"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Title *",
+                "required": "The title is required",
+                "placeholder": "the title of the news"
+            },
+            "content": {
+                "label": "Content *",
+                "required": "The content is required"
+            },
+            "publication_date": {
+                "label": "Publication date *",
+                "required": "The publication date is required"
+            },
+            "groups": {
+                "label": "Targeted group(s)",
+                "notice": "Select the group(s) that will see this news",
+                "select-all": "Select all",
+                "filter": "Filter groups"
+            }
+        },
+        "list": {
+            "title": "News",
+            "create": "Create an article",
+            "read-more": "Read"
+        },
+        "page": {
+            "others": "Other news"
+        },
+        "drawer": {
+            "title": "Edit news"
+        }
+    },
+    "instructions": {
+        "create": {
+            "title": "Add an instruction"
+        },
+        "form": {
+            "title": {
+                "label": "Title *",
+                "required": "The title is required",
+                "placeholder": "the title of the instruction"
+            },
+            "content": {
+                "label": "Content *",
+                "required": "The content is required"
+            },
+            "publication_date": {
+                "label": "Publication date *",
+                "required": "The publication date is required"
+            },
+            "groups": {
+                "label": "Targeted group(s)",
+                "notice": "Select the group(s) that will see this instruction",
+                "select-all": "Select all",
+                "filter": "Filter groups"
+            },
+            "notify": {
+                "label": "Notification",
+                "notice": "If selected, everyone will be notified of the new instruction",
+                "button": "Send a notification"
+            }
+        },
+        "list": {
+            "title": "Instructions",
+            "create": "Add an instruction",
+            "read-more": "Read"
+        },
+        "drawer": {
+            "title": "Edit instruction"
+        }
     }
 }

@@ -2163,12 +2163,94 @@
             },
             "groups": {
                 "label": "Groupe(s) cible(s)",
-                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
                 "select-all": "Tout sélectionner",
                 "filter": "Filtrer les groupes"
             }
         },
         "group-label": "Groupe :",
         "groups-label": "Groupes :"
+    },
+    "news": {
+        "create": {
+            "title": "Créer une actualité"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Titre *",
+                "required": "Le titre est requis",
+                "placeholder": "Le titre de l'actualité"
+            },
+            "content": {
+                "label": "Contenu *",
+                "required": "Le contenu est requis"
+            },
+            "publication_date": {
+                "label": "Date de publication",
+                "required": "La date de publication est requise"
+            },
+            "groups": {
+                "label": "Groupe(s) cible(s)",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette actualité",
+                "select-all": "Tout sélectionner",
+                "filter": "Filtrer les groupes"
+            }
+        },
+        "list": {
+            "title": "Actualités",
+            "create": "Créer un article",
+            "read-more": "Lire"
+        },
+        "page": {
+            "others": "Autres actualités"
+        },
+        "drawer": {
+            "title": "Éditer une actualité"
+        }
+    },
+    "instructions": {
+        "create": {
+            "title": "Ajouter une instruction"
+        },
+        "form": {
+            "image": {
+                "label": "Image"
+            },
+            "title": {
+                "label": "Titre *",
+                "required": "Le titre est requis",
+                "placeholder": "Le titre de l'instruction"
+            },
+            "content": {
+                "label": "Contenu *",
+                "required": "Le contenu est requis"
+            },
+            "publication_date": {
+                "label": "Date de publication",
+                "required": "La date de publication est requise"
+            },
+            "groups": {
+                "label": "Groupe(s) cible(s)",
+                "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
+                "select-all": "Tout sélectionner",
+                "filter": "Filtrer les groupes"
+            },
+            "notify": {
+                "label": "Notification",
+                "notice": "Si sélectionné, tout le monde sera notifié de la nouvelle instruction",
+                "button": "Envoyer une notification"
+            }
+        },
+        "list": {
+            "title": "Instructions",
+            "create": "Ajouter une instruction",
+            "read-more": "Lire"
+        },
+        "drawer": {
+            "title": "Éditer une instruction"
+        }
     }
 }

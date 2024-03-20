@@ -1,7 +1,9 @@
 <template>
-    <div class="page-section-narrow page-top">
-        <h1 class="page-title">{{ $t('event.create.title') }}</h1>
-        <EventForm ref="eventForm" v-model="form" />
+    <div class="create-instruction-page page-section-narrow">
+        <h1 class="page-title">{{ $t('instructions.create.title') }}</h1>
+
+        <InstructionForm ref="instructionForm" v-model="form" />
+
         <div class="form-actions">
             <LpiButton
                 :disabled="asyncing"
@@ -13,67 +15,68 @@
             />
 
             <LpiButton
-                :disabled="$refs?.eventForm?.v$?.$invalid || asyncing"
-                :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
+                :disabled="$refs?.instructionForm?.v$?.$invalid || asyncing"
+                :label="$filters.capitalize($t('common.confirm'))"
                 :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
-                @click="saveEvent"
+                @click="saveInstruction"
                 data-test="confirm-button"
             />
         </div>
     </div>
 </template>
 <script>
+import InstructionForm, {
+    defaultForm,
+} from '@/components/lpikit/InstructionForm/InstructionForm.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
-
 export default {
-    name: 'CreateEventPage',
-
+    name: 'CreateInstructionPage',
     components: {
-        EventForm,
+        InstructionForm,
         LpiButton,
     },
     data() {
         return {
-            asyncing: false,
             form: defaultForm(),
+            asyncing: false,
         }
     },
-
     methods: {
         cancel() {
             // TODO
             this.form = defaultForm()
         },
-
-        async saveEvent() {
-            const isValid = await this.$refs.eventForm.v$.$validate()
+        async saveInstruction() {
+            const isValid = await this.$refs.instructionForm.v$.$validate()
             if (!isValid) {
                 return
             }
-
             this.asyncing = true
             const formData = {
                 ...this.form,
-                date: this.form.date.toISOString(),
+                publication_date: this.form.publication_date.toISOString(),
                 groups: Object.entries(this.form.groups)
                     .filter(([, value]) => value)
                     .map(([id]) => id),
             }
             await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveEvent', formData)
+            console.log('saveInstruction', formData)
             this.asyncing = false
+            this.$router.push({ name: 'InstructionListPage' })
         },
     },
 }
 </script>
 <style lang="scss" scoped>
 .page-title {
+    margin-top: pxToRem(60px);
     margin-bottom: pxToRem(60px);
 }
 
 .form-actions {
+    margin-top: 2rem;
+    z-index: 100;
     flex-shrink: 0;
     width: 100%;
     display: flex;
