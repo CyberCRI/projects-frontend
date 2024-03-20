@@ -6,7 +6,7 @@
             :white-bg="true"
             btn-icon="Plus"
             @click="button.action"
-            class="individual-button"
+            class="individual-button white-bg"
             :data-test="button.dataTest"
         />
     </div>

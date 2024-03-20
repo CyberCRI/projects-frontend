@@ -1,11 +1,10 @@
 <template>
     <div class="home-announcement-item">
-        <h3 class="announcement-title-mobile">{{ $filters.capitalize(announcement.title) }}</h3>
         <div class="announcement-img-container">
             <img :alt="`announcement image`" :src="announcementImage" class="announcement-img" />
         </div>
         <div class="announcement-content">
-            <h3 class="announcement-title-desktop">
+            <h3 class="announcement-title">
                 {{ $filters.capitalize(announcement.title) }}
             </h3>
             <div class="announcement-infos">
@@ -76,14 +75,12 @@ export default {
 <style lang="scss" scoped>
 .home-announcement-item {
     display: flex;
-    flex-direction: column;
     border: 1px solid $gray-10;
     border-radius: $border-radius-s;
     margin-bottom: $space-xl;
     padding: $space-l;
 
     @media screen and (min-width: $min-tablet) {
-        flex-direction: row;
         height: 120px;
     }
 
@@ -91,13 +88,11 @@ export default {
         align-self: center;
         background-size: cover;
         background-position: top center;
-        height: pxToRem(200px);
         flex: none;
-        margin-bottom: $space-m;
+        margin-right: $space-m;
 
         @media screen and (min-width: $min-tablet) {
             margin-right: $space-xl;
-            margin-bottom: 0;
             width: pxToRem(120px);
             height: pxToRem(120px);
         }
@@ -125,15 +120,11 @@ export default {
 }
 
 .announcement-content {
-    .announcement-title-desktop {
-        display: none;
-
-        @media screen and (min-width: $min-tablet) {
-            display: block;
-            font-size: $font-size-l;
-            line-height: $font-size-2xl;
-            margin-bottom: $space-s;
-        }
+    .announcement-title {
+        display: block;
+        font-size: $font-size-l;
+        line-height: $font-size-2xl;
+        margin-bottom: $space-s;
     }
 
     .announcement-infos {

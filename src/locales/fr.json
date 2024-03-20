@@ -632,7 +632,8 @@
         "video": "Présentation video"
     },
     "feed": {
-        "see-all": "Tout voir"
+        "see-all": "Tout voir",
+        "title": "Newsfeed"
     },
     "file": {
         "add-image": "ajouter une image",

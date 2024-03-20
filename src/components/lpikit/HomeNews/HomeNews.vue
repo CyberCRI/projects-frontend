@@ -58,7 +58,7 @@ export default {
 
     methods: {
         seeAll() {
-            this.$router.push({ name: 'Search' })
+            this.$router.push({ name: 'Newsfeed' })
         },
 
         getAnnouncements() {

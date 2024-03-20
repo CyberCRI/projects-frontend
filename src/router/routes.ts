@@ -843,6 +843,15 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
+    {
+        path: '/newsfeed',
+        name: 'Newsfeed',
+        component: () =>
+            import(/* webpackChunkName: NewsfeedPage" */ '../pages/NewsfeedPage/NewsfeedPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
     ...(import.meta.env.VITE_APP_SHOW_DEBUG
         ? [
               {
