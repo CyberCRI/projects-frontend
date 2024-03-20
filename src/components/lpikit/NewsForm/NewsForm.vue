@@ -7,9 +7,10 @@
                 :contain="true"
                 :image-sizes="modelValue.imageSizes"
                 :picture="modelValue.header_image"
-                @update:header_image="updateForm({ imageSizes: $event })"
+                @update:imageSizes="updateForm({ imageSizes: $event })"
                 @update:picture="updateForm({ header_image: $event })"
                 :default-picture="defaultPictures"
+                :picture-ratio="4 / 3"
             ></ImageEditor>
         </div>
 
@@ -101,7 +102,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/svgs/IconImage.vue'
 import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPicker.vue'
-
+import throttle from 'lodash/throttle'
 export function defaultForm() {
     return {
         header_image: null,
@@ -190,9 +191,14 @@ export default {
             this.updateForm({ content: htmlContent === '<p></p>' ? null : htmlContent })
         },
 
-        updateForm(data) {
+        updateForm: throttle(function (data) {
+            // short throttling is mandatory here
+            // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
+            // and without a delay model dont have time to be updated in the second event
+            // resulting in lost of the first event data (eg the picture)
+            // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
             this.$emit('update:modelValue', { ...this.modelValue, ...data })
-        },
+        }, 16),
     },
 }
 </script>

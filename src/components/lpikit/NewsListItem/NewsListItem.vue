@@ -50,6 +50,7 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'NewsListItem',
@@ -84,22 +85,7 @@ export default {
             return true
         },
         imageSizes() {
-            if (
-                this.news &&
-                this.news.header_image &&
-                this.news.header_image.scale_x &&
-                this.news.header_image.scale_y &&
-                this.news.header_image.natural_ratio
-            ) {
-                return {
-                    scaleX: this.news.header_image.scale_x,
-                    scaleY: this.news.header_image.scale_y,
-                    naturalRatio: this.news.header_image.natural_ratio,
-                    left: this.news.header_image.left || 0,
-                    top: this.news.header_image.top || 0,
-                }
-            }
-            return null
+            return pictureApiToImageSizes(this.news?.header_image)
         },
 
         croppedImageSrc() {
@@ -122,7 +108,7 @@ export default {
 <style scoped lang="scss">
 .news-list-item {
     --news-dimension: 13rem;
-
+    --picture-ratio: calc(4 / 3);
     display: flex;
     gap: 1rem;
     height: calc(var(--news-dimension) + 3rem);
@@ -134,7 +120,7 @@ export default {
 
 .news-img-ctn {
     flex-basis: var(--news-dimension);
-    height: var(--news-dimension);
+    height: calc(var(--news-dimension) / var(--picture-ratio, 1));
     flex-shrink: 0;
 }
 

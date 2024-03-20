@@ -73,7 +73,7 @@ export default {
         },
 
         init() {
-            // get image natural size and aspect ration
+            // get image natural size and aspect ratio
             const img = this.$el.querySelector('.cropper-image')
             this.naturalWidth = img.naturalWidth
             this.naturalHeight = img.naturalHeight
@@ -151,7 +151,7 @@ export default {
                 : () => {}
 
             this.croppr = new Croppr(img, {
-                aspectRatio: this.ratio,
+                aspectRatio: this.ratio ? 1 / this.ratio : 1,
                 onCropEnd: (data) => {
                     this.updateData(data)
                     cropCircle(data)

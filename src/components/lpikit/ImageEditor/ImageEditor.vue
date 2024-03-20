@@ -1,5 +1,9 @@
 <template>
-    <div class="img-inner" :class="{ 'round-picture': roundPicture }">
+    <div
+        class="img-inner"
+        :class="{ 'round-picture': roundPicture }"
+        :style="{ '--picture-ratio': pictureRatio }"
+    >
         <div class="img-preview">
             <div class="preview-wrapper-outer" :class="{ active: !disabled }">
                 <CroppedImage
@@ -55,6 +59,7 @@
                 :image="displayedImage"
                 :image-sizes="imageSizes"
                 :round-shape="roundPicture"
+                :ratio="pictureRatio"
             />
         </DrawerLayout>
     </div>
@@ -105,6 +110,12 @@ export default {
             type: Boolean,
             required: false,
             default: false,
+        },
+
+        pictureRatio: {
+            type: Number,
+            required: false,
+            default: 1,
         },
     },
 
@@ -224,7 +235,7 @@ export default {
 
 .preview-wrapper-outer {
     width: 100%;
-    padding-bottom: 100%;
+    padding-bottom: calc(100% / var(--picture-ratio, 1));
     position: relative;
 
     &.active {
