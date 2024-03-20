@@ -9,6 +9,100 @@ HomePages.set(
     import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`)
 )
 
+export const newHomeExtraPaths = new Map()
+newHomeExtraPaths.set('old', [])
+newHomeExtraPaths.set('new', [
+    {
+        path: '/create-event',
+        name: 'CreateEvent',
+        component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),
+        meta: {
+            resetScroll: true,
+            requiresAuth: true,
+        },
+    },
+
+    {
+        path: '/calendar',
+        name: 'CalendarPage',
+        component: () => import('../pages/CalendarPage/CalendarPage.vue'),
+        redirect: { name: 'FutureEvents' },
+        meta: {
+            resetScroll: true,
+        },
+        children: [
+            {
+                path: 'future',
+                name: 'FutureEvents',
+                component: () => import('../pages/CalendarPage/Tabs/FutureEvents.vue'),
+                meta: {
+                    resetScroll: true,
+                },
+            },
+            {
+                path: 'past',
+                name: 'PastEvents',
+                component: () => import('../pages/CalendarPage/Tabs/PastEvents.vue'),
+                meta: {
+                    resetScroll: true,
+                },
+            },
+        ],
+    },
+
+    {
+        path: '/create-news',
+        name: 'CreateNewsPage',
+        component: () => import('../pages/CreateNewsPage/CreateNewsPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
+        path: '/news',
+        name: 'NewsListPage',
+        component: () => import('../pages/NewsListPage/NewsListPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
+        path: '/news/:slugOrId',
+        name: 'NewsPage',
+        component: () => import('../pages/NewsPage/NewsPage.vue'),
+        props: true,
+        meta: {
+            resetScroll: true,
+        },
+    },
+
+    {
+        path: '/create-intructions',
+        name: 'CreateInstructionPage',
+        component: () => import('../pages/CreateInstructionPage/CreateInstructionPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
+        path: '/instructions',
+        name: 'InstructionListPage',
+        component: () => import('../pages/InstructionListPage/InstructionListPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
+        path: '/instructions/:slugOrId',
+        name: 'InstructionPage',
+        component: () => import('../pages/InstructionPage/InstructionPage.vue'),
+        props: true,
+        meta: {
+            resetScroll: true,
+        },
+    },
+])
+
 const checkAccessRequestEnabled = (to, _from, next) => {
     if (!store.getters['organizations/current']?.access_request_enabled) {
         next({
@@ -771,106 +865,7 @@ const routes: Array<RouteRecordRaw> = [
               },
           ]
         : []),
-    ...(import.meta.env.VITE_APP_SHOW_EVENTS
-        ? [
-              {
-                  path: '/create-event',
-                  name: 'CreateEvent',
-                  component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),
-                  meta: {
-                      resetScroll: true,
-                      requiresAuth: true,
-                  },
-              },
-
-              {
-                  path: '/calendar',
-                  name: 'CalendarPage',
-                  component: () => import('../pages/CalendarPage/CalendarPage.vue'),
-                  redirect: { name: 'FutureEvents' },
-                  meta: {
-                      resetScroll: true,
-                  },
-                  children: [
-                      {
-                          path: 'future',
-                          name: 'FutureEvents',
-                          component: () => import('../pages/CalendarPage/Tabs/FutureEvents.vue'),
-                          meta: {
-                              resetScroll: true,
-                          },
-                      },
-                      {
-                          path: 'past',
-                          name: 'PastEvents',
-                          component: () => import('../pages/CalendarPage/Tabs/PastEvents.vue'),
-                          meta: {
-                              resetScroll: true,
-                          },
-                      },
-                  ],
-              },
-          ]
-        : []),
-    ...(import.meta.env.VITE_APP_SHOW_NEWS
-        ? [
-              {
-                  path: '/create-news',
-                  name: 'CreateNewsPage',
-                  component: () => import('../pages/CreateNewsPage/CreateNewsPage.vue'),
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-              {
-                  path: '/news',
-                  name: 'NewsListPage',
-                  component: () => import('../pages/NewsListPage/NewsListPage.vue'),
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-              {
-                  path: '/news/:slugOrId',
-                  name: 'NewsPage',
-                  component: () => import('../pages/NewsPage/NewsPage.vue'),
-                  props: true,
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-          ]
-        : []),
-    ...(import.meta.env.VITE_APP_SHOW_INSTRUCTIONS
-        ? [
-              {
-                  path: '/create-intructions',
-                  name: 'CreateInstructionPage',
-                  component: () =>
-                      import('../pages/CreateInstructionPage/CreateInstructionPage.vue'),
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-              {
-                  path: '/instructions',
-                  name: 'InstructionListPage',
-                  component: () => import('../pages/InstructionListPage/InstructionListPage.vue'),
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-              {
-                  path: '/instructions/:slugOrId',
-                  name: 'InstructionPage',
-                  component: () => import('../pages/InstructionPage/InstructionPage.vue'),
-                  props: true,
-                  meta: {
-                      resetScroll: true,
-                  },
-              },
-          ]
-        : []),
+    ...(newHomeExtraPaths.get(import.meta.env.VITE_APP_HOME) || []),
 ]
 
 export default routes
