@@ -7,7 +7,7 @@
                 :contain="true"
                 :image-sizes="modelValue.imageSizes"
                 :picture="modelValue.header_image"
-                @update:imageSizes="updateForm({ imageSizes: $event })"
+                @update:image-sizes="updateForm({ imageSizes: $event })"
                 @update:picture="updateForm({ header_image: $event })"
                 :default-picture="defaultPictures"
                 :picture-ratio="4 / 3"

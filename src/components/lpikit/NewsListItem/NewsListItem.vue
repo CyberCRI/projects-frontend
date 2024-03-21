@@ -109,6 +109,7 @@ export default {
 .news-list-item {
     --news-dimension: 13rem;
     --picture-ratio: calc(4 / 3);
+
     display: flex;
     gap: 1rem;
     height: calc(var(--news-dimension) + 3rem);

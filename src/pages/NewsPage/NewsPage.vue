@@ -215,6 +215,7 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
 
     --news-dimension: 16rem;
     --picture-ratio: calc(4 / 3);
+
     display: flex;
     gap: 2rem;
     height: var(--news-dimension);
