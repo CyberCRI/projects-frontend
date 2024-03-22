@@ -75,13 +75,13 @@ export default {
 <style lang="scss" scoped>
 .home-announcement-item {
     display: flex;
-    border: 1px solid $gray-10;
+    border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
-    margin-bottom: $space-xl;
     padding: $space-l;
+    gap: $space-l;
 
     @media screen and (min-width: $min-tablet) {
-        height: 120px;
+        min-height: 120px;
     }
 
     .announcement-img-container {
@@ -89,11 +89,11 @@ export default {
         background-size: cover;
         background-position: top center;
         flex: none;
-        margin-right: $space-m;
 
         @media screen and (min-width: $min-tablet) {
             margin-right: $space-xl;
-            width: pxToRem(120px);
+            flex-basis: pxToRem(120px);
+            flex-shrink: 1;
             height: pxToRem(120px);
         }
 

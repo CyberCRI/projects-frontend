@@ -113,7 +113,7 @@ export default {
         background: $white;
         border: $border-width-s solid $green;
         color: $black;
-        padding: 11px $space-xl; // 11 + 1 px border
+        padding: 11px $space-xl 10px $space-xl; // 11 + 1 px border
         font-size: $font-size-m;
         width: pxToRem(350px);
         max-width: 100%;

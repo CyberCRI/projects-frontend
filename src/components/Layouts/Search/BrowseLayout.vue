@@ -236,6 +236,7 @@ export default {
     display: block;
     background-color: $primary-lighter;
     padding: $space-xl 0;
+    padding: 1rem;
 }
 
 .project-list__header {

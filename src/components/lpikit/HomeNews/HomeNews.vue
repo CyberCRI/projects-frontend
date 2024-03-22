@@ -95,6 +95,7 @@ export default {
     display: flex;
     flex-direction: column;
     place-content: center center;
+    gap: $space-l;
 }
 
 .see-all {

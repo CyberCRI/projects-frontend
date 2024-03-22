@@ -591,6 +591,7 @@ export default {
 .search-container {
     @media (min-width: $min-tablet) {
         display: flex;
+        gap: 1rem;
         align-items: center;
         width: 100%;
     }
@@ -653,6 +654,10 @@ export default {
 
     @media (min-width: $min-tablet) {
         margin-bottom: 0;
+    }
+
+    @media (max-width: $min-tablet) {
+        width: 100%;
     }
 }
 </style>

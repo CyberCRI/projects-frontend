@@ -69,14 +69,15 @@ export default {
 .home-news-item {
     display: flex;
     flex-direction: column;
-    border: 1px solid $gray-10;
+    border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
-    margin-bottom: $space-xl;
     padding: $space-l;
+    gap: $space-m;
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
-        height: 200px;
+        min-height: 200px;
+        gap: $space-xl;
     }
 
     .news-img-container {
@@ -85,13 +86,12 @@ export default {
         background-position: top center;
         height: pxToRem(200px);
         flex: none;
-        margin-bottom: $space-m;
         width: 100%;
 
         @media screen and (min-width: $min-tablet) {
-            margin-right: $space-xl;
             margin-bottom: 0;
-            width: 280px;
+            flex-basis: 280px;
+            flex-shrink: 1;
         }
 
         .news-img {

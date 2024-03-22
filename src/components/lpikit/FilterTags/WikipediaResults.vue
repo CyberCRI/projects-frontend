@@ -101,8 +101,8 @@ export default {
         }
     },
 
-    mounted() {
-        this.launchSearch(this.queryString)
+    async mounted() {
+        await this.launchSearch(this.queryString)
     },
 
     methods: {

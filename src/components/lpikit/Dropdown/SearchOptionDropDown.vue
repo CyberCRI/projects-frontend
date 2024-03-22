@@ -184,8 +184,8 @@ export default {
 
     .drop-down-menu-wrapper {
         position: absolute;
-        top: 45px; // button size + 5px margin
-        left: -1; // to align with border
+        top: 40px; // button size + 5px margin
+        right: 0; // to align with border
         min-width: 100%;
         transform: scale3d(1, 1, 1); // fix rounding pixel width issue
         z-index: 1;
