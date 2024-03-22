@@ -3,8 +3,8 @@
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
-        <div v-if="summaryCardsExist && !isLoading" class="page-section-wide summary-cards">
-            <div class="summary-container">
+        <div v-if="summaryCardsExist && !isLoading" class="summary-cards">
+            <div class="summary-container page-section-wide">
                 <SummaryCardsList :projects="projects" />
             </div>
         </div>
@@ -326,11 +326,10 @@ export default {
     margin-bottom: $space-l;
     border-radius: $border-radius-17;
     flex-direction: column;
-    padding-inline: 5px;
+    gap: $space-2xl;
 
     @media (min-width: $min-tablet) {
         flex-direction: row;
-        padding: $space-l;
     }
 }
 
@@ -338,8 +337,7 @@ export default {
     margin-bottom: $space-xl;
 
     @media (min-width: $min-tablet) {
-        width: 35%;
-        margin-right: $space-l;
+        flex-basis: 35%;
         margin-bottom: 0;
     }
 
@@ -396,8 +394,7 @@ export default {
     height: fit-content;
 
     @media (min-width: $min-tablet) {
-        width: 65%;
-        margin-left: $space-l;
+        flex-basis: 65%;
     }
 
     .select-news {
