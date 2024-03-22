@@ -6,6 +6,7 @@
                 :image-sizes="imageSizes"
                 :src="croppedImageSrc"
                 class="picture"
+                :ratio="4 / 3"
             />
         </div>
         <div class="news-texts">

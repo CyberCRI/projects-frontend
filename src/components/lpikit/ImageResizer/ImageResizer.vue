@@ -130,8 +130,14 @@ export default {
                 // and in showing image we scale and move the image
                 this.x = -this.bboxWidth * (this.imageSizes.left / 100) // percentage to pixel size
                 this.y = -this.bboxHeight * (this.imageSizes.top / 100) // percentage to pixel size
-                this.width = this.maxWidth / this.imageSizes.scaleX // ratio to pixel size
-                this.height = this.maxHeight / this.imageSizes.scaleY // ratio to pixel size
+
+                if ((this.ratio || 1) > this.naturalRatio) {
+                    this.width = this.bboxWidth / this.imageSizes.scaleX // ratio to pixel size
+                    this.height = this.width / (this.ratio || 1) // ratio to pixel size
+                } else {
+                    this.height = this.bboxHeight / this.imageSizes.scaleY // ratio to pixel size
+                    this.width = this.height * (this.ratio || 1) // ratio to pixel size
+                }
             }
 
             // init croppr
@@ -175,8 +181,13 @@ export default {
             // data need to be scaled according to the image display size (ie natural vs bbox)
             this.left = (-100 * data.x) / this.naturalWidth // percentage, negated for recriprocal transformation
             this.top = (-100 * data.y) / this.naturalHeight // percentage, negated for recriprocal transformation
-            this.scaleX = this.maxWidth / this.bboxScale / data.width // ratio, i.e. 1 means no scaling
-            this.scaleY = this.maxHeight / this.bboxScale / data.height // ratio, i.e. 1 means no scaling
+
+            const scale =
+                (this.ratio || 1) > this.naturalRatio
+                    ? this.naturalWidth / data.width
+                    : this.naturalHeight / data.height
+            this.scaleX = scale
+            this.scaleY = scale
         },
     },
 }

@@ -13,6 +13,7 @@
                     :image-sizes="imageSizes"
                     :src="displayedImage"
                     class="preview-wrapper-inner"
+                    :ratio="pictureRatio"
                 />
             </div>
         </div>
