@@ -35,6 +35,12 @@ export default {
             required: false,
             default: false,
         },
+
+        ratio: {
+            // crop area aspect ratio
+            type: Number,
+            default: 1,
+        },
     },
 
     mounted() {
@@ -46,8 +52,8 @@ export default {
         imageStyles() {
             if (this.imageSizes) {
                 return {
-                    width: this.imageSizes.naturalRatio < 1 ? '100%' : 'auto',
-                    height: this.imageSizes.naturalRatio >= 1 ? '100%' : 'auto',
+                    width: this.ratio >= this.imageSizes.naturalRatio ? '100%' : 'auto',
+                    height: this.ratio < this.imageSizes.naturalRatio ? '100%' : 'auto',
                     'object-fit': 'unset',
                     'object-position': 'unset',
                     transform: `scale(${this.imageSizes.scaleX}, ${this.imageSizes.scaleY}) translate(${this.imageSizes.left}%, ${this.imageSizes.top}%)`,

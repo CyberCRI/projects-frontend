@@ -14,6 +14,7 @@
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import NewsForm from '@/components/lpikit/NewsForm/NewsForm.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 export default {
     name: 'EditNewsDrawer',
 
@@ -50,7 +51,7 @@ export default {
                         ...news,
                         publication_date: new Date(news.publication_date),
                         header_image: news.header_image || null,
-                        imageSizes: news.header_image?.imageSizes || null,
+                        imageSizes: pictureApiToImageSizes(news.header_image),
                         groups: news.groups.reduce((acc, group) => {
                             acc[group.id] = true
                             return acc

@@ -7,6 +7,7 @@
                     :image-sizes="imageSizes"
                     :src="croppedImageSrc"
                     class="picture"
+                    :ratio="4 / 3"
                 />
             </div>
             <div class="header-texts">
@@ -31,6 +32,7 @@ import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
 import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'NewsPage',
@@ -80,22 +82,7 @@ export default {
         },
 
         imageSizes() {
-            if (
-                this.news &&
-                this.news.header_image &&
-                this.news.header_image.scale_x &&
-                this.news.header_image.scale_y &&
-                this.news.header_image.natural_ratio
-            ) {
-                return {
-                    scaleX: this.news.header_image.scale_x,
-                    scaleY: this.news.header_image.scale_y,
-                    naturalRatio: this.news.header_image.natural_ratio,
-                    left: this.news.header_image.left || 0,
-                    top: this.news.header_image.top || 0,
-                }
-            }
-            return null
+            return pictureApiToImageSizes(this.news?.header_image)
         },
 
         croppedImageSrc() {
@@ -228,6 +215,7 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
     margin-bottom: 3rem;
 
     --news-dimension: 16rem;
+    --picture-ratio: calc(4 / 3);
 
     display: flex;
     gap: 2rem;
@@ -239,7 +227,7 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
 }
 
 .news-img-ctn {
-    flex-basis: var(--news-dimension);
+    flex-basis: calc(var(--picture-ratio, 1) * var(--news-dimension));
     height: var(--news-dimension);
     flex-shrink: 0;
 }
