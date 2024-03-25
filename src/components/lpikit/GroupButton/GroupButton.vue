@@ -110,18 +110,15 @@ export default {
             if (!this.customColor) return {}
             return { 'border-color': this.customColor }
         },
+        lang() {
+            return this.$store.getters['languages/current']
+        },
     },
 
     mounted() {
         if (!this.options.some((button) => button.iconName)) this.$nextTick(this.setSliderStyle)
 
         window.addEventListener('resize', debounce(this.setSliderStyle, 300))
-    },
-
-    computed: {
-        lang() {
-            return this.$store.getters['languages/current']
-        },
     },
 
     watch: {
