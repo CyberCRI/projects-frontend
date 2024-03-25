@@ -1961,39 +1961,6 @@
         "updated": "Modifié avec succès.",
         "deleted": "Supprimé avec succès."
     },
-    "notifications": {
-        "header": "Notifications",
-        "title": "Paramètre de notifications",
-        "tabs": {
-            "email": "Email Notifications",
-            "options": {
-                "yes": "Oui",
-                "no": "Non"
-            }
-        },
-        "projects": {
-            "follow": "Projets que vous suivez",
-            "follow-sub": "Être notifié quand un projet que vous suivez est mis à jour",
-            "member": "Ajout de membres au projet",
-            "member-sub": "Être notifié quand un membre est ajouté au projet",
-            "comment": "Commentaires",
-            "comment-sub": "Être notifié quand une personne ajoute un commentaire",
-            "project": "Votre projet",
-            "project-sub": "Être notifié si d'autres membres modifient vos projets",
-            "announcement": "Annonces",
-            "announcement-sub": "Être notifié quand une annonce est publiée sur le site",
-            "review": "Prêt pour révision",
-            "review-sub": "Être notifié quand un projet est pret à être revisé par vous",
-            "reviewed": "Révision faite",
-            "reviewed-sub": "Être notifié quand une révision est envoyée sur votre projet",
-            "reply": "Réponse aux commentaires",
-            "reply-sub": "Être notifié quand une réponse à votre commentaire est faite"
-        },
-        "type": {
-            "register-link": "lien d’enregistrement"
-        },
-        "empty": "Vous n’avez aucune notification"
-    },
     "portal": {
         "sub-title": "Découvrez les portails qui appartiennent à d’autres organisations. Parcourez, inspirez-vous et entrez en contact !"
     },
