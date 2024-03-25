@@ -118,6 +118,18 @@ export default {
         window.addEventListener('resize', debounce(this.setSliderStyle, 300))
     },
 
+    computed: {
+        lang() {
+            return this.$store.getters['languages/current']
+        },
+    },
+
+    watch: {
+        lang() {
+            this.$nextTick(this.setSliderStyle)
+        },
+    },
+
     methods: {
         selectButton(selectedButton) {
             this.$emit('update:model-value', selectedButton.value)
@@ -156,19 +168,11 @@ export default {
                 // If not in vertical mode, set slider's width
                 const selectedWidth = selected.offsetWidth
 
-                if (this.$store.getters['languages/current'] === 'en') {
-                    this.sliderStyle = `left: ${
-                        leftOffset + (firstButtonSelected ? 0 : -1)
-                    }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
-                        this.customColor ? `background-color: ${this.customColor}` : ''
-                    }`
-                } else {
-                    this.sliderStyle = `left: ${
-                        leftOffset + (firstButtonSelected ? 0 : 1)
-                    }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
-                        this.customColor ? `background-color: ${this.customColor}` : ''
-                    }`
-                }
+                this.sliderStyle = `left: ${
+                    leftOffset + (firstButtonSelected ? 0 : 1)
+                }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
+                    this.customColor ? `background-color: ${this.customColor}` : ''
+                }`
             } else {
                 // Else set slider's height
                 // Calculate slider's left offset
