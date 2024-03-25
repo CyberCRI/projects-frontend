@@ -1962,39 +1962,6 @@
         "updated": "Successfully updated.",
         "deleted": "Successfully deleted."
     },
-    "notifications": {
-        "header": "Notifications",
-        "title": "Notification settings",
-        "tabs": {
-            "email": "Email Notifications",
-            "options": {
-                "yes": "Yes",
-                "no": "No"
-            }
-        },
-        "projects": {
-            "follow": "Projects you follow",
-            "follow-sub": "Be notified when projects that you have follow are modified",
-            "member": "Added as team member",
-            "member-sub": "Be notified when somebody adds you as a team member in a project",
-            "comment": "Comments",
-            "comment-sub": "Be notified when somebody comments your project",
-            "project": "Your projects",
-            "project-sub": "Be notified when other team members modify your projects",
-            "announcement": "Announcements",
-            "announcement-sub": "Be notified when new announcements are published on the website",
-            "review": "Ready for review",
-            "review-sub": "When you are a reviewer of a project, be notified when a project is ready to be reviewed by you",
-            "reviewed": "Has been reviewed",
-            "reviewed-sub": "When your project is ready for review, be notified when the reviewer of your project has submitted his review",
-            "reply": "Reply to your comment",
-            "reply-sub": "Be notified when somebody replies to your comment"
-        },
-        "type": {
-            "register-link": "register link"
-        },
-        "empty": "You have no notifications"
-    },
     "portal": {
         "sub-title": "Discover portals that belong to other organisations. Browse, get inspired, and get in touch!"
     },
