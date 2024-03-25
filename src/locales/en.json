@@ -209,7 +209,11 @@
                 "accepted": "Accepted",
                 "no-result": "No result"
             }
-        }
+        },
+        "chat": "Chat platform (Connected view)",
+        "events": "Events",
+        "instructions": "Instructions",
+        "news": "news"
     },
     "account": {
         "title": "Create an account",
@@ -390,6 +394,7 @@
         "send": "Send",
         "see-less": "see less",
         "see-more": "see more",
+        "see-all": "See all",
         "set-deadline": "set deadline",
         "shrink": "shrink",
         "submit": "submit",
@@ -2217,6 +2222,27 @@
         },
         "drawer": {
             "title": "Edit instruction"
+        }
+    },
+
+    "chat": {
+        "drawer": {
+            "title": "Add chat platform",
+            "notice": "You can add a link to your chat platform. It will only be visible to your connected users.",
+            "url": {
+                "label": "Link to your chat platform",
+                "notice": "Paste here the link to your platform",
+                "placeholder": "Paste URL (https://...)"
+            },
+            "wording": {
+                "label": "Link wording",
+                "notice": "What the button should display (ex: Join chat, Join Whatsapp...) - 12 car max.",
+                "placeholder": "ex: Join chat"
+            }
+        },
+        "data": {
+            "link": "Link: ",
+            "wording": "Button wording: "
         }
     }
 }

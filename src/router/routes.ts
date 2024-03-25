@@ -8,6 +8,20 @@ HomePages.set(
     'new',
     import(/* webpackChunkName: "HomePage" */ `../pages/NewHomePage/NewHomePage.vue`)
 )
+export const GeneralAdminPages = new Map()
+
+GeneralAdminPages.set(
+    'old',
+    import(
+        /* webpackChunkName: "PortalGeneralAdmin" */ '../pages/AdminPortalPage/Tabs/InformationTab.vue'
+    )
+)
+GeneralAdminPages.set(
+    'new',
+    import(
+        /* webpackChunkName: "PortalGeneralAdmin" */ `../pages/AdminPortalPage/Tabs/NewInformationTab.vue`
+    )
+)
 
 export const newHomeExtraPaths = new Map()
 newHomeExtraPaths.set('old', [])
@@ -331,9 +345,8 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'general',
                 name: 'general',
                 component: () =>
-                    import(
-                        /* webpackChunkName: "PortalGeneralAdmin" */ '../pages/AdminPortalPage/Tabs/InformationTab.vue'
-                    ),
+                    GeneralAdminPages.get(import.meta.env.VITE_APP_HOME) ||
+                    GeneralAdminPages.get('old'),
             },
             {
                 path: 'tags',

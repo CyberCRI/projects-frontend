@@ -49,10 +49,13 @@ export default {
                     this.form = {
                         ...instruction,
                         publication_date: new Date(instruction.publication_date),
-                        groups: instruction.groups.reduce((acc, group) => {
-                            acc[group.id] = true
-                            return acc
-                        }, {}),
+                        // only reduce to array if not already an object
+                        groups: instruction.groups.reduce
+                            ? instruction.groups.reduce((acc, group) => {
+                                  acc[group.id] = true
+                                  return acc
+                              }, {})
+                            : instruction.groups,
                     }
             },
             immediate: true,

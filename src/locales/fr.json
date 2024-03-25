@@ -156,7 +156,11 @@
                 "hide-projects": "Masquer les projets",
                 "delete-category": "Supprimer la catégorie",
                 "delete-category-description": "Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée"
-            }
+            },
+            "chat": "Plateforme de chat (vue connectée)",
+            "events": "Événements",
+            "instructions": "Instructions",
+            "news": "Actualités"
         },
         "form": {
             "admin-info": {
@@ -392,6 +396,7 @@
         "send": "Envoyer",
         "see-less": "voir moins",
         "see-more": "voir plus",
+        "see-all": "Voir tout",
         "set-deadline": "fixer une échéance",
         "shrink": "réduire",
         "submit": "valider",
@@ -2219,6 +2224,26 @@
         },
         "drawer": {
             "title": "Éditer une instruction"
+        }
+    },
+    "chat": {
+        "drawer": {
+            "title": "Ajouter une plateforme de discussion",
+            "notice": "Vous pouvez ajouter un lien vers votre plateforme de discussion. Il ne sera visible que par vos utilisateurs connectés.",
+            "url": {
+                "label": "Lien vers votre plateforme de discussion",
+                "notice": "Collez ici le lien vers votre plateforme",
+                "placeholder": "Coller l'URL (https://...)"
+            },
+            "wording": {
+                "label": "Libellé du lien",
+                "notice": "Ce que le bouton devrait afficher (ex: Rejoindre la discussion, Rejoindre Whatsapp...) - max. 12 caractères.",
+                "placeholder": "ex: Rejoindre la discussion"
+            }
+        },
+        "data": {
+            "link": "Lien : ",
+            "wording": "Texte du bouton : "
         }
     }
 }
