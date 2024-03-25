@@ -6,6 +6,7 @@
         <template #default>
             <NewsAdminListItem
                 v-for="news in allNews"
+                :key="news.id"
                 :news="news"
                 @edit-news="onEditNews"
                 @delete-news="onDeleteNews"
@@ -169,4 +170,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped></style>

@@ -5,7 +5,7 @@
         :is-opened="isOpened"
         :title="$t('chat.drawer.title')"
         class="chat-drawer small"
-        @confirm="saveNews"
+        @confirm="saveChat"
         @close="cancel"
     >
         <form>
@@ -40,7 +40,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 
 export default {
-    name: 'EditNewsDrawer',
+    name: 'EditChatDrawer',
 
     emits: ['close'],
 
@@ -92,6 +92,7 @@ export default {
     padding-bottom: $space-m;
     line-height: 1.3;
 }
+
 .form-section {
     padding-bottom: $space-l;
 }

@@ -33,7 +33,7 @@ import EditChatDrawer, {
     defaultForm,
 } from '@/components/lpikit/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 export default {
-    name: 'EventAdminBlock',
+    name: 'ChatAdminBlock',
 
     components: {
         AdminBlock,
@@ -71,6 +71,7 @@ export default {
     strong {
         font-weight: bold;
     }
+
     a {
         color: $primary-dark;
         text-decoration: underline;

@@ -35,7 +35,7 @@ import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButt
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
-    name: 'NewsListItem',
+    name: 'NewsAdminListItem',
 
     mixins: [imageMixin],
 

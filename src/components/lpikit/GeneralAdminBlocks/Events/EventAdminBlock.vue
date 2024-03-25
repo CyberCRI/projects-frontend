@@ -6,6 +6,7 @@
         <template #default>
             <EventAdminListItem
                 v-for="event in events"
+                :key="event.id"
                 :event="event"
                 @edit-event="onEditEvent"
                 @delete-event="onDeleteEvent"
@@ -113,4 +114,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped></style>

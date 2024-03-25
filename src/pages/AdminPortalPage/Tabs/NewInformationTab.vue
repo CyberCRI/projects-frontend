@@ -147,7 +147,7 @@ import NewsAdminBlock from '@/components/lpikit/GeneralAdminBlocks/News/NewsAdmi
 import ChatAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
 
 export default {
-    name: 'InformationTab',
+    name: 'NewInformationTab',
 
     components: {
         GroupButton,

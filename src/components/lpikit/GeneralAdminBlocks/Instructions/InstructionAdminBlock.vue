@@ -10,6 +10,7 @@
         <template #default>
             <InstructionAdminListItem
                 v-for="instruction in diplayableInstructions"
+                :key="instruction.id"
                 :instruction="instruction"
                 @edit-instruction="onEditInstruction"
                 @delete-instruction="onDeleteInstruction"
@@ -140,4 +141,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped></style>
