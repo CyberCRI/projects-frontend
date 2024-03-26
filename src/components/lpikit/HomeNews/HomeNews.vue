@@ -99,6 +99,7 @@ export default {
 }
 
 .see-all {
+    margin-top: $space-l;
     display: flex;
     justify-content: center;
 }

@@ -72,6 +72,7 @@ export default {
     .project-image {
         width: 4rem;
         height: 4rem;
+        overflow: hidden;
     }
 
     .title {
