@@ -160,7 +160,8 @@
             "chat": "Plateforme de chat (vue connectée)",
             "events": "Événements",
             "instructions": "Instructions",
-            "news": "Actualités"
+            "news": "Actualités",
+            "featured-projects": "Projets à la une"
         },
         "form": {
             "admin-info": {
@@ -385,6 +386,7 @@
         "no": "non",
         "no-result": "Pas de résultat",
         "none": "aucun",
+        "of": "de",
         "org": "membres du portail",
         "quit-project": "Êtes-vous sûr(e) de vouloir quitter ce projet ?",
         "people": "Personnes",
@@ -2244,6 +2246,12 @@
         "data": {
             "link": "Lien : ",
             "wording": "Texte du bouton : "
+        }
+    },
+    "featured-projects": {
+        "drawer": {
+            "title": "Ajouter des projets à la une",
+            "max-pick-reached": "Vous avez atteind le nombre maximum de projets à la une."
         }
     }
 }

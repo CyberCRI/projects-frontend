@@ -125,6 +125,8 @@
             <ChatAdminBlock />
 
             <NewsAdminBlock />
+
+            <FeaturedProjectAdminBlock />
         </section>
     </div>
 </template>
@@ -145,6 +147,7 @@ import EventAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Events/Event
 import InstructionAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Instructions/InstructionAdminBlock.vue'
 import NewsAdminBlock from '@/components/lpikit/GeneralAdminBlocks/News/NewsAdminBlock.vue'
 import ChatAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
+import FeaturedProjectAdminBlock from '@/components/lpikit/GeneralAdminBlocks/FeaturedProject/FeaturedProjectAdminBlock.vue'
 
 export default {
     name: 'NewInformationTab',
@@ -160,6 +163,7 @@ export default {
         InstructionAdminBlock,
         NewsAdminBlock,
         ChatAdminBlock,
+        FeaturedProjectAdminBlock,
     },
 
     setup() {

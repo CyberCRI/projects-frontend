@@ -307,8 +307,8 @@ export default {
     flex-direction: row;
 
     @media (min-width: $min-tablet) {
-        padding-left: $space-3xl;
-        padding-right: $space-3xl;
+        padding-left: $space-2xl;
+        padding-right: $space-2xl;
     }
 }
 

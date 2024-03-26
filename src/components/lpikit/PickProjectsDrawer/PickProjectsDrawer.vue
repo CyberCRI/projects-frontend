@@ -1,7 +1,7 @@
 <template>
     <DrawerLayout
         :is-opened="isOpened"
-        :title="drawerTitle"
+        :title="drawerTitleWithLimit"
         :padding="true"
         @close="close"
         @confirm="confirm"
@@ -21,6 +21,13 @@
                 class="selected-card"
                 @unselect="unselectProject"
             />
+            <template v-if="maxPick">
+                <div class="project-placeholder" v-for="i in remainingPicks" :key="i">
+                    <div class="content">
+                        <div class="picture"></div>
+                    </div>
+                </div>
+            </template>
         </div>
         <div class="show-more" v-if="listProjects?.length > listLimit">
             <LinkButton
@@ -33,6 +40,7 @@
             :selected-projects="listProjects"
             @select-project="addProject"
             @batch-project="addBatch"
+            :can-pick-more="canPickMore"
         />
     </DrawerLayout>
 </template>
@@ -68,6 +76,10 @@ export default {
             type: Number,
             default: 5,
         },
+        maxPick: {
+            type: [Number, null],
+            default: null,
+        },
     },
 
     data() {
@@ -96,9 +108,31 @@ export default {
         seeMoreLabel() {
             return this.isSeeMore ? 'common.see-less' : 'common.see-more'
         },
+        remainingPicks() {
+            return this.maxPick
+                ? new Array(Math.max(this.maxPick - this.listProjects.length, 0))
+                : []
+        },
+
+        drawerTitleWithLimit() {
+            return (
+                this.drawerTitle +
+                (this.maxPick ? ` (${this.listProjects.length}/${this.maxPick})` : '')
+            )
+        },
+        canPickMore() {
+            return this.maxPick ? this.listProjects.length < this.maxPick : true
+        },
     },
     methods: {
         async addProject(project) {
+            if (!this.canPickMore) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('featured-projects.drawer.max-pick-reached'),
+                    type: 'warning',
+                })
+                return
+            }
             this.listProjects.push(project)
         },
 
@@ -156,5 +190,35 @@ export default {
     display: flex;
     justify-content: center;
     margin: $space-l 0;
+}
+
+.project-placeholder {
+    height: $card_height;
+    width: $card_width;
+    border: $border-width-s solid $gray-10;
+    border-radius: $border-radius-m;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: $space-m $space-m 0 $space-m;
+        height: 100%;
+    }
+
+    .picture {
+        display: inline-block;
+
+        $picture-width: 86px;
+
+        width: pxToRem($picture-width);
+        height: pxToRem($picture-width);
+        border-radius: $border-radius-xs;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-color: $gray-10;
+        box-shadow: 0 0 2px rgb(0 0 0 / 15%);
+    }
 }
 </style>
