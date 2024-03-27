@@ -137,11 +137,9 @@ export default {
         },
 
         async addBatch(projects) {
-            console.log('batch', projects)
             const projectsToAdd = (projects || [])
                 .slice(0)
                 .filter((p) => !(this.listProjects || []).some((lp) => lp.id === p.id))
-            console.log('projectsToAdd', projectsToAdd)
             if (this.maxPick && this.listProjects.length + projectsToAdd.length >= this.maxPick) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('featured-projects.drawer.max-pick-reached'),

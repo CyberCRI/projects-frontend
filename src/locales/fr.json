@@ -157,7 +157,7 @@
                 "delete-category": "Supprimer la catégorie",
                 "delete-category-description": "Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée"
             },
-            "chat": "Plateforme de chat (vue connectée)",
+            "chat": "Plateforme de discussion (vue connectée)",
             "events": "Événements",
             "instructions": "Instructions",
             "news": "Actualités",
@@ -2251,7 +2251,7 @@
     "featured-projects": {
         "drawer": {
             "title": "Ajouter des projets à la une",
-            "max-pick-reached": "Vous avez atteind le nombre maximum de projets à la une."
+            "max-pick-reached": "Vous avez atteint le nombre maximum de projets à la une."
         }
     }
 }
