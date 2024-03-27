@@ -110,12 +110,21 @@ export default {
             if (!this.customColor) return {}
             return { 'border-color': this.customColor }
         },
+        lang() {
+            return this.$store.getters['languages/current']
+        },
     },
 
     mounted() {
         if (!this.options.some((button) => button.iconName)) this.$nextTick(this.setSliderStyle)
 
         window.addEventListener('resize', debounce(this.setSliderStyle, 300))
+    },
+
+    watch: {
+        lang() {
+            this.$nextTick(this.setSliderStyle)
+        },
     },
 
     methods: {
@@ -156,19 +165,11 @@ export default {
                 // If not in vertical mode, set slider's width
                 const selectedWidth = selected.offsetWidth
 
-                if (this.$store.getters['languages/current'] === 'en') {
-                    this.sliderStyle = `left: ${
-                        leftOffset + (firstButtonSelected ? 0 : -1)
-                    }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
-                        this.customColor ? `background-color: ${this.customColor}` : ''
-                    }`
-                } else {
-                    this.sliderStyle = `left: ${
-                        leftOffset + (firstButtonSelected ? 0 : 1)
-                    }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
-                        this.customColor ? `background-color: ${this.customColor}` : ''
-                    }`
-                }
+                this.sliderStyle = `left: ${
+                    leftOffset + (firstButtonSelected ? 0 : 1)
+                }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
+                    this.customColor ? `background-color: ${this.customColor}` : ''
+                }`
             } else {
                 // Else set slider's height
                 // Calculate slider's left offset
