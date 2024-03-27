@@ -851,9 +851,11 @@
         "account-request": "Request an account",
         "new-project": "New project",
         "short-title": {
+            "events": "Calendar",
             "projects": "projects"
         },
         "long-title": {
+            "events": "Calendar",
             "projects": "my projects"
         },
         "create-project": "Create a project"

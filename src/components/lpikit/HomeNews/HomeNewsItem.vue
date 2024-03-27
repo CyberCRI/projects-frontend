@@ -7,7 +7,7 @@
                 :alt="`${news.title} image`"
                 :src="
                     imageError
-                        ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
+                        ? `${PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
                         : news.header_image?.variations?.small
                 "
                 @error="placeHolderImg"
@@ -28,11 +28,14 @@
 
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
+import ImageMixin from '@/mixins/imageMixin.ts'
 
 export default {
     name: 'HomeNewsItem',
 
     components: { IconImage },
+
+    mixins: [ImageMixin],
 
     props: {
         news: {

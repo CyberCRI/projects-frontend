@@ -5,7 +5,16 @@
         </div>
         <div v-if="summaryCardsExist && !isLoading" class="summary-cards">
             <div class="summary-container page-section-wide">
-                <SummaryCardsList :projects="projects" />
+                <ProjectSummaryBlock
+                    :projects="projects.slice(0, 3)"
+                    :inlined="numberOfSummaryBlock < 2"
+                />
+
+                <EventSummaryBlock
+                    :events="events"
+                    v-if="events.length"
+                    :inlined="numberOfSummaryBlock < 2"
+                />
             </div>
         </div>
         <LpiLoader v-else class="loading" type="simple" />
@@ -92,7 +101,8 @@ import permissions from '@/mixins/permissions.ts'
 import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
 import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
 import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
-import SummaryCardsList from '@/components/lpikit/SummaryCards/SummaryCardsList.vue'
+import ProjectSummaryBlock from '@/components/lpikit/SummaryCards/ProjectSummaryBlock.vue'
+import EventSummaryBlock from '@/components/lpikit/SummaryCards/EventSummaryBlock.vue'
 import { searchProjects } from '@/api/projects.service'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
@@ -109,8 +119,9 @@ export default {
         RecommendationBlock,
         HomeButtons,
         HomeNews,
-        SummaryCardsList,
+        ProjectSummaryBlock,
         LpiLoader,
+        EventSummaryBlock,
     },
 
     computed: {
@@ -120,6 +131,14 @@ export default {
 
         loggedIn() {
             return this.$store.getters['users/isLoggedIn']
+        },
+
+        numberOfSummaryBlock() {
+            let res = 0
+            if (this.loggedIn) res++ // my projects block always visible (at leat create project button)
+            if (this.events.length > 0) res++
+
+            return res
         },
     },
 
@@ -138,6 +157,7 @@ export default {
             topNews: null,
             projects: [],
             summaryCardsExist: false,
+            events: [],
         }
     },
 
@@ -154,6 +174,8 @@ export default {
 
         this.summaryCardsExist = this.loggedIn && this.projects.length > 0
 
+        await this.loadEvents()
+
         this.isLoading = false
     },
 
@@ -164,6 +186,44 @@ export default {
 
         logInUser() {
             goToKeycloakLoginPage()
+        },
+
+        async loadEvents() {
+            this.events = [
+                {
+                    id: 1,
+                    date: '2024-03-25',
+                    name: 'Event 1',
+                    information: 'Information 1',
+                    groups: [],
+                    date_edited: '2024-01-25T12:00:00Z',
+                },
+                {
+                    id: 2,
+                    date: '2024-03-28',
+                    name: 'Event 2',
+                    information: 'Information 2',
+                    groups: [
+                        {
+                            id: 3,
+                            name: 'Researchers',
+                        },
+                        {
+                            id: 159,
+                            name: 'R&D Staff',
+                        },
+                    ],
+                    date_edited: '2024-03-05T12:00:00Z',
+                },
+                {
+                    id: 3,
+                    date: '2024-04-02',
+                    name: 'Event 3',
+                    information: 'Information 3',
+                    groups: [],
+                    date_edited: '2024-03-03T12:00:00Z',
+                },
+            ].slice(0, 3)
         },
     },
 }
@@ -290,12 +350,20 @@ export default {
 .summary-cards {
     padding-inline: 0;
 
-    @media (min-width: $min-tablet) {
-        padding: $space-l;
-    }
-
     .summary-container {
         background-color: $green-lighter;
+
+        @media screen and (min-width: $min-tablet) {
+            padding: $space-l;
+            display: flex;
+            gap: $space-unit;
+            align-items: flex-start;
+
+            & > :deep(*) {
+                flex-basis: 33%;
+                flex-grow: 1;
+            }
+        }
     }
 }
 

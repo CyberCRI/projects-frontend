@@ -850,9 +850,11 @@
         "account-request": "Demander un compte",
         "new-project": "Nouveau projet",
         "short-title": {
+            "events": "Calendrier",
             "projects": "projets"
         },
         "long-title": {
+            "events": "Calendrier",
             "projects": "mes projets"
         },
         "create-project": "Créer un projet"

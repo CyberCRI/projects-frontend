@@ -1,0 +1,72 @@
+<template>
+    <BaseListSummaryBlock
+        :title="
+            projects.length > 2 ? $t(`home.short-title.projects`) : $t(`home.long-title.projects`)
+        "
+        :items="projects"
+        :inlined="inlined"
+    >
+        <template #default>
+            <ProjectLine
+                v-for="project in projects"
+                :key="project.id"
+                :project="project"
+                :cols="projects.length > 2 ? 'three-col' : 'two-col'"
+            />
+        </template>
+
+        <template #action>
+            <SummaryAction
+                v-if="projects.length > 2"
+                @click="seeAll"
+                action-icon="ArrowRight"
+                :action-label="$t('feed.see-all')"
+            />
+            <SummaryAction
+                v-else-if="projects.length"
+                @click="newProject"
+                action-icon="ArrowRight"
+                :action-label="$t('home.create-project')"
+            />
+            <SummaryAction
+                v-else
+                @click="newProject"
+                action-icon="Plus"
+                :action-label="$t('home.create-project')"
+            />
+        </template>
+    </BaseListSummaryBlock>
+</template>
+
+<script>
+import ProjectLine from '@/components/lpikit/SummaryCards/ProjectLine.vue'
+import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
+
+export default {
+    name: 'ProjectSummaryBlock',
+
+    components: { ProjectLine, BaseListSummaryBlock, SummaryAction },
+
+    props: {
+        projects: {
+            type: Array,
+            default: () => [],
+        },
+        inlined: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
+    methods: {
+        seeAll() {
+            this.$router.push({ name: 'Search' })
+        },
+
+        newProject() {
+            this.$router.push({ name: 'createProject' })
+        },
+    },
+}
+</script>
