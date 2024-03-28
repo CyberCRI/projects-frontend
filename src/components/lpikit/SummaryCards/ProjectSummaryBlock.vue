@@ -7,30 +7,25 @@
         :inlined="inlined"
     >
         <template #default>
-            <ProjectLine
-                v-for="project in projects"
-                :key="project.id"
-                :project="project"
-                :cols="projects.length > 2 ? 'three-col' : 'two-col'"
-            />
+            <ProjectLine v-for="project in projects" :key="project.id" :project="project" />
         </template>
 
         <template #action>
             <SummaryAction
                 v-if="projects.length > 2"
-                @click="seeAll"
+                :to="{ name: 'ProfileProjects' }"
                 action-icon="ArrowRight"
                 :action-label="$t('feed.see-all')"
             />
             <SummaryAction
                 v-else-if="projects.length"
-                @click="newProject"
+                :to="{ name: 'createProject' }"
                 action-icon="ArrowRight"
                 :action-label="$t('home.create-project')"
             />
             <SummaryAction
                 v-else
-                @click="newProject"
+                :to="{ name: 'createProject' }"
                 action-icon="Plus"
                 :action-label="$t('home.create-project')"
             />
@@ -56,16 +51,6 @@ export default {
         inlined: {
             type: Boolean,
             default: false,
-        },
-    },
-
-    methods: {
-        seeAll() {
-            this.$router.push({ name: 'Search' })
-        },
-
-        newProject() {
-            this.$router.push({ name: 'createProject' })
         },
     },
 }

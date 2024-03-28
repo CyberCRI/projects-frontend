@@ -1,21 +1,24 @@
 <template>
     <BaseListSummaryBlock
-        :title="events.length > 2 ? $t(`home.short-title.events`) : $t(`home.long-title.events`)"
-        :items="events"
+        :title="
+            instructions.length > 2
+                ? $t(`home.short-title.instructions`)
+                : $t(`home.long-title.instructions`)
+        "
+        :items="instructions"
         :inlined="inlined"
     >
         <template #default>
-            <EventItem
-                v-for="event in events"
-                :key="event.id"
-                :event="event"
-                :cols="events.length > 2 ? 'three-col' : 'two-col'"
+            <InstructionItem
+                v-for="instruction in instructions"
+                :key="instruction.id"
+                :instruction="instruction"
             />
         </template>
 
         <template #action>
             <SummaryAction
-                :to="{ name: 'CalendarPage' }"
+                :to="{ name: 'InstructionListPage' }"
                 action-icon="ArrowRight"
                 :action-label="$t('feed.see-all')"
             />
@@ -24,17 +27,17 @@
 </template>
 
 <script>
-import EventItem from '@/components/lpikit/EventList/EventItem.vue'
+import InstructionItem from '@/components/lpikit/SummaryCards/InstructionItem.vue'
 import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
-    name: 'EventSummaryBlock',
+    name: 'InstructionSummaryBlock',
 
-    components: { EventItem, BaseListSummaryBlock, SummaryAction },
+    components: { InstructionItem, BaseListSummaryBlock, SummaryAction },
 
     props: {
-        events: {
+        instructions: {
             type: Array,
             default: () => [],
         },
@@ -45,8 +48,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-.event {
-    padding: 0;
-}
-</style>

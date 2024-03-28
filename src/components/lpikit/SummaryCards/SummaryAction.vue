@@ -1,8 +1,8 @@
 <template>
-    <div class="summary-action">
+    <RouterLink :to="to" class="summary-action">
         <IconImage class="icon" :name="actionIcon" />
         <span class="label"> {{ $filters.capitalize(actionLabel) }}</span>
-    </div>
+    </RouterLink>
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
@@ -21,6 +21,10 @@ export default {
             type: String,
             default: '',
         },
+        to: {
+            type: [Object, String, null],
+            default: null,
+        },
     },
 }
 </script>
@@ -29,8 +33,6 @@ export default {
     display: flex;
     align-items: center;
     width: auto;
-    margin-inline: $space-m;
-    margin-block: $space-m;
     cursor: pointer;
 
     .icon {

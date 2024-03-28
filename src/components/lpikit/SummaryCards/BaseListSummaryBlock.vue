@@ -56,22 +56,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.column-wrapper {
-    width: 100%;
-    background-color: $white;
-    border: $border-width-s solid $primary-dark;
-    border-radius: $border-radius-s;
+.summary-block {
     display: flex;
     flex-direction: column;
-    margin-block: $space-l;
-    padding-top: $space-xs;
+    align-items: center;
+    justify-content: center;
+    padding-inline: $space-xs;
+}
 
-    @media screen and (min-width: $min-tablet) {
-        .inlined & {
-            flex-direction: row;
-            padding-top: 0;
-        }
-    }
+.uppercase-title {
+    font-size: $font-size-l;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $primary-dark;
+    margin-top: $space-l;
 }
 
 .no-col-wrapper {
@@ -80,53 +78,22 @@ export default {
     align-items: center;
 }
 
-.three-col-wrapper {
+.column-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: $white;
+    border: $border-width-s solid $primary-dark;
+    border-radius: $border-radius-s;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-inline: $space-xs;
+    margin-block: $space-l;
+    padding: $space-m;
+    gap: $space-m;
 
     @media screen and (min-width: $min-tablet) {
-        padding-inline: $space-xl;
-    }
-}
-
-.inlined .three-col-wrapper .column-wrapper {
-    @media screen and (min-width: $min-tablet) {
-        margin-top: $space-m;
-    }
-}
-
-.one-col-wrapper,
-.two-col-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-inline: $space-xs;
-
-    @media screen and (min-width: $min-tablet) {
-        .inlined {
-            flex-direction: row !important;
-            padding-inline: $space-xl;
+        .inlined & {
+            flex-direction: row;
         }
-    }
-
-    .column-wrapper {
-        @media screen and (min-width: $min-tablet) {
-            padding-top: 0;
-        }
-    }
-}
-
-@media screen and (min-width: $min-tablet) {
-    .inlined.one-col-wrapper .column-wrapper {
-        width: 40%;
-    }
-
-    .inlined.two-col-wrapper .column-wrapper {
-        width: 70%;
     }
 }
 
@@ -141,51 +108,19 @@ export default {
     display: flex;
     flex-direction: column;
     width: auto;
-
-    .one-col-wrapper & {
-        @media screen and (min-width: $min-tablet) {
-            width: 60%;
-        }
-    }
+    gap: $space-m;
+    flex-grow: 1;
 
     &:empty {
         display: none;
     }
 }
 
-@media screen and (min-width: $min-tablet) {
-    .inlined .items-line {
-        flex-direction: row;
-        width: 80%;
-
-        > :deep(*) {
-            flex-basis: 33%;
-            flex-grow: 1;
-        }
-    }
-}
-
 .block-action {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     width: auto;
-    margin-inline: $space-m;
-    margin-block: $space-m;
-}
-
-@media screen and (min-width: $min-tablet) {
-    .inlined .block-action {
-        width: 20%;
-        justify-content: flex-end;
-        margin-left: 0;
-        margin-block: 0;
-    }
-}
-
-.one-col-wrapper .block-action {
-    @media screen and (min-width: $min-tablet) {
-        width: 40%;
-    }
 }
 
 .no-col-wrapper .block-action {
@@ -194,16 +129,46 @@ export default {
     width: 100%;
 }
 
-.uppercase-title {
-    font-size: $font-size-l;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: $primary-dark;
-    margin-top: $space-l;
-
-    @media screen and (min-width: $min-tablet) {
+@media screen and (min-width: $min-tablet) {
+    .uppercase-title {
         margin-top: 0;
         margin-right: $space-l;
+    }
+
+    .one-col-wrapper,
+    .two-col-wrapper {
+        &.inlined {
+            flex-direction: row !important;
+            padding-inline: $space-xl;
+        }
+    }
+
+    .inlined {
+        &.one-col-wrapper .column-wrapper {
+            width: 40%;
+        }
+
+        &.two-col-wrapper .column-wrapper {
+            width: 70%;
+        }
+
+        &.three-col-wrapper .column-wrapper {
+            margin-top: $space-m;
+        }
+
+        .items-line {
+            flex-direction: row;
+            width: 80%;
+
+            > :deep(*) {
+                flex-basis: 33%;
+                flex-grow: 1;
+            }
+        }
+
+        .block-action {
+            justify-content: center;
+        }
     }
 }
 </style>
