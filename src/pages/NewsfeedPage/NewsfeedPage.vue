@@ -135,4 +135,10 @@ export default {
     justify-content: center;
     padding-bottom: $space-3xl;
 }
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: $space-l;
+}
 </style>

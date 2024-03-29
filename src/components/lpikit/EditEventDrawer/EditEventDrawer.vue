@@ -50,10 +50,13 @@ export default {
                     this.form = {
                         ...event,
                         date: new Date(event.date),
-                        groups: event.groups.reduce((acc, group) => {
-                            acc[group.id] = true
-                            return acc
-                        }, {}),
+                        // build group "object" from array if it is an array
+                        groups: event.groups.reduce
+                            ? event.groups.reduce((acc, group) => {
+                                  acc[group.id] = true
+                                  return acc
+                              }, {})
+                            : event.groups,
                     }
                 } else {
                     this.form = defaultForm()

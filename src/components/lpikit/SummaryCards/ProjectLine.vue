@@ -1,5 +1,8 @@
 <template>
-    <div class="line" :class="[cols]" @click="seeProject">
+    <RouterLink
+        :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+        class="line"
+    >
         <CroppedImage
             v-if="project && project.header_image && project.header_image.variations"
             ref="projectImg"
@@ -11,7 +14,7 @@
         <div class="project-title">
             {{ $filters.capitalize(project.title) }}
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script>
@@ -29,14 +32,6 @@ export default {
         project: {
             type: Object,
             required: true,
-        },
-
-        cols: {
-            type: String,
-            default: 'three-col',
-            validator(value) {
-                return ['one-col', 'two-col', 'three-col'].includes(value)
-            },
         },
     },
 
@@ -56,10 +51,6 @@ export default {
         placeHolderImg() {
             this.imageError = true
         },
-
-        seeProject() {
-            this.$router.push(`/projects/${this.project.slug}/summary`)
-        },
     },
 }
 </script>
@@ -68,33 +59,7 @@ export default {
 .line {
     display: flex;
     align-items: center;
-    margin-block: $space-2xs;
-    margin-left: $space-m;
     cursor: pointer;
-}
-
-.three-col {
-    width: auto;
-
-    @media screen and (min-width: $min-tablet) {
-        width: calc(100% / 3);
-    }
-}
-
-.two-col {
-    width: auto;
-    margin-right: $space-m;
-
-    @media screen and (min-width: $min-tablet) {
-        width: calc(100% / 2);
-        margin-right: 0;
-    }
-}
-
-@media screen and (min-width: $min-tablet) {
-    .line {
-        margin-block: $space-m;
-    }
 }
 
 .img-container {

@@ -156,7 +156,12 @@
                 "hide-projects": "Hide projects",
                 "delete-category": "Delete category",
                 "delete-category-description": "Are you sure you want to delete this category? This action cannot be undone."
-            }
+            },
+            "chat": "Chat platform (Connected view)",
+            "events": "Events",
+            "instructions": "Instructions",
+            "news": "news",
+            "featured-projects": "Featured projects"
         },
         "form": {
             "admin-info": {
@@ -379,6 +384,7 @@
         "no": "no",
         "no-result": "No result",
         "none": "none",
+        "of": "of",
         "org": "portal members",
         "quit-project": "Are you sure you want to quit this project?",
         "people": "People",
@@ -390,6 +396,7 @@
         "send": "Send",
         "see-less": "see less",
         "see-more": "see more",
+        "see-all": "See all",
         "set-deadline": "set deadline",
         "shrink": "shrink",
         "submit": "submit",
@@ -844,10 +851,14 @@
         "account-request": "Request an account",
         "new-project": "New project",
         "short-title": {
-            "projects": "projects"
+            "events": "Calendar",
+            "projects": "projects",
+            "instructions": "Do not miss"
         },
         "long-title": {
-            "projects": "my projects"
+            "events": "Calendar",
+            "projects": "my projects",
+            "instructions": "Do not miss"
         },
         "create-project": "Create a project"
     },
@@ -2217,6 +2228,33 @@
         },
         "drawer": {
             "title": "Edit instruction"
+        }
+    },
+
+    "chat": {
+        "drawer": {
+            "title": "Add chat platform",
+            "notice": "You can add a link to your chat platform. It will only be visible to your connected users.",
+            "url": {
+                "label": "Link to your chat platform",
+                "notice": "Paste here the link to your platform",
+                "placeholder": "Paste URL (https://...)"
+            },
+            "wording": {
+                "label": "Link wording",
+                "notice": "What the button should display (ex: Join chat, Join Whatsapp...) - 12 car max.",
+                "placeholder": "ex: Join chat"
+            }
+        },
+        "data": {
+            "link": "Link: ",
+            "wording": "Button wording: "
+        }
+    },
+    "featured-projects": {
+        "drawer": {
+            "title": "Add featured projects",
+            "max-pick-reached": "You have reached the maximum number of featured projects"
         }
     }
 }

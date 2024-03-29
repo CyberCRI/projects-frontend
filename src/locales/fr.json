@@ -156,7 +156,12 @@
                 "hide-projects": "Masquer les projets",
                 "delete-category": "Supprimer la catégorie",
                 "delete-category-description": "Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée"
-            }
+            },
+            "chat": "Plateforme de discussion (vue connectée)",
+            "events": "Événements",
+            "instructions": "Instructions",
+            "news": "Actualités",
+            "featured-projects": "Projets à la une"
         },
         "form": {
             "admin-info": {
@@ -381,6 +386,7 @@
         "no": "non",
         "no-result": "Pas de résultat",
         "none": "aucun",
+        "of": "de",
         "org": "membres du portail",
         "quit-project": "Êtes-vous sûr(e) de vouloir quitter ce projet ?",
         "people": "Personnes",
@@ -392,6 +398,7 @@
         "send": "Envoyer",
         "see-less": "voir moins",
         "see-more": "voir plus",
+        "see-all": "Voir tout",
         "set-deadline": "fixer une échéance",
         "shrink": "réduire",
         "submit": "valider",
@@ -843,10 +850,14 @@
         "account-request": "Demander un compte",
         "new-project": "Nouveau projet",
         "short-title": {
-            "projects": "projets"
+            "events": "Calendrier",
+            "projects": "projets",
+            "instructions": "À ne pas manquer"
         },
         "long-title": {
-            "projects": "mes projets"
+            "events": "Calendrier",
+            "projects": "mes projets",
+            "instructions": "À ne pas manquer"
         },
         "create-project": "Créer un projet"
     },
@@ -2219,6 +2230,32 @@
         },
         "drawer": {
             "title": "Éditer une instruction"
+        }
+    },
+    "chat": {
+        "drawer": {
+            "title": "Ajouter une plateforme de discussion",
+            "notice": "Vous pouvez ajouter un lien vers votre plateforme de discussion. Il ne sera visible que par vos utilisateurs connectés.",
+            "url": {
+                "label": "Lien vers votre plateforme de discussion",
+                "notice": "Collez ici le lien vers votre plateforme",
+                "placeholder": "Coller l'URL (https://...)"
+            },
+            "wording": {
+                "label": "Libellé du lien",
+                "notice": "Ce que le bouton devrait afficher (ex: Rejoindre la discussion, Rejoindre Whatsapp...) - max. 12 caractères.",
+                "placeholder": "ex: Rejoindre la discussion"
+            }
+        },
+        "data": {
+            "link": "Lien : ",
+            "wording": "Texte du bouton : "
+        }
+    },
+    "featured-projects": {
+        "drawer": {
+            "title": "Ajouter des projets à la une",
+            "max-pick-reached": "Vous avez atteint le nombre maximum de projets à la une."
         }
     }
 }

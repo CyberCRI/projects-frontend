@@ -52,10 +52,12 @@ export default {
                         publication_date: new Date(news.publication_date),
                         header_image: news.header_image || null,
                         imageSizes: pictureApiToImageSizes(news.header_image),
-                        groups: news.groups.reduce((acc, group) => {
-                            acc[group.id] = true
-                            return acc
-                        }, {}),
+                        groups: news.groups.reduce
+                            ? news.groups.reduce((acc, group) => {
+                                  acc[group.id] = true
+                                  return acc
+                              }, {})
+                            : news.groups,
                     }
             },
             immediate: true,

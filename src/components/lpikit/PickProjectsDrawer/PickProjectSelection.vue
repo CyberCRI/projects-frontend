@@ -87,6 +87,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        canPickMore: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     computed: {
@@ -149,6 +153,7 @@ export default {
 
         selectProject(project) {
             this.$emit('select-project', project)
+            if (!this.canPickMore) return
             project.selected = true
             this.$forceUpdate()
         },
