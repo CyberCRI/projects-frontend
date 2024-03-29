@@ -10,7 +10,7 @@
                         class="icon"
                     />
 
-                    <span v-if="modelValue.label">{{ modelValue.label }}</span>
+                    <span v-if="modelValue.label">{{ $t(modelValue.label) }}</span>
                 </span>
                 <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
             </slot>
@@ -45,7 +45,7 @@
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
                                     <IconImage :name="item.leftIcon" />
                                 </span>
-                                <span class="label">{{ item.label }}</span>
+                                <span class="label">{{ $t(item.label) }}</span>
                                 <span v-if="item.rightIcon" class="menu-icon right-icon">
                                     <IconImage :name="item.rightIcon" />
                                 </span>
