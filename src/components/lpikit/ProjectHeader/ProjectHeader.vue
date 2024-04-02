@@ -206,7 +206,7 @@
                                 <router-link
                                     v-for="sdg in project?.sdgs || []"
                                     :key="sdg"
-                                    :to="browsePageWithQuery('sdgs', sdg)"
+                                    :to="browseProjectsWithQuery('sdgs', sdg)"
                                     class="sdg-link"
                                 >
                                     <img
@@ -637,11 +637,12 @@ export default {
             this.imageLoaded = true
         },
 
-        browsePageWithQuery(queryField, queryValue) {
+        browseProjectsWithQuery(queryField, queryValue) {
             return {
-                path: '/search',
+                name: 'ProjectSearch',
                 query: {
                     [queryField]: queryValue,
+                    section: 'projects',
                 },
             }
         },
