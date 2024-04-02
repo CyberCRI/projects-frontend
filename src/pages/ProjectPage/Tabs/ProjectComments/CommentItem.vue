@@ -16,7 +16,7 @@
                         <span class="author">
                             {{ comment.author.given_name }} {{ comment.author.family_name }}
                         </span>
-                        <span>&bull;</span>
+                        <span class="separator">&bull;</span>
                         <span class="date">
                             <span v-if="showEditDate">
                                 {{ new Date(comment.updated_at).toLocaleDateString() }}
@@ -285,6 +285,9 @@ $comment-pic-size: pxToRem(72px);
                 color: $primary-dark;
                 font-weight: 700;
                 font-size: $font-size-m;
+                .separator {
+                    padding: 0 0.5rem;
+                }
             }
 
             .action {
