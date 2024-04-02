@@ -5,6 +5,7 @@ import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { axios } from '@/api/api.config'
+
 vi.mock('@/api/api.config', function () {
     return {
         axios: {
@@ -22,7 +23,7 @@ const i18n = {
 }
 
 const mockSearch = vi
-    .spyOn(WikipediaResults.methods, 'launchSearch')
+    .spyOn((WikipediaResults as any).methods, 'launchSearch')
     .mockImplementation(() => Promise.resolve())
 
 describe('WikipediaResults', () => {
