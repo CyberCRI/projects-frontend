@@ -6,8 +6,6 @@
                     v-if="showSectionFilter"
                     v-model="selectedSection"
                     :menu-items="sectionFilters"
-                    :label="searchOptionDropDownLabel"
-                    :icon="searchOptionDropDownIcon"
                 />
                 <SearchInput
                     class="search-input"
@@ -169,7 +167,7 @@ export default {
                 key: 'all-sections',
                 type: 'all',
                 leftIcon: 'BarsStaggered',
-                label: this.$t('search.all-section'),
+                label: 'search.all-section',
             },
         }
     },
@@ -217,44 +215,34 @@ export default {
     },
 
     computed: {
-        searchOptionDropDownLabel() {
-            return this.$t(`search.${this.selectedSection.type}-section`)
-        },
-
-        searchOptionDropDownIcon() {
-            return this.selectedSection && this.selectedSection.leftIcon
-                ? this.selectedSection.leftIcon
-                : 'BarsStaggered'
-        },
-
         sectionFilters() {
             return [
                 {
                     key: 'all-sections',
                     type: 'all',
                     leftIcon: 'BarsStaggered',
-                    label: this.$t('search.all-section'),
+                    label: 'search.all-section',
                     dataTest: 'all-sections-button',
                 },
                 {
                     key: 'project-section',
                     type: 'projects',
                     leftIcon: 'Briefcase',
-                    label: this.$t('search.projects-section'),
+                    label: 'search.projects-section',
                     dataTest: 'project-section-button',
                 },
                 {
                     key: 'group-section',
                     type: 'groups',
                     leftIcon: 'PeopleGroup',
-                    label: this.$t('search.groups'),
+                    label: 'search.groups',
                     dataTest: 'group-section-button',
                 },
                 {
                     key: 'person-section',
                     type: 'people',
                     leftIcon: 'Account',
-                    label: this.$t('search.peoples'),
+                    label: 'search.peoples',
                     dataTest: 'person-section-button',
                 },
             ]
