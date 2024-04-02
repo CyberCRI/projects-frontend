@@ -1,4 +1,6 @@
 <template>
+    <!-- oboarding todos -->
+    <OnboardingTodoBlock v-if="showOnbordingTodos" />
     <div v-if="loggedIn">
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
@@ -125,6 +127,7 @@ import InstructionSummaryBlock from '@/components/lpikit/SummaryCards/Instructio
 import { searchProjects } from '@/api/projects.service'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 
 export default {
     name: 'NewHomePage',
@@ -142,6 +145,7 @@ export default {
         ProjectSummaryBlock,
         EventSummaryBlock,
         InstructionSummaryBlock,
+        OnboardingTodoBlock,
     },
 
     data() {
@@ -195,6 +199,18 @@ export default {
             if (this.displayableInstructions.length > 0) res++
 
             return res
+        },
+        showOnbordingTodos() {
+            if (!this.loggedIn) return false
+            if (!this.organization?.onboarding_enabled) return false
+            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
+            return (
+                status.show_progress &&
+                (status.complete_profile ||
+                    status.explore_projects ||
+                    status.create_project ||
+                    status.take_tour)
+            )
         },
     },
 
