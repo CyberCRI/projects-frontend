@@ -285,6 +285,7 @@ $comment-pic-size: pxToRem(72px);
                 color: $primary-dark;
                 font-weight: 700;
                 font-size: $font-size-m;
+
                 .separator {
                     padding: 0 0.5rem;
                 }
