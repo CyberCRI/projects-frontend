@@ -29,7 +29,7 @@
             </p>
         </div>
 
-        <div>
+        <div class="editor-section">
             <TipTapEditor
                 v-if="editorBlogEntry"
                 :key="editorKey"
@@ -37,7 +37,7 @@
                 :socket="!isAddMode"
                 :ws-data="editorBlogEntry"
                 :provider-params="providerParams"
-                class="input-field content-editor no-max-height"
+                class="input-field content-editor"
                 mode="full"
                 parent="blog-entry"
                 @destroy="closeDrawer"
@@ -342,9 +342,8 @@ export default {
 .blog-drawer {
     height: 100%;
 
-    .input-field {
-        margin: $space-l;
-        margin-bottom: $space-xs;
+    :deep(.drawer__main) {
+        gap: $space-unit;
     }
 
     .content-editor {
@@ -357,5 +356,11 @@ export default {
     color: $salmon-dark;
     font-size: $font-size-s;
     margin-left: $space-l;
+}
+
+.editor-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 </style>
