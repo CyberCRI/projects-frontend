@@ -251,6 +251,7 @@ export default {
         left: 0;
         min-width: 100%;
         transform: scale3d(1, 1, 1); // fix rounding pixel width issue
+        margin-top: -1px; // fix pixel rounding issue on zoomed scrren
 
         &.clamp-corner {
             // "invisible" 6px clamping if not enough space to accomodate the top right border radius
