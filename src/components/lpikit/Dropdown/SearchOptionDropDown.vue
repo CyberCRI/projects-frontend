@@ -10,7 +10,9 @@
                         class="icon"
                     />
 
-                    <span v-if="modelValue.label">{{ $t(modelValue.label) }}</span>
+                    <span class="drop-down-label" v-if="modelValue.label">{{
+                        $t(modelValue.label)
+                    }}</span>
                 </span>
                 <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
             </slot>
@@ -297,5 +299,9 @@ export default {
 .menu-fade-leave-to {
     opacity: 0;
     transform: translateY(-100%);
+}
+
+.drop-down-label {
+    white-space: nowrap;
 }
 </style>

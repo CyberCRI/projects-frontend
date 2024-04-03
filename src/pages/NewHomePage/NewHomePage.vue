@@ -39,12 +39,14 @@
         </div>
         <LpiLoader v-else class="loading" type="simple" />
     </div>
-    <div v-else class="page-section-wide introduction">
+    <div v-else class="page-section-full introduction">
         <div v-if="organization && organization.banner_image" class="banner-image">
             <h1 class="mobile-not-connected-main-title">
                 {{ organization.dashboard_title }}
             </h1>
-            <img :src="organization.banner_image.url" alt="logo" class="organization-banner" />
+            <div class="banner-wrapper">
+                <img :src="organization.banner_image.url" alt="logo" class="organization-banner" />
+            </div>
             <div class="introduction-container">
                 <h1 class="image-main-title">
                     {{ organization.dashboard_title }}
@@ -351,7 +353,7 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
     .mobile-not-connected-main-title {
         font-size: $font-size-xl;
         text-align: center;
-        margin-bottom: $space-xl;
+        margin-bottom: $space-m;
 
         @media screen and (min-width: $min-tablet) {
             display: none;
@@ -361,13 +363,22 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
     .banner-image {
         display: flex;
         flex-direction: column;
+        gap: $space-l;
 
         @media screen and (min-width: $min-tablet) {
             flex-direction: row;
+            gap: $space-2xl;
+        }
+
+        .banner-wrapper {
+            @media screen and (min-width: $min-tablet) {
+                flex-basis: 60%;
+                flex-shrink: 0;
+            }
         }
 
         .organization-banner {
-            margin-bottom: $space-l;
+            width: 100%;
 
             @media screen and (min-width: $min-tablet) {
                 margin-bottom: 0;
