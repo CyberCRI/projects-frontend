@@ -13,6 +13,13 @@
                 v-for="instruction in instructions"
                 :key="instruction.id"
                 :instruction="instruction"
+                @edit-instruction="editedInstruction = instruction"
+            />
+
+            <EditInstructionDrawer
+                :is-opened="!!editedInstruction"
+                :instruction="editedInstruction"
+                @close="editedInstruction = null"
             />
         </template>
 
@@ -30,11 +37,12 @@
 import InstructionItem from '@/components/lpikit/SummaryCards/InstructionItem.vue'
 import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
+import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
 
 export default {
     name: 'InstructionSummaryBlock',
 
-    components: { InstructionItem, BaseListSummaryBlock, SummaryAction },
+    components: { InstructionItem, BaseListSummaryBlock, SummaryAction, EditInstructionDrawer },
 
     props: {
         instructions: {
@@ -45,6 +53,12 @@ export default {
             type: Boolean,
             default: false,
         },
+    },
+
+    data() {
+        return {
+            editedInstruction: null,
+        }
     },
 }
 </script>
