@@ -10,12 +10,13 @@
                 :key="event.id"
                 :event="event"
                 :cols="events.length > 2 ? 'three-col' : 'two-col'"
-                @edit-event="editedNews = event"
+                @edit-event="editedEvent = event"
             />
-            <EditNewsDrawer
-                :is-opened="!!editedNews"
-                :news="editedNews"
-                @close="editedNews = null"
+
+            <EditEventDrawer
+                :is-opened="!!editedEvent"
+                :event="editedEvent"
+                @close="editedEvent = null"
             />
         </template>
 
@@ -33,12 +34,12 @@
 import EventItem from '@/components/lpikit/EventList/EventItem.vue'
 import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
-import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
+import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
 
 export default {
     name: 'EventSummaryBlock',
 
-    components: { EventItem, BaseListSummaryBlock, SummaryAction, EditNewsDrawer },
+    components: { EventItem, BaseListSummaryBlock, SummaryAction, EditEventDrawer },
 
     props: {
         events: {
@@ -53,7 +54,7 @@ export default {
 
     data() {
         return {
-            editedNews: null,
+            editedEvent: null,
         }
     },
 }
