@@ -8,8 +8,8 @@
                 v-for="event in events"
                 :key="event.id"
                 :event="event"
-                @edit-event="onEditEvent"
-                @delete-event="onDeleteEvent"
+                @edit-event="editedEvent = event"
+                @delete-event="eventToDelete = event"
             ></EventAdminListItem>
         </template>
 
@@ -17,7 +17,19 @@
             <LinkButton btn-icon="ArrowRight" :label="$t('common.see-all')" />
         </template>
     </AdminBlock>
+
     <EditEventDrawer :is-opened="!!editedEvent" @close="editedEvent = null" :event="editedEvent" />
+
+    <ConfirmModal
+        v-if="eventToDelete"
+        :content="$t('event.delete.message')"
+        :title="$t('event.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="eventToDelete = null"
+        @confirm="deleteEvent"
+        :asyncing="isDeletingEvent"
+    />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
@@ -25,6 +37,7 @@ import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
 import { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 import EventAdminListItem from './EventAdminListItem.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 export default {
     name: 'EventAdminBlock',
 
@@ -33,6 +46,7 @@ export default {
         LinkButton,
         EditEventDrawer,
         EventAdminListItem,
+        ConfirmModal,
     },
 
     data() {
@@ -40,6 +54,8 @@ export default {
             events: [],
             isLoading: true,
             editedEvent: null,
+            eventToDelete: null,
+            isDeletingEvent: false,
         }
     },
 
@@ -103,13 +119,26 @@ export default {
             this.editedEvent = defaultForm()
         },
 
-        onEditEvent(event) {
-            this.editedEvent = event
-        },
-
-        onDeleteEvent(event) {
-            // TODO
-            console.log('deleteEvent', event)
+        async deleteEvent() {
+            // TODO: delete event
+            console.log('delete event', this.eventToDelete)
+            this.isDeletingEvent = true
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('event.delete.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('event.delete.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.eventToDelete = null
+                this.isDeletingEvent = false
+            }
         },
     },
 }

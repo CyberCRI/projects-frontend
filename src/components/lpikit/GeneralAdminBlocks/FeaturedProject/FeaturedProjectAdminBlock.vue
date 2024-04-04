@@ -202,6 +202,7 @@ export default {
             isLoading: true,
             editFeaturedProjects: false,
             maxProjects: 4,
+            asyncing: false,
         }
     },
 
@@ -227,6 +228,27 @@ export default {
                 }, 1000)
             })
             this.isLoading = false
+        },
+
+        async onPickProjects(projects) {
+            this.isLoading = true
+            try {
+                // TODO: save event and remove log
+                console.log('save Featured projects', projects)
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('featured-projects.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('featured-projects.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.isLoading = false
+            }
         },
     },
 }

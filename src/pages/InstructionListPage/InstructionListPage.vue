@@ -22,6 +22,7 @@
                 v-for="instruction in allInstructions"
                 :key="instruction.id"
                 @edit-instruction="editedInstruction = instruction"
+                @delete-instruction="instructionToDelete = instruction"
             />
         </div>
     </div>
@@ -30,12 +31,23 @@
         :instruction="editedInstruction"
         @close="editedInstruction = null"
     />
+    <ConfirmModal
+        v-if="instructionToDelete"
+        :content="$t('instructions.delete.message')"
+        :title="$t('instructions.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="instructionToDelete = null"
+        @confirm="deleteInstruction"
+        :asyncing="isDeletingInstruction"
+    />
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import InstructionListItem from '@/components/lpikit/InstructionListItem/InstructionListItem.vue'
 import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 export default {
     name: 'InstructionListPage',
     components: {
@@ -43,6 +55,7 @@ export default {
         LoaderSimple,
         InstructionListItem,
         EditInstructionDrawer,
+        ConfirmModal,
     },
 
     data() {
@@ -50,6 +63,8 @@ export default {
             allIinstructions: [],
             loading: false,
             editedInstruction: null,
+            instructionToDelete: null,
+            isDeletingInstruction: false,
         }
     },
 
@@ -121,6 +136,28 @@ const foo = 123</code></pre><table style="minWidth: 900px"><colgroup><col><col><
             ]
 
             this.loading = false
+        },
+
+        async deleteInstruction() {
+            // TODO: delete intstuction
+            console.log('delete instruction', this.instructionToDelete)
+            this.isDeletingInstruction = true
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('instructions.delete.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('instructions.delete.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.instructionToDelete = null
+                this.isDeletingInstruction = false
+            }
         },
     },
 }

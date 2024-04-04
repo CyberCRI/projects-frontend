@@ -7,6 +7,7 @@
         class="instruction-drawer medium"
         @confirm="saveInstruction"
         @close="cancel"
+        :asyncing="asyncing"
     >
         <InstructionForm ref="instructionForm" v-model="form" class="instruction-form" />
     </DrawerLayout>
@@ -72,17 +73,31 @@ export default {
                 return
             }
             this.asyncing = true
-            const formData = {
-                ...this.form,
-                publication_date: this.form.publication_date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+
+            try {
+                const formData = {
+                    ...this.form,
+                    publication_date: this.form.publication_date.toISOString(),
+                    groups: Object.entries(this.form.groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                console.log('saveInstruction', formData) // TODO: save instruction
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('instructions.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('instructions.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$emit('close')
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveInstruction', formData)
-            this.asyncing = false
-            this.$emit('close')
         },
     },
 }
