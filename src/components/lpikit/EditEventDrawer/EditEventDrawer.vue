@@ -7,6 +7,7 @@
         class="small"
         @close="closeDrawer"
         @confirm="saveEvent"
+        :asyncing="asyncing"
     >
         <EventForm ref="eventForm" v-model="form" v-if="form" />
     </DrawerLayout>
@@ -40,6 +41,7 @@ export default {
     data() {
         return {
             form: defaultForm(),
+            asyncing: false,
         }
     },
 
@@ -73,16 +75,33 @@ export default {
                 return
             }
 
-            const formData = {
-                ...this.form,
-                date: this.form.date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+            this.asyncing = true
+
+            try {
+                const formData = {
+                    ...this.form,
+                    date: this.form.date.toISOString(),
+                    groups: Object.entries(this.form.groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                // TODO: save event and remove log
+                console.log('saveEvent', formData)
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('event.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('event.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.closeDrawer()
             }
-            // TODO: save event and remove log
-            console.log('saveEvent', formData)
-            this.closeDrawer()
         },
         closeDrawer() {
             this.$emit('close')

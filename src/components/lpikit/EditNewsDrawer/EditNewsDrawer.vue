@@ -7,6 +7,7 @@
         class="news-drawer medium"
         @confirm="saveNews"
         @close="cancel"
+        :asyncing="asyncing"
     >
         <NewsForm ref="newsForm" v-model="form" class="news-form" />
     </DrawerLayout>
@@ -74,18 +75,32 @@ export default {
                 return
             }
             this.asyncing = true
-            // TODO handle image
-            const formData = {
-                ...this.form,
-                publication_date: this.form.publication_date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+
+            try {
+                const formData = {
+                    ...this.form,
+                    publication_date: this.form.publication_date.toISOString(),
+                    groups: Object.entries(this.form.groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her// TODO handle image
+
+                console.log('saveNews', formData)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('news.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('news.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$emit('close')
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveNews', formData)
-            this.asyncing = false
-            this.$emit('close')
         },
     },
 }

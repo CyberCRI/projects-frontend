@@ -14,14 +14,14 @@
                 <h3 class="news-title">{{ news.title }}</h3>
                 <div class="news-actions" v-if="canEditNews">
                     <ContextActionButton
-                        action-icon="Close"
-                        class="remove-btn small"
-                        @click="$emit('remove-news', news)"
-                    />
-                    <ContextActionButton
                         action-icon="Pen"
                         class="edit-btn small"
                         @click="$emit('edit-news', news)"
+                    />
+                    <ContextActionButton
+                        action-icon="Close"
+                        class="remove-btn small"
+                        @click="$emit('delete-news', news)"
                     />
                 </div>
             </div>
@@ -58,7 +58,7 @@ export default {
 
     mixins: [imageMixin],
 
-    emits: ['remove-news', 'edit-news'],
+    emits: ['delete-news', 'edit-news'],
 
     components: {
         CroppedImage,

@@ -4,14 +4,14 @@
             <h3 class="instruction-title">{{ instruction.title }}</h3>
             <div class="instruction-actions" v-if="canEditInstruction">
                 <ContextActionButton
-                    action-icon="Close"
-                    class="remove-btn small"
-                    @click="$emit('remove-instruction', instruction)"
-                />
-                <ContextActionButton
                     action-icon="Pen"
                     class="edit-btn small"
                     @click="$emit('edit-instruction', instruction)"
+                />
+                <ContextActionButton
+                    action-icon="Close"
+                    class="remove-btn small"
+                    @click="$emit('delete-instruction', instruction)"
                 />
             </div>
         </div>
@@ -33,7 +33,7 @@ import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 export default {
     name: 'InstructionItem',
 
-    emits: ['remove-instruction', 'edit-instruction'],
+    emits: ['delete-instruction', 'edit-instruction'],
 
     components: {
         HtmlLimiter,

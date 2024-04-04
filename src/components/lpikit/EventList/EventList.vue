@@ -13,25 +13,36 @@
                     :event="event"
                     v-for="event in events"
                     :key="event.id"
-                    @edit-event="onEditEvent"
-                    @delete-event="onDeleteEvent"
+                    @edit-event="editedEvent = event"
+                    @delete-event="eventToDelete = event"
                 />
             </div>
         </div>
     </div>
     <EditEventDrawer :is-opened="!!editedEvent" :event="editedEvent" @close="editedEvent = null" />
+
+    <ConfirmModal
+        v-if="eventToDelete"
+        :content="$t('event.delete.message')"
+        :title="$t('event.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="eventToDelete = null"
+        @confirm="deleteEvent"
+        :asyncing="isDeletingEvent"
+    />
 </template>
 <script>
 import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from './EventItem.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 export default {
     name: 'EventList',
-
-    emits: ['delete-event'],
 
     components: {
         EditEventDrawer,
         EventItem,
+        ConfirmModal,
     },
 
     props: {
@@ -44,16 +55,32 @@ export default {
     data() {
         return {
             editedEvent: null,
+            eventToDelete: null,
+            isDeletingEvent: false,
         }
     },
 
     methods: {
-        onDeleteEvent(event) {
-            this.$emit('delete-event', event)
-        },
-
-        onEditEvent(event) {
-            this.editedEvent = event
+        async deleteEvent() {
+            // TODO: delete event
+            console.log('delete event', this.eventToDelete)
+            this.isDeletingEvent = true
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('event.delete.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('event.delete.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.eventToDelete = null
+                this.isDeletingEvent = false
+            }
         },
 
         getMonthFromDate(yearMonth) {

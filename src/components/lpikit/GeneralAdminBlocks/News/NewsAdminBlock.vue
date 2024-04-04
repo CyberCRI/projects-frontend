@@ -8,8 +8,8 @@
                 v-for="news in allNews"
                 :key="news.id"
                 :news="news"
-                @edit-news="onEditNews"
-                @delete-news="onDeleteNews"
+                @edit-news="editedNews = news"
+                @delete-news="newsToDelete = news"
             ></NewsAdminListItem>
         </template>
 
@@ -17,7 +17,19 @@
             <LinkButton btn-icon="ArrowRight" :label="$t('common.see-all')" />
         </template>
     </AdminBlock>
+
     <EditNewsDrawer :is-opened="!!editedNews" @close="editedNews = null" :news="editedNews" />
+
+    <ConfirmModal
+        v-if="newsToDelete"
+        :content="$t('news.delete.message')"
+        :title="$t('news.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="newsToDelete = null"
+        @confirm="deleteNews"
+        :asyncing="isDeletingNews"
+    />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
@@ -25,6 +37,7 @@ import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
 import { defaultForm } from '@/components/lpikit/NewsForm/NewsForm.vue'
 import NewsAdminListItem from './NewsAdminListItem.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 
 const dummyNews = [
     {
@@ -123,6 +136,7 @@ export default {
         LinkButton,
         EditNewsDrawer,
         NewsAdminListItem,
+        ConfirmModal,
     },
 
     data() {
@@ -130,6 +144,8 @@ export default {
             allNews: [],
             isLoading: true,
             editedNews: null,
+            newsToDelete: null,
+            isDeletingNews: false,
         }
     },
 
@@ -159,13 +175,26 @@ export default {
             this.editedNews = defaultForm()
         },
 
-        onEditNews(news) {
-            this.editedNews = news
-        },
-
-        onDeleteNews(news) {
-            // TODO
-            console.log('deleteNews', news)
+        async deleteNews() {
+            // TODO: delete news
+            console.log('delete news', this.newsToDelete)
+            this.isDeletingNews = true
+            try {
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('news.delete.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('news.delete.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.newsToDelete = null
+                this.isDeletingNews = false
+            }
         },
     },
 }

@@ -2121,6 +2121,16 @@
         "create": {
             "title": "Ajouter un événement au calendrier"
         },
+        "delete": {
+            "title": "Supprimer un événement ? ",
+            "message": "Voulez-vous supprimmer cet événement ?",
+            "success": "Événement supprimé",
+            "error": "Erreur lors de la suppression de l'événement"
+        },
+        "save": {
+            "success": "Événement sauvegardé",
+            "error": "Erreur lors de la sauvegarde de l'événement"
+        },
         "drawer": {
             "create": "Ajouter un événement au calendrier",
             "edit": "Éditer un événement du calendrier"
@@ -2153,6 +2163,16 @@
     "news": {
         "create": {
             "title": "Créer une actualité"
+        },
+        "delete": {
+            "title": "Supprimer une actualité ? ",
+            "message": "Voulez-vous supprimmer cette actualité ?",
+            "success": "Actualité supprimée",
+            "error": "Erreur lors de la suppression de l'actualité"
+        },
+        "save": {
+            "success": "Actualité sauvegardée",
+            "error": "Erreur lors de la sauvegarde de l'actualité"
         },
         "form": {
             "image": {
@@ -2193,6 +2213,16 @@
     "instructions": {
         "create": {
             "title": "Ajouter une instruction"
+        },
+        "delete": {
+            "title": "Supprimer une instruction ? ",
+            "message": "Voulez-vous supprimmer cette instruction ?",
+            "success": "Instruction supprimée",
+            "error": "Erreur lors de la suppression de l'instruction"
+        },
+        "save": {
+            "success": "Instruction sauvegardée",
+            "error": "Erreur lors de la sauvegarde de l'instruction"
         },
         "form": {
             "image": {
@@ -2256,6 +2286,10 @@
         "drawer": {
             "title": "Ajouter des projets à la une",
             "max-pick-reached": "Vous avez atteint le nombre maximum de projets à la une."
+        },
+        "save": {
+            "success": "Projets à la une sauvegardés",
+            "error": "Erreur lors de la sauvegarde des projets à la une"
         }
     }
 }

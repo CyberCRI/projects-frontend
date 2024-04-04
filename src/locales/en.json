@@ -2122,6 +2122,17 @@
         "create": {
             "title": "Add a calendar event"
         },
+
+        "delete": {
+            "title": "Delete event? ",
+            "message": "Do you want to delete this event?",
+            "succes": "Event deleted",
+            "error": "Error while trying to delete the event"
+        },
+        "save": {
+            "succes": "Event saved",
+            "error": "Error while trying to save the event"
+        },
         "drawer": {
             "create": "Add a calendar event",
             "edit": "Edit a calendar event"
@@ -2154,6 +2165,16 @@
     "news": {
         "create": {
             "title": "Create a news"
+        },
+        "delete": {
+            "title": "Delete news? ",
+            "message": "Do you want to delete this news?",
+            "succes": "News deleted",
+            "error": "Error while trying to delete the news"
+        },
+        "save": {
+            "succes": "News saved",
+            "error": "Error while trying to save the news"
         },
         "form": {
             "image": {
@@ -2194,6 +2215,16 @@
     "instructions": {
         "create": {
             "title": "Add an instruction"
+        },
+        "delete": {
+            "title": "Delete instruction? ",
+            "message": "Do you want to delete this instruction?",
+            "succes": "Instruction deleted",
+            "error": "Error while trying to delete the instruction"
+        },
+        "save": {
+            "succes": "Instruction saved",
+            "error": "Error while trying to save the instruction"
         },
         "form": {
             "title": {
@@ -2255,6 +2286,10 @@
         "drawer": {
             "title": "Add featured projects",
             "max-pick-reached": "You have reached the maximum number of featured projects"
+        },
+        "save": {
+            "succes": "Featured projects saved",
+            "error": "Error while trying to save the featured projects"
         }
     }
 }
