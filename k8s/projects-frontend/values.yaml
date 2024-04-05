@@ -58,6 +58,8 @@ e2e:
   name: '{{ join "-" (list .Values.instanceName "e2e") }}'
   enabled: false
   schedule: 0 9,15 * * *
+  timezone: Europe/Paris
+  concurrencyPolicy: Forbid
   image:
     repository: criprodprod.azurecr.io
     path: projects-frontend-e2e
@@ -78,3 +80,10 @@ e2e:
     success:
       enabled: true
       slackChannel: it-projects-frontend
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 1200m
+      memory: 1.5Gi

@@ -87,12 +87,7 @@ spec:
           containers:
           - name: main
             resources:
-              limits:
-                cpu: 1000m
-                memory: 1Gi
-              requests:
-                cpu: 1200m
-                memory: 1.5Gi
+            {{- toYaml .Values.e2e.resources | nindent 14 }}
         outputs:
           artifacts:
           - name: report
@@ -136,6 +131,8 @@ spec:
     entrypoint: all
     serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
   schedule: {{ .Values.e2e.schedule }}
+  timezone: {{ .Values.e2e.timezone }}
+  concurrencyPolicy: {{ .Values.e2e.concurrencyPolicy }}
 ---
 
 {{- $configGenerator := dict
