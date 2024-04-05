@@ -16,10 +16,13 @@
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import NewsForm from '@/components/lpikit/NewsForm/NewsForm.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { createNews, putNews, postNewsHeader } from '@/api/news.service.ts'
+import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+
 export default {
     name: 'EditNewsDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'news-edited'],
 
     components: {
         DrawerLayout,
@@ -53,12 +56,12 @@ export default {
                         publication_date: new Date(news.publication_date),
                         header_image: news.header_image || null,
                         imageSizes: pictureApiToImageSizes(news.header_image),
-                        groups: news.groups.reduce
-                            ? news.groups.reduce((acc, group) => {
+                        people_groups: news.people_groups.reduce
+                            ? news.people_groups.reduce((acc, group) => {
                                   acc[group.id] = true
                                   return acc
                               }, {})
-                            : news.groups,
+                            : news.people_groups,
                     }
             },
             immediate: true,
@@ -77,16 +80,48 @@ export default {
             this.asyncing = true
 
             try {
-                const formData = {
+                const payload = {
                     ...this.form,
                     publication_date: this.form.publication_date.toISOString(),
-                    groups: Object.entries(this.form.groups)
+                    people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her// TODO handle image
 
-                console.log('saveNews', formData)
+                let savedNews
+
+                if (this.news.id) {
+                    savedNews = await putNews(
+                        this.$store.getters['organizations/current']?.code,
+                        this.news.id,
+                        payload
+                    )
+                } else {
+                    savedNews = await createNews(
+                        this.$store.getters['organizations/current']?.code,
+                        payload
+                    )
+                }
+
+                if (this.form.header_image instanceof File) {
+                    const formData = new FormData()
+
+                    formData.append(
+                        'file',
+                        this.form['header_image'],
+                        this.form['header_image'].name
+                    )
+
+                    imageSizesFormData(formData, this.form.imageSizes)
+
+                    await postNewsHeader(
+                        this.$store.getters['organizations/current']?.code,
+                        savedNews.id,
+                        formData
+                    )
+                }
+
+                this.$emit('news-edited', savedNews)
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('news.save.success'),
                     type: 'success',
