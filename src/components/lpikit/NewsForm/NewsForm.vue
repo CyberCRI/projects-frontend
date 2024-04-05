@@ -84,8 +84,8 @@
             <p class="notice">{{ $t('news.form.groups.notice') }}</p>
 
             <MultiGroupPicker
-                :model-value="modelValue.groups"
-                @update:model-value="updateForm({ groups: $event })"
+                :model-value="modelValue.people_groups"
+                @update:model-value="updateForm({ people_groups: $event })"
             />
         </div>
     </form>
@@ -110,7 +110,7 @@ export function defaultForm() {
         title: '',
         content: '',
         publication_date: '',
-        groups: {},
+        people_groups: {},
     }
 }
 

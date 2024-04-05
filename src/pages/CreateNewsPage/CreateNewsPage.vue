@@ -28,6 +28,9 @@
 <script>
 import NewsForm, { defaultForm } from '@/components/lpikit/NewsForm/NewsForm.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import { createNews, postNewsHeader } from '@/api/news.service.ts'
+import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+
 export default {
     name: 'CreateNewsPage',
     components: {
@@ -50,19 +53,53 @@ export default {
             if (!isValid) {
                 return
             }
-            this.asyncing = true
-            // TODO: handle header_image and imageSize
-            const formData = {
-                ...this.form,
-                publication_date: this.form.publication_date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+            try {
+                this.asyncing = true
+                // TODO: handle header_image and imageSize
+                const payload = {
+                    ...this.form,
+                    publication_date: this.form.publication_date.toISOString(),
+                    people_groups: Object.entries(this.form.people_groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                const savedNews = await createNews(
+                    this.$store.getters['organizations/current']?.code,
+                    payload
+                )
+
+                if (this.form.header_image instanceof File) {
+                    const formData = new FormData()
+
+                    formData.append(
+                        'file',
+                        this.form['header_image'],
+                        this.form['header_image'].name
+                    )
+
+                    imageSizesFormData(formData, this.form.imageSizes)
+
+                    await postNewsHeader(
+                        this.$store.getters['organizations/current']?.code,
+                        savedNews.id,
+                        formData
+                    )
+                }
+
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('news.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('news.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$router.push({ name: 'NewsListPage' })
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveNews', formData)
-            this.asyncing = false
-            this.$router.push({ name: 'NewsListPage' })
         },
     },
 }
