@@ -38,11 +38,14 @@
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'InstructionListItem',
 
     emits: ['delete-instruction', 'edit-instruction'],
+
+    mixins: [permissions],
 
     components: {
         LinkButton,
@@ -65,8 +68,7 @@ export default {
 
     computed: {
         canEditInstruction() {
-            // TODO: implement logic
-            return true
+            return this.isAdmin
         },
     },
 

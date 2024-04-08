@@ -1,11 +1,17 @@
 import { axios, configFormData } from '@/api/api.config'
 import { APIResponseList } from '@/api/types'
 import { NewsModel, NewsInput, NewsOutput, NewsHeaderOutput } from '@/models/news.model'
+import { _adaptParamsToGetQuery } from '@/api/utils.service'
 
-export async function getAllNews(orgCode: string): Promise<APIResponseList<NewsModel>> {
+export async function getAllNews(
+    orgCode: string,
+    params: any
+): Promise<APIResponseList<NewsModel>> {
+    const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/`
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/`,
+            adaptedParams
         )
     ).data
 }

@@ -15,6 +15,18 @@
                 <h1 class="page-title">{{ news.title }}</h1>
                 <p>{{ publicationDate }}</p>
             </div>
+            <div class="news-actions" v-if="canEditNews">
+                <ContextActionButton
+                    action-icon="Pen"
+                    class="edit-btn small"
+                    @click="editedNews = news"
+                />
+                <ContextActionButton
+                    action-icon="Close"
+                    class="remove-btn small"
+                    @click="newsToDelete = news"
+                />
+            </div>
         </div>
     </div>
 
@@ -24,8 +36,32 @@
 
     <div class="other-news page-section-narrow">
         <h3 class="other-news-title">{{ $t('news.page.others') }}</h3>
-        <NewsListItem :news="anotherNews" v-for="anotherNews in otherNews" :key="anotherNews.id" />
+        <NewsListItem
+            :news="anotherNews"
+            v-for="anotherNews in otherNews"
+            :key="anotherNews.id"
+            @edit-news="editedNews = anotherNews"
+            @delete-news="newsToDelete = anotherNews"
+        />
     </div>
+
+    <EditNewsDrawer
+        :is-opened="!!editedNews"
+        :news="editedNews"
+        @news-edited="onNewsEdited"
+        @close="editedNews = null"
+    />
+
+    <ConfirmModal
+        v-if="newsToDelete"
+        :content="$t('news.delete.message')"
+        :title="$t('news.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="newsToDelete = null"
+        @confirm="deleteNews"
+        :asyncing="isDeletingNews"
+    />
 </template>
 <script>
 import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
@@ -33,17 +69,24 @@ import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import { getNews, getAllNews } from '@/api/news.service.ts'
+import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
+import permissions from '@/mixins/permissions.ts'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 
 export default {
     name: 'NewsPage',
 
-    mixins: [imageMixin],
+    mixins: [imageMixin, permissions],
 
     components: {
         BreadCrumbs,
         CroppedImage,
         NewsListItem,
+        ContextActionButton,
+        ConfirmModal,
+        EditNewsDrawer,
     },
     props: {
         slugOrId: {
@@ -58,6 +101,8 @@ export default {
             otherNews: [],
             loading: false,
             style: {},
+            editedNews: null,
+            newsToDelete: null,
         }
     },
 
@@ -69,6 +114,10 @@ export default {
     },
 
     computed: {
+        canEditNews() {
+            return this.isAdmin
+        },
+
         breadcrumbs() {
             return [
                 {
@@ -104,9 +153,47 @@ export default {
         },
 
         async loadOtherNews() {
+            // fetch 3 news because we want to show 2 other news and one might be the current one
             this.otherNews = (
-                await getAllNews(this.$store.getters['organizations/current']?.code)
-            ).results?.filter((news) => news.id !== this.news.id)
+                await getAllNews(this.$store.getters['organizations/current']?.code, { limit: 3 })
+            ).results
+                ?.filter((news) => news.id !== this.news.id)
+                .slice(0, 2)
+        },
+
+        async deleteNews() {
+            this.isDeletingNews = true
+            try {
+                await deleteNews(
+                    this.$store.getters['organizations/current']?.code,
+                    this.newsToDelete.id
+                )
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('news.delete.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('news.delete.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                if (this.newsToDelete.id != this.news.id) {
+                    this.loadOtherNews()
+                    this.newsToDelete = null
+                    this.isDeletingNews = false
+                } else {
+                    this.$router.push({ name: 'NewsListPage' })
+                }
+            }
+        },
+        onNewsEdited(editedNews) {
+            if (editedNews.id === this.news.id) {
+                this.loadNews()
+            } else {
+                this.loadOtherNews()
+            }
         },
     },
 }
@@ -134,6 +221,15 @@ export default {
     flex-shrink: 0;
 }
 
+.header-texts {
+    flex-grow: 1;
+}
+
+.news-actions {
+    display: flex;
+    gap: $space-s;
+}
+
 .news-texts {
     flex-grow: 1;
     display: flex;
@@ -144,6 +240,7 @@ export default {
 
 .page-title {
     font-size: $font-size-3xl;
+    text-align: left;
 }
 
 .other-news {

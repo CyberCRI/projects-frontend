@@ -52,8 +52,12 @@ import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
 import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
+import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'NewsListPage',
+
+    mixins: [permissions],
+
     components: {
         LpiButton,
         LoaderSimple,
@@ -77,8 +81,7 @@ export default {
     },
     computed: {
         canCreateNews() {
-            // TODO: implement this
-            return true
+            return this.isAdmin
         },
     },
 

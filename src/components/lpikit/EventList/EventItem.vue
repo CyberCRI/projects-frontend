@@ -41,10 +41,13 @@
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'EventItem',
 
     emits: ['delete-event', 'edit-event'],
+
+    mixins: [permissions],
 
     components: {
         IconImage,
@@ -60,8 +63,7 @@ export default {
 
     computed: {
         canEditEvents() {
-            // TODO: implement logic
-            return true
+            return this.isAdmin
         },
         isNew() {
             return Date.now() - new Date(this.event.date_edited).getTime() < 7 * 24 * 60 * 60 * 1000

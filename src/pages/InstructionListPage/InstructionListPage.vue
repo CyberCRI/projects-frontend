@@ -48,6 +48,7 @@ import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import InstructionListItem from '@/components/lpikit/InstructionListItem/InstructionListItem.vue'
 import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'InstructionListPage',
     components: {
@@ -57,6 +58,8 @@ export default {
         EditInstructionDrawer,
         ConfirmModal,
     },
+
+    mixins: [permissions],
 
     data() {
         return {
@@ -73,8 +76,7 @@ export default {
     },
     computed: {
         canCreateInstruction() {
-            // TODO: implement this
-            return true
+            return this.isAdmin
         },
     },
 
