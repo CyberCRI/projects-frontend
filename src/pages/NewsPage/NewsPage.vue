@@ -107,10 +107,13 @@ export default {
     },
 
     async mounted() {
-        this.loading = true
-        await this.loadNews()
-        await this.loadOtherNews()
-        this.loading = false
+        await this.load()
+    },
+
+    watch: {
+        slugOrId() {
+            this.load()
+        },
     },
 
     computed: {
@@ -145,6 +148,12 @@ export default {
     },
 
     methods: {
+        async load() {
+            this.loading = true
+            await this.loadNews()
+            await this.loadOtherNews()
+            this.loading = false
+        },
         async loadNews() {
             this.news = await getNews(
                 this.$store.getters['organizations/current']?.code,
