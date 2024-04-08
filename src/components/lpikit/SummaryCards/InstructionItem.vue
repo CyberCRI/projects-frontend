@@ -25,13 +25,32 @@
             />
         </div>
     </div>
+
+    <EditInstructionDrawer
+        :is-opened="!!editedInstruction"
+        :instruction="editedInstruction"
+        @close="editedInstruction = null"
+    />
+    <ConfirmModal
+        v-if="instructionToDelete"
+        :content="$t('instructions.delete.message')"
+        :title="$t('instructions.delete.title')"
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="instructionToDelete = null"
+        @confirm="deleteInstruction"
+        :asyncing="isDeletingInstruction"
+    />
 </template>
 <script>
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'InstructionItem',
+
+    mixins: [permissions],
 
     emits: ['delete-instruction', 'edit-instruction'],
 
@@ -55,8 +74,7 @@ export default {
 
     computed: {
         canEditInstruction() {
-            // TODO: implement logic
-            return true
+            return this.isAdmin
         },
     },
 

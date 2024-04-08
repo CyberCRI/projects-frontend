@@ -52,11 +52,12 @@ import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButt
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'NewsListItem',
 
-    mixins: [imageMixin],
+    mixins: [imageMixin, permissions],
 
     emits: ['delete-news', 'edit-news'],
 
@@ -82,8 +83,7 @@ export default {
 
     computed: {
         canEditNews() {
-            // TODO: implement logic
-            return true
+            return this.isAdmin
         },
         imageSizes() {
             return pictureApiToImageSizes(this.news?.header_image)

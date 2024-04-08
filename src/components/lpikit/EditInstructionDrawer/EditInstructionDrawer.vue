@@ -18,7 +18,7 @@ import InstructionForm from '@/components/lpikit/InstructionForm/InstructionForm
 export default {
     name: 'EditInstructionDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'instruction-edited'],
 
     components: {
         DrawerLayout,
@@ -82,12 +82,13 @@ export default {
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                const savedInstruction = await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
                 console.log('saveInstruction', formData) // TODO: save instruction
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('instructions.save.success'),
                     type: 'success',
                 })
+                this.$emit('instruction-edited', savedInstruction)
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('instructions.save.error')} (${err})`,

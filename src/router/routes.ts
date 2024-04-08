@@ -33,6 +33,7 @@ newHomeExtraPaths.set('new', [
         meta: {
             resetScroll: true,
             requiresAuth: true,
+            requiresAdmin: true,
         },
     },
 
@@ -70,6 +71,8 @@ newHomeExtraPaths.set('new', [
         component: () => import('../pages/CreateNewsPage/CreateNewsPage.vue'),
         meta: {
             resetScroll: true,
+            requiresAuth: true,
+            requiresAdmin: true,
         },
     },
     {
@@ -96,6 +99,8 @@ newHomeExtraPaths.set('new', [
         component: () => import('../pages/CreateInstructionPage/CreateInstructionPage.vue'),
         meta: {
             resetScroll: true,
+            requiresAuth: true,
+            requiresAdmin: true,
         },
     },
     {
