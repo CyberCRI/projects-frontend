@@ -1,6 +1,5 @@
 import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import MockComponent from '../../../helpers/MockComponent.vue'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
