@@ -18,7 +18,11 @@
                 insturctions <input v-model="summaryMaxInstructions" type="number" min="0" max="1"
             /></label>
         </div -->
-        <div v-if="summaryCardsExist && !isLoading" class="summary-cards">
+        <div
+            v-if="summaryCardsExist && !isLoading"
+            class="summary-cards"
+            data-test="home-user-header"
+        >
             <div class="summary-container page-section-wide">
                 <ProjectSummaryBlock
                     :projects="displayableProjects"
@@ -39,7 +43,7 @@
         </div>
         <LpiLoader v-else class="loading" type="simple" />
     </div>
-    <div v-else class="page-section-full introduction">
+    <div v-else class="page-section-full introduction" data-test="home-organization-header">
         <div v-if="organization && organization.banner_image" class="banner-image">
             <h1 class="mobile-not-connected-main-title">
                 {{ organization.dashboard_title }}
@@ -227,7 +231,7 @@ export default {
         const response = await searchProjects('', filters)
         this.projects = response.results
 
-        this.summaryCardsExist = this.loggedIn && this.projects.length > 0
+        this.summaryCardsExist = this.loggedIn // && this.projects.length > 0
 
         await Promise.all([this.loadEvents(), this.loadInstructions()])
 

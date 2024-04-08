@@ -3,11 +3,15 @@
         <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
         <LpiLoader v-if="isLoading" class="loading" type="simple" />
         <div v-else>
-            <RecommendationList :recommendations="projectRecommendations" />
+            <RecommendationList
+                :recommendations="projectRecommendations"
+                data-test="project-recommendations"
+            />
             <RecommendationList
                 v-if="loggedIn"
                 :recommendations="userRecommendations"
                 :user-recommendation="true"
+                data-test="user-recommendations"
             />
         </div>
     </div>
