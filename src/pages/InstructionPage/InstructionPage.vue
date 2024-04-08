@@ -158,6 +158,7 @@ export default {
 .instruction-content {
     margin-bottom: 4rem;
 }
+
 .intruction-actions {
     display: flex;
     gap: $space-s;
