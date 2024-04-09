@@ -13,8 +13,9 @@
                 class="create-instruction-button"
             />
         </div>
-        <div class="loader-ctn" v-if="loading">
-            <LoaderSimple />
+        <div class="instruction-list" v-if="loading">
+            <InstructionListItemSkeleton />
+            <InstructionListItemSkeleton />
         </div>
         <div v-else class="instruction-list">
             <InstructionListItem
@@ -44,7 +45,7 @@
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import InstructionListItemSkeleton from '@//components/lpikit/InstructionListItem/InstructionListItemSkeleton.vue'
 import InstructionListItem from '@/components/lpikit/InstructionListItem/InstructionListItem.vue'
 import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
@@ -53,10 +54,10 @@ export default {
     name: 'InstructionListPage',
     components: {
         LpiButton,
-        LoaderSimple,
         InstructionListItem,
         EditInstructionDrawer,
         ConfirmModal,
+        InstructionListItemSkeleton,
     },
 
     mixins: [permissions],
