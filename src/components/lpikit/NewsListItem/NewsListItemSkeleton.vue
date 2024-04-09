@@ -7,7 +7,7 @@
             <div class="news-title-ctn">
                 <SkeletonComponent tag="h3" height="24px" width="100%" />
             </div>
-            <div class="news-excerpt" :style="style">
+            <div class="news-excerpt">
                 <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />
                 <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />
                 <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />

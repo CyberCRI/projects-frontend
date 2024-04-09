@@ -3,7 +3,7 @@
         <div class="instruction-title-ctn">
             <SkeletonComponent tag="h3" height="24px" width="100%" />
         </div>
-        <div class="instruction-excerpt" :style="style">
+        <div class="instruction-excerpt">
             <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />
             <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />
             <SkeletonComponent class="text-skeleton" tag="p" height="16px" width="100%" />
