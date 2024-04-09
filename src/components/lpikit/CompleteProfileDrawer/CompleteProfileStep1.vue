@@ -667,7 +667,7 @@ textarea {
 }
 
 .sdg-grid {
-    $sdg-size: pxToRem(50px);
+    $sdg-size: pxToRem(150px);
 
     margin-top: pxToRem(20px);
     display: grid;
