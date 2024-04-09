@@ -13,8 +13,9 @@
                 class="create-news-button"
             />
         </div>
-        <div class="loader-ctn" v-if="loading">
-            <LoaderSimple />
+        <div class="news-list" v-if="loading">
+            <NewsListItemSkeleton />
+            <NewsListItemSkeleton />
         </div>
         <div v-else class="news-list">
             <NewsListItem
@@ -47,12 +48,13 @@
 </template>
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
 import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import permissions from '@/mixins/permissions.ts'
+import NewsListItemSkeleton from '@/components/lpikit/NewsListItem/NewsListItemSkeleton.vue'
+
 export default {
     name: 'NewsListPage',
 
@@ -60,10 +62,10 @@ export default {
 
     components: {
         LpiButton,
-        LoaderSimple,
         NewsListItem,
         EditNewsDrawer,
         ConfirmModal,
+        NewsListItemSkeleton,
     },
 
     data() {
