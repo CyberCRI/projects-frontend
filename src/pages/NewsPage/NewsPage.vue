@@ -15,16 +15,18 @@
                 <h1 class="page-title">{{ news.title }}</h1>
                 <p>{{ publicationDate }}</p>
             </div>
-            <div class="news-actions" v-if="canEditNews">
+            <div class="news-actions" v-if="canEditNews || canDeleteNews">
                 <ContextActionButton
                     action-icon="Pen"
                     class="edit-btn small"
                     @click="editedNews = news"
+                    v-if="canEditNews"
                 />
                 <ContextActionButton
                     action-icon="Close"
                     class="remove-btn small"
                     @click="newsToDelete = news"
+                    v-if="canDeleteNews"
                 />
             </div>
         </div>
@@ -117,10 +119,6 @@ export default {
     },
 
     computed: {
-        canEditNews() {
-            return this.isAdmin
-        },
-
         breadcrumbs() {
             return [
                 {

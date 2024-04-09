@@ -33,7 +33,7 @@ newHomeExtraPaths.set('new', [
         meta: {
             resetScroll: true,
             requiresAuth: true,
-            requiresAdmin: true,
+            requiresAdminOrFacilitator: true,
         },
     },
 
@@ -72,7 +72,7 @@ newHomeExtraPaths.set('new', [
         meta: {
             resetScroll: true,
             requiresAuth: true,
-            requiresAdmin: true,
+            requiresAdminOrFacilitator: true,
         },
     },
     {
@@ -94,13 +94,13 @@ newHomeExtraPaths.set('new', [
     },
 
     {
-        path: '/create-intructions',
+        path: '/create-instruction',
         name: 'CreateInstructionPage',
         component: () => import('../pages/CreateInstructionPage/CreateInstructionPage.vue'),
         meta: {
             resetScroll: true,
             requiresAuth: true,
-            requiresAdmin: true,
+            requiresAdminOrFacilitator: true,
         },
     },
     {

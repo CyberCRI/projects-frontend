@@ -12,16 +12,18 @@
         <div class="news-texts">
             <div class="news-title-ctn">
                 <h3 class="news-title">{{ news.title }}</h3>
-                <div class="news-actions" v-if="canEditNews">
+                <div class="news-actions" v-if="canEditNews || canDeleteNews">
                     <ContextActionButton
                         action-icon="Pen"
                         class="edit-btn small"
                         @click="$emit('edit-news', news)"
+                        v-if="canEditNews"
                     />
                     <ContextActionButton
                         action-icon="Close"
                         class="remove-btn small"
                         @click="$emit('delete-news', news)"
+                        v-if="canDeleteNews"
                     />
                 </div>
             </div>
@@ -82,9 +84,6 @@ export default {
     },
 
     computed: {
-        canEditNews() {
-            return this.isAdmin
-        },
         imageSizes() {
             return pictureApiToImageSizes(this.news?.header_image)
         },

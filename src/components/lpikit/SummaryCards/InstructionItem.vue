@@ -2,16 +2,18 @@
     <div class="instruction-item">
         <div class="instruction-title-ctn">
             <h3 class="instruction-title">{{ instruction.title }}</h3>
-            <div class="instruction-actions" v-if="canEditInstruction">
+            <div class="instruction-actions" v-if="canEditInstruction || canDeleteInstruction">
                 <ContextActionButton
                     action-icon="Pen"
                     class="edit-btn small"
                     @click="$emit('edit-instruction', instruction)"
+                    v-if="canEditInstruction"
                 />
                 <ContextActionButton
                     action-icon="Close"
                     class="remove-btn small"
                     @click="$emit('delete-instruction', instruction)"
+                    v-if="canDeleteInstruction"
                 />
             </div>
         </div>
@@ -70,12 +72,6 @@ export default {
         return {
             style: {},
         }
-    },
-
-    computed: {
-        canEditInstruction() {
-            return this.isAdmin
-        },
     },
 
     methods: {

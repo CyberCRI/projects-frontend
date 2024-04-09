@@ -4,6 +4,7 @@ import store from '@/store'
 import routes from './routes'
 import analytics from '@/analytics'
 import isAdmin from '@/functs/isAdmin'
+import isAdminOrFacilitator from '@/functs/isAdminOrFacilitator'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import utils from '@/functs/functions'
 
@@ -64,9 +65,14 @@ router.beforeEach((to, _from, next) => {
             // else next('/dashboard')
             next({ name: 'Home' })
         }
-    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin(store))
+    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin(store)) {
         next({ name: 'Home' })
-    else {
+    } else if (
+        to.matched.some((route) => route.meta.requiresAdminOrFacilitator) &&
+        !isAdminOrFacilitator(store)
+    ) {
+        next({ name: 'Home' })
+    } else {
         next()
     }
 })
