@@ -65,6 +65,10 @@ export default {
             )
         },
 
+        isAdminOrFacilitator() {
+            return this.isAdmin || this.isFacilitator
+        },
+
         /* PROJECTS */
 
         canCreateProject() {
@@ -285,6 +289,42 @@ export default {
                 this.hasPermission('organizations', 'change_peoplegroup') ||
                 this.hasPermission('peoplegroup', 'update')
             )
+        },
+
+        /* NEWS */
+
+        canCreateNews() {
+            return this.isAdminOrFacilitator
+        },
+        canEditNews() {
+            return this.isAdminOrFacilitator
+        },
+        canDeleteNews() {
+            return this.isAdminOrFacilitator
+        },
+
+        /* EVENTS */
+
+        canCreateEvent() {
+            return this.isAdminOrFacilitator
+        },
+        canEditEvent() {
+            return this.isAdminOrFacilitator
+        },
+        canDeleteEvent() {
+            return this.isAdminOrFacilitator
+        },
+
+        /* INSTRUCTIONS */
+
+        canCreateInstruction() {
+            return this.isAdminOrFacilitator
+        },
+        canEditInstruction() {
+            return this.isAdminOrFacilitator
+        },
+        canDeleteInstruction() {
+            return this.isAdminOrFacilitator
         },
     },
 }

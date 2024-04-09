@@ -79,11 +79,6 @@ export default {
     mounted() {
         this.loadNews()
     },
-    computed: {
-        canCreateNews() {
-            return this.isAdmin
-        },
-    },
 
     methods: {
         createNews() {

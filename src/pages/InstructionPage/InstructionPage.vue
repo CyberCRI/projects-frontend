@@ -2,16 +2,18 @@
     <div class="instruction-list-page page-section-medium" v-if="instruction">
         <div class="instruction-header">
             <BreadCrumbs :breadcrumbs="breadcrumbs" />
-            <div class="intruction-actions" v-if="canEditIntruction">
+            <div class="intruction-actions" v-if="canEditInstruction || canDeleteInstruction">
                 <ContextActionButton
                     action-icon="Pen"
                     class="edit-btn small"
                     @click="editedInstruction = instruction"
+                    v-if="canEditInstruction"
                 />
                 <ContextActionButton
                     action-icon="Close"
                     class="remove-btn small"
                     @click="instructionToDelete = instruction"
+                    v-if="canDeleteInstruction"
                 />
             </div>
             <h1 class="page-title">{{ instruction.title }}</h1>
@@ -78,10 +80,6 @@ export default {
     },
 
     computed: {
-        canEditIntruction() {
-            return this.isAdmin
-        },
-
         breadcrumbs() {
             return [
                 {

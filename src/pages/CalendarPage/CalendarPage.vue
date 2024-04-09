@@ -46,9 +46,6 @@ export default {
                 },
             ]
         },
-        canCreateEvent() {
-            return this.isAdmin
-        },
     },
     methods: {
         createEvent() {

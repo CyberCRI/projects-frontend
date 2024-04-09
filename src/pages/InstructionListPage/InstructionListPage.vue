@@ -74,11 +74,6 @@ export default {
     mounted() {
         this.loadInstructions()
     },
-    computed: {
-        canCreateInstruction() {
-            return this.isAdmin
-        },
-    },
 
     methods: {
         createInstruction() {

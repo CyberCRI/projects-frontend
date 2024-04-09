@@ -1,5 +1,5 @@
 <template>
-    <div class="event" :class="{ editable: canEditEvents, 'is-new': isNew }">
+    <div class="event" :class="{ editable: canEditEvent || canDeleteEvent, 'is-new': isNew }">
         <div class="date">
             <IconImage name="Calendar" class="icon" />
             <div class="day-month">
@@ -24,16 +24,18 @@
                 {{ event.groups.map((group) => group.name).join(', ') }}
             </p>
         </div>
-        <div class="event-controls" v-if="canEditEvents">
+        <div class="event-controls" v-if="canEditEvent || canDeleteEvent">
             <ContextActionButton
                 action-icon="Pen"
                 class="edit-btn small"
                 @click="editEvent(event)"
+                v-if="canEditEvent"
             />
             <ContextActionButton
                 action-icon="Close"
                 class="remove-btn small"
                 @click="deleteEvent(event)"
+                v-if="canDeleteEvent"
             />
         </div>
     </div>
@@ -62,9 +64,6 @@ export default {
     },
 
     computed: {
-        canEditEvents() {
-            return this.isAdmin
-        },
         isNew() {
             return Date.now() - new Date(this.event.date_edited).getTime() < 7 * 24 * 60 * 60 * 1000
         },
