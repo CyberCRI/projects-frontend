@@ -1,8 +1,10 @@
 <template>
-    <div class="news-list-page page-section-medium" v-if="news">
+    <div class="news-list-page page-section-medium">
         <div class="news-header">
             <div class="news-img-ctn">
+                <SkeletonComponent width="100%" height="100%" v-if="loading" />
                 <CroppedImage
+                    v-else-if="news"
                     :alt="`${news.title} image`"
                     :image-sizes="imageSizes"
                     :src="croppedImageSrc"
@@ -12,8 +14,10 @@
             </div>
             <div class="header-texts">
                 <BreadCrumbs :breadcrumbs="breadcrumbs" />
-                <h1 class="page-title">{{ news.title }}</h1>
-                <p>{{ publicationDate }}</p>
+                <SkeletonComponent v-if="loading" class="skeleton-block" height="42px" tag="h1" />
+                <h1 v-else-if="news" class="page-title">{{ news.title }}</h1>
+                <SkeletonComponent v-if="loading" class="skeleton-block" height="16px" tag="p" />
+                <p v-else-if="news">{{ publicationDate }}</p>
             </div>
             <div class="news-actions" v-if="canEditNews || canDeleteNews">
                 <ContextActionButton
@@ -32,19 +36,30 @@
         </div>
     </div>
 
-    <div class="page-section-narrow" v-if="news">
-        <div class="news-content" v-html="news.content"></div>
+    <div class="page-section-narrow">
+        <div v-if="loading">
+            <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
+            <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
+            <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
+        </div>
+        <div v-else-if="news" class="news-content" v-html="news.content"></div>
     </div>
 
     <div class="other-news page-section-narrow">
-        <h3 class="other-news-title">{{ $t('news.page.others') }}</h3>
-        <NewsListItem
-            :news="anotherNews"
-            v-for="anotherNews in otherNews"
-            :key="anotherNews.id"
-            @edit-news="editedNews = anotherNews"
-            @delete-news="newsToDelete = anotherNews"
-        />
+        <h3 class="other-news-title" v-if="loading || otherNews.length">
+            {{ $t('news.page.others') }}
+        </h3>
+
+        <NewsListItemSkeleton v-if="loading" />
+        <template v-else>
+            <NewsListItem
+                :news="anotherNews"
+                v-for="anotherNews in otherNews"
+                :key="anotherNews.id"
+                @edit-news="editedNews = anotherNews"
+                @delete-news="newsToDelete = anotherNews"
+            />
+        </template>
     </div>
 
     <EditNewsDrawer
@@ -76,6 +91,8 @@ import permissions from '@/mixins/permissions.ts'
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
+import NewsListItemSkeleton from '@/components/lpikit/NewsListItem/NewsListItemSkeleton.vue'
 
 export default {
     name: 'NewsPage',
@@ -89,6 +106,8 @@ export default {
         ContextActionButton,
         ConfirmModal,
         EditNewsDrawer,
+        SkeletonComponent,
+        NewsListItemSkeleton,
     },
     props: {
         slugOrId: {
@@ -153,10 +172,18 @@ export default {
             this.loading = false
         },
         async loadNews() {
-            this.news = await getNews(
-                this.$store.getters['organizations/current']?.code,
-                this.slugOrId
-            )
+            try {
+                this.news = await getNews(
+                    this.$store.getters['organizations/current']?.code,
+                    this.slugOrId
+                )
+            } catch (err) {
+                console.error(err)
+                this.$router.replace({
+                    name: 'page404',
+                    params: { pathMatch: this.$route.path.substring(1).split('/') },
+                })
+            }
         },
 
         async loadOtherNews() {
@@ -164,7 +191,7 @@ export default {
             this.otherNews = (
                 await getAllNews(this.$store.getters['organizations/current']?.code, { limit: 3 })
             ).results
-                ?.filter((news) => news.id !== this.news.id)
+                ?.filter((news) => !this.news || news.id !== this.news.id)
                 .slice(0, 2)
         },
 
@@ -268,5 +295,9 @@ export default {
     height: 100%;
     object-fit: cover;
     border-radius: 1rem;
+}
+
+.skeleton-block {
+    margin-bottom: 1rem;
 }
 </style>
