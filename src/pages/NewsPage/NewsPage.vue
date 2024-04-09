@@ -296,6 +296,7 @@ export default {
     object-fit: cover;
     border-radius: 1rem;
 }
+
 .skeleton-block {
     margin-bottom: 1rem;
 }
