@@ -199,6 +199,7 @@ export default {
 .text-skeleton {
     margin-bottom: 1rem;
 }
+
 .centered-skeleton {
     margin-left: auto;
     margin-right: auto;
