@@ -1,17 +1,15 @@
 <template>
-    <div class="loader-ctn" v-if="loading">
-        <LoaderSimple />
-    </div>
+    <EventListSkeleton v-if="loading" />
     <EventList v-else :events-by-month="eventsByMonth" />
 </template>
 <script>
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
 import EventList from '@/components/lpikit/EventList/EventList.vue'
+import EventListSkeleton from '@/components/lpikit/EventList/EventListSkeleton.vue'
 export default {
     name: 'FutureEvents',
 
     components: {
-        LoaderSimple,
+        EventListSkeleton,
         EventList,
     },
 
