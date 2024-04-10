@@ -76,6 +76,7 @@ export default {
         gap: $space-m;
         align-items: stretch;
         padding-top: $space-l;
+        padding-bottom: $space-l;
         box-sizing: border-box;
 
         > * {
