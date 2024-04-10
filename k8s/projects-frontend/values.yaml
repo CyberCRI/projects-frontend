@@ -81,9 +81,9 @@ e2e:
       enabled: true
       slackChannel: it-projects-frontend
   resources:
-    limits:
+    requests:
       cpu: 1000m
       memory: 1Gi
-    requests:
+    limits:
       cpu: 1200m
       memory: 1.5Gi
