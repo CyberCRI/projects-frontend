@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         createEvent() {
-            this.$router.push({ name: 'CreateEvent  ' })
+            this.$router.push({ name: 'CreateEvent' })
         },
     },
 }

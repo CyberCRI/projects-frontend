@@ -2136,21 +2136,21 @@
             "edit": "Éditer un événement du calendrier"
         },
         "form": {
-            "name": {
+            "title": {
                 "label": "Nom de l'événement *",
                 "placeholder": "Ex. Examen du 1er semestre",
                 "required": "Le nom est requis"
             },
-            "information": {
+            "content": {
                 "label": "Information",
                 "placeholder": "Ajoutez des informations sur cet événement"
             },
-            "date": {
+            "event_date": {
                 "label": "Date de l'événement *",
                 "placeholder": "Sélectionnez la date",
                 "required": "La date est requise"
             },
-            "groups": {
+            "people_groups": {
                 "label": "Groupe(s) cible(s)",
                 "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
                 "select-all": "Tout sélectionner",

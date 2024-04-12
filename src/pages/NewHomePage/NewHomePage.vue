@@ -33,6 +33,7 @@
                     :events="displayableEvents"
                     v-if="displayableEvents.length"
                     :inlined="numberOfSummaryBlock < 2"
+                    @reload-events="loadEvents"
                 />
                 <InstructionSummaryBlock
                     :instructions="displayableInstructions"
@@ -134,6 +135,7 @@ import { searchProjects } from '@/api/projects.service'
 import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+import { getAllEvents } from '@/api/event.service'
 
 export default {
     name: 'NewHomePage',
@@ -187,7 +189,7 @@ export default {
         },
 
         displayableEvents() {
-            return this.events.slice(0, this.summaryMaxEvents)
+            return this.events?.slice(0, this.summaryMaxEvents) || []
         },
 
         displayableInstructions() {
@@ -248,41 +250,11 @@ export default {
         },
 
         async loadEvents() {
-            this.events = [
-                {
-                    id: 1,
-                    date: '2024-03-25',
-                    name: 'Event 1',
-                    information: 'Information 1',
-                    groups: [],
-                    date_edited: '2024-01-25T12:00:00Z',
-                },
-                {
-                    id: 2,
-                    date: '2024-03-28',
-                    name: 'Event 2',
-                    information: 'Information 2',
-                    groups: [
-                        {
-                            id: 3,
-                            name: 'Researchers',
-                        },
-                        {
-                            id: 159,
-                            name: 'R&D Staff',
-                        },
-                    ],
-                    date_edited: '2024-03-05T12:00:00Z',
-                },
-                {
-                    id: 3,
-                    date: '2024-04-02',
-                    name: 'Event 3',
-                    information: 'Information 3',
-                    groups: [],
-                    date_edited: '2024-03-03T12:00:00Z',
-                },
-            ]
+            this.events = (
+                await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                    ordering: '+event_date',
+                })
+            ).results
         },
 
         async loadInstructions() {

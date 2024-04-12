@@ -1,10 +1,12 @@
 <template>
     <EventListSkeleton v-if="loading" />
-    <EventList v-else :events-by-month="eventsByMonth" />
+    <EventList v-else :events-by-month="eventsByMonth" @reload-events="fetchEvents" />
 </template>
 <script>
 import EventList from '@/components/lpikit/EventList/EventList.vue'
 import EventListSkeleton from '@/components/lpikit/EventList/EventListSkeleton.vue'
+import { getAllEvents } from '@/api/event.service'
+
 export default {
     name: 'FutureEvents',
 
@@ -28,51 +30,20 @@ export default {
         async fetchEvents() {
             // Fetch events
             this.loading = true
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            const eventsFromAPi = [
-                {
-                    id: 1,
-                    date: '2024-03-25',
-                    name: 'Event 1',
-                    information: 'Information 1',
-                    groups: [],
-                    date_edited: '2024-01-25T12:00:00Z',
-                },
-                {
-                    id: 2,
-                    date: '2024-03-28',
-                    name: 'Event 2',
-                    information: 'Information 2',
-                    groups: [
-                        {
-                            id: 3,
-                            name: 'Researchers',
-                        },
-                        {
-                            id: 159,
-                            name: 'R&D Staff',
-                        },
-                    ],
-                    date_edited: '2024-03-05T12:00:00Z',
-                },
-                {
-                    id: 3,
-                    date: '2024-04-02',
-                    name: 'Event 3',
-                    information: 'Information 3',
-                    groups: [],
-                    date_edited: '2024-03-03T12:00:00Z',
-                },
-            ]
+            const eventsFromAPi = (
+                await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                    ordering: '+event_date',
+                })
+            ).results
 
             // sort and group by month
             const eventsByMonth = eventsFromAPi
                 .sort((a, b) => {
-                    return new Date(a.date) - new Date(b.date)
+                    return new Date(a.event_date) - new Date(b.event_date)
                 })
                 .reduce((acc, event) => {
                     // keep the year in key !
-                    const key = event.date.split('-').slice(0, 2).join('-')
+                    const key = event.event_date.split('-').slice(0, 2).join('-')
                     if (!acc[key]) {
                         acc[key] = []
                     }
