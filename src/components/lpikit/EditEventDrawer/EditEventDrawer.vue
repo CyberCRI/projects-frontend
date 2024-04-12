@@ -13,13 +13,14 @@
     </DrawerLayout>
 </template>
 <script>
+import { createEvent, putEvent } from '@/api/event.service'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 
 export default {
     name: 'EditEventDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'event-edited'],
 
     components: {
         EventForm,
@@ -51,14 +52,14 @@ export default {
                 if (event) {
                     this.form = {
                         ...event,
-                        date: new Date(event.date),
+                        event_date: new Date(event.event_date),
                         // build group "object" from array if it is an array
-                        groups: event.groups.reduce
-                            ? event.groups.reduce((acc, group) => {
+                        people_groups: event.people_groups.reduce
+                            ? event.people_groups.reduce((acc, group) => {
                                   acc[group.id] = true
                                   return acc
                               }, {})
-                            : event.groups,
+                            : event.people_groups,
                     }
                 } else {
                     this.form = defaultForm()
@@ -80,18 +81,29 @@ export default {
             try {
                 const formData = {
                     ...this.form,
-                    date: this.form.date.toISOString(),
-                    groups: Object.entries(this.form.groups)
+                    event_date: this.form.event_date.toISOString(),
+                    people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                // TODO: save event and remove log
-                console.log('saveEvent', formData)
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                let savedEvent
+                if (this.event?.id) {
+                    savedEvent = await putEvent(
+                        this.$store.getters['organizations/current']?.code,
+                        this.event.id,
+                        formData
+                    )
+                } else {
+                    savedEvent = await createEvent(
+                        this.$store.getters['organizations/current']?.code,
+                        formData
+                    )
+                }
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('event.save.success'),
                     type: 'success',
                 })
+                this.$emit('event-edited', savedEvent)
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('event.save.error')} (${err})`,

@@ -18,7 +18,12 @@
         </template>
     </AdminBlock>
 
-    <EditEventDrawer :is-opened="!!editedEvent" @close="editedEvent = null" :event="editedEvent" />
+    <EditEventDrawer
+        :is-opened="!!editedEvent"
+        @close="editedEvent = null"
+        :event="editedEvent"
+        @event-edited="loadEvents"
+    />
 
     <ConfirmModal
         v-if="eventToDelete"
@@ -38,6 +43,7 @@ import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer
 import { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 import EventAdminListItem from './EventAdminListItem.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import { getAllEvents, deleteEvent } from '@/api/event.service'
 export default {
     name: 'EventAdminBlock',
 
@@ -73,45 +79,11 @@ export default {
     methods: {
         async loadEvents() {
             this.isLoading = true
-            this.events = await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve([
-                        {
-                            id: 1,
-                            date: '2024-03-25',
-                            name: 'Event 1',
-                            information: 'Information 1',
-                            groups: [],
-                            date_edited: '2024-01-25T12:00:00Z',
-                        },
-                        {
-                            id: 2,
-                            date: '2024-03-28',
-                            name: 'Event 2',
-                            information: 'Information 2',
-                            groups: [
-                                {
-                                    id: 3,
-                                    name: 'Researchers',
-                                },
-                                {
-                                    id: 159,
-                                    name: 'R&D Staff',
-                                },
-                            ],
-                            date_edited: '2024-03-05T12:00:00Z',
-                        },
-                        {
-                            id: 3,
-                            date: '2024-04-02',
-                            name: 'Event 3',
-                            information: 'Information 3',
-                            groups: [],
-                            date_edited: '2024-03-03T12:00:00Z',
-                        },
-                    ])
-                }, 1000)
-            })
+            this.events = (
+                await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                    ordering: '+event_date',
+                })
+            ).results
             this.isLoading = false
         },
 
@@ -124,11 +96,15 @@ export default {
             console.log('delete event', this.eventToDelete)
             this.isDeletingEvent = true
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                await deleteEvent(
+                    this.$store.getters['organizations/current']?.code,
+                    this.eventToDelete.id
+                )
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('event.delete.success'),
                     type: 'success',
                 })
+                this.loadEvents()
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('event.delete.error')} (${err})`,

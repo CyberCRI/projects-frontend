@@ -48,9 +48,12 @@ import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSumma
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import { deleteEvent } from '@/api/event.service'
 
 export default {
     name: 'EventSummaryBlock',
+
+    emits: ['reload-events'],
 
     components: { EventItem, BaseListSummaryBlock, SummaryAction, EditEventDrawer, ConfirmModal },
 
@@ -75,15 +78,17 @@ export default {
 
     methods: {
         async deleteEvent() {
-            // TODO: delete event
-            console.log('delete event', this.eventToDelete)
             this.isDeletingEvent = true
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                await deleteEvent(
+                    this.$store.getters['organizations/current']?.code,
+                    this.eventToDelete.id
+                )
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('event.delete.success'),
                     type: 'success',
                 })
+                this.$emit('reload-events')
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('event.delete.error')} (${err})`,

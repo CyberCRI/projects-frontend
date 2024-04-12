@@ -1,17 +1,17 @@
 <template>
     <form>
         <div class="form-section">
-            <label>{{ $t('event.form.name.label') }}</label>
+            <label>{{ $t('event.form.title.label') }}</label>
             <TextInput
                 input-type="text"
                 label=""
-                :model-value="modelValue.name"
-                @update:model-value="updateForm({ name: $event })"
-                :placeholder="$t('event.form.name.placeholder')"
-                @blur="v$.modelValue.name.$validate"
+                :model-value="modelValue.title"
+                @update:model-value="updateForm({ title: $event })"
+                :placeholder="$t('event.form.title.placeholder')"
+                @blur="v$.modelValue.title.$validate"
             />
             <p
-                v-for="error of v$.modelValue.name.$errors"
+                v-for="error of v$.modelValue.title.$errors"
                 :key="error.$uid"
                 class="error-description"
             >
@@ -19,35 +19,35 @@
             </p>
         </div>
         <div class="form-section">
-            <label>{{ $t('event.form.information.label') }}</label>
+            <label>{{ $t('event.form.content.label') }}</label>
             <TextInput
                 input-type="textarea"
                 label=""
-                :model-value="modelValue.information"
-                @update:model-value="updateForm({ information: $event })"
-                :placeholder="$t('event.form.information.placeholder')"
+                :model-value="modelValue.content"
+                @update:model-value="updateForm({ content: $event })"
+                :placeholder="$t('event.form.content.placeholder')"
             />
         </div>
         <div class="form-section">
-            <label>{{ $t('event.form.date.label') }}</label>
+            <label>{{ $t('event.form.event_date.label') }}</label>
             <button type="button" @click="showDatePicker = true" class="date-btn">
                 <IconImage class="icon" name="Calendar" />
                 {{ $t('invitation.create.field.validity.pick-date') }}
             </button>
 
-            <span class="date-preview" v-if="modelValue.date">{{ displayedDate }}</span>
+            <span class="date-preview" v-if="modelValue.event_date">{{ displayedDate }}</span>
             <VueDatePicker
                 v-if="showDatePicker"
                 :on-click-outside="() => (showDatePicker = false)"
                 :inline="true"
                 :auto-apply="true"
-                :model-value="modelValue.date"
+                :model-value="modelValue.event_date"
                 :enable-time-picker="false"
                 @update:model-value="onDateSelected"
             />
 
             <p
-                v-for="error of v$.modelValue.date.$errors"
+                v-for="error of v$.modelValue.event_date.$errors"
                 :key="error.$uid"
                 class="error-description"
             >
@@ -55,12 +55,12 @@
             </p>
         </div>
         <div class="form-section">
-            <label>{{ $t('event.form.groups.label') }}</label>
-            <p class="notice">{{ $t('event.form.groups.notice') }}</p>
+            <label>{{ $t('event.form.people_groups.label') }}</label>
+            <p class="notice">{{ $t('event.form.people_groups.notice') }}</p>
 
             <MultiGroupPicker
-                :model-value="modelValue.groups"
-                @update:model-value="updateForm({ groups: $event })"
+                :model-value="modelValue.people_groups"
+                @update:model-value="updateForm({ people_groups: $event })"
             />
         </div>
     </form>
@@ -76,10 +76,10 @@ import MultiGroupPicker from '@/components/lpikit/MultiGroupPicker/MultiGroupPic
 
 export function defaultForm() {
     return {
-        name: '',
-        information: '',
-        date: '',
-        groups: {},
+        title: '',
+        content: '',
+        event_date: '',
+        people_groups: {},
     }
 }
 
@@ -112,11 +112,14 @@ export default {
     validations() {
         return {
             modelValue: {
-                name: {
-                    required: helpers.withMessage(this.$t('event.form.name.required'), required),
+                title: {
+                    required: helpers.withMessage(this.$t('event.form.title.required'), required),
                 },
-                date: {
-                    required: helpers.withMessage(this.$t('event.form.date.required'), required),
+                event_date: {
+                    required: helpers.withMessage(
+                        this.$t('event.form.event_date.required'),
+                        required
+                    ),
                 },
             },
         }
@@ -124,13 +127,15 @@ export default {
 
     computed: {
         displayedDate() {
-            return this.modelValue.date ? new Date(this.modelValue.date).toLocaleDateString() : ''
+            return this.modelValue.event_date
+                ? new Date(this.modelValue.event_date).toLocaleDateString()
+                : ''
         },
     },
 
     methods: {
         onDateSelected(modelData) {
-            this.updateForm({ date: modelData })
+            this.updateForm({ event_date: modelData })
             this.showDatePicker = false
         },
 

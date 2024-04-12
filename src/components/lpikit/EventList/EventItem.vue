@@ -4,10 +4,10 @@
             <IconImage name="Calendar" class="icon" />
             <div class="day-month">
                 <div class="day">
-                    {{ getDayFromDate(event.date) }}
+                    {{ getDayFromDate(event.event_date) }}
                 </div>
                 <div class="month">
-                    {{ $t(`event.calendar.month.${getMonthFromDate(event.date)}.short`) }}
+                    {{ $t(`event.calendar.month.${getMonthFromDate(event.event_date)}.short`) }}
                 </div>
             </div>
         </div>
@@ -15,13 +15,15 @@
             <span class="novelty-marker"></span>
         </div>
         <div class="texts">
-            <h4 class="event-name">{{ event.name }}</h4>
-            <p class="event-information">{{ event.information }}</p>
-            <p class="event-groups" v-if="event.groups.length">
+            <h4 class="event-name">{{ event.title }}</h4>
+            <p class="event-information">{{ event.content }}</p>
+            <p class="event-groups" v-if="event.people_groups.length">
                 <span>{{
-                    event.groups.length > 1 ? $t('event.groups-label') : $t('event.group-label')
+                    event.people_groups.length > 1
+                        ? $t('event.groups-label')
+                        : $t('event.group-label')
                 }}</span>
-                {{ event.groups.map((group) => group.name).join(', ') }}
+                {{ event.people_groups.map((group) => group.name).join(', ') }}
             </p>
         </div>
         <div class="event-controls" v-if="canEditEvent || canDeleteEvent">
@@ -65,7 +67,7 @@ export default {
 
     computed: {
         isNew() {
-            return Date.now() - new Date(this.event.date_edited).getTime() < 7 * 24 * 60 * 60 * 1000
+            return Date.now() - new Date(this.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
         },
     },
 
@@ -74,7 +76,7 @@ export default {
             return yearMonth.split('-')[1]
         },
         getDayFromDate(date) {
-            return date.split('-')[2]
+            return date.split('T')[0].split('-')[2]
         },
 
         deleteEvent(event) {

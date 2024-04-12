@@ -2138,21 +2138,21 @@
             "edit": "Edit a calendar event"
         },
         "form": {
-            "name": {
+            "title": {
                 "label": "Name of event *",
                 "placeholder": "Ex. 1st sem. exam",
                 "required": "The name is required"
             },
-            "information": {
+            "content": {
                 "label": "information",
                 "placeholder": "Add information about this event"
             },
-            "date": {
+            "event_date": {
                 "label": "Event date *",
                 "placeholder": "Select date",
                 "required": "The date is required"
             },
-            "groups": {
+            "people_groups": {
                 "label": "Targeted group(s)",
                 "notice": "Select the group(s) that will see this event",
                 "select-all": "Select all",

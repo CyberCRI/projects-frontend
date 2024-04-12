@@ -26,6 +26,7 @@
 <script>
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
+import { createEvent } from '@/api/event.service'
 
 export default {
     name: 'CreateEventPage',
@@ -53,17 +54,30 @@ export default {
                 return
             }
 
-            this.asyncing = true
-            const formData = {
-                ...this.form,
-                date: this.form.date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+            try {
+                this.asyncing = true
+                const formData = {
+                    ...this.form,
+                    event_date: this.form.event_date?.toISOString(),
+                    people_groups: Object.entries(this.form.people_groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                await createEvent(this.$store.getters['organizations/current']?.code, formData)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('event.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('event.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$router.push({ name: 'FutureEvents' })
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveEvent', formData)
-            this.asyncing = false
         },
     },
 }
