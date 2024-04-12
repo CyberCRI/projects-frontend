@@ -30,6 +30,7 @@ import InstructionForm, {
     defaultForm,
 } from '@/components/lpikit/InstructionForm/InstructionForm.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import { createInstruction } from '@/api/instruction.service'
 export default {
     name: 'CreateInstructionPage',
     components: {
@@ -53,17 +54,33 @@ export default {
                 return
             }
             this.asyncing = true
-            const formData = {
-                ...this.form,
-                publication_date: this.form.publication_date.toISOString(),
-                groups: Object.entries(this.form.groups)
-                    .filter(([, value]) => value)
-                    .map(([id]) => id),
+
+            try {
+                const formData = {
+                    ...this.form,
+                    publication_date: this.form.publication_date.toISOString(),
+                    people_groups: Object.entries(this.form.people_groups)
+                        .filter(([, value]) => value)
+                        .map(([id]) => id),
+                }
+                await createInstruction(
+                    this.$store.getters['organizations/current']?.code,
+                    formData
+                )
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('instruction.save.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('instruction.save.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$router.push({ name: 'InstructionListPage' })
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveInstruction', formData)
-            this.asyncing = false
-            this.$router.push({ name: 'InstructionListPage' })
         },
     },
 }
