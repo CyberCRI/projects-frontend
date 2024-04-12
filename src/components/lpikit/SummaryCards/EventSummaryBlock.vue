@@ -18,6 +18,7 @@
                 :is-opened="!!editedEvent"
                 :event="editedEvent"
                 @close="editedEvent = null"
+                @event-edited="$emit('reload-events')"
             />
 
             <ConfirmModal

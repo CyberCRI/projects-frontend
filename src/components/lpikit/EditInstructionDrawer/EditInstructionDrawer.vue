@@ -15,6 +15,7 @@
 <script>
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import InstructionForm from '@/components/lpikit/InstructionForm/InstructionForm.vue'
+import { createInstruction, putInstruction } from '@/api/instruction.service'
 export default {
     name: 'EditInstructionDrawer',
 
@@ -51,12 +52,12 @@ export default {
                         ...instruction,
                         publication_date: new Date(instruction.publication_date),
                         // only reduce to array if not already an object
-                        groups: instruction.groups.reduce
-                            ? instruction.groups.reduce((acc, group) => {
+                        people_groups: instruction.people_groups.reduce
+                            ? instruction.people_groups.reduce((acc, group) => {
                                   acc[group.id] = true
                                   return acc
                               }, {})
-                            : instruction.groups,
+                            : instruction.people_groups,
                     }
             },
             immediate: true,
@@ -78,12 +79,23 @@ export default {
                 const formData = {
                     ...this.form,
                     publication_date: this.form.publication_date.toISOString(),
-                    groups: Object.entries(this.form.groups)
+                    people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                const savedInstruction = await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
-                console.log('saveInstruction', formData) // TODO: save instruction
+                let savedInstruction
+                if (this.instruction?.id) {
+                    savedInstruction = await putInstruction(
+                        this.$store.getters['organizations/current']?.code,
+                        this.instruction?.id,
+                        formData
+                    )
+                } else {
+                    savedInstruction = await createInstruction(
+                        this.$store.getters['organizations/current']?.code,
+                        formData
+                    )
+                }
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('instructions.save.success'),
                     type: 'success',

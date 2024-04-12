@@ -21,6 +21,7 @@
                 :is-opened="!!editedInstruction"
                 :instruction="editedInstruction"
                 @close="editedInstruction = null"
+                @instruction-edited="$emit('reload-instructions')"
             />
 
             <ConfirmModal
@@ -51,9 +52,12 @@ import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSumma
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import { deleteInstruction } from '@/api/instruction.service'
 
 export default {
     name: 'InstructionSummaryBlock',
+
+    emits: ['reload-instructions'],
 
     components: {
         InstructionItem,
@@ -88,11 +92,15 @@ export default {
             console.log('delete instruction', this.instructionToDelete)
             this.isDeletingInstruction = true
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call her
+                await deleteInstruction(
+                    this.$store.getters['organizations/current']?.code,
+                    this.instructionToDelete.id
+                )
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('instructions.delete.success'),
                     type: 'success',
                 })
+                this.$emit('reload-instructions')
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('instructions.delete.error')} (${err})`,

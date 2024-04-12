@@ -70,8 +70,8 @@
             <p class="notice">{{ $t('instructions.form.groups.notice') }}</p>
 
             <MultiGroupPicker
-                :model-value="modelValue.groups"
-                @update:model-value="updateForm({ groups: $event })"
+                :model-value="modelValue.people_groups"
+                @update:model-value="updateForm({ people_groups: $event })"
             />
         </div>
         <div class="form-section">
@@ -81,7 +81,7 @@
             <button type="button" @click="toggleNotify" class="date-btn">
                 <IconImage
                     class="icon"
-                    :name="modelValue.notify ? 'SquareRounded' : 'SquareRoundedOutline'"
+                    :name="modelValue.has_to_be_notified ? 'SquareRounded' : 'SquareRoundedOutline'"
                 />
                 {{ $t('instructions.form.notify.button') }}
             </button>
@@ -104,8 +104,8 @@ export function defaultForm() {
         title: '',
         content: '',
         publication_date: '',
-        groups: {},
-        notify: false,
+        people_groups: {},
+        has_to_be_notified: false,
     }
 }
 

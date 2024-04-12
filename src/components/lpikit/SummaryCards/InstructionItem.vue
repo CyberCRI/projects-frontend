@@ -27,22 +27,6 @@
             />
         </div>
     </div>
-
-    <EditInstructionDrawer
-        :is-opened="!!editedInstruction"
-        :instruction="editedInstruction"
-        @close="editedInstruction = null"
-    />
-    <ConfirmModal
-        v-if="instructionToDelete"
-        :content="$t('instructions.delete.message')"
-        :title="$t('instructions.delete.title')"
-        cancel-button-label="common.cancel"
-        confirm-button-label="common.delete"
-        @cancel="instructionToDelete = null"
-        @confirm="deleteInstruction"
-        :asyncing="isDeletingInstruction"
-    />
 </template>
 <script>
 import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'

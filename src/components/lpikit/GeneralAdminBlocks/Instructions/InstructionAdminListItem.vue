@@ -1,9 +1,37 @@
 <template>
-    <p class="clamped">{{ instructionText }}</p>
+    <div class="instruction-excerpt-wrapper">
+        <div class="instruction-actions" v-if="canEditInstruction || canDeleteInstruction">
+            <ContextActionButton
+                action-icon="Pen"
+                class="edit-btn small"
+                @click="$emit('edit-instruction', instruction)"
+                v-if="canEditInstruction"
+            />
+            <ContextActionButton
+                action-icon="Close"
+                class="remove-btn small"
+                @click="$emit('delete-instruction', instruction)"
+                v-if="canDeleteInstruction"
+            />
+        </div>
+        <p class="clamped">{{ instructionText }}</p>
+    </div>
 </template>
 <script>
+import permissions from '@/mixins/permissions.ts'
+import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+
 export default {
     name: 'InstructionAdminListItem',
+
+    mixins: [permissions],
+
+    emits: ['delete-instruction', 'edit-instruction'],
+
+    components: {
+        ContextActionButton,
+    },
+
     props: {
         instruction: {
             type: Object,
@@ -19,11 +47,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.instruction-excerpt-wrapper {
+    position: relative;
+}
+
 .clamped {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.5;
+}
+
+.instruction-actions {
+    position: absolute;
+    top: $space-s;
+    right: $space-unit;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-end;
 }
 </style>
