@@ -18,22 +18,22 @@
         <div class="news-content">
             <h3 class="news-title-desktop">{{ $filters.capitalize(news.title) }}</h3>
             <p class="news-description">{{ news.purpose }}</p>
-            <div class="more-info" @click="readMore">
-                <IconImage class="arrow" name="ArrowRight" />
-                <span class="read"> {{ $filters.capitalize($t('common.read')) }}</span>
-            </div>
+            <SummaryAction
+                :to="{ name: 'pageProject', params: { slugOrId: news.slug } }"
+                :action-label="$t('common.read')"
+            />
         </div>
     </div>
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
 import ImageMixin from '@/mixins/imageMixin.ts'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
     name: 'HomeNewsItem',
 
-    components: { IconImage },
+    components: { SummaryAction },
 
     mixins: [ImageMixin],
 
@@ -59,10 +59,6 @@ export default {
 
         onImageLoaded() {
             this.imageLoaded = true
-        },
-
-        readMore() {
-            this.$router.push(`/projects/${this.news.slug}/summary`)
         },
     },
 }
@@ -120,6 +116,9 @@ export default {
 }
 
 .news-content {
+    display: flex;
+    flex-flow: column nowrap;
+
     .news-title-desktop {
         display: none;
 
@@ -132,6 +131,7 @@ export default {
     }
 
     .news-description {
+        flex-grow: 1;
         line-height: $font-size-xl;
         display: -webkit-box;
         -webkit-line-clamp: 3;

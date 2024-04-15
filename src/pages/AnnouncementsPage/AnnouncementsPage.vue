@@ -65,6 +65,7 @@ export default {
 .page-title {
     margin-bottom: $space-2xl;
 }
+
 .announcements-page {
     margin-bottom: $space-2xl;
 }
