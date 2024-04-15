@@ -37,8 +37,6 @@ import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vu
 export default {
     name: 'AnnouncementCardSkeleton',
 
-    emits: ['know-more-clicked'],
-
     components: { SkeletonComponent },
 }
 </script>
