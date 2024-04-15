@@ -27,6 +27,14 @@ export const newHomeExtraPaths = new Map()
 newHomeExtraPaths.set('old', [])
 newHomeExtraPaths.set('new', [
     {
+        path: '/announcements',
+        name: 'AnnouncementsPage',
+        component: () => import('../pages/AnnouncementsPage/AnnouncementsPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
         path: '/create-event',
         name: 'CreateEvent',
         component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),

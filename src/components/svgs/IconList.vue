@@ -106,6 +106,8 @@ export default {
                 'CropFree',
                 'SquareRounded',
                 'SquareRoundedOutline',
+                'BookmarkBoxOutline',
+                'BullhornOutline',
             ],
         }
     },
