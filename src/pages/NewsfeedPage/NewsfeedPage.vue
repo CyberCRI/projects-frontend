@@ -1,36 +1,38 @@
 <template>
-    <h1 class="newsfeed-title">
-        {{ $t('feed.title') }}
-    </h1>
+    <div class="newsfeed-page page-section-medium page-top">
+        <h1 class="page-title">
+            {{ $t('feed.title') }}
+        </h1>
 
-    <div class="newsfeed-container page-section-wide">
-        <div class="newsfeed-select-container"></div>
-        <div v-if="isLoading">
-            <NewsListSkeleton :limit="15" />
-        </div>
-        <div v-else class="news-container">
-            <div v-for="(item, index) in newsfeed" :key="index">
-                <HomeAnnouncementsItem
-                    v-if="item.type == 'announcement'"
-                    class="newsfeed-announcement"
-                    :announcement="item.announcement"
-                />
-                <HomeNewsItem
-                    v-else-if="item.type == 'project'"
-                    class="newsfeed-project"
-                    :news="item.project"
-                />
+        <div class="newsfeed-container">
+            <div class="newsfeed-select-container"></div>
+            <div v-if="isLoading">
+                <NewsListSkeleton :limit="15" />
+            </div>
+            <div v-else class="news-container">
+                <div v-for="(item, index) in newsfeed" :key="index">
+                    <HomeAnnouncementsItem
+                        v-if="item.type == 'announcement'"
+                        class="newsfeed-announcement"
+                        :announcement="item.announcement"
+                    />
+                    <HomeNewsItem
+                        v-else-if="item.type == 'project'"
+                        class="newsfeed-project"
+                        :news="item.project"
+                    />
+                </div>
             </div>
         </div>
-    </div>
 
-    <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
-        <PaginationButtons
-            :current="pagination.currentPage"
-            :pagination="pagination"
-            :total="pagination.total"
-            @update-pagination="onClickPagination"
-        />
+        <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
+            <PaginationButtons
+                :current="pagination.currentPage"
+                :pagination="pagination"
+                :total="pagination.total"
+                @update-pagination="onClickPagination"
+            />
+        </div>
     </div>
 </template>
 
@@ -105,27 +107,12 @@ export default {
 
 <style lang="scss" scoped>
 .newsfeed-title {
-    font-weight: 700;
-    font-size: $font-size-xl;
-    text-align: center;
-    margin-bottom: $space-xl;
-    margin-top: $space-3xl;
-
-    @media screen and (min-width: $min-tablet) {
-        font-size: $font-size-4xl;
-        margin-bottom: $space-l;
-    }
+    margin-bottom: $space-2xl;
 }
 
 .newsfeed-container {
     padding-top: $space-xl;
     padding-inline: $space-xs;
-    width: 100%;
-
-    @media (min-width: $min-tablet) {
-        width: 65%;
-        padding: $space-l;
-    }
 }
 
 .pagination-container {
@@ -134,11 +121,13 @@ export default {
     align-items: center;
     justify-content: center;
     padding-bottom: $space-3xl;
+    padding-top: $space-unit;
 }
 
 .news-container {
     display: flex;
     flex-direction: column;
     gap: $space-l;
+    justify-content: stretch;
 }
 </style>

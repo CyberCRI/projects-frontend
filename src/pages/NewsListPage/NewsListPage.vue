@@ -1,5 +1,5 @@
 <template>
-    <div class="news-list-page page-section-medium">
+    <div class="news-list-page page-section-medium page-top">
         <h1 class="page-title">{{ $t('news.list.title') }}</h1>
 
         <div class="create-news-button-ctn">
@@ -176,8 +176,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-title {
-    margin-top: pxToRem(60px);
-    margin-bottom: pxToRem(60px);
+    margin-bottom: $space-2xl;
 }
 
 .create-news-button-ctn {

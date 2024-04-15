@@ -1,5 +1,5 @@
 <template>
-    <div class="announcements-page page-section-medium">
+    <div class="announcements-page page-section-medium page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('home.announcements')) }}</h1>
 
         <AnnouncementCardListSkeleton v-if="isLoading" />
@@ -62,12 +62,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.announcements-page {
+.page-title {
     margin-bottom: $space-2xl;
 }
-
-.page-title {
-    margin-top: pxToRem(60px);
-    margin-bottom: pxToRem(60px);
+.announcements-page {
+    margin-bottom: $space-2xl;
 }
 </style>

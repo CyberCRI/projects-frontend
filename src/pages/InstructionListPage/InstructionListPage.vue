@@ -1,5 +1,5 @@
 <template>
-    <div class="instruction-list-page page-section-medium">
+    <div class="instruction-list-page page-section-medium page-top">
         <h1 class="page-title">{{ $t('instructions.list.title') }}</h1>
 
         <div class="create-instruction-button-ctn">
@@ -122,8 +122,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-title {
-    margin-top: pxToRem(60px);
-    margin-bottom: pxToRem(60px);
+    margin-bottom: $space-2xl;
 }
 
 .create-instruction-button-ctn {
