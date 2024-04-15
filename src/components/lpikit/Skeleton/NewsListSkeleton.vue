@@ -1,41 +1,48 @@
 <template>
     <div v-for="(item, index) in limit" :key="index" class="fake-news">
         <div v-if="projectNewsIndex.indexOf(index) >= 0" class="project-skeleton">
-            <div class="text-placeholder mobile" />
-            <div class="subtext-placeholder subtext mobile" />
-            <div class="image-placeholder" />
-            <div class="news-content-placeholder">
-                <div class="text-placeholder desktop" />
-                <div class="subtext-placeholder subtext desktop" />
-                <div class="text-placeholder" />
-                <div class="text-placeholder" />
-                <div class="subtext-placeholder subtext" />
-                <div class="read-placeholder" />
+            <SkeletonComponent class="text-placeholder mobile" />
+            <SkeletonComponent class="subtext-placeholder subtext mobile" />
+            <SkeletonComponent class="image-placeholder" />
+            <div class="news-content-placeholder flex-grow">
+                <SkeletonComponent class="text-placeholder desktop" />
+                <SkeletonComponent class="subtext-placeholder subtext desktop" />
+                <SkeletonComponent class="text-placeholder" />
+                <SkeletonComponent class="text-placeholder" />
+                <SkeletonComponent class="subtext-placeholder subtext" />
+                <SkeletonComponent class="read-placeholder" />
             </div>
         </div>
         <div v-else class="announcement-skeleton">
-            <div class="announcement-image-placeholder" />
-            <div class="news-content-placeholder">
-                <div class="text-placeholder announcement" />
-                <div class="subtext-placeholder subtext desktop" />
-                <div class="text-placeholder announcement" />
-                <div class="read-placeholder" />
+            <SkeletonComponent class="announcement-image-placeholder" />
+            <div class="news-content-placeholder flex-grow">
+                <SkeletonComponent class="text-placeholder announcement" />
+                <SkeletonComponent class="subtext-placeholder subtext desktop" />
+                <SkeletonComponent class="text-placeholder announcement" />
+                <SkeletonComponent class="read-placeholder" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
 export default {
     name: 'NewsListSkeleton',
 
+    components: {
+        SkeletonComponent,
+    },
+
     data() {
         return {
-            projectNewsIndex: [0, 1, 2, 5, 6, 8, 9, 10, 13, 14],
+            // indices of skeleton that are projects (other are announcements)
+            projectNewsIndex: [1, 2, 5, 6, 8, 9, 10, 13, 14],
         }
     },
 
     props: {
+        // number of skeletons to show
         limit: {
             type: Number,
             default: 15,
@@ -56,13 +63,13 @@ export default {
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
-        width: pxToRem(900px);
     }
 }
 
 .project-skeleton {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
@@ -72,15 +79,13 @@ export default {
 .announcement-skeleton {
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 .image-placeholder {
     width: 100%;
     height: pxToRem(200px);
-    background: $gray-10;
-    border-radius: $border-radius-xs;
     margin-bottom: $space-m;
-    animation: skeleton-loading 1s linear infinite alternate;
 
     @media screen and (min-width: $min-tablet) {
         margin-right: $space-xl;
@@ -92,10 +97,8 @@ export default {
 .announcement-image-placeholder {
     width: pxToRem(120px);
     height: pxToRem(120px);
-    background: $gray-10;
     border-radius: $border-radius-xs;
     margin-bottom: $space-m;
-    animation: skeleton-loading 1s linear infinite alternate;
     margin-right: $space-m;
 
     @media screen and (min-width: $min-tablet) {
@@ -104,16 +107,8 @@ export default {
 }
 
 .text-placeholder {
-    background: $gray-10;
-    border-radius: $border-radius-xs;
-    width: pxToRem(350px);
     height: pxToRem(16px);
     margin-bottom: pxToRem(16px);
-    animation: skeleton-loading 1s linear infinite alternate;
-
-    @media screen and (min-width: $min-tablet) {
-        width: pxToRem(550px);
-    }
 
     &.mobile {
         @media screen and (min-width: $min-tablet) {
@@ -128,23 +123,12 @@ export default {
             display: block;
         }
     }
-
-    &.announcement {
-        width: pxToRem(210px);
-
-        @media screen and (min-width: $min-tablet) {
-            width: pxToRem(700px);
-        }
-    }
 }
 
 .subtext-placeholder {
-    background: $gray-10;
-    border-radius: $border-radius-xs;
     width: pxToRem(200px);
     height: pxToRem(16px);
     margin-bottom: pxToRem(16px);
-    animation: skeleton-loading 1s linear infinite alternate;
 
     @media screen and (min-width: $min-tablet) {
         width: pxToRem(300px);
@@ -172,11 +156,12 @@ export default {
 }
 
 .read-placeholder {
-    background: $gray-10;
-    border-radius: $border-radius-xs;
     width: pxToRem(50px);
     height: pxToRem(16px);
     margin-bottom: pxToRem(16px);
-    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }
 </style>

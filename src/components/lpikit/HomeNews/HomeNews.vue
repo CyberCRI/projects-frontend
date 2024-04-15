@@ -1,5 +1,5 @@
 <template>
-    <LpiLoader v-if="isLoading" class="loading" type="simple" />
+    <NewsListSkeleton v-if="isLoading" :limit="5" />
     <div v-else>
         <div class="home-news-container">
             <HomeAnnouncementsItem
@@ -19,14 +19,14 @@
 import HomeNewsItem from '@/components/lpikit/HomeNews/HomeNewsItem.vue'
 import { getAllProjects } from '@/api/projects.service'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
 import { getAnnouncements } from '@/api/announcements.service'
 import HomeAnnouncementsItem from '@/components/lpikit/HomeNews/HomeAnnouncementsItem.vue'
 
 export default {
     name: 'HomeNews',
 
-    components: { HomeNewsItem, LpiButton, LpiLoader, HomeAnnouncementsItem },
+    components: { HomeNewsItem, LpiButton, NewsListSkeleton, HomeAnnouncementsItem },
 
     props: {
         organization: {
