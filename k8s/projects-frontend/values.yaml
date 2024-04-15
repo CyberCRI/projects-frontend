@@ -79,7 +79,7 @@ e2e:
       enabled: true
       slackChannel: it-projects-frontend
     success:
-      enabled: true
+      enabled: false
       slackChannel: it-projects-frontend
   resources:
     requests:
