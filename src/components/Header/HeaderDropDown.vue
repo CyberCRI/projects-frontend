@@ -301,6 +301,7 @@ export default {
 
                 .label {
                     transform-origin: left center;
+                    white-space: nowrap;
                 }
 
                 .label,

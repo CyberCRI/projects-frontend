@@ -842,6 +842,9 @@
     "home": {
         "all-projects": "All projects",
         "announcements": "announcements",
+        "news": "News",
+        "calendar": "Calendar",
+        "instructions": "Instructions",
         "communities": "Portals",
         "home": "Home",
         "categories": {

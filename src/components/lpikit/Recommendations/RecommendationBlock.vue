@@ -1,8 +1,11 @@
 <template>
     <div class="recommendation-wrapper">
         <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
-        <LpiLoader v-if="isLoading" class="loading" type="simple" />
-        <div v-else>
+        <div v-if="isLoading" class="recommendation-inner">
+            <RecommendationListSkeleton />
+            <RecommendationListSkeleton v-if="loggedIn" :user-recommendation="true" />
+        </div>
+        <div v-else class="recommendation-inner">
             <RecommendationList
                 :recommendations="projectRecommendations"
                 data-test="project-recommendations"
@@ -18,14 +21,14 @@
 </template>
 
 <script>
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
 import RecommendationList from '@/components/lpikit/Recommendations/RecommendationList.vue'
 import { getProjectsRecommendations, getUsersRecommendations } from '@/api/recommendations.service'
+import RecommendationListSkeleton from '@/components/lpikit/Recommendations/RecommendationListSkeleton.vue'
 
 export default {
     name: 'RecommendationBlock',
 
-    components: { RecommendationList, LpiLoader },
+    components: { RecommendationList, RecommendationListSkeleton },
 
     props: {
         organization: {
@@ -78,11 +81,7 @@ export default {
     font-weight: 700;
 }
 
-.loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: $space-xl;
-    margin-bottom: $space-m;
+.recommendation-inner {
+    width: 100%;
 }
 </style>

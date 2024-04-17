@@ -458,6 +458,7 @@ export default {
     @media (min-width: $min-tablet) {
         flex-basis: 35%;
         margin-bottom: 0;
+        flex-shrink: 0;
     }
 
     button {
@@ -514,6 +515,7 @@ export default {
 
     @media (min-width: $min-tablet) {
         flex-basis: 65%;
+        flex-shrink: 0;
     }
 
     .select-news {
