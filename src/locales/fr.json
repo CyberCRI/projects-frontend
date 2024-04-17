@@ -134,7 +134,8 @@
             "templates": "Templates",
             "users": "Utilisateurs",
             "requests": "Demandes",
-            "groups": "Groupes"
+            "groups": "Groupes",
+            "settings": "Paramètres"
         },
         "page-title": "Admin",
         "portal": {
@@ -144,7 +145,26 @@
                 "logo": "Logo",
                 "size-min-logo": "Taille minimale du logo : {minWidth}px * {minHeight}px",
                 "portal-referencing": "référencement sur le portail principal",
-                "visible": "Visible"
+                "visible": "Visible",
+                "public-image": "Image (vue publique)",
+                "wording": {
+                    "title": "textes de la page d'accueil",
+                    "notice": "Modifiez ici les textes qui apparaissent sur votre page d'accueil (titre et description sur la vue publique et titre uniquement sur la vue connectée, c'est-à-dire une fois que vos utilisateurs sont connectés).",
+                    "fields": {
+                        "title": "Titre",
+                        "title-placeholder": "(pas encore de titre)",
+                        "description": "Description",
+                        "description-placeholder": "(pas encore de description)"
+                    }
+                },
+                "banner-edit": {
+                    "success": "Image sauvegardée",
+                    "error": "Erreur lors de la sauvegarde de l'image"
+                },
+                "logo-edit": {
+                    "success": "Logo sauvegardé",
+                    "error": "Erreur lors de la sauvegarde du logo"
+                }
             },
             "categories": {
                 "add": "Ajouter une catégorie",

@@ -51,7 +51,13 @@
                 {{ organization.dashboard_title }}
             </h1>
             <div class="banner-wrapper">
-                <img :src="organization.banner_image.url" alt="logo" class="organization-banner" />
+                <CroppedImage
+                    alt="welcome image"
+                    :image-sizes="bannerImageSizes"
+                    :src="bannerUrl"
+                    class="organization-banner"
+                    :ratio="2 / 1"
+                />
             </div>
             <div class="introduction-container">
                 <h1 class="image-main-title">
@@ -138,6 +144,8 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import { getAllEvents } from '@/api/event.service'
 import { getAllInstructions } from '@/api/instruction.service'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 
 export default {
     name: 'NewHomePage',
@@ -156,6 +164,7 @@ export default {
         EventSummaryBlock,
         InstructionSummaryBlock,
         OnboardingTodoBlock,
+        CroppedImage,
     },
 
     data() {
@@ -184,6 +193,14 @@ export default {
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
+        },
+
+        bannerUrl() {
+            return this.organization?.banner_image?.variations?.medium
+        },
+
+        bannerImageSizes() {
+            return pictureApiToImageSizes(this.organization?.banner_image)
         },
 
         loggedIn() {
@@ -316,6 +333,7 @@ export default {
 
         .organization-banner {
             width: 100%;
+            aspect-ratio: 3;
 
             @media screen and (min-width: $min-tablet) {
                 margin-bottom: 0;

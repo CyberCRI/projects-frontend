@@ -37,6 +37,7 @@
             />
 
             <LinkButton
+                v-if="!noResize"
                 v-disable-focus="disabled"
                 :label="$t('project.form.resize-image')"
                 btn-icon="CropFree"
@@ -118,6 +119,15 @@ export default {
             required: false,
             default: 1,
         },
+        noResize: {
+            type: Boolean,
+            default: false,
+        },
+
+        dontResizeOnChange: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -171,7 +181,7 @@ export default {
 
         uploadImage(image) {
             this.setImage(image)
-            this.$nextTick(this.openImageResizer)
+            if (!this.noResize && !this.dontResizeOnChange) this.$nextTick(this.openImageResizer)
         },
 
         openImageResizer() {

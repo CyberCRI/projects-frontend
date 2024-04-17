@@ -28,16 +28,26 @@ export async function getOrganizations(): Promise<APIResponseList<OrganizationOu
     return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/`)).data
 }
 
-export async function postOrganisationBanner({
-    code,
-    body,
-}: {
-    code: string
+export async function postOrganisationBanner(
+    code: string,
     body: ImageOrganizationInput
-}): Promise<ImageOrganizationOutput> {
+): Promise<ImageOrganizationOutput> {
     return (
         await axios.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/banner/`,
+            body
+        )
+    ).data
+}
+
+export async function patchOrganisationBanner(
+    code: string,
+    banner_id: number,
+    body: ImageOrganizationInput
+): Promise<ImageOrganizationOutput> {
+    return (
+        await axios.patch(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/banner/${banner_id}/`,
             body
         )
     ).data
