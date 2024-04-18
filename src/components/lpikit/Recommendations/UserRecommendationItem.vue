@@ -2,8 +2,6 @@
     <li v-if="recommendation" class="recommendation-item">
         <router-link
             class="recommendation"
-            @mouseover="showExtraTags = true"
-            @mouseout="showExtraTags = false"
             :to="{ name: 'ProfileOtherUser', params: { userId: recommendation.slug } }"
         >
             <CroppedImage
@@ -35,31 +33,35 @@
                         colors="primary-light"
                         class="skill-badge"
                     />
-                    <span
-                        class="tag-elt-show-more"
-                        @click="showExtraTags = !showExtraTags"
-                        :class="{ hidden: !hasMoreTags || showExtraTags }"
+
+                    <ToolTip
+                        v-if="hasMoreTags"
+                        hover="true"
+                        interactive
+                        :is-text-content="false"
+                        secondary
                     >
-                        <BadgeItem
-                            v-if="moreSkills && !showExtraTags"
-                            :label="`+${moreSkills.length}`"
-                            size="small"
-                            colors="primary-dark"
-                            class="skill-badge"
-                            @mouseover="showExtraTags = true"
-                            @mouseout="showExtraTags = false"
-                        />
-                    </span>
-                </div>
-                <div v-if="showExtraTags">
-                    <BadgeItem
-                        v-for="(skill, index) in moreSkills"
-                        :key="index"
-                        :label="skill.wikipedia_tag.name"
-                        size="small"
-                        colors="primary-light"
-                        class="skill-badge"
-                    />
+                        <template #custom-content>
+                            <div class="extra-skills-list">
+                                <BadgeItem
+                                    v-for="(skill, index) in moreSkills"
+                                    :key="index"
+                                    :label="skill.wikipedia_tag.name"
+                                    size="small"
+                                    colors="primary-light"
+                                    class="skill-badge"
+                                />
+                            </div>
+                        </template>
+                        <span class="tag-elt-show-more">
+                            <BadgeItem
+                                :label="`+${moreSkills.length}`"
+                                size="small"
+                                colors="primary-dark"
+                                class="skill-badge"
+                            />
+                        </span>
+                    </ToolTip>
                 </div>
             </div>
         </router-link>
@@ -70,6 +72,7 @@
 import imageMixin from '@/mixins/imageMixin.ts'
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
+import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
 
 export default {
     name: 'UserRecommendationItem',
@@ -78,7 +81,7 @@ export default {
 
     mixins: [imageMixin],
 
-    components: { CroppedImage, BadgeItem },
+    components: { CroppedImage, BadgeItem, ToolTip },
 
     props: {
         recommendation: {
@@ -90,7 +93,7 @@ export default {
     data() {
         return {
             imageError: false,
-            showExtraTags: false,
+            skillsLimit: 3,
         }
     },
 
@@ -100,16 +103,22 @@ export default {
         },
 
         displayedSkills() {
-            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
-                return this.recommendation.skills.slice(0, 3)
+            if (
+                this.recommendation.skills &&
+                this.recommendation.skills.length > this.skillsLimit
+            ) {
+                return this.recommendation.skills.slice(0, this.skillsLimit)
             } else {
                 return this.recommendation.skills
             }
         },
 
         moreSkills() {
-            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
-                return this.recommendation.skills.slice(3)
+            if (
+                this.recommendation.skills &&
+                this.recommendation.skills.length > this.skillsLimit
+            ) {
+                return this.recommendation.skills.slice(this.skillsLimit)
             } else {
                 return []
             }
@@ -141,7 +150,7 @@ export default {
 .recommendation {
     margin: $space-m 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: $space-s;
 
     &--spacer {
@@ -186,10 +195,18 @@ export default {
 
 .tag-elt-show-more {
     cursor: pointer;
+}
 
-    &.hidden {
-        visibility: hidden;
-        pointer-events: none;
-    }
+.extra-skills-list {
+    max-width: 20rem;
+    padding: 1rem;
+}
+
+.skills,
+.extra-skills-list {
+    line-height: 1.4;
+    display: flex;
+    gap: $space-xs;
+    flex-wrap: wrap;
 }
 </style>

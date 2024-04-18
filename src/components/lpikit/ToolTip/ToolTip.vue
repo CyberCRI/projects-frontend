@@ -4,7 +4,7 @@
         :class="{ secondary }"
         :content="content"
         :disabled="disabled"
-        :force-show="forceShow"
+        :show="forceShow"
         :placement="placement"
         :offset-distance="offsetDistance"
         :offset-skid="offsetSkid"
@@ -79,8 +79,8 @@ export default {
         },
 
         forceShow: {
-            type: Boolean,
-            default: false,
+            type: [Boolean, null],
+            default: null,
         },
 
         offsetDistance: {
