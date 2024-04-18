@@ -41,7 +41,7 @@
                         :class="{ hidden: !hasMoreTags || showExtraTags }"
                     >
                         <BadgeItem
-                            v-if="moreSkills && !showExtraTags"
+                            v-if="hasMoreTags && !showExtraTags"
                             :label="`+${moreSkills.length}`"
                             size="small"
                             colors="primary-dark"
@@ -51,7 +51,7 @@
                         />
                     </span>
                 </div>
-                <div v-if="showExtraTags">
+                <div v-if="hasMoreTags && showExtraTags">
                     <BadgeItem
                         v-for="(skill, index) in moreSkills"
                         :key="index"
@@ -91,6 +91,7 @@ export default {
         return {
             imageError: false,
             showExtraTags: false,
+            skillsLimit: 3,
         }
     },
 
@@ -100,16 +101,22 @@ export default {
         },
 
         displayedSkills() {
-            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
-                return this.recommendation.skills.slice(0, 3)
+            if (
+                this.recommendation.skills &&
+                this.recommendation.skills.length > this.skillsLimit
+            ) {
+                return this.recommendation.skills.slice(0, this.skillsLimit)
             } else {
                 return this.recommendation.skills
             }
         },
 
         moreSkills() {
-            if (this.recommendation.skills && this.recommendation.skills.length > 3) {
-                return this.recommendation.skills.slice(3)
+            if (
+                this.recommendation.skills &&
+                this.recommendation.skills.length > this.skillsLimit
+            ) {
+                return this.recommendation.skills.slice(this.skillsLimit)
             } else {
                 return []
             }
