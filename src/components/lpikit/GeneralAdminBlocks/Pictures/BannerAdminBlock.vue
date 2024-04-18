@@ -42,7 +42,7 @@ export default {
                 const formData = new FormData()
                 formData.append('file', file, file.name)
 
-                await postOrganisationBanner(this.organization.code, formData)
+                await postOrganisationBanner({ code: this.organization.code, body: formData })
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('admin.portal.general.banner-edit.success'),
