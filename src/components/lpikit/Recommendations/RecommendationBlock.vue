@@ -23,8 +23,8 @@
 <script>
 import RecommendationList from '@/components/lpikit/Recommendations/RecommendationList.vue'
 import {
-    getProjectsRecommendationsForUser,
-    getUsersRecommendationsForUser,
+    getRandomProjectsRecommendationsForUser,
+    getRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
 import RecommendationListSkeleton from '@/components/lpikit/Recommendations/RecommendationListSkeleton.vue'
 
@@ -54,17 +54,17 @@ export default {
     },
 
     async mounted() {
-        let recommendedProjects = await getProjectsRecommendationsForUser({
+        let recommendedProjects = await getRandomProjectsRecommendationsForUser({
             organization: this.organization.code,
-            params: { limit: 4 },
+            params: { count: 4, pool: 25 },
         })
-        this.projectRecommendations = recommendedProjects.results
+        this.projectRecommendations = recommendedProjects
 
-        let recommendedUsers = await getUsersRecommendationsForUser({
+        let recommendedUsers = await getRandomUsersRecommendationsForUser({
             organization: this.organization.code,
-            params: { limit: 3 },
+            params: { count: 3, pool: 25 },
         })
-        this.userRecommendations = recommendedUsers.results
+        this.userRecommendations = recommendedUsers
 
         this.isLoading = false
     },

@@ -7,16 +7,18 @@ import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { UserFactory } from '../../../factories/user.factory'
 import {
-    getProjectsRecommendationsForUser,
-    getUsersRecommendationsForUser,
+    getRandomProjectsRecommendationsForUser,
+    getRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
 
 vi.mock('@/api/recommendations.service', () => ({
-    getProjectsRecommendationsForUser: vi.fn(),
-    getUsersRecommendationsForUser: vi.fn(),
+    getRandomProjectsRecommendationsForUser: vi.fn(),
+    getRandomUsersRecommendationsForUser: vi.fn(),
 }))
-vi.mocked(getProjectsRecommendationsForUser).mockResolvedValue(ProjectOutputFactory.generateMany(2))
-vi.mocked(getUsersRecommendationsForUser).mockResolvedValue(UserFactory.generateMany(2))
+vi.mocked(getRandomProjectsRecommendationsForUser).mockResolvedValue(
+    ProjectOutputFactory.generateMany(2)
+)
+vi.mocked(getRandomUsersRecommendationsForUser).mockResolvedValue(UserFactory.generateMany(2))
 
 const i18n = {
     locale: 'en',
