@@ -1,4 +1,4 @@
-import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
+import HomeNewsfeed from '@/components/lpikit/HomeNewsfeed/HomeNewsfeed.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'
@@ -75,9 +75,9 @@ const props = {
     },
 }
 
-describe('HomeNews', () => {
+describe('HomeNewsfeed', () => {
     it('should render HomeNews', async () => {
-        let wrapper = lpiShallowMount(HomeNews, { props, store, router, i18n })
+        let wrapper = lpiShallowMount(HomeNewsfeed, { props, store, router, i18n })
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
     })
@@ -89,9 +89,9 @@ describe('HomeNews', () => {
             previous: null,
             results: ProjectOutputFactory.generateMany(2),
         })
-        let wrapper = lpiShallowMount(HomeNews, { props, store, router, i18n })
+        let wrapper = lpiShallowMount(HomeNewsfeed, { props, store, router, i18n })
         await flushPromises()
-        expect(wrapper.findAll('home-news-item-stub')).toHaveLength(2)
+        expect(wrapper.findAll('newsfeed-project-item-stub')).toHaveLength(2)
     })
 
     it('should display announcements', async () => {
@@ -101,8 +101,8 @@ describe('HomeNews', () => {
             previous: null,
             results: AnnouncementFactory.generateMany(2),
         })
-        let wrapper = lpiShallowMount(HomeNews, { props, store, router, i18n })
+        let wrapper = lpiShallowMount(HomeNewsfeed, { props, store, router, i18n })
         await flushPromises()
-        expect(wrapper.findAll('home-announcements-item-stub')).toHaveLength(2)
+        expect(wrapper.findAll('newsfeed-announcements-item-stub')).toHaveLength(2)
     })
 })

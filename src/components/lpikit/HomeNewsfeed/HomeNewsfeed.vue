@@ -2,12 +2,16 @@
     <NewsListSkeleton v-if="isLoading" :limit="5" />
     <div v-else>
         <div class="home-news-container">
-            <HomeAnnouncementsItem
+            <NewsfeedAnnouncementsItem
                 v-for="(announcement, index) in announcements"
                 :key="index"
                 :announcement="announcement"
             />
-            <HomeNewsItem v-for="(info, index) in news" :key="index" :news="info" />
+            <NewsfeedProjectItem
+                v-for="(project, index) in projects"
+                :key="index"
+                :project="project"
+            />
         </div>
         <div class="see-all">
             <LpiButton :label="$t('feed.see-all')" :secondary="false" @click="seeAll" />
@@ -16,17 +20,17 @@
 </template>
 
 <script>
-import HomeNewsItem from '@/components/lpikit/HomeNews/HomeNewsItem.vue'
+import NewsfeedProjectItem from '@/components/lpikit/HomeNewsfeed/NewsfeedProjectItem.vue'
 import { getAllProjects } from '@/api/projects.service'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
 import { getAnnouncements } from '@/api/announcements.service'
-import HomeAnnouncementsItem from '@/components/lpikit/HomeNews/HomeAnnouncementsItem.vue'
+import NewsfeedAnnouncementsItem from '@/components/lpikit/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 
 export default {
-    name: 'HomeNews',
+    name: 'HomeNewsfeed',
 
-    components: { HomeNewsItem, LpiButton, NewsListSkeleton, HomeAnnouncementsItem },
+    components: { NewsfeedProjectItem, LpiButton, NewsListSkeleton, NewsfeedAnnouncementsItem },
 
     props: {
         organization: {
@@ -41,7 +45,7 @@ export default {
             ordering: '-updated_at',
             limit: 5,
         })
-        this.news = projects.results
+        this.projects = projects.results
 
         await this.getAnnouncements()
 
@@ -50,7 +54,7 @@ export default {
 
     data() {
         return {
-            news: [],
+            projects: [],
             isLoading: true,
             announcements: [],
         }

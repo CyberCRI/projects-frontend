@@ -39,7 +39,7 @@
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
-    name: 'HomeAnnouncementsItem',
+    name: 'NewsfeedAnnouncementsItem',
 
     components: { SummaryAction },
 

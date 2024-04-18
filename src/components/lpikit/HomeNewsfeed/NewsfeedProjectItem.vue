@@ -1,25 +1,21 @@
 <template>
-    <div class="home-news-item">
-        <h3 class="news-title-mobile">{{ $filters.capitalize(news.title) }}</h3>
+    <div class="home-project-item">
+        <h3 class="project-title-mobile">{{ $filters.capitalize(project.title) }}</h3>
 
-        <div class="news-img-container">
-            <img
-                :alt="`${news.title} image`"
-                :src="
-                    imageError
-                        ? `${PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                        : news.header_image?.variations?.small
-                "
-                @error="placeHolderImg"
-                @load="onImageLoaded"
-                class="news-img"
+        <div class="project-img-container">
+            <CroppedImage
+                :alt="`${project.title} image`"
+                :image-sizes="imageSizes"
+                :src="croppedImageSrc"
+                class="project-img"
+                :ratio="1 / 1"
             />
         </div>
-        <div class="news-content">
-            <h3 class="news-title-desktop">{{ $filters.capitalize(news.title) }}</h3>
-            <p class="news-description">{{ news.purpose }}</p>
+        <div class="project-content">
+            <h3 class="project-title-desktop">{{ $filters.capitalize(project.title) }}</h3>
+            <p class="project-description">{{ project.purpose }}</p>
             <SummaryAction
-                :to="{ name: 'pageProject', params: { slugOrId: news.slug } }"
+                :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
                 :action-label="$t('common.read')"
             />
         </div>
@@ -27,18 +23,20 @@
 </template>
 
 <script>
+import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import ImageMixin from '@/mixins/imageMixin.ts'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
-    name: 'HomeNewsItem',
+    name: 'NewsfeedProjectItem',
 
-    components: { SummaryAction },
+    components: { SummaryAction, CroppedImage },
 
     mixins: [ImageMixin],
 
     props: {
-        news: {
+        project: {
             type: Object,
             default: () => {},
         },
@@ -51,21 +49,22 @@ export default {
         }
     },
 
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
-            this.imageLoaded = true
+    computed: {
+        imageSizes() {
+            return pictureApiToImageSizes(this.project?.header_image)
         },
 
-        onImageLoaded() {
-            this.imageLoaded = true
+        croppedImageSrc() {
+            return this.project && this.project.header_image
+                ? this.project?.header_image.variations?.small
+                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-.home-news-item {
+.home-project-item {
     display: flex;
     flex-direction: column;
     border: $border-width-s solid $gray-10;
@@ -79,7 +78,7 @@ export default {
         gap: $space-xl;
     }
 
-    .news-img-container {
+    .project-img-container {
         align-self: center;
         background-size: cover;
         background-position: top center;
@@ -89,11 +88,10 @@ export default {
 
         @media screen and (min-width: $min-tablet) {
             margin-bottom: 0;
-            flex-basis: 280px;
-            flex-shrink: 1;
+            flex-basis: 200px;
         }
 
-        .news-img {
+        .project-img {
             object-fit: cover;
             max-width: inherit;
             max-height: inherit;
@@ -104,7 +102,7 @@ export default {
         }
     }
 
-    .news-title-mobile {
+    .project-title-mobile {
         font-size: $font-size-l;
         line-height: $font-size-3xl;
         margin-bottom: $space-m;
@@ -115,11 +113,11 @@ export default {
     }
 }
 
-.news-content {
+.project-content {
     display: flex;
     flex-flow: column nowrap;
 
-    .news-title-desktop {
+    .project-title-desktop {
         display: none;
 
         @media screen and (min-width: $min-tablet) {
@@ -130,7 +128,7 @@ export default {
         }
     }
 
-    .news-description {
+    .project-description {
         flex-grow: 1;
         line-height: $font-size-xl;
         display: -webkit-box;
