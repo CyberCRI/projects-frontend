@@ -1,6 +1,6 @@
 <template>
     <div class="image-input-ctn">
-        <label :for="id" ref="label" class="image-button" data-test="upload-image-button">
+        <label :for="uniqueId" ref="label" class="image-button" data-test="upload-image-button">
             <LinkButton
                 v-if="isLink"
                 btn-icon="Upload"
@@ -19,7 +19,7 @@
             />
         </label>
 
-        <input :id="id" :ref="id" type="file" @change="uploadImage" />
+        <input :id="uniqueId" :ref="uniqueId" type="file" @change="uploadImage" />
     </div>
 </template>
 
@@ -37,12 +37,13 @@ export default {
         LinkButton,
     },
 
-    props: {
-        id: {
-            type: String,
-            required: true,
-        },
+    data() {
+        return {
+            uniqueId: (Math.random() + 1).toString(36).substring(7),
+        }
+    },
 
+    props: {
         existingImage: {
             type: String,
             default: null,
@@ -64,7 +65,7 @@ export default {
 
     methods: {
         uploadImage(event) {
-            this.$emit('upload-image', this.$refs[this.id].files[0])
+            this.$emit('upload-image', this.$refs[this.uniqueId].files[0])
             event.target.value = ''
         },
     },
