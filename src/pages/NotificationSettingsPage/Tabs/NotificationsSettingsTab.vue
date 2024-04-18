@@ -39,6 +39,9 @@ export default {
                 project_ready_for_review: false,
                 project_has_been_reviewed: false,
                 comment_received_a_response: false,
+                organization_has_new_access_request: false,
+                invitation_link_will_expire: false,
+                new_instruction: false,
             },
             isLoading: true,
         }
@@ -116,6 +119,24 @@ export default {
                     subLabel: this.$t('notifications.projects.reply-sub'),
                     value: this.form.comment_received_a_response,
                     settingValue: 'comment_received_a_response',
+                },
+                {
+                    label: this.$t('notifications.organization.access'),
+                    subLabel: this.$t('notifications.organization.access-sub'),
+                    value: this.form.organization_has_new_access_request,
+                    settingValue: 'organization_has_new_access_request',
+                },
+                {
+                    label: this.$t('notifications.organization.invitation'),
+                    subLabel: this.$t('notifications.organization.invitation-sub'),
+                    value: this.form.invitation_link_will_expire,
+                    settingValue: 'invitation_link_will_expire',
+                },
+                {
+                    label: this.$t('notifications.organization.instruction'),
+                    subLabel: this.$t('notifications.organization.instruction-sub'),
+                    value: this.form.new_instruction,
+                    settingValue: 'new_instruction',
                 },
             ]
         },

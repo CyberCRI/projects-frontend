@@ -2031,7 +2031,13 @@
             "blogEntries": "Blog entries notifications"
         },
         "organization": {
-            "added": "New user to organization notification"
+            "added": "New user to organization notification",
+            "access": "Access request notification",
+            "access-sub": "Be notified when a user requests access to your organization",
+            "invitation": "Invitation notification",
+            "invitation-sub": "Be notified when an invitation link will expire",
+            "instruction": "Instruction notification",
+            "instruction-sub": "Be notified when a new instruction is published"
         },
         "read-all": "Read all notifications",
         "type": {

@@ -36,6 +36,9 @@ export interface NotificationsSettings {
     project_ready_for_review: boolean
     project_has_been_reviewed: boolean
     comment_received_a_response: boolean
+    organization_has_new_access_request: boolean
+    invitation_link_will_expire: boolean
+    new_instruction: boolean
 }
 
 export interface UserPatchModel {
