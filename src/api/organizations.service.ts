@@ -43,6 +43,19 @@ export async function postOrganisationBanner({
     ).data
 }
 
+export async function patchOrganisationBanner(
+    code: string,
+    banner_id: number,
+    body: ImageOrganizationInput
+): Promise<ImageOrganizationOutput> {
+    return (
+        await axios.patch(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/banner/${banner_id}/`,
+            body
+        )
+    ).data
+}
+
 export async function postOrganisationLogo({
     code,
     body,

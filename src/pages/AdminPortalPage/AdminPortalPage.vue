@@ -28,12 +28,31 @@ export default {
                   ]
                 : []
 
-            return [
+            const generalTabs = new Map()
+
+            generalTabs.set('old', [
                 {
                     key: 'admin-infos',
                     label: this.$t('admin.tabs.information'),
                     view: { name: 'general' },
                 },
+            ])
+
+            generalTabs.set('new', [
+                {
+                    key: 'admin-infos',
+                    label: this.$t('admin.tabs.information'),
+                    view: { name: 'general' },
+                },
+                {
+                    key: 'admin-settings',
+                    label: this.$t('admin.tabs.settings'),
+                    view: { name: 'AdminSettings' },
+                },
+            ])
+
+            return [
+                ...(generalTabs.get(import.meta.env.VITE_APP_HOME) || generalTabs.get('old')),
                 {
                     key: 'admin-categories',
                     label: this.$t('admin.tabs.categories'),

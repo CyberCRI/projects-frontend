@@ -134,7 +134,8 @@
             "templates": "Templates",
             "users": "Users",
             "requests": "Requests",
-            "groups": "Groups"
+            "groups": "Groups",
+            "settings": "Settings"
         },
         "page-title": "Admin",
         "portal": {
@@ -144,7 +145,26 @@
                 "logo": "Logo",
                 "size-min-logo": "Minimum size for the logo: {minWidth}px * {minHeight}px",
                 "portal-referencing": "Parent portal referencing",
-                "visible": "Visible"
+                "visible": "Visible",
+                "public-image": "Image (public view)",
+                "wording": {
+                    "title": "Homepage wording",
+                    "notice": "Edit here the texts that appear on your Homepage (title and description on the public view and title only on your connected view, ie once your users are loggedin).",
+                    "fields": {
+                        "title": "Title",
+                        "title-placeholder": "(no title yet)",
+                        "description": "Description",
+                        "description-placeholder": "(no description yet)"
+                    }
+                },
+                "banner-edit": {
+                    "success": "Image saved",
+                    "error": "Error while saving image"
+                },
+                "logo-edit": {
+                    "success": "Logo saved",
+                    "error": "Error while saving logo"
+                }
             },
             "categories": {
                 "add": "Add a category",
