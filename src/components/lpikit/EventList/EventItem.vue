@@ -100,22 +100,22 @@ export default {
     padding: $space-m;
     border-radius: $border-radius-m;
 
-    .event-controls {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        display: none;
-        flex-wrap: nowrap;
-        gap: $space-2xs;
-        justify-content: flex-end;
+    &.editable {
+        padding-right: 1.4em;
+
+        &:hover {
+            background: $primary-lighter;
+        }
     }
 
-    &.editable:hover {
-        background: $primary-lighter;
-
-        .event-controls {
-            display: flex;
-        }
+    .event-controls {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: $space-2xs;
+        justify-content: flex-start;
     }
 
     .date {
