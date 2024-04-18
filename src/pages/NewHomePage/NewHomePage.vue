@@ -119,7 +119,7 @@
             <div class="news">
                 <div v-if="topNews" class="top-news"></div>
                 <div class="other-news">
-                    <HomeNews :organization="organization" />
+                    <HomeNewsfeed :organization="organization" />
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
 import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
 import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
-import HomeNews from '@/components/lpikit/HomeNews/HomeNews.vue'
+import HomeNewsfeed from '@/components/lpikit/HomeNewsfeed/HomeNewsfeed.vue'
 import ProjectSummaryBlock from '@/components/lpikit/SummaryCards/ProjectSummaryBlock.vue'
 import EventSummaryBlock from '@/components/lpikit/SummaryCards/EventSummaryBlock.vue'
 import InstructionSummaryBlock from '@/components/lpikit/SummaryCards/InstructionSummaryBlock.vue'
@@ -158,7 +158,7 @@ export default {
         ProjectCategoriesDropdown,
         RecommendationBlock,
         HomeButtons,
-        HomeNews,
+        HomeNewsfeed,
         LpiLoader,
         ProjectSummaryBlock,
         EventSummaryBlock,

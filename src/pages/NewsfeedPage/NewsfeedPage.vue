@@ -11,15 +11,15 @@
             </div>
             <div v-else class="news-container">
                 <div v-for="(item, index) in newsfeed" :key="index">
-                    <HomeAnnouncementsItem
+                    <NewsfeedAnnouncementsItem
                         v-if="item.type == 'announcement'"
                         class="newsfeed-announcement"
                         :announcement="item.announcement"
                     />
-                    <HomeNewsItem
+                    <NewsfeedProjectItem
                         v-else-if="item.type == 'project'"
                         class="newsfeed-project"
-                        :news="item.project"
+                        :project="item.project"
                     />
                 </div>
             </div>
@@ -38,8 +38,8 @@
 
 <script>
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import HomeAnnouncementsItem from '@/components/lpikit/HomeNews/HomeAnnouncementsItem.vue'
-import HomeNewsItem from '@/components/lpikit/HomeNews/HomeNewsItem.vue'
+import NewsfeedAnnouncementsItem from '@/components/lpikit/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
+import NewsfeedProjectItem from '@/components/lpikit/HomeNewsfeed/NewsfeedProjectItem.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
@@ -48,8 +48,8 @@ export default {
     name: 'NewsfeedPage',
 
     components: {
-        HomeAnnouncementsItem,
-        HomeNewsItem,
+        NewsfeedAnnouncementsItem,
+        NewsfeedProjectItem,
         PaginationButtons,
         NewsListSkeleton,
     },
