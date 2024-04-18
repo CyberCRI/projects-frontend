@@ -74,7 +74,7 @@ describe('NewHomePage', () => {
         // search visible
         expect(wrapper.find('search-options-stub').exists()).toBe(true)
         // newsfeed visible
-        expect(wrapper.find('home-news-stub').exists()).toBe(true)
+        expect(wrapper.find('home-newsfeed-stub').exists()).toBe(true)
         // recommendation block visible
         expect(wrapper.find('recommendation-block-stub').exists()).toBe(true)
         // home buttons NOT visible
@@ -94,7 +94,7 @@ describe('NewHomePage', () => {
         // categories dropdown visible
         expect(wrapper.find('project-categories-dropdown-stub').exists()).toBe(true)
         // newsfeed visible
-        expect(wrapper.find('home-news-stub').exists()).toBe(true)
+        expect(wrapper.find('home-newsfeed-stub').exists()).toBe(true)
         // recommendation block visible
         expect(wrapper.find('recommendation-block-stub').exists()).toBe(true)
         // home buttons visible
