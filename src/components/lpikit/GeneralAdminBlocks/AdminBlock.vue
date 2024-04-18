@@ -57,6 +57,10 @@ export default {
     justify-content: space-between;
 }
 
+.admin-block-footer {
+    display: flex;
+}
+
 .loader {
     display: flex;
     justify-content: center;

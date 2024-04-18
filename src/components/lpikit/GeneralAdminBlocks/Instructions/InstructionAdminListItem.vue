@@ -49,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .instruction-excerpt-wrapper {
     position: relative;
+    padding-right: 1.4rem;
 }
 
 .clamped {
@@ -61,10 +62,11 @@ export default {
 
 .instruction-actions {
     position: absolute;
-    top: $space-s;
-    right: $space-unit;
+    top: 0;
+    right: 0;
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: $space-2xs;
     align-items: center;
     justify-content: flex-end;
 }

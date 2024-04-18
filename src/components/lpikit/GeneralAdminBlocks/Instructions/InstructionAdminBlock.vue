@@ -18,7 +18,11 @@
         </template>
 
         <template #footer>
-            <LinkButton btn-icon="ArrowRight" :label="$t('common.see-all')" />
+            <LinkButton
+                btn-icon="ArrowRight"
+                :label="$t('common.see-all')"
+                :to="{ name: 'InstructionListPage' }"
+            />
         </template>
     </AdminBlock>
     <EditInstructionDrawer

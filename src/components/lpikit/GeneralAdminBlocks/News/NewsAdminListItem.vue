@@ -79,8 +79,7 @@ export default {
     gap: 1rem;
     height: var(--news-dimension);
     overflow: hidden;
-    padding: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0;
 }
 
 .news-img-ctn {
@@ -106,7 +105,8 @@ export default {
 
 .news-actions {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: $space-2xs;
     align-items: center;
 }
 

@@ -89,7 +89,8 @@ export default {
 
 .instruction-actions {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: $space-2xs;
     align-items: center;
 }
 
