@@ -22,12 +22,36 @@ export async function getProjectsRecommendationsForUser(
     ).data
 }
 
+export async function getRandomProjectsRecommendationsForUser(
+    body: RecommendationsParams
+): Promise<ProjectOutput[]> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
+                body.organization
+            }/recommended-project/user/random/`,
+            _adaptParamsToGetQuery(body.params)
+        )
+    ).data
+}
+
 export async function getUsersRecommendationsForUser(body): Promise<UserModel[]> {
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
                 body.organization
             }/recommended-user/user/`,
+            _adaptParamsToGetQuery(body.params)
+        )
+    ).data
+}
+
+export async function getRandomUsersRecommendationsForUser(body): Promise<UserModel[]> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
+                body.organization
+            }/recommended-user/user/random/`,
             _adaptParamsToGetQuery(body.params)
         )
     ).data
