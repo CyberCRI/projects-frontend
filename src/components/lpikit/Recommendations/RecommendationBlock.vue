@@ -22,7 +22,10 @@
 
 <script>
 import RecommendationList from '@/components/lpikit/Recommendations/RecommendationList.vue'
-import { getProjectsRecommendations, getUsersRecommendations } from '@/api/recommendations.service'
+import {
+    getProjectsRecommendationsForUser,
+    getUsersRecommendationsForUser,
+} from '@/api/recommendations.service'
 import RecommendationListSkeleton from '@/components/lpikit/Recommendations/RecommendationListSkeleton.vue'
 
 export default {
@@ -51,13 +54,13 @@ export default {
     },
 
     async mounted() {
-        let recommendedProjects = await getProjectsRecommendations({
+        let recommendedProjects = await getProjectsRecommendationsForUser({
             organization: this.organization.code,
             params: { limit: 4 },
         })
         this.projectRecommendations = recommendedProjects.results
 
-        let recommendedUsers = await getUsersRecommendations({
+        let recommendedUsers = await getUsersRecommendationsForUser({
             organization: this.organization.code,
             params: { limit: 3 },
         })

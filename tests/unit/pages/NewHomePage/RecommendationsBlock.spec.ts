@@ -6,14 +6,17 @@ import flushPromises from 'flush-promises'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { UserFactory } from '../../../factories/user.factory'
-import { getProjectsRecommendations, getUsersRecommendations } from '@/api/recommendations.service'
+import {
+    getProjectsRecommendationsForUser,
+    getUsersRecommendationsForUser,
+} from '@/api/recommendations.service'
 
 vi.mock('@/api/recommendations.service', () => ({
-    getProjectsRecommendations: vi.fn(),
-    getUsersRecommendations: vi.fn(),
+    getProjectsRecommendationsForUser: vi.fn(),
+    getUsersRecommendationsForUser: vi.fn(),
 }))
-vi.mocked(getProjectsRecommendations).mockResolvedValue(ProjectOutputFactory.generateMany(2))
-vi.mocked(getUsersRecommendations).mockResolvedValue(UserFactory.generateMany(2))
+vi.mocked(getProjectsRecommendationsForUser).mockResolvedValue(ProjectOutputFactory.generateMany(2))
+vi.mocked(getUsersRecommendationsForUser).mockResolvedValue(UserFactory.generateMany(2))
 
 const i18n = {
     locale: 'en',
