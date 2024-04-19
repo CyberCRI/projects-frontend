@@ -1,5 +1,5 @@
 <template>
-    <li class="sub-list" v-if="!group.hidden">
+    <li class="sub-list" v-show="!group.hidden">
         <div class="top-list">
             <div
                 class="texts"
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="group.children?.length && (showChild || forceOpen)" class="child-list">
+        <div v-show="group.children?.length && (showChild || forceOpen)" class="child-list">
             <ul>
                 <MultiGroupPickerElement
                     v-for="child in group.children"
