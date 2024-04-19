@@ -121,6 +121,7 @@ li {
     display: flex;
     width: 70%;
     align-items: center;
+
     &.has-children {
         cursor: pointer;
     }
