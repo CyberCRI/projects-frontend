@@ -272,6 +272,7 @@ export default {
             this.events = (
                 await getAllEvents(this.$store.getters['organizations/current']?.code, {
                     ordering: '+event_date',
+                    from_date: new Date().toISOString(),
                 })
             ).results
         },
