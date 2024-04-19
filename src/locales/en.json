@@ -875,12 +875,12 @@
         "new-project": "New project",
         "short-title": {
             "events": "Calendar",
-            "projects": "projects",
+            "projects": "Your projects",
             "instructions": "Do not miss"
         },
         "long-title": {
             "events": "Calendar",
-            "projects": "my projects",
+            "projects": "Your projects",
             "instructions": "Do not miss"
         },
         "create-project": "Create a project"
