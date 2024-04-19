@@ -2177,7 +2177,8 @@
                 "label": "Groupe(s) cible(s)",
                 "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
                 "select-all": "Tout sélectionner",
-                "filter": "Filtrer les groupes"
+                "filter": "Filtrer les groupes",
+                "all": "Selectionner tous"
             }
         },
         "group-label": "Groupe :",

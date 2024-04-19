@@ -1,7 +1,11 @@
 <template>
     <li class="sub-list" v-if="!group.hidden">
         <div class="top-list">
-            <div class="texts" @click="showChildren">
+            <div
+                class="texts"
+                @click="showChildren"
+                :class="{ 'has-children': group.children?.length }"
+            >
                 <div>
                     <LpiCheckbox
                         label=""
@@ -9,6 +13,7 @@
                         @update:model-value="toggleGroup(group)"
                         class="checkbox"
                         @click.stop
+                        :disabled="group.disabled"
                     />
                 </div>
                 <div class="name" :class="{ 'green-color': hasDisplayableChildren }">
@@ -19,12 +24,12 @@
                     <IconImage
                         v-if="hasDisplayableChildren"
                         class="icon green-color"
-                        :name="this.showChild ? 'ChevronUp' : 'ChevronDown'"
+                        :name="showChild || forceOpen ? 'ChevronUp' : 'ChevronDown'"
                     />
                 </div>
             </div>
         </div>
-        <div v-if="group.children && this.showChild" class="child-list">
+        <div v-if="group.children?.length && (showChild || forceOpen)" class="child-list">
             <ul>
                 <MultiGroupPickerElement
                     v-for="child in group.children"
@@ -33,6 +38,7 @@
                     class="nested-list"
                     :selected-groups="selectedGroups"
                     @toggle-group="toggleGroup"
+                    :force-open="forceOpen"
                 />
             </ul>
         </div>
@@ -60,6 +66,11 @@ export default {
         selectedGroups: {
             type: Object,
             default: () => ({}),
+        },
+
+        forceOpen: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -110,7 +121,9 @@ li {
     display: flex;
     width: 70%;
     align-items: center;
-    cursor: pointer;
+    &.has-children {
+        cursor: pointer;
+    }
 }
 
 .child-list {
