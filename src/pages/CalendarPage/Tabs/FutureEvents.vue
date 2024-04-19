@@ -33,6 +33,7 @@ export default {
             const eventsFromAPi = (
                 await getAllEvents(this.$store.getters['organizations/current']?.code, {
                     ordering: '+event_date',
+                    from_date: new Date().toISOString(),
                 })
             ).results
 
