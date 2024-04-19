@@ -2050,7 +2050,13 @@
             "blogEntries": "Notifications de blog"
         },
         "organization": {
-            "added": "Notification d'ajout d'utilisateur"
+            "added": "Notification d'ajout d'utilisateur",
+            "access": "Notification de demande d'accès",
+            "access-sub": "Être notifié quand un utilisateur demande l'accès à votre organisation",
+            "invitation": "Notification d'invitation",
+            "invitation-sub": "Être notifié quand un lien d'invitation va expirer",
+            "instruction": "Notification d'instruction",
+            "instruction-sub": "Être notifié quand une instruction est envoyée"
         },
         "read-all": "Lire toutes notifications",
         "type": {
