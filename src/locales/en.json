@@ -2185,7 +2185,8 @@
                 "label": "Targeted group(s)",
                 "notice": "Select the group(s) that will see this event",
                 "select-all": "Select all",
-                "filter": "Filter groups"
+                "filter": "Filter groups",
+                "all": "Select all"
             }
         },
         "group-label": "Group:",
