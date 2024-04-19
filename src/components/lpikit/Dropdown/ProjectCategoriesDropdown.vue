@@ -1,12 +1,14 @@
 <template>
-    <div v-click-outside="close">
+    <div class="project-categories-dropdown" v-click-outside="close" :class="{ 'is-open': open }">
         <button class="categories" @click="toggle_categories">
             <span class="categories-btn">{{ $t('project.categories') }}</span>
             <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
         </button>
-        <div v-if="open" class="choose-project-categories">
-            <DropdownCategories />
-        </div>
+        <transition name="slide">
+            <div v-if="open" class="choose-project-categories">
+                <DropdownCategories />
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -42,6 +44,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.project-categories-dropdown {
+    position: relative;
+
+    &.is-open,
+    &.is-open .choose-project-categories {
+        box-shadow: 0 12px 12px rgb(0 0 0 / 30%);
+    }
+}
+
 .categories {
     border: 1px solid $gray-10;
     border-radius: $border-radius-s;
@@ -70,10 +81,43 @@ export default {
     }
 }
 
+.is-open .categories {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0;
+}
+
 .choose-project-categories {
     display: flex;
     flex-direction: column;
-    padding: $space-xs;
-    padding-top: $space-2xs;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.3s;
+    transform-origin: top center;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+    transform: scaleY(1);
+
+    :deep(a) {
+        opacity: 0;
+    }
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: scaleY(0) translateY(-2rem);
+
+    :deep(a) {
+        opacity: 0;
+    }
 }
 </style>

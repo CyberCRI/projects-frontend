@@ -27,7 +27,10 @@ export default {
 
 <style lang="scss" scoped>
 .drop-down-menu {
-    background-color: $primary-dark;
+    background-color: $white;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: $gray-10;
     border-bottom-left-radius: $border-radius-xs;
     border-bottom-right-radius: $border-radius-xs;
     max-height: pxToRem(450px);
@@ -42,7 +45,7 @@ export default {
         position: relative;
 
         .drop-down-menu-item-content {
-            color: $white;
+            color: $primary-dark;
             padding: $space-m 0;
             font-size: $font-size-s;
             display: flex;
@@ -58,9 +61,10 @@ export default {
         }
 
         &:hover {
+            background-color: $green-light;
+
             .drop-down-menu-item-content {
                 .label {
-                    color: $green-light;
                     transform: scaleX(1.1);
                 }
             }
