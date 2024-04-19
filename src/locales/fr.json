@@ -874,12 +874,12 @@
         "new-project": "Nouveau projet",
         "short-title": {
             "events": "Calendrier",
-            "projects": "projets",
+            "projects": "Vos projets",
             "instructions": "À ne pas manquer"
         },
         "long-title": {
             "events": "Calendrier",
-            "projects": "mes projets",
+            "projects": "Vos projets",
             "instructions": "À ne pas manquer"
         },
         "create-project": "Créer un projet"
