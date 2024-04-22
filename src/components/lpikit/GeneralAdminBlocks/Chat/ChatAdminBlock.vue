@@ -16,22 +16,25 @@
         </template>
         <template #default v-if="hasChat">
             <p class="chat-data">
-                <strong>{{ $t('chat.data.wording') }}</strong> {{ wording }}
+                <strong>{{ $t('chat.data.wording') }}</strong> <span>{{ chat_button_text }}</span>
             </p>
             <p class="chat-data">
                 <strong>{{ $t('chat.data.link') }}</strong>
-                <a target="_blank" :href="url">{{ url }}</a>
+                <a v-if="chat_url" target="_blank" :href="chat_url">{{ chat_url }}</a>
+                <span v-else>{{ $t('chat.data.no-link') }}</span>
             </p>
         </template>
     </AdminBlock>
-    <EditChatDrawer :is-opened="editChatIsOpen" @close="editChatIsOpen = false" :form="chatForm" />
+    <EditChatDrawer
+        :is-opened="editChatIsOpen"
+        @close="editChatIsOpen = false"
+        @chat-edited="reloadOrganization"
+    />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import EditChatDrawer, {
-    defaultForm,
-} from '@/components/lpikit/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
+import EditChatDrawer from '@/components/lpikit/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 export default {
     name: 'ChatAdminBlock',
 
@@ -43,23 +46,36 @@ export default {
 
     data() {
         return {
-            wording: 'Join chat',
-            url: 'https://universitedeparis.slack.com',
             editChatIsOpen: false,
-            chatForm: defaultForm(),
         }
     },
 
     computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+
         blockTitle() {
             return this.$t('admin.portal.chat')
         },
         hasChat() {
-            return !!this.url
+            return !!this.chat_url
+        },
+
+        chat_button_text() {
+            return this.organization?.chat_button_text || $t('chat.data.no-wording')
+        },
+
+        chat_url() {
+            return this.organization?.chat_url
         },
     },
 
-    methods: {},
+    methods: {
+        reloadOrganization() {
+            this.$store.dispatch('organizations/getCurrentOrganization', this.organization.code)
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>

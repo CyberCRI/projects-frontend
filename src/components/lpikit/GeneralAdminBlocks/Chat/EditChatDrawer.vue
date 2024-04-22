@@ -14,14 +14,14 @@
             <div class="form-section">
                 <label class="label">{{ $t('chat.drawer.url.label') }}</label>
                 <p class="notice">{{ $t('chat.drawer.url.notice') }}</p>
-                <TextInput v-model="form.url" :placeholder="$t('chat.drawer.url.placeholder')" />
+                <TextInput v-model="chat_url" :placeholder="$t('chat.drawer.url.placeholder')" />
             </div>
 
             <div class="form-section">
                 <label class="label">{{ $t('chat.drawer.wording.label') }}</label>
                 <p class="notice">{{ $t('chat.drawer.wording.notice') }}</p>
                 <TextInput
-                    v-model="form.url"
+                    v-model="chat_button_text"
                     :placeholder="$t('chat.drawer.wording.placeholder')"
                 />
             </div>
@@ -29,20 +29,14 @@
     </DrawerLayout>
 </template>
 <script>
-export function defaultForm() {
-    return {
-        url: '',
-        wording: '',
-    }
-}
-
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
+import { patchOrganization } from '@/api/organizations.service.ts'
 
 export default {
     name: 'EditChatDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'chat-edited'],
 
     components: {
         DrawerLayout,
@@ -57,8 +51,11 @@ export default {
     },
 
     data() {
+        const org = this.$store.getters['organizations/current']
+
         return {
-            form: defaultForm(),
+            chat_button_text: org.chat_button_text || '',
+            chat_url: org.chat_url || '',
             asyncing: false,
         }
     },
@@ -68,19 +65,30 @@ export default {
             this.$emit('close')
         },
         async saveChat() {
-            const isValid = await this.$refs.newsForm.v$.$validate()
-            if (!isValid) {
-                return
-            }
             this.asyncing = true
-            // TODO handle image
-            const formData = {
-                ...this.form,
+
+            try {
+                const payload = {
+                    chat_button_text: this.chat_button_text,
+                    chat_url: this.chat_url,
+                }
+
+                await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
+                this.$emit('chat-edited')
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('chat.drawer.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('chat.drawer.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$emit('close')
             }
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            console.log('saveChat', formData)
-            this.asyncing = false
-            this.$emit('close')
         },
     },
 }

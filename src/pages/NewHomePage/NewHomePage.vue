@@ -175,13 +175,7 @@ export default {
             open_categories: false,
             recommendations: [],
             isLoading: true,
-            homeButtons: [
-                {
-                    label: this.$t('home.new-project'),
-                    action: () => this.$router.push({ name: 'createProject' }),
-                    dataTest: 'create-project',
-                },
-            ],
+
             topNews: null,
             projects: [],
             events: [],
@@ -204,6 +198,27 @@ export default {
 
         bannerImageSizes() {
             return pictureApiToImageSizes(this.organization?.banner_image)
+        },
+
+        homeButtons() {
+            const btns = [
+                {
+                    label: this.$t('home.new-project'),
+                    action: () => this.$router.push({ name: 'createProject' }),
+                    dataTest: 'create-project',
+                    icon: 'Plus',
+                },
+            ]
+
+            if (this.organization.chat_button_text && this.organization.chat_url) {
+                btns.push({
+                    label: this.organization.chat_button_text,
+                    action: () => window.open(this.organization.chat_url, '_blank'),
+                    dataTest: 'go-to-chat',
+                    icon: '',
+                })
+            }
+            return btns
         },
 
         loggedIn() {

@@ -4,7 +4,7 @@
             :label="button.label"
             :secondary="true"
             :white-bg="true"
-            btn-icon="Plus"
+            :btn-icon="button.icon"
             @click="button.action"
             class="individual-button white-bg"
             :data-test="button.dataTest"
