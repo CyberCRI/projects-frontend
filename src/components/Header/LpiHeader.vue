@@ -424,51 +424,50 @@ export default {
         },
 
         moreMenu() {
-            const newHomeRelated =
-                import.meta.env.VITE_APP_HOME === 'new'
-                    ? [
-                          {
-                              label: this.$t('home.calendar').toUpperCase(),
-                              to: { name: 'CalendarPage' },
-                              leftIcon: 'Calendar',
-                              condition: true, // TODO ?
-                              dataTest: 'more-calendar',
-                          },
-                          {
-                              label: this.$t('home.instructions').toUpperCase(),
-                              to: { name: 'InstructionListPage' },
-                              leftIcon: 'BookmarkBoxOutline',
-                              condition: true, // TODO ?
-                              dataTest: 'more-instructions',
-                          },
-                          {
-                              label: this.$t('home.news').toUpperCase(),
-                              to: { name: 'NewsListPage' },
-                              leftIcon: 'Article',
-                              condition: true, // TODO ?
-                              dataTest: 'more-instructions',
-                          },
-                      ]
-                    : []
+            const moreExtras = new Map()
+            moreExtras.set('old', [
+                {
+                    label: this.$t('home.announcements').toUpperCase(),
+                    action: () => this.toAnnouncements(),
+                    leftIcon: 'BullhornOutline',
+                    condition: this.announcements.length > 0,
+                    dataTest: 'announcements',
+                },
+            ])
+
+            moreExtras.set('new', [
+                {
+                    label: this.$t('home.calendar').toUpperCase(),
+                    to: { name: 'CalendarPage' },
+                    leftIcon: 'Calendar',
+                    condition: true, // TODO ?
+                    dataTest: 'more-calendar',
+                },
+                {
+                    label: this.$t('home.instructions').toUpperCase(),
+                    to: { name: 'InstructionListPage' },
+                    leftIcon: 'BookmarkBoxOutline',
+                    condition: true, // TODO ?
+                    dataTest: 'more-instructions',
+                },
+                {
+                    label: this.$t('home.news').toUpperCase(),
+                    to: { name: 'NewsListPage' },
+                    leftIcon: 'Article',
+                    condition: true, // TODO ?
+                    dataTest: 'more-instructions',
+                },
+                {
+                    label: this.$t('home.announcements').toUpperCase(),
+                    to: { name: 'AnnouncementsPage' },
+                    leftIcon: 'BullhornOutline',
+                    condition: this.announcements.length > 0,
+                    dataTest: 'announcements',
+                },
+            ])
+
             return [
-                ...newHomeRelated,
-                ...[
-                    import.meta.env.VITE_APP_HOME === 'new'
-                        ? {
-                              label: this.$t('home.announcements').toUpperCase(),
-                              to: { name: 'AnnouncementsPage' },
-                              leftIcon: 'BullhornOutline',
-                              condition: this.announcements.length > 0,
-                              dataTest: 'announcements',
-                          }
-                        : {
-                              label: this.$t('home.announcements').toUpperCase(),
-                              action: () => this.toAnnouncements(),
-                              leftIcon: 'BullhornOutline',
-                              condition: this.announcements.length > 0,
-                              dataTest: 'announcements',
-                          },
-                ],
+                ...(moreExtras.get(import.meta.env.VITE_APP_HOME) || moreExtras.get('old') || []),
                 {
                     label: this.$t('home.communities').toUpperCase(),
                     to: { name: 'Portal' },

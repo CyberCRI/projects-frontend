@@ -36,7 +36,7 @@
 
                     <ToolTip
                         v-if="hasMoreTags"
-                        hover="true"
+                        hover
                         interactive
                         :is-text-content="false"
                         secondary
@@ -199,7 +199,7 @@ export default {
 
 .extra-skills-list {
     max-width: 20rem;
-    padding: 1rem;
+    padding: $space-s;
 }
 
 .skills,
