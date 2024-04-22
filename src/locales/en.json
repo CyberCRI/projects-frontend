@@ -155,7 +155,9 @@
                         "title-placeholder": "(no title yet)",
                         "description": "Description",
                         "description-placeholder": "(no description yet)"
-                    }
+                    },
+                    "success": "Home wording saved",
+                    "error": "Error while saving home wording"
                 },
                 "banner-edit": {
                     "success": "Image saved",

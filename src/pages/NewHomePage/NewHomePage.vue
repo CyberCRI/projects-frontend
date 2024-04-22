@@ -63,9 +63,10 @@
                 <h1 class="image-main-title">
                     {{ organization.dashboard_title }}
                 </h1>
-                <div class="introduction-text">
-                    {{ organization.dashboard_subtitle }}
-                </div>
+                <div
+                    class="introduction-text homepage-introduction-text"
+                    v-html="organization.description || ''"
+                ></div>
                 <div class="image-account-buttons">
                     <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
                     <LpiButton
@@ -81,12 +82,14 @@
             <h1 class="centered-main-title">
                 {{ organization.dashboard_title }}
             </h1>
-            <div class="centered-introduction">
-                {{ organization.dashboard_subtitle }}
-            </div>
+            <div
+                class="centered-introduction homepage-introduction-text"
+                v-html="organization.description || ''"
+            ></div>
             <div class="account-buttons">
                 <LpiButton :label="$t('home.login')" :secondary="false" />
                 <LpiButton
+                    v-if="organization.access_request_enabled"
                     :label="$t('home.account-request')"
                     :secondary="true"
                     class="login-button"

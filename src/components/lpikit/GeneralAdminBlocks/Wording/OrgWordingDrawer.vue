@@ -1,7 +1,7 @@
 <template>
     <DrawerLayout
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="false"
+        :confirm-action-disabled="asyncing"
         :is-opened="isOpened"
         :title="$t('admin.portal.general.wording.title')"
         class="wording-drawer medium"
@@ -41,11 +41,12 @@
 import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
+import { patchOrganization } from '@/api/organizations.service.ts'
 
 export default {
     name: 'OrgWordingDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'organization-edited'],
 
     components: {
         TipTapEditor,
@@ -61,21 +62,48 @@ export default {
     },
 
     data() {
+        const org = this.$store.getters['organizations/current']
+        const title = org?.dashboard_title || ''
+        const description = org?.description || ''
+
         return {
             editorKey: 0,
-            title: '',
+            title: title,
             description: {
-                savedContent: '',
-                originalContent: '',
+                savedContent: description,
+                originalContent: description,
             },
             addedImages: [],
+            asyncing: false,
         }
     },
 
     methods: {
-        saveWording() {
-            // TODO Save wording
-            this.$emit('close')
+        async saveWording() {
+            this.asyncing = true
+
+            try {
+                const payload = {
+                    dashboard_title: this.title,
+                    description: this.description.savedContent,
+                }
+
+                await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
+                this.$emit('organization-edited')
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.portal.general.wording.success'),
+                    type: 'success',
+                })
+            } catch (err) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('admin.portal.general.wording.error')} (${err})`,
+                    type: 'error',
+                })
+                console.error(err)
+            } finally {
+                this.asyncing = false
+                this.$emit('close')
+            }
         },
 
         close() {
