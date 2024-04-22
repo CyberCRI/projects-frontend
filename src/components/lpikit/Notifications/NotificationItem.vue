@@ -105,7 +105,7 @@
                         class="strong"
                         place="week_group"
                     >
-                        {{ notification.invitation.people_group.name }}
+                        {{ notification.invitation?.people_group.name }}
                     </span>
                 </template>
                 <template #today_group>
@@ -115,8 +115,8 @@
                         place="today_group"
                     >
                         <router-link
-                            :to="`/group/${notification.invitation.people_group.id}/snapshot`"
-                            >{{ notification.invitation.people_group.name }}</router-link
+                            :to="`/group/${notification.invitation?.people_group.id}/snapshot`"
+                            >{{ notification.invitation?.people_group.name }}</router-link
                         >
                     </span>
                 </template>
@@ -160,6 +160,16 @@
                         place="access_request_nb"
                     >
                         {{ notification.context.access_request_nb }}
+                    </span>
+                </template>
+
+                <template #requests_count>
+                    <span
+                        v-if="notification.type === 'pending_access_requests'"
+                        class="strong"
+                        place="requests_count"
+                    >
+                        {{ notification.context.requests_count }}
                     </span>
                 </template>
             </i18n-t>
