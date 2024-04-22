@@ -486,6 +486,7 @@ export default {
 
     @media (min-width: $min-tablet) {
         flex-direction: row;
+        align-items: flex-start;
     }
 }
 
@@ -496,6 +497,8 @@ export default {
         flex-basis: 35%;
         margin-bottom: 0;
         flex-shrink: 0;
+        position: sticky;
+        top: -7rem;
     }
 
     button {
