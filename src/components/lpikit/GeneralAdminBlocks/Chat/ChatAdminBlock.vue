@@ -63,7 +63,7 @@ export default {
         },
 
         chat_button_text() {
-            return this.organization?.chat_button_text || $t('chat.data.no-wording')
+            return this.organization?.chat_button_text || this.$t('chat.data.no-wording')
         },
 
         chat_url() {
