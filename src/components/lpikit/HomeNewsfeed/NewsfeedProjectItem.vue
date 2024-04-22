@@ -13,7 +13,9 @@
         </div>
         <div class="project-content">
             <h3 class="project-title-desktop">{{ $filters.capitalize(project.title) }}</h3>
-            <p class="project-description">{{ project.purpose }}</p>
+            <div class="project-description">
+                <p class="clamped">{{ purpose }}</p>
+            </div>
             <SummaryAction
                 :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
                 :action-label="$t('common.read')"
@@ -58,6 +60,11 @@ export default {
             return this.project && this.project.header_image
                 ? this.project?.header_image.variations?.small
                 : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
+        },
+
+        purpose() {
+            const sanitized = this.project?.purpose.replace(/<[^>]+>/g, ' ') || ''
+            return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
         },
     },
 }
@@ -130,9 +137,12 @@ export default {
 
     .project-description {
         flex-grow: 1;
+    }
+
+    .clamped {
         line-height: $font-size-xl;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }

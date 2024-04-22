@@ -21,7 +21,9 @@
                     {{ $t(`recruit.${announcement.type}`) }}
                 </span>
             </div>
-            <div class="announcement-description" v-html="announcement.description"></div>
+            <div class="announcement-description">
+                <p class="clamped">{{ description }}</p>
+            </div>
 
             <SummaryAction
                 :to="{
@@ -62,6 +64,11 @@ export default {
             return `${
                 import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
             }/placeholders/announcement_placeholder.png`
+        },
+
+        description() {
+            const sanitized = this.announcement?.description.replace(/<[^>]+>/g, ' ') || ''
+            return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
         },
     },
 }
@@ -144,9 +151,12 @@ export default {
 
     .announcement-description {
         flex-grow: 1;
+    }
+
+    .clamped {
         line-height: $font-size-xl;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
