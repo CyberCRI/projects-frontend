@@ -2308,11 +2308,15 @@
                 "label": "Link wording",
                 "notice": "What the button should display (ex: Join chat, Join Whatsapp...) - 12 car max.",
                 "placeholder": "ex: Join chat"
-            }
+            },
+            "success": "Chat settings saved",
+            "error": "Error while saving chat settings"
         },
         "data": {
             "link": "Link: ",
-            "wording": "Button wording: "
+            "wording": "Button wording: ",
+            "no-link": "(nothing set)",
+            "no-wording": "(nothing set)"
         }
     },
     "featured-projects": {

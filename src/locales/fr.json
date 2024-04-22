@@ -2308,11 +2308,15 @@
                 "label": "Libellé du lien",
                 "notice": "Ce que le bouton devrait afficher (ex: Rejoindre la discussion, Rejoindre Whatsapp...) - max. 12 caractères.",
                 "placeholder": "ex: Rejoindre la discussion"
-            }
+            },
+            "success": "Paramètres de la plateforme de discussion sauvegardés",
+            "error": "Erreur lors de la sauvegarde des paramètres de la plateforme de discussion"
         },
         "data": {
             "link": "Lien : ",
-            "wording": "Texte du bouton : "
+            "wording": "Texte du bouton : ",
+            "no-link": "(rien de défini)",
+            "no-wording": "(rien de défini)"
         }
     },
     "featured-projects": {
