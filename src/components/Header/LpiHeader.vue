@@ -303,7 +303,10 @@ export default {
                 notification.type === 'invitation_today_reminder'
             ) {
                 return
-            } else if (notification.type === 'access_request') {
+            } else if (
+                notification.type === 'access_request' ||
+                notification.type === 'pending_access_requests'
+            ) {
                 this.$router.push({ name: 'RequestsAdminTab' })
             } else {
                 this.$router.push({
