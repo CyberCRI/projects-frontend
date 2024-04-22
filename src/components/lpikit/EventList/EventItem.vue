@@ -132,6 +132,10 @@ export default {
         }
 
         .day-month {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 1.4rem;
             color: $primary-dark;
             font-weight: 900;
 
