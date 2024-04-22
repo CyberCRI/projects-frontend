@@ -16,7 +16,7 @@
 import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import NewsForm from '@/components/lpikit/NewsForm/NewsForm.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import { createNews, putNews, postNewsHeader } from '@/api/news.service.ts'
+import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 
 export default {
@@ -82,28 +82,34 @@ export default {
             try {
                 const payload = {
                     ...this.form,
+                    header_image: this.form.header_image,
                     publication_date: this.form.publication_date.toISOString(),
                     people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-
+                let payloadNews = { ...payload }
+                delete payloadNews.imageSizes
+                delete payloadNews.header_image
                 let savedNews
 
                 if (this.news.id) {
-                    savedNews = await putNews(
+                    savedNews = await patchNews(
                         this.$store.getters['organizations/current']?.code,
                         this.news.id,
-                        payload
+                        payloadNews
                     )
                 } else {
                     savedNews = await createNews(
                         this.$store.getters['organizations/current']?.code,
-                        payload
+                        payloadNews
                     )
                 }
 
-                if (this.form.header_image instanceof File) {
+                const formData = new FormData()
+                imageSizesFormData(formData, this.form.imageSizes)
+
+                if (payload.header_image instanceof File) {
                     const formData = new FormData()
 
                     formData.append(
@@ -111,12 +117,26 @@ export default {
                         this.form['header_image'],
                         this.form['header_image'].name
                     )
-
                     imageSizesFormData(formData, this.form.imageSizes)
-
-                    await postNewsHeader(
+                    payload.header_image_id = (
+                        await postNewsHeader(
+                            this.$store.getters['organizations/current']?.code,
+                            savedNews.id,
+                            formData
+                        )
+                    ).id
+                    formData.delete('file')
+                    await patchNewsHeader(
                         this.$store.getters['organizations/current']?.code,
                         savedNews.id,
+                        payload.header_image_id,
+                        formData
+                    )
+                } else if (savedNews.header_image?.id) {
+                    await patchNewsHeader(
+                        this.$store.getters['organizations/current']?.code,
+                        this.news.id,
+                        this.news.header_image.id,
                         formData
                     )
                 }
