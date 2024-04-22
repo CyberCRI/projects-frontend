@@ -155,7 +155,9 @@
                         "title-placeholder": "(pas encore de titre)",
                         "description": "Description",
                         "description-placeholder": "(pas encore de description)"
-                    }
+                    },
+                    "success": "Textes de la page d'accueil sauvegardés",
+                    "error": "Erreur lors de la sauvegarde des textes de la page d'accueil"
                 },
                 "banner-edit": {
                     "success": "Image sauvegardée",

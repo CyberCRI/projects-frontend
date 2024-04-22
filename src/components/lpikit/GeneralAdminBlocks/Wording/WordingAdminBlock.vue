@@ -13,7 +13,7 @@
             <div class="sub-container">
                 <h5 class="sub-title">{{ $t('admin.portal.general.wording.fields.title') }}</h5>
                 <p class="sub-field">
-                    {{ $t('admin.portal.general.wording.fields.title-placeholder') }}
+                    {{ title }}
                 </p>
             </div>
             <div class="sub-container">
@@ -21,12 +21,16 @@
                     {{ $t('admin.portal.general.wording.fields.description') }}
                 </h5>
                 <p class="sub-field">
-                    {{ $t('admin.portal.general.wording.fields.description-placeholder') }}
+                    {{ description }}
                 </p>
             </div>
         </template>
     </AdminBlock>
-    <OrgWordingDrawer :is-opened="drawerIsOpen" @close="drawerIsOpen = false" />
+    <OrgWordingDrawer
+        :is-opened="drawerIsOpen"
+        @close="drawerIsOpen = false"
+        @organization-edited="reloadOrganization"
+    />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
@@ -46,6 +50,31 @@ export default {
         return {
             drawerIsOpen: false,
         }
+    },
+
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+        title() {
+            return (
+                this.organization?.dashboard_title ||
+                $t('admin.portal.general.wording.fields.title-placeholder')
+            )
+        },
+        description() {
+            if (this.organization?.description) {
+                const sanitized = this.organization?.description.replace(/<[^>]+>/g, ' ')
+                return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
+            }
+            return this.$t('admin.portal.general.wording.fields.description-placeholder')
+        },
+    },
+
+    methods: {
+        reloadOrganization() {
+            this.$store.dispatch('organizations/getCurrentOrganization', this.organization.code)
+        },
     },
 }
 </script>
