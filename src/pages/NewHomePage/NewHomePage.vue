@@ -56,7 +56,7 @@
                     :image-sizes="bannerImageSizes"
                     :src="bannerUrl"
                     class="organization-banner"
-                    :ratio="2 / 1"
+                    :ratio="3 / 1"
                 />
             </div>
             <div class="introduction-container">
@@ -353,6 +353,7 @@ export default {
         .organization-banner {
             width: 100%;
             aspect-ratio: 3;
+            border-radius: pxToRem(8px);
 
             @media screen and (min-width: $min-tablet) {
                 margin-bottom: 0;
