@@ -71,19 +71,4 @@ export default {
         }
     }
 }
-
-.custom-scrollbar::-webkit-scrollbar {
-    width: 11px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: $white;
-    border: solid 3px $primary-dark;
-    border-radius: $scrollbar-radius;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    border: solid 3px $primary-dark;
-    border-radius: $scrollbar-radius;
-}
 </style>
