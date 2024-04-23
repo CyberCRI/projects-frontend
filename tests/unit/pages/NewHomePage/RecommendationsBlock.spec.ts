@@ -26,7 +26,7 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
+const storeFactory = (loggedIn) => ({
     modules: {
         projectCategories: {
             namespaced: true,
@@ -46,55 +46,35 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                isLoggedIn: vi.fn().mockReturnValue(false),
+                isLoggedIn: vi.fn().mockReturnValue(loggedIn),
             },
         },
     },
-}
-
-const connectedStore = {
-    modules: {
-        ...store.modules,
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-                isLoggedIn: vi.fn().mockReturnValue(true),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
-}
+})
 
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
-const props = {
-    organization: {
-        code: 'TEST',
-    },
-    loggedIn: false,
-}
-
-const propsLoggedIn = {
-    organization: {
-        code: 'TEST',
-    },
-    loggedIn: true,
-}
+const props = {}
 
 describe('RecommendationBlock', () => {
     it('should render RecommendationBlock', async () => {
-        let wrapper = lpiShallowMount(RecommendationBlock, { props, store, router, i18n })
+        let wrapper = lpiShallowMount(RecommendationBlock, {
+            props,
+            store: storeFactory(false),
+            router,
+            i18n,
+        })
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
     })
 
     it('should display projects reco for non connected user', async () => {
-        let wrapper = lpiShallowMount(RecommendationBlock, { props, store, router, i18n })
+        let wrapper = lpiShallowMount(RecommendationBlock, {
+            props,
+            store: storeFactory(false),
+            router,
+            i18n,
+        })
         await flushPromises()
         expect(wrapper.find('[data-test="project-recommendations"]').exists()).toBe(true)
         expect(wrapper.find('[data-test="user-recommendations"]').exists()).toBe(false)
@@ -102,8 +82,8 @@ describe('RecommendationBlock', () => {
 
     it('should display project and user reco for connected user', async () => {
         let wrapper = lpiShallowMount(RecommendationBlock, {
-            props: propsLoggedIn,
-            store,
+            props: props,
+            store: storeFactory(true),
             router,
             i18n,
         })

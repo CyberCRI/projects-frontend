@@ -1,13 +1,23 @@
 <template>
-    <div v-for="(button, index) in buttons" :key="index" class="home-btn-container">
+    <div class="home-btn-container">
         <LpiButton
-            :label="button.label"
-            :secondary="true"
-            :white-bg="true"
-            :btn-icon="button.icon"
-            @click="button.action"
+            :label="$t('home.new-project')"
+            secondary
+            white-bg
+            btn-icon="Plus"
+            @click="$router.push({ name: 'createProject' })"
             class="individual-button white-bg"
-            :data-test="button.dataTest"
+            data-test="create-project"
+        />
+
+        <LpiButton
+            v-if="organization.chat_button_text && organization.chat_url"
+            :label="organization.chat_button_text"
+            secondary
+            white-bg
+            @click="window.open(this.organization.chat_url, '_blank')"
+            class="individual-button white-bg"
+            data-test="go-to-chat"
         />
     </div>
 </template>
@@ -20,10 +30,9 @@ export default {
 
     components: { LpiButton },
 
-    props: {
-        buttons: {
-            type: Array,
-            default: () => [],
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
         },
     },
 }
@@ -33,9 +42,6 @@ export default {
 .home-btn-container {
     display: flex;
     place-content: center center;
-
-    .individual-button {
-        margin-block: $space-xs;
-    }
+    gap: $space-xs;
 }
 </style>

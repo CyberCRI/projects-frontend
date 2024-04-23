@@ -66,9 +66,9 @@ describe('NewHomePage', () => {
     it('should contain site header as non connected user', () => {
         let wrapper = lpiShallowMount(NewHomePage, { store, router, i18n })
         // org header should be visible
-        expect(wrapper.find('[data-test=home-organization-header]').exists()).toBe(true)
+        expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(true)
         // user header should NOT be visible
-        expect(wrapper.find('[data-test=home-user-header]').exists()).toBe(false)
+        expect(wrapper.find('home-header-connected-stub').exists()).toBe(false)
         // categories dropdown visible
         expect(wrapper.find('project-categories-dropdown-stub').exists()).toBe(true)
         // search visible
@@ -86,9 +86,9 @@ describe('NewHomePage', () => {
         // TODO mock loadEvent and loadInstructions
         await flushPromises() // wait for data to be "loaded"
         // org header should not be visible
-        expect(wrapper.find('[data-test=home-organization-header]').exists()).toBe(false)
+        expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(false)
         // user header should be visible
-        expect(wrapper.find('[data-test=home-user-header]').exists()).toBe(true)
+        expect(wrapper.find('home-header-connected-stub').exists()).toBe(true)
         // search visible
         expect(wrapper.find('search-options-stub').exists()).toBe(true)
         // categories dropdown visible

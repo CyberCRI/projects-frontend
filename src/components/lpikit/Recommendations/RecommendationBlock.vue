@@ -6,14 +6,13 @@
             <RecommendationListSkeleton v-if="loggedIn" :user-recommendation="true" />
         </div>
         <div v-else class="recommendation-inner">
-            <RecommendationList
+            <ProjectRecommendationList
                 :recommendations="projectRecommendations"
                 data-test="project-recommendations"
             />
-            <RecommendationList
+            <UserRecommendationList
                 v-if="loggedIn"
                 :recommendations="userRecommendations"
-                :user-recommendation="true"
                 data-test="user-recommendations"
             />
         </div>
@@ -21,7 +20,8 @@
 </template>
 
 <script>
-import RecommendationList from '@/components/lpikit/Recommendations/RecommendationList.vue'
+import UserRecommendationList from '@/components/lpikit/Recommendations/UserRecommendationList.vue'
+import ProjectRecommendationList from '@/components/lpikit/Recommendations/ProjectRecommendationList.vue'
 import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
@@ -31,19 +31,7 @@ import RecommendationListSkeleton from '@/components/lpikit/Recommendations/Reco
 export default {
     name: 'RecommendationBlock',
 
-    components: { RecommendationList, RecommendationListSkeleton },
-
-    props: {
-        organization: {
-            type: Object,
-            default: () => {},
-        },
-
-        loggedIn: {
-            type: Boolean,
-            default: false,
-        },
-    },
+    components: { UserRecommendationList, ProjectRecommendationList, RecommendationListSkeleton },
 
     data() {
         return {
@@ -53,19 +41,28 @@ export default {
         }
     },
 
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+
+        loggedIn() {
+            return this.$store.getters['users/isLoggedIn']
+        },
+    },
+
     async mounted() {
-        let recommendedProjects = await getRandomProjectsRecommendationsForUser({
+        this.projectRecommendations = await getRandomProjectsRecommendationsForUser({
             organization: this.organization.code,
             params: { count: 4, pool: 25 },
         })
-        this.projectRecommendations = recommendedProjects
 
-        let recommendedUsers = await getRandomUsersRecommendationsForUser({
-            organization: this.organization.code,
-            params: { count: 3, pool: 25 },
-        })
-        this.userRecommendations = recommendedUsers
-
+        if (this.loggedIn) {
+            this.userRecommendations = await getRandomUsersRecommendationsForUser({
+                organization: this.organization.code,
+                params: { count: 3, pool: 25 },
+            })
+        }
         this.isLoading = false
     },
 }
