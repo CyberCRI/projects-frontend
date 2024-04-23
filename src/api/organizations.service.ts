@@ -198,3 +198,36 @@ export async function acceptAccessRequest(org_code, params) {
         )
     ).data
 }
+
+export async function getFeaturedProjects(org_code, params) {
+    return (
+        await axios.get(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/featured-project/`,
+            _adaptParamsToGetQuery(params)
+        )
+    ).data
+}
+
+export async function addFeaturedProject(org_code, body) {
+    return (
+        await axios.post(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/featured-project/add/`,
+            body
+        )
+    ).data
+}
+
+export async function removeFeaturedProject(org_code, body) {
+    return (
+        await axios.post(
+            `${
+                import.meta.env.VITE_APP_API_DEFAULT_VERSION
+            }/organization/${org_code}/featured-project/remove/`,
+            body
+        )
+    ).data
+}
