@@ -66,6 +66,7 @@ export default {
     data() {
         return {
             instructions: [],
+            instructionsCount: 0,
             isLoading: true,
             editedInstruction: null,
             instructionToDelete: null,
@@ -90,11 +91,15 @@ export default {
     methods: {
         async loadInstructions() {
             this.isLoading = true
-            this.instructions = (
-                await getAllInstructions(this.$store.getters['organizations/current']?.code, {
+            const request = await getAllInstructions(
+                this.$store.getters['organizations/current']?.code,
+                {
                     ordering: '+publication_date',
-                })
-            ).results
+                    limit: 1,
+                }
+            )
+            this.instructions = request.results
+            this.instructionsCount = request.count
             this.isLoading = false
         },
 

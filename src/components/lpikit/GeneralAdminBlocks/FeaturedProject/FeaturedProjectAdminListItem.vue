@@ -67,7 +67,7 @@ export default {
     display: flex;
     gap: $space-unit;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 
     .project-image {
         width: 4rem;

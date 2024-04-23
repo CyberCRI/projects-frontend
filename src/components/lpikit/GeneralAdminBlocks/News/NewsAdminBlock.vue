@@ -63,6 +63,7 @@ export default {
     data() {
         return {
             allNews: [],
+            newsCount: 0,
             isLoading: true,
             editedNews: null,
             newsToDelete: null,
@@ -72,7 +73,7 @@ export default {
 
     computed: {
         blockTitle() {
-            let extra = this.isLoading ? '' : ` (${this.allNews.length})`
+            let extra = this.isLoading ? '' : ` (${this.newsCount})`
             return this.$t('admin.portal.news') + extra
         },
     },
@@ -84,9 +85,12 @@ export default {
     methods: {
         async loadNews() {
             this.isLoading = true
-            this.allNews = (
-                await getAllNews(this.$store.getters['organizations/current']?.code)
-            ).results
+            const request = await getAllNews(this.$store.getters['organizations/current']?.code, {
+                ordering: '+publication_date',
+                limit: 4,
+            })
+            this.allNews = request.results
+            this.newsCount = request.count
             this.isLoading = false
         },
 

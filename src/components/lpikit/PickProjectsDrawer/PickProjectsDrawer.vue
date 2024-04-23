@@ -50,6 +50,7 @@ import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
 import PickProjectSelection from './PickProjectSelection.vue'
 import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import { toRaw } from 'vue'
 
 export default {
     name: 'PickProjectsDrawer',
@@ -152,7 +153,7 @@ export default {
         },
 
         async confirm() {
-            this.$emit('picked-projects', this.listProjects)
+            this.$emit('picked-projects', toRaw(this.listProjects))
             this.close()
         },
 

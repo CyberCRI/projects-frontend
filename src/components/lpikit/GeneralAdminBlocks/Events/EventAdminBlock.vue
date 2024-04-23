@@ -62,6 +62,7 @@ export default {
     data() {
         return {
             events: [],
+            eventsCount: 0,
             isLoading: true,
             editedEvent: null,
             eventToDelete: null,
@@ -71,7 +72,7 @@ export default {
 
     computed: {
         blockTitle() {
-            let extra = this.isLoading ? '' : ` (${this.events.length})`
+            let extra = this.isLoading ? '' : ` (${this.eventsCount})`
             return this.$t('admin.portal.events') + extra
         },
     },
@@ -83,12 +84,13 @@ export default {
     methods: {
         async loadEvents() {
             this.isLoading = true
-            this.events = (
-                await getAllEvents(this.$store.getters['organizations/current']?.code, {
-                    ordering: '+event_date',
-                    from_date: new Date().toISOString(),
-                })
-            ).results
+            const request = await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                ordering: '+event_date',
+                from_date: new Date().toISOString(),
+                limit: 4,
+            })
+            this.events = request.results
+            this.eventsCount = request.count
             this.isLoading = false
         },
 
