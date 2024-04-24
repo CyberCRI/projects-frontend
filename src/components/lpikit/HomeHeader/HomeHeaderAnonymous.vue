@@ -41,6 +41,7 @@
                 <div class="description-toggle">
                     <LinkButton
                         v-if="!descriptionComputed || isDescriptionLimited"
+                        class="toggle-description-button"
                         :label="showLessDescription ? $t('common.see-more') : $t('common.see-less')"
                         :secondary="false"
                         :btn-icon="showLessDescription ? 'ChevronDown' : 'ChevronUp'"
@@ -199,6 +200,10 @@ export default {
 .description-toggle {
     display: flex;
     justify-content: center;
+
+    .toggle-description-button {
+        padding-left: 0 !important;
+    }
 }
 
 .description-limited {

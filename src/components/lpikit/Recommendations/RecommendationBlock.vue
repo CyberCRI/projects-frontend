@@ -26,6 +26,7 @@ import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
+import { getFeaturedProjects } from '@/api/organizations.service'
 import RecommendationListSkeleton from '@/components/lpikit/Recommendations/RecommendationListSkeleton.vue'
 
 export default {
@@ -52,10 +53,16 @@ export default {
     },
 
     async mounted() {
-        this.projectRecommendations = await getRandomProjectsRecommendationsForUser({
+        const featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
+        const projectRecommendations = await getRandomProjectsRecommendationsForUser({
             organization: this.organization.code,
             params: { count: 4, pool: 25 },
         })
+
+        this.projectRecommendations = [
+            ...featuredrojects.map((p) => ({ ...p, isFeatured: true })),
+            ...projectRecommendations.map((p) => ({ ...p, isFeatured: false })),
+        ].slice(0, 4)
 
         if (this.loggedIn) {
             this.userRecommendations = await getRandomUsersRecommendationsForUser({
