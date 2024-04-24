@@ -23,7 +23,7 @@
                 <span class="project-title">
                     {{ recommendation.title }}
                 </span>
-                <span class="is-featured">
+                <span class="is-featured" v-if="recommendation.isFeatured">
                     {{ $t('recommendations.is-featured') }}
                 </span>
             </div>

@@ -57,7 +57,7 @@ export default {
             featuredProjects: [],
             isLoading: true,
             editFeaturedProjects: false,
-            maxProjects: 4,
+            maxProjects: 3,
             asyncing: false,
         }
     },
