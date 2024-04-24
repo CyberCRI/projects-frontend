@@ -32,13 +32,6 @@ export default {
 
     components: { NewsfeedProjectItem, LpiButton, NewsListSkeleton, NewsfeedAnnouncementsItem },
 
-    props: {
-        organization: {
-            type: Object,
-            default: () => {},
-        },
-    },
-
     async mounted() {
         const projects = await getAllProjects({
             organizations: [this.organization.code],
@@ -58,6 +51,12 @@ export default {
             isLoading: true,
             announcements: [],
         }
+    },
+
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
     },
 
     methods: {
