@@ -4,7 +4,7 @@
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
         <!-- TODO keepin for testing purpose to remove when all is set -->
-        <!--div class="debug" style="background-color: rgba(255, 0, 0, 1); text-align: center">
+        <!--div class="debug" style="background-color: rgb(255 0 0 / 100%); text-align: center">
             <label>
                 projects <input v-model="summaryMaxProjects" type="number" min="0" max="3"
             /></label>
@@ -175,7 +175,7 @@ export default {
             padding: $space-l;
             display: flex;
             gap: $space-unit;
-            align-items: flex-start;
+            align-items: stretch;
 
             & > :deep(*) {
                 flex-basis: 33%;

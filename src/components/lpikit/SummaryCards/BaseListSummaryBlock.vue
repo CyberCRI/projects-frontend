@@ -59,16 +59,15 @@ export default {
 .summary-block {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: stretch;
     padding-inline: $space-xs;
 }
 
 .uppercase-title {
-    font-size: $font-size-l;
-    font-weight: 700;
+    font-size: $font-size-xs;
+    font-weight: normal;
     text-transform: uppercase;
-    color: $primary-dark;
     margin-top: $space-l;
 }
 
@@ -86,12 +85,17 @@ export default {
     border-radius: $border-radius-s;
     display: flex;
     flex-direction: column;
-    margin-block: $space-l;
+    margin-block: $space-s;
     padding: $space-m;
     gap: $space-m;
+    flex-grow: 1;
+}
 
-    @media screen and (min-width: $min-tablet) {
-        .inlined & {
+@media screen and (min-width: $min-tablet) {
+    .inlined {
+        align-items: center;
+
+        .column-wrapper {
             flex-direction: row;
         }
     }

@@ -96,6 +96,7 @@ export default {
 
 .instruction-title {
     font-size: $font-size-xl;
+    color: $primary-dark;
 }
 
 .instruction-excerpt {
@@ -122,6 +123,10 @@ export default {
     h4 {
         font-size: $font-size-m;
         font-weight: 500;
+    }
+
+    * {
+        color: $primary-dark !important;
     }
 }
 
