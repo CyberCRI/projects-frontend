@@ -122,8 +122,9 @@ export default {
         async loadEvents() {
             this.events = (
                 await getAllEvents(this.$store.getters['organizations/current']?.code, {
-                    ordering: '+event_date',
+                    ordering: 'event_date',
                     from_date: new Date().toISOString(),
+                    limit: this.summaryMaxEvents,
                 })
             ).results
         },

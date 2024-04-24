@@ -11,9 +11,6 @@
                 </div>
             </div>
         </div>
-        <div class="novelty-wrapper" v-if="isNew">
-            <span class="novelty-marker"></span>
-        </div>
         <div class="texts">
             <h4 class="event-name">{{ event.title }}</h4>
             <p class="event-information">{{ event.content }}</p>
@@ -125,6 +122,7 @@ export default {
         gap: $space-2xs;
         justify-content: flex-start;
         align-items: center;
+        position: relative;
 
         .icon {
             width: $font-size-3xl;
@@ -146,16 +144,6 @@ export default {
             .month {
                 font-size: $font-size-xs;
             }
-        }
-    }
-
-    .novelty-wrapper {
-        .novelty-marker {
-            display: inline-block;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 1rem;
-            background-color: $salmon;
         }
     }
 
@@ -184,6 +172,18 @@ export default {
         .event-information,
         .event-groups {
             font-weight: 900;
+        }
+
+        .date::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 0.8rem;
+            background-color: $salmon;
         }
     }
 }
