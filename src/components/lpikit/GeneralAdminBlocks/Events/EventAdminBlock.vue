@@ -85,7 +85,7 @@ export default {
         async loadEvents() {
             this.isLoading = true
             const request = await getAllEvents(this.$store.getters['organizations/current']?.code, {
-                ordering: '+event_date',
+                ordering: 'event_date',
                 from_date: new Date().toISOString(),
                 limit: 4,
             })
