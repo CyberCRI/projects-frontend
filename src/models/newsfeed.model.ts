@@ -7,8 +7,10 @@ import { ProjectModel } from './project.model'
  * @description Newsfeed models
  */
 
-export interface NewsfeedModel extends BaseModel {
-    project: ProjectModel
-    announcement: AnnouncementModel
-    type: string
+export interface NewsfeedModel {
+    id: number
+    type: 'project' | 'announcement' | 'news'
+    project?: any
+    news?: any
+    announcement?: any
 }
