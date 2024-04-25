@@ -41,12 +41,7 @@ spec:
       {{- end }}
     {{- end }}
     securityContext:
-      runAsNonRoot: true
-      runAsUser: 10000
-      runAsGroup: 10000
-      fsGroup: 10000
-      seccompProfile:
-        type: RuntimeDefault
+      {{- include "common.podSecurityContext.restricted" dict | nindent 6 }}
     templates:
       - name: all
         steps:

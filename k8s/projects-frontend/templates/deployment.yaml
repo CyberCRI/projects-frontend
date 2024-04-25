@@ -22,20 +22,13 @@ spec:
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 101
-        runAsGroup: 101
-        fsGroup: 101
-        seccompProfile:
-          type: RuntimeDefault
+        {{- include "common.podSecurityContext.restricted" dict | nindent 8 }}
       containers:
         {{- with $.Values.image }}
         - image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
         {{- end }}
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: ["ALL"]
+          {{- include "common.containerSecurityContext.restricted" dict | nindent 12 }}
           imagePullPolicy: IfNotPresent
           name: projects-frontend
           ports:
