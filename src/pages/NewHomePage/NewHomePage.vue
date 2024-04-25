@@ -200,7 +200,6 @@ export default {
 
     @media (min-width: $min-tablet) {
         flex-basis: 65%;
-        flex-shrink: 0;
     }
 
     .select-news {
