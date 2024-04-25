@@ -105,8 +105,9 @@ export default {
     --picture-ratio: calc(4 / 3);
 
     display: flex;
+    align-items: stretch;
     gap: 1rem;
-    height: calc(var(--news-dimension) + 3rem);
+    height: var(--news-dimension);
     overflow: hidden;
     padding: 1rem;
     border: $border-width-s solid $gray-10;
@@ -179,6 +180,6 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 1rem;
+    border-radius: $border-radius-s;
 }
 </style>

@@ -2,16 +2,7 @@
     <NewsListSkeleton v-if="isLoading" :limit="5" />
     <div v-else>
         <div class="home-news-container">
-            <NewsfeedAnnouncementsItem
-                v-for="(announcement, index) in announcements"
-                :key="index"
-                :announcement="announcement"
-            />
-            <NewsfeedProjectItem
-                v-for="(project, index) in projects"
-                :key="index"
-                :project="project"
-            />
+            <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
         </div>
         <div class="see-all">
             <LpiButton :label="$t('feed.see-all')" :secondary="false" @click="seeAll" />
@@ -20,36 +11,31 @@
 </template>
 
 <script>
-import NewsfeedProjectItem from '@/components/lpikit/HomeNewsfeed/NewsfeedProjectItem.vue'
-import { getAllProjects } from '@/api/projects.service'
+import NewsFeed from '@/components/lpikit/NewsFeed/NewsFeed.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
-import { getAnnouncements } from '@/api/announcements.service'
-import NewsfeedAnnouncementsItem from '@/components/lpikit/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
+import { getNewsfeed } from '@/api/newsfeed.service.ts'
 
 export default {
     name: 'HomeNewsfeed',
 
-    components: { NewsfeedProjectItem, LpiButton, NewsListSkeleton, NewsfeedAnnouncementsItem },
+    components: { NewsFeed, LpiButton, NewsListSkeleton },
+
+    props: {
+        limit: {
+            type: Number,
+            default: 6,
+        },
+    },
 
     async mounted() {
-        const projects = await getAllProjects({
-            organizations: [this.organization.code],
-            ordering: '-updated_at',
-            limit: 5,
-        })
-        this.projects = projects.results
-
-        await this.getAnnouncements()
-
-        this.isLoading = false
+        await this.loadNewsfeed()
     },
 
     data() {
         return {
-            projects: [],
             isLoading: true,
-            announcements: [],
+            newsfeed: [],
         }
     },
 
@@ -60,26 +46,18 @@ export default {
     },
 
     methods: {
-        seeAll() {
-            this.$router.push({ name: 'Newsfeed' })
+        async loadNewsfeed() {
+            this.isLoading = true
+            this.newsfeed = (
+                await getNewsfeed(this.organization.code, {
+                    limit: this.limit,
+                })
+            ).results
+            this.isLoading = false
         },
 
-        getAnnouncements() {
-            return getAnnouncements({
-                organizations: [this.organization.code],
-                ordering: '-updated_at',
-            })
-                .then(({ results }) => {
-                    this.announcements = results.filter(
-                        (announcement) =>
-                            announcement.project.publication_status !== 'private' &&
-                            (!announcement.deadline ||
-                                new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0))
-                    )
-                })
-                .catch((err) => {
-                    console.error(err)
-                })
+        seeAll() {
+            this.$router.push({ name: 'Newsfeed' })
         },
     },
 }

@@ -10,18 +10,7 @@
                 <NewsListSkeleton :limit="15" />
             </div>
             <div v-else class="news-container">
-                <div v-for="(item, index) in newsfeed" :key="index">
-                    <NewsfeedAnnouncementsItem
-                        v-if="item.type == 'announcement'"
-                        class="newsfeed-announcement"
-                        :announcement="item.announcement"
-                    />
-                    <NewsfeedProjectItem
-                        v-else-if="item.type == 'project'"
-                        class="newsfeed-project"
-                        :project="item.project"
-                    />
-                </div>
+                <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
             </div>
         </div>
 
@@ -38,18 +27,15 @@
 
 <script>
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import NewsfeedAnnouncementsItem from '@/components/lpikit/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
-import NewsfeedProjectItem from '@/components/lpikit/HomeNewsfeed/NewsfeedProjectItem.vue'
 import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
-
+import NewsFeed from '@/components/lpikit/NewsFeed/NewsFeed.vue'
 export default {
     name: 'NewsfeedPage',
 
     components: {
-        NewsfeedAnnouncementsItem,
-        NewsfeedProjectItem,
+        NewsFeed,
         PaginationButtons,
         NewsListSkeleton,
     },
@@ -72,7 +58,6 @@ export default {
 
         pagination() {
             if (!this.request) return { total: 0 }
-            console.log(this.request)
             return {
                 currentPage: this.request.current_page,
                 total: this.request.total_page,

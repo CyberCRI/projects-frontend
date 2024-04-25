@@ -85,10 +85,15 @@ export default {
         },
 
         async loadInstructions() {
+            const dateLimit =
+                this.canEditInstruction || this.canDeleteInstruction
+                    ? {}
+                    : { to_date: new Date().toISOString() }
             this.loading = true
             this.allInstructions = (
                 await getAllInstructions(this.$store.getters['organizations/current']?.code, {
                     ordering: '+publication_date',
+                    ...dateLimit,
                 })
             ).results
             this.loading = false
