@@ -1,5 +1,5 @@
 <template>
-    <div class="page-section-full introduction" data-test="home-organization-header">
+    <div class="page-section-medium introduction" data-test="home-organization-header">
         <div class="banner">
             <h1 class="mobile-not-connected-main-title">
                 {{ organization.dashboard_title }}
@@ -10,7 +10,7 @@
                     :image-sizes="bannerImageSizes"
                     :src="bannerUrl"
                     class="organization-banner"
-                    :ratio="3 / 1"
+                    :ratio="1 / 1"
                 />
             </div>
             <div
@@ -145,14 +145,14 @@ export default {
 
         .banner-wrapper {
             @media screen and (min-width: $min-tablet) {
-                flex-basis: 60%;
+                flex-basis: 30%;
                 flex-shrink: 0;
             }
         }
 
         .organization-banner {
             width: 100%;
-            aspect-ratio: 3;
+            aspect-ratio: 1;
             border-radius: pxToRem(8px);
 
             @media screen and (min-width: $min-tablet) {

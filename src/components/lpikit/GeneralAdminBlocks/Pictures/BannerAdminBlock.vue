@@ -7,7 +7,7 @@
             :picture="organization.banner_image"
             @update:image-sizes="resizeBanner($event)"
             @update:picture="setBanner($event)"
-            :picture-ratio="3 / 1"
+            :picture-ratio="1 / 1"
             dont-resize-on-change
         ></ImageEditor>
     </AdminBlock>
