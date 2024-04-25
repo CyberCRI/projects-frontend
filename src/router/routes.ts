@@ -137,6 +137,23 @@ newHomeExtraPaths.set('new', [
             resetScroll: true,
         },
     },
+    {
+        path: '/recommendations/projects',
+        name: 'ProjectRecommendationPage',
+        component: () => import('../pages/ProjectRecommendationPage/ProjectRecommendationPage.vue'),
+        meta: {
+            resetScroll: true,
+        },
+    },
+    {
+        path: '/recommendations/people',
+        name: 'UserRecommendationPage',
+        component: () => import('../pages/UserRecommendationPage/UserRecommendationPage.vue'),
+        meta: {
+            resetScroll: true,
+            requiresAuth: true,
+        },
+    },
 ])
 
 const checkAccessRequestEnabled = (to, _from, next) => {

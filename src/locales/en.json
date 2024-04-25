@@ -2093,7 +2093,13 @@
         "title": "Recommended for you",
         "is-featured": "(Featured)",
         "more-projects": "Discover more projects",
-        "more-profiles": "Discover more profiles"
+        "more-profiles": "Discover more profiles",
+        "projects": {
+            "title": "Recommended projects"
+        },
+        "people": {
+            "title": "Recommended persons"
+        }
     },
     "event": {
         "calendar": {

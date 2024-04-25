@@ -2092,7 +2092,13 @@
         "title": "Recommandé pour vous",
         "is-featured": "(A la Une)",
         "more-projects": "Découvrez plus de projets",
-        "more-profiles": "Découvrez plus de profils"
+        "more-profiles": "Découvrez plus de profils",
+        "projects": {
+            "title": "Projets recommandés"
+        },
+        "people": {
+            "title": "Personnes recommandées"
+        }
     },
     "event": {
         "calendar": {
