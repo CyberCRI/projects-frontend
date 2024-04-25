@@ -2,20 +2,14 @@
     <div class="instruction-item">
         <div class="instruction-title-ctn">
             <h3 class="instruction-title">{{ instruction.title }}</h3>
-            <div class="instruction-actions" v-if="canEditInstruction || canDeleteInstruction">
-                <ContextActionButton
-                    action-icon="Pen"
-                    class="edit-btn small"
-                    @click="$emit('edit-instruction', instruction)"
-                    v-if="canEditInstruction"
-                />
-                <ContextActionButton
-                    action-icon="Close"
-                    class="remove-btn small"
-                    @click="$emit('delete-instruction', instruction)"
-                    v-if="canDeleteInstruction"
-                />
-            </div>
+
+            <ContextActionMenu
+                class="instruction-actions"
+                @edit="$emit('edit-instruction', instruction)"
+                :can-edit="canEditInstruction"
+                @delete="$emit('delete-instruction', instruction)"
+                :can-delete="canDeleteInstruction"
+            />
         </div>
         <div class="instruction-excerpt" :style="style">
             <HtmlLimiter
@@ -29,9 +23,9 @@
     </div>
 </template>
 <script>
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 import permissions from '@/mixins/permissions.ts'
+import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 
 export default {
     name: 'InstructionItem',
@@ -42,7 +36,7 @@ export default {
 
     components: {
         HtmlLimiter,
-        ContextActionButton,
+        ContextActionMenu,
     },
 
     props: {
@@ -85,13 +79,6 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-}
-
-.instruction-actions {
-    display: flex;
-    flex-direction: column;
-    gap: $space-2xs;
-    align-items: center;
 }
 
 .instruction-title {

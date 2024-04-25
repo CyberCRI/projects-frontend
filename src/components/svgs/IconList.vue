@@ -108,6 +108,7 @@ export default {
                 'SquareRoundedOutline',
                 'BookmarkBoxOutline',
                 'BullhornOutline',
+                'DotsVertical',
             ],
         }
     },

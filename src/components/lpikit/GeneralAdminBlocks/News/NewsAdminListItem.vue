@@ -12,18 +12,13 @@
         <div class="news-texts">
             <div class="news-title-ctn">
                 <h3 class="news-title">{{ news.title }}</h3>
-                <div class="news-actions" v-if="canEditNews">
-                    <ContextActionButton
-                        action-icon="Pen"
-                        class="edit-btn small"
-                        @click="$emit('edit-news', news)"
-                    />
-                    <ContextActionButton
-                        action-icon="Close"
-                        class="remove-btn small"
-                        @click="$emit('delete-news', news)"
-                    />
-                </div>
+                <ContextActionMenu
+                    class="news-actions"
+                    @edit="$emit('edit-news', news)"
+                    :can-edit="canEditNews"
+                    @delete="$emit('delete-news', news)"
+                    :can-delete="canDeleteNews"
+                />
             </div>
         </div>
     </div>
@@ -31,19 +26,20 @@
 <script>
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'NewsAdminListItem',
 
-    mixins: [imageMixin],
+    mixins: [imageMixin, permissions],
 
     emits: ['delete-news', 'edit-news'],
 
     components: {
         CroppedImage,
-        ContextActionButton,
+        ContextActionMenu,
     },
 
     props: {
@@ -101,13 +97,6 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-}
-
-.news-actions {
-    display: flex;
-    flex-direction: column;
-    gap: $space-2xs;
-    align-items: center;
 }
 
 .news-title {

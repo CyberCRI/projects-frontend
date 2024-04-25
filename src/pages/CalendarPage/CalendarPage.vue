@@ -5,7 +5,7 @@
             <LpiButton
                 v-if="canCreateEvent"
                 primary
-                :label="$filters.capitalize($t('event.create.title'))"
+                :label="$filters.capitalize($t('event.create.button'))"
                 @click="createEvent"
                 data-test="create-event-button"
                 btn-icon="Plus"

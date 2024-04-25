@@ -2152,7 +2152,8 @@
             }
         },
         "create": {
-            "title": "Add a calendar event"
+            "title": "Add a calendar event",
+            "button": "Add"
         },
 
         "delete": {
@@ -2235,7 +2236,7 @@
         },
         "list": {
             "title": "News",
-            "create": "Create an article",
+            "create": "Create",
             "read-more": "Read"
         },
         "page": {
@@ -2287,7 +2288,7 @@
         },
         "list": {
             "title": "Instructions",
-            "create": "Add an instruction",
+            "create": "Add",
             "read-more": "Read"
         },
         "drawer": {
