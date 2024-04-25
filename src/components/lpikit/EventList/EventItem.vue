@@ -23,25 +23,18 @@
                 {{ event.people_groups.map((group) => group.name).join(', ') }}
             </p>
         </div>
-        <div class="event-controls" v-if="canEditEvent || canDeleteEvent">
-            <ContextActionButton
-                action-icon="Pen"
-                class="edit-btn small"
-                @click="editEvent(event)"
-                v-if="canEditEvent"
-            />
-            <ContextActionButton
-                action-icon="Close"
-                class="remove-btn small"
-                @click="deleteEvent(event)"
-                v-if="canDeleteEvent"
-            />
-        </div>
+        <ContextActionMenu
+            class="event-controls"
+            @edit="editEvent(event)"
+            :can-edit="canEditEvent"
+            @delete="deleteEvent(event)"
+            :can-delete="canDeleteEvent"
+        />
     </div>
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'EventItem',
@@ -52,7 +45,7 @@ export default {
 
     components: {
         IconImage,
-        ContextActionButton,
+        ContextActionMenu,
     },
 
     props: {
@@ -109,10 +102,6 @@ export default {
         position: absolute;
         right: 0;
         top: 0;
-        display: flex;
-        flex-flow: column nowrap;
-        gap: $space-2xs;
-        justify-content: flex-start;
     }
 
     .date {

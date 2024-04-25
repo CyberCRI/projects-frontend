@@ -1,25 +1,19 @@
 <template>
     <div class="instruction-excerpt-wrapper">
-        <div class="instruction-actions" v-if="canEditInstruction || canDeleteInstruction">
-            <ContextActionButton
-                action-icon="Pen"
-                class="edit-btn small"
-                @click="$emit('edit-instruction', instruction)"
-                v-if="canEditInstruction"
-            />
-            <ContextActionButton
-                action-icon="Close"
-                class="remove-btn small"
-                @click="$emit('delete-instruction', instruction)"
-                v-if="canDeleteInstruction"
-            />
-        </div>
+        <ContextActionMenu
+            class="instruction-actions"
+            @edit="$emit('edit-instruction', instruction)"
+            :can-edit="canEditInstruction"
+            @delete="$emit('delete-instruction', instruction)"
+            :can-delete="canDeleteInstruction"
+        />
+
         <p class="clamped">{{ instructionText }}</p>
     </div>
 </template>
 <script>
 import permissions from '@/mixins/permissions.ts'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 
 export default {
     name: 'InstructionAdminListItem',
@@ -29,7 +23,7 @@ export default {
     emits: ['delete-instruction', 'edit-instruction'],
 
     components: {
-        ContextActionButton,
+        ContextActionMenu,
     },
 
     props: {
@@ -64,10 +58,5 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: $space-2xs;
-    align-items: center;
-    justify-content: flex-end;
 }
 </style>

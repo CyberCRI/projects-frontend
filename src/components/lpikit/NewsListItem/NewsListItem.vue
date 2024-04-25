@@ -12,20 +12,14 @@
         <div class="news-texts">
             <div class="news-title-ctn">
                 <h3 class="news-title">{{ news.title }}</h3>
-                <div class="news-actions" v-if="canEditNews || canDeleteNews">
-                    <ContextActionButton
-                        action-icon="Pen"
-                        class="edit-btn small"
-                        @click="$emit('edit-news', news)"
-                        v-if="canEditNews"
-                    />
-                    <ContextActionButton
-                        action-icon="Close"
-                        class="remove-btn small"
-                        @click="$emit('delete-news', news)"
-                        v-if="canDeleteNews"
-                    />
-                </div>
+
+                <ContextActionMenu
+                    class="news-actions"
+                    @edit="$emit('edit-news', news)"
+                    :can-edit="canEditNews"
+                    @delete="$emit('delete-news', news)"
+                    :can-delete="canDeleteNews"
+                />
             </div>
             <div class="news-excerpt" :style="style">
                 <HtmlLimiter
@@ -50,7 +44,7 @@
 <script>
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
@@ -67,7 +61,7 @@ export default {
         CroppedImage,
         LinkButton,
         HtmlLimiter,
-        ContextActionButton,
+        ContextActionMenu,
     },
 
     props: {
@@ -138,12 +132,6 @@ export default {
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-}
-
-.news-actions {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
 }
 
 .news-title {

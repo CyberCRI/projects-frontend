@@ -2151,7 +2151,8 @@
             }
         },
         "create": {
-            "title": "Ajouter un événement au calendrier"
+            "title": "Ajouter un événement au calendrier",
+            "button": "Ajouter"
         },
         "delete": {
             "title": "Supprimer un événement ? ",
@@ -2233,7 +2234,7 @@
         },
         "list": {
             "title": "Actualités",
-            "create": "Créer un article",
+            "create": "Créer",
             "read-more": "Lire"
         },
         "page": {
@@ -2288,7 +2289,7 @@
         },
         "list": {
             "title": "Instructions",
-            "create": "Ajouter une instruction",
+            "create": "Ajouter",
             "read-more": "Lire"
         },
         "drawer": {
