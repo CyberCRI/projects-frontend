@@ -147,10 +147,13 @@ export default {
         },
 
         async loadNews() {
+            const dateLimit =
+                this.canEditNews || this.canDeleteNews ? {} : { to_date: new Date().toISOString() }
+
             this.loading = true
             this.newsRequest = await getAllNews(
                 this.$store.getters['organizations/current']?.code,
-                { limit: this.maxNewsPerPage }
+                { limit: this.maxNewsPerPage, ...dateLimit }
             )
             this.loading = false
         },
