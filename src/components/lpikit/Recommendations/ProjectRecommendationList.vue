@@ -30,7 +30,7 @@ export default {
 
     methods: {
         goToMoreRecommendations() {
-            this.$router.push({ name: 'Search' })
+            this.$router.push({ name: 'ProjectRecommendationPage' })
         },
     },
 }

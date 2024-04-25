@@ -10,14 +10,13 @@ export interface RecommendationsParams {
 }
 
 export async function getProjectsRecommendationsForUser(
-    body: RecommendationsParams
+    orgCode: string,
+    params: any
 ): Promise<ProjectOutput[]> {
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
-                body.organization
-            }/recommended-project/user/`,
-            _adaptParamsToGetQuery(body.params)
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/recommended-project/user/`,
+            _adaptParamsToGetQuery(params)
         )
     ).data
 }
@@ -35,13 +34,14 @@ export async function getRandomProjectsRecommendationsForUser(
     ).data
 }
 
-export async function getUsersRecommendationsForUser(body): Promise<UserModel[]> {
+export async function getUsersRecommendationsForUser(
+    orgCode: string,
+    params: any
+): Promise<UserModel[]> {
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
-                body.organization
-            }/recommended-user/user/`,
-            _adaptParamsToGetQuery(body.params)
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/recommended-user/user/`,
+            _adaptParamsToGetQuery(params)
         )
     ).data
 }
