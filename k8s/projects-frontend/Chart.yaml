@@ -25,4 +25,4 @@ appVersion: "1.16.0"
 dependencies:
 - name: common
   repository: oci://criprodprod.azurecr.io/helm
-  version: 0.1.5
+  version: 0.1.6
