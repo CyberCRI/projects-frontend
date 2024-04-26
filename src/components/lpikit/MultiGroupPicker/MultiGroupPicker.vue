@@ -20,6 +20,15 @@
         />
         <ul>
             <MultiGroupPickerElement
+                v-if="hasPublicField"
+                :key="publicPseudoGroup.id"
+                :group="publicPseudoGroup"
+                :selected-groups="publicPseudoGroupModelValue"
+                @toggle-group="onTogglePublic"
+                :filter="groupFilter"
+            />
+
+            <MultiGroupPickerElement
                 :key="allSelectedPseudoGroup.id"
                 :group="allSelectedPseudoGroup"
                 :selected-groups="pseudoGroupModelValue"
@@ -34,7 +43,7 @@
                 :selected-groups="modelValue"
                 @toggle-group="onToggleGroup"
                 :filter="groupFilter"
-                :force-open="groupFilter.length"
+                :force-open="!!groupFilter.length"
             />
         </ul>
     </template>
@@ -49,7 +58,7 @@ import FilterSearchInput from '@/components/peopleKit/Filters/FilterSearchInput.
 export default {
     name: 'MultiGroupPicker',
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'update:isPublic'],
 
     components: {
         MultiGroupPickerElement,
@@ -61,6 +70,14 @@ export default {
         modelValue: {
             type: Object,
             required: true,
+        },
+        hasPublicField: {
+            type: Boolean,
+            default: false,
+        },
+        isPublic: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -86,7 +103,22 @@ export default {
         pseudoGroupModelValue() {
             const values = Object.values(this.modelValue)
             return {
-                '-1': !values.length || !values.some((value) => value),
+                '-1': !this.isPublic && (!values.length || !values.some((value) => value)),
+            }
+        },
+
+        publicPseudoGroup() {
+            return {
+                id: -1,
+                name: this.$t('event.form.people_groups.public'),
+                children: [],
+                disabled: this.publicPseudoGroupModelValue['-1'],
+            }
+        },
+
+        publicPseudoGroupModelValue() {
+            return {
+                '-1': this.isPublic,
             }
         },
     },
@@ -120,6 +152,7 @@ export default {
                 [group.id]: !this.modelValue[group.id],
             }
             this.$emit('update:modelValue', groups)
+            this.$emit('update:isPublic', false)
         },
 
         onToggleSelectAll() {
@@ -132,6 +165,23 @@ export default {
                 }
 
                 this.$emit('update:modelValue', groups)
+                this.$emit('update:isPublic', false)
+            }
+        },
+
+        onTogglePublic() {
+            if (!this.publicPseudoGroupModelValue['-1']) {
+                const groups = {
+                    ...this.modelValue,
+                }
+                for (let key of Object.keys(groups)) {
+                    groups[key] = false
+                }
+
+                this.$emit('update:modelValue', groups)
+                this.$emit('update:isPublic', true)
+
+                this.pseudoGroupModelValue['-1']
             }
         },
 

@@ -153,7 +153,7 @@ export default {
             this.loading = true
             this.newsRequest = await getAllNews(
                 this.$store.getters['organizations/current']?.code,
-                { limit: this.maxNewsPerPage, ...dateLimit }
+                { ordering: '-publication_date', limit: this.maxNewsPerPage, ...dateLimit }
             )
             this.loading = false
         },

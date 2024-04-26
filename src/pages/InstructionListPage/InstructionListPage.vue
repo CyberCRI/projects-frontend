@@ -92,7 +92,7 @@ export default {
             this.loading = true
             this.allInstructions = (
                 await getAllInstructions(this.$store.getters['organizations/current']?.code, {
-                    ordering: '+publication_date',
+                    ordering: 'publication_date',
                     ...dateLimit,
                 })
             ).results

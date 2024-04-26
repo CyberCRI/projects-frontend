@@ -70,6 +70,9 @@
             <p class="notice">{{ $t('instructions.form.groups.notice') }}</p>
 
             <MultiGroupPicker
+                has-public-field
+                :is-public="modelValue.visible_by_all"
+                @update:is-public="updateForm({ visible_by_all: $event })"
                 :model-value="modelValue.people_groups"
                 @update:model-value="updateForm({ people_groups: $event })"
             />
@@ -103,9 +106,10 @@ export function defaultForm() {
     return {
         title: '',
         content: '',
-        publication_date: '',
-        people_groups: {},
+        publication_date: new Date().toISOString(),
         has_to_be_notified: false,
+        people_groups: {},
+        visible_by_all: true,
     }
 }
 

@@ -86,7 +86,7 @@ export default {
         async loadNews() {
             this.isLoading = true
             const request = await getAllNews(this.$store.getters['organizations/current']?.code, {
-                ordering: '+publication_date',
+                ordering: '-publication_date',
                 limit: 4,
             })
             this.allNews = request.results

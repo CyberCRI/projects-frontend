@@ -75,7 +75,7 @@ export default {
 
     computed: {
         blockTitle() {
-            let extra = this.isLoading ? '' : ` (${this.instructions.length})`
+            let extra = this.isLoading ? '' : ` (${this.instructionsCount})`
             return this.$t('admin.portal.instructions') + extra
         },
 
@@ -94,7 +94,7 @@ export default {
             const request = await getAllInstructions(
                 this.$store.getters['organizations/current']?.code,
                 {
-                    ordering: '+publication_date',
+                    ordering: '-publication_date',
                     limit: 1,
                 }
             )

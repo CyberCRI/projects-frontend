@@ -2196,7 +2196,8 @@
                 "notice": "Select the group(s) that will see this event",
                 "select-all": "Select all",
                 "filter": "Filter groups",
-                "all": "Select all"
+                "all": "All groups",
+                "public": "Public"
             }
         },
         "group-label": "Group:",

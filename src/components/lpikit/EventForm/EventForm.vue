@@ -59,6 +59,9 @@
             <p class="notice">{{ $t('event.form.people_groups.notice') }}</p>
 
             <MultiGroupPicker
+                has-public-field
+                :is-public="modelValue.visible_by_all"
+                @update:is-public="updateForm({ visible_by_all: $event })"
                 :model-value="modelValue.people_groups"
                 @update:model-value="updateForm({ people_groups: $event })"
             />
@@ -80,6 +83,7 @@ export function defaultForm() {
         content: '',
         event_date: '',
         people_groups: {},
+        visible_by_all: true,
     }
 }
 
