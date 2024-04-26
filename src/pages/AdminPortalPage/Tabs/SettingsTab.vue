@@ -2,24 +2,19 @@
     <div class="information-tab">
         <section>
             <div class="block-container">
-                <h4 class="title">{{ $t('admin.portal.general.logo') }}</h4>
-                <span class="description">
-                    {{
-                        $t('admin.portal.general.size-min-logo', {
-                            minWidth: 250,
-                            minHeight: 50,
-                        })
-                    }}</span
-                >
-                <img v-if="form.logo_image" :src="form.logo_image.variations.small" />
-                <ImageInput id="org_logo" @upload-image="uploadLogo" />
+                <LogoAdminBlock />
+
+                <BannerAdminBlock />
+
+                <ChatAdminBlock />
+
+                <WordingAdminBlock />
             </div>
         </section>
 
         <section>
-            <div class="block-container form">
-                <div>
-                    <h4 class="title">{{ $t('form.organization-name') }}</h4>
+            <div class="block-container">
+                <AdminBlock :block-title="$t('form.organization-name')">
                     <span class="description">{{ $t('tips.organization-name') }}</span>
                     <TextInput v-model="form.name" class="text-input" @blur="v$.form.name.$touch" />
                     <p
@@ -29,26 +24,9 @@
                     >
                         {{ error.$message }}
                     </p>
-                </div>
-                <div>
-                    <h4 class="title">{{ $t('form.title') }}</h4>
-                    <span class="description">{{ $t('tips.organization-title') }}</span>
-                    <TextInput
-                        v-model="form.dashboard_title"
-                        class="text-input"
-                        @blur="v$.form.dashboard_title.$touch"
-                    />
-                    <p
-                        v-for="error of v$.form.dashboard_title.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
-                </div>
-                <div>
-                    <h4 class="title">{{ $t('form.email') }}</h4>
-                    <span class="description">{{ $t('tips.organization-email') }}</span>
+                </AdminBlock>
+                <AdminBlock :block-title="$t('tips.organization-email')">
+                    <span class="description">{{}}</span>
                     <TextInput
                         v-model="form.contact_email"
                         class="text-input"
@@ -61,9 +39,8 @@
                     >
                         {{ error.$message }}
                     </p>
-                </div>
-                <div>
-                    <h4 class="title">{{ $t('form.language') }}</h4>
+                </AdminBlock>
+                <AdminBlock :block-title="$t('form.language')">
                     <span class="description">{{ $t('tips.organization-language') }}</span>
                     <LpiSelect
                         v-model="form.language"
@@ -77,11 +54,12 @@
                     >
                         {{ error.$message }}
                     </p>
-                </div>
-                <div>
-                    <h4 class="title">
-                        {{ $filters.capitalize($t('admin.portal.general.portal-referencing')) }}
-                    </h4>
+                </AdminBlock>
+                <AdminBlock
+                    :block-title="
+                        $filters.capitalize($t('admin.portal.general.portal-referencing'))
+                    "
+                >
                     <span class="description">{{ $t('tips.organization-visibility') }}</span>
                     <GroupButton
                         v-model="form.is_logo_visible_on_parent_dashboard"
@@ -107,7 +85,7 @@
                             @update:model-value="(value) => (form.background_color = value.hex)"
                         />
                     </div>
-                </div>
+                </AdminBlock>
 
                 <LpiButton
                     :disabled="v$.$errors && v$.$errors.length"
@@ -122,27 +100,32 @@
 </template>
 
 <script>
-import { postOrganisationBanner, postOrganisationLogo } from '@/api/organizations.service'
-
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
 import LpiSelect from '@/components/lpikit/LpiSelect/LpiSelect.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-
+import LogoAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Pictures/LogoAdminBlock.vue'
+import BannerAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Pictures/BannerAdminBlock.vue'
+import WordingAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Wording/WordingAdminBlock.vue'
+import ChatAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
+import AdminBlock from '@/components/lpikit/GeneralAdminBlocks/AdminBlock.vue'
 export default {
     name: 'SettingsTab',
 
     components: {
         GroupButton,
         TextInput,
-        ImageInput,
         LpiSelect,
         LpiButton,
         SketchPicker: Sketch,
+        LogoAdminBlock,
+        BannerAdminBlock,
+        WordingAdminBlock,
+        ChatAdminBlock,
+        AdminBlock,
     },
 
     setup() {
@@ -192,14 +175,7 @@ export default {
     data() {
         return {
             isLoading: false,
-            organizationLogo: undefined,
-            organizationBanner: undefined,
             form: {
-                banner_image: {
-                    variations: {
-                        small: undefined,
-                    },
-                },
                 contact_email: '',
                 language: '',
                 logo_image: {
@@ -208,7 +184,6 @@ export default {
                     },
                 },
                 name: '',
-                dashboard_title: '',
                 is_logo_visible_on_parent_dashboard: false,
                 background_color: '',
             },
@@ -225,16 +200,6 @@ export default {
                     maxLength: helpers.withMessage(
                         this.$t('admin.form.admin-info.name.max-length'),
                         maxLength(32)
-                    ),
-                },
-                dashboard_title: {
-                    required: helpers.withMessage(
-                        this.$t('admin.form.admin-info.dashboard-title.required'),
-                        required
-                    ),
-                    maxLength: helpers.withMessage(
-                        this.$t('admin.form.admin-info.dashboard-title.max-length'),
-                        maxLength(128)
                     ),
                 },
                 contact_email: {
@@ -269,26 +234,6 @@ export default {
 
             const data = { ...this.form }
 
-            if (this.organizationLogo instanceof File) {
-                const logoFormData = new FormData()
-                logoFormData.append('file', this.organizationLogo, this.organizationLogo.name)
-                const apiResponse = await postOrganisationLogo({
-                    code: this.$store.state.organizations.current.code,
-                    body: logoFormData,
-                })
-                data.logo_image_id = apiResponse.id
-            }
-
-            if (this.organizationBanner instanceof File) {
-                const bannerFormData = new FormData()
-                bannerFormData.append('file', this.organizationBanner, this.organizationBanner.name)
-                const apiResponse = await postOrganisationBanner({
-                    code: this.$store.state.organizations.current.code,
-                    body: bannerFormData,
-                })
-                data.banner_image_id = apiResponse.id
-            }
-
             try {
                 await this.$store.dispatch('organizations/updateCurrentOrganization', data)
                 this.$store.dispatch('notifications/pushToast', {
@@ -303,17 +248,6 @@ export default {
                 console.error(error)
             } finally {
                 this.isLoading = false
-            }
-        },
-
-        uploadLogo(image) {
-            this.organizationLogo = image
-
-            const fileReader = new FileReader()
-            fileReader.readAsDataURL(this.organizationLogo)
-
-            fileReader.onload = (fileReaderEvent) => {
-                this.form.logo_image.variations.small = fileReaderEvent.target.result
             }
         },
     },
@@ -337,21 +271,6 @@ export default {
 
         &:not(:first-of-type) {
             margin-top: $space-l;
-        }
-
-        .title {
-            font-size: $font-size-l;
-            color: $primary-dark;
-            font-weight: bold;
-            margin: 0 0 $space-l;
-        }
-
-        .image-input-ctn {
-            margin: $space-m auto 0;
-        }
-
-        img {
-            max-width: 100%;
         }
 
         .description {
