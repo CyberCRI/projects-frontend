@@ -132,7 +132,8 @@ export default {
         async loadInstructions() {
             this.instructions = (
                 await getAllInstructions(this.$store.getters['organizations/current']?.code, {
-                    ordering: '+publication_date',
+                    ordering: '-publication_date',
+                    to_date: new Date().toISOString(),
                     limit: 1,
                 })
             ).results
