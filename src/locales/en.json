@@ -2083,8 +2083,8 @@
             "invitation_today_reminder": "A {link} you created for the group {today_group} will expire today",
             "invitation_week_reminder": "A {link} you created for the group {week_group} will expire in a week",
             "register-link": "register link",
-            "access_request": "Respond to {access_request_nb} pending access request(s)!",
-            "pending_access_requests": "Respond to {requests_count} pending access request(s)!"
+            "access_request": "You have just received a new access request. Respond to it!",
+            "pending_access_requests": "Reminder: respond to {requests_count} pending access request(s) for the organization {organization}!"
         },
         "empty": "You have no notifications"
     },

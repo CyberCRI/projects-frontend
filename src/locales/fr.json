@@ -2082,8 +2082,8 @@
             "invitation_today_reminder": "Un {link} que vous avez créé pour le groupe {today_group} arrive à expiration aujourd'hui",
             "invitation_week_reminder": "Un {link} que vous avez créé pour le groupe {week_group} arrivera à expiration dans une semaine",
             "register-link": "lien d’enregistrement",
-            "access_request": "Répondez à {access_request_nb} demande(s) d'accès en attente!",
-            "pending_access_requests": "Répondez à {requests_count} demande(s) d'accès en attente!"
+            "access_request": "Vous venez de recevoir une nouvelle demande d'accès. Répondez-y!",
+            "pending_access_requests": "Rappel: répondez à {requests_count} demande(s) d'accès en attente pour l'organisation {organization}!"
         },
         "empty": "Vous n’avez aucune notification"
     },

@@ -159,7 +159,6 @@
                         class="strong"
                         place="access_request_nb"
                     >
-                        {{ notification.context.access_request_nb }}
                     </span>
                 </template>
 
@@ -170,6 +169,7 @@
                         place="requests_count"
                     >
                         {{ notification.context.requests_count }}
+                        {{ notification.context.organization }}
                     </span>
                 </template>
             </i18n-t>
