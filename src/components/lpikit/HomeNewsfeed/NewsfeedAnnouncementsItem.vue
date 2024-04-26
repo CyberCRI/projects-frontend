@@ -81,19 +81,18 @@ export default {
     border-radius: $border-radius-s;
     padding: $space-l;
     gap: $space-l;
-
+    align-items: center;
     @media screen and (min-width: $min-tablet) {
+        align-items: flex-start;
         min-height: 120px;
     }
 
     .announcement-img-container {
-        align-self: center;
         background-size: cover;
         background-position: top center;
         flex: none;
 
         @media screen and (min-width: $min-tablet) {
-            margin-right: $space-xl;
             flex-basis: pxToRem(120px);
             flex-shrink: 1;
             height: pxToRem(120px);
