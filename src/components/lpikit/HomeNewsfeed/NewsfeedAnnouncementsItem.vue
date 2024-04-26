@@ -82,6 +82,7 @@ export default {
     padding: $space-l;
     gap: $space-l;
     align-items: center;
+
     @media screen and (min-width: $min-tablet) {
         align-items: flex-start;
         min-height: 120px;
