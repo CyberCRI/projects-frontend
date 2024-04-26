@@ -106,12 +106,12 @@ export default {
 
     display: flex;
     align-items: stretch;
-    gap: 1rem;
+    gap: $space-l;
     height: var(--news-dimension);
     overflow: hidden;
-    padding: 1rem;
+    padding: $space-l;
     border: $border-width-s solid $gray-10;
-    border-radius: 1rem;
+    border-radius: $border-radius-s;
 }
 
 .news-img-ctn {

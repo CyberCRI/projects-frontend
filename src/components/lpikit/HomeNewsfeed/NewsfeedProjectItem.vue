@@ -77,12 +77,12 @@ export default {
     border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
     padding: $space-l;
-    gap: $space-m;
+    gap: $space-l;
 
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
         min-height: 200px;
-        gap: $space-xl;
+        align-items: flex-start;
     }
 
     .project-img-container {
