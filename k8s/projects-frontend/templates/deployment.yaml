@@ -22,7 +22,7 @@ spec:
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
-        {{- include "common.podSecurityContext.restricted" dict | nindent 8 }}
+        {{- include "common.podSecurityContext.restricted" (dict "user" 101) | nindent 8 }}
       containers:
         {{- with $.Values.image }}
         - image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
