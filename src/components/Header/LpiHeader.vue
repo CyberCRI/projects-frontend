@@ -188,7 +188,8 @@
 
 <script>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { patchUser } from '@/api/people.service.ts'
+// EASTER BUG 9 bis : lang is not saved
+// import { patchUser } from '@/api/people.service.ts'
 import { getAnnouncements } from '@/api/announcements.service'
 
 import permissions from '@/mixins/permissions.ts'
@@ -323,7 +324,8 @@ export default {
                 }
                 // dont wait for termination, user update take a while
                 // and we dont want the UI to freeze meanwhile
-                patchUser(this.$store.getters['users/id'], body)
+                // EASTER BUG 9 : lang is not saved
+                //patchUser(this.$store.getters['users/id'], body)
             }
 
             await this.$store.dispatch('languages/updateCurrentLanguage', lang)
