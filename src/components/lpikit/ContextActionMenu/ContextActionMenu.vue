@@ -5,13 +5,13 @@
                 <ContextActionButton
                     action-icon="Pen"
                     class="edit-btn small"
-                    @click="$emit('edit')"
+                    @click.stop.prevent="$emit('edit')"
                     v-if="canEdit"
                 />
                 <ContextActionButton
                     action-icon="Close"
                     class="remove-btn small"
-                    @click="$emit('delete')"
+                    @click.stop.prevent="$emit('delete')"
                     v-if="canDelete"
                 />
             </div>

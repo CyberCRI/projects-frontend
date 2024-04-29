@@ -1,8 +1,8 @@
 <template>
-    <RouterLink :to="to" class="summary-action">
+    <component :is="to ? 'RouterLink' : 'vue:span'" :to="to" class="summary-action">
         <IconImage class="icon" :name="actionIcon" />
         <span class="label"> {{ $filters.capitalize(actionLabel) }}</span>
-    </RouterLink>
+    </component>
 </template>
 <script>
 import IconImage from '@/components/svgs/IconImage.vue'

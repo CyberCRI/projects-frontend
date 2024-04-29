@@ -60,6 +60,10 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
 }
 
 .img-container {

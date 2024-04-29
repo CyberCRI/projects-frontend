@@ -1,5 +1,12 @@
 <template>
-    <div class="home-announcement-item">
+    <RouterLink
+        class="home-announcement-item shadow-box"
+        :to="{
+            name: 'projectAnnouncements',
+            params: { slugOrId: this.announcement.project.slug },
+            hash: '#tab',
+        }"
+    >
         <div class="announcement-img-container">
             <img :alt="`announcement image`" :src="announcementImage" class="announcement-img" />
         </div>
@@ -25,16 +32,9 @@
                 <p class="clamped">{{ description }}</p>
             </div>
 
-            <SummaryAction
-                :to="{
-                    name: 'projectAnnouncements',
-                    params: { slugOrId: this.announcement.project.slug },
-                    hash: '#tab',
-                }"
-                :action-label="$t('common.read')"
-            />
+            <SummaryAction :action-label="$t('common.read')" />
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script>

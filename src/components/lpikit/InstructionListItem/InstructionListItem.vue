@@ -1,5 +1,8 @@
 <template>
-    <div class="instruction-list-item">
+    <RouterLink
+        class="instruction-list-item shadow-box"
+        :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
+    >
         <div class="instruction-title-ctn">
             <h3 class="instruction-title">{{ instruction.title }}</h3>
             <ContextActionMenu
@@ -20,18 +23,13 @@
             />
         </div>
         <div class="read-more-ctn">
-            <LinkButton
-                class="read-button"
-                btn-icon="ArrowRight"
-                :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
-                :label="$t('instructions.list.read-more')"
-            />
+            <SummaryAction class="read-button" :action-label="$t('instructions.list.read-more')" />
         </div>
-    </div>
+    </RouterLink>
 </template>
 <script>
 import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 import permissions from '@/mixins/permissions.ts'
 
@@ -43,7 +41,7 @@ export default {
     mixins: [permissions],
 
     components: {
-        LinkButton,
+        SummaryAction,
         HtmlLimiter,
         ContextActionMenu,
     },

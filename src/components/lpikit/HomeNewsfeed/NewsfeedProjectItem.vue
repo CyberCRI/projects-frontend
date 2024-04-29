@@ -1,5 +1,8 @@
 <template>
-    <div class="home-project-item">
+    <RouterLink
+        :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
+        class="home-project-item shadow-box"
+    >
         <h3 class="project-title-mobile">{{ $filters.capitalize(project.title) }}</h3>
 
         <div class="project-img-container">
@@ -16,12 +19,9 @@
             <div class="project-description">
                 <p class="clamped">{{ purpose }}</p>
             </div>
-            <SummaryAction
-                :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
-                :action-label="$t('common.read')"
-            />
+            <SummaryAction :action-label="$t('common.read')" />
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script>
@@ -82,7 +82,7 @@ export default {
     @media screen and (min-width: $min-tablet) {
         flex-direction: row;
         min-height: 200px;
-        align-items: flex-start;
+        align-items: stretch;
     }
 
     .project-img-container {
