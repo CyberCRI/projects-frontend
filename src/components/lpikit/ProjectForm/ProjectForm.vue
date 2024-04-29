@@ -302,7 +302,10 @@ export default {
         },
 
         saveTags() {
-            this.tags = this.tagsInProcess
+            if (!this.isAddMode) {
+                // EASTER BUG should also execute when isAddMode
+                this.tags = this.tagsInProcess
+            }
             this.tagSearchIsOpened = false
         },
 
