@@ -1,21 +1,23 @@
 <template>
+    <!-- ESATER BUG 5bis socket not working confirm-action-disabled="!socketReady"-->
     <Drawer
         :class="{ fs: isFullScreen }"
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="!socketReady"
+        :confirm-action-disabled="false && !socketReady"
         :is-opened="isOpened"
         :title="$t('description.edit')"
         class="description-drawer"
         @close="closeDrawer"
         @confirm="patchProject(true)"
     >
+        <!-- ESATER BUG 5 socket not working (socket should be true) + provider params-->
         <TipTapEditor
             v-if="editorDescription"
             :key="editorKey"
             ref="tipTapEditor"
-            :socket="true"
+            :socket="false"
             :ws-data="editorDescription"
-            :provider-params="providerParams"
+            :provider-params="undefined && providerParams"
             class="no-max-height"
             mode="full"
             @destroy="$emit('close')"
