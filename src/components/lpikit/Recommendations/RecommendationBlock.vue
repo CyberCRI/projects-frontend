@@ -53,7 +53,15 @@ export default {
     },
 
     async mounted() {
-        const featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
+        let featuredrojects = []
+        // temp fix for backend bug
+        try {
+            featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
+        } catch (err) {
+            console.log(err)
+            featuredrojects = []
+        }
+
         const projectRecommendations = await getRandomProjectsRecommendationsForUser({
             organization: this.organization.code,
             params: { count: 4, pool: 25 },
