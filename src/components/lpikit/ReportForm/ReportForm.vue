@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { reportBug, reportAbuse } from '@/api/report.service'
+import { /*EASTER BUG 7bis:  reportBug,*/ reportAbuse } from '@/api/report.service'
 import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
 import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 import useValidate from '@vuelidate/core'
@@ -141,7 +141,8 @@ export default {
                     }
                 } else if (this.type === 'bug') {
                     try {
-                        await reportBug(this.form)
+                        // EASTER BUG 7 bug report dont send mail
+                        // await reportBug(this.form)
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.bug-report.success'),
                             type: 'success',
