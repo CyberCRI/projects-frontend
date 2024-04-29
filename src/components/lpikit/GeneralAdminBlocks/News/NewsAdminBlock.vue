@@ -14,9 +14,9 @@
         </template>
 
         <template #footer>
-            <LinkButton
+            <SummaryAction
                 btn-icon="ArrowRight"
-                :label="$t('common.see-all')"
+                :action-label="$t('common.see-all')"
                 :to="{ name: 'NewsListPage' }"
             />
         </template>
@@ -48,6 +48,7 @@ import { defaultForm } from '@/components/lpikit/NewsForm/NewsForm.vue'
 import NewsAdminListItem from './NewsAdminListItem.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
     name: 'NewsAdminBlock',
@@ -58,6 +59,7 @@ export default {
         EditNewsDrawer,
         NewsAdminListItem,
         ConfirmModal,
+        SummaryAction,
     },
 
     data() {

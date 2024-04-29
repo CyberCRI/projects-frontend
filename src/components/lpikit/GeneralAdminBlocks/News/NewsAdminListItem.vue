@@ -1,5 +1,5 @@
 <template>
-    <div class="news-list-item">
+    <RouterLink class="news-list-item" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
         <div class="news-img-ctn">
             <CroppedImage
                 :alt="`${news.title} image`"
@@ -21,7 +21,7 @@
                 />
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 <script>
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
@@ -76,6 +76,11 @@ export default {
     height: var(--news-dimension);
     overflow: hidden;
     padding: 1rem 0;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
 }
 
 .news-img-ctn {

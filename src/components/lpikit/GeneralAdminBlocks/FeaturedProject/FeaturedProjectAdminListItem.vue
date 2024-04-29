@@ -1,5 +1,8 @@
 <template>
-    <div class="featured-project-admin-list-item">
+    <RouterLink
+        class="featured-project-admin-list-item"
+        :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
+    >
         <div class="project-image">
             <CroppedImage
                 :alt="`${project.title} image`"
@@ -11,7 +14,7 @@
         <div project-text>
             <h4 class="title">{{ project.title }}</h4>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script>
@@ -68,6 +71,10 @@ export default {
     gap: $space-unit;
     justify-content: flex-start;
     align-items: flex-start;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
 
     .project-image {
         width: 4rem;

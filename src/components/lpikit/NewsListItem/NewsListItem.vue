@@ -1,5 +1,8 @@
 <template>
-    <div class="news-list-item">
+    <RouterLink
+        :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
+        class="news-list-item shadow-box"
+    >
         <div class="news-img-ctn">
             <CroppedImage
                 :alt="`${news.title} image`"
@@ -31,21 +34,16 @@
                 />
             </div>
             <div class="read-more-ctn">
-                <LinkButton
-                    class="read-button"
-                    btn-icon="ArrowRight"
-                    :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
-                    :label="$t('news.list.read-more')"
-                />
+                <SummaryAction class="read-button" :action-label="$t('news.list.read-more')" />
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 <script>
 import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import permissions from '@/mixins/permissions.ts'
@@ -59,7 +57,7 @@ export default {
 
     components: {
         CroppedImage,
-        LinkButton,
+        SummaryAction,
         HtmlLimiter,
         ContextActionMenu,
     },
@@ -168,7 +166,7 @@ export default {
 
 .read-more-ctn {
     flex-shrink: 0;
-    padding: 1rem 0;
+    padding-top: 1rem;
 
     .read-button {
         width: min-content;

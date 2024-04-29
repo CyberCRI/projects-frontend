@@ -92,10 +92,6 @@ export default {
 
     &.editable {
         padding-right: 1.4em;
-
-        &:hover {
-            background: $primary-lighter;
-        }
     }
 
     .event-controls {

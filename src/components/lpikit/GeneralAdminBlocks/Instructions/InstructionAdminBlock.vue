@@ -18,9 +18,9 @@
         </template>
 
         <template #footer>
-            <LinkButton
+            <SummaryAction
                 btn-icon="ArrowRight"
-                :label="$t('common.see-all')"
+                :action-label="$t('common.see-all')"
                 :to="{ name: 'InstructionListPage' }"
             />
         </template>
@@ -51,6 +51,7 @@ import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import { defaultForm } from '@/components/lpikit/InstructionForm/InstructionForm.vue'
 import InstructionAdminListItem from './InstructionAdminListItem.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 
 export default {
     name: 'InstructionAdminBlock',
@@ -61,6 +62,7 @@ export default {
         EditInstructionDrawer,
         InstructionAdminListItem,
         ConfirmModal,
+        SummaryAction,
     },
 
     data() {
