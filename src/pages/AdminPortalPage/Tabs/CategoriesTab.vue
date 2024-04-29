@@ -201,9 +201,10 @@ export default {
                 }
 
                 try {
-                    await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
-                        reordered,
-                    })
+                    // EATSER BUG 10 categorie order not saved
+                    // await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
+                    //     reordered,
+                    // })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.categories-reorder.success'),
                         type: 'success',
