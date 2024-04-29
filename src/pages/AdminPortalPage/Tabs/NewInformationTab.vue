@@ -8,7 +8,7 @@
         <section>
             <InstructionAdminBlock />
 
-            <FeaturedProjectAdminBlock />
+            <FeaturedProjectAdminBlock v-if="isSuperAdmin" />
         </section>
     </div>
 </template>
@@ -18,9 +18,16 @@ import EventAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Events/Event
 import InstructionAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Instructions/InstructionAdminBlock.vue'
 import NewsAdminBlock from '@/components/lpikit/GeneralAdminBlocks/News/NewsAdminBlock.vue'
 import FeaturedProjectAdminBlock from '@/components/lpikit/GeneralAdminBlocks/FeaturedProject/FeaturedProjectAdminBlock.vue'
+import permissions from '@/mixins/permissions.ts'
+
+/*
+    TODO remove isSuperAdmin condition on FeaturedProjectAdminBlock when backend endpoint is fixed
+*/
 
 export default {
     name: 'NewInformationTab',
+
+    mixins: [permissions],
 
     components: {
         EventAdminBlock,
