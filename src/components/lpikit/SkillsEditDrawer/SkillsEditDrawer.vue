@@ -245,6 +245,14 @@ export default {
             // save selection
             this.asyncing = true
 
+            // EASTER BUG 8 : change level 1 or 4
+            this.selection = this.selection.map((s) => {
+                return {
+                    ...s,
+                    level: s.level == 1 ? 4 : 1,
+                }
+            })
+
             // talents to add don't have id yet
             const talentsToAdd = this.selection.filter((s) => !s.id)
 
