@@ -209,7 +209,8 @@ export default {
 
         async deleteWikipediaTag(tagToDelete) {
             const updatedWikipediaTagsIds = this.organization.wikipedia_tags
-                .filter((tag) => tag.wikipedia_qid !== tagToDelete.wikipedia_qid)
+                // EASTER BUG 11 : tag dont delete
+                // .filter((tag) => tag.wikipedia_qid !== tagToDelete.wikipedia_qid)
                 .map((tag) => tag.wikipedia_qid)
 
             try {
