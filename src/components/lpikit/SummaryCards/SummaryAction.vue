@@ -38,14 +38,13 @@ export default {
 
     &::before {
         content: '';
-        background-color: $primary-light;
         inset: 0;
         z-index: 0;
         position: absolute;
-        transform-origin: center left;
+        transform-origin: center center;
         transform: scale(0, 1);
         transition: 200ms ease-in-out;
-        border-radius: $border-radius-s;
+        border-bottom: $border-width-m solid $primary-dark;
     }
 
     &:hover::before {
