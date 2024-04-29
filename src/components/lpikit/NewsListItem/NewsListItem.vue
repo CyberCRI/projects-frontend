@@ -166,7 +166,7 @@ export default {
 
 .read-more-ctn {
     flex-shrink: 0;
-    padding: 1rem 0;
+    padding-top: 1rem;
 
     .read-button {
         width: min-content;
