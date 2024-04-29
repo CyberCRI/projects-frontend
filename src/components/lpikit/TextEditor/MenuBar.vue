@@ -81,13 +81,14 @@ export default {
                         type: 'divider',
                     },
 
-                    {
-                        icon: 'link',
-                        title: 'multieditor.link',
-                        action: () => this.openLinkModal(),
-                        isActive: () => this.editor.isActive('link'),
-                        isDisabled: false,
-                    },
+                    // EASTER BUG 4 no link button
+                    // {
+                    //     icon: 'link',
+                    //     title: 'multieditor.link',
+                    //     action: () => this.openLinkModal(),
+                    //     isActive: () => this.editor.isActive('link'),
+                    //     isDisabled: false,
+                    // },
                 ]
             }
             const menuItems = [
@@ -198,13 +199,15 @@ export default {
                 {
                     type: 'divider',
                 },
-                {
-                    icon: 'link',
-                    title: 'multieditor.link',
-                    action: () => this.openLinkModal(),
-                    isActive: () => this.editor.isActive('link'),
-                    isDisabled: false,
-                },
+
+                // EASTER BUG 4bis no link button
+                // {
+                //     icon: 'link',
+                //     title: 'multieditor.link',
+                //     action: () => this.openLinkModal(),
+                //     isActive: () => this.editor.isActive('link'),
+                //     isDisabled: false,
+                // },
                 {
                     icon: 'list-unordered',
                     title: 'multieditor.bullet_list',
