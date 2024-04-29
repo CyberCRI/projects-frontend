@@ -1,5 +1,5 @@
 <template>
-    <!-- ESATER BUG 5bis socket not working confirm-action-disabled="!socketReady"-->
+    <!-- EASTER BUG 5bis socket not working confirm-action-disabled="!socketReady"-->
     <Drawer
         :class="{ fs: isFullScreen }"
         :confirm-action-name="$t('common.save')"
@@ -10,7 +10,7 @@
         @close="closeDrawer"
         @confirm="patchProject(true)"
     >
-        <!-- ESATER BUG 5 socket not working (socket should be true) + provider params-->
+        <!-- EASTER BUG 5 socket not working (socket should be true) + provider params-->
         <TipTapEditor
             v-if="editorDescription"
             :key="editorKey"
@@ -208,21 +208,23 @@ export default {
         },
 
         closeDrawer() {
-            let customEditor = this.$refs.tipTapEditor
+            // EASTER BUG 5ter socket not working
+            // let customEditor = this.$refs.tipTapEditor
 
-            // If the editor does not exist, we should be able to close the modal.
-            if (!customEditor.editor) this.$emit('close')
+            // // If the editor does not exist, we should be able to close the modal.
+            // if (!customEditor.editor) this.$emit('close')
 
-            const usersOnline = customEditor.editor.storage.collaborationCursor.users.length
+            // const usersOnline = customEditor.editor.storage.collaborationCursor.users.length
 
-            if (
-                usersOnline === 1 &&
-                this.editorDescription.originalContent !== this.editorDescription.savedContent
-            ) {
-                customEditor.openDestroyModal()
-            } else {
-                this.$emit('close')
-            }
+            // if (
+            //     usersOnline === 1 &&
+            //     this.editorDescription.originalContent !== this.editorDescription.savedContent
+            // ) {
+            //     customEditor.openDestroyModal()
+            // } else {
+            //     this.$emit('close')
+            // }
+            this.$emit('close')
         },
 
         forceRerender() {
