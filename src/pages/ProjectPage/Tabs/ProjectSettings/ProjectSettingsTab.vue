@@ -298,7 +298,9 @@ export default {
                 try {
                     const response = await this.$store.dispatch('projects/updateProject', {
                         id: this.project.id,
-                        project: { publication_status: status },
+                        // EASTER BUG 6 : publication status dont change
+                        // project: { publication_status: status },
+                        project: { publication_status: this.project.publication_status },
                     })
 
                     this.$store.dispatch('projects/updateProjectVisibility', response)
