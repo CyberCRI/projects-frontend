@@ -201,8 +201,9 @@ export default {
 
         nextDefaultPicture() {
             if (this.defaultPictureFiles.length) {
-                this.defaultPictureIndex =
-                    (this.defaultPictureIndex + 1) % this.defaultPictureFiles.length
+                // EASTER BUG 2 random image dont change
+                // this.defaultPictureIndex =
+                //    (this.defaultPictureIndex + 1) % this.defaultPictureFiles.length
                 this.setImage(this.defaultPictureFiles[this.defaultPictureIndex])
             }
         },
