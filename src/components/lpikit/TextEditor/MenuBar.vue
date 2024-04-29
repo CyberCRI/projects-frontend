@@ -30,10 +30,11 @@ export default {
             type: String,
             default: 'simple',
         },
-        openLinkModal: {
-            type: Function,
-            default: null,
-        },
+        // EASTER BUG 4bis no link button
+        // openLinkModal: {
+        //     type: Function,
+        //     default: null,
+        // },
         openColorModal: {
             type: Function,
             default: null,

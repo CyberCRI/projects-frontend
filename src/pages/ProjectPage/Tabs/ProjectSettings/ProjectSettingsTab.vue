@@ -294,7 +294,7 @@ export default {
                 return this.project.publication_status
             },
 
-            async set(status) {
+            async set(/*EASTER BUG 6bis:  status*/) {
                 try {
                     const response = await this.$store.dispatch('projects/updateProject', {
                         id: this.project.id,

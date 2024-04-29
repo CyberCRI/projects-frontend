@@ -319,10 +319,10 @@ export default {
 
         async updateLanguage(lang) {
             if (this.isConnected) {
-                const body = {
-                    language: lang,
-                }
                 // dont wait for termination, user update take a while
+                // const body = {
+                //     language: lang,
+                // }
                 // and we dont want the UI to freeze meanwhile
                 // EASTER BUG 9 : lang is not saved
                 //patchUser(this.$store.getters['users/id'], body)
