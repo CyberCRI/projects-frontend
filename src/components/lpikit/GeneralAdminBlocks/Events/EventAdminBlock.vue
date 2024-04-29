@@ -14,9 +14,9 @@
         </template>
 
         <template #footer>
-            <LinkButton
+            <SummaryAction
                 btn-icon="ArrowRight"
-                :label="$t('common.see-all')"
+                :action-label="$t('common.see-all')"
                 :to="{ name: 'CalendarPage' }"
             />
         </template>
@@ -48,6 +48,7 @@ import { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
 import EventAdminListItem from './EventAdminListItem.vue'
 import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
 import { getAllEvents, deleteEvent } from '@/api/event.service'
+import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 export default {
     name: 'EventAdminBlock',
 
@@ -57,6 +58,7 @@ export default {
         EditEventDrawer,
         EventAdminListItem,
         ConfirmModal,
+        SummaryAction,
     },
 
     data() {
