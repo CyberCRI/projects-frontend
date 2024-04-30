@@ -3,6 +3,16 @@
         :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
         class="news-list-item shadow-box"
     >
+        <div class="news-title-ctn mobile">
+            <h3 class="news-title">{{ news.title }}</h3>
+            <ContextActionMenu
+                class="news-actions"
+                @edit="$emit('edit-news', news)"
+                :can-edit="canEditNews"
+                @delete="$emit('delete-news', news)"
+                :can-delete="canDeleteNews"
+            />
+        </div>
         <div class="news-img-ctn">
             <CroppedImage
                 :alt="`${news.title} image`"
@@ -12,8 +22,8 @@
                 :ratio="4 / 3"
             />
         </div>
-        <div class="news-texts">
-            <div class="news-title-ctn">
+        <div class="news-texts" :style="textsStyle">
+            <div class="news-title-ctn desktop">
                 <h3 class="news-title">{{ news.title }}</h3>
 
                 <ContextActionMenu
@@ -72,6 +82,7 @@ export default {
     data() {
         return {
             style: {},
+            textsStyle: {},
         }
     },
 
@@ -90,9 +101,11 @@ export default {
     methods: {
         computeLayout() {
             this.style = {}
+            this.textsStyle = {}
         },
         layoutComputed(event) {
             this.style = { height: event.height + 'px' }
+            this.textsStyle = { height: 'auto' }
         },
     },
 }
@@ -105,17 +118,27 @@ export default {
     display: flex;
     align-items: stretch;
     gap: $space-l;
-    height: var(--news-dimension);
     overflow: hidden;
     padding: $space-l;
     border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
+    flex-direction: column;
+
+    @media screen and (min-width: $min-tablet) {
+        flex-direction: row;
+        height: var(--news-dimension);
+    }
 }
 
 .news-img-ctn {
-    flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
-    height: var(--news-dimension);
     flex-shrink: 0;
+    aspect-ratio: calc(4 / 3);
+    width: 100%;
+
+    @media screen and (min-width: $min-tablet) {
+        flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
+        width: auto;
+    }
 }
 
 .news-texts {
@@ -124,6 +147,10 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     gap: 1rem;
+
+    @media screen and (max-width: $min-tablet) {
+        height: 12rem;
+    }
 }
 
 .news-title-ctn {
@@ -135,6 +162,18 @@ export default {
 
 .news-title {
     font-size: $font-size-xl;
+}
+
+@media screen and (min-width: $min-tablet) {
+    .mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: $min-tablet) {
+    .desktop {
+        display: none;
+    }
 }
 
 .news-excerpt {

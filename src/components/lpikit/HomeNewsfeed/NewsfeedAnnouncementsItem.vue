@@ -8,7 +8,14 @@
         }"
     >
         <div class="announcement-img-container">
-            <img :alt="`announcement image`" :src="announcementImage" class="announcement-img" />
+            <CroppedImage
+                :alt="`${announcement?.project?.title} image`"
+                :image-sizes="imageSizes"
+                :src="croppedImageSrc"
+                class="project-img"
+                :ratio="1 / 1"
+            />
+            <div :style="announcementStyle" class="announcement-overlay"></div>
         </div>
         <div class="announcement-content">
             <h3 class="announcement-title">
@@ -39,11 +46,15 @@
 
 <script>
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
-
+import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import ImageMixin from '@/mixins/imageMixin.ts'
 export default {
     name: 'NewsfeedAnnouncementsItem',
 
-    components: { SummaryAction },
+    mixins: [ImageMixin],
+
+    components: { SummaryAction, CroppedImage },
 
     props: {
         announcement: {
@@ -60,21 +71,35 @@ export default {
     },
 
     computed: {
-        announcementImage() {
-            return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
-            }/placeholders/announcement_placeholder.png`
+        announcementStyle() {
+            return {
+                'background-image': `url(${
+                    import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                }/placeholders/announcement_placeholder.png)`,
+            }
         },
 
         description() {
             const sanitized = this.announcement?.description.replace(/<[^>]+>/g, ' ') || ''
             return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
         },
+
+        imageSizes() {
+            return pictureApiToImageSizes(this.announcement.project?.header_image)
+        },
+
+        croppedImageSrc() {
+            return this.announcement?.project && this.announcement.project?.header_image
+                ? this.announcement?.project?.header_image.variations?.small
+                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
+$dimension: 200px;
+
 .home-announcement-item {
     display: flex;
     border: $border-width-s solid $gray-10;
@@ -85,21 +110,30 @@ export default {
 
     @media screen and (min-width: $min-tablet) {
         align-items: flex-start;
-        min-height: 120px;
+        min-height: $dimension;
     }
 
     .announcement-img-container {
         background-size: cover;
         background-position: top center;
         flex: none;
+        position: relative;
+        flex-basis: $dimension;
+        flex-shrink: 0;
+        height: $dimension;
 
-        @media screen and (min-width: $min-tablet) {
-            flex-basis: pxToRem(120px);
-            flex-shrink: 1;
-            height: pxToRem(120px);
+        .announcement-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: $dimension;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transform-origin: center center;
+            transform: scale(0.5);
         }
 
-        .announcement-img {
+        .project-img {
             object-fit: cover;
             max-width: inherit;
             max-height: inherit;
@@ -124,6 +158,7 @@ export default {
 .announcement-content {
     display: flex;
     flex-direction: column;
+    align-self: stretch;
 
     .announcement-title {
         display: block;
