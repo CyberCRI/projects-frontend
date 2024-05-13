@@ -62,20 +62,16 @@ export default {
 :deep(.picture) {
     $picture-width: 72px;
 
-    display: inline-block;
+    display: flex;
     width: pxToRem($picture-width);
     height: pxToRem($picture-width);
     border-radius: $border-radius-xs;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     box-shadow: 0 0 2px rgb(0 0 0 / 15%);
 }
 
 :deep(.picture-user) {
     $picture-width: 110px;
 
-    background-position: top center;
     width: pxToRem($picture-width);
     height: pxToRem($picture-width);
 }
@@ -83,13 +79,11 @@ export default {
 :deep(.picture-project) {
     $picture-width: 86px;
 
-    background-position: top center;
     width: pxToRem($picture-width);
     height: pxToRem($picture-width);
 }
 
 :deep(.picture-group) {
-    background-position: top center;
     border-radius: 50%;
     width: pxToRem(90px);
     height: pxToRem(90px);

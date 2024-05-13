@@ -45,6 +45,7 @@ $icon-size: pxToRem(18px);
     display: inline-block;
     font-weight: 700;
     cursor: pointer;
+    white-space: nowrap;
 
     .label-ctn {
         text-transform: lowercase;
