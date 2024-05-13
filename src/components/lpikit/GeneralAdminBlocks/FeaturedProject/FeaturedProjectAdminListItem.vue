@@ -77,6 +77,7 @@ export default {
     }
 
     .project-image {
+        display: flex;
         width: 4rem;
         height: 4rem;
         overflow: hidden;
