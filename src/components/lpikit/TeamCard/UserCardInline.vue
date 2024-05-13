@@ -96,7 +96,7 @@ export default {
         },
 
         userImage() {
-            if (this.user.id) {
+            if (this.$filters.isNotGroup(this.user)) {
                 return this.user.profile_picture
                     ? this.user.profile_picture.variations.medium
                     : null
@@ -104,7 +104,9 @@ export default {
             return this.user.header_image ? this.user.header_image.variations.medium : null
         },
         imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.user.profile_picture)
+            return this.imageError
+                ? null
+                : pictureApiToImageSizes(this.user.profile_picture || this.user.header_image)
         },
         defaultImage() {
             return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`

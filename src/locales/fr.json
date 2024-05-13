@@ -1319,7 +1319,7 @@
             "goal": "Objectif",
             "sdg": "ODD",
             "link-and-attached-document": "Ressources",
-            "team-member": "Membre de l'équipe",
+            "team-member": "Membre de l'équipe / groupe",
             "announcement": "Annonce",
             "comment": "Commentaire",
             "location": "Lieu"
@@ -1740,7 +1740,7 @@
         "title": "Tags"
     },
     "team": {
-        "add": "ajouter un membre",
+        "add": "ajouter un membre / groupe",
         "edit": "modifier un membre de l'équipe",
         "group-members": "membres du groupe",
         "project-members": "membres du projet",
