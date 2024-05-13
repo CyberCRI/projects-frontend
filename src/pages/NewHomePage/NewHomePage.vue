@@ -21,6 +21,14 @@
             <div v-if="loggedIn" class="home-buttons">
                 <HomeButtons />
             </div>
+            <div class="locations-link">
+                <LpiButton
+                    :label="$t('home.check-locations')"
+                    secondary
+                    class="white-bg"
+                    @click="$router.push({ name: 'map' })"
+                />
+            </div>
             <div class="recommandations">
                 <RecommendationBlock />
             </div>
@@ -46,6 +54,7 @@ import HomeNewsfeed from '@/components/lpikit/HomeNewsfeed/HomeNewsfeed.vue'
 import HomeHeaderConnected from '@/components/lpikit/HomeHeader/HomeHeaderConnected.vue'
 import HomeHeaderAnonymous from '@/components/lpikit/HomeHeader/HomeHeaderAnonymous.vue'
 import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
 
 export default {
     name: 'NewHomePage',
@@ -59,6 +68,7 @@ export default {
         HomeNewsfeed,
         HomeHeaderConnected,
         HomeHeaderAnonymous,
+        LpiButton,
     },
 
     data() {
@@ -178,14 +188,26 @@ export default {
         }
     }
 
-    .home-buttons {
+    .home-buttons,
+    .locations-link {
         margin-top: $space-l;
-        background-color: $primary-lighter;
         display: flex;
         align-items: center;
         justify-content: space-around;
         flex-wrap: wrap;
-        padding-block: $space-s;
+        padding: $space-l $space-s;
+        border-radius: $border-radius-8;
+    }
+
+    .home-buttons {
+        background-color: $primary-lighter;
+    }
+
+    .locations-link {
+        border: $border-width-s solid $primary-dark;
+        background-image: url('#{$PUBLIC_BINARIES_PREFIX}/map-images/map-link-background.png');
+        background-size: cover;
+        background-position: center;
     }
 
     .recommandations {

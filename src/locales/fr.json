@@ -884,7 +884,9 @@
             "projects": "Vos projets",
             "instructions": "À ne pas manquer"
         },
-        "create-project": "Créer un projet"
+        "create-project": "Créer un projet",
+        "check-locations": "Voir nos emplacements",
+        "our-locations": "Nos emplacements"
     },
     "language": {
         "label-en": "English",
