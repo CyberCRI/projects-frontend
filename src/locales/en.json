@@ -885,7 +885,9 @@
             "projects": "Your projects",
             "instructions": "Do not miss"
         },
-        "create-project": "Create a project"
+        "create-project": "Create a project",
+        "check-locations": "Check our locations",
+        "our-locations": "Our locations"
     },
     "language": {
         "label-en": "English",

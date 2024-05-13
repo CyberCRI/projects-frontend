@@ -467,6 +467,13 @@ export default {
                     condition: this.announcements.length > 0,
                     dataTest: 'announcements',
                 },
+                {
+                    label: this.$t('home.our-locations').toUpperCase(),
+                    to: { name: 'map' },
+                    leftIcon: 'Map',
+                    condition: true,
+                    dataTest: 'map',
+                },
             ])
 
             return [
