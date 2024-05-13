@@ -1322,7 +1322,7 @@
             "goal": "Goal",
             "sdg": "SDG",
             "link-and-attached-document": "Resources",
-            "team-member": "Team member",
+            "team-member": "Team member / group",
             "announcement": "Announcement",
             "comment": "comment",
             "location": "Location"
@@ -1741,7 +1741,7 @@
         "title": "Tags"
     },
     "team": {
-        "add": "add members",
+        "add": "add members / groups",
         "edit": "edit team member",
         "group-members": "group members",
         "project-members": "project members",

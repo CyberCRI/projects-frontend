@@ -75,19 +75,19 @@ export default {
                     // watch out for current (logged) user (in create project) : it has no id yet !
                     selected:
                         this.selectedUsers.some(
-                            // group have a type, user don't
-                            (selected) => !selected.type && selected.id === result.id
+                            (selected) =>
+                                this.$filters.isNotGroup(selected) && selected.id === result.id
                         ) ||
                         (this.addToCurrentProject
                             ? this.team.some(
-                                  // group have a type, user don't
                                   (projectMember) =>
-                                      !projectMember.type && projectMember.id === result.id
+                                      this.$filters.isNotGroup(projectMember) &&
+                                      projectMember.id === result.id
                               )
                             : this.currentUsers.some(
-                                  // group have a type, user don't
                                   (currentUser) =>
-                                      !currentUser.user.type && currentUser.user.id === result.id
+                                      this.$filters.isNotGroup(currentUser.user) &&
+                                      currentUser.user.id === result.id
                               )),
                 }))
             } else {
@@ -96,19 +96,19 @@ export default {
                     ...result,
                     selected:
                         this.selectedUsers.some(
-                            // group have a type, user don't
-                            (selected) => !!selected.type && selected.id === result.id
+                            (selected) =>
+                                this.$filters.isGroup(selected) && selected.id === result.id
                         ) ||
                         (this.addToCurrentProject
                             ? this.team.some(
-                                  // group have a type, user don't
                                   (projectMember) =>
-                                      !!projectMember.type && projectMember.id === result.id
+                                      this.$filters.isGroup(projectMember) &&
+                                      projectMember.id === result.id
                               )
                             : this.currentUsers.some(
-                                  // group have a type, user don't
                                   (currentUser) =>
-                                      !!currentUser.user.type && currentUser.user.id === result.id
+                                      this.$filters.isGroup(currentUser.user) &&
+                                      currentUser.user.id === result.id
                               )),
                 }))
             }
