@@ -173,20 +173,20 @@
 </template>
 
 <script>
-import Drawer from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
-import SwitchInput from '@/components/lpikit/SwitchInput/SwitchInput.vue'
+import Drawer from '@/components/base/BaseDrawer.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import ImageInput from '@/components/base/form/ImageInput.vue'
+import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import CardList from '@/components/project/ProjectList/CardList.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { Sketch } from '@ckpack/vue-color'
-import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
 
 export default {
     name: 'CategoryDrawer',

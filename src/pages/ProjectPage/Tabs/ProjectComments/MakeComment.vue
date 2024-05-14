@@ -46,13 +46,13 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { mapGetters } from 'vuex'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 
 export default {
     name: 'MakeComment',

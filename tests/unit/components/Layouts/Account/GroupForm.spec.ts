@@ -1,4 +1,4 @@
-import GroupForm from '@/components/Layouts/Account/GroupForm.vue'
+import GroupForm from '@/components/lpikit/Account/GroupForm.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

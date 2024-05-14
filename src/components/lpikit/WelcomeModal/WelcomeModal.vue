@@ -38,8 +38,8 @@
     </BaseModal>
 </template>
 <script>
-import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 export default {
     name: 'WelcomeModal',

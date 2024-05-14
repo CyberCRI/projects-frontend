@@ -50,9 +50,9 @@
 </template>
 
 <script>
-import ProjectForm from '@/components/lpikit/ProjectForm/ProjectForm.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
+import ProjectForm from '@/components/project/ProjectForm/ProjectForm.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import permissions from '@/mixins/permissions.ts'
 
 import useValidate from '@vuelidate/core'

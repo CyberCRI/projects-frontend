@@ -65,11 +65,11 @@
 
 <script>
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import ResourceCard from '@/components/lpikit/ResourceCard/ResourceCard.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import ResourceCard from '@/components/project/ResourceCard/ResourceCard.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'ProjectResourcesTab',

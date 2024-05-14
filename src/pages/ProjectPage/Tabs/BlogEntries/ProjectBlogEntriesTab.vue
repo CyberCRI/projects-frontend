@@ -24,7 +24,7 @@
                     @click="projectLayoutToggleAddModal('blogEntry')"
                 />
             </div>
-            <SummaryBlock
+            <BlogSummaryBlock
                 :current="expandedEntry"
                 :items="summaryItems"
                 @item-clicked="updateExpanded"
@@ -43,11 +43,11 @@
 
 <script>
 import BlogEntry from './BlogEntry.vue'
-import SummaryBlock from '@/components/lpikit/Summary/SummaryBlock.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import BlogSummaryBlock from '@/components/project/BlogSummaryBlock.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'ProjectBlogEntriesTab',
@@ -58,7 +58,7 @@ export default {
 
     components: {
         BlogEntry,
-        SummaryBlock,
+        BlogSummaryBlock,
         ConfirmModal,
         LpiButton,
     },

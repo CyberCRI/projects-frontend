@@ -26,9 +26,9 @@
     </div>
 </template>
 <script>
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import CardList from '@/components/project/ProjectList/CardList.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getProjectsRecommendationsForUser } from '@/api/recommendations.service'
 import { axios } from '@/api/api.config'
 export default {

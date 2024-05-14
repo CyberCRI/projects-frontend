@@ -12,7 +12,7 @@
 
 <script>
 import NewsFeed from '@/components/lpikit/NewsFeed/NewsFeed.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
 

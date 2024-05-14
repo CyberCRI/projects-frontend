@@ -2,7 +2,7 @@
     <IconList></IconList>
 </template>
 <script>
-import IconList from '@/components/svgs/IconList.vue'
+import IconList from '@/components/lpikit/IconList/IconList.vue'
 
 export default {
     name: 'DebugIcons',

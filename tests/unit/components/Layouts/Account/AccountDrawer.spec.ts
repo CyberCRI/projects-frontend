@@ -1,4 +1,4 @@
-import AccountDrawer from '@/components/Layouts/Account/AccountDrawer.vue'
+import AccountDrawer from '@/components/lpikit/Account/AccountDrawer.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 

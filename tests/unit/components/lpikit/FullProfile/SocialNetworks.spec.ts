@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import SocialNetworks from '@/components/lpikit/FullProfile/SocialNetworks.vue'
+import SocialNetworks from '@/components/people/FullProfile/SocialNetworks.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '../../../../factories/user.factory'
 

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 export default {
     name: 'SectionHeader',

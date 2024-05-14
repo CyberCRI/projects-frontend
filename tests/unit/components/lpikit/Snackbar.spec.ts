@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const factory = (props?) => {

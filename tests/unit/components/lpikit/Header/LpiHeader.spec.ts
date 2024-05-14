@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import LpiHeader from '@/components/Header/LpiHeader.vue'
+import LpiHeader from '@/components/app/LpiHeader/LpiHeader.vue'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 import MockComponent from '../../../../helpers/MockComponent.vue'
@@ -121,7 +121,7 @@ describe('LpiHeader.vue', () => {
     it('should find the drawers', () => {
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 
-        const drawers = wrapper.findAll('drawer-layout-stub')
+        const drawers = wrapper.findAll('base-drawer-stub')
         // Notifications and contact form
         expect(drawers.length).toEqual(2)
     })

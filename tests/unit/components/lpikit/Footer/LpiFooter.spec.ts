@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import LpiFooter from '@/components/lpikit/Footer/LpiFooter.vue'
+import LpiFooter from '@/components/app/Footer/LpiFooter.vue'
 import { OrganizationOutputFactory } from '../../../../../tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '../../../../helpers/MockComponent.vue'

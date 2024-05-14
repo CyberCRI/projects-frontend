@@ -120,7 +120,7 @@
             @cancel="toggleShowQuitIsImposibleVisible"
         />
 
-        <DrawerLayout
+        <BaseDrawer
             :has-footer="false"
             :is-opened="profileDrawer.isOpened"
             :title="$t('profile.drawer_title')"
@@ -132,7 +132,7 @@
                 :can-edit="false"
                 :user-id="profileDrawer.user_id"
             />
-        </DrawerLayout>
+        </BaseDrawer>
     </div>
 </template>
 
@@ -141,13 +141,13 @@ import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
-import UserCard from '@/components/peopleKit/UserCard.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
+import UserCard from '@/components/people/UserCard.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
@@ -159,7 +159,7 @@ export default {
         UserCard,
         GroupCard,
         ConfirmModal,
-        DrawerLayout,
+        BaseDrawer,
         ProjectTeamEditor,
         LpiButton,
         DynamicGrid,

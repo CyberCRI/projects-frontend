@@ -43,8 +43,8 @@
 import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 export default {
     name: 'ReviewItem',

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProfileHeader from '@/components/lpikit/FullProfile/ProfileHeader.vue'
+import ProfileHeader from '@/components/people/FullProfile/ProfileHeader.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { UserFactory } from '../../../../factories/user.factory'

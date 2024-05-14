@@ -34,7 +34,7 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import OrgWordingDrawer from '@/components/lpikit/GeneralAdminBlocks/Wording/OrgWordingDrawer.vue'
 
 export default {

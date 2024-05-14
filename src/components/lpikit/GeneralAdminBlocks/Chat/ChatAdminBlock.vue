@@ -33,7 +33,7 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import EditChatDrawer from '@/components/lpikit/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 export default {
     name: 'ChatAdminBlock',

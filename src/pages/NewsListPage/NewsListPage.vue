@@ -55,14 +55,14 @@
     />
 </template>
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
-import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import permissions from '@/mixins/permissions.ts'
-import NewsListItemSkeleton from '@/components/lpikit/NewsListItem/NewsListItemSkeleton.vue'
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
 export default {

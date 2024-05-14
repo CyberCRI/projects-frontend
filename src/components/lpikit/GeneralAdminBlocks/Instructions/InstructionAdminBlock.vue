@@ -45,10 +45,10 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import { defaultForm } from '@/components/lpikit/InstructionForm/InstructionForm.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import InstructionAdminListItem from './InstructionAdminListItem.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'

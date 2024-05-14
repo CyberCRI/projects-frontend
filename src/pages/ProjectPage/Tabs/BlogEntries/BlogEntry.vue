@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {

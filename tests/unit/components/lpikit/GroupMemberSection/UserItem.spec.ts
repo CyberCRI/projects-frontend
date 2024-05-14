@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
+import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
 import { describe, expect, it } from 'vitest'
 import GroupMemberFactory from '../../../../factories/group-member.factory'
 

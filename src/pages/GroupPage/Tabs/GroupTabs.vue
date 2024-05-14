@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'GroupTabs',

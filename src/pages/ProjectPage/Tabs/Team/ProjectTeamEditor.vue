@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 export default {
     name: 'ProjectTeamEditor',

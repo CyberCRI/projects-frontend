@@ -64,10 +64,10 @@
 <script>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 export default {
     name: 'HomeHeaderAnonymous',
     components: {

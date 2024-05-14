@@ -28,7 +28,7 @@
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
-import LoaderComplex from '@/components/lpikit/Loader/LoaderComplex.vue'
+import LoaderComplex from '@/components/base/loader/LoaderComplex.vue'
 import BaseMap from '@/components/lpikit/Map/BaseMap.vue'
 import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
 import { getLocations } from '@/api/locations.services'

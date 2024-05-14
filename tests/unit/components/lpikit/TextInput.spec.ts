@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const factory = (props?) => {

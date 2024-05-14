@@ -62,7 +62,7 @@
             class="similar-projects"
         />
 
-        <DrawerLayout
+        <BaseDrawer
             :has-footer="false"
             :is-opened="profileDrawer.isOpened"
             :title="$t('profile.drawer_title')"
@@ -75,7 +75,7 @@
                 :can-edit="false"
                 :user-id="profileDrawer.user_id"
             />
-        </DrawerLayout>
+        </BaseDrawer>
     </div>
 </template>
 
@@ -88,10 +88,10 @@ import MapRecap from './MapRecap.vue'
 import ResourcesRecap from './ResourcesRecap.vue'
 import ReviewRecap from './ReviewRecap.vue'
 import SimilarProjects from './SimilarProjects.vue'
-import GroupMemberSection from '@/components/lpikit/GroupMemberSection/GroupMemberSection.vue'
+import GroupMemberSection from '@/components/group/GroupMemberSection/GroupMemberSection.vue'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 import DescriptionPlaceholder from '@/pages/ProjectPage/Tabs/Description/DescriptionPlaceholder.vue'
 import permissions from '@/mixins/permissions.ts'
 
@@ -112,7 +112,7 @@ export default {
         SimilarProjects,
         GroupMemberSection,
         UserProfile,
-        DrawerLayout,
+        BaseDrawer,
     },
 
     props: {

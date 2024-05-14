@@ -16,7 +16,7 @@
 
 <script>
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
-import LinkedProjects from '@/components/lpikit/LinkedProjects/LinkedProjects.vue'
+import LinkedProjects from '@/components/project/LinkedProjects/LinkedProjects.vue'
 
 export default {
     name: 'LinkedProjectsRecap',

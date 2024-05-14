@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupHeaderSkeleton from '@/components/lpikit/GroupHeader/GroupHeaderSkeleton.vue'
+import GroupHeaderSkeleton from '@/components/group/GroupHeader/GroupHeaderSkeleton.vue'
 import { describe, expect, it } from 'vitest'
 
 const i18n = {

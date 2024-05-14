@@ -14,7 +14,7 @@
 <script>
 import { postOrganisationLogo } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
-import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
+import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {

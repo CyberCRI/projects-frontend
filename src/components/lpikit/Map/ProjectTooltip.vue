@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
     name: 'ProjectTooltip',

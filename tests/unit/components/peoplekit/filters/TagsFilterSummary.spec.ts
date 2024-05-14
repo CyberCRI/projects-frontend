@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TagsFilterSummary from '@/components/peopleKit/Filters/TagsFilterSummary.vue'
+import TagsFilterSummary from '@/components/lpikit/Filters/TagsFilterSummary.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 function buildStore() {

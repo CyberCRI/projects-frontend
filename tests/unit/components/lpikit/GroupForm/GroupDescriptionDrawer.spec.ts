@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupDescriptionDrawer from '@/components/lpikit/GroupForm/GroupDescriptionDrawer.vue'
+import GroupDescriptionDrawer from '@/components/group/GroupForm/GroupDescriptionDrawer.vue'
 import { describe, expect, it } from 'vitest'
 
 const i18n = {

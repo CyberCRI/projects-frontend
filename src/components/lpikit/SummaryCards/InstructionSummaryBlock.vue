@@ -50,8 +50,8 @@
 import InstructionItem from '@/components/lpikit/SummaryCards/InstructionItem.vue'
 import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
-import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteInstruction } from '@/api/instruction.service'
 
 export default {

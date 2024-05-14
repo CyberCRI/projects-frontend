@@ -41,7 +41,7 @@
     </div>
 </template>
 <script>
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import ProjectSummaryBlock from '@/components/lpikit/SummaryCards/ProjectSummaryBlock.vue'
 import EventSummaryBlock from '@/components/lpikit/SummaryCards/EventSummaryBlock.vue'
 import InstructionSummaryBlock from '@/components/lpikit/SummaryCards/InstructionSummaryBlock.vue'

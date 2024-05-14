@@ -8,8 +8,8 @@
     </button>
 </template>
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'OnboardingTodo',
 

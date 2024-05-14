@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { getFaq } from '@/api/faqs.service'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import { computed } from 'vue'

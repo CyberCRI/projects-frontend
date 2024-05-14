@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'HomeButtons',

@@ -19,7 +19,7 @@
 
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 export default {
     name: 'ProjectLine',

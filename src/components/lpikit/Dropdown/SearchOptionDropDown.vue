@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
 export default {
     name: 'SearchOptionDropDown',

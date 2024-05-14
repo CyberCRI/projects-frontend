@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

@@ -5,7 +5,7 @@
     </component>
 </template>
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 export default {
     name: 'SummaryAction',
 

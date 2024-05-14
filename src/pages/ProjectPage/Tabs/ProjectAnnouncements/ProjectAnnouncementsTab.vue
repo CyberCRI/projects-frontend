@@ -38,11 +38,11 @@
 
 <script>
 import permissions from '@/mixins/permissions.ts'
-import AnnouncementItem from '@/components/lpikit/Announcement/AnnouncementItem.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import ReplyAnnouncementDrawer from '@/components/lpikit/ReplyAnnouncementDrawer/ReplyAnnouncementDrawer.vue'
+import AnnouncementItem from '@/components/project/Announcement/AnnouncementItem.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import ReplyAnnouncementDrawer from '@/components/project/ReplyAnnouncementDrawer/ReplyAnnouncementDrawer.vue'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
 
 export default {

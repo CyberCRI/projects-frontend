@@ -35,8 +35,8 @@
     </BaseModal>
 </template>
 <script>
-import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 export default {
     name: 'ProfileCompletedModal',
 

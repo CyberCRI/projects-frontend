@@ -112,13 +112,13 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import ExternalLabelButton from '@/components/lpikit/LpiButton/ExternalLabelButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import MakeComment from './MakeComment.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {

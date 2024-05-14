@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import HomeCarousel from '@/components/HomeCarousel/HomeCarousel.vue'
+import HomeCarousel from '@/components/lpikit/HomeCarousel/HomeCarousel.vue'
 import { loadLocaleMessages } from '@/locales/i18n'
 import imageMixin from '@/mixins/imageMixin'
 

@@ -256,7 +256,7 @@ const routes: Array<RouteRecordRaw> = [
     //     name: 'CompleteProfilePage',
     //     component: () =>
     //         import(
-    //             /* webpackChunkName: "CompleteProfilePage" */ '../components/lpikit/CompleteProfileDrawer/CompleteProfileDrawer.vue'
+    //             /* webpackChunkName: "CompleteProfilePage" */ '../components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
     //         ),
     //     props: {
     //         isOpened: true,

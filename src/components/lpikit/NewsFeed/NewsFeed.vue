@@ -37,11 +37,11 @@
     />
 </template>
 <script>
-import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import NewsfeedAnnouncementsItem from '@/components/lpikit/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 import NewsfeedProjectItem from '@/components/lpikit/HomeNewsfeed/NewsfeedProjectItem.vue'
-import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
+import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
 import { deleteNews } from '@/api/news.service.ts'
 export default {
     name: 'NewsFeed',

@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
-import SkillSteps from '@/components/lpikit/Steps/SkillSteps.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
+import SkillSteps from '@/components/people/SkillSteps/SkillSteps.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'OnboardingModal',

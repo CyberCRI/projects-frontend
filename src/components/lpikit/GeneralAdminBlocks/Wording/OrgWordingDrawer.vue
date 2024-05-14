@@ -1,5 +1,5 @@
 <template>
-    <DrawerLayout
+    <BaseDrawer
         :confirm-action-name="$t('common.save')"
         :confirm-action-disabled="asyncing"
         :is-opened="isOpened"
@@ -34,13 +34,13 @@
                 @update="updateContent"
             />
         </div>
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization } from '@/api/organizations.service.ts'
 
 export default {
@@ -50,7 +50,7 @@ export default {
 
     components: {
         TipTapEditor,
-        DrawerLayout,
+        BaseDrawer,
         TextInput,
     },
 

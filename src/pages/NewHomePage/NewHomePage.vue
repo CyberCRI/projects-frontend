@@ -54,7 +54,7 @@ import HomeNewsfeed from '@/components/lpikit/HomeNewsfeed/HomeNewsfeed.vue'
 import HomeHeaderConnected from '@/components/lpikit/HomeHeader/HomeHeaderConnected.vue'
 import HomeHeaderAnonymous from '@/components/lpikit/HomeHeader/HomeHeaderAnonymous.vue'
 import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'NewHomePage',

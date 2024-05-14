@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import UserProfile from '@/components/Profile/UserProfile.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 
 export default {
     name: 'UserProfilePage',

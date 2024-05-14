@@ -22,7 +22,7 @@
     </div>
 </template>
 <script>
-import ProjectLogo from '@/components/svgs/ProjectLogo.vue'
+import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 
 export default {
     name: 'SignUpWrapper',

@@ -43,10 +43,10 @@
 
 <script>
 import { getHierarchyGroups } from '@/api/group.service.ts'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import GroupsElement from './GroupsElement.vue'
-import PickGroupDrawer from '@/components/lpikit/PickGroupDrawer/PickGroupDrawer.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 
 export default {
     name: 'GroupsListTab',

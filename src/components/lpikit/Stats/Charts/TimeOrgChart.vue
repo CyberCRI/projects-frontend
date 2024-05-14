@@ -8,7 +8,7 @@
 <script>
 import { MONTH } from '@/functs/constants.ts'
 import LpiLineChart from './Generic/LpiLineChart.vue'
-import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
 
 export default {
     name: 'TimeOrgChart',

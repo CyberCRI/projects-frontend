@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
 import BaseMap from '@/components/lpikit/Map/BaseMap.vue'

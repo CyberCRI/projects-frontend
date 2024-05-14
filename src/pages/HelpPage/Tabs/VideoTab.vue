@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TheVideoPlayer from '@/components/shrcomponents/TheVideoPlayer.vue'
+import TheVideoPlayer from '@/components/base/media/TheVideoPlayer.vue'
 
 export default {
     name: 'VideoTab',

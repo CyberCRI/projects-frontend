@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ParentGroupSection from '@/components/lpikit/GroupForm/ParentGroupSection.vue'
+import ParentGroupSection from '@/components/group/GroupForm/ParentGroupSection.vue'
 import { describe, expect, it } from 'vitest'
 import useValidate from '@vuelidate/core'
 

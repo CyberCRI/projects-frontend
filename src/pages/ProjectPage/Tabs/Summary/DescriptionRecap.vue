@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
-import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 
 export default {
     name: 'DescriptionRecap',

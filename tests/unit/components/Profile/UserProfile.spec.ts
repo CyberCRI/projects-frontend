@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import UserProfile from '@/components/Profile/UserProfile.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { getUser } from '@/api/people.service'

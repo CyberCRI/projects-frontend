@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
-import SkillSteps from '@/components/lpikit/Steps/SkillSteps.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import SkillSteps from '@/components/people/SkillSteps/SkillSteps.vue'
 
 export default {
     name: 'OnboardingStepCard',

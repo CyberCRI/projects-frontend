@@ -24,7 +24,7 @@
     </RouterLink>
 </template>
 <script>
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'

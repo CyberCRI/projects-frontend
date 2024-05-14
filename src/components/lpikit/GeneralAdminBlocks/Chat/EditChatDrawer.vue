@@ -1,5 +1,5 @@
 <template>
-    <DrawerLayout
+    <BaseDrawer
         :confirm-action-name="$t('common.save')"
         :confirm-action-disabled="form?.v$?.$invalid"
         :is-opened="isOpened"
@@ -26,11 +26,11 @@
                 />
             </div>
         </form>
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 <script>
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization } from '@/api/organizations.service.ts'
 
 export default {
@@ -39,7 +39,7 @@ export default {
     emits: ['close', 'chat-edited'],
 
     components: {
-        DrawerLayout,
+        BaseDrawer,
         TextInput,
     },
 

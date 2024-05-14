@@ -30,7 +30,7 @@
 
 <script>
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
-import ResourceCount from '@/components/lpikit/ResourceCount/ResourceCount.vue'
+import ResourceCount from '@/components/project/ResourceCount/ResourceCount.vue'
 
 export default {
     name: 'ResourcesRecap',

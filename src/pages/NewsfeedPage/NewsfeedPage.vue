@@ -27,7 +27,7 @@
 
 <script>
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import NewsListSkeleton from '@/components/lpikit/Skeleton/NewsListSkeleton.vue'
 import NewsFeed from '@/components/lpikit/NewsFeed/NewsFeed.vue'

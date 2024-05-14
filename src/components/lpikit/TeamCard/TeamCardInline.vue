@@ -39,10 +39,10 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 export default {
     name: 'TeamCardInline',

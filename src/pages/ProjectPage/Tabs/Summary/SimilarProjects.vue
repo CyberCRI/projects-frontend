@@ -44,9 +44,9 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 export default {
     name: 'SimilarProjects',

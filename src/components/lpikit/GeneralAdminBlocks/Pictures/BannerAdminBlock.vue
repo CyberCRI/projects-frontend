@@ -15,7 +15,7 @@
 <script>
 import { postOrganisationBanner, patchOrganisationBanner } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
-import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
+import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
 

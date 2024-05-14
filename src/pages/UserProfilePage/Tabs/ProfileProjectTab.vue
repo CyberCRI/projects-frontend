@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
+import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import permissions from '@/mixins/permissions.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import { getUserFollows } from '@/api/follows.service'
 
 export default {

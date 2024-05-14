@@ -17,8 +17,8 @@
     </div>
 </template>
 <script>
-import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
 export default {
     name: 'NotificationsSettingsTab',

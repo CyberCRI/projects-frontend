@@ -51,11 +51,11 @@
 </template>
 
 <script>
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getFaq, createFaq, putFaq, deleteFaq } from '@/api/faqs.service'
 
 function defaultFaq() {

@@ -81,18 +81,18 @@
     />
 </template>
 <script>
-import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
-import NewsListItem from '@/components/lpikit/NewsListItem/NewsListItem.vue'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
 import permissions from '@/mixins/permissions.ts'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
-import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
-import NewsListItemSkeleton from '@/components/lpikit/NewsListItem/NewsListItemSkeleton.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
+import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 
 export default {
     name: 'NewsPage',

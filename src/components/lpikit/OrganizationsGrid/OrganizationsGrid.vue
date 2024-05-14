@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 
 export default {
     name: 'OrganizationsGrid',

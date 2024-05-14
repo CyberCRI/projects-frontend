@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 

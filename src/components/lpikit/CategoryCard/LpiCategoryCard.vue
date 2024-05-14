@@ -30,8 +30,8 @@
 
 <script>
 import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 export default {
     name: 'LpiCategoryCard',

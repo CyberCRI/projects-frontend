@@ -115,11 +115,11 @@
 </template>
 <script>
 import { getInvitations, deleteInvitation } from '@/api/invitations.service.ts'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import BadgeItem from '@/components/base/BadgeItem.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'LinksList',
     components: {

@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
 export default {
     name: 'DebugOnboarding',

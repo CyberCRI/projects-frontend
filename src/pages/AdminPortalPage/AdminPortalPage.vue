@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 
 export default {
     name: 'AdminPortalPage',

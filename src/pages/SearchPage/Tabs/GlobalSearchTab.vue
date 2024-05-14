@@ -43,11 +43,11 @@
 </template>
 
 <script>
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
-import UserCard from '@/components/peopleKit/UserCard.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import CardList from '@/components/project/ProjectList/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
+import UserCard from '@/components/people/UserCard.vue'
 
 export default {
     name: 'GlobalSearchTab',

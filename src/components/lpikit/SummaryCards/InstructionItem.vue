@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import HtmlLimiter from '@/components/lpikit/AnnouncementCard/HtmlLimiter.vue'
+import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import permissions from '@/mixins/permissions.ts'
 import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
 

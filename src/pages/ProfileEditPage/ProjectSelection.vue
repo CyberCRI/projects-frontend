@@ -43,9 +43,9 @@
 
 <script>
 import { getAllProjects, searchProjects } from '@/api/projects.service'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
 
 export default {
     name: 'ProjectSelection',

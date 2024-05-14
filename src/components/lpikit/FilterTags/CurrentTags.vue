@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
+import FilterValue from '@/components/lpikit/Filters/FilterValue.vue'
 
 export default {
     name: 'CurrentTags',

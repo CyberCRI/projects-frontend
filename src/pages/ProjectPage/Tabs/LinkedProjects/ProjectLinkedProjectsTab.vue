@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import LinkedProjects from '@/components/lpikit/LinkedProjects/LinkedProjects.vue'
+import LinkedProjects from '@/components/project/LinkedProjects/LinkedProjects.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'ProjectLinkedProjectsTab',

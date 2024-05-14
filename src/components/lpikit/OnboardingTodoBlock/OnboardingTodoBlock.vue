@@ -71,9 +71,9 @@
 </template>
 <script>
 import OnboardingTodo from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodo.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from '@/api/people.service.ts'
 
 export default {

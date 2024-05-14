@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import CardList from '@/components/project/ProjectList/CardList.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
 import { getGroup } from '@/api/group.service'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import EmptyCard from '@/components/lpikit/UserProfile/EmptyCard.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 
 export default {
     name: 'ProfileGroupsTab',

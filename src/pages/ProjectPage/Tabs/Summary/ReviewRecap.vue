@@ -29,9 +29,9 @@
     </div>
 </template>
 <script>
-import ReviewDrawer from '@/components/lpikit/ReviewDrawer/ReviewDrawer.vue'
+import ReviewDrawer from '@/components/project/ReviewDrawer/ReviewDrawer.vue'
 import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewItem from '@/pages/ProjectPage/Tabs/Summary/ReviewItem.vue'
 export default {
     name: 'ReviewRecap',

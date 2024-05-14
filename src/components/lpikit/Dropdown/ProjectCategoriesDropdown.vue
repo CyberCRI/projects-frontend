@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 import DropdownCategories from '@/components/lpikit/Dropdown/DropdownCategories.vue'
 
 export default {

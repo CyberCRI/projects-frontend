@@ -1,5 +1,5 @@
 import { lpiMount, lpiShallowMount } from '../../../helpers/LpiMount'
-import BlogDrawer from '@/components/lpikit/BlogDrawer/BlogDrawer.vue'
+import BlogDrawer from '@/components/project/BlogDrawer/BlogDrawer.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'

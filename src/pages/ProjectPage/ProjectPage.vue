@@ -66,18 +66,18 @@
 </template>
 
 <script>
-import ProjectHeader from '@/components/lpikit/ProjectHeader/ProjectHeader.vue'
-import ProjectTabs from '@/components/lpikit/ProjectTabs/ProjectTabs.vue'
-import ProjectTabsSkeleton from '@/components/lpikit/ProjectTabs/ProjectTabsSkeleton.vue'
-import GoalDrawer from '@/components/lpikit/GoalDrawer/GoalDrawer.vue'
-import TeamDrawer from '@/components/lpikit/TeamDrawer/TeamDrawer.vue'
-import AnnouncementDrawer from '@/components/lpikit/AnnouncementDrawer/AnnouncementDrawer.vue'
-import LinkedProjectDrawer from '@/components/lpikit/LinkedProjectDrawer/LinkedProjectDrawer.vue'
-import LocationDrawer from '@/components/lpikit/LocationDrawer/LocationDrawer.vue'
-import BlogDrawer from '@/components/lpikit/BlogDrawer/BlogDrawer.vue'
-import ResourceDrawer from '@/components/lpikit/ResourceDrawer/ResourceDrawer.vue'
-import ProjectDrawer from '@/components/lpikit/ProjectDrawer/ProjectDrawer.vue'
-import SdgsDrawer from '@/components/lpikit/SdgsDrawer/SdgsDrawer.vue'
+import ProjectHeader from '@/components/project/ProjectHeader/ProjectHeader.vue'
+import ProjectTabs from '@/components/project/ProjectTabs/ProjectTabs.vue'
+import ProjectTabsSkeleton from '@/components/project/ProjectTabs/ProjectTabsSkeleton.vue'
+import GoalDrawer from '@/components/project/GoalDrawer/GoalDrawer.vue'
+import TeamDrawer from '@/components/project/TeamDrawer/TeamDrawer.vue'
+import AnnouncementDrawer from '@/components/project/AnnouncementDrawer/AnnouncementDrawer.vue'
+import LinkedProjectDrawer from '@/components/project/LinkedProjectDrawer/LinkedProjectDrawer.vue'
+import LocationDrawer from '@/components/project/LocationDrawer/LocationDrawer.vue'
+import BlogDrawer from '@/components/project/BlogDrawer/BlogDrawer.vue'
+import ResourceDrawer from '@/components/project/ResourceDrawer/ResourceDrawer.vue'
+import ProjectDrawer from '@/components/project/ProjectDrawer/ProjectDrawer.vue'
+import SdgsDrawer from '@/components/project/SdgsDrawer/SdgsDrawer.vue'
 
 import utils from '@/functs/functions.ts'
 

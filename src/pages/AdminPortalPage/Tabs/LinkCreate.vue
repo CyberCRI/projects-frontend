@@ -125,17 +125,17 @@
     </div>
 </template>
 <script>
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 import { postInvitation } from '@/api/invitations.service.ts'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import GroupSelectDrawer from '@/components/lpikit/GroupSelectDrawer/GroupSelectDrawer.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
 export default {
     name: 'LinkCreate',
     components: {

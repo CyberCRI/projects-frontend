@@ -20,8 +20,8 @@
     </ToolTip>
 </template>
 <script>
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 export default {
     name: 'ContextActionMenu',
     emits: ['delete', 'edit'],

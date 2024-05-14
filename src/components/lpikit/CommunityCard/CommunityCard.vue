@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import PatatoidIcon from '@/components/svgs/PatatoidIcon.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
+import PatatoidIcon from '@/components/base/media/PatatoidIcon.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 
 export default {
     name: 'CommunityCard',

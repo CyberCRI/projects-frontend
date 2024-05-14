@@ -193,7 +193,7 @@
             @cancel="toggleShowQuitIsImposibleVisible"
         />
 
-        <DrawerLayout
+        <BaseDrawer
             :has-footer="false"
             :is-opened="reportForm.visible"
             :title="reportForm.type ? $t(`report.${reportForm.type}`) : ''"
@@ -201,7 +201,7 @@
             @close="reportForm.visible = false"
         >
             <ReportForm :type="reportForm.type" @close="toggleReportForm" />
-        </DrawerLayout>
+        </BaseDrawer>
 
         <ReviewDrawer
             :is-opened="reviewDrawerVisible"
@@ -213,19 +213,19 @@
 </template>
 
 <script>
-import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import permissions from '@/mixins/permissions.ts'
 import viewportWidth from '@/mixins/viewportWidth.ts'
-import LpiCheckbox from '@/components/lpikit/Checkbox/LpiCheckbox.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import ReportForm from '@/components/lpikit/ReportForm/ReportForm.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import ReviewDrawer from '@/components/lpikit/ReviewDrawer/ReviewDrawer.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import ReportForm from '@/components/app/ReportForm/ReportForm.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import ReviewDrawer from '@/components/project/ReviewDrawer/ReviewDrawer.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 
 export default {
@@ -243,7 +243,7 @@ export default {
         GroupButton,
         LpiSnackbar,
         ReportForm,
-        DrawerLayout,
+        BaseDrawer,
         ConfirmModal,
         ReviewDrawer,
     },

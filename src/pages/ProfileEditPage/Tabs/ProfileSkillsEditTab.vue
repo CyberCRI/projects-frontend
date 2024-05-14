@@ -84,11 +84,11 @@
     />
 </template>
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import SkillItem from '@/components/lpikit/SkillItem/SkillItem.vue'
-import SkillsEditDrawer from '@/components/lpikit/SkillsEditDrawer/SkillsEditDrawer.vue'
-import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import SkillItem from '@/components/people/SkillItem/SkillItem.vue'
+import SkillsEditDrawer from '@/components/people/SkillsEditDrawer/SkillsEditDrawer.vue'
+import SkillLevelTip from '@/components/people/SkillLevelTip.vue'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {

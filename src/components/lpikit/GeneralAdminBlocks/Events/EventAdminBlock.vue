@@ -42,11 +42,11 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
-import { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import EventAdminListItem from './EventAdminListItem.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllEvents, deleteEvent } from '@/api/event.service'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 export default {

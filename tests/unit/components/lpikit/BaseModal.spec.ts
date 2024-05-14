@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('BaseModal', () => {

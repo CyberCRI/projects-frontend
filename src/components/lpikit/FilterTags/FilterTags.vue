@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
 import CurrentTags from './CurrentTags.vue'
 import SuggestedTags from './SuggestedTags.vue'
 import WikipediaResults from './WikipediaResults.vue'

@@ -64,14 +64,14 @@ import pageTitle from '@/mixins/pageTitle.ts'
 
 import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
 import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import {
     updateFiltersFromURL,
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
-import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
 

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import NotificationsSettingsTab from './Tabs/NotificationsSettingsTab.vue'
 
 export default {

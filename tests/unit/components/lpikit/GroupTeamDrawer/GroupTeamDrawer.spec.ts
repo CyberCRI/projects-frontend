@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupTeamDrawer from '@/components/lpikit/GroupTeamDrawer/GroupTeamDrawer.vue'
+import GroupTeamDrawer from '@/components/group/GroupTeamDrawer/GroupTeamDrawer.vue'
 import { describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '../../../../factories/project-member.factory'
 

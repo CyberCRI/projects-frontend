@@ -44,11 +44,11 @@
 </template>
 
 <script>
-import EventItem from '@/components/lpikit/EventList/EventItem.vue'
+import EventItem from '@/components/event/EventList/EventItem.vue'
 import BaseListSummaryBlock from '@/components/lpikit/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
-import EditEventDrawer from '@/components/lpikit/EditEventDrawer/EditEventDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
 
 export default {

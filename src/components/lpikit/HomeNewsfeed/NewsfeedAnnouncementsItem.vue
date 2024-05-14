@@ -46,7 +46,7 @@
 
 <script>
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import ImageMixin from '@/mixins/imageMixin.ts'
 export default {

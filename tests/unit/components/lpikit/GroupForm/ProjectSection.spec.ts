@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectSection from '@/components/lpikit/GroupForm/ProjectSection.vue'
+import ProjectSection from '@/components/group/GroupForm/ProjectSection.vue'
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory } from '../../../../../tests/factories/project.factory'
 

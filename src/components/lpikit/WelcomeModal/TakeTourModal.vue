@@ -33,9 +33,9 @@
     </BaseModal>
 </template>
 <script>
-import BaseModal from '@/components/lpikit/BaseModal/BaseModal.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'TakeTourModal',
 

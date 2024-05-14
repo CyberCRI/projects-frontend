@@ -85,12 +85,12 @@
 import { getProjectCategory } from '@/api/project-categories.service'
 import { getWikiTag } from '@/api/wikipedia-tags.service'
 import { getOrgTag } from '@/api/organization-tags.service'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import FiltersDrawer from '@/components/peopleKit/Filters/FiltersDrawer.vue'
-import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import FiltersDrawer from '@/components/lpikit/Filters/FiltersDrawer.vue'
+import FilterValue from '@/components/lpikit/Filters/FilterValue.vue'
 import SearchOptionDropDown from '@/components/lpikit/Dropdown/SearchOptionDropDown.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 function defaultFilters() {
     return {

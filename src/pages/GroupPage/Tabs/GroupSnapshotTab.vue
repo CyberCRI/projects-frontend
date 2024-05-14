@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :has-footer="false"
         :is-opened="profileDrawer.isOpened"
         :title="$t('profile.drawer_title')"
@@ -90,19 +90,19 @@
             :user-id="profileDrawer.user_id"
             @close="closeProfileDrawer"
         />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
-import DescriptionExpandable from '@/components/lpikit/AnnouncementCard/DescriptionExpandable.vue'
-import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
+import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
+import CardList from '@/components/project/ProjectList/CardList.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
-import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
+import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
 
 export default {
@@ -116,7 +116,7 @@ export default {
         UserItem,
         CardList,
         ProjectCard,
-        DrawerLayout,
+        BaseDrawer,
         UserProfile,
         DynamicGrid,
     },

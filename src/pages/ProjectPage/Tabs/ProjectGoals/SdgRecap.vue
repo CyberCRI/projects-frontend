@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 

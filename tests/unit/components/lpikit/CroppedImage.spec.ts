@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 import { describe, expect, it } from 'vitest'
 const i18n = {

@@ -40,15 +40,15 @@
 </template>
 
 <script>
-import DescriptionSummaryBlock from '@/components/lpikit/Summary/DescriptionSummaryBlock.vue'
-import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
+import DescriptionSummaryBlock from '@/components/project/DescriptionSummaryBlock.vue'
+import DescriptionDrawer from '@/components/project/EditDescriptionDrawer/DescriptionDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import DescriptionPlaceholder from './DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
 import throttle from 'lodash.throttle'
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 export default {
     name: 'ProjectDescriptionTab',
 

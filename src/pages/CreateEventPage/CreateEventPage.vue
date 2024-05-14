@@ -24,8 +24,8 @@
     </div>
 </template>
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import EventForm, { defaultForm } from '@/components/lpikit/EventForm/EventForm.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import EventForm, { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { createEvent } from '@/api/event.service'
 
 export default {

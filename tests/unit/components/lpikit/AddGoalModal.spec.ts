@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GoalDrawer from '@/components/lpikit/GoalDrawer/GoalDrawer.vue'
+import GoalDrawer from '@/components/project/GoalDrawer/GoalDrawer.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

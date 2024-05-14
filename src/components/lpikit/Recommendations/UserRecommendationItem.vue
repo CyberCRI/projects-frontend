@@ -70,9 +70,9 @@
 
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/lpikit/CroppedImage/CroppedImage.vue'
-import BadgeItem from '@/components/lpikit/Badge/BadgeItem.vue'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import BadgeItem from '@/components/base/BadgeItem.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 
 export default {
     name: 'UserRecommendationItem',

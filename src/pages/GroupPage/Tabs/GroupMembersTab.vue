@@ -27,7 +27,7 @@
             />
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :v-if="profileDrawer.isOpened"
         :has-footer="false"
         :is-opened="profileDrawer.isOpened"
@@ -42,14 +42,14 @@
             :user-id="profileDrawer.user_id"
             @close="closeProfileDrawer"
         />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
 import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
@@ -59,7 +59,7 @@ export default {
 
     components: {
         UserItem,
-        DrawerLayout,
+        BaseDrawer,
         UserProfile,
         PaginationButtons,
         MemberListSkeleton,

@@ -1,4 +1,4 @@
-import AccountFormTitleBlock from '@/components/Layouts/Account/AccountFormTitleBlock.vue'
+import AccountFormTitleBlock from '@/components/lpikit/Account/AccountFormTitleBlock.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

@@ -42,11 +42,11 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import EditNewsDrawer from '@/components/lpikit/EditNewsDrawer/EditNewsDrawer.vue'
-import { defaultForm } from '@/components/lpikit/NewsForm/NewsForm.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
 import NewsAdminListItem from './NewsAdminListItem.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
 

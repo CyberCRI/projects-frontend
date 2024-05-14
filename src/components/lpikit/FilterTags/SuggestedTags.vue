@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import FilterValue from '@/components/lpikit/Filters/FilterValue.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 
 export default {
     name: 'SuggestedTags',

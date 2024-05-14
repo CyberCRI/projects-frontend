@@ -40,7 +40,7 @@ import { getWikiTagDisambiguate } from '@/api/wikipedia-tags.service'
 
 import SearchResults from './SearchResults.vue'
 import AmbiguousResults from './AmbiguousResults.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { searchWikiTags } from '@/api/wikipedia-tags.service'
 
 /**

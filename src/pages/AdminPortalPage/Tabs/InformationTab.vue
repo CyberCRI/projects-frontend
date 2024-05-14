@@ -124,11 +124,11 @@
 <script>
 import { postOrganisationBanner, postOrganisationLogo } from '@/api/organizations.service'
 
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import ImageInput from '@/components/lpikit/ImageInput/ImageInput.vue'
-import LpiSelect from '@/components/lpikit/LpiSelect/LpiSelect.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import ImageInput from '@/components/base/form/ImageInput.vue'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'

@@ -31,7 +31,7 @@
 </template>
 <script>
 import GroupsElementRadio from '@/pages/AdminPortalPage/Tabs/GroupsElementRadio.vue'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
 import { searchGroupsAlgolia } from '@/api/projects.service.ts'
 
 export default {
