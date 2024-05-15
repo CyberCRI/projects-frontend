@@ -123,7 +123,7 @@ import SearchInput from '@/components/base/form/SearchInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import AccountDrawer from '@/components/lpikit/Account/AccountDrawer.vue'
+import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
 
 import debounce from 'lodash.debounce'
 import IconImage from '@/components/base/media/IconImage.vue'

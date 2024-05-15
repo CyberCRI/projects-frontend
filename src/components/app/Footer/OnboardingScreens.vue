@@ -23,10 +23,10 @@
     </template>
 </template>
 <script>
-import WelcomeModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
+import WelcomeModal from '@/components/onboarding/WelcomeModal/WelcomeModal.vue'
 import CompleteProfileDrawer from '@/components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
-import ProfileCompletedModal from '@/components/lpikit/WelcomeModal/ProfileCompletedModal.vue'
-import TakeTourModal from '@/components/lpikit/WelcomeModal/TakeTourModal.vue'
+import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
+import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {

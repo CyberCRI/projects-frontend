@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import NoItem from '@/components/lpikit/NoItem/NoItem.vue'
+import NoItem from '@/components/project/NoItem/NoItem.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

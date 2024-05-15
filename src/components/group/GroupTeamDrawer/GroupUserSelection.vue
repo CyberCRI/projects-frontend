@@ -66,7 +66,7 @@
 <script>
 import debounce from 'lodash.debounce'
 import SearchInput from '@/components/base/form/SearchInput.vue'
-import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
+import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

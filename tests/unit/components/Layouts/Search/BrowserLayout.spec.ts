@@ -1,4 +1,4 @@
-import BrowseLayout from '@/components/lpikit/BrowseLayout/BrowseLayout.vue'
+import BrowseLayout from '@/components/search/BrowseLayout/BrowseLayout.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

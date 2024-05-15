@@ -170,7 +170,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import SignUpWrapper from '@/components/lpikit/SignUpWrapper/SignUpWrapper.vue'
+import SignUpWrapper from '@/components/app/SignUpWrapper/SignUpWrapper.vue'
 export default {
     name: 'RegisterPage',
 

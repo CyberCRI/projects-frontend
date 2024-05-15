@@ -33,7 +33,7 @@ import ProjectCard from '@/components/project/ProjectCard.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'LinkedProjects',

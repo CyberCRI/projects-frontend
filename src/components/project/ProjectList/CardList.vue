@@ -73,10 +73,10 @@
 
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
-import ProjectListSkeleton from '@/components/lpikit/Skeleton/ProjectListSkeleton.vue'
+import ProjectListSkeleton from '@/components/project/ProjectListSkeleton.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'CardList',

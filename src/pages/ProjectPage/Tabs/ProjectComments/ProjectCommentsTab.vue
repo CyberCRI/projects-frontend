@@ -19,7 +19,7 @@
 
 <script>
 import CommentItem from './CommentItem.vue'
-import NoItem from '@/components/lpikit/NoItem/NoItem.vue'
+import NoItem from '@/components/project/NoItem/NoItem.vue'
 import MakeComment from './MakeComment.vue'
 import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'

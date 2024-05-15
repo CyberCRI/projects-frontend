@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import SdgChart from '@/components/lpikit/Stats/Charts/SdgChart.vue'
+import SdgChart from '@/components/stats/Charts/SdgChart.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

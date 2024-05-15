@@ -53,8 +53,8 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import throttle from 'lodash/throttle'
 import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
 import { getHierarchyGroups } from '@/api/group.service.ts'
-import FilterValue from '@/components/lpikit/Filters/FilterValue.vue'
-import FilterSearchInput from '@/components/lpikit/Filters/FilterSearchInput.vue'
+import FilterValue from '@/components/search/Filters/FilterValue.vue'
+import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 export default {
     name: 'MultiGroupPicker',
 

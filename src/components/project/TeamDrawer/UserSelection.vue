@@ -54,7 +54,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import TeamResultList from '@/components/project/TeamDrawer/TeamResultList.vue'
-import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
+import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import { searchPeopleProject } from '@/api/people.service'
 
 export default {

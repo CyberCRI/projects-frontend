@@ -1,4 +1,4 @@
-import AccountLayout from '@/components/lpikit/Account/AccountLayout.vue'
+import AccountLayout from '@/components/people/Account/AccountLayout.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it } from 'vitest'

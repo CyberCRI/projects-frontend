@@ -2,7 +2,7 @@
 
 /* 
     Use this script to list all icon names from src/components/base/media/IconImage.vue
-    then paste the output to  src/components/lpikit/IconList/IconList.vue
+    then paste the output to  src/components/dev/IconList/IconList.vue
     (in data's names array)
 */
 

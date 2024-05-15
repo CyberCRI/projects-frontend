@@ -4,7 +4,7 @@
 
 <script>
 import analytics from '@/analytics'
-import SdgsFilter from '@/components/lpikit/Filters/SdgsFilter.vue'
+import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 
 export default {
     name: 'SdgGrid',

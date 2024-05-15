@@ -148,7 +148,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import ProjectTeamEditor from '@/pages/ProjectPage/Tabs/Team/ProjectTeamEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'ProjectTeamTab',

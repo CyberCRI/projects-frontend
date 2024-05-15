@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
-import CategoriesFilterSummary from '@/components/lpikit/Filters/CategoriesFilterSummary.vue'
+import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

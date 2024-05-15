@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
-import ProjectCategoriesDropdown from '@/components/lpikit/Dropdown/ProjectCategoriesDropdown.vue'
-import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
-import HomeButtons from '@/components/lpikit/HomeButtons/HomeButtons.vue'
-import HomeNewsfeed from '@/components/lpikit/HomeNewsfeed/HomeNewsfeed.vue'
-import HomeHeaderConnected from '@/components/lpikit/HomeHeader/HomeHeaderConnected.vue'
-import HomeHeaderAnonymous from '@/components/lpikit/HomeHeader/HomeHeaderAnonymous.vue'
-import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
+import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
+import HomeButtons from '@/components/home/HomeButtons/HomeButtons.vue'
+import HomeNewsfeed from '@/components/home/HomeNewsfeed/HomeNewsfeed.vue'
+import HomeHeaderConnected from '@/components/home/HomeHeader/HomeHeaderConnected.vue'
+import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymous.vue'
+import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {

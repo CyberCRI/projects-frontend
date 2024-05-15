@@ -51,8 +51,8 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
-import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'GroupMembersTab',

@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import CommunityCard from '@/components/lpikit/CommunityCard/CommunityCard.vue'
+import CommunityCard from '@/components/org/CommunityCard/CommunityCard.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('CommunityCard', () => {

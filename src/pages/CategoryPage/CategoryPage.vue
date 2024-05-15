@@ -62,8 +62,8 @@ import store from '@/store'
 import formatHtml from '@/mixins/formatHtml.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
 
-import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
-import CategoryCardImage from '@/components/lpikit/CategoryCard/CategoryCardImage.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import CategoryCardImage from '@/components/category/CategoryCard/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import {

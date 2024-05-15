@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import BrowseLayout from '@/components/lpikit/BrowseLayout/BrowseLayout.vue'
+import BrowseLayout from '@/components/search/BrowseLayout/BrowseLayout.vue'
 /**
  * WARNING: do not remove ":key="$route.name"" on line 2
  * or it will break BrowseLayout initialization

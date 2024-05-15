@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TimeOrgChart from '@/components/lpikit/Stats/Charts/TimeOrgChart.vue'
+import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

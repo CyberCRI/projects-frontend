@@ -107,11 +107,11 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-import LogoAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Pictures/LogoAdminBlock.vue'
-import BannerAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Pictures/BannerAdminBlock.vue'
-import WordingAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Wording/WordingAdminBlock.vue'
-import ChatAdminBlock from '@/components/lpikit/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
-import AdminBlock from '@/components/lpikit/GeneralAdminBlocks/AdminBlock.vue'
+import LogoAdminBlock from '@/components/admin/GeneralAdminBlocks/Pictures/LogoAdminBlock.vue'
+import BannerAdminBlock from '@/components/admin/GeneralAdminBlocks/Pictures/BannerAdminBlock.vue'
+import WordingAdminBlock from '@/components/admin/GeneralAdminBlocks/Wording/WordingAdminBlock.vue'
+import ChatAdminBlock from '@/components/admin/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 export default {
     name: 'SettingsTab',
 

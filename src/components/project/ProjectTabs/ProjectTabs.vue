@@ -35,7 +35,7 @@
 <script>
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import AddToProjectDropdown from '@/components/lpikit/Dropdown/AddToProjectDropdown.vue'
+import AddToProjectDropdown from '@/components/project/AddToProjectDropdown.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {

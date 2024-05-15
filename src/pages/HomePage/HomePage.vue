@@ -201,12 +201,12 @@
 </template>
 
 <script>
-import CategoryCard from '@/components/lpikit/CategoryCard/CategoryCard.vue'
+import CategoryCard from '@/components/category/CategoryCard/CategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import AnnouncementCardList from '@/components/project/AnnouncementCard/AnnouncementCardList.vue'
-import HomeCarousel from '@/components/lpikit/HomeCarousel/HomeCarousel.vue'
-import CommunityCard from '@/components/lpikit/CommunityCard/CommunityCard.vue'
+import HomeCarousel from '@/components/home/HomeCarousel/HomeCarousel.vue'
+import CommunityCard from '@/components/org/CommunityCard/CommunityCard.vue'
 import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
 import CardList from '@/components/project/ProjectList/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -226,7 +226,7 @@ import analytics from '@/analytics'
 
 import { getAnnouncements } from '@/api/announcements.service'
 
-import OnboardingTodoBlock from '@/components/lpikit/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 
 export default {
     name: 'HomePage',

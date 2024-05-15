@@ -69,11 +69,11 @@
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
+import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from './LocationForm.vue'
-//import LocationTooltip from '@/components/lpikit/Map/LocationTooltip.vue'
+//import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import BaseMap from '@/components/lpikit/Map/BaseMap.vue'
+import BaseMap from '@/components/map/BaseMap.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import WikipediaResults from '@/components/lpikit/FilterTags/WikipediaResults.vue'
+import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'

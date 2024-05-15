@@ -28,8 +28,8 @@
     </RouterLink>
 </template>
 <script>
-import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
-import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
+import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
+import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import permissions from '@/mixins/permissions.ts'
 

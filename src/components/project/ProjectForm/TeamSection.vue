@@ -42,7 +42,7 @@
 import TeamDrawer from '@/components/project/TeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { mapGetters } from 'vuex'
-import TeamCardInline from '@/components/lpikit/TeamCard/TeamCardInline.vue'
+import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 
 export default {
     name: 'TeamSection',

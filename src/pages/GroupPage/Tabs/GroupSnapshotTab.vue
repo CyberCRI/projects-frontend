@@ -101,9 +101,9 @@ import CardList from '@/components/project/ProjectList/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
-import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
+import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'GroupSnapshotTab',

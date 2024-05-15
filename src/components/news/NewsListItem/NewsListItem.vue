@@ -52,8 +52,8 @@
 <script>
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import ContextActionMenu from '@/components/lpikit/ContextActionMenu/ContextActionMenu.vue'
-import SummaryAction from '@/components/lpikit/SummaryCards/SummaryAction.vue'
+import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
+import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import permissions from '@/mixins/permissions.ts'

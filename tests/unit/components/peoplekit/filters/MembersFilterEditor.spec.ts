@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
-import MembersFilterEditor from '@/components/lpikit/Filters/MembersFilterEditor.vue'
+import MembersFilterEditor from '@/components/search/Filters/MembersFilterEditor.vue'
 import PeopleFactory from '../../../../factories/people.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import english from '@/locales/en.json'

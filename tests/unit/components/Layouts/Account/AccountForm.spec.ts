@@ -1,4 +1,4 @@
-import AccountForm from '@/components/lpikit/Account/AccountForm.vue'
+import AccountForm from '@/components/people/Account/AccountForm.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'

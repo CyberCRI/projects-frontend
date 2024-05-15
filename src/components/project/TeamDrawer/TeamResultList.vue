@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import UserCardInline from '@/components/lpikit/TeamCard/UserCardInline.vue'
+import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'

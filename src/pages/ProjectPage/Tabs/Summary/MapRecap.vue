@@ -30,8 +30,8 @@
 <script>
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
-import BaseMap from '@/components/lpikit/Map/BaseMap.vue'
+import MapPointer from '@/components/map/MapPointer.vue'
+import BaseMap from '@/components/map/BaseMap.vue'
 
 export default {
     name: 'MapRecap',

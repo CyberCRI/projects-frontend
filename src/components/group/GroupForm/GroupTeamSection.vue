@@ -61,7 +61,7 @@
 import GroupTeamDrawer from '@/components/group/GroupTeamDrawer/GroupTeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { mapGetters } from 'vuex'
-import TeamCardInline from '@/components/lpikit/TeamCard/TeamCardInline.vue'
+import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {

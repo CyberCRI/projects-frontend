@@ -73,11 +73,11 @@
 <script>
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import FilterValue from '@/components/lpikit/Filters/FilterValue.vue'
+import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TagsFilterEditor from '@/components/lpikit/Filters/TagsFilterEditor.vue'
+import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 
 export default {
     name: 'TagsTab',

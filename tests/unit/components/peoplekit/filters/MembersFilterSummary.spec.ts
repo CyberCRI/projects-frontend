@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
-import MembersFilterSummary from '@/components/lpikit/Filters/MembersFilterSummary.vue'
+import MembersFilterSummary from '@/components/search/Filters/MembersFilterSummary.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const factory = (props?) => {

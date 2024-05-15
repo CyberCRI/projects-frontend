@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TagResult from '@/components/lpikit/FilterTags/TagResult.vue'
+import TagResult from '@/components/search/FilterTags/TagResult.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 const i18n = {
