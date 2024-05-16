@@ -44,7 +44,7 @@
 <script>
 import { getHierarchyGroups } from '@/api/group.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import GroupsElement from './GroupsElement.vue'
+import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
 import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 

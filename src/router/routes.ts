@@ -435,7 +435,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksList.vue'
+                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksListTab.vue'
                             ),
                     },
                     {
@@ -443,7 +443,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksCreate',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinkCreate" */ '../pages/AdminPortalPage/Tabs/LinkCreate.vue'
+                                /* webpackChunkName: "LinkCreateTab" */ '../pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
                             ),
                     },
                 ],

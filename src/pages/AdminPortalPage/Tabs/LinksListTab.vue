@@ -121,7 +121,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
-    name: 'LinksList',
+    name: 'LinksListTab',
     components: {
         LinkButton,
         BadgeItem,

@@ -30,7 +30,7 @@
     </div>
 </template>
 <script>
-import GroupsElementRadio from '@/pages/AdminPortalPage/Tabs/GroupsElementRadio.vue'
+import GroupsElementRadio from '@/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import { searchGroupsAlgolia } from '@/api/projects.service.ts'
 

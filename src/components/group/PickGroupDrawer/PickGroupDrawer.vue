@@ -22,7 +22,7 @@
 </template>
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import PickGroup from '@/pages/AdminPortalPage/Tabs/PickGroup.vue'
+import PickGroup from '@/components/group/PickGroup/PickGroup.vue'
 
 export default {
     name: 'PickGroupDrawer',

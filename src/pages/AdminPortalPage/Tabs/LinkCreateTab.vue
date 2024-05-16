@@ -137,7 +137,7 @@ import { helpers, required } from '@vuelidate/validators'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 export default {
-    name: 'LinkCreate',
+    name: 'LinkCreateTab',
     components: {
         IconImage,
         LpiButton,

@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import LinkList from '@/pages/AdminPortalPage/Tabs/LinksList.vue'
+import LinkListTab from '@/pages/AdminPortalPage/Tabs/LinksListTab.vue'
 import english from '@/locales/en.json'
 import * as invitationSrv from '@/api/invitations.service'
 import flushPromises from 'flush-promises'
@@ -35,14 +35,14 @@ function buildStore() {
 }
 
 const factory = (props?) => {
-    return lpiMount(LinkList, {
+    return lpiMount(LinkListTab, {
         props,
         i18n,
         store: buildStore(),
     })
 }
 
-describe('LinkList.vue', () => {
+describe('LinkListTab.vue', () => {
     it('should mount the component', () => {
         const wrapper = factory({ projects: [] })
         const vm: any = wrapper.vm

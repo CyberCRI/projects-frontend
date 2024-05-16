@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import LinkCreate from '@/pages/AdminPortalPage/Tabs/LinkCreate.vue'
+import LinkCreateTab from '@/pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -45,7 +45,7 @@ function buildStore() {
 }
 
 const factory = (props?) => {
-    return lpiMount(LinkCreate, {
+    return lpiMount(LinkCreateTab, {
         props,
         i18n,
         store: buildStore(),
@@ -57,7 +57,7 @@ const factory = (props?) => {
     })
 }
 
-describe('LinkCreate.vue', () => {
+describe('LinkCreateTab.vue', () => {
     it('should mount the component', () => {
         const wrapper = factory({ projects: [] })
         const vm: any = wrapper.vm
