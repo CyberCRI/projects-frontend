@@ -33,7 +33,7 @@ import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 export default {
-    name: 'UserItem',
+    name: 'GroupMemberItem',
 
     emits: ['user-click'],
 

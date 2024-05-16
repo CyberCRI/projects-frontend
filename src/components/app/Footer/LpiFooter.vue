@@ -139,7 +139,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ContactForm from '@/components/app/ContactForm/ContactForm.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from './FooterEnglishTips.vue'
-import OnboardingScreens from '@/components/app/Footer/OnboardingScreens.vue'
+import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 export default {
     name: 'LpiFooter',
 

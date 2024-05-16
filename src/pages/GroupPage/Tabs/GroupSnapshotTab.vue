@@ -34,7 +34,7 @@
                 <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
             </div>
             <DynamicGrid :min-gap="90" class="members-container" v-else>
-                <UserItem
+                <GroupMemberItem
                     v-for="member in members.slice(0, totalDisplayed)"
                     :key="member.id"
                     :user="member"
@@ -96,7 +96,7 @@
 <script>
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
-import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
 import CardList from '@/components/project/ProjectList/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -113,7 +113,7 @@ export default {
         MemberListSkeleton,
         SeeMoreArrow,
         DescriptionExpandable,
-        UserItem,
+        GroupMemberItem,
         CardList,
         ProjectCard,
         BaseDrawer,

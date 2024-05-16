@@ -9,7 +9,7 @@
             </div>
             <MemberListSkeleton :min-gap="90" v-if="isLoading" />
             <DynamicGrid :min-gap="90" v-else class="members-container">
-                <UserItem
+                <GroupMemberItem
                     v-for="member in members"
                     :key="member.id"
                     :user="member"
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
@@ -58,7 +58,7 @@ export default {
     name: 'GroupMembersTab',
 
     components: {
-        UserItem,
+        GroupMemberItem,
         BaseDrawer,
         UserProfile,
         PaginationButtons,

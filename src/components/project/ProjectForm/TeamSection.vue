@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import TeamDrawer from '@/components/project/TeamDrawer/TeamDrawer.vue'
+import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { mapGetters } from 'vuex'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'

@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import UserItem from '@/components/group/GroupMemberSection/UserItem.vue'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
 import { describe, expect, it } from 'vitest'
 import GroupMemberFactory from '../../../../factories/group-member.factory'
 
@@ -12,7 +12,7 @@ const i18n = {
     },
 }
 
-describe('UserItem.vue', () => {
+describe('GroupMemberItem.vue', () => {
     let wrapper
     let defaultParams
 
@@ -25,12 +25,12 @@ describe('UserItem.vue', () => {
         }
     })
 
-    it('should render UserItem component', () => {
-        wrapper = lpiMount(UserItem, defaultParams)
+    it('should render GroupMemberItem component', () => {
+        wrapper = lpiMount(GroupMemberItem, defaultParams)
         expect(wrapper.exists()).toBe(true)
     }),
         it('should emit user-click event when clicking close', async () => {
-            wrapper = lpiShallowMount(UserItem, defaultParams)
+            wrapper = lpiShallowMount(GroupMemberItem, defaultParams)
             const closeButton = wrapper.find('.user')
 
             expect(closeButton.exists()).toBeTruthy()

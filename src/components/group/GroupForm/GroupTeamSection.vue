@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import GroupTeamDrawer from '@/components/group/GroupTeamDrawer/GroupTeamDrawer.vue'
+import GroupTeamDrawer from '@/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { mapGetters } from 'vuex'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'

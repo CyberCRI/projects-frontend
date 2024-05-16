@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import OnboardingScreens from '@/components/app/Footer/OnboardingScreens.vue'
+import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 const i18n = {
