@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
-import CommentItem from '@/pages/ProjectPage/Tabs/ProjectComments/CommentItem.vue'
+import CommentItem from '@/components/project/Comment/CommentItem.vue'
 import english from '@/locales/en.json'
 import { CommentFactory } from '../../../../factories/comment.factory'
 

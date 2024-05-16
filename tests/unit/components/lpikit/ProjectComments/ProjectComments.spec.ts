@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
-import ProjectCommentsTab from '@/pages/ProjectPage/Tabs/ProjectComments/ProjectCommentsTab.vue'
+import ProjectCommentsTab from '@/pages/ProjectPage/Tabs/ProjectCommentsTab.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import

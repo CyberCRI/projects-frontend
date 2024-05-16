@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import BlogEntry from './BlogEntry.vue'
+import BlogEntry from '@/components/project/BlogEntry/BlogEntry.vue'
 import BlogSummaryBlock from '@/components/project/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'

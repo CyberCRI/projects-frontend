@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
+import SectionHeader from '@/components/project/SectionHeader/SectionHeader.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
 export default {

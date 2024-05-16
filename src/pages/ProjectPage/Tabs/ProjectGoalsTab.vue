@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import SdgRecap from './SdgRecap.vue'
-import GoalItem from './GoalItem.vue'
+import SdgRecap from '@/components/project/SdgRecap/SdgRecap.vue'
+import GoalItem from '@/components/project/GoalItem/GoalItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'

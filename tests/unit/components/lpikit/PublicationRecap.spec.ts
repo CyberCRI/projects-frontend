@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import PublicationRecap from '@/pages/ProjectPage/Tabs/Summary/PublicationRecap.vue'
+import PublicationRecap from '@/components/project/Recap/PublicationRecap.vue'
 import { BlogEntryFactory } from '../../../factories/blog-entry.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

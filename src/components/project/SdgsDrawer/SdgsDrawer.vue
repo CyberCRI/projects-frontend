@@ -13,7 +13,7 @@
 
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgGrid from '@/pages/ProjectPage/Tabs/ProjectGoals/SdgGrid.vue'
+import SdgGrid from '@/components/project/SdgGrid/SdgGrid.vue'
 
 export default {
     name: 'SdgsDrawer',

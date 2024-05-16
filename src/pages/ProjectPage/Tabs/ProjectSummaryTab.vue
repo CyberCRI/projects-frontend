@@ -80,19 +80,19 @@
 </template>
 
 <script>
-import DescriptionRecap from './DescriptionRecap.vue'
-import GoalsRecap from './GoalsRecap.vue'
-import PublicationRecap from './PublicationRecap.vue'
-import LinkedProjectsRecap from './LinkedProjectsRecap.vue'
-import MapRecap from './MapRecap.vue'
-import ResourcesRecap from './ResourcesRecap.vue'
-import ReviewRecap from './ReviewRecap.vue'
-import SimilarProjects from './SimilarProjects.vue'
+import DescriptionRecap from '@/components/project/Recap/DescriptionRecap.vue'
+import GoalsRecap from '@/components/project/Recap/GoalsRecap.vue'
+import PublicationRecap from '@/components/project/Recap/PublicationRecap.vue'
+import LinkedProjectsRecap from '@/components/project/Recap/LinkedProjectsRecap.vue'
+import MapRecap from '@/components/project/Recap/MapRecap.vue'
+import ResourcesRecap from '@/components/project/Recap/ResourcesRecap.vue'
+import ReviewRecap from '@/components/project/Recap/ReviewRecap.vue'
+import SimilarProjects from '@/components/project/SimilarProjects/SimilarProjects.vue'
 import GroupMemberSection from '@/components/group/GroupMemberSection/GroupMemberSection.vue'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
-import DescriptionPlaceholder from '@/pages/ProjectPage/Tabs/Description/DescriptionPlaceholder.vue'
+import DescriptionPlaceholder from '@/components/project/DescriptionPlaceholder/DescriptionPlaceholder.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {

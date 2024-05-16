@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
+import SectionHeader from '@/components/project/SectionHeader/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/project/ResourceCard/ResourceCard.vue'
 import permissions from '@/mixins/permissions.ts'

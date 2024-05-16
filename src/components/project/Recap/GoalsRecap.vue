@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import GoalSummaryItem from './GoalSummaryItem.vue'
-import SectionHeader from '@/pages/ProjectPage/Tabs/shared/SectionHeader.vue'
+import GoalSummaryItem from '@/components/project/GoalSummaryItem/GoalSummaryItem.vue'
+import SectionHeader from '@/components/project/SectionHeader/SectionHeader.vue'
 
 export default {
     name: 'GoalsRecap',
