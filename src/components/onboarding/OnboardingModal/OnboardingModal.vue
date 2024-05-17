@@ -54,7 +54,7 @@
 
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
-import SkillSteps from '@/components/people/SkillSteps/SkillSteps.vue'
+import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {

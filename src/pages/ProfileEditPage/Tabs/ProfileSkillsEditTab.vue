@@ -86,9 +86,9 @@
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import SkillItem from '@/components/people/SkillItem/SkillItem.vue'
-import SkillsEditDrawer from '@/components/people/SkillsEditDrawer/SkillsEditDrawer.vue'
-import SkillLevelTip from '@/components/people/SkillLevelTip.vue'
+import SkillItem from '@/components/people/skill/SkillItem.vue'
+import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
+import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {

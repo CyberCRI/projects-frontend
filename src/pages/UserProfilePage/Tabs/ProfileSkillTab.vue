@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import UserSkills from '@/components/people/UserSkills/UserSkills.vue'
-import SkillLevelTip from '@/components/people/SkillLevelTip.vue'
+import UserSkills from '@/components/people/skill/UserSkills.vue'
+import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {

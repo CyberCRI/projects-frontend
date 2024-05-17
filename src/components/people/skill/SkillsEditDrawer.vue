@@ -100,7 +100,7 @@ import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vu
 import { toRaw } from 'vue'
 import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
-import SkillLevelTip from '@/components/people/SkillLevelTip.vue'
+import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import debounce from 'lodash.debounce'
 import { wikiAutocomplete } from '@/api/wikipedia-tags.service'

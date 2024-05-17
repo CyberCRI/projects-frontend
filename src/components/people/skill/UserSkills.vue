@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SkillItem from '@/components/people/SkillItem/SkillItem.vue'
+import SkillItem from '@/components/people/skill/SkillItem.vue'
 
 export default {
     name: 'UserSkills',

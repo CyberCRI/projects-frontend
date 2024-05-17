@@ -5,7 +5,7 @@
     </div>
 </template>
 <script>
-import SkillSteps from '@/components/people/SkillSteps/SkillSteps.vue'
+import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 
 export default {
     name: 'SkillItem',

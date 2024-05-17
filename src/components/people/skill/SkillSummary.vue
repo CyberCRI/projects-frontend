@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import SkillItem from '@/components/people/SkillItem/SkillItem.vue'
+import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 export default {
