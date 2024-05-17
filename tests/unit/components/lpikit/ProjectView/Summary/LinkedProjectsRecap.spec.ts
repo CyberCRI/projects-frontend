@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import LinkedProjectsRecap from '@/components/project/Recap/LinkedProjectsRecap.vue'
+import LinkedProjectsRecap from '@/components/project/linked-project/LinkedProjectsRecap.vue'
 import { ProjectFactory } from '../../../../../factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

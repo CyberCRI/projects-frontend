@@ -34,7 +34,7 @@
 <script>
 import AdminBlock from '../AdminBlock.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import PickProjectsDrawer from '@/components/project/PickProjectsDrawer/PickProjectsDrawer.vue'
+import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
 import FeaturedProjectAdminListItem from './FeaturedProjectAdminListItem.vue'
 import {
     getFeaturedProjects,

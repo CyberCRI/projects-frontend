@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import DescriptionSummaryBlock from '@/components/project/DescriptionSummaryBlock.vue'
-import DescriptionDrawer from '@/components/project/EditDescriptionDrawer/DescriptionDrawer.vue'
+import DescriptionSummaryBlock from '@/components/project/description/DescriptionSummaryBlock.vue'
+import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
-import DescriptionPlaceholder from '@/components/project/DescriptionPlaceholder/DescriptionPlaceholder.vue'
+import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
 import throttle from 'lodash.throttle'

@@ -181,12 +181,12 @@ import ImageInput from '@/components/base/form/ImageInput.vue'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import CategoryCardImage from '@/components/category/CategoryCard/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import CardList from '@/components/project/ProjectList/CardList.vue'
+import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { Sketch } from '@ckpack/vue-color'
-import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 
 export default {
     name: 'CategoryDrawer',

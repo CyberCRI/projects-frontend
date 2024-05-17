@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
-import MapRecap from '@/components/project/Recap/MapRecap.vue'
+import MapRecap from '@/components/project/map/MapRecap.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('MapRecap.vue', () => {

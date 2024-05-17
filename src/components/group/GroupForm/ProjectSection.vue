@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import PickProjectsDrawer from '@/components/project/PickProjectsDrawer/PickProjectsDrawer.vue'
+import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import DescriptionRecap from '@/components/project/Recap/DescriptionRecap.vue'
+import DescriptionRecap from '@/components/project/description/DescriptionRecap.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

@@ -35,7 +35,7 @@
 </template>
 <script>
 import UserCard from '@/components/people/UserCard.vue'
-import CardList from '@/components/project/ProjectList/CardList.vue'
+import CardList from '@/components/base/CardList.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
 import { axios } from '@/api/api.config'

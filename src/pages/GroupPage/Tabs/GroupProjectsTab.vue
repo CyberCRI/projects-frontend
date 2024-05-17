@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import CardList from '@/components/project/ProjectList/CardList.vue'
+import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'

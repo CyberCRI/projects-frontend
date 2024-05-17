@@ -88,8 +88,8 @@
 </template>
 
 <script>
-import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
-import CardList from '@/components/project/ProjectList/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import EmptyCard from './EmptyCard.vue'

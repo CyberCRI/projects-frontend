@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import CardList from '@/components/project/ProjectList/CardList.vue'
-import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
+import CardList from '@/components/base/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 
 export default {

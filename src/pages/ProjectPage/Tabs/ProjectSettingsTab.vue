@@ -224,7 +224,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import ReportForm from '@/components/app/ReportForm/ReportForm.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ReviewDrawer from '@/components/project/ReviewDrawer/ReviewDrawer.vue'
+import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import LinkedProjects from '@/components/project/LinkedProjects/LinkedProjects.vue'
+import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import ProjectForm from '@/components/project/ProjectForm/ProjectForm.vue'
+import ProjectForm from '@/components/project/ProjectForm.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import permissions from '@/mixins/permissions.ts'

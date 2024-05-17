@@ -140,13 +140,13 @@
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 
-import SectionHeader from '@/components/project/SectionHeader/SectionHeader.vue'
+import SectionHeader from '@/components/base/SectionHeader.vue'
 import UserCard from '@/components/people/UserCard.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
-import ProjectTeamEditor from '@/components/project/ProjectTeamEditor/ProjectTeamEditor.vue'
+import ProjectTeamEditor from '@/components/project/ProjectTeamEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 

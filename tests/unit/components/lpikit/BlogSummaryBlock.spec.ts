@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import BlogSummaryBlock from '@/components/project/BlogSummaryBlock.vue'
+import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

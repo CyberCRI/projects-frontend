@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import CardList from '@/components/project/ProjectList/CardList.vue'
+import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import { getGroup } from '@/api/group.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'

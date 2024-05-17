@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectHeader from '@/components/project/ProjectHeader/ProjectHeader.vue'
+import ProjectHeader from '@/components/project/ProjectHeader.vue'
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import permissions from '@/mixins/permissions'
 import MockComponent from '../../../helpers/MockComponent.vue'

@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import CommentItem from '@/components/project/Comment/CommentItem.vue'
-import NoItem from '@/components/project/NoItem/NoItem.vue'
-import MakeComment from '@/components/project/Comment/MakeComment.vue'
+import CommentItem from '@/components/project/comment/CommentItem.vue'
+import NoItem from '@/components/project/comment/NoItem.vue'
+import MakeComment from '@/components/project/comment/MakeComment.vue'
 import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'

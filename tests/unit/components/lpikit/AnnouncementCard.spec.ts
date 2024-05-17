@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import AnnouncementCard from '@/components/project/AnnouncementCard/AnnouncementCard.vue'
+import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
 import { ProjectFactory } from '../../../factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import CardList from '@/components/project/ProjectList/CardList.vue'
-import ProjectListSearch from '@/components/project/ProjectListSearch/ProjectListSearch.vue'
+import CardList from '@/components/base/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 import UserCard from '@/components/people/UserCard.vue'
 
 export default {

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GoalsRecap from '@/components/project/Recap/GoalsRecap.vue'
+import GoalsRecap from '@/components/project/goal/GoalsRecap.vue'
 import { GoalFactory } from '../../../../factories/goal.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -12,7 +12,7 @@ const i18n = {
     },
 }
 
-describe('GoalItem.vue', () => {
+describe('GoalRecap.vue', () => {
     it('should render component', () => {
         const wrapper = lpiShallowMount(GoalsRecap, {
             props: {
