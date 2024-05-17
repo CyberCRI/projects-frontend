@@ -201,7 +201,7 @@
 </template>
 
 <script>
-import CategoryCard from '@/components/category/CategoryCard/CategoryCard.vue'
+import CategoryCard from '@/components/category/CategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import AnnouncementCardList from '@/components/project/announcement/AnnouncementCardList.vue'

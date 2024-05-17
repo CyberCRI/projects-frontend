@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import CategoryCard from '@/components/category/CategoryCard/CategoryCard.vue'
+import CategoryCard from '@/components/category/CategoryCard.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const category = {

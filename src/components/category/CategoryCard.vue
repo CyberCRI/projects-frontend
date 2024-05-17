@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import CategoryCardImage from '@/components/category/CategoryCard/CategoryCardImage.vue'
+import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 

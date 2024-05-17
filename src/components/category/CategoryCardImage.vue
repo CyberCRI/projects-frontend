@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CategoryCardDefaultBackground from './CategoryCardDefaultBackground.vue'
+import CategoryCardDefaultBackground from '@/components/category/CategoryCardDefaultBackground.vue'
 
 export default {
     name: 'CategoryCardImage',

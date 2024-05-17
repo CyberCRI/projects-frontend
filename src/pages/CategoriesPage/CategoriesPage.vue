@@ -59,7 +59,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import LpiCategoryCard from '@/components/category/CategoryCard/LpiCategoryCard.vue'
+import LpiCategoryCard from '@/components/category/LpiCategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CategoryCard from '@/components/category/CategoryCard/CategoryCard.vue'
+import CategoryCard from '@/components/category/CategoryCard.vue'
 import { mapGetters } from 'vuex'
 
 export default {
