@@ -17,9 +17,9 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 
-import LpiFooter from '@/components/app/Footer/LpiFooter.vue'
-import AppToastList from '@/components/app/AppToastList/AppToastList.vue'
-import LpiHeader from '@/components/app/LpiHeader/LpiHeader.vue'
+import LpiFooter from '@/components/app/LpiFooter.vue'
+import AppToastList from '@/components/app/AppToastList.vue'
+import LpiHeader from '@/components/app/LpiHeader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
 
 import keycloak from '@/api/auth/keycloak.ts'

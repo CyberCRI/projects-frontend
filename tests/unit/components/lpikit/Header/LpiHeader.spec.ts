@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import LpiHeader from '@/components/app/LpiHeader/LpiHeader.vue'
+import LpiHeader from '@/components/app/LpiHeader.vue'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 import MockComponent from '../../../../helpers/MockComponent.vue'

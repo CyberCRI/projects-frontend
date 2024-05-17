@@ -165,12 +165,12 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import utils from '@/functs/functions.ts'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import ContactForm from '@/components/app/ContactForm/ContactForm.vue'
+import ContactForm from '@/components/app/ContactForm.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import SignUpWrapper from '@/components/app/SignUpWrapper/SignUpWrapper.vue'
+import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 export default {
     name: 'RegisterPage',
 

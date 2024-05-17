@@ -197,12 +197,12 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
 import HeaderDropDown from '@/components/base/navigation/HeaderDropDown.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import NotificationIcon from '@/components/app/NotificationIcon/NotificationIcon.vue'
-import NotificationList from '@/components/app/Notifications/NotificationList.vue'
+import NotificationIcon from '@/components/app/NotificationIcon.vue'
+import NotificationList from '@/components/app/NotificationList.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
-import ContactForm from '@/components/app/ContactForm/ContactForm.vue'
+import ContactForm from '@/components/app/ContactForm.vue'
 
 export default {
     name: 'LpiHeader',

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import NewsFeed from '@/components/app/NewsFeed/NewsFeed.vue'
+import NewsFeed from '@/components/app/NewsFeed.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
 import { getNewsfeed } from '@/api/newsfeed.service.ts'

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import FooterEnglishTips from '@/components/app/Footer/FooterEnglishTips.vue'
+import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 const i18n = {

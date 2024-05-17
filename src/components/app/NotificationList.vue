@@ -17,7 +17,7 @@
 
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import NotificationItem from '@/components/app/Notifications/NotificationItem.vue'
+import NotificationItem from '@/components/app/NotificationItem.vue'
 
 export default {
     name: 'NotificationList',

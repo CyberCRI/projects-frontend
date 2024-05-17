@@ -30,7 +30,7 @@ import { getNewsfeed } from '@/api/newsfeed.service.ts'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
-import NewsFeed from '@/components/app/NewsFeed/NewsFeed.vue'
+import NewsFeed from '@/components/app/NewsFeed.vue'
 export default {
     name: 'NewsfeedPage',
 

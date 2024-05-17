@@ -133,12 +133,12 @@
 </template>
 
 <script>
-import LpiLogo from '@/components/app/Footer/LpiLogo.vue'
-import ReportForm from '@/components/app/ReportForm/ReportForm.vue'
+import LpiLogo from '@/components/app/LpiLogo.vue'
+import ReportForm from '@/components/app/ReportForm.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import ContactForm from '@/components/app/ContactForm/ContactForm.vue'
+import ContactForm from '@/components/app/ContactForm.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-import FooterEnglishTips from './FooterEnglishTips.vue'
+import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 export default {
     name: 'LpiFooter',

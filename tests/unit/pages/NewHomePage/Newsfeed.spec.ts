@@ -1,4 +1,4 @@
-import NewsFeed from '@/components/app/NewsFeed/NewsFeed.vue'
+import NewsFeed from '@/components/app/NewsFeed.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'
