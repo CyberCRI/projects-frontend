@@ -2091,6 +2091,7 @@
     },
     "recommendations": {
         "empty": "Vous n'avez aucune recommandation",
+        "connect-to": "Nous vous recommandons de contacter :",
         "title": "Recommandé pour vous",
         "is-featured": "(A la Une)",
         "more-projects": "Découvrez plus de projets",
