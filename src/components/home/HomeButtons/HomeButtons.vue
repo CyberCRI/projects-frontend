@@ -15,7 +15,7 @@
             :label="organization.chat_button_text"
             secondary
             white-bg
-            @click="window.open(this.organization.chat_url, '_blank')"
+            @click="goToChat"
             class="individual-button white-bg"
             data-test="go-to-chat"
         />
@@ -33,6 +33,12 @@ export default {
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
+        },
+    },
+
+    methods: {
+        goToChat() {
+            window.open(this.organization.chat_url, '_blank')
         },
     },
 }
