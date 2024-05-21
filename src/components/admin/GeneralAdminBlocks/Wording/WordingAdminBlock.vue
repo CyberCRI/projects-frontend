@@ -2,8 +2,8 @@
     <AdminBlock :block-title="$t('admin.portal.general.wording.title')" :is-loading="false">
         <template #actions>
             <LinkButton
-                btn-icon="Plus"
-                :label="$t('common.add')"
+                btn-icon="Pen"
+                :label="$t('common.edit')"
                 @click="drawerIsOpen = true"
             ></LinkButton>
         </template>
