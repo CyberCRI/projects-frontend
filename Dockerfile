@@ -37,7 +37,7 @@ COPY . /app/
 RUN NODE_ENV=production yarn build &&\
     rm -rf node_modules/.cache
 
-FROM nginx:1.25.3-alpine
+FROM nginx:1.26-alpine
 
 RUN apk update && \
     apk upgrade --no-cache && \
