@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupRoleSelection from '@/components/lpikit/GroupTeamDrawer/GroupRoleSelection.vue'
+import GroupRoleSelection from '@/components/people/GroupTeamDrawer/GroupRoleSelection.vue'
 import { describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '../../../../factories/project-member.factory'
 

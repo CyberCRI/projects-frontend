@@ -1,7 +1,7 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import waitForExpect from 'wait-for-expect'
-import FilterTags from '@/components/lpikit/FilterTags/FilterTags.vue'
+import FilterTags from '@/components/search/FilterTags/FilterTags.vue'
 import { getAllOrgTags } from '@/api/organization-tags.service'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 

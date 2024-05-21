@@ -60,13 +60,13 @@
 </template>
 <script>
 import { getHierarchyGroups } from '@/api/group.service.ts'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
 import permissions from '@/mixins/permissions'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
-import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
-import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
+import CardList from '@/components/base/CardList.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 
 export default {
     name: 'GroupsPage',

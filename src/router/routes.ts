@@ -256,7 +256,7 @@ const routes: Array<RouteRecordRaw> = [
     //     name: 'CompleteProfilePage',
     //     component: () =>
     //         import(
-    //             /* webpackChunkName: "CompleteProfilePage" */ '../components/lpikit/CompleteProfileDrawer/CompleteProfileDrawer.vue'
+    //             /* webpackChunkName: "CompleteProfilePage" */ '../components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
     //         ),
     //     props: {
     //         isOpened: true,
@@ -435,7 +435,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksList',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksList.vue'
+                                /* webpackChunkName: "LinksList" */ '../pages/AdminPortalPage/Tabs/LinksListTab.vue'
                             ),
                     },
                     {
@@ -443,7 +443,7 @@ const routes: Array<RouteRecordRaw> = [
                         name: 'linksCreate',
                         component: () =>
                             import(
-                                /* webpackChunkName: "LinkCreate" */ '../pages/AdminPortalPage/Tabs/LinkCreate.vue'
+                                /* webpackChunkName: "LinkCreateTab" */ '../pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
                             ),
                     },
                 ],
@@ -710,7 +710,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectSummary',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSummaryTab" */ '../pages/ProjectPage/Tabs/Summary/ProjectSummaryTab.vue'
+                        /* webpackChunkName: "ProjectSummaryTab" */ '../pages/ProjectPage/Tabs/ProjectSummaryTab.vue'
                     ),
             },
             {
@@ -722,7 +722,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectDescription',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectDescriptionTab" */ '../pages/ProjectPage/Tabs/Description/ProjectDescriptionTab.vue'
+                        /* webpackChunkName: "ProjectDescriptionTab" */ '../pages/ProjectPage/Tabs/ProjectDescriptionTab.vue'
                     ),
             },
             {
@@ -734,7 +734,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectBlog',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectBlogEntriesTab" */ '../pages/ProjectPage/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'
+                        /* webpackChunkName: "ProjectBlogEntriesTab" */ '../pages/ProjectPage/Tabs/ProjectBlogEntriesTab.vue'
                     ),
             },
             {
@@ -742,7 +742,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectGoals',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectGoalsTab" */ '../pages/ProjectPage/Tabs/ProjectGoals/ProjectGoalsTab.vue'
+                        /* webpackChunkName: "ProjectGoalsTab" */ '../pages/ProjectPage/Tabs/ProjectGoalsTab.vue'
                     ),
             },
             {
@@ -750,7 +750,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectTeam',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectTeamTab" */ '../pages/ProjectPage/Tabs/Team/ProjectTeamTab.vue'
+                        /* webpackChunkName: "ProjectTeamTab" */ '../pages/ProjectPage/Tabs/ProjectTeamTab.vue'
                     ),
             },
             {
@@ -762,7 +762,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectResources',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectResourcesTab" */ '../pages/ProjectPage/Tabs/Resources/ProjectResourcesTab.vue'
+                        /* webpackChunkName: "ProjectResourcesTab" */ '../pages/ProjectPage/Tabs/ProjectResourcesTab.vue'
                     ),
             },
             {
@@ -770,7 +770,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectLinkedProjects',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectLinkedProjectsTab" */ '../pages/ProjectPage/Tabs/LinkedProjects/ProjectLinkedProjectsTab.vue'
+                        /* webpackChunkName: "ProjectLinkedProjectsTab" */ '../pages/ProjectPage/Tabs/ProjectLinkedProjectsTab.vue'
                     ),
             },
             {
@@ -778,7 +778,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectComments',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectCommentsTab" */ '../pages/ProjectPage/Tabs/ProjectComments/ProjectCommentsTab.vue'
+                        /* webpackChunkName: "ProjectCommentsTab" */ '../pages/ProjectPage/Tabs/ProjectCommentsTab.vue'
                     ),
             },
             {
@@ -786,7 +786,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'projectAnnouncements',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectAnnouncementsTab" */ '../pages/ProjectPage/Tabs/ProjectAnnouncements/ProjectAnnouncementsTab.vue'
+                        /* webpackChunkName: "ProjectAnnouncementsTab" */ '../pages/ProjectPage/Tabs/ProjectAnnouncementsTab.vue'
                     ),
             },
             {
@@ -794,7 +794,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'ProjectSettings',
                 component: () =>
                     import(
-                        /* webpackChunkName: "ProjectSettingsTab" */ '../pages/ProjectPage/Tabs/ProjectSettings/ProjectSettingsTab.vue'
+                        /* webpackChunkName: "ProjectSettingsTab" */ '../pages/ProjectPage/Tabs/ProjectSettingsTab.vue'
                     ),
             },
         ],

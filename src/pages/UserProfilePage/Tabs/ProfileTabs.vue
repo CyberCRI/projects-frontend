@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import ProfileSummaryTab from '@/pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'
 import ProfileBioTab from '@/pages/UserProfilePage/Tabs/ProfileBioTab.vue'
 import ProfileProjectTab from '@/pages/UserProfilePage/Tabs/ProfileProjectTab.vue'

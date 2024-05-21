@@ -8,8 +8,8 @@
     </div>
 </template>
 <script>
-import AnnouncementCardList from '@/components/lpikit/AnnouncementCard/AnnouncementCardList.vue'
-import AnnouncementCardListSkeleton from '@/components/lpikit/AnnouncementCard/AnnouncementCardListSkeleton.vue'
+import AnnouncementCardList from '@/components/project/announcement/AnnouncementCardList.vue'
+import AnnouncementCardListSkeleton from '@/components/project/announcement/AnnouncementCardListSkeleton.vue'
 import { getAnnouncements } from '@/api/announcements.service'
 export default {
     name: 'AnnouncementsPage',

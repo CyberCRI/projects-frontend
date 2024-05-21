@@ -50,13 +50,13 @@
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
 import formatHtml from '@/mixins/formatHtml.ts'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
-import Category from '@/components/lpikit/CategoryCard/CategoryCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import CategoryDrawer from '@/components/lpikit/CategoryDrawer/CategoryDrawer.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import Category from '@/components/category/CategoryCard.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
 import { VueDraggableNext } from 'vue-draggable-next'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
 export default {
     name: 'CategoriesTab',

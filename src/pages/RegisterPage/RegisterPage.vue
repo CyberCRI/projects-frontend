@@ -145,7 +145,7 @@
             </SignUpWrapper>
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :is-opened="showContactUsDrawer"
         :has-footer="false"
         class="medium"
@@ -154,7 +154,7 @@
         @close="closeDrawer"
     >
         <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
@@ -163,14 +163,14 @@ import { helpers, required, email } from '@vuelidate/validators'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
 import utils from '@/functs/functions.ts'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import ContactForm from '@/components/Drawers/ContactForm.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import ContactForm from '@/components/app/ContactForm.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
-import SignUpWrapper from '@/components/lpikit/SignUpWrapper/SignUpWrapper.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 export default {
     name: 'RegisterPage',
 
@@ -180,7 +180,7 @@ export default {
         TextInput,
         LpiButton,
         ContactForm,
-        DrawerLayout,
+        BaseDrawer,
         LoaderSimple,
         SignUpWrapper,
     },

@@ -3,8 +3,8 @@
     <EventList v-else :events-by-month="eventsByMonth" @reload-events="fetchEvents" />
 </template>
 <script>
-import EventList from '@/components/lpikit/EventList/EventList.vue'
-import EventListSkeleton from '@/components/lpikit/EventList/EventListSkeleton.vue'
+import EventList from '@/components/event/EventList/EventList.vue'
+import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
 import { getAllEvents } from '@/api/event.service'
 
 export default {

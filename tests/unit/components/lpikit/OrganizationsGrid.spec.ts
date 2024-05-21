@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import OrganizationsGrid from '@/components/lpikit/OrganizationsGrid/OrganizationsGrid.vue'
+import OrganizationsGrid from '@/components/org/OrganizationsGrid.vue'
 import { ProjectFactory } from '../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 

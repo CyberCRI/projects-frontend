@@ -144,7 +144,7 @@
             </div>
         </div>
 
-        <DrawerLayout
+        <BaseDrawer
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
             :title="$t('template.edit-tags')"
@@ -157,21 +157,21 @@
                 :ambiguous-tags-open="ambiguousTagsOpen"
                 @ambiguous-menu="ambiguousTagsOpen = $event"
             />
-        </DrawerLayout>
+        </BaseDrawer>
     </div>
 </template>
 
 <script>
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
-import LpiSelect from '@/components/lpikit/LpiSelect/LpiSelect.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import { getProjectCategory } from '@/api/project-categories.service'
-import FieldDisabler from '@/components/lpikit/ProjectForm/FieldDisabler.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
-import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
+import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
+import FilterValue from '@/components/search/Filters/FilterValue.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
@@ -186,7 +186,7 @@ export default {
         LpiButton,
         LpiSnackbar,
         FieldDisabler,
-        DrawerLayout,
+        BaseDrawer,
         TagsFilterEditor,
         FilterValue,
     },

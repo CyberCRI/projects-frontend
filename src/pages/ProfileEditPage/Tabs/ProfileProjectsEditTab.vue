@@ -77,9 +77,9 @@
     />
 </template>
 <script>
-import UserProjectList from '@/components/lpikit/UserProfile/UserProjectList.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import PickProjectsDrawer from '@/components/lpikit/PickProjectsDrawer/PickProjectsDrawer.vue'
+import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
 import { deleteFollow, getUserFollows } from '@/api/follows.service'
 
 export default {

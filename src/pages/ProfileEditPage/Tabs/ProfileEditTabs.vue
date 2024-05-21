@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import ProfileGeneralEditTab from '@/pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'
 import ProfileBioEditTab from '@/pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'
 import ProfileProjectsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'
@@ -20,7 +20,7 @@ import ProfileGroupsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileGroupsEdit
 import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
 import ProfilePrivacyEditTab from '@/pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'
 import permissions from '@/mixins/permissions.ts'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'ProfileEditTabs',
 

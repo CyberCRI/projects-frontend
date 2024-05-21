@@ -370,7 +370,7 @@
 import debounce from 'lodash.debounce'
 import formatHtml from '@/mixins/formatHtml.ts'
 
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import pageTitle from '@/mixins/pageTitle.ts'

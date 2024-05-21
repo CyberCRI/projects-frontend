@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import OnboardingModal from '@/components/lpikit/OnboardingModal/OnboardingModal.vue'
+import OnboardingModal from '@/components/onboarding/OnboardingModal/OnboardingModal.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('BaseModal', () => {

@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupSelectDrawer from '@/components/lpikit/GroupSelectDrawer/GroupSelectDrawer.vue'
+import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 

@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import VueI18n from 'vue-i18n'
@@ -46,14 +46,14 @@ const factory = (props?) => {
                 {
                     label: 'Tab 1',
                     component: defineAsyncComponent(
-                        () => import('@/components/lpikit/LpiButton/LpiButton.vue')
+                        () => import('@/components/base/button/LpiButton.vue')
                     ),
                     props: [{ label: 'LpiButton' }],
                 },
                 {
                     label: 'Tab 2',
                     component: defineAsyncComponent(
-                        () => import('@/components/lpikit/Snackbar/LpiSnackbar.vue')
+                        () => import('@/components/base/LpiSnackbar.vue')
                     ),
                     props: [{ text: 'success message', type: 'success' }],
                 },

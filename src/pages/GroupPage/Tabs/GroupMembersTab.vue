@@ -9,7 +9,7 @@
             </div>
             <MemberListSkeleton :min-gap="90" v-if="isLoading" />
             <DynamicGrid :min-gap="90" v-else class="members-container">
-                <UserItem
+                <GroupMemberItem
                     v-for="member in members"
                     :key="member.id"
                     :user="member"
@@ -27,7 +27,7 @@
             />
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :v-if="profileDrawer.isOpened"
         :has-footer="false"
         :is-opened="profileDrawer.isOpened"
@@ -42,24 +42,24 @@
             :user-id="profileDrawer.user_id"
             @close="closeProfileDrawer"
         />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
-import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'GroupMembersTab',
 
     components: {
-        UserItem,
-        DrawerLayout,
+        GroupMemberItem,
+        BaseDrawer,
         UserProfile,
         PaginationButtons,
         MemberListSkeleton,

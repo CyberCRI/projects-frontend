@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import UserCard from '@/components/peopleKit/UserCard.vue'
+import UserCard from '@/components/people/UserCard.vue'
 import { UserFactory } from '../../../factories/user.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 

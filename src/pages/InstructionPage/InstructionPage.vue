@@ -64,12 +64,12 @@
     />
 </template>
 <script>
-import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
-import ContextActionButton from '@/components/lpikit/LpiButton/ContextActionButton.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import permissions from '@/mixins/permissions'
-import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
+import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import { getInstruction, deleteInstruction } from '@/api/instruction.service'
 
 export default {

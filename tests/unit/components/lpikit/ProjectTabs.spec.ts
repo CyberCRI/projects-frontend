@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import ProjectTabs from '@/components/lpikit/ProjectTabs/ProjectTabs.vue'
+import ProjectTabs from '@/components/project/ProjectTabs.vue'
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'

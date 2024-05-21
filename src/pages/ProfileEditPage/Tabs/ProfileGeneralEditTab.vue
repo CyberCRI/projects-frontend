@@ -233,7 +233,7 @@
             />
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :confirm-action-name="$t('common.confirm')"
         :is-opened="showTagsDrawer"
         :title="$t('profile.edit.general.tags.label')"
@@ -246,9 +246,9 @@
             :hide-organization-tags="true"
             v-model="tagsSelection"
         />
-    </DrawerLayout>
+    </BaseDrawer>
     <!-- sdgss selector -->
-    <DrawerLayout
+    <BaseDrawer
         :confirm-action-name="$t('common.confirm')"
         :is-opened="showSdgsDrawer"
         :title="$t('profile.edit.general.sdgs.label')"
@@ -258,7 +258,7 @@
         data-test="sdgs-drawer"
     >
         <SdgsFilter v-if="showSdgsDrawer" v-model="sdgsSelection" />
-    </DrawerLayout>
+    </BaseDrawer>
 
     <ConfirmModal
         v-if="showCancelConfirmModal"
@@ -269,20 +269,20 @@
     />
 </template>
 <script>
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import SdgsFilter from '@/components/peopleKit/Filters/SdgsFilter.vue'
+import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
-import ImageEditor from '@/components/lpikit/ImageEditor/ImageEditor.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import ImageEditor from '@/components/base/form/ImageEditor.vue'
 
 function defaultForm() {
     return {
@@ -311,7 +311,7 @@ export default {
         TextInput,
         LpiButton,
         TagsFilterEditor,
-        DrawerLayout,
+        BaseDrawer,
         SdgsFilter,
         LinkButton,
         ImageEditor,

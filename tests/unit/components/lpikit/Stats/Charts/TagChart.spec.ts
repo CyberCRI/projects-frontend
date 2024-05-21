@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TagChart from '@/components/lpikit/Stats/Charts/TagChart.vue'
+import TagChart from '@/components/stats/Charts/TagChart.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

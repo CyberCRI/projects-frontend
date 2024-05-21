@@ -1,6 +1,6 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import LpiFooter from '@/components/lpikit/Footer/LpiFooter.vue'
+import LpiFooter from '@/components/app/LpiFooter.vue'
 import MockComponent from '../../../helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

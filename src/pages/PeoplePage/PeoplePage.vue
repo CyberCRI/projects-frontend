@@ -21,7 +21,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import {
     updateFiltersFromURL,
     updateSearchQuery,

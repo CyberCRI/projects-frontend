@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import UserSkills from '@/components/lpikit/UserSkills/UserSkills.vue'
+import UserSkills from '@/components/people/skill/UserSkills.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const factory = (props) => {

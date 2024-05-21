@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProfileCompletedModal from '@/components/lpikit/WelcomeModal/ProfileCompletedModal.vue'
+import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 

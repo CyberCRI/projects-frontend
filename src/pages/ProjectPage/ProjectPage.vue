@@ -66,18 +66,18 @@
 </template>
 
 <script>
-import ProjectHeader from '@/components/lpikit/ProjectHeader/ProjectHeader.vue'
-import ProjectTabs from '@/components/lpikit/ProjectTabs/ProjectTabs.vue'
-import ProjectTabsSkeleton from '@/components/lpikit/ProjectTabs/ProjectTabsSkeleton.vue'
-import GoalDrawer from '@/components/lpikit/GoalDrawer/GoalDrawer.vue'
-import TeamDrawer from '@/components/lpikit/TeamDrawer/TeamDrawer.vue'
-import AnnouncementDrawer from '@/components/lpikit/AnnouncementDrawer/AnnouncementDrawer.vue'
-import LinkedProjectDrawer from '@/components/lpikit/LinkedProjectDrawer/LinkedProjectDrawer.vue'
-import LocationDrawer from '@/components/lpikit/LocationDrawer/LocationDrawer.vue'
-import BlogDrawer from '@/components/lpikit/BlogDrawer/BlogDrawer.vue'
-import ResourceDrawer from '@/components/lpikit/ResourceDrawer/ResourceDrawer.vue'
-import ProjectDrawer from '@/components/lpikit/ProjectDrawer/ProjectDrawer.vue'
-import SdgsDrawer from '@/components/lpikit/SdgsDrawer/SdgsDrawer.vue'
+import ProjectHeader from '@/components/project/ProjectHeader.vue'
+import ProjectTabs from '@/components/project/ProjectTabs.vue'
+import ProjectTabsSkeleton from '@/components/project/ProjectTabsSkeleton.vue'
+import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
+import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
+import AnnouncementDrawer from '@/components/project/announcement/AnnouncementDrawer.vue'
+import LinkedProjectDrawer from '@/components/project/linked-project/LinkedProjectDrawer.vue'
+import LocationDrawer from '@/components/project/map/LocationDrawer.vue'
+import BlogDrawer from '@/components/project/blog/BlogDrawer.vue'
+import ResourceDrawer from '@/components/project/resource/ResourceDrawer.vue'
+import ProjectDrawer from '@/components/project/ProjectDrawer.vue'
+import SdgsDrawer from '@/components/project/sdg/SdgsDrawer.vue'
 
 import utils from '@/functs/functions.ts'
 

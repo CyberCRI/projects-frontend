@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import DatePicker from '@/components/lpikit/DatePicker/DatePicker.vue'
+import DatePicker from '@/components/base/form/DatePicker.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

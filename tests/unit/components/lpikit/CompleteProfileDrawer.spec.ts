@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import CompleteProfileDrawer from '@/components/lpikit/CompleteProfileDrawer/CompleteProfileDrawer.vue'
+import CompleteProfileDrawer from '@/components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
 
 import { describe, expect, it } from 'vitest'
 const i18n = {

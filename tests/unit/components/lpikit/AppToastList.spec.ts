@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
-import AppToastList from '@/components/App/AppToastList.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import AppToastList from '@/components/app/AppToastList.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('AppToastList', () => {

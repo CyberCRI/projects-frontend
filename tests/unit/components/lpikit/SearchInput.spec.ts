@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const factory = (props?) => {

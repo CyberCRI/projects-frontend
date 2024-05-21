@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import SearchResults from '@/components/lpikit/FilterTags/SearchResults.vue'
+import SearchResults from '@/components/search/FilterTags/SearchResults.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

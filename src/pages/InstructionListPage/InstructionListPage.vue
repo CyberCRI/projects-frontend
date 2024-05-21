@@ -45,11 +45,11 @@
     />
 </template>
 <script>
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import InstructionListItemSkeleton from '@//components/lpikit/InstructionListItem/InstructionListItemSkeleton.vue'
-import InstructionListItem from '@/components/lpikit/InstructionListItem/InstructionListItem.vue'
-import EditInstructionDrawer from '@/components/lpikit/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/lpikit/ConfirmModal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import InstructionListItemSkeleton from '@//components/instruction/InstructionListItem/InstructionListItemSkeleton.vue'
+import InstructionListItem from '@/components/instruction/InstructionListItem/InstructionListItem.vue'
+import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 

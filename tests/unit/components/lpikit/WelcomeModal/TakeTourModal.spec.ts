@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import TakeTourModal from '@/components/lpikit/WelcomeModal/TakeTourModal.vue'
+import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'

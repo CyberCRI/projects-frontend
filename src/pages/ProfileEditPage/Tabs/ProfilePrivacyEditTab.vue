@@ -102,8 +102,8 @@
     </div>
 </template>
 <script>
-import GroupButton from '@/components/lpikit/GroupButton/GroupButton.vue'
-import LoaderSimple from '@/components/lpikit/Loader/LoaderSimple.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from '@/api/people.service.ts'
 import { getUser } from '@/api/people.service.ts'
 

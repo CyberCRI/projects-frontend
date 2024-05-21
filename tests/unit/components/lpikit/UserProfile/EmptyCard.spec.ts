@@ -1,6 +1,6 @@
 import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import EmptyCard from '@/components/lpikit/UserProfile/EmptyCard.vue'
+import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 import { describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '../../../../factories/project-member.factory'
 

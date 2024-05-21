@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <DrawerLayout
+        <BaseDrawer
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
             :title="$t('tag.add-wiki')"
@@ -66,18 +66,18 @@
                 :hide-organization-tags="true"
                 @ambiguous-menu="ambiguousTagsOpen = $event"
             />
-        </DrawerLayout>
+        </BaseDrawer>
     </div>
 </template>
 
 <script>
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import FilterValue from '@/components/peopleKit/Filters/FilterValue.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import TagsFilterEditor from '@/components/peopleKit/Filters/TagsFilterEditor.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 
 export default {
     name: 'TagsTab',
@@ -86,7 +86,7 @@ export default {
         FilterValue,
         TextInput,
         LpiButton,
-        DrawerLayout,
+        BaseDrawer,
         TagsFilterEditor,
     },
 

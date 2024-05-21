@@ -1,4 +1,4 @@
-import RecommendationBlock from '@/components/lpikit/Recommendations/RecommendationBlock.vue'
+import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'

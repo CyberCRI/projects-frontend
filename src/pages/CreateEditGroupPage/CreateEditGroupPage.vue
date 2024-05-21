@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import GroupForm from '@/components/lpikit/GroupForm/GroupForm.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LpiSnackbar from '@/components/lpikit/Snackbar/LpiSnackbar.vue'
+import GroupForm from '@/components/group/GroupForm/GroupForm.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import permissions from '@/mixins/permissions.ts'
 import {
     postGroup,

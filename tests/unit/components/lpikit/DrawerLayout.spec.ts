@@ -1,6 +1,6 @@
 import english from '@/locales/en.json'
 import { lpiShallowMount, lpiMount } from '../../../helpers/LpiMount'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
@@ -11,7 +11,7 @@ const i18n = {
     },
 }
 
-describe('DrawerLayout', () => {
+describe('BaseDrawer', () => {
     let wrapper
     let defaultParams
 
@@ -26,29 +26,29 @@ describe('DrawerLayout', () => {
         }
     })
 
-    it('should render DrawerLayout component', () => {
-        wrapper = lpiShallowMount(DrawerLayout, defaultParams)
+    it('should render BaseDrawer component', () => {
+        wrapper = lpiShallowMount(BaseDrawer, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should show DrawerLayout component when it is opened', () => {
-        wrapper = lpiShallowMount(DrawerLayout, defaultParams)
+    it('should show BaseDrawer component when it is opened', () => {
+        wrapper = lpiShallowMount(BaseDrawer, defaultParams)
         const drawerIsShown = wrapper.find('.drawer')
 
         expect(drawerIsShown.exists()).toBeTruthy()
     })
 
-    it('should hide DrawerLayout component when it is closed', () => {
+    it('should hide BaseDrawer component when it is closed', () => {
         defaultParams.props.isOpened = false
-        wrapper = lpiShallowMount(DrawerLayout, defaultParams)
+        wrapper = lpiShallowMount(BaseDrawer, defaultParams)
         const drawerIsShown = wrapper.find('.drawer--opened')
 
         expect(drawerIsShown.exists()).toBeFalsy()
     })
 
     it('should emit close event when clicking close', async () => {
-        wrapper = lpiShallowMount(DrawerLayout, defaultParams)
+        wrapper = lpiShallowMount(BaseDrawer, defaultParams)
         const closeButton = wrapper.find('.header__close')
 
         expect(closeButton.exists()).toBeTruthy()
@@ -59,7 +59,7 @@ describe('DrawerLayout', () => {
     })
 
     it('should emit close event when clicking outside', async () => {
-        wrapper = lpiShallowMount(DrawerLayout, defaultParams)
+        wrapper = lpiShallowMount(BaseDrawer, defaultParams)
         const outside = wrapper.find('.background')
 
         expect(outside.exists()).toBeTruthy()
@@ -70,7 +70,7 @@ describe('DrawerLayout', () => {
     })
 
     it('should emit close event when clicking cancel', async () => {
-        wrapper = lpiMount(DrawerLayout, defaultParams)
+        wrapper = lpiMount(BaseDrawer, defaultParams)
         const cancel = wrapper.find('.footer__left-button')
 
         expect(cancel.exists()).toBeTruthy()
@@ -81,7 +81,7 @@ describe('DrawerLayout', () => {
     })
 
     it('should emit confirm event when clicking confirm', async () => {
-        wrapper = lpiMount(DrawerLayout, defaultParams)
+        wrapper = lpiMount(BaseDrawer, defaultParams)
         const cancel = wrapper.find('.footer__right-button')
 
         expect(cancel.exists()).toBeTruthy()

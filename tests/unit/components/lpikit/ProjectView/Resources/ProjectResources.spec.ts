@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import ProjectResourcesTab from '@/pages/ProjectPage/Tabs/Resources/ProjectResourcesTab.vue'
+import ProjectResourcesTab from '@/pages/ProjectPage/Tabs/ProjectResourcesTab.vue'
 import { OrganizationOutputFactory } from '../../../../../factories/organization.factory'
 import utils from '@/functs/functions'
 

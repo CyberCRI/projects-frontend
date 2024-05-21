@@ -34,7 +34,7 @@
                 <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
             </div>
             <DynamicGrid :min-gap="90" class="members-container" v-else>
-                <UserItem
+                <GroupMemberItem
                     v-for="member in members.slice(0, totalDisplayed)"
                     :key="member.id"
                     :user="member"
@@ -76,7 +76,7 @@
             </div>
         </div>
     </div>
-    <DrawerLayout
+    <BaseDrawer
         :has-footer="false"
         :is-opened="profileDrawer.isOpened"
         :title="$t('profile.drawer_title')"
@@ -90,20 +90,20 @@
             :user-id="profileDrawer.user_id"
             @close="closeProfileDrawer"
         />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import SeeMoreArrow from '@/components/lpikit/SeeMoreArrow/SeeMoreArrow.vue'
-import DescriptionExpandable from '@/components/lpikit/AnnouncementCard/DescriptionExpandable.vue'
-import UserItem from '@/components/lpikit/GroupMemberSection/UserItem.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import UserProfile from '@/components/Profile/UserProfile.vue'
-import MemberListSkeleton from '@/components/lpikit/Skeleton/MemberListSkeleton.vue'
-import SkeletonComponent from '@/components/lpikit/Skeleton/SkeletonComponent.vue'
-import DynamicGrid from '@/components/lpikit/DynamicGrid/DynamicGrid.vue'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
+import CardList from '@/components/base/CardList.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
+import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
+import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'GroupSnapshotTab',
@@ -113,10 +113,10 @@ export default {
         MemberListSkeleton,
         SeeMoreArrow,
         DescriptionExpandable,
-        UserItem,
+        GroupMemberItem,
         CardList,
         ProjectCard,
-        DrawerLayout,
+        BaseDrawer,
         UserProfile,
         DynamicGrid,
     },

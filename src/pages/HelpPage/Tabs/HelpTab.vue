@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
 
 export default {

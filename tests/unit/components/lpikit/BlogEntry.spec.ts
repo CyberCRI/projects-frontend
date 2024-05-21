@@ -1,7 +1,7 @@
 import { lpiMount } from '../../../helpers/LpiMount'
 import VueI18n from 'vue-i18n'
 import english from '@/locales/en.json'
-import BlogEntry from '@/pages/ProjectPage/Tabs/BlogEntries/BlogEntry.vue'
+import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import { BlogEntryFactory } from '../../../factories/blog-entry.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

@@ -61,9 +61,9 @@
     </div>
 </template>
 <script>
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import TipTapEditor from '@/components/lpikit/TextEditor/TipTapEditor.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { patchUser } from '@/api/people.service.ts'
 
 function defaultForm() {

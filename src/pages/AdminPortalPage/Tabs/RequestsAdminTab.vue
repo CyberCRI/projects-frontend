@@ -99,22 +99,22 @@
 </template>
 
 <script>
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
 import debounce from 'lodash.debounce'
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
-import LpiCheckbox from '@/components/lpikit/Checkbox/LpiCheckbox.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
 import {
     getAccessRequests,
     acceptAccessRequest,
     declineAccessRequest,
 } from '@/api/organizations.service.ts'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 
 export default {
     name: 'RequestsAdminTab',

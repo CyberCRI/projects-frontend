@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import AddToProjectDropdown from '@/components/lpikit/Dropdown/AddToProjectDropdown.vue'
+import AddToProjectDropdown from '@/components/project/AddToProjectDropdown.vue'
 import english from '@/locales/en.json'
 import utils from '@/functs/functions'
 import { ProjectOutputFactory } from '../../../factories/project.factory'

@@ -59,10 +59,10 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import LpiCategoryCard from '@/components/lpikit/CategoryCard/LpiCategoryCard.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import LpiCategoryCard from '@/components/category/LpiCategoryCard.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
-import SearchOptions from '@/components/lpikit/SearchOptions/SearchOptions.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import {
     updateFiltersFromURL,
     updateSearchQuery,

@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
-import LanguageFilter from '@/components/peopleKit/Filters/LanguageFilter.vue'
+import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import StatCard from '@/components/lpikit/Stats/StatCard.vue'
-import ProjectsByOrg from '@/components/lpikit/Stats/Charts/ProjectsByOrg.vue'
-import SdgChart from '@/components/lpikit/Stats/Charts/SdgChart.vue'
-import TagChart from '@/components/lpikit/Stats/Charts/TagChart.vue'
-import LpiLoader from '@/components/lpikit/Loader/LoaderSimple.vue'
-import TimeOrgChart from '@/components/lpikit/Stats/Charts/TimeOrgChart.vue'
+import StatCard from '@/components/stats/StatCard.vue'
+import ProjectsByOrg from '@/components/stats/Charts/ProjectsByOrg.vue'
+import SdgChart from '@/components/stats/Charts/SdgChart.vue'
+import TagChart from '@/components/stats/Charts/TagChart.vue'
+import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
+import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
 import { getStats } from '@/api/stats.service'
 import debounce from 'lodash.debounce'
 

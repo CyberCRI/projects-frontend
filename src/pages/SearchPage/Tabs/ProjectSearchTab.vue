@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import ProjectCard from '@/components/peopleKit/ProjectCard.vue'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
+import ProjectCard from '@/components/project/ProjectCard.vue'
+import CardList from '@/components/base/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 
 export default {
     name: 'ProjectSearchTab',

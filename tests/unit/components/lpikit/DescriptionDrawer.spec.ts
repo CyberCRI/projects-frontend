@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '../../../helpers/LpiMount'
-import DescriptionDrawer from '@/components/lpikit/EditDescriptionDrawer/DescriptionDrawer.vue'
+import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '../../../../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'

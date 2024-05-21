@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
-import ProjectListSearch from '@/components/lpikit/ProjectListSearch/ProjectListSearch.vue'
-import GroupCard from '@/components/peopleKit/GroupCard.vue'
+import CardList from '@/components/base/CardList.vue'
+import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import GroupCard from '@/components/group/GroupCard.vue'
 
 export default {
     name: 'GroupSearchTab',

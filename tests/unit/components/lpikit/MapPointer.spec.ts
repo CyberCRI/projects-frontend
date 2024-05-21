@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import MapPointer from '@/components/lpikit/Map/MapPointer.vue'
+import MapPointer from '@/components/map/MapPointer.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

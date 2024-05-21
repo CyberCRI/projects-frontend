@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import CurrentTags from '@/components/lpikit/FilterTags/CurrentTags.vue'
+import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

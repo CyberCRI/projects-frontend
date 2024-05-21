@@ -119,20 +119,20 @@
 </template>
 
 <script>
-import SearchInput from '@/components/lpikit/SearchInput/SearchInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
-import LpiLoader from '@/components/lpikit/Loader/LpiLoader.vue'
-import AccountDrawer from '@/components/Layouts/Account/AccountDrawer.vue'
+import SearchInput from '@/components/base/form/SearchInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
 
 import debounce from 'lodash.debounce'
-import IconImage from '@/components/svgs/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 
-import PaginationButtons from '@/components/lpikit/PaginationButtons.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 
 import { searchPeopleAdmin } from '@/api/people.service'
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 
 export default {
     name: 'AccountsTab',

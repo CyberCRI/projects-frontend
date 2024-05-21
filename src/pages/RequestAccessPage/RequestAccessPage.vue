@@ -115,7 +115,7 @@
             </div>
         </template>
     </SignUpWrapper>
-    <DrawerLayout
+    <BaseDrawer
         :is-opened="showContactUsDrawer"
         :has-footer="false"
         class="medium"
@@ -124,15 +124,15 @@
         @close="closeDrawer"
     >
         <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
-import TextInput from '@/components/lpikit/TextInput/TextInput.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
-import ContactForm from '@/components/Drawers/ContactForm.vue'
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import SignUpWrapper from '@/components/lpikit/SignUpWrapper/SignUpWrapper.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import ContactForm from '@/components/app/ContactForm.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import { helpers, required, email } from '@vuelidate/validators'
 import { postAccessRequest } from '@/api/organizations.service.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
@@ -143,7 +143,7 @@ export default {
         TextInput,
         LpiButton,
         ContactForm,
-        DrawerLayout,
+        BaseDrawer,
         SignUpWrapper,
     },
 

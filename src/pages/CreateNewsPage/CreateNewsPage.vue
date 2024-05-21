@@ -26,8 +26,8 @@
     </div>
 </template>
 <script>
-import NewsForm, { defaultForm } from '@/components/lpikit/NewsForm/NewsForm.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import NewsForm, { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createNews, postNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 

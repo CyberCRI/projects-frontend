@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
-import WelcomedModal from '@/components/lpikit/WelcomeModal/WelcomeModal.vue'
+import WelcomedModal from '@/components/onboarding/WelcomeModal/WelcomeModal.vue'
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { loadLocaleMessages } from '@/locales/i18n'

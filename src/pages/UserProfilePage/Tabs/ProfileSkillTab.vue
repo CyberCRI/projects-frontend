@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import UserSkills from '@/components/lpikit/UserSkills/UserSkills.vue'
-import SkillLevelTip from '@/components/Profile/SkillLevelTip.vue'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import UserSkills from '@/components/people/skill/UserSkills.vue'
+import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
     name: 'ProfileSkillTab',

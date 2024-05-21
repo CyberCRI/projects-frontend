@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import ResourceCard from '@/components/lpikit/ResourceCard/ResourceCard.vue'
+import ResourceCard from '@/components/project/resource/ResourceCard.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

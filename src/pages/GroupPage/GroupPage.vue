@@ -51,13 +51,13 @@
 </template>
 
 <script>
-import BreadCrumbs from '@/components/lpikit/BreadCrumbs/BreadCrumbs.vue'
-import SubGroups from '@/components/lpikit/SubGroups/SubGroups.vue'
-import GroupHeader from '@/components/lpikit/GroupHeader/GroupHeader.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
+import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
 import GroupTabs from './Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
 import permissions from '@/mixins/permissions.ts'
-import LinkButton from '@/components/lpikit/LpiButton/LinkButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
     name: 'GroupPage',

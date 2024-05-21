@@ -28,8 +28,8 @@
 <script>
 import InstructionForm, {
     defaultForm,
-} from '@/components/lpikit/InstructionForm/InstructionForm.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+} from '@/components/instruction/InstructionForm/InstructionForm.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createInstruction } from '@/api/instruction.service'
 export default {
     name: 'CreateInstructionPage',

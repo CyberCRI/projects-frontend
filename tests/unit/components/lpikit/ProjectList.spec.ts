@@ -1,5 +1,5 @@
 import { lpiMount } from '../../../helpers/LpiMount'
-import CardList from '@/components/lpikit/ProjectList/CardList.vue'
+import CardList from '@/components/base/CardList.vue'
 import { ProjectFactory } from '../../../factories/project.factory'
 import english from '@/locales/en.json'
 

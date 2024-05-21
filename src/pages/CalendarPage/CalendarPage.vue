@@ -17,8 +17,8 @@
     </div>
 </template>
 <script>
-import TabsLayout from '@/components/lpikit/Tabs/TabsLayout.vue'
-import LpiButton from '@/components/lpikit/LpiButton/LpiButton.vue'
+import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 
 export default {

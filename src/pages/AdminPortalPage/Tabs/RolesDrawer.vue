@@ -1,5 +1,5 @@
 <template>
-    <DrawerLayout
+    <BaseDrawer
         :confirm-action-name="$t('common.save')"
         :is-opened="isOpenEditRoleDrawer"
         :title="$t('groups.title')"
@@ -25,14 +25,14 @@
                 </div>
             </div>
         </template>
-    </DrawerLayout>
+    </BaseDrawer>
 </template>
 
 <script>
-import DrawerLayout from '@/components/lpikit/Drawer/DrawerLayout.vue'
-import IconImage from '@/components/svgs/IconImage.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 
-import ToolTip from '@/components/lpikit/ToolTip/ToolTip.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 
 export default {
     name: 'RolesDrawer',
@@ -40,7 +40,7 @@ export default {
     emits: ['close', 'confirm'],
 
     components: {
-        DrawerLayout,
+        BaseDrawer,
         IconImage,
         ToolTip,
     },
