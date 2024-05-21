@@ -212,9 +212,11 @@ export default {
         background-size: 100%;
         background-position: center;
         transition: all 0.3s ease-in-out;
+
         @media screen and (max-width: $max-mobile) {
             background-size: cover;
         }
+
         &.is-hovered {
             background-size: 120%;
         }
