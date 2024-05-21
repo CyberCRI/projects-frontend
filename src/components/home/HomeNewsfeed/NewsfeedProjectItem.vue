@@ -12,13 +12,11 @@
                 :ratio="1 / 1"
             />
         </div>
-        <div class="project-content">
-            <h3 class="project-title-desktop">{{ $filters.capitalize(project.title) }}</h3>
-            <div class="project-description">
-                <p class="clamped">{{ purpose }}</p>
-            </div>
-            <SummaryAction :action-label="$t('common.read')" />
+        <h3 class="project-title">{{ $filters.capitalize(project.title) }}</h3>
+        <div class="project-description">
+            <p class="clamped">{{ purpose }}</p>
         </div>
+        <SummaryAction class="project-action" :action-label="$t('common.read')" />
     </RouterLink>
 </template>
 
@@ -72,24 +70,35 @@ export default {
 $dimension: 120px;
 
 .home-project-item {
-    display: flex;
+    display: grid;
     border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
     padding: $space-l;
-    gap: $space-l;
-    flex-direction: row;
     min-height: $dimension;
-    align-items: stretch;
+    column-gap: $space-l;
+    grid-template-columns: $dimension auto;
+    grid-template-rows: auto 1fr auto;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, auto);
+        row-gap: $space-l;
+    }
 
     .project-img-container {
-        align-self: flex-start;
-        background-size: cover;
-        background-position: top center;
         height: $dimension;
-        flex: none;
-        width: 100%;
-        margin-bottom: 0;
-        flex-basis: $dimension;
+        width: $dimension;
+        grid-column: 1;
+        grid-row: 1 / 4;
+        aspect-ratio: 1;
+        margin: 0 auto;
+
+        @media screen and (max-width: $min-tablet) {
+            grid-column: 1;
+            grid-row: 2;
+            width: 200px; // see NewsfeedAnnouncementsItem.vue
+            height: 200px;
+        }
 
         .project-img {
             object-fit: cover;
@@ -103,22 +112,45 @@ $dimension: 120px;
     }
 }
 
-.project-content {
-    flex-flow: column nowrap;
+.project-title {
     display: block;
-    line-height: 1.5;
-    margin-bottom: $space-m;
+    font-size: $font-size-l;
+    line-height: $font-size-2xl;
+    margin-bottom: $space-s;
+    grid-column: 2;
+    grid-row: 1;
 
-    .project-description {
-        flex-grow: 1;
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 1;
     }
+}
 
-    .clamped {
-        line-height: $font-size-xl;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+.project-description {
+    grid-column: 2;
+    grid-row: 2;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 3;
+    }
+}
+
+.clamped {
+    line-height: $font-size-xl;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.project-action {
+    grid-column: 2;
+    grid-row: 3;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 4;
     }
 }
 </style>

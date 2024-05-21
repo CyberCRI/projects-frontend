@@ -117,13 +117,9 @@ $dimension: 200px;
     }
 
     .announcement-img-container {
-        background-size: cover;
-        background-position: top center;
-        flex: none;
         position: relative;
-        flex-basis: $dimension;
-        flex-shrink: 0;
         height: $dimension;
+        width: $dimension;
         aspect-ratio: 1;
         margin: 0 auto;
         grid-column: 1;
@@ -156,22 +152,7 @@ $dimension: 200px;
             border: 1px solid $gray-10;
         }
     }
-
-    // .announcement-title-mobile {
-    //     font-size: $font-size-l;
-    //     line-height: $font-size-3xl;
-    //     margin-bottom: $space-m;
-
-    //     @media screen and (min-width: $min-tablet) {
-    //         display: none;
-    //     }
-    // }
 }
-
-// .announcement-content {
-//     display: flex;
-//     flex-direction: column;
-//     align-self: stretch;
 
 .announcement-title {
     display: block;
@@ -239,6 +220,4 @@ $dimension: 200px;
         grid-row: 5;
     }
 }
-
-// }
 </style>
