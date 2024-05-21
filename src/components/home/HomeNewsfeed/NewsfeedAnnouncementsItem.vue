@@ -17,30 +17,25 @@
             />
             <div :style="announcementStyle" class="announcement-overlay"></div>
         </div>
-        <div class="announcement-content">
-            <h3 class="announcement-title">
-                {{ $filters.capitalize(announcement.title) }}
-            </h3>
-            <div class="announcement-infos">
-                <span class="date-ctn">
-                    {{ new Date(announcement.updated_at).toLocaleDateString() }}
-                </span>
-                <span v-if="announcement.type && announcement.type !== 'na'" class="dot">
-                    &#9679;
-                </span>
-                <span
-                    v-if="announcement.type && announcement.type !== 'na'"
-                    class="announcement-type"
-                >
-                    {{ $t(`recruit.${announcement.type}`) }}
-                </span>
-            </div>
-            <div class="announcement-description">
-                <p class="clamped">{{ description }}</p>
-            </div>
-
-            <SummaryAction :action-label="$t('common.read')" />
+        <h3 class="announcement-title">
+            {{ $filters.capitalize(announcement.title) }}
+        </h3>
+        <div class="announcement-infos">
+            <span class="date-ctn">
+                {{ new Date(announcement.updated_at).toLocaleDateString() }}
+            </span>
+            <span v-if="announcement.type && announcement.type !== 'na'" class="dot">
+                &#9679;
+            </span>
+            <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
+                {{ $t(`recruit.${announcement.type}`) }}
+            </span>
         </div>
+        <div class="announcement-description">
+            <p class="clamped">{{ description }}</p>
+        </div>
+
+        <SummaryAction class="announcement-action" :action-label="$t('common.read')" />
     </RouterLink>
 </template>
 
@@ -101,12 +96,20 @@ export default {
 $dimension: 200px;
 
 .home-announcement-item {
-    display: flex;
+    display: grid;
     border: $border-width-s solid $gray-10;
     border-radius: $border-radius-s;
     padding: $space-l;
-    gap: $space-l;
     align-items: center;
+    column-gap: $space-l;
+    grid-template-columns: $dimension auto;
+    grid-template-rows: auto auto 1fr auto;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, auto);
+        row-gap: $space-l;
+    }
 
     @media screen and (min-width: $min-tablet) {
         align-items: flex-start;
@@ -121,6 +124,15 @@ $dimension: 200px;
         flex-basis: $dimension;
         flex-shrink: 0;
         height: $dimension;
+        aspect-ratio: 1;
+        margin: 0 auto;
+        grid-column: 1;
+        grid-row: 1 / 5;
+
+        @media screen and (max-width: $min-tablet) {
+            grid-column: 1;
+            grid-row: 2;
+        }
 
         .announcement-overlay {
             position: absolute;
@@ -131,6 +143,7 @@ $dimension: 200px;
             background-size: cover;
             transform-origin: center center;
             transform: scale(0.5);
+            opacity: 0.9;
         }
 
         .project-img {
@@ -144,56 +157,88 @@ $dimension: 200px;
         }
     }
 
-    .announcement-title-mobile {
-        font-size: $font-size-l;
-        line-height: $font-size-3xl;
-        margin-bottom: $space-m;
+    // .announcement-title-mobile {
+    //     font-size: $font-size-l;
+    //     line-height: $font-size-3xl;
+    //     margin-bottom: $space-m;
 
-        @media screen and (min-width: $min-tablet) {
-            display: none;
-        }
+    //     @media screen and (min-width: $min-tablet) {
+    //         display: none;
+    //     }
+    // }
+}
+
+// .announcement-content {
+//     display: flex;
+//     flex-direction: column;
+//     align-self: stretch;
+
+.announcement-title {
+    display: block;
+    font-size: $font-size-l;
+    line-height: $font-size-2xl;
+    margin-bottom: $space-s;
+    grid-column: 2;
+    grid-row: 1;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 1;
     }
 }
 
-.announcement-content {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
+.announcement-infos {
+    font-size: $font-size-s;
+    color: $primary-dark;
+    font-weight: 700;
+    margin-bottom: $space-s;
+    grid-column: 2;
+    grid-row: 2;
 
-    .announcement-title {
-        display: block;
-        font-size: $font-size-l;
-        line-height: $font-size-2xl;
-        margin-bottom: $space-s;
-    }
-
-    .announcement-infos {
-        font-size: $font-size-s;
-        color: $primary-dark;
-        font-weight: 700;
-        margin-bottom: $space-s;
-    }
-
-    .dot {
-        position: relative;
-        top: -1px;
-        padding: 0 $space-2xs;
-    }
-
-    .announcement-type {
-        text-transform: uppercase;
-    }
-
-    .announcement-description {
-        flex-grow: 1;
-    }
-
-    .clamped {
-        line-height: $font-size-xl;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 3;
     }
 }
+
+.dot {
+    position: relative;
+    top: -1px;
+    padding: 0 $space-2xs;
+}
+
+.announcement-type {
+    text-transform: uppercase;
+}
+
+.announcement-description {
+    flex-grow: 1;
+    grid-column: 2;
+    grid-row: 3;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 4;
+    }
+}
+
+.clamped {
+    line-height: $font-size-xl;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.announcement-action {
+    grid-column: 2;
+    grid-row: 4;
+
+    @media screen and (max-width: $min-tablet) {
+        grid-column: 1;
+        grid-row: 5;
+    }
+}
+
+// }
 </style>

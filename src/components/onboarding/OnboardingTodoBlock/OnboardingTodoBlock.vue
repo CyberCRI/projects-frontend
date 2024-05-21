@@ -303,10 +303,15 @@ export default {
 .todo-list {
     list-style: none;
     display: flex;
+    flex-flow: row nowrap;
     gap: $space-unit;
     padding: $space-unit;
     background-color: rgb(108 213 255 / 40%);
     border-radius: $border-radius-8;
+
+    @media screen and (max-width: $min-tablet) {
+        flex-flow: column nowrap;
+    }
 }
 
 .action-link {
