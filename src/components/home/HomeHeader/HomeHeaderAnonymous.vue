@@ -15,39 +15,47 @@
             </div>
             <div
                 class="introduction-container"
-                :class="{ 'with-image': hasBannerImage, 'without-image': !hasBannerImage }"
+                :class="{
+                    'with-image': hasBannerImage,
+                    'without-image': !hasBannerImage,
+                    'without-description': !hasDescription,
+                }"
             >
                 <h1 class="image-main-title">
                     {{ organization.dashboard_title }}
                 </h1>
-                <div
-                    v-if="showLessDescription"
-                    :style="styleDescription"
-                    class="description-limited"
-                >
-                    <HtmlLimiter
-                        :html="organization.description || ''"
-                        :striped-tags="['table']"
+                <template v-if="hasDescription">
+                    <div
+                        v-if="showLessDescription"
+                        :style="styleDescription"
+                        class="description-limited"
+                    >
+                        <HtmlLimiter
+                            :html="organization.description || ''"
+                            :striped-tags="['table']"
+                            class="introduction-text homepage-introduction-text"
+                            @computed="descriptionLayoutComputed"
+                            @computing="computeDescriptionLayout"
+                        />
+                    </div>
+                    <div
+                        v-else
                         class="introduction-text homepage-introduction-text"
-                        @computed="descriptionLayoutComputed"
-                        @computing="computeDescriptionLayout"
-                    />
-                </div>
-                <div
-                    v-else
-                    class="introduction-text homepage-introduction-text"
-                    v-html="organization.description || ''"
-                ></div>
-                <div class="description-toggle">
-                    <LinkButton
-                        v-if="!descriptionComputed || isDescriptionLimited"
-                        class="toggle-description-button"
-                        :label="showLessDescription ? $t('common.see-more') : $t('common.see-less')"
-                        :secondary="false"
-                        :btn-icon="showLessDescription ? 'ChevronDown' : 'ChevronUp'"
-                        @click="showLessDescription = !showLessDescription"
-                    />
-                </div>
+                        v-html="organization.description || ''"
+                    ></div>
+                    <div class="description-toggle">
+                        <LinkButton
+                            v-if="!descriptionComputed || isDescriptionLimited"
+                            class="toggle-description-button"
+                            :label="
+                                showLessDescription ? $t('common.see-more') : $t('common.see-less')
+                            "
+                            :secondary="false"
+                            :btn-icon="showLessDescription ? 'ChevronDown' : 'ChevronUp'"
+                            @click="showLessDescription = !showLessDescription"
+                        />
+                    </div>
+                </template>
                 <div class="image-account-buttons">
                     <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
                     <LpiButton
@@ -99,6 +107,9 @@ export default {
         },
         hasBannerImage() {
             return this.organization && this.organization.banner_image
+        },
+        hasDescription() {
+            return !!this.organization?.description
         },
     },
     methods: {
@@ -155,6 +166,11 @@ export default {
             aspect-ratio: 1;
             border-radius: pxToRem(8px);
 
+            @media screen and (max-width: $min-tablet) {
+                width: 80%;
+                margin: 0 auto;
+            }
+
             @media screen and (min-width: $min-tablet) {
                 margin-bottom: 0;
                 margin-right: $space-2xl;
@@ -165,6 +181,10 @@ export default {
             display: flex;
             flex-flow: column nowrap;
             flex-grow: 1;
+
+            &.without-description {
+                justify-content: center;
+            }
 
             &.without-image {
                 align-items: center;
@@ -188,6 +208,10 @@ export default {
             .image-account-buttons {
                 display: flex;
                 margin-top: $space-l;
+
+                @media screen and (max-width: $min-tablet) {
+                    justify-content: center;
+                }
             }
         }
     }

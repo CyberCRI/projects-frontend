@@ -36,7 +36,6 @@
         <div class="all-news">
             <div class="select-news"></div>
             <div class="news">
-                <div v-if="topNews" class="top-news"></div>
                 <div class="other-news">
                     <HomeNewsfeed />
                 </div>
@@ -74,7 +73,6 @@ export default {
     data() {
         return {
             recommendations: [],
-            topNews: null,
         }
     },
 
@@ -230,11 +228,6 @@ export default {
 
     .news {
         height: fit-content;
-
-        .top-news {
-            height: pxToRem(274px);
-            border: 1px solid red;
-        }
     }
 }
 </style>
