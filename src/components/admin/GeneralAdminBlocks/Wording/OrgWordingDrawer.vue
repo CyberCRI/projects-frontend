@@ -77,6 +77,14 @@ export default {
             asyncing: false,
         }
     },
+    watch: {
+        isOpened() {
+            const org = this.$store.getters['organizations/current']
+            const description = org?.description || ''
+            this.description.savedContent = description
+            this.description.originalContent = description
+        },
+    },
 
     methods: {
         async saveWording() {
@@ -112,7 +120,7 @@ export default {
 
         updateContent(htmlContent) {
             this.description.savedContent = htmlContent
-            if (htmlContent === '<p></p>') this.description.savedContent = null
+            if (htmlContent === '<p></p>') this.description.savedContent = ''
         },
 
         handleImage(img) {
