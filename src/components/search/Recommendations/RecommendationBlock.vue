@@ -54,7 +54,6 @@ export default {
 
     async mounted() {
         let featuredrojects = []
-        // temp fix for backend bug
         try {
             featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
         } catch (err) {
