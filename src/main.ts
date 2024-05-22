@@ -26,6 +26,8 @@ Icon.Default.mergeOptions({
     shadowUrl: 'leaflet/dist/images/marker-shadow.png',
 })
 
+document.querySelector('html').classList.add('org-' + import.meta.env.VITE_APP_API_ORG_CODE)
+
 window['socket'] = { connected: false }
 
 // speedy redirect to keycloak login without loading the whole app
