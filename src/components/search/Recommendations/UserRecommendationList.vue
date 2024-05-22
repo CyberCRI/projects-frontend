@@ -4,7 +4,6 @@
         :more-label="$t('recommendations.more-profiles')"
         @goto-more-recommendations="goToMoreRecommendations"
     >
-        <p class="notice">{{ $t('recommendations.connect-to') }}</p>
         <UserRecommendationItem
             v-for="(recommendation, index) in recommendations"
             :key="index"

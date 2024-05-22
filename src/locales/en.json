@@ -2092,7 +2092,7 @@
     },
     "recommendations": {
         "empty": "You have no recommendations",
-        "connect-to": "You might want to connect with:",
+        "connect-to": "You might want to connect with",
         "title": "Recommended for you",
         "is-featured": "(Featured)",
         "more-projects": "Discover more projects",
@@ -2105,6 +2105,7 @@
         }
     },
     "event": {
+        "no-event": "No event yet.",
         "calendar": {
             "title": "Calendar",
             "future": "Future",
