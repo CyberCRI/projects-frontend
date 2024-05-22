@@ -19,10 +19,6 @@ import InstructionAdminBlock from '@/components/admin/GeneralAdminBlocks/Instruc
 import NewsAdminBlock from '@/components/admin/GeneralAdminBlocks/News/NewsAdminBlock.vue'
 import FeaturedProjectAdminBlock from '@/components/admin/GeneralAdminBlocks/FeaturedProject/FeaturedProjectAdminBlock.vue'
 
-/*
-    TODO remove isSuperAdmin condition on FeaturedProjectAdminBlock when backend endpoint is fixed
-*/
-
 export default {
     name: 'NewInformationTab',
 
