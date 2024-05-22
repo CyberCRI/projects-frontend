@@ -1,6 +1,6 @@
 <template>
     <div class="page-section-wide page-top recommendation-page">
-        <h1 class="page-title">{{ $t('recommendations.people.title') }}</h1>
+        <h1 class="page-title">{{ $t('recommendations.connect-to') }}</h1>
 
         <CardList
             :desktop-columns-number="6"
