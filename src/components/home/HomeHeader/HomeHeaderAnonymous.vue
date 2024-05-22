@@ -223,7 +223,7 @@ export default {
 
 .description-toggle {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 
     .toggle-description-button {
         padding-left: 0 !important;
