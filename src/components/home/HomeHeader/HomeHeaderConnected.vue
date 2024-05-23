@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div
+        class="home-header-connected"
+        :class="{
+            empty: !isLoading && numberOfSummaryBlock < 2 && displayableProjects?.length == 0,
+        }"
+    >
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
@@ -61,6 +66,7 @@ export default {
     data() {
         return {
             events: [],
+            projects: [],
             instructions: [],
             summaryMaxEvents: 3,
             summaryMaxProjects: 3,
@@ -79,11 +85,11 @@ export default {
         },
 
         displayableInstructions() {
-            return this.instructions.slice(0, this.summaryMaxInstructions)
+            return this.instructions?.slice(0, this.summaryMaxInstructions)
         },
 
         displayableProjects() {
-            return this.projects.slice(0, this.summaryMaxProjects)
+            return this.projects?.slice(0, this.summaryMaxProjects)
         },
 
         loggedIn() {
@@ -184,6 +190,17 @@ export default {
                 flex-grow: 1;
             }
         }
+    }
+}
+
+.empty {
+    :deep(.column-wrapper),
+    :deep(.block-action) {
+        width: min-content;
+    }
+
+    :deep(.summary-block h1.uppercase-title) {
+        margin-right: 0;
     }
 }
 </style>
