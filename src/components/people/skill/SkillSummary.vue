@@ -4,7 +4,7 @@
             <h4 class="title">{{ $t('profile.skills') }} ({{ allSkills.length }})</h4>
             <SeeMoreArrow
                 v-if="allSkills.length > maxSkills"
-                @click="goToSkillTab"
+                @click.prevent="goToSkillTab"
                 data-test="see-more-skills"
             />
         </div>
