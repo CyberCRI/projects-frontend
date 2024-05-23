@@ -1,10 +1,5 @@
 <template>
-    <div
-        class="home-header-connected"
-        :class="{
-            empty: !isLoading && numberOfSummaryBlock < 2 && displayableProjects?.length == 0,
-        }"
-    >
+    <div class="home-header-connected">
         <div class="page-section-medium title-container">
             <h1 class="main-title">{{ organization.dashboard_title }}</h1>
         </div>
@@ -18,11 +13,11 @@
             /></label>
 
             <label>
-                insturctions <input v-model="summaryMaxInstructions" type="number" min="0" max="1"
+                instructions <input v-model="summaryMaxInstructions" type="number" min="0" max="1"
             /></label>
         </div-->
         <div v-if="!isLoading" class="summary-cards" data-test="home-user-header">
-            <div class="summary-container page-section-wide">
+            <div class="summary-container page-section-wide" v-if="!isEmptyDashboard">
                 <ProjectSummaryBlock
                     :projects="displayableProjects"
                     :inlined="numberOfSummaryBlock < 2"
@@ -41,6 +36,16 @@
                     @reload-instructions="loadInstructions"
                 />
             </div>
+            <div class="empty-dashboard" v-if="isEmptyDashboard">
+                <LpiButton
+                    :label="$t('home.create-project')"
+                    secondary
+                    btn-icon="Plus"
+                    @click="$router.push({ name: 'createProject' })"
+                    class="white-bg"
+                    data-test="empty-dashboard-create-project"
+                />
+            </div>
         </div>
         <LpiLoader v-else class="loading" type="simple" />
     </div>
@@ -53,6 +58,7 @@ import InstructionSummaryBlock from '@/components/home/SummaryCards/InstructionS
 import { getAllEvents } from '@/api/event.service'
 import { getAllInstructions } from '@/api/instruction.service'
 import { searchProjects } from '@/api/projects.service'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 export default {
     name: 'HomeHeaderConnected',
 
@@ -61,6 +67,7 @@ export default {
         EventSummaryBlock,
         InstructionSummaryBlock,
         LpiLoader,
+        LpiButton,
     },
 
     data() {
@@ -103,6 +110,14 @@ export default {
             if (this.displayableInstructions.length > 0) res++
 
             return res
+        },
+
+        isEmptyDashboard() {
+            return (
+                !this.displayableProjects.length &&
+                !this.displayableEvents.length &&
+                !this.displayableInstructions.length
+            )
         },
     },
 
@@ -193,14 +208,9 @@ export default {
     }
 }
 
-.empty {
-    :deep(.column-wrapper),
-    :deep(.block-action) {
-        width: min-content;
-    }
-
-    :deep(.summary-block h1.uppercase-title) {
-        margin-right: 0;
-    }
+.empty-dashboard {
+    display: flex;
+    justify-content: center;
+    padding: $space-l 0;
 }
 </style>
