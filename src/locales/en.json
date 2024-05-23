@@ -1226,6 +1226,7 @@
                             "confirm": "Next"
                         },
                         "edit": {
+                            "title": "Hobbies levels",
                             "notice": "Indicate your level of mastery.",
                             "help": "More about the hobbies levels",
                             "confirm": "Save"

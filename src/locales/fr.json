@@ -1223,6 +1223,7 @@
                             "confirm": "Suivant"
                         },
                         "edit": {
+                            "title": "Niveaux des hobbies",
                             "notice": "Indiquer votre niveau pour chaque hobby",
                             "help": "En savoir plus sur les niveaux de hobby",
                             "confirm": "Sauvegarder"
