@@ -6,8 +6,9 @@
         class="small"
         @close="close"
         @confirm="saveSdgs"
+        :asyncing="asyncing"
     >
-        <SdgGrid ref="sdg-grid" :current-sdgs="sdgs" @close-drawer="close" />
+        <SdgGrid ref="sdg-grid" :current-sdgs="sdgs" />
     </BaseDrawer>
 </template>
 
@@ -34,16 +35,20 @@ export default {
     },
 
     data() {
-        return {}
+        return {
+            asyncing: false,
+        }
     },
 
     methods: {
         async saveSdgs() {
+            this.asyncing = true
             await this.$refs['sdg-grid'].submitSdgs()
-            this.close()
+            this.asyncing = false
         },
 
         close() {
+            if (this.asyncing) return
             this.$emit('close')
         },
     },

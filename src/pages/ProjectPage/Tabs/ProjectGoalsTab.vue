@@ -27,6 +27,7 @@
             :content="$t('common.destroy-confirm')"
             @cancel="toggleDeleteConfirmModal"
             @confirm="deleteGoal"
+            :asyncing="asyncing"
         />
     </div>
 </template>
@@ -56,6 +57,7 @@ export default {
         return {
             confirmDeleteVisible: false,
             goalToBeDeleted: null,
+            asyncing: false,
         }
     },
 
@@ -67,6 +69,7 @@ export default {
         },
 
         async deleteGoal() {
+            this.asyncing = true
             try {
                 await this.$store.dispatch('goals/deleteGoal', this.goalToBeDeleted.id)
                 this.$store.dispatch('notifications/pushToast', {
@@ -80,6 +83,7 @@ export default {
                 })
                 console.error(error)
             } finally {
+                this.asyncing = false
                 this.toggleDeleteConfirmModal()
             }
         },
