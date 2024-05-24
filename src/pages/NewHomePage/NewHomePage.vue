@@ -154,6 +154,7 @@ export default {
         margin-bottom: 0;
         flex-shrink: 0;
         position: sticky;
+        z-index: 1;
         top: -7rem;
     }
 
