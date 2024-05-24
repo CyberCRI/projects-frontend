@@ -25,6 +25,7 @@
             :title="$filters.capitalize($t('common.delete'))"
             @cancel="confirmDeleteModalVisible = false"
             @confirm="deleteAnnouncement"
+            :asyncing="isDeleting"
         />
 
         <ReplyAnnouncementDrawer
@@ -62,6 +63,7 @@ export default {
         return {
             confirmDeleteModalVisible: false,
             appliedAnnouncement: null,
+            isDeleting: false,
         }
     },
 
@@ -80,6 +82,7 @@ export default {
     methods: {
         async deleteAnnouncement() {
             try {
+                this.isDeleting = true
                 await this.$store.dispatch(
                     'announcements/deleteAnnouncement',
                     this.announcementToBeDeleted
@@ -95,6 +98,7 @@ export default {
                 })
                 console.error(error)
             } finally {
+                this.isDeleting = false
                 this.confirmDeleteModalVisible = false
                 this.announcementToBeDeleted = null
             }
