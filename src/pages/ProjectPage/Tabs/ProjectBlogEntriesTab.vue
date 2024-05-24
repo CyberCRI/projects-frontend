@@ -37,6 +37,7 @@
             :title="$t('common.delete')"
             @cancel="confirmModalVisible = false"
             @confirm="deleteBlogEntry"
+            :asyncing="asyncing"
         />
     </div>
 </template>
@@ -70,6 +71,7 @@ export default {
             currentBlogEntry: null,
             sockerserver: import.meta.env.VITE_APP_WSS_HOST,
             provider: null,
+            asyncing: false,
         }
     },
 
@@ -116,7 +118,9 @@ export default {
         },
 
         async deleteBlogEntry() {
+            this.asyncing = true
             await this.$store.dispatch('blogEntries/deleteBlogEntry', this.currentBlogEntry)
+            this.asyncing = false
             this.confirmModalVisible = false
         },
     },

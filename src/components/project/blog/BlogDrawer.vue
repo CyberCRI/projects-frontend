@@ -7,6 +7,7 @@
         class="blog-drawer"
         @close="checkClose"
         @confirm="submitBlogEntry"
+        :asyncing="asyncing"
     >
         <ConfirmModal
             v-if="confirmModalIsOpen"
@@ -125,6 +126,7 @@ export default {
             editorKey: 0,
             socketReady: false,
             confirmModalIsOpen: false,
+            asyncing: false,
         }
     },
 
@@ -204,13 +206,14 @@ export default {
         async submitBlogEntry(closeWindowAfterOperation = true) {
             const isValid = await this.v$.$validate()
             if (isValid) {
-                if (this.isAddMode) this.createBlogEntry(closeWindowAfterOperation)
-                else this.updateBlogEntry(closeWindowAfterOperation)
+                if (this.isAddMode) await this.createBlogEntry(closeWindowAfterOperation)
+                else await this.updateBlogEntry(closeWindowAfterOperation)
             }
         },
 
         async createBlogEntry(closeWindowAfterCreate) {
             try {
+                this.asyncing = true
                 const res = await this.$store.dispatch('blogEntries/postBlogEntry', {
                     project_id: this.$store.getters['projects/project'].id,
                     title: this.title,
@@ -232,6 +235,8 @@ export default {
                     scope: 'project.updated.blog-entry-create',
                 })
 
+                this.asyncing = false
+
                 if (closeWindowAfterCreate) this.closeDrawer()
 
                 if (this.$route.name !== 'projectBlog')
@@ -246,6 +251,7 @@ export default {
         },
 
         async updateBlogEntry(closeWindowAfterPatch) {
+            this.asyncing = true
             const body = {
                 id: this.editedBlog.id,
                 title: this.title,
@@ -270,6 +276,8 @@ export default {
                 scope: 'project.updated.blog-entry',
             })
 
+            this.asyncing = false
+
             if (closeWindowAfterPatch) {
                 this.closeDrawer()
                 this.$store.dispatch('notifications/pushToast', {
@@ -285,8 +293,8 @@ export default {
         },
 
         checkClose() {
+            if (this.asyncing) return
             const customEditor = this.$refs.tiptapEditor
-
             if (!this.isAddMode) {
                 const usersOnline = customEditor.editor
                     ? customEditor.editor.storage.collaborationCursor.users.length
@@ -315,6 +323,7 @@ export default {
         },
 
         closeDrawer() {
+            if (this.asyncing) return
             this.confirmModalIsOpen = false
             this.v$.$reset()
             this.$emit('close')
