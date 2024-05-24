@@ -6,6 +6,7 @@
         :confirm-action-name="$t('common.save')"
         :is-opened="isOpened"
         class="medium"
+        :asyncing="asyncing"
     >
         <div class="form">
             <TextInput
@@ -128,6 +129,7 @@ export default {
             },
             deadlineVisible: false,
             showConfirmModal: false,
+            asyncing: false,
         }
     },
 
@@ -226,6 +228,7 @@ export default {
             const isValid = await this.v$.$validate()
 
             if (isValid) {
+                this.asyncing = true
                 const payload = {
                     ...this.form,
                     project_id: this.project.id,
@@ -249,6 +252,7 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.asyncing = false
                         this.closeModalNoConfirm()
                     }
                 } else {
@@ -272,6 +276,7 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.asyncing = false
                         this.closeModalNoConfirm()
                     }
                 }
@@ -288,6 +293,7 @@ export default {
         },
 
         closeModal() {
+            if (this.asyncing) return
             if (this.form.description.originalContent !== this.form.description.savedContent)
                 this.showConfirmModal = !this.showConfirmModal
             else {
@@ -296,6 +302,7 @@ export default {
         },
 
         closeModalNoConfirm() {
+            if (this.asyncing) return
             this.v$.$reset()
             this.$emit('close')
         },
