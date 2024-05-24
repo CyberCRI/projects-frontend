@@ -59,6 +59,7 @@
             :title="$t('common.delete')"
             @cancel="confirmModalVisible = false"
             @confirm="deleteResource(currentResource, currentType)"
+            :asyncing="asyncing"
         />
     </div>
 </template>
@@ -84,6 +85,7 @@ export default {
             currentType: null,
             currentResource: null,
             confirmModalContent: null,
+            asyncing: false,
         }
     },
 
@@ -139,6 +141,7 @@ export default {
         },
 
         async deleteResource(resource, type) {
+            this.asyncing = true
             if (type === 'link') {
                 try {
                     await this.$store.dispatch('attachmentLinks/deleteAttachmentLink', resource.id)
@@ -153,6 +156,7 @@ export default {
                     })
                     console.error(error)
                 } finally {
+                    this.asyncing = false
                     this.confirmModalVisible = false
                 }
             } else if (type === 'file') {
@@ -169,6 +173,7 @@ export default {
                     })
                     console.error(error)
                 } finally {
+                    this.asyncing = false
                     this.confirmModalVisible = false
                 }
             }
