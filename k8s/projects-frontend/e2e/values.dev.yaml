@@ -1,16 +1,9 @@
 injectedEnv:
   nonSensitive:
-    VITE_APP_KEYCLOAK_URL: https://lpi-dev.cloud-iam.com/auth
-    VITE_APP_VERSION: '{{ .Values.application.revision }}'
     VITE_APP_API_URL: https://api-e2e.projects.k8s.lp-i.dev
-    VITE_APP_DOC: https://docs.projects.k8s.lp-i.dev # todo: custom one ?
     VITE_APP_WSS_HOST: wss://hocus-pocus-e2e.k8s.lp-i.dev
     VITE_APP_META_PORTAL_URL: https://e2e-meta.projects.k8s.lp-i.dev
-    VITE_APP_MIXPANEL_API_URL: https://mixpanel-proxy.k8s.lp-i.dev # todo: custom one ?
-    VITE_APP_BASE_URL: '{{ .Values.hostname }}'
-    VITE_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
-    VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID: ''
-    VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID: ''
-    VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ''
     VITE_APP_KEYCLOAK_REALM: e2e
+    # VITE_APP_DOC: todo: custom one ?
+    # VITE_APP_MIXPANEL_API_URL: todo: custom one ?
 
