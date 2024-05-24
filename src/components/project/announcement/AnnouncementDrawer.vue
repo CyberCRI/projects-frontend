@@ -11,6 +11,7 @@
             class="medium"
             @close="close"
             @confirm="submit"
+            :asyncing="asyncing"
         >
             <div class="announcement-form">
                 <div class="form-section">
@@ -123,6 +124,7 @@ export default {
                 deadline: new Date(),
                 type: 'na',
             },
+            asyncing: false,
         }
     },
 
@@ -195,6 +197,7 @@ export default {
             const isValid = await this.v$.$validate()
 
             if (isValid) {
+                this.asyncing = true
                 const body = {
                     ...this.form,
                     deadline: this.hasDeadline
@@ -219,6 +222,7 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.asyncing = false
                         this.closeNoConfirm()
                     }
                 } else {
@@ -235,6 +239,7 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.asyncing = false
                         this.closeNoConfirm()
                     }
                 }
@@ -242,6 +247,7 @@ export default {
         },
 
         toggleConfirmModal() {
+            if (this.asyncing) return
             this.confirmModalIsOpen = !this.confirmModalIsOpen
         },
 
@@ -257,11 +263,13 @@ export default {
         },
 
         closeNoConfirm() {
+            if (this.asyncing) return
             this.v$.$reset()
             this.$emit('close')
         },
 
         confirmClose() {
+            if (this.asyncing) return
             this.toggleConfirmModal()
             this.closeNoConfirm()
         },
@@ -298,7 +306,7 @@ export default {
                         description: {
                             originalContent: this.announcement.description,
                             room: '',
-                            savedContent: '',
+                            savedContent: this.announcement.description,
                         },
                     }
                     this.hasDeadline = !!this.announcement.deadline
