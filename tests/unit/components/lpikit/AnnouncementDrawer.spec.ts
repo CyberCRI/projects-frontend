@@ -43,7 +43,7 @@ describe('AnnouncementDrawer.vue', () => {
                 description: {
                     originalContent: announcement.description,
                     room: '',
-                    savedContent: '',
+                    savedContent: announcement.description,
                 },
             })
         })
