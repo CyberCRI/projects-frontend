@@ -77,7 +77,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import { contactUs } from '@/api/report.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
 
 function defaultForm() {
     return {
@@ -92,7 +91,7 @@ export default {
 
     emits: ['close'],
 
-    components: { LpiButton, TextInput, BaseDrawer },
+    components: { TextInput, BaseDrawer },
 
     props: {
         isOpened: {
@@ -169,6 +168,7 @@ export default {
 <style scoped lang="scss">
 .form {
     padding: 0 1.5rem;
+
     .title {
         font-size: $font-size-m;
         color: $primary-dark;

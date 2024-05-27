@@ -223,6 +223,10 @@ export default {
             showContactUsDrawer: false,
             scrolled: false,
             announcements: [],
+            customNotificationStyle: {
+                maxHeight: 'unset',
+                padding: 'unset',
+            },
         }
     },
 
