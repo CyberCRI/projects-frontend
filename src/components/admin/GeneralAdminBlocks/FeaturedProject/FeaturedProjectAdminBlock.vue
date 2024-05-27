@@ -87,6 +87,7 @@ export default {
 
         async onPickProjects(projects) {
             this.isLoading = true
+            this.editFeaturedProjects = false
             try {
                 const current = this.featuredProjects.map((p) => p.id)
                 const picked = projects.map((p) => p.id)
