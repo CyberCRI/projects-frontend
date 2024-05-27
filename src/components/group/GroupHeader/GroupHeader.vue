@@ -40,6 +40,7 @@
                     :label="$t('group.contact')"
                     btn-icon="EmailOutline"
                     vertical-layout
+                    class="bg-on-hover"
                 />
             </ToolTip>
             <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
@@ -56,7 +57,12 @@
                         </button>
                     </div>
                 </template>
-                <ExternalLabelButton :label="$t('group.share')" btn-icon="Share" vertical-layout />
+                <ExternalLabelButton
+                    :label="$t('group.share')"
+                    btn-icon="Share"
+                    vertical-layout
+                    class="bg-on-hover"
+                />
             </ToolTip>
         </div>
     </div>

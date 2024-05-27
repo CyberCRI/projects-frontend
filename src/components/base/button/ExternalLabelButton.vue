@@ -151,5 +151,21 @@ export default {
             pointer-events: none;
         }
     }
+
+    &.bg-on-hover {
+        svg {
+            transform-origin: center;
+            transition: all 200ms ease-in-out;
+        }
+
+        &:hover {
+            border-radius: 8px;
+            background-color: $primary-light !important;
+
+            svg {
+                transform: scale(1.1);
+            }
+        }
+    }
 }
 </style>
