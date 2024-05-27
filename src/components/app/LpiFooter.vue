@@ -105,17 +105,8 @@
                 <LpiLogo class="lpi-logo" />
             </div>
         </div>
-        <BaseDrawer
-            :custom-style="customNotificationStyle"
-            :is-opened="showContactUsDrawer"
-            :has-footer="false"
-            class="medium"
-            confirm-action-name=""
-            :title="$t('footer.contact')"
-            @close="showContactUsDrawer = false"
-        >
-            <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
-        </BaseDrawer>
+
+        <ContactDrawer :is-opened="showContactUsDrawer" @close="showContactUsDrawer = false" />
         <BaseDrawer
             v-if="reportBugOpen"
             :confirm-action-name="$t('common.submit')"
@@ -136,7 +127,7 @@
 import LpiLogo from '@/components/app/LpiLogo.vue'
 import ReportForm from '@/components/app/ReportForm.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import ContactForm from '@/components/app/ContactForm.vue'
+import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
@@ -146,7 +137,7 @@ export default {
     components: {
         LpiLogo,
         ReportForm,
-        ContactForm,
+        ContactDrawer,
         BaseDrawer,
         ProjectLogo,
         OnboardingScreens,
@@ -157,10 +148,6 @@ export default {
         return {
             reportBugOpen: false,
             showContactUsDrawer: false,
-            customNotificationStyle: {
-                maxHeight: 'unset',
-                padding: 'unset',
-            },
         }
     },
 
