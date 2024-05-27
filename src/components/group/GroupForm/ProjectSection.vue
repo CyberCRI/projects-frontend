@@ -89,6 +89,7 @@ export default {
     methods: {
         onProjectsPicked(projects) {
             this.$emit('update:model-value', [...projects])
+            this.drawerIsOpen = false
         },
 
         onRemoveProject(project) {

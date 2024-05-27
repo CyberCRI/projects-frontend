@@ -5,6 +5,7 @@
         :padding="true"
         @close="close"
         @confirm="confirm"
+        :asyncing="asyncing"
     >
         <template v-if="listProjects.length" #header_clear>
             <div class="clear" @click="clearSelection">
@@ -81,6 +82,10 @@ export default {
             type: [Number, null],
             default: null,
         },
+        asyncing: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -154,7 +159,8 @@ export default {
 
         async confirm() {
             this.$emit('picked-projects', toRaw(this.listProjects))
-            this.close()
+            // Note: this is now the responsability of host component to close the drawer
+            // so it can update asyncing state as needed
         },
 
         close() {

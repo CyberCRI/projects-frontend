@@ -74,6 +74,7 @@
         @close="showFollowProjectDrawer = false"
         @picked-projects="onProjectsPicked"
         :title="$t('group.form.add-projects')"
+        :asyncing="followedProjectAsyncing"
     />
 </template>
 <script>
@@ -105,6 +106,7 @@ export default {
             projectsLimit: 12,
             projectColumns: 4,
             followedProjectLoading: true,
+            followedProjectAsyncing: false,
         }
     },
     mounted() {
@@ -136,6 +138,8 @@ export default {
         },
 
         async onProjectsPicked(projects) {
+            this.followedProjectAsyncing = true
+
             const previousIndex = this.followedProjects.reduce((acc, project) => {
                 acc[project.id] = true
                 return acc
@@ -173,6 +177,7 @@ export default {
             })
             this.$emit('profile-edited')
             await this.setFollowedProject()
+            this.followedProjectAsyncing = false
             this.showFollowProjectDrawer = false
         },
         updateFollows() {
