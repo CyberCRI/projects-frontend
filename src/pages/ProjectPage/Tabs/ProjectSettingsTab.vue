@@ -193,15 +193,11 @@
             @cancel="toggleShowQuitIsImposibleVisible"
         />
 
-        <BaseDrawer
-            :has-footer="false"
+        <ReportDrawer
             :is-opened="reportForm.visible"
-            :title="reportForm.type ? $t(`report.${reportForm.type}`) : ''"
-            class="report-form"
-            @close="reportForm.visible = false"
-        >
-            <ReportForm :type="reportForm.type" @close="toggleReportForm" />
-        </BaseDrawer>
+            :type="reportForm.type"
+            @close="toggleReportForm"
+        />
 
         <ReviewDrawer
             :is-opened="reviewDrawerVisible"
@@ -221,8 +217,7 @@ import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import ReportForm from '@/components/app/ReportForm.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import ReportDrawer from '@/components/app/ReportDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
@@ -242,8 +237,7 @@ export default {
         LpiCheckbox,
         GroupButton,
         LpiSnackbar,
-        ReportForm,
-        BaseDrawer,
+        ReportDrawer,
         ConfirmModal,
         ReviewDrawer,
     },

@@ -145,16 +145,8 @@
             </SignUpWrapper>
         </div>
     </div>
-    <BaseDrawer
-        :is-opened="showContactUsDrawer"
-        :has-footer="false"
-        class="medium"
-        confirm-action-name=""
-        :title="$t('footer.contact')"
-        @close="closeDrawer"
-    >
-        <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
-    </BaseDrawer>
+
+    <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
@@ -165,8 +157,7 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import utils from '@/functs/functions.ts'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import ContactForm from '@/components/app/ContactForm.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
@@ -179,8 +170,7 @@ export default {
     components: {
         TextInput,
         LpiButton,
-        ContactForm,
-        BaseDrawer,
+        ContactDrawer,
         LoaderSimple,
         SignUpWrapper,
     },

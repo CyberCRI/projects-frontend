@@ -172,17 +172,7 @@
             />
         </BaseDrawer>
 
-        <BaseDrawer
-            :custom-style="customNotificationStyle"
-            :is-opened="showContactUsDrawer"
-            :has-footer="false"
-            class="medium"
-            confirm-action-name=""
-            :title="$t('footer.contact')"
-            @close="closeDrawer"
-        >
-            <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
-        </BaseDrawer>
+        <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
     </div>
 </template>
 
@@ -202,7 +192,7 @@ import NotificationList from '@/components/app/NotificationList.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
-import ContactForm from '@/components/app/ContactForm.vue'
+import ContactDrawer from '@/components/app/ContactDrawer.vue'
 
 export default {
     name: 'LpiHeader',
@@ -210,7 +200,7 @@ export default {
     mixins: [permissions],
 
     components: {
-        ContactForm,
+        ContactDrawer,
         HeaderItemList,
         BadgeItem,
         NotificationList,
@@ -231,12 +221,12 @@ export default {
             isLoading: true,
             showNotificationDrawer: false,
             showContactUsDrawer: false,
+            scrolled: false,
+            announcements: [],
             customNotificationStyle: {
                 maxHeight: 'unset',
                 padding: 'unset',
             },
-            scrolled: false,
-            announcements: [],
         }
     },
 

@@ -115,23 +115,14 @@
             </div>
         </template>
     </SignUpWrapper>
-    <BaseDrawer
-        :is-opened="showContactUsDrawer"
-        :has-footer="false"
-        class="medium"
-        confirm-action-name=""
-        :title="$t('footer.contact')"
-        @close="closeDrawer"
-    >
-        <ContactForm v-if="showContactUsDrawer" @close="closeDrawer" />
-    </BaseDrawer>
+
+    <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import ContactForm from '@/components/app/ContactForm.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import { helpers, required, email } from '@vuelidate/validators'
 import { postAccessRequest } from '@/api/organizations.service.ts'
@@ -142,8 +133,7 @@ export default {
     components: {
         TextInput,
         LpiButton,
-        ContactForm,
-        BaseDrawer,
+        ContactDrawer,
         SignUpWrapper,
     },
 

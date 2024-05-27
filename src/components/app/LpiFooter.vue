@@ -105,28 +105,10 @@
                 <LpiLogo class="lpi-logo" />
             </div>
         </div>
-        <BaseDrawer
-            :custom-style="customNotificationStyle"
-            :is-opened="showContactUsDrawer"
-            :has-footer="false"
-            class="medium"
-            confirm-action-name=""
-            :title="$t('footer.contact')"
-            @close="showContactUsDrawer = false"
-        >
-            <ContactForm v-if="showContactUsDrawer" @close="showContactUsDrawer = false" />
-        </BaseDrawer>
-        <BaseDrawer
-            v-if="reportBugOpen"
-            :confirm-action-name="$t('common.submit')"
-            :has-footer="false"
-            :is-opened="reportBugOpen"
-            :title="$t(`report.bug`)"
-            class="report-form"
-            @close="reportBugOpen = false"
-        >
-            <ReportForm type="bug" @close="reportBugOpen = false" />
-        </BaseDrawer>
+
+        <ContactDrawer :is-opened="showContactUsDrawer" @close="showContactUsDrawer = false" />
+
+        <ReportDrawer :is-opened="reportBugOpen" type="bug" @close="reportBugOpen = false" />
 
         <OnboardingScreens v-if="showOnboardingScreen && isConnected"> </OnboardingScreens>
     </footer>
@@ -134,9 +116,8 @@
 
 <script>
 import LpiLogo from '@/components/app/LpiLogo.vue'
-import ReportForm from '@/components/app/ReportForm.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import ContactForm from '@/components/app/ContactForm.vue'
+import ReportDrawer from '@/components/app/ReportDrawer.vue'
+import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
@@ -145,9 +126,8 @@ export default {
 
     components: {
         LpiLogo,
-        ReportForm,
-        ContactForm,
-        BaseDrawer,
+        ReportDrawer,
+        ContactDrawer,
         ProjectLogo,
         OnboardingScreens,
         FooterEnglishTips,
@@ -157,10 +137,6 @@ export default {
         return {
             reportBugOpen: false,
             showContactUsDrawer: false,
-            customNotificationStyle: {
-                maxHeight: 'unset',
-                padding: 'unset',
-            },
         }
     },
 
