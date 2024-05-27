@@ -250,7 +250,7 @@
                         <div class="end-buttons">
                             <ExternalLabelButton
                                 v-if="$store.getters['users/isLoggedIn']"
-                                class="space-button"
+                                class="space-button bg-on-hover"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
                                 :btn-icon="followed ? 'Heart' : 'HeartOutline'"
                                 vertical-layout
@@ -260,7 +260,7 @@
                                 v-if="
                                     project && project.announcements && project.announcements.length
                                 "
-                                class="space-button article-button"
+                                class="space-button article-button bg-on-hover"
                                 :label="$t('group.news')"
                                 btn-icon="Article"
                                 vertical-layout
@@ -268,7 +268,7 @@
                                 @click="$emit('show-project-announcements')"
                             />
                             <ExternalLabelButton
-                                class="space-button"
+                                class="space-button bg-on-hover"
                                 :label="$filters.capitalize($t('comment.comment-verb'))"
                                 btn-icon="ChatBubble"
                                 vertical-layout
@@ -293,7 +293,7 @@
                                     </div>
                                 </template>
                                 <ExternalLabelButton
-                                    class="space-button"
+                                    class="space-button bg-on-hover"
                                     :label="$t('group.share')"
                                     btn-icon="Share"
                                     vertical-layout
@@ -301,7 +301,7 @@
                             </ToolTip>
                             <ExternalLabelButton
                                 v-if="moreInfo"
-                                class="space-button"
+                                class="space-button bg-on-hover"
                                 :label="$t('group.less')"
                                 btn-icon="ChevronUp"
                                 @click="displayLessInfo"
@@ -309,7 +309,7 @@
                             <ExternalLabelButton
                                 v-else
                                 id="more-info-btn"
-                                class="space-button"
+                                class="space-button bg-on-hover"
                                 :label="$t('group.more')"
                                 btn-icon="ChevronDown"
                                 @click="displayMoreInfo"
@@ -1149,6 +1149,7 @@ export default {
                 .space-button {
                     margin-top: 15px;
                     margin-bottom: 15px;
+                    width: 100%;
                 }
 
                 @media screen and (max-width: $min-tablet) {
