@@ -3,7 +3,7 @@ on:
   workflow_call:
 jobs:
   lint-and-test:
-    runs-on: [self-hosted, m2c4-runner]
+    runs-on: frontend-lint-test
     steps:
       - uses: actions/checkout@v4
         with:
