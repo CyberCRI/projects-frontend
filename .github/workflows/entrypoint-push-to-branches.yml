@@ -16,7 +16,7 @@ jobs:
   lint-and-test:
     uses: ./.github/workflows/lint-and-test.yml
   build-docker:
-    uses: CyberCRI/github-workflows/.github/workflows/build-push.yaml@new-arc
+    uses: CyberCRI/github-workflows/.github/workflows/build-push.yaml@main
     with:
       registry-name: ${{ vars.DOCKER_PROD_REGISTRY }}
       image-name: projects-front
