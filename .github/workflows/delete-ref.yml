@@ -8,4 +8,4 @@ on:
 
 jobs:
   delete-ref:
-    uses: CyberCRI/github-workflows/.github/workflows/delete-tag-deploy-when-matching-ref-deleted.yaml@deploy-fast
+    uses: CyberCRI/github-workflows/.github/workflows/delete-tag-deploy-when-matching-ref-deleted.yaml@main
