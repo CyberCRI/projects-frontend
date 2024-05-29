@@ -4,7 +4,7 @@
             <h1 class="title">{{ $t('profile.edit.edit-my-profile') }}</h1>
             <p class="notice">
                 {{ $t('profile.edit.notice') }}
-                <a href="/help">{{ $t('profile.edit.help') }}</a>
+                <router-link :to="{ name: 'Help' }">{{ $t('profile.edit.help') }}</router-link>
             </p>
             <div class="body">
                 <ProfileEditTabs :user="user" @profile-edited="onProfileEdited" />
