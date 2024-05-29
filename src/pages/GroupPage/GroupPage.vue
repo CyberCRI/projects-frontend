@@ -129,10 +129,19 @@ export default {
                 this.groupDescription = groupData.description
                 this.groupShortDescription = groupData.short_description
 
-                this.groupHierarchy = groupData.hierarchy.map((group) => ({
-                    name: group.name,
-                    route: { name: 'Group', params: { groupId: group.slug || group.id } },
-                }))
+                this.groupHierarchy = groupData.hierarchy.map((group, index) =>
+                    // first item is the organization dummy group
+                    // so we redirect it to the groups page
+                    index === 0
+                        ? {
+                              name: this.$filters.capitalize(this.$t('common.groups')),
+                              route: { name: 'Groups' },
+                          }
+                        : {
+                              name: group.name,
+                              route: { name: 'Group', params: { groupId: group.slug || group.id } },
+                          }
+                )
                 this.groupChildren = groupData.children
 
                 // we can't use "this.groupId" because it might be a slug and not an id....
