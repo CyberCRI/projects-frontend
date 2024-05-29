@@ -18,6 +18,7 @@
             @click="goToChat"
             class="individual-button white-bg"
             data-test="go-to-chat"
+            no-text-transform
         />
     </div>
 </template>

@@ -10,7 +10,7 @@
         type="button"
         class="lpi-button"
     >
-        <ButtonContent :label="label" :btn-icon="btnIcon" />
+        <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
     </button>
 </template>
 
@@ -45,6 +45,11 @@ export default {
         },
 
         reversedOrder: {
+            type: Boolean,
+            default: false,
+        },
+
+        noTextTransform: {
             type: Boolean,
             default: false,
         },
