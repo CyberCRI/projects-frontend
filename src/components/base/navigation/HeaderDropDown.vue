@@ -9,8 +9,10 @@
                     :name="icon"
                     class="icon"
                 />
-                <span v-if="label" data-test="current-label">{{ label }}</span>
-                <span class="icon caret"><IconImage name="MenuDown" /></span>
+                <span class="label-and-icon">
+                    <span v-if="label" data-test="current-label">{{ label }}</span>
+                    <span class="icon caret"><IconImage name="MenuDown" /></span>
+                </span>
             </slot>
         </button>
         <div
@@ -377,5 +379,28 @@ export default {
 .menu-fade-leave-to {
     opacity: 0;
     transform: translateY(-100%);
+}
+
+.label-and-icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: pxToRem(6px);
+        background-color: $primary-dark;
+        bottom: pxToRem(-6px);
+        transform: scale(0);
+        transition: transform 0.15s ease-in-out;
+    }
+
+    &:hover::after {
+        transform: scale(1);
+    }
 }
 </style>

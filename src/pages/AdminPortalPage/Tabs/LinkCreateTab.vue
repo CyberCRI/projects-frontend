@@ -326,6 +326,11 @@ export default {
     gap: $space-m;
     color: $primary-dark;
     font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
 
     & + .validity-type-btn {
         margin-left: $space-unit;

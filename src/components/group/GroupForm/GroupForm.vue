@@ -437,6 +437,10 @@ export default {
             align-items: center;
             text-align: right;
 
+            &:hover {
+                background-color: $primary-lighter;
+            }
+
             > .label {
                 font-weight: 700;
                 font-size: $font-size-m;
