@@ -117,6 +117,8 @@ export default {
     padding-bottom: $space-l;
     border-radius: $border-radius-17;
     flex-direction: row;
+    position: relative; // higher than home category dropdown and buttons and suggestions
+    z-index: 10;
 
     @media (min-width: $min-tablet) {
         padding-left: $space-2xl;
