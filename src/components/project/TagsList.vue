@@ -88,7 +88,7 @@
                     size="small"
                 />
             </router-link>
-            <span v-if="internal">
+            <template v-if="internal">
                 <router-link
                     v-for="tag in moreInfoTags || []"
                     :key="prefix + tag.name"
@@ -102,8 +102,8 @@
                         size="small"
                     />
                 </router-link>
-            </span>
-            <span v-else>
+            </template>
+            <template v-else>
                 <a
                     v-for="tag in moreInfoTags || []"
                     :key="prefix + tag.direction"
@@ -118,7 +118,7 @@
                         size="small"
                     />
                 </a>
-            </span>
+            </template>
         </div>
     </div>
 </template>
@@ -431,7 +431,7 @@ export default {
     z-index: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: $space-2xs;
+    gap: $space-s;
     width: min-content;
 
     &.straight-corner {
