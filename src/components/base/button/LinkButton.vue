@@ -6,7 +6,7 @@
         type="button"
         class="link-button"
     >
-        <ButtonContent :label="label" :btn-icon="btnIcon" />
+        <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
     </component>
 </template>
 
@@ -36,6 +36,11 @@ export default {
         btnIcon: {
             type: [String, Object],
             default: null,
+        },
+
+        noTextTransform: {
+            type: Boolean,
+            default: false,
         },
     },
 

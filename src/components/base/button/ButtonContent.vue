@@ -2,7 +2,13 @@
     <IconImage v-if="btnIcon && btnIcon !== 'LoaderSimple'" :name="btnIcon" class="btn-icon" />
     <LoaderSimple v-if="btnIcon && btnIcon === 'LoaderSimple'" class="btn-icon loader" />
 
-    <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
+    <span
+        v-if="label"
+        data-test="button-label"
+        class="label"
+        :class="{ 'no-text-transform': noTextTransform }"
+        >{{ label }}</span
+    >
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -25,6 +31,11 @@ export default {
             type: [String, Object],
             default: null,
         },
+
+        noTextTransform: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>
@@ -35,6 +46,14 @@ export default {
 
     &::first-letter {
         text-transform: capitalize;
+    }
+
+    &.no-text-transform {
+        text-transform: none;
+
+        &::first-letter {
+            text-transform: none;
+        }
     }
 }
 
