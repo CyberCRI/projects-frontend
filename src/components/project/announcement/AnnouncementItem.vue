@@ -1,5 +1,5 @@
 <template>
-    <div class="announcement shadow-box">
+    <div class="announcement">
         <div class="banner">
             <div class="creation-date">{{ $filters.capitalize(createdDateLabel) }}</div>
             <div v-if="!!this.announcement.deadline" class="deadline">

@@ -1,5 +1,9 @@
 <template>
-    <DialogModal @close="closeModal" @submit="insertVideo">
+    <DialogModal
+        @close="closeModal"
+        @submit="insertVideo"
+        :second-button-options="secondButtonOptions"
+    >
         <template #header>{{ $filters.capitalize($t('file.add-video')) }}</template>
 
         <template #body>
@@ -42,6 +46,11 @@ export default {
     computed: {
         validVideo() {
             return this.videoSrc.match(/youtu\.be|youtube|vimeo/)
+        },
+        secondButtonOptions() {
+            return {
+                disabled: !this.videoSrc || !this.validVideo,
+            }
         },
     },
 

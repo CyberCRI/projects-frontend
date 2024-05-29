@@ -1,5 +1,9 @@
 <template>
-    <DialogModal @close="closeModal" @submit="insertImage">
+    <DialogModal
+        @close="closeModal"
+        @submit="insertImage"
+        :second-button-options="secondButtonOptions"
+    >
         <template #header>{{ $filters.capitalize($t('file.add-image')) }}</template>
 
         <template #body>
@@ -76,6 +80,11 @@ export default {
 
         currentOrgCode() {
             return this.$store.getters['organizations/current'].code
+        },
+        secondButtonOptions() {
+            return {
+                disabled: !this.file,
+            }
         },
     },
 

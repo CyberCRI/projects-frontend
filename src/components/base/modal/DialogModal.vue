@@ -21,7 +21,7 @@
             <button
                 v-bind="firstButtonOptions"
                 type="button"
-                class="button-footer"
+                class="button-footer shadow-box"
                 @click="close"
                 aria-label="first-button"
                 data-test="cancel-destroy"
@@ -35,7 +35,7 @@
                 v-if="$slots['button-2']"
                 v-bind="secondButtonOptions"
                 type="button"
-                class="button-footer button-footer--submit"
+                class="button-footer button-footer--submit shadow-box"
                 @click="submit"
                 aria-label="second-button"
                 data-test="confirm-destroy"
@@ -143,6 +143,7 @@ export default {
 .button-footer[disabled] {
     opacity: 0.7;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */

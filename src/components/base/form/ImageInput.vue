@@ -5,8 +5,8 @@
                 v-if="isLink"
                 btn-icon="Upload"
                 :label="displayedLabel"
-                class="passive"
                 v-disable-focus="unfocusable"
+                @click.prevent="this.$refs?.label?.click()"
             />
 
             <LpiButton
@@ -14,8 +14,8 @@
                 btn-icon="Upload"
                 secondary
                 :label="displayedLabel"
-                class="passive"
                 v-disable-focus="unfocusable"
+                @click.prevent="this.$refs?.label?.click()"
             />
         </label>
 
@@ -92,10 +92,6 @@ export default {
 
     label {
         cursor: pointer;
-    }
-
-    .passive {
-        pointer-events: none;
     }
 }
 </style>

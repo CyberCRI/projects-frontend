@@ -1,5 +1,9 @@
 <template>
-    <button :class="{ secondary }" type="button" class="context-action-button">
+    <button
+        :class="[{ secondary }, actionIcon]"
+        type="button"
+        class="context-action-button shadow-box"
+    >
         <IconImage :name="actionIcon" class="action-icon" />
     </button>
 </template>
@@ -58,6 +62,20 @@ export default {
         fill: $primary-dark;
         border: $border-width-s solid $primary-dark;
     }
+
+    &.Pen:hover {
+        .action-icon {
+            animation: rotate-pen 0.5s ease-in-out infinite;
+            transform-origin: bottom left;
+        }
+    }
+
+    &.Close:hover {
+        .action-icon {
+            animation: rotate-close 1.2s ease-in-out infinite;
+            transform-origin: center center;
+        }
+    }
 }
 
 .context-action-button :deep(svg) {
@@ -74,5 +92,41 @@ export default {
 
 .context-action-button.secondary :deep(svg) {
     fill: $primary-dark;
+}
+
+@keyframes rotate-pen {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes rotate-close {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(90deg);
+    }
+
+    75% {
+        transform: rotate(-90deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 </style>

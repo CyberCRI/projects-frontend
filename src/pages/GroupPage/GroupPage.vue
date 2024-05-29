@@ -14,17 +14,18 @@
                 :is-loading="isLoading"
             />
 
-            <LinkButton
-                v-if="!isLoading && canEditGroup"
-                class="edit-btn"
-                btn-icon="Pen"
-                :label="editGroupLabel"
-                data-test="edit-group"
-                :to="{
-                    name: 'frontEditGroup',
-                    params: { groupId: this.groupSlug || this.groupId },
-                }"
-            />
+            <div class="edit-btn-wrapper" v-if="!isLoading && canEditGroup">
+                <LinkButton
+                    class="edit-btn"
+                    btn-icon="Pen"
+                    :label="editGroupLabel"
+                    data-test="edit-group"
+                    :to="{
+                        name: 'frontEditGroup',
+                        params: { groupId: this.groupSlug || this.groupId },
+                    }"
+                />
+            </div>
 
             <GroupHeader
                 :title="groupName"
@@ -200,8 +201,8 @@ export default {
     margin: $space-2xl 0;
 }
 
-.edit-btn {
-    display: inline-flex;
+.edit-btn-wrapper {
+    display: flex;
     width: 100%;
     justify-content: flex-end;
     padding-bottom: 24px;

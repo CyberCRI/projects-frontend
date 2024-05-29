@@ -8,7 +8,7 @@
         }"
         :disabled="disabled"
         type="button"
-        class="lpi-button"
+        class="lpi-button shadow-box"
     >
         <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
     </button>
@@ -92,6 +92,7 @@ export default {
     &.disabled {
         opacity: 0.4;
         cursor: not-allowed;
+        pointer-events: none;
     }
 
     &.secondary {

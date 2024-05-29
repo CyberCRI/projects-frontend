@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="header__close" @click="close">
-                        <span class="icon-circle"><IconImage name="Close" /></span>
+                        <span class="icon-circle shadow-box"><IconImage name="Close" /></span>
                     </div>
                 </header>
 
@@ -275,7 +275,7 @@ $slide-duration: 400ms;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-left: $space-l;
+        padding: 0 $space-l;
 
         &.scrolled {
             box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
@@ -324,7 +324,7 @@ $slide-duration: 400ms;
 }
 
 .header__close {
-    width: 64px;
+    width: min-content;
     display: flex;
     justify-content: center;
     align-items: center;
