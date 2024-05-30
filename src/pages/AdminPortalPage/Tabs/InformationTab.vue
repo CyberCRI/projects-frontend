@@ -358,7 +358,6 @@ export default {
             display: block;
             margin-bottom: $space-m;
             font-size: $font-size-s;
-            line-height: $font-size-m;
         }
 
         button {

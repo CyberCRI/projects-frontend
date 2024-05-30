@@ -283,7 +283,6 @@ export default {
 
     .intro {
         font-size: $font-size-m;
-        line-height: 1.5;
         margin: 2.2rem 0;
     }
 
@@ -319,7 +318,7 @@ export default {
         background: transparent;
         border: none;
         font-size: $font-size-s;
-        line-height: 16px;
+        line-height: 1.2;
         color: $black-1;
     }
 }

@@ -486,7 +486,6 @@ export default {
 
 .section-notice {
     font-size: $font-size-m;
-    line-height: 1.5;
     margin-bottom: pxToRem(23px);
 }
 

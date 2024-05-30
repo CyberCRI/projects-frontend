@@ -217,7 +217,6 @@ export default {
                 font-size: $font-size-5xl;
                 font-weight: 700;
                 margin-bottom: $space-l;
-                line-height: 50px;
                 text-transform: capitalize;
             }
 
@@ -230,13 +229,11 @@ export default {
                 font-size: $font-size-l;
                 font-weight: 400;
                 margin-bottom: $space-l;
-                line-height: 26px;
             }
 
             .short-description {
                 font-weight: 400;
                 font-size: $font-size-m;
-                line-height: 24px;
                 margin-bottom: $space-l;
             }
 
@@ -321,6 +318,7 @@ export default {
             height: 22px;
             fill: $primary-dark;
             margin-right: $space-xs;
+            margin-top: 4px;
         }
 
         span {

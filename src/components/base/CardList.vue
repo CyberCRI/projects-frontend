@@ -162,29 +162,28 @@ export default {
 <style lang="scss" scoped>
 .card-list {
     justify-content: space-between;
+}
 
-    &__empty {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
+.card-list__empty {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
 
-        &--text {
-            font-weight: 400;
-            font-size: 22px;
-            line-height: 24px;
-            color: $primary-dark;
-            margin-bottom: 24px;
-        }
+.card-list__empty--text {
+    font-weight: 400;
+    font-size: 22px;
+    color: $primary-dark;
+    margin-bottom: 24px;
+}
 
-        &--image {
-            width: 200px;
-        }
-    }
+.card-list__empty--image {
+    width: 200px;
+}
 
-    &__content {
-        width: min-content;
-    }
+.card-list__content {
+    width: min-content;
 }
 
 .see-more-arrow {
@@ -197,13 +196,11 @@ export default {
     .title-ctn {
         display: flex;
         align-items: center;
-        margin-left: pxToRem(20px);
         margin-bottom: $space-l;
 
         .title {
             color: $primary-dark;
             font-size: 20px;
-            line-height: 24px;
             font-weight: bold;
         }
     }

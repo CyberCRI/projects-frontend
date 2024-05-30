@@ -98,7 +98,6 @@ export default {
     height: 50px;
     flex: none;
     margin-right: $space-s;
-    line-height: $font-size-l;
 }
 
 .text-container {
@@ -112,6 +111,7 @@ export default {
     font-weight: 700;
     font-size: $font-size-m;
     color: $primary-dark;
+    line-height: 1.2;
 }
 
 .is-featured {

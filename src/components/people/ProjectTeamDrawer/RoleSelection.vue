@@ -280,7 +280,7 @@ export default {
 .form-control {
     font-size: $font-size-m;
     color: $primary-dark;
-    line-height: 12px;
+    line-height: 1;
     display: grid;
     grid-template-columns: 1em auto;
     gap: $space-m;
@@ -343,7 +343,7 @@ input[type='radio']:disabled {
     > label {
         font-weight: 700;
         font-size: $font-size-m;
-        line-height: 18px;
+        line-height: 1.1;
         color: $primary-dark;
         margin: 0;
         cursor: pointer;

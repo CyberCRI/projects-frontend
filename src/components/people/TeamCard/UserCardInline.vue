@@ -195,7 +195,6 @@ export default {
     .name {
         font-weight: 700;
         font-size: $font-size-s;
-        line-height: 20px;
         margin-bottom: $space-s;
     }
 

@@ -156,7 +156,7 @@ export default {
                 text-overflow: ellipsis;
                 font-weight: 700;
                 font-size: $font-size-2xl;
-                line-height: 30px;
+                line-height: 1.2;
                 background: $white;
                 color: $black;
                 transition: background-color 0.3s ease-in-out;
@@ -168,7 +168,6 @@ export default {
                 margin-top: pxToRem(16px);
                 font-weight: 400;
                 font-size: $font-size-m;
-                line-height: 24px;
                 color: $black;
                 transition: background-color 0.3s ease-in-out;
                 border-bottom-left-radius: $border-radius-m;

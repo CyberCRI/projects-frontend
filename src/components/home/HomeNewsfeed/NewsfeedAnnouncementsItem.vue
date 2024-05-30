@@ -157,7 +157,6 @@ $dimension: 200px;
 .announcement-title {
     display: block;
     font-size: $font-size-l;
-    line-height: $font-size-2xl;
     margin-bottom: $space-s;
     grid-column: 2;
     grid-row: 1;
@@ -204,7 +203,6 @@ $dimension: 200px;
 }
 
 .clamped {
-    line-height: $font-size-xl;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;

@@ -251,7 +251,6 @@ export default {
             }
 
             p {
-                line-height: 24px;
                 margin-bottom: $space-s;
             }
         }

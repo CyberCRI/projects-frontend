@@ -676,7 +676,6 @@ export default {
 
         .org-description {
             font-size: $font-size-m;
-            line-height: 24px;
             margin-bottom: $space-l;
         }
 
@@ -685,7 +684,7 @@ export default {
             margin-bottom: $space-l;
             font-weight: 700;
             font-size: $font-size-2xl;
-            line-height: 30px;
+            line-height: 1.2;
         }
 
         .tips-list {
@@ -693,7 +692,6 @@ export default {
             flex-direction: column;
             align-items: flex-start;
             font-size: $font-size-m;
-            line-height: 24px;
             margin-bottom: $space-l;
 
             .item {
@@ -713,7 +711,7 @@ export default {
     .title {
         font-weight: 700;
         font-size: $font-size-3xl;
-        line-height: 40px;
+        line-height: 1.2;
         padding-bottom: $space-2xl;
     }
 
@@ -727,7 +725,7 @@ export default {
 
         .link {
             font-size: $font-size-m;
-            line-height: 20px;
+            line-height: 1.2;
             color: $primary-dark;
         }
     }
@@ -770,7 +768,7 @@ export default {
             > label {
                 font-weight: 700;
                 font-size: $font-size-m;
-                line-height: 18px;
+                line-height: 1.2;
                 color: $primary-dark;
                 margin: 0;
                 cursor: pointer;
@@ -783,7 +781,7 @@ export default {
         font-size: $font-size-m;
         color: $primary-dark;
         font-weight: 400;
-        line-height: 12px;
+        line-height: 1;
         display: grid;
         grid-template-columns: 1em auto;
         gap: $space-m;

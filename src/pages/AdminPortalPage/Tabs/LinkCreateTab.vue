@@ -268,12 +268,6 @@ export default {
     margin-bottom: $font-size-l;
 }
 
-.intro {
-    p {
-        line-height: 1.6;
-    }
-}
-
 .form {
     margin: $space-2xl;
 

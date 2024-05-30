@@ -53,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 .section-header-ctn {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     color: $primary-dark;
     fill: $primary-dark;
     margin-bottom: $space-m;
@@ -65,13 +65,11 @@ export default {
 
         > span {
             font-size: $font-size-l;
-            line-height: pxToRem(24px);
         }
     }
 
     .section-button {
         font-size: 16px;
-        line-height: 18px;
     }
 }
 </style>

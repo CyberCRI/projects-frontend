@@ -88,7 +88,6 @@ export default {
 
 .notice {
     font-size: $font-size-m;
-    line-height: 1.6;
 }
 
 .footer {

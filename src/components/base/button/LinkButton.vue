@@ -59,7 +59,6 @@ export default {
     align-items: center;
     font-weight: 700;
     font-size: $font-size-m;
-    line-height: 18px;
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;

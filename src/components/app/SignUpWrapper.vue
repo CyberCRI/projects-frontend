@@ -114,7 +114,6 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 }
 
 :deep(.confirm-message) {
-    line-height: 1.5;
     font-size: $font-size-m;
 
     @media all and (max-width: $min-width-horizontal-layout) {

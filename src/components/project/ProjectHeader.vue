@@ -811,20 +811,19 @@ export default {
     .full-purpose {
         font-weight: 400;
         font-size: $font-size-m;
-        line-height: 24px;
     }
 
     .breadcrumb {
         font-weight: 700;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 1.1;
         color: $primary-dark;
     }
 
     .visibility {
         font-weight: 700;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 1.1;
         color: $primary-dark;
     }
 
@@ -1056,7 +1055,6 @@ export default {
             .purpose {
                 font-weight: 400;
                 font-size: $font-size-l;
-                line-height: 1.4;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;

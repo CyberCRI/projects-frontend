@@ -247,7 +247,6 @@ export default {
 
 .notice {
     font-size: $font-size-m;
-    line-height: 1.5;
     margin-bottom: $space-l;
 }
 
@@ -320,13 +319,13 @@ export default {
     font-size: pxToRem(40px);
     font-weight: 900;
     color: $primary-dark;
-    line-height: 1.125;
+    line-height: 1.2;
     margin-bottom: pxToRem(15px);
 }
 
 .expired-text {
     font-size: pxToRem(40px);
-    line-height: pxToRem(40px);
+    line-height: 1;
     text-align: center;
     color: $green;
     font-weight: 700;
@@ -351,7 +350,6 @@ export default {
 .extra-informations {
     // font-size: smaller;
     text-align: center;
-    line-height: pxToRem(30px);
     padding-bottom: 40px;
 
     a {

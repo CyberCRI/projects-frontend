@@ -59,7 +59,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    line-height: 1.3;
     color: $black;
     box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
     max-width: pxToRem(740px);
@@ -89,7 +88,6 @@ export default {
     .text {
         margin-right: auto;
         font-size: $font-size-xs;
-        line-height: 14px;
         font-weight: bold;
     }
 

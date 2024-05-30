@@ -226,7 +226,7 @@ export default {
         text-align: center;
         font-weight: 700;
         font-size: $font-size-2xl;
-        line-height: 30px;
+        line-height: 1.2;
         color: $black;
         width: 100%;
     }

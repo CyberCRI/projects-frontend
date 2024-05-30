@@ -295,7 +295,6 @@ export default {
 
             .category-description {
                 font-size: $font-size-m;
-                line-height: 1.5;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 overflow: hidden;

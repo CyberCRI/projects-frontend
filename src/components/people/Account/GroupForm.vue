@@ -254,7 +254,7 @@ export default {
         font-weight: 700;
         font-size: $font-size-l;
         color: $black;
-        line-height: 24px;
+        line-height: 1.2;
     }
 
     .sub-title {
@@ -263,7 +263,6 @@ export default {
 
     .list-label {
         font-size: $font-size-s;
-        line-height: 16px;
 
         &--has-children {
             font-weight: 700;
@@ -274,7 +273,6 @@ export default {
     .label {
         font-weight: 500;
         font-size: $font-size-m;
-        line-height: 18px;
         padding-bottom: $space-m;
     }
 

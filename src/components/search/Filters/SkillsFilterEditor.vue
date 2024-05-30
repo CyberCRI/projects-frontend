@@ -169,7 +169,6 @@ export default {
 <style lang="scss" scoped>
 .skill-description {
     font-size: $font-size-s;
-    line-height: 16px;
     margin-top: $space-l;
 }
 

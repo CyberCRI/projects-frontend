@@ -602,8 +602,4 @@ $sdg-size: $font-size-4xl;
     color: $primary-dark;
     cursor: pointer;
 }
-
-.notice {
-    line-height: 1.6;
-}
 </style>

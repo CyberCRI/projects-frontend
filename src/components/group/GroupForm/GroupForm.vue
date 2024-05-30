@@ -444,7 +444,7 @@ export default {
             > .label {
                 font-weight: 700;
                 font-size: $font-size-m;
-                line-height: 18px;
+                line-height: 1.1;
                 color: $primary-dark;
                 margin: 0;
                 cursor: pointer;
@@ -464,7 +464,6 @@ export default {
             font-size: $font-size-m;
             color: $primary-dark;
             font-weight: 400;
-            line-height: 12px;
             display: grid;
             grid-template-columns: 1em auto;
             gap: $space-m;

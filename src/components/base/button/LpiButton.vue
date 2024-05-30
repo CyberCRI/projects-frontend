@@ -73,7 +73,7 @@ export default {
     border-radius: $border-radius-50;
     font-weight: 700;
     font-size: $font-size-m;
-    line-height: 18px;
+    line-height: 1.2;
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;

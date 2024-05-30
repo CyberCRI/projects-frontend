@@ -336,7 +336,6 @@ export default {
 
     .tos {
         font-size: pxToRem(12px);
-        line-height: pxToRem(18px);
         padding-top: pxToRem(12px);
     }
 
@@ -397,7 +396,7 @@ export default {
 
 .expired-text {
     font-size: pxToRem(40px);
-    line-height: pxToRem(40px);
+    line-height: 1;
     text-align: center;
     color: $green;
     font-weight: 700;
@@ -422,7 +421,6 @@ export default {
 .extra-informations {
     // font-size: smaller;
     text-align: center;
-    line-height: pxToRem(30px);
     padding-bottom: 40px;
 
     a {

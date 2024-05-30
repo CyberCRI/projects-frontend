@@ -369,7 +369,7 @@ export default {
         background: transparent;
         border: none;
         font-size: $font-size-s;
-        line-height: 16px;
+        line-height: 1.2;
         color: $black-1;
         cursor: pointer;
 

@@ -259,7 +259,6 @@ export default {
     height: 50px;
     flex: none;
     margin-right: $space-s;
-    line-height: $font-size-l;
 }
 
 .icon {

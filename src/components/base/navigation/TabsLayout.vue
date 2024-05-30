@@ -429,7 +429,7 @@ export default {
                     font-style: normal;
                     font-weight: 500;
                     font-size: 16px;
-                    line-height: 18px;
+                    line-height: 1.1;
                     display: flex;
                     align-items: center;
                     text-transform: uppercase;

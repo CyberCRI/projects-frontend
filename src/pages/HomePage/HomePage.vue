@@ -556,7 +556,7 @@ export default {
     text-align: center;
     font-weight: 700;
     font-size: $font-size-3xl;
-    line-height: 40px;
+    line-height: 1.2;
     color: $black;
     width: 100%;
     margin-bottom: pxToRem(60px);

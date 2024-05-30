@@ -35,13 +35,12 @@ export default {
         font-weight: 700;
         font-size: $font-size-5xl;
         text-align: center;
-        line-height: 50px;
+        line-height: 1.2;
     }
 
     .sub-main-title {
         font-weight: 400;
         font-size: $font-size-m;
-        line-height: 24px;
         margin-top: $space-xl;
 
         .link {

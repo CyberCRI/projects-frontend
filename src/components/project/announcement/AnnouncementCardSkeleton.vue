@@ -109,13 +109,11 @@ $annoucement-padding: pxToRem(20px);
             .announcement-title {
                 font-size: $font-size-l;
                 font-weight: 500;
-                line-height: 1.4;
                 -webkit-line-clamp: 3;
             }
 
             .description {
                 font-size: $font-size-m;
-                line-height: 1.4;
                 -webkit-line-clamp: 6;
             }
         }
@@ -180,7 +178,6 @@ $annoucement-padding: pxToRem(20px);
                 flex-flow: column nowrap;
                 justify-content: flex-start;
                 flex-grow: 1;
-                line-height: 1.4;
 
                 .project-label,
                 .spacer {

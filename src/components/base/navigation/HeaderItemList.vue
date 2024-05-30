@@ -75,14 +75,13 @@ export default {
     text-align: start;
     font-weight: 700;
     font-size: $font-size-m;
-    line-height: 18px;
+    line-height: 1.1;
 }
 
 .user-badge {
     margin-right: $space-s;
     font-weight: 700;
     font-size: $font-size-xs;
-    line-height: 15px;
 }
 
 .icon {

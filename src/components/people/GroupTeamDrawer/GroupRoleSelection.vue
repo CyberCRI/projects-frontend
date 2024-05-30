@@ -242,7 +242,7 @@ export default {
 .form-control {
     font-size: $font-size-m;
     color: $primary-dark;
-    line-height: 12px;
+    line-height: 1;
     display: grid;
     grid-template-columns: 1em auto;
     gap: $space-m;

@@ -33,7 +33,6 @@ export default {
 .tos-tooltip-content {
     max-width: 20rem;
     padding: 1rem;
-    line-height: 1.4;
 
     a {
         color: $white;

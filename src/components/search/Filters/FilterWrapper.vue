@@ -64,7 +64,7 @@ export default {
 .filter-wrapper .header {
     font-weight: 500;
     font-size: $font-size-s;
-    line-height: 16px;
+    line-height: 1.2;
     display: flex;
     align-items: center;
     margin-top: pxToRem(16px);

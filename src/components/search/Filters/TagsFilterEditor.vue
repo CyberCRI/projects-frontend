@@ -190,7 +190,6 @@ export default {
 <style lang="scss" scoped>
 .tag-description {
     font-size: $font-size-s;
-    line-height: 16px;
     margin-top: $space-l;
 }
 
