@@ -26,7 +26,7 @@ export default {
     justify-content: space-around;
     height: $card_height;
     width: $card_width;
-    border: $border-width-s solid $gray-4;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-m;
     text-align: center;
     background: $white;
@@ -35,7 +35,7 @@ export default {
 
 .empty-label {
     text-align: center;
-    color: $gray-8;
+    color: $mid-gray;
     font-weight: 700;
     font-size: $font-size-s;
 }

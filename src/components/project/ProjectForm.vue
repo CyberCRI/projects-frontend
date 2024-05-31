@@ -421,7 +421,7 @@ export default {
     }
 
     .spacer {
-        border-top: 1px solid $gray-10;
+        border-top: 1px solid $lighter-gray;
         margin-bottom: 34px;
     }
 }

@@ -221,7 +221,7 @@ export default {
 
 .empty-field {
     padding-top: $space-l;
-    color: $gray-8;
+    color: $mid-gray;
     font-weight: 700;
 }
 </style>

@@ -226,7 +226,7 @@ export default {
         justify-content: space-between;
         width: 100%;
         padding: $space-l $space-m;
-        border-top: $border-width-s solid $gray-10;
+        border-top: $border-width-s solid $lighter-gray;
     }
 
     .role-block {
@@ -253,7 +253,7 @@ export default {
 }
 
 .form-control--disabled {
-    color: $disabled;
+    color: $mid-gray;
     cursor: not-allowed;
 }
 </style>

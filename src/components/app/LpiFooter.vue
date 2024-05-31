@@ -240,7 +240,7 @@ footer {
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
-        background-color: $gray-9;
+        background-color: $almost-white;
         padding: 1rem 0;
         justify-content: center;
 

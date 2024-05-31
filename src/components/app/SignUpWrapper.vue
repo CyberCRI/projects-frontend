@@ -125,7 +125,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
     margin: $space-l auto;
     width: 50%;
     padding: 0;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
 }
 
 .projects-logo-ctn,

@@ -880,8 +880,8 @@ export default {
         position: relative;
         margin-left: -1px;
         margin-right: -1px;
-        border-left: 1px solid $gray-5;
-        border-right: 1px solid $gray-5;
+        border-left: 1px solid $almost-black;
+        border-right: 1px solid $almost-black;
         word-break: normal;
         pointer-events: none;
     }
@@ -924,12 +924,12 @@ export default {
     }
 
     .editor th {
-        background-color: $gray-1;
+        background-color: $dark-gray;
         color: $white;
     }
 
     .editor-frozen .ProseMirror {
-        background-color: $gray-6;
+        background-color: $almost-white;
     }
 }
 </style>

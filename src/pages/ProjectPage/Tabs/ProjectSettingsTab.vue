@@ -821,13 +821,13 @@ export default {
     }
 
     input[type='radio']:disabled {
-        border: $border-width-s solid $disabled;
-        color: $disabled;
+        border: $border-width-s solid $mid-gray;
+        color: $mid-gray;
         cursor: not-allowed;
     }
 
     .form-control--disabled {
-        color: $disabled;
+        color: $mid-gray;
         cursor: not-allowed;
     }
 }

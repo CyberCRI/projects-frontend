@@ -117,7 +117,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
-    border-top: $border-width-s solid $gray-4;
+    border-top: $border-width-s solid $lighter-gray;
     color: $primary-dark;
     font-weight: 700;
     padding-top: $space-l;

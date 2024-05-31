@@ -60,7 +60,7 @@ export default {
 
     .search-input {
         background: $white;
-        border: $border-width-s solid $gray-7;
+        border: $border-width-s solid $light-gray;
         border-radius: $border-radius-xs;
         color: $black;
         padding: $space-s;
@@ -74,7 +74,7 @@ export default {
         }
 
         &::placeholder {
-            color: $gray-7;
+            color: $light-gray;
         }
     }
 }

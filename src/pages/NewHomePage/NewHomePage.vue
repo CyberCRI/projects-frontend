@@ -166,7 +166,7 @@ export default {
     }
 
     .categories {
-        border: 1px solid $gray-10;
+        border: 1px solid $lighter-gray;
         border-radius: $border-radius-s;
         height: pxToRem(50px);
         display: flex;

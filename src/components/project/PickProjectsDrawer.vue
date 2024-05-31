@@ -213,7 +213,7 @@ export default {
 .project-placeholder {
     height: $card_height;
     width: $card_width;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-m;
 
     .content {
@@ -235,7 +235,7 @@ export default {
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
-        background-color: $gray-10;
+        background-color: $lighter-gray;
         box-shadow: 0 0 2px rgb(0 0 0 / 15%);
     }
 }

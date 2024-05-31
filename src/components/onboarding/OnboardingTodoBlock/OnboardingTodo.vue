@@ -64,7 +64,7 @@ export default {
 
     &.done {
         pointer-events: none;
-        background-color: $gray-9;
+        background-color: $almost-white;
         cursor: default;
     }
 }

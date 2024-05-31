@@ -60,7 +60,7 @@ export default {
         display: flex;
         align-items: center;
         will-change: transform;
-        background-color: $disabled;
+        background-color: $mid-gray;
 
         .s-control {
             transition: transform 0.3s ease-out;
@@ -103,7 +103,7 @@ export default {
         border-radius: 50%;
         width: 19px;
         height: 19px;
-        background: $gray-2;
+        background: $almost-white;
     }
 }
 </style>

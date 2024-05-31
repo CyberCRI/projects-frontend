@@ -184,7 +184,7 @@ input[type='radio'] {
     border-radius: 50%;
 
     &.disabled {
-        border-color: $gray-10;
+        border-color: $lighter-gray;
     }
 }
 

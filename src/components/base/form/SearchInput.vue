@@ -120,7 +120,7 @@ export default {
         box-sizing: border-box;
 
         &::placeholder {
-            color: $gray-7;
+            color: $light-gray;
         }
 
         &:focus-visible {

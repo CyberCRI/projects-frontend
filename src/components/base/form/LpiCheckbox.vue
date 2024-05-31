@@ -93,13 +93,13 @@ input[type='checkbox']:checked::before {
 // }
 
 input[type='checkbox']:disabled {
-    border: $border-width-s solid $disabled;
-    color: $disabled;
+    border: $border-width-s solid $mid-gray;
+    color: $mid-gray;
     cursor: not-allowed;
 }
 
 .form-control--disabled {
-    color: $disabled;
+    color: $mid-gray;
     cursor: not-allowed;
 }
 </style>

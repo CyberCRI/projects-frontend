@@ -197,7 +197,7 @@ iframe {
 }
 
 footer {
-    border-top: $border-width-m solid $gray-10;
+    border-top: $border-width-m solid $lighter-gray;
     display: flex;
     justify-content: center;
     gap: 1rem;

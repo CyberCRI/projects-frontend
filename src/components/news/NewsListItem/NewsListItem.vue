@@ -120,7 +120,7 @@ export default {
     gap: $space-l;
     overflow: hidden;
     padding: $space-l;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-s;
     flex-direction: column;
 
