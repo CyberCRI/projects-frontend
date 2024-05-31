@@ -124,7 +124,7 @@ export default {
         }
 
         &:focus-visible {
-            outline-color: $green-dark;
+            outline-color: $primary;
         }
     }
 

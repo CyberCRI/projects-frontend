@@ -62,7 +62,7 @@ export default {
     padding-inline: $space-m;
     align-items: center;
     width: 100%;
-    background-color: $transparent;
+    background-color: transparent;
 
     @media (min-width: $min-tablet) {
         margin-top: $space-l;

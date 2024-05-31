@@ -1009,7 +1009,7 @@ export default {
                     }
 
                     .quantity {
-                        background: $green-dark;
+                        background: $primary;
                         color: $white;
                         height: 100%;
                         border-right: $border-width-s solid $green;

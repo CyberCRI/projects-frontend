@@ -209,45 +209,15 @@ export default {
         height: 60px;
         border-radius: 35px;
         font-size: $font-size-3xl;
-        line-height: $line-height-squashed;
+        line-height: 1;
     }
 
     @media screen and (min-width: $min-tablet) {
         &.big-input input {
             height: 90px;
             font-size: $font-size-5xl;
-            line-height: $line-height-squashed;
+            line-height: 1;
             border-radius: $border-radius-s;
-        }
-    }
-}
-
-// old style, add 'primary' class to use it
-// TODO check if still needed
-.input-ctn.primary {
-    input,
-    textarea {
-        border-radius: $border-radius-l;
-        background: $green-lighter;
-        border: $border-width-m solid $primary-dark;
-        color: $black;
-    }
-
-    ::placeholder {
-        color: $half-primary-dark;
-    }
-
-    label {
-        color: $primary-dark;
-    }
-
-    small {
-        color: $primary-dark;
-    }
-
-    @media screen and (min-width: $min-tablet) {
-        &.big-input input {
-            border-radius: $border-radius-xl;
         }
     }
 }

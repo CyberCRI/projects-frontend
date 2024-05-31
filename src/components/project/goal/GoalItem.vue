@@ -174,7 +174,7 @@ export default {
 
                 &.cancel {
                     background: $gray-10;
-                    color: $gray-11;
+                    color: $gray-8;
                 }
             }
 

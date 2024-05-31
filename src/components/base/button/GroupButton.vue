@@ -214,7 +214,7 @@ export default {
     color: $white;
 
     &.cancel {
-        color: $gray-11;
+        color: $gray-8;
     }
 }
 

@@ -160,7 +160,7 @@ export default {
 
     .last-publication-flag {
         border-top: $border-width-s solid $green;
-        background: $green-light;
+        background: $primary-light;
         color: $primary-dark;
         text-transform: uppercase;
         display: flex;

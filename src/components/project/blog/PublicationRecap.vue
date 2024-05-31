@@ -174,7 +174,7 @@ export default {
     }
 
     .last-publication-flag {
-        background: $green-light;
+        background: $primary-light;
         color: $primary-dark;
         text-transform: uppercase;
         display: flex;

@@ -119,7 +119,7 @@ export default {
         }
 
         .deadline {
-            background: $green-dark;
+            background: $primary;
         }
 
         .type {
