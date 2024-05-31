@@ -61,7 +61,7 @@ export default {
         }
 
         &:hover {
-            background-color: $green-light;
+            background-color: $primary-light;
 
             .drop-down-menu-item-content {
                 .label {

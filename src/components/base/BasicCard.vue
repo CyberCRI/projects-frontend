@@ -102,7 +102,7 @@ export default {
     font-weight: 700;
     font-size: $font-size-xs;
     text-transform: uppercase;
-    color: $green-dark;
+    color: $primary;
     margin-top: $space-s;
 }
 

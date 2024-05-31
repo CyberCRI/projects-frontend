@@ -1009,7 +1009,7 @@ export default {
                     }
 
                     .quantity {
-                        background: $green-dark;
+                        background: $primary;
                         color: $white;
                         height: 100%;
                         border-right: $border-width-s solid $green;
@@ -1406,8 +1406,8 @@ export default {
     padding-left: 40px;
     padding-bottom: 30px;
     display: flex;
-    border-bottom-left-radius: $border-radius-20;
-    border-bottom-right-radius: $border-radius-20;
+    border-bottom-left-radius: $border-radius-l;
+    border-bottom-right-radius: $border-radius-l;
 
     .vertical-line {
         border-left: 6px solid $primary-dark;

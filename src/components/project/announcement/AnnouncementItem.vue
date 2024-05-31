@@ -119,7 +119,7 @@ export default {
         }
 
         .deadline {
-            background: $green-dark;
+            background: $primary;
         }
 
         .type {
@@ -144,7 +144,7 @@ export default {
         right: 20px;
         display: flex;
         align-items: center;
-        z-index: $zindex-1;
+        z-index: 1;
 
         > button:nth-child(2) {
             margin-left: $space-m;

@@ -101,8 +101,8 @@ export default {
         }
 
         &:not(.current, .ellipsis):hover {
-            color: $green-dark;
-            fill: $green-dark;
+            color: $primary;
+            fill: $primary;
         }
 
         &:not(.current, .ellipsis):active {

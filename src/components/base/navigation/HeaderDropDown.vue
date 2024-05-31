@@ -315,12 +315,12 @@ export default {
             &:hover {
                 .drop-down-menu-item-content {
                     .label {
-                        color: $green-light;
+                        color: $primary-light;
                         transform: scaleX(1.1);
                     }
 
                     svg {
-                        fill: $green-light;
+                        fill: $primary-light;
                         transform: scale(1.35);
                     }
                 }

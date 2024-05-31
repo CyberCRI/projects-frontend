@@ -183,7 +183,7 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         gap: $space-m;
-        border-radius: $border-radius-20;
+        border-radius: $border-radius-l;
     }
 }
 </style>

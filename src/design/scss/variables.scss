@@ -1,25 +1,18 @@
 // LAYOUT
-
-$body-max-width: 1400px;
 $navbar-height: 50px;
 
 // COLORS
-
 $primary: #00b288;
 $primary-lighter: #ebfffa;
 $primary-light: #c2fff0;
 $primary-dark: #1d727c;
-$half-primary-dark: rgb(29 114 124 / 50%);
-$primary-dark-2: #4b929d;
 $aquamarine: #99ffe7;
 $white: #fff;
-$liner-white: linear-gradient(rgb(255 255 255 / 0%) 0%, #fff 100%);
 $black: #000;
 $black-1: #101010;
 $dark: #001a13;
 $disabled: #959495;
 $text-body: #313131;
-$gray-deactivated: #808080;
 $gray-1: #4a4a4a;
 $gray-2: #ebebeb;
 $gray-3: #363636;
@@ -30,32 +23,19 @@ $gray-7: #b7b7b7;
 $gray-8: #999;
 $gray-9: #f1f1f1;
 $gray-10: #d4d4d4;
-$gray-11: #999;
 $modal-background: rgb(6 6 6 / 85%);
 $green: #00dba7;
 $green-lighter: #f0fffb;
-$green-light: #c2fff0;
-$green-dark: #00b288;
-$input-placeholder: rgb(29 114 124 / 50%);
 $blue: #6cd5ff;
 $blue-lighter: #e5f8ff;
-$blue-light: #d6f3ff;
 $dark-blue: #00b7ff;
-$blue-link: #0052cc;
 $salmon: #ff9473;
-$salmon-lighter: #ffece5;
 $salmon-light: #ffc5b3;
 $salmon-dark: #ff3c00;
 $violet: #d6a2ff;
 $violet-dark: #ae47ff;
-$violet-darker: #8f00ff;
 $yellow: #fc0;
-$yellow-light: #ffe375;
 $yellow-lighter: #fff5cc;
-$transparent: transparent;
-$white-transparent: rgb(255 255 255 / 75%);
-$black-transparent: rgb(0 0 0 / 75%);
-$black-1: #101010;
 $skeleton-0: hsl(200deg 20% 80%);
 $skeleton-100: hsl(200deg 20% 95%);
 
@@ -67,7 +47,6 @@ $space-2xs: calc(0.25 * $space-unit); // 4px
 $space-xs: calc(0.375 * $space-unit); // 6px
 $space-s: calc(0.5 * $space-unit); // 8px
 $space-m: calc(0.75 * $space-unit); // 12px
-$space-20: calc(1.25 * $space-unit); // 20px
 $space-l: calc(1.5 * $space-unit); // 24px
 $space-xl: calc(2.125 * $space-unit); // 34px
 $space-42: calc(2.625 * $space-unit); // 42px
@@ -86,9 +65,7 @@ $font-size-2xl: 1.5rem; // 24px
 $font-size-3xl: 2.125rem; // 34px
 $font-size-4xl: 2.1875rem; // 35px
 $font-size-5xl: 2.625rem; // 42px
-$font-size-6xl: 2.8125rem; // 45px
 $font-size-7xl: 3.75rem; // 60px
-$font-size-8xl: 5.3125em; // 85px
 
 // LINE-HEIGHT
 
@@ -101,16 +78,13 @@ $line-height-squashed: 1;
 
 $border-radius-xs: 4px;
 $border-radius-s: 6px;
-$border-radius-m: 12px;
-$border-radius-l: 21px;
-$border-radius-xl: 75px;
 $border-radius-8: 8px;
+$border-radius-m: 12px;
 $border-radius-17: 17px;
-$border-radius-20: 20px;
+$border-radius-l: 21px;
 $border-radius-24: 24px;
 $border-radius-30: 30px;
 $border-radius-50: 50px;
-$scrollbar-radius: 9px;
 
 // BORDER-WIDTH
 
@@ -136,13 +110,8 @@ $max-mobile: 414px;
 $min-mobile: 320px;
 
 // Z-INDEX
-$zindex-1: 1;
-$zindex-dropdown: 1000;
-$zindex-sticky: 1020;
 $zindex-fixed: 1030;
 $zindex-modal: 1050;
-$zindex-popover: 1060;
-$zindex-tooltip: 1070;
 $zindex-navbar: 1080;
 $zindex-drawer: 1080;
 $zindex-toast: 1090;

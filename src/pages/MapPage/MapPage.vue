@@ -156,7 +156,7 @@ export default {
 
     .empty-map {
         display: inline-block;
-        background-color: $green-light;
+        background-color: $primary-light;
         border-radius: $border-radius-l;
         padding: $space-l;
         font-size: $font-size-xl;
