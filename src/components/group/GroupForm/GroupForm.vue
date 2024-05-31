@@ -503,19 +503,19 @@ export default {
         }
 
         input[type='radio']:disabled {
-            border: $border-width-s solid $disabled;
-            color: $disabled;
+            border: $border-width-s solid $mid-gray;
+            color: $mid-gray;
             cursor: not-allowed;
         }
 
         .form-control--disabled {
-            color: $disabled;
+            color: $mid-gray;
             cursor: not-allowed;
         }
     }
 
     .delete-group {
-        border-top: $border-width-s solid $gray-10;
+        border-top: $border-width-s solid $lighter-gray;
         padding: 24px 0;
     }
 
@@ -576,7 +576,7 @@ export default {
     }
 
     .spacer {
-        border-top: 1px solid $gray-10;
+        border-top: 1px solid $lighter-gray;
         margin-bottom: 34px;
     }
 }

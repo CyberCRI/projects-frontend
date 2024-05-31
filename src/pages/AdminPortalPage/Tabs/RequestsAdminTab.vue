@@ -319,7 +319,7 @@ export default {
         border: none;
         font-size: $font-size-s;
         line-height: $line-height-tight;
-        color: $black-1;
+        color: $almost-black;
     }
 }
 
@@ -340,7 +340,7 @@ table {
         text-align: start;
 
         label {
-            color: $black-1 !important;
+            color: $almost-black !important;
             font-weight: 700 !important;
             font-size: $font-size-s !important;
             display: flex;
@@ -459,10 +459,10 @@ table {
 }
 
 .action-status {
-    color: $gray-8;
+    color: $mid-gray;
 
     svg {
-        background-color: $gray-8;
+        background-color: $mid-gray;
     }
 }
 

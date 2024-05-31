@@ -237,7 +237,7 @@ export default {
     }
 
     .no-account {
-        background-color: $gray-6;
+        background-color: $almost-white;
         padding: $space-m;
         display: flex;
         align-items: center;

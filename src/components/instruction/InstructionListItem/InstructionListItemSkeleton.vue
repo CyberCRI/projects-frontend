@@ -34,7 +34,7 @@ export default {
     height: var(--instruction-dimension);
     overflow: hidden;
     padding: 1rem;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: 1rem;
 }
 

@@ -71,7 +71,7 @@ $dimension: 120px;
 
 .home-project-item {
     display: grid;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-s;
     padding: $space-l;
     min-height: $dimension;
@@ -107,7 +107,7 @@ $dimension: 120px;
             height: inherit;
             width: inherit;
             border-radius: $border-radius-s;
-            border: 1px solid $gray-10;
+            border: 1px solid $lighter-gray;
         }
     }
 }

@@ -122,11 +122,11 @@ export default {
     }
 
     .disabled {
-        color: $gray-6;
+        color: $almost-white;
 
         svg {
             width: 18px;
-            fill: $gray-6;
+            fill: $almost-white;
         }
     }
 }

@@ -120,10 +120,10 @@ export default {
 
     &.grey,
     &.disabled {
-        background-color: $gray-9;
+        background-color: $almost-white;
 
         .label {
-            color: $gray-8;
+            color: $mid-gray;
         }
     }
 

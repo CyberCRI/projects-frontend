@@ -156,7 +156,7 @@ export default {
 .card-type {
     font-weight: 700;
     font-size: 16px;
-    color: $black-1;
+    color: $almost-black;
 }
 
 .subgroups-link {

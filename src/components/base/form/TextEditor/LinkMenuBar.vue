@@ -74,7 +74,7 @@ export default {
 .link-menu-bar {
     position: relative;
     align-items: center;
-    background: $gray-1;
+    background: $dark-gray;
     color: $white;
     display: flex;
     padding: pxToRem(5px) pxToRem(20px);
@@ -89,7 +89,7 @@ export default {
         height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 10px solid $gray-1;
+        border-top: 10px solid $dark-gray;
         position: absolute;
         top: 100%;
         left: 50%;

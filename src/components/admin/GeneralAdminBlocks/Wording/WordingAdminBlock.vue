@@ -90,7 +90,7 @@ export default {
         left: 0;
         width: 6rem;
         height: 1px;
-        border-bottom: $border-width-s solid $gray-10;
+        border-bottom: $border-width-s solid $lighter-gray;
     }
 
     .sub-title,

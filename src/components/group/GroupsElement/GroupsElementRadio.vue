@@ -184,7 +184,7 @@ input[type='radio'] {
     border-radius: 50%;
 
     &.disabled {
-        border-color: $gray-10;
+        border-color: $lighter-gray;
     }
 }
 
@@ -235,7 +235,7 @@ input[type='radio']:checked {
 }
 
 .black-text {
-    color: $dark;
+    color: $almost-black;
     font-weight: 400;
 }
 </style>

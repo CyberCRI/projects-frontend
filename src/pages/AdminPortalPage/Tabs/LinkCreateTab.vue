@@ -275,7 +275,7 @@ export default {
         padding: $space-2xl 0;
 
         & + .form-section {
-            border-top: $border-width-s solid $gray-7;
+            border-top: $border-width-s solid $light-gray;
         }
 
         .section-header {

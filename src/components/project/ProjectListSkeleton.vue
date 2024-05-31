@@ -43,7 +43,7 @@ export default {
     .card {
         height: pxToRem(256px);
         width: pxToRem(185px);
-        border: $border-width-s solid $gray-9;
+        border: $border-width-s solid $almost-white;
         border-radius: $border-radius-m;
         overflow: hidden;
     }
@@ -58,14 +58,14 @@ export default {
     .image-placeholder {
         width: pxToRem(72px);
         height: pxToRem(72px);
-        background: $gray-10;
+        background: $lighter-gray;
         margin-bottom: $space-l;
         border-radius: $border-radius-xs;
         animation: skeleton-loading 1s linear infinite alternate;
     }
 
     .text-placeholder {
-        background: $gray-10;
+        background: $lighter-gray;
         border-radius: $border-radius-xs;
         width: 100%;
         height: pxToRem(16px);

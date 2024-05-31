@@ -160,7 +160,7 @@ export default {
     flex-direction: column;
     background: $white;
     overflow: hidden;
-    color: $dark;
+    color: $almost-black;
     border-radius: $border-radius-s;
     max-width: clamp(320px, 90%, 760px);
     margin: $space-s;

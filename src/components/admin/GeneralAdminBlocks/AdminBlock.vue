@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 .admin-block {
     padding: $space-unit 0;
-    border-bottom: $border-width-s solid $gray-10;
+    border-bottom: $border-width-s solid $lighter-gray;
 }
 
 .admin-block-header,

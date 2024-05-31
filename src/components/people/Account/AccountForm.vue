@@ -686,7 +686,7 @@ export default {
         .confirm-ctn {
             gap: 12px;
             display: inline-flex;
-            border-top: $border-width-s solid $gray-10;
+            border-top: $border-width-s solid $lighter-gray;
             width: 100%;
             padding: 12px 0;
             justify-content: center;
@@ -695,7 +695,7 @@ export default {
 
     .spacer {
         margin-top: $space-xl;
-        border-bottom: $border-width-s solid $gray-10;
+        border-bottom: $border-width-s solid $lighter-gray;
     }
 }
 
@@ -704,7 +704,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
-    border-top: $border-width-s solid $gray-4;
+    border-top: $border-width-s solid $lighter-gray;
     color: $primary-dark;
     font-weight: 700;
     padding-top: $space-l;

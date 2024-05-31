@@ -183,7 +183,7 @@ $slide-duration: 400ms;
     inset: 0;
     height: 100vh;
     width: 100vw;
-    background-color: $gray-1;
+    background-color: $dark-gray;
     opacity: 0.3;
 
     &.background-appear-enter-active {
@@ -287,7 +287,7 @@ $slide-duration: 400ms;
         width: 100%;
         display: flex;
         justify-content: center;
-        border-top: $border-width-s solid $gray-4;
+        border-top: $border-width-s solid $lighter-gray;
         color: $primary-dark;
         font-weight: 700;
         padding-top: $space-l;

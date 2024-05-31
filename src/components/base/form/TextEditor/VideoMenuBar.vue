@@ -103,7 +103,7 @@ export default {
 .video-menu-bar {
     position: relative;
     align-items: center;
-    background: $gray-1;
+    background: $dark-gray;
     color: $white;
     display: flex;
     padding: pxToRem(5px) pxToRem(20px);
@@ -118,7 +118,7 @@ export default {
         height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 10px solid $gray-1;
+        border-top: 10px solid $dark-gray;
         position: absolute;
         top: 100%;
         left: 50%;
@@ -127,12 +127,12 @@ export default {
 
     .labelled-menu-item {
         color: $white;
-        background-color: $gray-5;
+        background-color: $almost-black;
         white-space: nowrap;
 
         &.is-active {
             background-color: $white;
-            color: $gray-5;
+            color: $almost-black;
         }
     }
 

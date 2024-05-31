@@ -423,11 +423,11 @@ export default {
             justify-content: space-between;
             gap: $space-unit;
             align-items: center;
-            border-top: $border-width-s solid $gray-10;
+            border-top: $border-width-s solid $lighter-gray;
             padding: $space-l 0;
 
             &:last-child {
-                border-bottom: $border-width-s solid $gray-10;
+                border-bottom: $border-width-s solid $lighter-gray;
             }
 
             .skill-name {

@@ -128,7 +128,7 @@ export default {
     position: relative;
     background: $white;
     border-radius: $border-radius-s;
-    border: $border-width-s solid $gray-7;
+    border: $border-width-s solid $light-gray;
 
     &.active {
         border-bottom-left-radius: 0;
@@ -144,7 +144,7 @@ export default {
 
     .option-list {
         background-color: $white;
-        border: $border-width-s solid $gray-7;
+        border: $border-width-s solid $light-gray;
         border-radius: $border-radius-s;
     }
 
@@ -163,7 +163,7 @@ export default {
         color: $black;
 
         &.placeholder {
-            color: $gray-8;
+            color: $mid-gray;
             font-weight: 400;
 
             &--open {
@@ -191,7 +191,7 @@ export default {
         color: $black;
 
         &:hover {
-            background: $gray-2;
+            background: $almost-white;
         }
     }
 

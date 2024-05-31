@@ -173,8 +173,8 @@ export default {
                 }
 
                 &.cancel {
-                    background: $gray-10;
-                    color: $gray-8;
+                    background: $lighter-gray;
+                    color: $mid-gray;
                 }
             }
 

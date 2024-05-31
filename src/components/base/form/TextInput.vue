@@ -162,7 +162,7 @@ export default {
         width: 100%;
         border-radius: $border-radius-s;
         background: $white;
-        border: $border-width-s solid $gray-7;
+        border: $border-width-s solid $light-gray;
         color: $black;
     }
 
@@ -171,7 +171,7 @@ export default {
     }
 
     ::placeholder {
-        color: $gray-8;
+        color: $mid-gray;
     }
 
     label {
@@ -193,15 +193,15 @@ export default {
 
     &.disabled {
         input {
-            color: $gray-7;
+            color: $light-gray;
         }
 
         label {
-            color: $gray-7;
+            color: $light-gray;
         }
 
         small {
-            color: $gray-7;
+            color: $light-gray;
         }
     }
 

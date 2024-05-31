@@ -55,7 +55,7 @@ export default {
 .fake-news {
     display: flex;
     flex-direction: column;
-    border: $border-width-s solid $gray-9;
+    border: $border-width-s solid $almost-white;
     border-radius: $border-radius-m;
     overflow: hidden;
     margin-bottom: $space-xl;

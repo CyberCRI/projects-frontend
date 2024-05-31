@@ -55,14 +55,14 @@ export default {
     .image-placeholder {
         width: pxToRem(120px);
         height: pxToRem(120px);
-        background: $gray-10;
+        background: $lighter-gray;
         margin-bottom: $space-m;
         border-radius: 50%;
         animation: skeleton-loading 1s linear infinite alternate;
     }
 
     .text-placeholder {
-        background: $gray-10;
+        background: $lighter-gray;
         border-radius: $border-radius-xs;
         width: 100%;
         height: pxToRem(8px);

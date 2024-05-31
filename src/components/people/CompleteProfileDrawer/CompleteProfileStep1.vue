@@ -529,12 +529,12 @@ export default {
     @media (min-width: $med-tablet) {
         .column:first-child {
             padding-right: pxToRem(62px);
-            border-right: $border-width-s solid $gray-10;
+            border-right: $border-width-s solid $lighter-gray;
         }
 
         .column + .column {
             padding-left: pxToRem(62px);
-            border-left: $border-width-s solid $gray-10;
+            border-left: $border-width-s solid $lighter-gray;
         }
     }
 
@@ -584,18 +584,18 @@ textarea {
     margin-bottom: pxToRem(21px);
     font-size: 1rem;
     padding: 11px;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     box-sizing: border-box;
     border-radius: 0;
 
     &::placeholder {
-        color: $gray-10;
+        color: $lighter-gray;
         opacity: 1;
     }
 
     &[disabled] {
-        color: $gray-8;
-        background-color: $gray-9;
+        color: $mid-gray;
+        background-color: $almost-white;
         cursor: not-allowed;
     }
 }
@@ -742,9 +742,9 @@ textarea {
     white-space: nowrap;
 
     &.grey {
-        color: $gray-8;
-        border-color: $gray-10;
-        background-color: $gray-9;
+        color: $mid-gray;
+        border-color: $lighter-gray;
+        background-color: $almost-white;
     }
 }
 

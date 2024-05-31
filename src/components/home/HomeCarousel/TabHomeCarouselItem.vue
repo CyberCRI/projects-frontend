@@ -52,7 +52,7 @@ export default {
             max-width: unset;
             border-top-right-radius: 21px;
             border-top-left-radius: 21px;
-            box-shadow: 7px 9px 15px $gray-7;
+            box-shadow: 7px 9px 15px $light-gray;
         }
 
         picture {

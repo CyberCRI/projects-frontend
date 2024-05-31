@@ -111,7 +111,7 @@ export default {
     margin-bottom: $space-l;
     margin-top: $space-xl;
     text-transform: uppercase;
-    color: $black-1;
+    color: $almost-black;
     text-align: center;
 }
 
@@ -120,7 +120,7 @@ export default {
     flex-flow: column nowrap;
     gap: $space-l;
     padding: $space-m;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-m;
 }
 </style>

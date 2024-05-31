@@ -317,15 +317,15 @@
         width: fit-content;
 
         th {
-            background-color: $gray-2;
+            background-color: $almost-white;
             padding: $space-s $space-m;
-            color: $gray-3;
+            color: $dark-gray;
             font-weight: bold;
         }
 
         td,
         th {
-            border: 1px solid $gray-4 !important;
+            border: 1px solid $lighter-gray !important;
             min-width: 1em;
             padding: 3px 5px;
             vertical-align: top;
@@ -334,7 +334,7 @@
         }
 
         td {
-            border: 1px solid $gray-4;
+            border: 1px solid $lighter-gray;
             padding: $space-m calc(2 * $space-s);
         }
 
@@ -379,7 +379,7 @@
         overflow-wrap: break-word;
 
         &:hover {
-            color: $gray-3;
+            color: $dark-gray;
         }
     }
 
@@ -430,7 +430,7 @@
         font-style: italic;
         border-left: 4px solid $primary-dark;
         padding-left: 20px;
-        color: $gray-1;
+        color: $dark-gray;
     }
 
     img {

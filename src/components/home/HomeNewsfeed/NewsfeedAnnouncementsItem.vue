@@ -97,7 +97,7 @@ $dimension: 200px;
 
 .home-announcement-item {
     display: grid;
-    border: $border-width-s solid $gray-10;
+    border: $border-width-s solid $lighter-gray;
     border-radius: $border-radius-s;
     padding: $space-l;
     align-items: center;
@@ -149,7 +149,7 @@ $dimension: 200px;
             height: inherit;
             width: inherit;
             border-radius: $border-radius-s;
-            border: 1px solid $gray-10;
+            border: 1px solid $lighter-gray;
         }
     }
 }

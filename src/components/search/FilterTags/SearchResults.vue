@@ -66,7 +66,7 @@ export default {
         font-size: $font-size-l;
         padding-top: $space-2xl;
         font-style: italic;
-        color: $gray-8;
+        color: $mid-gray;
     }
 
     .search-results-ctn {

@@ -298,7 +298,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: $border-width-s solid $gray-10;
+    border-bottom: $border-width-s solid $lighter-gray;
 
     .wording {
         flex-grow: 1;

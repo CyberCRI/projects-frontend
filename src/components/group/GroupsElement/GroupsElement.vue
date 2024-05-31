@@ -103,7 +103,7 @@ export default {
 .top-list {
     display: flex;
     justify-content: space-between;
-    border-bottom: solid $gray-10 1px;
+    border-bottom: solid $lighter-gray 1px;
 }
 
 .sub-list {
@@ -154,7 +154,7 @@ li {
 }
 
 .grey-color {
-    fill: $gray-10;
+    fill: $lighter-gray;
 }
 
 .green-text {
@@ -162,7 +162,7 @@ li {
 }
 
 .black-text {
-    color: $dark;
+    color: $almost-black;
     font-weight: 400;
 }
 </style>

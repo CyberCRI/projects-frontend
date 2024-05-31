@@ -370,7 +370,7 @@ export default {
         border: none;
         font-size: $font-size-s;
         line-height: $line-height-tight;
-        color: $black-1;
+        color: $almost-black;
         cursor: pointer;
 
         &.unsotable {
@@ -381,7 +381,7 @@ export default {
         .icon {
             width: 20px;
             height: 20px;
-            fill: $black-1;
+            fill: $almost-black;
         }
     }
 }
