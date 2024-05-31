@@ -558,7 +558,7 @@ export default {
     h6 {
         font-weight: bold;
         letter-spacing: 1px;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-transform: uppercase;
     }
 
@@ -589,7 +589,6 @@ export default {
     p {
         font-size: 16px;
         letter-spacing: 0.2px;
-        line-height: 1.5;
     }
 
     .has-text-right {
@@ -768,14 +767,14 @@ export default {
 
     .intro-item .item-num {
         font-size: 72px;
-        line-height: 1;
+        line-height: $line-height-squashed;
         margin-bottom: 30px;
     }
 
     .intro-item .item-title {
         font-size: 24px;
         letter-spacing: 1px;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-transform: uppercase;
     }
 
@@ -1030,7 +1029,7 @@ export default {
         font-size: 18px;
         font-weight: 600;
         letter-spacing: normal;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-transform: none;
     }
 
@@ -1038,7 +1037,7 @@ export default {
         font-size: 13px;
         font-weight: 500;
         letter-spacing: normal;
-        line-height: 1.1;
+        line-height: $line-height-compact;
         margin-top: 10px;
     }
 

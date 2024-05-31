@@ -111,7 +111,7 @@ export default {
     text-align: center;
     font-weight: 700;
     font-size: $font-size-3xl;
-    line-height: 1.25;
+    line-height: $line-height-tight;
     margin-bottom: pxToRem(56px);
 }
 

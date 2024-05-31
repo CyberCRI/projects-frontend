@@ -80,6 +80,6 @@ export default {
     font-weight: 700;
     color: $primary-dark;
     -webkit-line-clamp: 1;
-    line-height: 1.2;
+    line-height: $line-height-tight;
 }
 </style>

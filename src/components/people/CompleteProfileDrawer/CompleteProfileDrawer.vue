@@ -181,7 +181,7 @@ iframe {
 
 .title {
     font-size: $font-size-5xl;
-    line-height: 1;
+    line-height: $line-height-squashed;
     margin-bottom: pxToRem(22px);
 }
 

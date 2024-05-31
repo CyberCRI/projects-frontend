@@ -319,13 +319,13 @@ export default {
     font-size: pxToRem(40px);
     font-weight: 900;
     color: $primary-dark;
-    line-height: 1.2;
+    line-height: $line-height-tight;
     margin-bottom: pxToRem(15px);
 }
 
 .expired-text {
     font-size: pxToRem(40px);
-    line-height: 1;
+    line-height: $line-height-squashed;
     text-align: center;
     color: $green;
     font-weight: 700;

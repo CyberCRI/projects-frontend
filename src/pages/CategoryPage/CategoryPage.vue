@@ -288,7 +288,7 @@ export default {
             .category-name {
                 font-weight: 700;
                 font-size: $font-size-5xl;
-                line-height: 1.2;
+                line-height: $line-height-tight;
                 text-align: center;
                 margin-bottom: $space-m;
             }

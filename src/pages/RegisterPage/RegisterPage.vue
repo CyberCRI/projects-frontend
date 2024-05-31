@@ -396,7 +396,7 @@ export default {
 
 .expired-text {
     font-size: pxToRem(40px);
-    line-height: 1;
+    line-height: $line-height-squashed;
     text-align: center;
     color: $green;
     font-weight: 700;

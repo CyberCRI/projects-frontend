@@ -185,7 +185,7 @@ export default {
             .category-card--name {
                 padding: $space-xs;
                 font-size: $font-size-s;
-                line-height: 1;
+                line-height: $line-height-squashed;
             }
         }
     }

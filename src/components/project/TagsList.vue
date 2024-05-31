@@ -407,14 +407,14 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
     position: relative;
-    height: 22px;
+    height: 1.5rem; // must be taller thatn tag-elt, see BadgeItem.vue, or will break layoutTagsBis()
 
     .tag-ctn {
         margin: 0;
         display: flex;
         flex-wrap: nowrap;
         gap: $space-xs;
-        height: 22px;
+        height: 1.5rem; // must be taller thatn tag-elt, see BadgeItem.vue, or will break layoutTagsBis()
     }
 }
 

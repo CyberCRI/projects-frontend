@@ -111,12 +111,11 @@ export default {
     font-weight: 700;
     font-size: $font-size-m;
     color: $primary-dark;
-    line-height: 1.2;
+    line-height: $line-height-tight;
 }
 
 .is-featured {
     font-size: $font-size-s;
     color: $primary-dark;
-    padding-top: $space-xs;
 }
 </style>

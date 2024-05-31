@@ -197,7 +197,7 @@ export default {
         &__title {
             font-weight: 700;
             font-size: clamp(2rem, 3vw, 3rem);
-            line-height: 1.2;
+            line-height: $line-height-tight;
             color: $black;
         }
 

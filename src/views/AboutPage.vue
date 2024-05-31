@@ -334,7 +334,7 @@ export default {
     h6 {
         font-weight: bold;
         letter-spacing: 1px;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-transform: uppercase;
     }
 
@@ -365,7 +365,6 @@ export default {
     p {
         font-size: 16px;
         letter-spacing: 0.2px;
-        line-height: 1.5;
     }
 
     .bg-light {

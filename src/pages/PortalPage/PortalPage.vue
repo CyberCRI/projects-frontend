@@ -112,7 +112,7 @@ export default {
                     font-size: $font-size-2xl;
                     font-style: normal;
                     font-weight: 700;
-                    line-height: 1.2;
+                    line-height: $line-height-tight;
                 }
 
                 .org-description {

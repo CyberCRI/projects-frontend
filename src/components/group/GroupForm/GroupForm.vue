@@ -444,7 +444,7 @@ export default {
             > .label {
                 font-weight: 700;
                 font-size: $font-size-m;
-                line-height: 1.1;
+                line-height: $line-height-compact;
                 color: $primary-dark;
                 margin: 0;
                 cursor: pointer;

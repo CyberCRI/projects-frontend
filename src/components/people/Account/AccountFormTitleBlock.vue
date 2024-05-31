@@ -35,7 +35,7 @@ export default {
         font-weight: 700;
         font-size: $font-size-5xl;
         text-align: center;
-        line-height: 1.2;
+        line-height: $line-height-tight;
     }
 
     .sub-main-title {

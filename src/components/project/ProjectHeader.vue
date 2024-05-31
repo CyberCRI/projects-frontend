@@ -804,7 +804,7 @@ export default {
         .full-title {
             font-weight: 700;
             font-size: $font-size-xl;
-            line-height: 1.2;
+            line-height: $line-height-tight;
         }
     }
 
@@ -816,14 +816,14 @@ export default {
     .breadcrumb {
         font-weight: 700;
         font-size: 14px;
-        line-height: 1.1;
+        line-height: $line-height-compact;
         color: $primary-dark;
     }
 
     .visibility {
         font-weight: 700;
         font-size: 14px;
-        line-height: 1.1;
+        line-height: $line-height-compact;
         color: $primary-dark;
     }
 
@@ -1044,7 +1044,7 @@ export default {
             .title {
                 font-weight: 700;
                 font-size: $font-size-5xl;
-                line-height: 1.2;
+                line-height: $line-height-tight;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;

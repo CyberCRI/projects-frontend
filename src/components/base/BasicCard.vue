@@ -93,7 +93,7 @@ export default {
     margin-top: $space-s;
     font-weight: 700;
     font-size: $font-size-m;
-    line-height: 1.1;
+    line-height: $line-height-compact;
     text-transform: capitalize;
     width: 100%;
 }

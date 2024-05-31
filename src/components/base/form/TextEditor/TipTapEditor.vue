@@ -895,7 +895,7 @@ export default {
         font-size: $font-size-2xs;
         font-style: normal;
         font-weight: 600;
-        line-height: normal;
+        line-height: $line-height-tight;
         user-select: none;
         color: $white;
         padding: 0.1rem 0.3rem;

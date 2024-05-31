@@ -64,7 +64,7 @@ export default {
 
         .inner {
             font-size: $font-size-xs;
-            line-height: 1;
+            line-height: $line-height-squashed;
             color: $white;
         }
     }

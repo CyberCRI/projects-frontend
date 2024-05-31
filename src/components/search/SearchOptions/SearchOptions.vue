@@ -510,7 +510,7 @@ export default {
         text-transform: uppercase;
         font-size: $font-size-s;
         color: $primary-dark;
-        line-height: 1;
+        line-height: $line-height-squashed;
         cursor: pointer;
 
         &:hover {

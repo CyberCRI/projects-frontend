@@ -209,14 +209,14 @@ export default {
         height: 60px;
         border-radius: 35px;
         font-size: $font-size-3xl;
-        line-height: 1;
+        line-height: $line-height-squashed;
     }
 
     @media screen and (min-width: $min-tablet) {
         &.big-input input {
             height: 90px;
             font-size: $font-size-5xl;
-            line-height: 1;
+            line-height: $line-height-squashed;
             border-radius: $border-radius-s;
         }
     }

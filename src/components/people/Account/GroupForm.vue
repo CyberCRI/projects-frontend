@@ -254,7 +254,7 @@ export default {
         font-weight: 700;
         font-size: $font-size-l;
         color: $black;
-        line-height: 1.2;
+        line-height: $line-height-tight;
     }
 
     .sub-title {

@@ -57,7 +57,7 @@ export default {
     font-size: $font-size-m;
     color: $primary-dark;
     font-weight: 400;
-    line-height: 1;
+    line-height: $line-height-squashed;
     display: inline-flex;
     align-items: center;
     gap: $space-s;

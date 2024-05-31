@@ -115,7 +115,7 @@ $dimension: 120px;
 .project-title {
     display: block;
     font-size: $font-size-l;
-    line-height: 1.2;
+    line-height: $line-height-tight;
     margin-bottom: $space-s;
     grid-column: 2;
     grid-row: 1;

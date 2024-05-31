@@ -198,10 +198,12 @@ export default {
         display: flex;
         flex-direction: row;
         width: 30%;
+        flex-grow: 1;
     }
 
     .tag-list-desktop {
         width: 100%;
+        flex-grow: 1;
     }
 
     .icon {

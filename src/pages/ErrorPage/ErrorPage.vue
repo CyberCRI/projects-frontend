@@ -114,7 +114,7 @@ export default {
             font-size: pxToRem(40px);
             font-weight: 900;
             color: $primary-dark;
-            line-height: 1.125;
+            line-height: $line-height-tight;
             margin-bottom: pxToRem(28px);
         }
 
@@ -124,7 +124,7 @@ export default {
             & + .notice {
                 margin-top: 1em;
                 font-size: $font-size-m;
-                line-height: 1.2;
+                line-height: $line-height-tight;
                 margin-bottom: $space-l;
             }
 
@@ -149,7 +149,7 @@ export default {
                 right: pxToRem(88px);
                 bottom: pxToRem(57px);
                 font-size: pxToRem(40px);
-                line-height: pxToRem(30px);
+                line-height: 0.75;
                 text-align: center;
                 color: $green;
                 font-weight: 700;

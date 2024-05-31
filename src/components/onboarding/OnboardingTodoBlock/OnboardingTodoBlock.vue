@@ -296,7 +296,7 @@ export default {
 .welcome-title {
     font-size: $font-size-2xl;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: $line-height-tight;
     text-align: center;
 }
 

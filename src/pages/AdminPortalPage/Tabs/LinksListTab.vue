@@ -248,7 +248,7 @@ export default {
     font-style: normal;
     font-weight: 700;
     font-size: $font-size-5xl;
-    line-height: 1.2;
+    line-height: $line-height-tight;
     text-align: center;
     margin-bottom: $font-size-l;
 }

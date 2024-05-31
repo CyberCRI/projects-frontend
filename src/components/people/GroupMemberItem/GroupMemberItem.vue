@@ -130,7 +130,7 @@ export default {
             margin: 0;
             font-weight: 700;
             font-size: $font-size-m;
-            line-height: 1.2;
+            line-height: $line-height-tight;
         }
 
         svg {

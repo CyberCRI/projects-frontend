@@ -156,7 +156,7 @@ export default {
                 text-overflow: ellipsis;
                 font-weight: 700;
                 font-size: $font-size-2xl;
-                line-height: 1.2;
+                line-height: $line-height-tight;
                 background: $white;
                 color: $black;
                 transition: background-color 0.3s ease-in-out;

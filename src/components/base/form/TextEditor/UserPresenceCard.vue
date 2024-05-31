@@ -111,7 +111,7 @@ export default {
     font-size: 13px;
     text-transform: uppercase;
     color: $text-body;
-    line-height: normal;
+    line-height: $line-height-tight;
     padding-left: 10px;
     align-items: center;
     display: flex;
@@ -124,7 +124,7 @@ export default {
     border-bottom: 0 solid lightgrey;
     border-left: 4px solid transparent;
     color: $text-body;
-    line-height: normal;
+    line-height: $line-height-tight;
     padding-left: 10px;
 }
 

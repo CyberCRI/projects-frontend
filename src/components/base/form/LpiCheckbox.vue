@@ -48,7 +48,7 @@ export default {
     font-size: $font-size-m;
     color: $primary-dark;
     font-weight: 400;
-    line-height: 1;
+    line-height: $line-height-squashed;
     display: grid;
     grid-template-columns: 1em auto;
     gap: $space-m;

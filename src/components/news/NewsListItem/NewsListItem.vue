@@ -162,7 +162,7 @@ export default {
 
 .news-title {
     font-size: $font-size-xl;
-    line-height: 1.2;
+    line-height: $line-height-tight;
 }
 
 @media screen and (min-width: $min-tablet) {
