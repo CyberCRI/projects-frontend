@@ -25,7 +25,7 @@ export async function reportAbuse(page) {
     await page.locator('[data-test="report-description"]').click()
     await page.locator('[data-test="report-description"]').fill('testing')
     logger.info('Description added')
-    await page.locator('[data-test="report-button"]').click()
+    await page.locator('.report-form [data-test="confirm-button"]').click()
     logger.info('Click to confirm report ')
 
     await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
