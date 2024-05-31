@@ -5,12 +5,12 @@
 
     &::-webkit-scrollbar-track {
         border: solid 3px transparent;
-        border-radius: $scrollbar-radius;
+        border-radius: 9px;
     }
 
     &::-webkit-scrollbar-thumb {
         background-color: $primary-dark;
-        border-radius: $scrollbar-radius;
+        border-radius: 9px;
     }
 }
 

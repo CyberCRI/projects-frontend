@@ -75,7 +75,7 @@ input[type='radio'] {
     width: pxToRem(20px);
     height: pxToRem(20px);
     border: $border-width-s solid $primary-dark;
-    border-radius: $border-radius-xl;
+    border-radius: pxToRem(20px);
     transform: translateY(-0.075em);
     display: grid;
     place-content: center;
@@ -86,7 +86,7 @@ input[type='radio']::before {
     content: '';
     width: pxToRem(12px);
     height: pxToRem(12px);
-    border-radius: $border-radius-xl;
+    border-radius: pxToRem(12px);
     transform: scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em $primary-dark;
