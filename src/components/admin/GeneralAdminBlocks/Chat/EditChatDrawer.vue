@@ -98,7 +98,6 @@ export default {
 .label {
     display: block;
     padding-bottom: $space-m;
-    line-height: 1.3;
 }
 
 .form-section {

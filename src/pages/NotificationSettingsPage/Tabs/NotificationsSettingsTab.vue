@@ -191,12 +191,10 @@ export default {
 
             .sub-label {
                 font-size: $font-size-s;
-                line-height: 22px;
             }
 
             .label {
                 font-size: $font-size-m;
-                line-height: 24px;
                 color: $primary-dark;
             }
         }

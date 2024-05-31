@@ -207,7 +207,7 @@ export default {
     font-size: inherit;
     font-weight: bold;
     transition: 0.15s color ease-in-out;
-    line-height: $font-size-s;
+    line-height: $line-height-squashed;
 }
 
 .label-selected {

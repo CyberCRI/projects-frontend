@@ -204,7 +204,6 @@ export default {
 
 .skills,
 .extra-skills-list {
-    line-height: 1.4;
     display: flex;
     gap: $space-xs;
     flex-wrap: wrap;

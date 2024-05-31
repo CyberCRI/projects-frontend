@@ -603,11 +603,11 @@ export default {
     display: flex;
     z-index: $zindex-navbar;
 
-    &__directory {
+    .header__directory {
         display: flex;
     }
 
-    &__container {
+    .header__container {
         padding-top: $space-m;
         padding-bottom: $space-m;
         display: flex;
@@ -623,11 +623,11 @@ export default {
         box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
     }
 
-    &__group-buttons-mobile {
+    .header__group-buttons-mobile {
         display: flex;
     }
 
-    &__group-buttons {
+    .header__group-buttons {
         display: none;
     }
 
@@ -635,10 +635,9 @@ export default {
         margin-right: $space-s;
         font-weight: 700;
         font-size: $font-size-xs;
-        line-height: 15px;
     }
 
-    &__mobile-nav {
+    .header__mobile-nav {
         height: 100vh;
         width: 98%;
         background: $primary-dark;
@@ -658,7 +657,6 @@ export default {
             .title {
                 font-weight: 700;
                 font-size: $font-size-2xl;
-                line-height: 28px;
                 padding-top: calc($navbar-height + $space-m);
                 margin-left: 8px;
             }
@@ -676,7 +674,7 @@ export default {
         }
     }
 
-    &__link {
+    .header__link {
         color: $white;
         text-transform: uppercase;
         cursor: pointer;
@@ -686,23 +684,22 @@ export default {
         }
     }
 
-    &__list-item {
+    .header__list-item {
         padding: $space-xs 0;
         text-align: start;
         font-weight: 700;
         font-size: $font-size-m;
-        line-height: 18px;
 
         &:first-child {
             padding-top: pxToRem(40px);
         }
     }
 
-    &__logo {
+    .header__logo {
         height: pxToRem(25px);
     }
 
-    &__arrows {
+    .header__arrows {
         width: pxToRem(42px);
         fill: $primary-dark;
 
@@ -750,28 +747,28 @@ a:visited {
     .header {
         position: fixed;
 
-        &__group-buttons {
+        .header__group-buttons {
             display: flex;
         }
 
-        &__group-buttons-mobile {
+        .header__group-buttons-mobile {
             display: none;
         }
 
-        &__mobile-btn {
+        .header__mobile-btn {
             display: none !important;
         }
 
-        &__mobile-nav {
+        .header__mobile-nav {
             display: none;
         }
 
-        &__button {
+        .header__button {
             text-transform: uppercase;
             margin-top: $space-2xs;
         }
 
-        &__logo {
+        .header__logo {
             height: pxToRem(40px);
         }
     }

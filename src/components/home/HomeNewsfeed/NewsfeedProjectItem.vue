@@ -115,7 +115,7 @@ $dimension: 120px;
 .project-title {
     display: block;
     font-size: $font-size-l;
-    line-height: $font-size-2xl;
+    line-height: $line-height-tight;
     margin-bottom: $space-s;
     grid-column: 2;
     grid-row: 1;
@@ -137,7 +137,6 @@ $dimension: 120px;
 }
 
 .clamped {
-    line-height: $font-size-xl;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;

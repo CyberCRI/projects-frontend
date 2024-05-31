@@ -64,7 +64,7 @@ export default {
         font-size: $font-size-l;
         font-weight: 700;
         color: $primary-dark;
-        line-height: 21px;
+        line-height: $line-height-tight;
     }
 
     .description-content-ctn {

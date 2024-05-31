@@ -67,7 +67,6 @@ export default {
         font-size: $font-size-m;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px;
     }
 
     .org-card-ctn {
@@ -113,14 +112,13 @@ export default {
                     font-size: $font-size-2xl;
                     font-style: normal;
                     font-weight: 700;
-                    line-height: 30px;
+                    line-height: $line-height-tight;
                 }
 
                 .org-description {
                     font-size: $font-size-m;
                     font-style: normal;
                     font-weight: 400;
-                    line-height: 24px;
                 }
             }
         }

@@ -231,7 +231,6 @@ export default {
 .categories-tab {
     .info-snackbar {
         border: 1px solid $primary-dark;
-        line-height: $font-size-l;
         margin: $space-l auto;
     }
 

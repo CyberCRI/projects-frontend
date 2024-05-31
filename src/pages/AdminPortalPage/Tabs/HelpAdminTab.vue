@@ -275,7 +275,6 @@ export default {
             text-align: start;
             margin-bottom: 0;
             margin-left: $space-l;
-            line-height: $font-size-l;
         }
 
         .input-ctn {

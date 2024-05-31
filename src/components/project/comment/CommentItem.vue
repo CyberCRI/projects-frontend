@@ -298,7 +298,6 @@ $comment-pic-size: pxToRem(72px);
 
         .comment-content {
             font-size: $font-size-m;
-            line-height: $font-size-2xl;
         }
     }
 

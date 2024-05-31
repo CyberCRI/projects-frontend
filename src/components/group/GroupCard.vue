@@ -143,7 +143,6 @@ export default {
     justify-content: center;
     font-weight: 700;
     font-size: $font-size-xs;
-    line-height: 18px;
     color: $primary-dark;
     margin-top: $space-s;
 
@@ -157,7 +156,6 @@ export default {
 .card-type {
     font-weight: 700;
     font-size: 16px;
-    line-height: 21px;
     color: $black-1;
 }
 
@@ -170,6 +168,7 @@ export default {
     padding: $space-xs $space-s;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: $font-size-xs;
     cursor: pointer;
     font-size: $font-size-s;

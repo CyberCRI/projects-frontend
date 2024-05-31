@@ -239,10 +239,9 @@ footer {
         display: inline-flex;
         flex-wrap: wrap;
         align-items: center;
-        line-height: 20px;
         width: 100%;
         background-color: $gray-9;
-        padding: pxToRem(16px) 0;
+        padding: 1rem 0;
         justify-content: center;
 
         .logo {

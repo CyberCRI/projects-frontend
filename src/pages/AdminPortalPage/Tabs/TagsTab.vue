@@ -283,7 +283,6 @@ export default {
 .hint {
     display: block;
     margin-bottom: $space-l;
-    line-height: 18px;
 }
 
 .input-container {

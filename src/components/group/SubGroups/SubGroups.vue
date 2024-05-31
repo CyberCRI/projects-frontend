@@ -60,7 +60,6 @@ export default {
         .name {
             font-weight: 400;
             font-size: $font-size-xs;
-            line-height: calc($space-3xs * 7);
             display: flex;
             align-items: center;
             text-align: center;
@@ -94,7 +93,6 @@ export default {
         .name {
             font-weight: 400;
             font-size: $font-size-xs;
-            line-height: calc($space-3xs * 7);
             display: flex;
             align-items: center;
             text-align: center;

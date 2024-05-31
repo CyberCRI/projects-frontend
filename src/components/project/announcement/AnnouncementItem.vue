@@ -135,7 +135,6 @@ export default {
     }
 
     .description {
-        line-height: 20px;
         font-size: $font-size-xs;
     }
 

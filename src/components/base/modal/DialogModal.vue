@@ -118,7 +118,6 @@ export default {
 
 .modal-body {
     max-height: 80vh;
-    line-height: 1.6;
 }
 
 /* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */

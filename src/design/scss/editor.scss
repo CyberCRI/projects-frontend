@@ -388,14 +388,14 @@
         font-weight: 700;
         margin-bottom: $space-l;
         margin-top: $space-m;
-        line-height: 1.2;
+        line-height: $line-height-tight;
     }
 
     h2 {
         font-size: $font-size-2xl;
         font-weight: 700;
         margin-bottom: $space-m;
-        line-height: 1.2;
+        line-height: $line-height-tight;
     }
 
     h3 {
@@ -403,17 +403,16 @@
         font-weight: 700;
         letter-spacing: 0;
         margin-bottom: $space-m;
-        line-height: 1.2;
+        line-height: $line-height-tight;
     }
 
     h4 {
         font-size: $font-size-l;
         font-weight: 700;
-        line-height: 22.98px;
+        line-height: $line-height-tight;
     }
 
     p {
-        line-height: 24px;
         min-height: 32px;
         margin-bottom: $space-s;
     }
@@ -588,21 +587,21 @@
     h1 {
         font-size: $font-size-2xl;
         font-weight: 700;
-        line-height: 26px;
+        line-height: $line-height-tight;
         margin-bottom: 8px;
     }
 
     h2 {
         font-size: $font-size-xl;
         font-weight: 700;
-        line-height: 26px;
+        line-height: $line-height-tight;
         margin-bottom: 8px;
     }
 
     h3 {
         font-size: $font-size-l;
         font-weight: 700;
-        line-height: 26px;
+        line-height: $line-height-tight;
         letter-spacing: 0;
         margin-bottom: 8px;
     }
@@ -610,13 +609,12 @@
     h4 {
         font-size: $font-size-s;
         font-weight: 700;
-        line-height: 26px;
+        line-height: $line-height-tight;
         margin-bottom: 8px;
     }
 
     p {
         font-size: $font-size-s;
-        line-height: 1.4;
         margin-bottom: 1.5rem;
     }
 }

@@ -197,7 +197,7 @@ export default {
         &__title {
             font-weight: 700;
             font-size: clamp(2rem, 3vw, 3rem);
-            line-height: 42px;
+            line-height: $line-height-tight;
             color: $black;
         }
 
@@ -249,7 +249,6 @@ export default {
 .short-description {
     font-weight: 400;
     font-size: $font-size-m;
-    line-height: 24px;
     margin-bottom: $space-l;
 }
 

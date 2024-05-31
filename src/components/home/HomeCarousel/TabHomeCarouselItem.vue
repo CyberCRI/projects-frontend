@@ -69,10 +69,6 @@ export default {
             font-size: $font-size-2xl;
             margin-bottom: $space-l;
         }
-
-        p {
-            line-height: 1.6;
-        }
     }
 
     a {

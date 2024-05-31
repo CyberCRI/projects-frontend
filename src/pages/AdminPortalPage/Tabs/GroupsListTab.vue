@@ -185,10 +185,6 @@ export default {
     display: flex;
     gap: $space-l;
 
-    p {
-        line-height: 1.6;
-    }
-
     .action {
         flex-grow: 1;
     }

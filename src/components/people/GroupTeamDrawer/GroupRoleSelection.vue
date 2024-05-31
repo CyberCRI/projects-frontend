@@ -178,7 +178,6 @@ export default {
     white-space: break-spaces;
     padding: $space-m;
     text-align: center;
-    line-height: 1.3;
     color: $black;
 
     .list-ctn {
@@ -242,7 +241,7 @@ export default {
 .form-control {
     font-size: $font-size-m;
     color: $primary-dark;
-    line-height: 12px;
+    line-height: $line-height-squashed;
     display: grid;
     grid-template-columns: 1em auto;
     gap: $space-m;

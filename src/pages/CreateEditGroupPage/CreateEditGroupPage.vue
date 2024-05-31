@@ -502,7 +502,6 @@ export default {
 
     p {
         font-size: $font-size-m;
-        line-height: 1.6;
         margin: $space-xl 0;
     }
 

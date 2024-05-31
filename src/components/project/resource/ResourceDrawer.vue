@@ -393,7 +393,7 @@ export default {
     padding: $space-l;
 
     .text-input {
-        padding: $space-l;
+        padding: 0;
         padding-bottom: $space-xs;
     }
 

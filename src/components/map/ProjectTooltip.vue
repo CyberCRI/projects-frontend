@@ -100,7 +100,6 @@ export default {
             color: $primary-dark;
             font-weight: 700;
             font-size: $font-size-s;
-            line-height: 18px;
         }
 
         &--dot {
@@ -125,13 +124,11 @@ export default {
         &--title {
             font-weight: 500;
             font-size: $font-size-xl;
-            line-height: 26px;
         }
 
         &--description {
             font-weight: 400;
             font-size: $font-size-m;
-            line-height: 24px;
         }
     }
 
@@ -163,13 +160,11 @@ export default {
         .project-title {
             font-size: $font-size-m;
             font-weight: 700;
-            line-height: 21px;
         }
 
         .project-purpose {
             font-size: $font-size-s;
-            line-height: 21px;
-            margin: $space-s;
+            margin: $space-s 0;
         }
     }
 }

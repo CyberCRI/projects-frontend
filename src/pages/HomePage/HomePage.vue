@@ -440,7 +440,7 @@ export default {
         padding-top: $space-m;
         font-weight: 700;
         font-size: $font-size-4xl;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-align: center;
 
         @media screen and (min-width: $min-desktop) {
@@ -556,7 +556,7 @@ export default {
     text-align: center;
     font-weight: 700;
     font-size: $font-size-3xl;
-    line-height: 40px;
+    line-height: $line-height-tight;
     color: $black;
     width: 100%;
     margin-bottom: pxToRem(60px);

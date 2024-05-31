@@ -244,14 +244,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sub-title {
-    font-weight: 400;
-    font-size: $font-size-s;
-    line-height: 18px;
-    margin-top: $space-s;
-    display: block;
-}
-
 .category-name,
 .card-title,
 .card-description {

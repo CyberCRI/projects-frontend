@@ -152,7 +152,6 @@ export default {
             text-overflow: ellipsis;
             font-weight: 700;
             font-size: $font-size-m;
-            line-height: 21px;
             padding: $space-s $space-2xl;
             background: $white;
             color: $black;
@@ -186,7 +185,7 @@ export default {
             .category-card--name {
                 padding: $space-xs;
                 font-size: $font-size-s;
-                line-height: $font-size-s;
+                line-height: $line-height-squashed;
             }
         }
     }

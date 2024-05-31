@@ -322,13 +322,13 @@ export default {
         label {
             font-size: $font-size-l;
             font-weight: 500;
-            line-height: 1;
+            line-height: $line-height-squashed;
         }
 
         .notice {
             font-size: $font-size-m;
             font-weight: 400;
-            line-height: 1;
+            line-height: $line-height-squashed;
         }
     }
 

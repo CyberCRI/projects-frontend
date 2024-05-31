@@ -288,14 +288,13 @@ export default {
             .category-name {
                 font-weight: 700;
                 font-size: $font-size-5xl;
-                line-height: 1.2;
+                line-height: $line-height-tight;
                 text-align: center;
                 margin-bottom: $space-m;
             }
 
             .category-description {
                 font-size: $font-size-m;
-                line-height: 1.5;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 overflow: hidden;

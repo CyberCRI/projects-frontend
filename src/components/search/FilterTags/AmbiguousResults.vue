@@ -110,7 +110,6 @@ export default {
             text-align: start;
             font-weight: 400;
             font-size: $font-size-s;
-            line-height: 18px;
             margin-top: $space-s;
             display: block;
         }
@@ -122,7 +121,6 @@ export default {
     margin-bottom: $space-xs;
 
     .subtitle {
-        line-height: $font-size-2xl;
         padding: 0 $space-l;
     }
 

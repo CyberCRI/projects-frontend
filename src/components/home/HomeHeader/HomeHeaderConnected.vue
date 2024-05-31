@@ -183,7 +183,7 @@ export default {
         padding-top: $space-m;
         font-weight: 700;
         font-size: $font-size-4xl;
-        line-height: 1;
+        line-height: $line-height-squashed;
         text-align: center;
     }
 }

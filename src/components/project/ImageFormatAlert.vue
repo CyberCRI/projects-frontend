@@ -92,10 +92,6 @@ export default {
             cursor: pointer;
         }
 
-        p {
-            line-height: 1.3;
-        }
-
         .actions {
             display: flex;
             justify-content: space-between;

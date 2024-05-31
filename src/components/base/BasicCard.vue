@@ -93,7 +93,7 @@ export default {
     margin-top: $space-s;
     font-weight: 700;
     font-size: $font-size-m;
-    line-height: 18px;
+    line-height: $line-height-compact;
     text-transform: capitalize;
     width: 100%;
 }
@@ -101,7 +101,6 @@ export default {
 :deep(.card-type) {
     font-weight: 700;
     font-size: $font-size-xs;
-    line-height: 18px;
     text-transform: uppercase;
     color: $green-dark;
     margin-top: $space-s;
@@ -136,14 +135,12 @@ export default {
 :deep(.description) {
     margin-top: $space-m;
     font-size: $font-size-s;
-    line-height: 18px;
     width: 100%;
 }
 
 :deep(.card-description) {
     margin-top: $space-xs;
     font-size: $font-size-s;
-    line-height: 18px;
 }
 
 :deep(.action-right-wrapper),

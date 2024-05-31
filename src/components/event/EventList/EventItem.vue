@@ -140,6 +140,7 @@ export default {
             font-size: 1rem;
             font-weight: 400;
             margin-bottom: $space-2xs;
+            line-height: $line-height-tight;
         }
 
         .event-information {

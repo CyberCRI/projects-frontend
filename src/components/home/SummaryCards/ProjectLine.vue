@@ -74,12 +74,12 @@ export default {
     height: 50px;
     flex: none;
     margin-right: $space-s;
-    line-height: $font-size-l;
 }
 
 .project-title {
     font-weight: 700;
     color: $primary-dark;
     -webkit-line-clamp: 1;
+    line-height: $line-height-tight;
 }
 </style>

@@ -181,7 +181,7 @@ export default {
 
             .resource-subtitle {
                 font-size: $font-size-s;
-                line-height: 14px;
+                line-height: $line-height-tight;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;

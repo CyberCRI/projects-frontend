@@ -131,7 +131,7 @@ export default {
 
             .entry-title {
                 font-size: $font-size-m;
-                line-height: 18px;
+                line-height: $line-height-tight;
             }
 
             .date {

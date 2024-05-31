@@ -80,7 +80,6 @@ export default {
 
 .list-label {
     font-size: $font-size-s;
-    line-height: 16px;
 
     &--has-children {
         font-weight: 700;

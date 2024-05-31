@@ -149,7 +149,6 @@ export default {
     .intro {
         margin-top: $space-xl;
         text-align: center;
-        line-height: 1.5;
         font-size: $font-size-m;
     }
 

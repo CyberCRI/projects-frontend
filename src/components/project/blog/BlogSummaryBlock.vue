@@ -199,7 +199,7 @@ export default {
         li {
             cursor: pointer;
             transition: color 0.2s ease-in-out;
-            line-height: 1.2;
+            line-height: $line-height-tight;
 
             &:hover {
                 color: $primary-dark;

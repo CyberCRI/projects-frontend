@@ -283,7 +283,6 @@ export default {
 
     .intro {
         font-size: $font-size-m;
-        line-height: 1.5;
         margin: 2.2rem 0;
     }
 
@@ -319,7 +318,7 @@ export default {
         background: transparent;
         border: none;
         font-size: $font-size-s;
-        line-height: 16px;
+        line-height: $line-height-tight;
         color: $black-1;
     }
 }
@@ -379,7 +378,7 @@ table {
 
 .first-item,
 .more-items {
-    line-height: 1;
+    line-height: $line-height-squashed;
     vertical-align: baseline;
 }
 
@@ -398,7 +397,6 @@ table {
     white-space: break-spaces;
     padding: $space-m;
     text-align: center;
-    line-height: 1.3;
     color: $black;
 }
 
