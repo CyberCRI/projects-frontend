@@ -489,7 +489,7 @@ export default {
         text-align: center;
         margin-bottom: $space-m;
         margin-top: $font-size-3xl;
-        color: $dark;
+        color: $almost-black;
     }
 }
 
@@ -549,7 +549,7 @@ export default {
 }
 
 .search-info {
-    color: $dark;
+    color: $almost-black;
     margin: $space-xl 0 $space-xl 0;
 }
 

@@ -251,7 +251,7 @@ export default {
         font-weight: 700;
         margin: $space-m 0 $space-m 0;
         text-transform: uppercase;
-        color: $dark;
+        color: $almost-black;
     }
 }
 

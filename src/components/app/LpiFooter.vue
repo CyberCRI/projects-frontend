@@ -170,7 +170,7 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-    color: $dark;
+    color: $almost-black;
 
     .footer-content {
         display: flex;

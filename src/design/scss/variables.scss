@@ -7,8 +7,8 @@ $primary-lighter: #ebfffa;
 $primary-light: #c2fff0;
 $primary-dark: #1d727c;
 $aquamarine: #99ffe7;
-$dark: #001a13;
-
+$green: #00dba7;
+$green-lighter: #f0fffb;
 $black: #000;
 $almost-black: #101010;
 $dark-gray: #363636;
@@ -17,9 +17,6 @@ $light-gray: #b7b7b7;
 $lighter-gray: #dbdbdb;
 $almost-white: #f0f0f0;
 $white: #fff;
-$modal-background: rgb(6 6 6 / 85%);
-$green: #00dba7;
-$green-lighter: #f0fffb;
 $blue: #6cd5ff;
 $blue-lighter: #e5f8ff;
 $dark-blue: #00b7ff;
@@ -32,9 +29,9 @@ $yellow: #fc0;
 $yellow-lighter: #fff5cc;
 $skeleton-0: hsl(200deg 20% 80%);
 $skeleton-100: hsl(200deg 20% 95%);
+$modal-background: rgb(6 6 6 / 85%);
 
 // SPACING
-
 $space-unit: 1rem; // 16px
 $space-3xs: calc(0.125 * $space-unit); // 2px
 $space-2xs: calc(0.25 * $space-unit); // 4px
@@ -48,7 +45,6 @@ $space-2xl: calc(3.125 * $space-unit); // 50px
 $space-3xl: calc(6.25 * $space-unit); // 100px
 
 // FONT-SIZE
-
 $font-size-2xs: 0.625rem; // 10px
 $font-size-xs: 0.75rem; // 12px
 $font-size-s: 0.875rem; // 14px
@@ -62,14 +58,12 @@ $font-size-5xl: 2.625rem; // 42px
 $font-size-7xl: 3.75rem; // 60px
 
 // LINE-HEIGHT
-
 $line-height-normal: 1.5;
 $line-height-tight: 1.2;
 $line-height-compact: 1.1;
 $line-height-squashed: 1;
 
 // BORDER-RADIUS
-
 $border-radius-xs: 4px;
 $border-radius-s: 6px;
 $border-radius-8: 8px;
@@ -81,19 +75,16 @@ $border-radius-30: 30px;
 $border-radius-50: 50px;
 
 // BORDER-WIDTH
-
 $border-width-s: 1px;
 $border-width-m: 2px;
 $border-width-l: 3px;
 
 // PX => REM
-
 @function pxToRem($size) {
     @return calc($size / 16px * 1rem);
 }
 
 // BREAKPOINT
-
 $max-desktop: 1824px;
 $min-desktop: 1200px;
 $max-tablet: 1024px;

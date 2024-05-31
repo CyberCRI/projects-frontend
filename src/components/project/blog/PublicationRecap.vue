@@ -209,7 +209,7 @@ export default {
             padding-bottom: $space-m;
             margin-bottom: $space-m;
             margin-top: $space-m;
-            color: $dark;
+            color: $almost-black;
             flex-shrink: 0;
 
             .author span:last-of-type {

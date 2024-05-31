@@ -162,7 +162,7 @@ li {
 }
 
 .black-text {
-    color: $dark;
+    color: $almost-black;
     font-weight: 400;
 }
 </style>
