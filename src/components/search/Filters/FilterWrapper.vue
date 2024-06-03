@@ -58,7 +58,7 @@ export default {
 
 <style lang="scss" scoped>
 .filter-wrapper {
-    border-bottom: 1px solid $green;
+    border-bottom: 1px solid $primary;
 }
 
 .filter-wrapper .header {

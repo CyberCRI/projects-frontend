@@ -654,7 +654,7 @@ export default {
     }
 
     .section {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-l;
         padding: $space-l;
 

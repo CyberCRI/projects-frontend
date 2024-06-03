@@ -54,7 +54,7 @@ $annoucement-padding: pxToRem(20px);
 
     .announcement-card {
         position: relative;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-m;
         width: 356px;
         height: 462px;

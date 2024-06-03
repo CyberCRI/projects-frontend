@@ -218,6 +218,6 @@ export default {
     text-transform: capitalize;
     cursor: pointer;
     border: none;
-    border-top: $border-width-s solid $green;
+    border-top: $border-width-s solid $primary;
 }
 </style>

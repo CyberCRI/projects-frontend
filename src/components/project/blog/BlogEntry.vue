@@ -112,7 +112,7 @@ export default {
 <style lang="scss" scoped>
 .blog-entry {
     border-radius: $border-radius-l;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     box-sizing: border-box;
     background: $white;
     position: relative;
@@ -140,7 +140,7 @@ export default {
         }
 
         .expand-button {
-            border-left: $border-width-s solid $green;
+            border-left: $border-width-s solid $primary;
             display: flex;
             align-items: center;
             padding: 0 $space-l;
@@ -159,7 +159,7 @@ export default {
     }
 
     .last-publication-flag {
-        border-top: $border-width-s solid $green;
+        border-top: $border-width-s solid $primary;
         background: $primary-light;
         color: $primary-dark;
         text-transform: uppercase;
@@ -172,7 +172,7 @@ export default {
     }
 
     .entry-body {
-        border-top: $border-width-s solid $green;
+        border-top: $border-width-s solid $primary;
         padding: $space-m $space-l;
 
         &::after {

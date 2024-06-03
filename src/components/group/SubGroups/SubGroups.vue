@@ -54,7 +54,7 @@ export default {
         align-items: center;
         padding: $space-m;
         background: $primary-lighter;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-30;
 
         .name {
@@ -74,7 +74,7 @@ export default {
         align-items: center;
         gap: $space-xs;
         padding: $space-2xs calc($space-2xl / 5) $space-2xs $space-2xs;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-30;
         transition: 0.3s;
 

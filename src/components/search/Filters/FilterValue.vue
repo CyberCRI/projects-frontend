@@ -83,7 +83,7 @@ $filter-value-icon-size: 16px;
     }
 
     &.suggested {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
 
         .filter-value-label {
             font-weight: 400;

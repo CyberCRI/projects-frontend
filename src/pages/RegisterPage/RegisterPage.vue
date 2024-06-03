@@ -398,7 +398,7 @@ export default {
     font-size: pxToRem(40px);
     line-height: $line-height-squashed;
     text-align: center;
-    color: $green;
+    color: $primary;
     font-weight: 700;
     padding-left: 30px;
     padding-right: 30px;

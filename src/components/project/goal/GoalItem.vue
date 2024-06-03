@@ -165,7 +165,7 @@ export default {
                 border-bottom-right-radius: $border-radius-l;
 
                 &.complete {
-                    background: $green;
+                    background: $primary;
                 }
 
                 &.ongoing {

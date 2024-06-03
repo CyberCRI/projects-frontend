@@ -155,7 +155,7 @@ export default {
         color: $primary-dark;
         background: $white;
         border-radius: $border-radius-24;
-        box-shadow: 0 0 0 1px $green;
+        box-shadow: 0 0 0 1px $primary;
         width: 100%;
 
         .icon {
@@ -199,7 +199,7 @@ export default {
         border-radius: $border-radius-l;
         max-height: pxToRem(450px);
         overflow: hidden auto;
-        border: 1px solid $green;
+        border: 1px solid $primary;
         box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
 
         @media (min-width: $min-tablet) {

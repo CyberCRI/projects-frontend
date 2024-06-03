@@ -104,7 +104,7 @@ export default {
     border: none;
 
     .category-card {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-m;
         display: flex;
         flex-direction: column;

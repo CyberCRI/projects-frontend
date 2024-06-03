@@ -44,7 +44,7 @@ export default {
     align-items: center;
     gap: 0.8rem;
     background: $white;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: $border-radius-l;
     padding: $space-s $space-m;
     color: $primary-dark;

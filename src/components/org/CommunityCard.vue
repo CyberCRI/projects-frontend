@@ -75,7 +75,7 @@ export default {
     flex-grow: 1;
     justify-content: center;
     padding: pxToRem(4.8px);
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: pxToRem(8px);
     position: relative;
     overflow: hidden;

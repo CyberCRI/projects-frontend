@@ -46,7 +46,7 @@ export default {
     justify-content: space-between;
     height: $card_height;
     width: $card_width;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: $border-radius-m;
     text-align: center;
     background: $white;

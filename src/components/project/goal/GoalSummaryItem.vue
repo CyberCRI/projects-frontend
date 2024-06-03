@@ -62,7 +62,7 @@ export default {
         }
 
         &.completed {
-            background: $green;
+            background: $primary;
             color: $white;
 
             svg {

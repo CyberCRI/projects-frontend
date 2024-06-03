@@ -184,7 +184,7 @@ export default {
 .summary {
     background: $primary-lighter;
     border-radius: $border-radius-l;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     position: relative;
     overflow: visible;
 
@@ -199,16 +199,16 @@ export default {
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: $green;
+        background-color: $primary;
     }
 
     .body {
         background: $primary-lighter;
         border-radius: 0 0 $border-radius-l $border-radius-l;
-        border-top: 0 solid $green;
-        border-left: $border-width-s solid $green;
-        border-right: $border-width-s solid $green;
-        border-bottom: $border-width-s solid $green;
+        border-top: 0 solid $primary;
+        border-left: $border-width-s solid $primary;
+        border-right: $border-width-s solid $primary;
+        border-bottom: $border-width-s solid $primary;
         position: absolute;
         transform: translateY(-1rem);
         top: 100%;

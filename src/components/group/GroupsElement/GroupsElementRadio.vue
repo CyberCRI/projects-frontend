@@ -214,7 +214,7 @@ input[type='radio']:checked {
 }
 
 .searched-group {
-    background-color: $green;
+    background-color: $primary;
 }
 
 .has-children {

@@ -70,7 +70,7 @@ export default {
     border-radius: $border-radius-xs;
 
     &-active {
-        background: $green;
+        background: $primary;
         color: $primary-dark;
     }
 }

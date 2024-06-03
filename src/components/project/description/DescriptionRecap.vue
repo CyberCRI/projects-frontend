@@ -58,7 +58,7 @@ export default {
     border-radius: $border-radius-l;
     padding: $space-2xl;
     color: $black;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
 
     .description-label {
         font-size: $font-size-l;

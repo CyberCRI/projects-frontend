@@ -293,7 +293,7 @@ export default {
         padding: $font-size-5xl;
         background-color: $primary-lighter;
         border-radius: $border-radius-l;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         align-self: stretch;
 
         &.mail-only {

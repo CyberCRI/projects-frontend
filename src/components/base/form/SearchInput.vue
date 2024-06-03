@@ -111,7 +111,7 @@ export default {
     .search-input {
         border-radius: $border-radius-l;
         background: $white;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         color: $black;
         padding: 11px $space-xl 10px $space-xl; // 11 + 1 px border
         font-size: $font-size-m;
@@ -178,7 +178,7 @@ export default {
         right: 0;
         max-height: 10rem;
         background-color: $white;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-l;
         display: flex;
         flex-flow: column nowrap;

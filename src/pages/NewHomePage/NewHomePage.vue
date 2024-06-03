@@ -225,7 +225,7 @@ export default {
 
     .recommandations {
         margin-top: $space-l;
-        border: 1px solid $green;
+        border: 1px solid $primary;
         border-radius: $border-radius-s;
     }
 }

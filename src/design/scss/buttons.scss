@@ -20,7 +20,7 @@
 
         &:hover {
             color: $almost-black;
-            background: $green;
+            background: $primary;
 
             svg {
                 fill: $almost-black;
@@ -38,7 +38,7 @@
 
         &:focus {
             outline: none;
-            box-shadow: 0 0 0 $border-width-l $green;
+            box-shadow: 0 0 0 $border-width-l $primary;
         }
 
         svg {
@@ -62,7 +62,7 @@
 
         &:hover {
             color: $almost-black;
-            background: $green;
+            background: $primary;
 
             svg {
                 fill: $almost-black;
@@ -79,7 +79,7 @@
         }
 
         &:focus {
-            box-shadow: 0 0 0 $border-width-l $green;
+            box-shadow: 0 0 0 $border-width-l $primary;
             outline: none;
         }
 
@@ -98,8 +98,8 @@
         }
 
         &:focus {
-            box-shadow: 0 0 0 $border-width-l $green;
-            outline: $border-width-l $green;
+            box-shadow: 0 0 0 $border-width-l $primary;
+            outline: $border-width-l $primary;
         }
 
         svg {

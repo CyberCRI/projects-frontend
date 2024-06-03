@@ -103,7 +103,7 @@ export default {
     }
 
     .resource-card {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-m;
         display: flex;
         cursor: pointer;
@@ -115,7 +115,7 @@ export default {
             flex-direction: row-reverse;
 
             .icon-ctn {
-                border-left: 1px solid $green;
+                border-left: 1px solid $primary;
                 border-right: unset;
             }
         }
@@ -126,7 +126,7 @@ export default {
 
         .icon-ctn {
             background: $primary;
-            border-right: 1px solid $green;
+            border-right: 1px solid $primary;
             padding: $space-l;
             display: flex;
             justify-content: center;
@@ -184,7 +184,7 @@ export default {
                 padding: $space-2xs;
                 background: $green-lighter;
                 border-radius: 100%;
-                border: $border-width-s solid $green;
+                border: $border-width-s solid $primary;
                 width: 20px;
                 height: 20px;
                 display: flex;

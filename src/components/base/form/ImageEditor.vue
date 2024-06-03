@@ -234,7 +234,7 @@ export default {
     }
 
     .img-preview {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         background-color: $white;
         overflow: hidden;
     }

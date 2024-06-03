@@ -151,7 +151,7 @@ export default {
                 font-size: pxToRem(40px);
                 line-height: 0.75;
                 text-align: center;
-                color: $green;
+                color: $primary;
                 font-weight: 700;
                 filter: drop-shadow(8px 0 0 #20393d) drop-shadow(-8px 0 0 #20393d)
                     drop-shadow(0 8px 0 #20393d) drop-shadow(0 -8px 0 #20393d);

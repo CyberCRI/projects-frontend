@@ -102,7 +102,7 @@ export default {
 
     &.green,
     &.ok {
-        background-color: $green;
+        background-color: $primary;
 
         .label {
             color: $black;
@@ -136,7 +136,7 @@ export default {
     &.is-open-tab {
         border-radius: $border-radius-m $border-radius-m 0 0;
         background-color: $white;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-bottom: $border-width-s solid $white;
         box-sizing: border-box;
     }

@@ -146,7 +146,7 @@ export default {
 .summary {
     background: $primary-lighter;
     border-radius: $border-radius-l;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     position: relative;
     overflow: hidden;
 
@@ -157,7 +157,7 @@ export default {
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: $green;
+        background-color: $primary;
     }
 
     .body {

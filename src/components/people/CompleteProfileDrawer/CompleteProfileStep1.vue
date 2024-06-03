@@ -701,7 +701,7 @@ textarea {
 
     .sdg-checkmark {
         display: inline-block;
-        background-color: $green;
+        background-color: $primary;
         fill: $white;
         widows: 1rem;
         height: 1rem;
@@ -719,7 +719,7 @@ textarea {
         position: absolute;
 
         &:checked + .sdg-pic {
-            box-shadow: 0 0 0 $border-width-m $green;
+            box-shadow: 0 0 0 $border-width-m $primary;
             transition: box-shadow 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
         }
 
@@ -738,7 +738,7 @@ textarea {
     font-size: $font-size-s;
     text-transform: uppercase;
     color: $primary-dark;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     white-space: nowrap;
 
     &.grey {
