@@ -270,7 +270,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .error-description {
-    color: $salmon;
+    color: $red;
     margin-top: $space-xs;
     font-size: $font-size-s;
 }

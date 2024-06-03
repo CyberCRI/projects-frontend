@@ -637,7 +637,7 @@ textarea {
 
     .error-description {
         text-align: right;
-        color: $salmon;
+        color: $red;
     }
 }
 

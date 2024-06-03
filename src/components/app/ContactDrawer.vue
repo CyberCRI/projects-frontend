@@ -190,7 +190,7 @@ export default {
     }
 
     .error-description {
-        color: $salmon;
+        color: $red;
         margin-top: $space-s;
         font-size: $font-size-s;
     }
