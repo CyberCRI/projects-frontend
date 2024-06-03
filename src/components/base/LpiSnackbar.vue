@@ -70,7 +70,7 @@ export default {
     }
 
     &.error {
-        background: $salmon-light;
+        background: $salmon;
         border: $border-width-l solid $salmon;
     }
 

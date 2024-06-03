@@ -86,7 +86,7 @@ export default {
         .vector {
             width: 28px;
             height: 28px;
-            background: $salmon-light;
+            background: $salmon;
             border-radius: 50%;
         }
 
