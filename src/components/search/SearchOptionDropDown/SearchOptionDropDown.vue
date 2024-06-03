@@ -225,7 +225,7 @@ export default {
                 width: 100%;
 
                 &--selected {
-                    background: $aquamarine;
+                    background: $primary-light;
                     border-radius: $border-radius-xs;
                 }
 

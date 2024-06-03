@@ -169,7 +169,7 @@ export default {
                 }
 
                 &.ongoing {
-                    background: $aquamarine;
+                    background: $primary-light;
                 }
 
                 &.cancel {
