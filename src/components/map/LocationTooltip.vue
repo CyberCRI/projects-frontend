@@ -59,7 +59,7 @@ export default {
             margin-right: $space-s;
 
             &.impact {
-                background: $violet-dark;
+                background: $violet;
             }
 
             &.team {

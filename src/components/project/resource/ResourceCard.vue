@@ -1,7 +1,7 @@
 <template>
     <div class="resource-wrapper">
         <div
-            :class="[{ 'h-reverse': horizontalReverse }, color]"
+            :class="{ 'h-reverse': horizontalReverse }"
             class="resource-card shadow-box"
             @click="openResource"
         >
@@ -71,14 +71,6 @@ export default {
             type: String,
             default: null,
         },
-
-        color: {
-            type: String,
-            default: null,
-            validator(value) {
-                return [null, 'blue', 'violet'].includes(value)
-            },
-        },
     },
 
     methods: {
@@ -146,10 +138,6 @@ export default {
                 max-height: 100%;
                 fill: $white;
             }
-
-            &.blue {
-                background: $blue;
-            }
         }
 
         .content {
@@ -213,26 +201,6 @@ export default {
                 &:nth-child(2) {
                     margin-left: $space-2xs;
                 }
-            }
-        }
-
-        &.blue {
-            .icon-ctn {
-                background: $blue;
-            }
-        }
-
-        &.violet {
-            border-color: $violet-dark;
-            color: $violet-dark;
-
-            .icon-ctn {
-                background: $violet;
-                border-right-color: $violet-dark;
-            }
-
-            &.resource-card .icon-ctn {
-                border-left-color: $violet-dark;
             }
         }
     }
