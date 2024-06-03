@@ -47,7 +47,7 @@ export default {
     gap: $space-m;
     background-color: $white;
     padding: $space-m $space-unit;
-    border: $dark-blue solid $border-width-s;
+    border: $blue solid $border-width-s;
     border-radius: 4rem;
     cursor: pointer;
     transition: 0.2s all ease-in-out;

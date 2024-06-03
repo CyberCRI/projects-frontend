@@ -2,7 +2,7 @@
     <div class="s-switch-input-ctn">
         <span v-if="label" class="s-label">{{ label }}</span>
 
-        <div class="s-switch" :class="[{ active: modelValue }, type]" @click="toggleValue">
+        <div class="s-switch" :class="{ active: modelValue }" @click="toggleValue">
             <div class="s-control" />
         </div>
     </div>
@@ -23,11 +23,6 @@ export default {
         modelValue: {
             type: Boolean,
             default: false,
-        },
-
-        type: {
-            type: String,
-            default: 'success',
         },
     },
 
@@ -66,20 +61,8 @@ export default {
             transition: transform 0.3s ease-out;
         }
 
-        &.success.active {
+        &.active {
             background-color: $primary;
-        }
-
-        &.info.active {
-            background-color: $dark-blue;
-        }
-
-        &.danger.active {
-            background-color: $salmon-dark;
-        }
-
-        &.warning.active {
-            background-color: $yellow;
         }
 
         &.active .s-control {
