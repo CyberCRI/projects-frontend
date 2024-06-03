@@ -125,7 +125,7 @@ export default {
             width: 30px;
             height: 30px;
             border-radius: 15px;
-            background-color: $blue-lighter;
+            background-color: $green-lighter;
             box-shadow: 0 0 0 3px $primary-dark;
             display: flex;
             justify-content: center;

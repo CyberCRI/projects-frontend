@@ -1,7 +1,7 @@
 <template>
     <div class="resource-wrapper">
         <div
-            :class="[{ 'h-reverse': horizontalReverse, 'blue-hover': blueHover }, color]"
+            :class="[{ 'h-reverse': horizontalReverse }, color]"
             class="resource-card shadow-box"
             @click="openResource"
         >
@@ -79,11 +79,6 @@ export default {
                 return [null, 'blue', 'violet'].includes(value)
             },
         },
-
-        blueHover: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     methods: {
@@ -133,12 +128,8 @@ export default {
             }
         }
 
-        &:not(.blue-hover):hover .content {
+        &:hover .content {
             background-color: $primary-lighter;
-        }
-
-        &.blue-hover:hover .content {
-            background-color: $blue-lighter;
         }
 
         .icon-ctn {

@@ -1,9 +1,5 @@
 <template>
     <div class="category-card-ctn" @click="goTo">
-        <span v-if="selected" class="selected-icon">
-            <IconImage class="icon" name="Check" />
-        </span>
-
         <div :class="[isSelected]" :style="{ width: imageWidth }" class="category-card shadow-box">
             <ContextActionButton
                 v-if="editable"
@@ -30,7 +26,6 @@
 
 <script>
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 export default {
@@ -40,7 +35,6 @@ export default {
 
     components: {
         CategoryCardImage,
-        IconImage,
         ContextActionButton,
     },
 
@@ -56,11 +50,6 @@ export default {
             validator(value) {
                 return ['big', 'small', 'extra-small', ''].includes(value)
             },
-        },
-
-        selected: {
-            type: Boolean,
-            default: false,
         },
 
         editable: {
@@ -113,26 +102,6 @@ export default {
     cursor: pointer;
     background: none;
     border: none;
-
-    .selected-icon {
-        width: 30px;
-        height: 30px;
-        border-radius: 15px;
-        background-color: $blue-lighter;
-        box-shadow: 0 0 0 3px $primary-dark;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        left: 20px;
-        top: -13px;
-        z-index: 1;
-
-        .icon {
-            height: 16px;
-            fill: $primary-dark;
-        }
-    }
 
     .category-card {
         border: $border-width-s solid $green;
