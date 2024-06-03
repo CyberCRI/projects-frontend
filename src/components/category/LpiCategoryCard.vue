@@ -151,7 +151,7 @@ export default {
 
         &:hover:not(.category-card__selected) {
             .category-card__name {
-                background-color: $green-lighter;
+                background-color: $primary-lighter;
             }
         }
     }

@@ -85,7 +85,7 @@ export default {
     .tag-result {
         cursor: pointer;
         padding: $space-l;
-        background: $green-lighter;
+        background: $primary-lighter;
         border-radius: $border-radius-m;
         text-align: center;
 

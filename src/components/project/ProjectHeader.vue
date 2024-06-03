@@ -1128,7 +1128,7 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: $green-lighter;
+            background: $primary-lighter;
             border-radius: 0 $border-radius-l $border-radius-l 0;
 
             @media screen and (max-width: $min-tablet) {

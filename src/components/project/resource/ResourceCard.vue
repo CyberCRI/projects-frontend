@@ -182,7 +182,7 @@ export default {
 
             .svg-wrapper {
                 padding: $space-2xs;
-                background: $green-lighter;
+                background: $primary-lighter;
                 border-radius: 100%;
                 border: $border-width-s solid $primary;
                 width: 20px;

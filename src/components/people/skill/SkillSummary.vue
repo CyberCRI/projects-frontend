@@ -87,7 +87,7 @@ export default {
 .skill-summary {
     display: flex;
     flex-direction: column;
-    background: $green-lighter;
+    background: $primary-lighter;
     padding: 24px;
     border-radius: $border-radius-l;
 
