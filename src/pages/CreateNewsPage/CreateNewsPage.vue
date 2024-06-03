@@ -58,7 +58,7 @@ export default {
                 // TODO: handle header_image and imageSize
                 const payload = {
                     ...this.form,
-                    publication_date: this.form.publication_date.toISOString(),
+                    publication_date: this.form.publication_date,
                     people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
