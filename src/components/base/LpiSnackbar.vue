@@ -75,7 +75,7 @@ export default {
     }
 
     &.warning {
-        background: $yellow-lighter;
+        background: $yellow;
         border: $border-width-l solid $yellow;
     }
 
