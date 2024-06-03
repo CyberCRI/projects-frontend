@@ -58,7 +58,7 @@ export default {
             try {
                 const formData = {
                     ...this.form,
-                    publication_date: this.form.publication_date.toISOString(),
+                    publication_date: this.form.publication_date,
                     people_groups: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
@@ -68,12 +68,12 @@ export default {
                     formData
                 )
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instruction.save.success'),
+                    message: this.$t('instructions.save.success'),
                     type: 'success',
                 })
             } catch (err) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instruction.save.error')} (${err})`,
+                    message: `${this.$t('instructions.save.error')} (${err})`,
                     type: 'error',
                 })
                 console.error(err)
