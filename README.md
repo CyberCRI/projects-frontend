@@ -1,5 +1,5 @@
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 # Projects
-
 ![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
 - [Projects](#projects)
@@ -14,6 +14,7 @@
   - [Typescript](#typescript)
   - [Backend Endpoints and Schemas](#backend-endpoints-and-schemas)
   - [Environments](#environments)
+- [License](#license)
 
 
 An annuary to display and manage projects related to the UN sustainable goals.
@@ -136,3 +137,14 @@ We use the strongly recommended rules from vue style guide and a few other ones 
 
 > The development environment is built on each push on the branch `main`, staging on each push of an `auto_staging` tag on main branch and the production on by pushsing a semver tag (i.e. `v1.2.3`) on the main branch.
 
+
+
+# License
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
