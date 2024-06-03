@@ -350,7 +350,7 @@ label {
 }
 
 .error-description {
-    color: $salmon-dark;
+    color: $salmon;
     margin-top: $space-s;
     font-size: $font-size-s;
 }

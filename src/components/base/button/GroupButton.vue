@@ -240,10 +240,10 @@ export default {
     z-index: 1;
 
     &.is-danger {
-        box-shadow: 0 0 0 $border-width-s $salmon-dark inset;
+        box-shadow: 0 0 0 $border-width-s $salmon inset;
 
         .button-container.selected {
-            background: $salmon-dark;
+            background: $salmon;
         }
 
         .button-container:not(.selected) {
@@ -257,7 +257,7 @@ export default {
         }
 
         .slider {
-            background: $salmon-dark;
+            background: $salmon;
         }
     }
 

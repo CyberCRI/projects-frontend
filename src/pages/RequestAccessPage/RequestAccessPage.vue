@@ -240,7 +240,7 @@ export default {
 }
 
 .error-message {
-    color: $salmon-dark;
+    color: $salmon;
     margin-top: $space-xs;
     font-size: $font-size-s;
 }

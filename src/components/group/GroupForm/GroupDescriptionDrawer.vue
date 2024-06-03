@@ -159,7 +159,7 @@ export default {
 }
 
 .error-description {
-    color: $salmon-dark;
+    color: $salmon;
     font-size: $font-size-s;
     margin-left: $space-l;
 }

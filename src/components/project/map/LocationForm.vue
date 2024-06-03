@@ -211,7 +211,7 @@ export default {
 
 .delete-button {
     color: $white;
-    background: $salmon-dark;
+    background: $salmon;
     width: 100%;
     padding: $space-m 0;
     font-weight: 700;
