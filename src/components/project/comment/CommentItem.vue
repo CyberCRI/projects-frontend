@@ -273,7 +273,7 @@ $comment-pic-size: pxToRem(72px);
         width: 100%;
         flex-grow: 1;
         padding-bottom: $space-l;
-        border-bottom: $border-width-s solid $green;
+        border-bottom: $border-width-s solid $primary;
 
         .comment-meta {
             display: flex;

@@ -192,7 +192,7 @@ export default {
     padding-inline: 0;
 
     .summary-container {
-        background-color: $green-lighter;
+        background-color: $primary-lighter;
 
         @media screen and (min-width: $min-tablet) {
             padding: $space-l;

@@ -199,7 +199,7 @@ label,
 }
 
 .error-description {
-    color: $salmon-dark;
+    color: $red;
     font-size: $font-size-s;
     margin-left: $space-l;
 }

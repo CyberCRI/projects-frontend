@@ -751,7 +751,7 @@ export default {
 .editor {
     overflow: hidden;
     border-radius: $border-radius-l;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     display: flex;
     flex-flow: column nowrap;
 
@@ -817,7 +817,7 @@ export default {
 
     .editor-header {
         justify-content: space-between;
-        border-bottom: $border-width-s solid $green;
+        border-bottom: $border-width-s solid $primary;
         top: 0;
 
         .icons {
@@ -910,7 +910,7 @@ export default {
     }
 
     .editor .selectedCell {
-        outline: $green dashed 1px;
+        outline: $primary dashed 1px;
     }
 
     .editor * {

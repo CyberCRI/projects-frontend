@@ -969,7 +969,7 @@ export default {
             }
 
             @media screen and (min-width: $min-tablet) {
-                border: $border-width-s solid $green;
+                border: $border-width-s solid $primary;
                 border-radius: $border-radius-l;
             }
 
@@ -990,7 +990,7 @@ export default {
                 align-items: center;
 
                 .quantity-text-badge {
-                    border: $border-width-s solid $green;
+                    border: $border-width-s solid $primary;
                     border-radius: $border-radius-l;
                     background: $white;
                     margin-left: pxToRem(20px);
@@ -1012,7 +1012,7 @@ export default {
                         background: $primary;
                         color: $white;
                         height: 100%;
-                        border-right: $border-width-s solid $green;
+                        border-right: $border-width-s solid $primary;
                         padding: $space-xs $space-unit;
                         display: flex;
                         align-items: center;
@@ -1128,7 +1128,7 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: $green-lighter;
+            background: $primary-lighter;
             border-radius: 0 $border-radius-l $border-radius-l 0;
 
             @media screen and (max-width: $min-tablet) {
@@ -1189,7 +1189,7 @@ export default {
                 height: 66px;
                 align-items: center;
                 border-radius: $border-radius-l;
-                border: $border-width-s solid $green;
+                border: $border-width-s solid $primary;
                 padding-inline: $space-l;
 
                 .end-buttons {

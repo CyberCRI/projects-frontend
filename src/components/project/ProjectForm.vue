@@ -357,7 +357,7 @@ export default {
     .completed-form-snackbar {
         width: fit-content;
         margin: $space-xl auto;
-        border: $border-width-s solid $salmon-dark;
+        border: $border-width-s solid $salmon;
     }
 
     .language {
@@ -376,7 +376,7 @@ export default {
     }
 
     .error-description {
-        color: $salmon-dark;
+        color: $red;
         margin-top: $space-s;
         font-size: $font-size-s;
     }

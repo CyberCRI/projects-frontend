@@ -115,7 +115,7 @@ export default {
     border: none;
 
     .category-card {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-m;
         display: flex;
         flex-direction: column;
@@ -125,7 +125,7 @@ export default {
             width: 30px;
             height: 30px;
             border-radius: 15px;
-            background-color: $blue-lighter;
+            background-color: $primary-lighter;
             box-shadow: 0 0 0 3px $primary-dark;
             display: flex;
             justify-content: center;
@@ -171,7 +171,7 @@ export default {
 
         &:hover:not(.category-card__selected) {
             .category-card--name {
-                background-color: $green-lighter;
+                background-color: $primary-lighter;
             }
         }
 

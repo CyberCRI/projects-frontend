@@ -154,7 +154,7 @@ export default {
             .left {
                 writing-mode: tb-rl;
                 transform: rotate(-180deg);
-                background: $green-lighter;
+                background: $primary-lighter;
                 color: $black;
                 text-align: center;
                 padding: $space-m;
@@ -165,11 +165,11 @@ export default {
                 border-bottom-right-radius: $border-radius-l;
 
                 &.complete {
-                    background: $green;
+                    background: $primary;
                 }
 
                 &.ongoing {
-                    background: $aquamarine;
+                    background: $primary-light;
                 }
 
                 &.cancel {

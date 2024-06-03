@@ -211,13 +211,13 @@ export default {
 
 .delete-button {
     color: $white;
-    background: $salmon-dark;
+    background: $salmon;
     width: 100%;
     padding: $space-m 0;
     font-weight: 700;
     text-transform: capitalize;
     cursor: pointer;
     border: none;
-    border-top: $border-width-s solid $green;
+    border-top: $border-width-s solid $primary;
 }
 </style>

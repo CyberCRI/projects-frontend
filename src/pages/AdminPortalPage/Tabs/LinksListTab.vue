@@ -281,7 +281,7 @@ table {
         background-color: $primary-lighter;
 
         tr th {
-            border-bottom: 1px solid $green;
+            border-bottom: 1px solid $primary;
         }
     }
 
@@ -289,7 +289,7 @@ table {
         tr {
             &:not(:last-child) {
                 td {
-                    border-bottom: 1px solid $green;
+                    border-bottom: 1px solid $primary;
                 }
             }
         }
@@ -325,7 +325,7 @@ table {
     cursor: pointer;
 
     &.active {
-        fill: $green;
+        fill: $primary;
     }
 }
 </style>

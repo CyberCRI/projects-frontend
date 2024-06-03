@@ -46,7 +46,7 @@ export default {
                 display: inline-block;
                 padding: $space-s;
                 background-color: $white;
-                border: $border-width-s solid $green;
+                border: $border-width-s solid $primary;
                 border-radius: $border-radius-m;
             }
         }

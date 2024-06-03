@@ -388,7 +388,7 @@ export default {
             padding-top: 2px; // room for the tab upper border not to be cropped
             margin-bottom: -1px; // merge with content top border if it has some (admin, carousel)
 
-            // same as border-bottom: $border-width-s solid $green;
+            // same as border-bottom: $border-width-s solid $primary;
             // but with a background-image so it passes under the child tab element
             background: transparent
                 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NguL38PwAE4wKCsDeq2gAAAABJRU5ErkJggg==')
@@ -439,15 +439,15 @@ export default {
                     cursor: pointer;
 
                     &-selected {
-                        background-color: $green;
+                        background-color: $primary;
                         color: $primary-dark;
                         border-radius: 8px;
                     }
                 }
 
                 .pellet {
-                    background: $green;
-                    border: 4px solid $green;
+                    background: $primary;
+                    border: 4px solid $primary;
                     border-radius: 50%;
                     margin-right: 12px;
                 }
@@ -514,9 +514,9 @@ export default {
 
             &.selected {
                 background: $primary-lighter;
-                border-left: $border-width-s solid $green;
-                border-top: $border-width-s solid $green;
-                border-right: $border-width-s solid $green;
+                border-left: $border-width-s solid $primary;
+                border-top: $border-width-s solid $primary;
+                border-right: $border-width-s solid $primary;
                 border-top-left-radius: $border-radius-l;
                 border-top-right-radius: $border-radius-l;
                 border-bottom: $border-width-s solid $primary-lighter; // mask parent pseudo border-bottom with background color
@@ -532,7 +532,7 @@ export default {
         border-radius: unset;
 
         &.border {
-            border: $border-width-s solid $green;
+            border: $border-width-s solid $primary;
             overflow: hidden;
             border-radius: $border-radius-l;
         }

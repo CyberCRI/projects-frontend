@@ -129,7 +129,7 @@ export default {
 
     &.shadowed {
         --popper-theme-box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
-        --popper-theme-border-color: #{$green};
+        --popper-theme-border-color: #{$primary};
         --popper-theme-background-color: #{$white};
         --popper-theme-padding: #{$space-m};
     }

@@ -502,7 +502,7 @@ export default {
 
     &__button {
         background: $white;
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         padding: $space-s $space-m;
         height: pxToRem(32px);
         box-sizing: border-box;
@@ -602,7 +602,7 @@ export default {
         border-bottom-right-radius: 0;
         border-right-width: 0;
         background: $white;
-        border-color: $green;
+        border-color: $primary;
         display: flex;
         flex-direction: column;
         align-items: center;

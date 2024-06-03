@@ -453,7 +453,7 @@ table {
 
     &.accept-action {
         svg {
-            background-color: $green;
+            background-color: $primary;
         }
     }
 }

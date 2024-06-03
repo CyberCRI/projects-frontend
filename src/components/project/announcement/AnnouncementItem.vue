@@ -115,7 +115,7 @@ export default {
         }
 
         .creation-date {
-            background: $dark-blue;
+            background: $blue;
         }
 
         .deadline {

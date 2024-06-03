@@ -240,7 +240,7 @@ export default {
 }
 
 .error-message {
-    color: $salmon-dark;
+    color: $red;
     margin-top: $space-xs;
     font-size: $font-size-s;
 }
@@ -327,7 +327,7 @@ export default {
     font-size: pxToRem(40px);
     line-height: $line-height-squashed;
     text-align: center;
-    color: $green;
+    color: $primary;
     font-weight: 700;
     padding-left: 30px;
     padding-right: 30px;

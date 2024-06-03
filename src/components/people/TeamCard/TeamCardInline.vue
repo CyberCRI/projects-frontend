@@ -111,7 +111,7 @@ export default {
     align-items: center;
     padding: $space-l $space-m;
     box-sizing: border-box;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: $border-radius-m;
     background-color: $white;
     height: pxToRem(118px);
@@ -172,7 +172,7 @@ export default {
     }
 
     .role {
-        background: $green;
+        background: $primary;
         color: $black;
         font-size: $font-size-s;
         font-weight: 700;

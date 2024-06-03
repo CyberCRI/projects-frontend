@@ -120,7 +120,7 @@ export default {
 
     &.limited {
         @media all and (min-width: $max-tablet) {
-            border: $border-width-s solid $green;
+            border: $border-width-s solid $primary;
             border-radius: $border-radius-l;
         }
     }

@@ -78,7 +78,7 @@ export default {
             flex-direction: column;
             justify-content: center;
             border-radius: 12px;
-            border: $border-width-s solid $green;
+            border: $border-width-s solid $primary;
             overflow: hidden;
             margin: $space-l;
             width: pxToRem(290px);
@@ -93,7 +93,7 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-bottom: $border-width-s solid $green;
+                border-bottom: $border-width-s solid $primary;
 
                 .org-image {
                     width: auto;

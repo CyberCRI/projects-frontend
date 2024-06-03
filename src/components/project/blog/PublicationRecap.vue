@@ -95,7 +95,7 @@ export default {
 .publication-recap {
     overflow: hidden;
     border-radius: $border-radius-l;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     box-sizing: border-box;
     background: $white;
     max-height: pxToRem(380px);
@@ -150,7 +150,7 @@ export default {
                 transition: 0.15s all ease-in-out;
                 will-change: transform;
                 z-index: -1;
-                background: $green;
+                background: $primary;
             }
 
             &:hover {
@@ -205,7 +205,7 @@ export default {
         .publication-title {
             font-size: $font-size-m;
             font-weight: 700;
-            border-bottom: $border-width-m solid $green;
+            border-bottom: $border-width-m solid $primary;
             padding-bottom: $space-m;
             margin-bottom: $space-m;
             margin-top: $space-m;

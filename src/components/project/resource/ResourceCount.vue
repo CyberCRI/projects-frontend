@@ -44,7 +44,7 @@ export default {
 <style lang="scss" scoped>
 .resource-count {
     cursor: pointer;
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: $border-radius-m;
     overflow: hidden;
     width: 150px;

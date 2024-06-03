@@ -24,38 +24,24 @@
                     {{ community.name }}
                 </h3>
             </div>
-
-            <div v-if="selected" class="gradient-ctn">
-                <div class="gradient"></div>
-            </div>
         </a>
-        <div v-if="selected" class="selected-icon">
-            <IconImage class="icon" name="Check" />
-        </div>
     </div>
 </template>
 
 <script>
 import PatatoidIcon from '@/components/base/media/PatatoidIcon.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 
 export default {
     name: 'CommunityCard',
 
     components: {
         PatatoidIcon,
-        IconImage,
     },
 
     props: {
         community: {
             type: Object,
             required: true,
-        },
-
-        selected: {
-            type: Boolean,
-            default: false,
         },
     },
 
@@ -82,25 +68,6 @@ export default {
     justify-content: stretch;
     position: relative;
     cursor: pointer;
-
-    .selected-icon {
-        width: 30px;
-        height: 30px;
-        border-radius: 15px;
-        background-color: $blue-lighter;
-        box-shadow: 0 0 0 3px $primary-dark;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        left: 20px;
-        top: -13px;
-
-        .icon {
-            height: 16px;
-            fill: $primary-dark;
-        }
-    }
 }
 
 .community-card {
@@ -108,7 +75,7 @@ export default {
     flex-grow: 1;
     justify-content: center;
     padding: pxToRem(4.8px);
-    border: $border-width-s solid $green;
+    border: $border-width-s solid $primary;
     border-radius: pxToRem(8px);
     position: relative;
     overflow: hidden;

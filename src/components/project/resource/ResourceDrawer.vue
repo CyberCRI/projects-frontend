@@ -414,13 +414,13 @@ export default {
 }
 
 .error-description {
-    color: $salmon-dark;
+    color: $red;
     font-size: $font-size-s;
     margin-left: $space-l;
 }
 
 .error {
-    color: $salmon-dark;
+    color: $red;
     margin-top: $space-s;
     font-size: $font-size-s;
 }

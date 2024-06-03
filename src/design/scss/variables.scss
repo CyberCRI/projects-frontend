@@ -2,31 +2,23 @@
 $navbar-height: 50px;
 
 // COLORS
-$primary: #00b288;
-$primary-lighter: #ebfffa;
-$primary-light: #c2fff0;
-$primary-dark: #1d727c;
-$aquamarine: #99ffe7;
-$green: #00dba7;
-$green-lighter: #f0fffb;
-$black: #000;
-$almost-black: #101010;
-$dark-gray: #363636;
-$mid-gray: #999;
-$light-gray: #b7b7b7;
-$lighter-gray: #dbdbdb;
-$almost-white: #f0f0f0;
-$white: #fff;
-$blue: #6cd5ff;
-$blue-lighter: #e5f8ff;
-$dark-blue: #00b7ff;
-$salmon: #ff9473;
-$salmon-light: #ffc5b3;
-$salmon-dark: #ff3c00;
-$violet: #d6a2ff;
-$violet-dark: #ae47ff;
-$yellow: #fc0;
-$yellow-lighter: #fff5cc;
+$primary: #00dba7; // Carribean green, Brand01, Success
+$primary-lighter: #f0fffb; // Mint cream, Brand01_lighter
+$primary-light: #99ffe7; // Aquamarine, Brand01_light
+$primary-dark: #1d727c; // Ming, Brand01_dark
+$black: #000; // no ?
+$almost-black: #101010; // black
+$dark-gray: #363636; // --> almost black and primary dark ???
+$mid-gray: #999; // Grey04
+$light-gray: #bdbdbd; // Grey03
+$lighter-gray: #d4d4d4; // Grey02
+$almost-white: #f1f1f1; // Grey01
+$white: #fff; // no ?
+$blue: #6cd5ff; // Baby blue, Brand05
+$salmon: #ff9473; // Light Salmon, Brand02
+$violet: #d6a2ff; // Mauve, Brand04
+$yellow: #fc0; // Sunglow, Brand03, Warning
+$red: #ff3c00; // Coquelicot, Error
 $skeleton-0: hsl(200deg 20% 80%);
 $skeleton-100: hsl(200deg 20% 95%);
 $modal-background: rgb(6 6 6 / 85%);

@@ -1,7 +1,7 @@
 <template>
     <div class="resource-wrapper">
         <div
-            :class="[{ 'h-reverse': horizontalReverse, 'blue-hover': blueHover }, color]"
+            :class="{ 'h-reverse': horizontalReverse }"
             class="resource-card shadow-box"
             @click="openResource"
         >
@@ -71,19 +71,6 @@ export default {
             type: String,
             default: null,
         },
-
-        color: {
-            type: String,
-            default: null,
-            validator(value) {
-                return [null, 'blue', 'violet'].includes(value)
-            },
-        },
-
-        blueHover: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     methods: {
@@ -116,7 +103,7 @@ export default {
     }
 
     .resource-card {
-        border: $border-width-s solid $green;
+        border: $border-width-s solid $primary;
         border-radius: $border-radius-m;
         display: flex;
         cursor: pointer;
@@ -128,22 +115,18 @@ export default {
             flex-direction: row-reverse;
 
             .icon-ctn {
-                border-left: 1px solid $green;
+                border-left: 1px solid $primary;
                 border-right: unset;
             }
         }
 
-        &:not(.blue-hover):hover .content {
+        &:hover .content {
             background-color: $primary-lighter;
-        }
-
-        &.blue-hover:hover .content {
-            background-color: $blue-lighter;
         }
 
         .icon-ctn {
             background: $primary;
-            border-right: 1px solid $green;
+            border-right: 1px solid $primary;
             padding: $space-l;
             display: flex;
             justify-content: center;
@@ -154,10 +137,6 @@ export default {
                 width: 30px;
                 max-height: 100%;
                 fill: $white;
-            }
-
-            &.blue {
-                background: $blue;
             }
         }
 
@@ -203,9 +182,9 @@ export default {
 
             .svg-wrapper {
                 padding: $space-2xs;
-                background: $green-lighter;
+                background: $primary-lighter;
                 border-radius: 100%;
-                border: $border-width-s solid $green;
+                border: $border-width-s solid $primary;
                 width: 20px;
                 height: 20px;
                 display: flex;
@@ -222,26 +201,6 @@ export default {
                 &:nth-child(2) {
                     margin-left: $space-2xs;
                 }
-            }
-        }
-
-        &.blue {
-            .icon-ctn {
-                background: $blue;
-            }
-        }
-
-        &.violet {
-            border-color: $violet-dark;
-            color: $violet-dark;
-
-            .icon-ctn {
-                background: $violet;
-                border-right-color: $violet-dark;
-            }
-
-            &.resource-card .icon-ctn {
-                border-left-color: $violet-dark;
             }
         }
     }

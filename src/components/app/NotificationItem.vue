@@ -262,7 +262,7 @@ export default {
 }
 
 .icon {
-    fill: $green;
+    fill: $primary;
     width: 10px;
     height: 10px;
     margin-right: $space-s;

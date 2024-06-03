@@ -60,7 +60,7 @@ export default {
             flex: 25%;
             padding: 8px 16px;
             background: white;
-            border: 1px solid $green;
+            border: 1px solid $primary;
             cursor: pointer;
 
             &:not(:last-child) {

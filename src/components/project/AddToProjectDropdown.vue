@@ -129,7 +129,7 @@ export default {
     flex-direction: column;
     width: max-content;
     padding: $space-m;
-    box-shadow: 0 0 0 1px $green;
+    box-shadow: 0 0 0 1px $primary;
     border-radius: $border-radius-l;
     border-top-right-radius: unset;
     background: $white;

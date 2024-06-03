@@ -232,7 +232,7 @@ export default {
 }
 
 .filter-wrapper {
-    border-bottom: $border-width-s solid $green;
+    border-bottom: $border-width-s solid $primary;
 
     &:last-child {
         border-bottom: none;
