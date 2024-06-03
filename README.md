@@ -1,5 +1,5 @@
-# Projects
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+# Projects
 ![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
 - [Projects](#projects)
