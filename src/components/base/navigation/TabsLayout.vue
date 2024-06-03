@@ -20,6 +20,7 @@
                             }"
                             class="item"
                             @click="selectTab(isMobile ? index : tab.index)"
+                            :data-test="tab.key"
                         >
                             <IconImage
                                 v-if="currentTab.label === tab.label"

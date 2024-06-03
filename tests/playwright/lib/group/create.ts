@@ -8,7 +8,13 @@ export async function createGroup(page: Page, GroupName: string) {
     logger.info('Navigate to group creation page')
     await page.locator('[data-test="dropdown-user-account"]').click()
     await page.locator('[data-test="admin"]').click()
-    await page.locator('[data-test="admin-groups"]').click()
+    try {
+        await page.locator('[data-test="admin-groups"]').click()
+    } catch (e) {
+        // group tab might be hidden in a "seem more" menu if screen is small
+        await page.locator('.tabs-header .more-btn').click()
+        await page.locator('[data-test="admin-groups"]').click()
+    }
     await page.locator('[data-test="create-group"]').click()
     await page.locator('[data-test="group-name-input"]').fill(GroupName)
     await page.locator('[data-test="group-email-input"]').fill('rototo@exemple.com')
