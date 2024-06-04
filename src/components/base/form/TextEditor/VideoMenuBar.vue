@@ -95,36 +95,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.video-menu-bar {
-    :deep(.menu-item) {
-        color: $white;
-    }
-
-    &::after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $primary-dark;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-
-    .custom-width-input {
-        display: block;
-        flex-grow: 1;
-        flex-shrink: 1;
-
-        input {
-            font-size: $font-size-s;
-            height: 24px;
-            width: 60px;
-        }
-    }
-}
-</style>
