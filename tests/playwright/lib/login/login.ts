@@ -8,7 +8,7 @@ export async function logIn(page: Page, user: User) {
     logger.info('Click on login button')
     await page.goto('/')
     await page.locator('[data-test="test-login-button"]').click()
-    logger.info('Fill username or email')
+    logger.info(`Fill username or email (${user.email})`)
     await page.locator('[data-test="username"]').fill(user.email)
     logger.info('Fill password')
     await page.locator('[data-test="password"]').fill(user.password)

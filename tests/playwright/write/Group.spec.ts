@@ -7,7 +7,7 @@ import { logIn, logOut, createGroup, deleteGroup, setRights, testRights, makeId 
 const logger = new Logger(LogLevel.Debug)
 const groupName = makeId(5)
 
-const rights = ['member', 'editor', 'leader']
+const rights = ['leader', 'editor', 'member']
 
 test(`test-${users.admin.email}`, async ({ page }) => {
     await page.goto('/')
