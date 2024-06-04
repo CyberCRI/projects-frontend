@@ -1186,14 +1186,22 @@ export default {
                 top: 0;
                 transform: translateY(0);
                 margin-top: 40px;
-                height: 66px;
+                height: auto;
                 align-items: center;
                 border-radius: $border-radius-l;
                 border: $border-width-s solid $primary;
                 padding-inline: $space-l;
+                margin-bottom: $space-m;
 
                 .end-buttons {
                     flex-direction: row;
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+
+                    @media screen and (max-width: $max-mobile) {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+
                     width: 100%;
 
                     .space-button {
