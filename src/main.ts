@@ -14,7 +14,6 @@ import analytics from '@/analytics'
 import '@/design/scss/reset.scss'
 import '@/design/scss/main.scss'
 import router from '@/router'
-import Meta from 'vue-meta'
 
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
@@ -119,7 +118,7 @@ async function main(): Promise<void> {
 
     app.use(i18n)
 
-    app.use(router, Meta)
+    app.use(router)
 
     app.use(store)
 
