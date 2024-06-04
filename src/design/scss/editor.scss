@@ -319,7 +319,7 @@
         th {
             background-color: $almost-white;
             padding: $space-s $space-m;
-            color: $dark-gray;
+            color: $almost-black;
             font-weight: bold;
         }
 
@@ -379,7 +379,7 @@
         overflow-wrap: break-word;
 
         &:hover {
-            color: $dark-gray;
+            color: $almost-black;
         }
     }
 
@@ -430,7 +430,7 @@
         font-style: italic;
         border-left: 4px solid $primary-dark;
         padding-left: 20px;
-        color: $dark-gray;
+        color: $almost-black;
     }
 
     img {

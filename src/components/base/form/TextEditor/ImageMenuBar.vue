@@ -5,30 +5,28 @@
         class="tablemenu"
         :tippy-options="tippyOptions"
     >
-        <div class="image-menu-bar">
-            <button
+        <ContextualToolMenu class="image-menu-bar">
+            <TextButtonMenuItem
                 v-for="(item, index) in items"
                 :key="index"
-                type="button"
-                class="labelled-menu-item"
-                :class="{ 'is-active': item.isActive ? item.isActive() : null }"
-                @click="item.action"
-                :title="item.title"
-                :disabled="item.isDisabled ? item.isDisabled() : null"
-                v-text="item.label"
-            ></button>
-        </div>
+                :item="item"
+            ></TextButtonMenuItem>
+        </ContextualToolMenu>
     </LpiBubbleMenu>
 </template>
 
 <script>
 import { LpiBubbleMenu } from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 import menuBarTippyOptions from './menuBarTippyOptions.js'
+import ContextualToolMenu from './ContexttualToolMenu.vue'
+import TextButtonMenuItem from './TextButtonMenuItem.vue'
 export default {
     name: 'ImageMenuBar',
 
     components: {
         LpiBubbleMenu,
+        ContextualToolMenu,
+        TextButtonMenuItem,
     },
 
     props: {
@@ -112,50 +110,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.image-menu-bar {
-    position: relative;
-    align-items: center;
-    background: $dark-gray;
-    color: $white;
-    display: flex;
-    padding: pxToRem(5px) pxToRem(20px);
-
-    .labelled-menu-item {
-        color: $white;
-        background-color: $almost-black;
-        white-space: nowrap;
-
-        &.is-active {
-            background-color: $white;
-            color: $almost-black;
-        }
-    }
-
-    &::after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $dark-gray;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-
-    .custom-width-input {
-        display: block;
-        flex-grow: 1;
-        flex-shrink: 1;
-
-        input {
-            font-size: $font-size-xs;
-            height: 24px;
-            width: 60px;
-        }
-    }
-}
-</style>

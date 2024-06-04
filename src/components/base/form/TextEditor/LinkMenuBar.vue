@@ -5,12 +5,12 @@
             class="linkmenu"
             :should-show="({ editor }) => editor.isActive('link')"
         >
-            <div class="link-menu-bar">
+            <ContextualToolMenu class="link-menu-bar">
                 <template v-for="(item, index) in items">
                     <div class="divider" v-if="item.type === 'divider'" :key="`divider${index}`" />
                     <MenuItem v-else v-bind="item" :key="index" />
                 </template>
-            </div>
+            </ContextualToolMenu>
         </LpiBubbleMenu>
     </div>
 </template>
@@ -18,6 +18,7 @@
 <script>
 import { LpiBubbleMenu } from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 import MenuItem from './MenuItem.vue'
+import ContextualToolMenu from './ContexttualToolMenu.vue'
 
 export default {
     name: 'LinkMenuBar',
@@ -25,6 +26,7 @@ export default {
     components: {
         MenuItem,
         LpiBubbleMenu,
+        ContextualToolMenu,
     },
 
     props: {
@@ -69,31 +71,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.link-menu-bar {
-    position: relative;
-    align-items: center;
-    background: $dark-gray;
-    color: $white;
-    display: flex;
-    padding: pxToRem(5px) pxToRem(20px);
-
-    :deep(.menu-item) {
-        color: $white;
-    }
-
-    &::after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $dark-gray;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-}
-</style>

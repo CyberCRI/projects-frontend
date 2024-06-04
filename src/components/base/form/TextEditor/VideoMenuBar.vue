@@ -6,23 +6,17 @@
         :tippy-options="tippyOptions"
         deep-selector="iframe"
     >
-        <div class="video-menu-bar">
-            <button
+        <ContextualToolMenu class="video-menu-bar">
+            <TextButtonMenuItem
                 v-for="(item, index) in labeled_items"
                 :key="'a' + index"
-                type="button"
-                class="labelled-menu-item"
-                :class="{ 'is-active': item.isActive ? item.isActive() : null }"
-                @click="item.action"
-                :title="item.title"
-                :disabled="item.isDisabled ? item.isDisabled() : null"
-                v-text="item.label"
-            ></button>
+                :item="item"
+            ></TextButtonMenuItem>
             <template v-for="(item, index) in items">
                 <div class="divider" v-if="item.type === 'divider'" :key="`divider${index}`" />
                 <MenuItem v-else v-bind="item" :key="index" />
             </template>
-        </div>
+        </ContextualToolMenu>
     </LpiBubbleMenu>
 </template>
 
@@ -30,13 +24,16 @@
 import { LpiBubbleMenu } from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 import MenuItem from './MenuItem.vue'
 import menuBarTippyOptions from './menuBarTippyOptions.js'
-
+import ContextualToolMenu from './ContexttualToolMenu.vue'
+import TextButtonMenuItem from './TextButtonMenuItem.vue'
 export default {
     name: 'VideoMenuBar',
 
     components: {
         MenuItem,
         LpiBubbleMenu,
+        ContextualToolMenu,
+        TextButtonMenuItem,
     },
 
     props: {
@@ -98,54 +95,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.video-menu-bar {
-    position: relative;
-    align-items: center;
-    background: $dark-gray;
-    color: $white;
-    display: flex;
-    padding: pxToRem(5px) pxToRem(20px);
-
-    :deep(.menu-item) {
-        color: $white;
-    }
-
-    &::after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $dark-gray;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-
-    .labelled-menu-item {
-        color: $white;
-        background-color: $almost-black;
-        white-space: nowrap;
-
-        &.is-active {
-            background-color: $white;
-            color: $almost-black;
-        }
-    }
-
-    .custom-width-input {
-        display: block;
-        flex-grow: 1;
-        flex-shrink: 1;
-
-        input {
-            font-size: $font-size-s;
-            height: 24px;
-            width: 60px;
-        }
-    }
-}
-</style>

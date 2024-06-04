@@ -5,12 +5,12 @@
         class="tablemenu"
         :tippy-options="tippyOptions"
     >
-        <div class="table-menu-bar">
+        <ContextualToolMenu class="table-menu-bar">
             <template v-for="(item, index) in items">
                 <div class="divider" v-if="item.type === 'divider'" :key="`divider${index}`" />
                 <MenuItem v-else v-bind="item" :key="index" />
             </template>
-        </div>
+        </ContextualToolMenu>
     </LpiBubbleMenu>
 </template>
 
@@ -18,6 +18,7 @@
 import { LpiBubbleMenu } from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 import MenuItem from './MenuItem.vue'
 import { posToDOMRect } from '@tiptap/core'
+import ContextualToolMenu from './ContexttualToolMenu.vue'
 
 export default {
     name: 'TableMenuBar',
@@ -25,6 +26,7 @@ export default {
     components: {
         MenuItem,
         LpiBubbleMenu,
+        ContextualToolMenu,
     },
 
     props: {
@@ -162,31 +164,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.table-menu-bar {
-    position: relative;
-    align-items: center;
-    background: $dark-gray;
-    color: $white;
-    display: flex;
-    padding: 5px 20px;
-
-    :deep(.menu-item) {
-        color: $white;
-    }
-
-    &::after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $dark-gray;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-}
-</style>

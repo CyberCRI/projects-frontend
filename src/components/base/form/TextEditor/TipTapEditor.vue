@@ -924,7 +924,7 @@ export default {
     }
 
     .editor th {
-        background-color: $dark-gray;
+        background-color: $almost-black;
         color: $white;
     }
 
