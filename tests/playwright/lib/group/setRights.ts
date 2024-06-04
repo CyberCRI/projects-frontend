@@ -18,13 +18,16 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
 
     if (rightToSet === 'member') {
         await delay(1000)
-        await page.locator(`[data-test="members"]`).last().click()
+        // TODO find a better way to avoid changing right of non super admin user
+        await page.locator(`[data-test="members"]`).first().click()
     } else if (rightToSet === 'editor') {
         await delay(1000)
-        await page.locator(`[data-test="editors"]`).last().click()
+        // TODO find a better way to avoid changing right of non super admin user
+        await page.locator(`[data-test="editors"]`).first().click()
     } else if (rightToSet === 'leader') {
         await delay(1000)
-        await page.locator(`[data-test="leaders"]`).last().click()
+        // TODO find a better way to avoid changing right of non super admin user
+        await page.locator(`[data-test="leaders"]`).first().click()
     }
     await delay(1000)
     await page.locator(`[data-test="confirm-button"]`).click()
