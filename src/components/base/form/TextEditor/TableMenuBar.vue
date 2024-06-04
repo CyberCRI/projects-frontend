@@ -167,7 +167,7 @@ export default {
 .table-menu-bar {
     position: relative;
     align-items: center;
-    background: $dark-gray;
+    background: $primary-dark;
     color: $white;
     display: flex;
     padding: 5px 20px;
@@ -182,7 +182,7 @@ export default {
         height: 0;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 10px solid $dark-gray;
+        border-top: 10px solid $primary-dark;
         position: absolute;
         top: 100%;
         left: 50%;

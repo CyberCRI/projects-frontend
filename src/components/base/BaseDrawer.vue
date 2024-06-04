@@ -183,7 +183,7 @@ $slide-duration: 400ms;
     inset: 0;
     height: 100vh;
     width: 100vw;
-    background-color: $dark-gray;
+    background-color: $modal-background;
     opacity: 0.3;
 
     &.background-appear-enter-active {

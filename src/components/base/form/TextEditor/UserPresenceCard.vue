@@ -110,7 +110,7 @@ export default {
     width: auto;
     font-size: 13px;
     text-transform: uppercase;
-    color: $dark-gray;
+    color: $almost-black;
     line-height: $line-height-tight;
     padding-left: 10px;
     align-items: center;
@@ -123,7 +123,7 @@ export default {
     display: inline-block;
     border-bottom: 0 solid lightgrey;
     border-left: 4px solid transparent;
-    color: $dark-gray;
+    color: $almost-black;
     line-height: $line-height-tight;
     padding-left: 10px;
 }

@@ -218,7 +218,7 @@ export default {
         }
 
         .publication-content {
-            color: $dark-gray;
+            color: $almost-black;
             position: relative;
             flex-grow: 1;
             overflow: hidden hidden;
