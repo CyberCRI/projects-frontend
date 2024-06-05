@@ -37,10 +37,14 @@ export default {
         async fetchEvents() {
             // Fetch events
             this.loading = true
+            // today date at midnight
+            let todayZeroHour = new Date()
+            todayZeroHour.setHours(0, 0, 0, 0)
+
             const eventsFromAPi = (
                 await getAllEvents(this.$store.getters['organizations/current']?.code, {
                     ordering: 'event_date',
-                    from_date: new Date().toISOString(),
+                    from_date: todayZeroHour.toISOString(),
                 })
             ).results
 
