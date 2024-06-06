@@ -1869,8 +1869,13 @@
             "success": "The goal has been updated successfully",
             "error": "Error during the goal update"
         },
+        "blog-create": {
+            "success": "The blog entry has been created successfully",
+            "error": "Error during the blog entry creation"
+        },
         "blog-update": {
-            "success": "The blog entry has been updated successfully"
+            "success": "The blog entry has been updated successfully",
+            "error": "Error during the blog entry update"
         },
         "group-added": {
             "success": "The group has been added successfully",
