@@ -44,8 +44,8 @@ export default {
 
     methods: {
         cancel() {
-            // TODO
             this.form = defaultForm()
+            this.$router.push({ name: 'FutureEvents' })
         },
 
         async saveEvent() {
