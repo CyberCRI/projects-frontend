@@ -101,6 +101,13 @@
                     :src="`${PUBLIC_BINARIES_PREFIX}/license.png`"
                     alt="CC BY-NC-SA 4.0"
                 />
+                <p>
+                    This work is licensed under a
+                    <a>
+                        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+                        License.
+                    </a>
+                </p>
             </div>
 
             <div class="creators">
