@@ -2346,5 +2346,17 @@
             "success": "Featured projects saved",
             "error": "Error while trying to save the featured projects"
         }
+    },
+    "message": {
+        "error-login": "An error occured during login. Please try again.",
+        "failed": "Error while sending message. Please try again.",
+        "leave-confirmation": "You're about to leave the page with unsaved data.",
+        "sent": "Message sent",
+        "redirect": "Redirect in progress",
+        "error": {
+            "unauthorized": "Unauthorized: Access is denied due to invalid credentials.",
+            "unprocessable-entity": "Unprocessable entity: Unable to process the contained instructions.",
+            "bad-gateway": "Bad gateway: The server encountered a temporary error and could not complete your request."
+        }
     }
 }
