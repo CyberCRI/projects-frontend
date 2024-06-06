@@ -236,6 +236,10 @@ export default {
                 })
 
                 this.asyncing = false
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('toasts.blog-create.success')}`,
+                    type: 'success',
+                })
 
                 if (closeWindowAfterCreate) this.closeDrawer()
 
@@ -245,50 +249,60 @@ export default {
                         params: { slugOrId: this.project.slug },
                     })
             } catch (error) {
-                // Notification is handled in the axios config.
                 console.error(error)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('toasts.blog-create.error')}`,
+                    type: 'error',
+                })
+            } finally {
+                this.asyncing = false
             }
         },
 
         async updateBlogEntry(closeWindowAfterPatch) {
-            this.asyncing = true
-            const body = {
-                id: this.editedBlog.id,
-                title: this.title,
-                content: this.editorBlogEntry.savedContent,
-                created_at: new Date(this.selectedDate),
-                images_ids: [...this.editedBlog.images, ...this.addedImages],
-            }
+            try {
+                this.asyncing = true
+                const body = {
+                    id: this.editedBlog.id,
+                    title: this.title,
+                    content: this.editorBlogEntry.savedContent,
+                    created_at: new Date(this.selectedDate),
+                    images_ids: [...this.editedBlog.images, ...this.addedImages],
+                }
 
-            const res = await this.$store.dispatch('blogEntries/patchBlogEntry', body)
+                const res = await this.$store.dispatch('blogEntries/patchBlogEntry', body)
 
-            this.editorBlogEntry.originalContent = this.editorBlogEntry.savedContent
+                this.editorBlogEntry.originalContent = this.editorBlogEntry.savedContent
 
-            const connectedUser = this.$store.getters['users/userFromApi']
-            this.notifyPatch({
-                pid: this.$store.state.users.id,
-                author_name: connectedUser
-                    ? connectedUser.given_name + ' ' + connectedUser.family_name
-                    : '',
-                id: res.id,
-                type: 'blog-entry-update',
-                updated_at: res.updated_at,
-                scope: 'project.updated.blog-entry',
-            })
+                const connectedUser = this.$store.getters['users/userFromApi']
+                this.notifyPatch({
+                    pid: this.$store.state.users.id,
+                    author_name: connectedUser
+                        ? connectedUser.given_name + ' ' + connectedUser.family_name
+                        : '',
+                    id: res.id,
+                    type: 'blog-entry-update',
+                    updated_at: res.updated_at,
+                    scope: 'project.updated.blog-entry',
+                })
 
-            this.asyncing = false
+                this.asyncing = false
 
-            if (closeWindowAfterPatch) {
-                this.closeDrawer()
+                if (closeWindowAfterPatch) {
+                    this.closeDrawer()
+                }
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('toasts.blog-update.success')}`,
                     type: 'success',
                 })
-            } else {
+            } catch (error) {
+                console.log(error)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-update.success')}`,
-                    type: 'success',
+                    message: `${this.$t('toasts.blog-update.error')}`,
+                    type: 'error',
                 })
+            } finally {
+                this.asyncing = false
             }
         },
 
