@@ -45,8 +45,8 @@ export default {
     },
     methods: {
         cancel() {
-            // TODO
             this.form = defaultForm()
+            this.$router.push({ name: 'NewsListPage' })
         },
         async saveNews() {
             const isValid = await this.$refs.newsForm.v$.$validate()

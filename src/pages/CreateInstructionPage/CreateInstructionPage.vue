@@ -45,8 +45,8 @@ export default {
     },
     methods: {
         cancel() {
-            // TODO
             this.form = defaultForm()
+            this.$router.push({ name: 'InstructionListPage' })
         },
         async saveInstruction() {
             const isValid = await this.$refs.instructionForm.v$.$validate()
