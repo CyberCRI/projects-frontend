@@ -2346,5 +2346,17 @@
             "success": "Projets à la une sauvegardés",
             "error": "Erreur lors de la sauvegarde des projets à la une"
         }
+    },
+    "message": {
+        "error-login": "Une erreur est survenue pendant la connexion. Veuillez réessayer.",
+        "failed": "Une erreur est survenue durant l'envoi du message. Veuillez réessayer.",
+        "leave-confirmation": "Vous êtes sur le point de quitter la page avec des changements non sauvegardés.",
+        "sent": "Message envoyé",
+        "redirect": "Redirection en cours",
+        "error": {
+            "unauthorized": "Non autorisé: Accès refusé en raison d'informations d'identification non valides.",
+            "unprocessable-entity": "Unprocessable entity: le serveur n'a pas été en mesure de réaliser les instructions demandées",
+            "bad-gateway": "Bad gateway: Le serveur a rencontré une erreur temporaire et n'a pas pu répondre à votre demande."
+        }
     }
 }
