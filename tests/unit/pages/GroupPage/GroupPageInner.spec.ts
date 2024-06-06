@@ -1,4 +1,4 @@
-import GroupPage from '@/pages/GroupPage/GroupPage.vue'
+import GroupPageInner from '@/pages/GroupPage/GroupPageInner.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { flushPromises } from '@vue/test-utils'
@@ -83,15 +83,15 @@ const buildParams = (groupId) => ({
     },
 })
 
-describe('GroupPage', () => {
-    it('should render GroupPage component', () => {
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+describe('GroupPageInner', () => {
+    it('should render GroupPageInner component', () => {
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
     it('should load group data', async () => {
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
         let vm: any = wrapper.vm
         expect(vm.isLoading).toBe(true)
         await flushPromises()
@@ -103,7 +103,7 @@ describe('GroupPage', () => {
 
     it('should display a 404 if no group found', async () => {
         vi.mocked(getGroup).mockRejectedValueOnce({ response: { status: 404 } })
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
         await (wrapper.vm as any).$nextTick() // Wait for component to be fully mounted
         vi.spyOn((wrapper.vm as any).$router, 'replace')
         await flushPromises()
@@ -116,7 +116,7 @@ describe('GroupPage', () => {
     })
 
     it('should not display a edit button button if not allowed', async () => {
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
 
         await flushPromises()
         expect(wrapper.find('.edit-btn').exists()).toBe(false)
@@ -126,7 +126,7 @@ describe('GroupPage', () => {
         store.modules.users.getters.getPermissions = vi.fn().mockReturnValue({
             'organizations.change_peoplegroup': true,
         })
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
 
         await flushPromises()
         expect(wrapper.find('.edit-btn').exists()).toBe(true)
@@ -152,7 +152,7 @@ describe('GroupPage', () => {
             publication_status: 'public',
         })
 
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
 
         await flushPromises()
         expect(wrapper.find('bread-crumbs-stub').exists()).toBe(true)
@@ -177,7 +177,7 @@ describe('GroupPage', () => {
             logo_image: null,
             publication_status: 'public',
         })
-        let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
+        let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))
 
         await flushPromises()
         expect(wrapper.find('sub-groups-stub').exists()).toBe(true)
