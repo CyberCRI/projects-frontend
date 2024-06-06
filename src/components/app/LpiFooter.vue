@@ -95,6 +95,14 @@
                 </ul>
             </div>
 
+            <div class="license">
+                <img
+                    id="license-image"
+                    :src="`${PUBLIC_BINARIES_PREFIX}/license.png`"
+                    alt="CC BY-NC-SA 4.0"
+                />
+            </div>
+
             <div class="creators">
                 <div>
                     <p class="projects">{{ $t('footer.projects') }}</p>
@@ -121,9 +129,10 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
+import imageMixin from '@/mixins/imageMixin.ts'
 export default {
     name: 'LpiFooter',
-
+    mixins: [imageMixin],
     components: {
         LpiLogo,
         ReportDrawer,
@@ -210,6 +219,13 @@ footer {
         }
     }
 
+    .license {
+        #license-image {
+            width: pxToRem(95px);
+            height: auto;
+        }
+    }
+
     .creators {
         display: flex;
         align-items: center;
@@ -219,16 +235,15 @@ footer {
             margin-right: $space-m;
             text-align: right;
         }
-    }
+        .lpi-logo {
+            width: pxToRem(95px);
+            height: pxToRem(87px);
+        }
 
-    .lpi-logo {
-        width: pxToRem(95px);
-        height: pxToRem(87px);
-    }
-
-    .projects {
-        font-weight: 700;
-        font-size: $font-size-s;
+        .projects {
+            font-weight: 700;
+            font-size: $font-size-s;
+        }
     }
 
     .report-form {
