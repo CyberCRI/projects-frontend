@@ -39,15 +39,21 @@
                             </RouterLink>
                         </FooterEnglishTips>
                     </li>
-                    <li class="list-item source" @click="goToSource">
-                        <p id="source-text">
-                            {{ $t('footer.sourceText') }}
-                        </p>
-                        <img
-                            id="source-image"
-                            :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
-                            alt="CC BY-NC-SA 4.0"
-                        />
+                    <li class="list-item source">
+                        <a
+                            id="source-link"
+                            href="https://github.com/CyberCRI/projects-frontend"
+                            target="_blank"
+                        >
+                            <p id="source-text">
+                                {{ $t('footer.sourceText') }}
+                            </p>
+                            <img
+                                id="source-image"
+                                :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
+                                alt="CC BY-NC-SA 4.0"
+                            />
+                        </a>
                     </li>
                 </ul>
 
@@ -150,11 +156,6 @@ export default {
             showContactUsDrawer: false,
         }
     },
-    methods: {
-        goToSource() {
-            window.location.href = 'https://github.com/CyberCRI/projects-frontend'
-        },
-    },
     computed: {
         canOpen() {
             return this.$store.state.languages.current === 'fr'
@@ -219,16 +220,18 @@ footer {
             cursor: pointer;
             margin: $space-m auto;
             &.source {
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-                #source-image {
-                    width: auto;
-                    height: 2em;
-                    margin-left: $space-s;
-                }
-                #source-text {
-                    display: inline-block;
+                #source-link {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    #source-image {
+                        width: auto;
+                        height: 2em;
+                        margin-left: $space-s;
+                    }
+                    #source-text {
+                        display: inline-block;
+                    }
                 }
             }
         }
