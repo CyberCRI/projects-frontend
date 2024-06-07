@@ -239,11 +239,14 @@
         }
     },
     "account": {
-        "title": "Create an account",
-        "edit-title": "Edit an account",
+        "title-create-add": "Create / add an account",
+        "title-create": "Create an account",
+        "title-edit": "Edit an account",
+        "title-invite": "Add an account",
+        "switch-to-edit": "Account already exists in your oragniztion, switching to edit",
+        "switch-to-invite": "Account already exists in another oragniztion, switching to add",
         "sub-title": "Fields with * are mandatory. ",
         "link": "Need help? We’re here.",
-        "button": "Create account",
         "form": {
             "first-name": "First name *",
             "last-name": "Last name *",

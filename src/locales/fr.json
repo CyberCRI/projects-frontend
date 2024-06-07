@@ -241,10 +241,13 @@
         }
     },
     "account": {
-        "title": "Créer un compte",
-        "edit-title": "Modifier un compte",
+        "title-create-add": "Créer / ajouter un compte",
+        "title-create": "Créer un compte",
+        "title-edit": "Modifier un compte",
+        "title-invite": "Ajouter un compte",
+        "switch-to-edit": "Le compte existe déjà dans votre organisation, passage en mode édition",
+        "switch-to-invite": "Le compte existe déjà dans une autre organisation, passage en mode ajout",
         "sub-title": "Les champs avec * sont obligatoires. ",
-        "button": "Créer un compte",
         "link": "Besoin d’aide ? On est là.",
         "form": {
             "first-name": "Prénom *",

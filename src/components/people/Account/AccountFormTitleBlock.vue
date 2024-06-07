@@ -2,7 +2,7 @@
     <div class="title-block">
         <h1 class="main-title">{{ mainTitleLabel }}</h1>
 
-        <p v-if="isAddMode" class="sub-main-title">
+        <p v-if="showHelp" class="sub-main-title">
             {{ $t('account.sub-title') }}<a href="" class="link">{{ $t('account.link') }}</a>
         </p>
     </div>
@@ -13,17 +13,17 @@ export default {
     name: 'AccountFormTitleBlock',
 
     props: {
-        isAddMode: {
+        mainTitleLabel: {
+            type: String,
+            required: true,
+        },
+        showHelp: {
             type: Boolean,
             required: true,
         },
     },
 
-    computed: {
-        mainTitleLabel() {
-            return this.isAddMode ? this.$t('account.title') : this.$t('account.edit-title')
-        },
-    },
+    computed: {},
 }
 </script>
 

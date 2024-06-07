@@ -3,7 +3,10 @@
         <LpiLoader type="simple" />
     </div>
     <div class="account-layout">
-        <AccountFormTitleBlock :is-add-mode="isAddMode" />
+        <AccountFormTitleBlock
+            :main-title-label="mainTitleLabel"
+            :show-help="isAddMode || isInviteMode"
+        />
 
         <TabsLayout
             :align-left="true"
@@ -26,7 +29,7 @@ import GroupForm from '@/components/people/Account/GroupForm.vue'
 export default {
     name: 'AccountLayout',
 
-    emits: ['update:modelValue', 'close'],
+    emits: ['update:modelValue', 'close', 'mode-changed'],
 
     mixins: [imageMixin],
 
@@ -40,6 +43,10 @@ export default {
         isAddMode: {
             type: Boolean,
             default: true,
+        },
+        isInviteMode: {
+            type: Boolean,
+            default: false,
         },
         selectedUser: {
             type: Object,
@@ -56,10 +63,22 @@ export default {
 
     async mounted() {
         this.isLoading = false
-        if (this.selectedUser) await this.setFormFromSelectedUser()
+        if (this.selectedUser?.id) await this.setFormFromSelectedUser()
+        else
+            this.currentUser = {
+                ...this.selectedUser,
+                current_org_role: this.selectedUser?.current_org_role,
+            }
     },
 
     computed: {
+        mainTitleLabel() {
+            return this.isAddMode
+                ? this.$t('account.title-create')
+                : this.isInviteMode
+                  ? this.$t('account.title-invite')
+                  : this.$t('account.title-edit')
+        },
         accountTabs() {
             return [
                 {
@@ -68,7 +87,11 @@ export default {
                     component: AccountForm,
                     props: {
                         isAddMode: this.isAddMode,
+                        isInviteMode: this.isInviteMode,
                         selectedUser: this.currentUser,
+                        onModeChange: (mode) => {
+                            this.$emit('mode-changed', mode)
+                        },
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -81,7 +104,7 @@ export default {
                         isAddMode: this.isAddMode,
                         selectedUser: this.currentUser,
                     },
-                    condition: !!this.currentUser && !this.isAddMode,
+                    condition: !!this.currentUser && !this.isAddMode && !this.isInviteMode,
                     dataTest: 'project-summary',
                 },
             ].filter((tab) => tab.condition)
@@ -121,7 +144,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    margin: auto;
+    margin: 0 auto;
     width: pxToRem(500px);
 }
 </style>

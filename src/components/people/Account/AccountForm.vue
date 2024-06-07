@@ -1,5 +1,15 @@
 <template>
     <form class="form-ctn">
+        <!-- Email -->
+        <div class="sub-section">
+            <TextInput v-model="form.email" @blur="v$.form.email.$touch">
+                <label class="label">{{ $t('account.form.email') }}</label>
+            </TextInput>
+            <p v-for="error of v$.form.email.$errors" :key="error.$uid" class="error-description">
+                {{ error.$message }}
+            </p>
+        </div>
+
         <!-- First Name -->
         <div class="sub-section" ref="info">
             <TextInput v-model="form.given_name" @blur="v$.form.given_name.$touch">
@@ -34,16 +44,6 @@
                 <label class="label">{{ $t('account.form.title') }}</label>
             </TextInput>
             <p v-for="error of v$.form.job.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
-        </div>
-
-        <!-- Email -->
-        <div class="sub-section">
-            <TextInput v-model="form.email" @blur="v$.form.email.$touch">
-                <label class="label">{{ $t('account.form.email') }}</label>
-            </TextInput>
-            <p v-for="error of v$.form.email.$errors" :key="error.$uid" class="error-description">
                 {{ error.$message }}
             </p>
         </div>
@@ -102,7 +102,7 @@
 
         <div class="spacer" v-if="isAddMode" />
 
-        <div v-if="isAddMode" class="sub-section" ref="groups">
+        <div v-if="isAddMode || isInviteMode" class="sub-section" ref="groups">
             <h2 class="title">{{ $t('account.form.groups') }}</h2>
             <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
 
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <ul v-if="isAddMode">
+            <ul v-if="isAddMode || isInviteMode">
                 <GroupHierarchyList
                     v-for="peopleGroup in peopleGroupsTree"
                     :key="peopleGroup.id"
@@ -227,7 +227,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 export default {
     name: 'AccountForm',
 
-    emits: ['close'],
+    emits: ['close', 'mode-changed'],
 
     mixins: [imageMixin],
 
@@ -245,6 +245,10 @@ export default {
         isAddMode: {
             type: Boolean,
             default: true,
+        },
+        isInviteMode: {
+            type: Boolean,
+            default: false,
         },
 
         selectedUser: {
@@ -364,7 +368,7 @@ export default {
             this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
         }
 
-        if (this.isAddMode) await this.setSelectedHierarchyGroups()
+        if (this.isAddMode || this.isInviteMode) await this.setSelectedHierarchyGroups()
 
         this.isLoading = false
     },
