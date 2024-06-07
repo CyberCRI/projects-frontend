@@ -746,7 +746,8 @@
         "directory": "Discover many more projects of other organisations on our meta-portal :",
         "help": "Help",
         "projects": "Projects Platform",
-        "madeBy": "is made by"
+        "madeBy": "is made by",
+        "sourceText": "See the source code"
     },
     "goal": {
         "add": "add a goal",

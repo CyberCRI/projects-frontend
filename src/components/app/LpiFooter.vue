@@ -39,6 +39,16 @@
                             </RouterLink>
                         </FooterEnglishTips>
                     </li>
+                    <li class="list-item source" @click="goToSource">
+                        <p id="source-text">
+                            {{ $t('footer.sourceText') }}
+                        </p>
+                        <img
+                            id="source-image"
+                            :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
+                            alt="CC BY-NC-SA 4.0"
+                        />
+                    </li>
                 </ul>
 
                 <ul class="footer-links">
@@ -95,21 +105,6 @@
                 </ul>
             </div>
 
-            <div class="license">
-                <img
-                    id="license-image"
-                    :src="`${PUBLIC_BINARIES_PREFIX}/license.png`"
-                    alt="CC BY-NC-SA 4.0"
-                />
-                <p>
-                    This work is licensed under a
-                    <a>
-                        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-                        License.
-                    </a>
-                </p>
-            </div>
-
             <div class="creators">
                 <div>
                     <p class="projects">{{ $t('footer.projects') }}</p>
@@ -155,7 +150,11 @@ export default {
             showContactUsDrawer: false,
         }
     },
-
+    methods: {
+        goToSource() {
+            window.location.href = 'https://github.com/CyberCRI/projects-frontend'
+        },
+    },
     computed: {
         canOpen() {
             return this.$store.state.languages.current === 'fr'
@@ -219,17 +218,23 @@ footer {
         li {
             cursor: pointer;
             margin: $space-m auto;
+            &.source {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                #source-image {
+                    width: auto;
+                    height: 2em;
+                    margin-left: $space-s;
+                }
+                #source-text {
+                    display: inline-block;
+                }
+            }
         }
 
         a:hover {
             text-decoration: underline;
-        }
-    }
-
-    .license {
-        #license-image {
-            width: pxToRem(95px);
-            height: auto;
         }
     }
 
