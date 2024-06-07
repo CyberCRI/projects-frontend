@@ -41,15 +41,14 @@
                     </li>
                     <li class="list-item source">
                         <a
-                            id="source-link"
+                            class="source-link"
                             href="https://github.com/CyberCRI/projects-frontend"
                             target="_blank"
                         >
-                            <p id="source-text">
+                            <span>
                                 {{ $t('footer.sourceText') }}
-                            </p>
+                            </span>
                             <img
-                                id="source-image"
                                 :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
                                 alt="CC BY-NC-SA 4.0"
                             />
@@ -220,17 +219,14 @@ footer {
             cursor: pointer;
             margin: $space-m auto;
             &.source {
-                #source-link {
+                .source-link {
                     display: flex;
                     align-items: center;
                     cursor: pointer;
-                    #source-image {
+                    gap: $space-s;
+                    img {
                         width: auto;
                         height: 2em;
-                        margin-left: $space-s;
-                    }
-                    #source-text {
-                        display: inline-block;
                     }
                 }
             }
