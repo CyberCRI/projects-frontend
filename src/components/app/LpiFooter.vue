@@ -39,7 +39,7 @@
                             </RouterLink>
                         </FooterEnglishTips>
                     </li>
-                    <li class="list-item source">
+                    <li class="list-item">
                         <a
                             class="source-link"
                             href="https://github.com/CyberCRI/projects-frontend"
@@ -218,16 +218,16 @@ footer {
         li {
             cursor: pointer;
             margin: $space-m auto;
-            &.source {
-                .source-link {
-                    display: flex;
-                    align-items: center;
-                    cursor: pointer;
-                    gap: $space-s;
-                    img {
-                        width: auto;
-                        height: 2em;
-                    }
+
+            .source-link {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                gap: $space-s;
+
+                img {
+                    width: auto;
+                    height: 2em;
                 }
             }
         }
@@ -246,6 +246,7 @@ footer {
             margin-right: $space-m;
             text-align: right;
         }
+
         .lpi-logo {
             width: pxToRem(95px);
             height: pxToRem(87px);
