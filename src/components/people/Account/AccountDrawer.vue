@@ -57,7 +57,8 @@ export default {
         },
 
         isInviteMode() {
-            return !(this.targetUser || this.selectedUser)?.current_org_role // null if not in current org
+            const user = this.targetUser || this.selectedUser
+            return !this.isAddMode && !user?.current_org_role // null if not in current org
         },
     },
 

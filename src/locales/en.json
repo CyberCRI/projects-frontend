@@ -239,6 +239,8 @@
         }
     },
     "account": {
+        "another-organization": "another organization",
+        "role-in-organization": "in",
         "title-create-add": "Create / add an account",
         "title-create": "Create an account",
         "title-edit": "Edit an account",
@@ -275,7 +277,8 @@
             "user": "User",
             "facilitator": "Facilitator",
             "admin": "Org admin"
-        }
+        },
+        "user-exists-in-other-org": "A user with the same email exists in our database. We can add him/her to your portal here."
     },
     "userItem": {
         "teamLeader": "Group Leader"

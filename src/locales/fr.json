@@ -241,6 +241,8 @@
         }
     },
     "account": {
+        "another-organization": "une autre organisation",
+        "role-in-organization": "dans",
         "title-create-add": "Créer / ajouter un compte",
         "title-create": "Créer un compte",
         "title-edit": "Modifier un compte",
@@ -277,7 +279,8 @@
             "user": "Utilisateur",
             "facilitator": "Facilitateur",
             "admin": "Org admin"
-        }
+        },
+        "user-exists-in-other-org": "Un utilisateur avec le même email existe dans notre base de données. Nous pouvons l'ajouter à votre portail ici."
     },
     "userItem": {
         "teamLeader": "Chef du groupe"

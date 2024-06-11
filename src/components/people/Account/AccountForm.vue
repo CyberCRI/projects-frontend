@@ -10,77 +10,88 @@
             </p>
         </div>
 
-        <!-- First Name -->
-        <div class="sub-section" ref="info">
-            <TextInput v-model="form.given_name" @blur="v$.form.given_name.$touch">
-                <label class="label">{{ $t('account.form.first-name') }}</label>
-            </TextInput>
-            <p
-                v-for="error of v$.form.given_name.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
+        <template v-if="isInviteMode">
+            <p class="invite-notice">
+                {{ $t('account.user-exists-in-other-org') }}
             </p>
-        </div>
 
-        <!-- Last Name -->
-        <div class="sub-section">
-            <TextInput v-model="form.family_name" @blur="v$.form.family_name.$touch">
-                <label class="label">{{ $t('account.form.last-name') }}</label>
-            </TextInput>
-            <p
-                v-for="error of v$.form.family_name.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
-        </div>
+            <OtherOrgUserCard
+                class="other-org-user-card"
+                :user="selectedUser"
+                v-if="selectedUser"
+            />
+        </template>
+        <template v-else>
+            <!-- First Name -->
+            <div class="sub-section" ref="info">
+                <TextInput v-model="form.given_name" @blur="v$.form.given_name.$touch">
+                    <label class="label">{{ $t('account.form.first-name') }}</label>
+                </TextInput>
+                <p
+                    v-for="error of v$.form.given_name.$errors"
+                    :key="error.$uid"
+                    class="error-description"
+                >
+                    {{ error.$message }}
+                </p>
+            </div>
 
-        <!-- Title -->
-        <div class="sub-section">
-            <TextInput v-model="form.job" @blur="v$.form.job.$touch">
-                <label class="label">{{ $t('account.form.title') }}</label>
-            </TextInput>
-            <p v-for="error of v$.form.job.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
-        </div>
-
-        <!-- Picture -->
-        <div class="sub-section">
-            <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
-            <ImageEditor
-                :picture-alt="`${form.name} image`"
-                :contain="true"
-                :round-picture="true"
-                v-model:imageSizes="form.imageSizes"
-                v-model:picture="form.profile_picture"
-                :default-picture="defaultPictures"
-            ></ImageEditor>
-        </div>
-
-        <div class="spacer" />
-
-        <!-- Google -->
-        <template v-if="isAddMode && hasGoogleSync">
+            <!-- Last Name -->
             <div class="sub-section">
-                <h2 class="title">{{ $t('account.form.google') }}</h2>
-                <div>
-                    <input
-                        type="checkbox"
-                        id="google-checkbox"
-                        name="google"
-                        @change="setGoogleCheckbox($event)"
-                    />
-                    <label for="google-checkbox" class="list-label google-checkbox-label">{{
-                        $t('account.form.create-google')
-                    }}</label>
-                </div>
+                <TextInput v-model="form.family_name" @blur="v$.form.family_name.$touch">
+                    <label class="label">{{ $t('account.form.last-name') }}</label>
+                </TextInput>
+                <p
+                    v-for="error of v$.form.family_name.$errors"
+                    :key="error.$uid"
+                    class="error-description"
+                >
+                    {{ error.$message }}
+                </p>
+            </div>
+
+            <!-- Title -->
+            <div class="sub-section">
+                <TextInput v-model="form.job" @blur="v$.form.job.$touch">
+                    <label class="label">{{ $t('account.form.title') }}</label>
+                </TextInput>
+                <p v-for="error of v$.form.job.$errors" :key="error.$uid" class="error-description">
+                    {{ error.$message }}
+                </p>
+            </div>
+
+            <!-- Picture -->
+            <div class="sub-section">
+                <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
+                <ImageEditor
+                    :picture-alt="`${form.name} image`"
+                    :contain="true"
+                    :round-picture="true"
+                    v-model:imageSizes="form.imageSizes"
+                    v-model:picture="form.profile_picture"
+                    :default-picture="defaultPictures"
+                ></ImageEditor>
             </div>
 
             <div class="spacer" />
+
+            <!-- Google -->
+            <template v-if="isAddMode && hasGoogleSync">
+                <div class="sub-section">
+                    <h2 class="title">{{ $t('account.form.google') }}</h2>
+                    <div>
+                        <div class="checkbox-item">
+                            <LpiCheckbox
+                                id="google-checkbox"
+                                :label="$t('account.form.create-google')"
+                                v-model="form.create_in_google"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="spacer" />
+            </template>
         </template>
 
         <!-- Rights -->
@@ -200,6 +211,7 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
@@ -223,6 +235,7 @@ import { resetUserPassword } from '@/api/people.service.ts'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import OtherOrgUserCard from '@/components/people/Account/OtherOrgUserCard.vue'
 
 export default {
     name: 'AccountForm',
@@ -239,6 +252,8 @@ export default {
         ConfirmModal,
         GroupHierarchyList,
         ImageEditor,
+        OtherOrgUserCard,
+        LpiCheckbox,
     },
 
     props: {
@@ -429,9 +444,9 @@ export default {
             return []
         },
 
-        setGoogleCheckbox(e) {
-            this.form.create_in_google = e.target.checked
-        },
+        // setGoogleCheckbox(e) {
+        //     this.form.create_in_google = e.target.checked
+        // },
 
         toggleShowRemoveUserVisible() {
             this.showRemoveUserQuit = !this.showRemoveUserQuit
@@ -671,6 +686,10 @@ export default {
                 border-radius: $border-radius-xs;
                 padding: $space-m $space-s;
                 margin-right: $space-m;
+
+                &:hover {
+                    background-color: $primary-lighter;
+                }
             }
         }
 
@@ -723,7 +742,33 @@ export default {
     }
 }
 
-.google-checkbox-label {
-    display: inline;
+.invite-notice,
+.other-org-user-card {
+    margin: $space-l 0;
+}
+
+.checkbox-item {
+    border: 1px solid $primary-dark;
+    padding: $space-m;
+    margin: $space-s pxToRem(16px) $space-s 0;
+    border-radius: $border-radius-xs;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    width: max-content;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
+
+    > label {
+        font-weight: 700;
+        font-size: $font-size-m;
+        line-height: $line-height-tight;
+        color: $primary-dark;
+        margin: 0;
+        cursor: pointer;
+        margin-left: $space-s;
+    }
 }
 </style>
