@@ -72,7 +72,7 @@ export default {
 
     props: {
         modelValue: {
-            type: Object, // map groupid: 'members'|'leaders'|'editors'|false
+            type: Object, // map {[groupid]: 'members'|'leaders'|'editors'|false}
             required: true,
         },
     },
@@ -141,23 +141,6 @@ export default {
         },
 
         addRemovePeopleGroup(groupId) {
-            // group.value = !group.value
-            // const index = this.selectedGroups.findIndex((grp) => grp.id === group.id)
-
-            // if (index !== -1) {
-            //     this.selectedGroups.splice(index, 1)
-            // } else this.selectedGroups.push(group)
-
-            // this.form.roles_to_add = [
-            //     ...this.selectedGroups.map((group) => {
-            //         for (const role of group.roles) {
-            //             if (role.split(':')[2] === 'members') {
-            //                 return role
-            //             }
-            //         }
-            //     }),
-            // ]
-
             if (this.modelValue[groupId])
                 this.$emit('update:modelValue', { ...this.modelValue, [groupId]: false })
             else this.$emit('update:modelValue', { ...this.modelValue, [groupId]: 'members' })
