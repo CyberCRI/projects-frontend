@@ -261,7 +261,9 @@
             "rights": "Droits",
             "rights-description": "Droits accordés sur la plateforme de projets",
             "groups": "Groupes",
-            "groups-description": "Cet utilisateur fera partie des groupes suivants:"
+            "groups-description": "Cet utilisateur fera partie des groupes suivants:",
+            "groups-roles": "Chef de groupe et éditeur",
+            "groups-roles-description": "Cet utilisateur sera l'administrateur du groupe des groupes suivants :"
         },
         "password-reset": {
             "success": "Lien de changement de mot de passe envoyé",

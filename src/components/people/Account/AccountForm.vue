@@ -113,46 +113,7 @@
 
         <div class="spacer" v-if="isAddMode" />
 
-        <div v-if="isAddMode || isInviteMode" class="sub-section" ref="groups">
-            <h2 class="title">{{ $t('account.form.groups') }}</h2>
-            <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
-
-            <div v-if="selectedGroups.length > 0" class="current-groups-ctn">
-                <div v-for="group in selectedGroups" :key="group.id">
-                    <FilterValue
-                        :label="group.name"
-                        class="actionable"
-                        icon="Close"
-                        @click="addRemovePeopleGroup(group)"
-                    />
-                </div>
-            </div>
-
-            <ul v-if="isAddMode || isInviteMode">
-                <GroupHierarchyList
-                    v-for="peopleGroup in peopleGroupsTree"
-                    :key="peopleGroup.id"
-                    :parent="peopleGroup"
-                    @add-group="addRemovePeopleGroup"
-                >
-                    <input
-                        type="checkbox"
-                        :id="peopleGroup.id"
-                        :name="peopleGroup.name"
-                        :checked="peopleGroup.value"
-                        @change="addRemovePeopleGroup(peopleGroup)"
-                    />
-                    <label
-                        :for="peopleGroup.id"
-                        class="list-label"
-                        :class="{
-                            'list-label--has-children': peopleGroup.children.length > 0,
-                        }"
-                        >{{ peopleGroup.name }}</label
-                    >
-                </GroupHierarchyList>
-            </ul>
-        </div>
+        <AccountGroupsForm v-if="isAddMode || isInviteMode" v-model="selectedGroups" />
 
         <div class="spacer" v-if="!isAddMode" />
 
@@ -222,7 +183,6 @@ import {
     pictureApiToImageSizes,
 } from '@/functs/imageSizesUtils.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
-import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import {
     postUser,
     patchUser,
@@ -230,12 +190,11 @@ import {
     postUserPicture,
     patchUserPicture,
 } from '@/api/people.service'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import { resetUserPassword } from '@/api/people.service.ts'
-import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import OtherOrgUserCard from '@/components/people/Account/OtherOrgUserCard.vue'
+import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue'
 
 export default {
     name: 'AccountForm',
@@ -245,15 +204,14 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        FilterValue,
         TextInput,
         RadioButton,
         LpiButton,
         ConfirmModal,
-        GroupHierarchyList,
         ImageEditor,
         OtherOrgUserCard,
         LpiCheckbox,
+        AccountGroupsForm,
     },
 
     props: {
@@ -295,8 +253,7 @@ export default {
             selectedRole: {},
             roles: [], // TODO this doesn't seem realy used
 
-            selectedGroups: [],
-            peopleGroupsTree: [],
+            selectedGroups: {},
 
             isLoading: false,
             asyncSave: false,
@@ -383,8 +340,6 @@ export default {
             this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
         }
 
-        if (this.isAddMode || this.isInviteMode) await this.setSelectedHierarchyGroups()
-
         this.isLoading = false
     },
 
@@ -423,27 +378,6 @@ export default {
             }
         },
 
-        setSelectedHierarchyGroups() {
-            // We get the current org group hierarchy and we selected the groups already added to the user.
-            getPeopleGroupsHierarchy(this.$store.getters['organizations/current'].code, {
-                organizations: this.$store.getters['organizations/current'].code,
-            }).then((peopleGroupsHierarchy) => {
-                this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
-            })
-        },
-
-        setGroupHierarchy(children) {
-            // this is a recursive call, as the groups have children, that have children, ...
-            if (children && children.length > 0)
-                return children.map((child) => ({
-                    ...child,
-                    value: false,
-                    children: this.setGroupHierarchy(child.children),
-                }))
-
-            return []
-        },
-
         // setGoogleCheckbox(e) {
         //     this.form.create_in_google = e.target.checked
         // },
@@ -458,25 +392,6 @@ export default {
             // dead code ?
             // if (role && role.id !== 0) this.form.groups_ids = [role.id]
             // else this.form.groups_ids = []
-        },
-
-        addRemovePeopleGroup(group) {
-            group.value = !group.value
-            const index = this.selectedGroups.findIndex((grp) => grp.id === group.id)
-
-            if (index !== -1) {
-                this.selectedGroups.splice(index, 1)
-            } else this.selectedGroups.push(group)
-
-            this.form.roles_to_add = [
-                ...this.selectedGroups.map((group) => {
-                    for (const role of group.roles) {
-                        if (role.split(':')[2] === 'members') {
-                            return role
-                        }
-                    }
-                }),
-            ]
         },
 
         async deleteUser() {
@@ -691,13 +606,6 @@ export default {
                     background-color: $primary-lighter;
                 }
             }
-        }
-
-        .current-groups-ctn {
-            display: flex;
-            flex-wrap: wrap;
-            gap: $space-s;
-            margin-bottom: $space-l;
         }
 
         .password-btn-ctn {
