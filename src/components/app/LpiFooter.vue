@@ -39,6 +39,21 @@
                             </RouterLink>
                         </FooterEnglishTips>
                     </li>
+                    <li class="list-item">
+                        <a
+                            class="source-link"
+                            href="https://github.com/CyberCRI/projects-frontend"
+                            target="_blank"
+                        >
+                            <span>
+                                {{ $t('footer.sourceText') }}
+                            </span>
+                            <img
+                                :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
+                                alt="CC BY-NC-SA 4.0"
+                            />
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="footer-links">
@@ -121,9 +136,10 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
+import imageMixin from '@/mixins/imageMixin.ts'
 export default {
     name: 'LpiFooter',
-
+    mixins: [imageMixin],
     components: {
         LpiLogo,
         ReportDrawer,
@@ -139,7 +155,6 @@ export default {
             showContactUsDrawer: false,
         }
     },
-
     computed: {
         canOpen() {
             return this.$store.state.languages.current === 'fr'
@@ -203,6 +218,18 @@ footer {
         li {
             cursor: pointer;
             margin: $space-m auto;
+
+            .source-link {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                gap: $space-s;
+
+                img {
+                    width: auto;
+                    height: 2em;
+                }
+            }
         }
 
         a:hover {
@@ -219,16 +246,16 @@ footer {
             margin-right: $space-m;
             text-align: right;
         }
-    }
 
-    .lpi-logo {
-        width: pxToRem(95px);
-        height: pxToRem(87px);
-    }
+        .lpi-logo {
+            width: pxToRem(95px);
+            height: pxToRem(87px);
+        }
 
-    .projects {
-        font-weight: 700;
-        font-size: $font-size-s;
+        .projects {
+            font-weight: 700;
+            font-size: $font-size-s;
+        }
     }
 
     .report-form {

@@ -747,7 +747,8 @@
         "personal-data": "Politique de protection des données personnelles",
         "help": "Aide",
         "projects": " Plateforme Projects",
-        "madeBy": "créée par"
+        "madeBy": "créée par",
+        "sourceText": "Voir le code source"
     },
     "goal": {
         "add": "ajouter un objectif",
