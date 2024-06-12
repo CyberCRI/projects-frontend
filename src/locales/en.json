@@ -261,7 +261,8 @@
             "groups": "Groups",
             "groups-description": "This user will be part of the following groups",
             "groups-roles": "Group leader & editor",
-            "groups-roles-description": "This user will be the group admin of the following group(s):"
+            "groups-roles-description": "This user will be the group admin of the following group(s):",
+            "no-group-selected": "No groups yet"
         },
         "password-reset": {
             "success": "Password reset link send",

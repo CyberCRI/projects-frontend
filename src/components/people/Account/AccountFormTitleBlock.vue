@@ -3,7 +3,10 @@
         <h1 class="main-title">{{ mainTitleLabel }}</h1>
 
         <p v-if="showHelp" class="sub-main-title">
-            {{ $t('account.sub-title') }}<a href="" class="link">{{ $t('account.link') }}</a>
+            {{ $t('account.sub-title')
+            }}<router-link :to="{ name: 'Help' }" class="link">{{
+                $t('account.link')
+            }}</router-link>
         </p>
     </div>
 </template>

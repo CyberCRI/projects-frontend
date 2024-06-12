@@ -113,37 +113,39 @@
 
         <div class="spacer" />
 
-        <AccountGroupsForm v-model="selectedGroups" />
+        <template v-if="hasRoleInCurrentOrg">
+            <AccountGroupsForm v-model="selectedGroups" />
 
-        <div class="spacer" />
+            <div class="spacer" />
 
-        <div v-if="!isAddMode" class="sub-section" ref="password">
-            <h2 class="title">{{ $t('account.reset-delete') }}</h2>
+            <div v-if="!isAddMode" class="sub-section" ref="password">
+                <h2 class="title">{{ $t('account.reset-delete') }}</h2>
 
-            <div class="password-btn-ctn">
-                <LpiButton
-                    @click="resetPassword"
-                    btn-icon="Lock"
-                    :label="$t('account.reset-password')"
-                    :secondary="true"
-                ></LpiButton>
-                <LpiButton
-                    btn-icon="TrashCanOutline"
-                    :label="$t('account.delete-account')"
-                    :secondary="true"
-                    @click="toggleShowRemoveUserVisible"
-                ></LpiButton>
-                <ConfirmModal
-                    v-if="showRemoveUserQuit"
-                    :content="$t('common.remove-user')"
-                    :title="$t('project.remove-user-title')"
-                    :cancel-button-label="'common.cancel'"
-                    :confirm-button-label="'project.remove-user'"
-                    @cancel="toggleShowRemoveUserVisible"
-                    @confirm="deleteUser"
-                />
+                <div class="password-btn-ctn">
+                    <LpiButton
+                        @click="resetPassword"
+                        btn-icon="Lock"
+                        :label="$t('account.reset-password')"
+                        :secondary="true"
+                    ></LpiButton>
+                    <LpiButton
+                        btn-icon="TrashCanOutline"
+                        :label="$t('account.delete-account')"
+                        :secondary="true"
+                        @click="toggleShowRemoveUserVisible"
+                    ></LpiButton>
+                    <ConfirmModal
+                        v-if="showRemoveUserQuit"
+                        :content="$t('common.remove-user')"
+                        :title="$t('project.remove-user-title')"
+                        :cancel-button-label="'common.cancel'"
+                        :confirm-button-label="'project.remove-user'"
+                        @cancel="toggleShowRemoveUserVisible"
+                        @confirm="deleteUser"
+                    />
+                </div>
             </div>
-        </div>
+        </template>
 
         <div class="sub-section">
             <div class="confirm-ctn">
@@ -291,6 +293,10 @@ export default {
     },
 
     computed: {
+        hasRoleInCurrentOrg() {
+            return this.selectedRole && this.selectedRole.value != 0
+        },
+
         hasGoogleSync() {
             // whether to give option to create user in google too
             return this.$store.getters['organizations/current'].google_sync_enabled
@@ -641,7 +647,6 @@ export default {
         .confirm-ctn {
             gap: 12px;
             display: inline-flex;
-            border-top: $border-width-s solid $lighter-gray;
             width: 100%;
             padding: 12px 0;
             justify-content: center;

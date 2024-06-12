@@ -8,35 +8,41 @@
             <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
 
             <div class="current-groups-ctn">
-                <div v-for="(role, groupId) in modelValue" :key="groupId">
+                <template v-for="(role, groupId) in modelValue">
                     <FilterValue
+                        :key="groupId"
                         v-if="role && peopleGroupsIndex[groupId]"
                         :label="peopleGroupsIndex[groupId].name"
                         class="actionable"
                         icon="Close"
                         @click="addRemovePeopleGroup(groupId)"
                     />
-                </div>
+                </template>
+                <span v-if="noGroupSelected" class="no-group-selected">
+                    {{ $t('account.form.no-group-selected') }}
+                </span>
             </div>
 
-            <ul>
-                <GroupHierarchyList
-                    v-for="peopleGroup in peopleGroupsTree"
-                    :key="peopleGroup.id"
-                    :parent="peopleGroup"
-                    @add-group="addRemovePeopleGroup"
-                    :selected-groups="modelValue"
-                >
-                    <LpiCheckbox
-                        :class="{
-                            'list-label--has-children': peopleGroup.children.length > 0,
-                        }"
-                        :label="peopleGroup.name"
-                        :model-value="!!modelValue['#' + peopleGroup.id]"
-                        @update:model-value="addRemovePeopleGroup(peopleGroup.id)"
-                    />
-                </GroupHierarchyList>
-            </ul>
+            <div class="groups-tree custom-scrollbar">
+                <ul>
+                    <GroupHierarchyList
+                        v-for="peopleGroup in peopleGroupsTree"
+                        :key="peopleGroup.id"
+                        :parent="peopleGroup"
+                        @add-group="addRemovePeopleGroup"
+                        :selected-groups="modelValue"
+                    >
+                        <LpiCheckbox
+                            :class="{
+                                'list-label--has-children': peopleGroup.children.length > 0,
+                            }"
+                            :label="peopleGroup.name"
+                            :model-value="!!modelValue['#' + peopleGroup.id]"
+                            @update:model-value="addRemovePeopleGroup(peopleGroup.id)"
+                        />
+                    </GroupHierarchyList>
+                </ul>
+            </div>
         </div>
 
         <div class="sub-section">
@@ -98,6 +104,15 @@ export default {
     },
 
     computed: {
+        noGroupSelected() {
+            return (
+                // we can have "falsy" role and group from other orgs that should not be taken in account
+                Object.entries(this.modelValue).filter(
+                    ([groupId, role]) => role && this.peopleGroupsIndex[groupId]
+                ).length === 0
+            )
+        },
+
         roleOptions() {
             return [
                 {
@@ -185,6 +200,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: $space-2xl 0;
+}
+
 .current-groups-ctn {
     display: flex;
     flex-wrap: wrap;
@@ -264,5 +286,19 @@ export default {
             align-items: center;
         }
     }
+}
+
+.no-group-selected {
+    background-color: $almost-white;
+    color: $mid-gray;
+    border: $border-width-s solid $mid-gray;
+    border-radius: $border-radius-30;
+    padding: $space-s $space-m;
+    text-transform: uppercase;
+}
+
+.groups-tree {
+    max-height: 22rem;
+    overflow-y: auto;
 }
 </style>

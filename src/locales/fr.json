@@ -263,7 +263,8 @@
             "groups": "Groupes",
             "groups-description": "Cet utilisateur fera partie des groupes suivants:",
             "groups-roles": "Chef de groupe et éditeur",
-            "groups-roles-description": "Cet utilisateur sera l'administrateur du groupe des groupes suivants :"
+            "groups-roles-description": "Cet utilisateur sera l'administrateur du groupe des groupes suivants :",
+            "no-group-selected": "Aucun groupe sélectionné"
         },
         "password-reset": {
             "success": "Lien de changement de mot de passe envoyé",
