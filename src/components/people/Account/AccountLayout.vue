@@ -8,25 +8,16 @@
             :show-help="isAddMode || isInviteMode"
         />
 
-        <!--TabsLayout
-            :align-left="true"
-            :border="false"
-            :tabs="accountTabs"
-            @close="$emit('close')"
-        /-->
-
         <AccountForm
             :is-add-mode="isAddMode"
             :is-invite-mode="isInviteMode"
             :selected-user="currentUser"
-            @mode-change="$emit('mode-changed', $event)"
             @close="$emit('close')"
         />
     </div>
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import { getUser } from '@/api/people.service.ts'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
@@ -35,9 +26,7 @@ import AccountForm from '@/components/people/Account/AccountForm.vue'
 export default {
     name: 'AccountLayout',
 
-    emits: ['update:modelValue', 'close', 'mode-changed'],
-
-    mixins: [imageMixin],
+    emits: ['close'],
 
     components: {
         AccountFormTitleBlock,

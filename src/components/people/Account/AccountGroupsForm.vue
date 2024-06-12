@@ -127,6 +127,7 @@ export default {
                     dataTest: 'button-role-editor',
                     tip: this.$t('group.role.managers.help'),
                 },
+                // keeping for future use
                 // {
                 //     value: 'members',
                 //     label: this.$filters.capitalize(this.$t('group.role.members.label')),
@@ -162,10 +163,8 @@ export default {
                 children.forEach((child) => {
                     this.peopleGroupsIndex['#' + child.id] = child
                 })
-                // TODO why ????
                 return children.map((child) => ({
                     ...child,
-                    // value: false,
                     children: this.setGroupHierarchy(child.children),
                 }))
             }

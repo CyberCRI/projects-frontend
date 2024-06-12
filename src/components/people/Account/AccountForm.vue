@@ -201,7 +201,7 @@ import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue
 export default {
     name: 'AccountForm',
 
-    emits: ['close', 'mode-changed'],
+    emits: ['close'],
 
     mixins: [imageMixin],
 

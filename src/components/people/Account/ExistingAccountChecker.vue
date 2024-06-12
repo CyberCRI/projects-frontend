@@ -4,12 +4,19 @@
             :main-title-label="this.$t('account.title-create-add')"
             :show-help="true"
         />
-        <TextInput
-            input-type="email"
-            v-model="email"
-            :placeholder="$t('profile.edit.general.professional-email.placeholder')"
-            @keyup.enter="searchUser"
-        />
+
+        <div class="input-field">
+            <TextInput
+                input-type="email"
+                v-model="email"
+                :placeholder="$t('profile.edit.general.professional-email.placeholder')"
+                @keyup.enter="searchUser"
+                @blur="v$.email.$validate"
+            />
+            <p v-for="error of v$.email.$errors" :key="error.$uid" class="error-description">
+                {{ error.$message }}
+            </p>
+        </div>
 
         <div class="footer">
             <LpiButton
@@ -22,7 +29,7 @@
             />
 
             <LpiButton
-                :disabled="confirmActionDisabled || asyncing"
+                :disabled="v$.$invalid || asyncing"
                 :label="$filters.capitalize($t('common.confirm'))"
                 :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
@@ -37,6 +44,8 @@ import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleB
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { searchPeopleAdmin } from '@/api/people.service'
+import useValidate from '@vuelidate/core'
+import { helpers, required, email } from '@vuelidate/validators'
 export default {
     name: 'ExistingAccountChecker',
 
@@ -48,17 +57,29 @@ export default {
         return {
             email: '',
             asyncing: false,
+            v$: useValidate(),
         }
     },
 
-    computed: {
-        confirmActionDisabled() {
-            return false // TODO
-        },
+    validations() {
+        return {
+            email: {
+                required: helpers.withMessage(
+                    this.$t('project.form.title-errors.required'),
+                    required
+                ),
+                email: helpers.withMessage(this.$t('form.report.email.format'), email),
+            },
+        }
+    },
+
+    mounted() {
+        this.$el?.querySelector('[type=email]')?.focus()
     },
 
     methods: {
         async searchUser() {
+            if (this.v$.$invalid) return
             // TODO this search method is too lax
             // we need to search by exact email match
             // and get 0 or 1 result only
@@ -92,6 +113,15 @@ export default {
     align-items: stretch;
     margin: 0 auto;
     width: pxToRem(500px);
+}
+
+.input-field {
+    padding: $space-2xs 0;
+}
+
+.error-description {
+    color: $red;
+    font-size: $font-size-s;
 }
 
 .footer {

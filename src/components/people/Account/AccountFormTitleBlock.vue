@@ -25,8 +25,6 @@ export default {
             required: true,
         },
     },
-
-    computed: {},
 }
 </script>
 
@@ -50,35 +48,6 @@ export default {
             font-weight: 700;
             color: $primary-dark;
             text-decoration: underline;
-        }
-    }
-
-    .anchors {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        margin-top: $space-2xl;
-
-        .btn {
-            flex: 25%;
-            padding: 8px 16px;
-            background: white;
-            border: 1px solid $primary;
-            cursor: pointer;
-
-            &:not(:last-child) {
-                border-right: none;
-            }
-
-            &:first-child {
-                border-top-left-radius: 4px;
-                border-bottom-left-radius: 4px;
-            }
-
-            &:last-child {
-                border-top-right-radius: 4px;
-                border-bottom-right-radius: 4px;
-            }
         }
     }
 }
