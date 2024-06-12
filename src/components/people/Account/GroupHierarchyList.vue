@@ -16,14 +16,15 @@
                 :key="item.id"
                 :parent="item"
                 @add-group="setGroupList"
+                :selected-groups="selectedGroups"
             >
                 <LpiCheckbox
                     :class="{
                         'list-label--has-children': item.children.length > 0,
                     }"
                     :label="item.name"
-                    :model-value="item.value"
-                    @update:model-value="setGroupList(item)"
+                    :model-value="!!selectedGroups['#' + item.id]"
+                    @update:model-value="setGroupList(item.id)"
                 />
             </GroupHierarchyList>
         </ul>
@@ -43,6 +44,11 @@ export default {
             type: Object,
             default: () => {},
         },
+
+        selectedGroups: {
+            type: Object, // map {[groupid]: 'members'|'leaders'|'managers'|false}
+            required: true,
+        },
     },
     data() {
         return {
@@ -50,8 +56,8 @@ export default {
         }
     },
     methods: {
-        setGroupList(group) {
-            this.$emit('add-group', group.id)
+        setGroupList(groupId) {
+            this.$emit('add-group', groupId)
         },
     },
 }

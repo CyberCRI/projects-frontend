@@ -1,78 +1,90 @@
 <template>
-    <div class="sub-section" ref="groups">
-        <h2 class="title">{{ $t('account.form.groups') }}</h2>
-        <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
+    <div v-if="isLoading" class="loader">
+        <LoaderSimple />
+    </div>
+    <template v-else>
+        <div class="sub-section" ref="groups">
+            <h2 class="title">{{ $t('account.form.groups') }}</h2>
+            <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
 
-        <div class="current-groups-ctn">
-            <div v-for="(role, groupId) in modelValue" :key="groupId">
-                <FilterValue
-                    v-if="role"
-                    :label="peopleGroupsIndex[groupId].name"
-                    class="actionable"
-                    icon="Close"
-                    @click="addRemovePeopleGroup(groupId)"
-                />
+            <div class="current-groups-ctn">
+                <div v-for="(role, groupId) in modelValue" :key="groupId">
+                    <FilterValue
+                        v-if="role && peopleGroupsIndex[groupId]"
+                        :label="peopleGroupsIndex[groupId].name"
+                        class="actionable"
+                        icon="Close"
+                        @click="addRemovePeopleGroup(groupId)"
+                    />
+                </div>
+            </div>
+
+            <ul>
+                <GroupHierarchyList
+                    v-for="peopleGroup in peopleGroupsTree"
+                    :key="peopleGroup.id"
+                    :parent="peopleGroup"
+                    @add-group="addRemovePeopleGroup"
+                    :selected-groups="modelValue"
+                >
+                    <LpiCheckbox
+                        :class="{
+                            'list-label--has-children': peopleGroup.children.length > 0,
+                        }"
+                        :label="peopleGroup.name"
+                        :model-value="!!modelValue['#' + peopleGroup.id]"
+                        @update:model-value="addRemovePeopleGroup(peopleGroup.id)"
+                    />
+                </GroupHierarchyList>
+            </ul>
+        </div>
+
+        <div class="sub-section">
+            <h2 class="title">{{ $t('account.form.groups-roles') }}</h2>
+            <p class="sub-title">{{ $t('account.form.groups-roles-description') }}</p>
+
+            <div class="group-rights">
+                <template v-for="(role, groupId) in modelValue">
+                    <div
+                        v-if="role && peopleGroupsIndex[groupId]"
+                        :key="groupId"
+                        class="group-item"
+                    >
+                        <p class="group-name">{{ peopleGroupsIndex[groupId].name }}</p>
+                        <div class="check-box-items">
+                            <template v-for="roleOption in roleOptions" :key="roleOption.value">
+                                <div class="item">
+                                    <LpiCheckbox
+                                        :label="roleOption.label"
+                                        :model-value="modelValue[groupId] === roleOption.value"
+                                        @update:model-value="setRole(groupId, roleOption.value)"
+                                    />
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
-
-        <ul>
-            <GroupHierarchyList
-                v-for="peopleGroup in peopleGroupsTree"
-                :key="peopleGroup.id"
-                :parent="peopleGroup"
-                @add-group="addRemovePeopleGroup"
-            >
-                <LpiCheckbox
-                    :class="{
-                        'list-label--has-children': peopleGroup.children.length > 0,
-                    }"
-                    :label="peopleGroup.name"
-                    :model-value="!!modelValue[peopleGroup.id]"
-                    @update:model-value="addRemovePeopleGroup(peopleGroup.id)"
-                />
-            </GroupHierarchyList>
-        </ul>
-    </div>
-
-    <div class="sub-section">
-        <h2 class="title">{{ $t('account.form.groups-roles') }}</h2>
-        <p class="sub-title">{{ $t('account.form.groups-roles-description') }}</p>
-
-        <div class="group-rights">
-            <template v-for="(role, groupId) in modelValue">
-                <div v-if="role" :key="groupId" class="group-item">
-                    <p class="group-name">{{ peopleGroupsIndex[groupId].name }}</p>
-                    <div class="check-box-items">
-                        <template v-for="roleOption in roleOptions" :key="roleOption.value">
-                            <div class="item">
-                                <LpiCheckbox
-                                    :label="roleOption.label"
-                                    :model-value="modelValue[groupId] === roleOption.value"
-                                    @update:model-value="setRole(groupId, roleOption.value)"
-                                />
-                            </div>
-                        </template>
-                    </div>
-                </div>
-            </template>
-        </div>
-    </div>
+    </template>
 </template>
 <script>
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'AccountGroupsForm',
 
     emits: ['update:modelValue'],
 
-    components: { GroupHierarchyList, FilterValue, LpiCheckbox },
+    components: { GroupHierarchyList, FilterValue, LpiCheckbox, LoaderSimple },
 
     props: {
         modelValue: {
-            type: Object, // map {[groupid]: 'members'|'leaders'|'editors'|false}
+            // can contain also groups from other orgs
+            type: Object, // map {[groupid]: 'members'|'leaders'|'managers'|false}
             required: true,
         },
     },
@@ -81,6 +93,7 @@ export default {
         return {
             peopleGroupsTree: [],
             peopleGroupsIndex: {},
+            isLoading: false,
         }
     },
 
@@ -94,10 +107,10 @@ export default {
                     tip: this.$t('group.role.leaders.help'),
                 },
                 {
-                    value: 'editors',
-                    label: this.$filters.capitalize(this.$t('group.role.editors.label')),
+                    value: 'managers',
+                    label: this.$filters.capitalize(this.$t('group.role.managers.label')),
                     dataTest: 'button-role-editor',
-                    tip: this.$t('group.role.editors.help'),
+                    tip: this.$t('group.role.managers.help'),
                 },
                 // {
                 //     value: 'members',
@@ -114,20 +127,25 @@ export default {
     },
 
     methods: {
-        setSelectedHierarchyGroups() {
+        async setSelectedHierarchyGroups() {
             // We get the current org group hierarchy and we selected the groups already added to the user.
-            getPeopleGroupsHierarchy(this.$store.getters['organizations/current'].code, {
-                organizations: this.$store.getters['organizations/current'].code,
-            }).then((peopleGroupsHierarchy) => {
-                this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
-            })
+            this.isLoading = true
+            try {
+                await getPeopleGroupsHierarchy(this.$store.getters['organizations/current'].code, {
+                    organizations: this.$store.getters['organizations/current'].code,
+                }).then((peopleGroupsHierarchy) => {
+                    this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
+                })
+            } finally {
+                this.isLoading = false
+            }
         },
 
         setGroupHierarchy(children) {
             // this is a recursive call, as the groups have children, that have children, ...
             if (children && children.length > 0) {
                 children.forEach((child) => {
-                    this.peopleGroupsIndex[child.id] = child
+                    this.peopleGroupsIndex['#' + child.id] = child
                 })
                 // TODO why ????
                 return children.map((child) => ({
@@ -141,15 +159,27 @@ export default {
         },
 
         addRemovePeopleGroup(groupId) {
-            if (this.modelValue[groupId])
-                this.$emit('update:modelValue', { ...this.modelValue, [groupId]: false })
-            else this.$emit('update:modelValue', { ...this.modelValue, [groupId]: 'members' })
+            const prefixedGroupId =
+                typeof groupId == 'string' && groupId[0] == '#' ? groupId : '#' + groupId
+
+            if (this.modelValue[prefixedGroupId])
+                this.$emit('update:modelValue', { ...this.modelValue, [prefixedGroupId]: false })
+            else
+                this.$emit('update:modelValue', {
+                    ...this.modelValue,
+                    [prefixedGroupId]: 'members',
+                })
         },
 
         setRole(groupId, role) {
-            if (this.modelValue[groupId] === role)
-                this.$emit('update:modelValue', { ...this.modelValue, [groupId]: 'members' })
-            else this.$emit('update:modelValue', { ...this.modelValue, [groupId]: role })
+            const prefixedGroupId =
+                typeof groupId == 'string' && groupId[0] == '#' ? groupId : '#' + groupId
+            if (this.modelValue[prefixedGroupId] === role)
+                this.$emit('update:modelValue', {
+                    ...this.modelValue,
+                    [prefixedGroupId]: 'members',
+                })
+            else this.$emit('update:modelValue', { ...this.modelValue, [prefixedGroupId]: role })
         },
     },
 }

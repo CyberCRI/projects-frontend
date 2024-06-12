@@ -116,10 +116,10 @@ export default {
                     userKey: 'is_leader',
                 },
                 {
-                    value: 'editors',
-                    label: this.$filters.capitalize(this.$t('group.role.editors.label')),
-                    dataTest: 'button-role-editor',
-                    tip: this.$t('group.role.editors.help'),
+                    value: 'managers',
+                    label: this.$filters.capitalize(this.$t('group.role.managers.label')),
+                    dataTest: 'button-role-managers',
+                    tip: this.$t('group.role.managers.help'),
                     userKey: 'is_editor',
                 },
                 {
@@ -138,7 +138,7 @@ export default {
             const index = this.userList.findIndex((usr) => usr.id === user.id)
 
             this.userList[index].role = role
-            this.userList[index].is_manager = role === 'editors'
+            this.userList[index].is_manager = role === 'managers'
             this.userList[index].is_leader = role === 'leaders'
 
             this.$emit('select-role', this.userList)

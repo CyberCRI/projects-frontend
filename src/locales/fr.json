@@ -847,7 +847,7 @@
             "leaders-managers": {
                 "label": "Leader et Manager"
             },
-            "editors": {
+            "managers": {
                 "label": "Editeur",
                 "help": "Editeur"
             }

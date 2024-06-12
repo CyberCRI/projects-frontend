@@ -111,11 +111,11 @@
             </div>
         </div>
 
-        <div class="spacer" v-if="isAddMode" />
+        <div class="spacer" />
 
-        <AccountGroupsForm v-if="isAddMode || isInviteMode" v-model="selectedGroups" />
+        <AccountGroupsForm v-model="selectedGroups" />
 
-        <div class="spacer" v-if="!isAddMode" />
+        <div class="spacer" />
 
         <div v-if="!isAddMode" class="sub-section" ref="password">
             <h2 class="title">{{ $t('account.reset-delete') }}</h2>
@@ -243,17 +243,15 @@ export default {
                 family_name: '',
                 job: '',
                 email: '',
-                roles_to_add: [],
-                roles_to_remove: [],
                 profile_picture: '',
                 create_in_google: false,
                 imageSizes: null,
             },
+            selectedGroups: {},
+            previousGroups: {}, // memo to compare with selected groups on save
             showRemoveUserQuit: false,
             selectedRole: {},
             roles: [], // TODO this doesn't seem realy used
-
-            selectedGroups: {},
 
             isLoading: false,
             asyncSave: false,
@@ -367,6 +365,21 @@ export default {
                 )
             } else this.selectedRole = this.roleOptions[0]
 
+            // can contain groups from other orgs
+            // they'll be ignored in AccountGroupForm
+            // but we need to keep them so they are not removed on save
+            this.selectedGroups =
+                this.selectedUser?.roles?.reduce((acc, roleString) => {
+                    const [scope, groupId, role] = roleString.split(':')
+                    if (scope !== 'peoplegroup') return acc
+                    return {
+                        ...acc,
+                        [groupId]: role,
+                    }
+                }, {}) || {}
+
+            this.previousGroups = { ...this.selectedGroups }
+
             this.form = {
                 ...this.form,
                 given_name: this.selectedUser.given_name,
@@ -419,10 +432,34 @@ export default {
         async confirm() {
             this.asyncSave = true
             try {
-                const usersRoles =
-                    this.selectedRole.value === 0
-                        ? []
-                        : [this.selectedRole.value, ...this.form.roles_to_add]
+                const groupRolesToAdd = []
+                const groupRolesToRemove = []
+
+                Object.entries(this.selectedGroups).forEach(([groupId, role]) => {
+                    // use loose equality to match false and undefined
+                    if (this.previousGroups[groupId] != role) {
+                        if (role) groupRolesToAdd.push(`peoplegroup:${groupId}:${role}`)
+                        if (this.previousGroups[groupId])
+                            groupRolesToRemove.push(
+                                `peoplegroup:${groupId}:${this.previousGroups[groupId]}`
+                            )
+                    }
+                })
+
+                const allRolesToAdd = [...groupRolesToAdd]
+                const allRolesToRemove = [...groupRolesToRemove]
+
+                if (this.selectedRole.value != 0) {
+                    allRolesToAdd.push(this.selectedRole.value)
+                } else if (this.selectedUser) {
+                    allRolesToRemove.push(
+                        `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
+                    )
+                }
+
+                // we don't have to compare previousGroups with selectedGroups for 'deleted one'
+                // because they still are in selectedGroups with a false value
+                // and so are handled by the previous loop
 
                 if (this.isAddMode) {
                     // CREATE
@@ -440,19 +477,12 @@ export default {
                         formData.append('create_in_google', true)
                     }
 
-                    usersRoles.forEach((role) => {
+                    allRolesToAdd.forEach((role) => {
                         formData.append('roles_to_add', role)
                     })
-                    ;(this.form.roles_to_remove || []).forEach((role) => {
+                    allRolesToRemove.forEach((role) => {
                         formData.append('roles_to_remove', role)
                     })
-                    // if role is none remove also organization role
-                    if (this.selectedUser && this.selectedRole.value === 0) {
-                        formData.append(
-                            'roles_to_remove',
-                            `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
-                        )
-                    }
 
                     if (this.form.profile_picture instanceof File) {
                         formData.append(
@@ -477,14 +507,8 @@ export default {
                     const payload = {
                         ...this.form,
                         profile_picture: this.form.profile_picture,
-                        roles_to_add: [...usersRoles],
-                        roles_to_remove:
-                            // if role is none remove also organization role
-                            this.selectedUser && this.selectedRole.value === 0
-                                ? [
-                                      `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`,
-                                  ]
-                                : [],
+                        roles_to_add: [...allRolesToAdd],
+                        roles_to_remove: [...allRolesToRemove],
                     }
 
                     const formData = new FormData()

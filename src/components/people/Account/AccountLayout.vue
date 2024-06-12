@@ -8,10 +8,18 @@
             :show-help="isAddMode || isInviteMode"
         />
 
-        <TabsLayout
+        <!--TabsLayout
             :align-left="true"
             :border="false"
             :tabs="accountTabs"
+            @close="$emit('close')"
+        /-->
+
+        <AccountForm
+            :is-add-mode="isAddMode"
+            :is-invite-mode="isInviteMode"
+            :selected-user="currentUser"
+            @mode-change="$emit('mode-changed', $event)"
             @close="$emit('close')"
         />
     </div>
@@ -22,9 +30,9 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import { getUser } from '@/api/people.service.ts'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
+// import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import AccountForm from '@/components/people/Account/AccountForm.vue'
-import GroupForm from '@/components/people/Account/GroupForm.vue'
+// import GroupForm from '@/components/people/Account/GroupForm.vue'
 
 export default {
     name: 'AccountLayout',
@@ -34,9 +42,10 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        TabsLayout,
+        //     TabsLayout,
         AccountFormTitleBlock,
         LpiLoader,
+        AccountForm,
     },
 
     props: {
@@ -79,36 +88,36 @@ export default {
                   ? this.$t('account.title-invite')
                   : this.$t('account.title-edit')
         },
-        accountTabs() {
-            return [
-                {
-                    key: 'form-account',
-                    label: this.$t('profile.edit.general.tab'),
-                    component: AccountForm,
-                    props: {
-                        isAddMode: this.isAddMode,
-                        isInviteMode: this.isInviteMode,
-                        selectedUser: this.currentUser,
-                        onModeChange: (mode) => {
-                            this.$emit('mode-changed', mode)
-                        },
-                    },
-                    condition: true,
-                    dataTest: 'project-summary',
-                },
-                {
-                    key: 'form-group-account',
-                    label: this.$t('profile.edit.groups.tab'),
-                    component: GroupForm,
-                    props: {
-                        isAddMode: this.isAddMode,
-                        selectedUser: this.currentUser,
-                    },
-                    condition: !!this.currentUser && !this.isAddMode && !this.isInviteMode,
-                    dataTest: 'project-summary',
-                },
-            ].filter((tab) => tab.condition)
-        },
+        // accountTabs() {
+        //     return [
+        //         {
+        //             key: 'form-account',
+        //             label: this.$t('profile.edit.general.tab'),
+        //             component: AccountForm,
+        //             props: {
+        //                 isAddMode: this.isAddMode,
+        //                 isInviteMode: this.isInviteMode,
+        //                 selectedUser: this.currentUser,
+        //                 onModeChange: (mode) => {
+        //                     this.$emit('mode-changed', mode)
+        //                 },
+        //             },
+        //             condition: true,
+        //             dataTest: 'project-summary',
+        //         },
+        //         {
+        //             key: 'form-group-account',
+        //             label: this.$t('profile.edit.groups.tab'),
+        //             component: GroupForm,
+        //             props: {
+        //                 isAddMode: this.isAddMode,
+        //                 selectedUser: this.currentUser,
+        //             },
+        //             condition: !!this.currentUser && !this.isAddMode && !this.isInviteMode,
+        //             dataTest: 'project-summary',
+        //         },
+        //     ].filter((tab) => tab.condition)
+        // },
     },
 
     methods: {
