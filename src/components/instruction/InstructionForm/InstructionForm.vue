@@ -191,7 +191,7 @@ export default {
             this.$emit('update:modelValue', { ...this.modelValue, ...data })
         },
         toggleNotify() {
-            this.updateForm({ notify: !this.modelValue.notify })
+            this.updateForm({ has_to_be_notified: !this.modelValue.has_to_be_notified })
         },
     },
 }
