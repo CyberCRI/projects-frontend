@@ -41,9 +41,9 @@ e2eEnv:
 resources:
   requests:
     cpu: 1m
-    memory: 15Mi
-  limits:
     memory: 30Mi
+  limits:
+    memory: 50Mi
 
 maintenance:
   enabled: false
