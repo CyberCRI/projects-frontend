@@ -97,7 +97,7 @@
         <!-- Rights -->
         <div class="sub-section" ref="rights">
             <h2 class="title">{{ $t('account.form.rights') }}</h2>
-            <p>{{ $t('account.form.rights-description') }}</p>
+            <p>{{ $t('account.form.rights-description') }} {{ organization.name }}</p>
 
             <div class="role-options-ctn">
                 <div v-for="roleOption in roleOptions" :key="roleOption.id" class="role-options">
@@ -293,6 +293,9 @@ export default {
     },
 
     computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
         hasRoleInCurrentOrg() {
             return this.selectedRole && this.selectedRole.value != 0
         },

@@ -18,6 +18,15 @@ export const axiosNoToken = a.create({
     withCredentials: true, // allow to set cookie from response
 })
 
+// this is a special version of axios
+// that doesn't use an interceptor to signal errors in toaters
+// it is currently needed by people.service.ts searchPeopleByExactMail()
+// as the error here just mean that we need to create a new account
+export const axiosNoErrorMessage = a.create({
+    baseURL: import.meta.env.VITE_APP_API_URL,
+    withCredentials: true, // allow to set cookie from response
+})
+
 export const configFormData = {
     headers: {
         'content-type': 'multipart/form-data',
@@ -113,11 +122,17 @@ const responseError = (error: AxiosError) => {
     return Promise.reject(error)
 }
 
+const responseNoToatError = (error: AxiosError) => {
+    return Promise.reject(error)
+}
+
 // Interceptors
 axios.interceptors.request.use(request, requestError)
 axios.interceptors.response.use(response, responseError)
 axiosNoToken.interceptors.request.use(requestNoToken, requestError)
 axiosNoToken.interceptors.response.use(response, responseError)
+axiosNoErrorMessage.interceptors.request.use(request, requestError)
+axiosNoErrorMessage.interceptors.response.use(response, responseNoToatError)
 
 // TODO: remove functions below once we moved everything to new API
 export const getAxiosConfig = (etag?) => {

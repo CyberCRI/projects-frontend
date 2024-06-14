@@ -262,7 +262,7 @@ export default {
             const params = activeFilter
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
-            params.current_org_role = 'admin'
+            params.current_org_role = 'admins,facilitators,users'
             params.limit = 25
             this.request = await searchPeopleAdmin({
                 search: this.searchFilter,

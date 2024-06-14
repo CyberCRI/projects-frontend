@@ -1,4 +1,4 @@
-import { axios, axiosNoToken } from './api.config'
+import { axios, axiosNoToken, axiosNoErrorMessage } from './api.config'
 import { APIResponseList } from '@/api/types'
 import { PeopleModel } from '@/models/people.model'
 import { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
@@ -73,6 +73,16 @@ export async function searchPeopleAdmin({
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/user/admin-list/?search=${search}&current_org_pk=${org_id}`,
+            adaptedParams
+        )
+    ).data
+}
+
+export async function searchPeopleByExactMail(email: string, params: object): Promise<PeopleModel> {
+    const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
+    return (
+        await axiosNoErrorMessage.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/get-by-email/${email}/`,
             adaptedParams
         )
     ).data

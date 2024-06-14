@@ -43,7 +43,7 @@
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import { searchPeopleAdmin } from '@/api/people.service'
+import { searchPeopleByExactMail } from '@/api/people.service'
 import useValidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 export default {
@@ -77,28 +77,30 @@ export default {
         this.$el?.querySelector('[type=email]')?.focus()
     },
 
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+    },
+
     methods: {
         async searchUser() {
             if (this.v$.$invalid) return
             // TODO this search method is too lax
             // we need to search by exact email match
             // and get 0 or 1 result only
+
+            let targetUser = { email: this.email }
+            this.asyncing = true
             try {
-                this.asyncing = true
-                this.targetUserReq = await searchPeopleAdmin({
-                    org_id: 1,
-                    search: this.email,
+                // 404 if user doesn't exist
+                targetUser = await searchPeopleByExactMail(this.email, {
+                    current_org_pk: this.organization.id,
                 })
-
-                let targetUser = this.targetUserReq.results.find(
-                    (user) => user.email.toLowerCase() === this.email.toLowerCase()
-                )
-                if (!targetUser) {
-                    targetUser = { email: this.email }
-                }
-
-                this.$emit('check-done', targetUser)
+            } catch {
+                console.log('no user match, proceed to account cretaion')
             } finally {
+                this.$emit('check-done', targetUser)
                 this.asyncing = false
             }
         },
