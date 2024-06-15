@@ -55,8 +55,8 @@ export default {
                         event_date: new Date(event.event_date),
                         // build group "object" from array if it is an array
                         people_groups: event.people_groups.reduce
-                            ? event.people_groups.reduce((acc, group) => {
-                                  acc[group.id] = true
+                            ? event.people_groups.reduce((acc, groupId) => {
+                                  acc[groupId] = true
                                   return acc
                               }, {})
                             : event.people_groups,

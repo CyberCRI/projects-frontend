@@ -152,7 +152,7 @@ export default {
                 [group.id]: !this.modelValue[group.id],
             }
             this.$emit('update:modelValue', groups)
-            this.$emit('update:isPublic', false)
+            this.$nextTick(() => this.$emit('update:isPublic', false))
         },
 
         onToggleSelectAll() {
@@ -165,7 +165,7 @@ export default {
                 }
 
                 this.$emit('update:modelValue', groups)
-                this.$emit('update:isPublic', false)
+                this.$nextTick(() => this.$emit('update:isPublic', false))
             }
         },
 
@@ -179,7 +179,7 @@ export default {
                 }
 
                 this.$emit('update:modelValue', groups)
-                this.$emit('update:isPublic', true)
+                this.$nextTick(() => this.$emit('update:isPublic', true))
 
                 this.pseudoGroupModelValue['-1']
             }
