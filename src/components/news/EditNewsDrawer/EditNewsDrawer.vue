@@ -58,8 +58,8 @@ export default {
                         header_image: news.header_image || null,
                         imageSizes: pictureApiToImageSizes(news.header_image),
                         people_groups: news.people_groups.reduce
-                            ? news.people_groups.reduce((acc, group) => {
-                                  acc[group.id] = true
+                            ? news.people_groups.reduce((acc, groupId) => {
+                                  acc[groupId] = true
                                   return acc
                               }, {})
                             : news.people_groups,

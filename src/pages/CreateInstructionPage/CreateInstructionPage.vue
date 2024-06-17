@@ -60,7 +60,7 @@ export default {
                 const formData = {
                     ...this.form,
                     publication_date: this.form.publication_date,
-                    people_groups: Object.entries(this.form.people_groups)
+                    people_groups_ids: Object.entries(this.form.people_groups)
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
