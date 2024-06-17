@@ -30,8 +30,8 @@
                         :key="index"
                         :label="skill.wikipedia_tag.name"
                         size="small"
-                        colors="primary-light"
                         class="skill-badge"
+                        :colors="skill.shared ? 'primary-dark' : 'primary-light'"
                     />
 
                     <ToolTip
@@ -90,35 +90,56 @@ export default {
         },
     },
 
+    async mounted() {
+        const loggedUser = await this.$store.dispatch(
+            'users/getUser',
+            this.$store.getters['users/id']
+        )
+
+        this.loggedUserSkillMap = loggedUser.skills.reduce((acc, skill) => {
+            acc[skill?.wikipedia_tag?.wikipedia_qid] = true
+            return acc
+        }, {})
+    },
+
     data() {
         return {
             imageError: false,
             skillsLimit: 3,
+            loggedUserSkillMap: {},
         }
     },
 
     computed: {
+        sharedSkills() {
+            return this.recommendation.skills
+                .map((skill) => ({
+                    ...skill,
+                    shared: !!this.loggedUserSkillMap[skill?.wikipedia_tag?.wikipedia_qid],
+                }))
+                .sort(function (a, b) {
+                    if (a.shared == b.shared) {
+                        return a.wikipedia_tag.name.localeCompare(b.wikipedia_tag.name)
+                    }
+                    return a.shared ? -1 : 1
+                })
+        },
+
         defaultImage() {
             return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
         },
 
         displayedSkills() {
-            if (
-                this.recommendation.skills &&
-                this.recommendation.skills.length > this.skillsLimit
-            ) {
-                return this.recommendation.skills.slice(0, this.skillsLimit)
+            if (this.sharedSkills && this.sharedSkills.length > this.skillsLimit) {
+                return this.sharedSkills.slice(0, this.skillsLimit)
             } else {
-                return this.recommendation.skills
+                return this.sharedSkills
             }
         },
 
         moreSkills() {
-            if (
-                this.recommendation.skills &&
-                this.recommendation.skills.length > this.skillsLimit
-            ) {
-                return this.recommendation.skills.slice(this.skillsLimit)
+            if (this.sharedSkills && this.sharedSkills.length > this.skillsLimit) {
+                return this.sharedSkills.slice(this.skillsLimit)
             } else {
                 return []
             }
