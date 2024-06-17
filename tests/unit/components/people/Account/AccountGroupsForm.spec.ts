@@ -1,8 +1,7 @@
-import GroupForm from '@/components/people/Account/GroupForm.vue'
+import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue'
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { UserFactory } from '../../../../factories/user.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 
 const i18n = {
@@ -21,12 +20,6 @@ const store = {
                 current: vi.fn(() => OrganizationOutputFactory.generate()),
             },
         },
-        users: {
-            namespaced: true,
-            actions: {
-                patchUser: vi.fn(),
-            },
-        },
     },
 }
 
@@ -38,7 +31,7 @@ describe('GroupForm', () => {
         defaultParams = {
             props: {
                 isAddMode: true,
-                selectedUser: UserFactory.generate(),
+                modelValue: {},
             },
             i18n,
             store,
@@ -46,7 +39,7 @@ describe('GroupForm', () => {
     })
 
     it('should render GroupForm component', () => {
-        wrapper = lpiShallowMount(GroupForm, defaultParams)
+        wrapper = lpiShallowMount(AccountGroupsForm, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })

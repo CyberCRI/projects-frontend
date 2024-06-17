@@ -1,5 +1,8 @@
 <template>
-    <label class="form-control" :class="{ 'form-control--disabled': disabled }">
+    <label
+        class="form-control"
+        :class="{ 'form-control--disabled': disabled, 'as-button': asButton }"
+    >
         <input
             type="radio"
             name="radio"
@@ -43,6 +46,11 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        asButton: {
+            type: Boolean,
+            default: false,
+        },
     },
     methods: {
         toggle() {
@@ -61,10 +69,19 @@ export default {
     display: inline-flex;
     align-items: center;
     gap: $space-s;
+    cursor: pointer;
 }
 
-.form-control + .form-control {
-    margin-top: 1em;
+.as-button {
+    text-transform: capitalize;
+    border: $border-width-s solid $primary-dark;
+    border-radius: $border-radius-xs;
+    padding: $space-m $space-s;
+    margin-right: $space-m;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
 }
 
 input[type='radio'] {

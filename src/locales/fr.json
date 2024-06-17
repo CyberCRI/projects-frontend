@@ -241,10 +241,15 @@
         }
     },
     "account": {
-        "title": "Créer un compte",
-        "edit-title": "Modifier un compte",
+        "another-organization": "une autre organisation",
+        "role-in-organization": "dans",
+        "title-create-add": "Créer / ajouter un compte",
+        "title-create": "Créer un compte",
+        "title-edit": "Modifier un compte",
+        "title-invite": "Ajouter un compte",
+        "switch-to-edit": "Le compte existe déjà dans votre organisation, passage en mode édition",
+        "switch-to-invite": "Le compte existe déjà dans une autre organisation, passage en mode ajout",
         "sub-title": "Les champs avec * sont obligatoires. ",
-        "button": "Créer un compte",
         "link": "Besoin d’aide ? On est là.",
         "form": {
             "first-name": "Prénom *",
@@ -256,7 +261,10 @@
             "rights": "Droits",
             "rights-description": "Droits accordés sur la plateforme de projets",
             "groups": "Groupes",
-            "groups-description": "Cet utilisateur fera partie des groupes suivants:"
+            "groups-description": "Cet utilisateur fera partie des groupes suivants:",
+            "groups-roles": "Chef de groupe et éditeur",
+            "groups-roles-description": "Cet utilisateur sera l'administrateur du groupe des groupes suivants :",
+            "no-group-selected": "Aucun groupe sélectionné"
         },
         "password-reset": {
             "success": "Lien de changement de mot de passe envoyé",
@@ -274,7 +282,8 @@
             "user": "Utilisateur",
             "facilitator": "Facilitateur",
             "admin": "Org admin"
-        }
+        },
+        "user-exists-in-other-org": "Un utilisateur avec le même email existe dans notre base de données. Nous pouvons l'ajouter à votre portail ici."
     },
     "userItem": {
         "teamLeader": "Chef du groupe"
@@ -840,7 +849,7 @@
             "leaders-managers": {
                 "label": "Leader et Manager"
             },
-            "editors": {
+            "managers": {
                 "label": "Editeur",
                 "help": "Editeur"
             }

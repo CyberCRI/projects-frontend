@@ -18,7 +18,7 @@
             </div>
 
             <LinkButton
-                :label="$t('account.button')"
+                :label="$t('account.title-create-add')"
                 btn-icon="Plus"
                 class="create-account"
                 @click="createAccountDrawer(null)"
@@ -48,7 +48,9 @@
                     <th></th>
                 </tr>
                 <tr v-for="(user, index) in filteredUsers" :key="index">
-                    <td>{{ $filters.capitalize(user.family_name) }}</td>
+                    <td>
+                        {{ $filters.capitalize(user.family_name) }}
+                    </td>
                     <td>{{ $filters.capitalize(user.given_name) }}</td>
                     <td>{{ $filters.capitalize(user.job) }}</td>
                     <td class="has-more">
@@ -111,7 +113,6 @@
         <AccountDrawer
             v-if="isOpenAccountDrawer"
             :is-opened="isOpenAccountDrawer"
-            :is-add-mode="!selectedUser"
             :selected-user="selectedUser"
             @close="closeAccountDrawer"
         />
@@ -261,7 +262,8 @@ export default {
             const params = activeFilter
                 ? { ordering: activeFilter.order + activeFilter.filter }
                 : {}
-
+            params.current_org_role = 'admins,facilitators,users'
+            params.limit = 25
             this.request = await searchPeopleAdmin({
                 search: this.searchFilter,
                 org_id: this.organization.id,

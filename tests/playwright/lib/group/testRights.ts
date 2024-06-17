@@ -20,7 +20,7 @@ export async function testRights(
         const editGroupLocator = page.locator('[data-test="edit-group"]')
         const isVisible = await editGroupLocator.isVisible()
         expect(isVisible).toBe(false)
-    } else if (rightToTest === 'editor') {
+    } else if (rightToTest === 'manager') {
         logger.info(`Test right to ${groupName} to ${rightToTest}`)
         await page.locator(`[data-test="group-card-${groupName}"]`).click()
         await delay(3000)

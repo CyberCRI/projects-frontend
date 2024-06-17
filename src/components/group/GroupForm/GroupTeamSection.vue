@@ -145,7 +145,7 @@ export default {
         roleLabel(user) {
             if (user) {
                 if (user.is_leader && user.is_manager) return 'group.role.leaders-managers.label'
-                else if (user.is_manager) return 'group.role.editors.label'
+                else if (user.is_manager) return 'group.role.managers.label'
                 else if (user.is_leader) return 'group.role.leaders.label'
                 else return 'group.role.members.label'
             }

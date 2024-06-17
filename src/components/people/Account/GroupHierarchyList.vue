@@ -16,22 +16,16 @@
                 :key="item.id"
                 :parent="item"
                 @add-group="setGroupList"
+                :selected-groups="selectedGroups"
             >
-                <input
-                    type="checkbox"
-                    :id="item.id"
-                    :name="item.name"
-                    :checked="item.value"
-                    @change="setGroupList(item)"
-                />
-                <label
-                    :for="item.id"
-                    class="list-label"
+                <LpiCheckbox
                     :class="{
                         'list-label--has-children': item.children.length > 0,
                     }"
-                    >{{ item.name }}</label
-                >
+                    :label="item.name"
+                    :model-value="!!selectedGroups['#' + item.id]"
+                    @update:model-value="setGroupList(item.id)"
+                />
             </GroupHierarchyList>
         </ul>
     </li>
@@ -39,15 +33,21 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
 export default {
     name: 'GroupHierarchyList',
-    components: { IconImage },
+    components: { IconImage, LpiCheckbox },
     emits: ['add-group'],
     props: {
         parent: {
             type: Object,
             default: () => {},
+        },
+
+        selectedGroups: {
+            type: Object, // map {[groupid]: 'members'|'leaders'|'managers'|false}
+            required: true,
         },
     },
     data() {
@@ -56,8 +56,8 @@ export default {
         }
     },
     methods: {
-        setGroupList(group) {
-            this.$emit('add-group', group)
+        setGroupList(groupId) {
+            this.$emit('add-group', groupId)
         },
     },
 }

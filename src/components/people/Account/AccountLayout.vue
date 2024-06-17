@@ -3,43 +3,45 @@
         <LpiLoader type="simple" />
     </div>
     <div class="account-layout">
-        <AccountFormTitleBlock :is-add-mode="isAddMode" />
+        <AccountFormTitleBlock
+            :main-title-label="mainTitleLabel"
+            :show-help="isAddMode || isInviteMode"
+        />
 
-        <TabsLayout
-            :align-left="true"
-            :border="false"
-            :tabs="accountTabs"
+        <AccountForm
+            :is-add-mode="isAddMode"
+            :is-invite-mode="isInviteMode"
+            :selected-user="currentUser"
             @close="$emit('close')"
         />
     </div>
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import { getUser } from '@/api/people.service.ts'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import AccountForm from '@/components/people/Account/AccountForm.vue'
-import GroupForm from '@/components/people/Account/GroupForm.vue'
 
 export default {
     name: 'AccountLayout',
 
-    emits: ['update:modelValue', 'close'],
-
-    mixins: [imageMixin],
+    emits: ['close'],
 
     components: {
-        TabsLayout,
         AccountFormTitleBlock,
         LpiLoader,
+        AccountForm,
     },
 
     props: {
         isAddMode: {
             type: Boolean,
             default: true,
+        },
+        isInviteMode: {
+            type: Boolean,
+            default: false,
         },
         selectedUser: {
             type: Object,
@@ -56,35 +58,21 @@ export default {
 
     async mounted() {
         this.isLoading = false
-        if (this.selectedUser) await this.setFormFromSelectedUser()
+        if (this.selectedUser?.id) await this.setFormFromSelectedUser()
+        else
+            this.currentUser = {
+                ...this.selectedUser,
+                current_org_role: this.selectedUser?.current_org_role,
+            }
     },
 
     computed: {
-        accountTabs() {
-            return [
-                {
-                    key: 'form-account',
-                    label: this.$t('profile.edit.general.tab'),
-                    component: AccountForm,
-                    props: {
-                        isAddMode: this.isAddMode,
-                        selectedUser: this.currentUser,
-                    },
-                    condition: true,
-                    dataTest: 'project-summary',
-                },
-                {
-                    key: 'form-group-account',
-                    label: this.$t('profile.edit.groups.tab'),
-                    component: GroupForm,
-                    props: {
-                        isAddMode: this.isAddMode,
-                        selectedUser: this.currentUser,
-                    },
-                    condition: !!this.currentUser && !this.isAddMode,
-                    dataTest: 'project-summary',
-                },
-            ].filter((tab) => tab.condition)
+        mainTitleLabel() {
+            return this.isAddMode
+                ? this.$t('account.title-create')
+                : this.isInviteMode
+                  ? this.$t('account.title-invite')
+                  : this.$t('account.title-edit')
         },
     },
 
@@ -121,7 +109,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    margin: auto;
+    margin: 0 auto;
     width: pxToRem(500px);
 }
 </style>

@@ -239,11 +239,16 @@
         }
     },
     "account": {
-        "title": "Create an account",
-        "edit-title": "Edit an account",
+        "another-organization": "another organization",
+        "role-in-organization": "in",
+        "title-create-add": "Create / add an account",
+        "title-create": "Create an account",
+        "title-edit": "Edit an account",
+        "title-invite": "Add an account",
+        "switch-to-edit": "Account already exists in your oragniztion, switching to edit",
+        "switch-to-invite": "Account already exists in another oragniztion, switching to add",
         "sub-title": "Fields with * are mandatory. ",
         "link": "Need help? We’re here.",
-        "button": "Create account",
         "form": {
             "first-name": "First name *",
             "last-name": "Last name *",
@@ -254,7 +259,10 @@
             "rights": "Rights",
             "rights-description": "Rights granted on projects platform",
             "groups": "Groups",
-            "groups-description": "This user will be part of the following groups"
+            "groups-description": "This user will be part of the following groups",
+            "groups-roles": "Group leader & editor",
+            "groups-roles-description": "This user will be the group admin of the following group(s):",
+            "no-group-selected": "No groups yet"
         },
         "password-reset": {
             "success": "Password reset link send",
@@ -272,7 +280,8 @@
             "user": "User",
             "facilitator": "Facilitator",
             "admin": "Org admin"
-        }
+        },
+        "user-exists-in-other-org": "A user with the same email exists in our database. We can add him/her to your portal here."
     },
     "userItem": {
         "teamLeader": "Group Leader"
@@ -841,7 +850,7 @@
             "leaders-managers": {
                 "label": "Leader and Manager"
             },
-            "editors": {
+            "managers": {
                 "label": "Editor",
                 "help": "Editor"
             }

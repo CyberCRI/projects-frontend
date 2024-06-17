@@ -1,179 +1,109 @@
 <template>
     <form class="form-ctn">
-        <!-- First Name -->
-        <div class="sub-section" ref="info">
-            <TextInput v-model="form.given_name" @blur="v$.form.given_name.$touch">
-                <label class="label">{{ $t('account.form.first-name') }}</label>
-            </TextInput>
-            <p
-                v-for="error of v$.form.given_name.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
-        </div>
-
-        <!-- Last Name -->
-        <div class="sub-section">
-            <TextInput v-model="form.family_name" @blur="v$.form.family_name.$touch">
-                <label class="label">{{ $t('account.form.last-name') }}</label>
-            </TextInput>
-            <p
-                v-for="error of v$.form.family_name.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
-        </div>
-
-        <!-- Title -->
-        <div class="sub-section">
-            <TextInput v-model="form.job" @blur="v$.form.job.$touch">
-                <label class="label">{{ $t('account.form.title') }}</label>
-            </TextInput>
-            <p v-for="error of v$.form.job.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
-        </div>
-
         <!-- Email -->
-        <div class="sub-section">
+        <AccountSection>
             <TextInput v-model="form.email" @blur="v$.form.email.$touch">
                 <label class="label">{{ $t('account.form.email') }}</label>
             </TextInput>
-            <p v-for="error of v$.form.email.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
+            <FieldErrors :errors="v$.form.email.$errors" />
+        </AccountSection>
+
+        <template v-if="isInviteMode">
+            <p class="invite-notice">
+                {{ $t('account.user-exists-in-other-org') }}
             </p>
-        </div>
 
-        <!-- Picture -->
-        <div class="sub-section">
-            <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
-            <ImageEditor
-                :picture-alt="`${form.name} image`"
-                :contain="true"
-                :round-picture="true"
-                v-model:imageSizes="form.imageSizes"
-                v-model:picture="form.profile_picture"
-                :default-picture="defaultPictures"
-            ></ImageEditor>
-        </div>
-
-        <div class="spacer" />
-
-        <!-- Google -->
-        <template v-if="isAddMode && hasGoogleSync">
-            <div class="sub-section">
-                <h2 class="title">{{ $t('account.form.google') }}</h2>
-                <div>
-                    <input
-                        type="checkbox"
-                        id="google-checkbox"
-                        name="google"
-                        @change="setGoogleCheckbox($event)"
-                    />
-                    <label for="google-checkbox" class="list-label google-checkbox-label">{{
-                        $t('account.form.create-google')
-                    }}</label>
-                </div>
-            </div>
+            <OtherOrgUserCard
+                class="other-org-user-card"
+                :user="selectedUser"
+                v-if="selectedUser"
+            />
+        </template>
+        <template v-else>
+            <AccountInfos
+                :model-value="form"
+                @update:model-value="form = { ...form, ...$event }"
+                :v$="v$"
+            />
 
             <div class="spacer" />
+
+            <!-- Google -->
+            <template v-if="isAddMode && hasGoogleSync">
+                <AccountSection :section-title="$t('account.form.google')">
+                    <div>
+                        <div class="checkbox-item">
+                            <LpiCheckbox
+                                id="google-checkbox"
+                                :label="$t('account.form.create-google')"
+                                v-model="form.create_in_google"
+                            />
+                        </div>
+                    </div>
+                </AccountSection>
+
+                <div class="spacer" />
+            </template>
         </template>
 
         <!-- Rights -->
-        <div class="sub-section" ref="rights">
-            <h2 class="title">{{ $t('account.form.rights') }}</h2>
-            <p>{{ $t('account.form.rights-description') }}</p>
-
+        <AccountSection
+            ref="rights"
+            :section-title="$t('account.form.rights')"
+            :section-notice="$t('account.form.rights-description') + ' ' + organization.name"
+        >
             <div class="role-options-ctn">
-                <div v-for="roleOption in roleOptions" :key="roleOption.id" class="role-options">
-                    <RadioButton
-                        :label="roleOption.label"
-                        v-model="selectedRole"
-                        @update:model-value="updateRole(roleOption)"
-                        :checked="selectedRole?.name === roleOption.name"
-                    />
-                </div>
-            </div>
-        </div>
-
-        <div class="spacer" v-if="isAddMode" />
-
-        <div v-if="isAddMode" class="sub-section" ref="groups">
-            <h2 class="title">{{ $t('account.form.groups') }}</h2>
-            <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
-
-            <div v-if="selectedGroups.length > 0" class="current-groups-ctn">
-                <div v-for="group in selectedGroups" :key="group.id">
-                    <FilterValue
-                        :label="group.name"
-                        class="actionable"
-                        icon="Close"
-                        @click="addRemovePeopleGroup(group)"
-                    />
-                </div>
-            </div>
-
-            <ul v-if="isAddMode">
-                <GroupHierarchyList
-                    v-for="peopleGroup in peopleGroupsTree"
-                    :key="peopleGroup.id"
-                    :parent="peopleGroup"
-                    @add-group="addRemovePeopleGroup"
-                >
-                    <input
-                        type="checkbox"
-                        :id="peopleGroup.id"
-                        :name="peopleGroup.name"
-                        :checked="peopleGroup.value"
-                        @change="addRemovePeopleGroup(peopleGroup)"
-                    />
-                    <label
-                        :for="peopleGroup.id"
-                        class="list-label"
-                        :class="{
-                            'list-label--has-children': peopleGroup.children.length > 0,
-                        }"
-                        >{{ peopleGroup.name }}</label
-                    >
-                </GroupHierarchyList>
-            </ul>
-        </div>
-
-        <div class="spacer" v-if="!isAddMode" />
-
-        <div v-if="!isAddMode" class="sub-section" ref="password">
-            <h2 class="title">{{ $t('account.reset-delete') }}</h2>
-
-            <div class="password-btn-ctn">
-                <LpiButton
-                    @click="resetPassword"
-                    btn-icon="Lock"
-                    :label="$t('account.reset-password')"
-                    :secondary="true"
-                ></LpiButton>
-                <LpiButton
-                    btn-icon="TrashCanOutline"
-                    :label="$t('account.delete-account')"
-                    :secondary="true"
-                    @click="toggleShowRemoveUserVisible"
-                ></LpiButton>
-                <ConfirmModal
-                    v-if="showRemoveUserQuit"
-                    :content="$t('common.remove-user')"
-                    :title="$t('project.remove-user-title')"
-                    :cancel-button-label="'common.cancel'"
-                    :confirm-button-label="'project.remove-user'"
-                    @cancel="toggleShowRemoveUserVisible"
-                    @confirm="deleteUser"
+                <RadioButton
+                    v-for="roleOption in roleOptions"
+                    :key="roleOption.id"
+                    as-button
+                    :label="roleOption.label"
+                    v-model="selectedRole"
+                    @update:model-value="updateRole(roleOption)"
+                    :checked="selectedRole?.name === roleOption.name"
                 />
             </div>
-        </div>
+        </AccountSection>
 
-        <div class="sub-section">
+        <div class="spacer" />
+
+        <template v-if="hasRoleInCurrentOrg">
+            <AccountGroupsForm v-model="selectedGroups" />
+
+            <div class="spacer" />
+
+            <AccountSection
+                v-if="!isAddMode"
+                ref="password"
+                :section-title="$t('account.reset-delete')"
+            >
+                <div class="password-btn-ctn">
+                    <LpiButton
+                        @click="resetPassword"
+                        btn-icon="Lock"
+                        :label="$t('account.reset-password')"
+                        :secondary="true"
+                    ></LpiButton>
+                    <LpiButton
+                        btn-icon="TrashCanOutline"
+                        :label="$t('account.delete-account')"
+                        :secondary="true"
+                        @click="toggleShowRemoveUserVisible"
+                    ></LpiButton>
+                    <ConfirmModal
+                        v-if="showRemoveUserQuit"
+                        :content="$t('common.remove-user')"
+                        :title="$t('project.remove-user-title')"
+                        :cancel-button-label="'common.cancel'"
+                        :confirm-button-label="'project.remove-user'"
+                        @cancel="toggleShowRemoveUserVisible"
+                        @confirm="deleteUser"
+                    />
+                </div>
+            </AccountSection>
+        </template>
+
+        <AccountSection>
             <div class="confirm-ctn">
                 <LpiButton
                     :disabled="asyncSave"
@@ -185,7 +115,7 @@
                 />
 
                 <LpiButton
-                    :disabled="asyncSave"
+                    :disabled="asyncSave || v$.$invalid"
                     :label="$filters.capitalize($t('common.confirm'))"
                     :btn-icon="asyncSave ? 'LoaderSimple' : null"
                     :secondary="false"
@@ -194,23 +124,23 @@
                     data-test="confirm-button"
                 />
             </div>
-        </div>
+        </AccountSection>
     </form>
 </template>
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
-import { helpers, required } from '@vuelidate/validators'
+import { helpers, required, email } from '@vuelidate/validators'
 import {
     imageSizesFormData,
     imageSizesFormDataPost,
     pictureApiToImageSizes,
 } from '@/functs/imageSizesUtils.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
-import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import {
     postUser,
     patchUser,
@@ -218,11 +148,13 @@ import {
     postUserPicture,
     patchUserPicture,
 } from '@/api/people.service'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import { resetUserPassword } from '@/api/people.service.ts'
-import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import OtherOrgUserCard from '@/components/people/Account/OtherOrgUserCard.vue'
+import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue'
+import AccountInfos from '@/components/people/Account/AccountInfos.vue'
+import AccountSection from '@/components/people/Account/AccountSection.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'AccountForm',
@@ -232,19 +164,26 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        FilterValue,
         TextInput,
         RadioButton,
         LpiButton,
         ConfirmModal,
-        GroupHierarchyList,
-        ImageEditor,
+        OtherOrgUserCard,
+        LpiCheckbox,
+        AccountGroupsForm,
+        AccountInfos,
+        AccountSection,
+        FieldErrors,
     },
 
     props: {
         isAddMode: {
             type: Boolean,
             default: true,
+        },
+        isInviteMode: {
+            type: Boolean,
+            default: false,
         },
 
         selectedUser: {
@@ -254,11 +193,6 @@ export default {
     },
 
     data() {
-        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-            return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
-            }/patatoids-project/Patatoid-${index}.png`
-        })
         return {
             v$: useValidate(),
             form: {
@@ -266,22 +200,16 @@ export default {
                 family_name: '',
                 job: '',
                 email: '',
-                roles_to_add: [],
-                roles_to_remove: [],
                 profile_picture: '',
                 create_in_google: false,
                 imageSizes: null,
             },
+            selectedGroups: {},
+            previousGroups: {}, // memo to compare with selected groups on save
             showRemoveUserQuit: false,
             selectedRole: {},
-            roles: [], // TODO this doesn't seem realy used
-
-            selectedGroups: [],
-            peopleGroupsTree: [],
-
             isLoading: false,
             asyncSave: false,
-            defaultPictures,
         }
     },
 
@@ -311,12 +239,20 @@ export default {
                         this.$t('project.form.title-errors.required'),
                         required
                     ),
+                    email: helpers.withMessage(this.$t('form.report.email.format'), email),
                 },
             },
         }
     },
 
     computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+        hasRoleInCurrentOrg() {
+            return this.selectedRole && this.selectedRole.value != 0
+        },
+
         hasGoogleSync() {
             // whether to give option to create user in google too
             return this.$store.getters['organizations/current'].google_sync_enabled
@@ -364,8 +300,6 @@ export default {
             this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
         }
 
-        if (this.isAddMode) await this.setSelectedHierarchyGroups()
-
         this.isLoading = false
     },
 
@@ -393,6 +327,21 @@ export default {
                 )
             } else this.selectedRole = this.roleOptions[0]
 
+            // can contain groups from other orgs
+            // they'll be ignored in AccountGroupForm
+            // but we need to keep them so they are not removed on save
+            this.selectedGroups =
+                this.selectedUser?.roles?.reduce((acc, roleString) => {
+                    const [scope, groupId, role] = roleString.split(':')
+                    if (scope !== 'peoplegroup') return acc
+                    return {
+                        ...acc,
+                        [groupId]: role,
+                    }
+                }, {}) || {}
+
+            this.previousGroups = { ...this.selectedGroups }
+
             this.form = {
                 ...this.form,
                 given_name: this.selectedUser.given_name,
@@ -404,30 +353,9 @@ export default {
             }
         },
 
-        setSelectedHierarchyGroups() {
-            // We get the current org group hierarchy and we selected the groups already added to the user.
-            getPeopleGroupsHierarchy(this.$store.getters['organizations/current'].code, {
-                organizations: this.$store.getters['organizations/current'].code,
-            }).then((peopleGroupsHierarchy) => {
-                this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
-            })
-        },
-
-        setGroupHierarchy(children) {
-            // this is a recursive call, as the groups have children, that have children, ...
-            if (children && children.length > 0)
-                return children.map((child) => ({
-                    ...child,
-                    value: false,
-                    children: this.setGroupHierarchy(child.children),
-                }))
-
-            return []
-        },
-
-        setGoogleCheckbox(e) {
-            this.form.create_in_google = e.target.checked
-        },
+        // setGoogleCheckbox(e) {
+        //     this.form.create_in_google = e.target.checked
+        // },
 
         toggleShowRemoveUserVisible() {
             this.showRemoveUserQuit = !this.showRemoveUserQuit
@@ -439,25 +367,6 @@ export default {
             // dead code ?
             // if (role && role.id !== 0) this.form.groups_ids = [role.id]
             // else this.form.groups_ids = []
-        },
-
-        addRemovePeopleGroup(group) {
-            group.value = !group.value
-            const index = this.selectedGroups.findIndex((grp) => grp.id === group.id)
-
-            if (index !== -1) {
-                this.selectedGroups.splice(index, 1)
-            } else this.selectedGroups.push(group)
-
-            this.form.roles_to_add = [
-                ...this.selectedGroups.map((group) => {
-                    for (const role of group.roles) {
-                        if (role.split(':')[2] === 'members') {
-                            return role
-                        }
-                    }
-                }),
-            ]
         },
 
         async deleteUser() {
@@ -485,10 +394,34 @@ export default {
         async confirm() {
             this.asyncSave = true
             try {
-                const usersRoles =
-                    this.selectedRole.value === 0
-                        ? []
-                        : [this.selectedRole.value, ...this.form.roles_to_add]
+                const groupRolesToAdd = []
+                const groupRolesToRemove = []
+
+                Object.entries(this.selectedGroups).forEach(([groupId, role]) => {
+                    // use loose equality to match false and undefined
+                    if (this.previousGroups[groupId] != role) {
+                        if (role) groupRolesToAdd.push(`peoplegroup:${groupId}:${role}`)
+                        if (this.previousGroups[groupId])
+                            groupRolesToRemove.push(
+                                `peoplegroup:${groupId}:${this.previousGroups[groupId]}`
+                            )
+                    }
+                })
+
+                const allRolesToAdd = [...groupRolesToAdd]
+                const allRolesToRemove = [...groupRolesToRemove]
+
+                if (this.selectedRole.value != 0) {
+                    allRolesToAdd.push(this.selectedRole.value)
+                } else if (this.selectedUser) {
+                    allRolesToRemove.push(
+                        `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
+                    )
+                }
+
+                // we don't have to compare previousGroups with selectedGroups for 'deleted one'
+                // because they still are in selectedGroups with a false value
+                // and so are handled by the previous loop
 
                 if (this.isAddMode) {
                     // CREATE
@@ -506,19 +439,12 @@ export default {
                         formData.append('create_in_google', true)
                     }
 
-                    usersRoles.forEach((role) => {
+                    allRolesToAdd.forEach((role) => {
                         formData.append('roles_to_add', role)
                     })
-                    ;(this.form.roles_to_remove || []).forEach((role) => {
+                    allRolesToRemove.forEach((role) => {
                         formData.append('roles_to_remove', role)
                     })
-                    // if role is none remove also organization role
-                    if (this.selectedUser && this.selectedRole.value === 0) {
-                        formData.append(
-                            'roles_to_remove',
-                            `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
-                        )
-                    }
 
                     if (this.form.profile_picture instanceof File) {
                         formData.append(
@@ -543,14 +469,8 @@ export default {
                     const payload = {
                         ...this.form,
                         profile_picture: this.form.profile_picture,
-                        roles_to_add: [...usersRoles],
-                        roles_to_remove:
-                            // if role is none remove also organization role
-                            this.selectedUser && this.selectedRole.value === 0
-                                ? [
-                                      `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`,
-                                  ]
-                                : [],
+                        roles_to_add: [...allRolesToAdd],
+                        roles_to_remove: [...allRolesToRemove],
                     }
 
                     const formData = new FormData()
@@ -629,68 +549,29 @@ export default {
 .form-ctn {
     padding: $space-l 0;
 
-    .sub-section {
-        padding-top: $space-xl;
+    .label {
+        font-weight: 500;
+        font-size: $font-size-m;
+        padding-bottom: $space-m;
+    }
 
-        .title {
-            font-weight: 700;
-            font-size: $font-size-l;
-            color: $black;
-        }
+    .role-options-ctn {
+        display: inline-flex;
+        margin-top: $space-l;
+    }
 
-        .sub-title {
-            margin: pxToRem(16px) 0;
-        }
+    .password-btn-ctn {
+        padding-top: 24px;
+        gap: 12px;
+        display: inline-flex;
+    }
 
-        .list-label {
-            font-size: $font-size-s;
-
-            &--has-children {
-                font-weight: 700;
-                color: $primary-dark;
-            }
-        }
-
-        .label {
-            font-weight: 500;
-            font-size: $font-size-m;
-            padding-bottom: $space-m;
-        }
-
-        .role-options-ctn {
-            display: inline-flex;
-            margin-top: $space-l;
-
-            .role-options {
-                text-transform: capitalize;
-                border: $border-width-s solid $primary-dark;
-                border-radius: $border-radius-xs;
-                padding: $space-m $space-s;
-                margin-right: $space-m;
-            }
-        }
-
-        .current-groups-ctn {
-            display: flex;
-            flex-wrap: wrap;
-            gap: $space-s;
-            margin-bottom: $space-l;
-        }
-
-        .password-btn-ctn {
-            padding-top: 24px;
-            gap: 12px;
-            display: inline-flex;
-        }
-
-        .confirm-ctn {
-            gap: 12px;
-            display: inline-flex;
-            border-top: $border-width-s solid $lighter-gray;
-            width: 100%;
-            padding: 12px 0;
-            justify-content: center;
-        }
+    .confirm-ctn {
+        gap: 12px;
+        display: inline-flex;
+        width: 100%;
+        padding: 12px 0;
+        justify-content: center;
     }
 
     .spacer {
@@ -719,7 +600,33 @@ export default {
     }
 }
 
-.google-checkbox-label {
-    display: inline;
+.invite-notice,
+.other-org-user-card {
+    margin: $space-l 0;
+}
+
+.checkbox-item {
+    border: 1px solid $primary-dark;
+    padding: $space-m;
+    margin: $space-s pxToRem(16px) $space-s 0;
+    border-radius: $border-radius-xs;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    width: max-content;
+
+    &:hover {
+        background-color: $primary-lighter;
+    }
+
+    > label {
+        font-weight: 700;
+        font-size: $font-size-m;
+        line-height: $line-height-tight;
+        color: $primary-dark;
+        margin: 0;
+        cursor: pointer;
+        margin-left: $space-s;
+    }
 }
 </style>
