@@ -1,14 +1,12 @@
 <template>
     <form class="form-ctn">
         <!-- Email -->
-        <div class="sub-section">
+        <AccountSection>
             <TextInput v-model="form.email" @blur="v$.form.email.$touch">
                 <label class="label">{{ $t('account.form.email') }}</label>
             </TextInput>
-            <p v-for="error of v$.form.email.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
-        </div>
+            <FieldErrors :errors="v$.form.email.$errors" />
+        </AccountSection>
 
         <template v-if="isInviteMode">
             <p class="invite-notice">
@@ -22,63 +20,17 @@
             />
         </template>
         <template v-else>
-            <!-- First Name -->
-            <div class="sub-section" ref="info">
-                <TextInput v-model="form.given_name" @blur="v$.form.given_name.$touch">
-                    <label class="label">{{ $t('account.form.first-name') }}</label>
-                </TextInput>
-                <p
-                    v-for="error of v$.form.given_name.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
-            </div>
-
-            <!-- Last Name -->
-            <div class="sub-section">
-                <TextInput v-model="form.family_name" @blur="v$.form.family_name.$touch">
-                    <label class="label">{{ $t('account.form.last-name') }}</label>
-                </TextInput>
-                <p
-                    v-for="error of v$.form.family_name.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
-            </div>
-
-            <!-- Title -->
-            <div class="sub-section">
-                <TextInput v-model="form.job" @blur="v$.form.job.$touch">
-                    <label class="label">{{ $t('account.form.title') }}</label>
-                </TextInput>
-                <p v-for="error of v$.form.job.$errors" :key="error.$uid" class="error-description">
-                    {{ error.$message }}
-                </p>
-            </div>
-
-            <!-- Picture -->
-            <div class="sub-section">
-                <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
-                <ImageEditor
-                    :picture-alt="`${form.name} image`"
-                    :contain="true"
-                    :round-picture="true"
-                    v-model:imageSizes="form.imageSizes"
-                    v-model:picture="form.profile_picture"
-                    :default-picture="defaultPictures"
-                ></ImageEditor>
-            </div>
+            <AccountInfos
+                :model-value="form"
+                @update:model-value="form = { ...form, ...$event }"
+                :v$="v$"
+            />
 
             <div class="spacer" />
 
             <!-- Google -->
             <template v-if="isAddMode && hasGoogleSync">
-                <div class="sub-section">
-                    <h2 class="title">{{ $t('account.form.google') }}</h2>
+                <AccountSection :section-title="$t('account.form.google')">
                     <div>
                         <div class="checkbox-item">
                             <LpiCheckbox
@@ -88,28 +40,30 @@
                             />
                         </div>
                     </div>
-                </div>
+                </AccountSection>
 
                 <div class="spacer" />
             </template>
         </template>
 
         <!-- Rights -->
-        <div class="sub-section" ref="rights">
-            <h2 class="title">{{ $t('account.form.rights') }}</h2>
-            <p>{{ $t('account.form.rights-description') }} {{ organization.name }}</p>
-
+        <AccountSection
+            ref="rights"
+            :section-title="$t('account.form.rights')"
+            :section-notice="$t('account.form.rights-description') + ' ' + organization.name"
+        >
             <div class="role-options-ctn">
-                <div v-for="roleOption in roleOptions" :key="roleOption.id" class="role-options">
-                    <RadioButton
-                        :label="roleOption.label"
-                        v-model="selectedRole"
-                        @update:model-value="updateRole(roleOption)"
-                        :checked="selectedRole?.name === roleOption.name"
-                    />
-                </div>
+                <RadioButton
+                    v-for="roleOption in roleOptions"
+                    :key="roleOption.id"
+                    as-button
+                    :label="roleOption.label"
+                    v-model="selectedRole"
+                    @update:model-value="updateRole(roleOption)"
+                    :checked="selectedRole?.name === roleOption.name"
+                />
             </div>
-        </div>
+        </AccountSection>
 
         <div class="spacer" />
 
@@ -118,9 +72,11 @@
 
             <div class="spacer" />
 
-            <div v-if="!isAddMode" class="sub-section" ref="password">
-                <h2 class="title">{{ $t('account.reset-delete') }}</h2>
-
+            <AccountSection
+                v-if="!isAddMode"
+                ref="password"
+                :section-title="$t('account.reset-delete')"
+            >
                 <div class="password-btn-ctn">
                     <LpiButton
                         @click="resetPassword"
@@ -144,10 +100,10 @@
                         @confirm="deleteUser"
                     />
                 </div>
-            </div>
+            </AccountSection>
         </template>
 
-        <div class="sub-section">
+        <AccountSection>
             <div class="confirm-ctn">
                 <LpiButton
                     :disabled="asyncSave"
@@ -159,7 +115,7 @@
                 />
 
                 <LpiButton
-                    :disabled="asyncSave"
+                    :disabled="asyncSave || v$.$invalid"
                     :label="$filters.capitalize($t('common.confirm'))"
                     :btn-icon="asyncSave ? 'LoaderSimple' : null"
                     :secondary="false"
@@ -168,7 +124,7 @@
                     data-test="confirm-button"
                 />
             </div>
-        </div>
+        </AccountSection>
     </form>
 </template>
 
@@ -178,7 +134,7 @@ import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
-import { helpers, required } from '@vuelidate/validators'
+import { helpers, required, email } from '@vuelidate/validators'
 import {
     imageSizesFormData,
     imageSizesFormDataPost,
@@ -194,9 +150,11 @@ import {
 } from '@/api/people.service'
 import { resetUserPassword } from '@/api/people.service.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import OtherOrgUserCard from '@/components/people/Account/OtherOrgUserCard.vue'
 import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue'
+import AccountInfos from '@/components/people/Account/AccountInfos.vue'
+import AccountSection from '@/components/people/Account/AccountSection.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'AccountForm',
@@ -210,10 +168,12 @@ export default {
         RadioButton,
         LpiButton,
         ConfirmModal,
-        ImageEditor,
         OtherOrgUserCard,
         LpiCheckbox,
         AccountGroupsForm,
+        AccountInfos,
+        AccountSection,
+        FieldErrors,
     },
 
     props: {
@@ -233,11 +193,6 @@ export default {
     },
 
     data() {
-        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-            return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
-            }/patatoids-project/Patatoid-${index}.png`
-        })
         return {
             v$: useValidate(),
             form: {
@@ -253,11 +208,8 @@ export default {
             previousGroups: {}, // memo to compare with selected groups on save
             showRemoveUserQuit: false,
             selectedRole: {},
-            roles: [], // TODO this doesn't seem realy used
-
             isLoading: false,
             asyncSave: false,
-            defaultPictures,
         }
     },
 
@@ -287,6 +239,7 @@ export default {
                         this.$t('project.form.title-errors.required'),
                         required
                     ),
+                    email: helpers.withMessage(this.$t('form.report.email.format'), email),
                 },
             },
         }
@@ -596,64 +549,29 @@ export default {
 .form-ctn {
     padding: $space-l 0;
 
-    .sub-section {
-        padding-top: $space-xl;
+    .label {
+        font-weight: 500;
+        font-size: $font-size-m;
+        padding-bottom: $space-m;
+    }
 
-        .title {
-            font-weight: 700;
-            font-size: $font-size-l;
-            color: $black;
-        }
+    .role-options-ctn {
+        display: inline-flex;
+        margin-top: $space-l;
+    }
 
-        .sub-title {
-            margin: pxToRem(16px) 0;
-        }
+    .password-btn-ctn {
+        padding-top: 24px;
+        gap: 12px;
+        display: inline-flex;
+    }
 
-        .list-label {
-            font-size: $font-size-s;
-
-            &--has-children {
-                font-weight: 700;
-                color: $primary-dark;
-            }
-        }
-
-        .label {
-            font-weight: 500;
-            font-size: $font-size-m;
-            padding-bottom: $space-m;
-        }
-
-        .role-options-ctn {
-            display: inline-flex;
-            margin-top: $space-l;
-
-            .role-options {
-                text-transform: capitalize;
-                border: $border-width-s solid $primary-dark;
-                border-radius: $border-radius-xs;
-                padding: $space-m $space-s;
-                margin-right: $space-m;
-
-                &:hover {
-                    background-color: $primary-lighter;
-                }
-            }
-        }
-
-        .password-btn-ctn {
-            padding-top: 24px;
-            gap: 12px;
-            display: inline-flex;
-        }
-
-        .confirm-ctn {
-            gap: 12px;
-            display: inline-flex;
-            width: 100%;
-            padding: 12px 0;
-            justify-content: center;
-        }
+    .confirm-ctn {
+        gap: 12px;
+        display: inline-flex;
+        width: 100%;
+        padding: 12px 0;
+        justify-content: center;
     }
 
     .spacer {

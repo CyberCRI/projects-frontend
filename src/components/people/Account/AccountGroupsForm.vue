@@ -3,10 +3,11 @@
         <LoaderSimple />
     </div>
     <template v-else>
-        <div class="sub-section" ref="groups">
-            <h2 class="title">{{ $t('account.form.groups') }}</h2>
-            <p class="sub-title">{{ $t('account.form.groups-description') }}</p>
-
+        <AccountSection
+            ref="groups"
+            :section-title="$t('account.form.groups')"
+            :section-notice="$t('account.form.groups-description')"
+        >
             <div class="current-groups-ctn">
                 <template v-for="(role, groupId) in modelValue">
                     <FilterValue
@@ -43,12 +44,13 @@
                     </GroupHierarchyList>
                 </ul>
             </div>
-        </div>
+        </AccountSection>
 
-        <div class="sub-section">
-            <h2 class="title">{{ $t('account.form.groups-roles') }}</h2>
-            <p class="sub-title">{{ $t('account.form.groups-roles-description') }}</p>
-
+        <AccountSection
+            v-if="!noGroupSelected"
+            :section-title="$t('account.form.groups-roles')"
+            :section-notice="$t('account.form.groups-roles-description')"
+        >
             <div class="group-rights">
                 <template v-for="(role, groupId) in modelValue">
                     <div
@@ -71,7 +73,7 @@
                     </div>
                 </template>
             </div>
-        </div>
+        </AccountSection>
     </template>
 </template>
 <script>
@@ -80,12 +82,13 @@ import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import AccountSection from '@/components/people/Account/AccountSection.vue'
 export default {
     name: 'AccountGroupsForm',
 
     emits: ['update:modelValue'],
 
-    components: { GroupHierarchyList, FilterValue, LpiCheckbox, LoaderSimple },
+    components: { GroupHierarchyList, FilterValue, LpiCheckbox, LoaderSimple, AccountSection },
 
     props: {
         modelValue: {
