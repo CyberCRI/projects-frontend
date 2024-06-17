@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="$refs?.eventForm?.v$?.$invalid"
+        :confirm-action-disabled="invalid"
         :is-opened="isOpened"
         :title="form.id ? $t('event.drawer.edit') : $t('event.drawer.create')"
         class="small"
@@ -9,7 +9,7 @@
         @confirm="saveEvent"
         :asyncing="asyncing"
     >
-        <EventForm ref="eventForm" v-model="form" v-if="form" />
+        <EventForm ref="eventForm" v-model="form" v-if="form" @invalid="invalid = $event" />
     </BaseDrawer>
 </template>
 <script>
@@ -43,6 +43,7 @@ export default {
         return {
             form: defaultForm(),
             asyncing: false,
+            invalid: false,
         }
     },
 

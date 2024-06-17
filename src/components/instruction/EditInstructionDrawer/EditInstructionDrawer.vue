@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="$refs?.instructionForm?.v$?.$invalid"
+        :confirm-action-disabled="invalid"
         :is-opened="isOpened"
         :title="$t('instructions.drawer.title')"
         class="instruction-drawer medium"
@@ -9,7 +9,12 @@
         @close="cancel"
         :asyncing="asyncing"
     >
-        <InstructionForm ref="instructionForm" v-model="form" class="instruction-form" />
+        <InstructionForm
+            ref="instructionForm"
+            v-model="form"
+            @invalid="invalid = $event"
+            class="instruction-form"
+        />
     </BaseDrawer>
 </template>
 <script>
@@ -41,6 +46,7 @@ export default {
         return {
             form: null,
             asyncing: false,
+            invalid: false,
         }
     },
 

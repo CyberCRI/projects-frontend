@@ -9,9 +9,7 @@
                 @blur="v$.form.first_name.$validate"
                 data-test="first-name-input"
             ></TextInput>
-            <p v-for="error of v$.form.first_name.$errors" :key="error.$uid" class="error-message">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.first_name.$errors" />
         </div>
 
         <!-- last name -->
@@ -23,9 +21,7 @@
                 @blur="v$.form.last_name.$validate"
                 data-test="last-name-input"
             ></TextInput>
-            <p v-for="error of v$.form.last_name.$errors" :key="error.$uid" class="error-message">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.last_name.$errors" />
         </div>
 
         <!-- pronouns -->
@@ -50,13 +46,7 @@
                 input-type="email"
                 @blur="v$.form.professional_email.$validate"
             ></TextInput>
-            <p
-                v-for="error of v$.form.professional_email.$errors"
-                :key="error.$uid"
-                class="error-message"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.professional_email.$errors" />
         </div>
 
         <!-- pro number -->
@@ -88,13 +78,7 @@
                 @blur="v$.form.personal_webpage.$validate"
                 data-test="personal-webpage-input"
             ></TextInput>
-            <p
-                v-for="error of v$.form.personal_webpage.$errors"
-                :key="error.$uid"
-                class="error-message"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.personal_webpage.$errors" />
         </div>
 
         <!-- linkedin -->
@@ -106,9 +90,7 @@
                 @blur="v$.form.linkedin.$validate"
                 data-test="linkedin-input"
             ></TextInput>
-            <p v-for="error of v$.form.linkedin.$errors" :key="error.$uid" class="error-message">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.linkedin.$errors" />
         </div>
 
         <!-- twitter -->
@@ -120,9 +102,7 @@
                 @blur="v$.form.twitter.$validate"
                 data-test="twitter-input"
             ></TextInput>
-            <p v-for="error of v$.form.twitter.$errors" :key="error.$uid" class="error-message">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.twitter.$errors" />
         </div>
 
         <hr class="form-separator" />
@@ -151,9 +131,7 @@
                 @blur="v$.form.title.$validate"
                 data-test="title-input"
             ></TextInput>
-            <p v-for="error of v$.form.title.$errors" :key="error.$uid" class="error-message">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.form.title.$errors" />
         </div>
 
         <!-- org address -->
@@ -283,6 +261,7 @@ import isEqual from 'lodash.isequal'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 function defaultForm() {
     return {
@@ -315,6 +294,7 @@ export default {
         SdgsFilter,
         LinkButton,
         ImageEditor,
+        FieldErrors,
     },
 
     emits: ['profile-edited'],

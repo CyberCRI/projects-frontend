@@ -18,13 +18,7 @@
                         : `${$t('group.form.edit-name')} *`
                 }}</label>
             </TextInput>
-            <p
-                v-for="error of validation.form.name.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.name.$errors" />
         </div>
 
         <!-- Email -->
@@ -37,13 +31,7 @@
                 @blur="validation.form.email.$validate"
                 ><label>{{ $t('group.form.email-label') }}</label>
             </TextInput>
-            <p
-                v-for="error of validation.form.email.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.email.$errors" />
         </div>
 
         <!-- Short Description-->
@@ -56,13 +44,7 @@
                 @blur="validation.form.short_description.$validate"
                 ><label>{{ $t('group.form.short-description-label') }}</label>
             </TextInput>
-            <p
-                v-for="error of validation.form.short_description.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.short_description.$errors" />
         </div>
 
         <!-- Image -->
@@ -149,13 +131,7 @@
                     <span class="checkbox-description">{{ visibility.description }}</span>
                 </template>
             </div>
-            <p
-                v-for="error of validation.form.publication_status.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.publication_status.$errors" />
         </div>
 
         <div v-if="$route.params.groupId" class="delete-group">
@@ -203,6 +179,7 @@ import { getHierarchyGroups } from '@/api/group.service.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { deleteGroup } from '@/api/groups.service'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'GroupForm',
@@ -222,6 +199,7 @@ export default {
         LoaderSimple,
         ConfirmModal,
         ImageEditor,
+        FieldErrors,
     },
 
     props: {
@@ -528,12 +506,6 @@ export default {
         label {
             align-self: flex-start;
         }
-    }
-
-    .error-description {
-        color: $red;
-        margin-top: $space-s;
-        font-size: $font-size-s;
     }
 
     .description label {

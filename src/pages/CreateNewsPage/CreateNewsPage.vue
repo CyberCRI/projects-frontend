@@ -2,7 +2,7 @@
     <div class="create-news-page page-section-narrow">
         <h1 class="page-title">{{ $t('news.create.title') }}</h1>
 
-        <NewsForm ref="newsForm" v-model="form" />
+        <NewsForm ref="newsForm" v-model="form" @invalid="invalid = $event" />
 
         <div class="form-actions">
             <LpiButton
@@ -15,7 +15,7 @@
             />
 
             <LpiButton
-                :disabled="$refs?.newsForm?.v$?.$invalid || asyncing"
+                :disabled="invalid || asyncing"
                 :label="$filters.capitalize($t('common.confirm'))"
                 :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
@@ -41,6 +41,7 @@ export default {
         return {
             form: defaultForm(),
             asyncing: false,
+            invalid: false,
         }
     },
     methods: {

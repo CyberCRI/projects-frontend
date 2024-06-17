@@ -18,13 +18,7 @@
                     data-test="report-email"
                     @blur="v$.form.reported_by.$validate"
                 />
-                <p
-                    v-for="error of v$.form.reported_by.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.reported_by.$errors" />
             </div>
 
             <div>
@@ -38,9 +32,7 @@
                     data-test="report-url"
                     @blur="v$.form.url.$validate"
                 />
-                <p v-for="error of v$.form.url.$errors" :key="error.$uid" class="error-description">
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.url.$errors" />
             </div>
 
             <div>
@@ -54,13 +46,7 @@
                     data-test="report-title"
                     @blur="v$.form.title.$validate"
                 />
-                <p
-                    v-for="error of v$.form.title.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.title.$errors" />
             </div>
 
             <div>
@@ -75,13 +61,7 @@
                     data-test="report-description"
                     @blur="v$.form.message.$validate"
                 />
-                <p
-                    v-for="error of v$.form.message.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.message.$errors" />
             </div>
         </div>
     </BaseDrawer>
@@ -93,6 +73,7 @@ import { reportBug, reportAbuse } from '@/api/report.service'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, url, required, email } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 function defaultForm() {
     return {
@@ -108,7 +89,7 @@ export default {
 
     emits: ['close'],
 
-    components: { TextInput, BaseDrawer },
+    components: { TextInput, BaseDrawer, FieldErrors },
 
     data() {
         return {

@@ -2,6 +2,7 @@
     <div>
         <BaseDrawer
             :confirm-action-name="$t('common.save')"
+            :confirm-action-disabled="v$.$invalid"
             :is-opened="isOpened"
             :title="
                 $filters.capitalize(
@@ -25,14 +26,9 @@
                         :label="$filters.capitalize(`${$t('recruit.title')}:`)"
                         :placeholder="$t('recruit.title')"
                         class="form-section"
+                        @blur="v$.form.title.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.title.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.title.$errors" />
                 </div>
                 <div class="form-section description-section">
                     <label class="label"
@@ -43,15 +39,10 @@
                         :ws-data="form.description"
                         class="description-field"
                         @update="updateContent"
+                        @blur="v$.form.description.$validate"
                     />
 
-                    <p
-                        v-for="error of v$.form.description.savedContent.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.description.savedContent.$errors" />
                 </div>
                 <div class="form-section">
                     <SwitchInput
@@ -92,6 +83,7 @@ import utils from '@/functs/functions.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'AnnouncementDrawer',
@@ -106,6 +98,7 @@ export default {
         TextInput,
         TipTapEditor,
         DatePicker,
+        FieldErrors,
     },
 
     data() {
@@ -346,11 +339,5 @@ export default {
 
 .datepicker {
     margin-top: $space-m;
-}
-
-.error {
-    color: $red;
-    margin-top: $space-s;
-    font-size: $font-size-s;
 }
 </style>

@@ -25,9 +25,7 @@
                 class="input-field"
                 @blur="v$.title.$validate"
             />
-            <p v-for="error of v$.title.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.title.$errors" />
         </div>
 
         <div class="editor-section">
@@ -49,13 +47,7 @@
                 @blur="v$.editorBlogEntry.savedContent.$validate"
             />
 
-            <p
-                v-for="error of v$.editorBlogEntry.savedContent.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.editorBlogEntry.savedContent.$errors" />
         </div>
         <DatePicker v-model="selectedDate" class="input-field" position="top" />
     </BaseDrawer>
@@ -70,6 +62,7 @@ import permissions from '@/mixins/permissions.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'BlogDrawer',
@@ -84,6 +77,7 @@ export default {
         DatePicker,
         BaseDrawer,
         ConfirmModal,
+        FieldErrors,
     },
 
     inject: {
@@ -373,12 +367,6 @@ export default {
         flex-grow: 1;
         min-height: pxToRem(300px);
     }
-}
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
-    margin-left: $space-l;
 }
 
 .editor-section {

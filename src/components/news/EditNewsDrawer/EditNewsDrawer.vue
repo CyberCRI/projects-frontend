@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="$refs?.newsForm?.v$?.$invalid"
+        :confirm-action-disabled="invalid"
         :is-opened="isOpened"
         :title="$t('news.drawer.title')"
         class="news-drawer medium"
@@ -9,7 +9,7 @@
         @close="cancel"
         :asyncing="asyncing"
     >
-        <NewsForm ref="newsForm" v-model="form" class="news-form" />
+        <NewsForm ref="newsForm" v-model="form" @invalid="invalid = $event" class="news-form" />
     </BaseDrawer>
 </template>
 <script>
@@ -44,6 +44,7 @@ export default {
         return {
             form: null,
             asyncing: false,
+            invalid: false,
         }
     },
 

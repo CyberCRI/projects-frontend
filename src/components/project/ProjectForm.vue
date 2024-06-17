@@ -28,13 +28,7 @@
                         : `${$t('project.form.edit-title')} *`
                 }}</label>
             </TextInput>
-            <p
-                v-for="error of validation.form.title.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.title.$errors" />
         </FieldDisabler>
 
         <!-- Purpose -->
@@ -48,13 +42,7 @@
                 space-below-label="large-space"
                 ><label>{{ $t('project.form.purpose-label') + ' *' }}</label>
             </TextInput>
-            <p
-                v-for="error of validation.form.purpose.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="validation.form.purpose.$errors" />
         </FieldDisabler>
 
         <!-- Team -->
@@ -142,6 +130,7 @@ import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'ProjectForm',
@@ -160,6 +149,7 @@ export default {
         TagsFilterSummary,
         BaseDrawer,
         ImageEditor,
+        FieldErrors,
     },
 
     props: {
@@ -373,12 +363,6 @@ export default {
         label {
             align-self: flex-start;
         }
-    }
-
-    .error-description {
-        color: $red;
-        margin-top: $space-s;
-        font-size: $font-size-s;
     }
 
     .tags label {

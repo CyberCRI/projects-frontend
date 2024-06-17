@@ -19,5 +19,6 @@ export default {
 .error-description {
     color: $red;
     margin-top: $space-s;
+    font-size: $font-size-s;
 }
 </style>
