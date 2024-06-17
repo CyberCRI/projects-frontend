@@ -1,7 +1,7 @@
 <template>
     <div class="page-section-narrow page-top">
         <h1 class="page-title">{{ $t('event.create.title') }}</h1>
-        <EventForm ref="eventForm" v-model="form" />
+        <EventForm ref="eventForm" v-model="form" @invalid="invalid = $event" />
         <div class="form-actions">
             <LpiButton
                 :disabled="asyncing"
@@ -13,7 +13,7 @@
             />
 
             <LpiButton
-                :disabled="$refs?.eventForm?.v$?.$invalid || asyncing"
+                :disabled="invalid || asyncing"
                 :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
                 :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
@@ -39,6 +39,7 @@ export default {
         return {
             asyncing: false,
             form: defaultForm(),
+            invalid: false,
         }
     },
 

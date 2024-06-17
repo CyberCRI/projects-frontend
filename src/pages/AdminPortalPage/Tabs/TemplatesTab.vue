@@ -14,13 +14,7 @@
                     @update:model-value="fillForm"
                     @blur="v$.selectedCategory.id.$touch"
                 />
-                <p
-                    v-for="error of v$.selectedCategory.id.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.selectedCategory.id.$errors" />
             </div>
             <FieldDisabler :disabled="otherFieldDisabled">
                 <div class="block-container">
@@ -175,6 +169,7 @@ import FilterValue from '@/components/search/Filters/FilterValue.vue'
 
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'TemplatesTab',
@@ -189,6 +184,7 @@ export default {
         BaseDrawer,
         TagsFilterEditor,
         FilterValue,
+        FieldErrors,
     },
 
     setup() {
@@ -409,12 +405,6 @@ export default {
 .templates-tab {
     .snackbar {
         margin: $space-l auto;
-    }
-
-    .error-description {
-        color: $red;
-        margin-top: $space-s;
-        font-size: $font-size-s;
     }
 
     .description {

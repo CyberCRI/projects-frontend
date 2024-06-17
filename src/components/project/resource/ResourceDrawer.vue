@@ -1,7 +1,7 @@
 <template>
     <div class="project-form">
         <BaseDrawer
-            :confirm-action-disabled="hasFileError"
+            :confirm-action-disabled="v$.$invalid || hasFileError"
             :has-footer="resourceTypeSelected || !isAddMode"
             :confirm-action-name="$t('common.save')"
             :is-opened="isOpened"
@@ -51,10 +51,9 @@
                         class="text-input"
                         data-test="input-link-adress"
                         placeholder="https://..."
+                        @blur="v$.link.$touch"
                     />
-                    <p v-for="error of v$.link.$errors" :key="error.$uid" class="error-description">
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.link.$errors" />
                 </template>
 
                 <TextInput
@@ -64,10 +63,9 @@
                     class="text-input"
                     data-test="input-link-title"
                     @focus="checkFile"
+                    @blur="v$.title.$touch"
                 />
-                <p v-for="error of v$.title.$errors" :key="error.$uid" class="error-description">
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.title.$errors" />
 
                 <TextInput
                     v-model="description"
@@ -76,14 +74,9 @@
                     class="text-input"
                     data-test="input-link-description"
                     @focus="checkFile"
+                    @blur="v$.description.$touch"
                 />
-                <p
-                    v-for="error of v$.description.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.description.$errors" />
             </div>
         </BaseDrawer>
     </div>
@@ -98,13 +91,14 @@ import ImageInput from '@/components/base/form/ImageInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, url } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'ResourceDrawer',
 
     emits: ['close'],
 
-    components: { LpiButton, ImageInput, BaseDrawer, TextInput },
+    components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
 
     props: {
         isAddMode: {
@@ -411,18 +405,6 @@ export default {
 
 :deep(.input-ctn) {
     box-sizing: border-box;
-}
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
-    margin-left: $space-l;
-}
-
-.error {
-    color: $red;
-    margin-top: $space-s;
-    font-size: $font-size-s;
 }
 </style>
 

@@ -16,14 +16,8 @@
         <div>
             <div class="review-entry">
                 <label>{{ $filters.capitalize($t('common.title')) }}</label>
-                <TextInput v-model="newReview.data.title" />
-                <p
-                    v-for="error of v$.newReview.data.title.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <TextInput v-model="newReview.data.title" @blur="v$.newReview.data.title.$touch" />
+                <FieldErrors :errors="v$.newReview.data.title.$errors" />
             </div>
 
             <div class="review-entry">
@@ -35,14 +29,9 @@
                     :ws-data="wsdata"
                     mode="simple"
                     @update="updateContent"
+                    @blur="v$.newReview.data.description.$touch"
                 />
-                <p
-                    v-for="error of v$.newReview.data.description.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.newReview.data.description.$errors" />
             </div>
             <div class="review-entry review-switch">
                 <label>{{ $filters.capitalize($t('project.publish')) }}</label>
@@ -76,6 +65,7 @@ import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'ReviewDrawer',
@@ -88,6 +78,7 @@ export default {
         TextInput,
         BaseDrawer,
         SwitchInput,
+        FieldErrors,
     },
 
     props: {
@@ -347,11 +338,5 @@ label {
     font-weight: bold;
     margin-bottom: $space-s;
     text-align: left;
-}
-
-.error-description {
-    color: $red;
-    margin-top: $space-s;
-    font-size: $font-size-s;
 }
 </style>

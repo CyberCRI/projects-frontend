@@ -10,13 +10,7 @@
                 :placeholder="$t('event.form.title.placeholder')"
                 @blur="v$.modelValue.title.$validate"
             />
-            <p
-                v-for="error of v$.modelValue.title.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.modelValue.title.$errors" />
         </div>
         <div class="form-section">
             <label>{{ $t('event.form.content.label') }}</label>
@@ -46,13 +40,7 @@
                 @update:model-value="onDateSelected"
             />
 
-            <p
-                v-for="error of v$.modelValue.event_date.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.modelValue.event_date.$errors" />
         </div>
         <div class="form-section">
             <label>{{ $t('event.form.people_groups.label') }}</label>
@@ -76,6 +64,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export function defaultForm() {
     return {
@@ -90,13 +79,14 @@ export function defaultForm() {
 export default {
     name: 'EventForm',
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'invalid'],
 
     components: {
         TextInput,
         VueDatePicker,
         IconImage,
         MultiGroupPicker,
+        FieldErrors,
     },
 
     props: {
@@ -127,6 +117,12 @@ export default {
                 },
             },
         }
+    },
+
+    watch: {
+        'v$.$invalid'(value) {
+            this.$emit('invalid', value)
+        },
     },
 
     computed: {
@@ -196,11 +192,5 @@ label,
     display: inline-block;
     font-size: 1.2rem;
     font-weight: 700;
-}
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
-    margin-left: $space-l;
 }
 </style>

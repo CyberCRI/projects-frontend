@@ -25,13 +25,7 @@
                                 @blur="v$.form.given_name.$validate"
                             />
                         </div>
-                        <p
-                            v-for="error of v$.form.given_name.$errors"
-                            :key="error.$uid"
-                            class="error-description"
-                        >
-                            {{ error.$message }}
-                        </p>
+                        <FieldErrors :errors="v$.form.given_name.$errors" />
                     </div>
 
                     <label class="field-title"
@@ -52,13 +46,7 @@
                                 @blur="v$.form.family_name.$validate"
                             />
                         </div>
-                        <p
-                            v-for="error of v$.form.family_name.$errors"
-                            :key="error.$uid"
-                            class="error-description"
-                        >
-                            {{ error.$message }}
-                        </p>
+                        <FieldErrors :errors="v$.form.family_name.$errors" />
                     </div>
 
                     <label class="field-title">{{ $t('complete-profile.personal.email') }} *</label>
@@ -78,13 +66,7 @@
                                 @blur="v$.user.email.$validate"
                             />
                         </div>
-                        <p
-                            v-for="error of v$.user.email.$errors"
-                            :key="error.$uid"
-                            class="error-description"
-                        >
-                            {{ error.$message }}
-                        </p>
+                        <FieldErrors :errors="v$.user.email.$errors" />
                     </div>
 
                     <label class="field-title"
@@ -105,13 +87,7 @@
                                 @blur="v$.form.job.$validate"
                             />
                         </div>
-                        <p
-                            v-for="error of v$.form.job.$errors"
-                            :key="error.$uid"
-                            class="error-description"
-                        >
-                            {{ error.$message }}
-                        </p>
+                        <FieldErrors :errors="v$.form.job.$errors" />
                     </div>
                 </div>
 
@@ -251,6 +227,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -264,6 +241,7 @@ export default {
         UserProfile,
         BaseDrawer,
         LoaderSimple,
+        FieldErrors,
     },
 
     mixins: [imageMixin, onboardingStatusMixin],
@@ -633,11 +611,6 @@ textarea {
         .field-decorator::after {
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-circle</title><path fill="%23ff9473" d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" /></svg>');
         }
-    }
-
-    .error-description {
-        text-align: right;
-        color: $red;
     }
 }
 

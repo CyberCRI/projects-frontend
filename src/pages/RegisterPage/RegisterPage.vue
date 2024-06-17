@@ -43,13 +43,7 @@
                                 @blur="v$.form.given_name.$validate"
                                 data-test="first-name"
                             />
-                            <p
-                                v-for="error of v$.form.given_name.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
+                            <FieldErrors :errors="v$.form.given_name.$errors" />
                         </div>
                         <div class="form-group">
                             <TextInput
@@ -59,13 +53,7 @@
                                 @blur="v$.form.family_name.$validate"
                                 data-test="last-name"
                             />
-                            <p
-                                v-for="error of v$.form.family_name.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
+                            <FieldErrors :errors="v$.form.family_name.$errors" />
                         </div>
                         <div class="form-group">
                             <TextInput
@@ -76,13 +64,7 @@
                                 @blur="v$.form.email.$validate"
                                 data-test="email"
                             />
-                            <p
-                                v-for="error of v$.form.email.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
+                            <FieldErrors :errors="v$.form.email.$errors" />
                         </div>
                         <div class="form-group">
                             <TextInput
@@ -93,17 +75,11 @@
                                 @blur="v$.form.password.$validate"
                                 data-test="password"
                             />
-                            <p
-                                v-for="error of v$.form.password.$errors"
-                                :key="error.$uid"
-                                class="error-message"
-                            >
-                                {{ error.$message }}
-                            </p>
+                            <FieldErrors :errors="v$.form.password.$errors" />
                         </div>
                         <div class="action">
                             <LpiButton
-                                :disabled="v$.form.$error || asyncing"
+                                :disabled="v$.form.$invalid || asyncing"
                                 @click="register"
                                 :label="$t('common.confirm')"
                                 :btn-icon="asyncing ? 'LoaderSimple' : null"
@@ -162,6 +138,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 export default {
     name: 'RegisterPage',
 
@@ -173,6 +150,7 @@ export default {
         ContactDrawer,
         LoaderSimple,
         SignUpWrapper,
+        FieldErrors,
     },
 
     props: {
@@ -320,12 +298,6 @@ export default {
 .confirm {
     border-radius: $border-radius-m;
     padding: $space-xl;
-}
-
-.error-message {
-    color: $red;
-    margin-top: $space-xs;
-    font-size: $font-size-s;
 }
 
 .action {

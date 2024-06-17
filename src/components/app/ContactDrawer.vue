@@ -22,13 +22,7 @@
                     @blur="v$.form.subject.$validate"
                 />
 
-                <p
-                    v-for="error of v$.form.subject.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.subject.$errors" />
             </div>
 
             <div class="form-input">
@@ -77,6 +71,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import { contactUs } from '@/api/report.service'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 function defaultForm() {
     return {
@@ -91,7 +86,7 @@ export default {
 
     emits: ['close'],
 
-    components: { TextInput, BaseDrawer },
+    components: { TextInput, BaseDrawer, FieldErrors },
 
     props: {
         isOpened: {
@@ -187,12 +182,6 @@ export default {
 
     .form-input {
         margin-bottom: $space-l;
-    }
-
-    .error-description {
-        color: $red;
-        margin-top: $space-s;
-        font-size: $font-size-s;
     }
 }
 </style>

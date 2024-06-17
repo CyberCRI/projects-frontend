@@ -17,13 +17,7 @@
                 <AdminBlock :block-title="$t('form.organization-name')">
                     <span class="description">{{ $t('tips.organization-name') }}</span>
                     <TextInput v-model="form.name" class="text-input" @blur="v$.form.name.$touch" />
-                    <p
-                        v-for="error of v$.form.name.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.name.$errors" />
                 </AdminBlock>
                 <AdminBlock :block-title="$t('tips.organization-email')">
                     <span class="description">{{}}</span>
@@ -32,13 +26,7 @@
                         class="text-input"
                         @blur="v$.form.contact_email.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.contact_email.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.contact_email.$errors" />
                 </AdminBlock>
                 <AdminBlock :block-title="$t('form.language')">
                     <span class="description">{{ $t('tips.organization-language') }}</span>
@@ -47,13 +35,7 @@
                         :options="languageOptions"
                         @blur="v$.form.language.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.language.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.language.$errors" />
                 </AdminBlock>
                 <AdminBlock
                     :block-title="
@@ -66,13 +48,7 @@
                         :options="visibilityOptions"
                         has-icon
                     />
-                    <p
-                        v-for="error of v$.form.background_color.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.background_color.$errors" />
 
                     <div v-if="form.is_logo_visible_on_parent_dashboard" class="color-ctn">
                         <span class="description">{{
@@ -88,7 +64,7 @@
                 </AdminBlock>
 
                 <LpiButton
-                    :disabled="v$.$errors && v$.$errors.length"
+                    :disabled="v$.$invalid"
                     :label="$filters.capitalize($t('common.save'))"
                     :btn-icon="isLoading ? 'LoaderSimple' : null"
                     class="save-button"
@@ -112,6 +88,7 @@ import BannerAdminBlock from '@/components/admin/GeneralAdminBlocks/Pictures/Ban
 import WordingAdminBlock from '@/components/admin/GeneralAdminBlocks/Wording/WordingAdminBlock.vue'
 import ChatAdminBlock from '@/components/admin/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 export default {
     name: 'SettingsTab',
 
@@ -126,6 +103,7 @@ export default {
         WordingAdminBlock,
         ChatAdminBlock,
         AdminBlock,
+        FieldErrors,
     },
 
     setup() {

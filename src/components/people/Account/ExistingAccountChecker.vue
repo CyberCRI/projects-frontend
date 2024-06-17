@@ -13,9 +13,7 @@
                 @keyup.enter="searchUser"
                 @blur="v$.email.$validate"
             />
-            <p v-for="error of v$.email.$errors" :key="error.$uid" class="error-description">
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.email.$errors" />
         </div>
 
         <div class="footer">
@@ -46,12 +44,13 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import { searchPeopleByExactMail } from '@/api/people.service'
 import useValidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 export default {
     name: 'ExistingAccountChecker',
 
     emits: ['cancel', 'check-done'],
 
-    components: { AccountFormTitleBlock, TextInput, LpiButton },
+    components: { AccountFormTitleBlock, TextInput, LpiButton, FieldErrors },
 
     data() {
         return {
@@ -119,11 +118,6 @@ export default {
 
 .input-field {
     padding: $space-2xs 0;
-}
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
 }
 
 .footer {

@@ -18,13 +18,7 @@
                         @blur="v$.form.given_name.$validate"
                         data-test="first-name"
                     />
-                    <p
-                        v-for="error of v$.form.given_name.$errors"
-                        :key="error.$uid"
-                        class="error-message"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.given_name.$errors" />
                 </div>
                 <div class="form-group">
                     <TextInput
@@ -34,13 +28,7 @@
                         @blur="v$.form.family_name.$validate"
                         data-test="last-name"
                     />
-                    <p
-                        v-for="error of v$.form.family_name.$errors"
-                        :key="error.$uid"
-                        class="error-message"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.family_name.$errors" />
                 </div>
                 <div class="form-group">
                     <TextInput
@@ -51,13 +39,7 @@
                         @blur="v$.form.email.$validate"
                         data-test="email"
                     />
-                    <p
-                        v-for="error of v$.form.email.$errors"
-                        :key="error.$uid"
-                        class="error-message"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.email.$errors" />
                 </div>
                 <div class="form-group">
                     <TextInput
@@ -88,7 +70,7 @@
                         data-test="cancel-btn"
                     />
                     <LpiButton
-                        :disabled="v$.form.$error || asyncing"
+                        :disabled="v$.form.$invalid || asyncing"
                         @click="requestAccess"
                         :label="$t('common.confirm')"
                         :btn-icon="asyncing ? 'LoaderSimple' : null"
@@ -127,6 +109,7 @@ import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import { helpers, required, email } from '@vuelidate/validators'
 import { postAccessRequest } from '@/api/organizations.service.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 export default {
     name: 'RequestAccessPage',
 
@@ -135,6 +118,7 @@ export default {
         LpiButton,
         ContactDrawer,
         SignUpWrapper,
+        FieldErrors,
     },
 
     data() {
@@ -237,12 +221,6 @@ export default {
 .confirm {
     border-radius: $border-radius-m;
     padding: $space-xl;
-}
-
-.error-message {
-    color: $red;
-    margin-top: $space-xs;
-    font-size: $font-size-s;
 }
 
 .notice {

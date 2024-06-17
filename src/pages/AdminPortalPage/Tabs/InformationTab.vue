@@ -22,13 +22,7 @@
                     <h4 class="title">{{ $t('form.organization-name') }}</h4>
                     <span class="description">{{ $t('tips.organization-name') }}</span>
                     <TextInput v-model="form.name" class="text-input" @blur="v$.form.name.$touch" />
-                    <p
-                        v-for="error of v$.form.name.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.name.$errors" />
                 </div>
                 <div>
                     <h4 class="title">{{ $t('form.title') }}</h4>
@@ -38,13 +32,7 @@
                         class="text-input"
                         @blur="v$.form.dashboard_title.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.dashboard_title.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.dashboard_title.$errors" />
                 </div>
                 <div>
                     <h4 class="title">{{ $t('form.email') }}</h4>
@@ -54,13 +42,7 @@
                         class="text-input"
                         @blur="v$.form.contact_email.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.contact_email.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.contact_email.$errors" />
                 </div>
                 <div>
                     <h4 class="title">{{ $t('form.language') }}</h4>
@@ -70,13 +52,7 @@
                         :options="languageOptions"
                         @blur="v$.form.language.$touch"
                     />
-                    <p
-                        v-for="error of v$.form.language.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.language.$errors" />
                 </div>
                 <div>
                     <h4 class="title">
@@ -88,13 +64,7 @@
                         :options="visibilityOptions"
                         has-icon
                     />
-                    <p
-                        v-for="error of v$.form.background_color.$errors"
-                        :key="error.$uid"
-                        class="error-description"
-                    >
-                        {{ error.$message }}
-                    </p>
+                    <FieldErrors :errors="v$.form.background_color.$errors" />
 
                     <div v-if="form.is_logo_visible_on_parent_dashboard" class="color-ctn">
                         <span class="description">{{
@@ -132,6 +102,7 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'InformationTab',
@@ -143,6 +114,7 @@ export default {
         LpiSelect,
         LpiButton,
         SketchPicker: Sketch,
+        FieldErrors,
     },
 
     setup() {

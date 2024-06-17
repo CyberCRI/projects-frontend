@@ -806,6 +806,7 @@
             "edit": "Edit",
             "edit-members": "Edit members",
             "edit-roles": "Edit roles",
+            "form-incomplete": "Fields are missing or invalid, complete to be able to save.",
             "create-group": "Create group",
             "edit-group": "Edit group",
             "edit-name": "Edit name of the group",

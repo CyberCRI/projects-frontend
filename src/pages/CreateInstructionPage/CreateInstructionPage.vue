@@ -2,7 +2,7 @@
     <div class="create-instruction-page page-section-narrow">
         <h1 class="page-title">{{ $t('instructions.create.title') }}</h1>
 
-        <InstructionForm ref="instructionForm" v-model="form" />
+        <InstructionForm ref="instructionForm" v-model="form" @invalid="invalid = $event" />
 
         <div class="form-actions">
             <LpiButton
@@ -15,7 +15,7 @@
             />
 
             <LpiButton
-                :disabled="$refs?.instructionForm?.v$?.$invalid || asyncing"
+                :disabled="invalid || asyncing"
                 :label="$filters.capitalize($t('common.confirm'))"
                 :btn-icon="asyncing ? 'LoaderSimple' : null"
                 class="footer__right-button"
@@ -41,6 +41,7 @@ export default {
         return {
             form: defaultForm(),
             asyncing: false,
+            invalid: false,
         }
     },
     methods: {

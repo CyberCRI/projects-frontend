@@ -6,7 +6,7 @@
         @close="close"
         :confirm-action-name="$t('recruit.apply')"
         @confirm="sendApplication"
-        :confirm-action-disabled="!captchatoken"
+        :confirm-action-disabled="v$.$invalid || !captchatoken"
     >
         <div class="announcement-reply">
             <h4 class="reply-to" v-if="announcement">{{ announcement.title }}</h4>
@@ -15,30 +15,20 @@
                 <TextInput
                     :label="$filters.capitalize($t('recruit.firstname'))"
                     v-model="form.applicant_firstname"
+                    @blur="v$.form.applicant_firstname.$touch"
                 />
 
-                <p
-                    v-for="error of v$.form.applicant_firstname.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.applicant_firstname.$errors" />
             </div>
 
             <div class="form-section">
                 <TextInput
                     v-model="form.applicant_name"
                     :label="$filters.capitalize($t('recruit.lastname'))"
+                    @blur="v$.form.applicant_name.$touch"
                 />
 
-                <p
-                    v-for="error of v$.form.applicant_name.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.applicant_name.$errors" />
             </div>
 
             <div class="form-section">
@@ -46,15 +36,10 @@
                     input-type="email"
                     v-model="form.applicant_email"
                     :label="$filters.capitalize($t('form.email'))"
+                    @blur="v$.form.applicant_email.$touch"
                 />
 
-                <p
-                    v-for="error of v$.form.applicant_email.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.applicant_email.$errors" />
             </div>
 
             <div class="form-section">
@@ -70,15 +55,10 @@
                     @update="updateContent"
                     :save-icon-visible="false"
                     name="motivation"
+                    @blur="v$.wsData.savedContent.$validate"
                 />
 
-                <p
-                    v-for="error of v$.wsData.savedContent.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.wsData.savedContent.$errors" />
             </div>
 
             <div class="form-section captcha_cont has-text-centered">
@@ -94,6 +74,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import { applyAnnouncement } from '@/api/announcements.service.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export default {
     name: 'ReplyAnnouncementDrawer',
@@ -104,6 +85,7 @@ export default {
         BaseDrawer,
         TipTapEditor,
         TextInput,
+        FieldErrors,
     },
     props: {
         isOpened: { type: Boolean, default: false },
@@ -269,12 +251,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.error-description {
-    color: $red;
-    margin-top: $space-xs;
-    font-size: $font-size-s;
-}
-
 .reply-to {
     margin-bottom: $space-m;
     text-align: center;

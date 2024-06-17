@@ -9,13 +9,7 @@
                 class="input-field"
                 @blur="v$.modelValue.title.$validate"
             />
-            <p
-                v-for="error of v$.modelValue.title.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.modelValue.title.$errors" />
         </div>
 
         <div class="form-section">
@@ -36,13 +30,7 @@
                 @update:model-value="onDateSelected"
             />
 
-            <p
-                v-for="error of v$.modelValue.publication_date.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.modelValue.publication_date.$errors" />
         </div>
 
         <div class="form-section">
@@ -57,13 +45,7 @@
                 @blur="v$.modelValue.content.$validate"
             />
 
-            <p
-                v-for="error of v$.modelValue.content.$errors"
-                :key="error.$uid"
-                class="error-description"
-            >
-                {{ error.$message }}
-            </p>
+            <FieldErrors :errors="v$.modelValue.content.$errors" />
         </div>
         <div class="form-section">
             <label>{{ $t('instructions.form.groups.label') }}</label>
@@ -101,6 +83,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 export function defaultForm() {
     return {
@@ -116,7 +99,7 @@ export function defaultForm() {
 export default {
     name: 'InstructionForm',
 
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'invalid'],
 
     components: {
         TextInput,
@@ -124,6 +107,7 @@ export default {
         VueDatePicker,
         IconImage,
         MultiGroupPicker,
+        FieldErrors,
     },
 
     props: {
@@ -144,6 +128,11 @@ export default {
         }
     },
 
+    watch: {
+        'v$.$invalid'(isInvalid) {
+            this.$emit('invalid', isInvalid)
+        },
+    },
     validations() {
         return {
             modelValue: {
@@ -213,12 +202,6 @@ export default {
     display: inline-block;
     font-size: 1.2rem;
     font-weight: 700;
-}
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
-    margin-left: $space-l;
 }
 
 .img-ctn {
