@@ -67,18 +67,25 @@ export default {
     async mounted() {
         this.isLoading = true
         try {
-            this.groups = await Promise.all(
+            // tricky stuff here, some group might not exist anymore
+            this.groups = await Promise.allSettled(
                 this.user.people_groups.map(async (group) => {
                     try {
                         return await getGroup(
                             this.$store.state.organizations.current.code,
-                            group.id
+                            group.id,
+                            true // no error toast
                         )
                     } catch (error) {
-                        console.error(error)
+                        console.error('missing group', group.id)
                         return null
                     }
                 })
+            ).then(
+                (results) =>
+                    results
+                        .filter((result) => result && result.status == 'fulfilled') // filter out failed requests
+                        .map((result) => result.value) // get the value of successful requests
             )
             this.groups = this.groups.filter((group) => !!group)
         } catch (error) {
