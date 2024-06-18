@@ -1082,6 +1082,7 @@
             "help": "Besoin d'aide ? On est là.",
             "edit": "Modifier",
             "general": {
+                "no-special-characters": "Les caratères spéciaux ne sont pas autorisés.",
                 "tab": "Infos Générales",
                 "form-has-error": "Il y a des champs manquants ou invalides dans le formulaires.",
                 "save-error": "Erreur lors de la sauvegarde du profil.",

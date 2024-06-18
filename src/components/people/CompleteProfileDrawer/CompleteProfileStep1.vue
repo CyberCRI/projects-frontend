@@ -228,6 +228,7 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -281,9 +282,17 @@ export default {
             form: {
                 given_name: {
                     required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
+                    ),
                 },
                 family_name: {
                     required: helpers.withMessage(this.$t('complete-profile.required'), required),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
+                    ),
                 },
 
                 job: {

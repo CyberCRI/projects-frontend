@@ -262,6 +262,7 @@ import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesU
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 
 function defaultForm() {
     return {
@@ -328,11 +329,19 @@ export default {
                         this.$t('profile.edit.general.first-name.is-required'),
                         required
                     ),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
+                    ),
                 },
                 last_name: {
                     required: helpers.withMessage(
                         this.$t('profile.edit.general.last-name.is-required'),
                         required
+                    ),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
                     ),
                 },
                 professional_email: {

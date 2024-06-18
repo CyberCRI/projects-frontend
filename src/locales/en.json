@@ -1085,6 +1085,7 @@
             "help": "Need help? We're here.",
             "edit": "Edit",
             "general": {
+                "no-special-characters": "No special characters allowed",
                 "tab": "General info",
                 "form-has-error": "There is missing or invalid field in the form.",
                 "save-error": "Error while saving profile.",
