@@ -70,3 +70,5 @@ export const CHART_COLORS = [
     '#AE47FF',
     '#D6A2FF',
 ]
+
+export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-']+$/giu

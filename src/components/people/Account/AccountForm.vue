@@ -155,6 +155,7 @@ import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue
 import AccountInfos from '@/components/people/Account/AccountInfos.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 
 export default {
     name: 'AccountForm',
@@ -221,11 +222,19 @@ export default {
                         this.$t('project.form.title-errors.required'),
                         required
                     ),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
+                    ),
                 },
                 family_name: {
                     required: helpers.withMessage(
                         this.$t('project.form.title-errors.required'),
                         required
+                    ),
+                    alphanum: helpers.withMessage(
+                        this.$t('profile.edit.general.no-special-characters'),
+                        helpers.regex(VALID_NAME_REGEX)
                     ),
                 },
                 job: {
