@@ -1,4 +1,4 @@
-import { axios } from '@/api/api.config'
+import { axios, axiosNoErrorMessage } from '@/api/api.config'
 import {
     GroupModel,
     GroupOuput,
@@ -23,9 +23,14 @@ export async function getHierarchyGroups(
     ).data
 }
 
-export async function getGroup(org: string, groupId: string): Promise<GroupOuput> {
+export async function getGroup(
+    org: string,
+    groupId: string,
+    noError: boolean = false
+): Promise<GroupOuput> {
+    const _axios = noError ? axiosNoErrorMessage : axios
     return (
-        await axios.get(
+        await _axios.get(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/organization/${org}/people-group/${groupId}/`
