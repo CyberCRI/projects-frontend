@@ -176,7 +176,10 @@ export default {
 
             this.$emit('update:picture', image)
             // reinit image cropping data
-            this.$emit('update:imageSizes', null)
+            // weird bug : cant emits several event in the same tick
+            this.$nextTick(() => {
+                this.$emit('update:imageSizes', null)
+            })
         },
 
         uploadImage(image) {
