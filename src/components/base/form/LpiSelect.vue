@@ -89,12 +89,12 @@ export default {
 
     props: {
         modelValue: {
-            type: [String, Number],
+            type: [String, Number], // value
             default: '',
         },
 
         options: {
-            type: Array,
+            type: Array, // [{label:'', value:''}, ...]
             required: true,
             default: () => [],
         },

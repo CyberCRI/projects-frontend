@@ -14,7 +14,7 @@ export async function postUser(payload: FormData): Promise<PeopleModel> {
     return (
         await axios.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
-                store.state.organizations?.current?.code || ''
+                store.getters['organizations/current']?.code || ''
             }`,
             payload
         )
@@ -36,7 +36,7 @@ export async function postUserWithInvitation(
     return (
         await axiosNoToken.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
-                store.state.organizations?.current?.code || ''
+                store.getters['organizations/current']?.code || ''
             }`,
             payload,
             config
@@ -161,7 +161,7 @@ export async function resetUserPassword(id: string | number): Promise<PeopleMode
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/user/${id}/reset-password/?organization=${
-                store.state.organizations?.current?.code || ''
+                store.getters['organizations/current']?.code || ''
             }`
         )
     ).data

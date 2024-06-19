@@ -19,7 +19,7 @@
                 v-if="selectedUser"
             />
         </template>
-        <template v-else>
+        <template v-else-if="!isLoading">
             <AccountInfos
                 :model-value="form"
                 @update:model-value="form = { ...form, ...$event }"
@@ -39,6 +39,10 @@
                                 v-model="form.create_in_google"
                             />
                         </div>
+                    </div>
+                    <div v-if="form.create_in_google && orgUnits.length">
+                        <label class="label">Organizational unit</label>
+                        <LpiSelect :options="orgUnits" v-model="form.google_organizational_unit" />
                     </div>
                 </AccountSection>
 
@@ -156,6 +160,8 @@ import AccountInfos from '@/components/people/Account/AccountInfos.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import { getOrgUnits } from '@/api/google.service'
 
 export default {
     name: 'AccountForm',
@@ -175,6 +181,7 @@ export default {
         AccountInfos,
         AccountSection,
         FieldErrors,
+        LpiSelect,
     },
 
     props: {
@@ -201,16 +208,18 @@ export default {
                 family_name: '',
                 job: '',
                 email: '',
-                profile_picture: '',
+                profile_picture: null,
                 create_in_google: false,
                 imageSizes: null,
+                google_organizational_unit: null,
             },
             selectedGroups: {},
             previousGroups: {}, // memo to compare with selected groups on save
             showRemoveUserQuit: false,
             selectedRole: {},
-            isLoading: false,
+            isLoading: true,
             asyncSave: false,
+            orgUnits: [],
         }
     },
 
@@ -304,9 +313,30 @@ export default {
     },
 
     async mounted() {
+        if (this.isAddMode && this.hasGoogleSync) {
+            this.orgUnits = (await getOrgUnits()).map((unit) => ({
+                label: unit,
+                value: unit,
+            }))
+        }
+
         if (this.selectedUser) await this.setFormFromSelectedUser()
         else {
             this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
+        }
+
+        if (this.isAddMode) {
+            // fix for undefined profile_picture
+            if (!this.form.profile_picture) {
+                this.form.profile_picture = null
+            }
+            if (
+                this.hasGoogleSync &&
+                this.orgUnits.length &&
+                !this.form.google_organizational_unit
+            ) {
+                this.form.google_organizational_unit = this.orgUnits[0].value
+            }
         }
 
         this.isLoading = false
@@ -357,8 +387,9 @@ export default {
                 family_name: this.selectedUser.family_name,
                 job: this.selectedUser.job,
                 email: this.selectedUser.email,
-                profile_picture: this.selectedUser.profile_picture,
+                profile_picture: this.selectedUser.profile_picture || null,
                 imageSizes: pictureApiToImageSizes(this.selectedUser.profile_picture),
+                google_organizational_unit: this.selectedUser.google_organizational_unit,
             }
         },
 
@@ -446,6 +477,10 @@ export default {
                         // we dont add the key if it is false, as backend will receive "false" (the string)
                         // that will be coerced to boolean True
                         formData.append('create_in_google', true)
+                        formData.append(
+                            'google_organizational_unit',
+                            this.form.google_organizational_unit
+                        )
                     }
 
                     allRolesToAdd.forEach((role) => {

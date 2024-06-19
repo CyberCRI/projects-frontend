@@ -45,7 +45,7 @@
             :image-sizes="modelValue.imageSizes"
             @update:image-sizes="updateForm('imageSizes', $event)"
             :picture="modelValue.profile_picture"
-            @update:profile_picture="updateForm('profile_picture', $event)"
+            @update:picture="updateForm('profile_picture', $event)"
             :default-picture="defaultPictures"
         ></ImageEditor>
     </AccountSection>
