@@ -70,5 +70,5 @@ export const CHART_COLORS = [
     '#AE47FF',
     '#D6A2FF',
 ]
-
-export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-']+$/giu
+// all unicode letters, marks (for diacriticals), numbers, spaces, and the following characters: - _ . '
+export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-_.']+$/giu
