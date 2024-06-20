@@ -75,7 +75,7 @@
         "lowlight": "^3.1.0",
         "mixpanel-browser": "^2.48.1",
         "remixicon": "^2",
-        "vue": "^3.3.9",
+        "vue": "^3.4.26",
         "vue-axios": "^3.5.2",
         "vue-chart-3": "^3.1.8",
         "vue-class-component": "^7",
