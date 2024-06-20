@@ -147,7 +147,7 @@ export default {
     }
 
     .popper[x-placement^='bottom'] .popper__arrow {
-        border-color: transparent transparent $primary-dark transparent;
+        border-color: transparent transparent $primary-dark;
     }
 
     .popper[x-placement^='left'] .popper__arrow {

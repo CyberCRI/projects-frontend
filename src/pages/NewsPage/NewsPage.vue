@@ -262,6 +262,7 @@ export default {
 .news-actions {
     display: flex;
     gap: $space-s;
+    height: min-content;
 }
 
 .news-texts {

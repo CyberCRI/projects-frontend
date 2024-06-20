@@ -1,11 +1,11 @@
 <template>
     <div class="information-tab">
-        <section>
-            <EventAdminBlock />
+        <section class="admin-section">
+            <EventAdminBlock class="sub-section" />
 
             <NewsAdminBlock />
         </section>
-        <section>
+        <section class="admin-section">
             <InstructionAdminBlock />
 
             <FeaturedProjectAdminBlock />
@@ -35,16 +35,15 @@ export default {
 .information-tab {
     display: flex;
     flex-direction: column;
-    padding: $space-xl 0;
 }
 
 @media (min-width: $min-desktop) {
     .information-tab {
         align-items: stretch;
         flex-direction: row;
-        gap: $space-xl;
+        gap: 10rem; // 160px
 
-        section {
+        .admin-section {
             width: 50%;
         }
     }

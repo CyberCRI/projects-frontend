@@ -176,7 +176,7 @@ export default {
         flex-basis: pxToRem(240px);
         width: pxToRem(240px);
         flex-shrink: 0;
-        margin: 0 auto $space-xl auto;
+        margin: 0 auto $space-xl;
 
         .img-ctn {
             width: pxToRem(240px);

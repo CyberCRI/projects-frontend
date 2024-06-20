@@ -1,12 +1,5 @@
 <template>
     <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
-        <template #actions>
-            <LinkButton
-                btn-icon="Plus"
-                :label="$t('common.add')"
-                @click="addInstruction"
-            ></LinkButton>
-        </template>
         <template #default>
             <InstructionAdminListItem
                 v-for="instruction in diplayableInstructions"
@@ -17,7 +10,12 @@
             ></InstructionAdminListItem>
         </template>
 
-        <template #footer>
+        <template #footer
+            ><SummaryAction
+                action-icon="Plus"
+                :action-label="$t('common.add')"
+                @click="addInstruction"
+            />
             <SummaryAction
                 btn-icon="ArrowRight"
                 :action-label="$t('common.see-all')"
@@ -45,7 +43,6 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
@@ -58,7 +55,6 @@ export default {
 
     components: {
         AdminBlock,
-        LinkButton,
         EditInstructionDrawer,
         InstructionAdminListItem,
         ConfirmModal,

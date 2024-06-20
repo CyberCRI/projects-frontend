@@ -40,13 +40,37 @@ export default {
 </script>
 <style lang="scss" scoped>
 .admin-block {
-    padding: $space-unit 0;
-    border-bottom: $border-width-s solid $lighter-gray;
+    padding: $space-2xl 0;
+    position: relative;
+}
+
+/* stylelint-disable-next-line  at-rule-no-unknown */
+@mixin block-separator {
+    content: '';
+    display: block;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 66%;
+    border-top: $border-width-s solid $primary;
+}
+
+.admin-block ~ .admin-block::before {
+    /* stylelint-disable-next-line  at-rule-no-unknown */
+    @include block-separator;
+}
+
+@media (max-width: $min-desktop) {
+    /* stylelint-disable-next-line selector-pseudo-class-no-unknown */
+    :global(.admin-section ~ .admin-section > .admin-block::before) {
+        /* stylelint-disable-next-line  at-rule-no-unknown */
+        @include block-separator;
+    }
 }
 
 .admin-block-header,
-.admin-block-content,
-.admin-block-footer {
+.admin-block-content {
     padding-bottom: $space-unit;
 }
 
@@ -59,6 +83,7 @@ export default {
 
 .admin-block-footer {
     display: flex;
+    gap: 1rem;
 }
 
 .loader {

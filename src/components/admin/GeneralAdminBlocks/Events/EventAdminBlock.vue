@@ -1,8 +1,6 @@
 <template>
     <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
-        <template #actions>
-            <LinkButton btn-icon="Plus" :label="$t('common.add')" @click="addEvent"></LinkButton>
-        </template>
+        <template #actions> </template>
         <template #default>
             <EventAdminListItem
                 v-for="event in events"
@@ -14,8 +12,9 @@
         </template>
 
         <template #footer>
+            <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addEvent" />
             <SummaryAction
-                btn-icon="ArrowRight"
+                action-icon="ArrowRight"
                 :action-label="$t('common.see-all')"
                 :to="{ name: 'CalendarPage' }"
             />
@@ -42,7 +41,6 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
 import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import EventAdminListItem from './EventAdminListItem.vue'
@@ -54,7 +52,6 @@ export default {
 
     components: {
         AdminBlock,
-        LinkButton,
         EditEventDrawer,
         EventAdminListItem,
         ConfirmModal,
@@ -86,9 +83,11 @@ export default {
     methods: {
         async loadEvents() {
             this.isLoading = true
+            const todayAtZero = new Date()
+            todayAtZero.setHours(0, 0, 0, 0)
             const request = await getAllEvents(this.$store.getters['organizations/current']?.code, {
                 ordering: 'event_date',
-                from_date: new Date().toISOString(),
+                from_date: todayAtZero.toISOString(),
                 limit: 4,
             })
             this.events = request.results
