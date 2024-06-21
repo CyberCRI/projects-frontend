@@ -13,10 +13,6 @@
                 :projects="ProjectListSearchSlotProps.projects"
                 :groups="ProjectListSearchSlotProps.groups"
                 :peoples="ProjectListSearchSlotProps.peoples"
-                :total-count="ProjectListSearchSlotProps.totalCount"
-                :display-see-more-button="true"
-                :see-more-query="search"
-                :with-title="true"
                 class="list-container"
             >
                 <template #projects="projectListSlotProps">

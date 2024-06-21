@@ -10,7 +10,6 @@
                     :is-loading="isLoading"
                     :limit="8"
                     :groups="groups"
-                    :with-title="false"
                 >
                     <template #groups="groupListSlotProps">
                         <GroupCard

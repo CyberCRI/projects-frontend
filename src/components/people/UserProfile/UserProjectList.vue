@@ -18,7 +18,6 @@
                 :is-loading="projectsLoading"
                 :limit="limit"
                 :projects="limit ? projects.slice(listStart, listStart + limit) : projects"
-                :with-title="false"
             >
                 <template #projects="projectListSlotProps">
                     <ProjectCard

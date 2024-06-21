@@ -44,7 +44,6 @@
                     :is-loading="isLoading"
                     :limit="12"
                     :groups="childGroup"
-                    :with-title="false"
                     class="list-container"
                 >
                     <template #groups="cardListSlotProps">

@@ -11,8 +11,6 @@
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
                 :peoples="ProjectListSearchSlotProps.peoples"
-                :total-count="ProjectListSearchSlotProps.totalCount"
-                :with-title="true"
                 class="list-container"
             >
                 <template #peoples="projectListSlotProps">

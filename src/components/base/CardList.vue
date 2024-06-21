@@ -16,17 +16,6 @@
 
         <template v-else>
             <div v-if="projects.length" class="card-container">
-                <div class="title-ctn" v-if="withTitle">
-                    <h3 class="title">
-                        {{ $t('search.projects-tab', { count: totalCount.projects }) }}
-
-                        <SeeMoreArrow
-                            class="see-more-arrow"
-                            v-if="displaySeeMoreButton"
-                            :to="{ name: 'ProjectSearch', query: seeMoreQuery }"
-                        />
-                    </h3>
-                </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="project in projects" :key="project.id" class="card-list__content">
                         <slot name="projects" :project="project"></slot>
@@ -35,15 +24,6 @@
             </div>
 
             <div v-if="groups.length" class="card-container">
-                <div class="title-ctn" v-if="withTitle">
-                    <h3 class="title">
-                        {{ $t('search.group-tab', { count: totalCount.groups }) }}
-                    </h3>
-                    <SeeMoreArrow
-                        v-if="displaySeeMoreButton"
-                        :to="{ name: 'GroupSearch', query: seeMoreQuery }"
-                    />
-                </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="group in groups" :key="group.id" class="card-list__content">
                         <slot name="groups" :group="group"></slot>
@@ -52,15 +32,6 @@
             </div>
 
             <div v-if="peoples.length" class="card-container">
-                <div class="title-ctn" v-if="withTitle">
-                    <h3 class="title">
-                        {{ $t('search.people-tab', { count: totalCount.peoples }) }}
-                    </h3>
-                    <SeeMoreArrow
-                        v-if="displaySeeMoreButton"
-                        :to="{ name: 'PeopleSearch', query: seeMoreQuery }"
-                    />
-                </div>
                 <DynamicGrid :min-gap="gridGap" class="card-list">
                     <div v-for="people in peoples" :key="people.id" class="card-list__content">
                         <slot name="peoples" :user="people"></slot>
@@ -74,8 +45,6 @@
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
 import ProjectListSkeleton from '@/components/project/ProjectListSkeleton.vue'
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
@@ -84,7 +53,6 @@ export default {
     mixins: [imageMixin],
 
     components: {
-        SeeMoreArrow,
         ProjectListSkeleton,
         DynamicGrid,
     },
@@ -105,15 +73,6 @@ export default {
             default: () => [],
         },
 
-        totalCount: {
-            type: Object,
-            default: () => ({
-                projects: 0,
-                groups: 0,
-                peoples: 0,
-            }),
-        },
-
         isLoading: {
             type: Boolean,
             default: false,
@@ -122,21 +81,6 @@ export default {
         limit: {
             type: Number,
             default: 12,
-        },
-
-        displaySeeMoreButton: {
-            type: Boolean,
-            default: false,
-        },
-
-        seeMoreQuery: {
-            type: Object,
-            default: null,
-        },
-
-        withTitle: {
-            type: Boolean,
-            default: false,
         },
     },
 
@@ -192,17 +136,5 @@ export default {
 
 .card-container {
     margin: $space-xl 0;
-
-    .title-ctn {
-        display: flex;
-        align-items: center;
-        margin-bottom: $space-l;
-
-        .title {
-            color: $primary-dark;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    }
 }
 </style>

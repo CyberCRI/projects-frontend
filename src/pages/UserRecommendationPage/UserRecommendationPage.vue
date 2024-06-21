@@ -7,7 +7,6 @@
             :is-loading="isLoading"
             :limit="limit"
             :peoples="usersRecommendationsRequest?.results"
-            :total-count="{ projects: 0, peoples: usersRecommendationsRequest?.count, groups: 0 }"
             class="list-container"
         >
             <template #peoples="peoplesListSlotProps">
