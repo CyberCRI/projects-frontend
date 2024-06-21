@@ -1,25 +1,25 @@
 <template>
     <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
-        <template #actions>
-            <LinkButton
-                v-if="featuredProjects.length"
-                btn-icon="Pen"
-                :label="$t('common.edit')"
-                @click="editFeaturedProjects = true"
-            />
-            <LinkButton
-                v-else
-                btn-icon="Plus"
-                :label="$t('common.add')"
-                @click="editFeaturedProjects = true"
-            />
-        </template>
         <template #default>
             <FeaturedProjectAdminListItem
                 v-for="featuredProject in featuredProjects"
                 :key="featuredProject.id"
                 :project="featuredProject"
             ></FeaturedProjectAdminListItem>
+        </template>
+        <template #footer>
+            <SummaryAction
+                v-if="featuredProjects.length"
+                action-icon="Pen"
+                :action-label="$t('common.edit')"
+                @click="editFeaturedProjects = true"
+            />
+            <SummaryAction
+                v-else
+                action-icon="Plus"
+                :action-label="$t('common.add')"
+                @click="editFeaturedProjects = true"
+            />
         </template>
     </AdminBlock>
     <PickProjectsDrawer
@@ -33,7 +33,7 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
+import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
 import FeaturedProjectAdminListItem from './FeaturedProjectAdminListItem.vue'
 import {
@@ -47,7 +47,7 @@ export default {
 
     components: {
         AdminBlock,
-        LinkButton,
+        SummaryAction,
         PickProjectsDrawer,
         FeaturedProjectAdminListItem,
     },

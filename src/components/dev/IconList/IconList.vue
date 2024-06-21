@@ -109,6 +109,7 @@ export default {
                 'BookmarkBoxOutline',
                 'BullhornOutline',
                 'DotsVertical',
+                'DotsHorizontal',
             ],
         }
     },

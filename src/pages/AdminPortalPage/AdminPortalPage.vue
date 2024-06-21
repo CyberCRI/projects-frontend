@@ -97,10 +97,8 @@ export default {
 
 <style lang="scss" scoped>
 .admin-portal-layout {
-    margin-bottom: $space-2xl;
-
     .page-title {
-        margin-bottom: $space-xl;
+        margin-bottom: $space-2xl;
     }
 }
 </style>

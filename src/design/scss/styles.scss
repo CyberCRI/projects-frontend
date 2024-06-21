@@ -47,6 +47,10 @@ $shadow-hover-scale: scale(1.01);
     }
 }
 
+.shadowed-box {
+    box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+}
+
 h1,
 h2,
 h3,
@@ -186,6 +190,6 @@ body[class*='has-open-modal-'] {
     margin-top: calc($navbar-height + $space-xl);
 
     @media screen and (min-width: $min-tablet) {
-        margin-top: calc($navbar-height + $space-xl * 2);
+        margin-top: calc($navbar-height + $space-2xl);
     }
 }

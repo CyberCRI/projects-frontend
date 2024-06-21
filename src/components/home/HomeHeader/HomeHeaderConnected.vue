@@ -141,10 +141,12 @@ export default {
         },
 
         async loadEvents() {
+            const todayAtZero = new Date()
+            todayAtZero.setHours(0, 0, 0, 0)
             this.events = (
                 await getAllEvents(this.$store.getters['organizations/current']?.code, {
                     ordering: 'event_date',
-                    from_date: new Date().toISOString(),
+                    from_date: todayAtZero.toISOString(),
                     limit: this.summaryMaxEvents,
                 })
             ).results

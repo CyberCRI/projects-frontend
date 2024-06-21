@@ -1,33 +1,39 @@
 <template>
-    <ToolTip hover interactive v-if="canEdit || canDelete" placement="top" offset-distance="0">
+    <MenuTip>
         <template #custom-content>
             <div class="context-action-menu">
                 <ContextActionButton
                     action-icon="Pen"
-                    class="edit-btn small"
+                    class="edit-btn"
+                    secondary
+                    no-border
                     @click.stop.prevent="$emit('edit')"
                     v-if="canEdit"
+                    :action-label="$t('common.edit')"
                 />
                 <ContextActionButton
                     action-icon="Close"
-                    class="remove-btn small"
+                    class="remove-btn"
+                    secondary
+                    no-border
                     @click.stop.prevent="$emit('delete')"
                     v-if="canDelete"
+                    :action-label="$t('common.delete')"
                 />
             </div>
         </template>
-        <ContextActionButton action-icon="DotsVertical" class="remove-btn small" />
-    </ToolTip>
+        <ContextActionButton secondary no-border action-icon="DotsHorizontal" class="remove-btn" />
+    </MenuTip>
 </template>
 <script>
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
+import MenuTip from '@/components/base/MenuTip.vue'
 export default {
     name: 'ContextActionMenu',
     emits: ['delete', 'edit'],
     components: {
         ContextActionButton,
-        ToolTip,
+        MenuTip,
     },
     props: {
         canEdit: {
@@ -44,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 .context-action-menu {
     display: flex;
-    gap: $space-2xs;
-    padding: $space-2xs;
+    flex-flow: column nowrap;
+    gap: $space-s;
 }
 </style>

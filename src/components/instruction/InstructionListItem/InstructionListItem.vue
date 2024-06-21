@@ -78,7 +78,6 @@ export default {
     justify-content: flex-start;
     gap: 1rem;
     height: var(--instruction-dimension);
-    overflow: hidden;
     padding: 1rem;
     border: $border-width-s solid $lighter-gray;
     border-radius: 1rem;
@@ -100,6 +99,7 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-flow: column;
+    overflow: hidden;
 
     h1 {
         font-size: $font-size-2xl;

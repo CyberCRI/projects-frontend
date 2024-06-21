@@ -1,10 +1,14 @@
 <template>
     <button
-        :class="[{ secondary }, actionIcon]"
+        :class="[{ secondary, 'no-border': noBorder }, actionIcon]"
         type="button"
         class="context-action-button shadow-box"
     >
-        <IconImage :name="actionIcon" class="action-icon" />
+        <span class="icon-wrapper">
+            <IconImage :name="actionIcon" class="action-icon" />
+        </span>
+
+        <span v-if="actionLabel" class="action-label">{{ actionLabel }}</span>
     </button>
 </template>
 
@@ -26,6 +30,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        noBorder: {
+            type: Boolean,
+            default: false,
+        },
+        actionLabel: {
+            type: String,
+            default: '',
+        },
     },
 }
 </script>
@@ -40,26 +52,48 @@ export default {
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;
-    overflow: hidden;
-    background: $primary-dark;
-    color: $white;
-    border-radius: 50%;
     padding: 0;
     border: none;
-    height: 30px;
-    width: 30px;
     box-sizing: border-box;
+    width: max-content;
+    background: transparent;
+    gap: 0.5rem;
+    appearance: none;
+    border-radius: pxToRem(30px);
 
-    &.small {
-        height: 22px;
-        width: 22px;
+    .action-label {
+        color: $primary-dark;
     }
 
-    &.secondary {
+    .icon-wrapper {
+        width: pxToRem(30px);
+        height: pxToRem(30px);
+        background: $primary-dark;
+        color: $white;
+        border-radius: pxToRem(30px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.small {
+        border-radius: pxToRem(22px);
+
+        .icon-wrapper {
+            height: pxToRem(22px);
+            width: pxToRem(22px);
+        }
+    }
+
+    &.secondary .icon-wrapper {
         background: $white;
         color: $primary-dark;
         fill: $primary-dark;
         border: $border-width-s solid $primary-dark;
+    }
+
+    &.no-border .icon-wrapper {
+        border: none !important;
     }
 
     &.Pen:hover {
@@ -75,6 +109,17 @@ export default {
             transform-origin: center center;
         }
     }
+
+    &.DotsHorizontal:hover {
+        .action-icon {
+            animation: horizontal-squeeze 0.8s ease-in-out infinite;
+            transform-origin: center center;
+        }
+    }
+}
+
+.action-label {
+    padding-right: 0.5rem;
 }
 
 .context-action-button :deep(svg) {
@@ -126,6 +171,20 @@ export default {
 
     100% {
         transform: rotate(0deg);
+    }
+}
+
+@keyframes horizontal-squeeze {
+    0% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(1.4);
+    }
+
+    100% {
+        transform: scaleX(1);
     }
 }
 </style>

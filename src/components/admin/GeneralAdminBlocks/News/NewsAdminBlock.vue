@@ -1,8 +1,5 @@
 <template>
     <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
-        <template #actions>
-            <LinkButton btn-icon="Plus" :label="$t('common.add')" @click="addNews"></LinkButton>
-        </template>
         <template #default>
             <NewsAdminListItem
                 v-for="news in allNews"
@@ -14,6 +11,7 @@
         </template>
 
         <template #footer>
+            <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addNews" />
             <SummaryAction
                 btn-icon="ArrowRight"
                 :action-label="$t('common.see-all')"
@@ -42,7 +40,6 @@
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
 import NewsAdminListItem from './NewsAdminListItem.vue'
@@ -55,7 +52,6 @@ export default {
 
     components: {
         AdminBlock,
-        LinkButton,
         EditNewsDrawer,
         NewsAdminListItem,
         ConfirmModal,

@@ -74,7 +74,6 @@ export default {
     display: flex;
     gap: 1rem;
     height: var(--news-dimension);
-    overflow: hidden;
     padding: 1rem 0;
     cursor: pointer;
 
