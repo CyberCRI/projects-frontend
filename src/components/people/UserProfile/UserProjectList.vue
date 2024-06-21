@@ -64,7 +64,7 @@
                     :desktop-columns-number="numberColumn"
                     :is-loading="ProjectListSearchSlotProps.isLoading"
                     :limit="limit"
-                    :items="ProjectListSearchSlotProps.projects"
+                    :items="ProjectListSearchSlotProps.items"
                 >
                     <template #default="projectListSlotProps">
                         <ProjectCard

@@ -4,24 +4,11 @@ import {
     AddManyLinkedProjectInput,
     LinkedProject,
     ProjectHeaderOutput,
-    ProjectModel,
     ProjectOutput,
     ProjectPatchInput,
 } from '@/models/project.model'
-import { APIParams, APIResponseList } from '@/api/types'
-import { LanguageType, ProjectMemberRoleType } from '@/models/types'
+import { APIParams, APIResponseList, SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-
-export interface SearchParams extends APIParams {
-    category?: number // id
-    languages?: LanguageType[]
-    member_role?: ProjectMemberRoleType[]
-    members?: string[]
-    ordering?: keyof ProjectModel // Field name to order by
-    organizations?: number[]
-    sdgs?: number[]
-    tags?: string[]
-}
 
 export async function createProject(project): Promise<ProjectOutput> {
     const result = (
@@ -171,73 +158,6 @@ export async function getAllProjects(
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function searchProjects(
-    search: string,
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
-    const url = search ? `search/project/${search}/` : 'search/project/'
-
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/${url}`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function searchGroupsAlgolia(
-    search: string,
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
-    const url = search ? `search/people-group/${search}/` : 'search/people-group/'
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/${url}`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function searchGroups(
-    organization: string,
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${organization}/people-group/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function searchUser(
-    search: string,
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
-    const url = search ? `search/user/${search}/` : 'search/user/'
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/${url}`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function searchAll(
-    search: string | null,
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
-    const url = search ? `search/global/${search}/` : 'search/global/'
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/${url}`,
             _adaptParamsToGetQuery(params)
         )
     ).data

@@ -142,7 +142,7 @@
                             <CardList
                                 v-if="projectsVisible"
                                 :desktop-columns-number="3"
-                                :items="ProjectListSearchSlotProps.projects"
+                                :items="ProjectListSearchSlotProps.items"
                                 :is-loading="isLoading"
                                 class="project-list"
                             >

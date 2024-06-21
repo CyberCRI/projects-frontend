@@ -10,30 +10,27 @@
                 :desktop-columns-number="6"
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
-                :items="[
-                    ...ProjectListSearchSlotProps.projects,
-                    ...ProjectListSearchSlotProps.groups,
-                    ...ProjectListSearchSlotProps.peoples,
-                ]"
+                :items="ProjectListSearchSlotProps.items"
                 class="list-container"
             >
                 <template #default="projectListSlotProps">
                     <ProjectCard
                         v-if="projectListSlotProps.item.type == 'project'"
-                        :project="projectListSlotProps.item"
+                        :project="projectListSlotProps.item.project"
                     />
                     <GroupCard
                         v-if="projectListSlotProps.item.type == 'people_group'"
-                        :group="projectListSlotProps.item"
+                        :group="projectListSlotProps.item.people_group"
                     />
                     <UserCard
                         v-if="projectListSlotProps.item.type == 'user'"
-                        :user="projectListSlotProps.item"
+                        :user="projectListSlotProps.item.user"
                         :to-link="{
                             name: 'ProfileOtherUser',
                             params: {
                                 userId:
-                                    projectListSlotProps.item.slug || projectListSlotProps.item.id,
+                                    projectListSlotProps.item.user.slug ||
+                                    projectListSlotProps.item.user.id,
                             },
                         }"
                     />

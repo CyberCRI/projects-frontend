@@ -53,7 +53,8 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import { getAllProjects, searchProjects } from '@/api/projects.service'
+import { getAllProjects } from '@/api/projects.service'
+import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
@@ -95,7 +96,10 @@ export default {
 
     computed: {
         matchingProjects() {
-            return this.request ? this.request.results : []
+            // api can result either project or a meta type that contain a project
+            return this.request && this.request.results
+                ? this.request.results.map((result) => (result.project ? result.project : result))
+                : []
         },
         matchingProjectsFiltered() {
             // mark already selected project as such

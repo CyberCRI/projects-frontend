@@ -10,11 +10,11 @@
                 :desktop-columns-number="6"
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
-                :items="ProjectListSearchSlotProps.projects"
+                :items="ProjectListSearchSlotProps.items"
                 class="list-container"
             >
                 <template #default="projectListSlotProps">
-                    <ProjectCard :project="projectListSlotProps.item" />
+                    <ProjectCard :project="projectListSlotProps.item.project" />
                 </template>
             </CardList>
         </template>
