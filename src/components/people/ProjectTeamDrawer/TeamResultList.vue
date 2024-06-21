@@ -93,6 +93,7 @@ export default {
                 }))
             } else {
                 // groups
+                // those are meta result so we destructure them
                 return this.results.map(({ people_group }) => ({
                     ...people_group,
                     selected:
