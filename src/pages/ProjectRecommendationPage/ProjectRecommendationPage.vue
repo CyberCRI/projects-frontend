@@ -6,11 +6,11 @@
             :desktop-columns-number="6"
             :is-loading="isLoading"
             :limit="limit"
-            :projects="projectRecommendationsRequest?.results"
+            :items="projectRecommendationsRequest?.results"
             class="list-container"
         >
-            <template #projects="projectListSlotProps">
-                <ProjectCard :project="projectListSlotProps.project" />
+            <template #default="projectListSlotProps">
+                <ProjectCard :project="projectListSlotProps.item" />
             </template>
         </CardList>
 

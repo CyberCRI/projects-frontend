@@ -8,9 +8,9 @@
                 </h2>
             </div>
             <div class="projects-container">
-                <CardList :is-loading="isLoading" :projects="projects">
-                    <template #projects="projectListSlotProps">
-                        <ProjectCard :project="projectListSlotProps.project" />
+                <CardList :is-loading="isLoading" :items="projects">
+                    <template #default="projectListSlotProps">
+                        <ProjectCard :project="projectListSlotProps.item" />
                     </template>
                 </CardList>
             </div>

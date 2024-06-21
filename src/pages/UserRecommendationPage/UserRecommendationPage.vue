@@ -6,16 +6,16 @@
             :desktop-columns-number="6"
             :is-loading="isLoading"
             :limit="limit"
-            :peoples="usersRecommendationsRequest?.results"
+            :items="usersRecommendationsRequest?.results"
             class="list-container"
         >
-            <template #peoples="peoplesListSlotProps">
+            <template #default="peoplesListSlotProps">
                 <UserCard
-                    :user="peoplesListSlotProps.user"
+                    :user="peoplesListSlotProps.item"
                     :to-link="{
                         name: 'ProfileOtherUser',
                         params: {
-                            userId: peoplesListSlotProps.user.slug || peoplesListSlotProps.user.id,
+                            userId: peoplesListSlotProps.item.slug || peoplesListSlotProps.item.id,
                         },
                     }"
                 />

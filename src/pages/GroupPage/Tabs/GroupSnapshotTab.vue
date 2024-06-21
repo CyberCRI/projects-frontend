@@ -64,12 +64,12 @@
             <div class="projects-container">
                 <CardList
                     :is-loading="isProjectsLoading"
-                    :projects="projects.slice(0, totalDisplayed)"
+                    :items="projects.slice(0, totalDisplayed)"
                 >
-                    <template #projects="projectListSlotProps">
+                    <template #default="projectListSlotProps">
                         <ProjectCard
                             :horizontal-display="true"
-                            :project="projectListSlotProps.project"
+                            :project="projectListSlotProps.item"
                         />
                     </template>
                 </CardList>

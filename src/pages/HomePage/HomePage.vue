@@ -96,10 +96,10 @@
                         :desktop-columns-number="6"
                         :is-loading="ProjectListSearchSlotProps.isLoading"
                         :limit="ProjectListSearchSlotProps.limit"
-                        :projects="ProjectListSearchSlotProps.projects"
+                        :items="ProjectListSearchSlotProps.projects"
                     >
-                        <template #projects="projectListSlotProps">
-                            <ProjectCard :project="projectListSlotProps.project" />
+                        <template #default="projectListSlotProps">
+                            <ProjectCard :project="projectListSlotProps.item" />
                         </template>
                     </CardList>
                 </template>
@@ -163,10 +163,10 @@
                         :desktop-columns-number="6"
                         :is-loading="ProjectListSearchSlotProps.isLoading"
                         :limit="ProjectListSearchSlotProps.limit"
-                        :projects="ProjectListSearchSlotProps.projects"
+                        :items="ProjectListSearchSlotProps.projects"
                     >
-                        <template #projects="projectListSlotProps">
-                            <ProjectCard :project="projectListSlotProps.project" />
+                        <template #default="projectListSlotProps">
+                            <ProjectCard :project="projectListSlotProps.item" />
                         </template>
                     </CardList>
                 </template>

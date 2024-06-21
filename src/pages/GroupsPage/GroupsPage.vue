@@ -43,12 +43,12 @@
                     :desktop-columns-number="6"
                     :is-loading="isLoading"
                     :limit="12"
-                    :groups="childGroup"
+                    :items="childGroup"
                     class="list-container"
                 >
-                    <template #groups="cardListSlotProps">
+                    <template #default="cardListSlotProps">
                         <GroupCard
-                            :group="cardListSlotProps.group"
+                            :group="cardListSlotProps.item"
                             :has-sub-groups-link="!!cardListSlotProps.group?.children?.length"
                         />
                     </template>

@@ -9,12 +9,12 @@
                     :desktop-columns-number="4"
                     :is-loading="isLoading"
                     :limit="8"
-                    :groups="groups"
+                    :items="groups"
                 >
-                    <template #groups="groupListSlotProps">
+                    <template #default="groupListSlotProps">
                         <GroupCard
-                            v-if="groupListSlotProps.group"
-                            :group="groupListSlotProps.group"
+                            v-if="groupListSlotProps.item"
+                            :group="groupListSlotProps.item"
                         />
                     </template>
                     <template #empty>

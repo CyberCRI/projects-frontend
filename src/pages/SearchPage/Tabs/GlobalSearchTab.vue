@@ -10,25 +10,30 @@
                 :desktop-columns-number="6"
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
-                :projects="ProjectListSearchSlotProps.projects"
-                :groups="ProjectListSearchSlotProps.groups"
-                :peoples="ProjectListSearchSlotProps.peoples"
+                :items="[
+                    ...ProjectListSearchSlotProps.projects,
+                    ...ProjectListSearchSlotProps.groups,
+                    ...ProjectListSearchSlotProps.peoples,
+                ]"
                 class="list-container"
             >
-                <template #projects="projectListSlotProps">
-                    <ProjectCard :project="projectListSlotProps.project" />
-                </template>
-                <template #groups="projectListSlotProps">
-                    <GroupCard :group="projectListSlotProps.group" />
-                </template>
-                <template #peoples="projectListSlotProps">
+                <template #default="projectListSlotProps">
+                    <ProjectCard
+                        v-if="projectListSlotProps.item.type == 'project'"
+                        :project="projectListSlotProps.item"
+                    />
+                    <GroupCard
+                        v-if="projectListSlotProps.item.type == 'people_group'"
+                        :group="projectListSlotProps.item"
+                    />
                     <UserCard
-                        :user="projectListSlotProps.user"
+                        v-if="projectListSlotProps.item.type == 'user'"
+                        :user="projectListSlotProps.item"
                         :to-link="{
                             name: 'ProfileOtherUser',
                             params: {
                                 userId:
-                                    projectListSlotProps.user.slug || projectListSlotProps.user.id,
+                                    projectListSlotProps.item.slug || projectListSlotProps.item.id,
                             },
                         }"
                     />
