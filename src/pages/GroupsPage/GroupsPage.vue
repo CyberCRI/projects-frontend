@@ -49,7 +49,7 @@
                     <template #default="cardListSlotProps">
                         <GroupCard
                             :group="cardListSlotProps.item"
-                            :has-sub-groups-link="!!cardListSlotProps.group?.children?.length"
+                            :has-sub-groups-link="!!cardListSlotProps.item?.children?.length"
                         />
                     </template>
                 </CardList>
