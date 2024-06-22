@@ -3,9 +3,7 @@
         <slot
             :is-loading="isLoading"
             :limit="searchLimit"
-            :projects="projects"
-            :groups="groups"
-            :peoples="peoples"
+            :items="items"
             :total-count="totalCount"
         ></slot>
 
@@ -31,11 +29,8 @@ import {
     getAllProjects,
     getAllRandomProjects,
     getAllRecommendedProjects,
-    searchProjects,
-    searchUser,
-    searchGroupsAlgolia,
-    searchAll,
 } from '@/api/projects.service'
+import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
@@ -86,14 +81,15 @@ export default {
                 first: undefined,
                 last: undefined,
             },
-            projects: [],
-            groups: [],
-            peoples: [],
+            // projects: [],
+            // groups: [],
+            // peoples: [],
+            items: [],
             isLoading: true,
             projectListTotal: 0,
             loadProjects: debounce(this._loadProjects, 40, { leading: false, trailing: true }),
             lastRequest: 0,
-            totalCount: {},
+            totalCount: 0,
         }
     },
 
@@ -138,9 +134,10 @@ export default {
         },
 
         initProjectLoading() {
-            this.projects = []
-            this.groups = []
-            this.peoples = []
+            // this.projects = []
+            // this.groups = []
+            // this.peoples = []
+            this.items = []
             this.isLoading = true
             this.$emit('loading', true)
         },
@@ -176,7 +173,7 @@ export default {
             } else if (this.search.search) {
                 if (this.mode === 'global')
                     response = await searchAll(query, {
-                        limit: 12,
+                        limit: 30,
                         organizations: this.organisation.code,
                     })
                 else if (this.mode === 'projects') response = await searchProjects(query, filters)
@@ -191,7 +188,7 @@ export default {
                 if (this.mode === 'global')
                     response = await searchAll(null, {
                         ...filters,
-                        limit: 12,
+                        limit: 30,
                         organizations: this.organisation.code,
                     })
                 else if (this.mode === 'projects')
@@ -236,23 +233,26 @@ export default {
 
             this.$emit('number-project', response.count)
 
-            if (this.mode === 'global') {
-                this.projects.push(...response[0].results.slice(0, maxResults))
-                this.peoples.push(...response[1].results.slice(0, maxResults))
-                this.groups.push(...response[2].results.slice(0, maxResults))
-                this.totalCount.projects = response[0].count
-                this.totalCount.peoples = response[1].count
-                this.totalCount.groups = response[2].count
-            } else if (this.mode === 'projects') {
-                this.totalCount.projects = response.count
-                this.projects.push(...response.results.slice(0, maxResults))
-            } else if (this.mode === 'groups') {
-                this.totalCount.groups = response.count
-                this.groups.push(...response.results.slice(0, maxResults))
-            } else if (this.mode === 'peoples') {
-                this.totalCount.peoples = response.count
-                this.peoples.push(...response.results.slice(0, maxResults))
-            }
+            // if (this.mode === 'global') {
+            //     this.projects.push(...response[0].results.slice(0, maxResults))
+            //     this.peoples.push(...response[1].results.slice(0, maxResults))
+            //     this.groups.push(...response[2].results.slice(0, maxResults))
+            //     this.totalCount.projects = response[0].count
+            //     this.totalCount.peoples = response[1].count
+            //     this.totalCount.groups = response[2].count
+            // } else if (this.mode === 'projects') {
+            //     this.totalCount.projects = response.count
+            //     this.projects.push(...response.results.slice(0, maxResults))
+            // } else if (this.mode === 'groups') {
+            //     this.totalCount.groups = response.count
+            //     this.groups.push(...response.results.slice(0, maxResults))
+            // } else if (this.mode === 'peoples') {
+            //     this.totalCount.peoples = response.count
+            //     this.peoples.push(...response.results.slice(0, maxResults))
+            // }
+
+            this.totalCount = response.count
+            this.items.push(...response.results.slice(0, maxResults))
             this.isLoading = false
             this.$emit('loading', false)
 

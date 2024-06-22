@@ -1,4 +1,4 @@
-import { SearchParams } from '@/api/projects.service'
+import { SearchParams } from '@/api/types'
 
 export function _adaptParamsToGetQuery(params: SearchParams) {
     return {

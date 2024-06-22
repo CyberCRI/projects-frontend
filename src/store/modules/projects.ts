@@ -1,4 +1,4 @@
-import { APIResponseList } from '@/api/types'
+import { APIResponseList, SearchParams } from '@/api/types'
 import { ProjectOutput, ProjectPatchInput } from '@/models/project.model'
 import {
     addLinkedProject,
@@ -12,7 +12,6 @@ import {
     getProject,
     patchLinkedProject,
     patchProject,
-    SearchParams,
     lockUnlockProject,
 } from '@/api/projects.service'
 import analytics from '@/analytics'

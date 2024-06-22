@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { searchProjects } from '@/api/projects.service'
+import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
@@ -119,7 +119,9 @@ export default {
         },
 
         matchingProjects() {
-            return this.request ? this.request.results : []
+            return this.request && this.request.results
+                ? this.request.results.map((result) => result.project)
+                : []
         },
 
         pagination() {
@@ -151,16 +153,13 @@ export default {
                 limit: 24,
                 organizations: this.$store.getters['organizations/current'].code,
             }
-            let projects
+
             if (this.queryString) {
-                projects = await searchProjects(encodeURIComponent(this.queryString), filters)
+                this.request = await searchProjects(encodeURIComponent(this.queryString), filters)
             } else {
-                projects = await searchProjects('', filters)
+                this.request = await searchProjects('', filters)
             }
 
-            this.request = projects
-
-            this.matchingProjects = projects.results
             this.isLoading = false
             this.$emit('search-done', true)
         },

@@ -10,13 +10,11 @@
                 :desktop-columns-number="6"
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
-                :groups="ProjectListSearchSlotProps.groups"
-                :total-count="ProjectListSearchSlotProps.totalCount"
-                :with-title="true"
+                :items="ProjectListSearchSlotProps.items"
                 class="list-container"
             >
-                <template #groups="projectListSlotProps">
-                    <GroupCard :group="projectListSlotProps.group" />
+                <template #default="projectListSlotProps">
+                    <GroupCard :group="projectListSlotProps.item.people_group" />
                 </template>
             </CardList>
         </template>

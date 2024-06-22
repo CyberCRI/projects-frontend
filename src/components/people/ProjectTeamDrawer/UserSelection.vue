@@ -49,7 +49,7 @@
 import debounce from 'lodash.debounce'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { searchGroupsAlgolia } from '@/api/projects.service.ts'
+import { searchGroupsAlgolia } from '@/api/search.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'

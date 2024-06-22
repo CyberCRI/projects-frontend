@@ -10,19 +10,18 @@
                 :desktop-columns-number="6"
                 :is-loading="ProjectListSearchSlotProps.isLoading"
                 :limit="ProjectListSearchSlotProps.limit"
-                :peoples="ProjectListSearchSlotProps.peoples"
-                :total-count="ProjectListSearchSlotProps.totalCount"
-                :with-title="true"
+                :items="ProjectListSearchSlotProps.items"
                 class="list-container"
             >
-                <template #peoples="projectListSlotProps">
+                <template #default="projectListSlotProps">
                     <UserCard
-                        :user="projectListSlotProps.user"
+                        :user="projectListSlotProps.item.user"
                         :to-link="{
                             name: 'ProfileOtherUser',
                             params: {
                                 userId:
-                                    projectListSlotProps.user.slug || projectListSlotProps.user.id,
+                                    projectListSlotProps.item.user.slug ||
+                                    projectListSlotProps.item.user.id,
                             },
                         }"
                     />

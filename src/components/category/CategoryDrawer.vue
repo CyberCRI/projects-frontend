@@ -142,12 +142,12 @@
                             <CardList
                                 v-if="projectsVisible"
                                 :desktop-columns-number="3"
-                                :projects="ProjectListSearchSlotProps.projects"
+                                :items="ProjectListSearchSlotProps.items"
                                 :is-loading="isLoading"
                                 class="project-list"
                             >
-                                <template #projects="projectListSlotProps">
-                                    <ProjectCard :project="projectListSlotProps.project" />
+                                <template #default="projectListSlotProps">
+                                    <ProjectCard :project="projectListSlotProps.item" />
                                 </template>
                             </CardList>
                         </template>

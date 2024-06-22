@@ -17,14 +17,13 @@
                 :desktop-columns-number="numberColumn"
                 :is-loading="projectsLoading"
                 :limit="limit"
-                :projects="limit ? projects.slice(listStart, listStart + limit) : projects"
-                :with-title="false"
+                :items="limit ? projects.slice(listStart, listStart + limit) : projects"
             >
-                <template #projects="projectListSlotProps">
+                <template #default="projectListSlotProps">
                     <ProjectCard
-                        v-if="projectListSlotProps.project"
+                        v-if="projectListSlotProps.item"
                         :horizontal-display="true"
-                        :project="projectListSlotProps.project"
+                        :project="projectListSlotProps.item"
                         @card-update="$emit('card-update')"
                     />
                 </template>
@@ -65,13 +64,13 @@
                     :desktop-columns-number="numberColumn"
                     :is-loading="ProjectListSearchSlotProps.isLoading"
                     :limit="limit"
-                    :projects="ProjectListSearchSlotProps.projects"
+                    :items="ProjectListSearchSlotProps.items"
                 >
-                    <template #projects="projectListSlotProps">
+                    <template #default="projectListSlotProps">
                         <ProjectCard
-                            v-if="projectListSlotProps.project"
+                            v-if="projectListSlotProps.item"
                             :horizontal-display="true"
-                            :project="projectListSlotProps.project"
+                            :project="projectListSlotProps.item"
                             @navigated-away="$emit('navigated-away')"
                             @card-update="$emit('card-update')"
                         />

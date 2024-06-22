@@ -70,45 +70,47 @@ export default {
     computed: {
         filteredResults() {
             if (this.type == 'users') {
-                return this.results.map((result) => ({
-                    ...result,
+                return this.results.map((user) => ({
+                    // for some reason user is not a meta result
+                    ...user,
                     // watch out for current (logged) user (in create project) : it has no id yet !
                     selected:
                         this.selectedUsers.some(
                             (selected) =>
-                                this.$filters.isNotGroup(selected) && selected.id === result.id
+                                this.$filters.isNotGroup(selected) && selected.id === user.id
                         ) ||
                         (this.addToCurrentProject
                             ? this.team.some(
                                   (projectMember) =>
                                       this.$filters.isNotGroup(projectMember) &&
-                                      projectMember.id === result.id
+                                      projectMember.id === user.id
                               )
                             : this.currentUsers.some(
                                   (currentUser) =>
                                       this.$filters.isNotGroup(currentUser.user) &&
-                                      currentUser.user.id === result.id
+                                      currentUser.user.id === user.id
                               )),
                 }))
             } else {
                 // groups
-                return this.results.map((result) => ({
-                    ...result,
+                // those are meta result so we destructure them
+                return this.results.map(({ people_group }) => ({
+                    ...people_group,
                     selected:
                         this.selectedUsers.some(
                             (selected) =>
-                                this.$filters.isGroup(selected) && selected.id === result.id
+                                this.$filters.isGroup(selected) && selected.id === people_group.id
                         ) ||
                         (this.addToCurrentProject
                             ? this.team.some(
                                   (projectMember) =>
                                       this.$filters.isGroup(projectMember) &&
-                                      projectMember.id === result.id
+                                      projectMember.id === people_group.id
                               )
                             : this.currentUsers.some(
                                   (currentUser) =>
                                       this.$filters.isGroup(currentUser.user) &&
-                                      currentUser.user.id === result.id
+                                      currentUser.user.id === people_group.id
                               )),
                 }))
             }

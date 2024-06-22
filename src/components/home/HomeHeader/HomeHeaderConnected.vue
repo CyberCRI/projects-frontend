@@ -57,7 +57,7 @@ import EventSummaryBlock from '@/components/home/SummaryCards/EventSummaryBlock.
 import InstructionSummaryBlock from '@/components/home/SummaryCards/InstructionSummaryBlock.vue'
 import { getAllEvents } from '@/api/event.service'
 import { getAllInstructions } from '@/api/instruction.service'
-import { searchProjects } from '@/api/projects.service'
+import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 export default {
     name: 'HomeHeaderConnected',
@@ -137,7 +137,7 @@ export default {
                 organizations: this.$store.getters['organizations/current'].code,
             }
             const response = await searchProjects('', filters)
-            this.projects = response.results
+            this.projects = response.results.map((result) => result.project)
         },
 
         async loadEvents() {
