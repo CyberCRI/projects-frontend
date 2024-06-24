@@ -9,8 +9,8 @@
         <div class="search-input-container">
             <SearchOptions
                 class="search-options"
-                :show-section-filter="true"
-                :search-button="true"
+                show-section-drop-down
+                search-button
                 @search="search"
             ></SearchOptions>
         </div>

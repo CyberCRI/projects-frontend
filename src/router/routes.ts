@@ -621,45 +621,33 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/search',
         name: 'Search',
-        redirect: { name: 'GlobalSearch' },
 
         component: () =>
             import(/* webpackChunkName: "SearchPage" */ '../pages/SearchPage/SearchPage.vue'),
         meta: {
             resetScroll: true,
         },
+        // keep child route for retro compatibility of shared search links
         children: [
             {
                 path: 'global',
                 name: 'GlobalSearch',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GlobalSearchTab.vue'
-                    ),
+                redirect: { name: 'Search' },
             },
             {
                 path: 'projects',
                 name: 'ProjectSearch',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/ProjectSearchTab.vue'
-                    ),
+                redirect: { name: 'Search' },
             },
             {
                 path: 'groups',
                 name: 'GroupSearch',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/GroupSearchTab.vue'
-                    ),
+                redirect: { name: 'Search' },
             },
             {
                 path: 'people',
                 name: 'PeopleSearch',
-                component: () =>
-                    import(
-                        /* webpackChunkName: "GlobalSearchTab" */ '../pages/SearchPage/Tabs/PeopleSearchTab.vue'
-                    ),
+                redirect: { name: 'Search' },
             },
         ],
     },

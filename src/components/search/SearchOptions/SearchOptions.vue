@@ -3,13 +3,13 @@
         <div class="search-container">
             <div class="search-group">
                 <SearchOptionDropDown
-                    v-if="showSectionFilter"
+                    v-if="showSectionDropDown"
                     v-model="selectedSection"
                     :menu-items="sectionFilters"
                 />
                 <SearchInput
                     class="search-input"
-                    :class="{ 'search-input--no-section': !showSectionFilter }"
+                    :class="{ 'search-input--no-section': !showSectionDropDown }"
                     v-model="selectedFilters.search"
                     :full="true"
                     :placeholder="$t('browse.placeholder')"
@@ -31,10 +31,37 @@
         <div v-if="showFilters">
             <div class="add-filter">
                 <div class="add-filter__button-list">
+                    <template v-if="!showSectionDropDown && showSectionFilter">
+                        <div
+                            v-for="sectionFilter in sectionFilters.slice(1)"
+                            :key="sectionFilter.key"
+                            :class="{
+                                'add-filter__button-list__button--selected':
+                                    selectedSection?.key == sectionFilter.key,
+                                'add-filter__button-list__button--hide':
+                                    selectedSection?.key != sectionFilters[0].key &&
+                                    selectedSection?.key != sectionFilter.key,
+                            }"
+                            class="add-filter__button-list__button"
+                            @click="
+                                selectedSection =
+                                    selectedSection?.key == sectionFilter.key
+                                        ? sectionFilters[0]
+                                        : sectionFilter
+                            "
+                        >
+                            {{ $t(sectionFilter.label) }}
+                            <span v-if="selectedSection?.key == sectionFilter.key" class="icon-ctn">
+                                <IconImage name="Close" />
+                            </span>
+                        </div>
+                    </template>
+
                     <div
                         v-for="(filterButton, key) in filterButtons"
                         :key="key"
                         :class="{
+                            'add-filter__button-list__button--unused': !filterButton.count,
                             'add-filter__button-list__button--selected': filterButton.count > 0,
                             'add-filter__button-list__button--hide': !filterButton.condition,
                         }"
@@ -43,6 +70,9 @@
                     >
                         {{ filterButton.label }}
                         <span v-if="filterButton.count > 0">({{ filterButton.count }})</span>
+                        <span v-if="filterButton.count > 0" class="icon-ctn">
+                            <IconImage name="Close" />
+                        </span>
                     </div>
                 </div>
             </div>
@@ -91,6 +121,7 @@ import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import SearchOptionDropDown from '@/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
 
 function defaultFilters() {
     return {
@@ -114,6 +145,10 @@ export default {
         showFilters: {
             type: Boolean,
             default: true,
+        },
+        showSectionDropDown: {
+            type: Boolean,
+            default: false,
         },
 
         search: {
@@ -150,6 +185,7 @@ export default {
         FiltersDrawer,
         FilterValue,
         LpiButton,
+        IconImage,
     },
 
     data() {
@@ -480,7 +516,8 @@ export default {
     padding-right: $space-xl;
 }
 
-.add-filter {
+.add-filter,
+.search-types {
     margin-top: $space-l;
 
     &__title {
@@ -493,7 +530,8 @@ export default {
     }
 }
 
-.add-filter__button-list {
+.add-filter__button-list,
+.search-types {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -501,6 +539,8 @@ export default {
     gap: $space-m;
 
     &__button {
+        display: flex;
+        align-items: center;
         background: $white;
         border: $border-width-s solid $primary;
         padding: $space-s $space-m;
@@ -524,6 +564,34 @@ export default {
 
         &--hide {
             display: none;
+        }
+
+        &--unused {
+            background: transparent;
+            border: $border-width-s solid $primary;
+        }
+
+        $filter-value-icon-size: 16px;
+
+        .icon-ctn {
+            flex-shrink: 0;
+            margin-left: $space-m;
+            display: inline-block;
+            width: pxToRem($filter-value-icon-size);
+            height: pxToRem($filter-value-icon-size);
+            background: $primary-dark;
+            position: relative;
+            border: $border-width-m solid $primary-dark;
+            border-radius: 100%;
+
+            svg {
+                width: pxToRem($filter-value-icon-size);
+                fill: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         }
     }
 }

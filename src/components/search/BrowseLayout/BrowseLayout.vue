@@ -3,36 +3,29 @@
         <div v-if="searchOptionsInitiated" class="browse-header">
             <SearchOptions
                 :limit="30"
-                :show-section-filter="true"
+                show-section-filter
+                show-filters
                 :search="search"
-                :section="$route.query.section || 'all'"
-                :show-section-drop-down="true"
                 @filter-total-changed="updateFilterTotal($event)"
                 @filters-updated="updateSearch($event)"
                 @filter-section-update="updateTabs($event)"
             />
         </div>
 
-        <TabsLayout
-            v-if="searchOptionsInitiated"
-            :border="false"
-            :tabs="tabs"
-            class="tab"
-            router-view
-        />
+        <GlobalSearchTab :search="rawSearch" />
     </div>
 </template>
 
 <script>
 import debounce from 'lodash.debounce'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import {
     updateFiltersFromURL,
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 
 export default {
     name: 'BrowseLayout',
@@ -48,7 +41,7 @@ export default {
 
     components: {
         SearchOptions,
-        TabsLayout,
+        GlobalSearchTab,
     },
 
     data() {
@@ -133,48 +126,6 @@ export default {
         },
         rawSearch() {
             return JSON.parse(JSON.stringify(this.search))
-        },
-        tabs() {
-            const query = { ...this.search }
-            return [
-                {
-                    key: 'search-list-tab',
-                    label: this.projectsCount
-                        ? this.$t('search.search-tab')
-                        : this.$t('search.all'),
-                    view: { name: 'GlobalSearch', query },
-                    condition: this.selectedSection === 'all',
-                    props: { search: this.rawSearch },
-                },
-                {
-                    key: 'projects-list-tab',
-                    label: this.projectsCount
-                        ? this.$t('search.projects-tab')
-                        : this.$t('search.projects-tab-label'),
-                    view: { name: 'ProjectSearch', query },
-                    condition:
-                        this.selectedSection === 'projects' || this.selectedSection === 'all',
-                    props: { search: this.rawSearch },
-                },
-                {
-                    key: 'groups-list-tab',
-                    label: this.projectsCount
-                        ? this.$t('search.group-tab')
-                        : this.$t('search.groups'),
-                    view: { name: 'GroupSearch', query },
-                    condition: this.selectedSection === 'groups' || this.selectedSection === 'all',
-                    props: { search: this.rawSearch },
-                },
-                {
-                    key: 'people-list-tab',
-                    label: this.projectsCount
-                        ? this.$t('search.people-tab')
-                        : this.$t('search.peoples'),
-                    view: { name: 'PeopleSearch', query },
-                    condition: this.selectedSection === 'people' || this.selectedSection === 'all',
-                    props: { search: this.rawSearch },
-                },
-            ].filter((tab) => tab.condition)
         },
     },
 

@@ -5,10 +5,9 @@
             <div v-if="searchOptionsInitiated" class="search-input-container">
                 <SearchOptions
                     :limit="30"
-                    :show-section-filter="false"
                     :search="search"
                     section="people"
-                    :show-filters="true"
+                    show-filters
                     @filter-total-changed="updateFilterTotal($event)"
                     @filters-updated="updateSearch($event)"
                 />

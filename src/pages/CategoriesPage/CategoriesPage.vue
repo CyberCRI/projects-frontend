@@ -7,10 +7,9 @@
                 <SearchOptions
                     ref="searchOptions"
                     :limit="30"
-                    :show-section-filter="false"
                     :search="search"
                     section="projects"
-                    :show-filters="true"
+                    show-filters
                     @filter-total-changed="updateFilterTotal($event)"
                     @filters-updated="updateSearch($event)"
                 />
