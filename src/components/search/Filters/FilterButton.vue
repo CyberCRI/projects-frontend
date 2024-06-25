@@ -1,23 +1,56 @@
 <template>
-    <div
-        :class="{
-            'add-filter__button-list__button--selected': isSelected,
-            'add-filter__button-list__button--hide': isHidden,
-
-            'add-filter__button-list__button--unused': isUnused,
-        }"
-        class="add-filter__button-list__button"
+    <ToolTip
+        arrow
+        class="color-tip"
+        :hover="true"
+        :interactive="false"
+        :disabled="!names?.length"
+        secondary
+        placement="bottom"
     >
-        {{ label }}
-        <span v-if="isSelected" class="icon-ctn">
-            <IconImage name="Close" />
-        </span>
-    </div>
+        <div
+            @click.stop.prevent="$emit('main-action')"
+            :class="{
+                'add-filter__button-list__button--selected': isSelected,
+                'add-filter__button-list__button--hide': isHidden,
+
+                'add-filter__button-list__button--unused': isUnused,
+            }"
+            class="add-filter__button-list__button"
+        >
+            {{ label }}
+            <ContextActionButton
+                v-if="isSelected"
+                class="icon-ctn extra-small"
+                @click.stop.prevent="$emit('clear-action')"
+                action-icon="Close"
+            />
+        </div>
+        <template #custom-content>
+            <div class="tooltip-div">
+                <ul class="list-ctn">
+                    <li v-for="name in names" :key="name" class="item">
+                        {{ name }}
+                    </li>
+                </ul>
+            </div>
+        </template>
+    </ToolTip>
 </template>
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
+
 export default {
     name: 'FilterButton',
+
+    emits: ['clear-action', 'main-action'],
+
+    components: {
+        ContextActionButton,
+        ToolTip,
+    },
+
     props: {
         label: {
             type: String,
@@ -35,10 +68,10 @@ export default {
             type: Boolean,
             default: false,
         },
-    },
-
-    components: {
-        IconImage,
+        names: {
+            type: Array,
+            default: () => [],
+        },
     },
 }
 </script>
@@ -81,22 +114,15 @@ export default {
     .icon-ctn {
         flex-shrink: 0;
         margin-left: $space-m;
-        display: inline-block;
-        width: $filter-value-icon-size;
-        height: $filter-value-icon-size;
-        background: $primary-dark;
-        position: relative;
-        border: $border-width-m solid $primary-dark;
-        border-radius: 100%;
+    }
+}
 
-        svg {
-            width: $filter-value-icon-size;
-            fill: $white;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+.tooltip-div {
+    padding: 1rem;
+
+    ul {
+        list-style: square;
+        padding-left: 1rem;
     }
 }
 </style>

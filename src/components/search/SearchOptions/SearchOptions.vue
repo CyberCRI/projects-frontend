@@ -38,7 +38,8 @@
                             :label="$t(sectionFilter.label)"
                             :is-selected="sectionFilter.isSelected"
                             :is-hidden="!sectionFilter.condition"
-                            @click="sectionFilter.action(key)"
+                            @main-action="sectionFilter.action(key)"
+                            @clear-action="sectionFilter.action(key)"
                             :data-test="sectionFilter.dataTest"
                         />
                     </template>
@@ -50,31 +51,12 @@
                         :is-unused="filterButton.isUnused"
                         :is-selected="filterButton.isSelected"
                         :is-hidden="!filterButton.condition"
-                        @click="filterButton.action(key)"
+                        @main-action="filterButton.action(key)"
+                        @clear-action="filterButton.clear(key)"
+                        :names="filterButton.names"
                     />
                 </div>
             </div>
-
-            <template v-if="selectedFiltersTotal !== 0">
-                <div class="selected-filters">
-                    <template v-for="(value, key) in selectedFiltersNames">
-                        <FilterValue
-                            v-for="(name, index) in selectedFiltersNames[key]"
-                            :key="index"
-                            :label="name"
-                            class="actionable"
-                            icon="Close"
-                            @click="removeFilter(key, index)"
-                        />
-                    </template>
-                    <LinkButton
-                        :label="$t('common.delete-selection')"
-                        class="clear-selection-button"
-                        btn-icon="Close"
-                        @click="clearSelectedFilters"
-                    />
-                </div>
-            </template>
         </div>
 
         <FiltersDrawer
@@ -94,9 +76,7 @@ import { getProjectCategory } from '@/api/project-categories.service'
 import { getWikiTag } from '@/api/wikipedia-tags.service'
 import { getOrgTag } from '@/api/organization-tags.service'
 import SearchInput from '@/components/base/form/SearchInput.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import SearchOptionDropDown from '@/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
@@ -123,9 +103,7 @@ export default {
     components: {
         SearchOptionDropDown,
         SearchInput,
-        LinkButton,
         FiltersDrawer,
-        FilterValue,
         LpiButton,
         FilterButton,
     },
@@ -272,50 +250,81 @@ export default {
 
         filterButtons() {
             return {
+                // TAGS
                 tags: this.makeFilterButton({
                     label: this.$t('search.tag'),
-                    count: this.selectedFiltersNames.tags.length,
+                    names: this.filterBlackList.includes('tags')
+                        ? []
+                        : this.selectedFilters.tags.map((tag) => {
+                              if (tag.wikipedia_qid) {
+                                  // wikipedia tags
+                                  return (
+                                      tag[`name_${this.$store.state.languages.current}`] ||
+                                      tag['name']
+                                  )
+                              } else {
+                                  // org tags
+                                  return tag.name
+                              }
+                          }),
                     condition:
                         this.selectedSection === 'projects' &&
                         !this.filterBlackList.includes('tags'),
                 }),
+                // SDGS
                 sdgs: this.makeFilterButton({
                     label: this.$t('search.sdg'),
-                    count: this.selectedFiltersNames.sdgs.length,
+                    names: this.filterBlackList.includes('sdgs')
+                        ? []
+                        : this.selectedFilters.sdgs.map((sdg) => {
+                              if (typeof sdg === 'string') return this.$t(`sdg.${sdg}.title`)
+                              return this.$t(`sdg.${sdg.id}.title`)
+                          }),
                     condition:
                         (this.selectedSection === 'projects' ||
                             this.selectedSection === 'people') &&
                         !this.filterBlackList.includes('sdgs'),
                 }),
+                // LANGUAGES
                 languages: this.makeFilterButton({
                     label: this.$t('search.language'),
-                    count: this.selectedFiltersNames.languages.length,
+                    names: this.filterBlackList.includes('languages')
+                        ? []
+                        : this.selectedFilters.languages.map((language) =>
+                              this.$t(`language.label-${language}`)
+                          ),
                     condition:
                         this.selectedSection === 'projects' &&
                         !this.filterBlackList.includes('languages'),
                 }),
-
+                // SKILLS
                 skills: this.makeFilterButton({
                     label: this.$t('search.skills'),
-                    count: this.selectedFiltersNames.skills.length,
+                    names: this.filterBlackList.includes('skills')
+                        ? []
+                        : this.selectedFilters.skills.map((skill) => skill.name),
                     condition:
                         this.selectedSection === 'people' &&
                         !this.filterBlackList.includes('skills'),
                 }),
+                // CATEGORIES
                 ...(this.$store.getters['projectCategories/all'].length
                     ? {
                           categories: this.makeFilterButton({
                               label: this.$t('search.category'),
-                              count: this.selectedFiltersNames.categories.length,
+                              names: this.filterBlackList.includes('categories')
+                                  ? []
+                                  : this.selectedFilters.categories.map((cat) => cat.name),
                               condition:
                                   this.selectedSection === 'projects' &&
                                   !this.filterBlackList.includes('categories'),
                           }),
                       }
                     : {}),
+                // ALL FILTERS
                 'all-filters': this.makeFilterButton({
                     label: this.$t('search.all-filters'),
-                    count: this.selectedFiltersTotal,
+                    forceCount: this.selectedFiltersTotal,
                     condition:
                         this.selectedSection === 'projects' || this.selectedSection === 'people',
                 }),
@@ -344,67 +353,20 @@ export default {
         organizationTags() {
             return this.selectedFilters.tags.filter((tag) => 'organization' in tag)
         },
-
-        selectedFiltersNames() {
-            return {
-                languages: this.languageNames,
-                sdgs: this.sdgNames,
-                categories: this.categoryNames,
-                tags: this.tagNames,
-                skills: this.skillsName,
-            }
-        },
-
-        languageNames() {
-            return this.filterBlackList.includes('languages')
-                ? []
-                : this.selectedFilters.languages.map((language) =>
-                      this.$t(`language.label-${language}`)
-                  )
-        },
-
-        sdgNames() {
-            return this.filterBlackList.includes('sdgs')
-                ? []
-                : this.selectedFilters.sdgs.map((sdg) => {
-                      if (typeof sdg === 'string') return this.$t(`sdg.${sdg}.title`)
-                      return this.$t(`sdg.${sdg.id}.title`)
-                  })
-        },
-
-        categoryNames() {
-            return this.filterBlackList.includes('categories')
-                ? []
-                : this.selectedFilters.categories.map((cat) => cat.name)
-        },
-
-        tagNames() {
-            if (this.filterBlackList.includes('tags')) return []
-
-            const wikipediaTagsNames = this.wikipediaTags.map(
-                (wikiTag) =>
-                    wikiTag[`name_${this.$store.state.languages.current}`] || wikiTag['name']
-            )
-            const organizationTagsNames = this.organizationTags.map((orgTag) => orgTag.name)
-
-            return [...wikipediaTagsNames, ...organizationTagsNames]
-        },
-
-        skillsName() {
-            return this.filterBlackList.includes('skills')
-                ? []
-                : this.selectedFilters.skills.map((skill) => skill.name)
-        },
     },
 
     methods: {
         makeFilterButton(config) {
+            const count = config.forceCount || config.names?.length || 0
+            const labelWithCount = config.label + (count ? ` (${count})` : '')
+            const label = config.names?.length == 1 ? config.names[0] : labelWithCount
             return {
                 ...config,
-                label: config.label + (config.count ? ` (${config.count})` : ''),
-                isUnused: !config.count,
-                isSelected: config.count > 0,
+                label,
+                isUnused: !count,
+                isSelected: count > 0,
                 action: this.openDrawer,
+                clear: this.clearSelectedFilters,
             }
         },
         adaptToParent(filters) {
@@ -426,17 +388,14 @@ export default {
             this.selectedSection = this.selectedSection == key ? ALL_SECTION_KEY : key
         },
 
-        clearSelectedFilters() {
-            Object.assign(this.selectedFilters, defaultFilters())
+        clearSelectedFilters(key) {
+            if (!key || key === 'all-filters') Object.assign(this.selectedFilters, defaultFilters())
+            else this.selectedFilters[key] = defaultFilters()[key]
         },
 
         openDrawer(drawer) {
             this.currentDrawer = drawer
             this.isRightDrawerOpened = true
-        },
-
-        removeFilter(type, index) {
-            this.selectedFilters[type].splice(index, 1)
         },
 
         updateFiltersFromDrawer(/*filter,*/ event) {

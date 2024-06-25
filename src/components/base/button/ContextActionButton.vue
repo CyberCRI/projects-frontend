@@ -44,6 +44,8 @@ export default {
 
 <style lang="scss" scoped>
 .context-action-button {
+    --context-action-button-size: 2rem;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,30 +61,27 @@ export default {
     background: transparent;
     gap: 0.5rem;
     appearance: none;
-    border-radius: pxToRem(30px);
+    border-radius: 50%;
 
     .action-label {
         color: $primary-dark;
     }
 
     .icon-wrapper {
-        width: pxToRem(30px);
-        height: pxToRem(30px);
+        width: var(--context-action-button-size);
+        height: var(--context-action-button-size);
         background: $primary-dark;
         color: $white;
-        border-radius: pxToRem(30px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    &.extra-small {
+        --context-action-button-size: 1rem;
     }
 
     &.small {
-        border-radius: pxToRem(22px);
-
-        .icon-wrapper {
-            height: pxToRem(22px);
-            width: pxToRem(22px);
-        }
+        --context-action-button-size: 1.5rem;
     }
 
     &.secondary .icon-wrapper {
@@ -125,13 +124,8 @@ export default {
 .context-action-button :deep(svg) {
     transition: 0.15s fill ease-in-out;
     fill: $white;
-    height: pxToRem(18px);
-    width: pxToRem(18px);
-}
-
-.context-action-button.small :deep(svg) {
-    height: pxToRem(16px);
-    width: pxToRem(16px);
+    position: absolute;
+    inset: 5%;
 }
 
 .context-action-button.secondary :deep(svg) {
