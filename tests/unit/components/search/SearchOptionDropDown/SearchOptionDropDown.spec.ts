@@ -18,6 +18,13 @@ describe('SearchOptionDropDown.vue', () => {
     beforeEach(() => {
         defaultParams = {
             i18n,
+            props: {
+                menuItems: {
+                    foo: {},
+                    bar: {},
+                },
+                modelValue: 'foo',
+            },
         }
     })
 

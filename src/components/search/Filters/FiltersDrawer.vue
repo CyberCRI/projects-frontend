@@ -8,13 +8,13 @@
         @close="close"
         @confirm="confirm"
     >
-        <template v-if="focusedFilter || mode !== 'all'" #header_prefix>
+        <template v-if="focusedFilter || mode !== allFiltersMode" #header_prefix>
             <span class="icon-back" @click="closeFocusedOrModeFilter"
                 ><IconImage name="ArrowLeft"
             /></span>
         </template>
 
-        <template v-if="mode === 'all'">
+        <template v-if="mode === allFiltersMode">
             <Component
                 :is="filters[focusedFilter].componentEditor"
                 v-if="focusedFilter"
@@ -62,6 +62,8 @@ import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilte
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
+const ALL_FILTERS_MODE = 'all-filters'
+
 export default {
     name: 'FiltersDrawer',
 
@@ -86,7 +88,7 @@ export default {
         },
         selectedSection: {
             type: String,
-            default: 'all',
+            default: ALL_FILTERS_MODE,
         },
         filterBlackList: {
             // filters we dont want to show/edit but are still active (i.e. categories in category page)
@@ -100,6 +102,7 @@ export default {
             selection: JSON.parse(JSON.stringify(this.preselection)),
             focusedFilter: null,
             ambiguousTagsOpen: false,
+            allFiltersMode: ALL_FILTERS_MODE,
         }
     },
 
@@ -166,7 +169,7 @@ export default {
             }
         },
         drawerTitle() {
-            if (this.mode === 'all') {
+            if (this.mode === this.allFiltersMode) {
                 if (this.focusedFilter) {
                     const title = this.filters[this.focusedFilter].title
                     return this.$t(`search.${title}`)

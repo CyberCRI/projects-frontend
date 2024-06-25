@@ -18,7 +18,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import SearchOptions, { ALL_SECTION_KEY } from '@/components/search/SearchOptions/SearchOptions.vue'
 import {
     updateFiltersFromURL,
     updateSearchQuery,
@@ -55,7 +55,7 @@ export default {
                 sdgs: [],
                 languages: [],
                 skills: [],
-                section: 'all',
+                section: ALL_SECTION_KEY,
                 organizations: [this.$store.state.organizations.current.code],
                 ordering: '-updated_at',
                 limit: 30,
@@ -65,7 +65,7 @@ export default {
             projectsCount: 0,
             searchOptionsInitiated: false,
 
-            selectedSection: 'all',
+            selectedSection: ALL_SECTION_KEY,
         }
     },
 
@@ -135,20 +135,14 @@ export default {
         },
 
         updateTabs(section) {
-            this.selectedSection = section && section.type ? section.type : 'all'
-            this.search.section = section && section.type ? section.type : 'all'
+            this.selectedSection = section ? section : ALL_SECTION_KEY
+            this.search.section = section ? section : ALL_SECTION_KEY
 
-            if (!section || !section.type || section.type === (this.$route.query.section || 'all'))
-                return
+            if (!section || section === (this.$route.query.section || ALL_SECTION_KEY)) return
 
-            const query = { ...this.$route.query, section: section.type }
+            const query = { ...this.$route.query, section: section }
 
-            if (this.selectedSection === 'all') this.$router.push({ name: 'GlobalSearch', query })
-            if (this.selectedSection === 'projects')
-                this.$router.push({ name: 'ProjectSearch', query })
-            if (this.selectedSection === 'groups') this.$router.push({ name: 'GroupSearch', query })
-            if (this.selectedSection === 'people')
-                this.$router.push({ name: 'PeopleSearch', query })
+            this.$router.push({ name: 'GlobalSearch', query })
         },
 
         updateProjectQuantity(quantity) {

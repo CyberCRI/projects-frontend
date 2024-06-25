@@ -5,13 +5,13 @@
                 <span class="label-ctn">
                     <slot name="badge"></slot>
                     <IconImage
-                        v-if="modelValue.leftIcon"
-                        :name="modelValue.leftIcon"
+                        v-if="menuItems[modelValue].leftIcon"
+                        :name="menuItems[modelValue].leftIcon"
                         class="icon"
                     />
 
-                    <span class="drop-down-label" v-if="modelValue.label">{{
-                        $t(modelValue.label)
+                    <span class="drop-down-label" v-if="menuItems[modelValue].label">{{
+                        $t(menuItems[modelValue].label)
                     }}</span>
                 </span>
                 <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
@@ -31,18 +31,17 @@
                     <ul v-else>
                         <li></li>
                         <li
-                            v-for="item in menuItems"
-                            :key="item.key"
+                            v-for="(item, key) in menuItems"
+                            :key="key"
                             class="drop-down-menu-item"
                             :data-test="item.dataTest"
                         >
                             <button
                                 class="drop-down-menu-item-content"
                                 :class="{
-                                    'drop-down-menu-item-content--selected':
-                                        modelValue.key === item.key,
+                                    'drop-down-menu-item-content--selected': modelValue === key,
                                 }"
-                                @click="menuAction(item)"
+                                @click="menuAction(key)"
                             >
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
                                     <IconImage :name="item.leftIcon" />
@@ -111,8 +110,8 @@ export default {
             this.open = false
         },
 
-        menuAction(item) {
-            this.$emit('update:model-value', item)
+        menuAction(key) {
+            this.$emit('update:model-value', key)
             this.close()
         },
     },
