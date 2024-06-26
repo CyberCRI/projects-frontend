@@ -4,19 +4,21 @@
         class="color-tip"
         :hover="true"
         :interactive="false"
-        :disabled="!names?.length"
+        :disabled="!names || names?.length < 2"
         secondary
         placement="bottom"
+        :class="{
+            'is-hidden': isHidden,
+        }"
     >
         <div
             @click.stop.prevent="$emit('main-action')"
             :class="{
-                'add-filter__button-list__button--selected': isSelected,
-                'add-filter__button-list__button--hide': isHidden,
+                'is-selected': isSelected,
 
-                'add-filter__button-list__button--unused': isUnused,
+                'is-unused': isUnused,
             }"
-            class="add-filter__button-list__button"
+            class="filter-button"
         >
             {{ label }}
             <ContextActionButton
@@ -76,8 +78,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.add-filter__button-list__button {
+.filter-button {
     display: flex;
+    gap: $space-m;
     align-items: center;
     background: $white;
     border: $border-width-s solid $primary;
@@ -95,26 +98,23 @@ export default {
         opacity: 0.7;
     }
 
-    &--selected {
+    &.is-selected {
         font-weight: 700;
         border: $border-width-s solid $primary-dark;
     }
 
-    &--hide {
-        display: none;
-    }
-
-    &--unused {
+    &.is-unused {
         background: transparent;
         border: $border-width-s solid $primary;
     }
 
-    $filter-value-icon-size: 1em;
-
     .icon-ctn {
         flex-shrink: 0;
-        margin-left: $space-m;
     }
+}
+
+.is-hidden {
+    display: none;
 }
 
 .tooltip-div {

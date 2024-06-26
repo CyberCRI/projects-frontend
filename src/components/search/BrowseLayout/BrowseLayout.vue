@@ -18,7 +18,8 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import SearchOptions, { ALL_SECTION_KEY } from '@/components/search/SearchOptions/SearchOptions.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import { ALL_SECTION_KEY } from '@/components/search/Filters/filter-constants.ts'
 import {
     updateFiltersFromURL,
     updateSearchQuery,

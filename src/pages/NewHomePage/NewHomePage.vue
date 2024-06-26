@@ -12,6 +12,7 @@
                 show-section-drop-down
                 search-button
                 @search="search"
+                @enter="search"
             ></SearchOptions>
         </div>
     </div>

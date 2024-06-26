@@ -62,6 +62,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import { ALL_SECTION_KEY } from '@/components/search/Filters/filter-constants.ts'
 
 export default {
     name: 'SearchOptionDropDown',
@@ -75,13 +76,13 @@ export default {
 
     props: {
         modelValue: {
-            type: Object,
-            default: () => ({}),
+            type: String,
+            default: ALL_SECTION_KEY,
         },
 
         menuItems: {
-            type: Array,
-            default: () => [],
+            type: Object,
+            default: () => ({}),
         },
 
         hasSeparator: {

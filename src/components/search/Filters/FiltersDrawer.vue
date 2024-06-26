@@ -27,7 +27,7 @@
                 <FilterWrapper
                     v-if="filter.condition"
                     :filter-key="key"
-                    :has-filters="filter.hasFilters"
+                    :has-filters="hasFilters(key)"
                     :is-toggleable="filter.toggleable"
                     @toggle-filter="toggleFilter"
                 >
@@ -51,25 +51,15 @@
 
 <script>
 import Drawer from '@/components/base/BaseDrawer.vue'
-import FilterWrapper from '@/components/search/Filters/FilterWrapper.vue'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
-import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
-import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
-import SkillsFilterSummary from '@/components/search/Filters/SkillsFilterSummary.vue'
-import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
-import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
-import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-
-const ALL_FILTERS_MODE = 'all-filters'
-
+import FilterWrapper from '@/components/search/Filters/FilterWrapper.vue'
+import { ALL_FILTERS_MODE } from '@/components/search/Filters/filter-constants.ts'
 export default {
     name: 'FiltersDrawer',
 
     emits: ['confirm', 'close'],
 
-    components: { FilterWrapper, Drawer, SdgsFilter, LanguageFilter, IconImage },
+    components: { FilterWrapper, Drawer, IconImage },
 
     props: {
         isOpened: {
@@ -82,18 +72,14 @@ export default {
             required: true,
         },
 
-        preselection: {
+        filters: {
             type: Object,
             required: true,
         },
-        selectedSection: {
-            type: String,
-            default: ALL_FILTERS_MODE,
-        },
-        filterBlackList: {
-            // filters we dont want to show/edit but are still active (i.e. categories in category page)
-            type: Array,
-            default: () => [],
+
+        preselection: {
+            type: Object,
+            required: true,
         },
     },
 
@@ -107,67 +93,6 @@ export default {
     },
 
     computed: {
-        filters() {
-            return {
-                tags: {
-                    title: 'tag',
-                    toggleable: true,
-                    componentSummary: TagsFilterSummary,
-                    componentEditor: TagsFilterEditor,
-                    hasFilters: this.selection['tags'].length > 0,
-                    condition:
-                        this.selectedSection === 'projects' &&
-                        !this.filterBlackList.includes('tags'),
-                },
-                sdgs: {
-                    title: 'sdg',
-                    componentSummary: SdgsFilter,
-                    componentEditor: SdgsFilter,
-                    toggleable: false,
-                    hasFilters: true,
-                    condition: !this.filterBlackList.includes('sdgs'),
-                },
-                skills: {
-                    title: 'skills',
-                    toggleable: true,
-                    componentSummary: SkillsFilterSummary,
-                    componentEditor: SkillsFilterEditor,
-                    hasFilters: this.selection['skills'].length > 0,
-                    condition:
-                        this.selectedSection === 'people' &&
-                        !this.filterBlackList.includes('skills'),
-                },
-                languages: {
-                    title: 'language',
-                    componentSummary: LanguageFilter,
-                    componentEditor: LanguageFilter,
-                    toggleable: false,
-                    hasFilters: true,
-                    condition:
-                        this.selectedSection === 'projects' &&
-                        !this.filterBlackList.includes('languages'),
-                },
-                // TODO
-                // localization: {
-                //     title: 'Localisation',
-                // },
-
-                ...(this.$store.getters['projectCategories/all'].length
-                    ? {
-                          categories: {
-                              title: 'category',
-                              toggleable: true,
-                              componentSummary: CategoriesFilterSummary,
-                              componentEditor: CategoriesFilterEditor,
-                              hasFilters: this.selection['categories'].length > 0,
-                              condition:
-                                  this.selectedSection === 'projects' &&
-                                  !this.filterBlackList.includes('categories'),
-                          },
-                      }
-                    : {}),
-            }
-        },
         drawerTitle() {
             if (this.mode === this.allFiltersMode) {
                 if (this.focusedFilter) {
@@ -187,6 +112,9 @@ export default {
     },
 
     methods: {
+        hasFilters(key) {
+            return ['sdfs', 'languages'].includes(key) || this.selection[key]?.length > 0
+        },
         confirm() {
             this.$emit('confirm', this.selection)
         },
@@ -246,3 +174,4 @@ export default {
     }
 }
 </style>
+@/components/search/Filters/filter-constants

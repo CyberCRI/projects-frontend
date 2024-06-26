@@ -9,64 +9,46 @@
                 />
                 <SearchInput
                     class="search-input"
-                    :class="{ 'search-input--no-section': !showSectionDropDown }"
+                    :class="{ 'has-sections': showSectionDropDown }"
                     v-model="selectedFilters.search"
                     :full="true"
                     :placeholder="$t('browse.placeholder')"
                     @delete-query="deleteQuery"
-                    @keyup.enter="$emit('enter', adaptToParent(selectedFilters))"
+                    @keyup.enter="$emit('enter', selectedSection, adaptToParent(selectedFilters))"
                 />
-            </div>
-            <div v-if="searchButton" class="search-button">
                 <LpiButton
+                    v-if="searchButton"
+                    class="search-button"
                     :label="$t('browse.page-title')"
                     :secondary="false"
                     @click="$emit('search', selectedSection, adaptToParent(selectedFilters))"
                     data-test="search-input-button"
-                >
-                </LpiButton>
+                />
             </div>
         </div>
 
-        <div v-if="showFilters">
-            <div class="add-filter">
-                <div class="add-filter__button-list">
-                    <template v-if="!showSectionDropDown && showSectionFilter">
-                        <FilterButton
-                            v-for="(sectionFilter, key) in sectionFilters"
-                            :key="key"
-                            :label="$t(sectionFilter.label)"
-                            :is-selected="sectionFilter.isSelected"
-                            :is-hidden="!sectionFilter.condition"
-                            @main-action="sectionFilter.action(key)"
-                            @clear-action="sectionFilter.action(key)"
-                            :data-test="sectionFilter.dataTest"
-                        />
-                    </template>
-
-                    <FilterButton
-                        v-for="(filterButton, key) in filterButtons"
-                        :key="key"
-                        :label="filterButton.label"
-                        :is-unused="filterButton.isUnused"
-                        :is-selected="filterButton.isSelected"
-                        :is-hidden="!filterButton.condition"
-                        @main-action="filterButton.action(key)"
-                        @clear-action="filterButton.clear(key)"
-                        :names="filterButton.names"
-                    />
-                </div>
-            </div>
+        <div v-if="showFilters" class="add-filter">
+            <FilterButton
+                v-for="(filterButton, key) in filterButtons"
+                :key="key"
+                :label="filterButton.label"
+                :is-unused="filterButton.isUnused"
+                :is-selected="filterButton.isSelected"
+                :is-hidden="!filterButton.condition"
+                @main-action="filterButton.action(key)"
+                @clear-action="filterButton.clear(key)"
+                :names="filterButton.names"
+                :data-test="filterButton.dataTest"
+            />
         </div>
 
         <FiltersDrawer
             :is-opened="!!currentDrawer"
+            :filters="contextualFilters"
             :mode="currentDrawer"
             :preselection="selectedFilters"
             @close="currentDrawer = null"
             @confirm="confirm"
-            :selected-section="selectedSection"
-            :filter-black-list="filterBlackList"
         />
     </div>
 </template>
@@ -80,6 +62,24 @@ import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
 import SearchOptionDropDown from '@/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
+
+import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
+import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
+import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
+import SkillsFilterSummary from '@/components/search/Filters/SkillsFilterSummary.vue'
+import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
+import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
+import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
+import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
+
+import {
+    ALL_FILTERS_MODE,
+    ALL_SECTION_KEY,
+    PROJECT_SECTION_KEY,
+    GROUP_SECTION_KEY,
+    PEOPLE_SECTION_KEY,
+} from '@/components/search/Filters/filter-constants.ts'
+
 function defaultFilters() {
     return {
         search: '',
@@ -92,8 +92,6 @@ function defaultFilters() {
         section: '',
     }
 }
-
-export const ALL_SECTION_KEY = 'all'
 
 export default {
     name: 'SearchOptions',
@@ -161,45 +159,7 @@ export default {
     },
 
     async mounted() {
-        // converts host component "search" (arrays of id)
-        // to arrays of object (needed in this component for displayinf them)
-
-        const rawFilters = this.search || {}
-        const filters = {}
-
-        // this must be done before the other filters
-        // since it trigger a search parameters reset
-        // (i.e. in category page search we should not reset the category filter)
-        filters.section = this.$route.query.section || this.section || ALL_SECTION_KEY
-
-        this.selectedSection = filters.section // TODO can be simplified to filters.section ?
-
-        filters.search = rawFilters.search || ''
-
-        filters.categories = await Promise.all(
-            (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
-        )
-
-        const wikipediaTags = await Promise.all(
-            (rawFilters.wikipedia_tags || []).map(async (wikiTagId) => await getWikiTag(wikiTagId))
-        )
-
-        const organizationTags = await Promise.all(
-            (rawFilters.organization_tags || []).map(async (orgTagId) => await getOrgTag(orgTagId))
-        )
-
-        filters.tags = [...wikipediaTags, ...organizationTags]
-
-        filters.sdgs = rawFilters.sdgs || []
-
-        filters.languages = rawFilters.languages || []
-
-        filters.skills = await Promise.all(
-            (rawFilters.skills || []).map(async (skillId) => await getWikiTag(skillId))
-        )
-
-        this.selectedFilters = filters
-        this.filtersInited = true
+        await this.initFilters()
     },
 
     computed: {
@@ -207,48 +167,63 @@ export default {
             return {
                 [ALL_SECTION_KEY]: {
                     action: this.toggleSectionFilter,
+                    clear: this.toggleSectionFilter,
+                    names: [],
                     leftIcon: 'BarsStaggered',
-                    label: 'search.all-section',
+                    label: this.$t('search.all-section'),
                     dataTest: 'all-sections-button',
                     condition: false,
                     isSelected: !this.selectedSection || this.selectedSection === ALL_SECTION_KEY,
                     isUnused: false,
                 },
-                projects: {
+                [PROJECT_SECTION_KEY]: {
                     action: this.toggleSectionFilter,
+                    clear: this.toggleSectionFilter,
+                    names: [],
                     leftIcon: 'Briefcase',
-                    label: 'search.projects-section',
+                    label: this.$t('search.projects-section'),
                     dataTest: 'project-section-button',
                     condition:
-                        this.selectedSection == ALL_SECTION_KEY ||
-                        this.selectedSection == 'projects',
-                    isSelected: this.selectedSection === 'projects',
+                        !this.showSectionDropDown &&
+                        this.showSectionFilter &&
+                        (this.selectedSection == ALL_SECTION_KEY ||
+                            this.selectedSection == PROJECT_SECTION_KEY),
+                    isSelected: this.selectedSection === PROJECT_SECTION_KEY,
                     isUnused: false,
                 },
-                groups: {
+                [GROUP_SECTION_KEY]: {
                     action: this.toggleSectionFilter,
+                    clear: this.toggleSectionFilter,
+                    names: [],
                     leftIcon: 'PeopleGroup',
-                    label: 'search.groups',
+                    label: this.$t('search.groups'),
                     dataTest: 'group-section-button',
                     condition:
-                        this.selectedSection == ALL_SECTION_KEY || this.selectedSection == 'groups',
-                    isSelected: this.selectedSection === 'groups',
+                        !this.showSectionDropDown &&
+                        this.showSectionFilter &&
+                        (this.selectedSection == ALL_SECTION_KEY ||
+                            this.selectedSection == GROUP_SECTION_KEY),
+                    isSelected: this.selectedSection === GROUP_SECTION_KEY,
                     isUnused: false,
                 },
-                people: {
+                [PEOPLE_SECTION_KEY]: {
                     action: this.toggleSectionFilter,
+                    clear: this.toggleSectionFilter,
                     leftIcon: 'Account',
-                    label: 'search.peoples',
+                    label: this.$t('search.peoples'),
                     dataTest: 'person-section-button',
                     condition:
-                        this.selectedSection == ALL_SECTION_KEY || this.selectedSection == 'people',
-                    isSelected: this.selectedSection === 'people',
+                        !this.showSectionDropDown &&
+                        this.showSectionFilter &&
+                        (this.selectedSection == ALL_SECTION_KEY ||
+                            this.selectedSection == PEOPLE_SECTION_KEY),
+                    isSelected: this.selectedSection === PEOPLE_SECTION_KEY,
                     isUnused: false,
                 },
             }
         },
 
-        filterButtons() {
+        contextualFilters() {
             return {
                 // TAGS
                 tags: this.makeFilterButton({
@@ -267,9 +242,15 @@ export default {
                                   return tag.name
                               }
                           }),
+                    dataTest: 'contextual-filter-tags',
                     condition:
-                        this.selectedSection === 'projects' &&
+                        this.selectedSection === PROJECT_SECTION_KEY &&
                         !this.filterBlackList.includes('tags'),
+                    // drawer config part
+                    title: 'tag',
+                    toggleable: true,
+                    componentSummary: TagsFilterSummary,
+                    componentEditor: TagsFilterEditor,
                 }),
                 // SDGS
                 sdgs: this.makeFilterButton({
@@ -280,10 +261,16 @@ export default {
                               if (typeof sdg === 'string') return this.$t(`sdg.${sdg}.title`)
                               return this.$t(`sdg.${sdg.id}.title`)
                           }),
+                    dataTest: 'contextual-filter-sdgs',
                     condition:
-                        (this.selectedSection === 'projects' ||
-                            this.selectedSection === 'people') &&
+                        (this.selectedSection === PROJECT_SECTION_KEY ||
+                            this.selectedSection === PEOPLE_SECTION_KEY) &&
                         !this.filterBlackList.includes('sdgs'),
+                    // drawer config part
+                    title: 'sdg',
+                    componentSummary: SdgsFilter,
+                    componentEditor: SdgsFilter,
+                    toggleable: false,
                 }),
                 // LANGUAGES
                 languages: this.makeFilterButton({
@@ -294,8 +281,14 @@ export default {
                               this.$t(`language.label-${language}`)
                           ),
                     condition:
-                        this.selectedSection === 'projects' &&
+                        this.selectedSection === PROJECT_SECTION_KEY &&
                         !this.filterBlackList.includes('languages'),
+                    dataTest: 'contextual-filter-languages',
+                    // drawer config part
+                    title: 'language',
+                    componentSummary: LanguageFilter,
+                    componentEditor: LanguageFilter,
+                    toggleable: false,
                 }),
                 // SKILLS
                 skills: this.makeFilterButton({
@@ -304,8 +297,14 @@ export default {
                         ? []
                         : this.selectedFilters.skills.map((skill) => skill.name),
                     condition:
-                        this.selectedSection === 'people' &&
+                        this.selectedSection === PEOPLE_SECTION_KEY &&
                         !this.filterBlackList.includes('skills'),
+                    dataTest: 'contextual-filter-skills',
+                    // drawer config part
+                    title: 'skills',
+                    toggleable: true,
+                    componentSummary: SkillsFilterSummary,
+                    componentEditor: SkillsFilterEditor,
                 }),
                 // CATEGORIES
                 ...(this.$store.getters['projectCategories/all'].length
@@ -316,17 +315,31 @@ export default {
                                   ? []
                                   : this.selectedFilters.categories.map((cat) => cat.name),
                               condition:
-                                  this.selectedSection === 'projects' &&
+                                  this.selectedSection === PROJECT_SECTION_KEY &&
                                   !this.filterBlackList.includes('categories'),
+                              dataTest: 'contextual-filter-category',
+                              // drawer config part
+                              title: 'category',
+                              toggleable: true,
+                              componentSummary: CategoriesFilterSummary,
+                              componentEditor: CategoriesFilterEditor,
                           }),
                       }
                     : {}),
+            }
+        },
+
+        filterButtons() {
+            return {
+                ...this.sectionFilters,
+                ...this.contextualFilters,
                 // ALL FILTERS
-                'all-filters': this.makeFilterButton({
+                [ALL_FILTERS_MODE]: this.makeFilterButton({
                     label: this.$t('search.all-filters'),
                     forceCount: this.selectedFiltersTotal,
                     condition:
-                        this.selectedSection === 'projects' || this.selectedSection === 'people',
+                        this.selectedSection === PROJECT_SECTION_KEY ||
+                        this.selectedSection === PEOPLE_SECTION_KEY,
                 }),
             }
         },
@@ -345,14 +358,6 @@ export default {
             )
             return count
         },
-
-        wikipediaTags() {
-            return this.selectedFilters.tags.filter((tag) => 'wikipedia_qid' in tag)
-        },
-
-        organizationTags() {
-            return this.selectedFilters.tags.filter((tag) => 'organization' in tag)
-        },
     },
 
     methods: {
@@ -369,14 +374,64 @@ export default {
                 clear: this.clearSelectedFilters,
             }
         },
+
+        async initFilters() {
+            // converts host component "search" (arrays of id)
+            // to arrays of object (needed in this component for displayinf them)
+
+            const rawFilters = this.search || {}
+            const filters = {}
+
+            // this must be done before the other filters
+            // since it trigger a search parameters reset
+            // (i.e. in category page search we should not reset the category filter)
+            filters.section = this.$route.query.section || this.section || ALL_SECTION_KEY
+
+            this.selectedSection = filters.section // TODO can be simplified to filters.section ?
+
+            filters.search = rawFilters.search || ''
+
+            filters.categories = await Promise.all(
+                (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
+            )
+
+            const wikipediaTags = await Promise.all(
+                (rawFilters.wikipedia_tags || []).map(
+                    async (wikiTagId) => await getWikiTag(wikiTagId)
+                )
+            )
+
+            const organizationTags = await Promise.all(
+                (rawFilters.organization_tags || []).map(
+                    async (orgTagId) => await getOrgTag(orgTagId)
+                )
+            )
+
+            filters.tags = [...wikipediaTags, ...organizationTags]
+
+            filters.sdgs = rawFilters.sdgs || []
+
+            filters.languages = rawFilters.languages || []
+
+            filters.skills = await Promise.all(
+                (rawFilters.skills || []).map(async (skillId) => await getWikiTag(skillId))
+            )
+
+            this.selectedFilters = filters
+            this.filtersInited = true
+        },
         adaptToParent(filters) {
             const adaptedFilters = {
                 search: filters.search,
                 categories: filters.categories.map((cat) => cat.id),
                 languages: [...filters.languages], // need to deconstruct to avoid reactivity issue when removing language
                 sdgs: [...filters.sdgs], // need to deconstruct to avoid reactivity issue when removing sdg
-                wikipedia_tags: this.wikipediaTags.map((tag) => tag.wikipedia_qid),
-                organization_tags: this.organizationTags.map((tag) => tag.id),
+                wikipedia_tags: this.selectedFilters.tags
+                    .filter((tag) => 'wikipedia_qid' in tag)
+                    .map((tag) => tag.wikipedia_qid),
+                organization_tags: this.selectedFilters.tags
+                    .filter((tag) => 'organization' in tag)
+                    .map((tag) => tag.id),
                 organizations: [this.$store.state.organizations.current.code],
                 skills: filters.skills.map((tag) => tag.wikipedia_qid),
             }
@@ -385,11 +440,13 @@ export default {
         },
 
         toggleSectionFilter(key) {
+            this.clearSelectedFilters()
             this.selectedSection = this.selectedSection == key ? ALL_SECTION_KEY : key
         },
 
         clearSelectedFilters(key) {
-            if (!key || key === 'all-filters') Object.assign(this.selectedFilters, defaultFilters())
+            if (!key || key === ALL_FILTERS_MODE)
+                Object.assign(this.selectedFilters, defaultFilters())
             else this.selectedFilters[key] = defaultFilters()[key]
         },
 
@@ -449,96 +506,16 @@ export default {
     width: 100%;
 }
 
-.search-block.inline {
-    max-width: none;
-    flex-grow: 1;
-    padding: 0;
-    padding-right: $space-xl;
-}
-
-.add-filter,
-.search-types {
-    margin-top: $space-l;
-
-    &__title {
-        font-size: $font-size-xs;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: $space-m;
-        margin-top: $font-size-3xl;
-        color: $almost-black;
-    }
-}
-
-.add-filter__button-list,
-.search-types {
+.search-container {
     display: flex;
+    gap: 1rem;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: $space-m;
-}
-
-.selected-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: $space-s;
-    margin: $space-2xl;
-    align-items: center;
-}
-
-.clear-selection-button {
-    margin: 0;
-    text-transform: uppercase;
-    padding: 0 !important;
-}
-
-.link {
-    color: $primary-dark;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.search-info {
-    color: $almost-black;
-    margin: $space-xl 0 $space-xl 0;
-}
-
-.mobile--hidden {
-    display: none;
-}
-
-@media only screen and (width >= 1000px) {
-    .add-filter {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .add-filter__button-list {
-        justify-content: start;
-    }
-
-    .mobile--hidden {
-        display: block;
-    }
-
-    .search-info {
-        text-align: left;
-    }
-}
-
-.search-container {
-    @media (min-width: $min-tablet) {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        width: 100%;
-    }
+    flex-direction: unset;
 
     .search-group {
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
 
         @media (min-width: $min-tablet) {
@@ -547,57 +524,36 @@ export default {
             justify-content: center;
         }
     }
-
-    .search-button {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        border-right-width: 0;
-        background: $white;
-        border-color: $primary;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .search-input {
-        .stretch & {
-            flex-grow: 1;
-        }
-
-        :deep(input) {
-            @media (min-width: $min-tablet) {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-        }
-
-        &--no-section {
-            :deep(input) {
-                @media (min-width: $min-tablet) {
-                    border-top-left-radius: $border-radius-l;
-                    border-bottom-left-radius: $border-radius-l;
-                }
-            }
-        }
-    }
-
-    @media (min-width: $min-tablet) {
-        align-items: center;
-        justify-content: center;
-        flex-direction: unset;
-    }
 }
 
-:deep(.search-input-ctn--full) {
-    width: pxToRem(350px);
+.search-input {
     margin-bottom: $space-m;
-
-    @media (min-width: $min-tablet) {
-        margin-bottom: 0;
-    }
+    width: pxToRem(600px); // drop is 250px so 350 + 250 = 600
 
     @media (max-width: $min-tablet) {
         width: 100%;
     }
+
+    @media (min-width: $min-tablet) {
+        margin-bottom: 0;
+
+        &.has-sections :deep(.search-input) {
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    &.has-sections {
+        width: pxToRem(350px);
+    }
+}
+
+.add-filter {
+    margin-top: $space-l;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: $space-m;
 }
 </style>
