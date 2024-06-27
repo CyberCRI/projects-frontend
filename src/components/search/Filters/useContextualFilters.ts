@@ -161,10 +161,11 @@ export default function useContextualFilters({
             // ALL FILTERS
             [ALL_FILTERS_MODE]: makeAllFiltersButton({
                 label: t('search.all-filters'),
-                forceCount: selectedFiltersTotal.value,
+                count: selectedFiltersTotal.value,
+                // only show if we have at least two contextual filters
                 condition:
-                    selectedSection.value === PROJECT_SECTION_KEY ||
-                    selectedSection.value === PEOPLE_SECTION_KEY,
+                    Object.values(contextualFilters.value).filter((filter) => filter.condition)
+                        .length > 1,
             }),
         }
     })
@@ -178,9 +179,10 @@ export default function useContextualFilters({
     })
 
     function makeFilterButton(config) {
-        const count = config.forceCount || config.names?.length || 0
+        const count = config.names?.length || 0
         const labelWithCount = config.label + (count ? ` (${count})` : '')
-        const label = config.names?.length == 1 ? config.names[0] : labelWithCount
+        // if we have just *one* filter value show its in the button
+        const label = count == 1 ? config.names[0] : labelWithCount
         return {
             ...config,
             label,
@@ -191,9 +193,8 @@ export default function useContextualFilters({
         }
     }
     function makeAllFiltersButton(config) {
-        const count = config.forceCount || config.names?.length || 0
-        const labelWithCount = config.label + (count ? ` (${count})` : '')
-        const label = config.names?.length == 1 ? config.names[0] : labelWithCount
+        const count = config.count || 0
+        const label = config.label + (count ? ` (${count})` : '')
         return {
             ...config,
             label,
