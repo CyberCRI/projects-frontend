@@ -28,6 +28,7 @@
 
         <SearchFilters
             v-if="showFilters && !showSectionDropDown"
+            ref="searchFilters"
             v-model:selected-filters="selectedFilters"
             v-model:selected-section="selectedSection"
             :search="search"
@@ -161,6 +162,12 @@ export default {
 
         emitSearchOptionsUpdated() {
             this.$emit('search-options-updated', this.adaptToParent())
+        },
+
+        // this method is used by CategoriesPage and GroupsPage via a ref
+        // eslint-disable-next-line vue/no-unused-properties
+        clearSelectedFilters() {
+            this.$refs.searchFilters?.clearSelectedFilters()
         },
     },
 

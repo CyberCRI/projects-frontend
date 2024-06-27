@@ -12,7 +12,7 @@
                 />
             </div>
 
-            <PeopleSearchTab :search="rawSearch" />
+            <GlobalSearchTab :search="rawSearch" />
         </div>
     </div>
 </template>
@@ -26,14 +26,14 @@ import {
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
 
-import PeopleSearchTab from '@/pages/SearchPage/Tabs/PeopleSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 
 export default {
     name: 'PeoplePage',
 
     components: {
         SearchOptions,
-        PeopleSearchTab,
+        GlobalSearchTab,
     },
 
     data() {

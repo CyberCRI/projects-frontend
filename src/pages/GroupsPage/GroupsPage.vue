@@ -2,9 +2,17 @@
     <div class="page-section-extra-wide groups-layout page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('common.groups')) }}</h1>
 
-        <div class="search-groups-ctn">
+        <div class="search-groups-ctn" v-if="!groupId && searchOptionsInitiated">
             <div class="search-input-container">
-                <SearchInput
+                <SearchOptions
+                    :limit="30"
+                    ref="searchOptions"
+                    :search="search"
+                    section="groups"
+                    show-filters
+                    @search-options-updated="updateSearch"
+                />
+                <!--SearchInput
                     v-model="searchFilter.search"
                     :full="true"
                     :placeholder="$t('browse.placeholder')"
@@ -16,56 +24,71 @@
                     :label="$t('browse.page-title')"
                     :secondary="false"
                     @click="updateSearchQuery(true)"
-                />
+                /-->
             </div>
         </div>
-        <div class="current-group-ctn">
-            <div class="breadcrumb">
-                <BreadCrumbs
-                    v-if="hierarchy?.length"
-                    :breadcrumbs="hierarchy"
-                    group-name=""
-                    :is-loading="isLoading"
-                />
+        <div class="page-section-wide" v-if="hasSearch">
+            <GlobalSearchTab :search="search" />
+            <div class="btn-ctn">
+                <LpiButton :label="$t('people-groups.browse-tree')" @click="showCategories" />
             </div>
-            <div class="current-group">
-                <h3 v-if="!isLoading && currentGroup">
-                    {{ currentGroup.name }} ({{ currentGroup.children.length }})
-                </h3>
-                <template v-if="isLoading">
-                    <SkeletonComponent width="110px" class="current-group-skeleton" />
-                    <SkeletonComponent width="40px" class="current-group-skeleton" />
-                </template>
-            </div>
-
-            <div class="groups-list">
-                <CardList
-                    :desktop-columns-number="6"
-                    :is-loading="isLoading"
-                    :limit="12"
-                    :items="childGroup"
-                    class="list-container"
-                >
-                    <template #default="cardListSlotProps">
-                        <GroupCard
-                            :group="cardListSlotProps.item"
-                            :has-sub-groups-link="!!cardListSlotProps.item?.children?.length"
-                        />
+        </div>
+        <template v-else>
+            <div class="current-group-ctn">
+                <div class="breadcrumb">
+                    <BreadCrumbs
+                        v-if="hierarchy?.length"
+                        :breadcrumbs="hierarchy"
+                        group-name=""
+                        :is-loading="isLoading"
+                    />
+                </div>
+                <div class="current-group">
+                    <h3 v-if="!isLoading && currentGroup">
+                        {{ currentGroup.name }} ({{ currentGroup.children.length }})
+                    </h3>
+                    <template v-if="isLoading">
+                        <SkeletonComponent width="110px" class="current-group-skeleton" />
+                        <SkeletonComponent width="40px" class="current-group-skeleton" />
                     </template>
-                </CardList>
+                </div>
+
+                <div class="groups-list">
+                    <CardList
+                        :desktop-columns-number="6"
+                        :is-loading="isLoading"
+                        :limit="12"
+                        :items="childGroup"
+                        class="list-container"
+                    >
+                        <template #default="cardListSlotProps">
+                            <GroupCard
+                                :group="cardListSlotProps.item"
+                                :has-sub-groups-link="!!cardListSlotProps.item?.children?.length"
+                            />
+                        </template>
+                    </CardList>
+                </div>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 <script>
+import debounce from 'lodash.debounce'
 import { getHierarchyGroups } from '@/api/group.service.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
 import permissions from '@/mixins/permissions'
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import {
+    updateFiltersFromURL,
+    updateSearchQuery,
+    resetPaginationIfNeeded,
+} from '@/functs/search.ts'
 
 export default {
     name: 'GroupsPage',
@@ -73,12 +96,13 @@ export default {
     mixins: [permissions],
 
     components: {
-        SearchInput,
         LpiButton,
         CardList,
         GroupCard,
         BreadCrumbs,
         SkeletonComponent,
+        SearchOptions,
+        GlobalSearchTab,
     },
 
     props: {
@@ -91,16 +115,44 @@ export default {
     data() {
         return {
             isLoading: true,
-            searchFilter: {
+            search: {
                 search: '',
-                section: 'groups',
+                categories: [],
+                organization_tags: [],
+                wikipedia_tags: [],
+                members: [],
+                sdgs: [],
+                languages: [],
+                skills: [],
+                section: 'all',
+                organizations: [this.$store.state.organizations.current.code],
+                ordering: '-updated_at',
+                limit: 30,
+                page: 1,
             },
             groupsIndex: null,
             rootId: null,
+            searchOptionsInitiated: false,
+            filterQueryParams: [
+                'search',
+                'sdgs',
+                'categories',
+                'organization_tags',
+                'wikipedia_tags',
+                'languages',
+                'page',
+            ],
+            selectedSection: 'all',
         }
     },
 
     async mounted() {
+        Object.assign(
+            this.search,
+            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
+        )
+        this.searchOptionsInitiated = true
+        this.selectedSection = this.$route.query.section
         await this.loadGroups()
     },
 
@@ -125,6 +177,14 @@ export default {
         hierarchy() {
             return (this.currentGroup?.hierarchy || []).map((groupId) => this.groupsIndex[groupId])
         },
+
+        hasSearch() {
+            return !!this.search.search
+            // keep for future development
+            // array to be populated with search filters keys for groups when ther'll be some
+            // ||
+            // [].reduce((acc, key) => acc || this.search[key].length > 0, false)
+        },
     },
 
     watch: {
@@ -148,17 +208,20 @@ export default {
             this.isLoading = false
         },
 
-        updateSearchQuery(searchButton) {
-            if (searchButton)
-                this.$router.push({
-                    name: 'GroupSearch',
-                    query: { ...this.searchFilter, section: 'groups' },
-                })
-            else
-                this.$router.push({
-                    name: 'GroupSearch',
-                    query: { section: 'groups' },
-                })
+        updateSearch: debounce(function (newSearch) {
+            // reset pagination to page 1 if other criterion have changed
+            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
+            // and so seem always different than this.search
+            const search = resetPaginationIfNeeded(this.search, {
+                ...this.search,
+                ...newSearch,
+            })
+            this.search = search
+            this.updateSearchQuery()
+        }, 500),
+
+        updateSearchQuery() {
+            return updateSearchQuery(this, this.filterQueryParams)
         },
 
         buildIndex(groups) {
@@ -189,6 +252,13 @@ export default {
             iterate(groups ? [groups] : [], [])
 
             this.groupsIndex = index
+        },
+        showCategories() {
+            this.$refs['searchOptions']?.deleteQuery()
+            this.$refs['searchOptions']?.clearSelectedFilters()
+            this.$nextTick(() => {
+                this.$el?.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
+            })
         },
     },
 }

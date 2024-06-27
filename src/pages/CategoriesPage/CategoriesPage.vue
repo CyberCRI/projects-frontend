@@ -26,7 +26,7 @@
         </div>
 
         <div class="page-section-wide" v-if="hasSearch || forceSearch">
-            <ProjectSearchTab :search="search" />
+            <GlobalSearchTab :search="search" />
             <div class="btn-ctn">
                 <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
             </div>
@@ -66,7 +66,7 @@ import {
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
-import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 export default {
     name: 'CategoriesPage',
 
@@ -76,7 +76,7 @@ export default {
         LpiButton,
         LpiCategoryCard,
         SearchOptions,
-        ProjectSearchTab,
+        GlobalSearchTab,
     },
 
     data() {
@@ -158,6 +158,7 @@ export default {
             return updateSearchQuery(this, this.filterQueryParams)
         },
         showCategories() {
+            this.$refs['searchOptions']?.deleteQuery()
             this.$refs['searchOptions']?.clearSelectedFilters()
             this.forceSearch = false
             this.$nextTick(() => {
