@@ -17,6 +17,13 @@ import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilter
 
 export const ALL_FILTERS_MODE = 'all-filters'
 
+export {
+    PROJECT_SECTION_KEY,
+    PEOPLE_SECTION_KEY,
+    GROUP_SECTION_KEY,
+    ALL_SECTION_KEY,
+} from '@/components/search/Filters/useSectionFilters'
+
 export default function useContextualFilters({
     selectedSection,
     selectedFilters,
@@ -149,18 +156,24 @@ export default function useContextualFilters({
         return count
     })
 
-    const filterButtons = computed(() => {
+    const recapFilters = computed(() => {
         return {
-            ...(showSectionFilter?.value ? sectionFilters.value : {}),
-            ...contextualFilters.value,
             // ALL FILTERS
-            [ALL_FILTERS_MODE]: makeFilterButton({
+            [ALL_FILTERS_MODE]: makeAllFiltersButton({
                 label: t('search.all-filters'),
                 forceCount: selectedFiltersTotal.value,
                 condition:
                     selectedSection.value === PROJECT_SECTION_KEY ||
                     selectedSection.value === PEOPLE_SECTION_KEY,
             }),
+        }
+    })
+
+    const filterButtons = computed(() => {
+        return {
+            ...(showSectionFilter?.value ? sectionFilters.value : {}),
+            ...contextualFilters.value,
+            ...recapFilters.value,
         }
     })
 
@@ -177,6 +190,25 @@ export default function useContextualFilters({
             clear: clearSelectedFilters,
         }
     }
+    function makeAllFiltersButton(config) {
+        const count = config.forceCount || config.names?.length || 0
+        const labelWithCount = config.label + (count ? ` (${count})` : '')
+        const label = config.names?.length == 1 ? config.names[0] : labelWithCount
+        return {
+            ...config,
+            label,
+            isUnused: !count,
+            isSelected: count > 0,
+            action: openDrawer,
+            clear: clearSelectedFilters,
+        }
+    }
 
-    return { sectionFilters, contextualFilters, filterButtons, selectedFiltersTotal }
+    return {
+        sectionFilters,
+        contextualFilters,
+        recapFilters,
+        filterButtons,
+        selectedFiltersTotal,
+    }
 }

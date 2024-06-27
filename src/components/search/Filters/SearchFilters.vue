@@ -6,10 +6,9 @@ import { getOrgTag } from '@/api/organization-tags.service'
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
 
-import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
-
 import useContextualFilters, {
     ALL_FILTERS_MODE,
+    ALL_SECTION_KEY,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
 import { ref, onMounted, watch, toRef } from 'vue'

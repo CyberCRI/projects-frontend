@@ -68,7 +68,7 @@ export default {
         },
 
         mode: {
-            type: String,
+            type: [String, null],
             required: true,
         },
 
