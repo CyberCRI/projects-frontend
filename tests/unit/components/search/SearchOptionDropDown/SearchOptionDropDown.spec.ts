@@ -1,6 +1,7 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import SearchOptionDropDown from '@/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
+import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters'
 
 import { describe, expect, it } from 'vitest'
 const i18n = {
@@ -19,11 +20,7 @@ describe('SearchOptionDropDown.vue', () => {
         defaultParams = {
             i18n,
             props: {
-                menuItems: {
-                    foo: {},
-                    bar: {},
-                },
-                modelValue: 'foo',
+                selectedSection: ALL_SECTION_KEY,
             },
         }
     })

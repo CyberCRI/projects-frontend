@@ -8,7 +8,7 @@ export const PEOPLE_SECTION_KEY = 'people'
 // TODO
 // !this.showSectionDropDown && this.showSectionFilter &&
 
-export default function useSectionFilters(selectedSection) {
+export default function useSectionFilters({ selectedSection }) {
     const { t } = useI18n()
 
     function toggleSectionFilter(key) {

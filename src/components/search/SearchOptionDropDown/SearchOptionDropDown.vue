@@ -2,28 +2,15 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import useSectionFilters from '@/components/search/Filters/useSectionFilters.ts'
-import { defineModel, defineProps, ref } from 'vue'
-
-// TODO ?
-// emits: ['update:model-value'],
-
-// components: {
-//     LpiLoader,
-//     IconImage,
-// },
+import { defineModel, ref } from 'vue'
 
 const selectedSection = defineModel('selectedSection', {
     type: String,
     default: () => ALL_SECTION_KEY,
 })
 
-const { sectionFilters } = useSectionFilters(selectedSection)
+const { sectionFilters } = useSectionFilters({ selectedSection })
 
-//props: {
-// sectionFilters: {
-//     type: Object,
-//     default: () => ({}),
-// },
 defineProps({
     hasSeparator: {
         type: Boolean,
@@ -35,7 +22,6 @@ defineProps({
         default: false,
     },
 })
-//},
 
 const open = ref(false)
 
@@ -59,13 +45,13 @@ function menuAction(key) {
                 <span class="label-ctn">
                     <slot name="badge"></slot>
                     <IconImage
-                        v-if="sectionFilters[selectedSection].leftIcon"
-                        :name="sectionFilters[selectedSection].leftIcon"
+                        v-if="sectionFilters[selectedSection]?.leftIcon"
+                        :name="sectionFilters[selectedSection]?.leftIcon"
                         class="icon"
                     />
 
-                    <span class="drop-down-label" v-if="sectionFilters[selectedSection].label">{{
-                        sectionFilters[selectedSection].label
+                    <span class="drop-down-label" v-if="sectionFilters[selectedSection]?.label">{{
+                        sectionFilters[selectedSection]?.label
                     }}</span>
                 </span>
                 <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />

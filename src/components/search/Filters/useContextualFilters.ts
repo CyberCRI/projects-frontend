@@ -1,10 +1,8 @@
-import { computed, toRefs, toRaw } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 import useSectionFilters, {
-    ALL_SECTION_KEY,
     PROJECT_SECTION_KEY,
-    GROUP_SECTION_KEY,
     PEOPLE_SECTION_KEY,
 } from '@/components/search/Filters/useSectionFilters'
 
@@ -25,12 +23,13 @@ export default function useContextualFilters({
     filterBlackList,
     openDrawer,
     clearSelectedFilters,
+    showSectionFilter,
 }) {
     const { t } = useI18n()
 
     const store = useStore()
 
-    const { sectionFilters } = useSectionFilters(selectedSection)
+    const { sectionFilters } = useSectionFilters({ selectedSection })
 
     const contextualFilters = computed(() => {
         return {
@@ -152,7 +151,7 @@ export default function useContextualFilters({
 
     const filterButtons = computed(() => {
         return {
-            ...sectionFilters.value,
+            ...(showSectionFilter?.value ? sectionFilters.value : {}),
             ...contextualFilters.value,
             // ALL FILTERS
             [ALL_FILTERS_MODE]: makeFilterButton({

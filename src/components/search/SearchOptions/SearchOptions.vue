@@ -28,15 +28,14 @@
         </div>
 
         <SearchFilters
-            v-if="showFilters"
+            v-if="showFilters && !showSectionDropDown"
             v-model:selected-filters="selectedFilters"
             v-model:selected-section="selectedSection"
             :search="search"
             :show-section-filter="showSectionFilter"
             :filter-black-list="filterBlackList"
             @filter-total-changed="$emit('filter-total-changed', $event)"
-        /><!-- :section="section" 
-            :section-filters="sectionFilters" -->
+        />
     </div>
 </template>
 
@@ -166,9 +165,6 @@ export default {
     watch: {
         selectedSection: function () {
             this.$emit('filter-section-update', this.selectedSection)
-            // const copySearch = { search: this.selectedFilters.search }
-            // this.clearSelectedFilters()
-            // this.selectedFilters.search = copySearch.search
         },
 
         selectedFilters: {

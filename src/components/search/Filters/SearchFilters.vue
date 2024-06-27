@@ -6,28 +6,13 @@ import { getOrgTag } from '@/api/organization-tags.service'
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
 
-import useSectionFilters, {
-    ALL_SECTION_KEY,
-    PROJECT_SECTION_KEY,
-    GROUP_SECTION_KEY,
-    PEOPLE_SECTION_KEY,
-} from '@/components/search/Filters/useSectionFilters.ts'
+import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
 
 import useContextualFilters, {
     ALL_FILTERS_MODE,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
-import {
-    defineModel,
-    defineProps,
-    defineEmits,
-    ref,
-    onMounted,
-    computed,
-    watch,
-    toRefs,
-    toRaw,
-} from 'vue'
+import { defineModel, ref, onMounted, watch, toRef } from 'vue'
 
 function defaultFilters() {
     return {
@@ -52,31 +37,11 @@ const props = defineProps({
         default: false,
     },
 
-    // section: {
-    //     type: String,
-    //     default: ALL_SECTION_KEY,
-    // },
-
     filterBlackList: {
         // filters we dont want to show/edit but are still active (i.e. categories in category page)
         type: Array,
         default: () => [],
     },
-
-    // selectedSection: {
-    //     type: String,
-    //     default: ALL_SECTION_KEY,
-    // },
-
-    // contextualFilters: {
-    //     type: Object,
-    //     default: defaultFilters,
-    // },
-
-    // sectionFilters: {
-    //     type: Object,
-    //     required: true,
-    // },
 })
 
 const selectedSection = defineModel('selectedSection', {
@@ -94,9 +59,10 @@ const emit = defineEmits(['filter-total-changed'])
 const { contextualFilters, filterButtons, selectedFiltersTotal } = useContextualFilters({
     selectedSection,
     selectedFilters,
-    filterBlackList: toRefs(props).filterBlackList,
+    filterBlackList: toRef(props, 'filterBlackList'),
     openDrawer,
     clearSelectedFilters,
+    showSectionFilter: toRef(props, 'showSectionFilter'),
 })
 
 const isRightDrawerOpened = ref(false)
@@ -112,17 +78,6 @@ onMounted(async () => {
 watch(selectedFiltersTotal, () => {
     emit('filter-total-changed', selectedFiltersTotal)
 })
-
-// watch(
-//     selectedFilters,
-//     () => {
-//         if (!filtersInited.value) return
-//         // convert object to their id as it what's is expected by host components
-//         emit('update:contextual-filters', this.adaptToParent())
-//     },
-//     { deep: true }
-// )
-// },
 
 async function initFilters() {
     // converts host component "search" (arrays of id)
