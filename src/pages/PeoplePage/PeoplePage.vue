@@ -8,8 +8,7 @@
                     :search="search"
                     section="people"
                     show-filters
-                    @filter-total-changed="updateFilterTotal($event)"
-                    @filters-updated="updateSearch($event)"
+                    @search-options-updated="updateSearch"
                 />
             </div>
 
@@ -54,7 +53,6 @@ export default {
                 limit: 30,
                 page: 1,
             },
-            filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
             filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
@@ -78,10 +76,6 @@ export default {
     },
 
     methods: {
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
-        },
-
         updateSearch: debounce(function (newSearch) {
             // reset pagination to page 1 if other criterion have changed
             // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit

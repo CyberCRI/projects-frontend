@@ -11,7 +11,7 @@ import useContextualFilters, {
     ALL_SECTION_KEY,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
-import { ref, onMounted, watch, toRef } from 'vue'
+import { ref, onMounted, toRef } from 'vue'
 
 function defaultFilters() {
     return {
@@ -21,7 +21,6 @@ function defaultFilters() {
         tags: [],
         skills: [],
         wikipedia_tags: [],
-        section: '',
     }
 }
 
@@ -53,9 +52,7 @@ const selectedFilters = defineModel('selectedFilters', {
     default: () => ALL_SECTION_KEY,
 })
 
-const emit = defineEmits(['filter-total-changed'])
-
-const { contextualFilters, filterButtons, selectedFiltersTotal } = useContextualFilters({
+const { contextualFilters, filterButtons } = useContextualFilters({
     selectedSection,
     selectedFilters,
     filterBlackList: toRef(props, 'filterBlackList'),
@@ -71,11 +68,6 @@ const filtersInited = ref(false)
 
 onMounted(async () => {
     await initFilters()
-})
-
-// watch: {
-watch(selectedFiltersTotal, () => {
-    emit('filter-total-changed', selectedFiltersTotal)
 })
 
 async function initFilters() {
@@ -126,8 +118,10 @@ function confirm($event) {
 }
 
 function clearSelectedFilters(key) {
-    if (!key || key === ALL_FILTERS_MODE) Object.assign(selectedFilters.value, defaultFilters())
-    else selectedFilters.value[key] = defaultFilters()[key]
+    const newValue = defaultFilters()
+    if (!key || key === ALL_FILTERS_MODE) {
+        selectedFilters.value = newValue
+    } else selectedFilters.value[key] = newValue[key]
 }
 </script>
 

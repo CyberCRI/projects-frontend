@@ -6,9 +6,7 @@
                 show-section-filter
                 show-filters
                 :search="search"
-                @filter-total-changed="updateFilterTotal($event)"
-                @filters-updated="updateSearch($event)"
-                @filter-section-update="updateTabs($event)"
+                @search-options-updated="updateSearch"
             />
         </div>
 
@@ -63,7 +61,6 @@ export default {
                 limit: 30,
                 page: 1,
             },
-            filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
 
@@ -132,21 +129,6 @@ export default {
     },
 
     methods: {
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
-        },
-
-        updateTabs(section) {
-            this.selectedSection = section ? section : ALL_SECTION_KEY
-            this.search.section = section ? section : ALL_SECTION_KEY
-
-            if (!section || section === (this.$route.query.section || ALL_SECTION_KEY)) return
-
-            const query = { ...this.$route.query, section: section }
-
-            this.$router.push({ name: 'GlobalSearch', query })
-        },
-
         updateProjectQuantity(quantity) {
             this.projectsCount = quantity
         },

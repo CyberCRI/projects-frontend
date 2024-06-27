@@ -23,8 +23,7 @@
                             v-if="searchOptionsInited"
                             :search="search"
                             class="container inline stretch"
-                            @filter-total-changed="updateFilterTotal($event)"
-                            @filters-updated="updateSearch($event)"
+                            @search-options-updated="updateSearch"
                             section="projects"
                             :filter-black-list="['categories']"
                         />
@@ -106,7 +105,6 @@ export default {
                 limit: 30,
                 page: this.$route.query.page || 1,
             },
-            filterTotal: 0,
             searchOptionsInited: false,
             filterQueryParams: [
                 'search',
@@ -178,10 +176,6 @@ export default {
     },
 
     methods: {
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
-        },
-
         updateSearch(newSearch) {
             // reset pagination to page 1 if other criterion have changed
             // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit

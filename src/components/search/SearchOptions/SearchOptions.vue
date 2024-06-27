@@ -4,8 +4,7 @@
             <div class="search-group">
                 <SearchOptionDropDown
                     v-if="showSectionDropDown"
-                    :selected-section="selectedSection"
-                    @update:selected-section="selectedSection = $event"
+                    v-model:selectedSection="selectedSection"
                 />
                 <SearchInput
                     class="search-input"
@@ -14,14 +13,14 @@
                     :full="true"
                     :placeholder="$t('browse.placeholder')"
                     @delete-query="deleteQuery"
-                    @keyup.enter="$emit('enter', selectedSection, adaptToParent())"
+                    @keyup.enter="emitSearchOptionsUpdated"
                 />
                 <LpiButton
                     v-if="searchButton"
                     class="search-button"
                     :label="$t('browse.page-title')"
                     :secondary="false"
-                    @click="$emit('search', selectedSection, adaptToParent())"
+                    @click="emitSearchOptionsUpdated"
                     data-test="search-input-button"
                 />
             </div>
@@ -34,7 +33,6 @@
             :search="search"
             :show-section-filter="showSectionFilter"
             :filter-black-list="filterBlackList"
-            @filter-total-changed="$emit('filter-total-changed', $event)"
         />
     </div>
 </template>
@@ -55,7 +53,7 @@ function defaultSearch() {
 export default {
     name: 'SearchOptions',
 
-    emits: ['filters-updated', 'filter-total-changed', 'filter-section-update', 'enter', 'search'],
+    emits: ['search-options-updated', 'filter-section-update'],
 
     components: {
         SearchOptionDropDown,
@@ -134,12 +132,12 @@ export default {
         adaptToParent() {
             const filters = {
                 search: this.selectedQuery,
-
+                section: this.selectedSection,
                 ...this.selectedFilters,
-                // NO SECTION ????
             }
             const adaptedFilters = {
                 search: filters.search,
+                section: filters.section,
                 categories: filters.categories?.map((cat) => cat.id) || [],
                 languages: filters.languages ? [...filters.languages] : [], // need to deconstruct to avoid reactivity issue when removing language
                 sdgs: filters.sdgs ? [...filters.sdgs] : [], // need to deconstruct to avoid reactivity issue when removing sdg
@@ -158,27 +156,31 @@ export default {
 
         deleteQuery() {
             this.selectedQuery = defaultSearch()
-            this.$emit('enter', this.adaptToParent())
+            if (!this.searchButton) this.emitSearchOptionsUpdated()
+        },
+
+        emitSearchOptionsUpdated() {
+            this.$emit('search-options-updated', this.adaptToParent())
         },
     },
 
     watch: {
         selectedSection: function () {
-            this.$emit('filter-section-update', this.selectedSection)
+            if (!this.searchButton) this.emitSearchOptionsUpdated()
         },
 
         selectedFilters: {
             handler() {
                 if (!this.filtersInited) return
                 // convert object to their id as it what's is expected by host components
-                this.$emit('filters-updated', this.adaptToParent())
+                if (!this.searchButton) this.emitSearchOptionsUpdated()
             },
             deep: true,
         },
 
         selectedQuery: {
             handler() {
-                this.$emit('filters-updated', this.adaptToParent())
+                if (!this.searchButton) this.emitSearchOptionsUpdated()
             },
         },
         'search.section': {

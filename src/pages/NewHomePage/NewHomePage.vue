@@ -11,7 +11,7 @@
                 class="search-options"
                 show-section-drop-down
                 search-button
-                @search="search"
+                @search-options-updated="search"
                 @enter="search"
             ></SearchOptions>
         </div>
@@ -104,8 +104,8 @@ export default {
     },
 
     methods: {
-        search(section, filters) {
-            this.$router.push({ name: 'Search', query: { section, ...filters } })
+        search(options) {
+            this.$router.push({ name: 'Search', query: options })
         },
     },
 }

@@ -10,8 +10,7 @@
                     :search="search"
                     section="projects"
                     show-filters
-                    @filter-total-changed="updateFilterTotal($event)"
-                    @filters-updated="updateSearch($event)"
+                    @search-options-updated="updateSearch"
                 />
             </div>
         </div>
@@ -97,7 +96,6 @@ export default {
                 limit: 30,
                 page: 1,
             },
-            filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
             filterQueryParams: [
@@ -142,10 +140,6 @@ export default {
     methods: {
         goTo(id) {
             this.$router.push({ name: 'Category', params: { id } })
-        },
-
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
         },
 
         updateSearch: debounce(function (newSearch) {
