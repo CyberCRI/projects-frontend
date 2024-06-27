@@ -12,7 +12,7 @@ import useContextualFilters, {
     ALL_FILTERS_MODE,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
-import { defineModel, ref, onMounted, watch, toRef } from 'vue'
+import { ref, onMounted, watch, toRef } from 'vue'
 
 function defaultFilters() {
     return {
