@@ -53,7 +53,7 @@
 import Drawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import FilterWrapper from '@/components/search/Filters/FilterWrapper.vue'
-import { ALL_FILTERS_MODE } from '@/components/search/Filters/filter-constants.ts'
+import { ALL_FILTERS_MODE } from '@/components/search/Filters/useContextualFilters.ts'
 export default {
     name: 'FiltersDrawer',
 

@@ -1,3 +1,57 @@
+<script setup>
+import IconImage from '@/components/base/media/IconImage.vue'
+import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import useSectionFilters from '@/components/search/Filters/useSectionFilters.ts'
+import { defineModel, defineProps, ref } from 'vue'
+
+// TODO ?
+// emits: ['update:model-value'],
+
+// components: {
+//     LpiLoader,
+//     IconImage,
+// },
+
+const selectedSection = defineModel('selectedSection', {
+    type: String,
+    default: () => ALL_SECTION_KEY,
+})
+
+const { sectionFilters } = useSectionFilters(selectedSection)
+
+//props: {
+// sectionFilters: {
+//     type: Object,
+//     default: () => ({}),
+// },
+defineProps({
+    hasSeparator: {
+        type: Boolean,
+        default: false,
+    },
+
+    isLoading: {
+        type: Boolean,
+        default: false,
+    },
+})
+//},
+
+const open = ref(false)
+
+function toggle() {
+    open.value = !open.value
+}
+
+function close() {
+    open.value = false
+}
+
+function menuAction(key) {
+    selectedSection.value = key
+    close()
+}
+</script>
 <template>
     <div v-click-outside="close" :class="{ 'is-open': open }" class="header-drop-down">
         <button class="drop-down-toggle" @click="toggle" data-test="drop-down-menu">
@@ -5,13 +59,13 @@
                 <span class="label-ctn">
                     <slot name="badge"></slot>
                     <IconImage
-                        v-if="menuItems[modelValue].leftIcon"
-                        :name="menuItems[modelValue].leftIcon"
+                        v-if="sectionFilters[selectedSection].leftIcon"
+                        :name="sectionFilters[selectedSection].leftIcon"
                         class="icon"
                     />
 
-                    <span class="drop-down-label" v-if="menuItems[modelValue].label">{{
-                        $t(menuItems[modelValue].label)
+                    <span class="drop-down-label" v-if="sectionFilters[selectedSection].label">{{
+                        sectionFilters[selectedSection].label
                     }}</span>
                 </span>
                 <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
@@ -31,7 +85,7 @@
                     <ul v-else>
                         <li></li>
                         <li
-                            v-for="(item, key) in menuItems"
+                            v-for="(item, key) in sectionFilters"
                             :key="key"
                             class="drop-down-menu-item"
                             :data-test="item.dataTest"
@@ -39,14 +93,15 @@
                             <button
                                 class="drop-down-menu-item-content"
                                 :class="{
-                                    'drop-down-menu-item-content--selected': modelValue === key,
+                                    'drop-down-menu-item-content--selected':
+                                        selectedSection === key,
                                 }"
                                 @click="menuAction(key)"
                             >
                                 <span v-if="item.leftIcon" class="menu-icon left-icon">
                                     <IconImage :name="item.leftIcon" />
                                 </span>
-                                <span class="label">{{ $t(item.label) }}</span>
+                                <span class="label">{{ item.label }}</span>
                                 <span v-if="item.rightIcon" class="menu-icon right-icon">
                                     <IconImage :name="item.rightIcon" />
                                 </span>
@@ -58,66 +113,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { ALL_SECTION_KEY } from '@/components/search/Filters/filter-constants.ts'
-
-export default {
-    name: 'SearchOptionDropDown',
-
-    emits: ['update:model-value'],
-
-    components: {
-        LpiLoader,
-        IconImage,
-    },
-
-    props: {
-        modelValue: {
-            type: String,
-            default: ALL_SECTION_KEY,
-        },
-
-        menuItems: {
-            type: Object,
-            default: () => ({}),
-        },
-
-        hasSeparator: {
-            type: Boolean,
-            default: false,
-        },
-
-        isLoading: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
-    data() {
-        return {
-            open: false,
-        }
-    },
-
-    methods: {
-        toggle() {
-            this.open = !this.open
-        },
-
-        close() {
-            this.open = false
-        },
-
-        menuAction(key) {
-            this.$emit('update:model-value', key)
-            this.close()
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .header-drop-down {
