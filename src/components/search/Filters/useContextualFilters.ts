@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 import useSectionFilters, {
@@ -37,6 +37,12 @@ export default function useContextualFilters({
     const store = useStore()
 
     const { sectionFilters } = useSectionFilters({ selectedSection })
+
+    watch(selectedSection, (neo, old) => {
+        if (neo !== old) {
+            clearSelectedFilters()
+        }
+    })
 
     const contextualFilters = computed(() => {
         return {

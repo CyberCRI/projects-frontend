@@ -5,15 +5,11 @@ export const ALL_SECTION_KEY = 'all'
 export const PROJECT_SECTION_KEY = 'projects'
 export const GROUP_SECTION_KEY = 'groups'
 export const PEOPLE_SECTION_KEY = 'people'
-// TODO
-// !this.showSectionDropDown && this.showSectionFilter &&
 
 export default function useSectionFilters({ selectedSection }) {
     const { t } = useI18n()
 
     function toggleSectionFilter(key) {
-        // TODO
-        // this.clearSelectedFilters()
         selectedSection.value = selectedSection.value == key ? ALL_SECTION_KEY : key
     }
 

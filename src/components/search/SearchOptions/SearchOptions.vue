@@ -223,6 +223,10 @@ export default {
             flex-direction: row;
             width: 100%;
             justify-content: center;
+
+            .search-button {
+                margin-left: $space-l;
+            }
         }
     }
 }
