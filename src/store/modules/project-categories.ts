@@ -45,7 +45,11 @@ const actions = {
         params: ProjectCategoryParams = {}
     ): Promise<APIResponseList<ProjectCategoryOutput>> {
         // If no organization set in the param use default one
-        if (!params.organization) params.organization = rootState.organizations.current.code
+        // TODO check why rootState.organizations.current is sometimes null
+        // the fallback on env value is a temporary fix
+        if (!params.organization)
+            params.organization =
+                rootState.organizations?.current?.code || import.meta.env.VITE_APP_ORG_CODE
 
         return new Promise((resolve, reject) => {
             getAllProjectCategories(params)
