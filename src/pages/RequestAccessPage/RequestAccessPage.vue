@@ -46,8 +46,10 @@
                         v-model="form.job"
                         :label="$t('request-access.profile-title.label')"
                         :placeholder="$t('request-access.profile-title.placeholder')"
+                        @blur="v$.form.job.$validate"
                         data-test="title"
                     />
+                    <FieldErrors :errors="v$.form.job.$errors" />
                 </div>
                 <div class="form-group">
                     <TextInput
@@ -156,6 +158,12 @@ export default {
                 family_name: {
                     required: helpers.withMessage(
                         this.$t('request-access.family_name.is-required'),
+                        required
+                    ),
+                },
+                job: {
+                    required: helpers.withMessage(
+                        this.$t('request-access.profile-title.is-required'),
                         required
                     ),
                 },

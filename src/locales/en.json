@@ -1560,17 +1560,18 @@
         },
         "given_name": {
             "label": "First name *",
-            "placeholder": "Enter your firstname",
-            "is-required": "Firstname is required"
+            "placeholder": "Enter your first name",
+            "is-required": "First name is required"
         },
         "family_name": {
             "label": "Last name *",
-            "placeholder": "Enter your lastname",
-            "is-required": "Lastname is required"
+            "placeholder": "Enter your last name",
+            "is-required": "Last name is required"
         },
         "profile-title": {
             "label": "Headline *",
-            "placeholder": "Ie. Student in computer science"
+            "placeholder": "Ie. Student in computer science",
+            "is-required": "Headline is required"
         },
         "message": {
             "label": "Message",

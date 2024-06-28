@@ -1566,8 +1566,9 @@
             "is-required": "Le nom de famille est obligatoire"
         },
         "profile-title": {
-            "label": "Titre",
-            "placeholder": "Ex. Étudiant en informatique"
+            "label": "Titre *",
+            "placeholder": "Ex. Étudiant en informatique",
+            "is-required": "Le titre est obligatoire"
         },
         "message": {
             "label": "Message",
