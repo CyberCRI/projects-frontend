@@ -157,6 +157,7 @@ newHomeExtraPaths.set('new', [
 ])
 
 const checkAccessRequestEnabled = (to, _from, next) => {
+    // check if access request is enabled and redirects to 404 if not
     if (!store.getters['organizations/current']?.access_request_enabled) {
         next({
             name: 'page404',
