@@ -42,6 +42,8 @@ jobs:
         VITE_APP_HOME=$DOCKER_INJECT_VITE_APP_HOME
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
+      submodules-app-id: ${{ secrets.INFRA_BOT_APP_ID }}
+      submodules-app-installation-id: ${{ secrets.INFRA_BOT_APP_INSTALLATION_ID }}
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
 
