@@ -2370,5 +2370,8 @@
             "unprocessable-entity": "Unprocessable entity: le serveur n'a pas été en mesure de réaliser les instructions demandées",
             "bad-gateway": "Bad gateway: Le serveur a rencontré une erreur temporaire et n'a pas pu répondre à votre demande."
         }
+    },
+    "people-groups": {
+        "browse-tree": "Parcourir l'arbre des groupes"
     }
 }

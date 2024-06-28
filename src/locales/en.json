@@ -2371,5 +2371,8 @@
             "unprocessable-entity": "Unprocessable entity: Unable to process the contained instructions.",
             "bad-gateway": "Bad gateway: The server encountered a temporary error and could not complete your request."
         }
+    },
+    "people-groups": {
+        "browse-tree": "Browse the group tree"
     }
 }

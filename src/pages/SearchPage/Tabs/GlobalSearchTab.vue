@@ -2,7 +2,7 @@
     <ProjectListSearch
         :search="search"
         :show-pagination="true"
-        mode="global"
+        :mode="searchMode"
         @pagination-changed="onPaginationChange"
     >
         <template #default="ProjectListSearchSlotProps">
@@ -62,6 +62,21 @@ export default {
         search: {
             type: Object,
             default: () => {},
+        },
+    },
+
+    computed: {
+        searchMode() {
+            // translate src/components/search/SearchOptions/SearchOptions.vue sectionFilters key
+            // to ProjectListSearch mode
+
+            if (this.search.section === 'projects') return 'projects'
+
+            if (this.search.section === 'people') return 'peoples'
+
+            if (this.search.section === 'groups') return 'groups'
+
+            return 'global'
         },
     },
 

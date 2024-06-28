@@ -7,12 +7,10 @@
                 <SearchOptions
                     ref="searchOptions"
                     :limit="30"
-                    :show-section-filter="false"
                     :search="search"
                     section="projects"
-                    :show-filters="true"
-                    @filter-total-changed="updateFilterTotal($event)"
-                    @filters-updated="updateSearch($event)"
+                    show-filters
+                    @search-options-updated="updateSearch"
                 />
             </div>
         </div>
@@ -28,7 +26,7 @@
         </div>
 
         <div class="page-section-wide" v-if="hasSearch || forceSearch">
-            <ProjectSearchTab :search="search" />
+            <GlobalSearchTab :search="search" />
             <div class="btn-ctn">
                 <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
             </div>
@@ -68,7 +66,7 @@ import {
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
-import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 export default {
     name: 'CategoriesPage',
 
@@ -78,7 +76,7 @@ export default {
         LpiButton,
         LpiCategoryCard,
         SearchOptions,
-        ProjectSearchTab,
+        GlobalSearchTab,
     },
 
     data() {
@@ -98,7 +96,6 @@ export default {
                 limit: 30,
                 page: 1,
             },
-            filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
             filterQueryParams: [
@@ -145,10 +142,6 @@ export default {
             this.$router.push({ name: 'Category', params: { id } })
         },
 
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
-        },
-
         updateSearch: debounce(function (newSearch) {
             // reset pagination to page 1 if other criterion have changed
             // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
@@ -165,6 +158,7 @@ export default {
             return updateSearchQuery(this, this.filterQueryParams)
         },
         showCategories() {
+            this.$refs['searchOptions']?.deleteQuery()
             this.$refs['searchOptions']?.clearSelectedFilters()
             this.forceSearch = false
             this.$nextTick(() => {

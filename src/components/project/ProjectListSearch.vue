@@ -61,6 +61,7 @@ export default {
             default: false,
         },
         mode: {
+            // global, projects, groups, peoples
             type: String,
             default: 'projects',
         },

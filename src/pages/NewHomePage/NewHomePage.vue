@@ -9,9 +9,10 @@
         <div class="search-input-container">
             <SearchOptions
                 class="search-options"
-                :show-section-filter="true"
-                :search-button="true"
-                @search="search"
+                show-section-drop-down
+                search-button
+                @search-options-updated="search"
+                @enter="search"
             ></SearchOptions>
         </div>
     </div>
@@ -103,8 +104,8 @@ export default {
     },
 
     methods: {
-        search(section, filters) {
-            this.$router.push({ name: 'Search', query: { section, ...filters } })
+        search(options) {
+            this.$router.push({ name: 'Search', query: options })
         },
     },
 }

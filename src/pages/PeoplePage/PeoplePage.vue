@@ -5,16 +5,14 @@
             <div v-if="searchOptionsInitiated" class="search-input-container">
                 <SearchOptions
                     :limit="30"
-                    :show-section-filter="false"
                     :search="search"
                     section="people"
-                    :show-filters="true"
-                    @filter-total-changed="updateFilterTotal($event)"
-                    @filters-updated="updateSearch($event)"
+                    show-filters
+                    @search-options-updated="updateSearch"
                 />
             </div>
 
-            <PeopleSearchTab :search="rawSearch" />
+            <GlobalSearchTab :search="rawSearch" />
         </div>
     </div>
 </template>
@@ -28,14 +26,14 @@ import {
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
 
-import PeopleSearchTab from '@/pages/SearchPage/Tabs/PeopleSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 
 export default {
     name: 'PeoplePage',
 
     components: {
         SearchOptions,
-        PeopleSearchTab,
+        GlobalSearchTab,
     },
 
     data() {
@@ -55,7 +53,6 @@ export default {
                 limit: 30,
                 page: 1,
             },
-            filterTotal: 0,
             projectsCount: 0,
             searchOptionsInitiated: false,
             filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
@@ -79,10 +76,6 @@ export default {
     },
 
     methods: {
-        updateFilterTotal(filterTotal) {
-            this.filterTotal = filterTotal
-        },
-
         updateSearch: debounce(function (newSearch) {
             // reset pagination to page 1 if other criterion have changed
             // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
