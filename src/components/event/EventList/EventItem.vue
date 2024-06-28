@@ -13,7 +13,7 @@
         </div>
         <div class="texts">
             <h4 class="event-name">{{ event.title }}</h4>
-            <p class="event-information">{{ event.content }}</p>
+            <div class="event-information" v-html="event.content"></div>
             <p class="event-groups" v-if="event.people_groups.length">
                 <span>{{
                     event.people_groups.length > 1

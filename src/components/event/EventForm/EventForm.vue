@@ -14,12 +14,14 @@
         </div>
         <div class="form-section">
             <label>{{ $t('event.form.content.label') }}</label>
-            <TextInput
-                input-type="textarea"
-                label=""
-                :model-value="modelValue.content"
-                @update:model-value="updateForm({ content: $event })"
-                :placeholder="$t('event.form.content.placeholder')"
+
+            <TipTapEditor
+                ref="tiptapEditor"
+                :ws-data="wsData"
+                class="input-field content-editor no-max-height"
+                mode="simple"
+                parent="blog-entry"
+                @update="updateContent"
             />
         </div>
         <div class="form-section">
@@ -65,6 +67,7 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 
 export function defaultForm() {
     return {
@@ -87,6 +90,7 @@ export default {
         IconImage,
         MultiGroupPicker,
         FieldErrors,
+        TipTapEditor,
     },
 
     props: {
@@ -100,6 +104,10 @@ export default {
         return {
             showDatePicker: false,
             v$: useVuelidate(),
+            wsData: {
+                savedContent: this.modelValue.content,
+                originalContent: this.modelValue.content,
+            },
         }
     },
 
@@ -137,6 +145,10 @@ export default {
         onDateSelected(modelData) {
             this.updateForm({ event_date: modelData })
             this.showDatePicker = false
+        },
+
+        updateContent(htmlContent) {
+            this.updateForm({ content: htmlContent === '<p></p>' ? null : htmlContent })
         },
 
         updateForm(data) {

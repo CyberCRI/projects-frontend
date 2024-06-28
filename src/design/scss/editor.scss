@@ -12,6 +12,7 @@
 .comment-content,
 .editor-content,
 .news-content,
+.event-information,
 .instruction-content,
 .homepage-introduction-text {
     pre.lpi-code-block {
@@ -379,7 +380,7 @@
         overflow-wrap: break-word;
 
         &:hover {
-            color: $almost-black;
+            text-decoration: underline;
         }
     }
 
@@ -413,7 +414,6 @@
     }
 
     p {
-        min-height: 32px;
         margin-bottom: $space-s;
     }
 
