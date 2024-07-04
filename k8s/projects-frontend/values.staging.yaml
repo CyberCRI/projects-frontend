@@ -1,6 +1,6 @@
 injectedEnv:
   nonSensitive:
-      VITE_APP_KEYCLOAK_URL: https://id.lp-i.xyz
+      VITE_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
       VITE_APP_VERSION: "{{ .Values.application.revision }}"
       VITE_APP_KEYCLOAK_REALM: lp-staging
 domain: k8s.lp-i.xyz
