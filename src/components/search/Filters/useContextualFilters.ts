@@ -180,7 +180,7 @@ export default function useContextualFilters({
         return {
             ...(showSectionFilter?.value ? sectionFilters.value : {}),
             ...contextualFilters.value,
-            ...recapFilters.value,
+            // ...recapFilters.value, // TODO: keep it hidden until we have more filters to recap
         }
     })
 

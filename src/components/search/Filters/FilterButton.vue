@@ -7,16 +7,13 @@
         :disabled="!names || names?.length < 2"
         secondary
         placement="bottom"
-        :class="{
-            'is-hidden': isHidden,
-        }"
     >
         <div
             @click.stop.prevent="$emit('main-action')"
             :class="{
                 'is-selected': isSelected,
-
                 'is-unused': isUnused,
+                'is-hidden': isHidden,
             }"
             class="filter-button"
         >
@@ -103,6 +100,10 @@ export default {
         border: $border-width-s solid $primary-dark;
     }
 
+    &.is-hidden {
+        display: none;
+    }
+
     &.is-unused {
         background: transparent;
         border: $border-width-s solid $primary;
@@ -111,10 +112,6 @@ export default {
     .icon-ctn {
         flex-shrink: 0;
     }
-}
-
-.is-hidden {
-    display: none;
 }
 
 .tooltip-div {
