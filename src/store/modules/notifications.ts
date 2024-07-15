@@ -32,7 +32,7 @@ const actions = {
     pushToast({ commit }, payload): void {
         commit('ADD_TOAST', { ...payload, isOpened: true })
         if (!payload.remaining) {
-            setTimeout(() => commit('REMOVE_TOAST', 0), payload.duration || 3000)
+            setTimeout(() => commit('REMOVE_TOAST', 0), payload.duration || 5 * 1000)
         }
     },
     deleteToast({ commit }, toastIndex: number): void {

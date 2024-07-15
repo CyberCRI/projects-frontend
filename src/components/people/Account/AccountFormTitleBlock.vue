@@ -30,7 +30,7 @@ export default {
 
 <style scoped lang="scss">
 .title-block {
-    padding-bottom: $space-2xl;
+    padding-bottom: $space-m;
 
     .main-title {
         font-weight: 700;
