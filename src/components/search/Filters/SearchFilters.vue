@@ -11,7 +11,7 @@ import useContextualFilters, {
     ALL_SECTION_KEY,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
-import { ref, onMounted, toRef, defineExpose } from 'vue'
+import { ref, onMounted, toRef } from 'vue'
 
 function defaultFilters() {
     return {
