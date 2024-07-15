@@ -7,6 +7,7 @@
 
         <div class="input-field">
             <TextInput
+                :label="$t('profile.edit.general.professional-email.label')"
                 input-type="email"
                 v-model="email"
                 :placeholder="$t('profile.edit.general.professional-email.placeholder')"

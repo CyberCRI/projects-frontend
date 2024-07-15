@@ -245,8 +245,8 @@
         "title-create": "Create an account",
         "title-edit": "Edit an account",
         "title-invite": "Add an account",
-        "switch-to-edit": "Account already exists in your oragniztion, switching to edit",
-        "switch-to-invite": "Account already exists in another oragniztion, switching to add",
+        "switch-to-edit": "Account already exists in your organization, switching to edit",
+        "switch-to-invite": "Account already exists in another organization, switching to add",
         "sub-title": "Fields with * are mandatory. ",
         "link": "Need help? We’re here.",
         "form": {
