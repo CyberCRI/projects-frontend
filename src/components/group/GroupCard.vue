@@ -25,7 +25,7 @@
         />
 
         <div class="text text-limit">
-            <div v-if="group.members_count" class="group-count">
+            <div v-if="group.members_count !== undefined" class="group-count">
                 <IconImage name="MultiplePerson" class="icon" />
                 {{ group.members_count }}
             </div>
