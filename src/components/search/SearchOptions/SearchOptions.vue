@@ -27,13 +27,14 @@
         </div>
 
         <SearchFilters
-            v-if="showFilters && !showSectionDropDown"
+            v-show="hasSearchFilters"
             ref="searchFilters"
             v-model:selected-filters="selectedFilters"
             v-model:selected-section="selectedSection"
             :search="search"
             :show-section-filter="showSectionFilter"
             :filter-black-list="filterBlackList"
+            @search-filters-inited="filtersInited = $event"
         />
     </div>
 </template>
@@ -102,12 +103,23 @@ export default {
 
     data() {
         return {
+            areSectionAndQueryInited: false,
             filtersInited: false,
             // here filters are array of object (whereas in search they are array of id)
             selectedFilters: {},
             selectedQuery: defaultSearch(),
             selectedSection: ALL_SECTION_KEY,
         }
+    },
+
+    computed: {
+        hasSearchFilters() {
+            return this.showFilters
+        },
+
+        allInited() {
+            return this.areSectionAndQueryInited && (!this.hasSearchFilters || this.filtersInited)
+        },
     },
 
     async mounted() {
@@ -128,7 +140,7 @@ export default {
 
             this.selectedQuery = rawFilters.search || defaultSearch()
 
-            this.filtersInited = true
+            this.areSectionAndQueryInited = true
         },
         adaptToParent() {
             const filters = {
@@ -178,7 +190,7 @@ export default {
 
         selectedFilters: {
             handler() {
-                if (!this.filtersInited) return
+                if (!this.allInited) return
                 // convert object to their id as it what's is expected by host components
                 if (!this.searchButton) this.emitSearchOptionsUpdated()
             },

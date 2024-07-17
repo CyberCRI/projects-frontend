@@ -24,6 +24,8 @@ function defaultFilters() {
     }
 }
 
+const emit = defineEmits(['search-filters-inited'])
+
 const props = defineProps({
     search: {
         type: Object, // here filters are array of id (whereas in slectedFiletrs they are array of object)
@@ -71,6 +73,7 @@ onMounted(async () => {
 })
 
 async function initFilters() {
+    emit('search-filters-inited', false)
     // converts host component "search" (arrays of id)
     // to arrays of object (needed in this component for displayinf them)
 
@@ -101,6 +104,8 @@ async function initFilters() {
 
     selectedFilters.value = filters
     filtersInited.value = true
+
+    emit('search-filters-inited', true)
 }
 
 function openDrawer(drawer) {
@@ -141,15 +146,16 @@ defineExpose({ clearSelectedFilters })
             :names="filterButton.names"
             :data-test="filterButton.dataTest"
         />
+        <FiltersDrawer
+            class="filters-drawer"
+            :is-opened="!!currentDrawer"
+            :filters="contextualFilters"
+            :mode="currentDrawer"
+            :preselection="selectedFilters"
+            @close="currentDrawer = null"
+            @confirm="confirm"
+        />
     </div>
-    <FiltersDrawer
-        :is-opened="!!currentDrawer"
-        :filters="contextualFilters"
-        :mode="currentDrawer"
-        :preselection="selectedFilters"
-        @close="currentDrawer = null"
-        @confirm="confirm"
-    />
 </template>
 
 <style lang="scss" scoped>
@@ -160,5 +166,9 @@ defineExpose({ clearSelectedFilters })
     justify-content: center;
     flex-wrap: wrap;
     gap: $space-m;
+}
+
+.filters-drawer {
+    position: absolute; // this prevent layout shift when opening drawer
 }
 </style>
