@@ -364,8 +364,11 @@
         "placeholder": "What are you looking for?"
     },
     "category": {
+        "add-sub-category": "Add a sub-category",
         "edit-order-success": "Categories order successfully edited",
-        "info": "You can classify projects into different categories (ex: student projects, teacher projects, research projects, etc. ). Every project will have to be associated with one of these categories. Maximum 15 categories allowed.",
+        "info-organize": "You can list projects in different categories (e.g., student projects, teacher projects, etc.).",
+        "info-limit": "Each project must be associated with one of these categories. Maximum allowed is 15 categories.",
+        "info-howto": "To add a sub-category, create a new category and then assign it a parent category",
         "page-title": "Category",
         "title": "Categories",
         "all-categories": "See all categories",
@@ -427,6 +430,7 @@
         "send": "Send",
         "see-less": "see less",
         "see-more": "see more",
+        "see": "See",
         "see-all": "See all",
         "set-deadline": "set deadline",
         "shrink": "shrink",

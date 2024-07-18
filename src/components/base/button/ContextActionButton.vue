@@ -2,7 +2,7 @@
     <button
         :class="[{ secondary, 'no-border': noBorder }, actionIcon]"
         type="button"
-        class="context-action-button shadow-box"
+        class="context-action-button"
     >
         <span class="icon-wrapper">
             <IconImage :name="actionIcon" class="action-icon" />
@@ -115,6 +115,20 @@ export default {
             transform-origin: center center;
         }
     }
+
+    &.Eye:hover {
+        .action-icon {
+            animation: open-eye 1s ease-in-out infinite;
+            transform-origin: center center;
+        }
+    }
+
+    &.Plus:hover {
+        .action-icon {
+            animation: scale-plus 1s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+    }
 }
 
 .action-label {
@@ -130,6 +144,42 @@ export default {
 
 .context-action-button.secondary :deep(svg) {
     fill: $primary-dark;
+}
+
+@keyframes open-eye {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.5);
+    }
+
+    65% {
+        transform: scaleY(1.3);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes scale-plus {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.3, 1);
+    }
+
+    60% {
+        transform: scale(1, 1.3);
+    }
+
+    90% {
+        transform: scale(1, 1);
+    }
 }
 
 @keyframes rotate-pen {

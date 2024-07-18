@@ -1,40 +1,29 @@
 <template>
     <div class="categories-tab">
-        <div class="header">
-            <div class="notices">
-                <p>
-                    {{ $t('category.info-organize') }}<br />
-                    {{ $t('category.info-limit') }}
-                </p>
-                <p>
-                    {{ $t('category.info-howto') }}
-                    (<IconImage class="icon-tip" name="FileTreeOutline" />)
-                </p>
-            </div>
-            <div class="actions">
-                <LinkButton
-                    btn-icon="Plus"
-                    :label="$t('admin.portal.categories.add')"
-                    @click="addCategory"
-                />
-            </div>
-        </div>
+        <LpiSnackbar class="info-snackbar" icon="QuestionMark" type="info">
+            <div v-html="$t('category.info')"></div>
+        </LpiSnackbar>
 
         <div class="categories-container">
             <LpiLoader v-if="isLoading" class="loader" type="simple" />
-            <ul v-if="computedSortedCategories">
-                <CategoryAdminElement
-                    v-for="category in sortedCategories"
+            <draggable v-if="computedSortedCategories" :list="sortedCategories" :move="change">
+                <Category
+                    v-for="(category, index) in sortedCategories"
                     :key="category.id"
                     :category="category"
                     :data-test="`category-${category.id}`"
                     class="category"
-                    @edit-category="editCategory"
-                    @add-sub-category="addCategory"
-                    @see-category="goToCategory"
+                    draggable
+                    editable
+                    size="small"
+                    @click="goToCategory(category)"
+                    @drop="onDrop($event, index)"
+                    @edit-category="editCategory(category)"
                 />
-            </ul>
+            </draggable>
         </div>
+
+        <LpiButton :label="$t('admin.portal.categories.add')" @click="addCategory" />
 
         <LpiSnackbar
             v-if="showMessage"
@@ -62,27 +51,27 @@
 import imageMixin from '@/mixins/imageMixin.ts'
 import formatHtml from '@/mixins/formatHtml.ts'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
+import Category from '@/components/category/CategoryCard.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
+import { VueDraggableNext } from 'vue-draggable-next'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 
 export default {
-    name: 'CategoriesTab',
+    name: 'CategoriesTabOld',
 
     mixins: [formatHtml, imageMixin],
 
     emits: ['close'],
 
     components: {
-        CategoryAdminElement,
+        Category,
         LpiSnackbar,
-        LinkButton,
+        LpiButton,
         CategoryDrawer,
+        draggable: VueDraggableNext,
         LpiLoader,
-        IconImage,
     },
 
     data() {
@@ -172,61 +161,64 @@ export default {
         },
 
         goToCategory(category) {
-            this.$router.push({ name: 'Category', params: { id: category.id } })
+            if (!this.editable) {
+                this.$emit('close')
+                this.$router.push({ name: 'Category', params: { id: category.id } })
+            }
         },
 
-        // change(evt) {
-        //     this.startIndex = evt.draggedContext.index
-        //     this.dropIndex = evt.draggedContext.futureIndex
-        // },
+        change(evt) {
+            this.startIndex = evt.draggedContext.index
+            this.dropIndex = evt.draggedContext.futureIndex
+        },
 
-        // async onDrop() {
-        //     const fromIndex = this.startIndex
-        //     const toIndex = this.dropIndex
+        async onDrop() {
+            const fromIndex = this.startIndex
+            const toIndex = this.dropIndex
 
-        //     const draggedElement = this.sortedCategories[fromIndex]
+            const draggedElement = this.sortedCategories[fromIndex]
 
-        //     if (fromIndex != toIndex) {
-        //         // Set new index to dragged category
-        //         const reordered = [{ categoryId: draggedElement.id, index: toIndex }]
+            if (fromIndex != toIndex) {
+                // Set new index to dragged category
+                const reordered = [{ categoryId: draggedElement.id, index: toIndex }]
 
-        //         // If dragged category index is decreased, increase indexes of categories having a lower index
-        //         if (toIndex < fromIndex) {
-        //             this.sortedCategories.forEach((element, index) => {
-        //                 if (index >= toIndex && index < fromIndex) {
-        //                     reordered.push({ categoryId: element.id, index: index + 1 })
-        //                 }
-        //             })
-        //         }
+                // If dragged category index is decreased, increase indexes of categories having a lower index
+                if (toIndex < fromIndex) {
+                    this.sortedCategories.forEach((element, index) => {
+                        if (index >= toIndex && index < fromIndex) {
+                            reordered.push({ categoryId: element.id, index: index + 1 })
+                        }
+                    })
+                }
 
-        //         // If dragged category index is increased, decrease indexes of categories having a higher index
-        //         else if (toIndex > fromIndex) {
-        //             this.sortedCategories.forEach((element, index) => {
-        //                 if (index > fromIndex && index <= toIndex) {
-        //                     reordered.push({ categoryId: element.id, index: index - 1 })
-        //                 }
-        //             })
-        //         }
+                // If dragged category index is increased, decrease indexes of categories having a higher index
+                else if (toIndex > fromIndex) {
+                    this.sortedCategories.forEach((element, index) => {
+                        if (index > fromIndex && index <= toIndex) {
+                            reordered.push({ categoryId: element.id, index: index - 1 })
+                        }
+                    })
+                }
 
-        //         try {
-        //             await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
-        //                 reordered,
-        //             })
-        //             this.$store.dispatch('notifications/pushToast', {
-        //                 message: this.$t('toasts.categories-reorder.success'),
-        //                 type: 'success',
-        //             })
-        //         } catch (error) {
-        //             this.$store.dispatch('notifications/pushToast', {
-        //                 message: `${this.$t('toasts.categories-reorder.error')} (${error})`,
-        //                 type: 'error',
-        //             })
-        //             console.error(error)
-        //         }
-        //         this.startIndex = null
-        //         this.dropIndex = null
-        //     }
-        // },
+                try {
+                    await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
+                        reordered,
+                    })
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.categories-reorder.success'),
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.categories-reorder.error')} (${error})`,
+                        type: 'error',
+                    })
+                    console.error(error)
+                }
+                this.startIndex = null
+                this.dropIndex = null
+            }
+        },
 
         close() {
             this.showMessage = false
@@ -237,26 +229,9 @@ export default {
 
 <style lang="scss" scoped>
 .categories-tab {
-    .header {
-        display: flex;
-        align-items: flex-start;
-        gap: $space-2xl;
-        margin-top: $space-xl;
-        margin-bottom: $space-2xl;
-
-        .notices {
-            flex-basis: 75%;
-
-            p + p {
-                margin-top: $space-m;
-            }
-        }
-
-        .actions {
-            flex-basis: 25%;
-            display: flex;
-            justify-content: flex-end;
-        }
+    .info-snackbar {
+        border: 1px solid $primary-dark;
+        margin: $space-l auto;
     }
 
     > button {
@@ -268,20 +243,20 @@ export default {
         fill: $white;
     }
 
-    .icon-tip {
-        width: 1.2em;
-        height: 1.2em;
-        display: inline-block;
-        vertical-align: bottom;
-        fill: $primary-dark;
-    }
-
-    .categories-container {
+    .categories-container > div {
         display: flex;
         flex-wrap: wrap;
         gap: $space-l;
         justify-content: center;
         padding: $space-m;
+    }
+
+    .category {
+        cursor: grab;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
     }
 }
 
