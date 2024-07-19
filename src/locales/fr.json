@@ -170,6 +170,8 @@
             },
             "categories": {
                 "add": "Ajouter une catégorie",
+                "authorizations": "Autorisations",
+                "description-limit": "300 caractères maximum.",
                 "edit": "Modifier une catégorie",
                 "is-reviewable": "Autoriser les révisions",
                 "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",

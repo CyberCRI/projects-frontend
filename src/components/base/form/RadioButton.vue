@@ -1,15 +1,19 @@
 <template>
     <label
         class="form-control"
-        :class="{ 'form-control--disabled': disabled, 'as-button': asButton }"
+        :class="{
+            'form-control--disabled': disabled,
+            'as-button': asButton,
+            'is-checked': isChecked,
+        }"
     >
         <input
             type="radio"
-            name="radio"
+            :name="radioGroup"
             @change="toggle"
-            :value="modelValue"
+            :value="value"
             :disabled="disabled"
-            :checked="checked"
+            :checked="isChecked"
         />
         {{ label }}
     </label>
@@ -21,13 +25,13 @@ export default {
 
     emits: ['update:modelValue'],
 
-    data() {
-        return {
-            value: {},
-        }
-    },
     props: {
         label: {
+            type: String,
+            required: true,
+        },
+
+        radioGroup: {
             type: String,
             required: true,
         },
@@ -37,12 +41,12 @@ export default {
             default: false,
         },
 
-        disabled: {
-            type: Boolean,
-            default: false,
+        value: {
+            type: [Boolean, String, Number],
+            default: true,
         },
 
-        checked: {
+        disabled: {
             type: Boolean,
             default: false,
         },
@@ -52,9 +56,15 @@ export default {
             default: false,
         },
     },
+
+    computed: {
+        isChecked() {
+            return this.modelValue === this.value
+        },
+    },
     methods: {
         toggle() {
-            this.$emit('update:modelValue', this.modelValue)
+            this.$emit('update:modelValue', this.value)
         },
     },
 }
@@ -81,6 +91,12 @@ export default {
 
     &:hover {
         background-color: $primary-lighter;
+    }
+
+    &.is-checked {
+        background-color: $primary-dark;
+        color: $white;
+        cursor: default;
     }
 }
 

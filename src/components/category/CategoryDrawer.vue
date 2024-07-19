@@ -4,41 +4,43 @@
         :is-opened="isOpened"
         :title="
             $filters.capitalize(
-                addMode ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')
+                !category?.id
+                    ? $t('admin.portal.categories.add')
+                    : $t('admin.portal.categories.edit')
             )
         "
-        class="category-modal medium"
+        class="category-modal small"
         @close="closeModal"
         @confirm="submitCategory"
         :asyncing="asyncing"
     >
-        <div class="form">
-            <div>
-                <h4 class="title">{{ $t('form.category-name') }}</h4>
+        <div class="category-form">
+            <CategoryField :label="$t('form.category-name')">
                 <TextInput v-model="category.name" />
-            </div>
+            </CategoryField>
 
-            <div>
-                <h4 class="title">{{ $t('form.description') }}</h4>
+            <CategoryField :label="$t('form.description')">
+                <p class="notice">{{ $t('admin.portal.categories.description-limit') }}</p>
+
                 <TipTapEditor :ws-data="category.description" @update="updateCategoryDescription" />
-            </div>
+            </CategoryField>
 
-            <div class="colors-ctn">
-                <div class="color-block">
-                    <h4 class="title">{{ $t('form.background-color') }}</h4>
-                    <LpiSnackbar icon="QuestionMark" type="info">
-                        <div v-html="$t('tips.background-color')"></div>
-                    </LpiSnackbar>
-                    <SketchPicker
-                        v-model="category.background_color"
-                        :preset-colors="[]"
-                        data-test="category-background-color"
-                    />
-                </div>
-            </div>
+            <CategoryField :label="$t('form.background-color')" is-toggleable>
+                <LpiSnackbar icon="QuestionMark" type="info">
+                    <div v-html="$t('tips.background-color')"></div>
+                </LpiSnackbar>
+                <SketchPicker
+                    v-model="category.background_color"
+                    :preset-colors="[]"
+                    data-test="category-background-color"
+                />
+            </CategoryField>
 
-            <div class="image-preview-ctn">
-                <h4 class="title">{{ $t('admin.portal.categories.preview-categories') }}</h4>
+            <CategoryField
+                class="image-preview-ctn"
+                :label="$t('admin.portal.categories.preview-categories')"
+                is-toggleable
+            >
                 <LpiSnackbar icon="QuestionMark" type="info">
                     <div v-html="$t('tips.category-image')"></div>
                 </LpiSnackbar>
@@ -69,9 +71,9 @@
                     "
                     @upload-image="showNewImage"
                 />
-            </div>
+            </CategoryField>
 
-            <div class="preview-block">
+            <!--div class="preview-block">
                 <div class="page-preview">
                     <div class="text-container">
                         <p
@@ -88,22 +90,51 @@
                         />
                     </div>
                 </div>
-            </div>
+            </div-->
 
-            <div>
-                <h4 class="title">{{ $t('admin.portal.categories.is-reviewable') }}</h4>
-                <SwitchInput v-model="category.is_reviewable" />
-            </div>
+            <CategoryField :label="$t('admin.portal.categories.authorizations')">
+                <div class="radio-group">
+                    <RadioButton
+                        v-model="category.is_reviewable"
+                        :value="true"
+                        :label="$t('common.no')"
+                        radio-group="is_reviewable"
+                        as-button
+                    />
+                    <RadioButton
+                        v-model="category.is_reviewable"
+                        :value="false"
+                        :label="$t('common.yes')"
+                        radio-group="is_reviewable"
+                        as-button
+                    />
+                    <h4 class="radio-group-title">
+                        {{ $t('admin.portal.categories.is-reviewable') }}
+                    </h4>
+                </div>
 
-            <div>
-                <h4 class="title">
-                    {{ $t('admin.portal.categories.limit-publication-to-reviewers') }}
-                </h4>
-                <div class="description">{{ $t('tips.limit-publication-to-reviewers') }}</div>
-                <SwitchInput v-model="category.only_reviewer_can_publish" />
-            </div>
+                <div class="radio-group">
+                    <RadioButton
+                        v-model="category.only_reviewer_can_publish"
+                        :value="true"
+                        :label="$t('common.no')"
+                        radio-group="only_reviewer_can_publish"
+                        as-button
+                    />
+                    <RadioButton
+                        v-model="category.only_reviewer_can_publish"
+                        :value="false"
+                        :label="$t('common.yes')"
+                        radio-group="only_reviewer_can_publish"
+                        as-button
+                    />
+                    <h4 class="radio-group-title">
+                        {{ $t('admin.portal.categories.limit-publication-to-reviewers') }}
+                    </h4>
+                </div>
+            </CategoryField>
 
-            <div v-if="!addMode">
+            <!--div v-if="category?.id">
                 <h4 class="title">{{ $t('admin.portal.categories.delete-category') }}</h4>
 
                 <LoaderSimple v-if="isFetchingProjects" />
@@ -159,16 +190,16 @@
                         @click="toggleConfirmDeleteModal"
                     />
                 </div>
-            </div>
+            </div-->
         </div>
 
-        <ConfirmModal
+        <!--ConfirmModal
             v-if="confirmDeleteVisible"
             :content="$t('admin.portal.categories.delete-category-description')"
             :title="$t('admin.portal.categories.delete-category')"
             @cancel="toggleConfirmDeleteModal"
             @confirm="deleteCategory"
-        />
+        /-->
     </Drawer>
 </template>
 
@@ -176,17 +207,38 @@
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+// import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import CardList from '@/components/base/CardList.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+// import LpiButton from '@/components/base/button/LpiButton.vue'
+// import CardList from '@/components/base/CardList.vue'
+// import ProjectCard from '@/components/project/ProjectCard.vue'
+// import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+// import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { Sketch } from '@ckpack/vue-color'
-import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+// import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import CategoryField from '@/components/category/CategoryField.vue'
+import RadioButton from '@/components/base/form/RadioButton.vue'
+
+export function defaultForm() {
+    return {
+        name: '',
+        description: {
+            originalContent: '',
+            savedContent: '',
+        },
+        background_color: '#81A617',
+        foreground_color: '#FFFFFF',
+        background_image: {
+            variations: {
+                small: undefined,
+            },
+        },
+        is_reviewable: true,
+        only_reviewer_can_publish: false,
+        organization_code: null,
+    }
+}
 
 export default {
     name: 'CategoryDrawer',
@@ -197,25 +249,21 @@ export default {
         Drawer,
         TextInput,
         TipTapEditor,
-        LpiSnackbar,
+        // LpiSnackbar,
         SketchPicker: Sketch,
         ImageInput,
         CategoryCardImage,
-        SwitchInput,
-        LpiButton,
-        CardList,
-        ProjectCard,
-        LoaderSimple,
-        ConfirmModal,
-        ProjectListSearch,
+        // LpiButton,
+        // CardList,
+        // ProjectCard,
+        // LoaderSimple,
+        // ConfirmModal,
+        // ProjectListSearch,
+        CategoryField,
+        RadioButton,
     },
 
     props: {
-        addMode: {
-            type: Boolean,
-            default: true,
-        },
-
         editedCategory: {
             type: Object,
             default: null,
@@ -228,31 +276,15 @@ export default {
 
     data() {
         return {
-            category: {
-                name: '',
-                description: {
-                    originalContent: '',
-                    savedContent: '',
-                },
-                background_color: '#81A617',
-                foreground_color: '#FFFFFF',
-                background_image: {
-                    variations: {
-                        small: undefined,
-                    },
-                },
-                is_reviewable: true,
-                only_reviewer_can_publish: false,
-                organization_code: null,
-            },
-            confirmDeleteVisible: false,
-            isFetchingProjects: true,
+            category: defaultForm(),
+            // confirmDeleteVisible: false,
+            // isFetchingProjects: true,
             projects: [],
-            projectsVisible: false,
+            // projectsVisible: false,
             displayedImage: null,
             asyncing: false,
-            projectNb: 0,
-            isLoading: false,
+            // projectNb: 0,
+            // isLoading: false,
         }
     },
 
@@ -270,7 +302,7 @@ export default {
     },
 
     async created() {
-        if (!this.addMode) {
+        if (this.editedCategory) {
             // Fill form with edited category data
             this.category = {
                 ...this.editedCategory,
@@ -279,6 +311,8 @@ export default {
                     savedContent: '',
                 },
             }
+        } else {
+            this.category = defaultForm()
         }
         this.category.organization_code = this.organization.code
     },
@@ -290,31 +324,31 @@ export default {
     },
 
     methods: {
-        onPaginationChange(pagination) {
-            if (
-                this.$route.query.page === pagination.currentPage ||
-                (!this.$route.query.page && pagination.currentPage === 1)
-            )
-                return
-            this.$router.push({
-                path: this.$route.path,
-                query: { ...this.$route.query, page: pagination.currentPage },
-            })
-        },
+        // onPaginationChange(pagination) {
+        //     if (
+        //         this.$route.query.page === pagination.currentPage ||
+        //         (!this.$route.query.page && pagination.currentPage === 1)
+        //     )
+        //         return
+        //     this.$router.push({
+        //         path: this.$route.path,
+        //         query: { ...this.$route.query, page: pagination.currentPage },
+        //     })
+        // },
 
         closeModal() {
             this.$emit('close-modal')
         },
 
-        toggleConfirmDeleteModal() {
-            this.confirmDeleteVisible = !this.confirmDeleteVisible
-        },
+        // toggleConfirmDeleteModal() {
+        //     this.confirmDeleteVisible = !this.confirmDeleteVisible
+        // },
 
-        async deleteCategory() {
-            this.toggleConfirmDeleteModal()
-            this.closeModal()
-            await this.$store.dispatch('projectCategories/deleteProjectCategory', this.category.id)
-        },
+        // async deleteCategory() {
+        //     this.toggleConfirmDeleteModal()
+        //     this.closeModal()
+        //     await this.$store.dispatch('projectCategories/deleteProjectCategory', this.category.id)
+        // },
 
         showNewImage(image) {
             const newImage = image
@@ -333,55 +367,45 @@ export default {
             this.$emit('submit-category', this.category)
         },
 
-        toggleProjectsVisible() {
-            this.projectsVisible = !this.projectsVisible
-        },
+        // toggleProjectsVisible() {
+        //     this.projectsVisible = !this.projectsVisible
+        // },
 
         updateCategoryDescription(htmlContent) {
             this.category.description.savedContent = htmlContent
         },
 
-        updateNumber(nb) {
-            this.projectNb = nb
-            this.isFetchingProjects = false
-        },
+        // updateNumber(nb) {
+        //     this.projectNb = nb
+        //     this.isFetchingProjects = false
+        // },
 
-        toggleLoading(loading) {
-            this.isLoading = loading
-        },
+        // toggleLoading(loading) {
+        //     this.isLoading = loading
+        // },
     },
 }
 </script>
 
 <style lang="scss" scoped>
 .category-modal {
-    .colors-ctn {
+    .color-block {
+        width: 50%;
         display: flex;
+        flex-direction: column;
         align-items: center;
 
-        .color-block {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            &:first-of-type {
-                margin-right: $space-s;
-            }
+        &:first-of-type {
+            margin-right: $space-s;
         }
     }
 
     @media screen and (max-width: $min-tablet) {
-        .colors-ctn {
-            flex-direction: column;
-            align-items: stretch;
+        .color-block {
+            width: 100%;
 
-            .color-block {
-                width: 100%;
-
-                &:first-of-type {
-                    margin-bottom: $space-l;
-                }
+            &:first-of-type {
+                margin-bottom: $space-l;
             }
         }
     }
@@ -459,5 +483,37 @@ export default {
     border-radius: $border-radius-m;
     background-size: cover;
     background-position: center;
+}
+
+.notice {
+    font-size: $font-size-s;
+    color: $almost-black;
+    margin-bottom: $space-m;
+}
+
+.reviewer-tip {
+    width: 1.2em;
+    height: 1.2em;
+    fill: primary-dark;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    margin-bottom: $space-l;
+
+    .radio-group-title {
+        padding-left: $space-s;
+        font-size: $font-size-m;
+        font-weight: 500;
+        color: $almost-black;
+    }
+}
+
+.category-form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-l;
 }
 </style>

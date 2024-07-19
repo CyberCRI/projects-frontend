@@ -39,10 +39,10 @@
         <CategoryDrawer
             v-if="categoryDrawerOpened"
             :is-opened="categoryDrawerOpened"
-            :add-mode="addMode"
             :edited-category="editedCategory"
             @close-modal="closeCategoryDrawer"
             @submit-category="submitCategory"
+            :category-parent="categoryParent"
         />
     </div>
 </template>
@@ -76,7 +76,6 @@ export default {
 
     data() {
         return {
-            addMode: true,
             categoryDrawerOpened: false,
             editedCategory: undefined,
             showMessage: false,
@@ -84,6 +83,7 @@ export default {
             editable: true,
             sortedCategories: [],
             isLoading: true,
+            categoryParent: null,
         }
     },
 
@@ -103,18 +103,19 @@ export default {
             this.sortedCategories = ret
         },
         addCategory() {
-            this.addMode = true
+            this.editedCategory = null
             this.categoryDrawerOpened = true
         },
 
         editCategory(category) {
-            this.addMode = false
             this.editedCategory = category
             this.categoryDrawerOpened = true
         },
 
         closeCategoryDrawer() {
             this.categoryDrawerOpened = false
+            this.editedCategory = null
+            this.parentCategory = null
         },
 
         async setImage(data, id) {
@@ -127,8 +128,9 @@ export default {
 
         async submitCategory(category) {
             const data = { ...category, description: category.description.savedContent }
-            let categoryId
-            if (this.addMode === true) {
+            let categoryId = category.id
+            if (!categoryId) {
+                // add
                 const result = await this.$store.dispatch(
                     'projectCategories/addProjectCategory',
                     data
@@ -137,7 +139,7 @@ export default {
                 categoryId = result.id
                 await this.setImage(data, categoryId)
             } else {
-                categoryId = category.id
+                // update
                 if (category.background_image) await this.setImage(data, categoryId)
             }
             try {
