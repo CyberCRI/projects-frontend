@@ -55,7 +55,7 @@ import Category from '@/components/category/CategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
-import { VueDraggableNext } from 'vue-draggable-next'
+// import { VueDraggableNext } from 'vue-draggable-next'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
 export default {
@@ -70,7 +70,7 @@ export default {
         LpiSnackbar,
         LpiButton,
         CategoryDrawer,
-        draggable: VueDraggableNext,
+        //draggable: VueDraggableNext,
         LpiLoader,
     },
 

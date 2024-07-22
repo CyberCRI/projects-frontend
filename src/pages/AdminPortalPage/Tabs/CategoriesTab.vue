@@ -15,25 +15,36 @@
                 <LinkButton
                     btn-icon="Plus"
                     :label="$t('admin.portal.categories.add')"
-                    @click="addCategory"
+                    @click="addCategory(null)"
                 />
             </div>
         </div>
 
         <div class="categories-container">
             <LpiLoader v-if="isLoading" class="loader" type="simple" />
-            <ul v-if="computedSortedCategories">
-                <CategoryAdminElement
-                    v-for="category in sortedCategories"
-                    :key="category.id"
-                    :category="category"
-                    :data-test="`category-${category.id}`"
-                    class="category"
-                    @edit-category="editCategory"
-                    @add-sub-category="addCategory"
-                    @see-category="goToCategory"
-                />
-            </ul>
+            <Sortable
+                v-if="categories.length"
+                :list="categories"
+                :options="dragOptions"
+                item-key="id"
+                group="categories"
+                @end="updateCategoryTree"
+                tag="ul"
+                data-parent-category=""
+            >
+                <template #item="{ element: category }">
+                    <CategoryAdminElement
+                        :key="category.id"
+                        :category="category"
+                        :data-test="`category-${category.id}`"
+                        class="category"
+                        @edit-category="editCategory"
+                        @add-sub-category="addCategory"
+                        @see-category="goToCategory"
+                        @update-category-tree="updateCategoryTree"
+                    />
+                </template>
+            </Sortable>
         </div>
 
         <LpiSnackbar
@@ -50,8 +61,8 @@
         <CategoryDrawer
             v-if="categoryDrawerOpened"
             :is-opened="categoryDrawerOpened"
-            :add-mode="addMode"
             :edited-category="editedCategory"
+            :parent-category="parentCategory"
             @close-modal="closeCategoryDrawer"
             @submit-category="submitCategory"
         />
@@ -68,7 +79,8 @@ import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-
+import { toRaw } from 'vue'
+import { Sortable } from 'sortablejs-vue3'
 export default {
     name: 'CategoriesTab',
 
@@ -83,48 +95,88 @@ export default {
         CategoryDrawer,
         LpiLoader,
         IconImage,
+        Sortable,
     },
 
     data() {
         return {
-            addMode: true,
             categoryDrawerOpened: false,
+            parentCategory: null,
             editedCategory: undefined,
             showMessage: false,
             isUpdating: false,
             editable: true,
-            sortedCategories: [],
+            categories: [],
             isLoading: true,
         }
     },
 
     computed: {
         computedSortedCategories() {
-            let ret = this.$store.getters['projectCategories/allOrderedByOrderId']
+            //            let ret = this.$store.getters['projectCategories/allOrderedByOrderId']
+            let ret = this.$store.getters['projectCategories/hierarchy']
                 .slice(0)
                 .sort((a, b) => a.order_index - b.order_index)
-            this.getSortedCategories(ret)
             return ret
+        },
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'categories',
+                disabled: false,
+                ghostClass: 'category-ghost',
+            }
+        },
+    },
+    watch: {
+        computedSortedCategories: {
+            handler(neo) {
+                this.isLoading = false
+                function rawCategories(categories) {
+                    return categories.map((category) => {
+                        return {
+                            ...toRaw(category),
+                            children: category.children ? rawCategories(category.children) : [],
+                        }
+                    })
+                }
+                this.categories = rawCategories(neo)
+            },
+            immediate: true,
         },
     },
 
     methods: {
-        getSortedCategories(ret) {
-            this.isLoading = false
-            this.sortedCategories = ret
+        updateCategoryTree(event) {
+            console.log('=====================')
+            console.log('onDrop')
+            // console.log(event)
+
+            console.log('new index', event.newIndex)
+            console.log('old index', event.oldIndex)
+            console.log('item', event.item)
+            console.log('from', event.from)
+            console.log('from id', event.from.dataset.parentCategory || null)
+            console.log('to', event.to)
+            console.log('to id', event.to.dataset.parentCategory || null)
+
+            console.log('=====================')
         },
-        addCategory() {
-            this.addMode = true
+        addCategory(parentCategory = null) {
+            this.editedCategory = null
+            this.parentCategory = parentCategory?.id || null
             this.categoryDrawerOpened = true
         },
 
         editCategory(category) {
-            this.addMode = false
             this.editedCategory = category
+            this.parentCategory = category.parent
             this.categoryDrawerOpened = true
         },
 
         closeCategoryDrawer() {
+            this.parentCategory = null
+            this.editedCategory = null
             this.categoryDrawerOpened = false
         },
 
@@ -137,9 +189,13 @@ export default {
         },
 
         async submitCategory(category) {
-            const data = { ...category, description: category.description.savedContent }
-            let categoryId
-            if (this.addMode === true) {
+            const data = {
+                ...category,
+                description: category.description.savedContent,
+            }
+            let categoryId = category.id
+            if (!categoryId) {
+                // add
                 const result = await this.$store.dispatch(
                     'projectCategories/addProjectCategory',
                     data
@@ -148,7 +204,7 @@ export default {
                 categoryId = result.id
                 await this.setImage(data, categoryId)
             } else {
-                categoryId = category.id
+                // edit
                 if (category.background_image) await this.setImage(data, categoryId)
             }
             try {
@@ -156,6 +212,7 @@ export default {
                     categoryId,
                     newCategory: data,
                 })
+                await this.$store.dispatch('projectCategories/getAllProjectCategories')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.category-update.success'),
                     type: 'success',
@@ -167,7 +224,7 @@ export default {
                 })
                 console.error(error)
             } finally {
-                this.categoryDrawerOpened = false
+                this.closeCategoryDrawer()
             }
         },
 
@@ -277,15 +334,25 @@ export default {
     }
 
     .categories-container {
+        margin: 0 auto;
+        width: 30rem;
         display: flex;
         flex-wrap: wrap;
         gap: $space-l;
-        justify-content: center;
+        justify-content: stretch;
         padding: $space-m;
+
+        > ul {
+            flex-grow: 1;
+        }
     }
 }
 
+.category-ghost {
+    background-color: $primary-lighter;
+}
+
 .flip-list-move {
-    transition: transform 1s;
+    transition: transform 0.5s;
 }
 </style>

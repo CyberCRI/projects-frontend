@@ -23,6 +23,8 @@ export interface ProjectCategoryModel extends BaseModel {
     is_reviewable: string
     name: string
     order_index: number
+    children: ProjectCategoryOutput[] | number[]
+    hierarchy?: ProjectCategoryOutput[] | number[]
 }
 
 export type ProjectCategoryCreateInput = Required<ProjectCategoryModel> & {

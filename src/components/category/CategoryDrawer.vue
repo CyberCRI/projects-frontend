@@ -92,6 +92,38 @@
                 </div>
             </div-->
 
+            <CategoryField :label="$t('admin.portal.categories.children')">
+                <p class="no-child" v-if="!category.children.length">
+                    {{ $t('admin.portal.categories.no-child') }}
+                </p>
+                <Sortable
+                    v-else
+                    :list="category.children"
+                    :options="dragOptions"
+                    group="category-children"
+                    @start="drag = true"
+                    @stop="drag = false"
+                    tag="transition-group"
+                    item-key="id"
+                    :component-data="{
+                        tag: 'ul',
+                        type: 'transition-group',
+                        name: !drag ? 'flip-list' : null,
+                    }"
+                >
+                    <template #item="{ element: child }">
+                        <li class="category-child" :key="child.id">
+                            <span class="drag-icon">
+                                <IconImage name="DotsGrid" />
+                            </span>
+                            <div class="child-name">
+                                {{ child.name }}
+                            </div>
+                        </li>
+                    </template>
+                </Sortable>
+            </CategoryField>
+
             <CategoryField :label="$t('admin.portal.categories.authorizations')">
                 <div class="radio-group">
                     <RadioButton
@@ -219,6 +251,8 @@ import { Sketch } from '@ckpack/vue-color'
 // import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 import CategoryField from '@/components/category/CategoryField.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { Sortable } from 'sortablejs-vue3'
 
 export function defaultForm() {
     return {
@@ -237,6 +271,7 @@ export function defaultForm() {
         is_reviewable: true,
         only_reviewer_can_publish: false,
         organization_code: null,
+        children: [],
     }
 }
 
@@ -261,6 +296,8 @@ export default {
         // ProjectListSearch,
         CategoryField,
         RadioButton,
+        IconImage,
+        Sortable,
     },
 
     props: {
@@ -268,9 +305,27 @@ export default {
             type: Object,
             default: null,
         },
+        parentCategory: {
+            type: Number,
+            default: null,
+        },
         isOpened: {
             type: Boolean,
             default: false,
+        },
+    },
+
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'category-children',
+                disabled: false,
+                ghostClass: 'child-ghost',
+            }
         },
     },
 
@@ -285,6 +340,7 @@ export default {
             asyncing: false,
             // projectNb: 0,
             // isLoading: false,
+            drag: false,
         }
     },
 
@@ -312,15 +368,9 @@ export default {
                 },
             }
         } else {
-            this.category = defaultForm()
+            this.category = { ...defaultForm(), parent: this.parentCategory }
         }
         this.category.organization_code = this.organization.code
-    },
-
-    computed: {
-        organization() {
-            return this.$store.getters['organizations/current']
-        },
     },
 
     methods: {
@@ -515,5 +565,42 @@ export default {
     display: flex;
     flex-direction: column;
     gap: $space-l;
+}
+
+.no-child {
+    font-style: italic;
+    color: $mid-gray;
+}
+
+.category-child {
+    display: flex;
+    align-items: center;
+    gap: $space-m;
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    margin-block: $space-s;
+    border: $border-width-s solid $light-gray;
+    cursor: move;
+
+    // make text unselectable
+    user-select: none;
+
+    .drag-icon {
+        display: inline-block;
+
+        svg {
+            width: 1.2em;
+            height: 1.2em;
+            fill: $mid-gray;
+        }
+    }
+}
+
+.child-ghost {
+    background-color: $primary-lighter;
+}
+
+.flip-list-move {
+    transition: transform 0.5s;
 }
 </style>

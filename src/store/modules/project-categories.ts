@@ -11,6 +11,7 @@ import {
     ProjectCategoryParams,
 } from '@/api/project-categories.service'
 import { APIResponseList } from '@/api/types'
+import { toRaw } from 'vue'
 
 export interface ProjectCategoriesState {
     all: ProjectCategoryOutput[]
@@ -22,6 +23,23 @@ const state = (): ProjectCategoriesState => ({
 
 const getters = {
     all: (state: ProjectCategoriesState) => state.all,
+    allByIds: (state: ProjectCategoriesState) =>
+        state.all.reduce((acc, category) => {
+            acc[category.id] = category
+            return acc
+        }, {}),
+    hierarchy: (state: ProjectCategoriesState, getters) => {
+        function hydrateChildren(cat) {
+            console.log('cat', cat)
+            console.log(getters.allByIds)
+            cat.children = cat?.children?.map((child) => toRaw(getters.allByIds[child.id])) || []
+            cat.children?.forEach(hydrateChildren)
+        }
+        const rootCategories =
+            state.all?.map(toRaw)?.filter((category) => !category.hierarchy?.length) || []
+        rootCategories.forEach(hydrateChildren)
+        return rootCategories
+    },
     getOneById: (state: ProjectCategoriesState) => (id) =>
         state.all.find((category: ProjectCategoryOutput) => category.id === Number(id)),
     allOrderedByOrderId: (state: ProjectCategoriesState) => {

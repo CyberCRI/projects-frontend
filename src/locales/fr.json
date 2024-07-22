@@ -171,6 +171,8 @@
             "categories": {
                 "add": "Ajouter une catégorie",
                 "authorizations": "Autorisations",
+                "children": "Sous-catégories",
+                "no-child": "Pas de sous-catégorie",
                 "description-limit": "300 caractères maximum.",
                 "edit": "Modifier une catégorie",
                 "is-reviewable": "Autoriser les révisions",

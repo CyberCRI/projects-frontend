@@ -110,6 +110,7 @@ export default {
                 'BullhornOutline',
                 'DotsVertical',
                 'DotsHorizontal',
+                'DotsGrid',
             ],
         }
     },
