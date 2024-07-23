@@ -89,6 +89,9 @@ watch(
         @dragleave="onDragLeave"
     >
         <div class="top-list">
+            <span class="drag-icon">
+                <IconImage name="DotsGrid" />
+            </span>
             <div class="texts" :class="{ clickable: hasChildren }" @click="showChild = !showChild">
                 <div
                     class="icon-td"
@@ -173,6 +176,7 @@ watch(
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: solid $lighter-gray 1px;
 }
 
@@ -253,5 +257,15 @@ li {
 
 .flip-list-move {
     transition: transform 0.5s;
+}
+
+.drag-icon {
+    display: inline-block;
+    cursor: move;
+    svg {
+        width: 1.2em;
+        height: 1.2em;
+        fill: $mid-gray;
+    }
 }
 </style>
