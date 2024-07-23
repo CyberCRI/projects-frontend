@@ -101,8 +101,7 @@
                     :list="category.children"
                     :options="dragOptions"
                     group="category-children"
-                    @start="drag = true"
-                    @stop="drag = false"
+                    @end="onReorder"
                     tag="transition-group"
                     item-key="id"
                     :component-data="{
@@ -112,7 +111,7 @@
                     }"
                 >
                     <template #item="{ element: child }">
-                        <li class="category-child" :key="child.id">
+                        <li class="category-child" :key="child.id" :data-category-id="child.id">
                             <span class="drag-icon">
                                 <IconImage name="DotsGrid" />
                             </span>
@@ -165,73 +164,7 @@
                     </h4>
                 </div>
             </CategoryField>
-
-            <!--div v-if="category?.id">
-                <h4 class="title">{{ $t('admin.portal.categories.delete-category') }}</h4>
-
-                <LoaderSimple v-if="isFetchingProjects" />
-
-                <div>
-                    <LpiSnackbar
-                        v-if="!isFetchingProjects && projectNb !== 0"
-                        icon="QuestionMark"
-                        type="info"
-                    >
-                        <div v-html="$t('tips.category-delete')"></div>
-                    </LpiSnackbar>
-                    <LpiButton
-                        v-if="!isFetchingProjects && projectNb !== 0"
-                        :label="
-                            projectsVisible
-                                ? $t('admin.portal.categories.hide-projects')
-                                : `${$t('admin.portal.categories.display-projects')} (${projectNb})`
-                        "
-                        class="projects-btn"
-                        @click="toggleProjectsVisible"
-                    />
-                    <ProjectListSearch
-                        :search="{
-                            limit: 12,
-                            categories: category.id,
-                        }"
-                        :show-pagination="true"
-                        :pagination-buttons-is-visible="projectsVisible"
-                        mode="projects"
-                        @pagination-changed="onPaginationChange"
-                        @number-project="updateNumber"
-                        @loading="toggleLoading"
-                    >
-                        <template #default="ProjectListSearchSlotProps">
-                            <CardList
-                                v-if="projectsVisible"
-                                :desktop-columns-number="3"
-                                :items="ProjectListSearchSlotProps.items"
-                                :is-loading="isLoading"
-                                class="project-list"
-                            >
-                                <template #default="projectListSlotProps">
-                                    <ProjectCard :project="projectListSlotProps.item" />
-                                </template>
-                            </CardList>
-                        </template>
-                    </ProjectListSearch>
-
-                    <LpiButton
-                        v-if="projectNb === 0"
-                        :label="$t('admin.portal.categories.delete-category')"
-                        @click="toggleConfirmDeleteModal"
-                    />
-                </div>
-            </div-->
         </div>
-
-        <!--ConfirmModal
-            v-if="confirmDeleteVisible"
-            :content="$t('admin.portal.categories.delete-category-description')"
-            :title="$t('admin.portal.categories.delete-category')"
-            @cancel="toggleConfirmDeleteModal"
-            @confirm="deleteCategory"
-        /-->
     </Drawer>
 </template>
 
@@ -239,16 +172,9 @@
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-// import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-// import LpiButton from '@/components/base/button/LpiButton.vue'
-// import CardList from '@/components/base/CardList.vue'
-// import ProjectCard from '@/components/project/ProjectCard.vue'
-// import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-// import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { Sketch } from '@ckpack/vue-color'
-// import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
 import CategoryField from '@/components/category/CategoryField.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -272,6 +198,7 @@ export function defaultForm() {
         only_reviewer_can_publish: false,
         organization_code: null,
         children: [],
+        order_index: 0,
     }
 }
 
@@ -284,16 +211,9 @@ export default {
         Drawer,
         TextInput,
         TipTapEditor,
-        // LpiSnackbar,
         SketchPicker: Sketch,
         ImageInput,
         CategoryCardImage,
-        // LpiButton,
-        // CardList,
-        // ProjectCard,
-        // LoaderSimple,
-        // ConfirmModal,
-        // ProjectListSearch,
         CategoryField,
         RadioButton,
         IconImage,
@@ -315,6 +235,14 @@ export default {
         },
     },
 
+    data() {
+        return {
+            category: defaultForm(),
+            projects: [],
+            displayedImage: null,
+            asyncing: false,
+        }
+    },
     computed: {
         organization() {
             return this.$store.getters['organizations/current']
@@ -327,21 +255,6 @@ export default {
                 ghostClass: 'child-ghost',
             }
         },
-    },
-
-    data() {
-        return {
-            category: defaultForm(),
-            // confirmDeleteVisible: false,
-            // isFetchingProjects: true,
-            projects: [],
-            // projectsVisible: false,
-            displayedImage: null,
-            asyncing: false,
-            // projectNb: 0,
-            // isLoading: false,
-            drag: false,
-        }
     },
 
     watch: {
@@ -374,31 +287,16 @@ export default {
     },
 
     methods: {
-        // onPaginationChange(pagination) {
-        //     if (
-        //         this.$route.query.page === pagination.currentPage ||
-        //         (!this.$route.query.page && pagination.currentPage === 1)
-        //     )
-        //         return
-        //     this.$router.push({
-        //         path: this.$route.path,
-        //         query: { ...this.$route.query, page: pagination.currentPage },
-        //     })
-        // },
+        onReorder(event) {
+            const { newIndex, oldIndex } = event
+            const movedChild = this.category.children[oldIndex]
+            this.category.children.splice(oldIndex, 1)
+            this.category.children.splice(newIndex, 0, movedChild)
+        },
 
         closeModal() {
             this.$emit('close-modal')
         },
-
-        // toggleConfirmDeleteModal() {
-        //     this.confirmDeleteVisible = !this.confirmDeleteVisible
-        // },
-
-        // async deleteCategory() {
-        //     this.toggleConfirmDeleteModal()
-        //     this.closeModal()
-        //     await this.$store.dispatch('projectCategories/deleteProjectCategory', this.category.id)
-        // },
 
         showNewImage(image) {
             const newImage = image
@@ -417,22 +315,9 @@ export default {
             this.$emit('submit-category', this.category)
         },
 
-        // toggleProjectsVisible() {
-        //     this.projectsVisible = !this.projectsVisible
-        // },
-
         updateCategoryDescription(htmlContent) {
             this.category.description.savedContent = htmlContent
         },
-
-        // updateNumber(nb) {
-        //     this.projectNb = nb
-        //     this.isFetchingProjects = false
-        // },
-
-        // toggleLoading(loading) {
-        //     this.isLoading = loading
-        // },
     },
 }
 </script>

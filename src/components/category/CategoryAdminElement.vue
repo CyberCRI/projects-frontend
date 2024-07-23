@@ -12,8 +12,6 @@ const emit = defineEmits([
     'update-category-tree',
 ])
 
-const wrapper = ref(null)
-
 const props = defineProps({
     category: {
         type: Object,
@@ -29,36 +27,6 @@ const showChild = ref(false)
 const chevronImage = computed(() => {
     return !hasChildren.value ? 'ChevronRight' : showChild.value ? 'ChevronUp' : 'ChevronDown'
 })
-
-// let openOnDragOverTimer = null
-
-// function onDragStart(event) {
-//     console.log('dragstart', event)
-//     if (event.target == wrapper.value) {
-//         console.log('onself')
-//     }
-//     showChild.value = false
-// }
-
-// function onDragEnter(event) {
-//     console.log('dragenter', event)
-//     if (event.target == wrapper.value) {
-//         console.log('onself')
-//         return
-//     }
-//     openOnDragOverTimer = window.setTimeout(() => {
-//         showChild.value = true
-//     }, 800)
-// }
-
-// function onDragLeave(event) {
-//     console.log('dragleave', event)
-//     if (event.target == wrapper.value) {
-//         console.log('onself')
-//     }
-//     clearTimeout(openOnDragOverTimer)
-// }
-// onBeforeUnmount(onDragLeave)
 
 const dragOptions = computed(() => {
     return {
@@ -76,13 +44,6 @@ function onDragStart(event) {
     }
 }
 
-function onDragOver(event) {
-    let selfAsParent = event.target.closest(`[data-category-id="${props.category.id}"]`)
-    if (!selfAsParent) {
-        showChild.value = true
-    }
-}
-
 const isDraggedOver = ref(false)
 
 function onDragEnter() {
@@ -94,10 +55,8 @@ function onDragLeave() {
 </script>
 <template>
     <li
-        ref="wrapper"
         class="sub-list"
         :class="{ 'is-dragged-over': isDraggedOver }"
-        @dragover="onDragOver"
         @dragstart="onDragStart"
         :data-category-id="category.id"
         :dragenter="onDragEnter"
@@ -167,6 +126,7 @@ function onDragLeave() {
             >
                 <template #item="{ element: child }">
                     <CategoryAdminElement
+                        v-show="showChild"
                         :key="child.id"
                         :category="child"
                         class="nested-list"

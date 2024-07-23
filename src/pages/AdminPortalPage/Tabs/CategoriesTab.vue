@@ -46,6 +46,9 @@
                 </template>
             </Sortable>
         </div>
+        <div v-if="reOrdering" class="re-ordering-screen">
+            <LoaderSimple />
+        </div>
 
         <LpiSnackbar
             v-if="showMessage"
@@ -78,9 +81,11 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { toRaw } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
+import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
 export default {
     name: 'CategoriesTab',
 
@@ -96,6 +101,7 @@ export default {
         LpiLoader,
         IconImage,
         Sortable,
+        LoaderSimple,
     },
 
     data() {
@@ -107,17 +113,15 @@ export default {
             isUpdating: false,
             editable: true,
             categories: [],
+            categoryIndex: {},
             isLoading: true,
+            reOrdering: false,
         }
     },
 
     computed: {
-        computedSortedCategories() {
-            //            let ret = this.$store.getters['projectCategories/allOrderedByOrderId']
-            let ret = this.$store.getters['projectCategories/hierarchy']
-                .slice(0)
-                .sort((a, b) => a.order_index - b.order_index)
-            return ret
+        categoryTree() {
+            return this.$store.getters['projectCategories/hierarchy']
         },
         dragOptions() {
             return {
@@ -129,7 +133,7 @@ export default {
         },
     },
     watch: {
-        computedSortedCategories: {
+        categoryTree: {
             handler(neo) {
                 this.isLoading = false
                 function rawCategories(categories) {
@@ -141,26 +145,76 @@ export default {
                     })
                 }
                 this.categories = rawCategories(neo)
+                function indexCategories(categories, index) {
+                    categories.reduce((acc, category) => {
+                        acc[category.id] = category
+                        return acc
+                    }, index)
+                    categories.forEach((category) => {
+                        indexCategories(category.children, index)
+                    })
+                    return index
+                }
+                this.categoryIndex = indexCategories(this.categories, {})
             },
             immediate: true,
         },
     },
 
     methods: {
-        updateCategoryTree(event) {
-            console.log('=====================')
-            console.log('onDrop')
-            // console.log(event)
+        async updateCategoryTree(event) {
+            const categoryId = event.item.dataset.categoryId
+            const oldParentId = event.from.dataset.parentCategory || null
+            const newParentId = event.to.dataset.parentCategory || null
+            const { oldIndex, newIndex } = event
 
-            console.log('new index', event.newIndex)
-            console.log('old index', event.oldIndex)
-            console.log('item', event.item)
-            console.log('from', event.from)
-            console.log('from id', event.from.dataset.parentCategory || null)
-            console.log('to', event.to)
-            console.log('to id', event.to.dataset.parentCategory || null)
+            const category = this.categoryIndex[categoryId]
+            const newParentChildren = this.categoryIndex[newParentId]?.children || this.categories
+            const oldParentChildren = this.categoryIndex[oldParentId]?.children || this.categories
 
-            console.log('=====================')
+            category.order_index = newIndex
+
+            // remove from old parent
+            oldParentChildren.splice(oldIndex, 1)
+            // add to new parent
+            newParentChildren.splice(newIndex, 0, category)
+
+            // some weridness with sortablejs duplicate the item html element
+            // if parent are different, so in this case we remove one
+            if (oldParentId !== newParentId) event.item.remove()
+
+            try {
+                this.reOrdering = true
+                // update new parent children
+                const newParentPromises = newParentChildren.map(async (child, index) => {
+                    if (child.id == category.id) {
+                        return await patchProjectCategory(child.id, {
+                            order_index: index,
+                            parent: newParentId,
+                        })
+                    } else if (index != child.order_index) {
+                        return await patchProjectCategory(child.id, { order_index: index })
+                    } else return Promise.resolve()
+                })
+                // update old parent children if necessary
+                const oldParentPromises =
+                    oldParentId !== newParentId
+                        ? oldParentChildren.map(async (child, index) => {
+                              if (index != child.order_index) {
+                                  return await patchProjectCategory(child.id, {
+                                      order_index: index,
+                                  })
+                              } else return Promise.resolve()
+                          })
+                        : []
+
+                await Promise.all([...newParentPromises, ...oldParentPromises])
+                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+            } catch (error) {
+                console.error(error)
+            } finally {
+                this.reOrdering = false
+            }
         },
         addCategory(parentCategory = null) {
             this.editedCategory = null
@@ -195,23 +249,24 @@ export default {
             }
             let categoryId = category.id
             if (!categoryId) {
-                // add
-                const result = await this.$store.dispatch(
-                    'projectCategories/addProjectCategory',
-                    data
-                )
-
-                categoryId = result.id
+                const createCategory = await createProjectCategory(data)
+                categoryId = createCategory.id
                 await this.setImage(data, categoryId)
             } else {
-                // edit
+                // edit catgeory
+                await patchProjectCategory(categoryId, data)
                 if (category.background_image) await this.setImage(data, categoryId)
             }
             try {
-                await this.$store.dispatch('projectCategories/updateProjectCategory', {
-                    categoryId,
-                    newCategory: data,
-                })
+                // Update order index of children
+                await Promise.all(
+                    category.children.map(async (child, index) => {
+                        if (index != child.order_index)
+                            return await patchProjectCategory(child.id, { order_index: index })
+                        else return Promise.resolve()
+                    })
+                )
+
                 await this.$store.dispatch('projectCategories/getAllProjectCategories')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.category-update.success'),
@@ -231,59 +286,6 @@ export default {
         goToCategory(category) {
             this.$router.push({ name: 'Category', params: { id: category.id } })
         },
-
-        // change(evt) {
-        //     this.startIndex = evt.draggedContext.index
-        //     this.dropIndex = evt.draggedContext.futureIndex
-        // },
-
-        // async onDrop() {
-        //     const fromIndex = this.startIndex
-        //     const toIndex = this.dropIndex
-
-        //     const draggedElement = this.sortedCategories[fromIndex]
-
-        //     if (fromIndex != toIndex) {
-        //         // Set new index to dragged category
-        //         const reordered = [{ categoryId: draggedElement.id, index: toIndex }]
-
-        //         // If dragged category index is decreased, increase indexes of categories having a lower index
-        //         if (toIndex < fromIndex) {
-        //             this.sortedCategories.forEach((element, index) => {
-        //                 if (index >= toIndex && index < fromIndex) {
-        //                     reordered.push({ categoryId: element.id, index: index + 1 })
-        //                 }
-        //             })
-        //         }
-
-        //         // If dragged category index is increased, decrease indexes of categories having a higher index
-        //         else if (toIndex > fromIndex) {
-        //             this.sortedCategories.forEach((element, index) => {
-        //                 if (index > fromIndex && index <= toIndex) {
-        //                     reordered.push({ categoryId: element.id, index: index - 1 })
-        //                 }
-        //             })
-        //         }
-
-        //         try {
-        //             await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
-        //                 reordered,
-        //             })
-        //             this.$store.dispatch('notifications/pushToast', {
-        //                 message: this.$t('toasts.categories-reorder.success'),
-        //                 type: 'success',
-        //             })
-        //         } catch (error) {
-        //             this.$store.dispatch('notifications/pushToast', {
-        //                 message: `${this.$t('toasts.categories-reorder.error')} (${error})`,
-        //                 type: 'error',
-        //             })
-        //             console.error(error)
-        //         }
-        //         this.startIndex = null
-        //         this.dropIndex = null
-        //     }
-        // },
 
         close() {
             this.showMessage = false
@@ -354,5 +356,15 @@ export default {
 
 .flip-list-move {
     transition: transform 0.5s;
+}
+
+.re-ordering-screen {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-color: rgb(255 255 255 / 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
