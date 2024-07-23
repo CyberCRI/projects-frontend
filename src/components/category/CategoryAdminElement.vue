@@ -262,6 +262,7 @@ li {
 .drag-icon {
     display: inline-block;
     cursor: move;
+
     svg {
         width: 1.2em;
         height: 1.2em;

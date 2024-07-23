@@ -123,7 +123,7 @@ export default {
 
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.$store.getters['projectCategories/hierarchy']
         },
 
         hasSearch() {
