@@ -1,17 +1,16 @@
 <template>
     <li class="drop-down-menu-item">
-        <router-link
-            class="drop-down-menu-item-content"
-            :to="{ name: 'Category', params: { id: category.id } }"
-        >
-            <span class="label">{{ $filters.capitalize(category.name) }}</span>
-        </router-link>
+        <slot name="default" :category="category"></slot>
         <ul class="sub-list">
             <ProjectCategoriesDropdownElement
                 :category="child"
                 v-for="child in category.children"
                 :key="child.id"
-            />
+            >
+                <template #default="{ category: child_ }">
+                    <slot name="default" :category="child_"></slot>
+                </template>
+            </ProjectCategoriesDropdownElement>
         </ul>
     </li>
 </template>

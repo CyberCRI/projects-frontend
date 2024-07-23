@@ -5,8 +5,8 @@
         :class="{ 'is-open': open }"
         v-if="categories?.length"
     >
-        <button class="categories" @click="toggle_categories">
-            <span class="categories-btn">{{ $t('project.categories') }}</span>
+        <button type="button" class="categories" @click="toggle_categories">
+            <span class="categories-btn">{{ dropdownLabel }}</span>
             <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
         </button>
         <transition name="slide">
@@ -17,7 +17,11 @@
                             v-for="category in categories"
                             :key="category.id"
                             :category="category"
-                        />
+                        >
+                            <template #default="{ category: child }">
+                                <slot name="default" :category="child"></slot>
+                            </template>
+                        </ProjectCategoriesDropdownElement>
                     </ul>
                 </div>
             </div>
@@ -36,6 +40,13 @@ export default {
     components: {
         IconImage,
         ProjectCategoriesDropdownElement,
+    },
+
+    props: {
+        dropdownLabel: {
+            type: String,
+            required: true,
+        },
     },
 
     data() {
