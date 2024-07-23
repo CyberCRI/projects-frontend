@@ -28,7 +28,8 @@
                 :options="dragOptions"
                 item-key="id"
                 group="categories"
-                @end="updateCategoryTree"
+                @start="onDragStart"
+                @end="onDragEnd"
                 tag="ul"
                 data-parent-category=""
             >
@@ -36,12 +37,14 @@
                     <CategoryAdminElement
                         :key="category.id"
                         :category="category"
+                        :dragged-category="draggedCategory"
+                        :drop-target-category="dropTargetCategory"
                         :data-test="`category-${category.id}`"
                         class="category"
                         @edit-category="editCategory"
                         @add-sub-category="addCategory"
                         @see-category="goToCategory"
-                        @update-category-tree="updateCategoryTree"
+                        @update-category-tree="onDragEnd"
                     />
                 </template>
             </Sortable>
@@ -116,6 +119,8 @@ export default {
             categoryIndex: {},
             isLoading: true,
             reOrdering: false,
+            draggedCategory: null,
+            dropTargetCategory: null,
         }
     },
 
@@ -162,14 +167,18 @@ export default {
     },
 
     methods: {
-        async updateCategoryTree(event) {
+        onDragStart(event) {
+            this.draggedCategory = this.categoryIndex[event.item.dataset.categoryId]
+        },
+        async onDragEnd(event) {
             const categoryId = event.item.dataset.categoryId
             const oldParentId = event.from.dataset.parentCategory || null
             const newParentId = event.to.dataset.parentCategory || null
             const { oldIndex, newIndex } = event
 
             const category = this.categoryIndex[categoryId]
-            const newParentChildren = this.categoryIndex[newParentId]?.children || this.categories
+            const newParent = this.categoryIndex[newParentId] || null
+            const newParentChildren = newParent?.children || this.categories
             const oldParentChildren = this.categoryIndex[oldParentId]?.children || this.categories
 
             category.order_index = newIndex
@@ -210,10 +219,15 @@ export default {
 
                 await Promise.all([...newParentPromises, ...oldParentPromises])
                 await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                this.dropTargetCategory = newParent
             } catch (error) {
                 console.error(error)
             } finally {
                 this.reOrdering = false
+                this.draggedCategory = null
+                this.$nextTick(() => {
+                    this.dropTargetCategory = null
+                })
             }
         },
         addCategory(parentCategory = null) {

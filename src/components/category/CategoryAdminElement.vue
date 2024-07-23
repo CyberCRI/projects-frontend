@@ -2,7 +2,7 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
 
 const emit = defineEmits([
@@ -16,6 +16,16 @@ const props = defineProps({
     category: {
         type: Object,
         required: true,
+    },
+
+    draggedCategory: {
+        type: Object,
+        default: null,
+    },
+
+    dropTargetCategory: {
+        type: Object,
+        default: null,
     },
 })
 
@@ -44,6 +54,12 @@ function onDragStart(event) {
     }
 }
 
+function onDragOver() {
+    if (props.draggedCategory && props.category.id != props.draggedCategory.id) {
+        showChild.value = true
+    }
+}
+
 const isDraggedOver = ref(false)
 
 function onDragEnter() {
@@ -52,15 +68,25 @@ function onDragEnter() {
 function onDragLeave() {
     isDraggedOver.value = false
 }
+
+watch(
+    () => props.dropTargetCategory,
+    (newValue) => {
+        if (newValue && newValue.id == props.category.id) {
+            showChild.value = true
+        }
+    }
+)
 </script>
 <template>
     <li
         class="sub-list"
         :class="{ 'is-dragged-over': isDraggedOver }"
         @dragstart="onDragStart"
+        @dragover="onDragOver"
         :data-category-id="category.id"
-        :dragenter="onDragEnter"
-        :dragleave="onDragLeave"
+        @dragenter="onDragEnter"
+        @dragleave="onDragLeave"
     >
         <div class="top-list">
             <div class="texts" :class="{ clickable: hasChildren }" @click="showChild = !showChild">
@@ -129,6 +155,8 @@ function onDragLeave() {
                         v-show="showChild"
                         :key="child.id"
                         :category="child"
+                        :dragged-category="draggedCategory"
+                        :drop-target-category="dropTargetCategory"
                         class="nested-list"
                         @edit-category="emit('edit-category', $event)"
                         @add-sub-category="emit('add-sub-category', $event)"
