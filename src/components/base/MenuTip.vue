@@ -52,7 +52,7 @@ export default {
             openedMenuTip.value = null
         },
 
-        closeAfterClick(event) {
+        closeAfterClick() {
             this.$nextTick(() => {
                 this.close()
             })
