@@ -40,12 +40,41 @@ jobs:
         VITE_APP_WSS_HOST=$DOCKER_INJECT_VITE_APP_WSS_HOST
         VITE_APP_VERSION=$DOCKER_INJECT_VITE_APP_VERSION
         VITE_APP_HOME=$DOCKER_INJECT_VITE_APP_HOME
+        VITE_APP_SENTRY_ENABLED=$DOCKER_INJECT_VITE_APP_SENTRY_ENABLED
+        VITE_APP_SENTRY_DSN=$DOCKER_INJECT_VITE_APP_SENTRY_DSN
+        VITE_APP_SENTRY_RELEASE=$DOCKER_INJECT_VITE_APP_SENTRY_RELEASE
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       submodules-app-id: ${{ secrets.INFRA_BOT_APP_ID }}
       submodules-app-installation-id: ${{ secrets.INFRA_BOT_APP_INSTALLATION_ID }}
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
+
+  upload-source-map:
+    runs-on: wlc-upload-source-map-runner
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Install sentry cli
+        run: yarn add @sentry/cli
+      - name: Login to sentry
+        run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
+      - name: Build with source map
+        run: NODE_OPTIONS=--max_old_space_size=4096 yarn build:sourcemaps
+      - name: Upload source map
+        run: |
+          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+          --project projects-frontend \
+          --release ${{ github.sha }} \
+          --url-prefix '/' \
+          dist
 
   tag-deploy:
     needs:
