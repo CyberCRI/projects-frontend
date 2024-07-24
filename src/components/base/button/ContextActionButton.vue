@@ -3,6 +3,7 @@
         :class="[{ secondary, 'no-border': noBorder }, actionIcon]"
         type="button"
         class="context-action-button"
+        :disabled="disabled"
     >
         <span class="icon-wrapper">
             <IconImage :name="actionIcon" class="action-icon" />
@@ -38,6 +39,10 @@ export default {
             type: String,
             default: '',
         },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>
@@ -62,6 +67,15 @@ export default {
     gap: 0.5rem;
     appearance: none;
     border-radius: 50%;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        .action-icon {
+            animation: none !important;
+        }
+    }
 
     .action-label {
         color: $primary-dark;

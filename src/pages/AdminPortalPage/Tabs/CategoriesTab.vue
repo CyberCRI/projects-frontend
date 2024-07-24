@@ -45,6 +45,7 @@
                         @add-sub-category="addCategory"
                         @see-category="goToCategory"
                         @update-category-tree="onDragEnd"
+                        @delete-category="categoryToDelete = category"
                     />
                 </template>
             </Sortable>
@@ -72,6 +73,18 @@
             @close-modal="closeCategoryDrawer"
             @submit-category="submitCategory"
         />
+
+        <ConfirmModal
+            v-if="categoryToDelete"
+            :content="
+                $t('admin.portal.categories.delete-category-description', {
+                    categoryName: categoryToDelete.name,
+                })
+            "
+            :title="$t('admin.portal.categories.delete-category')"
+            @cancel="categoryToDelete = null"
+            @confirm="deleteCategory"
+        />
     </div>
 </template>
 
@@ -89,6 +102,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import { toRaw } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
 import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 export default {
     name: 'CategoriesTab',
 
@@ -105,6 +119,7 @@ export default {
         IconImage,
         Sortable,
         LoaderSimple,
+        ConfirmModal,
     },
 
     data() {
@@ -121,6 +136,7 @@ export default {
             reOrdering: false,
             draggedCategory: null,
             dropTargetCategory: null,
+            categoryToDelete: null,
         }
     },
 
@@ -303,6 +319,15 @@ export default {
 
         close() {
             this.showMessage = false
+        },
+
+        async deleteCategory() {
+            // TODO: implement deletion of category when we have project count
+            this.$store.dispatch('notifications/pushToast', {
+                message: this.$t('admin.portal.categories.delete-category-noop'),
+                type: 'error',
+            })
+            this.categoryToDelete = null
         },
     },
 }

@@ -10,6 +10,7 @@ const emit = defineEmits([
     'add-sub-category',
     'see-category',
     'update-category-tree',
+    'delete-category',
 ])
 
 const props = defineProps({
@@ -68,6 +69,11 @@ function onDragEnter() {
 function onDragLeave() {
     isDraggedOver.value = false
 }
+
+const canDelete = computed(() => {
+    // TODO also check if has projects when available
+    return !hasChildren.value
+})
 
 watch(
     () => props.dropTargetCategory,
@@ -132,6 +138,7 @@ watch(
                         @click.stop.prevent="emit('add-sub-category', category)"
                         :action-label="$t('category.add-sub-category')"
                     />
+
                     <ContextActionButton
                         action-icon="Eye"
                         class="edit-btn small"
@@ -139,6 +146,21 @@ watch(
                         no-border
                         @click.stop.prevent="emit('see-category', category)"
                         :action-label="$t('common.see')"
+                    />
+
+                    <ContextActionButton
+                        action-icon="TrashCanOutline"
+                        class="edit-btn small"
+                        secondary
+                        no-border
+                        :disabled="!canDelete"
+                        :title="
+                            canDelete
+                                ? null
+                                : $t('admin.portal.categories.delete-category-has-children')
+                        "
+                        @click.stop.prevent="canDelete && emit('delete-category', category)"
+                        :action-label="$t('common.delete')"
                     />
                 </ContextActionMenu>
             </div>
@@ -165,6 +187,7 @@ watch(
                         @add-sub-category="emit('add-sub-category', $event)"
                         @see-category="emit('see-category', $event)"
                         @update-category-tree="emit('update-category-tree', $event)"
+                        @delete-category="emit('delete-category', $event)"
                     />
                 </template>
             </Sortable>

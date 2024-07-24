@@ -181,7 +181,9 @@
                 "display-projects": "Display projects",
                 "hide-projects": "Hide projects",
                 "delete-category": "Delete category",
-                "delete-category-description": "Are you sure you want to delete this category? This action cannot be undone."
+                "delete-category-description": "Are you sure you want to delete the '{categoryName}' category? This action cannot be undone.",
+                "delete-category-has-children": "This category has sub categories and/or projects. Remove them first.",
+                "delete-category-noop": "Deletion of category is currently not possible"
             },
             "chat": "Chat platform (Connected view)",
             "events": "Events",

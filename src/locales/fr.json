@@ -181,7 +181,9 @@
                 "display-projects": "Afficher les projets",
                 "hide-projects": "Masquer les projets",
                 "delete-category": "Supprimer la catégorie",
-                "delete-category-description": "Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée"
+                "delete-category-description": "Voulez-vous vraiment supprimer la catégorie '{categoryName}' ? Cette action ne peut pas être annulée",
+                "delete-category-has-children": "Cette catégorie contient des sous-catégories et/ou des projets. Déplacez les pour pouvoir la supprimer.",
+                "delete-category-noop": "La suppression de categorie n'est pas possible pour l'instant"
             },
             "chat": "Plateforme de discussion (vue connectée)",
             "events": "Événements",
