@@ -7,6 +7,7 @@
                 v-show="isOpen"
                 :class="{ 'shadowed-box': isOpen, 'is-open': isOpen }"
                 v-click-outside="close"
+                @click.capture="closeAfterClick"
             >
                 <ContextActionButton
                     action-icon="Close"
@@ -50,6 +51,14 @@ export default {
 
         close() {
             openedMenuTip.value = null
+        },
+
+        closeAfterClick(event) {
+            if (event.target.closest('.menu-tip .content-wrapper')) {
+                this.$nextTick(() => {
+                    this.close()
+                })
+            }
         },
     },
 
