@@ -143,6 +143,12 @@ export default {
             transform-origin: bottom center;
         }
     }
+    &.TrashCanOutline:hover {
+        .action-icon {
+            animation: trash-anim 1.2s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+    }
 }
 
 .action-label {
@@ -243,6 +249,31 @@ export default {
 
     100% {
         transform: scaleX(1);
+    }
+}
+
+@keyframes trash-anim {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.3);
+    }
+
+    40% {
+        transform: scaleY(1.3);
+    }
+
+    60% {
+        transform: scaleY(0.8);
+    }
+    80% {
+        transform: scaleY(1.15);
+    }
+
+    100% {
+        transform: scaleY(1);
     }
 }
 </style>
