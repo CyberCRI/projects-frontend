@@ -1,6 +1,6 @@
 <script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 
 const emit = defineEmits(['pick-category'])
 
@@ -13,27 +13,47 @@ const props = defineProps({
         type: Object,
         default: null,
     },
+    selectedCategories: {
+        type: Object,
+        default: null,
+    },
+    type: {
+        type: String,
+        default: 'radio',
+    },
 })
 
 const isSelected = ref(false)
 
-watch(
-    () => props.selectedCategory,
+watchEffect(
     () => {
-        isSelected.value = props.selectedCategory?.id === props.category.id
-    }
+        isSelected.value =
+            props.selectedCategory?.id === props.category.id ||
+            props.selectedCategories?.some(({ id }) => id == props.category.id)
+    },
+    { deep: true }
 )
 
 const hasChildren = computed(() => {
     return props.category.children?.length
 })
 const showChild = ref(false)
-watch(
-    () => props.selectedCategory,
+watchEffect(
     () => {
-        if (props.selectedCategory?.hierarchy.find(({ id }) => id == props.category.id))
+        if (
+            props.selectedCategory?.hierarchy?.find(
+                ({ id: parentId }) => parentId == props.category.id
+            ) ||
+            props.selectedCategories?.some(
+                (selectedCategory) =>
+                    !!selectedCategory?.hierarchy?.find(
+                        ({ id: parentId }) => parentId == props.category.id
+                    )
+            )
+        )
             showChild.value = true
-    }
+    },
+    { deep: true }
 )
 
 const chevronImage = computed(() => {
@@ -41,7 +61,7 @@ const chevronImage = computed(() => {
 })
 </script>
 <template>
-    <li class="sub-list" :data-category-id="category.id">
+    <li class="sub-list category-picker-element" :data-category-id="category.id">
         <div class="top-list">
             <div class="texts" :class="{ clickable: hasChildren }">
                 <div
@@ -57,9 +77,9 @@ const chevronImage = computed(() => {
 
                 <div class="control">
                     <input
-                        :ref="isSelected"
+                        :ref="isSelected ? 'selected' : 'unselected'"
                         name="category_picker"
-                        type="radio"
+                        :type="type"
                         :checked="isSelected"
                         @input="emit('pick-category', category)"
                     />
@@ -84,8 +104,10 @@ const chevronImage = computed(() => {
                     :key="child.id"
                     :category="child"
                     :selected-category="selectedCategory"
+                    :selected-categories="selectedCategories"
                     @pick-category="emit('pick-category', $event)"
                     class="nested-list"
+                    :type="type"
                 />
             </ul>
         </div>
@@ -190,6 +212,34 @@ input[type='radio']::before {
 }
 
 input[type='radio']:checked::before {
+    transform: scale(1);
+}
+
+input[type='checkbox'] {
+    appearance: none;
+    background-color: $white;
+    margin: 0;
+    font: inherit;
+    width: pxToRem(20px);
+    height: pxToRem(20px);
+    border: $border-width-s solid $primary-dark;
+    border-radius: $border-radius-xs;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+input[type='checkbox']::before {
+    content: '';
+    width: pxToRem(12px);
+    height: pxToRem(12px);
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em $primary-dark;
+}
+
+input[type='checkbox']:checked::before {
     transform: scale(1);
 }
 </style>
