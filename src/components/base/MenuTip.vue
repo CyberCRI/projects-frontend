@@ -7,7 +7,6 @@
                 v-show="isOpen"
                 :class="{ 'shadowed-box': isOpen, 'is-open': isOpen }"
                 v-click-outside="close"
-                @click.capture="closeAfterClick"
             >
                 <ContextActionButton
                     action-icon="Close"
@@ -16,7 +15,7 @@
                     secondary
                     no-border
                 />
-                <div class="content-wrapper">
+                <div class="content-wrapper" @click.capture="closeAfterClick">
                     <slot name="custom-content"></slot>
                 </div>
             </div>
@@ -54,11 +53,9 @@ export default {
         },
 
         closeAfterClick(event) {
-            if (event.target.closest('.menu-tip .content-wrapper')) {
-                this.$nextTick(() => {
-                    this.close()
-                })
-            }
+            this.$nextTick(() => {
+                this.close()
+            })
         },
     },
 
