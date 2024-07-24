@@ -33,20 +33,19 @@ export default {
     font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
     border: 0 none;
     appearance: none;
+    background-color: white;
+    transition: transform 200ms ease-in-out;
+    width: auto;
 
     .label {
         transform-origin: left center;
-        transition: transform 200ms ease-in-out;
         font-weight: 400;
         font-size: $font-size-m;
     }
 
     &:hover {
         background-color: $primary-light;
-
-        .label {
-            transform: scaleX(1.1);
-        }
+        transform: scaleX(1.1);
     }
 }
 </style>

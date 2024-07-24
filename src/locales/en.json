@@ -1376,6 +1376,7 @@
             "edit-project": "Edit project",
             "edit-title": "Edit title",
             "project-category": "Project category",
+            "select-category": "Pick a category",
             "purpose-label": "Project's goal",
             "purpose-placeholder": "What is the goal of your project?",
             "resize-image": "Reframe",
