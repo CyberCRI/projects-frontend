@@ -234,10 +234,6 @@ li {
     fill: $primary-dark;
 }
 
-.clickable {
-    cursor: pointer;
-}
-
 .grey-color {
     fill: $lighter-gray;
 }

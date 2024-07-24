@@ -448,7 +448,7 @@ export default {
         },
 
         categoryForCurrentOrganization() {
-            return this.project.categories.find(
+            return this.project?.categories?.find(
                 (category) =>
                     category.organization === this.$store.getters['organizations/current'].code
             )

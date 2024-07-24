@@ -67,7 +67,7 @@ export default {
         },
 
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.$store.getters['projectCategories/hierarchy']
         },
 
         projectTabs() {
