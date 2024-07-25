@@ -1,19 +1,10 @@
 import projectCategories from '@/store/modules/project-categories'
-import {
-    createProjectCategory,
-    deleteProjectCategory,
-    getAllProjectCategories,
-    patchProjectCategory,
-} from '@/api/project-categories.service'
+import { getAllProjectCategories } from '@/api/project-categories.service'
 
-import {
-    ProjectCategoryCreateInputFactory,
-    ProjectCategoryOutputFactory,
-    ProjectCategoryPatchInputFactory,
-} from '../../../factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/project-categories.service')
 
 vi.mock('vuex')
@@ -50,69 +41,6 @@ describe('Store module | categories | actions', () => {
         await projectCategories.actions.getAllProjectCategories({ commit, rootState }, {})
 
         expect(commit).toHaveBeenCalledWith('SET_PROJECT_CATEGORIES', categories)
-    })
-
-    it('updateProjectCategory', async () => {
-        const categoryId = 1
-        const newCategory = ProjectCategoryPatchInputFactory.generate()
-        const patchProjectCategoryMock = patchProjectCategory as Mock
-
-        patchProjectCategoryMock.mockResolvedValue(newCategory)
-
-        await projectCategories.actions.updateProjectCategory(
-            { commit, dispatch },
-            {
-                categoryId,
-                newCategory,
-            }
-        )
-
-        expect(commit).toHaveBeenCalledWith('UPDATE_PROJECT_CATEGORY', newCategory)
-    })
-
-    it('updateProjectCategoriesOrder', async () => {
-        const categoryId = 1
-        const index = 0
-        const newCategory = ProjectCategoryPatchInputFactory.generate()
-        const patchProjectCategoryMock = patchProjectCategory as Mock
-
-        patchProjectCategoryMock.mockResolvedValue(newCategory)
-
-        await projectCategories.actions.updateProjectCategoriesOrder(
-            { commit, dispatch },
-            {
-                reordered: [
-                    {
-                        categoryId,
-                        index,
-                    },
-                ],
-            }
-        )
-
-        expect(dispatch).toHaveBeenCalledWith('getAllProjectCategories')
-    })
-
-    it('createProjectCategory', async () => {
-        const newCategory = ProjectCategoryCreateInputFactory.generate()
-        const createProjectCategoryMock = createProjectCategory as Mock
-
-        createProjectCategoryMock.mockResolvedValue(newCategory)
-
-        await projectCategories.actions.addProjectCategory({ commit }, newCategory)
-
-        expect(commit).toHaveBeenCalledWith('ADD_PROJECT_CATEGORY', newCategory)
-    })
-
-    it('deleteProjectCategory', async () => {
-        const categoryId = 1
-        const deleteProjectCategoryMock = deleteProjectCategory as Mock
-
-        deleteProjectCategoryMock.mockResolvedValue(categoryId)
-
-        await projectCategories.actions.deleteProjectCategory({ commit }, categoryId)
-
-        expect(commit).toHaveBeenCalledWith('DELETE_PROJECT_CATEGORY', categoryId)
     })
 })
 

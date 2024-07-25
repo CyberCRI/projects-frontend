@@ -33,6 +33,8 @@ const ProjectCategoryFactory = createFactory<ProjectCategoryOutput & ProjectCate
         organization: OrganizationOutputFactory.generate(),
         tags: TagFactory.generateMany(2),
         wikipedia_tags_ids: TagFactory.generateMany(2).map((tag) => <number>tag.id),
+        children: [],
+        hierarchy: [],
     })
 )
 

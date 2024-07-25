@@ -1,12 +1,16 @@
 <template>
     <div class="whole-content">
-        <div class="edit-button-ctn">
+        <div class="top-ctn">
+            <div class="breadcrumbs-ctn">
+                <BreadCrumbs :breadcrumbs="categoryHierarchy || []" />
+            </div>
             <LinkButton
                 v-if="!loading && canEditProject"
                 :label="$t('project.edit')"
                 btn-icon="Pen"
                 @click="editProject"
                 data-test="header-project-button"
+                class="edit-btn"
             />
         </div>
         <div :class="{ loading, moreInfo }" class="project-header-ctn">
@@ -68,19 +72,6 @@
                         </div>
                     </div>
                     <div class="text-content">
-                        <div
-                            v-if="project && project.categories && project.categories.length"
-                            class="breadcrumb-desktop"
-                        >
-                            <SkeletonComponent
-                                v-if="loading"
-                                class="skeleton-block"
-                                height="60px"
-                            />
-                            <div v-else class="breadcrumb">
-                                {{ breadCrumb }}
-                            </div>
-                        </div>
                         <SkeletonComponent
                             v-if="loading"
                             class="skeleton-block"
@@ -218,20 +209,6 @@
                             </TransitionGroup>
                         </div>
 
-                        <div
-                            v-if="project && project.categories && project.categories.length"
-                            class="breadcrumb-mobile"
-                        >
-                            <SkeletonComponent
-                                v-if="loading"
-                                class="skeleton-block"
-                                height="46px"
-                            />
-                            <div v-else class="breadcrumb">
-                                {{ breadCrumb }}
-                            </div>
-                        </div>
-
                         <div class="visibility-mobile">
                             <div v-if="project && project.publication_status" class="visibility">
                                 <InfoSentence
@@ -353,6 +330,7 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import { postFollow as addFollow, deleteFollow } from '@/api/follows.service'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 export default {
     name: 'ProjectHeader',
@@ -368,6 +346,7 @@ export default {
         CroppedImage,
         InfoSentence,
         LinkButton,
+        BreadCrumbs,
     },
 
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
@@ -467,18 +446,40 @@ export default {
             }
             return null
         },
-        breadCrumb() {
-            let breadcrumb = '# '
-            let start = true
-            let ret = this.constructString(this.project.categories, 'name')
-            for (let word = 0; word < ret.length; word++) {
-                if (!start) {
-                    breadcrumb += '; '
-                }
-                breadcrumb += ret[word]
-                start = false
-            }
-            return breadcrumb
+
+        categoryForCurrentOrganization() {
+            return this.project?.categories?.find(
+                (category) =>
+                    category.organization === this.$store.getters['organizations/current'].code
+            )
+        },
+
+        categoryHierarchy() {
+            return [
+                {
+                    name: this.$t('home.home'),
+                    route: { name: 'HomeRoot' },
+                },
+                {
+                    name: this.$t('category.title'),
+                    route: { name: 'Categories' },
+                },
+                ...(this.categoryForCurrentOrganization?.hierarchy || []).map((cat) => ({
+                    name: cat.name,
+                    route: { name: 'Category', params: { id: cat.id } },
+                })),
+                ...(this.categoryForCurrentOrganization
+                    ? [
+                          {
+                              name: this.categoryForCurrentOrganization.name,
+                              route: {
+                                  name: 'Category',
+                                  params: { id: this.categoryForCurrentOrganization.id },
+                              },
+                          },
+                      ]
+                    : []),
+            ]
         },
         similarProjectStr() {
             let nb = this.similarProjects ? this.similarProjects.length : 0
@@ -734,16 +735,20 @@ export default {
     display: block !important;
 }
 
-.edit-button-ctn {
+.top-ctn {
     margin-top: $space-l;
     padding-bottom: $space-l;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 
     @media screen and (max-width: $min-tablet) {
         margin-bottom: $space-l;
         margin-top: unset;
+    }
+
+    .edit-btn {
+        margin-left: auto;
     }
 }
 
@@ -917,14 +922,12 @@ export default {
 
         .img-position,
         .tag-list-mobile,
-        .breadcrumb-mobile,
         .more-info-block-mobile,
         .visibility-mobile {
             display: none;
         }
 
         .tag-list-desktop,
-        .breadcrumb-desktop,
         .more-info-block-desktop,
         .visibility-desktop {
             display: block;
@@ -1312,7 +1315,6 @@ export default {
         .content-ctn .main-info-ctn .overflowing-badges .quantity-text-badge,
         .creation-date,
         .content-ctn .contact-ctn .right .social-icon-ctn,
-        .breadcrumb-desktop,
         .tag-list-desktop,
         .img-ctn,
         .visibility-desktop {
@@ -1330,10 +1332,6 @@ export default {
 
         .img-position {
             display: flex;
-        }
-
-        .breadcrumb-mobile {
-            display: block;
         }
 
         .content-ctn {

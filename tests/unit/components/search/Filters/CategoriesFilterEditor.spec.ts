@@ -9,7 +9,7 @@ function buildStore() {
             projectCategories: {
                 namespaced: true,
                 getters: {
-                    all: () => ProjectCategoryOutputFactory.generateMany(8),
+                    hierarchy: () => ProjectCategoryOutputFactory.generateMany(8),
                 },
             },
         },
@@ -33,7 +33,7 @@ describe('CategoriesFilterEditor.vue', () => {
 
     it('should display category buttons', () => {
         const wrapper = factory({ modelValue: [] })
-        const buttonContainers = wrapper.findAll('.category-card-ctn')
+        const buttonContainers = wrapper.findAll('.category-picker-element')
 
         expect(buttonContainers.length).toBe(8)
     })
@@ -42,8 +42,8 @@ describe('CategoriesFilterEditor.vue', () => {
         const wrapper = factory({ modelValue: [], triggerUpdate: true })
         const vm: any = wrapper.vm
 
-        const buttonContainer = wrapper.find('.category-card-ctn')
-        buttonContainer.trigger('click')
+        const buttonContainer = wrapper.find('.category-picker-element input')
+        buttonContainer.trigger('input')
         await wrapper.vm.$nextTick()
         expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     })

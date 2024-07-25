@@ -2,7 +2,8 @@
     <button
         :class="[{ secondary, 'no-border': noBorder }, actionIcon]"
         type="button"
-        class="context-action-button shadow-box"
+        class="context-action-button"
+        :disabled="disabled"
     >
         <span class="icon-wrapper">
             <IconImage :name="actionIcon" class="action-icon" />
@@ -38,6 +39,10 @@ export default {
             type: String,
             default: '',
         },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>
@@ -62,6 +67,15 @@ export default {
     gap: 0.5rem;
     appearance: none;
     border-radius: 50%;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        .action-icon {
+            animation: none !important;
+        }
+    }
 
     .action-label {
         color: $primary-dark;
@@ -115,6 +129,27 @@ export default {
             transform-origin: center center;
         }
     }
+
+    &.Eye:hover {
+        .action-icon {
+            animation: open-eye 1s ease-in-out infinite;
+            transform-origin: center center;
+        }
+    }
+
+    &.Plus:hover {
+        .action-icon {
+            animation: scale-plus 1s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+    }
+
+    &.TrashCanOutline:hover {
+        .action-icon {
+            animation: trash-anim 1.2s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+    }
 }
 
 .action-label {
@@ -130,6 +165,42 @@ export default {
 
 .context-action-button.secondary :deep(svg) {
     fill: $primary-dark;
+}
+
+@keyframes open-eye {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.5);
+    }
+
+    65% {
+        transform: scaleY(1.3);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes scale-plus {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.3, 1);
+    }
+
+    60% {
+        transform: scale(1, 1.3);
+    }
+
+    90% {
+        transform: scale(1, 1);
+    }
 }
 
 @keyframes rotate-pen {
@@ -179,6 +250,32 @@ export default {
 
     100% {
         transform: scaleX(1);
+    }
+}
+
+@keyframes trash-anim {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.3);
+    }
+
+    40% {
+        transform: scaleY(1.3);
+    }
+
+    60% {
+        transform: scaleY(0.8);
+    }
+
+    80% {
+        transform: scaleY(1.15);
+    }
+
+    100% {
+        transform: scaleY(1);
     }
 }
 </style>

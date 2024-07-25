@@ -2,24 +2,26 @@
     <MenuTip>
         <template #custom-content>
             <div class="context-action-menu">
-                <ContextActionButton
-                    action-icon="Pen"
-                    class="edit-btn"
-                    secondary
-                    no-border
-                    @click.stop.prevent="$emit('edit')"
-                    v-if="canEdit"
-                    :action-label="$t('common.edit')"
-                />
-                <ContextActionButton
-                    action-icon="Close"
-                    class="remove-btn"
-                    secondary
-                    no-border
-                    @click.stop.prevent="$emit('delete')"
-                    v-if="canDelete"
-                    :action-label="$t('common.delete')"
-                />
+                <slot>
+                    <ContextActionButton
+                        action-icon="Pen"
+                        class="edit-btn"
+                        secondary
+                        no-border
+                        @click.stop.prevent="$emit('edit')"
+                        v-if="canEdit"
+                        :action-label="$t('common.edit')"
+                    />
+                    <ContextActionButton
+                        action-icon="Close"
+                        class="remove-btn"
+                        secondary
+                        no-border
+                        @click.stop.prevent="$emit('delete')"
+                        v-if="canDelete"
+                        :action-label="$t('common.delete')"
+                    />
+                </slot>
             </div>
         </template>
         <ContextActionButton secondary no-border action-icon="DotsHorizontal" class="remove-btn" />

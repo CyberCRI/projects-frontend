@@ -33,6 +33,16 @@
         </header>
 
         <div class="category-body page-section-extra-wide">
+            <div class="category-children" v-if="sortedChildren.length">
+                <RouterLink
+                    :to="{ name: 'Category', params: { id: child.id } }"
+                    v-for="child in sortedChildren"
+                    class="category-child shadow-box"
+                    :key="child.id"
+                >
+                    <h3 class="child-title">{{ child.name }}</h3>
+                </RouterLink>
+            </div>
             <div class="category-search-header">
                 <LpiButton
                     v-if="canCreateProject"
@@ -119,6 +129,10 @@ export default {
     },
 
     computed: {
+        sortedChildren() {
+            return [...this.category.children]?.sort((a, b) => a.order_index - b.oreder_index) || []
+        },
+
         ...mapGetters({
             getProjectCategoryById: 'projectCategories/getOneById',
         }),
@@ -148,6 +162,10 @@ export default {
                     name: this.$t('category.title'),
                     route: { name: 'Categories' },
                 },
+                ...(this.category.hierarchy || []).map((cat) => ({
+                    name: cat.name,
+                    route: { name: 'Category', params: { id: cat.id } },
+                })),
                 {
                     name: this.category.name,
                     route: { name: 'Category', params: { id: this.category.id } },
@@ -323,6 +341,28 @@ export default {
 
     .search-block.inline {
         padding-right: 0;
+    }
+}
+
+.category-children {
+    display: flex;
+    gap: 1rem;
+    padding: $space-2xl;
+
+    .category-child {
+        display: inline-block;
+        flex-basis: 20rem;
+        padding: $space-m;
+        border: $border-width-s solid $primary;
+        border-radius: $border-radius-s;
+        background-color: $white;
+
+        .child-title {
+            font-weight: 700;
+            color: $almost-black;
+            font-size: $font-size-l;
+            line-height: 1.4;
+        }
     }
 }
 </style>

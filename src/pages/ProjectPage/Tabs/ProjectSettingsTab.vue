@@ -93,28 +93,32 @@
                             }}</a>
                         </li>
                     </ul>
-                    <template v-else>
-                        <div
-                            v-if="categories.length > 0 && currentOrgSelected"
-                            class="categories-ctn"
-                        >
-                            <div v-if="isLoading" class="loader-block">
-                                <LpiLoader type="simple" class="loader" />
-                            </div>
-                            <div v-for="category in categories" :key="category.id">
-                                <div class="checkbox-item">
-                                    <label class="form-control">
-                                        <input
-                                            v-model="selectedCategory.id"
-                                            :value="category.id"
-                                            type="radio"
-                                            @change="setCategory(category)"
-                                        />{{ category.name }}</label
-                                    >
-                                </div>
-                            </div>
+                    <div v-else-if="categories.length > 0" class="categories-ctn">
+                        <div v-if="isLoading" class="loader-block">
+                            <LpiLoader type="simple" class="loader" />
                         </div>
-                    </template>
+                        <!--div v-for="category in categories" :key="category.id">
+                            <div class="checkbox-item">
+                                <label class="form-control">
+                                    <input
+                                        v-model="selectedCategory.id"
+                                        :value="category.id"
+                                        type="radio"
+                                        @change="setCategory(category)"
+                                    />{{ category.name }}</label
+                                >
+                            </div>
+                        </div-->
+                        <ul>
+                            <CategoryPicker
+                                v-for="category in categories"
+                                :key="category.id"
+                                :category="category"
+                                :selected-category="selectedCategory"
+                                @pick-category="setCategory($event)"
+                            />
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -222,7 +226,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
-
+import CategoryPicker from '@/components/category/CategoryPicker.vue'
 export default {
     name: 'ProjectSettingsTab',
 
@@ -240,6 +244,7 @@ export default {
         ReportDrawer,
         ConfirmModal,
         ReviewDrawer,
+        CategoryPicker,
     },
 
     props: {
@@ -279,7 +284,14 @@ export default {
         }))
 
         this.selectedCategory =
-            this.project.categories.length > 0 ? { ...this.project.categories[0] } : {}
+            this.project.categories.length > 0
+                ? {
+                      ...this.project.categories.find(
+                          (cat) =>
+                              cat.organization == this.$store.getters['organizations/current'].code
+                      ),
+                  }
+                : {}
     },
 
     computed: {
@@ -730,27 +742,8 @@ export default {
         }
     }
 
-    .organization-ctn,
-    .categories-ctn {
-        position: relative;
-        display: flex;
+    .organization-ctn {
         flex-wrap: wrap;
-
-        /* Loader */
-        .loader-block {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgb(255 255 255 / 30%);
-            z-index: 1;
-
-            .loader {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-        }
 
         .checkbox-item {
             border: 1px solid $primary-dark;
@@ -773,6 +766,38 @@ export default {
                 margin: 0;
                 cursor: pointer;
                 margin-left: $space-s;
+            }
+        }
+    }
+
+    .categories-ctn {
+        position: relative;
+        display: flex;
+        justify-content: stretch;
+
+        > ul {
+            flex-grow: 1;
+        }
+    }
+
+    .organization-ctn,
+    .categories-ctn {
+        position: relative;
+        display: flex;
+
+        /* Loader */
+        .loader-block {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(255 255 255 / 30%);
+            z-index: 1;
+
+            .loader {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         }
     }

@@ -8,7 +8,7 @@ const store = {
         projectCategories: {
             namespaced: true,
             getters: {
-                allOrderedByOrderId: vi.fn().mockReturnValue([]),
+                hierarchy: vi.fn().mockReturnValue([]),
             },
         },
         organizations: {

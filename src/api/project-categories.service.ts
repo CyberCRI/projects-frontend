@@ -67,6 +67,20 @@ export async function getAllProjectCategories(
     ).data
 }
 
+export async function getProjectCategoriesHierarchy(
+    rootId: number,
+    params: ProjectCategoryParams
+): Promise<APIResponseList<ProjectCategoryOutput>> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/category/${rootId}/hierarchy/`,
+            {
+                params,
+            }
+        )
+    ).data
+}
+
 export async function postProjectCategoryBackground({
     id,
     body,
