@@ -143,6 +143,7 @@ export default {
             transform-origin: bottom center;
         }
     }
+
     &.TrashCanOutline:hover {
         .action-icon {
             animation: trash-anim 1.2s ease-in-out infinite;
@@ -268,6 +269,7 @@ export default {
     60% {
         transform: scaleY(0.8);
     }
+
     80% {
         transform: scaleY(1.15);
     }
