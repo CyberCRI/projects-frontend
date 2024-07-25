@@ -92,6 +92,7 @@ async function main(): Promise<void> {
     const app = createApp(App)
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
+    console.log(SENTRY_ENABLED)
     if (SENTRY_ENABLED) {
         const sentry = Sentry.init({
             app,
