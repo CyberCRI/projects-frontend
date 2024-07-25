@@ -93,7 +93,7 @@ async function main(): Promise<void> {
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {
-        Sentry.init({
+        const sentry = Sentry.init({
             app,
             dsn: import.meta.env.VITE_APP_SENTRY_DSN,
             integrations: [
@@ -114,6 +114,8 @@ async function main(): Promise<void> {
             replaysOnErrorSampleRate: 1.0,
             release: import.meta.env.VITE_APP_SENTRY_RELEASE,
         })
+        console.log('Sentry enabled')
+        console.log(sentry)
     }
 
     // Display errors / warnings
