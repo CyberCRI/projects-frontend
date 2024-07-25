@@ -1,29 +1,58 @@
 <template>
     <div class="categories-tab">
-        <LpiSnackbar class="info-snackbar" icon="QuestionMark" type="info">
-            <div v-html="$t('category.info')"></div>
-        </LpiSnackbar>
+        <div class="header">
+            <div class="notices">
+                <p>
+                    {{ $t('category.info-organize') }}<br />
+                    {{ $t('category.info-limit') }}
+                </p>
+                <p>
+                    {{ $t('category.info-howto') }}
+                    (<IconImage class="icon-tip" name="FileTreeOutline" />)
+                </p>
+            </div>
+            <div class="actions">
+                <LinkButton
+                    btn-icon="Plus"
+                    :label="$t('admin.portal.categories.add')"
+                    @click="addCategory(null)"
+                />
+            </div>
+        </div>
 
         <div class="categories-container">
             <LpiLoader v-if="isLoading" class="loader" type="simple" />
-            <draggable v-if="computedSortedCategories" :list="sortedCategories" :move="change">
-                <Category
-                    v-for="(category, index) in sortedCategories"
-                    :key="category.id"
-                    :category="category"
-                    :data-test="`category-${category.id}`"
-                    class="category"
-                    draggable
-                    editable
-                    size="small"
-                    @click="goToCategory(category)"
-                    @drop="onDrop($event, index)"
-                    @edit-category="editCategory(category)"
-                />
-            </draggable>
+            <Sortable
+                v-if="categories.length"
+                :list="categories"
+                :options="dragOptions"
+                item-key="id"
+                group="categories"
+                @start="onDragStart"
+                @end="onDragEnd"
+                tag="ul"
+                data-parent-category=""
+            >
+                <template #item="{ element: category }">
+                    <CategoryAdminElement
+                        :key="category.id"
+                        :category="category"
+                        :dragged-category="draggedCategory"
+                        :drop-target-category="dropTargetCategory"
+                        :data-test="`category-${category.id}`"
+                        class="category"
+                        @edit-category="editCategory"
+                        @add-sub-category="addCategory"
+                        @see-category="goToCategory"
+                        @update-category-tree="onDragEnd"
+                        @delete-category="categoryToDelete = category"
+                    />
+                </template>
+            </Sortable>
         </div>
-
-        <LpiButton :label="$t('admin.portal.categories.add')" @click="addCategory" />
+        <div v-if="reOrdering" class="re-ordering-screen">
+            <LoaderSimple />
+        </div>
 
         <LpiSnackbar
             v-if="showMessage"
@@ -39,10 +68,22 @@
         <CategoryDrawer
             v-if="categoryDrawerOpened"
             :is-opened="categoryDrawerOpened"
-            :add-mode="addMode"
             :edited-category="editedCategory"
+            :parent-category="parentCategory"
             @close-modal="closeCategoryDrawer"
             @submit-category="submitCategory"
+        />
+
+        <ConfirmModal
+            v-if="categoryToDelete"
+            :content="
+                $t('admin.portal.categories.delete-category-description', {
+                    categoryName: categoryToDelete.name,
+                })
+            "
+            :title="$t('admin.portal.categories.delete-category')"
+            @cancel="categoryToDelete = null"
+            @confirm="deleteCategory"
         />
     </div>
 </template>
@@ -51,13 +92,17 @@
 import imageMixin from '@/mixins/imageMixin.ts'
 import formatHtml from '@/mixins/formatHtml.ts'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import Category from '@/components/category/CategoryCard.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import { postProjectCategoryBackground } from '@/api/project-categories.service'
-import { VueDraggableNext } from 'vue-draggable-next'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { toRaw } from 'vue'
+import { Sortable } from 'sortablejs-vue3'
+import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 export default {
     name: 'CategoriesTab',
 
@@ -66,54 +111,156 @@ export default {
     emits: ['close'],
 
     components: {
-        Category,
+        CategoryAdminElement,
         LpiSnackbar,
-        LpiButton,
+        LinkButton,
         CategoryDrawer,
-        draggable: VueDraggableNext,
         LpiLoader,
+        IconImage,
+        Sortable,
+        LoaderSimple,
+        ConfirmModal,
     },
 
     data() {
         return {
-            addMode: true,
             categoryDrawerOpened: false,
+            parentCategory: null,
             editedCategory: undefined,
             showMessage: false,
             isUpdating: false,
             editable: true,
-            sortedCategories: [],
+            categories: [],
+            categoryIndex: {},
             isLoading: true,
+            reOrdering: false,
+            draggedCategory: null,
+            dropTargetCategory: null,
+            categoryToDelete: null,
         }
     },
 
     computed: {
-        computedSortedCategories() {
-            let ret = this.$store.getters['projectCategories/allOrderedByOrderId']
-                .slice(0)
-                .sort((a, b) => a.order_index - b.order_index)
-            this.getSortedCategories(ret)
-            return ret
+        categoryTree() {
+            return this.$store.getters['projectCategories/hierarchy']
+        },
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'categories',
+                disabled: false,
+                ghostClass: 'category-ghost',
+            }
+        },
+    },
+    watch: {
+        categoryTree: {
+            handler(neo) {
+                this.isLoading = false
+                function rawCategories(categories) {
+                    return categories.map((category) => {
+                        return {
+                            ...toRaw(category),
+                            children: category.children ? rawCategories(category.children) : [],
+                        }
+                    })
+                }
+                this.categories = rawCategories(neo)
+                function indexCategories(categories, index) {
+                    categories.reduce((acc, category) => {
+                        acc[category.id] = category
+                        return acc
+                    }, index)
+                    categories.forEach((category) => {
+                        indexCategories(category.children, index)
+                    })
+                    return index
+                }
+                this.categoryIndex = indexCategories(this.categories, {})
+            },
+            immediate: true,
         },
     },
 
     methods: {
-        getSortedCategories(ret) {
-            this.isLoading = false
-            this.sortedCategories = ret
+        onDragStart(event) {
+            this.draggedCategory = this.categoryIndex[event.item.dataset.categoryId]
         },
-        addCategory() {
-            this.addMode = true
+        async onDragEnd(event) {
+            const categoryId = event.item.dataset.categoryId
+            const oldParentId = event.from.dataset.parentCategory || null
+            const newParentId = event.to.dataset.parentCategory || null
+            const { oldIndex, newIndex } = event
+
+            const category = this.categoryIndex[categoryId]
+            const newParent = this.categoryIndex[newParentId] || null
+            const newParentChildren = newParent?.children || this.categories
+            const oldParentChildren = this.categoryIndex[oldParentId]?.children || this.categories
+
+            category.order_index = newIndex
+
+            // remove from old parent
+            oldParentChildren.splice(oldIndex, 1)
+            // add to new parent
+            newParentChildren.splice(newIndex, 0, category)
+
+            // some weridness with sortablejs duplicate the item html element
+            // if parent are different, so in this case we remove one
+            if (oldParentId !== newParentId) event.item.remove()
+
+            try {
+                this.reOrdering = true
+                // update new parent children
+                const newParentPromises = newParentChildren.map(async (child, index) => {
+                    if (child.id == category.id) {
+                        return await patchProjectCategory(child.id, {
+                            order_index: index,
+                            parent: newParentId,
+                        })
+                    } else if (index != child.order_index) {
+                        return await patchProjectCategory(child.id, { order_index: index })
+                    } else return Promise.resolve()
+                })
+                // update old parent children if necessary
+                const oldParentPromises =
+                    oldParentId !== newParentId
+                        ? oldParentChildren.map(async (child, index) => {
+                              if (index != child.order_index) {
+                                  return await patchProjectCategory(child.id, {
+                                      order_index: index,
+                                  })
+                              } else return Promise.resolve()
+                          })
+                        : []
+
+                await Promise.all([...newParentPromises, ...oldParentPromises])
+                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                this.dropTargetCategory = newParent
+            } catch (error) {
+                console.error(error)
+            } finally {
+                this.reOrdering = false
+                this.draggedCategory = null
+                this.$nextTick(() => {
+                    this.dropTargetCategory = null
+                })
+            }
+        },
+        addCategory(parentCategory = null) {
+            this.editedCategory = null
+            this.parentCategory = parentCategory?.id || null
             this.categoryDrawerOpened = true
         },
 
         editCategory(category) {
-            this.addMode = false
             this.editedCategory = category
+            this.parentCategory = category.parent
             this.categoryDrawerOpened = true
         },
 
         closeCategoryDrawer() {
+            this.parentCategory = null
+            this.editedCategory = null
             this.categoryDrawerOpened = false
         },
 
@@ -126,25 +273,31 @@ export default {
         },
 
         async submitCategory(category) {
-            const data = { ...category, description: category.description.savedContent }
-            let categoryId
-            if (this.addMode === true) {
-                const result = await this.$store.dispatch(
-                    'projectCategories/addProjectCategory',
-                    data
-                )
-
-                categoryId = result.id
+            const data = {
+                ...category,
+                description: category.description.savedContent,
+            }
+            let categoryId = category.id
+            if (!categoryId) {
+                const createCategory = await createProjectCategory(data)
+                categoryId = createCategory.id
                 await this.setImage(data, categoryId)
             } else {
-                categoryId = category.id
+                // edit catgeory
+                await patchProjectCategory(categoryId, data)
                 if (category.background_image) await this.setImage(data, categoryId)
             }
             try {
-                await this.$store.dispatch('projectCategories/updateProjectCategory', {
-                    categoryId,
-                    newCategory: data,
-                })
+                // Update order index of children
+                await Promise.all(
+                    category.children.map(async (child, index) => {
+                        if (index != child.order_index)
+                            return await patchProjectCategory(child.id, { order_index: index })
+                        else return Promise.resolve()
+                    })
+                )
+
+                await this.$store.dispatch('projectCategories/getAllProjectCategories')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.category-update.success'),
                     type: 'success',
@@ -156,72 +309,25 @@ export default {
                 })
                 console.error(error)
             } finally {
-                this.categoryDrawerOpened = false
+                this.closeCategoryDrawer()
             }
         },
 
         goToCategory(category) {
-            if (!this.editable) {
-                this.$emit('close')
-                this.$router.push({ name: 'Category', params: { id: category.id } })
-            }
-        },
-
-        change(evt) {
-            this.startIndex = evt.draggedContext.index
-            this.dropIndex = evt.draggedContext.futureIndex
-        },
-
-        async onDrop() {
-            const fromIndex = this.startIndex
-            const toIndex = this.dropIndex
-
-            const draggedElement = this.sortedCategories[fromIndex]
-
-            if (fromIndex != toIndex) {
-                // Set new index to dragged category
-                const reordered = [{ categoryId: draggedElement.id, index: toIndex }]
-
-                // If dragged category index is decreased, increase indexes of categories having a lower index
-                if (toIndex < fromIndex) {
-                    this.sortedCategories.forEach((element, index) => {
-                        if (index >= toIndex && index < fromIndex) {
-                            reordered.push({ categoryId: element.id, index: index + 1 })
-                        }
-                    })
-                }
-
-                // If dragged category index is increased, decrease indexes of categories having a higher index
-                else if (toIndex > fromIndex) {
-                    this.sortedCategories.forEach((element, index) => {
-                        if (index > fromIndex && index <= toIndex) {
-                            reordered.push({ categoryId: element.id, index: index - 1 })
-                        }
-                    })
-                }
-
-                try {
-                    await this.$store.dispatch('projectCategories/updateProjectCategoriesOrder', {
-                        reordered,
-                    })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.categories-reorder.success'),
-                        type: 'success',
-                    })
-                } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.categories-reorder.error')} (${error})`,
-                        type: 'error',
-                    })
-                    console.error(error)
-                }
-                this.startIndex = null
-                this.dropIndex = null
-            }
+            this.$router.push({ name: 'Category', params: { id: category.id } })
         },
 
         close() {
             this.showMessage = false
+        },
+
+        async deleteCategory() {
+            // TODO: implement deletion of category when we have project count
+            this.$store.dispatch('notifications/pushToast', {
+                message: this.$t('admin.portal.categories.delete-category-noop'),
+                type: 'error',
+            })
+            this.categoryToDelete = null
         },
     },
 }
@@ -229,9 +335,26 @@ export default {
 
 <style lang="scss" scoped>
 .categories-tab {
-    .info-snackbar {
-        border: 1px solid $primary-dark;
-        margin: $space-l auto;
+    .header {
+        display: flex;
+        align-items: flex-start;
+        gap: $space-2xl;
+        margin-top: $space-xl;
+        margin-bottom: $space-2xl;
+
+        .notices {
+            flex-basis: 75%;
+
+            p + p {
+                margin-top: $space-m;
+            }
+        }
+
+        .actions {
+            flex-basis: 25%;
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 
     > button {
@@ -243,24 +366,44 @@ export default {
         fill: $white;
     }
 
-    .categories-container > div {
+    .icon-tip {
+        width: 1.2em;
+        height: 1.2em;
+        display: inline-block;
+        vertical-align: bottom;
+        fill: $primary-dark;
+    }
+
+    .categories-container {
+        margin: 0 auto;
+        width: 30rem;
         display: flex;
         flex-wrap: wrap;
         gap: $space-l;
-        justify-content: center;
+        justify-content: stretch;
         padding: $space-m;
-    }
 
-    .category {
-        cursor: grab;
-
-        &:hover {
-            filter: brightness(1.2);
+        > ul {
+            flex-grow: 1;
         }
     }
 }
 
+.category-ghost {
+    background-color: $primary-lighter;
+}
+
 .flip-list-move {
-    transition: transform 1s;
+    transition: transform 0.5s;
+}
+
+.re-ordering-screen {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-color: rgb(255 255 255 / 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

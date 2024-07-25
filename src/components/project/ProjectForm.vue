@@ -1,15 +1,21 @@
 <template>
     <form>
         <!--  Category -->
-        <div v-if="isAddMode && categoryOptions && categoryOptions.length" class="category-ctn">
+        <div v-if="isAddMode && categories && categories.length" class="category-ctn">
             <label class="label">{{ $t('project.form.project-category') }} *</label>
-            <LpiSelect
-                v-model="form.category"
-                :value="form.category"
-                :options="categoryOptions"
+            <ProjectCategoriesDropdown
                 class="category-select"
                 data-test="select-project-category"
-            />
+                :dropdown-label="selectedCategoryLabel"
+                ref="categoryDropdown"
+            >
+                <template #default="{ category }">
+                    <ProjectCategoriesDropdownElementButton
+                        :category="category"
+                        @choose-category="setCategory(category.id)"
+                    />
+                </template>
+            </ProjectCategoriesDropdown>
         </div>
 
         <!--  Title -->
@@ -122,6 +128,8 @@
 <script>
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
+import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import TeamSection from '@/components/project/TeamSection.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
@@ -150,6 +158,8 @@ export default {
         BaseDrawer,
         ImageEditor,
         FieldErrors,
+        ProjectCategoriesDropdown,
+        ProjectCategoriesDropdownElementButton,
     },
 
     props: {
@@ -207,14 +217,10 @@ export default {
             return this.$store.getters['projectCategories/allOrderedByOrderId']
         },
 
-        categoryOptions() {
-            return this.categories.map((category) => {
-                return {
-                    value: category.id,
-                    label: category.name,
-                    dataTest: `project-form-${category.id}`,
-                }
-            })
+        selectedCategoryLabel() {
+            return this.selectedCategory
+                ? this.selectedCategory.name
+                : this.$t('project.form.select-category')
         },
 
         languageOptions() {
@@ -250,8 +256,8 @@ export default {
         otherFieldDisabled() {
             return (
                 this.isAddMode &&
-                !!this.categoryOptions &&
-                this.categoryOptions.length > 0 &&
+                !!this.categories &&
+                this.categories.length > 0 &&
                 !this.form.category
             )
         },
@@ -286,6 +292,10 @@ export default {
     },
 
     methods: {
+        setCategory(categoryId) {
+            this.form.category = categoryId
+            this.$refs.categoryDropdown?.close()
+        },
         closeTagSearchTags() {
             this.tagSearchIsOpened = false
             this.ambiguousTagsOpen = false

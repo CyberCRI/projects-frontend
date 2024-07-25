@@ -15,7 +15,7 @@
                     secondary
                     no-border
                 />
-                <div class="content-wrapper">
+                <div class="content-wrapper" @click.capture="closeAfterClick">
                     <slot name="custom-content"></slot>
                 </div>
             </div>
@@ -50,6 +50,12 @@ export default {
 
         close() {
             openedMenuTip.value = null
+        },
+
+        closeAfterClick() {
+            this.$nextTick(() => {
+                this.close()
+            })
         },
     },
 

@@ -18,7 +18,11 @@
     </div>
     <div class="page-section-wide bottom-page">
         <div class="projects-and-people">
-            <ProjectCategoriesDropdown />
+            <ProjectCategoriesDropdown :dropdown-label="$t('project.categories')">
+                <template #default="{ category }">
+                    <ProjectCategoriesDropdownElementLink :category="category" />
+                </template>
+            </ProjectCategoriesDropdown>
             <div v-if="loggedIn" class="home-buttons">
                 <HomeButtons />
             </div>
@@ -50,6 +54,7 @@
 <script>
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
+import ProjectCategoriesDropdownElementLink from '@/components/category/ProjectCategoriesDropdownElementLink.vue'
 import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 import HomeButtons from '@/components/home/HomeButtons/HomeButtons.vue'
 import HomeNewsfeed from '@/components/home/HomeNewsfeed/HomeNewsfeed.vue'
@@ -65,6 +70,7 @@ export default {
         OnboardingTodoBlock,
         SearchOptions,
         ProjectCategoriesDropdown,
+        ProjectCategoriesDropdownElementLink,
         RecommendationBlock,
         HomeButtons,
         HomeNewsfeed,

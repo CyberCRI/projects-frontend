@@ -170,6 +170,10 @@
             },
             "categories": {
                 "add": "Ajouter une catégorie",
+                "authorizations": "Autorisations",
+                "children": "Sous-catégories",
+                "no-child": "Pas de sous-catégorie",
+                "description-limit": "300 caractères maximum.",
                 "edit": "Modifier une catégorie",
                 "is-reviewable": "Autoriser les révisions",
                 "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",
@@ -177,7 +181,9 @@
                 "display-projects": "Afficher les projets",
                 "hide-projects": "Masquer les projets",
                 "delete-category": "Supprimer la catégorie",
-                "delete-category-description": "Voulez-vous vraiment supprimer cet élément ? Cette action ne peut pas être annulée"
+                "delete-category-description": "Voulez-vous vraiment supprimer la catégorie '{categoryName}' ? Cette action ne peut pas être annulée",
+                "delete-category-has-children": "Cette catégorie contient des sous-catégories et/ou des projets. Déplacez les pour pouvoir la supprimer.",
+                "delete-category-noop": "La suppression de categorie n'est pas possible pour l'instant"
             },
             "chat": "Plateforme de discussion (vue connectée)",
             "events": "Événements",
@@ -366,8 +372,11 @@
         "placeholder": "Que cherchez-vous ?"
     },
     "category": {
+        "add-sub-category": "Ajouter une sous-catégorie",
         "edit-order-success": "Modification de l'ordre des catégories bien effectuée",
-        "info": "Vous pouvez répertorier les projets en différentes catégories (ex : projets étudiants, projets d’enseignants, projets de recherche, etc.). Veuillez définir les vôtres ci-dessous. Chaque projet devra être associé à une de ces catégories. Maximum autorisé de 15 catégories.",
+        "info-organize": "Vous pouvez répertorier les projets en différentes catégories (ex : projets étudiants, projets d’enseignants, etc.).",
+        "info-limit": "Chaque projet devra être associé à une de ces catégories. Maximum autorisé de 15 catégories.",
+        "info-howto": "Pour ajouter une sous-catégorie, créez une nouvelle catégorie puis attribuez-lui une catégorie parent",
         "page-title": "Categorie",
         "title": "Catégories",
         "all-categories": "Voir toutes les catégories",
@@ -427,6 +436,7 @@
         "remove-user": "Êtes-vous sûr(e) de vouloir supprimer cet utilisateur ?",
         "save": "enregistrer",
         "send": "Envoyer",
+        "see": "Voir",
         "see-less": "voir moins",
         "see-more": "voir plus",
         "see-all": "Voir tout",
@@ -1365,6 +1375,7 @@
             "edit-project": "Modifier projet",
             "edit-title": "Modifier le titre",
             "project-category": "Catégorie du projet",
+            "select-category": "Choisir une catégorie",
             "purpose-label": "Votre mission",
             "purpose-placeholder": "Quel est l’objectif de votre projet ?",
             "resize-image": "Recadrer",

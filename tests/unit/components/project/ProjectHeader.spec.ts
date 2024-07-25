@@ -6,6 +6,7 @@ import permissions from '@/mixins/permissions'
 import MockComponent from '../../../helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import organizations from '@/store/modules/organizations'
 vi.mock('@/mixins/permissions')
 ;(permissions.computed.canEditProject as Mock).mockImplementation(() => true)
 
@@ -31,6 +32,14 @@ function buildStore() {
                 namespaced: true,
                 dispatch: vi.fn(),
             },
+            organizations: {
+                namespaced: true,
+                getters: {
+                    current: () => ({
+                        code: 'foo',
+                    }),
+                },
+            },
         },
     }
 }
@@ -46,6 +55,9 @@ describe('ProjectHeader.vue', () => {
             router: [
                 { path: '/', component: MockComponent },
                 { path: '/blank', component: MockComponent, name: 'blank' },
+                { path: '/blank', component: MockComponent, name: 'HomeRoot' },
+                { path: '/blank', component: MockComponent, name: 'Category' },
+                { path: '/blank', component: MockComponent, name: 'Categories' },
             ],
             provide: {
                 projectLayoutGoToTab: vi.fn(),

@@ -8,7 +8,7 @@
                         :class="{
                             'green-color': group.children?.length,
                             clickable: group.children?.length,
-                            'grey-color': !group.children?.lengt,
+                            'grey-color': !group.children?.length,
                         }"
                     >
                         <IconImage class="icon" name="ChevronRight" />
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="group.children && this.showChild" class="child-list">
+            <div v-if="group.children && showChild" class="child-list">
                 <GroupsElement
                     v-for="child in group.children"
                     :key="child.id"

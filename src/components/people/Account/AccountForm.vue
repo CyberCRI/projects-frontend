@@ -59,12 +59,11 @@
             <div class="role-options-ctn">
                 <RadioButton
                     v-for="roleOption in roleOptions"
-                    :key="roleOption.id"
+                    :key="roleOption.value"
                     as-button
                     :label="roleOption.label"
                     v-model="selectedRole"
-                    @update:model-value="updateRole(roleOption)"
-                    :checked="selectedRole?.name === roleOption.name"
+                    :value="roleOption.value"
                 />
             </div>
         </AccountSection>
@@ -216,7 +215,7 @@ export default {
             selectedGroups: {},
             previousGroups: {}, // memo to compare with selected groups on save
             showRemoveUserQuit: false,
-            selectedRole: {},
+            selectedRole: '',
             isLoading: true,
             asyncSave: false,
             orgUnits: [],
@@ -268,7 +267,7 @@ export default {
             return this.$store.getters['organizations/current']
         },
         hasRoleInCurrentOrg() {
-            return this.selectedRole && this.selectedRole.value != 0
+            return this.selectedRole && this.selectedRole != 0
         },
 
         hasGoogleSync() {
@@ -322,7 +321,7 @@ export default {
 
         if (this.selectedUser) await this.setFormFromSelectedUser()
         else {
-            this.selectedRole = this.isAddMode ? this.roleOptions[0] : this.roleNone
+            this.selectedRole = this.isAddMode ? this.roleOptions[0].value : this.roleNone.value
         }
 
         if (this.isAddMode) {
@@ -363,8 +362,8 @@ export default {
             if (this.selectedUser.current_org_role) {
                 this.selectedRole = this.roleOptions.find(
                     (role) => role.name === this.selectedUser.current_org_role
-                )
-            } else this.selectedRole = this.roleOptions[0]
+                )?.value
+            } else this.selectedRole = this.roleOptions[0].value
 
             // can contain groups from other orgs
             // they'll be ignored in AccountGroupForm
@@ -401,13 +400,13 @@ export default {
             this.showRemoveUserQuit = !this.showRemoveUserQuit
         },
 
-        updateRole(role) {
-            this.selectedRole = role
+        // updateRole(role) {
+        //     this.selectedRole = role
 
-            // dead code ?
-            // if (role && role.id !== 0) this.form.groups_ids = [role.id]
-            // else this.form.groups_ids = []
-        },
+        //     // dead code ?
+        //     // if (role && role.id !== 0) this.form.groups_ids = [role.id]
+        //     // else this.form.groups_ids = []
+        // },
 
         async deleteUser() {
             try {
@@ -451,8 +450,8 @@ export default {
                 const allRolesToAdd = [...groupRolesToAdd]
                 const allRolesToRemove = [...groupRolesToRemove]
 
-                if (this.selectedRole.value != 0) {
-                    allRolesToAdd.push(this.selectedRole.value)
+                if (this.selectedRole != 0) {
+                    allRolesToAdd.push(this.selectedRole)
                 } else if (this.selectedUser) {
                     allRolesToRemove.push(
                         `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
@@ -571,10 +570,10 @@ export default {
                 if (neo !== old) {
                     if (neo) {
                         // creating user in google forbid having role "none"
-                        if (this.selectedRole && this.selectedRole.name === this.roleNone.name) {
+                        if (this.selectedRole && this.selectedRole === this.roleNone.value) {
                             // using roles[0] instead of roleOptions[0]
                             // avoid trouble with awaiting computed value to be ready
-                            this.updateRole(this.roleOptions[0])
+                            this.selectedRole = this.roleOptions[0].value
                         }
                     }
                     // not sure if we want to do this

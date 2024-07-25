@@ -1,19 +1,29 @@
 <template>
     <div class="filter-categories">
-        <CategoryCard
+        <!--CategoryCard
             v-for="category in categories"
             :key="category.id"
             :category="category"
             :selected="isSelected(category.id)"
             size="extra-small"
             @go-to="toggleCategory(category)"
-        />
+        /-->
+        <ul>
+            <CategoryPicker
+                v-for="category in categories"
+                :key="category.id"
+                :category="category"
+                :selected-categories="modelValue"
+                @pick-category="toggleCategory"
+                type="checkbox"
+            />
+        </ul>
     </div>
 </template>
 
 <script>
-import CategoryCard from '@/components/category/CategoryCard.vue'
 import { mapGetters } from 'vuex'
+import CategoryPicker from '@/components/category/CategoryPicker.vue'
 
 export default {
     name: 'CategoriesFilterEditor',
@@ -21,7 +31,7 @@ export default {
     emits: ['update:modelValue'],
 
     components: {
-        CategoryCard,
+        CategoryPicker,
     },
 
     props: {
@@ -40,7 +50,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            categories: 'projectCategories/all',
+            categories: 'projectCategories/hierarchy',
         }),
     },
 
@@ -76,8 +86,10 @@ export default {
 <style scoped lang="scss">
 .filter-categories {
     display: flex;
-    flex-wrap: wrap;
-    gap: $space-xl;
-    justify-content: center;
+    justify-content: stretch;
+
+    > ul {
+        flex-grow: 1;
+    }
 }
 </style>
