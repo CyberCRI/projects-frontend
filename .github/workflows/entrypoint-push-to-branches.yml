@@ -51,7 +51,7 @@ jobs:
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
 
   upload-source-map:
-    runs-on: wlc-upload-source-map-runner
+    runs-on: frontend-upload-source-map-runner
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -93,22 +93,15 @@ async function main(): Promise<void> {
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {
-        const SENTRY_DSN = import.meta.env.VITE_APP_SENTRY_DSN
-        const SENTRY_RELEASE = import.meta.env.VITE_APP_SENTRY_RELEASE
-        const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT
-        const API_BASE = import.meta.env.VITE_API_BASE
-        const API_VERSION = import.meta.env.VITE_API_VERSION
-        // const apiRegex = new RegExp(String.raw`^${API_BASE}${API_VERSION}`, "g");
-
         Sentry.init({
             app,
-            dsn: SENTRY_DSN,
+            dsn: import.meta.env.VITE_APP_SENTRY_DSN,
             integrations: [
                 Sentry.browserTracingIntegration({ router }),
                 Sentry.replayIntegration(),
             ],
-            environment: ENVIRONMENT,
-            tracePropagationTargets: ['localhost', /.*/],
+            environment: import.meta.env.VITE_ENVIRONMENT,
+            tracePropagationTargets: ['localhost', import.meta.env.VITE_APP_API_URL],
 
             // Set tracesSampleRate to 1.0 to capture 100%
             // of transactions for tracing.
@@ -119,11 +112,7 @@ async function main(): Promise<void> {
             // plus for 100% of sessions with an error
             replaysSessionSampleRate: 0.1,
             replaysOnErrorSampleRate: 1.0,
-            release: SENTRY_RELEASE,
-            beforeSend: (event) => {
-                console.log(event)
-                return event
-            },
+            release: import.meta.env.VITE_APP_SENTRY_RELEASE,
         })
     }
 
