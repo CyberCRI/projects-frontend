@@ -66,7 +66,7 @@ jobs:
       - name: Login to sentry
         run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
       - name: Build with source map
-        run: NODE_OPTIONS=--max_old_space_size=1024 yarn build:sourcemaps
+        run: NODE_OPTIONS=--max_old_space_size=1536 yarn build:sourcemaps
       - name: Upload source map
         run: |
           ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
