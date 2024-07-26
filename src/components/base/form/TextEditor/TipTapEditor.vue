@@ -1,20 +1,5 @@
 <script setup>
-import funct from '@/functs/functions.ts'
-
-import { Editor, EditorContent } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
-import Color from '@tiptap/extension-color'
-import Underline from '@tiptap/extension-underline'
-import TextAlign from '@tiptap/extension-text-align'
-import Table from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
-import TableHeader from '@tiptap/extension-table-header'
-import TextStyle from '@tiptap/extension-text-style'
-
-import CustomTableCell from './tiptap-extensions/CustomTableCell.ts'
-import ExternalVideo from './tiptap-extensions/ExternalVideo.ts'
-
+import { EditorContent } from '@tiptap/vue-3'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import EditorModalImage from './modals/EditorModalImage.vue'
 import EditorModalLink from './modals/EditorModalLink.vue'
@@ -25,18 +10,12 @@ import MenuBar from './MenuBar.vue'
 import TableMenuBar from './TableMenuBar.vue'
 import LinkMenuBar from './LinkMenuBar.vue'
 
-import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.ts'
-import CustomImage from './tiptap-extensions/CustomImage.ts'
 import ImageMenuBar from './ImageMenuBar.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
 
-import Gapcursor from '@tiptap/extension-gapcursor'
-
-import lowlight from '@/functs/lowlight.ts'
-
-import { ref, reactive, watch, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
+import { useStore } from 'vuex'
+import { propsDefinitions, useTipTap } from '@/components/base/form/TextEditor/tiptap-base.js'
 
 const store = useStore()
 const { t } = useI18n()
@@ -45,263 +24,25 @@ const { t } = useI18n()
 const emit = defineEmits(['saved', 'update', 'destroy', 'image', 'blur'])
 
 // props
-const props = defineProps({
-    mode: {
-        // mode supports 4 values 'none' | 'simple' | 'medium' | 'full'
-        type: String,
-        default: 'simple',
-    },
-    wsData: {
-        type: Object,
-        required: true,
-    },
-    saveIconVisible: {
-        type: Boolean,
-        default: true,
-    },
+const props = defineProps(propsDefinitions)
 
-    parent: {
-        type: String,
-        default: '',
-    },
-
-    selectedCategory: {
-        // TODO really ???
-        type: Object,
-        default: () => {},
-    },
-})
-
-// data
-const editor = ref(null)
-const type = ref(null)
-const provider = ref(null)
-const activeModals = reactive({
-    destroy: false,
-    image: false,
-    link: false,
-    video: false,
-    color: false,
-})
-const editorInited = ref(false)
-
-// computed
-const user = computed(() => store.getters['users/userFromApi'])
-const accessToken = computed(() => store.getters['users/accessToken'])
-const linkHref = computed(() => editor.value.getAttributes('link').href)
-const currentColor = computed(() => editor.value.getAttributes('textStyle').color)
-
-// methods
-function focusEditor() {
-    if (editor.value) {
-        editor.value.commands.focus('end')
-    }
-}
-
-function appendTranslationsStyle() {
-    if (!document.getElementById('multieditor-translations')) {
-        let css = ''
-        store.state.languages.all.forEach((langcode) => {
-            css += `.lang-${langcode} .ProseMirror-focused .custom-video-wrapper.ProseMirror-selectednode:after { content: '${t(
-                'multieditor.click-to-play-video',
-                langcode
-            )}'; }
-                    `
-        })
-        const head = document.head || document.getElementsByTagName('head')[0]
-        const style = document.createElement('style')
-        style.innerHTML = css
-        style.id = 'multieditor-translations'
-        head.appendChild(style)
-    }
-}
-
-function initEditor() {
-    // this prevents multiple init of editor
-    // (that causes duplicate user/content bugs)
-    if (editorInited.value) return
-    editorInited.value = true
-
-    const getExtensions = () => {
-        let exts = [
-            // Collaborative (socket) use its own history
-            StarterKit.configure({ history: true }), // TODO: was !this.socket
-            Link.configure({
-                openOnClick: false,
-            }),
-            TextStyle,
-            Color,
-            // TODO: Check if need history
-            // History,
-            Underline,
-            TextAlign.configure({
-                types: ['heading', 'paragraph'],
-                alignments: ['left', 'center', 'right'],
-            }),
-            ExternalVideo,
-            Table.configure({
-                resizable: true,
-                cellMinWidth: 300,
-            }),
-            TableRow,
-            TableHeader,
-            CustomTableCell,
-            CustomImage,
-            Gapcursor,
-            LpiCodeBlock.configure({
-                lowlight,
-            }),
-        ]
-
-        return exts
-    }
-
-    const getContent = () => {
-        return props.wsData.originalContent
-    }
-
-    if (editor.value) destroyEditor()
-
-    editor.value = new Editor({
-        content: getContent(),
-        extensions: getExtensions(),
-        parseOptions: {
-            preserveWhitespace: 'full',
-        },
-    })
-    editor.value.on('update', () => {
-        emit('update', editor.value.getHTML())
-    })
-    editor.value.on('blur', (e) => {
-        emit('blur', e)
-    })
-}
-
-function openLinkModal() {
-    activeModals.link = true
-}
-
-function openColorModal() {
-    activeModals.color = true
-}
-
-function openVideoModal() {
-    activeModals.video = true
-}
-
-function openImageModal() {
-    activeModals.image = true
-}
-
-function openDestroyModal() {
-    activeModals.destroy = true
-}
-
-function handleLinkModalConfirmed(data) {
-    // set the link if there's data from popup
-    if (data) {
-        editor.value
-            .chain()
-            .focus()
-            .extendMarkRange('link')
-            .setLink({
-                href: (funct.isValidUrl(data.href) ? '' : 'http://') + data.href,
-            })
-            .run()
-        // if link made from empty selection, add the entered text as content
-        if (data.text) {
-            const selection = editor.value.view.state.selection
-            editor.value
-                .chain()
-                .focus()
-                .insertContentAt(
-                    {
-                        from: selection.from,
-                        to: selection.to,
-                    },
-                    data.text
-                )
-                .run()
-        }
-    } else {
-        // if there is no data, unset the link
-        editor.value.chain().focus().extendMarkRange('link').unsetLink().run()
-    }
-
-    activeModals.link = false
-}
-
-function handleColorModalConfirmed(data) {
-    if (data) {
-        editor.value.chain().focus().setColor(data).run()
-    } else {
-        editor.value.chain().focus().unsetColor().run()
-    }
-
-    activeModals.link = false
-}
-
-function handleVideoModalConfirmed(data) {
-    editor.value.chain().focus().setExternalVideo({ src: data.src }).run()
-
-    activeModals.video = false
-}
-
-function handleDestroyModalConfirmed() {
-    // reset modification
-    emit('update', props.wsData.originalContent)
-    editor.value.commands.setContent(props.wsData.originalContent)
-
-    activeModals.destroy = false
-    emit('destroy')
-}
-
-function handleImageModalConfirmed(img) {
-    const attrsw = img.sizeX < 1100 ? img.sizeX : 1100
-    const attrsh = img.sizeX < 1100 ? img.sizeY : img.sizeY * (1100 / parseFloat(img.sizeX))
-
-    editor.value
-        .chain()
-        .focus()
-        .setImage({
-            src: img.src,
-            width: attrsw,
-            height: attrsh,
-        })
-        .run()
-
-    activeModals.image = false
-}
-
-function handleImage(img) {
-    emit('image', img)
-}
-
-function destroyEditor() {
-    if (editor.value) {
-        editor.value.off('update')
-        editor.value.destroy()
-    }
-}
-
-watch(
-    () => props.wsData,
-    () => {
-        editorInited.value = false
-        // Reinit editor so that changes in wsData props are visible in editor
-        initEditor()
-    }
-)
-
-// lifecycle
-onMounted(() => {
-    appendTranslationsStyle()
-    initEditor()
-})
-
-onBeforeUnmount(() => {
-    destroyEditor()
-})
+const {
+    editor,
+    activeModals,
+    linkHref,
+    currentColor,
+    focusEditor,
+    openLinkModal,
+    openColorModal,
+    openVideoModal,
+    openImageModal,
+    openDestroyModal,
+    handleLinkModalConfirmed,
+    handleColorModalConfirmed,
+    handleVideoModalConfirmed,
+    handleImageModalConfirmed,
+    handleImage,
+} = useTipTap({ props, emit, store, t })
 </script>
 
 <template>
