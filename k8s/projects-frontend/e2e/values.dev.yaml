@@ -6,4 +6,5 @@ injectedEnv:
     VITE_APP_KEYCLOAK_REALM: e2e
     # VITE_APP_DOC: todo: custom one ?
     # VITE_APP_MIXPANEL_API_URL: todo: custom one ?
+    VITE_APP_ENVIRONMENT: e2e
 
