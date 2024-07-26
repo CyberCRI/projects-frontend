@@ -5,6 +5,7 @@ injectedEnv:
     VITE_APP_META_PORTAL_URL: https://projects.directory
     VITE_APP_MIXPANEL_API_URL: https://mixpanel-proxy.lp-i.org
     VITE_APP_VERSION: '{{ .Values.application.sourceTargetRevision | replace "_deploy" "" }}'
+    VITE_APP_ENVIRONMENT: prod
 
 certManagerClusterIssuer: letsencrypt-prod
 
