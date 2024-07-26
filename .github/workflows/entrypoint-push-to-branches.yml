@@ -43,6 +43,7 @@ jobs:
         VITE_APP_SENTRY_ENABLED=$DOCKER_INJECT_VITE_APP_SENTRY_ENABLED
         VITE_APP_SENTRY_DSN=$DOCKER_INJECT_VITE_APP_SENTRY_DSN
         VITE_APP_SENTRY_RELEASE=$DOCKER_INJECT_VITE_APP_SENTRY_RELEASE
+        VITE_APP_ENVIRONMENT=$DOCKER_INJECT_VITE_APP_ENVIRONMENT
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       submodules-app-id: ${{ secrets.INFRA_BOT_APP_ID }}
@@ -60,7 +61,7 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --pure-lockfile
       - name: Install sentry cli
         run: yarn add @sentry/cli
       - name: Login to sentry

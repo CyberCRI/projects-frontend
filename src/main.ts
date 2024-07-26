@@ -92,16 +92,15 @@ async function main(): Promise<void> {
     const app = createApp(App)
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
-    console.log(SENTRY_ENABLED)
     if (SENTRY_ENABLED) {
-        const sentry = Sentry.init({
+        Sentry.init({
             app,
             dsn: import.meta.env.VITE_APP_SENTRY_DSN,
             integrations: [
                 Sentry.browserTracingIntegration({ router }),
                 Sentry.replayIntegration(),
             ],
-            environment: import.meta.env.VITE_ENVIRONMENT,
+            environment: import.meta.env.VITE_APP_ENVIRONMENT,
             tracePropagationTargets: ['localhost', import.meta.env.VITE_APP_API_URL],
 
             // Set tracesSampleRate to 1.0 to capture 100%
@@ -115,8 +114,6 @@ async function main(): Promise<void> {
             replaysOnErrorSampleRate: 1.0,
             release: import.meta.env.VITE_APP_SENTRY_RELEASE,
         })
-        console.log('Sentry enabled')
-        console.log(sentry)
     }
 
     // Display errors / warnings
