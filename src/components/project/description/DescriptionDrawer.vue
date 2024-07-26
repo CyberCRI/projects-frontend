@@ -9,7 +9,7 @@
         @close="closeDrawer"
         @confirm="patchProject(true)"
     >
-        <TipTapEditor
+        <TipTapCollaborativeEditor
             v-if="editorDescription"
             :key="editorKey"
             ref="tipTapEditor"
@@ -28,7 +28,7 @@
 
 <script>
 import Drawer from '@/components/base/BaseDrawer.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 
 import analytics from '@/analytics'
 import retry from 'async-retry'
@@ -36,7 +36,7 @@ import retry from 'async-retry'
 export default {
     name: 'DescriptionDrawer',
 
-    components: { Drawer, TipTapEditor },
+    components: { Drawer, TipTapCollaborativeEditor },
 
     emits: ['close'],
 

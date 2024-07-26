@@ -29,23 +29,39 @@
         </div>
 
         <div class="editor-section">
-            <TipTapEditor
-                v-if="editorBlogEntry"
-                :key="editorKey"
-                ref="tiptapEditor"
-                :socket="!isAddMode"
-                :ws-data="editorBlogEntry"
-                :provider-params="providerParams"
-                class="input-field content-editor"
-                mode="full"
-                parent="blog-entry"
-                @destroy="closeDrawer"
-                @image="handleImage"
-                @saved="submitBlogEntry(false)"
-                @update="updateContent"
-                @socket-ready="socketReady = $event"
-                @blur="v$.editorBlogEntry.savedContent.$validate"
-            />
+            <template v-if="editorBlogEntry">
+                <TipTapEditor
+                    v-if="isAddMode"
+                    :key="'solo' + editorKey"
+                    ref="tiptapEditor"
+                    :ws-data="editorBlogEntry"
+                    class="input-field content-editor"
+                    mode="full"
+                    parent="blog-entry"
+                    @destroy="closeDrawer"
+                    @image="handleImage"
+                    @saved="submitBlogEntry(false)"
+                    @update="updateContent"
+                    @blur="v$.editorBlogEntry.savedContent.$validate"
+                />
+                <TipTapCollaborativeEditor
+                    v-else
+                    :key="'colloab' + editorKey"
+                    ref="tiptapEditor"
+                    socket
+                    :ws-data="editorBlogEntry"
+                    :provider-params="providerParams"
+                    class="input-field content-editor"
+                    mode="full"
+                    parent="blog-entry"
+                    @destroy="closeDrawer"
+                    @image="handleImage"
+                    @saved="submitBlogEntry(false)"
+                    @update="updateContent"
+                    @socket-ready="socketReady = $event"
+                    @blur="v$.editorBlogEntry.savedContent.$validate"
+                />
+            </template>
 
             <FieldErrors :errors="v$.editorBlogEntry.savedContent.$errors" />
         </div>
@@ -54,6 +70,7 @@
 </template>
 
 <script>
+import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import DatePicker from '@/components/base/form/DatePicker.vue'
@@ -73,6 +90,7 @@ export default {
 
     components: {
         TextInput,
+        TipTapCollaborativeEditor,
         TipTapEditor,
         DatePicker,
         BaseDrawer,
