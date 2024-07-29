@@ -1,8 +1,12 @@
 <script setup>
 import funct from '@/functs/functions.ts'
-import UserCard from './UserPresenceCard.vue'
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
+
+import TipTapCollaborativeConnectedStatus from '@/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
+import TipTapCollaborativeReconnectionStatus from '@/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
+import TipTapCollaborativeConnectingStatus from '@/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
+
 import { Editor } from '@tiptap/vue-3'
 import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS.ts'
 
@@ -301,27 +305,11 @@ onBeforeUnmount(() => {
 <template>
     <TipTapEditorContainer v-if="editor" :mode="mode">
         <template v-if="firstSync">
-            <div class="editor-socket">
-                <div :class="`editor-status editorstatus--${status}`">
-                    <div v-if="onlineAndConnected" class="list currenteditors">
-                        <UserCard
-                            v-for="(u, index) in editor.storage.collaborationCursor.users"
-                            :key="index"
-                            :user="{
-                                name: u.name,
-                                id: u.clientId,
-                                people_id: u.pid,
-                                color: u.color,
-                                picture: u.picture,
-                                imageSizes: u.imageSizes,
-                            }"
-                            mode="full"
-                            size="s"
-                            tint="inverse"
-                        />
-                    </div>
-                </div>
-            </div>
+            <TipTapCollaborativeConnectedStatus
+                :online-and-connected="onlineAndConnected"
+                :status="status"
+                :users="editor.storage.collaborationCursor.users"
+            />
 
             <TipTapModals
                 :editor="editor"
@@ -335,105 +323,28 @@ onBeforeUnmount(() => {
                 @destroy="emit('destroy', $event)"
                 @saved="emit('saved', $event)"
             />
-
-            <div
+            <TipTapCollaborativeReconnectionStatus
                 v-if="!onlineAndConnected"
-                :class="{ 'editor-frozen': !disconnectionGrace }"
-                class="status-bar"
-            >
-                <div
-                    v-if="!online"
-                    class="connection-status"
-                    v-text="$t(`multieditor.offline`)"
-                ></div>
-                <div
-                    v-if="online && status === 'connecting'"
-                    class="connection-status"
-                    v-text="$t(`multieditor.server-connecting`)"
-                ></div>
-                <div
-                    v-if="online && status === 'disconnected'"
-                    class="connection-status"
-                    v-text="$t(`multieditor.server-disconnected`)"
-                ></div>
-                <div
-                    v-if="!disconnectionGrace"
-                    class="connection-status"
-                    v-text="$t(`multieditor.frozen`)"
-                ></div>
-            </div>
+                :disconnection-grace="disconnectionGrace"
+                :status="status"
+            />
+
             <TipTapEditorContent
                 :editor="editor"
                 :editor-frozen="!disconnectionGrace"
                 is-connected
             />
         </template>
-        <template v-else>
-            <p v-if="cnxTimedout" class="not-synced">
-                {{ $t(`multieditor.server-unconnectable`) }}
-            </p>
-            <div v-else>
-                <p class="not-synced">{{ $t('multieditor.not-synced') }}</p>
-                <p class="not-synced">{{ $t('multieditor.server-' + status) }}</p>
-            </div>
-        </template>
+        <TipTapCollaborativeConnectingStatus v-else :cnx-timedout="cnxTimedout" :status="status" />
     </TipTapEditorContainer>
 </template>
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
-<style lang="scss" scoped>
-.not-synced {
-    padding: 20px;
-}
-
-.status-bar {
-    background: $white;
-    color: $primary-dark;
-    display: flex;
-    padding: 5px 20px;
-    position: sticky;
-    z-index: 10;
-    width: 100%;
-}
-
-.editor-socket {
-    align-items: center;
-    background: $primary-lighter;
-    display: flex;
-    justify-content: space-between;
-}
-
-.editor-status {
-    align-items: center;
-    color: $white;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 20px;
-
-    .list {
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
-}
-
-.connecting,
-.disconnected {
-    padding: 20px;
-    text-align: center;
-}
-
-.status-bar {
-    justify-content: center;
-    top: 30px;
-
-    &.editor-frozen {
-        top: 0;
-    }
-
-    .connection-status {
-        padding: 0 2rem;
-    }
-}
-</style>
+<!--style lang="scss" scoped>
+// TODO dead code ???
+// .connecting,
+// .disconnected {
+//     padding: 20px;
+//     text-align: center;
+// }
+</style-->
