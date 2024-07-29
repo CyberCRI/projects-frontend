@@ -13,6 +13,7 @@ import LinkMenuBar from './LinkMenuBar.vue'
 import ImageMenuBar from './ImageMenuBar.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
 
+import { watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 import { propsDefinitions, useTipTap } from '@/components/base/form/TextEditor/tiptap-base.js'
@@ -28,6 +29,7 @@ const props = defineProps(propsDefinitions)
 
 const {
     editor,
+    editorInited,
     activeModals,
     linkHref,
     currentColor,
@@ -41,8 +43,32 @@ const {
     handleColorModalConfirmed,
     handleVideoModalConfirmed,
     handleImageModalConfirmed,
+    appendTranslationsStyle,
     handleImage,
+    initEditor,
+    destroyEditor,
 } = useTipTap({ props, emit, store, t })
+
+// lifecycle
+onMounted(() => {
+    appendTranslationsStyle()
+    initEditor()
+})
+
+onBeforeUnmount(() => {
+    destroyEditor()
+})
+
+// watcher
+
+watch(
+    () => props.wsData,
+    () => {
+        editorInited.value = false
+        // Reinit editor so that changes in wsData props are visible in editor
+        initEditor()
+    }
+)
 </script>
 
 <template>

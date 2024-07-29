@@ -21,7 +21,7 @@ import Gapcursor from '@tiptap/extension-gapcursor'
 
 import lowlight from '@/functs/lowlight.ts'
 
-import { ref, reactive, watch, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 export const propsDefinitions = {
     mode: {
@@ -91,49 +91,54 @@ export function useTipTap({ props, emit, store, t }) {
         }
     }
 
+    function getExtensions() {
+        let exts = [
+            // Collaborative (socket) use its own history
+            StarterKit.configure({ history: true }), // TODO: was !this.socket
+            Link.configure({
+                openOnClick: false,
+            }),
+            TextStyle,
+            Color,
+            // TODO: Check if need history
+            // History,
+            Underline,
+            TextAlign.configure({
+                types: ['heading', 'paragraph'],
+                alignments: ['left', 'center', 'right'],
+            }),
+            ExternalVideo,
+            Table.configure({
+                resizable: true,
+                cellMinWidth: 300,
+            }),
+            TableRow,
+            TableHeader,
+            CustomTableCell,
+            CustomImage,
+            Gapcursor,
+            LpiCodeBlock.configure({
+                lowlight,
+            }),
+        ]
+
+        return exts
+    }
+
+    function getContent() {
+        return props.wsData.originalContent
+    }
+
     function initEditor() {
         // this prevents multiple init of editor
         // (that causes duplicate user/content bugs)
+
+        // socket stuff...(no wsdata)
+
         if (editorInited.value) return
         editorInited.value = true
 
-        const getExtensions = () => {
-            let exts = [
-                // Collaborative (socket) use its own history
-                StarterKit.configure({ history: true }), // TODO: was !this.socket
-                Link.configure({
-                    openOnClick: false,
-                }),
-                TextStyle,
-                Color,
-                // TODO: Check if need history
-                // History,
-                Underline,
-                TextAlign.configure({
-                    types: ['heading', 'paragraph'],
-                    alignments: ['left', 'center', 'right'],
-                }),
-                ExternalVideo,
-                Table.configure({
-                    resizable: true,
-                    cellMinWidth: 300,
-                }),
-                TableRow,
-                TableHeader,
-                CustomTableCell,
-                CustomImage,
-                Gapcursor,
-                LpiCodeBlock.configure({
-                    lowlight,
-                }),
-            ]
-
-            return exts
-        }
-
-        const getContent = () => {
-            return props.wsData.originalContent
-        }
+        // socket stuffs...  (provider, timer, online event)
 
         if (editor.value) destroyEditor()
 
@@ -259,29 +264,10 @@ export function useTipTap({ props, emit, store, t }) {
         }
     }
 
-    watch(
-        () => props.wsData,
-        () => {
-            editorInited.value = false
-            // Reinit editor so that changes in wsData props are visible in editor
-            initEditor()
-        }
-    )
-
-    // lifecycle
-    onMounted(() => {
-        appendTranslationsStyle()
-        initEditor()
-    })
-
-    onBeforeUnmount(() => {
-        destroyEditor()
-    })
-
     return {
         editor,
-        activeModals,
         editorInited,
+        activeModals,
         linkHref,
         currentColor,
         focusEditor,
@@ -296,6 +282,10 @@ export function useTipTap({ props, emit, store, t }) {
         handleDestroyModalConfirmed,
         handleImageModalConfirmed,
         handleImage,
+        appendTranslationsStyle,
+        initEditor,
         destroyEditor,
+        getExtensions,
+        getContent,
     }
 }
