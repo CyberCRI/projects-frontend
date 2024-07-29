@@ -45,8 +45,8 @@ export const propsDefinitions = {
 
     selectedCategory: {
         // TODO really ???
-        type: Object,
-        default: () => ({}),
+        type: [Object, null],
+        required: false,
     },
 }
 

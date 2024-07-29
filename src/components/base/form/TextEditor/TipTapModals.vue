@@ -19,7 +19,7 @@ const emit = defineEmits(['update', 'destroy', 'image', 'saved'])
 
 const props = defineProps({
     parent: { type: String, required: true },
-    selectedCategory: { type: Object, default: () => ({}) },
+    selectedCategory: { type: [Object, null], required: false },
     editor: { type: Object, required: true },
     showMenu: { type: Boolean, required: true },
     mode: { type: String, required: true },
