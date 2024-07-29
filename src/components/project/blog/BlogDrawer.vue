@@ -48,7 +48,6 @@
                     v-else
                     :key="'colloab' + editorKey"
                     ref="tiptapEditor"
-                    socket
                     :ws-data="editorBlogEntry"
                     :provider-params="providerParams"
                     class="input-field content-editor"

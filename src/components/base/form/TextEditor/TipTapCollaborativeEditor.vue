@@ -1,8 +1,9 @@
 <script setup>
 import funct from '@/functs/functions.ts'
 import UserCard from './UserPresenceCard.vue'
-
-import { Editor, EditorContent } from '@tiptap/vue-3'
+import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
+import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
+import { Editor } from '@tiptap/vue-3'
 import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS.ts'
 
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
@@ -21,14 +22,6 @@ import {
 import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
-
-/*
-TODO
-    - remove socket props
-    - use useTipTap
-    - remove this
-    - use .value
-*/
 
 const store = useStore()
 const { t } = useI18n()
@@ -56,19 +49,18 @@ const props = defineProps({
         },
     },
 
-    socket: {
-        type: Boolean,
-        default: false,
-    },
-
     providerParams: {
         type: Object,
         default: () => {},
     },
 })
 
-const { editor, editorInited, focusEditor, appendTranslationsStyle, destroyEditor, getExtensions } =
-    useTipTap({ props, emit, store, t })
+const { editor, editorInited, appendTranslationsStyle, destroyEditor, getExtensions } = useTipTap({
+    props,
+    emit,
+    store,
+    t,
+})
 
 // data
 const provider = ref(null)
@@ -127,15 +119,13 @@ const getCollaborativeContent = () => {
     // add nothing to the socket initially
     // either we'll fetch the socket content if we're not alone
     // or we'll set the content to the original description if we're the first to connect
-    if (props.socket) return ''
-    // else render previous conetnt
-    //return props.wsData.originalContent
+    return ''
 }
 
 function initCollaborativeEditor() {
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
-    if (props.socket && !props.wsData.room) return
+    if (!props.wsData.room) return
 
     if (editorInited.value) return
     editorInited.value = true
@@ -275,7 +265,7 @@ watch(
 watch(
     () => onlineAndConnected,
     (neo, old) => {
-        if (props.socket && old !== neo) {
+        if (old !== neo) {
             if (neo) {
                 handleReconnection()
             } else {
@@ -287,7 +277,7 @@ watch(
 watch(
     () => socketReady,
     (neo, old) => {
-        if (props.socket && old !== neo) {
+        if (old !== neo) {
             emit('socket-ready', neo)
         }
     },
@@ -309,11 +299,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-    <div
-        v-if="editor"
-        :class="'editor editor-' + mode + ' lang-' + $store.state.languages.current"
-        @click.self="focusEditor"
-    >
+    <TipTapEditorContainer v-if="editor" :mode="mode">
         <template v-if="firstSync">
             <div class="editor-socket">
                 <div :class="`editor-status editorstatus--${status}`">
@@ -376,16 +362,11 @@ onBeforeUnmount(() => {
                     v-text="$t(`multieditor.frozen`)"
                 ></div>
             </div>
-
-            <div class="content-wrapper">
-                <EditorContent
-                    ref="editorContent"
-                    :class="{ 'editor-frozen': !disconnectionGrace }"
-                    :editor="editor"
-                    class="editor-content custom-scrollbar"
-                    data-test="input-editor-content-connected"
-                />
-            </div>
+            <TipTapEditorContent
+                :editor="editor"
+                :editor-frozen="!disconnectionGrace"
+                is-connected
+            />
         </template>
         <template v-else>
             <p v-if="cnxTimedout" class="not-synced">
@@ -396,97 +377,44 @@ onBeforeUnmount(() => {
                 <p class="not-synced">{{ $t('multieditor.server-' + status) }}</p>
             </div>
         </template>
-    </div>
+    </TipTapEditorContainer>
 </template>
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
 <style lang="scss" scoped>
-.editor {
-    overflow: hidden;
-    border-radius: $border-radius-l;
-    border: $border-width-s solid $primary;
+.not-synced {
+    padding: 20px;
+}
+
+.status-bar {
+    background: $white;
+    color: $primary-dark;
     display: flex;
-    flex-flow: column nowrap;
+    padding: 5px 20px;
+    position: sticky;
+    z-index: 10;
+    width: 100%;
+}
 
-    .not-synced {
-        padding: 20px;
-    }
+.editor-socket {
+    align-items: center;
+    background: $primary-lighter;
+    display: flex;
+    justify-content: space-between;
+}
 
-    .content-wrapper {
-        display: flex;
-        flex-grow: 1;
-        overflow: hidden;
-    }
+.editor-status {
+    align-items: center;
+    color: $white;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
 
-    .editor-content {
-        color: $black;
-        padding: 8px;
-        overflow-y: auto;
-        max-height: 430px;
-        min-height: 100px;
-        flex-grow: 1;
-        margin-right: $space-2xs;
-
-        .ProseMirror {
-            outline: none;
-            padding: 30px;
-            border: none;
-            background: $primary-lighter;
-
-            & * {
-                word-wrap: break-word !important;
-            }
-        }
-
-        .anchor-element {
-            display: block;
-            position: relative;
-            visibility: hidden;
-        }
-    }
-
-    &.no-max-height {
-        .editor-content {
-            max-height: none;
-        }
-    }
-
-    &.min-height-100 {
-        .editor-content {
-            min-height: 100%;
-        }
-    }
-
-    .status-bar {
-        background: $white;
-        color: $primary-dark;
-        display: flex;
-        padding: 5px 20px;
-        position: sticky;
-        z-index: 10;
-        width: 100%;
-    }
-
-    .editor-socket {
+    .list {
         align-items: center;
-        background: $primary-lighter;
         display: flex;
-        justify-content: space-between;
-    }
-
-    .editor-status {
-        align-items: center;
-        color: $white;
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 20px;
-
-        .list {
-            align-items: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-        }
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 }
 
@@ -506,67 +434,6 @@ onBeforeUnmount(() => {
 
     .connection-status {
         padding: 0 2rem;
-    }
-}
-
-// TODO: this  break vue 3 compilation fix this later
-:deep(.content),
-:deep(.editor-content) {
-    /* Give a remote user a caret */
-    .collaboration-cursor__caret {
-        position: relative;
-        margin-left: -1px;
-        margin-right: -1px;
-        border-left: 1px solid $almost-black;
-        border-right: 1px solid $almost-black;
-        word-break: normal;
-        pointer-events: none;
-    }
-
-    /* Render the username above the caret */
-    .collaboration-cursor__label {
-        font-family: Roboto, 'Noto Sans SC', helvetica, arial, sans-serif;
-        position: absolute;
-        top: -1em;
-        left: -1px;
-        font-size: $font-size-2xs;
-        font-style: normal;
-        font-weight: 600;
-        line-height: $line-height-tight;
-        user-select: none;
-        color: $white;
-        padding: 0.1rem 0.3rem;
-        border-radius: 3px 3px 3px 0;
-        white-space: nowrap;
-        opacity: 0.7;
-        pointer-events: none;
-    }
-
-    .not-synced {
-        padding: 20px;
-    }
-
-    .editor .selectedCell {
-        outline: $primary dashed 1px;
-    }
-
-    .editor * {
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
-
-    .editor table {
-        max-width: 100% !important;
-        min-width: auto !important;
-    }
-
-    .editor th {
-        background-color: $almost-black;
-        color: $white;
-    }
-
-    .editor-frozen .ProseMirror {
-        background-color: $almost-white;
     }
 }
 </style>

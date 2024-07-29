@@ -46,7 +46,7 @@ export const propsDefinitions = {
     selectedCategory: {
         // TODO really ???
         type: Object,
-        default: () => {},
+        default: () => ({}),
     },
 }
 
@@ -55,13 +55,6 @@ export function useTipTap({ props, emit, store, t }) {
     const editor = ref(null)
 
     const editorInited = ref(false)
-
-    // methods
-    function focusEditor() {
-        if (editor.value) {
-            editor.value.commands.focus('end')
-        }
-    }
 
     function appendTranslationsStyle() {
         if (!document.getElementById('multieditor-translations')) {
@@ -157,7 +150,6 @@ export function useTipTap({ props, emit, store, t }) {
     return {
         editor,
         editorInited,
-        focusEditor,
         appendTranslationsStyle,
         initEditor,
         destroyEditor,

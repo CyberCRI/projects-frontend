@@ -18,11 +18,13 @@ const t = useI18n()
 const emit = defineEmits(['update', 'destroy', 'image', 'saved'])
 
 const props = defineProps({
-    parent: { type: Object, required: true },
-    selectedCategory: { type: Object, required: true },
+    parent: { type: String, required: true },
+    selectedCategory: { type: Object, default: () => ({}) },
     editor: { type: Object, required: true },
     showMenu: { type: Boolean, required: true },
     mode: { type: String, required: true },
+
+    saveIconVisible: { type: Boolean, default: false },
 })
 
 // data

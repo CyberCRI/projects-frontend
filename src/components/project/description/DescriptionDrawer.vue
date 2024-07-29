@@ -13,7 +13,6 @@
             v-if="editorDescription"
             :key="editorKey"
             ref="tipTapEditor"
-            :socket="true"
             :ws-data="editorDescription"
             :provider-params="providerParams"
             class="no-max-height"
