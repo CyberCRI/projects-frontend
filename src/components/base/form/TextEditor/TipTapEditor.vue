@@ -1,53 +1,26 @@
 <script setup>
 import { EditorContent } from '@tiptap/vue-3'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import EditorModalImage from './modals/EditorModalImage.vue'
-import EditorModalLink from './modals/EditorModalLink.vue'
-import EditorModalColor from './modals/EditorModalColor.vue'
-import EditorModalVideo from './modals/EditorModalVideo.vue'
-
-import MenuBar from './MenuBar.vue'
-import TableMenuBar from './TableMenuBar.vue'
-import LinkMenuBar from './LinkMenuBar.vue'
-
-import ImageMenuBar from './ImageMenuBar.vue'
-import VideoMenuBar from './VideoMenuBar.vue'
-
+import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 import { watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
-import { propsDefinitions, useTipTap } from '@/components/base/form/TextEditor/tiptap-base.js'
+import {
+    emitsDefinitions,
+    propsDefinitions,
+    useTipTap,
+} from '@/components/base/form/TextEditor/useTipTap.js'
 
 const store = useStore()
 const { t } = useI18n()
 
 // events
-const emit = defineEmits(['saved', 'update', 'destroy', 'image', 'blur'])
+const emit = defineEmits(emitsDefinitions)
 
 // props
 const props = defineProps(propsDefinitions)
 
-const {
-    editor,
-    editorInited,
-    activeModals,
-    linkHref,
-    currentColor,
-    focusEditor,
-    openLinkModal,
-    openColorModal,
-    openVideoModal,
-    openImageModal,
-    openDestroyModal,
-    handleLinkModalConfirmed,
-    handleColorModalConfirmed,
-    handleVideoModalConfirmed,
-    handleImageModalConfirmed,
-    appendTranslationsStyle,
-    handleImage,
-    initEditor,
-    destroyEditor,
-} = useTipTap({ props, emit, store, t })
+const { editor, editorInited, focusEditor, appendTranslationsStyle, initEditor, destroyEditor } =
+    useTipTap({ props, emit, store, t })
 
 // lifecycle
 onMounted(() => {
@@ -77,71 +50,20 @@ watch(
         :class="'editor editor-' + mode + ' lang-' + $store.state.languages.current"
         @click.self="focusEditor"
     >
-        <ConfirmModal
-            v-if="activeModals.destroy"
-            :content="`${t('description.delete')} ${t('description.edit-saved')}`"
-            :title="t('description.quit-without-saving-title')"
-            @cancel="activeModals.destroy = false"
-            @confirm="activeModals.destroy = false"
-        />
-        <EditorModalImage
-            v-if="activeModals.image"
-            :parent="parent"
-            :selected-category="selectedCategory"
-            @close-modal="activeModals.image = false"
-            @image="handleImage"
-            @on-confirm="handleImageModalConfirmed"
-        />
-
-        <EditorModalLink
-            v-if="activeModals.link"
-            :link-href="linkHref"
-            :has-selection="!editor.view.state.selection.empty"
-            @close-modal="activeModals.link = false"
-            @on-confirm="handleLinkModalConfirmed"
-        />
-
-        <EditorModalColor
-            v-if="activeModals.color"
-            :current-color="currentColor"
-            @close-modal="activeModals.color = false"
-            @on-confirm="handleColorModalConfirmed"
-        />
-
-        <EditorModalVideo
-            v-if="activeModals.video"
-            @close-modal="activeModals.video = false"
-            @on-confirm="handleVideoModalConfirmed"
-        />
-
-        <MenuBar
-            v-if="mode !== 'none'"
+        <TipTapModals
             :editor="editor"
+            :parent="parent"
             :mode="mode"
-            :open-color-modal="openColorModal"
-            :open-destroy-modal="openDestroyModal"
-            :open-image-modal="openImageModal"
-            :open-link-modal="openLinkModal"
-            :open-video-modal="openVideoModal"
+            :selected-category="selectedCategory"
+            :show-menu="mode !== 'none'"
             :save-icon-visible="saveIconVisible"
-            class="editor-header"
-            @saved="emit('saved')"
+            @image="emit('image', $event)"
+            @update="emit('update', $event)"
+            @destroy="emit('destroy', $event)"
+            @saved="emit('saved', $event)"
         />
 
         <div class="content-wrapper">
-            <TableMenuBar v-if="mode === 'full'" :editor="editor" class="editortablemenu" />
-
-            <LinkMenuBar
-                v-if="mode !== 'none'"
-                :editor="editor"
-                :open-link-modal="openLinkModal"
-                class="editorlinkmenu"
-            />
-
-            <ImageMenuBar :editor="editor" v-if="mode !== 'none'" />
-
-            <VideoMenuBar :editor="editor" v-if="mode !== 'none'" />
-
             <EditorContent
                 ref="editorContent"
                 :editor="editor"
@@ -210,8 +132,7 @@ watch(
         }
     }
 
-    .status-bar,
-    .editor-header {
+    .status-bar {
         background: $white;
         color: $primary-dark;
         display: flex;
@@ -219,21 +140,6 @@ watch(
         position: sticky;
         z-index: 10;
         width: 100%;
-    }
-
-    .editor-header {
-        justify-content: space-between;
-        border-bottom: $border-width-s solid $primary;
-        top: 0;
-
-        .icons {
-            align-items: center;
-            display: flex;
-
-            .menu-item {
-                color: $primary-dark;
-            }
-        }
     }
 
     .editor-socket {

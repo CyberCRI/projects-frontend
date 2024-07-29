@@ -5,18 +5,7 @@ import UserCard from './UserPresenceCard.vue'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS.ts'
 
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import EditorModalImage from './modals/EditorModalImage.vue'
-import EditorModalLink from './modals/EditorModalLink.vue'
-import EditorModalColor from './modals/EditorModalColor.vue'
-import EditorModalVideo from './modals/EditorModalVideo.vue'
-
-import MenuBar from './MenuBar.vue'
-import TableMenuBar from './TableMenuBar.vue'
-import LinkMenuBar from './LinkMenuBar.vue'
-
-import ImageMenuBar from './ImageMenuBar.vue'
-import VideoMenuBar from './VideoMenuBar.vue'
+import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
@@ -24,7 +13,11 @@ import { toRaw } from 'vue'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
-import { propsDefinitions, useTipTap } from '@/components/base/form/TextEditor/tiptap-base.js'
+import {
+    emitsDefinitions,
+    propsDefinitions,
+    useTipTap,
+} from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
@@ -45,8 +38,7 @@ const { t } = useI18n()
 const DISCONNECTION_GRACE_DURATION =
     import.meta.env.VITE_APP_DISCONNECTION_GRACE_DURATION || 6 * 1000
 
-// TODO merge bas emis
-const emit = defineEmits(['saved', 'update', 'destroy', 'image', 'blur', 'socket-ready'])
+const emit = defineEmits([...emitsDefinitions, 'socket-ready'])
 
 const props = defineProps({
     ...propsDefinitions,
@@ -75,27 +67,8 @@ const props = defineProps({
     },
 })
 
-const {
-    editor,
-    editorInited,
-    activeModals,
-    linkHref,
-    currentColor,
-    focusEditor,
-    openLinkModal,
-    openColorModal,
-    openVideoModal,
-    openImageModal,
-    openDestroyModal,
-    handleLinkModalConfirmed,
-    handleColorModalConfirmed,
-    handleVideoModalConfirmed,
-    handleImageModalConfirmed,
-    handleImage,
-    appendTranslationsStyle,
-    destroyEditor,
-    getExtensions,
-} = useTipTap({ props, emit, store, t })
+const { editor, editorInited, focusEditor, appendTranslationsStyle, destroyEditor, getExtensions } =
+    useTipTap({ props, emit, store, t })
 
 // data
 const provider = ref(null)
@@ -123,36 +96,6 @@ const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected)
 // methods
 
 function getCollaborativeExtensions() {
-    //     let exts = [
-    //         // Collaborative (socket) use its own history
-    //         StarterKit.configure({ history: !props.socket }),
-    //         Link.configure({
-    //             openOnClick: false,
-    //         }),
-    //         TextStyle,
-    //         Color,
-    //         // TODO: Check if need history
-    //         // History,
-    //         Underline,
-    //         TextAlign.configure({
-    //             types: ['heading', 'paragraph'],
-    //             alignments: ['left', 'center', 'right'],
-    //         }),
-    //         ExternalVideo,
-    //         Table.configure({
-    //             resizable: true,
-    //             cellMinWidth: 300,
-    //         }),
-    //         TableRow,
-    //         TableHeader,
-    //         CustomTableCell,
-    //         CustomImage,
-    //         Gapcursor,
-    //         LpiCodeBlock.configure({
-    //             lowlight,
-    //         }),
-    //     ]
-
     const exts = getExtensions()
 
     exts.push(
@@ -214,8 +157,6 @@ function initCollaborativeEditor() {
             destroyEditor()
         }
     }, cnxTimeout.value)
-
-    console.log('in init', accessToken.value)
 
     provider.value = new HocuspocusProvider({
         url: sockerserver,
@@ -314,10 +255,10 @@ function destroyCollaborativeEditor() {
 
 // watch
 // re-set the cookie when token change
+// TODO really ?
 watch(
     () => accessToken.value,
     () => {
-        console.log('in wathc', accessToken.value)
         funct.setTokenForWS(accessToken.value)
     }
 )
@@ -374,45 +315,6 @@ onBeforeUnmount(() => {
         @click.self="focusEditor"
     >
         <template v-if="firstSync">
-            <ConfirmModal
-                v-if="activeModals.destroy"
-                :content="`${$t('description.delete')} ${$t('description.edit-saved')}`"
-                :title="$t('description.quit-without-saving-title')"
-                confirm-button-label="common.continue"
-                @cancel="activeModals.destroy = false"
-                @confirm="handleDestroyModalConfirmed"
-            />
-
-            <EditorModalImage
-                v-if="activeModals.image"
-                :parent="parent"
-                :selected-category="selectedCategory"
-                @close-modal="activeModals.image = false"
-                @image="handleImage"
-                @on-confirm="handleImageModalConfirmed"
-            />
-
-            <EditorModalLink
-                v-if="activeModals.link"
-                :link-href="linkHref"
-                :has-selection="!editor.view.state.selection.empty"
-                @close-modal="activeModals.link = false"
-                @on-confirm="handleLinkModalConfirmed"
-            />
-
-            <EditorModalColor
-                v-if="activeModals.color"
-                :current-color="currentColor"
-                @close-modal="activeModals.color = false"
-                @on-confirm="handleColorModalConfirmed"
-            />
-
-            <EditorModalVideo
-                v-if="activeModals.video"
-                @close-modal="activeModals.video = false"
-                @on-confirm="handleVideoModalConfirmed"
-            />
-
             <div class="editor-socket">
                 <div :class="`editor-status editorstatus--${status}`">
                     <div v-if="onlineAndConnected" class="list currenteditors">
@@ -434,20 +336,20 @@ onBeforeUnmount(() => {
                     </div>
                 </div>
             </div>
-            <MenuBar
-                v-if="disconnectionGrace"
+
+            <TipTapModals
                 :editor="editor"
+                :parent="parent"
                 :mode="mode"
-                :open-color-modal="openColorModal"
-                :open-destroy-modal="openDestroyModal"
-                :open-image-modal="openImageModal"
-                :open-link-modal="openLinkModal"
-                :open-video-modal="openVideoModal"
-                :room="wsData.room"
+                :selected-category="selectedCategory"
+                :show-menu="disconnectionGrace"
                 :save-icon-visible="saveIconVisible"
-                class="editor-header"
-                @saved="$emit('saved')"
+                @image="emit('image', $event)"
+                @update="emit('update', $event)"
+                @destroy="emit('destroy', $event)"
+                @saved="emit('saved', $event)"
             />
+
             <div
                 v-if="!onlineAndConnected"
                 :class="{ 'editor-frozen': !disconnectionGrace }"
@@ -476,20 +378,6 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="content-wrapper">
-                <TableMenuBar
-                    v-if="disconnectionGrace && mode === 'full'"
-                    :editor="editor"
-                    class="editortablemenu"
-                />
-
-                <LinkMenuBar
-                    v-if="mode !== 'none' && disconnectionGrace"
-                    :editor="editor"
-                    :open-link-modal="openLinkModal"
-                    class="editorlinkmenu"
-                />
-                <VideoMenuBar v-if="mode !== 'none' && disconnectionGrace" :editor="editor" />
-                <ImageMenuBar v-if="mode !== 'none' && disconnectionGrace" :editor="editor" />
                 <EditorContent
                     ref="editorContent"
                     :class="{ 'editor-frozen': !disconnectionGrace }"
@@ -569,8 +457,7 @@ onBeforeUnmount(() => {
         }
     }
 
-    .status-bar,
-    .editor-header {
+    .status-bar {
         background: $white;
         color: $primary-dark;
         display: flex;
@@ -578,21 +465,6 @@ onBeforeUnmount(() => {
         position: sticky;
         z-index: 10;
         width: 100%;
-    }
-
-    .editor-header {
-        justify-content: space-between;
-        border-bottom: $border-width-s solid $primary;
-        top: 0;
-
-        .icons {
-            align-items: center;
-            display: flex;
-
-            .menu-item {
-                color: $primary-dark;
-            }
-        }
     }
 
     .editor-socket {

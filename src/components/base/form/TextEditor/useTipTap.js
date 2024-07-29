@@ -1,5 +1,3 @@
-import funct from '@/functs/functions.ts'
-
 import { Editor } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
@@ -21,7 +19,9 @@ import Gapcursor from '@tiptap/extension-gapcursor'
 
 import lowlight from '@/functs/lowlight.ts'
 
-import { ref, reactive, computed } from 'vue'
+import { ref } from 'vue'
+
+export const emitsDefinitions = ['saved', 'update', 'destroy', 'image', 'blur']
 
 export const propsDefinitions = {
     mode: {
@@ -53,18 +53,8 @@ export const propsDefinitions = {
 export function useTipTap({ props, emit, store, t }) {
     // data
     const editor = ref(null)
-    const activeModals = reactive({
-        destroy: false,
-        image: false,
-        link: false,
-        video: false,
-        color: false,
-    })
-    const editorInited = ref(false)
 
-    // computed
-    const linkHref = computed(() => editor.value.getAttributes('link').href)
-    const currentColor = computed(() => editor.value.getAttributes('textStyle').color)
+    const editorInited = ref(false)
 
     // methods
     function focusEditor() {
@@ -157,106 +147,6 @@ export function useTipTap({ props, emit, store, t }) {
         })
     }
 
-    function openLinkModal() {
-        activeModals.link = true
-    }
-
-    function openColorModal() {
-        activeModals.color = true
-    }
-
-    function openVideoModal() {
-        activeModals.video = true
-    }
-
-    function openImageModal() {
-        activeModals.image = true
-    }
-
-    function openDestroyModal() {
-        activeModals.destroy = true
-    }
-
-    function handleLinkModalConfirmed(data) {
-        // set the link if there's data from popup
-        if (data) {
-            editor.value
-                .chain()
-                .focus()
-                .extendMarkRange('link')
-                .setLink({
-                    href: (funct.isValidUrl(data.href) ? '' : 'http://') + data.href,
-                })
-                .run()
-            // if link made from empty selection, add the entered text as content
-            if (data.text) {
-                const selection = editor.value.view.state.selection
-                editor.value
-                    .chain()
-                    .focus()
-                    .insertContentAt(
-                        {
-                            from: selection.from,
-                            to: selection.to,
-                        },
-                        data.text
-                    )
-                    .run()
-            }
-        } else {
-            // if there is no data, unset the link
-            editor.value.chain().focus().extendMarkRange('link').unsetLink().run()
-        }
-
-        activeModals.link = false
-    }
-
-    function handleColorModalConfirmed(data) {
-        if (data) {
-            editor.value.chain().focus().setColor(data).run()
-        } else {
-            editor.value.chain().focus().unsetColor().run()
-        }
-
-        activeModals.link = false
-    }
-
-    function handleVideoModalConfirmed(data) {
-        editor.value.chain().focus().setExternalVideo({ src: data.src }).run()
-
-        activeModals.video = false
-    }
-
-    function handleDestroyModalConfirmed() {
-        // reset modification
-        emit('update', props.wsData.originalContent)
-        editor.value.commands.setContent(props.wsData.originalContent)
-
-        activeModals.destroy = false
-        emit('destroy')
-    }
-
-    function handleImageModalConfirmed(img) {
-        const attrsw = img.sizeX < 1100 ? img.sizeX : 1100
-        const attrsh = img.sizeX < 1100 ? img.sizeY : img.sizeY * (1100 / parseFloat(img.sizeX))
-
-        editor.value
-            .chain()
-            .focus()
-            .setImage({
-                src: img.src,
-                width: attrsw,
-                height: attrsh,
-            })
-            .run()
-
-        activeModals.image = false
-    }
-
-    function handleImage(img) {
-        emit('image', img)
-    }
-
     function destroyEditor() {
         if (editor.value) {
             editor.value.off('update')
@@ -267,21 +157,7 @@ export function useTipTap({ props, emit, store, t }) {
     return {
         editor,
         editorInited,
-        activeModals,
-        linkHref,
-        currentColor,
         focusEditor,
-        openLinkModal,
-        openColorModal,
-        openVideoModal,
-        openImageModal,
-        openDestroyModal,
-        handleLinkModalConfirmed,
-        handleColorModalConfirmed,
-        handleVideoModalConfirmed,
-        handleDestroyModalConfirmed,
-        handleImageModalConfirmed,
-        handleImage,
         appendTranslationsStyle,
         initEditor,
         destroyEditor,
