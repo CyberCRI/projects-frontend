@@ -3,6 +3,7 @@
         type="button"
         class="drop-down-menu-item-content"
         @click="$emit('choose-category', category)"
+        :data-test="`project-form-${category.id}`"
     >
         <span class="label">{{ $filters.capitalize(category.name) }}</span>
     </button>
