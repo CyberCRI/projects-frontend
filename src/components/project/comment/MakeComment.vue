@@ -21,7 +21,6 @@
                 :save-image-callback="saveCommentImage"
                 class="comment-description"
                 mode="full"
-                parent="comments"
                 @image="handleImage"
                 @update="updateContent"
             />

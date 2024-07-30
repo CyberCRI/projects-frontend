@@ -58,7 +58,6 @@ defineExpose({
     <TipTapEditorContainer v-if="editor" :mode="mode">
         <TipTapModals
             :editor="editor"
-            :parent="parent"
             :mode="mode"
             :show-menu="mode !== 'none'"
             :save-icon-visible="saveIconVisible"

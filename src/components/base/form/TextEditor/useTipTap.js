@@ -38,11 +38,6 @@ export const propsDefinitions = {
         default: true,
     },
 
-    parent: {
-        type: String,
-        default: '',
-    },
-
     saveImageCallback: {
         // function must take a file argument and return a promise resolving to an {url, width, height} object
         type: [Function, null],

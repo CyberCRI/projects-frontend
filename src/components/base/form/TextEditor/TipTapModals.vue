@@ -18,7 +18,6 @@ const t = useI18n()
 const emit = defineEmits(['update', 'destroy', 'image', 'saved'])
 
 const props = defineProps({
-    parent: { type: String, required: true },
     editor: { type: Object, required: true },
     showMenu: { type: Boolean, required: true },
     mode: { type: String, required: true },
@@ -160,7 +159,6 @@ function handleImage(img) {
     />
     <EditorModalImage
         v-if="activeModals.image"
-        :parent="parent"
         @close-modal="activeModals.image = false"
         @image="handleImage"
         @on-confirm="handleImageModalConfirmed"

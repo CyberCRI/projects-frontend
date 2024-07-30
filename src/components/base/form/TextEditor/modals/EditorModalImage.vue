@@ -49,26 +49,6 @@ export default {
             return this.file && this.file.size < MAX_FILE_SIZE
         },
 
-        isFaqImage() {
-            return this.$route.name === 'faq'
-        },
-
-        isTemplateImage() {
-            return this.$route.name === 'templates'
-        },
-
-        isProjectView() {
-            return this.$route.path.split('/')[1] === 'projects'
-        },
-
-        isBlogEntryImage() {
-            return this.parent === 'blog-entry'
-        },
-
-        isCommentImage() {
-            return this.parent === 'comments'
-        },
-
         secondButtonOptions() {
             return {
                 disabled: !this.file,
@@ -80,11 +60,6 @@ export default {
     },
 
     props: {
-        parent: {
-            type: String,
-            default: '',
-        },
-
         saveImageCallback: {
             // function must take a file argument and return a promise resolving to an {url, width, height} object
             type: [Function, null],

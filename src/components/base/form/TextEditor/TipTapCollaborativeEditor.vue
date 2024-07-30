@@ -319,7 +319,6 @@ defineExpose({
 
             <TipTapModals
                 :editor="editor"
-                :parent="parent"
                 :mode="mode"
                 :show-menu="disconnectionGrace"
                 :save-icon-visible="saveIconVisible"

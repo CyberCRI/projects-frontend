@@ -19,7 +19,6 @@
                 ref="tiptapEditor"
                 :ws-data="wsData"
                 class="input-field content-editor no-max-height"
-                parent="blog-entry"
                 @update="updateContent"
             />
         </div>

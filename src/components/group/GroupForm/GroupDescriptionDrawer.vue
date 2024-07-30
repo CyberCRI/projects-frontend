@@ -25,7 +25,6 @@
                 :ws-data="wsData"
                 class="input-field content-editor no-max-height min-height-100"
                 mode="medium"
-                parent="group-entry"
                 @destroy="closeDrawer"
                 @image="handleImage"
                 @update="updateContent"
