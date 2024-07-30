@@ -8,12 +8,20 @@
             <div class="block-container">
                 <h4 class="title">{{ $t('template.category') }}</h4>
                 <span class="description">{{ $t('template.tips-category') }}</span>
-                <LpiSelect
-                    v-model="selectedCategory.id"
-                    :options="categoriesOptions"
-                    @update:model-value="fillForm"
-                    @blur="v$.selectedCategory.id.$touch"
-                />
+                <ProjectCategoriesDropdown
+                    class="category-select"
+                    data-test="select-project-category"
+                    :dropdown-label="selectedCategoryLabel"
+                    ref="categoryDropdown"
+                >
+                    <template #default="{ category }">
+                        <ProjectCategoriesDropdownElementButton
+                            :category="category"
+                            @choose-category="setCategory(category)"
+                            @blur="v$.selectedCategory.id.$touch"
+                        />
+                    </template>
+                </ProjectCategoriesDropdown>
                 <FieldErrors :errors="v$.selectedCategory.id.$errors" />
             </div>
             <FieldDisabler :disabled="otherFieldDisabled">
@@ -158,7 +166,6 @@
 <script>
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import { getProjectCategory } from '@/api/project-categories.service'
@@ -170,6 +177,8 @@ import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
+import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 
 export default {
     name: 'TemplatesTab',
@@ -177,7 +186,6 @@ export default {
     components: {
         TextInput,
         TipTapEditor,
-        LpiSelect,
         LpiButton,
         LpiSnackbar,
         FieldDisabler,
@@ -185,6 +193,8 @@ export default {
         TagsFilterEditor,
         FilterValue,
         FieldErrors,
+        ProjectCategoriesDropdown,
+        ProjectCategoriesDropdownElementButton,
     },
 
     setup() {
@@ -217,7 +227,7 @@ export default {
                 wikipediaTags: [],
             },
             isLoading: false,
-            selectedCategory: { id: undefined },
+            selectedCategory: null,
             tagSearchIsOpened: false,
             editorKey: 0,
             newTags: [],
@@ -258,57 +268,61 @@ export default {
             return this.$store.getters['projectCategories/allOrderedByOrderId']
         },
 
-        categoriesOptions() {
-            return this.categories.map((category) => {
-                return { value: category.id, label: category.name }
-            })
-        },
-
         otherFieldDisabled() {
-            return !this.selectedCategory.id
+            return !this.selectedCategory?.id
         },
 
         allTags() {
             return [...(this.form || {}).organizationTags, ...(this.form || {}).wikipediaTags]
         },
+
+        selectedCategoryLabel() {
+            return this.selectedCategory
+                ? this.selectedCategory.name
+                : this.$t('project.form.select-category')
+        },
     },
 
     methods: {
+        setCategory(category) {
+            this.selectedCategory = category
+            this.$refs.categoryDropdown?.close()
+        },
         async fillForm() {
             this.selectedCategory = await getProjectCategory(
-                this.selectedCategory.id ? this.selectedCategory.id : this.categories[0].id
+                this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0].id
             )
 
-            if (this.selectedCategory.template) {
+            if (this.selectedCategory?.template) {
                 /* Titles and purpose */
-                this.form.title = this.selectedCategory.template.title_placeholder
-                this.form.purpose = this.selectedCategory.template.goal_placeholder
+                this.form.title = this.selectedCategory?.template.title_placeholder
+                this.form.purpose = this.selectedCategory?.template.goal_placeholder
                 this.form.description.originalContent =
-                    this.selectedCategory.template.description_placeholder
+                    this.selectedCategory?.template.description_placeholder
                 this.form.description.savedContent =
-                    this.selectedCategory.template.description_placeholder
+                    this.selectedCategory?.template.description_placeholder
 
                 /* Blog */
-                this.form.blogTitle = this.selectedCategory.template.blogentry_title_placeholder
+                this.form.blogTitle = this.selectedCategory?.template.blogentry_title_placeholder
                 this.form.blogContent.originalContent =
-                    this.selectedCategory.template.blogentry_placeholder
+                    this.selectedCategory?.template.blogentry_placeholder
                 this.form.blogContent.savedContent =
-                    this.selectedCategory.template.blogentry_placeholder
+                    this.selectedCategory?.template.blogentry_placeholder
 
                 /* Goal */
-                this.form.goalTitle = this.selectedCategory.template.goal_title
+                this.form.goalTitle = this.selectedCategory?.template.goal_title
                 this.form.goal_description.originalContent =
-                    this.selectedCategory.template.goal_description
+                    this.selectedCategory?.template.goal_description
                 this.form.goal_description.savedContent =
-                    this.selectedCategory.template.goal_description
+                    this.selectedCategory?.template.goal_description
 
                 /* Language */
                 this.form.language =
-                    this.selectedCategory.lang || this.$store.state.languages.current
+                    this.selectedCategory?.lang || this.$store.state.languages.current
 
                 /* Tags */
-                this.form.organizationTags = this.selectedCategory.organization_tags
-                this.form.wikipediaTags = this.selectedCategory.wikipedia_tags
+                this.form.organizationTags = this.selectedCategory?.organization_tags
+                this.form.wikipediaTags = this.selectedCategory?.wikipedia_tags
             }
             this.editorKey += 1
         },
@@ -335,7 +349,7 @@ export default {
 
             try {
                 await this.$store.dispatch('projectCategories/updateProjectCategory', {
-                    categoryId: this.selectedCategory.id,
+                    categoryId: this.selectedCategory?.id,
                     newCategory: updatedData,
                 })
                 this.$store.dispatch('notifications/pushToast', {
@@ -393,6 +407,13 @@ export default {
         allTags: {
             handler: function (neo) {
                 this.newTags = [...neo]
+            },
+            immediate: true,
+            deep: true,
+        },
+        selectedCategory: {
+            handler: function (neo, old) {
+                if (neo?.id && neo?.id != old?.id) this.fillForm()
             },
             immediate: true,
             deep: true,
