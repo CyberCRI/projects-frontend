@@ -24,12 +24,6 @@
 </template>
 
 <script>
-import { postProjectImage } from '@/api/projects.service'
-import { postFaqImage } from '@/api/faqs.service'
-import { postTemplateImage } from '@/api/templates.service'
-import { postBlogEntryImage } from '@/api/blogentries.service'
-import { postCommentImage } from '@/api/comments.service'
-import { postOrganizationImage } from '@/api/organizations.service'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 
@@ -75,13 +69,6 @@ export default {
             return this.parent === 'comments'
         },
 
-        currentProjectId() {
-            return this.$store.getters['projects/currentProjectId']
-        },
-
-        currentOrgCode() {
-            return this.$store.getters['organizations/current'].code
-        },
         secondButtonOptions() {
             return {
                 disabled: !this.file,
@@ -98,9 +85,11 @@ export default {
             default: '',
         },
 
-        selectedCategory: {
-            type: Object,
-            default: () => {},
+        saveImageCallback: {
+            // function must take a file argument and return a promise resolving to an {url, width, height} object
+            type: [Function, null],
+            required: false,
+            default: null,
         },
     },
 
@@ -156,100 +145,31 @@ export default {
 
         insertImage() {
             if (!this.validImage) return
-
-            this.uploading = true
-            const formData = new FormData()
-            formData.append('file', this.file, this.file.name)
-            formData.append('project_id', this.$store.getters['projects/currentProjectId'])
-
-            const handleSuccess = ({ id, width, height }) => {
-                const image = {
-                    src: this.buildImageUrl(id),
-                    width: width,
-                    height: height,
-                }
-
-                this.$emit('onConfirm', image)
-                this.closeModal()
-            }
-
-            const handleError = () => {
+            if (!this.saveImageCallback) {
                 this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('resource.invalid-image'),
+                    message: this.$t('resource.cannot-upload-image'),
                     type: 'error',
                 })
-            }
-
-            if (this.isOrganization) {
-                postOrganizationImage({
-                    orgCode: this.currentOrgCode,
-                    body: formData,
-                })
+                console.error('saveImageCallback is not defined')
+            } else {
+                this.uploading = true
+                this.saveImageCallback(this.file)
                     .then((image) => {
-                        handleSuccess(image)
-                        this.$emit('image', image)
+                        this.$emit('onConfirm', image)
+                        this.$nextTick(() => {
+                            this.$emit('image', image)
+                            this.closeModal()
+                        })
                     })
-                    .catch(() => handleError())
-            }
-
-            if (this.isFaqImage) {
-                postFaqImage({
-                    orgCode: this.currentOrgCode,
-                    body: formData,
-                })
-                    .then((image) => {
-                        handleSuccess(image)
-                        this.$emit('image', image)
+                    .catch(() => {
+                        this.$store.dispatch('notifications/pushToast', {
+                            message: this.$t('resource.error-uploading-image'),
+                            type: 'error',
+                        })
                     })
-                    .catch(() => handleError())
-            }
-
-            if (this.isTemplateImage) {
-                postTemplateImage({ id: this.selectedCategory.id, body: formData })
-                    .then((image) => handleSuccess(image))
-                    .catch(() => handleError())
-            }
-
-            if (this.isBlogEntryImage) {
-                postBlogEntryImage({
-                    project_id: this.currentProjectId,
-                    body: formData,
-                })
-                    .then((image) => {
-                        handleSuccess(image)
-                        this.$emit('image', image)
-                    })
-                    .catch(() => handleError())
-            } else if (this.isCommentImage) {
-                postCommentImage(this.currentProjectId, formData)
-                    .then((image) => handleSuccess(image))
-                    .catch(() => handleError())
-            } else if (this.isProjectView) {
-                postProjectImage({
-                    project_id: this.$store.state.projects.project.id,
-                    body: formData,
-                })
-                    .then((image) => handleSuccess(image))
-                    .catch(() => handleError())
             }
 
             this.uploading = false
-        },
-        buildImageUrl(image_id) {
-            if (this.isFaqImage) {
-                return `/v1/organization/${this.currentOrgCode}/faq-image/${image_id}/`
-            } else if (this.isOrganization) {
-                return `/v1/organization/${this.currentOrgCode}/image/${image_id}/`
-            } else if (this.isTemplateImage) {
-                return `/v1/category/${this.selectedCategory.id}/template-image/${image_id}/`
-            } else if (this.isBlogEntryImage) {
-                return `/v1/project/${this.currentProjectId}/blog-entry-image/${image_id}/`
-            } else if (this.isCommentImage) {
-                return `/v1/project/${this.currentProjectId}/comment-image/${image_id}/`
-            } else {
-                // isProjectView
-                return `/v1/project/${this.currentProjectId}/image/${image_id}/`
-            }
         },
     },
 }

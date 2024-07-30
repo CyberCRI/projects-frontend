@@ -47,6 +47,12 @@ watch(
         initEditor()
     }
 )
+
+// expose
+// editor needs to be accessed by parent (see HelpAdminTab.vue)
+defineExpose({
+    editor,
+})
 </script>
 <template>
     <TipTapEditorContainer v-if="editor" :mode="mode">
@@ -54,9 +60,9 @@ watch(
             :editor="editor"
             :parent="parent"
             :mode="mode"
-            :selected-category="selectedCategory"
             :show-menu="mode !== 'none'"
             :save-icon-visible="saveIconVisible"
+            :save-image-callback="saveImageCallback"
             @image="emit('image', $event)"
             @update="emit('update', $event)"
             @destroy="emit('destroy', $event)"

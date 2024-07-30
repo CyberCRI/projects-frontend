@@ -19,12 +19,17 @@ const emit = defineEmits(['update', 'destroy', 'image', 'saved'])
 
 const props = defineProps({
     parent: { type: String, required: true },
-    selectedCategory: { type: [Object, null], default: null },
     editor: { type: Object, required: true },
     showMenu: { type: Boolean, required: true },
     mode: { type: String, required: true },
 
     saveIconVisible: { type: Boolean, default: false },
+    saveImageCallback: {
+        // function must take a file argument and return a promise resolving to an {url, width, height} object
+        type: [Function, null],
+        required: false,
+        default: null,
+    },
 })
 
 // data
@@ -123,14 +128,16 @@ function handleDestroyModalConfirmed() {
 }
 
 function handleImageModalConfirmed(img) {
-    const attrsw = img.sizeX < 1100 ? img.sizeX : 1100
-    const attrsh = img.sizeX < 1100 ? img.sizeY : img.sizeY * (1100 / parseFloat(img.sizeX))
+    const MAX_SIZE = 1100
+    const attrsw = img.width < MAX_SIZE ? img.width : MAX_SIZE
+    const attrsh =
+        img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / parseFloat(img.width))
 
     props.editor
         .chain()
         .focus()
         .setImage({
-            src: img.src,
+            src: img.static_url,
             width: attrsw,
             height: attrsh,
         })
@@ -154,10 +161,10 @@ function handleImage(img) {
     <EditorModalImage
         v-if="activeModals.image"
         :parent="parent"
-        :selected-category="selectedCategory"
         @close-modal="activeModals.image = false"
         @image="handleImage"
         @on-confirm="handleImageModalConfirmed"
+        :save-image-callback="saveImageCallback"
     />
 
     <EditorModalLink

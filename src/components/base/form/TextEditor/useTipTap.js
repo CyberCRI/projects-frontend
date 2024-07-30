@@ -43,9 +43,9 @@ export const propsDefinitions = {
         default: '',
     },
 
-    selectedCategory: {
-        // TODO really ???
-        type: [Object, null],
+    saveImageCallback: {
+        // function must take a file argument and return a promise resolving to an {url, width, height} object
+        type: [Function, null],
         required: false,
     },
 }

@@ -1506,6 +1506,8 @@
         "edit-link": "edit a link",
         "edit-file": "edit a file",
         "invalid-image": "Unsupported file ... is this an image ?",
+        "error-uploading-image": "Error while uploading image ",
+        "cannot-upload-image": "Cannot upload image for now",
         "link-address": "link address",
         "resources": "resources",
         "web": "link to web resources | links to web resources",

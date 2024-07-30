@@ -38,6 +38,7 @@
                     class="input-field content-editor"
                     mode="full"
                     parent="blog-entry"
+                    :save-image-callback="saveBlogImage"
                     @destroy="closeDrawer"
                     @image="handleImage"
                     @saved="submitBlogEntry(false)"
@@ -53,6 +54,7 @@
                     class="input-field content-editor"
                     mode="full"
                     parent="blog-entry"
+                    :save-image-callback="saveBlogImage"
                     @destroy="closeDrawer"
                     @image="handleImage"
                     @saved="submitBlogEntry(false)"
@@ -79,6 +81,7 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { postBlogEntryImage } from '@/api/blogentries.service'
 
 export default {
     name: 'BlogDrawer',
@@ -214,6 +217,23 @@ export default {
     },
 
     methods: {
+        saveBlogImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // TODO necessary ?
+            formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+
+            return postBlogEntryImage({
+                project_id: this.project.id,
+                body: formData,
+            }) /*.then(({ id, width, height }) => ({
+                id,
+                width,
+                height,
+                url: `/v1/project/${this.project.id}/blog-entry-image/${id}/`,
+            }))*/
+        },
+
         async submitBlogEntry(closeWindowAfterOperation = true) {
             const isValid = await this.v$.$validate()
             if (isValid) {

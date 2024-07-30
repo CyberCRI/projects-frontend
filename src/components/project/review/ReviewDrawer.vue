@@ -25,9 +25,7 @@
                 <TipTapEditor
                     :key="editorKey"
                     :save-icon-visible="false"
-                    :socket="false"
                     :ws-data="wsdata"
-                    mode="simple"
                     @update="updateContent"
                     @blur="v$.newReview.data.description.$touch"
                 />

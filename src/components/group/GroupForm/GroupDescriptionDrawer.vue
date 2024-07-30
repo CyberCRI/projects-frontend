@@ -22,7 +22,6 @@
                 v-if="wsData"
                 :key="editorKey"
                 ref="tiptapEditor"
-                :socket="false && !isAddMode"
                 :ws-data="wsData"
                 class="input-field content-editor no-max-height min-height-100"
                 mode="medium"
@@ -60,9 +59,9 @@ export default {
             type: Boolean,
             default: false,
         },
-        // TODO this set the socket status
-        // witch is forced to false for now
-        // uintil the server is updated
+        // TODO this will set the collaborative
+        // when the HocusPocus server is updated
+        // eslint-disable-next-line
         isAddMode: {
             type: Boolean,
             default: true,

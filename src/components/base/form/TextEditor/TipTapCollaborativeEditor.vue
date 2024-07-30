@@ -301,6 +301,12 @@ onBeforeUnmount(() => {
     window.removeEventListener('offline', setOffline)
     window.removeEventListener('online', setOnline)
 })
+
+// expose
+// editor needs to be accessed by parent (see HelpAdminTab.vue)
+defineExpose({
+    editor,
+})
 </script>
 <template>
     <TipTapEditorContainer v-if="editor" :mode="mode">
@@ -315,9 +321,9 @@ onBeforeUnmount(() => {
                 :editor="editor"
                 :parent="parent"
                 :mode="mode"
-                :selected-category="selectedCategory"
                 :show-menu="disconnectionGrace"
                 :save-icon-visible="saveIconVisible"
+                :save-image-callback="saveImageCallback"
                 @image="emit('image', $event)"
                 @update="emit('update', $event)"
                 @destroy="emit('destroy', $event)"

@@ -171,7 +171,6 @@
                     <TipTapEditor
                         :key="personalBioKey"
                         :save-icon-visible="false"
-                        :socket="false"
                         :ws-data="personalBio"
                         class="html-input flex-grow"
                         mode="none"
@@ -187,7 +186,6 @@
                     <TipTapEditor
                         :key="longBioKey"
                         :save-icon-visible="false"
-                        :socket="false"
                         :ws-data="longBio"
                         class="html-input flex-grow"
                         mode="none"

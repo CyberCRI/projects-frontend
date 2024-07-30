@@ -18,7 +18,6 @@
                 :key="editorProfessionalBioKey"
                 ref="faq-editor"
                 :ws-data="form.professionalBio"
-                mode="simple"
                 @update="updateProfessionalBio"
                 data-test="professional-bio-editor"
             />
@@ -31,7 +30,6 @@
                 :key="editorPersonalBioKey"
                 ref="faq-editor"
                 :ws-data="form.personalBio"
-                mode="simple"
                 @update="updatePersonalBio"
                 data-test="personal-bio-editor"
             />

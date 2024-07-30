@@ -49,11 +49,8 @@
 
                 <TipTapEditor
                     :key="editorKey"
-                    mode="simple"
-                    :socket="false"
                     :ws-data="wsData"
                     @update="updateContent"
-                    :save-icon-visible="false"
                     name="motivation"
                     @blur="v$.wsData.savedContent.$validate"
                 />

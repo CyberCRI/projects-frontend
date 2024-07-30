@@ -24,7 +24,6 @@
             <TipTapEditor
                 :key="editorKey"
                 ref="tiptapEditor"
-                :socket="false"
                 :ws-data="description"
                 parent="organization"
                 class="input-field content-editor"

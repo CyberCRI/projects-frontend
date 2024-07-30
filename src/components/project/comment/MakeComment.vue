@@ -17,8 +17,8 @@
             <TipTapEditor
                 :key="editorKey"
                 :save-icon-visible="false"
-                :socket="false"
                 :ws-data="comment"
+                :save-image-callback="saveCommentImage"
                 class="comment-description"
                 mode="full"
                 parent="comments"
@@ -53,6 +53,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { postCommentImage } from '@/api/comments.service'
 
 export default {
     name: 'MakeComment',
@@ -105,6 +106,14 @@ export default {
     },
 
     methods: {
+        saveCommentImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // TODO still needed ?
+            formData.append('project_id', this.projectId)
+            return postCommentImage(this.projectId, formData)
+        },
+
         reset() {
             this.confirmModalIsOpen = false
             // reset comment

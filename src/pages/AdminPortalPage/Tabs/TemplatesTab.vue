@@ -89,6 +89,7 @@
                         :key="`description-${editorKey}`"
                         :selected-category="selectedCategory"
                         :ws-data="form.description"
+                        :save-image-callback="saveTemplateImage"
                         mode="full"
                         @update="updateDescription"
                     />
@@ -109,6 +110,7 @@
                         :key="`blog-${editorKey}`"
                         :selected-category="selectedCategory"
                         :ws-data="form.blogContent"
+                        :save-image-callback="saveTemplateImage"
                         mode="full"
                         @update="updateBlogDescription"
                     />
@@ -130,6 +132,7 @@
                         :save-icon-visible="false"
                         :selected-category="selectedCategory"
                         :ws-data="form.goal_description"
+                        :save-image-callback="saveTemplateImage"
                         data-test="template-advancement-goal-content-editor"
                         mode="full"
                         @update="updateEditorAdvancementGoal"
@@ -179,6 +182,7 @@ import { required, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
+import { postTemplateImage } from '@/api/templates.service'
 
 export default {
     name: 'TemplatesTab',
@@ -288,6 +292,13 @@ export default {
             this.selectedCategory = category
             this.$refs.categoryDropdown?.close()
         },
+        saveTemplateImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            return postTemplateImage({ id: this.selectedCategory.id, body: formData })
+        },
+
         async fillForm() {
             this.selectedCategory = await getProjectCategory(
                 this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0].id

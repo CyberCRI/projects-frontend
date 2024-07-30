@@ -1503,6 +1503,8 @@
         "edit-link": "modifier un lien",
         "edit-file": "modifier un fichier",
         "invalid-image": "Fichier non supporté... est-ce bien une image ?",
+        "error-uploading-image": "Erreur à la sauvegarde de l'image ",
+        "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
         "link-address": "url du lien",
         "resources": "Ressources",
         "web": "lien aux ressources web | lien aux ressources web | liens aux ressources web",

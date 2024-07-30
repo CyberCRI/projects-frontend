@@ -15,6 +15,7 @@
             ref="tipTapEditor"
             :ws-data="editorDescription"
             :provider-params="providerParams"
+            :save-image-callback="saveDescriptionImage"
             class="no-max-height"
             mode="full"
             @destroy="$emit('close')"
@@ -28,6 +29,7 @@
 <script>
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
+import { postProjectImage } from '@/api/projects.service'
 
 import analytics from '@/analytics'
 import retry from 'async-retry'
@@ -102,6 +104,17 @@ export default {
     },
 
     methods: {
+        saveDescriptionImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // TODO still needed ?
+            formData.append('project_id', this.project.id)
+            return postProjectImage({
+                project_id: this.project.id,
+                body: formData,
+            })
+        },
+
         async patchProject(closeWindowAfterPatch = true) {
             if (this.editorDescription) {
                 try {

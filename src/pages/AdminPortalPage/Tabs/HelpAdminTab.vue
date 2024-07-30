@@ -11,6 +11,7 @@
                     :ws-data="faqContent"
                     mode="full"
                     @update="updateContent"
+                    :save-image-callback="saveFaqImage"
                 />
 
                 <div class="buttons-ctn">
@@ -56,7 +57,7 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { getFaq, createFaq, putFaq, deleteFaq } from '@/api/faqs.service'
+import { getFaq, createFaq, putFaq, deleteFaq, postFaqImage } from '@/api/faqs.service'
 
 function defaultFaq() {
     return {
@@ -114,6 +115,16 @@ export default {
     },
 
     methods: {
+        saveFaqImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            return postFaqImage({
+                orgCode: this.currentOrgCode,
+                body: formData,
+            })
+        },
+
         async loadFaq() {
             try {
                 this.faq = await getFaq(this.currentOrgCode)
