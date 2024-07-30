@@ -5,7 +5,7 @@
         :class="{ 'is-open': open }"
         v-if="categories?.length"
     >
-        <button type="button" class="categories" @click="toggle_categories">
+        <button type="button" class="categories toggle-btn" @click="toggle_categories">
             <span class="categories-btn">{{ dropdownLabel }}</span>
             <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
         </button>

@@ -19,7 +19,7 @@ export async function createProject(page, projectName, projId) {
     try {
         await categorySelector.waitFor({ timeout: 10 * 1000 })
         logger.info('Click to add category (the first of the list)')
-        categorySelector.click()
+        categorySelector.locator('.toggle-btn').click()
         await categorySelector.locator('[data-test*=project-form]').first().click()
         logger.info('Category selected')
     } catch (e) {
