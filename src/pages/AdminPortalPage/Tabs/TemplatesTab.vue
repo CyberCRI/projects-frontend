@@ -168,7 +168,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import { getProjectCategory } from '@/api/project-categories.service'
+import { getProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
 import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
@@ -348,10 +348,8 @@ export default {
             }
 
             try {
-                await this.$store.dispatch('projectCategories/updateProjectCategory', {
-                    categoryId: this.selectedCategory?.id,
-                    newCategory: updatedData,
-                })
+                await patchProjectCategory(this.selectedCategory?.id, updatedData)
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.category-template-update.success'),
                     type: 'success',
