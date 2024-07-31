@@ -84,9 +84,9 @@ export default {
     },
 
     props: {
-        currentColor: {
-            type: String,
-            default: undefined,
+        editor: {
+            type: Object,
+            required: true,
         },
     },
 
@@ -95,6 +95,9 @@ export default {
     },
 
     computed: {
+        currentColor() {
+            return this.editor.getAttributes('textStyle').color
+        },
         mode() {
             return this.currentColor !== undefined ? 'edit' : 'add'
         },

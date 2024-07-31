@@ -10,7 +10,7 @@ import LinkMenuBar from './LinkMenuBar.vue'
 import ImageMenuBar from './ImageMenuBar.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
 import MenuBar from './MenuBar.vue'
-import { reactive, computed } from 'vue'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const t = useI18n()
@@ -40,9 +40,6 @@ const activeModals = reactive({
     video: false,
     color: false,
 })
-
-// computed
-const currentColor = computed(() => props.editor.getAttributes('textStyle').color)
 
 // methods
 
@@ -173,7 +170,7 @@ function handleImage(img) {
 
     <EditorModalColor
         v-if="activeModals.color"
-        :current-color="currentColor"
+        :editor="editor"
         @close-modal="activeModals.color = false"
         @on-confirm="handleColorModalConfirmed"
     />
