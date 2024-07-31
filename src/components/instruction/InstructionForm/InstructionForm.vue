@@ -38,6 +38,7 @@
             <TipTapEditor
                 ref="tiptapEditor"
                 :ws-data="wsData"
+                :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor no-max-height"
                 mode="full"
                 @update="updateContent"
@@ -83,6 +84,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { postOrganizationImage } from '@/api/organizations.service.ts'
 
 export function defaultForm() {
     return {
@@ -163,9 +165,20 @@ export default {
                 ? new Date(this.modelValue.publication_date).toLocaleDateString()
                 : ''
         },
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
     },
 
     methods: {
+        saveOrganizationImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            return postOrganizationImage({
+                orgCode: this.organization.code,
+                body: formData,
+            })
+        },
         onDateSelected(modelData) {
             this.updateForm({ publication_date: modelData })
             this.showDatePicker = false

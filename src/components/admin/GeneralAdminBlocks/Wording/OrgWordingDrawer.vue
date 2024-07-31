@@ -25,7 +25,7 @@
                 :key="editorKey"
                 ref="tiptapEditor"
                 :ws-data="description"
-                parent="organization"
+                :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor"
                 mode="full"
                 @destroy="close"
@@ -41,7 +41,7 @@
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import { patchOrganization } from '@/api/organizations.service.ts'
+import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
 
 export default {
     name: 'OrgWordingDrawer',
@@ -77,9 +77,16 @@ export default {
             asyncing: false,
         }
     },
+
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+    },
+
     watch: {
         isOpened() {
-            const org = this.$store.getters['organizations/current']
+            const org = this.organization
             const description = org?.description || ''
             this.description.savedContent = description
             this.description.originalContent = description
@@ -87,6 +94,15 @@ export default {
     },
 
     methods: {
+        saveOrganizationImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            return postOrganizationImage({
+                orgCode: this.organization.code,
+                body: formData,
+            })
+        },
+
         async saveWording() {
             this.asyncing = true
 
