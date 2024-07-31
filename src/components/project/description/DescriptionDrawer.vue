@@ -9,11 +9,19 @@
         @close="closeDrawer"
         @confirm="patchProject(true)"
     >
+        <ConfirmModal
+            v-if="confirmDestroyModalIsOpen"
+            :content="$t('description.delete') + ' ' + $t('description.edit-saved')"
+            :title="$t('description.quit-without-saving-title')"
+            @cancel="confirmDestroyModalIsOpen = false"
+            @confirm="handleDestroyModalConfirmed"
+        />
         <TipTapCollaborativeEditor
             v-if="editorDescription"
             :key="editorKey"
-            ref="tipTapEditor"
+            ref="tiptapEditor"
             :ws-data="editorDescription"
+            :room="room"
             :provider-params="providerParams"
             :save-image-callback="saveDescriptionImage"
             class="no-max-height"
@@ -30,14 +38,14 @@
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import { postProjectImage } from '@/api/projects.service'
-
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
 import retry from 'async-retry'
 
 export default {
     name: 'DescriptionDrawer',
 
-    components: { Drawer, TipTapCollaborativeEditor },
+    components: { Drawer, TipTapCollaborativeEditor, ConfirmModal },
 
     emits: ['close'],
 
@@ -68,9 +76,10 @@ export default {
             editorDescription: {
                 originalContent: '',
                 savedContent: '',
-                room: '',
             },
+            room: '',
             socketReady: false,
+            confirmDestroyModalIsOpen: false,
         }
     },
 
@@ -104,6 +113,10 @@ export default {
     },
 
     methods: {
+        handleDestroyModalConfirmed() {
+            this.confirmDestroyModalIsOpen = false
+            this.$refs.tiptapEditor?.closeEditor()
+        },
         saveDescriptionImage(file) {
             const formData = new FormData()
             formData.append('file', file, file.name)
@@ -207,10 +220,10 @@ export default {
 
             data.description = this.getProjectDescription(project)
             this.editorDescription = {
-                room: 'description_' + data.id,
                 originalContent: data.description,
                 savedContent: data.description,
             }
+            this.room = 'description_' + data.id
 
             this.$nextTick(() => {
                 this.forceRerender()
@@ -218,7 +231,7 @@ export default {
         },
 
         closeDrawer() {
-            let customEditor = this.$refs.tipTapEditor
+            let customEditor = this.$refs.tiptapEditor
 
             // If the editor does not exist, we should be able to close the modal.
             if (!customEditor.editor) this.$emit('close')
@@ -229,7 +242,7 @@ export default {
                 usersOnline === 1 &&
                 this.editorDescription.originalContent !== this.editorDescription.savedContent
             ) {
-                customEditor.openDestroyModal()
+                this.confirmDestroyModalIsOpen = true
             } else {
                 this.$emit('close')
             }

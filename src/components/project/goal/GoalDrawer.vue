@@ -119,7 +119,6 @@ export default {
                 description: {
                     originalContent: '',
                     savedContent: '',
-                    room: '',
                 },
                 deadline_at: new Date(),
                 status: 'na',
@@ -213,7 +212,6 @@ export default {
                         this.project && this.project.template
                             ? this.project.template.goal_description
                             : '',
-                    room: '',
                 },
                 deadline_at: new Date(),
                 status: 'na',

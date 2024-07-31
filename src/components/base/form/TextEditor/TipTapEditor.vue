@@ -20,12 +20,13 @@ const emit = defineEmits(emitsDefinitions)
 // props
 const props = defineProps(propsDefinitions)
 
-const { editor, editorInited, appendTranslationsStyle, initEditor, destroyEditor } = useTipTap({
-    props,
-    emit,
-    store,
-    t,
-})
+const { editor, editorInited, appendTranslationsStyle, initEditor, destroyEditor, closeEditor } =
+    useTipTap({
+        props,
+        emit,
+        store,
+        t,
+    })
 
 // lifecycle
 onMounted(() => {
@@ -52,10 +53,11 @@ watch(
 // editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
     editor,
+    closeEditor,
 })
 </script>
 <template>
-    <TipTapEditorContainer v-if="editor" :mode="mode">
+    <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
         <TipTapModals
             :editor="editor"
             :mode="mode"
@@ -63,8 +65,6 @@ defineExpose({
             :save-icon-visible="saveIconVisible"
             :save-image-callback="saveImageCallback"
             @image="emit('image', $event)"
-            @update="emit('update', $event)"
-            @destroy="emit('destroy', $event)"
             @saved="emit('saved', $event)"
         />
 

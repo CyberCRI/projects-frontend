@@ -14,7 +14,6 @@ import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
-import { toRaw } from 'vue'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
@@ -23,7 +22,7 @@ import {
     propsDefinitions,
     useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
-import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 
@@ -39,6 +38,10 @@ const emit = defineEmits([...emitsDefinitions, 'socket-ready'])
 
 const props = defineProps({
     ...propsDefinitions,
+    room: {
+        type: String,
+        required: true,
+    },
     color: {
         type: String,
         // choose a random color for every user
@@ -59,12 +62,13 @@ const props = defineProps({
     },
 })
 
-const { editor, editorInited, appendTranslationsStyle, destroyEditor, getExtensions } = useTipTap({
-    props,
-    emit,
-    store,
-    t,
-})
+const { editor, editorInited, appendTranslationsStyle, destroyEditor, closeEditor, getExtensions } =
+    useTipTap({
+        props,
+        emit,
+        store,
+        t,
+    })
 
 // data
 const provider = ref(null)
@@ -90,7 +94,6 @@ const onlineAndConnected = computed(() => online.value && status.value === 'conn
 const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected)
 
 // methods
-
 function getCollaborativeExtensions() {
     const exts = getExtensions()
 
@@ -129,7 +132,7 @@ const getCollaborativeContent = () => {
 function initCollaborativeEditor() {
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
-    if (!props.wsData.room) return
+    if (!props.room) return
 
     if (editorInited.value) return
     editorInited.value = true
@@ -154,7 +157,7 @@ function initCollaborativeEditor() {
 
     provider.value = new HocuspocusProvider({
         url: sockerserver,
-        name: props.wsData.room,
+        name: props.room,
         token: accessToken.value,
         parameters: providerParams,
         onOpen: () => {
@@ -306,10 +309,11 @@ onBeforeUnmount(() => {
 // editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
     editor,
+    closeEditor,
 })
 </script>
 <template>
-    <TipTapEditorContainer v-if="editor" :mode="mode">
+    <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
         <template v-if="firstSync">
             <TipTapCollaborativeConnectedStatus
                 :online-and-connected="onlineAndConnected"
@@ -324,8 +328,6 @@ defineExpose({
                 :save-icon-visible="saveIconVisible"
                 :save-image-callback="saveImageCallback"
                 @image="emit('image', $event)"
-                @update="emit('update', $event)"
-                @destroy="emit('destroy', $event)"
                 @saved="emit('saved', $event)"
             />
             <TipTapCollaborativeReconnectionStatus

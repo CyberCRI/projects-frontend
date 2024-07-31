@@ -111,7 +111,6 @@ export default {
                 title: '',
                 description: {
                     originalContent: '',
-                    room: '',
                     savedContent: '',
                 },
                 deadline: new Date(),
@@ -287,7 +286,6 @@ export default {
                         title: '',
                         description: {
                             originalContent: '',
-                            room: '',
                             savedContent: '',
                         },
                         deadline: new Date(),
@@ -298,7 +296,6 @@ export default {
                         ...this.announcement,
                         description: {
                             originalContent: this.announcement.description,
-                            room: '',
                             savedContent: this.announcement.description,
                         },
                     }

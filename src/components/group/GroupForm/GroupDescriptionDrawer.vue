@@ -76,13 +76,14 @@ export default {
         return {
             v$: useVuelidate(),
             wsData: {
-                room: null, // TODO: set to something when socket is enabled and we are in add mode
                 savedContent: '',
                 originalContent: '',
             },
             addedImages: [],
             editorKey: 0,
             confirmModalIsOpen: false,
+            // eslint-disable-next-line
+            room: null, // TODO: set to something when socket is enabled and we are in add mode
         }
     },
 

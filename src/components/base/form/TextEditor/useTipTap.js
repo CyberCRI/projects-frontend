@@ -30,6 +30,7 @@ export const propsDefinitions = {
         default: 'simple',
     },
     wsData: {
+        // {originalContent: string, originalContent: string}
         type: Object,
         required: true,
     },
@@ -142,6 +143,15 @@ export function useTipTap({ props, emit, store, t }) {
         }
     }
 
+    function closeEditor() {
+        // reset modification
+        emit('update', props.wsData.originalContent)
+        editor.value.commands.setContent(props.wsData.originalContent)
+
+        //activeModals.destroy = false
+        emit('destroy')
+    }
+
     return {
         editor,
         editorInited,
@@ -150,5 +160,6 @@ export function useTipTap({ props, emit, store, t }) {
         destroyEditor,
         getExtensions,
         getContent,
+        closeEditor,
     }
 }

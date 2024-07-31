@@ -17,6 +17,14 @@
             @cancel="confirmModalIsOpen = false"
             @confirm="closeDrawer"
         />
+
+        <ConfirmModal
+            v-if="confirmDestroyModalIsOpen"
+            :content="$t('description.delete') + ' ' + $t('description.edit-saved')"
+            :title="$t('description.quit-without-saving-title')"
+            @cancel="confirmDestroyModalIsOpen = false"
+            @confirm="handleDestroyModalConfirmed"
+        />
         <div>
             <TextInput
                 v-model="title"
@@ -49,6 +57,7 @@
                     :key="'colloab' + editorKey"
                     ref="tiptapEditor"
                     :ws-data="editorBlogEntry"
+                    :room="room"
                     :provider-params="providerParams"
                     class="input-field content-editor"
                     mode="full"
@@ -128,16 +137,17 @@ export default {
         return {
             v$: useVuelidate(),
             editorBlogEntry: {
-                room: null,
                 savedContent: '',
                 originalContent: '',
             },
+            room: null,
             selectedDate: new Date(),
             title: null,
             addedImages: [],
             editorKey: 0,
             socketReady: false,
             confirmModalIsOpen: false,
+            confirmDestroyModalIsOpen: false,
             asyncing: false,
         }
     },
@@ -187,10 +197,10 @@ export default {
                     this.selectedDate = this.editedBlog.created_at
                     this.title = this.editedBlog.title
                     this.editorBlogEntry = {
-                        room: `blog_${this.editedBlog.id}`,
                         savedContent: this.editedBlog.content,
                         originalContent: this.editedBlog.content,
                     }
+                    this.room = `blog_${this.editedBlog.id}`
                 } else {
                     this.editorBlogEntry.originalContent =
                         this.project &&
@@ -199,7 +209,7 @@ export default {
                             ? this.project.template.blogentry_placeholder
                             : ''
 
-                    this.editorBlogEntry.room = null
+                    this.room = null
                     this.editorBlogEntry.savedContent = this.editorBlogEntry.originalContent
                     this.selectedDate = new Date()
                     this.title = null
@@ -215,6 +225,10 @@ export default {
     },
 
     methods: {
+        handleDestroyModalConfirmed() {
+            this.confirmDestroyModalIsOpen = false
+            this.$refs.tiptapEditor?.closeEditor()
+        },
         saveBlogImage(file) {
             const formData = new FormData()
             formData.append('file', file, file.name)
@@ -347,7 +361,7 @@ export default {
                     usersOnline === 1 &&
                     this.editorBlogEntry.originalContent !== this.editorBlogEntry.savedContent
                 ) {
-                    customEditor.openDestroyModal()
+                    this.confirmDestroyModalIsOpen = true
                 } else if (this.title !== this.editedBlog.title) {
                     this.confirmModalIsOpen = true
                 } else {

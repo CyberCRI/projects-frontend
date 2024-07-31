@@ -2,14 +2,15 @@
 import { useStore } from 'vuex'
 const store = useStore()
 
-defineProps({
+const props = defineProps({
     mode: { type: String, required: true },
+    editor: { type: Object, required: true },
 })
 
 // methods
 function focusEditor() {
-    if (editor) {
-        editor.commands.focus('end')
+    if (props.editor) {
+        props.editor.commands.focus('end')
     }
 }
 </script>

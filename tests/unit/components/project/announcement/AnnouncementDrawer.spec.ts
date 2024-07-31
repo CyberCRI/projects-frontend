@@ -42,7 +42,6 @@ describe('AnnouncementDrawer.vue', () => {
                 ...announcement,
                 description: {
                     originalContent: announcement.description,
-                    room: '',
                     savedContent: announcement.description,
                 },
             })

@@ -1,6 +1,5 @@
 <script setup>
 import funct from '@/functs/functions.ts'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import EditorModalImage from './modals/EditorModalImage.vue'
 import EditorModalLink from './modals/EditorModalLink.vue'
 import EditorModalColor from './modals/EditorModalColor.vue'
@@ -11,11 +10,8 @@ import ImageMenuBar from './ImageMenuBar.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
 import MenuBar from './MenuBar.vue'
 import { reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
 
-const t = useI18n()
-
-const emit = defineEmits(['update', 'destroy', 'image', 'saved'])
+const emit = defineEmits(['image', 'saved'])
 
 const props = defineProps({
     editor: { type: Object, required: true },
@@ -34,7 +30,6 @@ const props = defineProps({
 // data
 
 const activeModals = reactive({
-    destroy: false,
     image: false,
     link: false,
     video: false,
@@ -57,10 +52,6 @@ function openVideoModal() {
 
 function openImageModal() {
     activeModals.image = true
-}
-
-function openDestroyModal() {
-    activeModals.destroy = true
 }
 
 function handleLinkModalConfirmed(data) {
@@ -113,15 +104,6 @@ function handleVideoModalConfirmed(data) {
     activeModals.video = false
 }
 
-function handleDestroyModalConfirmed() {
-    // reset modification
-    emit('update', props.wsData.originalContent)
-    props.editor.commands.setContent(props.wsData.originalContent)
-
-    activeModals.destroy = false
-    emit('destroy')
-}
-
 function handleImageModalConfirmed(img) {
     const MAX_SIZE = 1100
     const attrsw = img.width < MAX_SIZE ? img.width : MAX_SIZE
@@ -146,13 +128,6 @@ function handleImage(img) {
 }
 </script>
 <template>
-    <ConfirmModal
-        v-if="activeModals.destroy"
-        :content="`${t('description.delete')} ${t('description.edit-saved')}`"
-        :title="t('description.quit-without-saving-title')"
-        @cancel="activeModals.destroy = false"
-        @confirm="handleDestroyModalConfirmed"
-    />
     <EditorModalImage
         v-if="activeModals.image"
         @close-modal="activeModals.image = false"
@@ -187,7 +162,6 @@ function handleImage(img) {
         :editor="editor"
         :mode="mode"
         :open-color-modal="openColorModal"
-        :open-destroy-modal="openDestroyModal"
         :open-image-modal="openImageModal"
         :open-link-modal="openLinkModal"
         :open-video-modal="openVideoModal"
