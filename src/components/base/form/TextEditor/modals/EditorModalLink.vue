@@ -59,22 +59,15 @@ export default {
 
     components: { DialogModal, TextInput },
 
+    props: {
+        editor: { type: Object, required: true },
+    },
+
     data() {
         return {
             link: undefined,
             text: undefined,
         }
-    },
-
-    props: {
-        linkHref: {
-            type: String,
-            default: undefined,
-        },
-        hasSelection: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     mounted() {
@@ -92,6 +85,12 @@ export default {
             return {
                 disabled: !this.link || (this.needText && !this.text),
             }
+        },
+        linkHref() {
+            return this.editor.getAttributes('link').href
+        },
+        hasSelection() {
+            return !this.editor.view.state.selection.empty
         },
     },
 

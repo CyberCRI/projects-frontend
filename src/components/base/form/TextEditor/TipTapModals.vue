@@ -42,7 +42,6 @@ const activeModals = reactive({
 })
 
 // computed
-const linkHref = computed(() => props.editor.getAttributes('link').href)
 const currentColor = computed(() => props.editor.getAttributes('textStyle').color)
 
 // methods
@@ -167,8 +166,7 @@ function handleImage(img) {
 
     <EditorModalLink
         v-if="activeModals.link"
-        :link-href="linkHref"
-        :has-selection="!editor.view.state.selection.empty"
+        :editor="editor"
         @close-modal="activeModals.link = false"
         @on-confirm="handleLinkModalConfirmed"
     />
