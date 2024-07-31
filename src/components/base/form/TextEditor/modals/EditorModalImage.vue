@@ -29,6 +29,7 @@ import { postFaqImage } from '@/api/faqs.service'
 import { postTemplateImage } from '@/api/templates.service'
 import { postBlogEntryImage } from '@/api/blogentries.service'
 import { postCommentImage } from '@/api/comments.service'
+import { postOrganizationImage } from '@/api/organizations.service'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 
@@ -85,6 +86,9 @@ export default {
             return {
                 disabled: !this.file,
             }
+        },
+        isOrganization() {
+            return this.parent === 'organization'
         },
     },
 
@@ -176,6 +180,18 @@ export default {
                 })
             }
 
+            if (this.isOrganization) {
+                postOrganizationImage({
+                    orgCode: this.currentOrgCode,
+                    body: formData,
+                })
+                    .then((image) => {
+                        handleSuccess(image)
+                        this.$emit('image', image)
+                    })
+                    .catch(() => handleError())
+            }
+
             if (this.isFaqImage) {
                 postFaqImage({
                     orgCode: this.currentOrgCode,
@@ -222,6 +238,8 @@ export default {
         buildImageUrl(image_id) {
             if (this.isFaqImage) {
                 return `/v1/organization/${this.currentOrgCode}/faq-image/${image_id}/`
+            } else if (this.isOrganization) {
+                return `/v1/organization/${this.currentOrgCode}/image/${image_id}/`
             } else if (this.isTemplateImage) {
                 return `/v1/category/${this.selectedCategory.id}/template-image/${image_id}/`
             } else if (this.isBlogEntryImage) {

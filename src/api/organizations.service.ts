@@ -231,3 +231,12 @@ export async function removeFeaturedProject(org_code, body) {
         )
     ).data
 }
+
+export async function postOrganizationImage({ orgCode, body }): Promise<any> {
+    return (
+        await axios.post(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/image/`,
+            body
+        )
+    ).data
+}
