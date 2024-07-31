@@ -54,7 +54,7 @@
                 :ws-data="wsData"
                 class="input-field content-editor no-max-height"
                 mode="full"
-                parent="blog-entry"
+                parent="organization"
                 @update="updateContent"
                 @blur="v$.modelValue.content.$validate"
             />
