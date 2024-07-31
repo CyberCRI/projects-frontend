@@ -32,7 +32,7 @@ const MAX_FILE_SIZE = Number(import.meta.env.VITE_APP_MAX_SIZE_FILE) || 5000000 
 export default {
     name: 'EditorModalImage',
 
-    emits: ['closeModal', 'onConfirm', 'image'],
+    emits: ['closeModal', 'image'],
 
     components: { DialogModal, ImageInput },
 
@@ -63,6 +63,10 @@ export default {
             required: false,
             default: null,
         },
+        editor: {
+            type: Object,
+            required: true,
+        },
     },
 
     data() {
@@ -90,8 +94,7 @@ export default {
                     message: this.$t('resource.invalid-image'),
                     type: 'error',
                 })
-                this.imageSrc = ''
-                this.$emit('closeModal')
+                this.closeModal()
                 return
             }
 
@@ -100,8 +103,7 @@ export default {
                     message: this.$t(`crikit.errors.too-big-file-size`, { sizeMax }),
                     type: 'error',
                 })
-                this.imageSrc = ''
-                this.$emit('closeModal')
+                this.icloseModal()
                 return
             }
 
@@ -127,7 +129,7 @@ export default {
                 this.uploading = true
                 this.saveImageCallback(this.file)
                     .then((image) => {
-                        this.$emit('onConfirm', image)
+                        this.handleImageModalConfirmed(image)
                         this.$nextTick(() => {
                             this.$emit('image', image)
                             this.closeModal()
@@ -142,6 +144,23 @@ export default {
             }
 
             this.uploading = false
+        },
+
+        handleImageModalConfirmed(img) {
+            const MAX_SIZE = 1100
+            const attrsw = img.width < MAX_SIZE ? img.width : MAX_SIZE
+            const attrsh =
+                img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / parseFloat(img.width))
+
+            this.editor
+                .chain()
+                .focus()
+                .setImage({
+                    src: img.static_url,
+                    width: attrsw,
+                    height: attrsh,
+                })
+                .run()
         },
     },
 }

@@ -1,5 +1,4 @@
 <script setup>
-import funct from '@/functs/functions.ts'
 import EditorModalImage from './modals/EditorModalImage.vue'
 import EditorModalLink from './modals/EditorModalLink.vue'
 import EditorModalColor from './modals/EditorModalColor.vue'
@@ -13,7 +12,7 @@ import { reactive } from 'vue'
 
 const emit = defineEmits(['image', 'saved'])
 
-const props = defineProps({
+defineProps({
     editor: { type: Object, required: true },
     showMenu: { type: Boolean, required: true },
     mode: { type: String, required: true },
@@ -53,107 +52,32 @@ function openVideoModal() {
 function openImageModal() {
     activeModals.image = true
 }
-
-function handleLinkModalConfirmed(data) {
-    // set the link if there's data from popup
-    if (data) {
-        props.editor
-            .chain()
-            .focus()
-            .extendMarkRange('link')
-            .setLink({
-                href: (funct.isValidUrl(data.href) ? '' : 'http://') + data.href,
-            })
-            .run()
-        // if link made from empty selection, add the entered text as content
-        if (data.text) {
-            const selection = props.editor.view.state.selection
-            props.editor
-                .chain()
-                .focus()
-                .insertContentAt(
-                    {
-                        from: selection.from,
-                        to: selection.to,
-                    },
-                    data.text
-                )
-                .run()
-        }
-    } else {
-        // if there is no data, unset the link
-        props.editor.chain().focus().extendMarkRange('link').unsetLink().run()
-    }
-
-    activeModals.link = false
-}
-
-function handleColorModalConfirmed(data) {
-    if (data) {
-        props.editor.chain().focus().setColor(data).run()
-    } else {
-        props.editor.chain().focus().unsetColor().run()
-    }
-
-    activeModals.link = false
-}
-
-function handleVideoModalConfirmed(data) {
-    props.editor.chain().focus().setExternalVideo({ src: data.src }).run()
-
-    activeModals.video = false
-}
-
-function handleImageModalConfirmed(img) {
-    const MAX_SIZE = 1100
-    const attrsw = img.width < MAX_SIZE ? img.width : MAX_SIZE
-    const attrsh =
-        img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / parseFloat(img.width))
-
-    props.editor
-        .chain()
-        .focus()
-        .setImage({
-            src: img.static_url,
-            width: attrsw,
-            height: attrsh,
-        })
-        .run()
-
-    activeModals.image = false
-}
-
-function handleImage(img) {
-    emit('image', img)
-}
 </script>
 <template>
     <EditorModalImage
         v-if="activeModals.image"
-        @close-modal="activeModals.image = false"
-        @image="handleImage"
-        @on-confirm="handleImageModalConfirmed"
+        :editor="editor"
         :save-image-callback="saveImageCallback"
+        @close-modal="activeModals.image = false"
+        @image="emit('image', $event)"
     />
 
     <EditorModalLink
         v-if="activeModals.link"
         :editor="editor"
         @close-modal="activeModals.link = false"
-        @on-confirm="handleLinkModalConfirmed"
     />
 
     <EditorModalColor
         v-if="activeModals.color"
         :editor="editor"
         @close-modal="activeModals.color = false"
-        @on-confirm="handleColorModalConfirmed"
     />
 
     <EditorModalVideo
         v-if="activeModals.video"
+        :editor="editor"
         @close-modal="activeModals.video = false"
-        @on-confirm="handleVideoModalConfirmed"
     />
 
     <MenuBar

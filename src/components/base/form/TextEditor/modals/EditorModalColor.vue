@@ -62,7 +62,7 @@ import DialogModal from '@/components/base/modal/DialogModal.vue'
 export default {
     name: 'EditorModalColor',
 
-    emits: ['closeModal', 'onConfirm'],
+    emits: ['closeModal'],
 
     components: { DialogModal },
 
@@ -109,12 +109,20 @@ export default {
         },
 
         setColor() {
-            this.$emit('onConfirm', this.color)
-            this.closeModal()
+            this.handleColorModalConfirmed(this.color)
         },
 
         removeColor() {
-            this.$emit('onConfirm', null)
+            this.handleColorModalConfirmed(null)
+        },
+
+        handleColorModalConfirmed(data) {
+            if (data) {
+                this.editor.chain().focus().setColor(data).run()
+            } else {
+                this.editor.chain().focus().unsetColor().run()
+            }
+
             this.closeModal()
         },
     },
