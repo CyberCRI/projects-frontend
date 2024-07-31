@@ -54,9 +54,6 @@ export default {
                 disabled: !this.file,
             }
         },
-        isOrganization() {
-            return this.parent === 'organization'
-        },
     },
 
     props: {
