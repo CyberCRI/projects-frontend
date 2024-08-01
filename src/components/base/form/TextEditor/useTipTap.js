@@ -56,7 +56,7 @@ export function useTipTap({ props, emit, store, t }) {
         if (!document.getElementById('multieditor-translations')) {
             let css = ''
             store.state.languages.all.forEach((langcode) => {
-                css += `.lang-${langcode} .ProseMirror-focused .custom-video-wrapper.ProseMirror-selectednode:after { content: '${t(
+                css += `[lang="${langcode}"] .ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper:after { content: '${t(
                     'multieditor.click-to-play-video',
                     langcode
                 )}'; }
