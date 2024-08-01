@@ -16,7 +16,6 @@
         <div v-if="isLoggedIn">
             <TipTapEditor
                 :key="editorKey"
-                :save-icon-visible="false"
                 :ws-data="comment"
                 :save-image-callback="saveCommentImage"
                 class="comment-description"

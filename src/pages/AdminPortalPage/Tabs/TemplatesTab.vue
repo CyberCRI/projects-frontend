@@ -87,7 +87,6 @@
                     }}</label>
                     <TipTapEditor
                         :key="`description-${editorKey}`"
-                        :selected-category="selectedCategory"
                         :ws-data="form.description"
                         :save-image-callback="saveTemplateImage"
                         mode="full"
@@ -108,7 +107,6 @@
                     }}</label>
                     <TipTapEditor
                         :key="`blog-${editorKey}`"
-                        :selected-category="selectedCategory"
                         :ws-data="form.blogContent"
                         :save-image-callback="saveTemplateImage"
                         mode="full"
@@ -129,8 +127,6 @@
                     }}</label>
                     <TipTapEditor
                         :key="`advancement-goal-${editorKey}`"
-                        :save-icon-visible="false"
-                        :selected-category="selectedCategory"
                         :ws-data="form.goal_description"
                         :save-image-callback="saveTemplateImage"
                         data-test="template-advancement-goal-content-editor"

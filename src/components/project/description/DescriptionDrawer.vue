@@ -22,6 +22,7 @@
             ref="tiptapEditor"
             :ws-data="editorDescription"
             :room="room"
+            save-icon-visible
             :provider-params="providerParams"
             :save-image-callback="saveDescriptionImage"
             class="no-max-height"

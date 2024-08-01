@@ -36,7 +36,7 @@ export const propsDefinitions = {
     },
     saveIconVisible: {
         type: Boolean,
-        default: true,
+        default: false,
     },
 
     saveImageCallback: {

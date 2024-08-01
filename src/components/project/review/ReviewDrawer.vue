@@ -24,7 +24,6 @@
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
                     :key="editorKey"
-                    :save-icon-visible="false"
                     :ws-data="wsdata"
                     @update="updateContent"
                     @blur="v$.newReview.data.description.$touch"

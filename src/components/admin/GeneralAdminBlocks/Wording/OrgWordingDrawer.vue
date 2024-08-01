@@ -30,7 +30,6 @@
                 mode="full"
                 @destroy="close"
                 @image="handleImage"
-                @saved="submitBlogEntry(false)"
                 @update="updateContent"
             />
         </div>

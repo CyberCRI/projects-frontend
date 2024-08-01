@@ -61,6 +61,7 @@
                     :provider-params="providerParams"
                     class="input-field content-editor"
                     mode="full"
+                    save-icon-visible
                     :save-image-callback="saveBlogImage"
                     @destroy="closeDrawer"
                     @image="handleImage"
