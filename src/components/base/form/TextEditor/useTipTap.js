@@ -21,18 +21,14 @@ import lowlight from '@/functs/lowlight.ts'
 
 import { ref } from 'vue'
 
-export const emitsDefinitions = ['saved', 'update', 'destroy', 'image', 'blur']
+export const emitsDefinitions = ['saved', 'destroy', 'image', 'blur', 'update:modelValue']
 
 export const propsDefinitions = {
+    modelValue: { type: String, required: true },
     mode: {
         // mode supports 4 values 'none' | 'simple' | 'medium' | 'full'
         type: String,
         default: 'simple',
-    },
-    wsData: {
-        // {originalContent: string, originalContent: string}
-        type: Object,
-        required: true,
     },
     saveIconVisible: {
         type: Boolean,
@@ -49,8 +45,8 @@ export const propsDefinitions = {
 export function useTipTap({ props, emit, store, t }) {
     // data
     const editor = ref(null)
-
     const editorInited = ref(false)
+    const initialContent = ref(props.modelValue)
 
     function appendTranslationsStyle() {
         if (!document.getElementById('multieditor-translations')) {
@@ -105,7 +101,7 @@ export function useTipTap({ props, emit, store, t }) {
     }
 
     function getContent() {
-        return props.wsData.originalContent
+        return props.modelValue
     }
 
     function initEditor() {
@@ -115,6 +111,7 @@ export function useTipTap({ props, emit, store, t }) {
         // socket stuff...(no wsdata)
 
         if (editorInited.value) return
+        initialContent.value = props.modelValue
         editorInited.value = true
 
         // socket stuffs...  (provider, timer, online event)
@@ -129,7 +126,7 @@ export function useTipTap({ props, emit, store, t }) {
             },
         })
         editor.value.on('update', () => {
-            emit('update', editor.value.getHTML())
+            emit('update:modelValue', editor.value.getHTML())
         })
         editor.value.on('blur', (e) => {
             emit('blur', e)
@@ -143,13 +140,9 @@ export function useTipTap({ props, emit, store, t }) {
         }
     }
 
-    function closeEditor() {
-        // reset modification
-        emit('update', props.wsData.originalContent)
-        editor.value.commands.setContent(props.wsData.originalContent)
-
-        //activeModals.destroy = false
-        emit('destroy')
+    function resetContent() {
+        emit('update:modelValue', initialContent.value)
+        editor.value.commands.setContent(initialContent.value)
     }
 
     return {
@@ -160,6 +153,7 @@ export function useTipTap({ props, emit, store, t }) {
         destroyEditor,
         getExtensions,
         getContent,
-        closeEditor,
+        initialContent,
+        resetContent,
     }
 }

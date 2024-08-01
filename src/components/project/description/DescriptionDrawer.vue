@@ -17,10 +17,9 @@
             @confirm="handleDestroyModalConfirmed"
         />
         <TipTapCollaborativeEditor
-            v-if="editorDescription"
             :key="editorKey"
             ref="tiptapEditor"
-            :ws-data="editorDescription"
+            v-model="editorDescription"
             :room="room"
             save-icon-visible
             :provider-params="providerParams"
@@ -29,7 +28,6 @@
             mode="full"
             @destroy="$emit('close')"
             @saved="patchProject(false)"
-            @update="updateContent"
             @socket-ready="socketReady = $event"
         />
     </Drawer>
@@ -74,10 +72,7 @@ export default {
         return {
             editorKey: 0,
             isFullScreen: false,
-            editorDescription: {
-                originalContent: '',
-                savedContent: '',
-            },
+            editorDescription: '',
             room: '',
             socketReady: false,
             confirmDestroyModalIsOpen: false,
@@ -108,15 +103,24 @@ export default {
     watch: {
         'project.description': function (neo, old) {
             if (neo != old) {
-                this.editorDescription.originalContent = neo
+                this.editorDescription = neo
             }
+        },
+        isOpened: {
+            handler: function (neo) {
+                if (neo) {
+                    this.loadProject(this.project)
+                }
+            },
+            immediate: true,
         },
     },
 
     methods: {
         handleDestroyModalConfirmed() {
             this.confirmDestroyModalIsOpen = false
-            this.$refs.tiptapEditor?.closeEditor()
+            this.$refs.tiptapEditor?.resetContent()
+            this.$emit('close')
         },
         saveDescriptionImage(file) {
             const formData = new FormData()
@@ -130,78 +134,70 @@ export default {
         },
 
         async patchProject(closeWindowAfterPatch = true) {
-            if (this.editorDescription) {
-                try {
-                    await retry(
-                        async () => {
-                            try {
-                                const res = await this.$store.dispatch('projects/updateProject', {
-                                    id: this.project.id,
-                                    project: {
-                                        description: this.editorDescription.savedContent,
-                                    },
-                                })
+            try {
+                await retry(
+                    async () => {
+                        try {
+                            const res = await this.$store.dispatch('projects/updateProject', {
+                                id: this.project.id,
+                                project: {
+                                    description: this.editorDescription,
+                                },
+                            })
 
-                                await this.$store.dispatch(
-                                    'projects/updateCurrentProjectDescription',
-                                    this.editorDescription.savedContent
-                                )
+                            await this.$store.dispatch(
+                                'projects/updateCurrentProjectDescription',
+                                this.editorDescription
+                            )
 
-                                this.$store.dispatch('notifications/pushToast', {
-                                    message: this.$t('toasts.description-update.success'),
-                                    type: 'success',
-                                })
+                            this.$store.dispatch('notifications/pushToast', {
+                                message: this.$t('toasts.description-update.success'),
+                                type: 'success',
+                            })
 
-                                const connectedUser = this.$store.getters['users/userFromApi']
+                            const connectedUser = this.$store.getters['users/userFromApi']
 
-                                this.notifyPatch({
-                                    pid: this.$store.state.users.id,
-                                    author_name: connectedUser
-                                        ? connectedUser.given_name + ' ' + connectedUser.family_name
-                                        : '',
-                                    type: 'description-update',
-                                    id: res.id,
-                                    updated_at: res.updated_at,
-                                    scope: 'project.updated.description',
-                                })
+                            this.notifyPatch({
+                                pid: this.$store.state.users.id,
+                                author_name: connectedUser
+                                    ? connectedUser.given_name + ' ' + connectedUser.family_name
+                                    : '',
+                                type: 'description-update',
+                                id: res.id,
+                                updated_at: res.updated_at,
+                                scope: 'project.updated.description',
+                            })
 
-                                return res
-                            } catch (e) {
-                                console.error(e)
-                                throw e
-                            }
-                        },
-                        {
-                            retries: 10,
+                            return res
+                        } catch (e) {
+                            console.error(e)
+                            throw e
                         }
-                    )
-                } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.description-update.error')} (${error})`,
-                        type: 'error',
-                    })
-                    console.error(error)
-                } finally {
-                    this.forceRerender()
-                }
+                    },
+                    {
+                        retries: 10,
+                    }
+                )
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('toasts.description-update.error')} (${error})`,
+                    type: 'error',
+                })
+                console.error(error)
+            } finally {
+                this.forceRerender()
+            }
 
-                this.editorDescription.originalContent = this.editorDescription.savedContent
+            analytics.project.updateDescription({ id: this.project.id })
 
-                analytics.project.updateDescription({ id: this.project.id })
-
-                if (this.$route.name !== 'projectDescription') {
-                    this.$router.push({
-                        name: 'projectDescription',
-                        params: { slugOrId: this.projectSlug },
-                    })
-                }
+            if (this.$route.name !== 'projectDescription') {
+                this.$router.push({
+                    name: 'projectDescription',
+                    params: { slugOrId: this.projectSlug },
+                })
             }
 
             if (closeWindowAfterPatch) this.$emit('close')
-        },
-
-        updateContent(htmlContent) {
-            this.editorDescription.savedContent = htmlContent
         },
 
         getProjectDescription(project) {
@@ -214,17 +210,8 @@ export default {
         },
 
         loadProject(project) {
-            const data = {
-                id: project.id,
-                description: project.description,
-            }
-
-            data.description = this.getProjectDescription(project)
-            this.editorDescription = {
-                originalContent: data.description,
-                savedContent: data.description,
-            }
-            this.room = 'description_' + data.id
+            this.editorDescription = this.getProjectDescription(project)
+            this.room = 'description_' + project.id
 
             this.$nextTick(() => {
                 this.forceRerender()
@@ -239,10 +226,7 @@ export default {
 
             const usersOnline = customEditor.editor.storage.collaborationCursor.users.length
 
-            if (
-                usersOnline === 1 &&
-                this.editorDescription.originalContent !== this.editorDescription.savedContent
-            ) {
+            if (usersOnline === 1 && this.project?.description !== this.editorDescription) {
                 this.confirmDestroyModalIsOpen = true
             } else {
                 this.$emit('close')

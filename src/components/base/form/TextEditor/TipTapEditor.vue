@@ -2,7 +2,7 @@
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
-import { watch, onMounted, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
 import {
@@ -20,13 +20,12 @@ const emit = defineEmits(emitsDefinitions)
 // props
 const props = defineProps(propsDefinitions)
 
-const { editor, editorInited, appendTranslationsStyle, initEditor, destroyEditor, closeEditor } =
-    useTipTap({
-        props,
-        emit,
-        store,
-        t,
-    })
+const { editor, resetContent, appendTranslationsStyle, initEditor, destroyEditor } = useTipTap({
+    props,
+    emit,
+    store,
+    t,
+})
 
 // lifecycle
 onMounted(() => {
@@ -38,22 +37,11 @@ onBeforeUnmount(() => {
     destroyEditor()
 })
 
-// watcher
-
-watch(
-    () => props.wsData,
-    () => {
-        editorInited.value = false
-        // Reinit editor so that changes in wsData props are visible in editor
-        initEditor()
-    }
-)
-
 // expose
 // editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
     editor,
-    closeEditor,
+    resetContent,
 })
 </script>
 <template>

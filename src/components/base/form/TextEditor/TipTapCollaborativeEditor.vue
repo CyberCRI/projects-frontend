@@ -62,13 +62,20 @@ const props = defineProps({
     },
 })
 
-const { editor, editorInited, appendTranslationsStyle, destroyEditor, closeEditor, getExtensions } =
-    useTipTap({
-        props,
-        emit,
-        store,
-        t,
-    })
+const {
+    editor,
+    editorInited,
+    appendTranslationsStyle,
+    destroyEditor,
+    getExtensions,
+    initialContent,
+    resetContent,
+} = useTipTap({
+    props,
+    emit,
+    store,
+    t,
+})
 
 // data
 const provider = ref(null)
@@ -84,6 +91,9 @@ const cnxOpen = ref(false)
 const cnxTimedout = ref(false)
 const cnxTimeout = ref(3000)
 const cnxTimer = ref(null)
+
+// prevent update until first sync
+const updateIsBlocked = ref(true)
 
 // computed:
 const user = computed(() => store.getters['users/userFromApi'])
@@ -130,11 +140,13 @@ const getCollaborativeContent = () => {
 }
 
 function initCollaborativeEditor() {
+    updateIsBlocked.value = true
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
     if (!props.room) return
 
     if (editorInited.value) return
+    initialContent.value = props.modelValue
     editorInited.value = true
 
     status.value = 'connecting'
@@ -181,6 +193,7 @@ function initCollaborativeEditor() {
         onSynced: (event) => {
             if (event && !firstSync.value) {
                 firstSync.value = true
+                updateIsBlocked.value = false
 
                 // TODO may skip this since the history is kept by server now
                 // reset history so we can't undo past the initial content (e.g. to an empty content)
@@ -215,7 +228,7 @@ function initCollaborativeEditor() {
         },
     })
     editor.value.on('update', () => {
-        emit('update', editor.value.getHTML())
+        if (!updateIsBlocked.value) emit('update:modelValue', editor.value.getHTML())
     })
     editor.value.on('blur', (e) => {
         emit('blur', e)
@@ -261,15 +274,6 @@ watch(
 )
 
 watch(
-    () => props.wsData,
-    () => {
-        editorInited.value = false
-        // Reinit editor so that changes in wsData props are visible in editor
-        initCollaborativeEditor()
-    }
-)
-
-watch(
     () => onlineAndConnected,
     (neo, old) => {
         if (old !== neo) {
@@ -309,7 +313,7 @@ onBeforeUnmount(() => {
 // editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
     editor,
-    closeEditor,
+    resetContent,
 })
 </script>
 <template>
