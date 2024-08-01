@@ -37,11 +37,11 @@
             <label>{{ $filters.capitalize($t('instructions.form.content.label')) }}</label>
             <TipTapEditor
                 ref="tiptapEditor"
-                :ws-data="wsData"
+                :model-value="modelValue.content"
                 :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor no-max-height"
                 mode="full"
-                @update="updateContent"
+                @update:model-value="updateForm({ content: $event })"
                 @blur="v$.modelValue.content.$validate"
             />
 
@@ -89,7 +89,7 @@ import { postOrganizationImage } from '@/api/organizations.service.ts'
 export function defaultForm() {
     return {
         title: '',
-        content: '',
+        content: '<p></p>',
         publication_date: new Date().toISOString(),
         has_to_be_notified: false,
         people_groups: {},
@@ -121,10 +121,6 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            wsData: {
-                savedContent: this.modelValue.content,
-                originalContent: this.modelValue.content,
-            },
             showDatePicker: false,
         }
     },
@@ -182,10 +178,6 @@ export default {
         onDateSelected(modelData) {
             this.updateForm({ publication_date: modelData })
             this.showDatePicker = false
-        },
-
-        updateContent(htmlContent) {
-            this.updateForm({ content: htmlContent === '<p></p>' ? null : htmlContent })
         },
 
         updateForm(data) {

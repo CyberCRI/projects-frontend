@@ -24,13 +24,12 @@
             <TipTapEditor
                 :key="editorKey"
                 ref="tiptapEditor"
-                :ws-data="description"
+                v-model="description"
                 :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor"
                 mode="full"
                 @destroy="close"
                 @image="handleImage"
-                @update="updateContent"
             />
         </div>
     </BaseDrawer>
@@ -63,15 +62,11 @@ export default {
     data() {
         const org = this.$store.getters['organizations/current']
         const title = org?.dashboard_title || ''
-        const description = org?.description || ''
 
         return {
             editorKey: 0,
             title: title,
-            description: {
-                savedContent: description,
-                originalContent: description,
-            },
+            description: org?.description || '<p></p>',
             addedImages: [],
             asyncing: false,
         }
@@ -86,9 +81,7 @@ export default {
     watch: {
         isOpened() {
             const org = this.organization
-            const description = org?.description || ''
-            this.description.savedContent = description
-            this.description.originalContent = description
+            this.description = org?.description || '<p></p>'
         },
     },
 
@@ -108,7 +101,7 @@ export default {
             try {
                 const payload = {
                     dashboard_title: this.title,
-                    description: this.description.savedContent,
+                    description: this.description,
                 }
 
                 await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
@@ -131,11 +124,6 @@ export default {
 
         close() {
             this.$emit('close')
-        },
-
-        updateContent(htmlContent) {
-            this.description.savedContent = htmlContent
-            if (htmlContent === '<p></p>') this.description.savedContent = ''
         },
 
         handleImage(img) {

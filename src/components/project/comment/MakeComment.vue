@@ -16,12 +16,11 @@
         <div v-if="isLoggedIn">
             <TipTapEditor
                 :key="editorKey"
-                :ws-data="comment"
+                v-model="comment"
                 :save-image-callback="saveCommentImage"
                 class="comment-description"
                 mode="full"
                 @image="handleImage"
-                @update="updateContent"
             />
 
             <div class="action">
@@ -48,7 +47,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { mapGetters } from 'vuex'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import utils from '@/functs/functions.ts'
+// import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { postCommentImage } from '@/api/comments.service'
@@ -76,10 +75,7 @@ export default {
 
     data() {
         return {
-            comment: {
-                originalContent: this.originalComment ? this.originalComment.content : '',
-                savedContent: this.originalComment ? this.originalComment.content : '',
-            },
+            comment: this.originalComment ? this.originalComment.content : '<p></p>',
             editorKey: 0,
             addedImages: [],
             asyncing: false,
@@ -98,8 +94,10 @@ export default {
         },
         isEdited() {
             return this.originalComment
-                ? this.comment.originalContent != this.comment.savedContent
-                : utils.editorCanEdit(this.comment, 'add')
+                ? this.originalComment.content != this.comment
+                : this.comment !== '<p></p>'
+            // TODO WTF was this here for?
+            // utils.editorCanEdit(this.comment, 'add')
         },
     },
 
@@ -115,10 +113,7 @@ export default {
         reset() {
             this.confirmModalIsOpen = false
             // reset comment
-            this.comment = {
-                originalContent: '',
-                savedContent: '',
-            }
+            this.comment = '<p></p>'
             this.editorKey++
         },
 
@@ -144,7 +139,7 @@ export default {
         async createComment() {
             this.asyncing = true
             const payload = {
-                content: this.comment.savedContent,
+                content: this.comment,
                 project_id: this.projectId,
                 images_ids: this.addedImages,
             }
@@ -172,7 +167,7 @@ export default {
             const body = {
                 id: this.originalComment.id,
                 comment: {
-                    content: this.comment.savedContent,
+                    content: this.comment,
                     project_id: this.projectId,
                     images_ids: this.addedImages,
                 },
@@ -204,10 +199,6 @@ export default {
 
         handleImage(image) {
             this.addedImages(image)
-        },
-
-        updateContent(content) {
-            this.comment.savedContent = content
         },
 
         login() {

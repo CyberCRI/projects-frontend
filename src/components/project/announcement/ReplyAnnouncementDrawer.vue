@@ -49,13 +49,12 @@
 
                 <TipTapEditor
                     :key="editorKey"
-                    :ws-data="wsData"
-                    @update="updateContent"
+                    v-model="form.applicant_message"
                     name="motivation"
-                    @blur="v$.wsData.savedContent.$validate"
+                    @blur="v$.form.applicant_message.$validate"
                 />
 
-                <FieldErrors :errors="v$.wsData.savedContent.$errors" />
+                <FieldErrors :errors="v$.form.applicant_message.$errors" />
             </div>
 
             <div class="form-section captcha_cont has-text-centered">
@@ -104,7 +103,6 @@ export default {
                 applicant_message: '',
                 project_id: '',
             },
-            wsData: { content: '', originalContent: '', savedContent: '' },
             recaptcha: false,
             captchatoken: false,
         }
@@ -136,14 +134,10 @@ export default {
                         email
                     ),
                 },
-            },
-            wsData: {
-                savedContent: {
-                    required: helpers.withMessage(
-                        this.$t('form.reply-announcement.description'),
-                        required
-                    ),
-                },
+                applicant_message: helpers.withMessage(
+                    this.$t('form.reply-announcement.description'),
+                    required
+                ),
             },
         }
     },
@@ -153,15 +147,7 @@ export default {
             this.v$.$reset()
             this.$emit('close')
         },
-        updateContent(htmlContent) {
-            this.wsData.savedContent = htmlContent
-            this.form.applicant_message = htmlContent
 
-            if (htmlContent === '<p></p>') {
-                this.wsData.savedContent = null
-                this.form.applicant_message = null
-            }
-        },
         async sendApplication() {
             const isValid = await this.v$.$validate()
 
@@ -229,7 +215,6 @@ export default {
                     applicant_message: '',
                     project_id: '',
                 }
-                this.wsData = { content: '', originalContent: '', savedContent: '' }
                 this.recaptcha = false
                 this.captchatoken = false
                 if (open) {
