@@ -170,10 +170,9 @@
                     </p>
                     <TipTapEditor
                         :key="personalBioKey"
-                        :ws-data="personalBio"
+                        v-model="personalBio"
                         class="html-input flex-grow"
                         mode="none"
-                        @update="updatePersonalBio"
                     />
                 </div>
                 <div class="column flexed-column">
@@ -184,10 +183,9 @@
                     </p>
                     <TipTapEditor
                         :key="longBioKey"
-                        :ws-data="longBio"
+                        v-model="longBio"
                         class="html-input flex-grow"
                         mode="none"
-                        @update="updateLongBio"
                     />
                 </div>
             </div>
@@ -259,15 +257,9 @@ export default {
                 professional_description: '',
             },
             longBioKey: 0,
-            longBio: {
-                originalContent: '',
-                savedContent: '',
-            },
+            longBio: '<p></p>',
             personalBioKey: 0,
-            personalBio: {
-                originalContent: '',
-                savedContent: '',
-            },
+            personalBio: '<p></p>',
             exempleToShow: null,
             loading: false,
         }
@@ -355,14 +347,8 @@ export default {
                     this.form[field] = this.user[field]
                 })
 
-                this.personalBio = {
-                    originalContent: this.user.personal_description,
-                    savedContent: this.user.personal_description,
-                }
-                this.longBio = {
-                    originalContent: this.user.professional_description,
-                    savedContent: this.user.professional_description,
-                }
+                this.personalBio = this.user.personal_description || '<p></p>'
+                this.longBio = this.user.professional_description || '<p></p>'
 
                 this.sdgs.forEach((sdg) => {
                     sdg.selected = (this.user.sdgs || []).includes(sdg.id)
@@ -370,13 +356,6 @@ export default {
             } catch (error) {
                 console.error(error)
             }
-        },
-
-        updateLongBio(content) {
-            this.longBio.savedContent = content
-        },
-        updatePersonalBio(content) {
-            this.personalBio.savedContent = content
         },
 
         /* eslint-disable-next-line vue/no-unused-properties */
@@ -393,8 +372,8 @@ export default {
                         email: this.form.email,
                         job: this.form.job,
                         sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
-                        professional_description: this.longBio.savedContent,
-                        personal_description: this.personalBio.savedContent,
+                        professional_description: this.longBio,
+                        personal_description: this.personalBio,
                     }
 
                     await patchUser(this.user.id, data)
