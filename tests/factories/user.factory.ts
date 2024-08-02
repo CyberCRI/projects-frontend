@@ -22,7 +22,6 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     permissions: [''],
     people_groups: [], // TODO: generate this
     skills: [], // TODO: generate this
-    hobbies: [], // TODO: generate this
     profile_picture: {
         scale_x: faker.datatype.number(),
         scale_y: faker.datatype.number(),

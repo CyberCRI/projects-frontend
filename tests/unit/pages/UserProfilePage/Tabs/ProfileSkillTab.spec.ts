@@ -86,7 +86,7 @@ describe('ProfileSkillTab', () => {
     it('should display one list if user has skill but no hobby', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.skills = [{ id: '123' }]
+        user.skills = [{ id: '123', type: 'skill' }]
         store.modules.users.getters.id.mockReturnValue('456')
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
@@ -98,7 +98,7 @@ describe('ProfileSkillTab', () => {
     it('should display one list if user has hobbies but no skills', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.hobbies = [{ id: '123' }]
+        user.skills = [{ id: '123', type: 'hobby' }]
         store.modules.users.getters.id.mockReturnValue('456')
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
@@ -110,8 +110,10 @@ describe('ProfileSkillTab', () => {
     it('should display two lists if user has hobbies and skills', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.hobbies = [{ id: '123' }]
-        user.skills = [{ id: '123' }]
+        user.skills = [
+            { id: '123', type: 'skill' },
+            { id: '123', type: 'hobby' },
+        ]
         store.modules.users.getters.id.mockReturnValue('456')
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
@@ -123,8 +125,10 @@ describe('ProfileSkillTab', () => {
     it('should display a tip if list are displayed', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.hobbies = [{ id: '123' }]
-        user.skills = [{ id: '123' }]
+        user.skills = [
+            { id: '123', type: 'skill' },
+            { id: '123', type: 'hobby' },
+        ]
         store.modules.users.getters.id.mockReturnValue('456')
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))

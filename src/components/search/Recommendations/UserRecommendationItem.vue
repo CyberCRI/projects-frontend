@@ -102,23 +102,21 @@ export default {
             return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
         },
 
+        skills() {
+            return (this.recommendation.skills || []).filter((s) => s.type == 'skill')
+        },
+
         displayedSkills() {
-            if (
-                this.recommendation.skills &&
-                this.recommendation.skills.length > this.skillsLimit
-            ) {
-                return this.recommendation.skills.slice(0, this.skillsLimit)
+            if (this.skills.length > this.skillsLimit) {
+                return this.skills.slice(0, this.skillsLimit)
             } else {
-                return this.recommendation.skills
+                return this.skills
             }
         },
 
         moreSkills() {
-            if (
-                this.recommendation.skills &&
-                this.recommendation.skills.length > this.skillsLimit
-            ) {
-                return this.recommendation.skills.slice(this.skillsLimit)
+            if (this.skills.length > this.skillsLimit) {
+                return this.skills.slice(this.skillsLimit)
             } else {
                 return []
             }

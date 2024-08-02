@@ -10,11 +10,11 @@
                     />
                 </SkillLevelTip>
             </div>
-            <section class="section" v-if="user.skills?.length">
-                <UserSkills :full-list="true" :skills="user.skills" :title="$t('me.skills')" />
+            <section class="section" v-if="skills?.length">
+                <UserSkills :full-list="true" :skills="skills" :title="$t('me.skills')" />
             </section>
-            <section class="section" v-if="user.hobbies?.length">
-                <UserSkills :full-list="true" :skills="user.hobbies" :title="$t('me.hobbies')" />
+            <section class="section" v-if="hobbies?.length">
+                <UserSkills :full-list="true" :skills="hobbies" :title="$t('me.hobbies')" />
             </section>
         </template>
         <p v-else class="empty-field">{{ noSkillLabel }}</p>
@@ -44,7 +44,15 @@ export default {
 
     computed: {
         allSkills() {
-            return [...this.user.skills, ...this.user.hobbies]
+            return this.user.skills || []
+        },
+
+        skills() {
+            return this.allSkills.filter((s) => s.type == 'skill')
+        },
+
+        hobbies() {
+            return this.allSkills.filter((s) => s.type == 'hobby')
         },
 
         isCurrentUser() {

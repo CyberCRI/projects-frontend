@@ -59,7 +59,7 @@ export default {
         },
 
         allSkills() {
-            return [...this.user.skills, ...this.user.hobbies]
+            return this.user.skills
         },
 
         visibleSkills() {

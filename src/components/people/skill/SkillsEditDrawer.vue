@@ -182,22 +182,34 @@ export default {
         selectionAsTags() {
             return this.selection.map((s) => s.wikipedia_tag)
         },
+        allSkills() {
+            return this.user.skills || []
+        },
+        skills() {
+            return this.allSkills.filter((s) => s.type === 'skill')
+        },
+        hobbies() {
+            return this.allSkills.filter((s) => s.type === 'hobby')
+        },
     },
     watch: {
         isOpen(neo) {
             if (neo) {
                 this.search = ''
                 this.confirmedSearch = ''
-                this.selection =
-                    this.user && this.user[this.type]
-                        ? this.user[this.type].map((item) => ({ ...toRaw(item) }))
-                        : []
+                this.selection = this.getSkillOfType(this.type)
+                    ? this.getSkillOfType(this.type).map((item) => ({ ...toRaw(item) }))
+                    : []
                 this.searchResults = []
                 this.$nextTick(this.focusInput)
             }
         },
     },
     methods: {
+        getSkillOfType(type) {
+            if (type == 'skills') return this.skills
+            else return this.hobbies
+        },
         focusInput() {
             const searchInput = this.$el.querySelector('.search-field input')
             this.$nextTick(() => {
@@ -258,7 +270,7 @@ export default {
             // talents to update are in the user and in the selection but have different values
             const talentsToUpdate = []
             // filter talents to delete and update
-            this.user[this.type].forEach((talent) => {
+            this.getSkillOfType(this.type).forEach((talent) => {
                 const rawTalent = toRaw(talent)
                 const selectedTalent = selectionMap[rawTalent.id]
                 if (selectedTalent) {

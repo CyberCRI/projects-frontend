@@ -16,7 +16,6 @@ export interface UserModel {
     professional_description?: string
     people_groups?: object[] // TODO: define this type
     skills?: UserSkillModel[]
-    hobbies?: UserSkillModel[]
 }
 
 export interface UserFromJWTModel {
@@ -93,4 +92,6 @@ export interface UserSkillModel {
     level_to_reach: number
     category: string
     type: 'skill' | 'hobby'
+    can_mentor: boolean
+    needs_mentor: boolean
 }
