@@ -11,7 +11,6 @@ export interface PeopleModel {
     notifications?: number
     privacy_settings?: Object
     skills: Array<Object>
-    hobbies: Array<Object>
     id: number
     language: string
     email: string

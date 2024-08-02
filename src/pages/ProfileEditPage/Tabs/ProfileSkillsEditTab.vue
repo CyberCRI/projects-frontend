@@ -21,7 +21,7 @@
         </div>
         <div class="following-screen" v-else>
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
-                <template v-if="user[key] && user[key].length">
+                <template v-if="getSkillOfType(key).length">
                     <div class="actions">
                         <LinkButton
                             :label="
@@ -54,7 +54,7 @@
                     </div>
                     <div class="skill-list">
                         <SkillItem
-                            v-for="skill in user[key]"
+                            v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
                             :label="skill.wikipedia_tag.name"
                             :level="Number(skill.level)"
@@ -118,9 +118,18 @@ export default {
         isInitial() {
             return (
                 !this.user ||
-                ((!this.user.skills || this.user.skills.length === 0) &&
-                    (!this.user.hobbies || this.user.hobbies.length === 0))
+                ((!this.skills || this.skills.length === 0) &&
+                    (!this.hobbies || this.hobbies.length === 0))
             )
+        },
+        allSkills() {
+            return this.user.skills || []
+        },
+        skills() {
+            return this.allSkills.filter((s) => s.type === 'skill')
+        },
+        hobbies() {
+            return this.allSkills.filter((s) => s.type === 'hobby')
         },
     },
 
@@ -133,6 +142,11 @@ export default {
         closeDrawer() {
             this.drawerIsOpen = false
             this.$emit('edited')
+        },
+
+        getSkillOfType(type) {
+            if (type == 'skills') return this.skills
+            else return this.hobbies
         },
     },
 }
