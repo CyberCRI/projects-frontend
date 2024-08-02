@@ -1,16 +1,15 @@
 <template>
-    <div class="help-tab">
+    <div class="help-tab" v-if="!isLoading">
         <div class="block-container">
             <form onsubmit="return false;">
-                <TextInput v-model="faqTitle" :label="$t('faq.tab')" />
+                <TextInput v-model="faq.title" :label="$t('faq.tab')" />
 
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
                     :key="editorKey"
                     ref="faq-editor"
-                    :ws-data="faqContent"
+                    v-model="faq.content"
                     mode="full"
-                    @update="updateContent"
                     :save-image-callback="saveFaqImage"
                 />
 
@@ -24,7 +23,7 @@
                     />
 
                     <LpiButton
-                        :disabled="!faqTitle"
+                        :disabled="!faq.title"
                         :label="
                             $filters.capitalize(isAddMode ? $t('common.add') : $t('common.edit'))
                         "
@@ -61,8 +60,8 @@ import { getFaq, createFaq, putFaq, deleteFaq, postFaqImage } from '@/api/faqs.s
 
 function defaultFaq() {
     return {
-        content: undefined,
-        title: undefined,
+        content: '<p></p>',
+        title: '',
         id: undefined,
         created_at: undefined,
         updated_at: undefined,
@@ -83,11 +82,12 @@ export default {
             deleteLoading: false,
             deleteConfirmVisible: false,
             editorKey: 0,
-            faq: null,
+            faq: defaultFaq(),
+            isLoading: false,
         }
     },
 
-    async created() {
+    async mounted() {
         await this.loadFaq()
     },
 
@@ -96,18 +96,18 @@ export default {
             return this.$store.getters['organizations/current'].code
         },
 
-        faqTitle: {
-            get() {
-                return this.faq ? this.faq.title : ''
-            },
-            set(value) {
-                if (this.faq) this.faq.title = value
-            },
-        },
+        // faqTitle: {
+        //     get() {
+        //         return this.faq ? this.faq.title : ''
+        //     },
+        //     set(value) {
+        //         if (this.faq) this.faq.title = value
+        //     },
+        // },
 
-        faqContent() {
-            return { originalContent: this.faq ? this.faq.content : '' }
-        },
+        // faqContent() {
+        //     return { originalContent: this.faq ? this.faq.content : '' }
+        // },
 
         isAddMode() {
             return !this.faq || !this.faq.id
@@ -126,11 +126,14 @@ export default {
         },
 
         async loadFaq() {
+            this.isLoading = true
             try {
                 this.faq = await getFaq(this.currentOrgCode)
             } catch (err) {
                 console.log(err)
                 this.faq = defaultFaq()
+            } finally {
+                this.isLoading = false
             }
         },
         async deleteFaq() {
@@ -214,17 +217,17 @@ export default {
             }
         },
 
-        updateContent(htmlContent) {
-            const cursorPosition = this.$refs['faq-editor'].editor.view.state.selection.anchor
-            if (this.faq) this.faq.content = htmlContent
+        // updateContent(htmlContent) {
+        //     const cursorPosition = this.$refs['faq-editor'].editor.view.state.selection.anchor
+        //     if (this.faq) this.faq.content = htmlContent
 
-            this.$nextTick(() => {
-                // Store dispatch makes the editor lose focus,
-                // this sets back focus and sets cursor where it was
-                this.$refs['faq-editor'].editor.commands.focus()
-                this.$refs['faq-editor'].editor.commands.setTextSelection(cursorPosition)
-            })
-        },
+        //     this.$nextTick(() => {
+        //         // Store dispatch makes the editor lose focus,
+        //         // this sets back focus and sets cursor where it was
+        //         this.$refs['faq-editor'].editor.commands.focus()
+        //         this.$refs['faq-editor'].editor.commands.setTextSelection(cursorPosition)
+        //     })
+        // },
     },
 }
 </script>

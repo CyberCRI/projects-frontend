@@ -19,15 +19,13 @@
 
         <div class="editor-ctn">
             <TipTapEditor
-                v-if="wsData"
                 :key="editorKey"
                 ref="tiptapEditor"
-                :ws-data="wsData"
+                v-model="description"
                 class="input-field content-editor no-max-height min-height-100"
                 mode="medium"
                 @destroy="closeDrawer"
                 @image="handleImage"
-                @update="updateContent"
             />
         </div>
     </BaseDrawer>
@@ -75,10 +73,7 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            wsData: {
-                savedContent: '',
-                originalContent: '',
-            },
+            description: '<p></p>',
             addedImages: [],
             editorKey: 0,
             confirmModalIsOpen: false,
@@ -91,7 +86,7 @@ export default {
         isOpened: {
             handler: function (neo) {
                 if (neo) {
-                    this.wsData.originalContent = this.originalDescription
+                    this.description = this.originalDescription || '<p></p>'
                 }
                 this.$nextTick(() => {
                     this.forceRerender()
@@ -110,14 +105,8 @@ export default {
             this.forceRerender()
         },
 
-        updateContent(htmlContent) {
-            this.wsData.savedContent = htmlContent
-
-            if (htmlContent === '<p></p>') this.wsData.savedContent = null
-        },
-
         saveDescription() {
-            this.$emit('update-description', this.wsData.savedContent)
+            this.$emit('update-description', this.description)
             this.close()
         },
 

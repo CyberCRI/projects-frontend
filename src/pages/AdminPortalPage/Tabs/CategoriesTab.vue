@@ -278,7 +278,6 @@ export default {
         async submitCategory(category) {
             const data = {
                 ...category,
-                description: category.description.savedContent,
             }
             let categoryId = category.id
             if (!categoryId) {

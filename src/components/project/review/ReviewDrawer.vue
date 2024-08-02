@@ -24,7 +24,7 @@
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
                     :key="editorKey"
-                    :ws-data="wsdata"
+                    v-model="newReview.data.description"
                     @update="updateContent"
                     @blur="v$.newReview.data.description.$touch"
                 />
@@ -104,7 +104,6 @@ export default {
             v$: useVuelidate(),
             showConfirmModal: false,
             editorKey: 0,
-            wsdata: { originalContent: '', savedContent: '' },
             editorOption: {
                 modules: {
                     toolbar: [['bold', 'italic', 'underline'], ['link']],
@@ -163,6 +162,13 @@ export default {
         ...mapGetters({
             projectId: 'projects/currentProjectId',
         }),
+
+        isEdited() {
+            return this.mode == 'edit'
+                ? this.rdata.title != this.newReview.data.title ||
+                      this.rdata.description != this.newReview.data.description
+                : this.newReview.data.title != '' || this.newReview.data.description != '<p></p>'
+        },
     },
 
     watch: {
@@ -181,16 +187,12 @@ export default {
                     this.newReview = {
                         data: {
                             title: '',
-                            description: '',
+                            description: '<p></p>',
                         },
                     }
                 }
                 this.newReview.data.reviewer = this.$store.getters['users/id']
 
-                this.wsdata = {
-                    originalContent: this.newReview.data.description,
-                    savedContent: this.newReview.data.description,
-                }
                 this.$nextTick(this.forceRerender)
             },
             immediate: true,
@@ -204,17 +206,8 @@ export default {
             this.editorKey += 1
         },
 
-        updateContent(htmlContent) {
-            this.wsdata.savedContent = htmlContent
-            this.newReview.data.description = htmlContent
-
-            if (htmlContent === '<p></p>') this.newReview.data.description = null
-        },
-
         async saveReview() {
             const isValid = await this.v$.$validate()
-            // Update review
-            this.newReview.data.description = this.wsdata.savedContent
             if (this.mode === 'add' && isValid) {
                 await this.createReview()
             } else if (this.mode === 'edit' && isValid) {
@@ -291,7 +284,7 @@ export default {
         },
 
         closeDrawer() {
-            if (this.wsdata.originalContent !== this.wsdata.savedContent) this.openConfirmModal()
+            if (this.isEdited) this.openConfirmModal()
             else this.closeDrawerNoConfirm()
         },
 
