@@ -183,7 +183,8 @@
                 "delete-category": "Supprimer la catégorie",
                 "delete-category-description": "Voulez-vous vraiment supprimer la catégorie '{categoryName}' ? Cette action ne peut pas être annulée",
                 "delete-category-has-children": "Cette catégorie contient des sous-catégories et/ou des projets. Déplacez les pour pouvoir la supprimer.",
-                "delete-category-noop": "La suppression de categorie n'est pas possible pour l'instant"
+                "delete-category-error": "Erreur lors de la suppression de la catégorie",
+                "delete-category-success": "Catégorie supprimée"
             },
             "chat": "Plateforme de discussion (vue connectée)",
             "events": "Événements",

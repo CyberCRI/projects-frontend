@@ -45,7 +45,7 @@
                         @add-sub-category="addCategory"
                         @see-category="goToCategory"
                         @update-category-tree="onDragEnd"
-                        @delete-category="categoryToDelete = category"
+                        @delete-category="categoryToDelete = $event"
                     />
                 </template>
             </Sortable>
@@ -95,7 +95,10 @@ import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
-import { postProjectCategoryBackground } from '@/api/project-categories.service'
+import {
+    postProjectCategoryBackground,
+    deleteProjectCategory,
+} from '@/api/project-categories.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -322,12 +325,33 @@ export default {
         },
 
         async deleteCategory() {
-            // TODO: implement deletion of category when we have project count
-            this.$store.dispatch('notifications/pushToast', {
-                message: this.$t('admin.portal.categories.delete-category-noop'),
-                type: 'error',
-            })
-            this.categoryToDelete = null
+            if (
+                !this.categoryToDelete ||
+                this.categoryToDelete.children?.length ||
+                this.categoryToDelete.projects_count !== 0
+            ) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.portal.categories.delete-category-has-children'),
+                    type: 'error',
+                })
+                return
+            }
+            try {
+                await deleteProjectCategory(this.categoryToDelete.id)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.portal.categories.delete-category-success'),
+                    type: 'success',
+                })
+                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+            } catch (err) {
+                console.error(err)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('admin.portal.categories.delete-category-error'),
+                    type: 'error',
+                })
+            } finally {
+                this.categoryToDelete = null
+            }
         },
     },
 }
