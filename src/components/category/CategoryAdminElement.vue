@@ -33,6 +33,16 @@ const props = defineProps({
 const hasChildren = computed(() => {
     return props.category.children?.length
 })
+
+const hasNoChild = computed(() => {
+    return !hasChildren.value
+})
+
+const hasNoProject = computed(() => {
+    // will be false if undefined witch will forbid deletion if the api is not set up yet
+    return props.category.projects_count === 0
+})
+
 const showChild = ref(false)
 
 const chevronImage = computed(() => {
@@ -71,8 +81,7 @@ function onDragLeave() {
 }
 
 const canDelete = computed(() => {
-    // TODO also check if has projects when available
-    return !hasChildren.value
+    return hasNoChild.value && hasNoProject.value
 })
 
 watch(
