@@ -1,12 +1,12 @@
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="v$.$invalid || (!isAddMode && !socketReady)"
+        :confirm-action-disabled="v$.$invalid || (!isAddMode && !inSoloMode && !socketReady)"
         :is-opened="isOpened"
         :title="$t('blog.entry')"
         class="blog-drawer"
         @close="checkClose"
-        @confirm="submitBlogEntry"
+        @confirm="save"
         :asyncing="asyncing"
     >
         <ConfirmModal
@@ -24,6 +24,16 @@
             :title="$t('description.quit-without-saving-title')"
             @cancel="confirmDestroyModalIsOpen = false"
             @confirm="handleDestroyModalConfirmed"
+        />
+
+        <ConfirmModal
+            v-if="showConfirmSaveInSoloMode"
+            :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+            :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+            @cancel="showConfirmSaveInSoloMode = false"
+            @confirm="submitBlogEntry(true)"
+            :confirm-button-label="$t('common.save')"
+            :asyncing="asyncing"
         />
         <div>
             <TextInput
@@ -68,6 +78,7 @@
                 @update="updateContent"
                 @socket-ready="socketReady = $event"
                 @blur="v$.editorBlogEntry.$validate"
+                @falled-back-to-solo-edit="inSoloMode = true"
             />
 
             <FieldErrors :errors="v$.editorBlogEntry.$errors" />
@@ -145,6 +156,8 @@ export default {
             confirmModalIsOpen: false,
             confirmDestroyModalIsOpen: false,
             asyncing: false,
+            inSoloMode: false,
+            showConfirmSaveInSoloMode: false,
         }
     },
 
@@ -187,6 +200,8 @@ export default {
     watch: {
         isOpened: {
             handler: function () {
+                this.inSoloMode = false
+                this.showConfirmSaveInSoloMode = false
                 if (!this.isAddMode) {
                     this.selectedDate = this.editedBlog.created_at
                     this.title = this.editedBlog.title
@@ -229,6 +244,14 @@ export default {
                 project_id: this.project.id,
                 body: formData,
             })
+        },
+
+        save() {
+            if (this.inSoloMode) {
+                this.showConfirmSaveInSoloMode = true
+            } else {
+                this.submitBlogEntry()
+            }
         },
 
         async submitBlogEntry(closeWindowAfterOperation = true) {

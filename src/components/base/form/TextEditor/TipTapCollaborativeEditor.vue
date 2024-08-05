@@ -2,7 +2,7 @@
 import funct from '@/functs/functions.ts'
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
-
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TipTapCollaborativeConnectedStatus from '@/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import TipTapCollaborativeReconnectionStatus from '@/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
 import TipTapCollaborativeConnectingStatus from '@/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
@@ -16,6 +16,8 @@ import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+
+import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 
 import {
     emitsDefinitions,
@@ -34,7 +36,7 @@ const { t } = useI18n()
 const DISCONNECTION_GRACE_DURATION =
     import.meta.env.VITE_APP_DISCONNECTION_GRACE_DURATION || 6 * 1000
 
-const emit = defineEmits([...emitsDefinitions, 'socket-ready'])
+const emit = defineEmits([...emitsDefinitions, 'socket-ready', 'falled-back-to-solo-edit'])
 
 const props = defineProps({
     ...propsDefinitions,
@@ -91,6 +93,8 @@ const cnxOpen = ref(false)
 const cnxTimedout = ref(false)
 const cnxTimeout = ref(3000)
 const cnxTimer = ref(null)
+const fallbackToSoloEdit = ref(false)
+const hideSoloWarning = ref(false)
 
 // prevent update until first sync
 const updateIsBlocked = ref(true)
@@ -104,6 +108,11 @@ const onlineAndConnected = computed(() => online.value && status.value === 'conn
 const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected)
 
 // methods
+function fallbackToSoloMode() {
+    fallbackToSoloEdit.value = true
+    emit('falled-back-to-solo-edit')
+}
+
 function getCollaborativeExtensions() {
     const exts = getExtensions()
 
@@ -317,7 +326,26 @@ defineExpose({
 })
 </script>
 <template>
-    <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
+    <template v-if="fallbackToSoloEdit">
+        <LpiSnackbar
+            v-if="!hideSoloWarning"
+            class="solo-mode-warning"
+            icon="AlertOutline"
+            closable
+            @close="hideSoloWarning = true"
+            type="warning"
+        >
+            <span>{{ t(`multieditor.server-unconnectable.head-up-warning`) }}</span>
+        </LpiSnackbar>
+        <TipTapEditor
+            :model-value="modelValue"
+            @update:model-value="emit('update:modelValue', $event)"
+            :save-image-callback="saveImageCallback"
+            :mode="mode"
+            :save-icon-visible="false"
+        />
+    </template>
+    <TipTapEditorContainer v-else-if="editor" :editor="editor" :mode="mode">
         <template v-if="firstSync">
             <TipTapCollaborativeConnectedStatus
                 :online-and-connected="onlineAndConnected"
@@ -346,16 +374,25 @@ defineExpose({
                 is-connected
             />
         </template>
-        <TipTapCollaborativeConnectingStatus v-else :cnx-timedout="cnxTimedout" :status="status" />
+        <TipTapCollaborativeConnectingStatus
+            v-else
+            :cnx-timedout="cnxTimedout"
+            :status="status"
+            @do-fallback-edit="fallbackToSoloMode"
+        />
     </TipTapEditorContainer>
 </template>
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
-<!--style lang="scss" scoped>
+<style lang="scss" scoped>
 // TODO dead code ???
 // .connecting,
 // .disconnected {
 //     padding: 20px;
 //     text-align: center;
 // }
-</style-->
+
+.solo-mode-warning {
+    margin: 0 auto 1rem;
+}
+</style>

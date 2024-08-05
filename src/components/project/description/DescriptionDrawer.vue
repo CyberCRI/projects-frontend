@@ -2,12 +2,13 @@
     <Drawer
         :class="{ fs: isFullScreen }"
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="!socketReady"
+        :confirm-action-disabled="!inSoloMode && !socketReady"
         :is-opened="isOpened"
         :title="$t('description.edit')"
         class="description-drawer"
         @close="closeDrawer"
-        @confirm="patchProject(true)"
+        @confirm="save"
+        :asyncing="asyncing"
     >
         <ConfirmModal
             v-if="confirmDestroyModalIsOpen"
@@ -15,6 +16,15 @@
             :title="$t('description.quit-without-saving-title')"
             @cancel="confirmDestroyModalIsOpen = false"
             @confirm="handleDestroyModalConfirmed"
+        />
+        <ConfirmModal
+            v-if="showConfirmSaveInSoloMode"
+            :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+            :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+            @cancel="showConfirmSaveInSoloMode = false"
+            @confirm="patchProject(true)"
+            :confirm-button-label="$t('common.save')"
+            :asyncing="asyncing"
         />
         <TipTapCollaborativeEditor
             :key="editorKey"
@@ -29,6 +39,7 @@
             @destroy="$emit('close')"
             @saved="patchProject(false)"
             @socket-ready="socketReady = $event"
+            @falled-back-to-solo-edit="inSoloMode = true"
         />
     </Drawer>
 </template>
@@ -76,6 +87,9 @@ export default {
             room: '',
             socketReady: false,
             confirmDestroyModalIsOpen: false,
+            inSoloMode: false,
+            showConfirmSaveInSoloMode: false,
+            asyncing: false,
         }
     },
 
@@ -109,6 +123,8 @@ export default {
         isOpened: {
             handler: function (neo) {
                 if (neo) {
+                    this.inSoloMode = false
+                    this.showConfirmSaveInSoloMode = false
                     this.loadProject(this.project)
                 }
             },
@@ -133,8 +149,17 @@ export default {
             })
         },
 
+        save() {
+            if (this.inSoloMode) {
+                this.showConfirmSaveInSoloMode = true
+            } else {
+                this.patchProject(true)
+            }
+        },
+
         async patchProject(closeWindowAfterPatch = true) {
             try {
+                this.asyncing = true
                 await retry(
                     async () => {
                         try {
@@ -186,6 +211,7 @@ export default {
                 console.error(error)
             } finally {
                 this.forceRerender()
+                this.asyncing = false
             }
 
             analytics.project.updateDescription({ id: this.project.id })
