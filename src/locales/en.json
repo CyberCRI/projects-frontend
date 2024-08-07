@@ -177,14 +177,19 @@
                 "edit": "Edit a category",
                 "is-reviewable": "Authorize reviews",
                 "limit-publication-to-reviewers": "Limit publication to reviewers",
-                "preview-categories": "Preview in categories",
+                "preview-categories": "Preview",
                 "display-projects": "Display projects",
                 "hide-projects": "Hide projects",
                 "delete-category": "Delete category",
                 "delete-category-description": "Are you sure you want to delete the '{categoryName}' category? This action cannot be undone.",
                 "delete-category-has-children": "This category has sub categories and/or projects. Remove them first.",
                 "delete-category-error": "Error while deleting category",
-                "delete-category-success": "Category deleted"
+                "delete-category-success": "Category deleted",
+                "background-notice": "For the header of this category’s page,  you can choose a background color or upload your own background image",
+                "background-color": "Choose a background color",
+                "background-image": "Choose a background image",
+                "upload-picture": "Upload a picture",
+                "tips-background-image": "It is not required if you would rather simply display a color.<br/>Minimum width: 1024px, Minimum height: 400px."
             },
             "chat": "Chat platform (Connected view)",
             "events": "Events",
@@ -374,12 +379,12 @@
         "add-sub-category": "Add a sub-category",
         "edit-order-success": "Categories order successfully edited",
         "info-organize": "You can list projects in different categories (e.g., student projects, teacher projects, etc.).",
-        "info-limit": "Each project must be associated with one of these categories. Maximum allowed is 15 categories.",
-        "info-howto": "To add a sub-category, create a new category and then assign it a parent category",
+        "info-limit": "Each project must be associated with one of these categories.",
         "page-title": "Category",
         "title": "Categories",
         "all-categories": "See all categories",
-        "all-projects": "See all projects"
+        "all-projects": "See all projects",
+        "edit": "Edit"
     },
     "comment": {
         "add-comment": "Add your comment!",
@@ -691,7 +696,7 @@
         "upload": "Upload"
     },
     "form": {
-        "background-color": "background color",
+        "background-color": "Background color",
         "category-name": "Name of the category",
         "organization-name": "Name of your community",
         "description": "Description",

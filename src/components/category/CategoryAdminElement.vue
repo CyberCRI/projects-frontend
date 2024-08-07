@@ -136,7 +136,7 @@ watch(
                         secondary
                         no-border
                         @click.stop.prevent="emit('edit-category', category)"
-                        :action-label="$t('common.edit')"
+                        :action-label="$t('category.edit')"
                     />
 
                     <ContextActionButton

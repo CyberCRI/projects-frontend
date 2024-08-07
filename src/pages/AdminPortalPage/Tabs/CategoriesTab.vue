@@ -6,10 +6,6 @@
                     {{ $t('category.info-organize') }}<br />
                     {{ $t('category.info-limit') }}
                 </p>
-                <p>
-                    {{ $t('category.info-howto') }}
-                    (<IconImage class="icon-tip" name="FileTreeOutline" />)
-                </p>
             </div>
             <div class="actions">
                 <LinkButton
@@ -101,7 +97,6 @@ import {
 } from '@/api/project-categories.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 import { toRaw } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
 import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
@@ -119,7 +114,6 @@ export default {
         LinkButton,
         CategoryDrawer,
         LpiLoader,
-        IconImage,
         Sortable,
         LoaderSimple,
         ConfirmModal,

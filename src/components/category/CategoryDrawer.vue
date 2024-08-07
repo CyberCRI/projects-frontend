@@ -25,10 +25,12 @@
                 <TipTapEditor :ws-data="category.description" @update="updateCategoryDescription" />
             </CategoryField>
 
-            <CategoryField :label="$t('form.background-color')" is-toggleable>
-                <LpiSnackbar icon="QuestionMark" type="info">
+            <p class="pre-field-notice">{{ $t('admin.portal.categories.background-notice') }}</p>
+
+            <CategoryField :label="$t('admin.portal.categories.background-color')" is-toggleable>
+                <div class="field-tip">
                     <div v-html="$t('tips.background-color')"></div>
-                </LpiSnackbar>
+                </div>
                 <SketchPicker
                     v-model="category.background_color"
                     :preset-colors="[]"
@@ -38,32 +40,16 @@
 
             <CategoryField
                 class="image-preview-ctn"
-                :label="$t('admin.portal.categories.preview-categories')"
+                :label="$t('admin.portal.categories.background-image')"
                 is-toggleable
             >
-                <LpiSnackbar icon="QuestionMark" type="info">
-                    <div v-html="$t('tips.category-image')"></div>
-                </LpiSnackbar>
-                <CategoryCardImage
-                    v-if="!displayedImage"
-                    :background-color="category.background_color || '#FFF'"
-                    image-height="150px"
-                    image-width="100%"
-                />
-                <div
-                    v-else
-                    :style="{
-                        'background-image': `url(${displayedImage})`,
-                    }"
-                    class="category-image"
-                ></div>
-                <div class="category-preview">
-                    <div v-if="category.name" class="category-preview-name">
-                        {{ category.name }}
-                    </div>
+                <div class="field-tip">
+                    <div v-html="$t('admin.portal.categories.tips-background-image')"></div>
                 </div>
+
                 <ImageInput
                     id="category-image-input"
+                    :label="$t('admin.portal.categories.upload-picture')"
                     :existing-image="
                         category.background_image && category.background_image.variations
                             ? category.background_image.variations.small
@@ -71,6 +57,32 @@
                     "
                     @upload-image="showNewImage"
                 />
+            </CategoryField>
+
+            <CategoryField
+                class="image-preview-ctn"
+                :label="$t('admin.portal.categories.preview-categories')"
+            >
+                <div class="category-previewer">
+                    <CategoryCardImage
+                        v-if="!displayedImage"
+                        :background-color="category.background_color || '#FFF'"
+                        image-height="150px"
+                        image-width="100%"
+                    />
+                    <div
+                        v-else
+                        :style="{
+                            'background-image': `url(${displayedImage})`,
+                        }"
+                        class="category-image"
+                    ></div>
+                    <div class="category-preview">
+                        <div v-if="category.name" class="category-preview-name">
+                            {{ category.name }}
+                        </div>
+                    </div>
+                </div>
             </CategoryField>
 
             <!--div class="preview-block">
@@ -127,14 +139,14 @@
                 <div class="radio-group">
                     <RadioButton
                         v-model="category.is_reviewable"
-                        :value="true"
+                        :value="false"
                         :label="$t('common.no')"
                         radio-group="is_reviewable"
                         as-button
                     />
                     <RadioButton
                         v-model="category.is_reviewable"
-                        :value="false"
+                        :value="true"
                         :label="$t('common.yes')"
                         radio-group="is_reviewable"
                         as-button
@@ -147,14 +159,14 @@
                 <div class="radio-group">
                     <RadioButton
                         v-model="category.only_reviewer_can_publish"
-                        :value="true"
+                        :value="false"
                         :label="$t('common.no')"
                         radio-group="only_reviewer_can_publish"
                         as-button
                     />
                     <RadioButton
                         v-model="category.only_reviewer_can_publish"
-                        :value="false"
+                        :value="true"
                         :label="$t('common.yes')"
                         radio-group="only_reviewer_can_publish"
                         as-button
@@ -487,5 +499,13 @@ export default {
 
 .flip-list-move {
     transition: transform 0.5s;
+}
+
+.category-previewer {
+    margin-block: 0.8rem;
+}
+
+.field-tip {
+    margin-block: 0.8rem;
 }
 </style>
