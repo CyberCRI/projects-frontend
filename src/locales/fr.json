@@ -177,14 +177,19 @@
                 "edit": "Modifier une catégorie",
                 "is-reviewable": "Autoriser les révisions",
                 "limit-publication-to-reviewers": "Limiter la publication aux correcteurs",
-                "preview-categories": "Aperçu dans les catégories",
+                "preview-categories": "Pré-visualiser",
                 "display-projects": "Afficher les projets",
                 "hide-projects": "Masquer les projets",
                 "delete-category": "Supprimer la catégorie",
                 "delete-category-description": "Voulez-vous vraiment supprimer la catégorie '{categoryName}' ? Cette action ne peut pas être annulée",
                 "delete-category-has-children": "Cette catégorie contient des sous-catégories et/ou des projets. Déplacez les pour pouvoir la supprimer.",
                 "delete-category-error": "Erreur lors de la suppression de la catégorie",
-                "delete-category-success": "Catégorie supprimée"
+                "delete-category-success": "Catégorie supprimée",
+                "background-notice": "Pour l’en-tête de la page de cette catégorie, vous pouvez choisir une couleur d’arrière-plan ou télécharger votre propre image d’arrière-plan",
+                "background-color": "Choisir une couleur d'arrière plan",
+                "background-image": "Choisir une image",
+                "upload-picture": "Télécharger une image",
+                "tips-background-image": "Ce n'est pas obligatoire si vous préférez simplement afficher une couleur.<br/>Largeur minimale : 1024px, hauteur minimal : 400px."
             },
             "chat": "Plateforme de discussion (vue connectée)",
             "events": "Événements",
@@ -380,7 +385,8 @@
         "page-title": "Categorie",
         "title": "Catégories",
         "all-categories": "Voir toutes les catégories",
-        "all-projects": "Voir tous les projets"
+        "all-projects": "Voir tous les projets",
+        "edit": "Modifier"
     },
     "comment": {
         "add-comment": "Ajoutez votre commentaire !",
@@ -691,7 +697,7 @@
         "upload": "Ajouter"
     },
     "form": {
-        "background-color": "Couleur d'arrière plan",
+        "background-color": "Choisir une couleur d'arrière plan",
         "category-name": "Nom de la catégorie",
         "organization-name": "Nom de votre communauté",
         "description": "Description",
