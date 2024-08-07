@@ -181,6 +181,25 @@ export default {
         },
     },
 
+    watch: {
+        id: function (neo, old) {
+            if (neo && neo != old) {
+                this.search = {
+                    search: this.$route.query.search || '',
+                    categories: [this.id],
+                    tags: [],
+                    members: [],
+                    languages: [],
+                    sdgs: [],
+                    organizations: [this.$store.state.organizations.current.code],
+                    ordering: '-updated_at',
+                    limit: 30,
+                    page: this.$route.query.page || 1,
+                }
+            }
+        },
+    },
+
     async created() {
         Object.assign(
             this.search,
@@ -345,13 +364,21 @@ export default {
 }
 
 .category-children {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1rem;
     padding: $space-2xl;
 
+    @media screen and (min-width: $min-tablet) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media screen and (min-width: $min-desktop) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
     .category-child {
         display: inline-block;
-        flex-basis: 20rem;
         padding: $space-m;
         border: $border-width-s solid $primary;
         border-radius: $border-radius-s;
