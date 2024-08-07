@@ -139,14 +139,14 @@
                 <div class="radio-group">
                     <RadioButton
                         v-model="category.is_reviewable"
-                        :value="true"
+                        :value="false"
                         :label="$t('common.no')"
                         radio-group="is_reviewable"
                         as-button
                     />
                     <RadioButton
                         v-model="category.is_reviewable"
-                        :value="false"
+                        :value="true"
                         :label="$t('common.yes')"
                         radio-group="is_reviewable"
                         as-button
@@ -159,14 +159,14 @@
                 <div class="radio-group">
                     <RadioButton
                         v-model="category.only_reviewer_can_publish"
-                        :value="true"
+                        :value="false"
                         :label="$t('common.no')"
                         radio-group="only_reviewer_can_publish"
                         as-button
                     />
                     <RadioButton
                         v-model="category.only_reviewer_can_publish"
-                        :value="false"
+                        :value="true"
                         :label="$t('common.yes')"
                         radio-group="only_reviewer_can_publish"
                         as-button
