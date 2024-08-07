@@ -24,7 +24,6 @@
                 v-model="description"
                 class="input-field content-editor no-max-height min-height-100"
                 mode="medium"
-                @destroy="closeDrawer"
                 @image="handleImage"
             />
         </div>

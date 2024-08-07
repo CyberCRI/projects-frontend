@@ -21,7 +21,7 @@ import lowlight from '@/functs/lowlight.ts'
 
 import { ref } from 'vue'
 
-export const emitsDefinitions = ['saved', 'destroy', 'image', 'blur', 'update:modelValue']
+export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
 export const propsDefinitions = {
     modelValue: { type: String, required: true },
@@ -137,6 +137,7 @@ export function useTipTap({ props, emit, store, t }) {
         if (editor.value) {
             editor.value.off('update')
             editor.value.destroy()
+            editor.value = null
         }
     }
 

@@ -49,13 +49,11 @@
         <div class="editor-section">
             <TipTapEditor
                 v-if="isAddMode"
-                :key="'solo' + editorKey"
                 ref="tiptapEditor"
                 v-model="editorBlogEntry"
                 class="input-field content-editor"
                 mode="full"
                 :save-image-callback="saveBlogImage"
-                @destroy="closeDrawer"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
                 @update="updateContent"
@@ -63,7 +61,6 @@
             />
             <TipTapCollaborativeEditor
                 v-else
-                :key="'colloab' + editorKey"
                 ref="tiptapEditor"
                 v-model="editorBlogEntry"
                 :room="room"
@@ -72,7 +69,7 @@
                 mode="full"
                 save-icon-visible
                 :save-image-callback="saveBlogImage"
-                @destroy="closeDrawer"
+                @unauthorized="closeDrawer"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
                 @update="updateContent"
@@ -151,7 +148,6 @@ export default {
             selectedDate: new Date(),
             title: null,
             addedImages: [],
-            editorKey: 0,
             socketReady: false,
             confirmModalIsOpen: false,
             confirmDestroyModalIsOpen: false,
@@ -216,7 +212,6 @@ export default {
                     this.addedImages = []
                 }
                 this.$nextTick(() => {
-                    this.forceRerender()
                     if (this.v$) this.v$.$reset()
                 })
             },
@@ -359,7 +354,7 @@ export default {
             if (this.asyncing) return
             const customEditor = this.$refs.tiptapEditor
             if (!this.isAddMode) {
-                const usersOnline = customEditor.editor
+                const usersOnline = customEditor?.editor
                     ? customEditor.editor.storage.collaborationCursor.users.length
                     : 0
 
@@ -384,15 +379,10 @@ export default {
             this.confirmModalIsOpen = false
             this.v$.$reset()
             this.$emit('close')
-            this.forceRerender()
         },
 
         handleImage(img) {
             this.addedImages.push(img.id)
-        },
-
-        forceRerender() {
-            this.editorKey += 1
         },
     },
 }

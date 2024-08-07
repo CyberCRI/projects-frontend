@@ -28,7 +28,6 @@
                 :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor"
                 mode="full"
-                @destroy="close"
                 @image="handleImage"
             />
         </div>

@@ -27,7 +27,6 @@
             :asyncing="asyncing"
         />
         <TipTapCollaborativeEditor
-            :key="editorKey"
             ref="tiptapEditor"
             v-model="editorDescription"
             :room="room"
@@ -36,7 +35,7 @@
             :save-image-callback="saveDescriptionImage"
             class="no-max-height"
             mode="full"
-            @destroy="$emit('close')"
+            @unauthorized="$emit('close')"
             @saved="patchProject(false)"
             @socket-ready="socketReady = $event"
             @falled-back-to-solo-edit="inSoloMode = true"
@@ -81,7 +80,6 @@ export default {
 
     data() {
         return {
-            editorKey: 0,
             isFullScreen: false,
             editorDescription: '',
             room: '',
@@ -210,7 +208,6 @@ export default {
                 })
                 console.error(error)
             } finally {
-                this.forceRerender()
                 this.asyncing = false
             }
 
@@ -238,29 +235,24 @@ export default {
         loadProject(project) {
             this.editorDescription = this.getProjectDescription(project)
             this.room = 'description_' + project.id
-
-            this.$nextTick(() => {
-                this.forceRerender()
-            })
         },
 
         closeDrawer() {
             let customEditor = this.$refs.tiptapEditor
 
             // If the editor does not exist, we should be able to close the modal.
-            if (!customEditor.editor) this.$emit('close')
-
-            const usersOnline = customEditor.editor.storage.collaborationCursor.users.length
-
-            if (usersOnline === 1 && this.project?.description !== this.editorDescription) {
-                this.confirmDestroyModalIsOpen = true
-            } else {
+            if (!customEditor?.editor) {
                 this.$emit('close')
-            }
-        },
+            } else {
+                const usersOnline =
+                    customEditor.editor?.storage?.collaborationCursor?.users?.length || 0
 
-        forceRerender() {
-            this.editorKey += 1
+                if (usersOnline === 1 && this.project?.description !== this.editorDescription) {
+                    this.confirmDestroyModalIsOpen = true
+                } else {
+                    this.$emit('close')
+                }
+            }
         },
     },
 }

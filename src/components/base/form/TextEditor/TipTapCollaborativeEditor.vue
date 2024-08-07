@@ -1,5 +1,4 @@
 <script setup>
-import funct from '@/functs/functions.ts'
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -24,7 +23,7 @@ import {
     propsDefinitions,
     useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
-import { ref, watch, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
+import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 
@@ -36,7 +35,12 @@ const { t } = useI18n()
 const DISCONNECTION_GRACE_DURATION =
     import.meta.env.VITE_APP_DISCONNECTION_GRACE_DURATION || 6 * 1000
 
-const emit = defineEmits([...emitsDefinitions, 'socket-ready', 'falled-back-to-solo-edit'])
+const emit = defineEmits([
+    ...emitsDefinitions,
+    'socket-ready',
+    'unauthorized',
+    'falled-back-to-solo-edit',
+])
 
 const props = defineProps({
     ...propsDefinitions,
@@ -105,7 +109,7 @@ const accessToken = computed(() => store.getters['users/accessToken'])
 
 const onlineAndConnected = computed(() => online.value && status.value === 'connected')
 
-const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected)
+const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected.value)
 
 // methods
 function fallbackToSoloMode() {
@@ -172,7 +176,7 @@ function initCollaborativeEditor() {
     cnxTimer.value = setTimeout(() => {
         if (!cnxOpen.value) {
             cnxTimedout.value = true
-            destroyEditor()
+            if (editor.value) destroyCollaborativeEditor()
         }
     }, cnxTimeout.value)
 
@@ -187,7 +191,7 @@ function initCollaborativeEditor() {
             if (cnxTimer.value) clearTimeout(cnxTimer.value)
         },
         onAuthenticationFailed: () => {
-            emit('destroy')
+            emit('unauthorized')
             store.dispatch('notifications/pushToast', {
                 message: t('multieditor.unauthorized'),
                 type: 'error',
@@ -220,6 +224,24 @@ function initCollaborativeEditor() {
             synced.value = event
         },
     })
+
+    // debug
+    // ;[
+    //     'open',
+    //     'connect',
+    //     'authenticated',
+    //     'authenticationFailed',
+    //     'status',
+    //     'message',
+    //     'outgoingMessage',
+    //     'synced',
+    //     'close',
+    //     'disconnect',
+    //     'destroy',
+    //     'awarenessUpdate',
+    //     'awarenessChange',
+    //     'stateless',
+    // ].forEach((evt) => provider.value.on(evt, () => console.log('provider event ', evt)))
 
     // so also listen to client connection status
     window.addEventListener('offline', setOffline)
@@ -268,43 +290,34 @@ function handleReconnection() {
 
 function destroyCollaborativeEditor() {
     if (cnxTimer.value) clearTimeout(cnxTimer.value)
+    if (disconnectionGraceTimeout.value) clearTimeout(disconnectionGraceTimeout.value)
+    if (provider.value) {
+        provider.value.destroy()
+        provider.value = null
+    }
     destroyEditor()
-    if (provider.value) provider.value.destroy()
 }
 
 // watch
 // re-set the cookie when token change
 // TODO really ?
-watch(
-    () => accessToken.value,
-    () => {
-        funct.setTokenForWS(accessToken.value)
-    }
-)
+// watch(
+//     () => accessToken.value,
+//     () => {
+//         funct.setTokenForWS(accessToken.value)
+//     }
+// )
 
-watch(
-    () => onlineAndConnected,
-    (neo, old) => {
-        if (old !== neo) {
-            if (neo) {
-                handleReconnection()
-            } else {
-                handleDisconnection()
-            }
-        }
+watchEffect(() => {
+    if (onlineAndConnected.value) {
+        handleReconnection()
+    } else {
+        handleDisconnection()
     }
-)
-watch(
-    () => socketReady,
-    (neo, old) => {
-        if (old !== neo) {
-            emit('socket-ready', neo)
-        }
-    },
-    {
-        immediate: true,
-    }
-)
+})
+watchEffect(() => emit('socket-ready', socketReady.value), {
+    immediate: true,
+})
 
 // lifecycle
 onMounted(() => {
@@ -345,15 +358,17 @@ defineExpose({
             :save-icon-visible="false"
         />
     </template>
-    <TipTapEditorContainer v-else-if="editor" :editor="editor" :mode="mode">
+    <TipTapEditorContainer v-else :editor="editor" :mode="mode">
         <template v-if="firstSync">
             <TipTapCollaborativeConnectedStatus
+                v-if="editor"
                 :online-and-connected="onlineAndConnected"
                 :status="status"
                 :users="editor.storage.collaborationCursor.users"
             />
 
             <TipTapModals
+                v-if="editor"
                 :editor="editor"
                 :mode="mode"
                 :show-menu="disconnectionGrace"
@@ -369,6 +384,7 @@ defineExpose({
             />
 
             <TipTapEditorContent
+                v-if="editor"
                 :editor="editor"
                 :editor-frozen="!disconnectionGrace"
                 is-connected
