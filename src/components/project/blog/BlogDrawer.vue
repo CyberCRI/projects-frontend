@@ -1,12 +1,12 @@
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="v$.$invalid || (!isAddMode && !socketReady)"
+        :confirm-action-disabled="v$.$invalid || (!isAddMode && !inSoloMode && !socketReady)"
         :is-opened="isOpened"
         :title="$t('blog.entry')"
         class="blog-drawer"
         @close="checkClose"
-        @confirm="submitBlogEntry"
+        @confirm="save"
         :asyncing="asyncing"
     >
         <ConfirmModal
@@ -16,6 +16,24 @@
             confirm-button-label="common.continue"
             @cancel="confirmModalIsOpen = false"
             @confirm="closeDrawer"
+        />
+
+        <ConfirmModal
+            v-if="confirmDestroyModalIsOpen"
+            :content="$t('description.delete') + ' ' + $t('description.edit-saved')"
+            :title="$t('description.quit-without-saving-title')"
+            @cancel="confirmDestroyModalIsOpen = false"
+            @confirm="handleDestroyModalConfirmed"
+        />
+
+        <ConfirmModal
+            v-if="showConfirmSaveInSoloMode"
+            :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+            :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+            @cancel="showConfirmSaveInSoloMode = false"
+            @confirm="submitBlogEntry(true)"
+            :confirm-button-label="$t('common.save')"
+            :asyncing="asyncing"
         />
         <div>
             <TextInput
@@ -30,30 +48,44 @@
 
         <div class="editor-section">
             <TipTapEditor
-                v-if="editorBlogEntry"
-                :key="editorKey"
+                v-if="isAddMode"
                 ref="tiptapEditor"
-                :socket="!isAddMode"
-                :ws-data="editorBlogEntry"
+                v-model="editorBlogEntry"
+                class="input-field content-editor"
+                mode="full"
+                :save-image-callback="saveBlogImage"
+                @image="handleImage"
+                @saved="submitBlogEntry(false)"
+                @update="updateContent"
+                @blur="v$.editorBlogEntry.$validate"
+            />
+            <TipTapCollaborativeEditor
+                v-else
+                ref="tiptapEditor"
+                v-model="editorBlogEntry"
+                :room="room"
                 :provider-params="providerParams"
                 class="input-field content-editor"
                 mode="full"
-                parent="blog-entry"
-                @destroy="closeDrawer"
+                save-icon-visible
+                :save-image-callback="saveBlogImage"
+                @unauthorized="closeDrawer"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
                 @update="updateContent"
                 @socket-ready="socketReady = $event"
-                @blur="v$.editorBlogEntry.savedContent.$validate"
+                @blur="v$.editorBlogEntry.$validate"
+                @falled-back-to-solo-edit="inSoloMode = true"
             />
 
-            <FieldErrors :errors="v$.editorBlogEntry.savedContent.$errors" />
+            <FieldErrors :errors="v$.editorBlogEntry.$errors" />
         </div>
         <DatePicker v-model="selectedDate" class="input-field" position="top" />
     </BaseDrawer>
 </template>
 
 <script>
+import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import DatePicker from '@/components/base/form/DatePicker.vue'
@@ -63,6 +95,7 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { postBlogEntryImage } from '@/api/blogentries.service'
 
 export default {
     name: 'BlogDrawer',
@@ -73,6 +106,7 @@ export default {
 
     components: {
         TextInput,
+        TipTapCollaborativeEditor,
         TipTapEditor,
         DatePicker,
         BaseDrawer,
@@ -109,18 +143,17 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            editorBlogEntry: {
-                room: null,
-                savedContent: '',
-                originalContent: '',
-            },
+            editorBlogEntry: '',
+            room: null,
             selectedDate: new Date(),
             title: null,
             addedImages: [],
-            editorKey: 0,
             socketReady: false,
             confirmModalIsOpen: false,
+            confirmDestroyModalIsOpen: false,
             asyncing: false,
+            inSoloMode: false,
+            showConfirmSaveInSoloMode: false,
         }
     },
 
@@ -130,10 +163,8 @@ export default {
                 required: helpers.withMessage(this.$t('form.blog.title'), required),
             },
             editorBlogEntry: {
-                savedContent: {
-                    required: helpers.withMessage(this.$t('form.blog.description'), required),
-                    //$autoDirty: true,
-                },
+                required: helpers.withMessage(this.$t('form.blog.description'), required),
+                //$autoDirty: true,
             },
         }
     },
@@ -165,30 +196,22 @@ export default {
     watch: {
         isOpened: {
             handler: function () {
+                this.inSoloMode = false
+                this.showConfirmSaveInSoloMode = false
                 if (!this.isAddMode) {
                     this.selectedDate = this.editedBlog.created_at
                     this.title = this.editedBlog.title
-                    this.editorBlogEntry = {
-                        room: `blog_${this.editedBlog.id}`,
-                        savedContent: this.editedBlog.content,
-                        originalContent: this.editedBlog.content,
-                    }
+                    this.editorBlogEntry = this.editedBlog.content
+                    this.room = `blog_${this.editedBlog.id}`
                 } else {
-                    this.editorBlogEntry.originalContent =
-                        this.project &&
-                        this.project.template &&
-                        this.project.template.blogentry_placeholder
-                            ? this.project.template.blogentry_placeholder
-                            : ''
+                    this.editorBlogEntry = this.getNewBlogIniatialContent()
 
-                    this.editorBlogEntry.room = null
-                    this.editorBlogEntry.savedContent = this.editorBlogEntry.originalContent
+                    this.room = null
                     this.selectedDate = new Date()
                     this.title = null
                     this.addedImages = []
                 }
                 this.$nextTick(() => {
-                    this.forceRerender()
                     if (this.v$) this.v$.$reset()
                 })
             },
@@ -197,6 +220,35 @@ export default {
     },
 
     methods: {
+        getNewBlogIniatialContent() {
+            return this.project?.template?.blogentry_placeholder || '<p></p>'
+        },
+
+        handleDestroyModalConfirmed() {
+            this.confirmDestroyModalIsOpen = false
+            this.$refs.tiptapEditor?.resetContent()
+            this.$emit('close')
+        },
+        saveBlogImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // TODO necessary ?
+            formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+
+            return postBlogEntryImage({
+                project_id: this.project.id,
+                body: formData,
+            })
+        },
+
+        save() {
+            if (this.inSoloMode) {
+                this.showConfirmSaveInSoloMode = true
+            } else {
+                this.submitBlogEntry()
+            }
+        },
+
         async submitBlogEntry(closeWindowAfterOperation = true) {
             const isValid = await this.v$.$validate()
             if (isValid) {
@@ -211,7 +263,7 @@ export default {
                 const res = await this.$store.dispatch('blogEntries/postBlogEntry', {
                     project_id: this.$store.getters['projects/project'].id,
                     title: this.title,
-                    content: this.editorBlogEntry.savedContent,
+                    content: this.editorBlogEntry,
                     images_ids: this.addedImages,
                     created_at: this.selectedDate,
                 })
@@ -259,14 +311,12 @@ export default {
                 const body = {
                     id: this.editedBlog.id,
                     title: this.title,
-                    content: this.editorBlogEntry.savedContent,
+                    content: this.editorBlogEntry,
                     created_at: new Date(this.selectedDate),
                     images_ids: [...this.editedBlog.images, ...this.addedImages],
                 }
 
                 const res = await this.$store.dispatch('blogEntries/patchBlogEntry', body)
-
-                this.editorBlogEntry.originalContent = this.editorBlogEntry.savedContent
 
                 const connectedUser = this.$store.getters['users/userFromApi']
                 this.notifyPatch({
@@ -304,25 +354,19 @@ export default {
             if (this.asyncing) return
             const customEditor = this.$refs.tiptapEditor
             if (!this.isAddMode) {
-                const usersOnline = customEditor.editor
+                const usersOnline = customEditor?.editor
                     ? customEditor.editor.storage.collaborationCursor.users.length
                     : 0
 
-                if (
-                    usersOnline === 1 &&
-                    this.editorBlogEntry.originalContent !== this.editorBlogEntry.savedContent
-                ) {
-                    customEditor.openDestroyModal()
+                if (usersOnline === 1 && this.editedBlog.content !== this.editorBlogEntry) {
+                    this.confirmDestroyModalIsOpen = true
                 } else if (this.title !== this.editedBlog.title) {
                     this.confirmModalIsOpen = true
                 } else {
                     this.closeDrawer()
                 }
             } else {
-                if (
-                    this.editorBlogEntry.originalContent !== this.editorBlogEntry.savedContent ||
-                    this.title
-                ) {
+                if (this.editorBlogEntry !== this.getNewBlogIniatialContent || this.title) {
                     this.confirmModalIsOpen = true
                 } else {
                     this.closeDrawer()
@@ -335,21 +379,10 @@ export default {
             this.confirmModalIsOpen = false
             this.v$.$reset()
             this.$emit('close')
-            this.forceRerender()
-        },
-
-        updateContent(htmlContent) {
-            this.editorBlogEntry.savedContent = htmlContent
-
-            if (htmlContent === '<p></p>') this.editorBlogEntry.savedContent = null
         },
 
         handleImage(img) {
             this.addedImages.push(img.id)
-        },
-
-        forceRerender() {
-            this.editorKey += 1
         },
     },
 }

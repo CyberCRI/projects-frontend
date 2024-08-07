@@ -33,9 +33,16 @@ import TextInput from '@/components/base/form/TextInput.vue'
 export default {
     name: 'EditorModalVideo',
 
-    emits: ['closeModal', 'onConfirm'],
+    emits: ['closeModal'],
 
     components: { DialogModal, LpiSnackbar, TextInput },
+
+    props: {
+        editor: {
+            type: Object,
+            required: true,
+        },
+    },
 
     data() {
         return {
@@ -61,9 +68,14 @@ export default {
 
         insertVideo() {
             if (this.validVideo) {
-                this.$emit('onConfirm', { src: this.videoSrc })
+                this.handleVideoModalConfirmed({ src: this.videoSrc })
                 this.videoSrc = ''
             }
+        },
+
+        handleVideoModalConfirmed(data) {
+            this.editor.chain().focus().setExternalVideo({ src: data.src }).run()
+            this.closeModal()
         },
     },
 }

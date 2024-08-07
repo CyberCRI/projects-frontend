@@ -87,10 +87,9 @@
                     }}</label>
                     <TipTapEditor
                         :key="`description-${editorKey}`"
-                        :selected-category="selectedCategory"
-                        :ws-data="form.description"
+                        v-model="form.description"
+                        :save-image-callback="saveTemplateImage"
                         mode="full"
-                        @update="updateDescription"
                     />
                 </FieldDisabler>
 
@@ -107,10 +106,9 @@
                     }}</label>
                     <TipTapEditor
                         :key="`blog-${editorKey}`"
-                        :selected-category="selectedCategory"
-                        :ws-data="form.blogContent"
+                        v-model="form.blogContent"
+                        :save-image-callback="saveTemplateImage"
                         mode="full"
-                        @update="updateBlogDescription"
                     />
                 </FieldDisabler>
 
@@ -127,12 +125,10 @@
                     }}</label>
                     <TipTapEditor
                         :key="`advancement-goal-${editorKey}`"
-                        :save-icon-visible="false"
-                        :selected-category="selectedCategory"
-                        :ws-data="form.goal_description"
+                        v-model="form.goal_description"
+                        :save-image-callback="saveTemplateImage"
                         data-test="template-advancement-goal-content-editor"
                         mode="full"
-                        @update="updateEditorAdvancementGoal"
                     />
                 </FieldDisabler>
 
@@ -179,6 +175,7 @@ import { required, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
+import { postTemplateImage } from '@/api/templates.service'
 
 export default {
     name: 'TemplatesTab',
@@ -209,20 +206,11 @@ export default {
                 language: undefined,
                 title: '',
                 purpose: '',
-                description: {
-                    originalContent: '',
-                    savedContent: '',
-                },
+                description: '<p></p>',
                 blogTitle: '',
-                blogContent: {
-                    originalContent: '',
-                    savedContent: '',
-                },
+                blogContent: '<p></p>',
                 goalTitle: '',
-                goal_description: {
-                    originalContent: '',
-                    savedContent: '',
-                },
+                goal_description: '<p></p>',
                 organizationTags: [],
                 wikipediaTags: [],
             },
@@ -288,6 +276,13 @@ export default {
             this.selectedCategory = category
             this.$refs.categoryDropdown?.close()
         },
+        saveTemplateImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            return postTemplateImage({ id: this.selectedCategory.id, body: formData })
+        },
+
         async fillForm() {
             this.selectedCategory = await getProjectCategory(
                 this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0].id
@@ -297,24 +292,17 @@ export default {
                 /* Titles and purpose */
                 this.form.title = this.selectedCategory?.template.title_placeholder
                 this.form.purpose = this.selectedCategory?.template.goal_placeholder
-                this.form.description.originalContent =
-                    this.selectedCategory?.template.description_placeholder
-                this.form.description.savedContent =
-                    this.selectedCategory?.template.description_placeholder
-
+                this.form.description =
+                    this.selectedCategory?.template.description_placeholder || '<p></p>'
                 /* Blog */
                 this.form.blogTitle = this.selectedCategory?.template.blogentry_title_placeholder
-                this.form.blogContent.originalContent =
-                    this.selectedCategory?.template.blogentry_placeholder
-                this.form.blogContent.savedContent =
-                    this.selectedCategory?.template.blogentry_placeholder
+                this.form.blogContent =
+                    this.selectedCategory?.template.blogentry_placeholder || '<p></p>'
 
                 /* Goal */
                 this.form.goalTitle = this.selectedCategory?.template.goal_title
-                this.form.goal_description.originalContent =
-                    this.selectedCategory?.template.goal_description
-                this.form.goal_description.savedContent =
-                    this.selectedCategory?.template.goal_description
+                this.form.goal_description =
+                    this.selectedCategory?.template.goal_description || '<p></p>'
 
                 /* Language */
                 this.form.language =
@@ -333,10 +321,10 @@ export default {
             const template = {
                 title_placeholder: this.form.title,
                 goal_placeholder: this.form.purpose,
-                description_placeholder: this.form.description.savedContent,
+                description_placeholder: this.form.description,
                 blogentry_title_placeholder: this.form.blogTitle,
-                blogentry_placeholder: this.form.blogContent.savedContent,
-                goal_description: this.form.goal_description.savedContent,
+                blogentry_placeholder: this.form.blogContent,
+                goal_description: this.form.goal_description,
                 goal_title: this.form.goalTitle,
                 // language: this.form.language, TODO: delete or uncomment when we decide what to do about languages in categories
             }
@@ -363,18 +351,6 @@ export default {
             } finally {
                 this.isLoading = false
             }
-        },
-
-        updateDescription(htmlContent) {
-            this.form.description.savedContent = htmlContent
-        },
-
-        updateBlogDescription(htmlContent) {
-            this.form.blogContent.savedContent = htmlContent
-        },
-
-        updateEditorAdvancementGoal(htmlContent) {
-            this.form.goal_description.savedContent = htmlContent
         },
 
         updateTemplateTags() {

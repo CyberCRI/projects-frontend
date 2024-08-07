@@ -506,15 +506,13 @@
         &::after {
             content: '';
             position: absolute;
-            width: 100% !important;
-            height: 100% !important;
             z-index: 100;
             inset: 0;
         }
     }
 }
 
-.ProseMirror-focused .custom-video-wrapper.ProseMirror-selectednode::after {
+.ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper::after {
     color: white;
     font-size: 16px;
     text-align: center;

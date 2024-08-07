@@ -22,7 +22,7 @@
             <CategoryField :label="$t('form.description')">
                 <p class="notice">{{ $t('admin.portal.categories.description-limit') }}</p>
 
-                <TipTapEditor :ws-data="category.description" @update="updateCategoryDescription" />
+                <TipTapEditor v-model="category.description" />
             </CategoryField>
 
             <CategoryField :label="$t('form.background-color')" is-toggleable>
@@ -183,10 +183,7 @@ import { Sortable } from 'sortablejs-vue3'
 export function defaultForm() {
     return {
         name: '',
-        description: {
-            originalContent: '',
-            savedContent: '',
-        },
+        description: '<p></p>',
         background_color: '#81A617',
         foreground_color: '#FFFFFF',
         background_image: {
@@ -275,10 +272,7 @@ export default {
             // Fill form with edited category data
             this.category = {
                 ...this.editedCategory,
-                description: {
-                    originalContent: this.editedCategory.description,
-                    savedContent: '',
-                },
+                description: this.editedCategory.description,
             }
         } else {
             this.category = { ...defaultForm(), parent: this.parentCategory }
@@ -313,10 +307,6 @@ export default {
         submitCategory() {
             this.asyncing = true
             this.$emit('submit-category', this.category)
-        },
-
-        updateCategoryDescription(htmlContent) {
-            this.category.description.savedContent = htmlContent
         },
     },
 }

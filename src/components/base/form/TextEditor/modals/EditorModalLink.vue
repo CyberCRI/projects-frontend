@@ -51,30 +51,24 @@
 <script>
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
+import funct from '@/functs/functions.ts'
 
 export default {
     name: 'EditorModalLink',
 
-    emits: ['closeModal', 'onConfirm'],
+    emits: ['closeModal'],
 
     components: { DialogModal, TextInput },
+
+    props: {
+        editor: { type: Object, required: true },
+    },
 
     data() {
         return {
             link: undefined,
             text: undefined,
         }
-    },
-
-    props: {
-        linkHref: {
-            type: String,
-            default: undefined,
-        },
-        hasSelection: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     mounted() {
@@ -93,6 +87,12 @@ export default {
                 disabled: !this.link || (this.needText && !this.text),
             }
         },
+        linkHref() {
+            return this.editor.getAttributes('link').href
+        },
+        hasSelection() {
+            return !this.editor.view.state.selection.empty
+        },
     },
 
     methods: {
@@ -107,12 +107,44 @@ export default {
             if (this.needText) {
                 data.text = this.text
             }
-            this.$emit('onConfirm', data)
-            this.closeModal()
+            this.handleLinkModalConfirmed(data)
         },
 
         removeLink() {
-            this.$emit('onConfirm', null)
+            this.handleLinkModalConfirmed(null)
+        },
+
+        handleLinkModalConfirmed(data) {
+            // set the link if there's data from popup
+            if (data) {
+                this.editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange('link')
+                    .setLink({
+                        href: (funct.isValidUrl(data.href) ? '' : 'http://') + data.href,
+                    })
+                    .run()
+                // if link made from empty selection, add the entered text as content
+                if (data.text) {
+                    const selection = this.editor.view.state.selection
+                    this.editor
+                        .chain()
+                        .focus()
+                        .insertContentAt(
+                            {
+                                from: selection.from,
+                                to: selection.to,
+                            },
+                            data.text
+                        )
+                        .run()
+                }
+            } else {
+                // if there is no data, unset the link
+                this.editor.chain().focus().extendMarkRange('link').unsetLink().run()
+            }
+
             this.closeModal()
         },
     },

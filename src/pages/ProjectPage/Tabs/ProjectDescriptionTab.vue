@@ -31,7 +31,6 @@
         </div>
 
         <DescriptionDrawer
-            v-if="editDescriptionModalActive"
             :is-opened="editDescriptionModalActive"
             :project="updatedProject"
             @close="close"

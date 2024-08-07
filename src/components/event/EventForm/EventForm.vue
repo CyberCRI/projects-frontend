@@ -17,11 +17,9 @@
 
             <TipTapEditor
                 ref="tiptapEditor"
-                :ws-data="wsData"
+                :model-value="modelValue.content"
+                @update:model-value="updateForm({ content: $event })"
                 class="input-field content-editor no-max-height"
-                mode="simple"
-                parent="blog-entry"
-                @update="updateContent"
             />
         </div>
         <div class="form-section">
@@ -72,7 +70,7 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 export function defaultForm() {
     return {
         title: '',
-        content: '',
+        content: '<p></p>',
         event_date: '',
         people_groups: {},
         visible_by_all: true,
@@ -104,10 +102,6 @@ export default {
         return {
             showDatePicker: false,
             v$: useVuelidate(),
-            wsData: {
-                savedContent: this.modelValue.content,
-                originalContent: this.modelValue.content,
-            },
         }
     },
 
@@ -145,10 +139,6 @@ export default {
         onDateSelected(modelData) {
             this.updateForm({ event_date: modelData })
             this.showDatePicker = false
-        },
-
-        updateContent(htmlContent) {
-            this.updateForm({ content: htmlContent === '<p></p>' ? null : htmlContent })
         },
 
         updateForm(data) {

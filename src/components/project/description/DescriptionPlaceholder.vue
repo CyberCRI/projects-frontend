@@ -15,7 +15,7 @@
         <DescriptionDrawer
             :is-opened="editDescriptionModalActive"
             :project="project"
-            :v-if="editDescriptionModalActive"
+            v-if="editDescriptionModalActive"
             @close="close"
         />
     </div>
