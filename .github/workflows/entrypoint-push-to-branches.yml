@@ -76,6 +76,14 @@ jobs:
           --release ${{ github.sha }} \
           --url-prefix '/' \
           dist
+      - name: Upload source map
+        run: |
+          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+          --project projects-frontend-staging \
+          --release ${{ github.sha }} \
+          --url-prefix '/' \
+          dist
 
   tag-deploy:
     needs:
