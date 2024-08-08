@@ -68,7 +68,20 @@ jobs:
         run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
       - name: Build with source map
         run: NODE_OPTIONS=--max_old_space_size=2048 yarn build:sourcemaps
+      - name: Check if release exists
+        id: release_exists
+        run: |
+          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} releases info \
+          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+          ${{ github.sha }} | true
+          if [ ${PIPESTATUS[0]} -eq 0 ]; then
+            echo "::set-output name=release_exists::true"
+            echo "Release already exists"
+          else
+            echo "::set-output name=release_exists::false"
+          fi
       - name: Upload source map (dev)
+        if: steps.release_exists.outputs.release_exists == 'false'
         run: |
           ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
           --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
@@ -77,6 +90,7 @@ jobs:
           --url-prefix '/' \
           dist
       - name: Upload source map (staging)
+        if: steps.release_exists.outputs.release_exists == 'false'
         run: |
           ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
           --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
@@ -85,6 +99,7 @@ jobs:
           --url-prefix '/' \
           dist
       - name: Upload source map (production)
+        if: steps.release_exists.outputs.release_exists == 'false'
         run: |
           ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
           --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
