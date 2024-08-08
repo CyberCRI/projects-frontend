@@ -66,8 +66,6 @@ jobs:
         run: yarn add @sentry/cli
       - name: Login to sentry
         run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
-      - name: Build with source map
-        run: NODE_OPTIONS=--max_old_space_size=2048 yarn build:sourcemaps
       - name: Check if release exists
         id: release_exists
         run: |
@@ -80,6 +78,9 @@ jobs:
           else
             echo "::set-output name=release_exists::false"
           fi
+      - name: Build with source map
+        if: steps.release_exists.outputs.release_exists == 'false'
+        run: NODE_OPTIONS=--max_old_space_size=2048 yarn build:sourcemaps
       - name: Upload source map (dev)
         if: steps.release_exists.outputs.release_exists == 'false'
         run: |
