@@ -68,11 +68,27 @@ jobs:
         run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
       - name: Build with source map
         run: NODE_OPTIONS=--max_old_space_size=2048 yarn build:sourcemaps
-      - name: Upload source map
+      - name: Upload source map (dev)
         run: |
           ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
           --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
           --project projects-frontend \
+          --release ${{ github.sha }} \
+          --url-prefix '/' \
+          dist
+      - name: Upload source map (staging)
+        run: |
+          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+          --project projects-frontend-staging \
+          --release ${{ github.sha }} \
+          --url-prefix '/' \
+          dist
+      - name: Upload source map (production)
+        run: |
+          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+          --project projects-frontend-production \
           --release ${{ github.sha }} \
           --url-prefix '/' \
           dist
