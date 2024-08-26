@@ -289,7 +289,7 @@ export default {
                 ...this.editedCategory,
                 description: {
                     originalContent: this.editedCategory.description,
-                    savedContent: '',
+                    savedContent: this.editedCategory.description,
                 },
             }
         } else {
