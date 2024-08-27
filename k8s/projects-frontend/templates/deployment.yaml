@@ -22,13 +22,13 @@ spec:
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
-        {{- include "common.podSecurityContext.restricted" (dict "user" 101) | nindent 8 }}
+        {{- include "common.security.podSecurityContext.restricted" (dict "user" 101) | nindent 8 }}
       containers:
         {{- with $.Values.image }}
         - image: {{ tpl (printf "%s/%s:%s" .repository .path .tag) $ }}
         {{- end }}
           securityContext:
-          {{- include "common.containerSecurityContext.restricted" dict | nindent 12 }}
+          {{- include "common.security.containerSecurityContext.restricted" dict | nindent 12 }}
           imagePullPolicy: IfNotPresent
           name: projects-frontend
           ports:

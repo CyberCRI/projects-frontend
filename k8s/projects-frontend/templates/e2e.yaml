@@ -41,7 +41,7 @@ spec:
       {{- end }}
     {{- end }}
     securityContext:
-      {{- include "common.podSecurityContext.restricted" dict | nindent 6 }}
+      {{- include "common.security.podSecurityContext.restricted" dict | nindent 6 }}
     templates:
       - name: all
         steps:
@@ -136,5 +136,5 @@ spec:
 "commonLabels" .Values.e2e.commonLabels
 "name" (tpl .Values.e2e.name .) }}
 
-{{- include "common.config" $configGenerator}}
+{{- include "common.config.resources" $configGenerator}}
 {{- end}}

@@ -1,6 +1,6 @@
 dependencies:
 - name: common
   repository: oci://criprodprod.azurecr.io/helm
-  version: 0.1.6
-digest: sha256:3eb417b900b97eb94be0a79d9ef0c1d81f11ac458206f9b4d08a3da292e4595b
-generated: "2024-04-26T17:16:41.104570184+02:00"
+  version: 0.3.0-alpha
+digest: sha256:dd641890db0744fb78a7963e4ad2d3e6e2fe1612b1638f0b779f4b494d780340
+generated: "2024-08-27T16:49:10.202638841+02:00"
