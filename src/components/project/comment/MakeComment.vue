@@ -15,7 +15,6 @@
 
         <div v-if="isLoggedIn">
             <TipTapEditor
-                :key="editorKey"
                 v-model="comment"
                 :save-image-callback="saveCommentImage"
                 class="comment-description"
@@ -76,7 +75,6 @@ export default {
     data() {
         return {
             comment: this.originalComment ? this.originalComment.content : '<p></p>',
-            editorKey: 0,
             addedImages: [],
             asyncing: false,
             confirmModalIsOpen: false,
@@ -114,7 +112,6 @@ export default {
             this.confirmModalIsOpen = false
             // reset comment
             this.comment = '<p></p>'
-            this.editorKey++
         },
 
         async submit() {

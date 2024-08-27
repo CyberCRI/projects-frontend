@@ -22,7 +22,6 @@
                 {{ $t('admin.portal.general.wording.fields.description') }}
             </h4>
             <TipTapEditor
-                :key="editorKey"
                 ref="tiptapEditor"
                 v-model="description"
                 :save-image-callback="saveOrganizationImage"
@@ -63,7 +62,6 @@ export default {
         const title = org?.dashboard_title || ''
 
         return {
-            editorKey: 0,
             title: title,
             description: org?.description || '<p></p>',
             addedImages: [],

@@ -6,7 +6,6 @@
 
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
-                    :key="editorKey"
                     ref="faq-editor"
                     v-model="faq.content"
                     mode="full"
@@ -81,7 +80,6 @@ export default {
             addOrEditLoading: false,
             deleteLoading: false,
             deleteConfirmVisible: false,
-            editorKey: 0,
             faq: defaultFaq(),
             isLoading: false,
         }
@@ -145,7 +143,6 @@ export default {
                     orgCode: this.currentOrgCode,
                 })
                 await this.loadFaq()
-                this.editorKey += 1
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.faq-delete.success'),
                     type: 'success',

@@ -15,7 +15,6 @@
             <label>{{ $t('profile.edit.bio.professional-bio.label') }}</label>
             <p class="notice">{{ $t('profile.edit.bio.professional-bio.placeholder') }}</p>
             <TipTapEditor
-                :key="editorProfessionalBioKey"
                 ref="faq-editor"
                 v-model="form.professionalBio"
                 data-test="professional-bio-editor"
@@ -26,7 +25,6 @@
             <label>{{ $t('profile.edit.bio.personal-bio.label') }}</label>
             <p class="notice">{{ $t('profile.edit.bio.personal-bio.placeholder') }}</p>
             <TipTapEditor
-                :key="editorPersonalBioKey"
                 ref="faq-editor"
                 v-model="form.personalBio"
                 data-test="personal-bio-editor"
@@ -88,8 +86,6 @@ export default {
     data() {
         return {
             form: defaultForm(),
-            editorProfessionalBioKey: 0,
-            editorPersonalBioKey: 0,
             asyncing: false,
             confirmActionDisabled: false,
         }
@@ -153,8 +149,6 @@ export default {
             } else {
                 this.form = defaultForm()
             }
-            this.editorProfessionalBioKey++
-            this.editorPersonalBioKey++
         },
     },
 }

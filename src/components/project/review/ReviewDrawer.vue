@@ -23,7 +23,6 @@
             <div class="review-entry">
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
-                    :key="editorKey"
                     v-model="newReview.data.description"
                     @update="updateContent"
                     @blur="v$.newReview.data.description.$touch"
@@ -103,7 +102,6 @@ export default {
         return {
             v$: useVuelidate(),
             showConfirmModal: false,
-            editorKey: 0,
             editorOption: {
                 modules: {
                     toolbar: [['bold', 'italic', 'underline'], ['link']],
@@ -192,8 +190,6 @@ export default {
                     }
                 }
                 this.newReview.data.reviewer = this.$store.getters['users/id']
-
-                this.$nextTick(this.forceRerender)
             },
             immediate: true,
         },
@@ -202,10 +198,6 @@ export default {
     emits: ['close'],
 
     methods: {
-        forceRerender() {
-            this.editorKey += 1
-        },
-
         async saveReview() {
             const isValid = await this.v$.$validate()
             if (this.mode === 'add' && isValid) {

@@ -19,7 +19,6 @@
 
         <div class="editor-ctn">
             <TipTapEditor
-                :key="editorKey"
                 ref="tiptapEditor"
                 v-model="description"
                 class="input-field content-editor no-max-height min-height-100"
@@ -74,7 +73,6 @@ export default {
             v$: useVuelidate(),
             description: '<p></p>',
             addedImages: [],
-            editorKey: 0,
             confirmModalIsOpen: false,
             // eslint-disable-next-line
             room: null, // TODO: set to something when socket is enabled and we are in add mode
@@ -88,7 +86,6 @@ export default {
                     this.description = this.originalDescription || '<p></p>'
                 }
                 this.$nextTick(() => {
-                    this.forceRerender()
                     if (this.v$) this.v$.$reset()
                 })
             },
@@ -101,7 +98,6 @@ export default {
             this.confirmModalIsOpen = false
             this.v$.$reset()
             this.$emit('close')
-            this.forceRerender()
         },
 
         saveDescription() {
@@ -113,9 +109,6 @@ export default {
             this.addedImages.push(img.id)
         },
 
-        forceRerender() {
-            this.editorKey += 1
-        },
         close() {
             this.$emit('close')
         },

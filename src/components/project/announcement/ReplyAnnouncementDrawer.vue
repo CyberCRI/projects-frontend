@@ -48,7 +48,6 @@
                 </label>
 
                 <TipTapEditor
-                    :key="editorKey"
                     v-model="form.applicant_message"
                     name="motivation"
                     @blur="v$.form.applicant_message.$validate"
@@ -94,8 +93,6 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-
-            editorKey: 0,
             form: {
                 applicant_firstname: '',
                 applicant_name: '',

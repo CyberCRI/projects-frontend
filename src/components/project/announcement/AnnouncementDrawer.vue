@@ -35,7 +35,6 @@
                         >{{ $filters.capitalize($t('common.description')) }}:</label
                     >
                     <TipTapEditor
-                        :key="editorKey"
                         v-model="form.description"
                         class="description-field"
                         @blur="v$.form.description.$validate"
@@ -103,7 +102,6 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            editorKey: 0,
             hasDeadline: false,
             confirmModalIsOpen: false,
             form: {
@@ -261,10 +259,6 @@ export default {
             this.toggleConfirmModal()
             this.closeNoConfirm()
         },
-
-        forceRerender() {
-            this.editorKey += 1
-        },
     },
 
     watch: {
@@ -283,9 +277,6 @@ export default {
                         ...this.announcement,
                     }
                     this.hasDeadline = !!this.announcement.deadline
-                    this.$nextTick(() => {
-                        this.forceRerender()
-                    })
                 }
             },
             immediate: true,

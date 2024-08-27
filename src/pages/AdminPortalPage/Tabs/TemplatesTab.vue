@@ -24,6 +24,9 @@
                 </ProjectCategoriesDropdown>
                 <FieldErrors :errors="v$.selectedCategory.id.$errors" />
             </div>
+            <div class="loader" v-if="fetchingTemplate">
+                <LoaderSimple />
+            </div>
             <FieldDisabler :disabled="otherFieldDisabled">
                 <div class="block-container">
                     <div class="title-button-ctn">
@@ -132,13 +135,15 @@
                     />
                 </FieldDisabler>
 
-                <LpiButton
-                    :disabled="otherFieldDisabled"
-                    :label="$filters.capitalize($t('common.save'))"
-                    :btn-icon="isLoading ? 'LoaderSimple' : null"
-                    color="green"
-                    @click="submit"
-                />
+                <div class="form-actions">
+                    <LpiButton
+                        :disabled="otherFieldDisabled"
+                        :label="$filters.capitalize($t('common.save'))"
+                        :btn-icon="isLoading ? 'LoaderSimple' : null"
+                        color="green"
+                        @click="submit"
+                    />
+                </div>
             </div>
         </div>
 
@@ -169,7 +174,7 @@ import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
@@ -192,6 +197,7 @@ export default {
         FieldErrors,
         ProjectCategoriesDropdown,
         ProjectCategoriesDropdownElementButton,
+        LoaderSimple,
     },
 
     setup() {
@@ -220,6 +226,7 @@ export default {
             editorKey: 0,
             newTags: [],
             ambiguousTagsOpen: false,
+            fetchingTemplate: false,
         }
     },
 
@@ -257,7 +264,7 @@ export default {
         },
 
         otherFieldDisabled() {
-            return !this.selectedCategory?.id
+            return !this.selectedCategory?.id || this.fetchingTemplate
         },
 
         allTags() {
@@ -284,6 +291,7 @@ export default {
         },
 
         async fillForm() {
+            this.fetchingTemplate = true
             this.selectedCategory = await getProjectCategory(
                 this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0].id
             )
@@ -313,6 +321,7 @@ export default {
                 this.form.wikipediaTags = this.selectedCategory?.wikipedia_tags
             }
             this.editorKey += 1
+            this.fetchingTemplate = false
         },
 
         async submit() {
@@ -442,5 +451,12 @@ export default {
             margin-bottom: $space-m;
         }
     }
+}
+
+.loader,
+.form-actions {
+    display: flex;
+    justify-content: center;
+    padding-block: 1rem;
 }
 </style>

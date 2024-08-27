@@ -168,12 +168,7 @@
                     <p class="field-notice">
                         {{ $t('complete-profile.bio.personal-bio-notice') }}
                     </p>
-                    <TipTapEditor
-                        :key="personalBioKey"
-                        v-model="personalBio"
-                        class="html-input flex-grow"
-                        mode="none"
-                    />
+                    <TipTapEditor v-model="personalBio" class="html-input flex-grow" mode="none" />
                 </div>
                 <div class="column flexed-column">
                     <!-- long bio -->
@@ -181,12 +176,7 @@
                     <p class="field-notice">
                         {{ $t('complete-profile.bio.long-bio-notice') }}
                     </p>
-                    <TipTapEditor
-                        :key="longBioKey"
-                        v-model="longBio"
-                        class="html-input flex-grow"
-                        mode="none"
-                    />
+                    <TipTapEditor v-model="longBio" class="html-input flex-grow" mode="none" />
                 </div>
             </div>
         </ProfileEditBlock>
@@ -256,9 +246,7 @@ export default {
                 personal_description: '',
                 professional_description: '',
             },
-            longBioKey: 0,
             longBio: '<p></p>',
-            personalBioKey: 0,
             personalBio: '<p></p>',
             exempleToShow: null,
             loading: false,
