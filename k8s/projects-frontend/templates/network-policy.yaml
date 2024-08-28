@@ -1,21 +1,5 @@
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  labels:
-    {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
-  name: {{ tpl .Values.fullName . }}
-spec:
-  podSelector:
-    matchLabels:
-    {{- tpl (.Values.commonLabels  | toYaml | nindent 6 ) $ }}
-  policyTypes:
-    - Ingress
-  ingress:
-    # incoming http traffic from nginx-ingress
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: ingress-nginx
-      ports:
-        - protocol: TCP
-          port: http
+{{ include "common.security.networkPolicy" (dict
+  "name" (tpl .Values.fullName .)
+  "podSelector" (dict "matchLabels" (tpl (.Values.commonLabels | toJson) .| fromJson) )
+  "allowFromNginx" true
+) }}
