@@ -168,15 +168,7 @@
                     <p class="field-notice">
                         {{ $t('complete-profile.bio.personal-bio-notice') }}
                     </p>
-                    <TipTapEditor
-                        :key="personalBioKey"
-                        :save-icon-visible="false"
-                        :socket="false"
-                        :ws-data="personalBio"
-                        class="html-input flex-grow"
-                        mode="none"
-                        @update="updatePersonalBio"
-                    />
+                    <TipTapEditor v-model="personalBio" class="html-input flex-grow" mode="none" />
                 </div>
                 <div class="column flexed-column">
                     <!-- long bio -->
@@ -184,15 +176,7 @@
                     <p class="field-notice">
                         {{ $t('complete-profile.bio.long-bio-notice') }}
                     </p>
-                    <TipTapEditor
-                        :key="longBioKey"
-                        :save-icon-visible="false"
-                        :socket="false"
-                        :ws-data="longBio"
-                        class="html-input flex-grow"
-                        mode="none"
-                        @update="updateLongBio"
-                    />
+                    <TipTapEditor v-model="longBio" class="html-input flex-grow" mode="none" />
                 </div>
             </div>
         </ProfileEditBlock>
@@ -262,16 +246,8 @@ export default {
                 personal_description: '',
                 professional_description: '',
             },
-            longBioKey: 0,
-            longBio: {
-                originalContent: '',
-                savedContent: '',
-            },
-            personalBioKey: 0,
-            personalBio: {
-                originalContent: '',
-                savedContent: '',
-            },
+            longBio: '<p></p>',
+            personalBio: '<p></p>',
             exempleToShow: null,
             loading: false,
         }
@@ -359,14 +335,8 @@ export default {
                     this.form[field] = this.user[field]
                 })
 
-                this.personalBio = {
-                    originalContent: this.user.personal_description,
-                    savedContent: this.user.personal_description,
-                }
-                this.longBio = {
-                    originalContent: this.user.professional_description,
-                    savedContent: this.user.professional_description,
-                }
+                this.personalBio = this.user.personal_description || '<p></p>'
+                this.longBio = this.user.professional_description || '<p></p>'
 
                 this.sdgs.forEach((sdg) => {
                     sdg.selected = (this.user.sdgs || []).includes(sdg.id)
@@ -374,13 +344,6 @@ export default {
             } catch (error) {
                 console.error(error)
             }
-        },
-
-        updateLongBio(content) {
-            this.longBio.savedContent = content
-        },
-        updatePersonalBio(content) {
-            this.personalBio.savedContent = content
         },
 
         /* eslint-disable-next-line vue/no-unused-properties */
@@ -397,8 +360,8 @@ export default {
                         email: this.form.email,
                         job: this.form.job,
                         sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
-                        professional_description: this.longBio.savedContent,
-                        personal_description: this.personalBio.savedContent,
+                        professional_description: this.longBio,
+                        personal_description: this.personalBio,
                     }
 
                     await patchUser(this.user.id, data)

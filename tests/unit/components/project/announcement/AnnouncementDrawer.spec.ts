@@ -40,11 +40,6 @@ describe('AnnouncementDrawer.vue', () => {
         await waitForExpect(() => {
             expect(vm.form).toStrictEqual({
                 ...announcement,
-                description: {
-                    originalContent: announcement.description,
-                    room: '',
-                    savedContent: announcement.description,
-                },
             })
         })
     })

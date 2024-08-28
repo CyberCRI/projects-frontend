@@ -22,17 +22,12 @@
                 {{ $t('admin.portal.general.wording.fields.description') }}
             </h4>
             <TipTapEditor
-                :key="editorKey"
                 ref="tiptapEditor"
-                :socket="false"
-                :ws-data="description"
-                parent="organization"
+                v-model="description"
+                :save-image-callback="saveOrganizationImage"
                 class="input-field content-editor"
                 mode="full"
-                @destroy="close"
                 @image="handleImage"
-                @saved="submitBlogEntry(false)"
-                @update="updateContent"
             />
         </div>
     </BaseDrawer>
@@ -42,7 +37,7 @@
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import { patchOrganization } from '@/api/organizations.service.ts'
+import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
 
 export default {
     name: 'OrgWordingDrawer',
@@ -65,36 +60,45 @@ export default {
     data() {
         const org = this.$store.getters['organizations/current']
         const title = org?.dashboard_title || ''
-        const description = org?.description || ''
 
         return {
-            editorKey: 0,
             title: title,
-            description: {
-                savedContent: description,
-                originalContent: description,
-            },
+            description: org?.description || '<p></p>',
             addedImages: [],
             asyncing: false,
         }
     },
+
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
+    },
+
     watch: {
         isOpened() {
-            const org = this.$store.getters['organizations/current']
-            const description = org?.description || ''
-            this.description.savedContent = description
-            this.description.originalContent = description
+            const org = this.organization
+            this.description = org?.description || '<p></p>'
         },
     },
 
     methods: {
+        saveOrganizationImage(file) {
+            const formData = new FormData()
+            formData.append('file', file, file.name)
+            return postOrganizationImage({
+                orgCode: this.organization.code,
+                body: formData,
+            })
+        },
+
         async saveWording() {
             this.asyncing = true
 
             try {
                 const payload = {
                     dashboard_title: this.title,
-                    description: this.description.savedContent,
+                    description: this.description,
                 }
 
                 await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
@@ -117,11 +121,6 @@ export default {
 
         close() {
             this.$emit('close')
-        },
-
-        updateContent(htmlContent) {
-            this.description.savedContent = htmlContent
-            if (htmlContent === '<p></p>') this.description.savedContent = ''
         },
 
         handleImage(img) {

@@ -35,14 +35,12 @@
                         >{{ $filters.capitalize($t('common.description')) }}:</label
                     >
                     <TipTapEditor
-                        :key="editorKey"
-                        :ws-data="form.description"
+                        v-model="form.description"
                         class="description-field"
-                        @update="updateContent"
                         @blur="v$.form.description.$validate"
                     />
 
-                    <FieldErrors :errors="v$.form.description.savedContent.$errors" />
+                    <FieldErrors :errors="v$.form.description.$errors" />
                 </div>
                 <div class="form-section">
                     <SwitchInput
@@ -104,16 +102,11 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            editorKey: 0,
             hasDeadline: false,
             confirmModalIsOpen: false,
             form: {
                 title: '',
-                description: {
-                    originalContent: '',
-                    room: '',
-                    savedContent: '',
-                },
+                description: '<p></p>',
                 deadline: new Date(),
                 type: 'na',
             },
@@ -128,12 +121,10 @@ export default {
                     required: helpers.withMessage(this.$t('form.announcement.title'), required),
                 },
                 description: {
-                    savedContent: {
-                        required: helpers.withMessage(
-                            this.$t('form.announcement.description'),
-                            required
-                        ),
-                    },
+                    required: helpers.withMessage(
+                        this.$t('form.announcement.description'),
+                        required
+                    ),
                 },
             },
         }
@@ -163,8 +154,14 @@ export default {
 
         titleChanged() {
             return this.announcement
-                ? this.announcement.title === this.form.title
+                ? this.announcement.title !== this.form.title
                 : this.form.title !== ''
+        },
+
+        descriptionChanged() {
+            return this.announcement
+                ? this.announcement.description !== this.form.description
+                : this.form.description !== '<p></p>'
         },
     },
 
@@ -196,8 +193,7 @@ export default {
                     deadline: this.hasDeadline
                         ? utils.fullYearDateFormat(new Date(this.form.deadline))
                         : null,
-                    description:
-                        this.form.description.savedContent || this.form.description.originalContent,
+                    description: this.form.description,
                     project_id: this.$store.getters['projects/currentProjectId'],
                 }
 
@@ -245,10 +241,7 @@ export default {
         },
 
         close() {
-            if (
-                this.form.description.originalContent !== this.form.description.savedContent ||
-                this.titleChanged
-            ) {
+            if (this.descriptionChanged || this.titleChanged) {
                 this.toggleConfirmModal()
             } else {
                 this.closeNoConfirm()
@@ -266,16 +259,6 @@ export default {
             this.toggleConfirmModal()
             this.closeNoConfirm()
         },
-
-        forceRerender() {
-            this.editorKey += 1
-        },
-
-        updateContent(htmlContent) {
-            this.form.description.savedContent = htmlContent
-
-            if (htmlContent === '<p></p>') this.form.description.savedContent = null
-        },
     },
 
     watch: {
@@ -285,27 +268,15 @@ export default {
                     this.hasDeadline = false
                     this.form = {
                         title: '',
-                        description: {
-                            originalContent: '',
-                            room: '',
-                            savedContent: '',
-                        },
+                        description: '<p></p>',
                         deadline: new Date(),
                         type: 'na',
                     }
                 } else {
                     this.form = {
                         ...this.announcement,
-                        description: {
-                            originalContent: this.announcement.description,
-                            room: '',
-                            savedContent: this.announcement.description,
-                        },
                     }
                     this.hasDeadline = !!this.announcement.deadline
-                    this.$nextTick(() => {
-                        this.forceRerender()
-                    })
                 }
             },
             immediate: true,

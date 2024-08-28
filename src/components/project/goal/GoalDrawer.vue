@@ -22,11 +22,10 @@
                 <span class="goal-label">{{ $filters.capitalize($t('goal.description')) }}:</span>
                 <TipTapEditor
                     class="goal-description"
-                    :ws-data="form.description"
-                    @update="updateGoalDescription"
+                    v-model="form.description"
                     @blur="v$.form.description.$touch"
                 />
-                <FieldErrors :errors="v$.form.description.savedContent.$errors" />
+                <FieldErrors :errors="v$.form.description.$errors" />
             </div>
 
             <SwitchInput
@@ -116,11 +115,7 @@ export default {
             v$: useVuelidate(),
             form: {
                 title: '',
-                description: {
-                    originalContent: '',
-                    savedContent: '',
-                    room: '',
-                },
+                description: '<p></p>',
                 deadline_at: new Date(),
                 status: 'na',
             },
@@ -137,9 +132,7 @@ export default {
                     required: helpers.withMessage(this.$t('form.goal.title'), required),
                 },
                 description: {
-                    savedContent: {
-                        required: helpers.withMessage(this.$t('form.goal.description'), required),
-                    },
+                    required: helpers.withMessage(this.$t('form.goal.description'), required),
                 },
             },
         }
@@ -185,14 +178,20 @@ export default {
                 },
             ]
         },
+
+        isEdited() {
+            return this.editedGoal
+                ? this.editedGoal.description != this.form.description ||
+                      this.editedGoal.title != this.form.title
+                : this.form.description != '<p></p>' || this.form.title != ''
+        },
     },
 
     methods: {
         fillForm() {
             this.form.id = this.editedGoal.id
             this.form.title = this.editedGoal.title
-            this.form.description.originalContent = this.editedGoal.description
-            this.form.description.savedContent = this.editedGoal.description
+            this.form.description = this.editedGoal.description
             this.form.deadline_at = this.editedGoal.deadline_at
             this.form.status = this.editedGoal.status
             this.deadlineVisible = !!this.editedGoal.deadline_at
@@ -204,17 +203,11 @@ export default {
                     this.project && this.project.template
                         ? this.project.template.goal_placeholder
                         : '',
-                description: {
-                    originalContent:
-                        this.project && this.project.template
-                            ? this.project.template.goal_description
-                            : '',
-                    savedContent:
-                        this.project && this.project.template
-                            ? this.project.template.goal_description
-                            : '',
-                    room: '',
-                },
+                description:
+                    this.project && this.project.template
+                        ? this.project.template.goal_description || '<p></p>'
+                        : '<p></p>',
+
                 deadline_at: new Date(),
                 status: 'na',
             }
@@ -229,7 +222,7 @@ export default {
                 const payload = {
                     ...this.form,
                     project_id: this.project.id,
-                    description: this.form.description.savedContent,
+                    description: this.form.description,
                     deadline_at: this.form.deadline_at
                         ? utils.fullYearDateFormat(this.form.deadline_at)
                         : null,
@@ -280,19 +273,13 @@ export default {
             }
         },
 
-        updateGoalDescription(htmlContent) {
-            this.form.description.savedContent = htmlContent
-            if (htmlContent === '<p></p>') this.form.description.savedContent = null
-        },
-
         openConfirmModal() {
             this.showConfirmModal = !this.showConfirmModal
         },
 
         closeModal() {
             if (this.asyncing) return
-            if (this.form.description.originalContent !== this.form.description.savedContent)
-                this.showConfirmModal = !this.showConfirmModal
+            if (this.isEdited) this.openConfirmModal()
             else {
                 this.closeModalNoConfirm()
             }

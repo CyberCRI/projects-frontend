@@ -19,17 +19,11 @@
 
         <div class="editor-ctn">
             <TipTapEditor
-                v-if="wsData"
-                :key="editorKey"
                 ref="tiptapEditor"
-                :socket="false && !isAddMode"
-                :ws-data="wsData"
+                v-model="description"
                 class="input-field content-editor no-max-height min-height-100"
                 mode="medium"
-                parent="group-entry"
-                @destroy="closeDrawer"
                 @image="handleImage"
-                @update="updateContent"
             />
         </div>
     </BaseDrawer>
@@ -60,9 +54,9 @@ export default {
             type: Boolean,
             default: false,
         },
-        // TODO this set the socket status
-        // witch is forced to false for now
-        // uintil the server is updated
+        // TODO this will set the collaborative
+        // when the HocusPocus server is updated
+        // eslint-disable-next-line
         isAddMode: {
             type: Boolean,
             default: true,
@@ -77,14 +71,11 @@ export default {
     data() {
         return {
             v$: useVuelidate(),
-            wsData: {
-                room: null, // TODO: set to something when socket is enabled and we are in add mode
-                savedContent: '',
-                originalContent: '',
-            },
+            description: '<p></p>',
             addedImages: [],
-            editorKey: 0,
             confirmModalIsOpen: false,
+            // eslint-disable-next-line
+            room: null, // TODO: set to something when socket is enabled and we are in add mode
         }
     },
 
@@ -92,10 +83,9 @@ export default {
         isOpened: {
             handler: function (neo) {
                 if (neo) {
-                    this.wsData.originalContent = this.originalDescription
+                    this.description = this.originalDescription || '<p></p>'
                 }
                 this.$nextTick(() => {
-                    this.forceRerender()
                     if (this.v$) this.v$.$reset()
                 })
             },
@@ -108,17 +98,10 @@ export default {
             this.confirmModalIsOpen = false
             this.v$.$reset()
             this.$emit('close')
-            this.forceRerender()
-        },
-
-        updateContent(htmlContent) {
-            this.wsData.savedContent = htmlContent
-
-            if (htmlContent === '<p></p>') this.wsData.savedContent = null
         },
 
         saveDescription() {
-            this.$emit('update-description', this.wsData.savedContent)
+            this.$emit('update-description', this.description)
             this.close()
         },
 
@@ -126,9 +109,6 @@ export default {
             this.addedImages.push(img.id)
         },
 
-        forceRerender() {
-            this.editorKey += 1
-        },
         close() {
             this.$emit('close')
         },

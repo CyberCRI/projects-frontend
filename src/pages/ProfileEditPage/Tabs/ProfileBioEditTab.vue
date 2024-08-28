@@ -15,11 +15,8 @@
             <label>{{ $t('profile.edit.bio.professional-bio.label') }}</label>
             <p class="notice">{{ $t('profile.edit.bio.professional-bio.placeholder') }}</p>
             <TipTapEditor
-                :key="editorProfessionalBioKey"
                 ref="faq-editor"
-                :ws-data="form.professionalBio"
-                mode="simple"
-                @update="updateProfessionalBio"
+                v-model="form.professionalBio"
                 data-test="professional-bio-editor"
             />
         </div>
@@ -28,11 +25,8 @@
             <label>{{ $t('profile.edit.bio.personal-bio.label') }}</label>
             <p class="notice">{{ $t('profile.edit.bio.personal-bio.placeholder') }}</p>
             <TipTapEditor
-                :key="editorPersonalBioKey"
                 ref="faq-editor"
-                :ws-data="form.personalBio"
-                mode="simple"
-                @update="updatePersonalBio"
+                v-model="form.personalBio"
                 data-test="personal-bio-editor"
             />
         </div>
@@ -69,8 +63,8 @@ import { patchUser } from '@/api/people.service.ts'
 function defaultForm() {
     return {
         shortBio: '',
-        professionalBio: { originalContent: '', savedContent: '' },
-        personalBio: { originalContent: '', savedContent: '' },
+        professionalBio: '<p></p>',
+        personalBio: '<p></p>',
     }
 }
 
@@ -92,8 +86,6 @@ export default {
     data() {
         return {
             form: defaultForm(),
-            editorProfessionalBioKey: 0,
-            editorPersonalBioKey: 0,
             asyncing: false,
             confirmActionDisabled: false,
         }
@@ -124,8 +116,8 @@ export default {
             try {
                 const data = {
                     short_description: this.form.shortBio,
-                    professional_description: this.form.professionalBio.savedContent,
-                    personal_description: this.form.personalBio.savedContent,
+                    professional_description: this.form.professionalBio,
+                    personal_description: this.form.personalBio,
                 }
 
                 await patchUser(this.user.id, data)
@@ -151,27 +143,12 @@ export default {
             if (this.user) {
                 this.form = {
                     shortBio: this.user.short_description || '',
-                    personalBio: {
-                        originalContent: this.user.personal_description || '',
-                        savedContent: this.user.personal_description || '',
-                    },
-                    professionalBio: {
-                        originalContent: this.user.professional_description || '',
-                        savedContent: this.user.professional_description || '',
-                    },
+                    personalBio: this.user.personal_description || '<p></p>',
+                    professionalBio: this.user.professional_description || '<p></p>',
                 }
             } else {
                 this.form = defaultForm()
             }
-            this.editorProfessionalBioKey++
-            this.editorPersonalBioKey++
-        },
-        updateProfessionalBio(htmlContent) {
-            this.form.professionalBio.savedContent = htmlContent
-        },
-
-        updatePersonalBio(htmlContent) {
-            this.form.personalBio.savedContent = htmlContent
         },
     },
 }

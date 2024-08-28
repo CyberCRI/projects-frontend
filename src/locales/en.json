@@ -1017,7 +1017,17 @@
         "server-connected": "Server is connected.",
         "server-connecting": "Server is connecting...",
         "server-disconnected": "Server is disconnected.",
-        "server-unconnectable": "Cannot connect to server. Please retry later.",
+        "server-unconnectable": {
+            "status": "Unable to connect to the collaborative server.",
+            "notice": "Please check that your browser and/or antivirus allows WebSockets.",
+            "ack-notice": "You can use a simple editor (without collaborative editing). Note that other users’ data may be overwritten if you save at the same time..",
+
+            "do-ack": "I understand the risks and wish to continue with a simple editor (without collaborative editing).",
+            "do-solo-edit": "Edit on my own",
+            "head-up-warning": "Warning: editing in solo mode might result in data loss",
+            "confirm-save-title": "You are editing in solo mode.",
+            "confirm-save-text": "If someone else edited the content while you were editing, you will overwrite their changes. Are you sure you want to save?"
+        },
         "split_cell": "Split cell",
         "table": "Table",
         "text_align_left": "Text Align Left",
@@ -1511,6 +1521,8 @@
         "edit-link": "edit a link",
         "edit-file": "edit a file",
         "invalid-image": "Unsupported file ... is this an image ?",
+        "error-uploading-image": "Error while uploading image ",
+        "cannot-upload-image": "Cannot upload image for now",
         "link-address": "link address",
         "resources": "resources",
         "web": "link to web resources | links to web resources",
