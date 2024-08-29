@@ -1,25 +1,27 @@
 <template>
-    <div class="home-btn-container">
-        <LpiButton
-            :label="$t('home.new-project')"
-            secondary
-            white-bg
-            btn-icon="Plus"
-            @click="$router.push({ name: 'createProject' })"
-            class="individual-button white-bg"
-            data-test="create-project"
-        />
+    <div class="home-buttons">
+        <div class="home-btn-container">
+            <LpiButton
+                :label="$t('home.new-project')"
+                secondary
+                white-bg
+                btn-icon="Plus"
+                @click="$router.push({ name: 'createProject' })"
+                class="individual-button white-bg"
+                data-test="create-project"
+            />
 
-        <LpiButton
-            v-if="organization.chat_button_text && organization.chat_url"
-            :label="organization.chat_button_text"
-            secondary
-            white-bg
-            @click="goToChat"
-            class="individual-button white-bg"
-            data-test="go-to-chat"
-            no-text-transform
-        />
+            <LpiButton
+                v-if="organization.chat_button_text && organization.chat_url"
+                :label="organization.chat_button_text"
+                secondary
+                white-bg
+                @click="goToChat"
+                class="individual-button white-bg"
+                data-test="go-to-chat"
+                no-text-transform
+            />
+        </div>
     </div>
 </template>
 
@@ -46,6 +48,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home-buttons {
+    margin-top: $space-l;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: $space-l $space-s;
+    border-radius: $border-radius-8;
+    background-color: $primary-lighter;
+}
+
 .home-btn-container {
     display: flex;
     place-content: center center;
