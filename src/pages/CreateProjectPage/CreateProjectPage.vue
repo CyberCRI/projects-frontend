@@ -12,6 +12,7 @@
 
         <div class="project-form">
             <ProjectForm
+                :categories="categories"
                 ref="projectForm"
                 v-model="form"
                 @close="$emit('close')"
@@ -141,12 +142,26 @@ export default {
     },
 
     computed: {
+        categories() {
+            return this.$store.getters['projectCategories/allOrderedByOrderId']
+        },
+
         formNotEmpty() {
             if (this.$store.getters['organizations/isDefault']) {
                 return !!this.form.title && !!this.form.purpose
             }
-            return !!this.form.title && !!this.form.category && !!this.form.purpose
+            return (
+                !!this.form.title &&
+                !!this.form.purpose &&
+                (!this.categories?.length || !!this.form.category)
+            )
         },
+    },
+
+    async mounted() {
+        if (!this.categories.length) {
+            await this.$store.dispatch('projectCategories/getAllProjectCategories')
+        }
     },
 
     methods: {

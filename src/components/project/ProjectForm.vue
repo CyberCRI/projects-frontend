@@ -175,6 +175,10 @@ export default {
             type: Object,
             default: () => {},
         },
+        categories: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -200,12 +204,6 @@ export default {
 
     async mounted() {
         if (this.isAddMode) {
-            if (!this.categories.length) {
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
-            }
-            // TODO check if we still preselect first category or not
-            // this.form.category = this.categories[0].id
-
             if (this.$route.query.category) {
                 this.form.category = parseInt(this.$route.query.category)
             }
@@ -213,10 +211,6 @@ export default {
     },
 
     computed: {
-        categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
-        },
-
         selectedCategoryLabel() {
             return this.selectedCategory
                 ? this.selectedCategory.name
