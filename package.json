@@ -99,7 +99,7 @@
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",
         "@commitlint/config-conventional": "^16.2.1",
-        "@playwright/test": "^1.31.2",
+        "@playwright/test": "^1.46.1",
         "@trust/webcrypto": "^0.9.2",
         "@types/faker": "5",
         "@types/mixpanel-browser": "^2",
