@@ -148,6 +148,7 @@ export default {
         for (const key in this.form) {
             this.form[key] = organizationData[key]
         }
+        if (!this.form.background_color) this.form.background_color = '#FFFFFF'
     },
 
     data() {
