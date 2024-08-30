@@ -103,7 +103,7 @@
                         :round-picture="true"
                         v-model:imageSizes="form.imageSizes"
                         v-model:picture="form.picture"
-                        :default-picture="`${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`"
+                        :default-picture="defaultPictures"
                     >
                     </ImageEditor>
                 </div>
@@ -232,6 +232,11 @@ export default {
     mixins: [imageMixin, onboardingStatusMixin],
 
     data() {
+        const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
+            return `${
+                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+            }/patatoids-project/Patatoid-${index}.png`
+        })
         return {
             v$: useVuelidate(),
             user: null,
@@ -250,6 +255,7 @@ export default {
             personalBio: '<p></p>',
             exempleToShow: null,
             loading: false,
+            defaultPictures,
         }
     },
 
@@ -327,7 +333,7 @@ export default {
         async loadUser() {
             try {
                 this.user = await getUser(this.$store.getters['users/id'])
-                this.form.picture = this.user.profile_picture
+                this.form.picture = this.user.profile_picture || null
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
                     : null
