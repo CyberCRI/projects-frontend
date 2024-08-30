@@ -1,20 +1,29 @@
 <template>
-    <div class="recommendation-wrapper">
-        <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
-        <div v-if="isLoading" class="recommendation-inner">
-            <RecommendationListSkeleton />
-            <RecommendationListSkeleton v-if="loggedIn" :user-recommendation="true" />
-        </div>
-        <div v-else class="recommendation-inner">
-            <ProjectRecommendationList
-                :recommendations="projectRecommendations"
-                data-test="project-recommendations"
-            />
-            <UserRecommendationList
-                v-if="loggedIn"
-                :recommendations="userRecommendations"
-                data-test="user-recommendations"
-            />
+    <div
+        class="recommandations"
+        v-if="isLoading || projectRecommendations?.length || userRecommendations?.length"
+    >
+        <div class="recommendation-wrapper">
+            <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
+            <div v-if="isLoading" class="recommendation-inner">
+                <RecommendationListSkeleton />
+                <RecommendationListSkeleton v-if="loggedIn" :user-recommendation="true" />
+            </div>
+            <div
+                v-else-if="projectRecommendations?.length || userRecommendations?.length"
+                class="recommendation-inner"
+            >
+                <ProjectRecommendationList
+                    v-if="projectRecommendations?.length"
+                    :recommendations="projectRecommendations"
+                    data-test="project-recommendations"
+                />
+                <UserRecommendationList
+                    v-if="loggedIn && userRecommendations?.length"
+                    :recommendations="userRecommendations"
+                    data-test="user-recommendations"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -83,6 +92,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.recommandations {
+    margin-top: $space-l;
+    border: 1px solid $primary;
+    border-radius: $border-radius-s;
+}
+
 .recommendation-wrapper {
     display: flex;
     flex-direction: column;

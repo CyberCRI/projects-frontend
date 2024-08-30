@@ -23,22 +23,9 @@
                     <ProjectCategoriesDropdownElementLink :category="category" />
                 </template>
             </ProjectCategoriesDropdown>
-            <div v-if="loggedIn" class="home-buttons">
-                <HomeButtons />
-            </div>
-            <div class="locations-link" :class="{ 'is-hovered': locationButtonHover }">
-                <LpiButton
-                    :label="$t('home.check-locations')"
-                    secondary
-                    class="white-bg"
-                    @click="$router.push({ name: 'map' })"
-                    @mouseover="locationButtonHover = true"
-                    @mouseout="locationButtonHover = false"
-                />
-            </div>
-            <div class="recommandations">
-                <RecommendationBlock />
-            </div>
+            <HomeButtons v-if="loggedIn" />
+            <LocationsLink />
+            <RecommendationBlock />
         </div>
         <div class="all-news">
             <div class="select-news"></div>
@@ -61,7 +48,7 @@ import HomeNewsfeed from '@/components/home/HomeNewsfeed/HomeNewsfeed.vue'
 import HomeHeaderConnected from '@/components/home/HomeHeader/HomeHeaderConnected.vue'
 import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymous.vue'
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import LocationsLink from '@/components/home/LocationsLink/LocationsLink.vue'
 
 export default {
     name: 'NewHomePage',
@@ -76,14 +63,7 @@ export default {
         HomeNewsfeed,
         HomeHeaderConnected,
         HomeHeaderAnonymous,
-        LpiButton,
-    },
-
-    data() {
-        return {
-            locationButtonHover: false,
-            recommendations: [],
-        }
+        LocationsLink,
     },
 
     computed: {
@@ -197,43 +177,6 @@ export default {
             fill: $primary-dark;
             width: pxToRem(20px);
         }
-    }
-
-    .home-buttons,
-    .locations-link {
-        margin-top: $space-l;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        padding: $space-l $space-s;
-        border-radius: $border-radius-8;
-    }
-
-    .home-buttons {
-        background-color: $primary-lighter;
-    }
-
-    .locations-link {
-        border: $border-width-s solid $primary-dark;
-        background-image: url('#{$PUBLIC_BINARIES_PREFIX}/map-images/map-link-background.png');
-        background-size: 100%;
-        background-position: center;
-        transition: all 0.3s ease-in-out;
-
-        @media screen and (max-width: $max-mobile) {
-            background-size: cover;
-        }
-
-        &.is-hovered {
-            background-size: 120%;
-        }
-    }
-
-    .recommandations {
-        margin-top: $space-l;
-        border: 1px solid $primary;
-        border-radius: $border-radius-s;
     }
 }
 
