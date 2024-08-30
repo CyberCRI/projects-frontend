@@ -89,6 +89,7 @@
                 :replied-comment="comment"
                 @canceled="toggleReply"
                 @submited="toggleReply"
+                :is-private="isPrivate"
             />
         </div>
         <div v-if="comment.replies && comment.replies.length" class="comment-replies-ctn">
@@ -98,6 +99,7 @@
                 :comment="reply"
                 :is-reply="true"
                 :replied-comment="comment"
+                :is-private="isPrivate"
             />
         </div>
 
@@ -143,6 +145,11 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        isPrivate: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -168,6 +175,11 @@ export default {
         },
 
         async deleteComment() {
+            if (this.isPrivate) {
+                // TODO: use private message api
+                alert('Private comment cannot be deleted yet')
+                return
+            }
             const body = {
                 id: this.comment.id,
                 mainComment: this.repliedComment,

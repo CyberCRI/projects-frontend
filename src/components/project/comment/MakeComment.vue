@@ -9,12 +9,9 @@
             @confirm="cancel"
         />
 
-        <div v-if="!repliedComment && !originalComment" class="header">
-            <h4 class="title">{{ $t('comment.add-comment') }}</h4>
-        </div>
-
         <div v-if="isLoggedIn">
             <TipTapEditor
+                :key="editorKey"
                 v-model="comment"
                 :save-image-callback="saveCommentImage"
                 class="comment-description"
@@ -27,7 +24,7 @@
                 <LpiButton
                     :disabled="!canSubmitComment || asyncing"
                     :btn-icon="asyncing ? 'LoaderSimple' : null"
-                    :label="$t('comment.publish')"
+                    :label="isPrivate ? $t('comment.private-exchange.send') : $t('comment.publish')"
                     @click="submit"
                 />
             </div>
@@ -70,6 +67,11 @@ export default {
             type: Object,
             default: null,
         },
+
+        isPrivate: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -78,6 +80,7 @@ export default {
             addedImages: [],
             asyncing: false,
             confirmModalIsOpen: false,
+            editorKey: 0,
         }
     },
 
@@ -101,6 +104,11 @@ export default {
 
     methods: {
         saveCommentImage(file) {
+            if (this.isPrivate) {
+                // TODO: use private message api
+                alert('Private comment cannot have yet')
+                return
+            }
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO still needed ?
@@ -120,6 +128,7 @@ export default {
                 await this.createComment()
                 this.reset()
             }
+            this.editorKey++
             this.$emit('submited')
         },
 
@@ -134,6 +143,12 @@ export default {
         },
 
         async createComment() {
+            if (this.isPrivate) {
+                // TODO: use private message api
+                alert('Private comment cannot be saved yet')
+                return
+            }
+
             this.asyncing = true
             const payload = {
                 content: this.comment,
@@ -161,6 +176,11 @@ export default {
         },
 
         async updateComment() {
+            if (this.isPrivate) {
+                // TODO: use private message api
+                alert('Private comment cannot be updated yet')
+                return
+            }
             const body = {
                 id: this.originalComment.id,
                 comment: {
@@ -207,23 +227,6 @@ export default {
 
 <style lang="scss" scoped>
 .make-comment {
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: $space-m;
-        flex-wrap: wrap;
-
-        .title {
-            font-size: $font-size-2xl;
-            font-weight: 700;
-        }
-
-        .notice {
-            font-size: $font-size-s;
-        }
-    }
-
     .action {
         display: flex;
         gap: $space-m;

@@ -1,15 +1,16 @@
 <template>
     <div class="project-comments narrow-content">
         <div class="header">
-            <h2 class="title">{{ $t('comment.add-comment') }}</h2>
+            <h2 class="title">{{ $t('comment.private-exchange.notice') }}</h2>
+            <p class="notice">{{ $t('comment.private-exchange.notice') }}</p>
         </div>
+        <MakeComment is-private />
 
-        <MakeComment />
-
-        <NoItem v-if="!comments.length" message="comment.no-comments" />
+        <NoItem v-if="!comments.length" message="comment.private-exchange.no-message" />
 
         <div v-else>
             <CommentItem
+                is-private
                 v-for="comment in comments"
                 :key="comment.id"
                 :id="comment.id"
@@ -25,19 +26,39 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
-    name: 'ProjectCommentsTab',
+    name: 'ProjectPrivateExchangeTab',
 
-    mixins: [ProjectTab],
+    mixins: [ProjectTab, permissions],
 
     components: { CommentItem, NoItem, MakeComment },
 
+    props: {
+        project: {
+            type: Object,
+            default: () => {},
+        },
+    },
+
     computed: {
-        ...mapGetters({ comments: 'comments/all' }),
+        comments() {
+            // TODO: use private comment api
+            // ...mapGetters({ comments: 'comments/all' }),
+            return []
+        },
+        isMember() {
+            const members = [
+                ...this.project.team.members,
+                ...this.project.team.owners,
+                ...this.project.team.reviewers,
+            ]
+            return members.find((user) => this.$store.getters['users/id'] === user.id)
+        },
     },
 
     inject: ['projectLayoutToggleAddModal'],
@@ -47,6 +68,30 @@ export default {
             this.projectLayoutToggleAddModal('comment', comment)
         },
     },
+
+    mounted() {
+        if (!this.project) {
+            this.$router.replace({
+                name: 'pageProject',
+                params: { slugOrId: this.$route.params.slugOrId },
+            })
+        }
+    },
+
+    watch: {
+        project: {
+            handler: function (neo) {
+                if (neo && !this.isAdmin && !this.isMember) {
+                    this.$router.replace({
+                        name: 'pageProject',
+                        params: { slugOrId: this.project.slug || this.project.id },
+                    })
+                }
+            },
+            immediate: true,
+        },
+    },
+
     beforeRouteEnter(to, from, next) {
         next((vm) => {
             if (to.hash == '#tab') {

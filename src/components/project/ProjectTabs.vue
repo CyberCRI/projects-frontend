@@ -70,6 +70,15 @@ export default {
             return this.$store.getters['projectCategories/hierarchy']
         },
 
+        isMember() {
+            const members = [
+                ...this.project.team.members,
+                ...this.project.team.owners,
+                ...this.project.team.reviewers,
+            ]
+            return members.find((user) => this.$store.getters['users/id'] === user.id)
+        },
+
         projectTabs() {
             return [
                 {
@@ -141,6 +150,16 @@ export default {
                     view: `/projects/${this.$route.params.slugOrId}/comments`,
                     condition: true,
                     dataTest: 'project-comments',
+                },
+                {
+                    key: 'project-private-exchange',
+                    label: this.$t('comment.private-exchange.tab'),
+                    view: `/projects/${this.$route.params.slugOrId}/private-exchange`,
+                    props: {
+                        project: this.project,
+                    },
+                    condition: this.isAdmin || this.isMember,
+                    dataTest: 'project-private-exchange',
                 },
                 {
                     key: 'project-announcements',

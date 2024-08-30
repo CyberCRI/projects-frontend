@@ -395,6 +395,13 @@
         "discard-changes": "Discard changes?",
         "need-account": "You need an account to publish comments",
         "no-comments": "no comment has been made yet ...",
+        "private-exchange": {
+            "tab": "Internal Messages",
+            "no-message": "No private message yet...",
+            "notice": "Private messages are visible only to project team members.",
+            "send": "Send",
+            "title": "Add your private message"
+        },
         "publish": "Publish your comment",
         "delete-title": "Delete definitely?",
         "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
