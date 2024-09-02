@@ -1235,6 +1235,13 @@
                 "save-error": "Error while saving profile.",
                 "save-success": "Profile saved.",
                 "search": "search",
+                "level-notice": "Levels : 1 = curious; 2 = basic; 3 = comptent; 4 = expert.",
+                "level-notice-more": "More details",
+                "handle": "Handle",
+                "add-competences": "Add competences",
+                "modify-competences": "Modify competences",
+                "become-mentor": "Become mentor",
+                "become-mentee": "Be mentee",
                 "skills": {
                     "add": "Add professional skills",
                     "edit-items": "Edit skills",
@@ -1254,7 +1261,8 @@
                             "help": "More about skill levels",
                             "confirm": "Save"
                         }
-                    }
+                    },
+                    "title": "Professional skills"
                 },
                 "hobbies": {
                     "add": "Add hobbies",
@@ -1275,7 +1283,8 @@
                             "help": "More about the hobbies levels",
                             "confirm": "Save"
                         }
-                    }
+                    },
+                    "title": "Hobbies"
                 },
                 "levels": {
                     "curious": "Curious",

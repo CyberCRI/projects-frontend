@@ -137,7 +137,9 @@ export default {
         }
     }
 
-    &.Plus:hover {
+    &.Plus:hover,
+    &.HumanMaleChild:hover,
+    &.School:hover {
         .action-icon {
             animation: scale-plus 1s ease-in-out infinite;
             transform-origin: bottom center;

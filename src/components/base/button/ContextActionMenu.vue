@@ -24,7 +24,13 @@
                 </slot>
             </div>
         </template>
-        <ContextActionButton secondary no-border action-icon="DotsHorizontal" class="remove-btn" />
+        <ContextActionButton
+            secondary
+            no-border
+            :action-icon="triggerIcon"
+            :action-label="triggerLabel"
+            class="remove-btn"
+        />
     </MenuTip>
 </template>
 <script>
@@ -45,6 +51,14 @@ export default {
         canDelete: {
             type: Boolean,
             default: false,
+        },
+        triggerIcon: {
+            type: String,
+            default: 'DotsHorizontal',
+        },
+        triggerLabel: {
+            type: String,
+            default: '',
         },
     },
 }

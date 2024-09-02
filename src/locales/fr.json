@@ -1230,6 +1230,13 @@
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
                 "save-error": "Erreur lors de la sauvegarde du profil.",
                 "save-success": "Le profil a été sauvegardé.",
+                "level-notice": "Niveaux : 1 =  curieux; 2 = basique; 3 = compétent; 4 = expert.",
+                "level-notice-more": "Plus de détails",
+                "handle": "Gérer",
+                "add-competences": "Ajouter des compétences",
+                "modify-competences": "Modifier les compétences",
+                "become-meetor": "Devenir mentor",
+                "become-mentee": "Être mentoré",
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
                     "edit-items": "Éditer les compétences",
@@ -1249,7 +1256,8 @@
                             "help": "Plus à propos des niveaux de compétences",
                             "confirm": "Sauvegarder"
                         }
-                    }
+                    },
+                    "title": "Compétences"
                 },
                 "hobbies": {
                     "add": "Ajouter des hobbies",
@@ -1270,7 +1278,8 @@
                             "help": "En savoir plus sur les niveaux de hobby",
                             "confirm": "Sauvegarder"
                         }
-                    }
+                    },
+                    "title": "Hobbies"
                 },
                 "levels": {
                     "curious": "Curieux",

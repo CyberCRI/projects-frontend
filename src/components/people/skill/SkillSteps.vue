@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ border: hasBorder }" class="container">
+    <div :class="{ border: hasBorder, white }" class="container">
         <span
             v-for="(step, index) in steps"
             :key="index"
@@ -28,6 +28,11 @@ export default {
 
         /* eslint-disable-next-line */
         hasBorder: {
+            type: Boolean,
+            default: false,
+        },
+
+        white: {
             type: Boolean,
             default: false,
         },
@@ -62,5 +67,20 @@ export default {
 
 .step:last-child {
     margin-right: 0;
+}
+
+.white {
+    .border {
+        border: $border-width-l solid $white;
+    }
+
+    .step {
+        background-color: $primary-dark;
+        border: $border-width-m solid $white;
+    }
+
+    .step-completed {
+        background-color: $white;
+    }
 }
 </style>
