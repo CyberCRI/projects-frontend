@@ -1,8 +1,28 @@
 <template>
     <div>
-        <div class="columns-wrapper" :class="`layout-${columnCount.length}-columns`">
+        <div
+            class="columns-wrapper"
+            :class="{
+                [`layout-${columnCount.length}-columns`]: true,
+                'has-mentor-column': fullList && mentorSkills.length,
+            }"
+        >
+            <div class="column mentor-column" v-if="fullList && mentorSkills.length">
+                <h3 class="mentor-column-title"><IconImage name="School" /> {{ $t('Mentor') }}</h3>
+                <template v-for="skill in mentorSkills" :key="skill.id">
+                    <SkillItem
+                        white
+                        :label="skill.wikipedia_tag.name"
+                        :level="Number(skill.level)"
+                    />
+                </template>
+                <div class="mentorship-action">
+                    <IconImage name="EmailOutline" /> {{ $t('Ask for mentorship') }}
+                </div>
+            </div>
+
             <div
-                v-for="column in columnCount"
+                v-for="column in nonMentorColumnCount"
                 :key="`column-${column}`"
                 class="column"
                 :class="[`column-${column}`]"
@@ -11,7 +31,7 @@
 
                 <template v-for="(skill, idx) in visibleSkills">
                     <SkillItem
-                        v-if="(idx + idxOffset) % columnCount.length == column"
+                        v-if="(idx + idxOffset) % nonMentorColumnCount.length == column"
                         :key="skill.id"
                         :label="skill.wikipedia_tag.name"
                         :level="Number(skill.level)"
@@ -24,11 +44,11 @@
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
-
+import IconImage from '@/components/base/media/IconImage.vue'
 export default {
     name: 'UserSkills',
 
-    components: { SkillItem },
+    components: { SkillItem, IconImage },
 
     data() {
         return {
@@ -80,6 +100,23 @@ export default {
             // so this is used to offset skill indexes in computations
             return this.title ? 1 : 0
         },
+
+        mentorSkills() {
+            // TODO: use this one
+            // return this.skills.filter((skill) => skill.can_mentor)
+            return this.skills.filter((_skill, i) => i < 2)
+        },
+        nonMentorSkills() {
+            // TODO: use this one
+            // return this.skills.filter((skill) => !skill.can_mentor)
+            return this.skills.filter((_skill, i) => i >= 2)
+        },
+
+        nonMentorColumnCount() {
+            const res = [...this.columnCount]
+            if (res.length > 1 && this.fullList && this.mentorSkills.length > 0) res.pop()
+            return res
+        },
     },
 
     methods: {
@@ -95,13 +132,12 @@ export default {
                 this.columnCount = [0]
             }
 
+            let skills =
+                this.fullList && this.mentorSkills.length ? this.nonMentorSkills : this.skills
+
             // if there's more column than skills, delete extraneous
-            if (this.columnCount.length > this.skills.length + this.idxOffset) {
-                for (
-                    let i = this.skills.length + this.idxOffset;
-                    i < this.columnCount.length;
-                    i++
-                ) {
+            if (this.columnCount.length > skills.length + this.idxOffset) {
+                for (let i = skills.length + this.idxOffset; i < this.columnCount.length; i++) {
                     // hack column class name to hide it
                     this.columnCount[i] = 'empty'
                 }
@@ -118,8 +154,14 @@ export default {
     gap: pxToRem(31px);
 }
 
-.layout-1-columns .column {
-    flex-basis: 100%;
+.layout-1-columns {
+    &.has-mentor-column {
+        flex-direction: column;
+    }
+
+    .column {
+        flex-basis: 100%;
+    }
 }
 
 .layout-2-columns .column {
@@ -138,6 +180,24 @@ export default {
     padding: pxToRem(24px) pxToRem(32px);
     border-radius: $border-radius-l;
     align-items: stretch;
+}
+
+.mentor-column {
+    background-color: $primary-dark;
+    color: $white;
+
+    .mentorship-action,
+    .mentor-column-title {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        svg {
+            fill: $white;
+            width: 1.2em;
+            height: 1.2em;
+        }
+    }
 }
 
 .column-empty {

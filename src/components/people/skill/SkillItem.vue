@@ -1,7 +1,7 @@
 <template>
-    <div class="skill">
+    <div class="skill" :class="{ white }">
         <span>{{ $filters.capitalize(label) }}</span>
-        <SkillSteps :active-step="level" :steps="steps" class="steps" />
+        <SkillSteps :white="white" :active-step="level" :steps="steps" class="steps" />
     </div>
 </template>
 <script>
@@ -22,6 +22,10 @@ export default {
         steps: {
             type: Number,
             default: 4,
+        },
+        white: {
+            type: Boolean,
+            default: false,
         },
     },
 }
@@ -46,6 +50,12 @@ export default {
     .steps {
         margin: unset;
         flex-grow: unset;
+    }
+}
+
+.white {
+    span {
+        color: $white;
     }
 }
 </style>
