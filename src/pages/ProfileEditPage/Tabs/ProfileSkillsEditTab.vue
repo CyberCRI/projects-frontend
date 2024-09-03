@@ -81,7 +81,12 @@
                     </div>
 
                     <div class="skill-list">
-                        <UserSkills :full-list="true" :skills="getSkillOfType(key)" title="" />
+                        <UserSkills
+                            is-editable
+                            :full-list="true"
+                            :skills="getSkillOfType(key)"
+                            title=""
+                        />
                     </div>
                 </template>
                 <div v-else class="add-action">
