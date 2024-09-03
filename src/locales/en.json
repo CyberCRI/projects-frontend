@@ -1242,6 +1242,21 @@
                 "modify-competences": "Modify competences",
                 "become-mentor": "Become mentor",
                 "become-mentee": "Be mentee",
+                "mentorship": {
+                    "drawer": {
+                        "mentor": {
+                            "title": "Become mentor",
+                            "notice": "You have indicated a high level for these skills. Would you like to be a mentor? You determine the frequency of exchange that you arrange with the mentee. This could be to answer a question in 1 hour maximum, to do 3 one-hour mentoring sessions or support over a year for 2 hours per month."
+                        },
+                        "mentoree": {
+                            "title": "Be mentored",
+                            "notice": "For these skills, would you like to be mentored? We will then recommend mentors to you. You can get in touch with them and ask them what you need."
+                        }
+                    },
+                    "edit": {
+                        "note-placeholder": "Add a comment (optional)"
+                    }
+                },
                 "skills": {
                     "add": "Add professional skills",
                     "edit-items": "Edit skills",
@@ -1259,6 +1274,10 @@
                             "title": "Skill levels",
                             "notice": "Indicate your level of mastery.",
                             "help": "More about skill levels",
+                            "confirm": "Next"
+                        },
+                        "mentorship": {
+                            "title": "Mentorship",
                             "confirm": "Save"
                         }
                     },
@@ -1281,6 +1300,10 @@
                             "title": "Hobbies levels",
                             "notice": "Indicate your level of mastery.",
                             "help": "More about the hobbies levels",
+                            "confirm": "Save"
+                        },
+                        "mentorship": {
+                            "title": "Mentorship",
                             "confirm": "Save"
                         }
                     },

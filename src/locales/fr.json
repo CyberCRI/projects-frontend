@@ -1225,6 +1225,21 @@
                     "label": "Groupes dont je suis membre"
                 }
             },
+            "mentorship": {
+                "drawer": {
+                    "mentor": {
+                        "title": "Devenir mentor",
+                        "notice": "Vous avez indiqué un niveau élevé pour ces compétences. Souhaitez-vous être mentor ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e. Ça peut être pour répondre à une question en maximum 1 heure, faire 3 séances de mentorat d'une heure ou un accompagnement sur une année à hauteur de 2 heures par mois."
+                    },
+                    "mentoree": {
+                        "title": "Être mentoré·e",
+                        "notice": "Pour ces compétences, souhaitez-vous être mentoré·e ? Nous vous recommanderons alors des mentors. Vous pourrez rentrer en contact avec eux et leur demander ce dont vous avez besoin."
+                    }
+                },
+                "edit": {
+                    "note-placeholder": "Ajouter un commentaire (facultatif)"
+                }
+            },
             "skills": {
                 "tab": "Compétences",
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
@@ -1254,6 +1269,10 @@
                             "title": "Niveaux de compétences",
                             "notice": "Indiquez votre niveau de maîtrise.",
                             "help": "Plus à propos des niveaux de compétences",
+                            "confirm": "Suivant"
+                        },
+                        "mentorship": {
+                            "title": "Mentorat",
                             "confirm": "Sauvegarder"
                         }
                     },
@@ -1276,6 +1295,10 @@
                             "title": "Niveaux des hobbies",
                             "notice": "Indiquer votre niveau pour chaque hobby",
                             "help": "En savoir plus sur les niveaux de hobby",
+                            "confirm": "Suivant"
+                        },
+                        "mentorship": {
+                            "title": "Mentorat",
                             "confirm": "Sauvegarder"
                         }
                     },

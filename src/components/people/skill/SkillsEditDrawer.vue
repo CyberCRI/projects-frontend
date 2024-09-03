@@ -12,6 +12,7 @@
         @close="$emit('close')"
         @confirm="confirm"
     >
+        <!-- ADD MODE -->
         <div class="add-skill-mode" v-if="mode == 'add'">
             <p class="notice no-shrink">
                 {{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}
@@ -51,6 +52,9 @@
                 :inline="true"
             />
         </div>
+
+        <!-- EDIT MODE -->
+
         <div class="edit-skill-mode" v-else-if="mode == 'edit'">
             <p class="notice">
                 {{ $t(`profile.edit.skills.${type}.drawer.edit.notice`) }}
@@ -90,6 +94,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- MENTORSHIP MODE -->
+
+        <div class="mentorship-mode" v-else-if="mode == 'mentorship'">
+            <h4 class="subtitle">{{ $t(`profile.edit.skills.mentorship.drawer.mentor.title`) }}</h4>
+            <p class="notice">
+                {{ $t(`profile.edit.skills.mentorship.drawer.mentor.notice`) }}
+            </p>
+            <div class="mentorable-list">
+                <SkillMentorShipEdit
+                    v-for="skill in canBeMentorSkills"
+                    :key="skill.wikipedia_tag.wikipedia_qid"
+                    :skill-label="skill.wikipedia_tag.name"
+                    v-model:activate="skill.can_mentor"
+                    v-model:note="skill.comment"
+                />
+            </div>
+
+            <h4 class="subtitle">
+                {{ $t(`profile.edit.skills.mentorship.drawer.mentoree.title`) }}
+            </h4>
+            <p>
+                {{ $t(`profile.edit.skills.mentorship.drawer.mentoree.notice`) }}
+            </p>
+            <div class="mentorable-list">
+                <SkillMentorShipEdit
+                    v-for="skill in canNeedMentorSkills"
+                    :key="skill.wikipedia_tag.wikipedia_qid"
+                    :skill-label="skill.wikipedia_tag.name"
+                    v-model:activate="skill.needs_mentor"
+                    v-model:note="skill.comment"
+                />
+            </div>
+        </div>
     </BaseDrawer>
 </template>
 <script>
@@ -106,6 +144,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import debounce from 'lodash.debounce'
 import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import SkillMentorShipEdit from '@/components/people/skill/SkillMentorShipEdit.vue'
 
 export default {
     name: 'SkillsEditDrawer',
@@ -133,6 +172,7 @@ export default {
         WikipediaResults,
         SkillLevelTip,
         LpiButton,
+        SkillMentorShipEdit,
     },
 
     props: {
@@ -145,7 +185,7 @@ export default {
             required: true,
         },
         mode: {
-            type: String, // add | edit
+            type: String, // add | edit | mentorship
             required: true,
         },
         user: {
@@ -193,11 +233,17 @@ export default {
         allSkills() {
             return this.user.skills || []
         },
-        skills() {
-            return this.allSkills.filter((s) => s.type === 'skill')
+        filteredSkills() {
+            return this.allSkills.filter(
+                (s) => s.type === (this.type == 'skills' ? 'skill' : 'hobby')
+            )
         },
-        hobbies() {
-            return this.allSkills.filter((s) => s.type === 'hobby')
+
+        canBeMentorSkills() {
+            return this.selection.filter((skill) => skill.level > 2)
+        },
+        canNeedMentorSkills() {
+            return this.selection.filter((skill) => skill.level < 3)
         },
     },
     watch: {
@@ -205,8 +251,8 @@ export default {
             if (neo) {
                 this.search = ''
                 this.confirmedSearch = ''
-                this.selection = this.getSkillOfType(this.type)
-                    ? this.getSkillOfType(this.type).map((item) => ({ ...toRaw(item) }))
+                this.selection = this.filteredSkills
+                    ? this.filteredSkills.map((item) => ({ ...toRaw(item) }))
                     : []
                 this.searchResults = []
                 this.$nextTick(this.focusInput)
@@ -214,10 +260,6 @@ export default {
         },
     },
     methods: {
-        getSkillOfType(type) {
-            if (type == 'skills') return this.skills
-            else return this.hobbies
-        },
         focusInput() {
             const searchInput = this.$el.querySelector('.search-field input')
             this.$nextTick(() => {
@@ -256,6 +298,8 @@ export default {
             if (this.mode === 'add') {
                 if (this.selection && this.selection.length) this.$emit('switch-mode', 'edit')
                 else this.save() // no selection just delete everything and close
+            } else if (this.mode === 'edit') {
+                this.$emit('switch-mode', 'mentorship')
             } else {
                 this.save()
             }
@@ -278,7 +322,7 @@ export default {
             // talents to update are in the user and in the selection but have different values
             const talentsToUpdate = []
             // filter talents to delete and update
-            this.getSkillOfType(this.type).forEach((talent) => {
+            this.filteredSkills.forEach((talent) => {
                 const rawTalent = toRaw(talent)
                 const selectedTalent = selectionMap[rawTalent.id]
                 if (selectedTalent) {
@@ -362,6 +406,9 @@ export default {
                 type: this.type == 'hobbies' ? 'hobby' : 'skill',
                 category: '', // TODO: check what this is
                 user: this.user.id,
+                can_mentor: false,
+                needs_mentor: false,
+                comment: '',
             }
             this.selection = [...this.selection, skill]
         },
@@ -542,6 +589,21 @@ export default {
         fill: $primary-dark;
         display: inline-block;
         vertical-align: middle;
+    }
+}
+
+.mentorship-mode {
+    .notice {
+        padding-bottom: $space-m;
+        border-bottom: $border-width-s solid $light-gray;
+    }
+
+    .subtitle {
+        margin-top: $space-l;
+        margin-bottom: $space-l;
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
     }
 }
 </style>

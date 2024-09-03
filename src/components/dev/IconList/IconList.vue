@@ -120,6 +120,7 @@ export default {
                 'DotsGrid',
                 'HumanMaleChild',
                 'School',
+                'TextBoxOutline',
             ],
         }
     },
