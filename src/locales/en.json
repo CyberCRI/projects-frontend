@@ -1242,6 +1242,8 @@
                 "modify-competences": "Modify competences",
                 "become-mentor": "Become mentor",
                 "become-mentee": "Be mentee",
+                "delete-confirm-title": "Delete {type}",
+                "delete-confirm-body": "Are you sure you want to delete '{name}' from your {type}?",
                 "mentorship": {
                     "drawer": {
                         "mentor": {
@@ -1281,7 +1283,9 @@
                             "confirm": "Save"
                         }
                     },
-                    "title": "Professional skills"
+                    "title": "Professional skills",
+                    "type-plural": "professional skills",
+                    "type-singular": "a professional skill"
                 },
                 "hobbies": {
                     "add": "Add hobbies",
@@ -1307,7 +1311,9 @@
                             "confirm": "Save"
                         }
                     },
-                    "title": "Hobbies"
+                    "title": "Hobbies",
+                    "type-plural": "hobbies",
+                    "type-singular": "a hobby"
                 },
                 "levels": {
                     "curious": "Curious",

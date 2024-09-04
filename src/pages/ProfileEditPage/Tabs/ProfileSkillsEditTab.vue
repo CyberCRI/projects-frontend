@@ -86,6 +86,8 @@
                             :full-list="true"
                             :skills="getSkillOfType(key)"
                             title=""
+                            @edit-skill="openDrawer(key, 'edit', $event)"
+                            @delete-skill="deleteSkill($event, key)"
                         />
                     </div>
                 </template>
@@ -106,9 +108,29 @@
         :user="user"
         :mode="drawerMode"
         :type="drawerType"
+        :filter="editSkillFilter"
         @close="closeDrawer"
         @switch-mode="drawerMode = $event"
         @skills-updated="$emit('profile-edited')"
+    />
+    <ConfirmModal
+        v-if="skillToDelete"
+        :content="
+            $t('profile.edit.skills.delete-confirm-body', {
+                name: skillToDelete.wikipedia_tag.name,
+                type: $t(`profile.edit.skills.${typeToDelete}.type-plural`),
+            })
+        "
+        :title="
+            $t('profile.edit.skills.delete-confirm-title', {
+                type: $t(`profile.edit.skills.${typeToDelete}.type-singular`),
+            })
+        "
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="skillToDelete = null"
+        @confirm="onDeleteSkillConfirmed"
+        :asyncing="deletingSkill"
     />
 </template>
 <script>
@@ -118,8 +140,20 @@ import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import UserSkills from '@/components/people/skill/UserSkills.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import { deleteUserSkill } from '@/api/people.service.ts'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 export default {
     name: 'ProfileSkillsEditTab',
+
+    emits: ['edited', 'profile-edited'],
+
+    inject: {
+        reloadUser: {
+            from: 'profileEditReloadUser',
+            default: () => () => {},
+        },
+    },
+
     components: {
         LpiButton,
         SkillsEditDrawer,
@@ -127,9 +161,8 @@ export default {
         UserSkills,
         ContextActionMenu,
         ContextActionButton,
+        ConfirmModal,
     },
-
-    emits: ['edited', 'profile-edited'],
 
     props: {
         user: {
@@ -142,6 +175,10 @@ export default {
             drawerType: 'skills', // skills | hobbies
             drawerMode: 'add', // add | edit
             drawerIsOpen: false,
+            editSkillFilter: null,
+            skillToDelete: null,
+            typeToDelete: null,
+            deletingSkill: false,
         }
     },
     computed: {
@@ -164,7 +201,8 @@ export default {
     },
 
     methods: {
-        openDrawer(type, mode) {
+        openDrawer(type, mode, filter = null) {
+            this.editSkillFilter = filter?.wikipedia_tag?.wikipedia_qid || null
             this.drawerType = type
             this.drawerMode = mode
             this.drawerIsOpen = true
@@ -177,6 +215,32 @@ export default {
         getSkillOfType(type) {
             if (type == 'skills') return this.skills
             else return this.hobbies
+        },
+
+        deleteSkill(skill, type) {
+            this.typeToDelete = type
+            this.skillToDelete = skill
+        },
+
+        async onDeleteSkillConfirmed() {
+            this.deletingSkill = true
+            try {
+                await deleteUserSkill(this.skillToDelete?.id)
+                this.skillToDelete = null
+                await this.reloadUser()
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('profile.edit.skills.save-success'),
+                    type: 'success',
+                })
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('profile.edit.skills.save-error')} (${error})`,
+                    type: 'error',
+                })
+                console.error(error)
+            } finally {
+                this.deletingSkill = false
+            }
         },
     },
 }
