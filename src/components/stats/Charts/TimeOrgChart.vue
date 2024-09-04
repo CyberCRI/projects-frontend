@@ -27,9 +27,9 @@ export default {
             endDate: new Date(),
             formattedData: undefined,
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 legend: {
-                    responsive: true,
-                    maintainAspectRatio: true,
                     display: false,
                 },
             },
@@ -48,14 +48,14 @@ export default {
                     borderColor: '#01910f',
                     fill: false,
                     cubicInterpolationMode: 'monotone',
-                    label: "Created",
+                    label: 'Created',
                 },
                 {
                     data: projectsData.updated,
                     borderColor: '#f7b602',
                     fill: false,
                     cubicInterpolationMode: 'monotone',
-                    label: "Updated",
+                    label: 'Updated',
                 },
             ],
             labels: formatedDates,
