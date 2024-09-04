@@ -2,6 +2,7 @@ import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
+import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
@@ -9,6 +10,17 @@ const i18n = {
     fallbackLocale: 'en',
     messages: {
         en: english,
+    },
+}
+
+const store = {
+    modules: {
+        organizations: {
+            namespaced: true,
+            getters: {
+                current: () => OrganizationOutputFactory.generate(),
+            },
+        },
     },
 }
 
@@ -258,23 +270,24 @@ vi.mock('@/api/stats.service', () => {
 })
 
 describe('StatsByTab.vue', () => {
-    it('should render component', () => {
-        const wrapper = lpiShallowMount(StatsByTab, {
+    let defaultParams
+
+    beforeEach(() => {
+        defaultParams = {
+            store,
             props: {
                 filter: '',
             },
             i18n,
-        })
+        }
+    })
+    it('should render component', () => {
+        const wrapper = lpiShallowMount(StatsByTab, defaultParams)
         expect(wrapper.exists()).toBe(true)
     })
 
     it('shows loader', async () => {
-        const wrapper = lpiShallowMount(StatsByTab, {
-            props: {
-                filter: '',
-            },
-            i18n,
-        })
+        const wrapper = lpiShallowMount(StatsByTab, defaultParams)
         const vm: any = wrapper.vm
         expect(vm.isLoading).toBe(true)
         await waitForExpect(() => {
