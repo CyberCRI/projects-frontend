@@ -32,9 +32,6 @@ export default {
                         display: false,
                     },
                 },
-                legend: {
-                    display: false,
-                },
                 scales: {
                     x: {
                         beginAtZero: true,
