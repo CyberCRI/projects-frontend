@@ -74,7 +74,7 @@
                                     class="edit-btn small"
                                     secondary
                                     no-border
-                                    @click.stop.prevent=""
+                                    @click.stop.prevent="askMentorship = true"
                                 />
                             </ContextActionMenu>
                         </div>
@@ -132,6 +132,7 @@
         @confirm="onDeleteSkillConfirmed"
         :asyncing="deletingSkill"
     />
+    <MentorshipAskDrawer :is-open="askMentorship" @close="askMentorship = false" />
 </template>
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -142,6 +143,7 @@ import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import { deleteUserSkill } from '@/api/people.service.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import MentorshipAskDrawer from '@/components/people/skill/MentorshipAskDrawer.vue'
 export default {
     name: 'ProfileSkillsEditTab',
 
@@ -162,6 +164,7 @@ export default {
         ContextActionMenu,
         ContextActionButton,
         ConfirmModal,
+        MentorshipAskDrawer,
     },
 
     props: {
@@ -179,6 +182,7 @@ export default {
             skillToDelete: null,
             typeToDelete: null,
             deletingSkill: false,
+            askMentorship: false,
         }
     },
     computed: {
