@@ -1,43 +1,22 @@
 <template>
     <div class="container">
-        <GroupButton v-model="chartType" :options="chartTypeOptions" class="group-button" />
-        <LpiLineChart id="time-org-chart" :chart-data="formattedData" :options="options" />
+        <LpiLineChart :chart-data="formattedData" :options="options" />
     </div>
 </template>
 
 <script>
 import { MONTH } from '@/functs/constants.ts'
 import LpiLineChart from './Generic/LpiLineChart.vue'
-import GroupButton from '@/components/base/button/GroupButton.vue'
 
 export default {
     name: 'TimeOrgChart',
 
-    components: { LpiLineChart, GroupButton },
+    components: { LpiLineChart },
 
     props: {
         stats: {
             type: Array,
             default: () => [],
-        },
-    },
-
-    computed: {
-        chartTypeOptions() {
-            return [
-                {
-                    value: 'newProjects',
-                    label: this.$t('stats.new-projects'),
-                },
-                {
-                    value: 'cumulatedProjects',
-                    label: this.$t('stats.cumulated-projects'),
-                },
-                {
-                    value: 'updatedProjects',
-                    label: this.$t('stats.updated-projects'),
-                },
-            ]
         },
     },
 
@@ -58,67 +37,66 @@ export default {
     },
 
     created() {
-        this.populateDataChart()
-    },
+        const dates = this.getDates(this.startDate, this.endDate)
+        const projectsData = this.newFormatData(this.stats, dates)
+        const formatedDates = this.newFormatDates(dates)
 
-    watch: {
-        chartType() {
-            this.populateDataChart()
-        },
+        this.formattedData = {
+            datasets: [
+                {
+                    data: projectsData.created,
+                    borderColor: '#01910f',
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    label: "Created",
+                },
+                {
+                    data: projectsData.updated,
+                    borderColor: '#f7b602',
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    label: "Updated",
+                },
+            ],
+            labels: formatedDates,
+        }
     },
 
     methods: {
-        populateDataChart() {
-            const dates = this.formatDates(this.startDate, this.endDate)
-            const projectsData = this.formatData(this.stats)
-
-            this.formattedData = {
-                datasets: [
-                    {
-                        data: projectsData,
-                        borderColor: '#1d727c',
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                    },
-                ],
-                labels: dates,
-            }
-        },
-
-        formatDates(startDate, endDate) {
+        getDates(startDate, endDate) {
             const dates = []
-            let currentDate = new Date(startDate)
-            while (currentDate <= endDate) {
-                dates.push(`${MONTH[currentDate.getMonth()]} ${currentDate.getFullYear()}`)
-                currentDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1))
+            for (
+                let currentDate = new Date(startDate);
+                currentDate <= endDate;
+                currentDate.setMonth(currentDate.getMonth() + 1)
+            ) {
+                // currentDate would otherwise be a reference to the same object, over and over
+                dates.push(new Date(currentDate))
             }
             return dates
         },
 
-        formatData(stats) {
-            const statsSorted = [...stats].sort((a, b) => new Date(a.month) - new Date(b.month))
-            const startIndex = statsSorted.findIndex(
-                (stat) =>
-                    new Date(stat.month).toLocaleDateString() ===
-                    this.startDate.toLocaleDateString()
-            )
-            const statsByDates = statsSorted.slice(startIndex)
-            // By new projects
-            if (this.chartType === 'newProjects') {
-                return statsByDates.map((stat) => stat.created_count)
-                // By updated projects
-            } else if (this.chartType === 'updatedProjects') {
-                return statsByDates.map((stat) => stat.updated_count)
-                // By new projects cumulated
-            } else if (this.chartType === 'cumulatedProjects') {
-                const formattedData = []
-                statsByDates.forEach((stat) =>
-                    formattedData.push(
-                        stat.created_count + (formattedData[formattedData.length - 1] || 0)
-                    )
+        newFormatDates(dates) {
+            return dates.map((date) => `${MONTH[date.getMonth()]} ${date.getFullYear()}`)
+        },
+
+        newFormatData(stats, dates) {
+            const statsDate = stats.map((stat) => new Date(stat.month))
+            const data = { created: [], updated: [] }
+
+            for (const date of dates) {
+                const index = statsDate.findIndex(
+                    (statDate) => statDate.toLocaleDateString() === date.toLocaleDateString()
                 )
-                return formattedData
+                if (index !== -1) {
+                    data.created.push(stats[index].created_count)
+                    data.updated.push(stats[index].updated_count)
+                } else {
+                    data.created.push(0)
+                    data.updated.push(0)
+                }
             }
+            return data
         },
     },
 }
@@ -126,16 +104,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-    .group-button {
-        margin-bottom: $space-m;
-    }
-
-    #time-org-chart {
-        max-width: 100%;
-
-        :deep(canvas) {
-            max-width: 100%;
-        }
-    }
+    width: 100%;
 }
 </style>

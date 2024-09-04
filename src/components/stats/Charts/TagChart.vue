@@ -26,20 +26,22 @@ export default {
             language: this.$store.state.languages.current,
             options: {
                 maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
                 legend: {
                     display: false,
                 },
                 scales: {
-                    xAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
-                            gridLines: {
-                                display: false,
-                            },
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false,
                         },
-                    ],
+                    },
                 },
             },
         }
@@ -75,3 +77,9 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+    width: 100%;
+}
+</style>
