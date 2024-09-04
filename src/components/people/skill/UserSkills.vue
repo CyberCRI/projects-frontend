@@ -10,7 +10,8 @@
             <div class="column mentor-column" v-if="hasMentorRelatedSkills">
                 <div class="mentor-column-block" v-if="mentorSkills.length">
                     <h3 class="mentor-column-title">
-                        <IconImage name="School" /> {{ $t('Mentor') }}
+                        <IconImage name="School" />
+                        {{ $t('profile.edit.skills.mentorship.mentor') }}
                     </h3>
                     <template v-for="skill in mentorSkills" :key="skill.id">
                         <SkillItem
@@ -25,13 +26,15 @@
                     </template>
                     <div class="mentorship-actions">
                         <a href="#" class="mentorship-action" @click.prevent="askMentorship = true">
-                            <IconImage name="EmailOutline" /> {{ $t('Ask for mentorship') }}
+                            <IconImage name="EmailOutline" />
+                            {{ $t('profile.edit.skills.mentorship.ask') }}
                         </a>
                     </div>
                 </div>
                 <div class="mentor-column-block" v-if="mentoreeSkills.length">
                     <h3 class="mentor-column-title">
-                        <IconImage name="HumanMaleChild" /> {{ $t('Mentoree') }}
+                        <IconImage name="HumanMaleChild" />
+                        {{ $t('profile.edit.skills.mentorship.mentoree') }}
                     </h3>
                     <template v-for="skill in mentoreeSkills" :key="skill.id">
                         <SkillItem
@@ -45,8 +48,13 @@
                         />
                     </template>
                     <div class="mentorship-actions">
-                        <a href="#" class="mentorship-action" @click.prevent="">
-                            <IconImage name="EmailOutline" /> {{ $t('Offer your mentorship') }}
+                        <a
+                            href="#"
+                            class="mentorship-action"
+                            @click.prevent="offerMentorship = true"
+                        >
+                            <IconImage name="EmailOutline" />
+                            {{ $t('profile.edit.skills.mentorship.offer') }}
                         </a>
                     </div>
                 </div>
@@ -74,24 +82,29 @@
             </div>
         </div>
     </div>
-    <MentorshipAskDrawer :is-open="askMentorship" @close="askMentorship = false" />
+    <MentorshipContactDrawer
+        :is-open="askMentorship || offerMentorship"
+        :is-offer="offerMentorship"
+        @close="offerMentorship = askMentorship = false"
+    />
 </template>
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import MentorshipAskDrawer from '@/components/people/skill/MentorshipAskDrawer.vue'
+import MentorshipContactDrawer from '@/components/people/skill/MentorshipContactDrawer.vue'
 export default {
     name: 'UserSkills',
 
     emits: ['edit-skill', 'delete-skill'],
 
-    components: { SkillItem, IconImage, MentorshipAskDrawer },
+    components: { SkillItem, IconImage, MentorshipContactDrawer },
 
     data() {
         return {
             columnCount: [0],
             askMentorship: false,
+            offerMentorship: false,
         }
     },
 

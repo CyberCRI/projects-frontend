@@ -1225,47 +1225,7 @@
                     "label": "Groupes dont je suis membre"
                 }
             },
-            "mentorship": {
-                "drawer": {
-                    "mentor": {
-                        "title": "Devenir mentor",
-                        "notice": "Vous avez indiqué un niveau élevé pour ces compétences. Souhaitez-vous être mentor ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e. Ça peut être pour répondre à une question en maximum 1 heure, faire 3 séances de mentorat d'une heure ou un accompagnement sur une année à hauteur de 2 heures par mois."
-                    },
-                    "mentoree": {
-                        "title": "Être mentoré·e",
-                        "notice": "Pour ces compétences, souhaitez-vous être mentoré·e ? Nous vous recommanderons alors des mentors. Vous pourrez rentrer en contact avec eux et leur demander ce dont vous avez besoin."
-                    }
-                },
-                "edit": {
-                    "note-placeholder": "Ajouter un commentaire (facultatif)"
-                },
-                "ask": {
-                    "title": "Demander un mentorat",
-                    "notice": "Veuillez spécifier la compétence pour laquelle vous demandez un mentorat.",
-                    "error": "Erreur lors de l'envoi de votre requête.",
-                    "success": "Votre requête a été envoyée.",
-                    "fields": {
-                        "title": {
-                            "label": "Titre",
-                            "placeholder": "Ex. \"Pouvez-vous être mon mentor en Data Science ?\"",
-                            "required": "Le champ titre est requis."
-                        },
-                        "text": {
-                            "label": "Texte",
-                            "notice": "Ajoutez des détails sur vous et le type d'aide dont vous avez besoin (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
-                            "placeholder": "Commencez ici",
-                            "required": "Le champ texte est requis."
-                        },
-                        "email": {
-                            "label": "Réponse par e-mail",
-                            "notice": "Ce message sera envoyé par e-mail. Pour recevoir une réponse, ajoutez votre e-mail.",
-                            "placeholder": "Ex. jane.doe{'@'}gmail.com",
-                            "invalid": "Le champ e-mail est invalide.",
-                            "required": "Le champ e-mail est requis."
-                        }
-                    }
-                }
-            },
+
             "skills": {
                 "tab": "Compétences",
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
@@ -1276,10 +1236,59 @@
                 "handle": "Gérer",
                 "add-competences": "Ajouter des compétences",
                 "modify-competences": "Modifier les compétences",
-                "become-meetor": "Devenir mentor",
+                "become-mentor": "Devenir mentor",
                 "become-mentee": "Être mentoré",
                 "delete-confirm-title": "Supprimer {type}",
                 "delete-confirm-body": "Êtes-vous sûr de vouloir supprimer '{name}' de vos {type} ?",
+                "mentorship": {
+                    "mentor": "Mentor",
+                    "mentoree": "Mentoré·e",
+                    "offer": "Offrir votre mentorat",
+                    "ask": "Demander un mentorat",
+                    "drawer": {
+                        "mentor": {
+                            "title": "Devenir mentor",
+                            "notice": "Vous avez indiqué un niveau élevé pour ces compétences. Souhaitez-vous être mentor ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e. Ça peut être pour répondre à une question en maximum 1 heure, faire 3 séances de mentorat d'une heure ou un accompagnement sur une année à hauteur de 2 heures par mois."
+                        },
+                        "mentoree": {
+                            "title": "Être mentoré·e",
+                            "notice": "Pour ces compétences, souhaitez-vous être mentoré·e ? Nous vous recommanderons alors des mentors. Vous pourrez rentrer en contact avec eux et leur demander ce dont vous avez besoin."
+                        }
+                    },
+                    "edit": {
+                        "note-placeholder": "Ajouter un commentaire (facultatif)"
+                    },
+                    "contact": {
+                        "title-ask": "Demander un mentorat",
+                        "title-offer": "Offrir un mentorat",
+                        "notice-ask": "Veuillez spécifier la compétence pour laquelle vous demandez un mentorat.",
+                        "notice-offer": "Veuillez spécifier la compétence pour laquelle vous offrez un mentorat.",
+                        "error": "Erreur lors de l'envoi de votre requête.",
+                        "success": "Votre requête a été envoyée.",
+                        "fields": {
+                            "title": {
+                                "label": "Titre",
+                                "placeholder-ask": "Ex. \"Pouvez-vous être mon mentor en Data Science ?\"",
+                                "placeholder-offer": "Ex. \"Voudriez-vous que je sois votre mentor en Data Science ?\"",
+                                "required": "Le champ titre est requis."
+                            },
+                            "text": {
+                                "label": "Texte",
+                                "notice-ask": "Ajoutez des détails sur vous et le type d'aide dont vous avez besoin (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "notice-offer": "Ajoutez des détails sur vous et le type d'aide dont vous offrez (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "placeholder": "Commencez ici",
+                                "required": "Le champ texte est requis."
+                            },
+                            "email": {
+                                "label": "Réponse par e-mail",
+                                "notice": "Ce message sera envoyé par e-mail. Pour recevoir une réponse, ajoutez votre e-mail.",
+                                "placeholder": "Ex. jane.doe{'@'}gmail.com",
+                                "invalid": "Le champ e-mail est invalide.",
+                                "required": "Le champ e-mail est requis."
+                            }
+                        }
+                    }
+                },
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
                     "edit-items": "Éditer les compétences",

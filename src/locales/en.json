@@ -1245,6 +1245,10 @@
                 "delete-confirm-title": "Delete {type}",
                 "delete-confirm-body": "Are you sure you want to delete '{name}' from your {type}?",
                 "mentorship": {
+                    "mentor": "Mentor",
+                    "mentoree": "Mentoree",
+                    "offer": "Offer your mentorship",
+                    "ask": "Ask for mentorship",
                     "drawer": {
                         "mentor": {
                             "title": "Become mentor",
@@ -1258,20 +1262,24 @@
                     "edit": {
                         "note-placeholder": "Add a comment (optional)"
                     },
-                    "ask": {
-                        "title": "Ask for mentorship",
-                        "notice": "Please specify the skill for which you are asking mentorship.",
+                    "contact": {
+                        "title-ask": "Ask for mentorship",
+                        "title-offer": "Offer mentorship",
+                        "notice-ask": "Please specify the skill for which you are asking mentorship.",
+                        "notice-offer": "Please specify the skill for which you are offering mentorship.",
                         "error": "Error while sending the request.",
                         "success": "Your request was sent.",
                         "fields": {
                             "title": {
                                 "label": "Title",
-                                "placeholder": "Eg. \"Can you be my mentor in Datascience?\"",
+                                "placeholder-ask": "Eg. \"Can you be my mentor in Datascience?\"",
+                                "placeholder-offer": "Eg. \"Would you be my mentee in Datascience?\"",
                                 "required": "The title field is required."
                             },
                             "text": {
                                 "label": "Text",
-                                "notice": "Add details about you and the kind of help you need (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "notice-ask": "Add details about you and the kind of help you need (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "notice-offer": "Add details about you and the kind of help you provide (eg. number of hours, the nature of help - from simple feedback to lesson...).",
                                 "placeholder": "Start here",
                                 "required": "The text field is required."
                             },
