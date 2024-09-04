@@ -1238,6 +1238,32 @@
                 },
                 "edit": {
                     "note-placeholder": "Ajouter un commentaire (facultatif)"
+                },
+                "ask": {
+                    "title": "Demander un mentorat",
+                    "notice": "Veuillez spécifier la compétence pour laquelle vous demandez un mentorat.",
+                    "error": "Erreur lors de l'envoi de votre requête.",
+                    "success": "Votre requête a été envoyée.",
+                    "fields": {
+                        "title": {
+                            "label": "Titre",
+                            "placeholder": "Ex. \"Pouvez-vous être mon mentor en Data Science ?\"",
+                            "required": "Le champ titre est requis."
+                        },
+                        "text": {
+                            "label": "Texte",
+                            "notice": "Ajoutez des détails sur vous et le type d'aide dont vous avez besoin (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                            "placeholder": "Commencez ici",
+                            "required": "Le champ texte est requis."
+                        },
+                        "email": {
+                            "label": "Réponse par e-mail",
+                            "notice": "Ce message sera envoyé par e-mail. Pour recevoir une réponse, ajoutez votre e-mail.",
+                            "placeholder": "Ex. jane.doe{'@'}gmail.com",
+                            "invalid": "Le champ e-mail est invalide.",
+                            "required": "Le champ e-mail est requis."
+                        }
+                    }
                 }
             },
             "skills": {

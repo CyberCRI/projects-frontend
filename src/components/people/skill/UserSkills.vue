@@ -23,8 +23,10 @@
                             @delete-skill="$emit('delete-skill', skill)"
                         />
                     </template>
-                    <div class="mentorship-action">
-                        <IconImage name="EmailOutline" /> {{ $t('Ask for mentorship') }}
+                    <div class="mentorship-actions">
+                        <a href="#" class="mentorship-action" @click.prevent="askMentorship = true">
+                            <IconImage name="EmailOutline" /> {{ $t('Ask for mentorship') }}
+                        </a>
                     </div>
                 </div>
                 <div class="mentor-column-block" v-if="mentoreeSkills.length">
@@ -42,8 +44,10 @@
                             @delete-skill="$emit('delete-skill', skill)"
                         />
                     </template>
-                    <div class="mentorship-action">
-                        <IconImage name="EmailOutline" /> {{ $t('Offer your mentorship') }}
+                    <div class="mentorship-actions">
+                        <a href="#" class="mentorship-action" @click.prevent="">
+                            <IconImage name="EmailOutline" /> {{ $t('Offer your mentorship') }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -70,21 +74,24 @@
             </div>
         </div>
     </div>
+    <MentorshipAskDrawer :is-open="askMentorship" @close="askMentorship = false" />
 </template>
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
+import MentorshipAskDrawer from '@/components/people/skill/MentorshipAskDrawer.vue'
 export default {
     name: 'UserSkills',
 
     emits: ['edit-skill', 'delete-skill'],
 
-    components: { SkillItem, IconImage },
+    components: { SkillItem, IconImage, MentorshipAskDrawer },
 
     data() {
         return {
             columnCount: [0],
+            askMentorship: false,
         }
     },
 
@@ -243,6 +250,11 @@ export default {
 
     .mentorship-action {
         justify-content: flex-end;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     .mentor-column-block {
