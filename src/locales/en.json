@@ -1758,7 +1758,9 @@
         "number-tags": "Most used tags in projects",
         "page-title": "Statistics",
         "time-evolution": "Projects temporal evolution",
-        "updated-projects": "Monthly project updates"
+        "updated-projects": "Monthly project updates",
+        "created": "Created",
+        "updated": "Updated"
     },
     "status": {
         "complete": "completed",
