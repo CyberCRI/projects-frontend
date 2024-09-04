@@ -68,7 +68,7 @@
             <div class="level-editor-list">
                 <div
                     class="entry"
-                    v-for="skill in selection"
+                    v-for="skill in filteredSelection"
                     :key="skill.wikipedia_tag.wikipedia_qid"
                 >
                     <h4 class="skill-name">{{ skill.wikipedia_tag.name }}</h4>
@@ -184,6 +184,10 @@ export default {
             type: Object,
             required: true,
         },
+        filter: {
+            type: [String, Array, null],
+            default: null,
+        },
     },
     data() {
         return {
@@ -231,11 +235,20 @@ export default {
             )
         },
 
+        filteredSelection() {
+            if (!this.filter) return this.selection
+            if (Array.isArray(this.filter))
+                return this.selection.filter((s) =>
+                    this.filter.includes(s.wikipedia_tag.wikipedia_qid)
+                )
+            return this.selection.filter((s) => s.wikipedia_tag.wikipedia_qid === this.filter)
+        },
+
         canBeMentorSkills() {
-            return this.selection.filter((skill) => skill.level > 2)
+            return this.filteredSelection.filter((skill) => skill.level > 2)
         },
         canNeedMentorSkills() {
-            return this.selection.filter((skill) => skill.level < 3)
+            return this.filteredSelection.filter((skill) => skill.level < 3)
         },
     },
     watch: {

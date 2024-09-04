@@ -1257,6 +1257,8 @@
                 "modify-competences": "Modifier les compétences",
                 "become-meetor": "Devenir mentor",
                 "become-mentee": "Être mentoré",
+                "delete-confirm-title": "Supprimer {type}",
+                "delete-confirm-body": "Êtes-vous sûr de vouloir supprimer '{name}' de vos {type} ?",
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
                     "edit-items": "Éditer les compétences",
@@ -1281,7 +1283,9 @@
                             "confirm": "Sauvegarder"
                         }
                     },
-                    "title": "Compétences"
+                    "title": "Compétences",
+                    "type-plural": "compétences professionnelles",
+                    "type-singular": "une compétence professionnelle"
                 },
                 "hobbies": {
                     "add": "Ajouter des hobbies",
@@ -1307,7 +1311,9 @@
                             "confirm": "Sauvegarder"
                         }
                     },
-                    "title": "Hobbies"
+                    "title": "Hobbies",
+                    "type-plural": "hobbies",
+                    "type-singular": "un hobby"
                 },
                 "levels": {
                     "curious": "Curieux",

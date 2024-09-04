@@ -19,6 +19,8 @@
                             :label="skill.wikipedia_tag.name"
                             :level="Number(skill.level)"
                             :comment="skill.comment"
+                            @edit-skill="$emit('edit-skill', skill)"
+                            @delete-skill="$emit('delete-skill', skill)"
                         />
                     </template>
                     <div class="mentorship-action">
@@ -36,6 +38,8 @@
                             :label="skill.wikipedia_tag.name"
                             :level="Number(skill.level)"
                             :comment="skill.comment"
+                            @edit-skill="$emit('edit-skill', skill)"
+                            @delete-skill="$emit('delete-skill', skill)"
                         />
                     </template>
                     <div class="mentorship-action">
@@ -59,6 +63,8 @@
                         :key="skill.id"
                         :label="skill.wikipedia_tag.name"
                         :level="Number(skill.level)"
+                        @edit-skill="$emit('edit-skill', skill)"
+                        @delete-skill="$emit('delete-skill', skill)"
                     />
                 </template>
             </div>
@@ -71,6 +77,8 @@ import SkillItem from '@/components/people/skill/SkillItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 export default {
     name: 'UserSkills',
+
+    emits: ['edit-skill', 'delete-skill'],
 
     components: { SkillItem, IconImage },
 

@@ -8,15 +8,6 @@
         <span>{{ $filters.capitalize(label) }}</span>
 
         <div class="extras">
-            <div v-if="comment" class="comment">
-                <ToolTip hover placement="top">
-                    <template #custom-content>
-                        <p class="comment-content">{{ comment }}</p>
-                    </template>
-                    <IconImage class="comment-icon" name="TextBoxOutline" />
-                </ToolTip>
-            </div>
-
             <div class="edit-actions" v-if="editing">
                 <ContextActionButton
                     action-icon="Pen"
@@ -33,7 +24,22 @@
                     @click="$emit('delete-skill')"
                 />
             </div>
-            <SkillSteps v-else :white="white" :active-step="level" :steps="steps" class="steps" />
+
+            <div v-if="comment" v-show="!editing" class="comment">
+                <ToolTip hover placement="top">
+                    <template #custom-content>
+                        <p class="comment-content">{{ comment }}</p>
+                    </template>
+                    <IconImage class="comment-icon" name="TextBoxOutline" />
+                </ToolTip>
+            </div>
+            <SkillSteps
+                v-show="!editing"
+                :white="white"
+                :active-step="level"
+                :steps="steps"
+                class="steps"
+            />
         </div>
     </div>
 </template>
