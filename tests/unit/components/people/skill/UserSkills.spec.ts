@@ -53,9 +53,9 @@ describe('UserSkills.vue', () => {
         const wrapper = factory({ limit })
         const vm: any = wrapper.vm
 
-        expect(vm.visibleSkills.length).toEqual(limit)
+        expect(vm.nonMentorSkills.length).toEqual(limit)
         wrapper.setProps({ fullList: true })
         await vm.$nextTick()
-        expect(vm.visibleSkills.length).toEqual(vm.skills.length)
+        expect(vm.nonMentorSkills.length).toEqual(vm.skills.length)
     })
 })
