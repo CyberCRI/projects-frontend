@@ -112,7 +112,15 @@ export default {
             this.isMembersLoading = true
 
             this.$store.dispatch('peopleGroups/setCurrentId', this.groupId)
-            await Promise.all([this.loadGroup(), this.loadGroupMembers(), this.loadGroupProjects()])
+            try {
+                await Promise.all([
+                    this.loadGroup(),
+                    this.loadGroupMembers(),
+                    this.loadGroupProjects(),
+                ])
+            } catch (err) {
+                console.error("group data couldn't be loaded")
+            }
 
             this.isLoading = false
         },
@@ -120,7 +128,11 @@ export default {
         async loadGroup() {
             try {
                 this.isLoading = true
-                const groupData = await getGroup(this.currentOrganizationCode, this.groupId)
+                const groupData = await getGroup(
+                    this.currentOrganizationCode,
+                    this.groupId,
+                    /*no error*/ true
+                )
                 this.groupName = groupData.name
                 this.groupImage = groupData.header_image
                 this.groupEmail = groupData.email
@@ -158,12 +170,12 @@ export default {
             try {
                 const groupMemberData = await getGroupMember(
                     this.currentOrganizationCode,
-                    this.groupId
+                    this.groupId,
+                    /*no error*/ true
                 )
                 this.membersInitialRequest = groupMemberData
-            } catch (err) {
-                console.error(err)
             } finally {
+                // no catch / log because it might be a permission denied
                 this.isMembersLoading = false
             }
         },
@@ -172,12 +184,12 @@ export default {
             try {
                 const groupProjectData = await getGroupProject(
                     this.currentOrganizationCode,
-                    this.groupId
+                    this.groupId,
+                    /*no error*/ true
                 )
                 this.projectsInitialRequest = groupProjectData
-            } catch (err) {
-                console.error(err)
             } finally {
+                // no catch / log because it might be a permission denied
                 this.isProjectsLoading = false
             }
         },
