@@ -29,6 +29,7 @@ export default {
         },
     },
 
+
     setup(props) {
         const dataValue = ref(props.chartData)
         const dataOptions = ref(props.options)

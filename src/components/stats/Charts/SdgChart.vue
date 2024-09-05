@@ -27,24 +27,20 @@ export default {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                legend: {
-                    display: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
                 },
                 scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
+                    y: {
+                        beginAtZero: true,
+                    },
+                    x: {
+                        grid: {
+                            display: false,
                         },
-                    ],
-                    xAxes: [
-                        {
-                            gridLines: {
-                                display: false,
-                            },
-                        },
-                    ],
+                    },
                 },
             },
             clonedStats: this.stats,
@@ -81,3 +77,10 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.container {
+    width: 100%;
+    height: 100%;
+}
+</style>

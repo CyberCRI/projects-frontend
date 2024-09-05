@@ -1,43 +1,35 @@
 <template>
     <div class="stats-by-tab">
-        <StatCard :title="$t('stats.number-projects-org')">
-            <LpiLoader v-if="isLoading" />
-            <ProjectsByOrg v-else :key="renderCount" :stats="stats.by_organization" />
-        </StatCard>
-
         <StatCard :title="$t('stats.number-projects-sdg')">
             <LpiLoader v-if="isLoading" />
-            <SdgChart v-else :key="renderCount" :stats="stats.by_sdg" />
+            <SdgChart v-else :stats="stats.by_sdg" />
         </StatCard>
 
         <StatCard :title="$t('stats.time-evolution')">
             <LpiLoader v-if="isLoading" />
-            <TimeOrgChart v-else :key="renderCount" :stats="stats.by_month" />
+            <TimeOrgChart v-else :stats="stats.by_month" />
         </StatCard>
 
         <StatCard :title="$t('stats.number-tags')">
             <LpiLoader v-if="isLoading" />
-            <TagChart v-else :key="renderCount" :stats="stats.top_tags" />
+            <TagChart v-else :stats="stats.top_tags" />
         </StatCard>
     </div>
 </template>
 
 <script>
 import StatCard from '@/components/stats/StatCard.vue'
-import ProjectsByOrg from '@/components/stats/Charts/ProjectsByOrg.vue'
 import SdgChart from '@/components/stats/Charts/SdgChart.vue'
 import TagChart from '@/components/stats/Charts/TagChart.vue'
 import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
 import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
 import { getStats } from '@/api/stats.service'
-import debounce from 'lodash.debounce'
 
 export default {
     name: 'StatsByTab',
 
     components: {
         StatCard,
-        ProjectsByOrg,
         LpiLoader,
         SdgChart,
         TagChart,
@@ -52,18 +44,8 @@ export default {
     },
 
     async created() {
-        this.stats = await getStats(this.filter)
+        this.stats = await getStats(this.filter, this.organization.code)
         this.isLoading = false
-    },
-
-    mounted() {
-        window.addEventListener(
-            'resize',
-            debounce(() => {
-                this.renderCount++ // force re-render for responsive dataviz
-            }),
-            500
-        )
     },
 
     data() {
@@ -72,6 +54,11 @@ export default {
             renderCount: 0,
             stats: undefined,
         }
+    },
+    computed: {
+        organization() {
+            return this.$store.getters['organizations/current']
+        },
     },
 }
 </script>

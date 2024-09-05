@@ -42,11 +42,5 @@ export default {
         justify-content: center;
         min-height: 400px;
     }
-
-    @media screen and (max-width: $max-mobile) {
-        .chart-ctn {
-            justify-content: flex-start;
-        }
-    }
 }
 </style>
