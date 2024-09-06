@@ -7,6 +7,7 @@ import footer from './footer.analytic'
 import follow from './follow.analytic'
 import location from './location.analytic'
 import comment from './comment.analytics'
+import projectMessage from './project-message.analytics'
 import blog from './blog'
 import attachmentFile from './attachment-file.analytic'
 import attachmentLink from './attachment-link.analytic'
@@ -22,6 +23,7 @@ export default {
     follow,
     location,
     comment,
+    projectMessage,
     blog,
     attachmentFile,
     attachmentLink,

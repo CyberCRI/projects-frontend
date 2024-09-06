@@ -47,6 +47,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { postCommentImage } from '@/api/comments.service'
+import { postProjectMessageImage } from '@/api/project-messages.service'
 
 export default {
     name: 'MakeComment',
@@ -104,16 +105,15 @@ export default {
 
     methods: {
         saveCommentImage(file) {
-            if (this.isPrivate) {
-                // TODO: use private message api
-                alert('Private comment cannot have yet')
-                return
-            }
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO still needed ?
             formData.append('project_id', this.projectId)
-            return postCommentImage(this.projectId, formData)
+            if (this.isPrivate) {
+                return postProjectMessageImage(this.projectId, formData)
+            } else {
+                return postCommentImage(this.projectId, formData)
+            }
         },
 
         reset() {
@@ -143,12 +143,6 @@ export default {
         },
 
         async createComment() {
-            if (this.isPrivate) {
-                // TODO: use private message api
-                alert('Private comment cannot be saved yet')
-                return
-            }
-
             this.asyncing = true
             const payload = {
                 content: this.comment,
@@ -156,55 +150,99 @@ export default {
                 images_ids: this.addedImages,
             }
 
-            if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
-
-            try {
-                const result = await this.$store.dispatch('comments/postComment', payload)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.comment-create.success'),
-                    type: 'success',
-                })
-                if (!this.repliedComment) this.scrollToNewComment(result)
-            } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.comment-create.error')} (${error})`,
-                    type: 'error',
-                })
-            } finally {
-                this.asyncing = false
+            if (this.isPrivate) {
+                if (this.repliedComment) payload.reply_on = this.repliedComment.id // // reply_on_id in comment
+                try {
+                    const result = await this.$store.dispatch(
+                        'projectMessages/postProjectMessage',
+                        payload
+                    )
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-create.success'), // TODO
+                        type: 'success',
+                    })
+                    if (!this.repliedComment) this.scrollToNewComment(result)
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-create.error')} (${error})`, // TODO
+                        type: 'error',
+                    })
+                } finally {
+                    this.asyncing = false
+                }
+            } else {
+                if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
+                try {
+                    const result = await this.$store.dispatch('comments/postComment', payload)
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-create.success'),
+                        type: 'success',
+                    })
+                    if (!this.repliedComment) this.scrollToNewComment(result)
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-create.error')} (${error})`,
+                        type: 'error',
+                    })
+                } finally {
+                    this.asyncing = false
+                }
             }
         },
 
         async updateComment() {
             if (this.isPrivate) {
-                // TODO: use private message api
-                alert('Private comment cannot be updated yet')
-                return
-            }
-            const body = {
-                id: this.originalComment.id,
-                comment: {
-                    content: this.comment,
-                    project_id: this.projectId,
-                    images_ids: this.addedImages,
-                },
-            }
+                const body = {
+                    id: this.originalComment.id,
+                    projectMessage: {
+                        content: this.comment,
+                        project_id: this.projectId,
+                        images_ids: this.addedImages,
+                    },
+                }
 
-            try {
-                await this.$store.dispatch('comments/patchComment', {
-                    body,
-                    mainComment: this.repliedComment,
-                })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.comment-update.success'),
-                    type: 'success',
-                })
-            } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.comment-update.error')} (${error})`,
-                    type: 'error',
-                })
-                console.error(error)
+                try {
+                    await this.$store.dispatch('projectMessages/patchProjectMesage', {
+                        body,
+                        mainProjectMessage: this.repliedComment,
+                    })
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-update.success'), // TODO
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-update.error')} (${error})`, // TODO
+                        type: 'error',
+                    })
+                    console.error(error)
+                }
+            } else {
+                const body = {
+                    id: this.originalComment.id,
+                    comment: {
+                        content: this.comment,
+                        project_id: this.projectId,
+                        images_ids: this.addedImages,
+                    },
+                }
+
+                try {
+                    await this.$store.dispatch('comments/patchComment', {
+                        body,
+                        mainComment: this.repliedComment,
+                    })
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-update.success'),
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-update.error')} (${error})`,
+                        type: 'error',
+                    })
+                    console.error(error)
+                }
             }
         },
 
@@ -215,7 +253,7 @@ export default {
         },
 
         handleImage(image) {
-            this.addedImages(image)
+            this.addedImages.push(image.id)
         },
 
         login() {

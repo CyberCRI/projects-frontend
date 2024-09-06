@@ -6,17 +6,15 @@
         </div>
         <MakeComment is-private />
 
-        <NoItem v-if="!comments.length" message="comment.private-exchange.no-message" />
+        <NoItem v-if="!projectMessages.length" message="comment.private-exchange.no-message" />
 
         <div v-else>
             <CommentItem
                 is-private
-                v-for="comment in comments"
-                :key="comment.id"
-                :id="comment.id"
-                :comment="comment"
-                @edit-comment="openCommentModal"
-                @reply-to-comment="openCommentModal"
+                v-for="projectMessage in projectMessages"
+                :key="projectMessage.id"
+                :id="projectMessage.id"
+                :comment="projectMessage"
             />
         </div>
     </div>
@@ -26,7 +24,7 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
@@ -46,11 +44,8 @@ export default {
     },
 
     computed: {
-        comments() {
-            // TODO: use private comment api
-            // ...mapGetters({ comments: 'comments/all' }),
-            return []
-        },
+        ...mapGetters({ projectMessages: 'projectMessages/all' }),
+
         isMember() {
             const members = [
                 ...this.project.team.members,
@@ -58,14 +53,6 @@ export default {
                 ...this.project.team.reviewers,
             ]
             return members.find((user) => this.$store.getters['users/id'] === user.id)
-        },
-    },
-
-    inject: ['projectLayoutToggleAddModal'],
-
-    methods: {
-        openCommentModal(comment) {
-            this.projectLayoutToggleAddModal('comment', comment)
         },
     },
 

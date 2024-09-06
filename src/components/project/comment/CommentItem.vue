@@ -176,29 +176,47 @@ export default {
 
         async deleteComment() {
             if (this.isPrivate) {
-                // TODO: use private message api
-                alert('Private comment cannot be deleted yet')
-                return
-            }
-            const body = {
-                id: this.comment.id,
-                mainComment: this.repliedComment,
-            }
+                const body = {
+                    id: this.comment.id,
+                    mainProjectMessage: this.repliedComment,
+                }
 
-            try {
-                await this.$store.dispatch('comments/deleteComment', body)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.comment-delete.success'),
-                    type: 'success',
-                })
-            } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.comment-delete.error')} (${error})`,
-                    type: 'error',
-                })
-                console.error(error)
-            } finally {
-                this.confirmDeleteComment = false
+                try {
+                    await this.$store.dispatch('projectMessages/deleteProjectMessage', body)
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-delete.success'), // TODO
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-delete.error')} (${error})`, // TODO
+                        type: 'error',
+                    })
+                    console.error(error)
+                } finally {
+                    this.confirmDeleteComment = false
+                }
+            } else {
+                const body = {
+                    id: this.comment.id,
+                    mainComment: this.repliedComment,
+                }
+
+                try {
+                    await this.$store.dispatch('comments/deleteComment', body)
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-delete.success'),
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-delete.error')} (${error})`,
+                        type: 'error',
+                    })
+                    console.error(error)
+                } finally {
+                    this.confirmDeleteComment = false
+                }
             }
         },
         placeHolderImg() {

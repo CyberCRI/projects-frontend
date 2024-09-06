@@ -286,6 +286,7 @@ export default {
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
                     await this.$store.dispatch('comments/getComments', project.id)
+                    await this.$store.dispatch('projectMessages/getProjectMessages', project.id)
                     this.getSimilarProjects()
                     this.connectToSocket(project.id)
                     this.loading = false
