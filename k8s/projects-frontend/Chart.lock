@@ -1,6 +1,6 @@
 dependencies:
 - name: common
-  repository: file://../../../helm-helpers/common/
-  version: 0.3.1
-digest: sha256:b03cffd54f727557807cfef96926563ff25494e2d626ec97cfc3093333636f7e
-generated: "2024-09-06T09:54:05.034798457+02:00"
+  repository: oci://criprodprod.azurecr.io/helm
+  version: 0.3.2
+digest: sha256:75c63774b10ef1e2d2795dec0fef0fde19c68acf9b8fbb0321a58680a935ae39
+generated: "2024-09-06T11:40:14.093477942+02:00"
