@@ -38,9 +38,14 @@ export async function getGroup(
     ).data
 }
 
-export async function getGroupMember(org: string, groupId: string): Promise<GroupModel> {
+export async function getGroupMember(
+    org: string,
+    groupId: string,
+    noError: boolean = false
+): Promise<GroupModel> {
+    const _axios = noError ? axiosNoErrorMessage : axios
     return (
-        await axios.get(
+        await _axios.get(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/organization/${org}/people-group/${groupId}/member/`
@@ -48,9 +53,14 @@ export async function getGroupMember(org: string, groupId: string): Promise<Grou
     ).data
 }
 
-export async function getGroupProject(org: string, groupId: string): Promise<GroupModel> {
+export async function getGroupProject(
+    org: string,
+    groupId: string,
+    noError: boolean = false
+): Promise<GroupModel> {
+    const _axios = noError ? axiosNoErrorMessage : axios
     return (
-        await axios.get(
+        await _axios.get(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/organization/${org}/people-group/${groupId}/project/`
