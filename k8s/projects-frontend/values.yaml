@@ -32,13 +32,16 @@ injectedEnv:
     VITE_APP_HOME: new
     VITE_APP_SENTRY_ENABLED: "true"
     VITE_APP_SENTRY_RELEASE: '{{ .Values.application.revision }}'
-    API_URL_IN_CLUSTER: '{{ printf "http://%s.%s" .Values.backendServiceName .Values.namespace }}' # For nginx proxy only
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
     PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
     FRONTEND_URL: '{{ printf "https://%s/" .Values.hostname }}'
     CI: "true"
+
+nginxProxyEnv:
+  PROXY_API_URL: '{{ printf "http://%s.%s" .Values.backendServiceName .Values.namespace }}'
+  PROXY_NGINX_RESOLVER: kube-dns.kube-system
 
 resources:
   requests:
