@@ -40,8 +40,7 @@ server {
     # API proxy
     location ~ ^/(v[0-9]+)/(.*)$ {
         # https://stackoverflow.com/questions/17685674/nginx-proxy-pass-with-remote-addr
-        resolver ${NGINX_RESOLVER};
-        proxy_pass ${DOCKER_INJECT_VITE_APP_API_URL}/$1/$2;
+        proxy_pass ${API_URL_IN_CLUSTER}/$1/$2;
         proxy_ssl_protocols TLSv1.2 TLSv1.3;
         error_log  /var/log/nginx/error.log ${API_PROXY_LOG_LEVEL};
     }

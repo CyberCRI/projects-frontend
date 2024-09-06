@@ -2,4 +2,6 @@
   "name" (tpl .Values.fullName .)
   "podSelector" (dict "matchLabels" (tpl (.Values.commonLabels | toJson) .| fromJson) )
   "allowFromNginx" true
+  "allowDnsResolution" true
+  "additionalEgresses" ((tpl (dict "nest" .Values.networkPolicy.additionalEgresses | toJson) .) | fromJson).nest
 ) }}
