@@ -122,7 +122,7 @@
             :content="$t('comment.delete-description')"
             :title="$t('comment.delete-title')"
             @cancel="openConfirmModal"
-            @confirm="deleteMessage"
+            @confirm="deleteComment"
         />
     </div>
 </template>
@@ -204,39 +204,17 @@ export default {
             this.confirmDeleteComment = !this.confirmDeleteComment
         },
 
-        async deleteComment(comment) {
-            try {
-                await deleteComment(this.project.id, comment.id)
-                analytics.comment.deleteComment({
-                    project: {
-                        id: this.project.id,
-                    },
-                    comment: comment,
-                })
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
-        async deleteProjectMessage(projectMessage) {
-            try {
-                await deleteProjectMessage(this.project.id, projectMessage.id)
-
-                analytics.projectMessage.deleteProjectMessage({
-                    project: {
-                        id: this.project.id,
-                    },
-                    projectMessage: projectMessage,
-                })
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
-        async deleteMessage() {
+        async deleteComment() {
             if (this.isPrivate) {
                 try {
-                    await this.deleteProjectMessage(this.comment)
+                    await deleteProjectMessage(this.project.id, this.comment.id)
+
+                    analytics.projectMessage.deleteProjectMessage({
+                        project: {
+                            id: this.project.id,
+                        },
+                        projectMessage: this.comment,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-delete.success'), // TODO
                         type: 'success',
@@ -253,7 +231,13 @@ export default {
                 }
             } else {
                 try {
-                    await this.deleteComment(this.comment)
+                    await deleteComment(this.project.id, this.comment.id)
+                    analytics.comment.deleteComment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        comment: this.comment,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-delete.success'),
                         type: 'success',

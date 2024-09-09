@@ -159,99 +159,6 @@ export default {
             else this.cancel()
         },
 
-        async postComment(comment) {
-            try {
-                const result = await postComment(comment)
-
-                // if (comment.reply_on_id) {
-                //     commit('SET_REPLY', { id: comment.reply_on_id, comment: result })
-                // } else {
-                //     commit('SET_COMMENT', result)
-                // }
-
-                analytics.comment.comment({
-                    project: {
-                        id: this.project.id,
-                    },
-                    comment: result,
-                })
-
-                return result
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
-        async postProjectMessage(projectMessage) {
-            try {
-                const result = await postProjectMessage(projectMessage)
-
-                // reply_on_id in comment
-                // if (projectMessage.reply_on) {
-                //     commit('SET_REPLY', { id: projectMessage.reply_on, projectMessage: result }) // reply_on_id in comment
-                // } else {
-                //     commit('SET_PROJECT_MESSAGE', result)
-                // }
-
-                analytics.projectMessage.projectMessage({
-                    project: {
-                        id: this.project.id,
-                    },
-                    projectMessage: result,
-                })
-
-                return result
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
-        async patchProjectMessage(projectMessage) {
-            try {
-                const result = await patchProjectMessage(projectMessage.id, projectMessage)
-
-                // if (mainProjectMessage) {
-                //     commit('UPDATE_REPLY_PROJECT_MESSAGE', { reply: result, mainProjectMessage })
-                // } else {
-                //     commit('UPDATE_PROJECT_MESSAGE', result)
-                // }
-
-                analytics.projectMessage.updateProjectMessage({
-                    project: {
-                        id: this.project.id,
-                    },
-                    projectMessage: result,
-                })
-
-                return result
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
-        async patchComment(comment) {
-            try {
-                const result = await patchComment(comment.id, comment)
-
-                // if (mainComment) {
-                //     commit('UPDATE_REPLY_COMMENT', { reply: result, mainComment })
-                // } else {
-                //     commit('UPDATE_COMMENT', result)
-                // }
-
-                analytics.comment.updateComment({
-                    project: {
-                        id: this.project.id,
-                    },
-                    comment: result,
-                })
-
-                return result
-            } catch (err) {
-                throw new Error(err)
-            }
-        },
-
         async createComment() {
             this.asyncing = true
             const payload = {
@@ -263,7 +170,13 @@ export default {
             if (this.isPrivate) {
                 if (this.repliedComment) payload.reply_on = this.repliedComment.id // // reply_on_id in comment
                 try {
-                    const result = await this.postProjectMessage(payload)
+                    const result = await postProjectMessage(payload)
+                    analytics.projectMessage.projectMessage({
+                        project: {
+                            id: this.project.id,
+                        },
+                        projectMessage: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'), // TODO
                         type: 'success',
@@ -283,7 +196,13 @@ export default {
             } else {
                 if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
                 try {
-                    const result = await this.postComment(payload)
+                    const result = await postComment(payload)
+                    analytics.comment.comment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        comment: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'),
                         type: 'success',
@@ -313,7 +232,13 @@ export default {
                 }
 
                 try {
-                    await this.patchProjectMessage(projectMessage)
+                    const result = await patchProjectMessage(projectMessage.id, projectMessage)
+                    analytics.projectMessage.updateProjectMessage({
+                        project: {
+                            id: this.project.id,
+                        },
+                        projectMessage: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'), // TODO
                         type: 'success',
@@ -335,7 +260,13 @@ export default {
                 }
 
                 try {
-                    await this.patchComment(comment)
+                    const result = await patchComment(comment.id, comment)
+                    analytics.comment.updateComment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        comment: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'),
                         type: 'success',
