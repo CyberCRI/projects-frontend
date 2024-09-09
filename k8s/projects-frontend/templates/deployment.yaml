@@ -35,10 +35,10 @@ spec:
             - name: http
               containerPort: {{ .Values.targetPort }}
           env:
-            - name: ADD_HEADER_HSTS
-              value: add_header  Strict-Transport-Security "max-age=31536000" always;
-            - name: NGINX_RESOLVER
-              value: 10.0.0.10
+          {{- range $key, $value := .Values.nginxProxyEnv }}
+            - name: {{ $key }}
+              value: {{ tpl $value $ | quote }}
+          {{- end }}
           envFrom:
             {{- if .Values.injectedEnv.nonSensitive }}
             - configMapRef:

@@ -9,6 +9,7 @@
         />
 
         <AccountForm
+            v-if="currentUser"
             :is-add-mode="isAddMode"
             :is-invite-mode="isInviteMode"
             :selected-user="currentUser"
@@ -57,13 +58,13 @@ export default {
     },
 
     async mounted() {
-        this.isLoading = false
         if (this.selectedUser?.id) await this.setFormFromSelectedUser()
         else
             this.currentUser = {
                 ...this.selectedUser,
                 current_org_role: this.selectedUser?.current_org_role,
             }
+        this.isLoading = false
     },
 
     computed: {
@@ -78,12 +79,11 @@ export default {
 
     methods: {
         async setFormFromSelectedUser() {
-            await getUser(this.selectedUser.id).then((user) => {
-                this.currentUser = {
-                    ...user,
-                    current_org_role: this.selectedUser.current_org_role,
-                }
-            })
+            const user = await getUser(this.selectedUser.id)
+            this.currentUser = {
+                ...user,
+                current_org_role: this.selectedUser.current_org_role,
+            }
         },
     },
 }

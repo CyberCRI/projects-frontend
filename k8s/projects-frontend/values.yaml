@@ -32,7 +32,6 @@ injectedEnv:
     VITE_APP_HOME: new
     VITE_APP_SENTRY_ENABLED: "true"
     VITE_APP_SENTRY_RELEASE: '{{ .Values.application.revision }}'
-
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
@@ -40,12 +39,31 @@ e2eEnv:
     FRONTEND_URL: '{{ printf "https://%s/" .Values.hostname }}'
     CI: "true"
 
+nginxProxyEnv:
+  PROXY_API_URL: '{{ printf "http://%s.%s" .Values.backendServiceName .Values.namespace }}'
+  PROXY_NGINX_RESOLVER: kube-dns.kube-system
+
 resources:
   requests:
     cpu: 1m
     memory: 15Mi
   limits:
     memory: 50Mi
+
+backendServiceName: projects-backend
+
+networkPolicy:
+  additionalEgresses:
+  - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: '{{ .Values.namespace }}'
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: '{{ .Values.backendServiceName }}'
+    ports:
+      - port: 8000
+        protocol: TCP
 
 maintenance:
   enabled: false

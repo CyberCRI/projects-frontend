@@ -13,3 +13,5 @@ application:
 
 e2e:
   enabled: true
+
+namespace: nom-espace
