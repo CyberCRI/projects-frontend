@@ -6,7 +6,8 @@ COPY package.json yarn.lock /app/
 RUN yarn install --pure-lockfile --non-interactive &&\
     rm -rf /usr/local/share/.cache
 
-ARG VITE_APP_API_DEFAULT_VERSION=/v1 \
+ARG VERSION_HASH \
+    VITE_APP_API_DEFAULT_VERSION=/v1 \
     VITE_APP_API_ORG_CODE=CRI \
     VITE_APP_API_URL=https://api.projects.k8s.lp-i.dev \
     VITE_APP_BASE_URL \
