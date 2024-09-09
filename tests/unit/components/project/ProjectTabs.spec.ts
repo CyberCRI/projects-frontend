@@ -27,6 +27,15 @@ const store = {
                 allOrderedByOrderId: vi.fn(() => ProjectCategoryOutputFactory.generateMany(2)),
             },
         },
+
+        organizations: {
+            namespaced: true,
+            getters: {
+                current: () => ({
+                    id: 123,
+                }),
+            },
+        },
     },
 }
 

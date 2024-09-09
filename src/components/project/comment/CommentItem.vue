@@ -89,6 +89,7 @@
                 :replied-comment="comment"
                 @canceled="toggleReply"
                 @submited="toggleReply"
+                :is-private="isPrivate"
             />
         </div>
         <div v-if="comment.replies && comment.replies.length" class="comment-replies-ctn">
@@ -98,6 +99,7 @@
                 :comment="reply"
                 :is-reply="true"
                 :replied-comment="comment"
+                :is-private="isPrivate"
             />
         </div>
 
@@ -143,6 +145,11 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        isPrivate: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -168,25 +175,48 @@ export default {
         },
 
         async deleteComment() {
-            const body = {
-                id: this.comment.id,
-                mainComment: this.repliedComment,
-            }
+            if (this.isPrivate) {
+                const body = {
+                    id: this.comment.id,
+                    mainProjectMessage: this.repliedComment,
+                }
 
-            try {
-                await this.$store.dispatch('comments/deleteComment', body)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.comment-delete.success'),
-                    type: 'success',
-                })
-            } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.comment-delete.error')} (${error})`,
-                    type: 'error',
-                })
-                console.error(error)
-            } finally {
-                this.confirmDeleteComment = false
+                try {
+                    await this.$store.dispatch('projectMessages/deleteProjectMessage', body)
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-delete.success'), // TODO
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-delete.error')} (${error})`, // TODO
+                        type: 'error',
+                    })
+                    console.error(error)
+                } finally {
+                    this.confirmDeleteComment = false
+                }
+            } else {
+                const body = {
+                    id: this.comment.id,
+                    mainComment: this.repliedComment,
+                }
+
+                try {
+                    await this.$store.dispatch('comments/deleteComment', body)
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: this.$t('toasts.comment-delete.success'),
+                        type: 'success',
+                    })
+                } catch (error) {
+                    this.$store.dispatch('notifications/pushToast', {
+                        message: `${this.$t('toasts.comment-delete.error')} (${error})`,
+                        type: 'error',
+                    })
+                    console.error(error)
+                } finally {
+                    this.confirmDeleteComment = false
+                }
             }
         },
         placeHolderImg() {

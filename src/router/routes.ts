@@ -771,6 +771,14 @@ const routes: Array<RouteRecordRaw> = [
                     ),
             },
             {
+                path: 'private-exchange',
+                name: 'projectPrivateExchange',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProjectPrivateExchangeTab" */ '../pages/ProjectPage/Tabs/ProjectPrivateExchangeTab.vue'
+                    ),
+            },
+            {
                 path: 'announcements',
                 name: 'projectAnnouncements',
                 component: () =>

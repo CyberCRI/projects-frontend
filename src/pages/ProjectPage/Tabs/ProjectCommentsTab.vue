@@ -1,5 +1,9 @@
 <template>
     <div class="project-comments narrow-content">
+        <div class="header">
+            <h2 class="title">{{ $t('comment.add-comment') }}</h2>
+        </div>
+
         <MakeComment />
 
         <NoItem v-if="!comments.length" message="comment.no-comments" />
@@ -58,6 +62,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.header {
+    margin-block: 2rem;
+
+    .title {
+        font-size: $font-size-2xl;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .notice {
+        margin-top: 1rem;
+        font-size: 1rem;
+    }
+}
+
 .project-comments {
     margin-top: $space-2xl;
     margin-bottom: $space-l;

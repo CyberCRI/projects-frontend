@@ -397,6 +397,13 @@
         "discard-changes": "Annuler les modifications ?",
         "need-account": "Vous avez besoin d'un compte pour publier des commentaires.",
         "no-comments": "Aucun commentaire n'a encore été fait ...",
+        "private-exchange": {
+            "tab": "Messages internes",
+            "notice": "Les messages privés sont visibles uniquement entre les membres de l’équipe projet.",
+            "no-message": "Aucun message privé pour l'instant...",
+            "send": "Envoyer",
+            "title": "Ajoutez votre message privé"
+        },
         "publish": "Publiez votre commentaire",
         "delete-title": "Supprimer définitivement?",
         "delete-description": "Etes-vous sûr de vouloir supprimer définitivement votre commentaires? Cette action sera irréversible."
