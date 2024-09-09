@@ -4,7 +4,7 @@
             <h2 class="title">{{ $t('comment.add-comment') }}</h2>
         </div>
 
-        <MakeComment />
+        <MakeComment @comment-posted="$emit('reload-comments')" :project="project" />
 
         <NoItem v-if="!comments.length" message="comment.no-comments" />
 
@@ -14,8 +14,12 @@
                 :key="comment.id"
                 :id="comment.id"
                 :comment="comment"
+                :project="project"
                 @edit-comment="openCommentModal"
                 @reply-to-comment="openCommentModal"
+                @comment-posted="$emit('reload-comments')"
+                @comment-edited="$emit('reload-comments')"
+                @comment-deleted="$emit('reload-comments')"
             />
         </div>
     </div>
@@ -25,7 +29,6 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 
@@ -34,10 +37,19 @@ export default {
 
     mixins: [ProjectTab],
 
+    emits: ['reload-comments'],
+
     components: { CommentItem, NoItem, MakeComment },
 
-    computed: {
-        ...mapGetters({ comments: 'comments/all' }),
+    props: {
+        project: {
+            type: Object,
+            default: () => {},
+        },
+        comments: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     inject: ['projectLayoutToggleAddModal'],

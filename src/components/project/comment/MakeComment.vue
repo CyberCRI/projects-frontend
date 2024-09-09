@@ -46,19 +46,37 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { postCommentImage } from '@/api/comments.service'
-import { postProjectMessageImage } from '@/api/project-messages.service'
+import analytics from '@/analytics'
+import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
+
+import {
+    patchProjectMessage,
+    postProjectMessage,
+    postProjectMessageImage,
+} from '@/api/project-messages.service'
 
 export default {
     name: 'MakeComment',
 
-    emits: ['submited', 'canceled'],
+    emits: [
+        'submited',
+        'canceled',
+        'comment-posted',
+        'project-message-posted',
+        'comment-edited',
+        'project-message-edited',
+    ],
 
     mixins: [permissions],
 
     components: { LpiButton, TipTapEditor, ConfirmModal },
 
     props: {
+        project: {
+            type: Object,
+            default: () => {},
+        },
+
         repliedComment: {
             type: Object,
             default: null,
@@ -88,7 +106,6 @@ export default {
     computed: {
         ...mapGetters({
             isLoggedIn: 'users/isLoggedIn',
-            projectId: 'projects/currentProjectId',
         }),
 
         canSubmitComment() {
@@ -108,11 +125,11 @@ export default {
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO still needed ?
-            formData.append('project_id', this.projectId)
+            formData.append('project_id', this.project.id)
             if (this.isPrivate) {
-                return postProjectMessageImage(this.projectId, formData)
+                return postProjectMessageImage(this.project.id, formData)
             } else {
-                return postCommentImage(this.projectId, formData)
+                return postCommentImage(this.project.id, formData)
             }
         },
 
@@ -142,26 +159,119 @@ export default {
             else this.cancel()
         },
 
+        async postComment(comment) {
+            try {
+                const result = await postComment(comment)
+
+                // if (comment.reply_on_id) {
+                //     commit('SET_REPLY', { id: comment.reply_on_id, comment: result })
+                // } else {
+                //     commit('SET_COMMENT', result)
+                // }
+
+                analytics.comment.comment({
+                    project: {
+                        id: this.project.id,
+                    },
+                    comment: result,
+                })
+
+                return result
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
+
+        async postProjectMessage(projectMessage) {
+            try {
+                const result = await postProjectMessage(projectMessage)
+
+                // reply_on_id in comment
+                // if (projectMessage.reply_on) {
+                //     commit('SET_REPLY', { id: projectMessage.reply_on, projectMessage: result }) // reply_on_id in comment
+                // } else {
+                //     commit('SET_PROJECT_MESSAGE', result)
+                // }
+
+                analytics.projectMessage.projectMessage({
+                    project: {
+                        id: this.project.id,
+                    },
+                    projectMessage: result,
+                })
+
+                return result
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
+
+        async patchProjectMessage(projectMessage) {
+            try {
+                const result = await patchProjectMessage(projectMessage.id, projectMessage)
+
+                // if (mainProjectMessage) {
+                //     commit('UPDATE_REPLY_PROJECT_MESSAGE', { reply: result, mainProjectMessage })
+                // } else {
+                //     commit('UPDATE_PROJECT_MESSAGE', result)
+                // }
+
+                analytics.projectMessage.updateProjectMessage({
+                    project: {
+                        id: this.project.id,
+                    },
+                    projectMessage: result,
+                })
+
+                return result
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
+
+        async patchComment(comment) {
+            try {
+                const result = await patchComment(comment.id, comment)
+
+                // if (mainComment) {
+                //     commit('UPDATE_REPLY_COMMENT', { reply: result, mainComment })
+                // } else {
+                //     commit('UPDATE_COMMENT', result)
+                // }
+
+                analytics.comment.updateComment({
+                    project: {
+                        id: this.project.id,
+                    },
+                    comment: result,
+                })
+
+                return result
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
+
         async createComment() {
             this.asyncing = true
             const payload = {
                 content: this.comment,
-                project_id: this.projectId,
+                project_id: this.project.id,
                 images_ids: this.addedImages,
             }
 
             if (this.isPrivate) {
                 if (this.repliedComment) payload.reply_on = this.repliedComment.id // // reply_on_id in comment
                 try {
-                    const result = await this.$store.dispatch(
-                        'projectMessages/postProjectMessage',
-                        payload
-                    )
+                    const result = await this.postProjectMessage(payload)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'), // TODO
                         type: 'success',
                     })
-                    if (!this.repliedComment) this.scrollToNewComment(result)
+                    this.$emit('project-message-posted', result)
+                    this.$nextTick(() => {
+                        if (!this.repliedComment) this.scrollToNewComment(result)
+                    })
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-create.error')} (${error})`, // TODO
@@ -173,12 +283,15 @@ export default {
             } else {
                 if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
                 try {
-                    const result = await this.$store.dispatch('comments/postComment', payload)
+                    const result = await this.postComment(payload)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'),
                         type: 'success',
                     })
-                    if (!this.repliedComment) this.scrollToNewComment(result)
+                    this.$emit('comment-posted', result)
+                    this.$nextTick(() => {
+                        if (!this.repliedComment) this.scrollToNewComment(result)
+                    })
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-create.error')} (${error})`,
@@ -192,24 +305,20 @@ export default {
 
         async updateComment() {
             if (this.isPrivate) {
-                const body = {
+                const projectMessage = {
                     id: this.originalComment.id,
-                    projectMessage: {
-                        content: this.comment,
-                        project_id: this.projectId,
-                        images_ids: this.addedImages,
-                    },
+                    content: this.comment,
+                    project_id: this.project.id,
+                    images_ids: this.addedImages,
                 }
 
                 try {
-                    await this.$store.dispatch('projectMessages/patchProjectMesage', {
-                        body,
-                        mainProjectMessage: this.repliedComment,
-                    })
+                    await this.patchProjectMessage(projectMessage)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'), // TODO
                         type: 'success',
                     })
+                    this.$emit('project-message-edited', projectMessage)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-update.error')} (${error})`, // TODO
@@ -218,24 +327,20 @@ export default {
                     console.error(error)
                 }
             } else {
-                const body = {
+                const comment = {
                     id: this.originalComment.id,
-                    comment: {
-                        content: this.comment,
-                        project_id: this.projectId,
-                        images_ids: this.addedImages,
-                    },
+                    content: this.comment,
+                    project_id: this.project.id,
+                    images_ids: this.addedImages,
                 }
 
                 try {
-                    await this.$store.dispatch('comments/patchComment', {
-                        body,
-                        mainComment: this.repliedComment,
-                    })
+                    await this.patchComment(comment)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'),
                         type: 'success',
                     })
+                    this.$emit('comment-edited', comment)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-update.error')} (${error})`,
@@ -247,7 +352,7 @@ export default {
         },
 
         scrollToNewComment(comment) {
-            document.getElementById(comment.id).scrollIntoView({
+            document.getElementById(comment.id)?.scrollIntoView({
                 behavior: 'smooth',
             })
         },

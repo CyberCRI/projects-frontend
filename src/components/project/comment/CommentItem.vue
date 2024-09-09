@@ -30,10 +30,14 @@
 
                 <div v-if="editing" class="comment-body">
                     <MakeComment
+                        :project="project"
                         :original-comment="comment"
                         :replied-comment="repliedComment"
                         @canceled="toggleEdit"
                         @submited="toggleEdit"
+                        :is-private="isPrivate"
+                        @comment-edited="$emit('comment-edited', $event)"
+                        @project-message-edited="$emit('project-message-posted', $event)"
                     />
                 </div>
                 <p v-else class="comment-content" v-html="comment.content"></p>
@@ -86,10 +90,13 @@
         </div>
         <div v-if="replying" class="comment-reply-ctn">
             <MakeComment
+                :project="project"
                 :replied-comment="comment"
                 @canceled="toggleReply"
                 @submited="toggleReply"
                 :is-private="isPrivate"
+                @comment-posted="$emit('comment-posted', $event)"
+                @project-message-posted="$emit('project-message-posted', $event)"
             />
         </div>
         <div v-if="comment.replies && comment.replies.length" class="comment-replies-ctn">
@@ -100,6 +107,13 @@
                 :is-reply="true"
                 :replied-comment="comment"
                 :is-private="isPrivate"
+                :project="project"
+                @comment-posted="$emit('comment-posted', $event)"
+                @comment-edited="$emit('comment-edited', $event)"
+                @comment-deleted="$emit('comment-deleted', $event)"
+                @project-message-posted="$emit('project-message-posted', $event)"
+                @project-message-edited="$emit('project-message-posted', $event)"
+                @project-message-deleted="$emit('project-message-deleted', $event)"
             />
         </div>
 
@@ -108,7 +122,7 @@
             :content="$t('comment.delete-description')"
             :title="$t('comment.delete-title')"
             @cancel="openConfirmModal"
-            @confirm="deleteComment"
+            @confirm="deleteMessage"
         />
     </div>
 </template>
@@ -122,15 +136,31 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import fixEditorContent from '@/functs/editorUtils.ts'
+import { deleteComment } from '@/api/comments.service'
+import { deleteProjectMessage } from '@/api/project-messages.service'
+import analytics from '@/analytics'
 
 export default {
     name: 'CommentItem',
 
     mixins: [imageMixin],
 
+    emits: [
+        'comment-posted',
+        'project-message-posted',
+        'comment-edited',
+        'project-message-edited',
+        'comment-deleted',
+        'project-message-deleted',
+    ],
+
     components: { ConfirmModal, IconImage, ExternalLabelButton, MakeComment, CroppedImage },
 
     props: {
+        project: {
+            type: Object,
+            default: () => {},
+        },
         comment: {
             type: Object,
             default: () => {},
@@ -174,19 +204,44 @@ export default {
             this.confirmDeleteComment = !this.confirmDeleteComment
         },
 
-        async deleteComment() {
-            if (this.isPrivate) {
-                const body = {
-                    id: this.comment.id,
-                    mainProjectMessage: this.repliedComment,
-                }
+        async deleteComment(comment) {
+            try {
+                await deleteComment(this.project.id, comment.id)
+                analytics.comment.deleteComment({
+                    project: {
+                        id: this.project.id,
+                    },
+                    comment: comment,
+                })
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
 
+        async deleteProjectMessage(projectMessage) {
+            try {
+                await deleteProjectMessage(this.project.id, projectMessage.id)
+
+                analytics.projectMessage.deleteProjectMessage({
+                    project: {
+                        id: this.project.id,
+                    },
+                    projectMessage: projectMessage,
+                })
+            } catch (err) {
+                throw new Error(err)
+            }
+        },
+
+        async deleteMessage() {
+            if (this.isPrivate) {
                 try {
-                    await this.$store.dispatch('projectMessages/deleteProjectMessage', body)
+                    await this.deleteProjectMessage(this.comment)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-delete.success'), // TODO
                         type: 'success',
                     })
+                    this.$emit('project-message-deleted', this.comment)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-delete.error')} (${error})`, // TODO
@@ -197,17 +252,13 @@ export default {
                     this.confirmDeleteComment = false
                 }
             } else {
-                const body = {
-                    id: this.comment.id,
-                    mainComment: this.repliedComment,
-                }
-
                 try {
-                    await this.$store.dispatch('comments/deleteComment', body)
+                    await this.deleteComment(this.comment)
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-delete.success'),
                         type: 'success',
                     })
+                    this.$emit('comment-deleted', this.comment)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-delete.error')} (${error})`,

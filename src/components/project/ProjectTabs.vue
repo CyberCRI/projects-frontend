@@ -41,6 +41,8 @@ import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'ProjectTabs',
 
+    emits: ['reload-comments', 'reload-project-messages'],
+
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
 
     mixins: [permissions],
@@ -52,6 +54,14 @@ export default {
         },
 
         similarProjects: {
+            type: Array,
+            default: () => [],
+        },
+        comments: {
+            type: Array,
+            default: () => [],
+        },
+        projectMessages: {
             type: Array,
             default: () => [],
         },
@@ -87,6 +97,7 @@ export default {
                     view: `/projects/${this.$route.params.slugOrId}/summary`,
                     props: {
                         project: this.project,
+                        comments: this.comments,
                         similarProjects: this.similarProjects,
                     },
                     condition: true,
@@ -148,6 +159,11 @@ export default {
                     key: 'project-comments',
                     label: this.$t('comment.comments'),
                     view: `/projects/${this.$route.params.slugOrId}/comments`,
+                    props: {
+                        project: this.project,
+                        comments: this.comments,
+                        onReloadComments: () => this.$emit('reload-comments'),
+                    },
                     condition: true,
                     dataTest: 'project-comments',
                 },
@@ -157,6 +173,8 @@ export default {
                     view: `/projects/${this.$route.params.slugOrId}/private-exchange`,
                     props: {
                         project: this.project,
+                        projectMessages: this.projectMessages,
+                        onReloadProjectMessages: () => this.$emit('reload-project-messages'),
                     },
                     condition: this.isAdmin || this.isMember,
                     dataTest: 'project-private-exchange',

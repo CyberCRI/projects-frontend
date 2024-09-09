@@ -20,12 +20,6 @@ const i18n = {
 
 const store = {
     modules: {
-        comments: {
-            namespaced: true,
-            getters: {
-                all: vi.fn(() => CommentFactory.generate()),
-            },
-        },
         organizations: {
             namespaced: true,
             getters: {
@@ -46,8 +40,9 @@ const store = {
 describe('Tab.vue', () => {
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectSummaryTab, {
-            propsData: {
+            props: {
                 project: ProjectOutputFactory.generate(),
+                comments: [CommentFactory.generate()],
             },
             store,
             i18n,

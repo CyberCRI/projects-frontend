@@ -125,6 +125,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        comments: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -138,10 +142,6 @@ export default {
     },
 
     computed: {
-        comments() {
-            return this.$store.getters['comments/all']
-        },
-
         filteredGoals() {
             return (
                 (this.project &&

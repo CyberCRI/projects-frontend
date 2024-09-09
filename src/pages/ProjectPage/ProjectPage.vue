@@ -10,7 +10,15 @@
 
         <div class="tabs-wrapper">
             <ProjectTabsSkeleton v-if="loading" />
-            <ProjectTabs v-else :project="project" :similar-projects="similarProjects" />
+            <ProjectTabs
+                v-else
+                :project="project"
+                :comments="comments"
+                :project-messages="projectMessages"
+                :similar-projects="similarProjects"
+                @reload-comments="getComments(project.id)"
+                @reload-project-messages="getProjectMessages(project.id)"
+            />
         </div>
 
         <!-- add/edit modals -->
@@ -87,6 +95,8 @@ import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import permissions from '@/mixins/permissions.ts'
+import { getComments } from '@/api/comments.service'
+import { getProjectMessages } from '@/api/project-messages.service'
 
 export default {
     name: 'ProjectPage',
@@ -205,6 +215,8 @@ export default {
             sockerserver: import.meta.env.VITE_APP_WSS_HOST,
             provider: null,
             loading: true,
+            comments: [],
+            projectMessages: [],
         }
     },
 
@@ -222,11 +234,6 @@ export default {
     },
 
     computed: {
-        // TODO: ADD to comment summary for the number of comments
-        // commentsNumber() {
-        //     return this.$store.getters['comments/all'].length
-        // },
-
         project() {
             return this.$store.getters['projects/project']
         },
@@ -280,13 +287,31 @@ export default {
         //     this.modals[modalType].visible = !this.modals[modalType].visible
         // },
 
+        async getComments(project_id) {
+            try {
+                const response = await getComments(project_id)
+                this.comments = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
+        async getProjectMessages(project_id) {
+            try {
+                const response = await getProjectMessages(project_id)
+                this.projectMessages = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
         setProject(projectSlugOrId = this.$route.params.slugOrId) {
             this.loading = true
             this.$store
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
-                    await this.$store.dispatch('comments/getComments', project.id)
-                    await this.$store.dispatch('projectMessages/getProjectMessages', project.id)
+                    await this.getComments(project.id)
+                    await this.getProjectMessages(project.id)
                     this.getSimilarProjects()
                     this.connectToSocket(project.id)
                     this.loading = false

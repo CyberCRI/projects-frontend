@@ -4,7 +4,11 @@
             <h2 class="title">{{ $t('comment.private-exchange.notice') }}</h2>
             <p class="notice">{{ $t('comment.private-exchange.notice') }}</p>
         </div>
-        <MakeComment is-private />
+        <MakeComment
+            :project="project"
+            is-private
+            @project-message-posted="$emit('reload-project-messages')"
+        />
 
         <NoItem v-if="!projectMessages.length" message="comment.private-exchange.no-message" />
 
@@ -14,7 +18,11 @@
                 v-for="projectMessage in projectMessages"
                 :key="projectMessage.id"
                 :id="projectMessage.id"
+                :project="project"
                 :comment="projectMessage"
+                @project-message-posted="$emit('reload-project-messages')"
+                @project-message-edited="$emit('reload-project-messages')"
+                @project-message-deleted="$emit('reload-project-messages')"
             />
         </div>
     </div>
@@ -24,7 +32,6 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import { mapGetters } from 'vuex'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
@@ -34,6 +41,8 @@ export default {
 
     mixins: [ProjectTab, permissions],
 
+    emits: ['reload-project-messages'],
+
     components: { CommentItem, NoItem, MakeComment },
 
     props: {
@@ -41,11 +50,13 @@ export default {
             type: Object,
             default: () => {},
         },
+        projectMessages: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     computed: {
-        ...mapGetters({ projectMessages: 'projectMessages/all' }),
-
         isMember() {
             const members = [
                 ...this.project.team.members,
