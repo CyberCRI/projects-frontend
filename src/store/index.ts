@@ -1,8 +1,6 @@
 import attachmentFiles from '@/store/modules/attachment-files'
 import attachmentLinks from '@/store/modules/attachment-links'
 import blogEntries from '@/store/modules/blog-entries'
-import comments, { CommentsState } from '@/store/modules/comments'
-import projectMessages, { ProjectMessagesState } from '@/store/modules/project-messages'
 import follows from '@/store/modules/follows'
 import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
@@ -26,8 +24,6 @@ export interface State {
     organizations: OrganizationsState
     languages: LanguageState
     users: UsersState
-    comments: CommentsState
-    projectMessages: ProjectMessagesState
     locations: LocationsState
     announcements: AnnouncementsState
     groups: GroupsState
@@ -41,8 +37,6 @@ export default createStore({
         attachmentFiles,
         attachmentLinks,
         blogEntries,
-        comments,
-        projectMessages,
         follows,
         goals,
         groups,

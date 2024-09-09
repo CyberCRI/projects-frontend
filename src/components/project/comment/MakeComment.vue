@@ -46,19 +46,37 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { postCommentImage } from '@/api/comments.service'
-import { postProjectMessageImage } from '@/api/project-messages.service'
+import analytics from '@/analytics'
+import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
+
+import {
+    patchProjectMessage,
+    postProjectMessage,
+    postProjectMessageImage,
+} from '@/api/project-messages.service'
 
 export default {
     name: 'MakeComment',
 
-    emits: ['submited', 'canceled'],
+    emits: [
+        'submited',
+        'canceled',
+        'comment-posted',
+        'project-message-posted',
+        'comment-edited',
+        'project-message-edited',
+    ],
 
     mixins: [permissions],
 
     components: { LpiButton, TipTapEditor, ConfirmModal },
 
     props: {
+        project: {
+            type: Object,
+            default: () => {},
+        },
+
         repliedComment: {
             type: Object,
             default: null,
@@ -88,7 +106,6 @@ export default {
     computed: {
         ...mapGetters({
             isLoggedIn: 'users/isLoggedIn',
-            projectId: 'projects/currentProjectId',
         }),
 
         canSubmitComment() {
@@ -108,11 +125,11 @@ export default {
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO still needed ?
-            formData.append('project_id', this.projectId)
+            formData.append('project_id', this.project.id)
             if (this.isPrivate) {
-                return postProjectMessageImage(this.projectId, formData)
+                return postProjectMessageImage(this.project.id, formData)
             } else {
-                return postCommentImage(this.projectId, formData)
+                return postCommentImage(this.project.id, formData)
             }
         },
 
@@ -146,22 +163,28 @@ export default {
             this.asyncing = true
             const payload = {
                 content: this.comment,
-                project_id: this.projectId,
+                project_id: this.project.id,
                 images_ids: this.addedImages,
             }
 
             if (this.isPrivate) {
                 if (this.repliedComment) payload.reply_on = this.repliedComment.id // // reply_on_id in comment
                 try {
-                    const result = await this.$store.dispatch(
-                        'projectMessages/postProjectMessage',
-                        payload
-                    )
+                    const result = await postProjectMessage(payload)
+                    analytics.projectMessage.projectMessage({
+                        project: {
+                            id: this.project.id,
+                        },
+                        projectMessage: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'), // TODO
                         type: 'success',
                     })
-                    if (!this.repliedComment) this.scrollToNewComment(result)
+                    this.$emit('project-message-posted', result)
+                    this.$nextTick(() => {
+                        if (!this.repliedComment) this.scrollToNewComment(result)
+                    })
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-create.error')} (${error})`, // TODO
@@ -173,12 +196,21 @@ export default {
             } else {
                 if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
                 try {
-                    const result = await this.$store.dispatch('comments/postComment', payload)
+                    const result = await postComment(payload)
+                    analytics.comment.comment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        comment: result,
+                    })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-create.success'),
                         type: 'success',
                     })
-                    if (!this.repliedComment) this.scrollToNewComment(result)
+                    this.$emit('comment-posted', result)
+                    this.$nextTick(() => {
+                        if (!this.repliedComment) this.scrollToNewComment(result)
+                    })
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-create.error')} (${error})`,
@@ -192,24 +224,26 @@ export default {
 
         async updateComment() {
             if (this.isPrivate) {
-                const body = {
+                const projectMessage = {
                     id: this.originalComment.id,
-                    projectMessage: {
-                        content: this.comment,
-                        project_id: this.projectId,
-                        images_ids: this.addedImages,
-                    },
+                    content: this.comment,
+                    project_id: this.project.id,
+                    images_ids: this.addedImages,
                 }
 
                 try {
-                    await this.$store.dispatch('projectMessages/patchProjectMesage', {
-                        body,
-                        mainProjectMessage: this.repliedComment,
+                    const result = await patchProjectMessage(projectMessage.id, projectMessage)
+                    analytics.projectMessage.updateProjectMessage({
+                        project: {
+                            id: this.project.id,
+                        },
+                        projectMessage: result,
                     })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'), // TODO
                         type: 'success',
                     })
+                    this.$emit('project-message-edited', projectMessage)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-update.error')} (${error})`, // TODO
@@ -218,24 +252,26 @@ export default {
                     console.error(error)
                 }
             } else {
-                const body = {
+                const comment = {
                     id: this.originalComment.id,
-                    comment: {
-                        content: this.comment,
-                        project_id: this.projectId,
-                        images_ids: this.addedImages,
-                    },
+                    content: this.comment,
+                    project_id: this.project.id,
+                    images_ids: this.addedImages,
                 }
 
                 try {
-                    await this.$store.dispatch('comments/patchComment', {
-                        body,
-                        mainComment: this.repliedComment,
+                    const result = await patchComment(comment.id, comment)
+                    analytics.comment.updateComment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        comment: result,
                     })
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.comment-update.success'),
                         type: 'success',
                     })
+                    this.$emit('comment-edited', comment)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
                         message: `${this.$t('toasts.comment-update.error')} (${error})`,
@@ -247,7 +283,7 @@ export default {
         },
 
         scrollToNewComment(comment) {
-            document.getElementById(comment.id).scrollIntoView({
+            document.getElementById(comment.id)?.scrollIntoView({
                 behavior: 'smooth',
             })
         },
