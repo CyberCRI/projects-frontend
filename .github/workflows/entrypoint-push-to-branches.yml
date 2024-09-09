@@ -44,6 +44,7 @@ jobs:
         VITE_APP_SENTRY_DSN=$DOCKER_INJECT_VITE_APP_SENTRY_DSN
         VITE_APP_SENTRY_RELEASE=$DOCKER_INJECT_VITE_APP_SENTRY_RELEASE
         VITE_APP_ENVIRONMENT=$DOCKER_INJECT_VITE_APP_ENVIRONMENT
+        VERSION_HASH=${{ github.sha }}
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       submodules-app-id: ${{ secrets.INFRA_BOT_APP_ID }}
@@ -80,7 +81,7 @@ jobs:
           fi
       - name: Build with source map
         if: steps.release_exists.outputs.release_exists == 'false'
-        run: NODE_OPTIONS=--max_old_space_size=2048 yarn build:sourcemaps
+        run: NODE_OPTIONS=--max_old_space_size=2048 VERSION_HASH=${{ github.sha }} yarn build:sourcemaps
       - name: Upload source map (dev)
         if: steps.release_exists.outputs.release_exists == 'false'
         run: |
