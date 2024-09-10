@@ -1,7 +1,7 @@
 <template>
     <div class="project-comments narrow-content">
         <div class="header">
-            <h2 class="title">{{ $t('comment.private-exchange.notice') }}</h2>
+            <h2 class="title">{{ $t('comment.private-exchange.title') }}</h2>
             <p class="notice">{{ $t('comment.private-exchange.notice') }}</p>
         </div>
         <MakeComment

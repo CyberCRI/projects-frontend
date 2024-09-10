@@ -82,7 +82,11 @@
                 <div class="placeholder">
                     <IconImage name="Alert" />
                     <span>
-                        {{ $t('comment.deleted') }}
+                        {{
+                            isPrivate
+                                ? $t('comment.private-exchange.deleted')
+                                : $t('comment.deleted')
+                        }}
                         {{ new Date(comment.deleted_at).toLocaleDateString() }}
                     </span>
                 </div>
@@ -119,8 +123,14 @@
 
         <ConfirmModal
             v-if="confirmDeleteComment"
-            :content="$t('comment.delete-description')"
-            :title="$t('comment.delete-title')"
+            :content="
+                isPrivate
+                    ? $t('comment.private-exchange.delete-description')
+                    : $t('comment.delete-description')
+            "
+            :title="
+                isPrivate ? $t('comment.private-exchange.delete-title') : $t('comment.delete-title')
+            "
             @cancel="openConfirmModal"
             @confirm="deleteComment"
         />
@@ -216,7 +226,7 @@ export default {
                         projectMessage: this.comment,
                     })
                     this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-delete.success'), // TODO
+                        message: this.$t('toasts.project-message-delete.success'), // TODO
                         type: 'success',
                     })
                     this.$emit('project-message-deleted', this.comment)

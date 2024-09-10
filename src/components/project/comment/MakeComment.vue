@@ -178,7 +178,7 @@ export default {
                         projectMessage: result,
                     })
                     this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-create.success'), // TODO
+                        message: this.$t('toasts.project-message-create.success'), // TODO
                         type: 'success',
                     })
                     this.$emit('project-message-posted', result)
@@ -187,7 +187,7 @@ export default {
                     })
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-create.error')} (${error})`, // TODO
+                        message: `${this.$t('toasts.project-message-create.error')} (${error})`, // TODO
                         type: 'error',
                     })
                 } finally {
@@ -240,13 +240,13 @@ export default {
                         projectMessage: result,
                     })
                     this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-update.success'), // TODO
+                        message: this.$t('toasts.project-message-update.success'), // TODO
                         type: 'success',
                     })
                     this.$emit('project-message-edited', projectMessage)
                 } catch (error) {
                     this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-update.error')} (${error})`, // TODO
+                        message: `${this.$t('toasts.project-message-update.error')} (${error})`, // TODO
                         type: 'error',
                     })
                     console.error(error)

@@ -390,7 +390,7 @@
         "add-comment": "Add your comment!",
         "comment-verb": "comment",
         "comments": "comments",
-        "deleted": "comment deleted on the",
+        "deleted": "Comment deleted on the",
         "discard-comment": "Discard comment?",
         "discard-changes": "Discard changes?",
         "need-account": "You need an account to publish comments",
@@ -400,7 +400,10 @@
             "no-message": "No private message yet...",
             "notice": "Private messages are visible only to project team members.",
             "send": "Send",
-            "title": "Add your private message"
+            "title": "Add your private message",
+            "delete-title": "Delete definitely?",
+            "delete-description": "Are you sure you want to permanently delete your private message? This action will be irreversible.",
+            "deleted": "Private message deleted on the"
         },
         "publish": "Publish your comment",
         "delete-title": "Delete definitely?",
@@ -2015,6 +2018,18 @@
         },
         "project-life-status-update": {
             "success": "The project life status has been updated successfully"
+        },
+        "project-message-create": {
+            "success": "The private message has been added successfully",
+            "error": "Error during the private message creation"
+        },
+        "project-message-delete": {
+            "success": "The private message has been deleted successfully",
+            "error": "Error during the private message deletion"
+        },
+        "project-message-update": {
+            "success": "The private message has been updated successfully",
+            "error": "Error during the private message update"
         },
         "project-organizations-update": {
             "success": "The project organizations have been updated successfully",
