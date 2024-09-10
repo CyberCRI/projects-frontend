@@ -6,7 +6,12 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function reportAbuse(page) {
     logger.info('Click on project settings')
-    await page.locator('[data-test="project-settings"]').click()
+    let settings = await page.locator('[data-test="project-settings"]')
+    // button might be hidden in extra tabs dropdown
+    if (!settings) {
+        await page.locator('[data-test="extra-tabs-button"]').click()
+        settings = await page.locator('[data-test="project-settings"]')
+    }
     await page.locator('[data-test="report-bug"]').click()
     logger.info('Click on report bug')
     logger.info('Fill email to report')

@@ -62,6 +62,7 @@
                             :label="$filters.capitalize(showMoreButtonLabel)"
                             class="more-btn"
                             btn-icon="DotsHorizontal"
+                            data-test="extra-tabs-button-mobile"
                             @click="showTabList = !showTabList"
                         />
                     </div>
@@ -73,6 +74,7 @@
                     :label="showMoreButtonLabel"
                     class="more-btn"
                     btn-icon="DotsHorizontal"
+                    data-test="extra-tabs-button"
                     @click="showTabList = !showTabList"
                 />
                 <slot name="button-1"></slot>
