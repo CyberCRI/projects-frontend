@@ -40,7 +40,7 @@ e2eEnv:
     CI: "true"
 
 nginxProxyEnv:
-  PROXY_API_URL: '{{ printf "http://%s.%s" .Values.backendServiceName .Values.namespace }}'
+  PROXY_API_URL: '{{ printf "%s.%s" .Values.backendServiceName .Values.namespace }}'
   PROXY_NGINX_RESOLVER: kube-dns.kube-system
 
 resources:
