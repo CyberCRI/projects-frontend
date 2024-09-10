@@ -43,6 +43,7 @@ server {
     # API proxy
     location ~ ^/(v[0-9]+)/(.*)$ {
         proxy_pass http://backend/$1/$2;
+        proxy_set_header   Host ${PROXY_API_URL};
         error_log  /var/log/nginx/error.log ${API_PROXY_LOG_LEVEL};
     }
 }
