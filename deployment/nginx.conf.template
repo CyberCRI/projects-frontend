@@ -1,3 +1,6 @@
+upstream backend {
+    server ${PROXY_API_URL};
+}
 server {
     listen  8080;
 
@@ -39,9 +42,9 @@ server {
 
     # API proxy
     location ~ ^/(v[0-9]+)/(.*)$ {
-        # https://stackoverflow.com/questions/17685674/nginx-proxy-pass-with-remote-addr
-        resolver ${PROXY_NGINX_RESOLVER};
-        proxy_pass ${PROXY_API_URL}/$1/$2;
+        proxy_pass backend/$1/$2;
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
         error_log  /var/log/nginx/error.log ${API_PROXY_LOG_LEVEL};
     }
 }
