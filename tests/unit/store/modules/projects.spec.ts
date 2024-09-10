@@ -591,32 +591,6 @@ describe('Store module | projects | mutations', () => {
         expect(state.project.follows).toEqual(follows)
     })
 
-    // LOCATIONS
-    it('ADD_PROJECT_LOCATIONS', () => {
-        const payload = LocationFactory.generate()
-
-        expect(state.project.locations.length).toEqual(2)
-
-        projectsStore.mutations.ADD_PROJECT_LOCATIONS(state, payload)
-
-        expect(state.project.locations.length).toEqual(3)
-        expect(state.project.locations[2]).toEqual(payload)
-    })
-
-    it('SET_PROJECT_LOCATIONS', () => {
-        const selectedLocation = state.project.locations[1]
-        const payload = LocationFactory.generate()
-        payload.id = selectedLocation.id
-        payload.type = 'impact'
-
-        expect(selectedLocation.id === payload.id).toBeTruthy()
-        expect(selectedLocation.type !== payload.type).toBeTruthy()
-
-        projectsStore.mutations.SET_PROJECT_LOCATIONS(state, payload)
-
-        expect(state.project.locations[1].type).toEqual(payload.type)
-    })
-
     it('ADD_FOLLOW', () => {
         const follow = FollowFactory.generate()
         projectsStore.mutations.ADD_FOLLOW(state, follow)
@@ -634,16 +608,5 @@ describe('Store module | projects | mutations', () => {
             is_followed: false,
             follow_id: null,
         })
-    })
-
-    it('DELETE_PROJECT_LOCATIONS', () => {
-        const payload = LocationFactory.generate()
-        payload.id = state.project.locations[0].id
-
-        expect(state.project.locations.length).toEqual(3)
-
-        projectsStore.mutations.DELETE_PROJECT_LOCATIONS(state, payload)
-
-        expect(state.project.locations.length).toEqual(2)
     })
 })

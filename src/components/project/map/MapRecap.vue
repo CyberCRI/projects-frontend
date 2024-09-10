@@ -46,6 +46,13 @@ export default {
         BaseMap,
     },
 
+    props: {
+        locations: {
+            type: Array,
+            default: () => [],
+        },
+    },
+
     data() {
         return {
             config: {
@@ -63,16 +70,6 @@ export default {
                 worldCopyJump: true,
             },
         }
-    },
-
-    computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
-        locations() {
-            return this.project ? this.project.locations : []
-        },
     },
 
     watch: {

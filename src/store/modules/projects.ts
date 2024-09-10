@@ -17,7 +17,6 @@ import {
 import analytics from '@/analytics'
 import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
-import { LocationModel } from '@/models/location.model'
 import { BlogEntryOutput } from '@/models/blog-entry.model'
 import { AttachmentFileOutput } from '@/models/attachment-file.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
@@ -74,6 +73,7 @@ const actions = {
         }: {
             id: string
             project: ProjectPatchInput | FormData
+            scope?: string
         }
     ) {
         const result = await patchProject(id, project)
@@ -281,24 +281,7 @@ const actions = {
     updateCurrentProjectDescription({ commit }, description: string): void {
         commit('SET_PROJECT_DESCRIPTION', description)
     },
-    updateLocationMapPoint(
-        { commit },
-        {
-            location,
-            mode,
-        }: {
-            location: LocationModel
-            mode: string
-        }
-    ): void {
-        if (mode === 'add') {
-            commit('ADD_PROJECT_LOCATIONS', location)
-        } else if (mode === 'edit') {
-            commit('SET_PROJECT_LOCATIONS', location)
-        } else {
-            commit('DELETE_PROJECT_LOCATIONS', location)
-        }
-    },
+
     updateProjectVisibility({ commit }, project: ProjectOutput): void {
         commit('SET_PROJECT_VISIBILITY', project.publication_status)
     },
@@ -474,19 +457,6 @@ const mutations = {
     DELETE_FOLLOW: (state: ProjectState) => {
         state.project.is_followed.is_followed = false
         state.project.is_followed.follow_id = null
-    },
-
-    // LOCATIONS
-    ADD_PROJECT_LOCATIONS: (state: ProjectState, location: LocationModel) => {
-        state.project.locations.push(location)
-    },
-    SET_PROJECT_LOCATIONS: (state: ProjectState, location: LocationModel) => {
-        const index = state.project.locations.findIndex((l) => location.id === l.id)
-        state.project.locations.splice(index, 1, location)
-    },
-    DELETE_PROJECT_LOCATIONS: (state: ProjectState, location: LocationModel) => {
-        const index = state.project.locations.findIndex((l) => location.id === l.id)
-        state.project.locations.splice(index, 1)
     },
 }
 

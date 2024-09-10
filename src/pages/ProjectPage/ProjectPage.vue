@@ -13,6 +13,7 @@
             <ProjectTabs
                 v-else
                 :project="project"
+                :locations="locations"
                 :comments="comments"
                 :project-messages="projectMessages"
                 :similar-projects="similarProjects"
@@ -57,7 +58,13 @@
             :is-opened="modals.linkedProject.visible"
             @close="toggleAddModal('linkedProject')"
         />
-        <LocationDrawer :is-opened="modals.location.visible" @close="toggleAddModal('location')" />
+        <LocationDrawer
+            :project-id="project?.id"
+            :locations="locations"
+            @reload-locations="getProjectLocations"
+            :is-opened="modals.location.visible"
+            @close="toggleAddModal('location')"
+        />
         <BlogDrawer
             :edited-blog="modals.blogEntry.editedItem"
             :is-add-mode="!modals.blogEntry.editedItem"
@@ -97,7 +104,7 @@ import { HocuspocusProvider } from '@hocuspocus/provider'
 import permissions from '@/mixins/permissions.ts'
 import { getComments } from '@/api/comments.service'
 import { getProjectMessages } from '@/api/project-messages.service'
-
+import { getProjectLocations } from '@/api/locations.services'
 export default {
     name: 'ProjectPage',
 
@@ -217,6 +224,7 @@ export default {
             loading: true,
             comments: [],
             projectMessages: [],
+            locations: [],
         }
     },
 
@@ -310,13 +318,17 @@ export default {
             this.$store
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
-                    await this.getComments(project.id)
-                    await this.getProjectMessages(project.id)
-                    this.getSimilarProjects()
+                    await Promise.all([
+                        this.getComments(project.id),
+                        this.getProjectMessages(project.id),
+                        this.getProjectLocations(),
+                        this.getSimilarProjects(),
+                    ])
                     this.connectToSocket(project.id)
                     this.loading = false
                 })
-                .catch(() => {
+                .catch((err) => {
+                    console.log(err)
                     this.$router.replace({
                         name: 'page404',
                         params: { pathMatch: this.$route.path.substring(1).split('/') },
@@ -354,11 +366,23 @@ export default {
             }
         },
 
+        async getProjectLocations() {
+            try {
+                this.locations = await getProjectLocations(this.project.id)
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
         async getSimilarProjects() {
-            this.similarProjects = await getSuggestedProjects(
-                this.project.id,
-                this.$store.getters['organizations/current']?.code
-            )
+            try {
+                this.similarProjects = await getSuggestedProjects(
+                    this.project.id,
+                    this.$store.getters['organizations/current']?.code
+                )
+            } catch (err) {
+                console.error(err)
+            }
         },
 
         cleanupProvider() {
