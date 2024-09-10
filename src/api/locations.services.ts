@@ -3,6 +3,14 @@ import { LocationInput, LocationOutput } from '@/models/location.model'
 import { APIResponseList } from '@/api/types'
 import utils from '@/functs/functions'
 
+export async function getProjectLocations(projectId): Promise<APIResponseList<LocationOutput>> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/location/`
+        )
+    ).data
+}
+
 export async function getProjectLocation(body): Promise<APIResponseList<LocationOutput>> {
     return (
         await axios.get(

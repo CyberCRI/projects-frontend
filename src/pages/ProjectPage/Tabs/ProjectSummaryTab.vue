@@ -33,7 +33,7 @@
             </div>
 
             <div class="right">
-                <MapRecap v-if="project && project.locations && project.locations.length" />
+                <MapRecap v-if="locations.length" :locations="locations" />
 
                 <GroupMemberSection
                     v-if="project && team.length"
@@ -126,6 +126,11 @@ export default {
             default: () => [],
         },
         comments: {
+            type: Array,
+            default: () => [],
+        },
+
+        locations: {
             type: Array,
             default: () => [],
         },

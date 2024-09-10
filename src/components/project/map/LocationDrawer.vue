@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!!projectId">
         <BaseDrawer
             :has-footer="false"
             :is-opened="isOpened"
@@ -58,10 +58,14 @@
 
         <LocationForm
             v-if="formVisible"
+            :project-id="projectId"
             :location-to-be-edited="locationToBeEdited"
             :new-coordinates="newCoordinates"
             @close="formVisible = false"
             @center-map="centerMap"
+            @location-edited="$emit('reload-locations')"
+            @location-created="$emit('reload-locations')"
+            @location-deleted="$emit('reload-locations')"
         />
     </div>
 </template>
@@ -79,7 +83,7 @@ import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'LocationDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-locations'],
 
     mixins: [imageMixin, permissions],
 
@@ -96,6 +100,16 @@ export default {
         isOpened: {
             type: Boolean,
             default: false,
+        },
+
+        projectId: {
+            type: [String || number || null],
+            default: null,
+        },
+
+        locations: {
+            type: Array,
+            default: () => [],
         },
     },
 
@@ -121,16 +135,6 @@ export default {
         }
     },
 
-    computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
-        locations() {
-            return this.project ? this.project.locations : []
-        },
-    },
-
     methods: {
         centerMap() {
             if (this.$refs.map) this.$refs.map.centerMap()
@@ -138,7 +142,9 @@ export default {
 
         openEditModal(location) {
             if (this.canEditProject) {
-                this.locationToBeEdited = location
+                // restart from source locations because the map ones are not reactive
+                console.log('location', location)
+                this.locationToBeEdited = this.locations.find((loc) => loc.id === location.id)
                 this.formVisible = true
             }
         },

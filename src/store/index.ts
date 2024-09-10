@@ -5,7 +5,6 @@ import follows from '@/store/modules/follows'
 import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
 import languages, { LanguageState } from '@/store/modules/languages'
-import locations, { LocationsState } from '@/store/modules/locations'
 import notifications, { NotificationsState } from '@/store/modules/notifications'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
@@ -24,7 +23,6 @@ export interface State {
     organizations: OrganizationsState
     languages: LanguageState
     users: UsersState
-    locations: LocationsState
     announcements: AnnouncementsState
     groups: GroupsState
     notifications: NotificationsState
@@ -41,7 +39,6 @@ export default createStore({
         goals,
         groups,
         languages,
-        locations,
         notifications,
         organizations,
         projectCategories,

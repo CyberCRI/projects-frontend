@@ -65,6 +65,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        locations: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     computed: {
@@ -99,6 +103,7 @@ export default {
                         project: this.project,
                         comments: this.comments,
                         similarProjects: this.similarProjects,
+                        locations: this.locations,
                     },
                     condition: true,
                     dataTest: 'project-summary',

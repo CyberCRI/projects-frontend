@@ -46,11 +46,12 @@ import DialogModal from '@/components/base/modal/DialogModal.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
+import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
 
 export default {
     name: 'LocationForm',
 
-    emits: ['close', 'center-map'],
+    emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
 
     components: { DialogModal, TextInput, GroupButton },
 
@@ -63,6 +64,11 @@ export default {
         newCoordinates: {
             type: Array,
             default: () => [],
+        },
+
+        projectId: {
+            type: String,
+            default: null,
         },
     },
 
@@ -100,24 +106,27 @@ export default {
 
         async addLocation() {
             try {
-                const result = await this.$store.dispatch('locations/postLocations', {
+                const location = {
                     ...this.form,
                     lat: this.newCoordinates[0],
                     lng: this.newCoordinates[1],
-                    project_id: this.$store.getters['projects/currentProjectId'],
-                })
+                    project_id: this.projectId,
+                }
+                const result = await postLocations(location)
 
-                await this.$store.dispatch('projects/updateLocationMapPoint', {
+                analytics.location.addLocationMapPoint({
+                    project: {
+                        id: this.projectId,
+                    },
                     location: result,
-                    mode: 'add',
                 })
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.location-create.success'),
                     type: 'success',
                 })
-
-                this.$emit('center-map')
+                this.$emit('location-created')
+                this.$nextTick(() => this.$emit('center-map'))
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('toasts.location-create.error')} (${error})`,
@@ -131,17 +140,21 @@ export default {
 
         async editLocation() {
             try {
-                const result = await this.$store.dispatch('locations/patchLocation', this.form)
+                const result = await patchLocation(this.form)
 
-                await this.$store.dispatch('projects/updateLocationMapPoint', {
+                analytics.location.updateLocationMapPoint({
+                    project: {
+                        id: this.projectId,
+                    },
                     location: result,
-                    mode: 'edit',
                 })
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.location-update.success'),
                     type: 'success',
                 })
+
+                this.$emit('location-edited')
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('toasts.location-update.error')} (${error})`,
@@ -155,24 +168,21 @@ export default {
 
         async deleteLocation() {
             try {
-                await this.$store.dispatch('projects/updateLocationMapPoint', {
+                await deleteLocation(this.form)
+
+                analytics.location.deleteLocationMapPoint({
+                    project: {
+                        id: this.projectId,
+                    },
                     location: this.form,
-                    mode: 'delete',
                 })
-                await this.$store.dispatch('locations/deleteLocation', this.form)
 
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.location-delete.success'),
                     type: 'success',
                 })
-
-                analytics.location.deleteLocationMapPoint({
-                    project: {
-                        id: this.$store.getters['projects/currentProjectId'],
-                    },
-                    location: this.form,
-                })
-                this.$emit('center-map')
+                this.$emit('location-deleted')
+                this.$nextTick(() => this.$emit('center-map'))
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('toasts.location-delete.error')} (${error})`,
