@@ -986,7 +986,7 @@
             "color": "Couleur",
             "current": "Actuelle",
             "pick": "Choisir une couleur existante",
-            "set-color": "Appliquer ue couleur"
+            "set-color": "Appliquer une couleur"
         },
         "delete_column": "Supprimer cette colonne",
         "delete_row": "Supprimer cette ligne",

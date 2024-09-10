@@ -501,6 +501,11 @@
     }
 }
 
+table .custom-video-ctn {
+    // fix for collapsing videos in tables
+    min-width: 16rem;
+}
+
 .editor {
     .custom-video-wrapper {
         &::after {
