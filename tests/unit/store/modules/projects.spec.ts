@@ -21,12 +21,10 @@ import { BlogEntryFactory } from '../../../factories/blog-entry.factory'
 import { GoalFactory } from '../../../factories/goal.factory'
 import { AttachmentFileFactory } from '../../../factories/attachment-file.factory'
 import { AttachmentLinkFactory } from '../../../factories/attachment-link.factory'
-import { AnnouncementFactory } from '../../../factories/announcement.factory'
 import { FollowFactory } from '../../../factories/follow.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ReviewFactory } from '../../../factories/review.factory'
 import TagFactory from '../../../factories/wikipedia-tag.factory'
-import LocationFactory from '../../../factories/location.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/projects.service')
@@ -557,30 +555,6 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.UPDATE_REVIEW(state, { index: 0, review })
 
         expect(state.project.reviews[0]).toEqual(review)
-    })
-
-    // ANNOUNCEMENTS
-    it('ADD_ANNOUNCEMENT', () => {
-        const announcement = AnnouncementFactory.generate()
-        projectsStore.mutations.ADD_ANNOUNCEMENT(state, announcement)
-
-        expect(state.project.announcements[state.project.announcements.length - 1]).toEqual(
-            announcement
-        )
-    })
-
-    it('UPDATE_ANNOUNCEMENT', () => {
-        const announcement = AnnouncementFactory.generate()
-        projectsStore.mutations.UPDATE_ANNOUNCEMENT(state, { index: 0, announcement })
-
-        expect(state.project.announcements[0]).toEqual(announcement)
-    })
-
-    it('DELETE_ANNOUNCEMENT', () => {
-        const lengthBeforeDelete = state.project.announcements.length
-        projectsStore.mutations.DELETE_ANNOUNCEMENT(state, 0)
-
-        expect(state.project.announcements.length).toEqual(lengthBeforeDelete - 1)
     })
 
     // FOLLOWS

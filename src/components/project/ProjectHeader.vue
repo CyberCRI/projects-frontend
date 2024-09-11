@@ -234,14 +234,12 @@
                                 @click="toggleFollow"
                             />
                             <ExternalLabelButton
-                                v-if="
-                                    project && project.announcements && project.announcements.length
-                                "
+                                v-if="announcements?.length"
                                 class="space-button article-button bg-on-hover"
                                 :label="$t('group.news')"
                                 btn-icon="Article"
                                 vertical-layout
-                                :nb-button="project.announcements.length.toString()"
+                                :nb-button="announcements.length.toString()"
                                 @click="$emit('show-project-announcements')"
                             />
                             <ExternalLabelButton
@@ -356,7 +354,7 @@ export default {
     props: {
         project: {
             type: Object,
-            default: () => {},
+            default: () => ({}),
         },
 
         similarProjects: {
@@ -366,6 +364,10 @@ export default {
         loading: {
             type: Boolean,
             default: true,
+        },
+        announcements: {
+            type: Array,
+            default: () => [],
         },
     },
 

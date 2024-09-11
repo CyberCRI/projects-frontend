@@ -45,11 +45,14 @@ import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnno
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
-
+import { deleteAnnouncement } from '@/api/announcements.service'
+import analytics from '@/analytics'
 export default {
     name: 'ProjectAnnouncementsTab',
 
     mixins: [permissions, ProjectTab],
+
+    emits: ['reload-announcements'],
 
     components: {
         AnnouncementItem,
@@ -58,6 +61,17 @@ export default {
         LpiButton,
     },
     inject: ['projectLayoutToggleAddModal'],
+
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+        announcements: {
+            type: Array,
+            default: () => [],
+        },
+    },
 
     data() {
         return {
@@ -68,10 +82,6 @@ export default {
     },
 
     computed: {
-        announcements() {
-            return this.$store.getters['projects/project'].announcements
-        },
-
         sortedAnnouncements() {
             return [...this.announcements].sort(
                 (a, b) => new Date(b.created_at) - new Date(a.created_at)
@@ -83,14 +93,20 @@ export default {
         async deleteAnnouncement() {
             try {
                 this.isDeleting = true
-                await this.$store.dispatch(
-                    'announcements/deleteAnnouncement',
-                    this.announcementToBeDeleted
-                )
+                await deleteAnnouncement(this.announcementToBeDeleted)
+
+                analytics.announcement.removeAnnouncement({
+                    project: {
+                        id: this.project.id,
+                    },
+                    announcement: this.announcementToBeDeleted,
+                })
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.announcement-delete.success'),
                     type: 'success',
                 })
+                this.$emit('reload-announcements')
             } catch (error) {
                 this.$store.dispatch('notifications/pushToast', {
                     message: `${this.$t('toasts.announcement-delete.error')} (${error})`,

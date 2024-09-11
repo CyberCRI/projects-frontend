@@ -6,6 +6,7 @@
             :loading="loading"
             class="project-header"
             @show-project-announcements="goToTab('announcements')"
+            :announcements="announcements"
         />
 
         <div class="tabs-wrapper">
@@ -15,10 +16,12 @@
                 :project="project"
                 :locations="locations"
                 :comments="comments"
-                :project-messages="projectMessages"
-                :similar-projects="similarProjects"
                 @reload-comments="getComments(project.id)"
+                :project-messages="projectMessages"
                 @reload-project-messages="getProjectMessages(project.id)"
+                :announcements="announcements"
+                @reload-announcements="getAnnouncements"
+                :similar-projects="similarProjects"
             />
         </div>
 
@@ -48,7 +51,9 @@
             @close="toggleAddModal('resource')"
         />
         <AnnouncementDrawer
+            :project="project"
             :announcement="modals.announcement.editedItem"
+            @reload-announcements="getAnnouncements"
             :is-add-mode="!modals.announcement.editedItem"
             :is-opened="modals.announcement.visible"
             @close="toggleAddModal('announcement')"
@@ -105,6 +110,8 @@ import permissions from '@/mixins/permissions.ts'
 import { getComments } from '@/api/comments.service'
 import { getProjectMessages } from '@/api/project-messages.service'
 import { getProjectLocations } from '@/api/locations.services'
+
+import { getProjectAnnouncements } from '@/api/announcements.service'
 export default {
     name: 'ProjectPage',
 
@@ -225,6 +232,7 @@ export default {
             comments: [],
             projectMessages: [],
             locations: [],
+            announcements: [],
         }
     },
 
@@ -313,16 +321,26 @@ export default {
             }
         },
 
+        async getAnnouncements() {
+            try {
+                const response = await getProjectAnnouncements(this.project.id)
+                this.announcements = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
         setProject(projectSlugOrId = this.$route.params.slugOrId) {
             this.loading = true
             this.$store
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
                     await Promise.all([
-                        this.getComments(project.id),
-                        this.getProjectMessages(project.id),
+                        this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
+                        this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectLocations(),
                         this.getSimilarProjects(),
+                        this.getAnnouncements(),
                     ])
                     this.connectToSocket(project.id)
                     this.loading = false
