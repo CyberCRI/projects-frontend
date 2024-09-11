@@ -8,7 +8,7 @@ export async function reportBug(page) {
     logger.info('Click on project settings')
     let settings = await page.locator('[data-test="project-settings"]')
     // button might be hidden in extra tabs dropdown
-    if (!settings) {
+    if (!settings.count()) {
         await page.locator('[data-test="extra-tabs-button"]').click()
         settings = await page.locator('[data-test="project-settings"]')
     }
