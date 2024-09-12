@@ -22,7 +22,6 @@ import { AttachmentFileOutput } from '@/models/attachment-file.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import { GoalModel } from '@/models/goal.model'
 import { FollowOutput } from '@/models/follow.model'
-import { AnnouncementOutput } from '@/models/announcement.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
@@ -425,23 +424,6 @@ const mutations = {
     },
     DELETE_REVIEW: (state: ProjectState, index: number) => {
         state.project.reviews.splice(index, 1)
-    },
-
-    // ANNOUNCEMENTS
-    ADD_ANNOUNCEMENT: (state: ProjectState, announcement: AnnouncementOutput) => {
-        state.project.announcements.push(announcement)
-    },
-    UPDATE_ANNOUNCEMENT: (
-        state: ProjectState,
-        body: {
-            index: number
-            announcement: AnnouncementOutput
-        }
-    ) => {
-        state.project.announcements.splice(body.index, 1, body.announcement)
-    },
-    DELETE_ANNOUNCEMENT: (state: ProjectState, index: number) => {
-        state.project.announcements.splice(index, 1)
     },
 
     // FOLLOWS

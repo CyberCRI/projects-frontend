@@ -10,7 +10,6 @@ import organizations, { OrganizationsState } from '@/store/modules/organizations
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
 import projectMembers, { ProjectMembersState } from '@/store/modules/project-members'
 import projects, { ProjectState } from '@/store/modules/projects'
-import announcements, { AnnouncementsState } from '@/store/modules/announcements'
 import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
 import reviews from '@/store/modules/reviews'
 import users, { UsersState } from '@/store/modules/users'
@@ -23,7 +22,6 @@ export interface State {
     organizations: OrganizationsState
     languages: LanguageState
     users: UsersState
-    announcements: AnnouncementsState
     groups: GroupsState
     notifications: NotificationsState
     peopleGroups: PeopleGroupsState
@@ -44,7 +42,6 @@ export default createStore({
         projectCategories,
         projectMembers,
         projects,
-        announcements,
         reviews,
         users,
         peopleGroups,

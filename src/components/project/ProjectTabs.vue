@@ -41,7 +41,7 @@ import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'ProjectTabs',
 
-    emits: ['reload-comments', 'reload-project-messages'],
+    emits: ['reload-comments', 'reload-project-messages', 'reload-announcements'],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
 
@@ -66,6 +66,10 @@ export default {
             default: () => [],
         },
         locations: {
+            type: Array,
+            default: () => [],
+        },
+        announcements: {
             type: Array,
             default: () => [],
         },
@@ -188,9 +192,13 @@ export default {
                     key: 'project-announcements',
                     label: this.$t('home.announcements'),
                     view: `/projects/${this.$route.params.slugOrId}/announcements`,
+                    props: {
+                        project: this.project,
+                        announcements: this.announcements,
+                        onReloadAnnouncements: () => this.$emit('reload-announcements'),
+                    },
                     condition:
-                        this.project.announcements.length > 0 ||
-                        this.isRoute('projectAnnouncements'), // prevent error when emptying the current tab
+                        this.announcements?.length > 0 || this.isRoute('projectAnnouncements'), // prevent error when emptying the current tab
                     dataTest: 'project-announcements',
                 },
                 {

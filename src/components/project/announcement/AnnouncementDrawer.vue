@@ -83,10 +83,13 @@ import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
+import { postAnnouncement, patchAnnouncement } from '@/api/announcements.service'
+import analytics from '@/analytics'
+
 export default {
     name: 'AnnouncementDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-announcements'],
 
     components: {
         ConfirmModal,
@@ -97,6 +100,28 @@ export default {
         TipTapEditor,
         DatePicker,
         FieldErrors,
+    },
+
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+
+        announcement: {
+            type: Object || null,
+            default: null,
+        },
+
+        isAddMode: {
+            type: Boolean,
+            default: true,
+        },
+
+        isOpened: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -165,23 +190,6 @@ export default {
         },
     },
 
-    props: {
-        announcement: {
-            type: Object || null,
-            default: null,
-        },
-
-        isAddMode: {
-            type: Boolean,
-            default: true,
-        },
-
-        isOpened: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
     methods: {
         async submit() {
             const isValid = await this.v$.$validate()
@@ -194,12 +202,19 @@ export default {
                         ? utils.fullYearDateFormat(new Date(this.form.deadline))
                         : null,
                     description: this.form.description,
-                    project_id: this.$store.getters['projects/currentProjectId'],
+                    project_id: this.project.id,
                 }
 
                 if (this.isAddMode) {
                     try {
-                        await this.$store.dispatch('announcements/postAnnouncement', body)
+                        const result = await postAnnouncement(body)
+                        analytics.announcement.addAnnouncement({
+                            project: {
+                                id: this.project.id,
+                            },
+                            announcement: result,
+                        })
+
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.announcement-create.success'),
                             type: 'success',
@@ -211,12 +226,21 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.$emit('reload-announcements')
                         this.asyncing = false
                         this.closeNoConfirm()
                     }
                 } else {
                     try {
-                        await this.$store.dispatch('announcements/patchAnnouncement', body)
+                        const result = await patchAnnouncement(body)
+
+                        analytics.announcement.updateAnnouncement({
+                            project: {
+                                id: this.project.id,
+                            },
+                            announcement: result,
+                        })
+
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.announcement-update.success'),
                             type: 'success',
@@ -228,6 +252,7 @@ export default {
                         })
                         console.error(error)
                     } finally {
+                        this.$emit('reload-announcements')
                         this.asyncing = false
                         this.closeNoConfirm()
                     }

@@ -16,17 +16,14 @@ export async function getAnnouncements(params): Promise<APIResponseList<Announce
     ).data
 }
 
-export async function getProjectAnnouncements({
-    project_id,
-    params,
-}: {
-    project_id: string
-    params
-}): Promise<APIResponseList<AnnouncementOutput>> {
+export async function getProjectAnnouncements(
+    project_id: string,
+    params: Object
+): Promise<APIResponseList<AnnouncementOutput>> {
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/announcement/`,
-            utils.adaptParam(params)
+            utils.adaptParam(params || {})
         )
     ).data
 }
