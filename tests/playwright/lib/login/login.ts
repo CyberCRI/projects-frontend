@@ -9,6 +9,10 @@ export async function logIn(page: Page, user: User) {
     await page.goto('/')
     await page.locator('[data-test="test-login-button"]').click()
     logger.info(`Fill username or email (${user.email})`)
+    let loginForm = await page.locator('#kc-form-login')
+    if (await loginForm.isHidden()) {
+        await page.locator('.mail-pw-form-details summary').click
+    }
     await page.locator('[data-test="username"]').fill(user.email)
     logger.info('Fill password')
     await page.locator('[data-test="password"]').fill(user.password)

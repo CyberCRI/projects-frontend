@@ -8,13 +8,26 @@ export async function createGroup(page: Page, GroupName: string) {
     logger.info('Navigate to group creation page')
     await page.locator('[data-test="dropdown-user-account"]').click()
     await page.locator('[data-test="admin"]').click()
-    try {
-        await page.locator('[data-test="admin-groups"]').click()
-    } catch (e) {
-        // group tab might be hidden in a "seem more" menu if screen is small
-        await page.locator('.tabs-header .more-btn').click()
-        await page.locator('[data-test="admin-groups"]').click()
+
+    let groupsTab = await page.locator('[data-test="admin-groups"]')
+    // button might be hidden in extra tabs dropdown
+    const groupsTabCount = await groupsTab.count()
+    console.log('groupsTab count', groupsTabCount)
+    if (!groupsTabCount) {
+        console.log('will click extra tabs button')
+        await page.locator('[data-test="extra-tabs-button"]').click()
+        groupsTab = await page.locator('[data-test="admin-groups"]')
     }
+    await groupsTab.click()
+
+    // try {
+    //     await page.locator('[data-test="admin-groups"]').click()
+    // } catch (e) {
+    //     // group tab might be hidden in a "seem more" menu if screen is small
+    //     await page.locator('.tabs-header .more-btn').click()
+    //     await page.locator('[data-test="admin-groups"]').click()
+    // }
+
     await page.locator('[data-test="create-group"]').click()
     await page.locator('[data-test="group-name-input"]').fill(GroupName)
     await page.locator('[data-test="group-email-input"]').fill('rototo@exemple.com')

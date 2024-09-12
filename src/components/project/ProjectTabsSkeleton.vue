@@ -1,5 +1,5 @@
 <template>
-    <div class="project-tabs">
+    <div class="project-tabs project-tabs-skeleton">
         <TabsLayout :border="false" :tabs="projectTabs" />
     </div>
 </template>
