@@ -24,6 +24,7 @@ for (let i = 0; i < users.length; i++) {
             logger.error(err)
             throw err
         }
+        await delay(5000) // gives tiume for algolia to index
         try {
             await search(page, projId)
             logger.info(`searching for SearchTest_${i}`)

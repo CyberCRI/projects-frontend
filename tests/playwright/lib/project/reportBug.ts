@@ -1,18 +1,26 @@
 import { expect } from '@playwright/test'
 import { emailToReport } from '../../variables'
 import { LogLevel, Logger } from '../../logger'
+import { delay } from '../index'
 
 const logger = new Logger(LogLevel.Debug)
 
 export async function reportBug(page) {
     logger.info('Click on project settings')
+    await delay(1000) // give times skeleton to kick in
+    await expect(page.locator('.project-tabs-skeleton')).toHaveCount(0)
+    await delay(2000) // give times for tabs to compute
     let settings = await page.locator('[data-test="project-settings"]')
     // button might be hidden in extra tabs dropdown
-    if (!settings.count()) {
+    const settingsCount = await settings.count()
+    console.log('settings count', settingsCount)
+    if (!settingsCount) {
+        console.log('will click extra tabs button')
         await page.locator('[data-test="extra-tabs-button"]').click()
         settings = await page.locator('[data-test="project-settings"]')
     }
     logger.info('Click on report abuse')
+    await delay(5000)
     await page.locator('[data-test="report-abuse"]').click()
     logger.info('Add email to report')
     await page.locator('[data-test="report-email"]').click()
