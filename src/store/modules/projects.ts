@@ -17,17 +17,12 @@ import {
 import analytics from '@/analytics'
 import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
-import { BlogEntryOutput } from '@/models/blog-entry.model'
 import { GoalModel } from '@/models/goal.model'
 import { FollowOutput } from '@/models/follow.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
     project: ProjectOutput
-}
-
-function sortBlogEntries(a: any, b: any) {
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 }
 
 const state = (): ProjectState => ({
@@ -300,29 +295,6 @@ const mutations = {
     },
     SET_PROJECT_LOCK: (state: ProjectState, value: boolean) => {
         state.project.is_locked = value
-    },
-
-    // BLOG ENTRIES
-    SET_BLOG_ENTRIES: (state: ProjectState, blogEntries: BlogEntryOutput[]) => {
-        state.project.blog_entries = blogEntries
-        state.project.blog_entries.sort(sortBlogEntries)
-    },
-    ADD_BLOG_ENTRY: (state: ProjectState, blogEntry: any) => {
-        state.project.blog_entries.unshift(blogEntry)
-        state.project.blog_entries.sort(sortBlogEntries)
-    },
-    UPDATE_BLOG_ENTRY: (
-        state: ProjectState,
-        body: {
-            index: number
-            entry: BlogEntryOutput
-        }
-    ) => {
-        state.project.blog_entries.splice(body.index, 1, body.entry)
-        state.project.blog_entries.sort(sortBlogEntries)
-    },
-    DELETE_BLOG_ENTRY: (state: ProjectState, index: number) => {
-        state.project.blog_entries.splice(index, 1)
     },
 
     // GOALS

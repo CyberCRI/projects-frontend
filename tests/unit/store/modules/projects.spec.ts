@@ -17,10 +17,7 @@ import {
 import analytics from '@/analytics'
 
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
-import { BlogEntryFactory } from '../../../factories/blog-entry.factory'
 import { GoalFactory } from '../../../factories/goal.factory'
-import { AttachmentFileFactory } from '../../../factories/attachment-file.factory'
-import { AttachmentLinkFactory } from '../../../factories/attachment-link.factory'
 import { FollowFactory } from '../../../factories/follow.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ReviewFactory } from '../../../factories/review.factory'
@@ -373,35 +370,6 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.SET_PROJECT_LOCK(state, payload)
 
         expect(state.project.is_locked).toEqual(payload)
-    })
-
-    // BLOG ENTRIES
-    it('SET_BLOG_ENTRIES', () => {
-        const blogEntries = BlogEntryFactory.generateMany(2)
-        projectsStore.mutations.SET_BLOG_ENTRIES(state, blogEntries)
-
-        expect(state.project.blog_entries).toEqual(blogEntries)
-    })
-
-    it('ADD_BLOG_ENTRY', () => {
-        const blogEntry = BlogEntryFactory.generate()
-        projectsStore.mutations.ADD_BLOG_ENTRY(state, blogEntry)
-
-        expect(state.project.blog_entries[0]).toEqual(blogEntry)
-    })
-
-    it('DELETE_BLOG_ENTRY', () => {
-        const lengthBeforeDelete = state.project.blog_entries.length
-        projectsStore.mutations.DELETE_BLOG_ENTRY(state, 0)
-
-        expect(state.project.blog_entries.length).toEqual(lengthBeforeDelete - 1)
-    })
-
-    it('UPDATE_BLOG_ENTRY', () => {
-        const entry = BlogEntryFactory.generate()
-        projectsStore.mutations.UPDATE_BLOG_ENTRY(state, { index: 0, entry })
-
-        expect(state.project.blog_entries[0]).toEqual(entry)
     })
 
     // GOALS

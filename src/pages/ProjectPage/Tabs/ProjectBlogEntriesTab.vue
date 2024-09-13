@@ -49,7 +49,8 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-
+import analytics from '@/analytics'
+import { deleteBlogEntry } from '@/api/blogentries.service'
 export default {
     name: 'ProjectBlogEntriesTab',
 
@@ -57,11 +58,24 @@ export default {
 
     inject: ['projectLayoutToggleAddModal'],
 
+    emits: ['reload-blog-entries'],
+
     components: {
         BlogEntry,
         BlogSummaryBlock,
         ConfirmModal,
         LpiButton,
+    },
+
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+        blogEntries: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -76,20 +90,12 @@ export default {
     },
 
     computed: {
-        blogEntries() {
-            return this.$store.getters['projects/project'].blog_entries
-        },
-
         blogEntriesLength() {
             return this.blogEntries.length
         },
 
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
         summaryItems() {
-            return this.$store.getters['projects/project'].blog_entries.map((blogEntry) => {
+            return this.blogEntries.map((blogEntry) => {
                 return {
                     id: blogEntry.id,
                     label: blogEntry.title,
@@ -119,9 +125,35 @@ export default {
 
         async deleteBlogEntry() {
             this.asyncing = true
-            await this.$store.dispatch('blogEntries/deleteBlogEntry', this.currentBlogEntry)
-            this.asyncing = false
-            this.confirmModalVisible = false
+            try {
+                await deleteBlogEntry({
+                    id: this.currentBlogEntry.id,
+                    project_id: this.project.id,
+                })
+
+                this.$emit('reload-blog-entries')
+
+                analytics.blog.removeBlog({
+                    project: {
+                        id: this.project.id,
+                    },
+                    blogEntry: this.currentBlogEntry,
+                })
+
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('toasts.blog-delete.success'),
+                    type: 'success',
+                })
+            } catch (error) {
+                console.error(error)
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('toasts.blog-delete.error'),
+                    type: 'error',
+                })
+            } finally {
+                this.asyncing = false
+                this.confirmModalVisible = false
+            }
         },
     },
 

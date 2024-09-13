@@ -1923,6 +1923,11 @@
             "success": "The goal has been updated successfully",
             "error": "Error during the goal update"
         },
+        "blog-delete": {
+            "success": "The blog entry has been deleted successfully",
+            "error": "Error during the blog entry deletion"
+        },
+
         "blog-create": {
             "success": "The blog entry has been created successfully",
             "error": "Error during the blog entry creation"

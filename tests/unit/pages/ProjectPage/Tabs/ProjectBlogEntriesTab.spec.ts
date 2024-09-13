@@ -6,6 +6,7 @@ import utils from '@/functs/functions'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import blog from '@/analytics/blog'
 
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
@@ -46,6 +47,10 @@ describe('ProjectBlogEntriesTab.vue', () => {
             i18n,
             provide: {
                 projectLayoutToggleAddModal: vi.fn(),
+            },
+            props: {
+                blogEntries: [],
+                project: { id: 1 },
             },
         })
         expect(wrapper.exists()).toBe(true)

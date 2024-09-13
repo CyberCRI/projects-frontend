@@ -15,9 +15,9 @@
                 <GoalsRecap v-if="filteredGoals.length" :goals="filteredGoals" />
 
                 <PublicationRecap
-                    v-if="project && project.blog_entries.length"
+                    v-if="blogEntries.length"
                     :is-blog="true"
-                    :publications="project.blog_entries"
+                    :publications="blogEntries"
                 />
 
                 <LinkedProjectsRecap
@@ -139,6 +139,10 @@ export default {
             default: () => [],
         },
         linkResources: {
+            type: Array,
+            default: () => [],
+        },
+        blogEntries: {
             type: Array,
             default: () => [],
         },
