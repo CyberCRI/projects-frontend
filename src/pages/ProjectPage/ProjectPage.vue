@@ -7,6 +7,8 @@
             class="project-header"
             @show-project-announcements="goToTab('announcements')"
             :announcements="announcements"
+            :follow="follow"
+            @update-follow="follow = $event"
         />
 
         <div class="tabs-wrapper">
@@ -249,6 +251,7 @@ export default {
             fileResources: [],
             linkResources: [],
             blogEntries: [],
+            follow: { is_followed: false },
         }
     },
 
@@ -380,6 +383,7 @@ export default {
             this.$store
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
+                    this.follow = project.is_followed
                     await Promise.all([
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler

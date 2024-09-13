@@ -18,7 +18,6 @@ import analytics from '@/analytics'
 import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
 import { GoalModel } from '@/models/goal.model'
-import { FollowOutput } from '@/models/follow.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
@@ -360,21 +359,6 @@ const mutations = {
     },
     DELETE_REVIEW: (state: ProjectState, index: number) => {
         state.project.reviews.splice(index, 1)
-    },
-
-    // FOLLOWS
-    SET_FOLLOWS: (state: ProjectState, follows: FollowOutput[]) => {
-        state.project.follows = follows
-    },
-
-    ADD_FOLLOW: (state: ProjectState, follow: FollowOutput) => {
-        state.project.is_followed.is_followed = true
-        state.project.is_followed.follow_id = follow.id
-    },
-
-    DELETE_FOLLOW: (state: ProjectState) => {
-        state.project.is_followed.is_followed = false
-        state.project.is_followed.follow_id = null
     },
 }
 

@@ -1,4 +1,3 @@
-import follows from '@/store/modules/follows'
 import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
 import languages, { LanguageState } from '@/store/modules/languages'
@@ -27,7 +26,6 @@ export interface State {
 export default createStore({
     strict: import.meta.env.NODE_ENV !== 'production', // WTF ???
     modules: {
-        follows,
         goals,
         groups,
         languages,
