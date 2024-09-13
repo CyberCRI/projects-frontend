@@ -22,13 +22,9 @@ export async function getAttachmentFile(
     ).data
 }
 
-export async function postAttachmentFiles({
-    project_id,
-    body,
-}: {
-    project_id: string
+export async function postAttachmentFiles(
     body: AttachmentFileInput
-}): Promise<AttachmentFileOutput> {
+): Promise<AttachmentFileOutput> {
     const headers = {
         'Content-Type': 'multipart/form-data',
     }
@@ -43,7 +39,7 @@ export async function postAttachmentFiles({
     fd.append('mime', body.file.type || 'file')
     return (
         await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/file/`,
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${body.project_id}/file/`,
             fd,
             {
                 headers,

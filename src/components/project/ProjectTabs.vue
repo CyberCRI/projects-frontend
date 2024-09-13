@@ -41,7 +41,13 @@ import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'ProjectTabs',
 
-    emits: ['reload-comments', 'reload-project-messages', 'reload-announcements'],
+    emits: [
+        'reload-comments',
+        'reload-project-messages',
+        'reload-announcements',
+        'reload-file-resources',
+        'reload-link-resources',
+    ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
 
@@ -70,6 +76,14 @@ export default {
             default: () => [],
         },
         announcements: {
+            type: Array,
+            default: () => [],
+        },
+        fileResources: {
+            type: Array,
+            default: () => [],
+        },
+        linkResources: {
             type: Array,
             default: () => [],
         },
@@ -108,6 +122,8 @@ export default {
                         comments: this.comments,
                         similarProjects: this.similarProjects,
                         locations: this.locations,
+                        fileResources: this.fileResources,
+                        linkResources: this.linkResources,
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -143,6 +159,13 @@ export default {
                     key: 'project-resources',
                     label: this.$t('resource.resources'),
                     view: `/projects/${this.$route.params.slugOrId}/resources`,
+                    props: {
+                        project: this.project,
+                        fileResources: this.fileResources,
+                        linkResources: this.linkResources,
+                        onReloadFileResources: () => this.$emit('reload-file-resources'),
+                        onReloadLinkResources: () => this.$emit('reload-link-resources'),
+                    },
                     condition:
                         (this.project &&
                             !!(this.project.files.length || this.project.links.length)) ||

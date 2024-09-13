@@ -42,9 +42,9 @@
                 />
 
                 <ResourcesRecap
-                    v-if="project && (project.links.length || project.files.length)"
-                    :files="project.files"
-                    :links="project.links"
+                    v-if="linkResources?.length || fileResources?.length"
+                    :files="fileResources"
+                    :links="linkResources"
                 />
 
                 <PublicationRecap
@@ -131,6 +131,14 @@ export default {
         },
 
         locations: {
+            type: Array,
+            default: () => [],
+        },
+        fileResources: {
+            type: Array,
+            default: () => [],
+        },
+        linkResources: {
             type: Array,
             default: () => [],
         },
