@@ -93,14 +93,21 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required, url } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
+import analytics from '@/analytics'
+import { postAttachmentFiles, patchAttachmentFile } from '@/api/attachment-files.service'
+import { postAttachmentLinks, patchAttachmentLink } from '@/api/attachment-links.service'
 export default {
     name: 'ResourceDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-link-resources', 'reload-file-resources'],
 
     components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
 
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         isAddMode: {
             type: Boolean,
             default: true,
@@ -182,7 +189,7 @@ export default {
         },
 
         projectId() {
-            return this.$store.getters['projects/currentProjectId']
+            return this.project?.id
         },
     },
 
@@ -241,7 +248,7 @@ export default {
             if (!this.linkExists()) {
                 this.isSaving = true
                 const body = {
-                    project_id: this.$store.getters['projects/project'].id,
+                    project_id: this.projectId,
                     attachment_type: 'link',
                     description: this.description,
                     site_url: this.link,
@@ -249,7 +256,17 @@ export default {
                 }
 
                 try {
-                    await this.$store.dispatch('attachmentLinks/postAttachmentLinks', body)
+                    const result = await postAttachmentLinks(body)
+
+                    analytics.attachmentLink.addAttachment({
+                        project: {
+                            id: this.projectId,
+                        },
+                        attachment: result,
+                    })
+
+                    this.$emit('reload-link-resources')
+
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.link-create.success'),
                         type: 'success',
@@ -288,7 +305,18 @@ export default {
                     description: this.description,
                     project_id: this.projectId,
                 }
-                await this.$store.dispatch('attachmentFiles/postAttachmentFiles', body)
+
+                const result = await postAttachmentFiles(body)
+
+                analytics.attachmentFile.addAttachment({
+                    project: {
+                        id: this.projectId,
+                    },
+                    attachment: result,
+                })
+
+                this.$emit('reload-file-resources')
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.file-create.success'),
                     type: 'success',
@@ -323,7 +351,17 @@ export default {
             }
 
             try {
-                await this.$store.dispatch('attachmentLinks/patchAttachmentLink', body)
+                const result = await patchAttachmentLink(body)
+
+                analytics.attachmentLink.updateAttachment({
+                    project: {
+                        id: this.projectId,
+                    },
+                    attachment: result,
+                })
+
+                this.$emit('reload-link-resources')
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.link-update.success'),
                     type: 'success',
@@ -351,7 +389,16 @@ export default {
             }
 
             try {
-                await this.$store.dispatch('attachmentFiles/patchAttachmentFile', body)
+                const result = await patchAttachmentFile(body)
+
+                analytics.attachmentFile.updateAttachment({
+                    project: {
+                        id: this.projectId,
+                    },
+                    attachment: result,
+                })
+
+                this.$emit('reload-file-resources')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.file-update.success'),
                     type: 'success',

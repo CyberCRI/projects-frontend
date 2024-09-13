@@ -9,15 +9,15 @@
         </div>
 
         <SectionHeader
-            v-if="files.length"
+            v-if="fileResources.length"
             :has-button="false"
-            :quantity="files.length"
-            :title="$filters.capitalize($t('project.files', files.length))"
+            :quantity="fileResources.length"
+            :title="$filters.capitalize($t('project.files', fileResources.length))"
         />
 
-        <div v-if="files.length" class="resource-ctn">
+        <div v-if="fileResources.length" class="resource-ctn">
             <ResourceCard
-                v-for="file in files"
+                v-for="file in fileResources"
                 :key="file.id"
                 :can-delete="canEditProject"
                 :can-edit="canEditProject"
@@ -31,16 +31,16 @@
         </div>
 
         <SectionHeader
-            v-if="links.length"
+            v-if="linkResources.length"
             :has-button="false"
-            :quantity="links.length"
-            :title="$filters.capitalize($t('resource.web', links.length))"
+            :quantity="linkResources.length"
+            :title="$filters.capitalize($t('resource.web', linkResources.length))"
             class="link-header"
         />
 
-        <div v-if="links.length" class="resource-ctn">
+        <div v-if="linkResources.length" class="resource-ctn">
             <ResourceCard
-                v-for="link in links"
+                v-for="link in linkResources"
                 :key="link.id"
                 :can-delete="canEditProject"
                 :can-edit="canEditProject"
@@ -71,13 +71,32 @@ import ResourceCard from '@/components/project/resource/ResourceCard.vue'
 import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-
+import analytics from '@/analytics'
+import { deleteAttachmentFile } from '@/api/attachment-files.service'
+import { deleteAttachmentLink } from '@/api/attachment-links.service'
 export default {
     name: 'ProjectResourcesTab',
 
     mixins: [permissions, ProjectTab],
 
+    emits: ['reload-file-resources', 'reload-link-resources'],
+
     inject: ['projectLayoutToggleAddModal'],
+
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+        fileResources: {
+            type: Array,
+            default: () => [],
+        },
+        linkResources: {
+            type: Array,
+            default: () => [],
+        },
+    },
 
     data() {
         return {
@@ -96,38 +115,6 @@ export default {
         LpiButton,
     },
 
-    computed: {
-        files() {
-            return (
-                (this.$store.getters['projects/project'] &&
-                    this.$store.getters['projects/project'].files) ||
-                []
-            )
-        },
-
-        links() {
-            return (
-                (this.$store.getters['projects/project'] &&
-                    this.$store.getters['projects/project'].links) ||
-                []
-            )
-        },
-
-        // todo: add back if needed, to remove if Ignacio is happy ...
-        // linksByTags() {
-        //     const results = []
-        //     this.links.forEach((link) => {
-        //         if (results.every((result) => result.category !== link.category))
-        //             results.push({
-        //                 category: link.category,
-        //                 links: [link],
-        //             })
-        //         else results.find((result) => result.category === link.category).links.push(link)
-        //     })
-        //     return results
-        // },
-    },
-
     methods: {
         openModal(resource, type) {
             this.confirmModalVisible = true
@@ -144,7 +131,20 @@ export default {
             this.asyncing = true
             if (type === 'link') {
                 try {
-                    await this.$store.dispatch('attachmentLinks/deleteAttachmentLink', resource.id)
+                    await deleteAttachmentLink({
+                        id: resource.id,
+                        projectId: this.project.id,
+                    })
+
+                    analytics.attachmentLink.removeAttachment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        attachment: resource,
+                    })
+
+                    this.$emit('reload-link-resources')
+
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.link-delete.success'),
                         type: 'success',
@@ -161,7 +161,17 @@ export default {
                 }
             } else if (type === 'file') {
                 try {
-                    await this.$store.dispatch('attachmentFiles/deleteAttachmentFile', resource.id)
+                    await deleteAttachmentFile({ id: resource.id, projectId: this.project?.id })
+
+                    analytics.attachmentFile.removeAttachment({
+                        project: {
+                            id: this.project.id,
+                        },
+                        attachment: resource,
+                    })
+
+                    this.$emit('reload-file-resources')
+
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.file-delete.success'),
                         type: 'success',

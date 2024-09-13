@@ -484,50 +484,6 @@ describe('Store module | projects | mutations', () => {
         expect(state.project.linked_projects).toStrictEqual([])
     })
 
-    // FILES
-    it('ADD_ATTACHMENT_FILE', () => {
-        const file = AttachmentFileFactory.generate()
-        projectsStore.mutations.ADD_ATTACHMENT_FILE(state, file)
-
-        expect(state.project.files[state.project.files.length - 1]).toEqual(file)
-    })
-
-    it('UPDATE_ATTACHMENT_FILE', () => {
-        const file = AttachmentFileFactory.generate()
-        projectsStore.mutations.UPDATE_ATTACHMENT_FILE(state, { index: 0, file })
-
-        expect(state.project.files[0]).toEqual(file)
-    })
-
-    it('DELETE_ATTACHMENT_FILE', () => {
-        const lengthBeforeDelete = state.project.files.length
-        projectsStore.mutations.DELETE_ATTACHMENT_FILE(state, 0)
-
-        expect(state.project.files.length).toEqual(lengthBeforeDelete - 1)
-    })
-
-    // LINKS
-    it('ADD_ATTACHMENT_LINK', () => {
-        const link = AttachmentLinkFactory.generate()
-        projectsStore.mutations.ADD_ATTACHMENT_LINK(state, link)
-
-        expect(state.project.links[state.project.links.length - 1]).toEqual(link)
-    })
-
-    it('UPDATE_ATTACHMENT_LINK', () => {
-        const link = AttachmentLinkFactory.generate()
-        projectsStore.mutations.UPDATE_ATTACHMENT_LINK(state, { index: 0, link })
-
-        expect(state.project.links[0]).toEqual(link)
-    })
-
-    it('DELETE_ATTACHMENT_LINK', () => {
-        const lengthBeforeDelete = state.project.links.length
-        projectsStore.mutations.DELETE_ATTACHMENT_LINK(state, 0)
-
-        expect(state.project.links.length).toEqual(lengthBeforeDelete - 1)
-    })
-
     // REVIEWS
     it('SET_REVIEWS', () => {
         const reviews = ReviewFactory.generateMany(2)

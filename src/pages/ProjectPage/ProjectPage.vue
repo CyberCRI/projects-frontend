@@ -22,6 +22,10 @@
                 :announcements="announcements"
                 @reload-announcements="getAnnouncements"
                 :similar-projects="similarProjects"
+                :file-resources="fileResources"
+                @reload-file-resources="getFileResources"
+                :link-resources="linkResources"
+                @reload-link-resources="getLinkResources"
             />
         </div>
 
@@ -45,10 +49,13 @@
             @close="toggleAddModal('teamMember')"
         />
         <ResourceDrawer
+            :project="project"
             :is-add-mode="!modals.resource.editedItem"
             :is-opened="modals.resource.visible"
             :selected-item="modals.resource.editedItem"
             @close="toggleAddModal('resource')"
+            @reload-file-resources="getFileResources"
+            @reload-link-resources="getLinkResources"
         />
         <AnnouncementDrawer
             :project="project"
@@ -110,7 +117,8 @@ import permissions from '@/mixins/permissions.ts'
 import { getComments } from '@/api/comments.service'
 import { getProjectMessages } from '@/api/project-messages.service'
 import { getProjectLocations } from '@/api/locations.services'
-
+import { getAttachmentLinks } from '@/api/attachment-links.service.ts'
+import { getAttachmentFiles } from '@/api/attachment-files.service.ts'
 import { getProjectAnnouncements } from '@/api/announcements.service'
 export default {
     name: 'ProjectPage',
@@ -233,6 +241,8 @@ export default {
             projectMessages: [],
             locations: [],
             announcements: [],
+            fileResources: [],
+            linkResources: [],
         }
     },
 
@@ -303,6 +313,24 @@ export default {
         //     this.modals[modalType].visible = !this.modals[modalType].visible
         // },
 
+        async getFileResources() {
+            try {
+                const response = await getAttachmentFiles(this.project.id)
+                this.fileResources = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
+        async getLinkResources() {
+            try {
+                const response = await getAttachmentLinks(this.project.id)
+                this.linkResources = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
         async getComments(project_id) {
             try {
                 const response = await getComments(project_id)
@@ -341,6 +369,8 @@ export default {
                         this.getProjectLocations(),
                         this.getSimilarProjects(),
                         this.getAnnouncements(),
+                        this.getFileResources(),
+                        this.getLinkResources(),
                     ])
                     this.connectToSocket(project.id)
                     this.loading = false

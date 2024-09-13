@@ -18,8 +18,6 @@ import analytics from '@/analytics'
 import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
 import { BlogEntryOutput } from '@/models/blog-entry.model'
-import { AttachmentFileOutput } from '@/models/attachment-file.model'
-import { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import { GoalModel } from '@/models/goal.model'
 import { FollowOutput } from '@/models/follow.model'
 import { ProjectPublicationStatusType } from '@/models/types'
@@ -370,40 +368,6 @@ const mutations = {
     },
     DELETE_LINKED_PROJECT: (state: ProjectState, index: number) => {
         state.project.linked_projects.splice(index, 1)
-    },
-
-    // FILES
-    ADD_ATTACHMENT_FILE: (state: ProjectState, file: AttachmentFileOutput) => {
-        state.project.files.push(file)
-    },
-    UPDATE_ATTACHMENT_FILE: (
-        state: ProjectState,
-        body: {
-            index: number
-            file: AttachmentFileOutput
-        }
-    ) => {
-        state.project.files.splice(body.index, 1, body.file)
-    },
-    DELETE_ATTACHMENT_FILE: (state: ProjectState, index: number) => {
-        state.project.files.splice(index, 1)
-    },
-
-    // LINKS
-    ADD_ATTACHMENT_LINK: (state: ProjectState, link: AttachmentLinkOutput) => {
-        state.project.links.push(link)
-    },
-    UPDATE_ATTACHMENT_LINK: (
-        state: ProjectState,
-        body: {
-            index: number
-            link: AttachmentLinkOutput
-        }
-    ) => {
-        state.project.links.splice(body.index, 1, body.link)
-    },
-    DELETE_ATTACHMENT_LINK: (state: ProjectState, index: number) => {
-        state.project.links.splice(index, 1)
     },
 
     // REVIEWS
