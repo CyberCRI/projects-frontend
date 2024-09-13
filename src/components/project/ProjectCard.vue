@@ -63,7 +63,7 @@
 
 <script>
 import BasicCard from '@/components/base/BasicCard.vue'
-import { postFollow as addFollow, deleteFollow } from '@/api/follows.service'
+import followUtils from '@/functs/followUtils.ts'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
@@ -223,21 +223,24 @@ export default {
         },
 
         async updateFollow() {
-            if (this.follow.is_followed) {
-                await deleteFollow({
-                    follower_id: this.follow.follow_id,
-                    project_id: this.project.id,
-                })
-                this.follow.is_followed = false
-            } else {
-                const result = await addFollow({
-                    follower_id: this.$store.state.users.id,
-                    project_id: this.project.id,
-                })
-                this.follow = result.project.is_followed
+            try {
+                if (this.follow.is_followed) {
+                    await followUtils.unfollow({
+                        follower_id: this.follow.follow_id,
+                        project_id: this.project.id,
+                    })
+                    this.follow.is_followed = false
+                } else {
+                    const result = await followUtils.follow({
+                        follower_id: this.$store.state.users.id,
+                        project_id: this.project.id,
+                    })
+                    this.follow = result.project.is_followed
+                }
+                this.$emit('card-update')
+            } catch (error) {
+                console.error('Error updating follow', error)
             }
-
-            this.$emit('card-update')
         },
     },
 }

@@ -480,31 +480,4 @@ describe('Store module | projects | mutations', () => {
 
         expect(state.project.reviews[0]).toEqual(review)
     })
-
-    // FOLLOWS
-    it('SET_FOLLOWS', () => {
-        const follows = FollowFactory.generateMany(2)
-        projectsStore.mutations.SET_FOLLOWS(state, follows)
-
-        expect(state.project.follows).toEqual(follows)
-    })
-
-    it('ADD_FOLLOW', () => {
-        const follow = FollowFactory.generate()
-        projectsStore.mutations.ADD_FOLLOW(state, follow)
-
-        expect(state.project.is_followed).toEqual({
-            is_followed: true,
-            follow_id: follow.id,
-        })
-    })
-
-    it('DELETE_FOLLOW', () => {
-        projectsStore.mutations.DELETE_FOLLOW(state)
-
-        expect(state.project.is_followed).toEqual({
-            is_followed: false,
-            follow_id: null,
-        })
-    })
 })

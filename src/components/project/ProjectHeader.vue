@@ -327,13 +327,13 @@ import TagsList from '@/components/project/TagsList.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
-import { postFollow as addFollow, deleteFollow } from '@/api/follows.service'
+import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 export default {
     name: 'ProjectHeader',
 
-    emits: ['show-project-announcements'],
+    emits: ['show-project-announcements', 'update-follow'],
 
     components: {
         SkeletonComponent,
@@ -368,6 +368,10 @@ export default {
         announcements: {
             type: Array,
             default: () => [],
+        },
+        follow: {
+            type: Object,
+            default: () => ({}),
         },
     },
 
@@ -411,7 +415,6 @@ export default {
             imageError: false,
             moreInfo: false,
             plusButton: 0,
-            follow: (this.project && this.project.is_followed) || false,
         }
     },
 
@@ -651,18 +654,25 @@ export default {
         },
 
         async toggleFollow() {
-            if (this.follow && this.follow.is_followed) {
-                await deleteFollow({
-                    follower_id: this.follow.follow_id,
-                    project_id: this.project.id,
-                })
-                this.follow.is_followed = false
-            } else {
-                const result = await addFollow({
-                    follower_id: this.$store.getters['users/id'],
-                    project_id: this.project.id,
-                })
-                this.follow = result.project.is_followed
+            try {
+                if (this.follow && this.follow.is_followed) {
+                    await followUtils.unfollow({
+                        follower_id: this.follow.follow_id,
+                        project_id: this.project.id,
+                    })
+                    this.$emit('update-follow', { is_followed: false })
+                } else {
+                    await followUtils.follow({
+                        follower_id: this.$store.getters['users/id'],
+                        project_id: this.project.id,
+                    })
+                    this.$emit('update-follow', {
+                        follower_id: this.$store.state.users.id,
+                        is_followed: true,
+                    })
+                }
+            } catch (error) {
+                console.error('Error updating follow', error)
             }
         },
 

@@ -81,7 +81,8 @@
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
-import { deleteFollow, getUserFollows } from '@/api/follows.service'
+import followUtils from '@/functs/followUtils.ts'
+import { getUserFollows } from '@/api/follows.service'
 
 export default {
     name: 'ProfileProjectsEditTab',
@@ -156,7 +157,7 @@ export default {
             if (toRemove.length) {
                 await Promise.all(
                     toRemove.map((project) =>
-                        deleteFollow({
+                        followUtils.unfollow({
                             follower_id: project.is_followed.follow_id,
                             project_id: project.id,
                         })
@@ -171,7 +172,7 @@ export default {
                 })
             }
             let body = { follows: listFollowedProjects }
-            await this.$store.dispatch('follows/addFollowMany', {
+            await followUtils.followMany({
                 id: this.user.id,
                 body: body,
             })
