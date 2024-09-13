@@ -1920,6 +1920,10 @@
             "success": "L'objectif a bien été modifié",
             "error": "Erreur lors de la modification de l'objectif"
         },
+        "blog-delete": {
+            "success": "L'article de blog a bien été supprimé",
+            "error": "Erreur lors de la suppression de l'article de blog"
+        },
         "blog-create": {
             "success": "L'article de blog a bien été ajouté",
             "error": "Erreur lors de la création de l'article de blog"

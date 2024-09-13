@@ -1,4 +1,3 @@
-import blogEntries from '@/store/modules/blog-entries'
 import follows from '@/store/modules/follows'
 import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
@@ -28,7 +27,6 @@ export interface State {
 export default createStore({
     strict: import.meta.env.NODE_ENV !== 'production', // WTF ???
     modules: {
-        blogEntries,
         follows,
         goals,
         groups,

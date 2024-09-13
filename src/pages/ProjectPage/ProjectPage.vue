@@ -26,6 +26,8 @@
                 @reload-file-resources="getFileResources"
                 :link-resources="linkResources"
                 @reload-link-resources="getLinkResources"
+                :blog-entries="blogEntries"
+                @reload-blog-entries="getBlogEntries"
             />
         </div>
 
@@ -78,10 +80,12 @@
             @close="toggleAddModal('location')"
         />
         <BlogDrawer
+            :project="project"
             :edited-blog="modals.blogEntry.editedItem"
             :is-add-mode="!modals.blogEntry.editedItem"
             :is-opened="modals.blogEntry.visible"
             @close="toggleAddModal('blogEntry')"
+            @reload-blog-entries="getBlogEntries"
         />
 
         <SdgsDrawer
@@ -120,6 +124,7 @@ import { getProjectLocations } from '@/api/locations.services'
 import { getAttachmentLinks } from '@/api/attachment-links.service.ts'
 import { getAttachmentFiles } from '@/api/attachment-files.service.ts'
 import { getProjectAnnouncements } from '@/api/announcements.service'
+import { getBlogEntries } from '@/api/blogentries.service'
 export default {
     name: 'ProjectPage',
 
@@ -243,6 +248,7 @@ export default {
             announcements: [],
             fileResources: [],
             linkResources: [],
+            blogEntries: [],
         }
     },
 
@@ -313,6 +319,17 @@ export default {
         //     this.modals[modalType].visible = !this.modals[modalType].visible
         // },
 
+        async getBlogEntries() {
+            try {
+                const response = await getBlogEntries(this.project.id)
+                this.blogEntries = (response.results || []).sort((a, b) => {
+                    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                })
+            } catch (err) {
+                console.error(err)
+            }
+        },
+
         async getFileResources() {
             try {
                 const response = await getAttachmentFiles(this.project.id)
@@ -371,6 +388,7 @@ export default {
                         this.getAnnouncements(),
                         this.getFileResources(),
                         this.getLinkResources(),
+                        this.getBlogEntries(),
                     ])
                     this.connectToSocket(project.id)
                     this.loading = false

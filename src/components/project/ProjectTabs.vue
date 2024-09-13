@@ -47,6 +47,7 @@ export default {
         'reload-announcements',
         'reload-file-resources',
         'reload-link-resources',
+        'reload-blog-entries',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -87,13 +88,13 @@ export default {
             type: Array,
             default: () => [],
         },
+        blogEntries: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     computed: {
-        blogEntries() {
-            return this.project ? this.project.blog_entries : []
-        },
-
         linkedProjects() {
             return this.project ? this.project.linked_projects : []
         },
@@ -124,6 +125,7 @@ export default {
                         locations: this.locations,
                         fileResources: this.fileResources,
                         linkResources: this.linkResources,
+                        blogEntries: this.blogEntries,
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -152,6 +154,11 @@ export default {
                     key: 'project-blog',
                     label: this.$t('blog.title'),
                     view: `/projects/${this.$route.params.slugOrId}/blog-entries`,
+                    props: {
+                        project: this.project,
+                        blogEntries: this.blogEntries,
+                        onReloadBlogEntries: () => this.$emit('reload-blog-entries'),
+                    },
                     condition: !!this.blogEntries.length || this.isRoute('projectBlog'), // prevent error when emptying the current tab
                     dataTest: 'project-blog',
                 },

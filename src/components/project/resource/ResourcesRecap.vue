@@ -37,13 +37,15 @@ export default {
 
     components: { SectionHeader, ResourceCount },
 
-    computed: {
-        files() {
-            return this.$store.getters['projects/project'].files
+    props: {
+        files: {
+            type: Array,
+            default: () => [],
         },
 
-        links() {
-            return this.$store.getters['projects/project'].links
+        links: {
+            type: Array,
+            default: () => [],
         },
     },
 

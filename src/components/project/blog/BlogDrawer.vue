@@ -96,11 +96,13 @@ import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postBlogEntryImage } from '@/api/blogentries.service'
+import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
+import analytics from '@/analytics'
 
 export default {
     name: 'BlogDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-blog-entries'],
 
     mixins: [permissions],
 
@@ -260,12 +262,22 @@ export default {
         async createBlogEntry(closeWindowAfterCreate) {
             try {
                 this.asyncing = true
-                const res = await this.$store.dispatch('blogEntries/postBlogEntry', {
-                    project_id: this.$store.getters['projects/project'].id,
+
+                const body = {
+                    project_id: this.project.id,
                     title: this.title,
                     content: this.editorBlogEntry,
                     images_ids: this.addedImages,
                     created_at: this.selectedDate,
+                }
+
+                const result = await postBlogEntry(body)
+
+                analytics.blog.addBlog({
+                    project: {
+                        id: this.project.id,
+                    },
+                    blogEntry: result,
                 })
 
                 const connectedUser = this.$store.getters['users/userFromApi']
@@ -275,15 +287,17 @@ export default {
                     author_name: connectedUser
                         ? connectedUser.given_name + ' ' + connectedUser.family_name
                         : '',
-                    id: res.id,
+                    id: result.id,
                     type: 'blog-entry-create',
-                    updated_at: res.updated_at,
+                    updated_at: result.updated_at,
                     scope: 'project.updated.blog-entry-create',
                 })
 
+                this.$emit('reload-blog-entries')
+
                 this.asyncing = false
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-create.success')}`,
+                    message: this.$t('toasts.blog-create.success'),
                     type: 'success',
                 })
 
@@ -297,7 +311,7 @@ export default {
             } catch (error) {
                 console.error(error)
                 this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-create.error')}`,
+                    message: this.$t('toasts.blog-create.error'),
                     type: 'error',
                 })
             } finally {
@@ -316,7 +330,17 @@ export default {
                     images_ids: [...this.editedBlog.images, ...this.addedImages],
                 }
 
-                const res = await this.$store.dispatch('blogEntries/patchBlogEntry', body)
+                const result = await patchBlogEntry({
+                    project_id: this.project.id,
+                    body: body,
+                })
+
+                analytics.blog.updateBlog({
+                    project: {
+                        id: this.project.id,
+                    },
+                    blogEntry: result,
+                })
 
                 const connectedUser = this.$store.getters['users/userFromApi']
                 this.notifyPatch({
@@ -324,13 +348,15 @@ export default {
                     author_name: connectedUser
                         ? connectedUser.given_name + ' ' + connectedUser.family_name
                         : '',
-                    id: res.id,
+                    id: result.id,
                     type: 'blog-entry-update',
-                    updated_at: res.updated_at,
+                    updated_at: result.updated_at,
                     scope: 'project.updated.blog-entry',
                 })
 
                 this.asyncing = false
+
+                this.$emit('reload-blog-entries')
 
                 if (closeWindowAfterPatch) {
                     this.closeDrawer()
