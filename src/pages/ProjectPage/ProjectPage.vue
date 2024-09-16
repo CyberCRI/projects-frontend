@@ -2,6 +2,7 @@
     <div class="page-section-extra-wide project-layout">
         <ProjectHeader
             :project="project"
+            :sdgs="sdgs"
             :similar-projects="similarProjects"
             :loading="loading"
             class="project-header"
@@ -30,6 +31,10 @@
                 @reload-link-resources="getLinkResources"
                 :blog-entries="blogEntries"
                 @reload-blog-entries="getBlogEntries"
+                :goals="goals"
+                @reload-goals="getGoals"
+                :sdgs="sdgs"
+                @reload-sdgs="getSdgs"
             />
         </div>
 
@@ -40,10 +45,11 @@
             @close="toggleAddModal('project')"
         />
         <GoalDrawer
+            :project="project"
             :edited-goal="modals.goal.editedItem"
-            :is-add-mode="!modals.goal.editedItem"
             :is-opened="modals.goal.visible"
             @close="toggleAddModal('goal')"
+            @reload-goals="getGoals"
         />
         <TeamDrawer
             v-if="modals.teamMember.visible"
@@ -91,8 +97,10 @@
         />
 
         <SdgsDrawer
+            :project="project"
             :is-opened="modals.sdg.visible"
-            :sdgs="(project && project.sdgs) || []"
+            :sdgs="sdgs || []"
+            @reload-sdgs="getSdgs"
             @close="toggleAddModal('sdg')"
         />
     </div>
@@ -127,6 +135,8 @@ import { getAttachmentLinks } from '@/api/attachment-links.service.ts'
 import { getAttachmentFiles } from '@/api/attachment-files.service.ts'
 import { getProjectAnnouncements } from '@/api/announcements.service'
 import { getBlogEntries } from '@/api/blogentries.service'
+import { getAllGoals } from '@/api/goals.service'
+import { getProject } from '@/api/projects.service'
 export default {
     name: 'ProjectPage',
 
@@ -252,6 +262,8 @@ export default {
             linkResources: [],
             blogEntries: [],
             follow: { is_followed: false },
+            goals: [],
+            sdgs: [],
         }
     },
 
@@ -322,6 +334,23 @@ export default {
         //     this.modals[modalType].visible = !this.modals[modalType].visible
         // },
 
+        async getGoals() {
+            try {
+                const response = await getAllGoals(this.project.id)
+                this.goals = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
+        async getSdgs() {
+            try {
+                // TODO beg for a dedicated endpoint
+                const response = await getProject(this.project.id)
+                this.sdgs = response.sdgs
+            } catch (err) {
+                console.error(err)
+            }
+        },
         async getBlogEntries() {
             try {
                 const response = await getBlogEntries(this.project.id)
@@ -384,6 +413,8 @@ export default {
                 .dispatch('projects/getProject', projectSlugOrId)
                 .then(async (project) => {
                     this.follow = project.is_followed
+                    this.goals = this.project.goals
+                    this.sdgs = this.project.sdgs
                     await Promise.all([
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler

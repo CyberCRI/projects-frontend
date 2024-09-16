@@ -17,7 +17,6 @@ import {
 import analytics from '@/analytics'
 import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
-import { GoalModel } from '@/models/goal.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
@@ -294,26 +293,6 @@ const mutations = {
     },
     SET_PROJECT_LOCK: (state: ProjectState, value: boolean) => {
         state.project.is_locked = value
-    },
-
-    // GOALS
-    SET_GOALS: (state: ProjectState, goals: GoalModel[]) => {
-        state.project.goals = goals
-    },
-    ADD_GOAL: (state: ProjectState, goal: GoalModel) => {
-        state.project.goals.push(goal)
-    },
-    UPDATE_GOAL: (
-        state: ProjectState,
-        body: {
-            index: number
-            goal: GoalModel
-        }
-    ) => {
-        state.project.goals.splice(body.index, 1, body.goal)
-    },
-    DELETE_GOAL: (state: ProjectState, index: number) => {
-        state.project.goals.splice(index, 1)
     },
 
     // MEMBERS

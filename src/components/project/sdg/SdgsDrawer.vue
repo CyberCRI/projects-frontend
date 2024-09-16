@@ -8,22 +8,28 @@
         @confirm="saveSdgs"
         :asyncing="asyncing"
     >
-        <SdgGrid ref="sdg-grid" :current-sdgs="sdgs" />
+        <SdgsFilter ref="sdg-grid" v-model="selection" />
     </BaseDrawer>
 </template>
 
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgGrid from '@/components/project/sdg/SdgGrid.vue'
+import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
+import { patchProject } from '@/api/projects.service'
+import analytics from '@/analytics'
 
 export default {
     name: 'SdgsDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-sdgs'],
 
-    components: { BaseDrawer, SdgGrid },
+    components: { BaseDrawer, SdgsFilter },
 
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         isOpened: {
             type: Boolean,
             default: false,
@@ -37,14 +43,43 @@ export default {
     data() {
         return {
             asyncing: false,
+            selection: [...this.sdgs],
         }
+    },
+
+    watch: {
+        isOpened(isOpened) {
+            if (isOpened) {
+                this.selection = [...this.sdgs]
+            }
+        },
     },
 
     methods: {
         async saveSdgs() {
             this.asyncing = true
-            await this.$refs['sdg-grid'].submitSdgs()
-            this.asyncing = false
+            const sdgs = this.selection
+            try {
+                await patchProject(this.project.id, { sdgs })
+
+                analytics.goal.updateSDG(this.project.id, sdgs)
+
+                this.$emit('reload-sdgs')
+
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('toasts.sdgs-update.success'),
+                    type: 'success',
+                })
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('toasts.sdgs-update.error')} (${error})`,
+                    type: 'error',
+                })
+                console.error(error)
+            } finally {
+                this.$emit('close')
+                this.asyncing = false
+            }
         },
 
         close() {

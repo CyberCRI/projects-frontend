@@ -17,13 +17,11 @@ import {
 import analytics from '@/analytics'
 
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
-import { GoalFactory } from '../../../factories/goal.factory'
-import { FollowFactory } from '../../../factories/follow.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ReviewFactory } from '../../../factories/review.factory'
 import TagFactory from '../../../factories/wikipedia-tag.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/projects.service')
 vi.mock('@/analytics')
 
@@ -370,35 +368,6 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.SET_PROJECT_LOCK(state, payload)
 
         expect(state.project.is_locked).toEqual(payload)
-    })
-
-    // GOALS
-    it('SET_GOALS', () => {
-        const goals = GoalFactory.generateMany(2)
-        projectsStore.mutations.SET_GOALS(state, goals)
-
-        expect(state.project.goals).toEqual(goals)
-    })
-
-    it('ADD_GOAL', () => {
-        const goal = GoalFactory.generate()
-        projectsStore.mutations.ADD_GOAL(state, goal)
-
-        expect(state.project.goals[state.project.goals.length - 1]).toEqual(goal)
-    })
-
-    it('DELETE_GOAL', () => {
-        const lengthBeforeDelete = state.project.goals.length
-        projectsStore.mutations.DELETE_GOAL(state, 0)
-
-        expect(state.project.goals.length).toEqual(lengthBeforeDelete - 1)
-    })
-
-    it('UPDATE_GOAL', () => {
-        const goal = GoalFactory.generate()
-        projectsStore.mutations.UPDATE_GOAL(state, { index: 0, goal })
-
-        expect(state.project.goals[0]).toEqual(goal)
     })
 
     // MEMBERS

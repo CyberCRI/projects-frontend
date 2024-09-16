@@ -48,6 +48,8 @@ export default {
         'reload-file-resources',
         'reload-link-resources',
         'reload-blog-entries',
+        'reload-goals',
+        'reload-sdgs',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -89,6 +91,14 @@ export default {
             default: () => [],
         },
         blogEntries: {
+            type: Array,
+            default: () => [],
+        },
+        goals: {
+            type: Array,
+            default: () => [],
+        },
+        sdgs: {
             type: Array,
             default: () => [],
         },
@@ -144,10 +154,15 @@ export default {
                     key: 'project-goals',
                     label: this.$t('goal.goals'),
                     view: `/projects/${this.$route.params.slugOrId}/goals`,
+                    props: {
+                        project: this.project,
+                        goals: this.goals,
+                        sdgs: this.sdgs,
+                        onReloadGoals: () => this.$emit('reload-goals'),
+                        onReloadSdgs: () => this.$emit('reload-sdgs'),
+                    },
                     condition:
-                        this.project.goals.length ||
-                        this.project.sdgs.length ||
-                        this.isRoute('projectGoals'), // prevent error when emptying the current tab
+                        this.goals?.length || this.sdgs?.length || this.isRoute('projectGoals'), // prevent error when emptying the current tab
                     dataTest: 'project-goals',
                 },
                 {
