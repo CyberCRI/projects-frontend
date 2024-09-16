@@ -39,10 +39,7 @@
                 </div>
             </div>
             <div class="content-ctn">
-                <div
-                    :class="{ 'has-sdg': project && project.sdgs && project.sdgs.length }"
-                    class="main-info-ctn"
-                >
+                <div :class="{ 'has-sdg': sdgs?.length }" class="main-info-ctn">
                     <div class="img-block">
                         <div class="img-ctn">
                             <SkeletonComponent
@@ -189,13 +186,10 @@
                             <SkeletonComponent border-radius="50%" height="30px" width="30px" />
                         </div>
 
-                        <div
-                            class="sdg-ctn"
-                            v-show="!loading && project && project.sdgs && project.sdgs.length"
-                        >
+                        <div class="sdg-ctn" v-show="!loading && sdgs?.length">
                             <TransitionGroup name="sdg" tag="div">
                                 <router-link
-                                    v-for="sdg in project?.sdgs || []"
+                                    v-for="sdg in sdgs || []"
                                     :key="sdg"
                                     :to="browseProjectsWithQuery('sdgs', sdg)"
                                     class="sdg-link"
@@ -355,6 +349,11 @@ export default {
         project: {
             type: Object,
             default: () => ({}),
+        },
+
+        sdgs: {
+            type: Array,
+            default: () => [],
         },
 
         similarProjects: {

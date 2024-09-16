@@ -1,6 +1,6 @@
 <template>
     <div class="project-goals">
-        <SdgRecap :sdgs="project.sdgs" />
+        <SdgRecap :sdgs="sdgs" />
 
         <div class="add-goal" v-if="canEditProject">
             <LpiButton
@@ -12,8 +12,8 @@
         </div>
 
         <GoalItem
-            v-for="(goal, index) in project.goals"
-            :key="index"
+            v-for="goal in goals"
+            :key="goal.id"
             :goal="goal"
             :can-edit-goal="canEditProject"
             :can-delete-goal="canEditProject"
@@ -40,16 +40,32 @@ import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
+import { deleteGoal } from '@/api/goals.service'
+import analytics from '@/analytics'
+
 export default {
     name: 'ProjectGoalsTab',
+
+    emits: ['reload-goals'],
 
     mixins: [permissions, ProjectTab],
 
     components: { SdgRecap, GoalItem, ConfirmModal, LpiButton },
 
-    computed: {
-        project() {
-            return this.$store.getters['projects/project']
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+
+        goals: {
+            type: Array,
+            default: () => [],
+        },
+
+        sdgs: {
+            type: Array,
+            default: () => [],
         },
     },
 
@@ -71,7 +87,19 @@ export default {
         async deleteGoal() {
             this.asyncing = true
             try {
-                await this.$store.dispatch('goals/deleteGoal', this.goalToBeDeleted.id)
+                await deleteGoal({
+                    id: this.goalToBeDeleted.id,
+                    project_id: this.project.id,
+                })
+
+                this.$emit('reload-goals')
+
+                analytics.goal.removeGoalProject({
+                    project: {
+                        id: this.project.id,
+                    },
+                    goal: this.goalToBeDeleted,
+                })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.goal-delete.success'),
                     type: 'success',

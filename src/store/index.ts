@@ -1,4 +1,3 @@
-import goals from '@/store/modules/goals'
 import groups, { GroupsState } from '@/store/modules/groups'
 import languages, { LanguageState } from '@/store/modules/languages'
 import notifications, { NotificationsState } from '@/store/modules/notifications'
@@ -26,7 +25,6 @@ export interface State {
 export default createStore({
     strict: import.meta.env.NODE_ENV !== 'production', // WTF ???
     modules: {
-        goals,
         groups,
         languages,
         notifications,

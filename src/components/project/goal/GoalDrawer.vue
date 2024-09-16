@@ -77,10 +77,13 @@ import { required, helpers } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
+import { createGoal, patchGoal } from '@/api/goals.service'
+import analytics from '@/analytics'
+
 export default {
     name: 'GoalDrawer',
 
-    emits: ['close'],
+    emits: ['close', 'reload-goals'],
 
     components: {
         ConfirmModal,
@@ -94,11 +97,10 @@ export default {
     },
 
     props: {
-        isAddMode: {
-            type: Boolean,
-            default: true,
+        project: {
+            type: Object,
+            default: () => ({}),
         },
-
         isOpened: {
             type: Boolean,
             default: false,
@@ -106,7 +108,7 @@ export default {
 
         editedGoal: {
             type: Object,
-            default: () => {},
+            default: () => ({}),
         },
     },
 
@@ -139,14 +141,6 @@ export default {
     },
 
     computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
-        projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
-        },
-
         statusColor() {
             if (this.form.status === 'ongoing') return '#99FFE7'
             else if (this.form.status === 'complete') return '#00DBA7'
@@ -230,7 +224,20 @@ export default {
                 if (this.form.id) {
                     // Update goal
                     try {
-                        await this.$store.dispatch('goals/patchGoal', payload)
+                        const result = await patchGoal({
+                            goal: payload,
+                            project_id: this.project.id,
+                        })
+
+                        analytics.goal.updateGoalProject({
+                            project: {
+                                id: this.project.id,
+                            },
+                            goal: result,
+                        })
+
+                        this.$emit('reload-goals')
+
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.goal-update.success'),
                             type: 'success',
@@ -248,7 +255,20 @@ export default {
                 } else {
                     // Create goal
                     try {
-                        await this.$store.dispatch('goals/createGoal', payload)
+                        const result = await createGoal({
+                            goal: payload,
+                            project_id: this.project.id,
+                        })
+
+                        analytics.goal.addGoalProject({
+                            project: {
+                                id: this.project.id,
+                            },
+                            goal: result,
+                        })
+
+                        this.$emit('reload-goals')
+
                         this.$store.dispatch('notifications/pushToast', {
                             message: this.$t('toasts.goal-create.success'),
                             type: 'success',
@@ -256,7 +276,7 @@ export default {
                         if (this.$route.name !== 'projectGoals') {
                             this.$router.push({
                                 name: 'projectGoals',
-                                params: { slugOrId: this.projectSlug },
+                                params: { slugOrId: this.project.slug || this.project.id },
                             })
                         }
                     } catch (error) {
@@ -304,7 +324,7 @@ export default {
 
         isOpened: {
             handler: function () {
-                if (!this.isAddMode) this.fillForm()
+                if (this.editedGoal?.id) this.fillForm()
                 else this.resetForm()
             },
             immediate: true,
