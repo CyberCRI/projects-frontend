@@ -35,6 +35,8 @@
                 @reload-goals="getGoals"
                 :sdgs="sdgs"
                 @reload-sdgs="getSdgs"
+                :team="team"
+                @reload-team="getTeam"
             />
         </div>
 
@@ -53,10 +55,13 @@
         />
         <TeamDrawer
             v-if="modals.teamMember.visible"
+            :project="project"
+            :current-users="mergedTeam"
             :edited-user="modals.teamMember.editedItem"
             :is-edit-mode="!!modals.teamMember.editedItem"
             :is-opened="modals.teamMember.visible"
             @close="toggleAddModal('teamMember')"
+            @reload-team="getTeam"
         />
         <ResourceDrawer
             :project="project"
@@ -264,6 +269,7 @@ export default {
             follow: { is_followed: false },
             goals: [],
             sdgs: [],
+            team: { owners: [], members: [], reviewers: [] },
         }
     },
 
@@ -287,6 +293,18 @@ export default {
 
         accessToken() {
             return this.$store.getters['users/accessToken']
+        },
+        mergedTeam() {
+            // this is damn ugly but necessary for compatibility with TeamResultList
+            // witch expects [{user: { ... }, role: '...'}, {user: { ... }, role: '...'} ... ]
+            return [
+                ...this.team.owners,
+                ...this.team.reviewers,
+                ...this.team.members,
+                ...this.team.people_groups,
+            ].map((user) => ({
+                user,
+            }))
         },
     },
 
@@ -347,6 +365,15 @@ export default {
                 // TODO beg for a dedicated endpoint
                 const response = await getProject(this.project.id)
                 this.sdgs = response.sdgs
+            } catch (err) {
+                console.error(err)
+            }
+        },
+        async getTeam() {
+            try {
+                // TODO beg for a dedicated endpoint
+                const response = await getProject(this.project.id)
+                this.team = response.team
             } catch (err) {
                 console.error(err)
             }
@@ -415,6 +442,7 @@ export default {
                     this.follow = project.is_followed
                     this.goals = this.project.goals
                     this.sdgs = this.project.sdgs
+                    this.team = this.project.team
                     await Promise.all([
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler

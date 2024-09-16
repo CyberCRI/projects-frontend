@@ -50,6 +50,7 @@ export default {
         'reload-blog-entries',
         'reload-goals',
         'reload-sdgs',
+        'reload-team',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -102,6 +103,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        team: {
+            type: Object,
+            default: () => ({ owners: [], members: [], reviewers: [] }),
+        },
     },
 
     computed: {
@@ -114,11 +119,7 @@ export default {
         },
 
         isMember() {
-            const members = [
-                ...this.project.team.members,
-                ...this.project.team.owners,
-                ...this.project.team.reviewers,
-            ]
+            const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
             return members.find((user) => this.$store.getters['users/id'] === user.id)
         },
 
@@ -136,6 +137,7 @@ export default {
                         fileResources: this.fileResources,
                         linkResources: this.linkResources,
                         blogEntries: this.blogEntries,
+                        team: this.team,
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -206,6 +208,14 @@ export default {
                     key: 'project-team',
                     label: this.$t('team.team'),
                     view: `/projects/${this.$route.params.slugOrId}/team`,
+                    props: {
+                        project: this.project,
+                        team: this.team,
+                        onReloadTeam: () => {
+                            console.log('reload tabs')
+                            this.$emit('reload-team')
+                        },
+                    },
                     condition: true,
                     dataTest: 'project-team',
                 },
@@ -254,6 +264,10 @@ export default {
                     props: {
                         project: this.project,
                         categories: this.categories,
+                        onReloadTeam: () => {
+                            console.log('reload tabs')
+                            this.$emit('reload-team')
+                        },
                     },
                     dataTest: 'project-settings',
                 },

@@ -28,11 +28,11 @@
 
         <TeamDrawer
             v-if="teamModalVisible"
-            :add-to-current-project="false"
             :current-users="projectUsers"
             :is-opened="teamModalVisible"
             :selected-category="selectedCategory"
             @close="teamModalVisible = false"
+            :add-to-current-project="false"
             @add-user="addUser"
         />
     </div>

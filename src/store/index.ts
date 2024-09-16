@@ -3,7 +3,6 @@ import languages, { LanguageState } from '@/store/modules/languages'
 import notifications, { NotificationsState } from '@/store/modules/notifications'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
-import projectMembers, { ProjectMembersState } from '@/store/modules/project-members'
 import projects, { ProjectState } from '@/store/modules/projects'
 import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
 import reviews from '@/store/modules/reviews'
@@ -12,7 +11,6 @@ import { createStore } from 'vuex'
 
 export interface State {
     projectCategories: ProjectCategoriesState
-    projectMembers: ProjectMembersState
     projects: ProjectState
     organizations: OrganizationsState
     languages: LanguageState
@@ -30,7 +28,6 @@ export default createStore({
         notifications,
         organizations,
         projectCategories,
-        projectMembers,
         projects,
         reviews,
         users,

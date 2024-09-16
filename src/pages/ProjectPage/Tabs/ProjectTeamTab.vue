@@ -116,7 +116,7 @@
             :content="$t('common.cant-quit-other')"
             :title="$t('project.quit')"
             :has-second-button="false"
-            :cancel-button-label="'common.ok'"
+            :cancel-button-label="$t('common.ok')"
             @cancel="toggleShowQuitIsImposibleVisible"
         />
 
@@ -150,6 +150,8 @@ import ProjectTeamEditor from '@/components/project/ProjectTeamEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
+import { deleteProjectMembers } from '@/api/project-members.service'
+import analytics from '@/analytics'
 export default {
     name: 'ProjectTeamTab',
 
@@ -165,9 +167,22 @@ export default {
         DynamicGrid,
     },
 
+    emits: ['reload-team'],
+
     inject: ['projectLayoutToggleAddModal'],
 
     mixins: [permissions, ProjectTab],
+
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+        team: {
+            type: Object,
+            default: () => ({ owners: [], members: [], reviewers: [] }),
+        },
+    },
 
     data() {
         return {
@@ -186,24 +201,20 @@ export default {
     },
 
     computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
         owners() {
-            return this.project.team.owners
+            return this.team.owners
         },
 
         members() {
-            return this.project.team.members
+            return this.team.members
         },
 
         reviewers() {
-            return this.project.team.reviewers
+            return this.team.reviewers
         },
 
         groups() {
-            return this.project.team.people_groups
+            return this.team.people_groups
         },
     },
 
@@ -242,15 +253,23 @@ export default {
                         people_groups: [this.userToBeDeleted.id],
                     }
                 }
-                await this.$store.dispatch('projectMembers/deleteProjectMember', body)
 
                 try {
-                    const project = await this.$store.dispatch(
-                        'projects/getProject',
-                        this.project.id
-                    )
+                    // TODO messages ?
+                    await deleteProjectMembers(this.project.id, body)
 
-                    await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                    analytics.project.removeTeamMember({
+                        project: {
+                            id: this.project.id,
+                        },
+                        members: body,
+                    })
+                } catch (e) {
+                    console.error(e)
+                }
+
+                try {
+                    this.$emit('reload-team')
                 } catch {
                     // if the project is not visible anymore, we get a 404
                     projectNoMoreVisible = true
@@ -276,11 +295,7 @@ export default {
                  */
                 if (error.response?.data?.users) {
                     try {
-                        const project = await this.$store.dispatch(
-                            'projects/getProject',
-                            this.project.id
-                        )
-                        await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                        this.$emit('reload-team')
                     } finally {
                         this.showQuitIsImposible = true
                     }

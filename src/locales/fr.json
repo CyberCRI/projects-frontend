@@ -462,7 +462,8 @@
         "the-project": "Le projet",
         "title": "titre",
         "yes": "oui",
-        "disconnect": "Déconnexion"
+        "disconnect": "Déconnexion",
+        "ok": "Ok"
     },
     "complete-profile": {
         "bio": {

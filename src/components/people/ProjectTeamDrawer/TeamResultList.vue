@@ -46,8 +46,6 @@ export default {
             type: String, // "groups" | "users"
             required: true,
         },
-        addToCurrentProject: { type: Boolean, default: false },
-        team: { type: Array, default: () => [] },
         currentUsers: { type: Array, default: () => [] },
         selectedUsers: { type: Array, default: () => [] },
     },
@@ -79,17 +77,11 @@ export default {
                             (selected) =>
                                 this.$filters.isNotGroup(selected) && selected.id === user.id
                         ) ||
-                        (this.addToCurrentProject
-                            ? this.team.some(
-                                  (projectMember) =>
-                                      this.$filters.isNotGroup(projectMember) &&
-                                      projectMember.id === user.id
-                              )
-                            : this.currentUsers.some(
-                                  (currentUser) =>
-                                      this.$filters.isNotGroup(currentUser.user) &&
-                                      currentUser.user.id === user.id
-                              )),
+                        this.currentUsers.some(
+                            (currentUser) =>
+                                this.$filters.isNotGroup(currentUser.user) &&
+                                currentUser.user.id === user.id
+                        ),
                 }))
             } else {
                 // groups
@@ -101,17 +93,11 @@ export default {
                             (selected) =>
                                 this.$filters.isGroup(selected) && selected.id === people_group.id
                         ) ||
-                        (this.addToCurrentProject
-                            ? this.team.some(
-                                  (projectMember) =>
-                                      this.$filters.isGroup(projectMember) &&
-                                      projectMember.id === people_group.id
-                              )
-                            : this.currentUsers.some(
-                                  (currentUser) =>
-                                      this.$filters.isGroup(currentUser.user) &&
-                                      currentUser.user.id === people_group.id
-                              )),
+                        this.currentUsers.some(
+                            (currentUser) =>
+                                this.$filters.isGroup(currentUser.user) &&
+                                currentUser.user.id === people_group.id
+                        ),
                 }))
             }
         },

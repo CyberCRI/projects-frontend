@@ -47,11 +47,6 @@ describe('Store module | projects | getters', () => {
         project: project,
         currentProjectId: project.id,
         currentProjectSlug: project.slug,
-        projectMembers: [
-            ...project.team.owners,
-            ...project.team.reviewers,
-            ...project.team.members,
-        ],
     }
 
     it('project', () => {
@@ -68,11 +63,6 @@ describe('Store module | projects | getters', () => {
         const result = projectsStore.getters.currentProjectSlug(state)
 
         expect(result).toBe(state.currentProjectSlug)
-    })
-    it.skip('projectMembers', () => {
-        const result = projectsStore.getters.projectMembers(state)
-
-        expect(result).toStrictEqual(state.projectMembers)
     })
 })
 
@@ -368,14 +358,6 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.SET_PROJECT_LOCK(state, payload)
 
         expect(state.project.is_locked).toEqual(payload)
-    })
-
-    // MEMBERS
-    it('SET_PROJECT_MEMBERS', () => {
-        const payload = ProjectOutputFactory.generate()
-        projectsStore.mutations.SET_PROJECT_MEMBERS(state, payload)
-
-        expect(state.project.team.members).toEqual(payload.team.members)
     })
 
     // TAGS

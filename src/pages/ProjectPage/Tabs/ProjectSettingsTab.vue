@@ -230,7 +230,7 @@ import CategoryPicker from '@/components/category/CategoryPicker.vue'
 export default {
     name: 'ProjectSettingsTab',
 
-    emits: ['asyncing'],
+    emits: ['asyncing', 'reload-team'],
 
     mixins: [permissions, viewportWidth],
 
@@ -582,11 +582,7 @@ export default {
                     this.$router.push({ name: 'HomeRoot' })
                 }
                 try {
-                    const project = await this.$store.dispatch(
-                        'projects/getProject',
-                        this.project.id
-                    )
-                    await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                    this.$emit('reload-team')
                 } catch {
                     // if the project is not visible anymore, we get a 404
                     projectNoMoreVisible = true
@@ -605,11 +601,7 @@ export default {
                  */
                 if (error.response?.data?.users) {
                     try {
-                        const project = await this.$store.dispatch(
-                            'projects/getProject',
-                            this.project.id
-                        )
-                        await this.$store.dispatch('projects/updateCurrentProjectMembers', project)
+                        this.$emit('reload-team')
                     } finally {
                         this.showQuitIsImposible = true
                     }

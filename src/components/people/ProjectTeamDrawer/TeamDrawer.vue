@@ -11,7 +11,6 @@
     >
         <UserSelection
             v-show="isSelectingUser && !isEditMode"
-            :add-to-current-project="addToCurrentProject"
             :current-users="currentUsers"
             :project="project"
             @select-user="selectUser"
@@ -35,15 +34,21 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserSelection from './UserSelection.vue'
 import RoleSelection from './RoleSelection.vue'
+import { addProjectMembers } from '@/api/project-members.service'
+import analytics from '@/analytics'
 
 export default {
     name: 'TeamDrawer',
 
-    emits: ['close', 'add-user'],
+    emits: ['close', 'add-user', 'reload-team'],
 
     components: { BaseDrawer, UserSelection, RoleSelection },
 
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         addToCurrentProject: {
             type: Boolean,
             default: true,
@@ -95,12 +100,8 @@ export default {
     },
 
     computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.project?.slug || ''
         },
 
         label() {
@@ -132,18 +133,16 @@ export default {
             if (this.addToCurrentProject && !this.isSelectingUser) {
                 this.asyncing = true
                 try {
-                    await this.$store.dispatch('projectMembers/addProjectMembers', {
-                        projectId: this.project.id,
-                        projectMembers: { ...this.form.team },
+                    await addProjectMembers(this.project.id, { ...this.form.team })
+
+                    analytics.project.addMember({
+                        project: {
+                            id: this.project.id,
+                        },
+                        members: { ...this.form.team },
                     })
-                    const updatedProject = await this.$store.dispatch(
-                        'projects/getProject',
-                        this.project.id
-                    )
-                    await this.$store.dispatch(
-                        'projects/updateCurrentProjectMembers',
-                        updatedProject
-                    )
+
+                    this.$emit('reload-team')
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.team-member-create.success'),
