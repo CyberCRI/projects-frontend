@@ -18,8 +18,8 @@
 
         <div v-if="currentUser" class="team-grid">
             <TeamCardInline
-                v-for="(user, index) in projectUsers"
-                :key="index"
+                v-for="user in projectUsers"
+                :key="user?.user.id"
                 :role-label="roleLabel(user.role)"
                 :user="user.user"
                 @user-clicked="removeUser(user)"
@@ -27,12 +27,10 @@
         </div>
 
         <TeamDrawer
-            v-if="teamModalVisible"
             :current-users="projectUsers"
             :is-opened="teamModalVisible"
-            :selected-category="selectedCategory"
+            :selected-categories="[selectedCategory]"
             @close="teamModalVisible = false"
-            :add-to-current-project="false"
             @add-user="addUser"
         />
     </div>

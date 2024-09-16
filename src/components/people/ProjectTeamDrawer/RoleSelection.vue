@@ -77,12 +77,7 @@ export default {
     components: { LpiButton, IconImage, ToolTip },
 
     props: {
-        project: {
-            type: Object,
-            default: () => {},
-        },
-
-        selectedCategory: {
+        selectedCategories: {
             type: Object,
             default: () => {},
         },
@@ -100,11 +95,6 @@ export default {
         isEditMode: {
             type: Boolean,
             default: false,
-        },
-
-        addToCurrentProject: {
-            type: Boolean,
-            default: true,
         },
     },
 
@@ -131,11 +121,9 @@ export default {
     computed: {
         isReviewable() {
             // if it is a project edition, use current  project categories, else (project creation) use  selected category
-            const categories = this.addToCurrentProject
-                ? this.project.categories
-                : [this.selectedCategory]
+            const categories = this.selectedCategories || []
             // keep only categroies from current organization
-            let orgCategories = (categories || []).filter(
+            let orgCategories = categories.filter(
                 (cat) =>
                     !!cat && this.$store.getters['organizations/current'].code === cat.organization
             )

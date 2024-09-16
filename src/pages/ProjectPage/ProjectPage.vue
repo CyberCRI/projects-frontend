@@ -54,11 +54,10 @@
             @reload-goals="getGoals"
         />
         <TeamDrawer
-            v-if="modals.teamMember.visible"
             :project="project"
             :current-users="mergedTeam"
-            :edited-user="modals.teamMember.editedItem"
-            :is-edit-mode="!!modals.teamMember.editedItem"
+            :selected-categories="this.project?.categories || []"
+            :edited-user="modals.teamMember?.editedItem || null"
             :is-opened="modals.teamMember.visible"
             @close="toggleAddModal('teamMember')"
             @reload-team="getTeam"
@@ -217,7 +216,7 @@ export default {
         })
 
         const toggleAddModal = (modalType, editedItem = null) => {
-            if (editedItem !== null) {
+            if (editedItem) {
                 modals.value[modalType].editedItem = editedItem
             } else modals.value[modalType].editedItem = null
 
@@ -298,10 +297,10 @@ export default {
             // this is damn ugly but necessary for compatibility with TeamResultList
             // witch expects [{user: { ... }, role: '...'}, {user: { ... }, role: '...'} ... ]
             return [
-                ...this.team.owners,
-                ...this.team.reviewers,
-                ...this.team.members,
-                ...this.team.people_groups,
+                ...(this.team.owners || []),
+                ...(this.team.reviewers || []),
+                ...(this.team.members || []),
+                ...(this.team.people_groups || []),
             ].map((user) => ({
                 user,
             }))

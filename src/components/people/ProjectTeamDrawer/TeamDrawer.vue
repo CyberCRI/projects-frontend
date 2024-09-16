@@ -10,7 +10,7 @@
         :asyncing="asyncing"
     >
         <UserSelection
-            v-show="isSelectingUser && !isEditMode"
+            v-show="isSelectingUser && !this.editedUser"
             :current-users="currentUsers"
             :project="project"
             @select-user="selectUser"
@@ -18,10 +18,8 @@
 
         <RoleSelection
             v-if="isSelectingRoles"
-            :add-to-current-project="addToCurrentProject"
-            :is-edit-mode="isEditMode"
-            :project="project"
-            :selected-category="selectedCategory"
+            :is-edit-mode="!!this.editedUser"
+            :selected-categories="selectedCategories"
             :selected-role="selectedRole"
             :selected-users="selectedUsers"
             @back-to-user-selection="goBackToUserSelection"
@@ -49,24 +47,15 @@ export default {
             type: Object,
             default: () => ({}),
         },
-        addToCurrentProject: {
-            type: Boolean,
-            default: true,
-        },
 
         currentUsers: {
             type: Array,
             default: () => [],
         },
 
-        isEditMode: {
-            type: Boolean,
-            default: false,
-        },
-
         editedUser: {
-            type: Object,
-            default: () => {},
+            type: [Object, null, undefined],
+            default: null,
         },
 
         isOpened: {
@@ -74,9 +63,9 @@ export default {
             default: false,
         },
 
-        selectedCategory: {
-            type: Object,
-            default: () => {},
+        selectedCategories: {
+            type: Array,
+            default: () => [],
         },
     },
 
@@ -105,14 +94,14 @@ export default {
         },
 
         label() {
-            return this.isEditMode ? this.$t('team.edit') : this.$t('team.add')
+            return this.editedUser ? this.$t('team.edit') : this.$t('team.add')
         },
     },
 
     watch: {
         isOpened: {
             handler: function () {
-                if (this.editedUser && this.isEditMode) {
+                if (this.editedUser) {
                     this.selectedUsers = [this.editedUser.user]
                     this.selectedRole = this.editedUser.role
                     this.isSelectingRoles = true
@@ -121,6 +110,7 @@ export default {
                     this.selectedUsers = []
                     this.selectedRole = 'owners'
                     this.isSelectingUser = true
+                    this.isSelectingRoles = false
                 }
             },
             immediate: true,
@@ -130,7 +120,7 @@ export default {
     methods: {
         async addTeamMember() {
             this.validatePick = true
-            if (this.addToCurrentProject && !this.isSelectingUser) {
+            if (this.project.id && !this.isSelectingUser) {
                 this.asyncing = true
                 try {
                     await addProjectMembers(this.project.id, { ...this.form.team })

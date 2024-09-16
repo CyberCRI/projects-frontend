@@ -176,10 +176,10 @@ export default {
 
         mergedTeam() {
             return [
-                ...this.team.owners,
-                ...this.team.reviewers,
-                ...this.team.members,
-                ...this.team.people_groups,
+                ...(this.team.owners || []),
+                ...(this.team.reviewers || []),
+                ...(this.team.members || []),
+                ...(this.team.people_groups || []),
             ]
         },
 
