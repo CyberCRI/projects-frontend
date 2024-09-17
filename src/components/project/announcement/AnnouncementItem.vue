@@ -167,4 +167,22 @@ export default {
         align-items: center;
     }
 }
+
+.description::v-deep {
+    strong {
+        font-weight: 700 !important;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    a:hover {
+        text-decoration: underline !important;
+    }
+}
 </style>

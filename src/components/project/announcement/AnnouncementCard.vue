@@ -227,4 +227,22 @@ $annoucement-padding: pxToRem(20px);
         }
     }
 }
+
+.description::v-deep {
+    strong {
+        font-weight: 700;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
 </style>
