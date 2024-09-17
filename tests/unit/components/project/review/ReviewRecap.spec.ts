@@ -44,37 +44,38 @@ function buildStore(permissions) {
 
 const project = {
     id: 123,
-    reviews: [
-        {
-            id: 158,
-            description: "<p>C'était <b>très</b> intéressant</p>",
-            title: 'La grande revue',
-            created_at: '2022-10-20T13:16:48.183141Z',
-            updated_at: '2022-10-25T12:53:23.830479Z',
-            reviewer: {
-                id: 1133,
-                given_name: 'test',
-                email: 'test.auto@external.cri-paris.org',
-                family_name: 'auto',
-                pronouns: '',
-            },
-        },
-        {
-            id: 158,
-            description: "<p>C'était <b>très</b> <b>très</b> intéressant</p>",
-            title: 'La grande revue, saison 2',
-            created_at: '2022-10-21T13:16:48.183141Z',
-            updated_at: '2022-10-26T12:53:23.830479Z',
-            reviewer: {
-                id: 1133,
-                given_name: 'test',
-                email: 'test.auto@external.cri-paris.org',
-                family_name: 'auto',
-                pronouns: '',
-            },
-        },
-    ],
 }
+
+const reviews = [
+    {
+        id: 158,
+        description: "<p>C'était <b>très</b> intéressant</p>",
+        title: 'La grande revue',
+        created_at: '2022-10-20T13:16:48.183141Z',
+        updated_at: '2022-10-25T12:53:23.830479Z',
+        reviewer: {
+            id: 1133,
+            given_name: 'test',
+            email: 'test.auto@external.cri-paris.org',
+            family_name: 'auto',
+            pronouns: '',
+        },
+    },
+    {
+        id: 158,
+        description: "<p>C'était <b>très</b> <b>très</b> intéressant</p>",
+        title: 'La grande revue, saison 2',
+        created_at: '2022-10-21T13:16:48.183141Z',
+        updated_at: '2022-10-26T12:53:23.830479Z',
+        reviewer: {
+            id: 1133,
+            given_name: 'test',
+            email: 'test.auto@external.cri-paris.org',
+            family_name: 'auto',
+            pronouns: '',
+        },
+    },
+]
 
 const i18n = {
     locale: 'en',
@@ -96,7 +97,8 @@ describe('ReviewRecap.vue', () => {
     it('should render component', () => {
         const wrapper = setUpComponent(
             {
-                project: project,
+                project,
+                reviews,
             },
             buildStore({})
         )
@@ -106,7 +108,8 @@ describe('ReviewRecap.vue', () => {
     it('should contain review data', async () => {
         const wrapper = setUpComponent(
             {
-                project: project,
+                project,
+                reviews,
             },
             buildStore({})
         )
@@ -121,7 +124,8 @@ describe('ReviewRecap.vue', () => {
     it('should display edit button if allowed', async () => {
         const wrapper = setUpComponent(
             {
-                project: project,
+                project,
+                reviews,
             },
             buildStore({ 'projects.add_review': true })
         )
@@ -132,7 +136,8 @@ describe('ReviewRecap.vue', () => {
     it('should not display edit button if not allowed', async () => {
         const wrapper = setUpComponent(
             {
-                project: project,
+                project,
+                reviews,
             },
             buildStore({})
         )

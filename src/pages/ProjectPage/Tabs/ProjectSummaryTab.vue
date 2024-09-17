@@ -27,8 +27,9 @@
 
                 <ReviewRecap
                     v-if="project && project.publication_status"
-                    :class="project.publication_status"
                     :project="project"
+                    :reviews="reviews"
+                    @reload-reviews="$emit('reload-reviews')"
                 />
             </div>
 
@@ -100,6 +101,8 @@ export default {
 
     mixins: [ProjectTab, permissions],
 
+    emits: ['reload-reviews'],
+
     components: {
         DescriptionPlaceholder,
         DescriptionRecap,
@@ -149,6 +152,10 @@ export default {
         team: {
             type: Object,
             default: () => ({ owners: [], members: [], reviewers: [] }),
+        },
+        reviews: {
+            type: Array,
+            default: () => [],
         },
     },
 

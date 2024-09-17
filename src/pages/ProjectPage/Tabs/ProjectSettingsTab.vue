@@ -206,7 +206,7 @@
         <ReviewDrawer
             :is-opened="reviewDrawerVisible"
             :project="project"
-            mode="add"
+            @reload-reviews="$emit('reload-reviews')"
             @close="toggleReviewDrawer"
         />
     </div>
@@ -230,7 +230,7 @@ import CategoryPicker from '@/components/category/CategoryPicker.vue'
 export default {
     name: 'ProjectSettingsTab',
 
-    emits: ['asyncing', 'reload-team'],
+    emits: ['asyncing', 'reload-team', 'reload-reviews'],
 
     mixins: [permissions, viewportWidth],
 

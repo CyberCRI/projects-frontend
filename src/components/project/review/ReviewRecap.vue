@@ -14,10 +14,10 @@
         />
         <ReviewDrawer
             :is-opened="editReview"
-            mode="edit"
             :rdata="{ ...editReview }"
             :project="project"
             @close="editReview = null"
+            @reload-reviews="$emit('reload-reviews')"
         />
         <ConfirmModal
             v-if="toDelete"
@@ -33,8 +33,11 @@ import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewItem from '@/components/project/review/ReviewItem.vue'
+import { deleteReview } from '@/api/reviews.service'
 export default {
     name: 'ReviewRecap',
+
+    emits: ['reload-reviews'],
 
     components: {
         ReviewDrawer,
@@ -48,6 +51,11 @@ export default {
             type: Object,
             default: () => {},
         },
+
+        reviews: {
+            type: Array,
+            default: () => [],
+        },
     },
     data() {
         return {
@@ -55,15 +63,11 @@ export default {
             toDelete: null,
         }
     },
-    computed: {
-        reviews() {
-            return this.project.reviews || []
-        },
-    },
     methods: {
         async deleteReview() {
             try {
-                await this.$store.dispatch('reviews/deleteReview', this.toDelete.id)
+                await deleteReview({ project_id: this.project.id, id: this.toDelete.id })
+                this.$emit('reload-reviews')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.review-delete.success'),
                     type: 'success',

@@ -15,7 +15,6 @@ import {
     lockUnlockProject,
 } from '@/api/projects.service'
 import analytics from '@/analytics'
-import { ReviewModel } from '@/models/review.model'
 import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
@@ -299,26 +298,6 @@ const mutations = {
     },
     DELETE_LINKED_PROJECT: (state: ProjectState, index: number) => {
         state.project.linked_projects.splice(index, 1)
-    },
-
-    // REVIEWS
-    SET_REVIEWS: (state: ProjectState, reviews: ReviewModel[]) => {
-        state.project.reviews = reviews
-    },
-    ADD_REVIEW: (state: ProjectState, review: ReviewModel) => {
-        state.project.reviews.push(review)
-    },
-    UPDATE_REVIEW: (
-        state: ProjectState,
-        body: {
-            index: number
-            review: ReviewModel
-        }
-    ) => {
-        state.project.reviews.splice(body.index, 1, body.review)
-    },
-    DELETE_REVIEW: (state: ProjectState, index: number) => {
-        state.project.reviews.splice(index, 1)
     },
 }
 
