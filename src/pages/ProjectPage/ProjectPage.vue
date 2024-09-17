@@ -37,6 +37,8 @@
                 @reload-sdgs="getSdgs"
                 :team="team"
                 @reload-team="getTeam"
+                :reviews="reviews"
+                @reload-reviews="getReviews"
             />
         </div>
 
@@ -141,6 +143,7 @@ import { getProjectAnnouncements } from '@/api/announcements.service'
 import { getBlogEntries } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
 import { getProject } from '@/api/projects.service'
+import { getReviews } from '@/api/reviews.service'
 export default {
     name: 'ProjectPage',
 
@@ -269,6 +272,7 @@ export default {
             goals: [],
             sdgs: [],
             team: { owners: [], members: [], reviewers: [] },
+            reviews: [],
         }
     },
 
@@ -350,6 +354,15 @@ export default {
         //     else this.modals[modalType].editedItem = null
         //     this.modals[modalType].visible = !this.modals[modalType].visible
         // },
+
+        async getReviews() {
+            try {
+                const response = await getReviews(this.project.id)
+                this.reviews = response.results
+            } catch (err) {
+                console.error(err)
+            }
+        },
 
         async getGoals() {
             try {
@@ -442,6 +455,7 @@ export default {
                     this.goals = this.project.goals
                     this.sdgs = this.project.sdgs
                     this.team = this.project.team
+                    this.reviews = this.project.reviews
                     await Promise.all([
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler

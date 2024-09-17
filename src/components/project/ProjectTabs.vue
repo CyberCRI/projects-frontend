@@ -51,6 +51,7 @@ export default {
         'reload-goals',
         'reload-sdgs',
         'reload-team',
+        'reload-reviews',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -107,6 +108,10 @@ export default {
             type: Object,
             default: () => ({ owners: [], members: [], reviewers: [] }),
         },
+        reviews: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     computed: {
@@ -138,6 +143,8 @@ export default {
                         linkResources: this.linkResources,
                         blogEntries: this.blogEntries,
                         team: this.team,
+                        reviews: this.reviews,
+                        onReloadReviews: () => this.$emit('reload-reviews'),
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -264,10 +271,8 @@ export default {
                     props: {
                         project: this.project,
                         categories: this.categories,
-                        onReloadTeam: () => {
-                            console.log('reload tabs')
-                            this.$emit('reload-team')
-                        },
+                        onReloadTeam: () => this.$emit('reload-team'),
+                        onReloadReviews: () => this.$emit('reload-reviews'),
                     },
                     dataTest: 'project-settings',
                 },

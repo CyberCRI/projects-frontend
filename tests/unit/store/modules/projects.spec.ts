@@ -18,7 +18,6 @@ import analytics from '@/analytics'
 
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
-import { ReviewFactory } from '../../../factories/review.factory'
 import TagFactory from '../../../factories/wikipedia-tag.factory'
 
 import { describe, expect, it, vi, Mock } from 'vitest'
@@ -401,34 +400,5 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.DELETE_LINKED_PROJECT(state, 0)
 
         expect(state.project.linked_projects).toStrictEqual([])
-    })
-
-    // REVIEWS
-    it('SET_REVIEWS', () => {
-        const reviews = ReviewFactory.generateMany(2)
-        projectsStore.mutations.SET_REVIEWS(state, reviews)
-
-        expect(state.project.reviews).toEqual(reviews)
-    })
-
-    it('ADD_REVIEW', () => {
-        const review = ReviewFactory.generate()
-        projectsStore.mutations.ADD_REVIEW(state, review)
-
-        expect(state.project.reviews[state.project.reviews.length - 1]).toEqual(review)
-    })
-
-    it('DELETE_REVIEW', () => {
-        const lengthBeforeDelete = state.project.reviews.length
-        projectsStore.mutations.DELETE_REVIEW(state, 0)
-
-        expect(state.project.reviews.length).toEqual(lengthBeforeDelete - 1)
-    })
-
-    it('UPDATE_REVIEW', () => {
-        const review = ReviewFactory.generate()
-        projectsStore.mutations.UPDATE_REVIEW(state, { index: 0, review })
-
-        expect(state.project.reviews[0]).toEqual(review)
     })
 })

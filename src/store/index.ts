@@ -5,7 +5,6 @@ import organizations, { OrganizationsState } from '@/store/modules/organizations
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
 import projects, { ProjectState } from '@/store/modules/projects'
 import peopleGroups, { PeopleGroupsState } from '@/store/modules/people-groups'
-import reviews from '@/store/modules/reviews'
 import users, { UsersState } from '@/store/modules/users'
 import { createStore } from 'vuex'
 
@@ -29,7 +28,6 @@ export default createStore({
         organizations,
         projectCategories,
         projects,
-        reviews,
         users,
         peopleGroups,
     },

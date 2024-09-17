@@ -6,7 +6,7 @@
         :is-opened="isOpened"
         :title="
             $filters.capitalize(
-                mode === 'add' ? $t('project.add-review') : $t('project.edit-review')
+                !this.rdata?.id ? $t('project.add-review') : $t('project.edit-review')
             )
         "
         class="review-drawer medium"
@@ -53,7 +53,6 @@
 <script>
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { mapGetters } from 'vuex'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import permissions from '@/mixins/permissions.ts'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
@@ -63,10 +62,14 @@ import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
+import { postReview, patchReview } from '@/api/reviews.service'
+
 export default {
     name: 'ReviewDrawer',
 
     mixins: [permissions],
+
+    emits: ['reload-reviews', 'close'],
 
     components: {
         ConfirmModal,
@@ -78,11 +81,6 @@ export default {
     },
 
     props: {
-        mode: {
-            type: String,
-            required: true,
-        },
-
         project: {
             type: Object,
             required: true,
@@ -157,12 +155,8 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            projectId: 'projects/currentProjectId',
-        }),
-
         isEdited() {
-            return this.mode == 'edit'
+            return rdata?.id
                 ? this.rdata.title != this.newReview.data.title ||
                       this.rdata.description != this.newReview.data.description
                 : this.newReview.data.title != '' || this.newReview.data.description != '<p></p>'
@@ -175,7 +169,7 @@ export default {
                 this.publish = false
                 this.lock = true
 
-                if (this.mode === 'edit') {
+                if (this.rdata?.id) {
                     this.publish = this.project.publication_status === 'public'
                     this.lock = this.project.is_locked
 
@@ -195,46 +189,52 @@ export default {
         },
     },
 
-    emits: ['close'],
-
     methods: {
         async saveReview() {
             const isValid = await this.v$.$validate()
-            if (this.mode === 'add' && isValid) {
-                await this.createReview()
-            } else if (this.mode === 'edit' && isValid) {
-                await this.updateReview()
-            }
+            if (isValid) {
+                if (!this.rdata?.id) {
+                    // add
+                    await this.createReview()
+                } else {
+                    //edit
+                    await this.updateReview()
+                }
 
-            // Update other project properties
-            const projectData = { life_status: 'private', is_locked: false }
-            if (this.publish) projectData.publication_status = 'public'
-            if (this.lock) {
-                projectData.is_locked = true
-                projectData.life_status = 'completed'
-            } else {
-                projectData.life_status = 'running'
-            }
-            await this.$store.dispatch('projects/updateProject', {
-                id: this.project.id,
-                project: projectData,
-            })
+                // Update other project properties
+                const projectData = { life_status: 'private', is_locked: false }
+                if (this.publish) projectData.publication_status = 'public'
+                if (this.lock) {
+                    projectData.is_locked = true
+                    projectData.life_status = 'completed'
+                } else {
+                    projectData.life_status = 'running'
+                }
+                await this.$store.dispatch('projects/updateProject', {
+                    id: this.project.id,
+                    project: projectData,
+                })
 
-            this.closeDrawerNoConfirm()
+                this.closeDrawerNoConfirm()
+            }
         },
 
         async createReview() {
             const body = {
                 description: this.newReview.data.description,
                 title: this.newReview.data.title,
-                project_id: this.projectId,
+                project_id: this.project.id,
                 reviewer_id: this.newReview.data.reviewer,
             }
 
             try {
-                await this.$store.dispatch('reviews/postReview', body)
+                // await this.$store.dispatch('reviews/postReview', body)
+
+                await postReview(body)
+                this.$emit('reload-reviews')
+
                 await this.$store.dispatch('projects/lockUnlockProject', {
-                    project_id: this.projectId,
+                    project_id: this.project.id,
                     context: this.lock ? 'lock' : 'unlock',
                 })
 
@@ -255,13 +255,15 @@ export default {
             let body = {
                 description: this.newReview.data.description,
                 title: this.newReview.data.title,
-                project_id: this.projectId,
+                project_id: this.project.id,
                 reviewer_id: this.newReview.data.reviewer.id,
                 id: this.newReview.id,
             }
 
             try {
-                await this.$store.dispatch('reviews/patchReview', body)
+                // await this.$store.dispatch('reviews/patchReview', body)
+                await patchReview(body)
+                this.$emit('reload-reviews')
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.review-update.success'),
                     type: 'success',
