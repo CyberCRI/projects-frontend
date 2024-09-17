@@ -85,7 +85,7 @@ export default {
         width: var(--context-action-button-size);
         height: var(--context-action-button-size);
         background: $primary-dark;
-        color: $white;
+        color: var(--context-action-button-bg-color, $white);
         border-radius: 50%;
         position: relative;
     }
@@ -99,7 +99,7 @@ export default {
     }
 
     &.secondary .icon-wrapper {
-        background: $white;
+        background: var(--context-action-button-bg-color, $white);
         color: $primary-dark;
         fill: $primary-dark;
         border: $border-width-s solid $primary-dark;
@@ -137,7 +137,9 @@ export default {
         }
     }
 
-    &.Plus:hover {
+    &.Plus:hover,
+    &.HumanMaleChild:hover,
+    &.School:hover {
         .action-icon {
             animation: scale-plus 1s ease-in-out infinite;
             transform-origin: bottom center;

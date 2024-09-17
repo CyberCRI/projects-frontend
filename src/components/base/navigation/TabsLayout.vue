@@ -2,7 +2,7 @@
     <div class="tabs">
         <div
             v-click-outside="() => (showTabList = false)"
-            :class="{ 'align-left': alignLeft, 'align-right': alignRight, border }"
+            :class="[{ 'align-left': alignLeft, 'align-right': alignRight, border }, headerClasses]"
             class="tabs-header"
         >
             <div class="tabs-slider">
@@ -83,11 +83,14 @@
 
         <div
             v-if="currentTab"
-            :class="{
-                border,
-                'no-top-left-radius': noTopLeftRadius,
-                'no-top-right-radius': noTopRightRadius,
-            }"
+            :class="[
+                {
+                    border,
+                    'no-top-left-radius': noTopLeftRadius,
+                    'no-top-right-radius': noTopRightRadius,
+                },
+                contentClasses,
+            ]"
             class="content"
         >
             <template v-if="currentTab.component && currentTab.key">
@@ -114,7 +117,7 @@ import debounce from 'lodash.debounce'
 export default {
     name: 'TabsLayout',
 
-    emits: ['close'],
+    emits: ['close', 'tab-changed'],
 
     components: { LinkButton, IconImage },
 
@@ -144,6 +147,16 @@ export default {
         routerView: {
             type: Boolean,
             default: false,
+        },
+
+        headerClasses: {
+            type: [String, Array, Object],
+            default: () => [],
+        },
+
+        contentClasses: {
+            type: [String, Array, Object],
+            default: () => [],
         },
     },
 
@@ -309,6 +322,12 @@ export default {
             deep: true,
             immediate: true,
         },
+        current: {
+            handler: function (neo, old) {
+                if (neo != old) this.$emit('tab-changed', this.tabs[neo])
+            },
+            immediate: true,
+        },
     },
 }
 </script>
@@ -320,7 +339,6 @@ export default {
     .tabs-header {
         display: flex;
         align-items: flex-end;
-        width: 100%;
 
         &.align-left {
             justify-content: flex-start;

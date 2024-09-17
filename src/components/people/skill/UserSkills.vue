@@ -1,38 +1,110 @@
 <template>
     <div>
-        <div class="columns-wrapper" :class="`layout-${columnCount.length}-columns`">
+        <div
+            class="columns-wrapper"
+            :class="{
+                [`layout-${columnCount.length}-columns`]: true,
+                'has-mentor-column': fullList && hasMentorRelatedSkills,
+            }"
+        >
+            <div class="column mentor-column" v-if="hasMentorRelatedSkills">
+                <div class="mentor-column-block" v-if="mentorSkills.length">
+                    <h3 class="mentor-column-title">
+                        <IconImage name="School" />
+                        {{ $t('profile.edit.skills.mentorship.mentor') }}
+                    </h3>
+                    <template v-for="skill in mentorSkills" :key="skill.id">
+                        <SkillItem
+                            :is-editable="isEditable"
+                            white
+                            :label="skill.wikipedia_tag.name"
+                            :level="Number(skill.level)"
+                            :comment="skill.comment"
+                            @edit-skill="$emit('edit-skill', skill)"
+                            @delete-skill="$emit('delete-skill', skill)"
+                        />
+                    </template>
+                    <div class="mentorship-actions">
+                        <a href="#" class="mentorship-action" @click.prevent="askMentorship = true">
+                            <IconImage name="EmailOutline" />
+                            {{ $t('profile.edit.skills.mentorship.ask') }}
+                        </a>
+                    </div>
+                </div>
+                <div class="mentor-column-block" v-if="mentoreeSkills.length">
+                    <h3 class="mentor-column-title">
+                        <IconImage name="HumanMaleChild" />
+                        {{ $t('profile.edit.skills.mentorship.mentoree') }}
+                    </h3>
+                    <template v-for="skill in mentoreeSkills" :key="skill.id">
+                        <SkillItem
+                            :is-editable="isEditable"
+                            white
+                            :label="skill.wikipedia_tag.name"
+                            :level="Number(skill.level)"
+                            :comment="skill.comment"
+                            @edit-skill="$emit('edit-skill', skill)"
+                            @delete-skill="$emit('delete-skill', skill)"
+                        />
+                    </template>
+                    <div class="mentorship-actions">
+                        <a
+                            href="#"
+                            class="mentorship-action"
+                            @click.prevent="offerMentorship = true"
+                        >
+                            <IconImage name="EmailOutline" />
+                            {{ $t('profile.edit.skills.mentorship.offer') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <div
-                v-for="column in columnCount"
+                v-for="column in nonMentorColumnCount"
                 :key="`column-${column}`"
                 class="column"
                 :class="[`column-${column}`]"
             >
                 <h3 v-if="title && column === 0" class="title">{{ title }}</h3>
 
-                <template v-for="(skill, idx) in visibleSkills">
+                <template v-for="(skill, idx) in nonMentorSkills">
                     <SkillItem
-                        v-if="(idx + idxOffset) % columnCount.length == column"
+                        v-if="(idx + idxOffset) % nonMentorColumnCount.length == column"
+                        :is-editable="isEditable"
                         :key="skill.id"
                         :label="skill.wikipedia_tag.name"
                         :level="Number(skill.level)"
+                        @edit-skill="$emit('edit-skill', skill)"
+                        @delete-skill="$emit('delete-skill', skill)"
                     />
                 </template>
             </div>
         </div>
     </div>
+    <MentorshipContactDrawer
+        :is-open="askMentorship || offerMentorship"
+        :is-offer="offerMentorship"
+        @close="offerMentorship = askMentorship = false"
+    />
 </template>
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
-
+import IconImage from '@/components/base/media/IconImage.vue'
+import MentorshipContactDrawer from '@/components/people/skill/MentorshipContactDrawer.vue'
 export default {
     name: 'UserSkills',
 
-    components: { SkillItem },
+    emits: ['edit-skill', 'delete-skill'],
+
+    components: { SkillItem, IconImage, MentorshipContactDrawer },
 
     data() {
         return {
             columnCount: [0],
+            askMentorship: false,
+            offerMentorship: false,
         }
     },
 
@@ -60,6 +132,11 @@ export default {
             type: String,
             default: '',
         },
+
+        isEditable: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     mounted() {
@@ -72,13 +149,35 @@ export default {
     },
 
     computed: {
-        visibleSkills() {
-            return this.fullList ? this.skills : this.skills.slice(0, this.limit)
-        },
         idxOffset() {
             // if we have a title, it take the place of the first skill
             // so this is used to offset skill indexes in computations
             return this.title ? 1 : 0
+        },
+
+        mentorSkills() {
+            if (!this.fullList) return []
+            return this.skills.filter((skill) => skill.can_mentor)
+        },
+
+        mentoreeSkills() {
+            if (!this.fullList) return []
+            return this.skills.filter((skill) => skill.needs_mentor)
+        },
+
+        nonMentorSkills() {
+            if (!this.fullList) return this.skills.slice(0, this.limit)
+            return this.skills.filter((skill) => !skill.can_mentor && !skill.needs_mentor)
+        },
+
+        hasMentorRelatedSkills() {
+            return this.mentorSkills.length || this.mentoreeSkills.length
+        },
+
+        nonMentorColumnCount() {
+            const res = [...this.columnCount]
+            if (res.length > 1 && this.fullList && this.hasMentorRelatedSkills) res.pop()
+            return res
         },
     },
 
@@ -95,13 +194,12 @@ export default {
                 this.columnCount = [0]
             }
 
+            let skills =
+                this.fullList && this.hasMentorRelatedSkills ? this.nonMentorSkills : this.skills
+
             // if there's more column than skills, delete extraneous
-            if (this.columnCount.length > this.skills.length + this.idxOffset) {
-                for (
-                    let i = this.skills.length + this.idxOffset;
-                    i < this.columnCount.length;
-                    i++
-                ) {
+            if (this.columnCount.length > skills.length + this.idxOffset) {
+                for (let i = skills.length + this.idxOffset; i < this.columnCount.length; i++) {
                     // hack column class name to hide it
                     this.columnCount[i] = 'empty'
                 }
@@ -118,8 +216,14 @@ export default {
     gap: pxToRem(31px);
 }
 
-.layout-1-columns .column {
-    flex-basis: 100%;
+.layout-1-columns {
+    &.has-mentor-column {
+        flex-direction: column;
+    }
+
+    .column {
+        flex-basis: 100%;
+    }
 }
 
 .layout-2-columns .column {
@@ -133,11 +237,50 @@ export default {
 .column {
     display: flex;
     flex-flow: column;
-    gap: $space-m;
+    gap: 0;
     background-color: $primary-lighter;
-    padding: pxToRem(24px) pxToRem(32px);
+    padding: pxToRem(24px) pxToRem(12px);
     border-radius: $border-radius-l;
     align-items: stretch;
+}
+
+.mentor-column {
+    background-color: $primary-dark;
+    color: $white;
+
+    .mentorship-action,
+    .mentor-column-title {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        svg {
+            fill: $white;
+            width: 1.2em;
+            height: 1.2em;
+        }
+    }
+
+    .mentorship-action {
+        justify-content: flex-end;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .mentor-column-block {
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+
+        & ~ .mentor-column-block {
+            margin-top: $space-m;
+            padding-top: $space-m;
+            border-top: 1px solid $white;
+        }
+    }
 }
 
 .column-empty {

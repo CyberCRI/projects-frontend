@@ -20,44 +20,74 @@
             </div>
         </div>
         <div class="following-screen" v-else>
+            <div class="level-notice page-section-medium">
+                <p>
+                    {{ $t('profile.edit.skills.level-notice') }}
+                    <SkillLevelTip>
+                        <a href="#" data-test="skill-levels-help-button">{{
+                            $t('profile.edit.skills.level-notice-more')
+                        }}</a>
+                    </SkillLevelTip>
+                </p>
+            </div>
+
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
                 <template v-if="getSkillOfType(key).length">
-                    <div class="actions">
-                        <LinkButton
-                            :label="
-                                $filters.capitalize($t(`profile.edit.skills.${key}.edit-items`))
-                            "
-                            btn-icon="Pen"
-                            @click="openDrawer(key, 'add')"
-                            :data-test="`edit-${key}-button`"
-                        />
-                        <LinkButton
-                            :label="
-                                $filters.capitalize($t(`profile.edit.skills.${key}.edit-levels`))
-                            "
-                            btn-icon="Pen"
-                            @click="openDrawer(key, 'edit')"
-                            data-test="edit-levels-button"
-                        />
-
-                        <SkillLevelTip>
-                            <LinkButton
-                                :label="
-                                    $filters.capitalize(
-                                        $t(`profile.edit.skills.${key}.levels-help`)
-                                    )
-                                "
-                                btn-icon="HelpCircle"
-                                data-test="skill-levels-help-button"
-                            />
-                        </SkillLevelTip>
+                    <div class="skill-list-header">
+                        <h2 class="skill-list-title">
+                            {{ $t(`profile.edit.skills.${key}.title`) }}
+                        </h2>
+                        <div class="skill-list-actions">
+                            <ContextActionMenu
+                                trigger-icon="Pen"
+                                :trigger-label="$t('profile.edit.skills.handle')"
+                            >
+                                <ContextActionButton
+                                    action-icon="Plus"
+                                    :action-label="$t('profile.edit.skills.add-competences')"
+                                    class="edit-btn small"
+                                    secondary
+                                    no-border
+                                    @click.stop.prevent="openDrawer(key, 'add')"
+                                    :data-test="`edit-${key}-button`"
+                                />
+                                <ContextActionButton
+                                    action-icon="Pen"
+                                    :action-label="$t('profile.edit.skills.modify-competences')"
+                                    class="edit-btn small"
+                                    secondary
+                                    no-border
+                                    @click.stop.prevent="openDrawer(key, 'edit')"
+                                    data-test="edit-levels-button"
+                                />
+                                <ContextActionButton
+                                    action-icon="School"
+                                    :action-label="$t('profile.edit.skills.become-mentor')"
+                                    class="edit-btn small"
+                                    secondary
+                                    no-border
+                                    @click.stop.prevent="offerMentorship = true"
+                                />
+                                <ContextActionButton
+                                    action-icon="HumanMaleChild"
+                                    :action-label="$t('profile.edit.skills.become-mentee')"
+                                    class="edit-btn small"
+                                    secondary
+                                    no-border
+                                    @click.stop.prevent="askMentorship = true"
+                                />
+                            </ContextActionMenu>
+                        </div>
                     </div>
+
                     <div class="skill-list">
-                        <SkillItem
-                            v-for="skill in getSkillOfType(key)"
-                            :key="`${skill.id}-${skill.level}`"
-                            :label="skill.wikipedia_tag.name"
-                            :level="Number(skill.level)"
+                        <UserSkills
+                            is-editable
+                            :full-list="true"
+                            :skills="getSkillOfType(key)"
+                            title=""
+                            @edit-skill="openDrawer(key, 'edit', $event)"
+                            @delete-skill="deleteSkill($event, key)"
                         />
                     </div>
                 </template>
@@ -78,28 +108,68 @@
         :user="user"
         :mode="drawerMode"
         :type="drawerType"
+        :filter="editSkillFilter"
         @close="closeDrawer"
         @switch-mode="drawerMode = $event"
         @skills-updated="$emit('profile-edited')"
     />
+    <ConfirmModal
+        v-if="skillToDelete"
+        :content="
+            $t('profile.edit.skills.delete-confirm-body', {
+                name: skillToDelete.wikipedia_tag.name,
+                type: $t(`profile.edit.skills.${typeToDelete}.type-plural`),
+            })
+        "
+        :title="
+            $t('profile.edit.skills.delete-confirm-title', {
+                type: $t(`profile.edit.skills.${typeToDelete}.type-singular`),
+            })
+        "
+        cancel-button-label="common.cancel"
+        confirm-button-label="common.delete"
+        @cancel="skillToDelete = null"
+        @confirm="onDeleteSkillConfirmed"
+        :asyncing="deletingSkill"
+    />
+    <MentorshipContactDrawer
+        :is-open="askMentorship || offerMentorship"
+        @close="offerMentorship = askMentorship = false"
+        :is-offer="offerMentorship"
+    />
 </template>
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
+import UserSkills from '@/components/people/skill/UserSkills.vue'
+import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import { deleteUserSkill } from '@/api/people.service.ts'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import MentorshipContactDrawer from '@/components/people/skill/MentorshipContactDrawer.vue'
 export default {
     name: 'ProfileSkillsEditTab',
-    components: {
-        LpiButton,
-        SkillItem,
-        SkillsEditDrawer,
-        SkillLevelTip,
-        LinkButton,
-    },
 
     emits: ['edited', 'profile-edited'],
+
+    inject: {
+        reloadUser: {
+            from: 'profileEditReloadUser',
+            default: () => () => {},
+        },
+    },
+
+    components: {
+        LpiButton,
+        SkillsEditDrawer,
+        SkillLevelTip,
+        UserSkills,
+        ContextActionMenu,
+        ContextActionButton,
+        ConfirmModal,
+        MentorshipContactDrawer,
+    },
 
     props: {
         user: {
@@ -112,6 +182,12 @@ export default {
             drawerType: 'skills', // skills | hobbies
             drawerMode: 'add', // add | edit
             drawerIsOpen: false,
+            editSkillFilter: null,
+            skillToDelete: null,
+            typeToDelete: null,
+            deletingSkill: false,
+            askMentorship: false,
+            offerMentorship: false,
         }
     },
     computed: {
@@ -134,7 +210,8 @@ export default {
     },
 
     methods: {
-        openDrawer(type, mode) {
+        openDrawer(type, mode, filter = null) {
+            this.editSkillFilter = filter?.wikipedia_tag?.wikipedia_qid || null
             this.drawerType = type
             this.drawerMode = mode
             this.drawerIsOpen = true
@@ -148,6 +225,32 @@ export default {
             if (type == 'skills') return this.skills
             else return this.hobbies
         },
+
+        deleteSkill(skill, type) {
+            this.typeToDelete = type
+            this.skillToDelete = skill
+        },
+
+        async onDeleteSkillConfirmed() {
+            this.deletingSkill = true
+            try {
+                await deleteUserSkill(this.skillToDelete?.id)
+                this.skillToDelete = null
+                await this.reloadUser()
+                this.$store.dispatch('notifications/pushToast', {
+                    message: this.$t('profile.edit.skills.save-success'),
+                    type: 'success',
+                })
+            } catch (error) {
+                this.$store.dispatch('notifications/pushToast', {
+                    message: `${this.$t('profile.edit.skills.save-error')} (${error})`,
+                    type: 'error',
+                })
+                console.error(error)
+            } finally {
+                this.deletingSkill = false
+            }
+        },
     },
 }
 </script>
@@ -155,7 +258,6 @@ export default {
 @import './profile-form';
 
 .profile-edit-skills {
-    width: pxToRem(600px);
     margin: 0 auto;
 }
 
@@ -176,28 +278,36 @@ export default {
 }
 
 .following-screen {
-    .actions {
-        margin-top: $space-xl;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
     .add-action {
         margin-top: $space-xl;
         display: flex;
         justify-content: center;
         align-items: center;
     }
+}
 
-    .skill-list {
-        margin-top: $space-xl;
-        background-color: $primary-lighter;
-        padding: $space-l pxToRem(17px);
-        display: flex;
-        flex-flow: column nowrap;
-        gap: $space-m;
-        border-radius: $border-radius-l;
+.skill-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: $space-l;
+    margin-bottom: $space-m;
+
+    .skill-list-title {
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
+    }
+}
+
+.level-notice {
+    margin-top: $space-unit;
+    margin-bottom: $space-2xl;
+
+    a {
+        font-weight: 700;
+        color: $primary-dark;
+        text-decoration: underline;
     }
 }
 </style>

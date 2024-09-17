@@ -1240,6 +1240,64 @@
                 "save-error": "Error while saving profile.",
                 "save-success": "Profile saved.",
                 "search": "search",
+                "level-notice": "Levels : 1 = curious; 2 = basic; 3 = comptent; 4 = expert.",
+                "level-notice-more": "More details",
+                "handle": "Handle",
+                "add-competences": "Add competences",
+                "modify-competences": "Modify competences",
+                "become-mentor": "Become mentor",
+                "become-mentee": "Be mentee",
+                "delete-confirm-title": "Delete {type}",
+                "delete-confirm-body": "Are you sure you want to delete '{name}' from your {type}?",
+                "mentorship": {
+                    "mentor": "Mentor",
+                    "mentoree": "Mentoree",
+                    "offer": "Offer your mentorship",
+                    "ask": "Ask for mentorship",
+                    "drawer": {
+                        "mentor": {
+                            "title": "Become mentor",
+                            "notice": "You have indicated a high level for these skills. Would you like to be a mentor? You determine the frequency of exchange that you arrange with the mentee. This could be to answer a question in 1 hour maximum, to do 3 one-hour mentoring sessions or support over a year for 2 hours per month."
+                        },
+                        "mentoree": {
+                            "title": "Be mentored",
+                            "notice": "For these skills, would you like to be mentored? We will then recommend mentors to you. You can get in touch with them and ask them what you need."
+                        }
+                    },
+                    "edit": {
+                        "note-placeholder": "Add a comment (optional)"
+                    },
+                    "contact": {
+                        "title-ask": "Ask for mentorship",
+                        "title-offer": "Offer mentorship",
+                        "notice-ask": "Please specify the skill for which you are asking mentorship.",
+                        "notice-offer": "Please specify the skill for which you are offering mentorship.",
+                        "error": "Error while sending the request.",
+                        "success": "Your request was sent.",
+                        "fields": {
+                            "title": {
+                                "label": "Title",
+                                "placeholder-ask": "Eg. \"Can you be my mentor in Datascience?\"",
+                                "placeholder-offer": "Eg. \"Would you be my mentee in Datascience?\"",
+                                "required": "The title field is required."
+                            },
+                            "text": {
+                                "label": "Text",
+                                "notice-ask": "Add details about you and the kind of help you need (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "notice-offer": "Add details about you and the kind of help you provide (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "placeholder": "Start here",
+                                "required": "The text field is required."
+                            },
+                            "email": {
+                                "label": "Email reply",
+                                "notice": "This message will be sent as an email. To receive an answer, add your email.",
+                                "placeholder": "Eg. jane.doe{'@'}gmail.com",
+                                "invalid": "The email field is invalid.",
+                                "required": "The email field is required."
+                            }
+                        }
+                    }
+                },
                 "skills": {
                     "add": "Add professional skills",
                     "edit-items": "Edit skills",
@@ -1257,9 +1315,16 @@
                             "title": "Skill levels",
                             "notice": "Indicate your level of mastery.",
                             "help": "More about skill levels",
+                            "confirm": "Next"
+                        },
+                        "mentorship": {
+                            "title": "Mentorship",
                             "confirm": "Save"
                         }
-                    }
+                    },
+                    "title": "Professional skills",
+                    "type-plural": "professional skills",
+                    "type-singular": "a professional skill"
                 },
                 "hobbies": {
                     "add": "Add hobbies",
@@ -1279,8 +1344,15 @@
                             "notice": "Indicate your level of mastery.",
                             "help": "More about the hobbies levels",
                             "confirm": "Save"
+                        },
+                        "mentorship": {
+                            "title": "Mentorship",
+                            "confirm": "Save"
                         }
-                    }
+                    },
+                    "title": "Hobbies",
+                    "type-plural": "hobbies",
+                    "type-singular": "a hobby"
                 },
                 "levels": {
                     "curious": "Curious",
