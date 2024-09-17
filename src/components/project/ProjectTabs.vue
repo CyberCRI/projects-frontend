@@ -138,6 +138,7 @@ export default {
                     props: {
                         project: this.project,
                         comments: this.comments,
+                        goals: this.goals,
                         similarProjects: this.similarProjects,
                         locations: this.locations,
                         fileResources: this.fileResources,

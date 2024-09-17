@@ -161,6 +161,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        goals: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     data() {
@@ -176,12 +180,10 @@ export default {
     computed: {
         filteredGoals() {
             return (
-                (this.project &&
-                    this.project.goals.filter(
-                        (goal) =>
-                            goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
-                    )) ||
-                []
+                this.goals?.filter(
+                    (goal) =>
+                        goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
+                ) || []
             )
         },
 
