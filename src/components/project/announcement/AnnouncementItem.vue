@@ -172,6 +172,7 @@ export default {
     strong {
         font-weight: 700 !important;
     }
+
     em {
         font-style: italic;
     }
