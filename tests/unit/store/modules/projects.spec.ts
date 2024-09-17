@@ -1,8 +1,6 @@
 import projectsStore from '@/store/modules/projects'
 import {
-    addLinkedProject,
     createProject,
-    deleteLinkedProject,
     deleteProject,
     duplicateProject,
     getAllProjects,
@@ -11,7 +9,6 @@ import {
     getProject,
     patchProject,
     lockUnlockProject,
-    patchLinkedProject,
 } from '@/api/projects.service'
 
 import analytics from '@/analytics'
@@ -132,101 +129,6 @@ describe('Store module | projects | actions', () => {
         expect(duplicateProjectMock).toHaveBeenCalledWith(project.id)
         expect(result).toBe(project)
         expect(duplicateMock).toHaveBeenCalledWith(project.id, result.id)
-    })
-
-    it('addLinkedProject', async () => {
-        const target = ProjectOutputFactory.generate()
-        const project = ProjectOutputFactory.generate()
-        const addLinkedProjectMock = addLinkedProject as Mock
-        const addLinkedProjectAnalyticsMock = analytics.linkedProject.addLinkedProject as Mock
-
-        const projectList = [
-            {
-                project_id: project.id,
-                target_id: target.id,
-            },
-        ]
-
-        const body = { projects: projectList }
-
-        target.linked_projects = []
-        target.linked_projects.push({ id: 1, project: project })
-
-        addLinkedProjectMock.mockResolvedValue(target)
-
-        const result = await projectsStore.actions.addLinkedProject(
-            { commit, rootState },
-            { id: target.id, body: body }
-        )
-
-        expect(addLinkedProjectMock).toHaveBeenCalledWith({ id: target.id, body: body })
-        expect(result).toBe(target)
-        expect(commit).toHaveBeenCalledWith('ADD_LINKED_PROJECT', result.linked_projects[0])
-        expect(addLinkedProjectAnalyticsMock).toHaveBeenCalledWith({
-            project: {
-                id: rootState.projects.project.id,
-            },
-            linkedProject: result.linked_projects[0],
-        })
-    })
-
-    it('patchLinkedProject', async () => {
-        const project = ProjectOutputFactory.generate()
-        const patchLinkedProjectMock = patchLinkedProject as Mock
-        const patchLinkedProjectAnalyticsMock = analytics.linkedProject.patchLinkedProject as Mock
-
-        patchLinkedProjectMock.mockResolvedValue(project)
-
-        const result = await projectsStore.actions.patchLinkedProject(
-            { commit, rootState },
-            { target_id: project.id, id: 1, body: project }
-        )
-
-        expect(patchLinkedProjectMock).toHaveBeenCalledWith({
-            target_id: project.id,
-            id: 1,
-            body: project,
-        })
-        expect(result).toBe(project)
-        expect(commit).toHaveBeenCalledWith('PATCH_LINKED_PROJECT', result)
-        expect(patchLinkedProjectAnalyticsMock).toHaveBeenCalledWith({
-            project: {
-                id: rootState.projects.project.id,
-            },
-            linkedProject: result,
-        })
-    })
-
-    it('deleteLinkedProject', async () => {
-        const project = ProjectOutputFactory.generate()
-        const linkedProject = ProjectFactory.generate()
-
-        const projectWithLinkedProject = {
-            ...project,
-            linked_projects: [{ id: 1, project: linkedProject, reason: 'inspiré de' }],
-        }
-
-        const deleteLinkedProjectMock = deleteLinkedProject as Mock
-        const removeLinkedProjectMock = analytics.linkedProject.removeLinkedProject as Mock
-
-        deleteLinkedProjectMock.mockResolvedValue(projectWithLinkedProject)
-
-        await projectsStore.actions.deleteLinkedProject(
-            { commit, rootState },
-            { id: 1, project_id: projectWithLinkedProject.id }
-        )
-
-        expect(removeLinkedProjectMock).toHaveBeenCalledWith({
-            project: {
-                id: rootState.projects.project.id,
-            },
-            linkedProject: rootState.projects.project.linked_projects[0],
-        })
-        expect(deleteLinkedProjectMock).toHaveBeenCalledWith({
-            id: 1,
-            project_id: projectWithLinkedProject.id,
-        })
-        expect(commit).toHaveBeenCalled()
     })
 
     it('getProject', async () => {
@@ -357,48 +259,5 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.SET_PROJECT_LOCK(state, payload)
 
         expect(state.project.is_locked).toEqual(payload)
-    })
-
-    // TAGS
-    it('SET_PROJECT_TAGS', () => {
-        const payload = TagFactory.generateMany(2)
-        projectsStore.mutations.SET_PROJECT_TAGS(state, payload)
-
-        expect(state.project.tags).toEqual(payload)
-    })
-
-    // LINKED PROJECTS
-    it('ADD_LINKED_PROJECT', () => {
-        const linkedProject = ProjectFactory.generate()
-
-        projectsStore.mutations.ADD_LINKED_PROJECT(state, {
-            id: 1,
-            project: linkedProject,
-            reason: 'inspiré de',
-        })
-
-        expect(state.project.linked_projects).toStrictEqual([
-            { id: 1, project: linkedProject, reason: 'inspiré de' },
-        ])
-    })
-
-    it('PATCH_LINKED_PROJECT', () => {
-        const linkedProject = ProjectOutputFactory.generate()
-
-        projectsStore.mutations.PATCH_LINKED_PROJECT(state, {
-            id: 1,
-            project: { linked_projects: linkedProject },
-            reason: 'inspiré de',
-        })
-
-        expect(state.project.linked_projects).toStrictEqual([
-            { id: 1, project: { linked_projects: linkedProject }, reason: 'inspiré de' },
-        ])
-    })
-
-    it('DELETE_LINKED_PROJECT', () => {
-        projectsStore.mutations.DELETE_LINKED_PROJECT(state, 0)
-
-        expect(state.project.linked_projects).toStrictEqual([])
     })
 })

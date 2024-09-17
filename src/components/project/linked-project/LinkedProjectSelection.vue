@@ -81,7 +81,15 @@ export default {
     },
 
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         selectedProjects: {
+            type: Array,
+            default: () => [],
+        },
+        alreadyLinkedProjects: {
             type: Array,
             default: () => [],
         },
@@ -92,18 +100,14 @@ export default {
     },
 
     computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
         matchingProjectsFiltered() {
             // mark already linked projects as such
             return this.matchingProjects.map((matchingProject) => {
                 const selected =
                     // is the current prohect ?
-                    matchingProject.id == this.$store.getters['projects/currentProjectId'] ||
+                    matchingProject.id == this.project?.id ||
                     // or an already linked project ?
-                    (this.project.linked_projects || []).some(
+                    (this.alreadyLinkedProjects || []).some(
                         (project) => project.project.id === matchingProject.id
                     ) ||
                     // or a currently selected project ?

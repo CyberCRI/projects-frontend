@@ -7,7 +7,12 @@
                 @click="projectLayoutToggleAddModal('linkedProject')"
             />
         </div>
-        <LinkedProjects :linked-projects="project ? project.linked_projects : []" />
+        <LinkedProjects
+            is-editable
+            :project="project"
+            :linked-projects="linkedProjects"
+            @reload-linked-projects="$emit('reload-linked-projects')"
+        />
     </div>
 </template>
 
@@ -22,6 +27,8 @@ export default {
 
     mixins: [permissions, ProjectTab],
 
+    emits: ['reload-linked-projects'],
+
     inject: ['projectLayoutToggleAddModal'],
 
     components: {
@@ -29,9 +36,15 @@ export default {
         LpiButton,
     },
 
-    computed: {
-        project() {
-            return this.$store.getters['projects/project']
+    props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
+
+        linkedProjects: {
+            type: Array,
+            default: () => [],
         },
     },
 }

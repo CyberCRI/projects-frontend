@@ -11,6 +11,7 @@
         "
         :selected-projects="listProjects"
         :padding="true"
+        :asyncing="asyncing"
         @unselect="unselectProject"
         @close="closeModal"
         @confirm="addLinkedProject"
@@ -23,16 +24,18 @@
 
         <div v-if="listProjects.length" class="results-ctn">
             <ProjectCard
-                v-for="project in listProjects"
-                :key="project.id"
+                v-for="aProject in listProjects"
+                :key="aProject.id"
                 :has-close-icon="true"
-                :project="project"
+                :project="aProject"
                 class="selected-card"
                 @unselect="unselectProject"
             />
         </div>
         <LinkedProjectSelection
+            :project="project"
             :selected-projects="listProjects"
+            :already-linked-projects="alreadyLinkedProjects"
             @select-project="addProject"
             @batch-project="addBatch"
             @search-done="search"
@@ -44,25 +47,21 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import LinkedProjectSelection from './LinkedProjectSelection.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
+import analytics from '@/analytics'
+import { addLinkedProject, patchLinkedProject } from '@/api/projects.service'
 
 export default {
     name: 'LinkedProjectDrawer',
 
-    emits: ['close', 'clear', 'unselect'],
+    emits: ['close', 'clear', 'unselect', 'reload-linked-projects'],
 
     components: { BaseDrawer, LinkedProjectSelection, ProjectCard },
 
-    data() {
-        return {
-            selectedProject: null,
-            selectedReason: undefined,
-            listProjects: [],
-            hasFooter: false,
-            searchDone: false,
-        }
-    },
-
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         editedLinkedProject: {
             type: Object,
             default: null,
@@ -71,11 +70,26 @@ export default {
             type: Boolean,
             default: false,
         },
+        alreadyLinkedProjects: {
+            type: Array,
+            default: () => [],
+        },
     },
 
+    data() {
+        return {
+            selectedProject: null,
+            selectedReason: undefined,
+            listProjects: [],
+            hasFooter: false,
+            searchDone: false,
+            asyncing: false,
+        }
+    },
     watch: {
         isOpened: {
             handler: function () {
+                this.asyncing = false
                 if (this.editedLinkedProject) {
                     this.selectedProject = this.editedLinkedProject.project
                     this.selectedReason = this.editedLinkedProject.reason
@@ -122,20 +136,34 @@ export default {
         },
 
         async addLinkedProject() {
+            this.asyncing = true
             try {
-                const target_id = this.$store.getters['projects/currentProjectId']
-                let listLinkedProjects = []
-                for (let i = 0; i < this.listProjects.length; i++) {
-                    listLinkedProjects.push({
-                        project_id: this.listProjects[i].id,
-                        target_id: target_id,
-                    })
-                }
-                let body = { projects: listLinkedProjects }
-                await this.$store.dispatch('projects/addLinkedProject', {
-                    id: this.$store.getters['projects/currentProjectId'],
-                    body: body,
+                const projectId = this.project.id
+                let addedLinkedProjects = this.listProjects.map((addedProject) => {
+                    return {
+                        project_id: addedProject.id,
+                        target_id: projectId,
+                    }
                 })
+                const addedLinkedProjectsIdSet = new Set(
+                    addedLinkedProjects.map((addedLinkedProject) => addedLinkedProject.project_id)
+                )
+                let body = { projects: addedLinkedProjects }
+                const result = await addLinkedProject({ id: projectId, body })
+                result['linked_projects']
+                    ?.filter((linked_project) =>
+                        addedLinkedProjectsIdSet.has(linked_project.project.id)
+                    )
+                    .forEach((linked_project) => {
+                        analytics.linkedProject.addLinkedProject({
+                            project: {
+                                id: this.project.id,
+                            },
+                            linkedProject: linked_project,
+                        })
+                    })
+                this.$emit('reload-linked-projects', result['linked_projects'])
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.linked-project-create.success'),
                     type: 'success',
@@ -158,19 +186,29 @@ export default {
             } finally {
                 this.listProjects.splice(0)
                 this.closeModal()
+                this.asyncing = false
             }
         },
 
         async editLinkedProject() {
+            this.asyncing = true
             try {
-                await this.$store.dispatch('projects/patchLinkedProject', {
-                    id: this.editedLinkedProject.id,
-                    target_id: this.$store.getters['projects/currentProjectId'],
-                    body: {
-                        project_id: this.selectedProject.id,
-                        target_id: this.$store.getters['projects/currentProjectId'],
-                        reason: this.selectedReason,
+                const id = this.editedLinkedProject.id
+                const target_id = this.project.id
+                const body = {
+                    project_id: this.selectedProject.id,
+                    target_id,
+                    reason: this.selectedReason,
+                }
+
+                const result = await patchLinkedProject({ target_id, id, body })
+
+                this.$emit('reload-linked-projects')
+                analytics.linkedProject.patchLinkedProject({
+                    project: {
+                        id: this.project.id,
                     },
+                    linkedProject: result,
                 })
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.linked-project-update.success'),
@@ -184,6 +222,7 @@ export default {
                 console.error(error)
             } finally {
                 this.closeModal()
+                this.asyncing = false
             }
         },
 
