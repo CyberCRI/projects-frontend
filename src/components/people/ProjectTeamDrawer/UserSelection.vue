@@ -81,19 +81,9 @@ export default {
     },
 
     props: {
-        addToCurrentProject: {
-            type: Boolean,
-            default: true,
-        },
-
         currentUsers: {
             type: Array,
             default: () => [],
-        },
-
-        project: {
-            type: Object,
-            default: () => {},
         },
     },
 
@@ -124,8 +114,6 @@ export default {
                     component: TeamResultList,
                     props: {
                         initialRequest: this.userRequest,
-                        addToCurrentProject: this.addToCurrentProject,
-                        team: this.team,
                         currentUsers: this.currentUsers,
                         selectedUsers: this.selectedUsers,
                         type: 'users',
@@ -142,27 +130,12 @@ export default {
                     component: TeamResultList,
                     props: {
                         initialRequest: this.groupRequest,
-                        addToCurrentProject: this.addToCurrentProject,
-                        team: this.team,
                         currentUsers: this.currentUsers,
                         selectedUsers: this.selectedUsers,
                         type: 'groups',
                     },
                 },
             ]
-        },
-        team() {
-            const owners = this.project && this.project.team.owners ? this.project.team.owners : []
-            const reviewers =
-                this.project && this.project.team.reviewers ? this.project.team.reviewers : []
-            const members =
-                this.project && this.project.team.members ? this.project.team.members : []
-            const people_groups =
-                this.project && this.project.team.people_groups
-                    ? this.project.team.people_groups
-                    : []
-
-            return [...owners, ...reviewers, ...members, ...people_groups]
         },
 
         filteredUsers() {

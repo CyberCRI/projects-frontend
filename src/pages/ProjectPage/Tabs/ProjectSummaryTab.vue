@@ -36,8 +36,8 @@
                 <MapRecap v-if="locations.length" :locations="locations" />
 
                 <GroupMemberSection
-                    v-if="project && team.length"
-                    :members="team"
+                    v-if="mergedTeam?.length"
+                    :members="mergedTeam"
                     @user-click="openProfileDrawer"
                 />
 
@@ -146,6 +146,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        team: {
+            type: Object,
+            default: () => ({ owners: [], members: [], reviewers: [] }),
+        },
     },
 
     data() {
@@ -170,12 +174,12 @@ export default {
             )
         },
 
-        team() {
+        mergedTeam() {
             return [
-                ...this.project.team.owners,
-                ...this.project.team.reviewers,
-                ...this.project.team.members,
-                ...this.project.team.people_groups,
+                ...(this.team.owners || []),
+                ...(this.team.reviewers || []),
+                ...(this.team.members || []),
+                ...(this.team.people_groups || []),
             ]
         },
 

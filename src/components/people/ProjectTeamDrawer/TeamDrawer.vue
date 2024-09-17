@@ -10,8 +10,7 @@
         :asyncing="asyncing"
     >
         <UserSelection
-            v-show="isSelectingUser && !isEditMode"
-            :add-to-current-project="addToCurrentProject"
+            v-show="isSelectingUser && !this.editedUser"
             :current-users="currentUsers"
             :project="project"
             @select-user="selectUser"
@@ -19,10 +18,8 @@
 
         <RoleSelection
             v-if="isSelectingRoles"
-            :add-to-current-project="addToCurrentProject"
-            :is-edit-mode="isEditMode"
-            :project="project"
-            :selected-category="selectedCategory"
+            :is-edit-mode="!!this.editedUser"
+            :selected-categories="selectedCategories"
             :selected-role="selectedRole"
             :selected-users="selectedUsers"
             @back-to-user-selection="goBackToUserSelection"
@@ -35,18 +32,20 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserSelection from './UserSelection.vue'
 import RoleSelection from './RoleSelection.vue'
+import { addProjectMembers } from '@/api/project-members.service'
+import analytics from '@/analytics'
 
 export default {
     name: 'TeamDrawer',
 
-    emits: ['close', 'add-user'],
+    emits: ['close', 'add-user', 'reload-team'],
 
     components: { BaseDrawer, UserSelection, RoleSelection },
 
     props: {
-        addToCurrentProject: {
-            type: Boolean,
-            default: true,
+        project: {
+            type: Object,
+            default: () => ({}),
         },
 
         currentUsers: {
@@ -54,14 +53,9 @@ export default {
             default: () => [],
         },
 
-        isEditMode: {
-            type: Boolean,
-            default: false,
-        },
-
         editedUser: {
-            type: Object,
-            default: () => {},
+            type: [Object, null, undefined],
+            default: null,
         },
 
         isOpened: {
@@ -69,9 +63,9 @@ export default {
             default: false,
         },
 
-        selectedCategory: {
-            type: Object,
-            default: () => {},
+        selectedCategories: {
+            type: Array,
+            default: () => [],
         },
     },
 
@@ -95,23 +89,19 @@ export default {
     },
 
     computed: {
-        project() {
-            return this.$store.getters['projects/project']
-        },
-
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.project?.slug || ''
         },
 
         label() {
-            return this.isEditMode ? this.$t('team.edit') : this.$t('team.add')
+            return this.editedUser ? this.$t('team.edit') : this.$t('team.add')
         },
     },
 
     watch: {
         isOpened: {
             handler: function () {
-                if (this.editedUser && this.isEditMode) {
+                if (this.editedUser) {
                     this.selectedUsers = [this.editedUser.user]
                     this.selectedRole = this.editedUser.role
                     this.isSelectingRoles = true
@@ -120,6 +110,7 @@ export default {
                     this.selectedUsers = []
                     this.selectedRole = 'owners'
                     this.isSelectingUser = true
+                    this.isSelectingRoles = false
                 }
             },
             immediate: true,
@@ -129,21 +120,19 @@ export default {
     methods: {
         async addTeamMember() {
             this.validatePick = true
-            if (this.addToCurrentProject && !this.isSelectingUser) {
+            if (this.project.id && !this.isSelectingUser) {
                 this.asyncing = true
                 try {
-                    await this.$store.dispatch('projectMembers/addProjectMembers', {
-                        projectId: this.project.id,
-                        projectMembers: { ...this.form.team },
+                    await addProjectMembers(this.project.id, { ...this.form.team })
+
+                    analytics.project.addMember({
+                        project: {
+                            id: this.project.id,
+                        },
+                        members: { ...this.form.team },
                     })
-                    const updatedProject = await this.$store.dispatch(
-                        'projects/getProject',
-                        this.project.id
-                    )
-                    await this.$store.dispatch(
-                        'projects/updateCurrentProjectMembers',
-                        updatedProject
-                    )
+
+                    this.$emit('reload-team')
 
                     this.$store.dispatch('notifications/pushToast', {
                         message: this.$t('toasts.team-member-create.success'),

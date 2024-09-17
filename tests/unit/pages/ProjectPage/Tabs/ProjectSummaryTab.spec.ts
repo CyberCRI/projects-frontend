@@ -8,6 +8,7 @@ import english from '@/locales/en.json'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
+import projectAnalytic from '@/analytics/project.analytic'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
 const i18n = {
@@ -39,10 +40,12 @@ const store = {
 
 describe('Tab.vue', () => {
     it('should render component', () => {
+        const project = ProjectOutputFactory.generate()
         const wrapper = lpiShallowMount(ProjectSummaryTab, {
             props: {
-                project: ProjectOutputFactory.generate(),
+                project,
                 comments: [CommentFactory.generate()],
+                team: project.team,
             },
             store,
             i18n,

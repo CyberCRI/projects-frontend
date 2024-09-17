@@ -31,12 +31,6 @@ const getters = {
     project: (state: ProjectState) => state.project,
     currentProjectId: (state: ProjectState) => (state.project ? state.project.id : undefined),
     currentProjectSlug: (state: ProjectState) => (state.project ? state.project.slug : undefined),
-    projectMembers: (state: ProjectState) => [
-        ...state.project.team.owners,
-        ...state.project.team.reviewers,
-        ...state.project.team.members,
-        ...state.project.team.people_groups,
-    ],
 }
 
 const actions = {
@@ -263,11 +257,6 @@ const actions = {
         }
     },
 
-    updateCurrentProjectMembers({ commit }, project: ProjectOutput): void {
-        commit('SET_PROJECT_MEMBERS', project)
-        commit('SET_PROJECT_VISIBILITY', project.publication_status)
-    },
-
     updateCurrentProjectDescription({ commit }, description: string): void {
         commit('SET_PROJECT_DESCRIPTION', description)
     },
@@ -293,14 +282,6 @@ const mutations = {
     },
     SET_PROJECT_LOCK: (state: ProjectState, value: boolean) => {
         state.project.is_locked = value
-    },
-
-    // MEMBERS
-    SET_PROJECT_MEMBERS: (state: ProjectState, project: ProjectOutput) => {
-        state.project.team.members = project.team.members
-        state.project.team.owners = project.team.owners
-        state.project.team.reviewers = project.team.reviewers
-        state.project.team.people_groups = project.team.people_groups
     },
 
     // TAGS

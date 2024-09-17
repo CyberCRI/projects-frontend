@@ -35,7 +35,7 @@ export default {
 
         groupName: {
             type: String,
-            required: true,
+            default: '',
         },
         isLoading: {
             type: Boolean,

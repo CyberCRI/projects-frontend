@@ -461,7 +461,8 @@
         "title": "title",
         "yes": "yes",
         "disconnect": "Disconnect",
-        "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved."
+        "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
+        "ok": "Ok"
     },
     "complete-profile": {
         "bio": {

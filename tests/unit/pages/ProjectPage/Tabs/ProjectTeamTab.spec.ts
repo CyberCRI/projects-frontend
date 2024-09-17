@@ -23,7 +23,6 @@ const store = {
             namespaced: true,
             getters: {
                 project: () => ProjectOutputFactory.generate(),
-                projectMembers: () => [],
             },
         },
 
