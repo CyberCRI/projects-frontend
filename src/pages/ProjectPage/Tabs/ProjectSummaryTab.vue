@@ -202,7 +202,7 @@ export default {
     },
     methods: {
         async openProfileDrawer(user) {
-            if (user.id) {
+            if (this.$filters.isNotGroup(user)) {
                 this.profileDrawer.user_id = user.id
                 this.profileDrawer.isOpened = true
             } else {
