@@ -52,6 +52,7 @@ export default {
         'reload-sdgs',
         'reload-team',
         'reload-reviews',
+        'reload-linked-projects',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -112,13 +113,13 @@ export default {
             type: Array,
             default: () => [],
         },
+        linkedProjects: {
+            type: Array,
+            default: () => [],
+        },
     },
 
     computed: {
-        linkedProjects() {
-            return this.project ? this.project.linked_projects : []
-        },
-
         categories() {
             return this.$store.getters['projectCategories/hierarchy']
         },
@@ -144,6 +145,7 @@ export default {
                         blogEntries: this.blogEntries,
                         team: this.team,
                         reviews: this.reviews,
+                        linkedProjects: this.linkedProjects,
                         onReloadReviews: () => this.$emit('reload-reviews'),
                     },
                     condition: true,
@@ -207,8 +209,13 @@ export default {
                     key: 'project-linked-projects',
                     label: this.$t('project.linked-projects'),
                     view: `/projects/${this.$route.params.slugOrId}/linked-projects`,
+                    props: {
+                        project: this.project,
+                        linkedProjects: this.linkedProjects,
+                        onReloadLinkedProjects: () => this.$emit('reload-linked-projects'),
+                    },
                     condition:
-                        !!this.linkedProjects.length || this.isRoute('projectLinkedProjects'), // prevent error when emptying the current tab
+                        !!this.linkedProjects?.length || this.isRoute('projectLinkedProjects'), // prevent error when emptying the current tab
                     dataTest: 'project-linked-projects',
                 },
                 {

@@ -39,6 +39,8 @@
                 @reload-team="getTeam"
                 :reviews="reviews"
                 @reload-reviews="getReviews"
+                :linked-projects="linkedProjects"
+                @reload-linked-projects="getLinkedProjects"
             />
         </div>
 
@@ -82,7 +84,10 @@
             @close="toggleAddModal('announcement')"
         />
         <LinkedProjectDrawer
+            :project="project"
+            :already-linked-projects="linkedProjects"
             :edited-linked-project="modals.linkedProject.editedItem"
+            @reload-linked-projects="getLinkedProjects($event)"
             :is-opened="modals.linkedProject.visible"
             @close="toggleAddModal('linkedProject')"
         />
@@ -273,6 +278,7 @@ export default {
             sdgs: [],
             team: { owners: [], members: [], reviewers: [] },
             reviews: [],
+            linkedProjects: [],
         }
     },
 
@@ -372,6 +378,19 @@ export default {
                 console.error(err)
             }
         },
+        async getLinkedProjects(linkedProjects) {
+            if (linkedProjects) {
+                this.linkedProjects = linkedProjects
+            } else {
+                try {
+                    // TODO beg for a dedicated endpoint
+                    const response = await getProject(this.project.id)
+                    this.linkedProjects = response.linked_projects
+                } catch (err) {
+                    console.error(err)
+                }
+            }
+        },
         async getSdgs() {
             try {
                 // TODO beg for a dedicated endpoint
@@ -456,6 +475,7 @@ export default {
                     this.sdgs = this.project.sdgs
                     this.team = this.project.team
                     this.reviews = this.project.reviews
+                    this.linkedProjects = this.project.linked_projects
                     await Promise.all([
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler

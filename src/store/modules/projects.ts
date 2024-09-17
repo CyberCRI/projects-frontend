@@ -1,21 +1,17 @@
 import { APIResponseList, SearchParams } from '@/api/types'
 import { ProjectOutput, ProjectPatchInput } from '@/models/project.model'
 import {
-    addLinkedProject,
     createProject,
-    deleteLinkedProject,
     deleteProject,
     duplicateProject,
     getAllProjects,
     getAllRandomProjects,
     getAllRecommendedProjects,
     getProject,
-    patchLinkedProject,
     patchProject,
     lockUnlockProject,
 } from '@/api/projects.service'
 import analytics from '@/analytics'
-import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
 import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
@@ -88,103 +84,6 @@ const actions = {
             analytics.project.duplicate(id, result.id)
 
             return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
-
-    async addLinkedProject(
-        { commit, rootState },
-        {
-            id,
-            body,
-        }: {
-            id: string
-            body: any
-        }
-    ) {
-        try {
-            const result = await addLinkedProject({ id, body })
-            const targets = []
-            const body_linked_projects = body.projects
-            for (let i = 0; i < body_linked_projects.length; i++) {
-                const project = body_linked_projects[i]
-                targets.push(project['project_id'])
-            }
-            const ret_linked_projects = result['linked_projects']
-            for (let i = 0; i < ret_linked_projects.length; i++) {
-                const linked_project = ret_linked_projects[i]
-                if (targets.includes(linked_project.project['id'])) {
-                    commit('ADD_LINKED_PROJECT', linked_project)
-                    analytics.linkedProject.addLinkedProject({
-                        project: {
-                            id: rootState.projects.project.id,
-                        },
-                        linkedProject: linked_project,
-                    })
-                }
-            }
-
-            return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
-
-    async patchLinkedProject(
-        { commit, rootState },
-        {
-            target_id,
-            id,
-            body,
-        }: {
-            target_id: string
-            id: number
-            body: any
-        }
-    ) {
-        try {
-            const result = await patchLinkedProject({ target_id, id, body })
-
-            commit('PATCH_LINKED_PROJECT', result)
-
-            analytics.linkedProject.patchLinkedProject({
-                project: {
-                    id: rootState.projects.project.id,
-                },
-                linkedProject: result,
-            })
-
-            return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
-
-    async deleteLinkedProject(
-        { commit, rootState },
-        {
-            id,
-            project_id,
-        }: {
-            id: number
-            project_id: string
-        }
-    ) {
-        try {
-            await deleteLinkedProject({ id, project_id })
-
-            const index = rootState.projects.project.linked_projects.findIndex(
-                (project) => project.id === id
-            )
-            analytics.linkedProject.removeLinkedProject({
-                project: {
-                    id: rootState.projects.project.id,
-                },
-                linkedProject: rootState.projects.project.linked_projects[index],
-            })
-
-            commit('DELETE_LINKED_PROJECT', index)
         } catch (err) {
             throw new Error(err)
         }
@@ -281,23 +180,6 @@ const mutations = {
     },
     SET_PROJECT_LOCK: (state: ProjectState, value: boolean) => {
         state.project.is_locked = value
-    },
-
-    // TAGS
-    SET_PROJECT_TAGS: (state: ProjectState, tags: WikipediaTagModel[]) => {
-        state.project.tags = tags
-    },
-
-    // LINKED PROJECTS
-    ADD_LINKED_PROJECT: (state: ProjectState, result: any) => {
-        state.project.linked_projects.push(result)
-    },
-    PATCH_LINKED_PROJECT: (state: ProjectState, result: any) => {
-        const index = state.project.linked_projects.findIndex((project) => project.id === result.id)
-        state.project.linked_projects.splice(index, 1, result)
-    },
-    DELETE_LINKED_PROJECT: (state: ProjectState, index: number) => {
-        state.project.linked_projects.splice(index, 1)
     },
 }
 

@@ -7,13 +7,16 @@
         >
             <div
                 class="linked-project-card"
-                v-for="project in linkedProjectsReordered"
-                :key="project.id"
+                v-for="aLinkedProject in linkedProjectsReordered"
+                :key="aLinkedProject.id"
             >
-                <ProjectCard :project="project.project" />
+                <ProjectCard :project="aLinkedProject.project" />
 
                 <div v-if="canEditAndDelete" class="actions-ctn">
-                    <ContextActionButton action-icon="Close" @click="confirmDelete(project)" />
+                    <ContextActionButton
+                        action-icon="Close"
+                        @click="confirmDelete(aLinkedProject)"
+                    />
                 </div>
             </div>
         </DynamicGrid>
@@ -34,13 +37,16 @@ import ContextActionButton from '@/components/base/button/ContextActionButton.vu
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
-
+import analytics from '@/analytics'
+import { deleteLinkedProject } from '@/api/projects.service'
 export default {
     name: 'LinkedProjects',
 
     mixins: [permissions],
 
     inject: ['projectLayoutToggleAddModal'],
+
+    emits: ['reload-linked-projects'],
 
     components: {
         ProjectCard,
@@ -50,9 +56,18 @@ export default {
     },
 
     props: {
+        project: {
+            type: Object,
+            default: () => ({}),
+        },
         linkedProjects: {
             type: Array,
             default: () => [],
+        },
+
+        isEditable: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -65,7 +80,7 @@ export default {
 
     computed: {
         canEditAndDelete() {
-            return this.canEditProject && this.$route.name === 'projectLinkedProjects'
+            return this.isEditable && this.canEditProject
         },
 
         linkedProjectsReordered() {
@@ -85,10 +100,20 @@ export default {
 
         async deleteLinkedProject() {
             try {
-                await this.$store.dispatch('projects/deleteLinkedProject', {
-                    project_id: this.$store.getters['projects/currentProjectId'],
+                await deleteLinkedProject({
+                    project_id: this.project.id,
                     id: this.projectToBeDeleted.id,
                 })
+
+                this.$emit('reload-linked-projects')
+
+                analytics.linkedProject.removeLinkedProject({
+                    project: {
+                        id: this.project.id,
+                    },
+                    linkedProject: this.projectToBeDeleted,
+                })
+
                 this.$store.dispatch('notifications/pushToast', {
                     message: this.$t('toasts.linked-project-delete.success'),
                     type: 'success',

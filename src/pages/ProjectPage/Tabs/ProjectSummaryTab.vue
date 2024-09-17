@@ -21,8 +21,8 @@
                 />
 
                 <LinkedProjectsRecap
-                    v-if="project && project.linked_projects.length"
-                    :linked-projects="project.linked_projects"
+                    v-if="linkedProjects?.length"
+                    :linked-projects="linkedProjects"
                 />
 
                 <ReviewRecap
@@ -154,6 +154,10 @@ export default {
             default: () => ({ owners: [], members: [], reviewers: [] }),
         },
         reviews: {
+            type: Array,
+            default: () => [],
+        },
+        linkedProjects: {
             type: Array,
             default: () => [],
         },
