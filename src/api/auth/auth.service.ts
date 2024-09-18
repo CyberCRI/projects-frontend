@@ -143,6 +143,7 @@ export async function refreshAccessToken(): Promise<any> {
 }
 
 export async function getNotifications(id) {
+    // TODO: should getNotificationsSetting
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`
@@ -151,6 +152,7 @@ export async function getNotifications(id) {
 }
 
 export async function patchNotifications({ id, payload }) {
+    // TODO: should patchNotificationsSetting
     return (
         await axios.patch(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`,

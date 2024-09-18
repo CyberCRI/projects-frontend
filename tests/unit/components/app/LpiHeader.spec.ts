@@ -122,7 +122,7 @@ describe('LpiHeader.vue', () => {
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 
         // Notifications
-        const notificationDrawer = wrapper.findAll('base-drawer-stub')
+        const notificationDrawer = wrapper.findAll('notification-list-stub')
         expect(notificationDrawer.length).toEqual(1)
         // contact form
         const contactDrawer = wrapper.findAll('contact-drawer-stub')

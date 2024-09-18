@@ -1,6 +1,5 @@
 import groups, { GroupsState } from '@/store/modules/groups'
 import languages, { LanguageState } from '@/store/modules/languages'
-import notifications, { NotificationsState } from '@/store/modules/notifications'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
 import projects, { ProjectState } from '@/store/modules/projects'
@@ -15,7 +14,6 @@ export interface State {
     languages: LanguageState
     users: UsersState
     groups: GroupsState
-    notifications: NotificationsState
     peopleGroups: PeopleGroupsState
 }
 
@@ -24,7 +22,6 @@ export default createStore({
     modules: {
         groups,
         languages,
-        notifications,
         organizations,
         projectCategories,
         projects,

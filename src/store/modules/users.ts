@@ -193,6 +193,7 @@ const actions = {
     },
 
     async getNotifications({ commit }, id) {
+        // TODO: should be getNotificationsSetting
         try {
             const result = await getNotifications(id)
 
@@ -205,6 +206,7 @@ const actions = {
     },
 
     async patchNotifications({ commit }, { id, payload }) {
+        // TODO: should be patchNotificationsSetting
         try {
             const result = await patchNotifications({ id, payload })
 

@@ -80,7 +80,7 @@
                     :rounded-icon="true"
                     data-test="dropdown-plus"
                 />
-                <HeaderLink v-if="isConnected" @click="getNotifications">
+                <HeaderLink v-if="isConnected" @click="showNotificationDrawer = true">
                     <NotificationIcon :notification-count="notificationCount" />
                 </HeaderLink>
                 <HeaderLink
@@ -155,22 +155,11 @@
             </aside>
         </Transition>
 
-        <BaseDrawer
-            :custom-style="customNotificationStyle"
-            :has-footer="false"
+        <NotificationList
             :is-opened="showNotificationDrawer"
-            class="small"
-            confirm-action-name=""
-            title="Notifications"
+            @go-to="notificationAction"
             @close="closeDrawer"
-        >
-            <NotificationList
-                v-if="showNotificationDrawer"
-                :is-loading="isLoading"
-                :notifications="filteredNotifications"
-                @go-to="notificationAction"
-            />
-        </BaseDrawer>
+        />
 
         <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
     </div>
@@ -186,14 +175,12 @@ import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
 import HeaderDropDown from '@/components/base/navigation/HeaderDropDown.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import NotificationIcon from '@/components/app/NotificationIcon.vue'
 import NotificationList from '@/components/app/NotificationList.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
-
 export default {
     name: 'LpiHeader',
 
@@ -208,7 +195,6 @@ export default {
         HeaderLink,
         HeaderDropDown,
         NotificationIcon,
-        BaseDrawer,
         IconImage,
     },
 
@@ -218,15 +204,10 @@ export default {
             categoriesModalActive: false,
             openPortalNav: false,
             faqModalActive: false,
-            isLoading: true,
             showNotificationDrawer: false,
             showContactUsDrawer: false,
             scrolled: false,
             announcements: [],
-            customNotificationStyle: {
-                maxHeight: 'unset',
-                padding: 'unset',
-            },
         }
     },
 
@@ -274,20 +255,13 @@ export default {
             this.isNavOpen = !this.isNavOpen
         },
 
-        async getNotifications() {
-            this.showNotificationDrawer = !this.showNotificationDrawer
-            await this.$store.dispatch('notifications/getNotifications')
-            this.$store.commit('users/SET_NOTIFICATIONS_COUNT', 0)
-            this.isLoading = false
-        },
-
         closeDrawer() {
             this.showNotificationDrawer = false
             this.showContactUsDrawer = false
         },
 
         notificationAction(notification) {
-            this.showNotificationDrawer = !this.showNotificationDrawer
+            this.showNotificationDrawer = false
             if (
                 notification.type === 'invitation_week_reminder' ||
                 notification.type === 'invitation_today_reminder'
@@ -530,7 +504,9 @@ export default {
                 },
                 {
                     label: this.$t('notifications.header'),
-                    action: () => this.getNotifications(),
+                    action: () => {
+                        this.showNotificationDrawer = true
+                    },
                     leftIcon: 'Bell',
                     condition: this.isConnected,
                     dataTest: 'notifications',
@@ -569,22 +545,9 @@ export default {
             return ''
         },
 
-        filteredNotifications() {
-            return this.notifications.map((notification) => ({
-                ...notification,
-                icon: !notification.is_viewed ? 'Circle' : null,
-                action: () => this.notificationAction(notification),
-            }))
-        },
-
         notificationCount() {
             return this.$store.getters['users/getNotificationCount']
         },
-
-        notifications() {
-            return this.$store.getters['notifications/notifications']
-        },
-
         organisation() {
             return this.$store.getters['organizations/current']
         },

@@ -1,40 +1,90 @@
 <template>
-    <div class="notification-list">
-        <LpiLoader v-if="isLoading" class="loading" type="simple" />
-        <ul v-else-if="notifications.length > 0">
-            <NotificationItem
-                v-for="(notification, index) in notifications"
-                :key="index"
-                :notification="notification"
-                @go-to="$emit('go-to', notification)"
-            />
-        </ul>
-        <div v-else>
-            <p class="empty-notification">{{ $t('notifications.empty') }}</p>
+    <BaseDrawer
+        :custom-style="customNotificationStyle"
+        :has-footer="false"
+        :is-opened="isOpened"
+        class="small"
+        confirm-action-name=""
+        title="Notifications"
+        @close="$emit('close')"
+    >
+        <div class="notification-list">
+            <LpiLoader v-if="isLoading" class="loading" type="simple" />
+            <ul v-else-if="filteredNotifications.length > 0">
+                <NotificationItem
+                    v-for="(notification, index) in filteredNotifications"
+                    :key="index"
+                    :notification="notification"
+                    @go-to="$emit('go-to', notification)"
+                />
+            </ul>
+            <div v-else>
+                <p class="empty-notification">{{ $t('notifications.empty') }}</p>
+            </div>
         </div>
-    </div>
+    </BaseDrawer>
 </template>
 
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import NotificationItem from '@/components/app/NotificationItem.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { getNotifications } from '@/api/notifications.service'
 
 export default {
     name: 'NotificationList',
 
-    emits: ['go-to'],
+    emits: ['go-to', 'close'],
 
-    components: { NotificationItem, LpiLoader },
+    components: { NotificationItem, LpiLoader, BaseDrawer },
 
     props: {
-        notifications: {
-            type: Array,
-            default: () => [],
-        },
-
-        isLoading: {
+        isOpened: {
             type: Boolean,
             default: false,
+        },
+    },
+
+    data() {
+        return {
+            customNotificationStyle: {
+                maxHeight: 'unset',
+                padding: 'unset',
+            },
+            notifications: [],
+            isLoading: false,
+        }
+    },
+
+    computed: {
+        filteredNotifications() {
+            return this.notifications.map((notification) => ({
+                ...notification,
+                icon: !notification.is_viewed ? 'Circle' : null,
+                action: () => this.notificationAction(notification),
+            }))
+        },
+    },
+    watch: {
+        isOpened(isOpened) {
+            if (isOpened) {
+                this.getNotifications()
+            }
+        },
+    },
+
+    methods: {
+        async getNotifications() {
+            this.isLoading = true
+            try {
+                const result = await getNotifications()
+                this.notifications = result.results
+                this.$store.commit('users/SET_NOTIFICATIONS_COUNT', 0)
+            } catch (err) {
+                console.error(err)
+            } finally {
+                this.isLoading = false
+            }
         },
     },
 }
