@@ -18,26 +18,25 @@
 
 <script>
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'AppToastList',
-
-    emits: ['delete-toast'],
 
     components: {
         LpiSnackbar,
     },
 
-    props: {
-        toastList: {
-            type: Array,
-            required: true,
-        },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     computed: {
         snackbars() {
-            return (this.toastList || []).map((toast) => {
+            return (this.toaster.toastList || []).map((toast) => {
                 const iconMap = {
                     error: 'Cancel',
                     warning: 'AlertOutline',
@@ -56,7 +55,7 @@ export default {
 
     methods: {
         close(toastIndex) {
-            this.$emit('delete-toast', toastIndex)
+            this.toaster.deleteToast(toastIndex)
         },
     },
 }

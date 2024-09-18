@@ -86,6 +86,8 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postAnnouncement, patchAnnouncement } from '@/api/announcements.service'
 import analytics from '@/analytics'
 
+import useToasterStore from '@/stores/useToaster.ts'
+
 export default {
     name: 'AnnouncementDrawer',
 
@@ -100,6 +102,13 @@ export default {
         TipTapEditor,
         DatePicker,
         FieldErrors,
+    },
+
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -215,15 +224,11 @@ export default {
                             announcement: result,
                         })
 
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.announcement-create.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.announcement-create.success'))
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.announcement-create.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(
+                            `${this.$t('toasts.announcement-create.error')} (${error})`
+                        )
                         console.error(error)
                     } finally {
                         this.$emit('reload-announcements')
@@ -241,15 +246,11 @@ export default {
                             announcement: result,
                         })
 
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.announcement-update.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.announcement-update.success'))
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.announcement-update.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(
+                            `${this.$t('toasts.announcement-update.error')} (${error})`
+                        )
                         console.error(error)
                     } finally {
                         this.$emit('reload-announcements')

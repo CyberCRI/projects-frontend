@@ -1,20 +1,29 @@
 import { Icon } from 'leaflet'
 import { createApp } from 'vue'
+
+import { axios } from './api/api.config'
 import VueAxios from 'vue-axios'
 
 import keycloak from './api/auth/keycloak'
 import { checkExpiredToken } from './api/auth/keycloakUtils'
+
 import i18n from './locales/i18n'
+
 import store from './store'
+
+import pinia from './stores'
+
 import { capitalize, isNotGroup, isGroup } from '@/filters'
 import App from './App.vue'
-import { axios } from './api/api.config'
 import { clickOutside, disableFocus } from '@/directives'
+
 import analytics from '@/analytics'
+import * as Sentry from '@sentry/vue'
+
 import '@/design/scss/reset.scss'
 import '@/design/scss/main.scss'
+
 import router from '@/router'
-import * as Sentry from '@sentry/vue'
 
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
@@ -147,6 +156,7 @@ async function main(): Promise<void> {
     app.use(router)
 
     app.use(store)
+    app.use(pinia)
 
     app.mount('#app')
 

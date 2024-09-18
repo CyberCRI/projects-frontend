@@ -9,12 +9,13 @@
             <LpiFooter @on-click="toggleReportBugModal" />
         </div>
 
-        <AppToastList :toast-list="toastList" @delete-toast="deleteToast($event)" />
+        <AppToastList />
     </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations /*, mapActions*/ } from 'vuex'
+
 import debounce from 'lodash.debounce'
 
 import LpiFooter from '@/components/app/LpiFooter.vue'
@@ -45,7 +46,6 @@ export default {
 
     computed: {
         ...mapGetters({
-            toastList: 'notifications/getToastList',
             isLoggedIn: 'users/isLoggedIn',
         }),
 
@@ -92,11 +92,6 @@ export default {
         ...mapMutations({
             resetUser: 'users/RESET_USER',
         }),
-
-        ...mapActions({
-            deleteToast: 'notifications/deleteToast',
-        }),
-
         toggleReportBugModal() {
             this.reportBugModalActive = !this.reportBugModalActive
         },
