@@ -42,6 +42,7 @@ import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.
 import EventItem from './EventItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'EventList',
@@ -52,6 +53,12 @@ export default {
         EditEventDrawer,
         EventItem,
         ConfirmModal,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -79,16 +86,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.eventToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('event.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('event.delete.success'))
+
                 this.$emit('reload-events')
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('event.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.eventToDelete = null

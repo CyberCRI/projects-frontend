@@ -59,6 +59,7 @@ import permissions from '@/mixins/permissions.ts'
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'CreateProjectPage',
@@ -68,6 +69,13 @@ export default {
     emits: ['close'],
 
     components: { ProjectForm, LpiButton, LpiSnackbar },
+
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     data() {
         return {
@@ -218,15 +226,9 @@ export default {
                     name: 'projectDescription',
                     params: { slugOrId: project.slug },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-create.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-create.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.loading = false

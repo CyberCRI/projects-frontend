@@ -48,6 +48,7 @@ import permissions from '@/mixins/permissions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
 import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 import {
     patchProjectMessage,
@@ -70,6 +71,12 @@ export default {
     mixins: [permissions],
 
     components: { LpiButton, TipTapEditor, ConfirmModal },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -177,19 +184,17 @@ export default {
                         },
                         projectMessage: result,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-message-create.success'), // TODO
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(
+                        this.$t('toasts.project-message-create.success') /* TODO */
+                    )
                     this.$emit('project-message-posted', result)
                     this.$nextTick(() => {
                         if (!this.repliedComment) this.scrollToNewComment(result)
                     })
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.project-message-create.error')} (${error})`, // TODO
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('toasts.project-message-create.error')} (${error})` /* TODO */
+                    )
                 } finally {
                     this.asyncing = false
                 }
@@ -203,19 +208,14 @@ export default {
                         },
                         comment: result,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-create.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.comment-create.success'))
+
                     this.$emit('comment-posted', result)
                     this.$nextTick(() => {
                         if (!this.repliedComment) this.scrollToNewComment(result)
                     })
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-create.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.comment-create.error')} (${error})`)
                 } finally {
                     this.asyncing = false
                 }
@@ -239,16 +239,14 @@ export default {
                         },
                         projectMessage: result,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-message-update.success'), // TODO
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(
+                        this.$t('toasts.project-message-update.success') /* TODO */
+                    )
                     this.$emit('project-message-edited', projectMessage)
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.project-message-update.error')} (${error})`, // TODO
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('toasts.project-message-update.error')} (${error})`
+                    )
                     console.error(error)
                 }
             } else {
@@ -267,16 +265,11 @@ export default {
                         },
                         comment: result,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.comment-update.success'))
+
                     this.$emit('comment-edited', comment)
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-update.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.comment-update.error')} (${error})`)
                     console.error(error)
                 }
             }

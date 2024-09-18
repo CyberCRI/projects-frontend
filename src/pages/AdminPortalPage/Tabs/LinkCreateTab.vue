@@ -136,6 +136,7 @@ import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'LinkCreateTab',
     components: {
@@ -146,6 +147,12 @@ export default {
         GroupSelectDrawer,
         GroupCard,
         LinkButton,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -190,16 +197,11 @@ export default {
             this.isSaving = true
             try {
                 await postInvitation(this.$store.state.organizations.current.code, this.form)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('invitation.create.create-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('invitation.create.create-success'))
+
                 this.$router.push({ name: 'linksList' })
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('invitation.create.create-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('invitation.create.create-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false

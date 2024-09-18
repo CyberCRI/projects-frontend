@@ -47,6 +47,7 @@ import EventAdminListItem from './EventAdminListItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllEvents, deleteEvent } from '@/api/event.service'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'EventAdminBlock',
 
@@ -56,6 +57,13 @@ export default {
         EventAdminListItem,
         ConfirmModal,
         SummaryAction,
+    },
+
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -108,16 +116,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.eventToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('event.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('event.delete.success'))
+
                 this.loadEvents()
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('event.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.eventToDelete = null

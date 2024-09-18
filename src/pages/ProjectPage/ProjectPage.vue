@@ -149,6 +149,7 @@ import { getBlogEntries } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
 import { getProject } from '@/api/projects.service'
 import { getReviews } from '@/api/reviews.service'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectPage',
 
@@ -170,6 +171,7 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
         const modals = ref({
             project: {
                 visible: false,
@@ -254,6 +256,7 @@ export default {
         provide('projectLayoutGoToTab', goToTab)
 
         return {
+            toaster,
             modals,
             toggleAddModal,
             goToTab,
@@ -357,10 +360,7 @@ export default {
             // real update, notify user
             let message = data.author_name + ' ' + this.$t(data.scope)
 
-            this.$store.dispatch('notifications/pushToast', {
-                message: message,
-                type: 'info',
-            })
+            this.toaster.pushInfo(message)
         },
         // toggleAddModal(modalType, editedItem) {
         //     if (editedItem) this.modals[modalType].editedItem = editedItem

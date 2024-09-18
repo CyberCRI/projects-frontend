@@ -52,6 +52,7 @@ import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawe
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'InstructionListPage',
@@ -64,6 +65,12 @@ export default {
     },
 
     mixins: [permissions],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     data() {
         return {
@@ -106,16 +113,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.instructionToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
+
                 this.loadInstructions()
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.instructionToDelete = null

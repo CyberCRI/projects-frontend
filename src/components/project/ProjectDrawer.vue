@@ -31,6 +31,7 @@ import ProjectForm from '@/components/project/ProjectForm.vue'
 import { postProjectHeader, patchProjectHeader } from '@/api/projects.service'
 import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'ProjectDrawer',
@@ -38,6 +39,12 @@ export default {
     components: { BaseDrawer, ProjectForm },
 
     emits: ['close'],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         isOpened: {
@@ -219,15 +226,9 @@ export default {
                     id: this.currentProject.id,
                     project: payload,
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-edit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-edit.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-edit.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-edit.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false

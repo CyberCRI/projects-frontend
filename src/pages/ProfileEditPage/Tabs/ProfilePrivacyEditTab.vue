@@ -106,6 +106,7 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from '@/api/people.service.ts'
 import { getUser } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultForm() {
     return {
@@ -137,6 +138,12 @@ export default {
     components: {
         GroupButton,
         LoaderSimple,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -217,15 +224,9 @@ export default {
 
                 this.$emit('profile-edited')
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('profile.edit.privacy.save-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('profile.edit.privacy.save-success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.privacy.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.privacy.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

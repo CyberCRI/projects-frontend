@@ -49,6 +49,7 @@ import { defaultForm } from '@/components/instruction/InstructionForm/Instructio
 import InstructionAdminListItem from './InstructionAdminListItem.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'InstructionAdminBlock',
@@ -59,6 +60,12 @@ export default {
         InstructionAdminListItem,
         ConfirmModal,
         SummaryAction,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -120,15 +127,9 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.instructionToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.instructionToDelete = null

@@ -18,6 +18,7 @@ import NewsForm from '@/components/news/NewsForm/NewsForm.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'EditNewsDrawer',
@@ -27,6 +28,12 @@ export default {
     components: {
         BaseDrawer,
         NewsForm,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -143,15 +150,9 @@ export default {
                 }
 
                 this.$emit('news-edited', savedNews)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.save.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

@@ -3,6 +3,8 @@ import * as keycloakUtils from '@/api/auth/keycloakUtils'
 import keycloak from '@/api/auth/keycloak'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import pinia from '@/stores'
+import useToasterStore from '@/stores/useToaster'
 vi.mock('@/api/auth/keycloakUtils')
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
@@ -108,6 +110,9 @@ describe('Keycloak | refreshTokenLoop', () => {
 })
 
 describe('Keycloak | loginIfValidState', () => {
+    beforeEach(() => {
+        useToasterStore(pinia)
+    })
     it('loginIfValidState', async () => {
         globalThis.window = Object.create(window)
         const search =

@@ -93,6 +93,7 @@ import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'NewsPage',
@@ -109,6 +110,13 @@ export default {
         SkeletonComponent,
         NewsListItemSkeleton,
     },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     props: {
         slugOrId: {
             type: String,
@@ -202,15 +210,9 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.newsToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.delete.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 if (this.newsToDelete.id != this.news.id) {

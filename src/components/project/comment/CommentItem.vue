@@ -149,6 +149,7 @@ import fixEditorContent from '@/functs/editorUtils.ts'
 import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'CommentItem',
@@ -165,6 +166,12 @@ export default {
     ],
 
     components: { ConfirmModal, IconImage, ExternalLabelButton, MakeComment, CroppedImage },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -225,16 +232,14 @@ export default {
                         },
                         projectMessage: this.comment,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-message-delete.success'), // TODO
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(
+                        this.$t('toasts.project-message-delete.success') /* TODO */
+                    )
                     this.$emit('project-message-deleted', this.comment)
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-delete.error')} (${error})`, // TODO
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('toasts.comment-delete.error')} (${error})` /* TODO */
+                    )
                     console.error(error)
                 } finally {
                     this.confirmDeleteComment = false
@@ -248,16 +253,11 @@ export default {
                         },
                         comment: this.comment,
                     })
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.comment-delete.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.comment-delete.success'))
+
                     this.$emit('comment-deleted', this.comment)
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.comment-delete.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.comment-delete.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.confirmDeleteComment = false

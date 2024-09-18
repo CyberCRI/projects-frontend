@@ -53,6 +53,7 @@ import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'InstructionSummaryBlock',
@@ -65,6 +66,12 @@ export default {
         SummaryAction,
         EditInstructionDrawer,
         ConfirmModal,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -96,16 +103,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.instructionToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
+
                 this.$emit('reload-instructions')
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.instructionToDelete = null

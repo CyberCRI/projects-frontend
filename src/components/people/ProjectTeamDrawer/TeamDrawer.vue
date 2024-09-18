@@ -34,6 +34,7 @@ import UserSelection from './UserSelection.vue'
 import RoleSelection from './RoleSelection.vue'
 import { addProjectMembers } from '@/api/project-members.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'TeamDrawer',
@@ -41,6 +42,12 @@ export default {
     emits: ['close', 'add-user', 'reload-team'],
 
     components: { BaseDrawer, UserSelection, RoleSelection },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -134,10 +141,7 @@ export default {
 
                     this.$emit('reload-team')
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.team-member-create.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.team-member-create.success'))
 
                     if (this.$route.name !== 'projectTeam') {
                         this.$router.push({
@@ -146,10 +150,9 @@ export default {
                         })
                     }
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.team-member-create.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('toasts.team-member-create.error')} (${error})`
+                    )
                     console.error(error)
                 } finally {
                     this.asyncing = false

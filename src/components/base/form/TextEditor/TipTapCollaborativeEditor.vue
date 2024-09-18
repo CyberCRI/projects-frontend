@@ -29,6 +29,7 @@ import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const { t } = useI18n()
+import useToasterStore from '@/stores/useToaster.ts'
 
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
@@ -67,6 +68,8 @@ const props = defineProps({
         default: () => {},
     },
 })
+
+const toaster = useToasterStore()
 
 const {
     editor,
@@ -192,10 +195,7 @@ function initCollaborativeEditor() {
         },
         onAuthenticationFailed: () => {
             emit('unauthorized')
-            store.dispatch('notifications/pushToast', {
-                message: t('multieditor.unauthorized'),
-                type: 'error',
-            })
+            toaster.pushError(t('multieditor.unauthorized'))
         },
         // it tell us if server is down or not
         // status is only reliable if we have a working connection

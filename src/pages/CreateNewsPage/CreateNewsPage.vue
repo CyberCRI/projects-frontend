@@ -30,6 +30,7 @@ import NewsForm, { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createNews, postNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'CreateNewsPage',
@@ -37,6 +38,13 @@ export default {
         NewsForm,
         LpiButton,
     },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     data() {
         return {
             form: defaultForm(),
@@ -87,15 +95,9 @@ export default {
                     )
                 }
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.save.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

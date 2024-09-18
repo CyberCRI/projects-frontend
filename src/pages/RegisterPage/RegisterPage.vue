@@ -139,6 +139,7 @@ import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'RegisterPage',
 
@@ -151,6 +152,12 @@ export default {
         LoaderSimple,
         SignUpWrapper,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -265,17 +272,11 @@ export default {
                 this.confirm = true
             } catch (error) {
                 if (error?.response?.status === 409) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.email-already-exists')}`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('register.email-already-exists')}`)
                 } else {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.save-error')} ${
-                            error?.response?.data?.error || ''
-                        }`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('register.save-error')} ${error?.response?.data?.error || ''}`
+                    )
                 }
 
                 console.error(error)

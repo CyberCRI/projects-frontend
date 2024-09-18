@@ -74,6 +74,7 @@ import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
 import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'CreateEditGroupPage',
@@ -89,6 +90,12 @@ export default {
             type: [String, null],
             default: null,
         },
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -266,15 +273,9 @@ export default {
 
                 this.$router.push({ name: 'Group', params: { groupId: newGroupId } })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.group-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.group-create.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.group-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.group-create.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false
@@ -309,15 +310,9 @@ export default {
 
                 this.$router.push({ name: 'Group', params: { groupId: this.groupId } })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.group-edit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.group-edit.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.group-edit.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.group-edit.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false

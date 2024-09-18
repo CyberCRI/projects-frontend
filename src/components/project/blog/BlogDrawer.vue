@@ -98,6 +98,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postBlogEntryImage } from '@/api/blogentries.service'
 import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'BlogDrawer',
@@ -114,6 +115,12 @@ export default {
         BaseDrawer,
         ConfirmModal,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     inject: {
@@ -296,10 +303,7 @@ export default {
                 this.$emit('reload-blog-entries')
 
                 this.asyncing = false
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.blog-create.success'))
 
                 if (closeWindowAfterCreate) this.closeDrawer()
 
@@ -310,10 +314,7 @@ export default {
                     })
             } catch (error) {
                 console.error(error)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-create.error'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('toasts.blog-create.error'))
             } finally {
                 this.asyncing = false
             }
@@ -361,16 +362,10 @@ export default {
                 if (closeWindowAfterPatch) {
                     this.closeDrawer()
                 }
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-update.success')}`,
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(`${this.$t('toasts.blog-update.success')}`)
             } catch (error) {
                 console.log(error)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-update.error')}`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.blog-update.error')}`)
             } finally {
                 this.asyncing = false
             }

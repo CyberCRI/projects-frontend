@@ -89,6 +89,7 @@ import WordingAdminBlock from '@/components/admin/GeneralAdminBlocks/Wording/Wor
 import ChatAdminBlock from '@/components/admin/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'SettingsTab',
 
@@ -107,8 +108,10 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
         return {
             v$: useVuelidate(),
+            toaster,
         }
     },
 
@@ -215,15 +218,11 @@ export default {
 
             try {
                 await this.$store.dispatch('organizations/updateCurrentOrganization', data)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-general-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.organization-general-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-general-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-general-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false

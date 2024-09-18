@@ -263,6 +263,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultForm() {
     return {
@@ -301,6 +302,12 @@ export default {
     emits: ['profile-edited'],
 
     mixins: [imageMixin],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         user: {
@@ -468,16 +475,10 @@ export default {
                     // reload user if self to update store info
                     if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
                     // confirm success
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('profile.edit.general.save-success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
                 }
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.general.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.general.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

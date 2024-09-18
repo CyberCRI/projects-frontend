@@ -16,6 +16,7 @@
 import { createEvent, putEvent } from '@/api/event.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import EventForm, { defaultForm } from '@/components/event/EventForm/EventForm.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'EditEventDrawer',
@@ -25,6 +26,12 @@ export default {
     components: {
         EventForm,
         BaseDrawer,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -100,16 +107,11 @@ export default {
                         formData
                     )
                 }
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('event.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('event.save.success'))
+
                 this.$emit('event-edited', savedEvent)
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('event.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('event.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

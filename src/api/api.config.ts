@@ -1,6 +1,7 @@
 import a, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
 import store from '@/store'
+import useToasterStore from '@/stores/useToaster'
 
 import i18n from '@/locales/i18n'
 
@@ -57,6 +58,7 @@ const response = (response: AxiosResponse) => response
 
 // Handle errors on responses
 const responseError = (error: AxiosError) => {
+    const toaster = useToasterStore()
     const originalRequest: any = error.config
 
     // We could add specific notification to display the errors
@@ -70,15 +72,9 @@ const responseError = (error: AxiosError) => {
                     message += `${key}: ${data.errors[key].join(' ')}`
                 }
 
-                store.dispatch('notifications/pushToast', {
-                    message: message,
-                    type: 'error',
-                })
+                toaster.pushError(message)
             } else {
-                store.dispatch('notifications/pushToast', {
-                    message: data.detail,
-                    type: 'error',
-                })
+                toaster.pushError(data.detail)
             }
             // other error cases are kept for backward compatibility
         } else if (status === 400) {
@@ -87,28 +83,22 @@ const responseError = (error: AxiosError) => {
             const firstValue = data[firstKey][0]
             const message = `${firstKey}: ${firstValue}`
 
-            store.dispatch('notifications/pushToast', {
-                message: message,
-                type: 'warning',
-            })
+            toaster.pushWarning(message)
         } else if (status === 401) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 //message: i18n.messages[i18n.locale].message['error']['unauthorized'],
-                message: i18n.global.t('message.error.unauthorized'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.unauthorized')
+            )
         } else if (status === 422) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 // message: i18n.messages[i18n.locale].message['error']['unprocessable-entity'],
-                message: i18n.global.t('message.error.unprocessable-entity'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.unprocessable-entity')
+            )
         } else if (status === 502) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 // message: i18n.messages[i18n.locale].message['error']['bad-gateway'],
-                message: i18n.global.t('message.error.bad-gateway'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.bad-gateway')
+            )
         }
 
         // TODO : is this still used ?

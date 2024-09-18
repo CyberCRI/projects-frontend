@@ -49,6 +49,7 @@ import LinkedProjectSelection from './LinkedProjectSelection.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import analytics from '@/analytics'
 import { addLinkedProject, patchLinkedProject } from '@/api/projects.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'LinkedProjectDrawer',
@@ -56,6 +57,12 @@ export default {
     emits: ['close', 'clear', 'unselect', 'reload-linked-projects'],
 
     components: { BaseDrawer, LinkedProjectSelection, ProjectCard },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -164,10 +171,7 @@ export default {
                     })
                 this.$emit('reload-linked-projects', result['linked_projects'])
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.linked-project-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.linked-project-create.success'))
 
                 if (this.$route.name !== 'projectLinkedProjects') {
                     this.$router.push({
@@ -178,10 +182,9 @@ export default {
                     })
                 }
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.linked-project-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.linked-project-create.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.listProjects.splice(0)
@@ -210,15 +213,11 @@ export default {
                     },
                     linkedProject: result,
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.linked-project-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.linked-project-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.linked-project-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.linked-project-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.closeModal()

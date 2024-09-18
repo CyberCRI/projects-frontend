@@ -47,6 +47,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'LocationForm',
@@ -70,6 +71,12 @@ export default {
             type: String,
             default: null,
         },
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     created() {
@@ -121,17 +128,12 @@ export default {
                     location: result,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.location-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.location-create.success'))
+
                 this.$emit('location-created')
                 this.$nextTick(() => this.$emit('center-map'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.location-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.location-create.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('close')
@@ -149,17 +151,11 @@ export default {
                     location: result,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.location-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.location-update.success'))
 
                 this.$emit('location-edited')
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.location-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.location-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('close')
@@ -177,17 +173,12 @@ export default {
                     location: this.form,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.location-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.location-delete.success'))
+
                 this.$emit('location-deleted')
                 this.$nextTick(() => this.$emit('center-map'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.location-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.location-delete.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('close')

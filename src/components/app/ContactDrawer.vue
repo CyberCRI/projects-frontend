@@ -72,6 +72,7 @@ import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import { contactUs } from '@/api/report.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultForm() {
     return {
@@ -87,6 +88,12 @@ export default {
     emits: ['close'],
 
     components: { TextInput, BaseDrawer, FieldErrors },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         isOpened: {
@@ -140,15 +147,9 @@ export default {
 
                 try {
                     await contactUs(this.form)
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.contact.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.contact.success'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.contact.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.contact.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.isLoading = false

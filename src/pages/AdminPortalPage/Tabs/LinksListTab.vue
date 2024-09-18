@@ -120,6 +120,7 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'LinksListTab',
     components: {
@@ -128,6 +129,12 @@ export default {
         ConfirmModal,
         IconImage,
         LoaderSimple,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -160,15 +167,10 @@ export default {
                 }).href
             try {
                 await navigator.clipboard.writeText(link)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('common.link-copied-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('common.link-copied-success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('common.link-copied-failed'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('common.link-copied-failed'))
+
                 console.error('Failed to copy: ', err)
             }
         },
@@ -188,16 +190,11 @@ export default {
 
             try {
                 await deleteInvitation(this.$store.state.organizations.current.code, linkId)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('invitation.delete.delete-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('invitation.delete.delete-success'))
+
                 this.loadInvitations()
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('invitation.delete.deleted-failed')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('invitation.delete.deleted-failed')} (${error})`)
                 console.error(error)
             }
         },

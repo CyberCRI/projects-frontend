@@ -43,6 +43,7 @@ import NewsfeedAnnouncementsItem from '@/components/home/HomeNewsfeed/NewsfeedAn
 import NewsfeedProjectItem from '@/components/home/HomeNewsfeed/NewsfeedProjectItem.vue'
 import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
 import { deleteNews } from '@/api/news.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'NewsFeed',
     emits: ['reload-newsfeed'],
@@ -53,6 +54,13 @@ export default {
         EditNewsDrawer,
         ConfirmModal,
     },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     props: {
         newsfeed: {
             type: Array,
@@ -75,16 +83,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.newsToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.delete.success'))
+
                 this.$emit('reload-newsfeed')
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.newsToDelete = null

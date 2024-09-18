@@ -71,6 +71,7 @@ import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawe
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import { getInstruction, deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'InstructionPage',
@@ -84,6 +85,13 @@ export default {
         ConfirmModal,
         SkeletonComponent,
     },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     props: {
         slugOrId: {
             type: String,
@@ -149,15 +157,9 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.instructionToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.instructionToDelete = null

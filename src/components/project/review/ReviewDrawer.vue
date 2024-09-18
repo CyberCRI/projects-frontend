@@ -63,6 +63,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 import { postReview, patchReview } from '@/api/reviews.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'ReviewDrawer',
@@ -78,6 +79,12 @@ export default {
         BaseDrawer,
         SwitchInput,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -238,15 +245,9 @@ export default {
                     context: this.lock ? 'lock' : 'unlock',
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.review-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.review-create.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.review-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.review-create.error')} (${error})`)
                 console.error(error)
             }
         },
@@ -264,15 +265,9 @@ export default {
                 // await this.$store.dispatch('reviews/patchReview', body)
                 await patchReview(body)
                 this.$emit('reload-reviews')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.review-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.review-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.review-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.review-update.error')} (${error})`)
                 console.error(error)
             }
         },

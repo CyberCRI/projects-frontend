@@ -47,6 +47,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
 import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'GroupsListTab',
@@ -55,6 +56,12 @@ export default {
         GroupsElement,
         PickGroupDrawer,
         LoaderSimple,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -134,15 +141,9 @@ export default {
                 await this.$store.dispatch('groups/addParent', payload)
 
                 this.loadGroups()
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.group-added.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.group-added.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.group-added.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.group-added.error')} (${error})`)
             } finally {
                 this.loading = false
             }

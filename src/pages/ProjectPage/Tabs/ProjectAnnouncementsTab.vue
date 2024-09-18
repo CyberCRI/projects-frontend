@@ -47,6 +47,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
 import { deleteAnnouncement } from '@/api/announcements.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectAnnouncementsTab',
 
@@ -61,6 +62,12 @@ export default {
         LpiButton,
     },
     inject: ['projectLayoutToggleAddModal'],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -102,16 +109,11 @@ export default {
                     announcement: this.announcementToBeDeleted,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.announcement-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.announcement-delete.success'))
+
                 this.$emit('reload-announcements')
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.announcement-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.announcement-delete.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isDeleting = false

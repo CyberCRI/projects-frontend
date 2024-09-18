@@ -14,9 +14,17 @@
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'DebugOnboarding',
     components: { LpiButton },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     data() {
         return {
             reseting: false,
@@ -31,15 +39,9 @@ export default {
                 const keycloak_id = user.keycloak_id
                 await patchUser(keycloak_id, payload)
                 await this.$store.dispatch('users/getUser', keycloak_id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `Onboarding reseted for ${user.email}`,
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `Error while reseting onboarding status`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`Error while reseting onboarding status`)
             } finally {
                 this.reseting = false
             }

@@ -112,6 +112,7 @@ import { helpers, required, email } from '@vuelidate/validators'
 import { postAccessRequest } from '@/api/organizations.service.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'RequestAccessPage',
 
@@ -122,7 +123,12 @@ export default {
         SignUpWrapper,
         FieldErrors,
     },
-
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
     data() {
         return {
             form: {
@@ -191,18 +197,14 @@ export default {
                 this.confirm = true
             } catch (error) {
                 if (error?.response?.status === 409) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.email-already-exists')}`, // TODO
-                        type: 'error',
-                    })
+                    this.toaster.pushError(this.$t('register.email-already-exists') /* TODO*/)
                 } else {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.save-error')} ${
+                    this.toaster.pushError(
+                        `${this.$t('register.save-error')} ${
                             // TODO
                             error?.response?.data?.error || ''
-                        }`,
-                        type: 'error',
-                    })
+                        }`
+                    )
                 }
 
                 console.error(error)

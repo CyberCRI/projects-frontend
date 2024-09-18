@@ -59,6 +59,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { patchUser } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultForm() {
     return {
@@ -77,6 +78,13 @@ export default {
     },
 
     emits: ['profile-edited'],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     props: {
         user: {
             type: Object,
@@ -125,15 +133,9 @@ export default {
 
                 // update store if self
                 if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('profile.edit.bio.save-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('profile.edit.bio.save-success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.bio.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.bio.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

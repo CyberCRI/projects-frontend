@@ -32,6 +32,7 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization } from '@/api/organizations.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'EditChatDrawer',
@@ -41,6 +42,13 @@ export default {
     components: {
         BaseDrawer,
         TextInput,
+    },
+
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -75,15 +83,9 @@ export default {
 
                 await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
                 this.$emit('chat-edited')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('chat.drawer.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('chat.drawer.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('chat.drawer.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('chat.drawer.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

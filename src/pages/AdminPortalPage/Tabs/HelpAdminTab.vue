@@ -56,6 +56,7 @@ import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getFaq, createFaq, putFaq, deleteFaq, postFaqImage } from '@/api/faqs.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultFaq() {
     return {
@@ -73,6 +74,12 @@ export default {
     name: 'HelpAdminTab',
 
     components: { TipTapEditor, TextInput, LpiSnackbar, LpiButton, ConfirmModal },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     data() {
         return {
@@ -143,15 +150,9 @@ export default {
                     orgCode: this.currentOrgCode,
                 })
                 await this.loadFaq()
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.faq-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.faq-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.faq-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.faq-delete.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.deleteLoading = false
@@ -176,15 +177,9 @@ export default {
                         images_ids: this.addedImages,
                     })
                     await this.loadFaq()
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.faq-create.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.faq-create.success'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.faq-create.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.faq-create.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.addOrEditLoading = false
@@ -198,15 +193,9 @@ export default {
                     })
 
                     await this.loadFaq()
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.faq-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.faq-update.success'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.faq-update.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.faq-update.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.addOrEditLoading = false

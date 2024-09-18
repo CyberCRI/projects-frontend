@@ -16,6 +16,7 @@ import { postOrganisationLogo } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'LogoAdminBlock',
@@ -23,6 +24,12 @@ export default {
     components: {
         AdminBlock,
         ImageEditor,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     computed: {
@@ -42,10 +49,7 @@ export default {
 
                 await postOrganisationLogo({ code: this.organization.code, body: formData })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.general.logo-edit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('admin.portal.general.logo-edit.success'))
 
                 await this.$store.dispatch(
                     'organizations/getCurrentOrganization',
@@ -54,10 +58,7 @@ export default {
             } catch (error) {
                 console.error(error)
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.general.logo-edit.error'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('admin.portal.general.logo-edit.error'))
             }
         },
     },

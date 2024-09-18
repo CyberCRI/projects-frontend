@@ -46,6 +46,7 @@ import NewsAdminListItem from './NewsAdminListItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'NewsAdminBlock',
@@ -56,6 +57,12 @@ export default {
         NewsAdminListItem,
         ConfirmModal,
         SummaryAction,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     data() {
@@ -103,16 +110,11 @@ export default {
                     this.$store.getters['organizations/current']?.code,
                     this.newsToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.delete.success'))
+
                 this.loadNews()
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.newsToDelete = null

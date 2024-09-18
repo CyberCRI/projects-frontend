@@ -227,6 +227,7 @@ import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectSettingsTab',
 
@@ -245,6 +246,12 @@ export default {
         ConfirmModal,
         ReviewDrawer,
         CategoryPicker,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -313,10 +320,7 @@ export default {
 
                     this.$store.dispatch('projects/updateProjectVisibility', response)
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-visibility-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.project-visibility-update.success'))
 
                     analytics.project.updateVisibility({ id: this.project.id })
                 } catch (error) {
@@ -337,10 +341,7 @@ export default {
                         project: { life_status: status },
                     })
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-life-status-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.project-life-status-update.success'))
 
                     analytics.project.updateStatus({ id: this.project.id })
                 } catch (error) {
@@ -454,15 +455,11 @@ export default {
                         organizations_codes: payload,
                     },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-organizations-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-organizations-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-organizations-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.project-organizations-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false
@@ -477,15 +474,11 @@ export default {
                         project_categories_ids: [value.id],
                     },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-categories-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-categories-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-categories-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.project-categories-update.error')} (${error})`
+                )
                 console.error(error)
             }
         },
@@ -510,15 +503,9 @@ export default {
                     params: { slugOrId: project.slug },
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-duplication.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-duplication.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-duplication.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-duplication.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('asyncing', false)
@@ -552,16 +539,11 @@ export default {
         async destroyProject() {
             try {
                 await this.$store.dispatch('projects/deleteProject', this.project.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-destroy.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-destroy.success'))
+
                 this.$router.push({ name: 'HomeRoot' })
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-destroy.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-destroy.error')} (${error})`)
                 console.error(error)
             }
         },
@@ -588,10 +570,7 @@ export default {
                     projectNoMoreVisible = true
                 }
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-quit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-quit.success'))
             } catch (error) {
                 console.error(error)
                 /**
@@ -609,10 +588,7 @@ export default {
                     /**
                      * here this is just a "standard" error, so display it
                      */
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.project-quit.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.project-quit.error')} (${error})`)
                 }
             } finally {
                 this.showConfirmQuit = false

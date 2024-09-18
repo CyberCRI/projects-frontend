@@ -39,6 +39,7 @@ import permissions from '@/mixins/permissions.ts'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 import analytics from '@/analytics'
 import { deleteLinkedProject } from '@/api/projects.service'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'LinkedProjects',
 
@@ -53,6 +54,12 @@ export default {
         ContextActionButton,
         ConfirmModal,
         DynamicGrid,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -114,15 +121,11 @@ export default {
                     linkedProject: this.projectToBeDeleted,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.linked-project-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.linked-project-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.linked-project-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.linked-project-delete.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.confirmModalVisible = false

@@ -181,6 +181,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'TemplatesTab',
@@ -201,7 +202,9 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
         return {
+            toaster,
             v$: useVuelidate(),
         }
     },
@@ -347,15 +350,11 @@ export default {
             try {
                 await patchProjectCategory(this.selectedCategory?.id, updatedData)
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.category-template-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.category-template-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.category-template-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.category-template-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false

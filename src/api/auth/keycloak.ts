@@ -7,6 +7,7 @@ import {
 import store from '@/store'
 import router from '@/router/index'
 
+import useToasterStore from '@/stores/useToaster'
 import i18n from '@/locales/i18n'
 
 export type AuthResult = {
@@ -118,6 +119,7 @@ export default {
     },
 
     async loginIfValidState(loginSearchParams: URLSearchParams): Promise<void> {
+        const toaster = useToasterStore()
         try {
             const state = loginSearchParams.get('state')
                 ? JSON.parse(loginSearchParams.get('state') as string)
@@ -179,14 +181,9 @@ export default {
                 })
         } catch (e) {
             console.error(e)
-            store.dispatch(
-                'notifications/pushToast',
-                {
-                    // message: i18n.messages[i18n.locale].message['error-login'],
-                    message: i18n.global.t('message.error-login'),
-                    type: 'error',
-                },
-                { root: true }
+            toaster.pushError(
+                // message: i18n.messages[i18n.locale].message['error-login'],
+                i18n.global.t('message.error-login')
             )
         }
     },
@@ -206,11 +203,9 @@ export default {
     },
 
     onLoginError(): void {
+        const toaster = useToasterStore()
         const home = '/dashboard'
-        store.dispatch('notifications/pushToast', {
-            message: i18n.global.t('message.error-login'),
-            type: 'error',
-        })
+        toaster.pushError(i18n.global.t('message.error-login'))
         router.push(home)
     },
 }

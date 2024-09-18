@@ -74,6 +74,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteAttachmentFile } from '@/api/attachment-files.service'
 import { deleteAttachmentLink } from '@/api/attachment-links.service'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectResourcesTab',
 
@@ -82,6 +83,12 @@ export default {
     emits: ['reload-file-resources', 'reload-link-resources'],
 
     inject: ['projectLayoutToggleAddModal'],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -145,15 +152,9 @@ export default {
 
                     this.$emit('reload-link-resources')
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.link-delete.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.link-delete.success'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.link-delete.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.link-delete.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.asyncing = false
@@ -172,15 +173,9 @@ export default {
 
                     this.$emit('reload-file-resources')
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.file-delete.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.file-delete.success'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.file-delete.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.file-delete.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.asyncing = false

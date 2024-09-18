@@ -50,6 +50,7 @@ import { postProjectImage } from '@/api/projects.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
 import retry from 'async-retry'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'DescriptionDrawer',
@@ -57,6 +58,12 @@ export default {
     components: { Drawer, TipTapCollaborativeEditor, ConfirmModal },
 
     emits: ['close'],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -173,10 +180,7 @@ export default {
                                 this.editorDescription
                             )
 
-                            this.$store.dispatch('notifications/pushToast', {
-                                message: this.$t('toasts.description-update.success'),
-                                type: 'success',
-                            })
+                            this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
 
                             const connectedUser = this.$store.getters['users/userFromApi']
 
@@ -202,10 +206,7 @@ export default {
                     }
                 )
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.description-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.description-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

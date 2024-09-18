@@ -27,6 +27,8 @@ import router from '@/router'
 
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
+import useToasterStore from '@/stores/useToaster'
+
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
 Icon.Default.mergeOptions({
@@ -43,6 +45,41 @@ if (window.location.pathname === '/login') {
 }
 
 async function main(): Promise<void> {
+    // init app
+    const app = createApp(App)
+    // Display errors / warnings
+    app.config.errorHandler = (err, vm, info) => {
+        const toaster = useToasterStore()
+        const splitedError = err.toString().split(':')
+        const title = splitedError.length > 1 ? splitedError[0] : 'Error'
+        const message = splitedError.length > 1 ? splitedError.slice(1).join(':') : splitedError[0]
+        toaster.pushError(
+            `<span class="error-title">${title}:</span><span>${message}</span><br><span class="error-title">Info:</span><span>${info}</span>`
+        )
+        throw err // Throw error in console so we can still trace the error location instead of doing a console.error
+    }
+    app.config.warnHandler = (msg, vm, trace) => {
+        console.warn(`Warn: ${msg}\n\nTrace: ${trace}`)
+    }
+
+    app.directive('click-outside', clickOutside)
+    app.directive('disable-focus', disableFocus)
+
+    app.config.globalProperties.$filters = {
+        capitalize,
+        isNotGroup,
+        isGroup,
+    }
+
+    app.use(VueAxios, axios)
+
+    app.use(i18n)
+
+    app.use(router)
+
+    app.use(store)
+    app.use(pinia)
+
     // Init analytics
     analytics.init()
 
@@ -98,7 +135,6 @@ async function main(): Promise<void> {
     //     i18n,
     //     render: (h) => h(App),
     // })
-    const app = createApp(App)
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {
@@ -125,39 +161,7 @@ async function main(): Promise<void> {
         })
     }
 
-    // Display errors / warnings
-    app.config.errorHandler = (err, vm, info) => {
-        const splitedError = err.toString().split(':')
-        const title = splitedError.length > 1 ? splitedError[0] : 'Error'
-        const message = splitedError.length > 1 ? splitedError.slice(1).join(':') : splitedError[0]
-        store.dispatch('notifications/pushToast', {
-            message: `<span class="error-title">${title}:</span><span>${message}</span><br><span class="error-title">Info:</span><span>${info}</span>`,
-            type: 'error',
-        })
-        throw err // Throw error in console so we can still trace the error location instead of doing a console.error
-    }
-    app.config.warnHandler = (msg, vm, trace) => {
-        console.warn(`Warn: ${msg}\n\nTrace: ${trace}`)
-    }
-
-    app.directive('click-outside', clickOutside)
-    app.directive('disable-focus', disableFocus)
-
-    app.config.globalProperties.$filters = {
-        capitalize,
-        isNotGroup,
-        isGroup,
-    }
-
-    app.use(VueAxios, axios)
-
-    app.use(i18n)
-
-    app.use(router)
-
-    app.use(store)
-    app.use(pinia)
-
+    // mount app
     app.mount('#app')
 
     keycloak.refreshTokenLoop.start()

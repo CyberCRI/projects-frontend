@@ -26,6 +26,7 @@
 <script>
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 const MAX_FILE_SIZE = Number(import.meta.env.VITE_APP_MAX_SIZE_FILE) || 5000000 // 5MB
 
@@ -35,6 +36,12 @@ export default {
     emits: ['closeModal', 'image'],
 
     components: { DialogModal, ImageInput },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     computed: {
         validImage() {
@@ -90,19 +97,13 @@ export default {
             this.imageSrc = this.file.name
 
             if (!this.validImageExtension) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('resource.invalid-image'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('resource.invalid-image'))
                 this.closeModal()
                 return
             }
 
             if (!this.validImageSize) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t(`crikit.errors.too-big-file-size`, { sizeMax }),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t(`crikit.errors.too-big-file-size`, { sizeMax }))
                 this.icloseModal()
                 return
             }
@@ -120,10 +121,7 @@ export default {
         insertImage() {
             if (!this.validImage) return
             if (!this.saveImageCallback) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('resource.cannot-upload-image'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('resource.cannot-upload-image'))
                 console.error('saveImageCallback is not defined')
             } else {
                 this.uploading = true
@@ -136,10 +134,7 @@ export default {
                         })
                     })
                     .catch(() => {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('resource.error-uploading-image'),
-                            type: 'error',
-                        })
+                        this.toaster.pushError(this.$t('resource.error-uploading-image'))
                     })
             }
 

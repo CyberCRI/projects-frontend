@@ -17,6 +17,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import { patchProject } from '@/api/projects.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'SdgsDrawer',
@@ -24,6 +25,12 @@ export default {
     emits: ['close', 'reload-sdgs'],
 
     components: { BaseDrawer, SdgsFilter },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -66,15 +73,9 @@ export default {
 
                 this.$emit('reload-sdgs')
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.sdgs-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.sdgs-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.sdgs-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.sdgs-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('close')

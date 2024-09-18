@@ -38,6 +38,7 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'OrgWordingDrawer',
@@ -48,6 +49,12 @@ export default {
         TipTapEditor,
         BaseDrawer,
         TextInput,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -103,15 +110,9 @@ export default {
 
                 await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
                 this.$emit('organization-edited')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.general.wording.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('admin.portal.general.wording.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('admin.portal.general.wording.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('admin.portal.general.wording.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false
