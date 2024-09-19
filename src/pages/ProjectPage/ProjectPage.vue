@@ -300,6 +300,11 @@ export default {
             return this.$store.getters['projects/project']
         },
 
+        isMember() {
+            const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
+            return members.find((user) => this.$store.getters['users/id'] === user.id)
+        },
+
         accessToken() {
             return this.$store.getters['users/accessToken']
         },
@@ -476,16 +481,24 @@ export default {
                     this.team = this.project.team
                     this.reviews = this.project.reviews
                     this.linkedProjects = this.project.linked_projects
-                    await Promise.all([
+
+                    const extraData = [
                         this.getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
-                        this.getProjectMessages(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
                         this.getProjectLocations(),
                         this.getSimilarProjects(),
                         this.getAnnouncements(),
                         this.getFileResources(),
                         this.getLinkResources(),
                         this.getBlogEntries(),
-                    ])
+                    ]
+
+                    if (this.isMember) {
+                        extraData.push(
+                            // TODO remove param and use this.proejct.id in method, also chnage handler
+                            this.getProjectMessages(project.id)
+                        )
+                    }
+                    await Promise.all(extraData)
                     this.connectToSocket(project.id)
                     this.loading = false
                 })
