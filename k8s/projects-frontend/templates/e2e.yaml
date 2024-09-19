@@ -22,6 +22,8 @@ spec:
             value: {{ print "{{workflow.uid}}" | quote }}
           - name: slackChannel
             value: {{ .Values.e2e.notify.failure.slackChannel | quote }}
+          - name: reportHost
+            value: {{ (printf "%s.blob.core.windows.net" .Values.e2e.blobName) | quote }}
       {{- end }}
       {{- if .Values.e2e.notify.success.enabled }}
       succeeded:
