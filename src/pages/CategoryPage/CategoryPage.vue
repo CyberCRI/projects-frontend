@@ -25,6 +25,7 @@
                             class="container inline stretch"
                             @search-options-updated="updateSearch"
                             section="projects"
+                            show-filters
                             :filter-black-list="['categories']"
                         />
                     </div>
