@@ -300,9 +300,11 @@ export default {
             return this.$store.getters['projects/project']
         },
 
-        isMember() {
+        isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return members.find((user) => this.$store.getters['users/id'] === user.id)
+            return (
+                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
+            )
         },
 
         accessToken() {
@@ -492,7 +494,7 @@ export default {
                         this.getBlogEntries(),
                     ]
 
-                    if (this.isMember) {
+                    if (this.isMemberOrAdmin) {
                         extraData.push(
                             // TODO remove param and use this.proejct.id in method, also chnage handler
                             this.getProjectMessages(project.id)

@@ -61,9 +61,11 @@ export default {
     },
 
     computed: {
-        isMember() {
+        isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return members.find((user) => this.$store.getters['users/id'] === user.id)
+            return (
+                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
+            )
         },
     },
 
@@ -79,7 +81,7 @@ export default {
     watch: {
         project: {
             handler: function (neo) {
-                if (neo && !this.isAdmin && !this.isMember) {
+                if (neo && !this.isMemberOrAdmin) {
                     this.$router.replace({
                         name: 'pageProject',
                         params: { slugOrId: this.project.slug || this.project.id },

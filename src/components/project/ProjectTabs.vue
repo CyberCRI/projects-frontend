@@ -124,9 +124,11 @@ export default {
             return this.$store.getters['projectCategories/hierarchy']
         },
 
-        isMember() {
+        isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return members.find((user) => this.$store.getters['users/id'] === user.id)
+            return (
+                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
+            )
         },
 
         projectTabs() {
@@ -256,7 +258,7 @@ export default {
                         projectMessages: this.projectMessages,
                         onReloadProjectMessages: () => this.$emit('reload-project-messages'),
                     },
-                    condition: this.isAdmin || this.isMember,
+                    condition: this.isMemberOrAdmin,
                     dataTest: 'project-private-exchange',
                 },
                 {
