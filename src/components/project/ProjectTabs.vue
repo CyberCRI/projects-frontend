@@ -252,6 +252,7 @@ export default {
                     view: `/projects/${this.$route.params.slugOrId}/private-exchange`,
                     props: {
                         project: this.project,
+                        team: this.team,
                         projectMessages: this.projectMessages,
                         onReloadProjectMessages: () => this.$emit('reload-project-messages'),
                     },
@@ -278,6 +279,7 @@ export default {
                     condition: true,
                     props: {
                         project: this.project,
+                        team: this.team,
                         categories: this.categories,
                         onReloadTeam: () => this.$emit('reload-team'),
                         onReloadReviews: () => this.$emit('reload-reviews'),
