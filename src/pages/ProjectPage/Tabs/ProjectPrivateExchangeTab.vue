@@ -54,15 +54,15 @@ export default {
             type: Array,
             default: () => [],
         },
+        team: {
+            type: Object,
+            default: () => {},
+        },
     },
 
     computed: {
         isMember() {
-            const members = [
-                ...this.project.team.members,
-                ...this.project.team.owners,
-                ...this.project.team.reviewers,
-            ]
+            const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
             return members.find((user) => this.$store.getters['users/id'] === user.id)
         },
     },

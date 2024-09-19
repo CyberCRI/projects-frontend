@@ -257,6 +257,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        team: {
+            type: Object,
+            default: () => {},
+        },
     },
 
     data() {
@@ -427,11 +431,7 @@ export default {
         },
 
         isMember() {
-            const members = [
-                ...this.project.team.members,
-                ...this.project.team.owners,
-                ...this.project.team.reviewers,
-            ]
+            const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
             return members.find((user) => this.$store.getters['users/id'] === user.id)
         },
     },
@@ -542,9 +542,9 @@ export default {
 
         openConfirmOrQuit() {
             if (
-                this.project.team.owners &&
-                this.project.team.owners.length === 1 &&
-                this.project.team.owners.find((user) => this.$store.getters['users/id'] === user.id)
+                this.team.owners &&
+                this.team.owners.length === 1 &&
+                this.team.owners.find((user) => this.$store.getters['users/id'] === user.id)
             )
                 this.showQuitIsImposible = true
             else this.showConfirmQuit = true
