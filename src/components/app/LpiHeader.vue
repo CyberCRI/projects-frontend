@@ -111,7 +111,7 @@
                     icon="Account"
                 />
                 <HeaderDropDown
-                    :label="$store.getters['languages/current'].toUpperCase()"
+                    :label="languagesStore.current.toUpperCase()"
                     :menu-items="langMenu"
                     data-test="dropdown-lang"
                 />
@@ -181,6 +181,7 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'LpiHeader',
 
@@ -196,6 +197,13 @@ export default {
         HeaderDropDown,
         NotificationIcon,
         IconImage,
+    },
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
     },
 
     data() {
@@ -280,7 +288,7 @@ export default {
             }
         },
 
-        async updateLanguage(lang) {
+        updateLanguage(lang) {
             if (this.isConnected) {
                 const body = {
                     language: lang,
@@ -290,7 +298,7 @@ export default {
                 patchUser(this.$store.getters['users/id'], body)
             }
 
-            await this.$store.dispatch('languages/updateCurrentLanguage', lang)
+            this.languagesStore.current = lang
         },
 
         async toAnnouncements() {
@@ -327,14 +335,12 @@ export default {
         },
 
         langMenu() {
-            return this.$store.getters['languages/all']
+            return this.languagesStore.all
                 .map((lang) => ({
                     label: lang.toUpperCase(),
                     action: () => this.updateLanguage(lang),
                 }))
-                .filter(
-                    (lang) => lang.label !== this.$store.getters['languages/current'].toUpperCase()
-                )
+                .filter((lang) => lang.label !== this.languagesStore.current.toUpperCase())
         },
 
         organization() {
@@ -525,7 +531,7 @@ export default {
                     dataTest: 'user-dropdown-menu',
                 },
                 {
-                    label: this.$store.getters['languages/current'].toUpperCase(),
+                    label: this.languagesStore.current.toUpperCase(),
                     childItems: this.langMenu,
                     condition: true,
                     dataTest: 'lang',

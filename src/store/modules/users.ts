@@ -12,7 +12,9 @@ import funct from '@/functs/functions'
 import { NotificationsSettings, UserModel } from '@/models/user.model'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { removeApiCookie } from '@/api/auth/cookie.service'
-import store from '@/store'
+
+import useLanguagesStore from '@/stores/useLanguages'
+import { LanguageType } from '@/models/types'
 
 export interface UsersState {
     refreshToken?: string
@@ -171,6 +173,7 @@ const actions = {
     },
 
     async getUser({ commit }, id) {
+        const languagesStore = useLanguagesStore()
         // id is keycloak_id OR django user id OR slug
         try {
             const user = await getUser(id)
@@ -180,7 +183,7 @@ const actions = {
             commit('SET_NOTIFICATIONS_COUNT', user.notifications)
             commit('SET_USER_FROM_API', user)
 
-            await store.dispatch('languages/updateCurrentLanguage', user.language)
+            languagesStore.current = user.language as LanguageType
 
             return user
         } catch (err) {

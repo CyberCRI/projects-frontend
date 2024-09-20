@@ -1,5 +1,5 @@
 import { Icon } from 'leaflet'
-import { createApp } from 'vue'
+import { createApp, watchEffect } from 'vue'
 
 import { axios } from './api/api.config'
 import VueAxios from 'vue-axios'
@@ -28,6 +28,7 @@ import router from '@/router'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import useToasterStore from '@/stores/useToaster'
+import useLanguagesStore from '@/stores/useLanguages'
 
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
@@ -108,6 +109,17 @@ async function main(): Promise<void> {
         router.push(nextPage)
     }
 
+    const languagesStore = useLanguagesStore()
+
+    watchEffect(() => {
+        const lang = languagesStore.current
+        localStorage.setItem('lang', lang)
+        i18n.global.locale.value = lang
+        // Set lang attribute for non translated langages to be translated by browser extensions
+        const html = document.documentElement
+        html.setAttribute('lang', lang)
+    })
+
     // Get & Set lang from localstorage
     // if (localStorage.getItem('lang'))
     //     i18n.global.locale.value = localStorage.getItem('lang').toLowerCase()
@@ -117,7 +129,7 @@ async function main(): Promise<void> {
         ? localStorage.getItem('lang').toLowerCase()
         : import.meta.env.VITE_APP_I18N_LOCALE || 'en'
 
-    store.dispatch('languages/updateCurrentLanguage', lang)
+    languagesStore.current = lang
 
     if (store.state.users?.keycloak_id)
         await store.dispatch('users/getUser', store.state.users.keycloak_id)
