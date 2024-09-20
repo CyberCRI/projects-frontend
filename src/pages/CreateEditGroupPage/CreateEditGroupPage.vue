@@ -75,6 +75,7 @@ import { required, maxLength, helpers, email } from '@vuelidate/validators'
 import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
 import useToasterStore from '@/stores/useToaster.ts'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 
 export default {
     name: 'CreateEditGroupPage',
@@ -93,8 +94,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const peopleGroupsStore = usePeopleGroupsStore()
         return {
             toaster,
+            peopleGroupsStore,
         }
     },
 
@@ -160,7 +163,7 @@ export default {
     },
 
     async mounted() {
-        await this.$store.dispatch('people-groups/setCurrentId', this.groupId || null)
+        this.peopleGroupsStore.currentId = this.groupId || null
         // check right to create (if no grouip id passed) or edit (if group id passed)
         // and 404 if not allowed
         if ((this.groupId && !this.canEditGroup) || (!this.groupId && !this.canCreateGroup)) {

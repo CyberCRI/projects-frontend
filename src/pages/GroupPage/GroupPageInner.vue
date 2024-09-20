@@ -59,6 +59,7 @@ import GroupTabs from './Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
 import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 
 export default {
     name: 'GroupPageInner',
@@ -70,6 +71,12 @@ export default {
         LinkButton,
     },
     mixins: [permissions],
+    setup() {
+        const peopleGroupsStore = usePeopleGroupsStore()
+        return {
+            peopleGroupsStore,
+        }
+    },
     props: {
         groupId: {
             type: String,
@@ -111,7 +118,7 @@ export default {
             this.isProjectsLoading = true
             this.isMembersLoading = true
 
-            this.$store.dispatch('peopleGroups/setCurrentId', this.groupId)
+            this.peopleGroupsStore.currentId = this.groupId
             try {
                 await Promise.all([
                     this.loadGroup(),
@@ -155,7 +162,7 @@ export default {
                 this.groupChildren = groupData.children
 
                 // we can't use "this.groupId" because it might be a slug and not an id....
-                this.$store.dispatch('peopleGroups/setCurrentId', groupData.id)
+                this.peopleGroupsStore.currentId = groupData.id
             } catch (e) {
                 this.$router.replace({
                     name: 'page404',

@@ -36,13 +36,6 @@ const store = {
                 current: vi.fn().mockReturnValue({ id: 'TEST' }),
             },
         },
-        peopleGroups: {
-            namespaced: true,
-            actions: {
-                getPeopleGroups: vi.fn(),
-                setCurrentId: vi.fn(),
-            },
-        },
     },
 }
 

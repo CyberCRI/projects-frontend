@@ -1,6 +1,8 @@
 import utils from '@/functs/functions'
 import store from '@/store'
 
+import { mapState } from 'pinia'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 export default {
     methods: {
         hasPermission(scope, action, pk?) {
@@ -12,6 +14,10 @@ export default {
     },
 
     computed: {
+        ...mapState(usePeopleGroupsStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            currentPeopleGroupIdForPermissions: 'currentId',
+        }),
         isOwner() {
             return (
                 this.$store.getters['users/isConnected'] &&
@@ -265,7 +271,7 @@ export default {
                 this.hasPermission(
                     'organizations',
                     'add_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId']
+                    this.currentPeopleGroupIdForPermissions
                 ) ||
                 this.hasPermission('organizations', 'add_peoplegroup') ||
                 this.hasPermission('peoplegroup', 'add_peoplegroup') ||
@@ -279,12 +285,12 @@ export default {
                 this.hasPermission(
                     'accounts',
                     'change_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId'] || null
+                    this.currentPeopleGroupIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'change_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId'] || null
+                    this.currentPeopleGroupIdForPermissions || null
                 ) ||
                 this.hasPermission('organizations', 'change_peoplegroup') ||
                 this.hasPermission('peoplegroup', 'update')
