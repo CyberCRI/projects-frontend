@@ -28,6 +28,7 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import imageMixin from '@/mixins/imageMixin.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SdgRecap',
@@ -38,6 +39,12 @@ export default {
 
     mixins: [permissions, imageMixin],
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         sdgs: {
             type: Array,
@@ -47,7 +54,7 @@ export default {
 
     computed: {
         lang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
     },
 

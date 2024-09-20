@@ -90,6 +90,7 @@ import ChatAdminBlock from '@/components/admin/GeneralAdminBlocks/Chat/ChatAdmin
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'SettingsTab',
 
@@ -109,15 +110,17 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             v$: useVuelidate(),
             toaster,
+            languagesStore,
         }
     },
 
     computed: {
         languageOptions() {
-            return this.$store.getters['languages/all'].map((lang) => {
+            return this.languagesStore.all.map((lang) => {
                 return {
                     value: lang,
                     label: this.$t(`language.label-${lang}`),

@@ -47,6 +47,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import debounce from 'lodash.debounce'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'GroupButton',
@@ -56,7 +57,12 @@ export default {
     components: {
         IconImage,
     },
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     data() {
         return {
             sliderStyle: null,
@@ -111,7 +117,7 @@ export default {
             return { 'border-color': this.customColor }
         },
         lang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
     },
 

@@ -82,7 +82,6 @@ const {
 } = useTipTap({
     props,
     emit,
-    store,
     t,
 })
 

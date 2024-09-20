@@ -13,11 +13,11 @@ const initialLang =
     (allLanguages.indexOf(userLang) > -1 ? userLang : null) ||
     import.meta.env.VITE_APP_I18N_LOCALE
 
-const useToasterStore = defineStore('languages', {
+const useLanguagesStore = defineStore('languages', {
     state: (): LanguageState => ({
         all: allLanguages,
         current: initialLang,
     }),
 })
 
-export default useToasterStore
+export default useLanguagesStore

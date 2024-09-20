@@ -104,6 +104,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'InformationTab',
@@ -120,15 +121,17 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
             v$: useVuelidate(),
+            languagesStore,
         }
     },
 
     computed: {
         languageOptions() {
-            return this.$store.getters['languages/all'].map((lang) => {
+            return this.languagesStore.all.map((lang) => {
                 return {
                     value: lang,
                     label: this.$t(`language.label-${lang}`),

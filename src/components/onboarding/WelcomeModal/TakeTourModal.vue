@@ -36,6 +36,7 @@
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'TakeTourModal',
 
@@ -44,14 +45,19 @@ export default {
     components: { BaseModal, LoaderSimple },
 
     mixins: [onboardingStatusMixin],
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     mounted() {
         this.onboardingTrap('take_tour', false)
     },
 
     computed: {
         videoSrc() {
-            return this.$store.state.languages.current === 'fr'
+            return this.languagesStore.current === 'fr'
                 ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
                 : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
         },

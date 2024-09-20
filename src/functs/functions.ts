@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     copyObject(obj) {
@@ -38,11 +39,12 @@ export default {
     },
 
     getTimePassed(d) {
+        const languagesStore = useLanguagesStore()
         /* https://natclark.com/tutorials/javascript-relative-time/ */
 
         const now = new Date().getTime()
         const old = new Date(d).getTime()
-        const formatter = new Intl.RelativeTimeFormat(store.getters['languages/current'] || 'en', {
+        const formatter = new Intl.RelativeTimeFormat(languagesStore.current || 'en', {
             style: `long`,
         })
 

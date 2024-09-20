@@ -14,6 +14,7 @@ import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.v
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export const ALL_FILTERS_MODE = 'all-filters'
 
@@ -35,6 +36,7 @@ export default function useContextualFilters({
     const { t } = useI18n()
 
     const store = useStore()
+    const languagesStore = useLanguagesStore()
 
     const { sectionFilters } = useSectionFilters({ selectedSection })
 
@@ -54,7 +56,7 @@ export default function useContextualFilters({
                     : selectedFilters.value?.tags?.map((tag) => {
                           if (tag.wikipedia_qid) {
                               // wikipedia tags
-                              return tag[`name_${store.state.languages.current}`] || tag['name']
+                              return tag[`name_${languagesStore.current}`] || tag['name']
                           } else {
                               // org tags
                               return tag.name

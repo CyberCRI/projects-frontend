@@ -79,6 +79,7 @@ import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-ta
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'TagsTab',
@@ -92,8 +93,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
         }
     },
 
@@ -121,7 +124,7 @@ export default {
         },
 
         currentLang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
     },
 

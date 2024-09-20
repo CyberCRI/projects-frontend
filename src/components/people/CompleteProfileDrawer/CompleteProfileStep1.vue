@@ -214,6 +214,7 @@ import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -233,8 +234,10 @@ export default {
     mixins: [imageMixin, onboardingStatusMixin],
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
         }
     },
 
@@ -298,7 +301,7 @@ export default {
 
     computed: {
         lang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
         hasBioExemple() {
             return this.researcherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId

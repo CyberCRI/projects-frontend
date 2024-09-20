@@ -140,6 +140,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'RegisterPage',
 
@@ -155,8 +156,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
         }
     },
 
@@ -265,7 +268,7 @@ export default {
                     formData.append(key, this.form[key])
                 })
 
-                formData.append('language', this.$store.getters['languages/current'])
+                formData.append('language', this.languagesStore.current)
 
                 await postUserWithInvitation(this.token, formData)
 

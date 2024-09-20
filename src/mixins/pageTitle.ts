@@ -1,5 +1,3 @@
-import { mapGetters } from 'vuex'
-
 function getPageTitle(vm) {
     const { pageTitle } = vm.$options
     if (pageTitle) {
@@ -22,15 +20,11 @@ export default {
         },
     },
 
-    computed: {
-        ...mapGetters({
-            currentLang: 'languages/current',
-        }),
-    },
+    /* TODO broken with pinia, remove because anyway we'll switch to nuxt soon*/
 
-    watch: {
-        currentLang: function () {
-            this.setPageTitle()
-        },
-    },
+    // watch: {
+    //     currentLang: function () {
+    //         this.setPageTitle()
+    //     },
+    // },
 }

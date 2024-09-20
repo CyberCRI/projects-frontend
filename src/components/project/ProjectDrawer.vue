@@ -32,6 +32,7 @@ import { postProjectHeader, patchProjectHeader } from '@/api/projects.service'
 import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'ProjectDrawer',
@@ -41,8 +42,10 @@ export default {
     emits: ['close'],
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
         }
     },
 
@@ -67,7 +70,7 @@ export default {
                         small: undefined,
                     },
                 },
-                language: this.$store.state.languages.current,
+                language: this.languagesStore.current,
                 wikipedia_tags: [],
                 organization_tags: [],
             },

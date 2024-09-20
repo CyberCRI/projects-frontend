@@ -137,6 +137,7 @@ import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'LpiFooter',
     mixins: [imageMixin],
@@ -148,7 +149,12 @@ export default {
         OnboardingScreens,
         FooterEnglishTips,
     },
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     data() {
         return {
             reportBugOpen: false,
@@ -157,7 +163,7 @@ export default {
     },
     computed: {
         canOpen() {
-            return this.$store.state.languages.current === 'fr'
+            return this.languagesStore.current === 'fr'
         },
         showDirectoryLink() {
             const organization = this.$store.getters['organizations/current']

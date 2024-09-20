@@ -4,14 +4,12 @@ import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorC
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 import { onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useStore } from 'vuex'
 import {
     emitsDefinitions,
     propsDefinitions,
     useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 
-const store = useStore()
 const { t } = useI18n()
 
 // events
@@ -23,7 +21,6 @@ const props = defineProps(propsDefinitions)
 const { editor, resetContent, appendTranslationsStyle, initEditor, destroyEditor } = useTipTap({
     props,
     emit,
-    store,
     t,
 })
 

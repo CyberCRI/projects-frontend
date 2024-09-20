@@ -182,6 +182,7 @@ import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDr
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'TemplatesTab',
@@ -203,9 +204,11 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
             v$: useVuelidate(),
+            languagesStore,
         }
     },
 
@@ -253,7 +256,7 @@ export default {
     computed: {
         // TODO: delete or uncomment when we decide what to do about languages in categories
         // languages() {
-        //     return this.$store.getters['languages/all']
+        //     return this.languagesStore.all
         // },
 
         // languagesOptions() {
@@ -316,8 +319,7 @@ export default {
                     this.selectedCategory?.template.goal_description || '<p></p>'
 
                 /* Language */
-                this.form.language =
-                    this.selectedCategory?.lang || this.$store.state.languages.current
+                this.form.language = this.selectedCategory?.lang || this.languagesStore.current
 
                 /* Tags */
                 this.form.organizationTags = this.selectedCategory?.organization_tags

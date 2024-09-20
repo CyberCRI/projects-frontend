@@ -60,6 +60,7 @@ import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'CreateProjectPage',
@@ -72,8 +73,10 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
         }
     },
 
@@ -88,7 +91,7 @@ export default {
                 category: undefined,
                 header_image: null,
 
-                language: this.$store.state.languages.current,
+                language: this.languagesStore.current,
 
                 wikipedia_tags: [],
                 organization_tags: [],
