@@ -21,13 +21,6 @@ const store = {
                 current: () => OrganizationOutputFactory.generate(),
             },
         },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
     },
 }
 

@@ -14,13 +14,6 @@ const i18n = {
 
 const store = {
     modules: {
-        languages: {
-            namespaced: true,
-            getters: {
-                current: vi.fn(() => 'en'),
-            },
-        },
-
         organizations: {
             namespaced: true,
             getters: {

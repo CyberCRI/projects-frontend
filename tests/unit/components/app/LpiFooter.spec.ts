@@ -27,13 +27,6 @@ const store = {
                 isConnected: vi.fn(),
             },
         },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'fr',
-                all: ['en', 'fr'],
-            },
-        },
     },
 }
 

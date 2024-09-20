@@ -43,13 +43,6 @@ const store = {
                 accessToken: vi.fn(),
             },
         },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
     },
 }
 

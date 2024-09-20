@@ -29,13 +29,6 @@ const store = {
                 pushToast: vi.fn(),
             },
         },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
     },
 }
 

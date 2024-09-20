@@ -24,13 +24,6 @@ function buildStore(permissions) {
                     currentProjectId: vi.fn(() => 123),
                 },
             },
-            languages: {
-                namespaced: true,
-                state: {
-                    current: 'en',
-                    all: ['en', 'fr'],
-                },
-            },
             users: {
                 namespaced: true,
                 getters: {

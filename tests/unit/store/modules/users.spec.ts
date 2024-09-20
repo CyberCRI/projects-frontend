@@ -7,6 +7,8 @@ import funct from '@/functs/functions'
 import { UserFromJWTFactory } from '../../../factories/user.factory'
 import { createStore } from 'vuex'
 import * as keycloakUtils from '@/api/auth/keycloakUtils'
+import pinia from '@/stores'
+import useLanguagesStore from '@/stores/useLanguages'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/router/index', () => ({
@@ -15,19 +17,21 @@ vi.mock('@/router/index', () => ({
     },
 }))
 
+// must keep this until transition to pinia is completed
+vi.mock('@/store', () => ({
+    default: {},
+}))
+
 // vi.mock('vuex') // this shal no be mocked here ! no ! no ! no !
 vi.mock('@/api/people.service')
 vi.mock('@/api/auth/auth.service')
 vi.mock('@/analytics')
 vi.mock('@/functs/functions')
-vi.mock('@/store', () => ({
-    default: {
-        actions: {
-            'languages/updateCurrentLanguage': () => 'en',
-        },
-    },
-}))
+
 describe('Store module | users | init', () => {
+    beforeEach(() => {
+        useLanguagesStore(pinia)
+    })
     function setTokens() {
         window.localStorage.setItem(
             'ACCESS_TOKEN',
@@ -92,6 +96,9 @@ describe('Store module | users | init', () => {
 })
 
 describe('Store module | users | getters', () => {
+    beforeEach(() => {
+        useLanguagesStore(pinia)
+    })
     const stateWithSessionToken = {
         refreshToken:
             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJydCI6eyJwaWQiOiI2YTViMWM0MC02NzQwLTQ2NjUtYTdmNS05NWI2ZDcwY2ZkNWYifSwiZXhwIjoxNjMzNzY0NjU3fQ.iIG2cjz5Tn4kq1_qiIfiCi-SoR8ZREUKoQBBgfd4c9AMhl2V4SDY47GmAImHc5XUu3hq2k0hoWGvlrBON3DwZQ',
@@ -347,6 +354,9 @@ describe('Store module | users | getters', () => {
 })
 
 describe('Store module | users | actions', () => {
+    beforeEach(() => {
+        useLanguagesStore(pinia)
+    })
     const commit = vi.fn()
     const dispatch = vi.fn()
 
@@ -489,6 +499,9 @@ describe('Store module | users | actions', () => {
 })
 
 describe('Store module | users | mutations', () => {
+    beforeEach(() => {
+        useLanguagesStore(pinia)
+    })
     it('RESET_USER', () => {
         const state = {
             refreshToken: 'randomRefreshToken',

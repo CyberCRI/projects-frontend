@@ -67,14 +67,6 @@ const store = {
                 all: () => ProjectCategoryOutputFactory.generateMany(2),
             },
         },
-
-        languages: {
-            namespaced: true,
-            getters: {
-                current: () => 'en',
-                all: () => ['en', 'fr'],
-            },
-        },
     },
 }
 

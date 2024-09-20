@@ -46,13 +46,6 @@ const store = {
                 postBlogEntry: vi.fn(),
             },
         },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
     },
 }
 

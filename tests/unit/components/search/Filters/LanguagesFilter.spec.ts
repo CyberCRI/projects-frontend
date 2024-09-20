@@ -3,18 +3,6 @@ import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            languages: {
-                namespaced: true,
-                getters: {
-                    all: () => ['en', 'fr'],
-                },
-            },
-        },
-    }
-}
 
 const i18n = {
     locale: 'en',
@@ -29,7 +17,6 @@ const factory = (props?) => {
         props: {
             ...props,
         },
-        store: buildStore(),
         i18n,
     })
 }
