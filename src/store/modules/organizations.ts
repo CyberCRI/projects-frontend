@@ -2,34 +2,28 @@ import {
     getOrganizationByCode,
     getOrganizations,
     patchOrganization,
-    addGroupMember,
-    removeGroupMember,
 } from '@/api/organizations.service'
 
-import { getPeopleGroups } from '@/api/groups.service'
+// import { getPeopleGroups } from '@/api/groups.service'
 import { APIResponseList } from '@/api/types'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
-import { PeopleGroupOutput } from '@/models/people-group'
 import analytics from '@/analytics'
 
 export interface OrganizationsState {
     all: OrganizationOutput[]
     current: OrganizationOutput
-    peopleGroups: PeopleGroupOutput[]
 }
 
 const state = (): OrganizationsState => ({
     all: [],
     current: null,
-    peopleGroups: [],
 })
 
 const getters = {
     current: (state: OrganizationsState) => state.current,
     all: (state: OrganizationsState) => state.all,
     isDefault: (state: OrganizationsState) => state.current.code === 'DEFAULT',
-    peopleGroups: (state: OrganizationsState) => state.peopleGroups,
 }
 
 const actions = {
@@ -70,34 +64,6 @@ const actions = {
             throw new Error(err)
         }
     },
-
-    async addGroupMember(_, { org_id, body }) {
-        try {
-            return await addGroupMember({ org_id, body })
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
-
-    async removeGroupMember(_, { org_id, body }) {
-        try {
-            return await removeGroupMember({ org_id, body })
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
-
-    async getPeopleGroups({ commit }, org_code) {
-        try {
-            const { results } = await getPeopleGroups(org_code, { organizations: org_code })
-
-            commit('SET_PEOPLE_GROUPS', results)
-
-            return results
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
 }
 
 const mutations = {
@@ -106,10 +72,6 @@ const mutations = {
     },
     SET_ORGANIZATIONS(state: OrganizationsState, organizations: OrganizationOutput[]): void {
         state.all = organizations
-    },
-
-    SET_PEOPLE_GROUPS(state: OrganizationsState, groups: PeopleGroupOutput[]) {
-        state.peopleGroups = groups
     },
 }
 

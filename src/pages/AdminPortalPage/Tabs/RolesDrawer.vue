@@ -32,8 +32,12 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { getGroups } from '@/api/groups.service'
-
+import { addOrgMember, removeOrgMember } from '@/api/organizations.service'
 import ToolTip from '@/components/base/ToolTip.vue'
+
+/** 
+ TODO: remove this dead component 
+*/
 
 export default {
     name: 'RolesDrawer',
@@ -102,30 +106,28 @@ export default {
     },
 
     methods: {
-        patchUser() {
-            if (this.selectedRole.id !== 0) {
-                this.$store
-                    .dispatch('organizations/addGroupMember', {
+        async patchUser() {
+            try {
+                if (this.selectedRole.id !== 0) {
+                    await addOrgMember({
                         org_id: this.organization.code,
                         body: {
                             name: this.selectedRole.name,
                             user: this.selectedUser.id,
                         },
                     })
-                    .then(async () => {
-                        this.$emit('confirm')
-                    })
-            } else {
-                this.$store
-                    .dispatch('organizations/removeGroupMember', {
+                } else {
+                    await removeOrgMember({
                         org_id: this.organization.code,
                         body: {
                             users: [this.selectedUser.id],
                         },
                     })
-                    .then(async () => {
-                        this.$emit('confirm')
-                    })
+                }
+            } catch (e) {
+                console.error(e)
+            } finally {
+                this.$emit('confirm')
             }
         },
     },

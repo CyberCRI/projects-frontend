@@ -71,7 +71,7 @@ export async function postOrganisationLogo({
     ).data
 }
 
-export async function addGroupMember({
+export async function addOrgMember({
     org_id,
     body,
 }: {
@@ -86,7 +86,7 @@ export async function addGroupMember({
     ).data
 }
 
-export async function removeGroupMember({
+export async function removeOrgMember({
     org_id,
     body,
 }: {
