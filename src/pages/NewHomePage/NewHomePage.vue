@@ -49,7 +49,7 @@ import HomeHeaderConnected from '@/components/home/HomeHeader/HomeHeaderConnecte
 import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymous.vue'
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import LocationsLink from '@/components/home/LocationsLink/LocationsLink.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewHomePage',
 
@@ -65,10 +65,15 @@ export default {
         HomeHeaderAnonymous,
         LocationsLink,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         loggedIn() {

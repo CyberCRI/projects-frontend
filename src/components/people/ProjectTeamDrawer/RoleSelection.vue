@@ -68,6 +68,7 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'RoleSelection',
@@ -75,6 +76,12 @@ export default {
     emits: ['select-role', 'back-to-user-selection'],
 
     components: { LpiButton, IconImage, ToolTip },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
 
     props: {
         selectedCategories: {
@@ -124,8 +131,7 @@ export default {
             const categories = this.selectedCategories || []
             // keep only categroies from current organization
             let orgCategories = categories.filter(
-                (cat) =>
-                    !!cat && this.$store.getters['organizations/current'].code === cat.organization
+                (cat) => !!cat && this.organizationsStore.current.code === cat.organization
             )
 
             // reviewable by default (ie if there is no category)

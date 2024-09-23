@@ -54,4 +54,5 @@ export type OrganizationOutput = BaseModel &
         wikipedia_tags: WikipediaTagModel[]
         tags: OrganizationTagModel[]
         children: string[]
+        access_request_enabled?: boolean
     }

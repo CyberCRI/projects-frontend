@@ -3,7 +3,7 @@ import { APIResponseList } from '@/api/types'
 import { PeopleModel } from '@/models/people.model'
 import { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import store from '@/store'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 // New user service using projects API
 export async function getUser(id: string): Promise<PeopleModel> {
@@ -11,10 +11,11 @@ export async function getUser(id: string): Promise<PeopleModel> {
 }
 
 export async function postUser(payload: FormData): Promise<PeopleModel> {
+    const organizationsStore = useOrganizationsStore()
     return (
         await axios.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
-                store.getters['organizations/current']?.code || ''
+                organizationsStore.current?.code || ''
             }`,
             payload
         )
@@ -26,6 +27,7 @@ export async function postUserWithInvitation(
     inviteToken: string,
     payload: FormData
 ): Promise<PeopleModel> {
+    const organizationsStore = useOrganizationsStore()
     // use token as auth header with and "Invite" key instead of "Bearer"
     const config = {
         headers: {
@@ -36,7 +38,7 @@ export async function postUserWithInvitation(
     return (
         await axiosNoToken.post(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/?organization=${
-                store.getters['organizations/current']?.code || ''
+                organizationsStore.current?.code || ''
             }`,
             payload,
             config
@@ -156,13 +158,12 @@ export async function deleteUserSkill(skill_id: number): Promise<PeopleModel> {
 }
 
 export async function resetUserPassword(id: string | number): Promise<PeopleModel> {
+    const organizationsStore = useOrganizationsStore()
     return (
         await axios.get(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/user/${id}/reset-password/?organization=${
-                store.getters['organizations/current']?.code || ''
-            }`
+            }/user/${id}/reset-password/?organization=${organizationsStore.current?.code || ''}`
         )
     ).data
 }

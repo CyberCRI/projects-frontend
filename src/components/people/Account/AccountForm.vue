@@ -162,7 +162,7 @@ import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import { getOrgUnits } from '@/api/google.service'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'AccountForm',
 
@@ -185,8 +185,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -271,7 +273,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         hasRoleInCurrentOrg() {
             return this.selectedRole && this.selectedRole != 0
@@ -279,7 +281,7 @@ export default {
 
         hasGoogleSync() {
             // whether to give option to create user in google too
-            return this.$store.getters['organizations/current'].google_sync_enabled
+            return this.organizationsStore.current.google_sync_enabled
         },
         roleNone() {
             return {
@@ -295,17 +297,17 @@ export default {
                 {
                     name: 'users',
                     label: this.$t('account.role.user'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:users`,
+                    value: `organization:#${this.organizationsStore.current.id}:users`,
                 },
                 {
                     name: 'facilitators',
                     label: this.$t('account.role.facilitator'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:facilitators`,
+                    value: `organization:#${this.organizationsStore.current.id}:facilitators`,
                 },
                 {
                     name: 'admins',
                     label: this.$t('account.role.admin'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:admins`,
+                    value: `organization:#${this.organizationsStore.current.id}:admins`,
                 },
             ]
 
@@ -449,7 +451,7 @@ export default {
                     allRolesToAdd.push(this.selectedRole)
                 } else if (this.selectedUser) {
                     allRolesToRemove.push(
-                        `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
+                        `organization:#${this.organizationsStore.current.id}:${this.selectedUser.current_org_role}`
                     )
                 }
 

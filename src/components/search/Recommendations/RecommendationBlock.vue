@@ -37,11 +37,17 @@ import {
 } from '@/api/recommendations.service'
 import { getFeaturedProjects } from '@/api/organizations.service'
 import RecommendationListSkeleton from '@/components/search/Recommendations/RecommendationListSkeleton.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'RecommendationBlock',
 
     components: { UserRecommendationList, ProjectRecommendationList, RecommendationListSkeleton },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
 
     data() {
         return {
@@ -53,7 +59,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         loggedIn() {

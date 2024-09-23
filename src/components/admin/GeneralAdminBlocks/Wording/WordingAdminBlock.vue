@@ -36,6 +36,7 @@
 import AdminBlock from '../AdminBlock.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import OrgWordingDrawer from '@/components/admin/GeneralAdminBlocks/Wording/OrgWordingDrawer.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'WordingAdminBlock',
@@ -45,7 +46,12 @@ export default {
         LinkButton,
         OrgWordingDrawer,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             drawerIsOpen: false,
@@ -54,7 +60,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         title() {
             return (
@@ -73,7 +79,7 @@ export default {
 
     methods: {
         reloadOrganization() {
-            this.$store.dispatch('organizations/getCurrentOrganization', this.organization.code)
+            this.organizationsStore.getCurrentOrganization(this.organization.code)
         },
     },
 }

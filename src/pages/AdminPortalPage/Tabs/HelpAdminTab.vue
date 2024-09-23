@@ -57,6 +57,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getFaq, createFaq, putFaq, deleteFaq, postFaqImage } from '@/api/faqs.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 function defaultFaq() {
     return {
@@ -76,8 +77,10 @@ export default {
     components: { TipTapEditor, TextInput, LpiSnackbar, LpiButton, ConfirmModal },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -98,7 +101,7 @@ export default {
 
     computed: {
         currentOrgCode() {
-            return this.$store.getters['organizations/current'].code
+            return this.organizationsStore.current.code
         },
 
         // faqTitle: {

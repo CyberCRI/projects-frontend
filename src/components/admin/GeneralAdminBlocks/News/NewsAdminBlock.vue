@@ -47,6 +47,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'NewsAdminBlock',
@@ -60,8 +61,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -90,7 +93,7 @@ export default {
     methods: {
         async loadNews() {
             this.isLoading = true
-            const request = await getAllNews(this.$store.getters['organizations/current']?.code, {
+            const request = await getAllNews(this.organizationsStore.current?.code, {
                 ordering: '-publication_date',
                 limit: 4,
             })
@@ -106,10 +109,7 @@ export default {
         async deleteNews() {
             this.isDeletingNews = true
             try {
-                await deleteNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.newsToDelete.id
-                )
+                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
                 this.toaster.pushSuccess(this.$t('news.delete.success'))
 
                 this.loadNews()

@@ -191,7 +191,7 @@ import CategoryField from '@/components/category/CategoryField.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { Sortable } from 'sortablejs-vue3'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export function defaultForm() {
     return {
         name: '',
@@ -228,7 +228,12 @@ export default {
         IconImage,
         Sortable,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         editedCategory: {
             type: Object,
@@ -254,7 +259,7 @@ export default {
     },
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         dragOptions() {
             return {

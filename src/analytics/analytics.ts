@@ -2,6 +2,7 @@
 import Mixpanel, { RequestOptions } from 'mixpanel-browser'
 
 import store from '@/store'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 export const mixpanel = Mixpanel
 
@@ -27,14 +28,15 @@ export const init = () => {
  * Set organization properties for all analytic events sent
  */
 export const setOrganizationProperties = () => {
+    const organizationsStore = useOrganizationsStore()
     try {
         Mixpanel.register({
             // Only add organization properties if not null
-            ...(store.state.organizations.current && {
+            ...(organizationsStore.current && {
                 organization: {
-                    id: store.state.organizations.current.id,
-                    code: store.state.organizations.current.code,
-                    name: store.state.organizations.current.name,
+                    id: organizationsStore.current.id,
+                    code: organizationsStore.current.code,
+                    name: organizationsStore.current.name,
                 },
             }),
         })

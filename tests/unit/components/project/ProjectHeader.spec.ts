@@ -6,7 +6,6 @@ import permissions from '@/mixins/permissions'
 import MockComponent from '../../../helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-import organizations from '@/store/modules/organizations'
 vi.mock('@/mixins/permissions')
 ;(permissions.computed.canEditProject as Mock).mockImplementation(() => true)
 

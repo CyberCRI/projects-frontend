@@ -33,13 +33,19 @@
 import GroupsElementRadio from '@/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import { searchGroupsAlgolia } from '@/api/search.service.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'PickGroup',
     emits: ['select-group'],
     components: {
         GroupsElementRadio,
         SearchInput,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
     props: {
         subtitle: {
@@ -139,7 +145,7 @@ export default {
 
                 const filters = {
                     limit: 12,
-                    organizations: this.$store.getters['organizations/current'].code,
+                    organizations: this.organizationsStore.current.code,
                 }
                 let listGroups = (
                     await searchGroupsAlgolia(encodeURIComponent(this.queryString), filters)

@@ -15,6 +15,7 @@ import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { getFaq } from '@/api/faqs.service'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import { computed } from 'vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'HelpPage',
@@ -25,6 +26,14 @@ export default {
     },
 
     mixins: [onboardingStatusMixin],
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
+
     provide() {
         return {
             helpPageHasFaq: computed(() => this.hasFaq),
@@ -42,7 +51,7 @@ export default {
 
     async mounted() {
         try {
-            this.faq = await getFaq(this.$store.getters['organizations/current'].code)
+            this.faq = await getFaq(this.organizationsStore.current.code)
         } catch (err) {
             console.error(err)
             // ignore 404 error

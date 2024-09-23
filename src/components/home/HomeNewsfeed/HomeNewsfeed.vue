@@ -15,12 +15,17 @@ import NewsFeed from '@/components/app/NewsFeed.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'HomeNewsfeed',
 
     components: { NewsFeed, LpiButton, NewsListSkeleton },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         limit: {
             type: Number,
@@ -41,7 +46,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 

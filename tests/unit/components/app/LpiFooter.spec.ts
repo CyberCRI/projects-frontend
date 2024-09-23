@@ -4,6 +4,8 @@ import LpiFooter from '@/components/app/LpiFooter.vue'
 import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '../../../helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -15,12 +17,6 @@ const i18n = {
 
 const store = {
     modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -51,6 +47,8 @@ describe('LpiFooter', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
             store,

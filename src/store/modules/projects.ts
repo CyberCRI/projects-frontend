@@ -102,12 +102,15 @@ const actions = {
     },
 
     async getAllRecommendedProjects(
-        { rootState },
+        _,
         params: SearchParams = {}
     ): Promise<APIResponseList<ProjectOutput>> {
         try {
+            // TODO: use pinia store
             // If no organizations set use default one
-            if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            if (!params.organizations)
+                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
             return await getAllRecommendedProjects(params)
         } catch (err) {
@@ -116,12 +119,15 @@ const actions = {
     },
 
     async getAllRandomProjects(
-        { rootState },
+        _,
         params: SearchParams = {}
     ): Promise<APIResponseList<ProjectOutput>> {
         try {
+            // TODO: use pinia store
             // If no organizations set use default one
-            if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            if (!params.organizations)
+                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
             return await getAllRandomProjects(params)
         } catch (err) {
@@ -129,13 +135,13 @@ const actions = {
         }
     },
 
-    async getAllProjects(
-        { rootState },
-        params: SearchParams = {}
-    ): Promise<APIResponseList<ProjectOutput>> {
+    async getAllProjects(_, params: SearchParams = {}): Promise<APIResponseList<ProjectOutput>> {
         try {
+            // TODO: use pinia store
             // If no organizations set use default one
-            if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+            if (!params.organizations)
+                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
             const projects = await getAllProjects(params)
             analytics.project.search(params)

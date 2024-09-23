@@ -121,6 +121,8 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'LinksListTab',
     components: {
@@ -134,6 +136,7 @@ export default {
         const toaster = useToasterStore()
         return {
             toaster,
+            useOrganizationsStore,
         }
     },
 
@@ -152,9 +155,7 @@ export default {
     methods: {
         async loadInvitations() {
             this.loading = true
-            this.links = (
-                await getInvitations(this.$store.state.organizations.current.code)
-            ).results
+            this.links = (await getInvitations(this.organizationsStore.current.code)).results
             this.loading = false
         },
 
@@ -189,7 +190,7 @@ export default {
             this.hideConfirmModal()
 
             try {
-                await deleteInvitation(this.$store.state.organizations.current.code, linkId)
+                await deleteInvitation(this.organizationsStore.current.code, linkId)
                 this.toaster.pushSuccess(this.$t('invitation.delete.delete-success'))
 
                 this.loadInvitations()

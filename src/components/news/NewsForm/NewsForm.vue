@@ -90,6 +90,7 @@ import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPick
 import throttle from 'lodash/throttle'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export function defaultForm() {
     return {
@@ -118,6 +119,13 @@ export default {
         IconImage,
         MultiGroupPicker,
         FieldErrors,
+    },
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     props: {
@@ -166,7 +174,7 @@ export default {
                 : ''
         },
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 

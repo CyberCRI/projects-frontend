@@ -4,6 +4,8 @@ import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vu
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -15,10 +17,10 @@ const i18n = {
 
 const store = {
     modules: {
-        organizations: {
+        users: {
             namespaced: true,
             getters: {
-                current: () => OrganizationOutputFactory.generate(),
+                isConnecetd: () => true,
             },
         },
     },
@@ -29,6 +31,8 @@ describe('TakeTourModal.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
             store,

@@ -48,6 +48,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllEvents, deleteEvent } from '@/api/event.service'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EventAdminBlock',
 
@@ -61,8 +62,10 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -93,7 +96,7 @@ export default {
             this.isLoading = true
             const todayAtZero = new Date()
             todayAtZero.setHours(0, 0, 0, 0)
-            const request = await getAllEvents(this.$store.getters['organizations/current']?.code, {
+            const request = await getAllEvents(this.organizationsStore.current?.code, {
                 ordering: 'event_date',
                 from_date: todayAtZero.toISOString(),
                 limit: 4,
@@ -112,10 +115,7 @@ export default {
             console.log('delete event', this.eventToDelete)
             this.isDeletingEvent = true
             try {
-                await deleteEvent(
-                    this.$store.getters['organizations/current']?.code,
-                    this.eventToDelete.id
-                )
+                await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
                 this.toaster.pushSuccess(this.$t('event.delete.success'))
 
                 this.loadEvents()

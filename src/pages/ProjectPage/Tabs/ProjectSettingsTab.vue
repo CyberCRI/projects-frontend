@@ -228,6 +228,7 @@ import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProjectSettingsTab',
 
@@ -249,8 +250,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -288,7 +291,7 @@ export default {
     },
 
     async created() {
-        const organizations = await this.$store.dispatch('organizations/getAllOrganizations')
+        const organizations = await this.organizationsStore.getAllOrganizations()
         this.allOrganizations = organizations.results.map((org) => ({
             ...org,
             selected: !!this.project.organizations.find((projOrg) => projOrg.code === org.code),
@@ -298,8 +301,7 @@ export default {
             this.project.categories.length > 0
                 ? {
                       ...this.project.categories.find(
-                          (cat) =>
-                              cat.organization == this.$store.getters['organizations/current'].code
+                          (cat) => cat.organization == this.organizationsStore.current.code
                       ),
                   }
                 : {}
@@ -426,9 +428,7 @@ export default {
         },
 
         currentOrgSelected() {
-            return this.organizations_codes.includes(
-                this.$store.getters['organizations/current'].code
-            )
+            return this.organizations_codes.includes(this.organizationsStore.current.code)
         },
 
         isMember() {

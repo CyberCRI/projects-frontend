@@ -19,6 +19,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'BannerAdminBlock',
@@ -29,14 +30,16 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         bannerImageSizes() {
             return pictureApiToImageSizes(this.organization?.banner_image)
@@ -53,10 +56,7 @@ export default {
 
                 this.toaster.pushSuccess(this.$t('admin.portal.general.banner-edit.success'))
 
-                await this.$store.dispatch(
-                    'organizations/getCurrentOrganization',
-                    this.organization.code
-                )
+                await this.organizationsStore.getCurrentOrganization(this.organization.code)
             } catch (error) {
                 console.error(error)
 
@@ -79,10 +79,7 @@ export default {
                     }
                     this.toaster.pushSuccess(this.$t('admin.portal.general.banner-edit.success'))
 
-                    await this.$store.dispatch(
-                        'organizations/getCurrentOrganization',
-                        this.organization.code
-                    )
+                    await this.organizationsStore.getCurrentOrganization(this.organization.code)
                 } catch (error) {
                     console.error(error)
 

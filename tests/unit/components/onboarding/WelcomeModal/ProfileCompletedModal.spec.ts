@@ -4,6 +4,9 @@ import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileC
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -12,25 +15,15 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProfileCompletedModal.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
-            store,
         }
     })
 

@@ -323,7 +323,7 @@ import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProjectHeader',
 
@@ -344,7 +344,12 @@ export default {
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
 
     mixins: [permissions, imageMixin],
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         project: {
             type: Object,
@@ -453,8 +458,7 @@ export default {
 
         categoryForCurrentOrganization() {
             return this.project?.categories?.find(
-                (category) =>
-                    category.organization === this.$store.getters['organizations/current'].code
+                (category) => category.organization === this.organizationsStore.current.code
             )
         },
 

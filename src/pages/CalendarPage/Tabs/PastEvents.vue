@@ -7,13 +7,19 @@
 import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
 import EventList from '@/components/event/EventList/EventList.vue'
 import { getAllEvents } from '@/api/event.service'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'PastEvents',
 
     components: {
         EventListSkeleton,
         EventList,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     data() {
@@ -41,7 +47,7 @@ export default {
             let todayZeroHour = new Date()
             todayZeroHour.setHours(0, 0, 0, 0)
             const eventsFromAPi = (
-                await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                await getAllEvents(this.organizationsStore.current?.code, {
                     ordering: '-event_date',
                     to_date: todayZeroHour.toISOString(),
                 })

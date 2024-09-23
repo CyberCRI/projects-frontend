@@ -7,18 +7,22 @@
 
 <script>
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'AdminPortalPage',
 
     components: {
         TabsLayout,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     computed: {
         tabs() {
-            const requestAdminTab = this.$store.getters['organizations/current']
-                ?.access_request_enabled
+            const requestAdminTab = this.organizationsStore.current?.access_request_enabled
                 ? [
                       {
                           key: 'admin-requests',

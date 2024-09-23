@@ -11,6 +11,8 @@
 import AnnouncementCardList from '@/components/project/announcement/AnnouncementCardList.vue'
 import AnnouncementCardListSkeleton from '@/components/project/announcement/AnnouncementCardListSkeleton.vue'
 import { getAnnouncements } from '@/api/announcements.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'AnnouncementsPage',
 
@@ -19,6 +21,12 @@ export default {
         AnnouncementCardListSkeleton,
     },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             announcements: [],
@@ -28,7 +36,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 

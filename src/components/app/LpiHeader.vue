@@ -183,6 +183,7 @@ import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'LpiHeader',
 
@@ -203,9 +204,11 @@ export default {
     setup() {
         const languagesStore = useLanguagesStore()
         const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
         return {
             languagesStore,
             projectCategoriesStore,
+            organizationsStore,
         }
     },
 
@@ -347,7 +350,7 @@ export default {
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         userMenu() {
@@ -558,7 +561,7 @@ export default {
             return this.$store.getters['users/getNotificationCount']
         },
         organisation() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 }

@@ -73,6 +73,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import { searchPeopleProject } from '@/api/people.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'GroupUserSelection',
@@ -86,6 +87,12 @@ export default {
         UserCardInline,
         PaginationButtons,
         LinkButton,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     mounted() {
@@ -159,9 +166,9 @@ export default {
             this.isLoading = true
             this.request = await searchPeopleProject({
                 search: this.queryString,
-                org_id: this.$store.getters['organizations/current'].id,
+                org_id: this.organizationsStore.current.id,
                 params: {
-                    organizations: [this.$store.getters['organizations/current'].code], // return only users from current org
+                    organizations: [this.organizationsStore.current.code], // return only users from current org
                 },
             })
 

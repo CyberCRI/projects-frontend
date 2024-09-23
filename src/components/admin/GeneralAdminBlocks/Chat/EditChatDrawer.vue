@@ -33,7 +33,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization } from '@/api/organizations.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EditChatDrawer',
 
@@ -46,8 +46,10 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -59,7 +61,7 @@ export default {
     },
 
     data() {
-        const org = this.$store.getters['organizations/current']
+        const org = this.organizationsStore.current
 
         return {
             chat_button_text: org.chat_button_text || '',
@@ -81,7 +83,7 @@ export default {
                     chat_url: this.chat_url,
                 }
 
-                await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
+                await patchOrganization(this.organizationsStore.current?.code, payload)
                 this.$emit('chat-edited')
                 this.toaster.pushSuccess(this.$t('chat.drawer.success'))
             } catch (err) {

@@ -1,8 +1,9 @@
 import utils from '@/functs/functions'
 import permissions from '@/mixins/permissions'
-
+import useOrganizationsStore from '@/stores/useOrganizations'
 const isAdminOrFacilitator = (store) => {
-    const orgId = store.getters['organizations/current'].id
+    const organizationsStore = useOrganizationsStore()
+    const orgId = organizationsStore.current.id
     return !!(
         utils.isConnected() &&
         (permissions.methods.hasPermission('organization', 'delete_organization') ||

@@ -51,7 +51,7 @@ import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EventSummaryBlock',
 
@@ -60,8 +60,10 @@ export default {
     components: { EventItem, BaseListSummaryBlock, SummaryAction, EditEventDrawer, ConfirmModal },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -88,10 +90,7 @@ export default {
         async deleteEvent() {
             this.isDeletingEvent = true
             try {
-                await deleteEvent(
-                    this.$store.getters['organizations/current']?.code,
-                    this.eventToDelete.id
-                )
+                await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
                 this.toaster.pushSuccess(this.$t('event.delete.success'))
 
                 this.$emit('reload-events')

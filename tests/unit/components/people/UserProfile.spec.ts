@@ -7,6 +7,10 @@ import { flushPromises } from '@vue/test-utils'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 vi.mock('@/api/people.service.ts', () => ({
     getUser: vi.fn(),
 }))
@@ -22,18 +26,12 @@ const store = {
         users: {
             namespaced: true,
             getters: {
-                id: vi.fn(),
+                id: vi.fn().mockReturnValue(12),
                 userFromApi: vi.fn(),
                 getPermissions: vi.fn().mockReturnValue({}),
             },
             actions: {
                 getUser: vi.fn(),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
             },
         },
     },
@@ -49,6 +47,10 @@ const buildParams = (userId, showPageLink) => ({
 })
 
 describe('UserProfile', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
     it('should render UserProfile component', () => {
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
 

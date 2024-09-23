@@ -19,6 +19,7 @@ import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'EditNewsDrawer',
@@ -31,8 +32,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -103,15 +106,12 @@ export default {
 
                 if (this.news.id) {
                     savedNews = await patchNews(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.news.id,
                         payloadNews
                     )
                 } else {
-                    savedNews = await createNews(
-                        this.$store.getters['organizations/current']?.code,
-                        payloadNews
-                    )
+                    savedNews = await createNews(this.organizationsStore.current?.code, payloadNews)
                 }
 
                 const formData = new FormData()
@@ -128,21 +128,21 @@ export default {
                     imageSizesFormData(formData, this.form.imageSizes)
                     payload.header_image_id = (
                         await postNewsHeader(
-                            this.$store.getters['organizations/current']?.code,
+                            this.organizationsStore.current?.code,
                             savedNews.id,
                             formData
                         )
                     ).id
                     formData.delete('file')
                     await patchNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         savedNews.id,
                         payload.header_image_id,
                         formData
                     )
                 } else if (savedNews.header_image?.id) {
                     await patchNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.news.id,
                         this.news.header_image.id,
                         formData

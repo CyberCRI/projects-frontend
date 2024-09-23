@@ -1,6 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import store from '@/store'
-
+import useOrganizationsStore from '@/stores/useOrganizations'
 export const HomePages = new Map()
 
 HomePages.set('old', import(/* webpackChunkName: "HomePage" */ `../pages/HomePage/HomePage.vue`))
@@ -157,8 +156,9 @@ newHomeExtraPaths.set('new', [
 ])
 
 const checkAccessRequestEnabled = (to, _from, next) => {
+    const organizationsStore = useOrganizationsStore()
     // check if access request is enabled and redirects to 404 if not
-    if (!store.getters['organizations/current']?.access_request_enabled) {
+    if (!organizationsStore.current?.access_request_enabled) {
         next({
             name: 'page404',
             params: { pathMatch: to.path.substring(1).split('/') },

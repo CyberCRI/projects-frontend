@@ -31,6 +31,7 @@ import PaginationButtons from '@/components/base/navigation/PaginationButtons.vu
 import { axios } from '@/api/api.config'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
 import NewsFeed from '@/components/app/NewsFeed.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewsfeedPage',
 
@@ -39,7 +40,12 @@ export default {
         PaginationButtons,
         NewsListSkeleton,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             isLoading: false,
@@ -72,7 +78,7 @@ export default {
     methods: {
         async loadNewsfeed() {
             this.isLoading = true
-            const req = await getNewsfeed(this.$store.state.organizations.current.code, {
+            const req = await getNewsfeed(this.organizationsStore.current.code, {
                 limit: 15,
             })
             this.request = req

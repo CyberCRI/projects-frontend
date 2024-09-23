@@ -62,7 +62,7 @@ import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'CreateProjectPage',
 
@@ -76,10 +76,12 @@ export default {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
             languagesStore,
             projectCategoriesStore,
+            organizationsStore,
         }
     },
 
@@ -161,7 +163,7 @@ export default {
         },
 
         formNotEmpty() {
-            if (this.$store.getters['organizations/isDefault']) {
+            if (this.organizationsStore.isDefault) {
                 return !!this.form.title && !!this.form.purpose
             }
             return (
@@ -199,7 +201,7 @@ export default {
                 is_shareable: false,
                 publication_status: 'private',
                 life_status: 'running',
-                organizations_codes: [this.$store.getters['organizations/current'].code],
+                organizations_codes: [this.organizationsStore.current.code],
                 wikipedia_tags_ids: this.form.wikipedia_tags.map((tag) => tag.wikipedia_qid),
                 organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
             }

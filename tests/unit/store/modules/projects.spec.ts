@@ -148,7 +148,9 @@ describe('Store module | projects | actions', () => {
         const projects = ProjectOutputFactory.generateMany(2)
         const getAllRecommendedProjectsMock = getAllRecommendedProjects as Mock
         const params = {
-            organizations: [rootState.organizations.current.code],
+            // TODO: use pinia store
+            // organizations: [rootState.organizations.current.code],
+            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
         }
 
         getAllRecommendedProjectsMock.mockResolvedValue(projects)
@@ -163,7 +165,9 @@ describe('Store module | projects | actions', () => {
         const projects = ProjectOutputFactory.generateMany(2)
         const getAllRandomProjectsMock = getAllRandomProjects as Mock
         const params = {
-            organizations: [rootState.organizations.current.code],
+            // TODO: use pinia store
+            // organizations: [rootState.organizations.current.code],
+            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
         }
 
         getAllRandomProjectsMock.mockResolvedValue(projects)
@@ -179,7 +183,9 @@ describe('Store module | projects | actions', () => {
         const getAllProjectsMock = getAllProjects as Mock
         const searchProjectsMock = analytics.project.search as Mock
         const params = {
-            organizations: [rootState.organizations.current.code],
+            // TODO: use pinia store
+            // organizations: [rootState.organizations.current.code],
+            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
         }
 
         getAllProjectsMock.mockResolvedValue(projects)

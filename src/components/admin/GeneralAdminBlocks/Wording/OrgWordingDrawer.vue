@@ -39,7 +39,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'OrgWordingDrawer',
 
@@ -52,8 +52,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -65,7 +67,7 @@ export default {
     },
 
     data() {
-        const org = this.$store.getters['organizations/current']
+        const org = this.organizationsStore.current
         const title = org?.dashboard_title || ''
 
         return {
@@ -78,7 +80,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 
@@ -108,7 +110,7 @@ export default {
                     description: this.description,
                 }
 
-                await patchOrganization(this.$store.getters['organizations/current']?.code, payload)
+                await patchOrganization(this.organizationsStore.current?.code, payload)
                 this.$emit('organization-edited')
                 this.toaster.pushSuccess(this.$t('admin.portal.general.wording.success'))
             } catch (err) {

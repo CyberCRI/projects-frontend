@@ -50,6 +50,7 @@ import InstructionAdminListItem from './InstructionAdminListItem.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'InstructionAdminBlock',
@@ -63,8 +64,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -96,13 +99,10 @@ export default {
     methods: {
         async loadInstructions() {
             this.isLoading = true
-            const request = await getAllInstructions(
-                this.$store.getters['organizations/current']?.code,
-                {
-                    ordering: '-publication_date',
-                    limit: 1,
-                }
-            )
+            const request = await getAllInstructions(this.organizationsStore.current?.code, {
+                ordering: '-publication_date',
+                limit: 1,
+            })
             this.instructions = request.results
             this.instructionsCount = request.count
             this.isLoading = false
@@ -124,7 +124,7 @@ export default {
             this.isDeletingInstruction = true
             try {
                 await deleteInstruction(
-                    this.$store.getters['organizations/current']?.code,
+                    this.organizationsStore.current?.code,
                     this.instructionToDelete.id
                 )
                 this.toaster.pushSuccess(this.$t('instructions.delete.success'))

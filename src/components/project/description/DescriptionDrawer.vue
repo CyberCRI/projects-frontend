@@ -51,7 +51,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
 import retry from 'async-retry'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'DescriptionDrawer',
 
@@ -60,8 +60,10 @@ export default {
     emits: ['close'],
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -114,7 +116,7 @@ export default {
         providerParams() {
             return {
                 projectId: this.$store.getters['projects/currentProjectId'],
-                organizationId: this.$store.getters['organizations/current'].id,
+                organizationId: this.organizationsStore.current.id,
             }
         },
     },

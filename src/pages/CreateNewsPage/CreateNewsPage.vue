@@ -31,7 +31,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createNews, postNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'CreateNewsPage',
     components: {
@@ -40,8 +40,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -72,10 +74,7 @@ export default {
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                const savedNews = await createNews(
-                    this.$store.getters['organizations/current']?.code,
-                    payload
-                )
+                const savedNews = await createNews(this.organizationsStore.current?.code, payload)
 
                 if (this.form.header_image instanceof File) {
                     const formData = new FormData()
@@ -89,7 +88,7 @@ export default {
                     imageSizesFormData(formData, this.form.imageSizes)
 
                     await postNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         savedNews.id,
                         formData
                     )

@@ -141,6 +141,7 @@ import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'RegisterPage',
 
@@ -157,9 +158,12 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             toaster,
             languagesStore,
+            organizationsStore,
         }
     },
 
@@ -221,7 +225,7 @@ export default {
     async mounted() {
         this.isLinkValid = await this.validateToken()
         this.verifyingLink = false
-        this.contactEmail = this.$store.getters['organizations/current']?.contact_email
+        this.contactEmail = this.organizationsStore.current?.contact_email
     },
     computed: {
         backgroundImageUrl() {
@@ -231,10 +235,7 @@ export default {
     methods: {
         async validateToken() {
             try {
-                const token = await getInvitation(
-                    this.$store.getters['organizations/current'].code,
-                    this.token
-                )
+                const token = await getInvitation(this.organizationsStore.current.code, this.token)
                 const expirationDate = Date.parse(token.expire_at)
                 if (expirationDate > new Date()) {
                     return true

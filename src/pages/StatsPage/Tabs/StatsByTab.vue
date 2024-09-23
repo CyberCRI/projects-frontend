@@ -24,6 +24,7 @@ import TagChart from '@/components/stats/Charts/TagChart.vue'
 import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
 import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
 import { getStats } from '@/api/stats.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'StatsByTab',
@@ -35,7 +36,12 @@ export default {
         TagChart,
         TimeOrgChart,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         filter: {
             type: String,
@@ -57,7 +63,7 @@ export default {
     },
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 }

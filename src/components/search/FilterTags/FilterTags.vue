@@ -43,6 +43,7 @@ import SuggestedTags from './SuggestedTags.vue'
 import WikipediaResults from './WikipediaResults.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { getAllOrgTags } from '@/api/organization-tags.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'FilterTags',
 
@@ -54,7 +55,12 @@ export default {
         SuggestedTags,
         WikipediaResults,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         preselection: {
             type: Array,
@@ -88,12 +94,12 @@ export default {
         this.tags = [...this.preselection]
         await Promise.all([
             getAllOrgTags({
-                organization: this.$store.state.organizations.current.code,
+                organization: this.organizationsStore.current.code,
             }).then(({ results }) => {
                 this.organizationTags = results
             }),
             getAllWikiTags({
-                organization: this.$store.state.organizations.current.code,
+                organization: this.organizationsStore.current.code,
             }).then(({ results }) => {
                 this.wikipediaTags = results
             }),

@@ -113,6 +113,7 @@ import { postAccessRequest } from '@/api/organizations.service.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'RequestAccessPage',
 
@@ -125,8 +126,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             toaster,
+            organizationsStore,
         }
     },
     data() {
@@ -177,7 +181,7 @@ export default {
         }
     },
     async mounted() {
-        this.contactEmail = this.$store.getters['organizations/current']?.contact_email
+        this.contactEmail = this.organizationsStore.current?.contact_email
     },
 
     methods: {
@@ -188,7 +192,7 @@ export default {
             }
             this.asyncing = true
             try {
-                const org_code = this.$store.getters['organizations/current']?.code
+                const org_code = this.organizationsStore.current?.code
                 const payload = {
                     ...this.form,
                     organization: org_code,

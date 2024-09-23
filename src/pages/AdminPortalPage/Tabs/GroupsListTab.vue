@@ -49,7 +49,7 @@ import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
 import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupsListTab',
     components: {
@@ -60,8 +60,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -86,9 +88,7 @@ export default {
     methods: {
         async loadGroups() {
             this.loading = true
-            this.groups = (
-                await getHierarchyGroups(this.$store.state.organizations.current.code)
-            ).children
+            this.groups = (await getHierarchyGroups(this.organizationsStore.current.code)).children
 
             this.loading = false
         },
@@ -124,7 +124,7 @@ export default {
             } else if (this.groupToBeEdited) {
                 this.parent = group
             }
-            const orgCode = this.$store.getters['organizations/current'].code
+            const orgCode = this.organizationsStore.current.code
 
             const body = {
                 name: this.child.name,

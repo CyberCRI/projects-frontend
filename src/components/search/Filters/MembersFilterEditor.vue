@@ -36,7 +36,7 @@
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import { searchPeopleProject } from '@/api/people.service'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'MembersFilterEditor',
 
@@ -46,7 +46,12 @@ export default {
     },
 
     emits: ['update:model-value'],
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         modelValue: {
             type: Array,
@@ -79,7 +84,7 @@ export default {
         async getPeople(searchString) {
             const results = await searchPeopleProject({
                 search: searchString,
-                org_id: this.$store.getters['organizations/current'].id,
+                org_id: this.organizationsStore.current.id,
             })
             const filteredResults = results.filter(
                 (result) => !this.selection.some((member) => member.id == result.id)

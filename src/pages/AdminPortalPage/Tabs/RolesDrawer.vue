@@ -34,7 +34,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import { getGroups } from '@/api/groups.service'
 import { addOrgMember, removeOrgMember } from '@/api/organizations.service'
 import ToolTip from '@/components/base/ToolTip.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 /** 
  TODO: remove this dead component 
 */
@@ -48,6 +48,12 @@ export default {
         BaseDrawer,
         IconImage,
         ToolTip,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     props: {
@@ -75,7 +81,7 @@ export default {
         }
 
         if (this.selectedUser) {
-            const result = await getGroups(this.$store.getters['organizations/current'].id)
+            const result = await getGroups(this.organizationsStore.current.id)
 
             const groups = [...result.results]
 
@@ -101,7 +107,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 

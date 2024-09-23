@@ -53,6 +53,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'InstructionListPage',
@@ -67,8 +68,10 @@ export default {
     mixins: [permissions],
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -98,7 +101,7 @@ export default {
                     : { to_date: new Date().toISOString() }
             this.loading = true
             this.allInstructions = (
-                await getAllInstructions(this.$store.getters['organizations/current']?.code, {
+                await getAllInstructions(this.organizationsStore.current?.code, {
                     ordering: 'publication_date',
                     ...dateLimit,
                 })
@@ -110,7 +113,7 @@ export default {
             this.isDeletingInstruction = true
             try {
                 await deleteInstruction(
-                    this.$store.getters['organizations/current']?.code,
+                    this.organizationsStore.current?.code,
                     this.instructionToDelete.id
                 )
                 this.toaster.pushSuccess(this.$t('instructions.delete.success'))

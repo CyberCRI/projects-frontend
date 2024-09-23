@@ -91,6 +91,7 @@ import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'SettingsTab',
 
@@ -111,10 +112,13 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             v$: useVuelidate(),
             toaster,
             languagesStore,
+            organizationsStore,
         }
     },
 
@@ -130,7 +134,7 @@ export default {
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         visibilityOptions() {
@@ -220,7 +224,7 @@ export default {
             const data = { ...this.form }
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', data)
+                await this.organizationsStore.updateCurrentOrganization(data)
                 this.toaster.pushSuccess(this.$t('toasts.organization-general-update.success'))
             } catch (error) {
                 this.toaster.pushError(

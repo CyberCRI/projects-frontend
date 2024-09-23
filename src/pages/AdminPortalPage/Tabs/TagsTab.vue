@@ -80,7 +80,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'TagsTab',
 
@@ -94,9 +94,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
             languagesStore,
+            organizationsStore,
         }
     },
 
@@ -120,7 +122,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         currentLang() {
@@ -132,7 +134,7 @@ export default {
         async loadWikiTags() {
             this.wikipediaTags = (
                 await getAllWikiTags({
-                    organization: this.$store.state.organizations.current.code,
+                    organization: this.organizationsStore.current.code,
                 })
             ).results
         },
@@ -140,7 +142,7 @@ export default {
         async loadOrgTags() {
             this.organizationTags = await (
                 await getAllOrgTags({
-                    organization: this.$store.state.organizations.current.code,
+                    organization: this.organizationsStore.current.code,
                 })
             ).results
         },
@@ -171,7 +173,7 @@ export default {
             const newWikiIds = this.newWikipediaTags.map((tag) => tag.wikipedia_qid)
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', {
+                await this.organizationsStore.updateCurrentOrganization({
                     wikipedia_tags_ids: newWikiIds,
                 })
                 await this.loadWikiTags()
@@ -211,7 +213,7 @@ export default {
                 .map((tag) => tag.wikipedia_qid)
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', {
+                await this.organizationsStore.updateCurrentOrganization({
                     wikipedia_tags_ids: updatedWikipediaTagsIds,
                 })
                 await this.loadWikiTags()

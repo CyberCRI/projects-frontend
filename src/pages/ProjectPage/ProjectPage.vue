@@ -150,6 +150,8 @@ import { getAllGoals } from '@/api/goals.service'
 import { getProject } from '@/api/projects.service'
 import { getReviews } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'ProjectPage',
 
@@ -172,6 +174,8 @@ export default {
 
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+
         const modals = ref({
             project: {
                 visible: false,
@@ -260,6 +264,7 @@ export default {
             modals,
             toggleAddModal,
             goToTab,
+            organizationsStore,
         }
     },
 
@@ -523,7 +528,7 @@ export default {
                 try {
                     const providerParams = {
                         projectId: this.$store.getters['projects/currentProjectId'],
-                        organizationId: this.$store.getters['organizations/current'].id,
+                        organizationId: this.organizationsStore.current.id,
                     }
 
                     this.provider = new HocuspocusProvider({
@@ -555,7 +560,7 @@ export default {
             try {
                 this.similarProjects = await getSuggestedProjects(
                     this.project.id,
-                    this.$store.getters['organizations/current']?.code
+                    this.organizationsStore.current?.code
                 )
             } catch (err) {
                 console.error(err)

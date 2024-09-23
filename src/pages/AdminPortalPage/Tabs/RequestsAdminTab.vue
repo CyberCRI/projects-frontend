@@ -116,6 +116,7 @@ import {
 } from '@/api/organizations.service.ts'
 import ToolTip from '@/components/base/ToolTip.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'RequestsAdminTab',
@@ -129,8 +130,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -176,7 +179,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         filteredUsers() {

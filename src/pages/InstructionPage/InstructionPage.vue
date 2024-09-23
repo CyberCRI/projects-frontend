@@ -72,7 +72,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import { getInstruction, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'InstructionPage',
 
@@ -87,8 +87,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -136,7 +138,7 @@ export default {
             // TODO: Fetch instuction
             try {
                 this.instruction = await getInstruction(
-                    this.$store.getters['organizations/current']?.code,
+                    this.organizationsStore.current?.code,
                     this.slugOrId
                 )
 
@@ -154,7 +156,7 @@ export default {
             this.isDeletingInstruction = true
             try {
                 await deleteInstruction(
-                    this.$store.getters['organizations/current']?.code,
+                    this.organizationsStore.current?.code,
                     this.instructionToDelete.id
                 )
                 this.toaster.pushSuccess(this.$t('instructions.delete.success'))

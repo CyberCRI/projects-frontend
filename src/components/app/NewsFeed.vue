@@ -44,6 +44,7 @@ import NewsfeedProjectItem from '@/components/home/HomeNewsfeed/NewsfeedProjectI
 import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
 import { deleteNews } from '@/api/news.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewsFeed',
     emits: ['reload-newsfeed'],
@@ -56,8 +57,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -79,10 +82,7 @@ export default {
         async deleteNews() {
             this.isDeletingNews = true
             try {
-                await deleteNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.newsToDelete.id
-                )
+                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
                 this.toaster.pushSuccess(this.$t('news.delete.success'))
 
                 this.$emit('reload-newsfeed')

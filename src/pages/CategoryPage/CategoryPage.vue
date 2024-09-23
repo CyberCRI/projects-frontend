@@ -83,6 +83,7 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'CategoryPage',
 
@@ -98,7 +99,11 @@ export default {
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
-        return { projectCategoriesStore }
+        const organizationsStore = useOrganizationsStore()
+        return {
+            projectCategoriesStore,
+            organizationsStore,
+        }
     },
 
     pageTitle() {
@@ -114,7 +119,7 @@ export default {
                 members: [],
                 languages: [],
                 sdgs: [],
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
                 ordering: '-updated_at',
                 limit: 30,
                 page: this.$route.query.page || 1,
@@ -191,7 +196,7 @@ export default {
                     members: [],
                     languages: [],
                     sdgs: [],
-                    organizations: [this.$store.state.organizations.current.code],
+                    organizations: [this.organizationsStore.current.code],
                     ordering: '-updated_at',
                     limit: 30,
                     page: this.$route.query.page || 1,

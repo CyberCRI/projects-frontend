@@ -59,6 +59,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import debounce from 'lodash.debounce'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'LinkedProjectSelection',
 
@@ -70,6 +71,13 @@ export default {
         SearchInput,
         LoaderSimple,
         PaginationButtons,
+    },
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     data() {
@@ -155,7 +163,7 @@ export default {
 
             const filters = {
                 limit: 24,
-                organizations: this.$store.getters['organizations/current'].code,
+                organizations: this.organizationsStore.current.code,
             }
 
             if (this.queryString) {

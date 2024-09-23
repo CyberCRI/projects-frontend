@@ -94,7 +94,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewsPage',
 
@@ -112,8 +112,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -181,10 +183,7 @@ export default {
         },
         async loadNews() {
             try {
-                this.news = await getNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.slugOrId
-                )
+                this.news = await getNews(this.organizationsStore.current?.code, this.slugOrId)
             } catch (err) {
                 console.error(err)
                 this.$router.replace({
@@ -197,7 +196,7 @@ export default {
         async loadOtherNews() {
             // fetch 3 news because we want to show 2 other news and one might be the current one
             this.otherNews = (
-                await getAllNews(this.$store.getters['organizations/current']?.code, { limit: 3 })
+                await getAllNews(this.organizationsStore.current?.code, { limit: 3 })
             ).results
                 ?.filter((news) => !this.news || news.id !== this.news.id)
                 .slice(0, 2)
@@ -206,10 +205,7 @@ export default {
         async deleteNews() {
             this.isDeletingNews = true
             try {
-                await deleteNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.newsToDelete.id
-                )
+                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
                 this.toaster.pushSuccess(this.$t('news.delete.success'))
             } catch (err) {
                 this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)

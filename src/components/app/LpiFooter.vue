@@ -138,6 +138,7 @@ import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'LpiFooter',
     mixins: [imageMixin],
@@ -151,8 +152,10 @@ export default {
     },
     setup() {
         const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             languagesStore,
+            organizationsStore,
         }
     },
     data() {
@@ -166,7 +169,7 @@ export default {
             return this.languagesStore.current === 'fr'
         },
         showDirectoryLink() {
-            const organization = this.$store.getters['organizations/current']
+            const organization = this.organizationsStore.current
             if (organization && organization.code === 'DEFAULT') {
                 return false
             }
@@ -183,7 +186,7 @@ export default {
             return this.$store.getters['users/isConnected']
         },
         showOnboardingScreen() {
-            return this.$store.getters['organizations/current']?.onboarding_enabled
+            return this.organizationsStore.current?.onboarding_enabled
         },
     },
 }

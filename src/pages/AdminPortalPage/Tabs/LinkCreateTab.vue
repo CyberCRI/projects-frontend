@@ -137,6 +137,8 @@ import { helpers, required } from '@vuelidate/validators'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'LinkCreateTab',
     components: {
@@ -150,8 +152,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -196,7 +201,7 @@ export default {
         async save() {
             this.isSaving = true
             try {
-                await postInvitation(this.$store.state.organizations.current.code, this.form)
+                await postInvitation(this.organizationsStore.current.code, this.form)
                 this.toaster.pushSuccess(this.$t('invitation.create.create-success'))
 
                 this.$router.push({ name: 'linksList' })

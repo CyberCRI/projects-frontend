@@ -99,6 +99,7 @@ import { postBlogEntryImage } from '@/api/blogentries.service'
 import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'BlogDrawer',
@@ -118,8 +119,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -197,7 +200,7 @@ export default {
             return {
                 blogId: this.editedBlog ? this.editedBlog.id : null,
                 projectId: this.$store.getters['projects/currentProjectId'],
-                organizationId: this.$store.getters['organizations/current'].id,
+                organizationId: this.organizationsStore.current.id,
             }
         },
     },

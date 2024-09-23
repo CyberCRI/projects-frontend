@@ -7,6 +7,9 @@ import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 vi.mock('y-prosemirror', () => ({
     default: {},
@@ -58,66 +61,15 @@ function buildStore(isLogged, resetUser) {
                 actions: {},
                 mutations: mutations,
             },
-            organizations: {
-                namespaced: true,
-                state: () => ({ all: [] }),
-                getters: {
-                    theme: () => 'main',
-                    current: () => {
-                        return { code: '123' }
-                    },
-                },
-                actions: {},
-                mutations: {},
-            },
-            app: {
-                namespaced: true,
-                state: () => ({ loading: { visible: true, message: null } }),
-                getters: {
-                    loading: vi.fn(() => {
-                        return { visible: true, message: null }
-                    }),
-                },
-                actions: {
-                    updateLoading: vi.fn(),
-                },
-                mutations: {},
-            },
-            notifications: {
-                namespaced: true,
-                state: () => ({
-                    toastList: [
-                        {
-                            message: '',
-                            isOpened: false,
-                            type: '',
-                        },
-                    ],
-                }),
-                getters: {
-                    getToastList: vi.fn(() => [
-                        {
-                            message: '',
-                            isOpened: false,
-                            type: '',
-                        },
-                    ]),
-                },
-                actions: {
-                    deleteToast: vi.fn(),
-                },
-            },
-            faqs: {
-                namespaced: true,
-                actions: {
-                    getFaq: vi.fn(),
-                },
-            },
         },
     }
 }
 
 describe('On tab focus', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: '123' } as OrganizationOutput
+    })
     const localStorageMock = mockLocalStorage()
 
     Object.defineProperty(window, 'localStorage', {

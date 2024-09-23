@@ -28,16 +28,24 @@
     </div>
 </template>
 <script>
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'PortalPage',
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
+
     async mounted() {
-        await this.$store.dispatch('organizations/getAllOrganizations')
+        await this.organizationsStore.getAllOrganizations()
     },
 
     computed: {
         organisations() {
-            return this.$store.getters['organizations/all'].filter(
+            return this.organizationsStore.all.filter(
                 (org) => org.is_logo_visible_on_parent_dashboard
             )
         },

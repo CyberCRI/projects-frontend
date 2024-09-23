@@ -60,7 +60,7 @@ import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupPageInner',
     components: {
@@ -73,8 +73,10 @@ export default {
     mixins: [permissions],
     setup() {
         const peopleGroupsStore = usePeopleGroupsStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             peopleGroupsStore,
+            organizationsStore,
         }
     },
     props: {
@@ -105,7 +107,7 @@ export default {
 
     computed: {
         currentOrganizationCode() {
-            return this.$store.state.organizations.current.code
+            return this.organizationsStore.current.code
         },
         editGroupLabel() {
             return this.$t('group.edit-group')

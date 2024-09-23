@@ -29,6 +29,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import useToasterStore from '@/stores/useToaster'
 import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
@@ -135,10 +136,8 @@ async function main(): Promise<void> {
         await store.dispatch('users/getUser', store.state.users.keycloak_id)
 
     // Get org information on init
-    await store.dispatch(
-        'organizations/getCurrentOrganization',
-        import.meta.env.VITE_APP_API_ORG_CODE
-    )
+    const organizationsStore = useOrganizationsStore()
+    await organizationsStore.getCurrentOrganization(import.meta.env.VITE_APP_API_ORG_CODE)
 
     // eslint-disable-next-line vue/require-name-property
     // const app = Vue.createApp({

@@ -6,6 +6,7 @@ import { ProjectCategoryOutputFactory } from '../../../factories/project-categor
 import MockComponent from '../../../helpers/MockComponent.vue'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { axios } from '@/api/api.config'
 // quick fix for vi error
@@ -53,13 +54,6 @@ const store = {
                 permissions: permissions,
             },
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => organization,
-                all: () => organizations,
-            },
-        },
     },
 }
 
@@ -68,6 +62,9 @@ describe('LpiHeader.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = organization
+        organizationsStore.all = organizations
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
         defaultParams = {

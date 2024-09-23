@@ -109,7 +109,7 @@ import SocialNetworks from './SocialNetworks.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProfileHeader',
 
@@ -118,7 +118,12 @@ export default {
     mixins: [imageMixin],
 
     components: { IconImage, BadgeItem, SocialNetworks, CroppedImage },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         user: {
             type: Object,
@@ -145,8 +150,7 @@ export default {
         displayableGroups() {
             return this.user?.people_groups
                 ? this.user.people_groups.filter(
-                      (group) =>
-                          group.organization === this.$store.getters['organizations/current']?.code
+                      (group) => group.organization === this.organizationsStore.current?.code
                   )
                 : []
         },

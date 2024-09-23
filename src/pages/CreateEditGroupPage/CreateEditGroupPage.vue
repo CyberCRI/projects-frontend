@@ -76,6 +76,7 @@ import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesU
 import isEqual from 'lodash.isequal'
 import useToasterStore from '@/stores/useToaster.ts'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'CreateEditGroupPage',
@@ -95,9 +96,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const peopleGroupsStore = usePeopleGroupsStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
             peopleGroupsStore,
+            organizationsStore,
         }
     },
 
@@ -223,7 +226,7 @@ export default {
             // to allow edition of groups on the meta portal (PROJ-1032)
             return this.groupData
                 ? this.groupData.organization
-                : this.$store.getters['organizations/current'].code
+                : this.organizationsStore.current.code
         },
     },
 

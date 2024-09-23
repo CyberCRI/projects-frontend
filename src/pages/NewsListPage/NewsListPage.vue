@@ -65,7 +65,7 @@ import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSke
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewsListPage',
 
@@ -81,8 +81,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -132,10 +135,7 @@ export default {
         async deleteNews() {
             this.isDeletingNews = true
             try {
-                await deleteNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.newsToDelete.id
-                )
+                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
                 this.toaster.pushSuccess(this.$t('news.delete.success'))
 
                 this.loadNews()
@@ -153,10 +153,11 @@ export default {
                 this.canEditNews || this.canDeleteNews ? {} : { to_date: new Date().toISOString() }
 
             this.loading = true
-            this.newsRequest = await getAllNews(
-                this.$store.getters['organizations/current']?.code,
-                { ordering: '-publication_date', limit: this.maxNewsPerPage, ...dateLimit }
-            )
+            this.newsRequest = await getAllNews(this.organizationsStore.current?.code, {
+                ordering: '-publication_date',
+                limit: this.maxNewsPerPage,
+                ...dateLimit,
+            })
             this.loading = false
         },
 

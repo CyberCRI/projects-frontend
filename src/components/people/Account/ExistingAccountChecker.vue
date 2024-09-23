@@ -46,6 +46,8 @@ import { searchPeopleByExactMail } from '@/api/people.service'
 import useValidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'ExistingAccountChecker',
 
@@ -53,6 +55,12 @@ export default {
 
     components: { AccountFormTitleBlock, TextInput, LpiButton, FieldErrors },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             email: '',
@@ -79,7 +87,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 

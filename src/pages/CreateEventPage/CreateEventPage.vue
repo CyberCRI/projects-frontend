@@ -28,6 +28,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import EventForm, { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'CreateEventPage',
@@ -38,8 +39,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -72,7 +75,7 @@ export default {
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                await createEvent(this.$store.getters['organizations/current']?.code, formData)
+                await createEvent(this.organizationsStore.current?.code, formData)
                 this.toaster.pushSuccess(this.$t('event.save.success'))
             } catch (err) {
                 this.toaster.pushError(`${this.$t('event.save.error')} (${err})`)

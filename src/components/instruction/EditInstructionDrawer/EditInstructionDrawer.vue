@@ -22,6 +22,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import InstructionForm from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { createInstruction, putInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EditInstructionDrawer',
 
@@ -33,8 +34,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -99,13 +102,13 @@ export default {
                 let savedInstruction
                 if (this.instruction?.id) {
                     savedInstruction = await putInstruction(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.instruction?.id,
                         formData
                     )
                 } else {
                     savedInstruction = await createInstruction(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         formData
                     )
                 }

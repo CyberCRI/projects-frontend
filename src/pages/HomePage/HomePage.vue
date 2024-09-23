@@ -228,7 +228,7 @@ import { getAnnouncements } from '@/api/announcements.service'
 
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'HomePage',
 
@@ -256,8 +256,10 @@ export default {
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
         return {
             projectCategoriesStore,
+            organizationsStore,
         }
     },
 
@@ -273,7 +275,7 @@ export default {
     },
 
     created() {
-        this.$store.dispatch('organizations/getAllOrganizations')
+        this.organizationsStore.getAllOrganizations()
     },
 
     mounted() {
@@ -282,11 +284,11 @@ export default {
 
     computed: {
         organizations() {
-            return this.$store.getters['organizations/all']
+            return this.organizationsStore.all
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         categories() {

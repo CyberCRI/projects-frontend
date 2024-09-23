@@ -59,6 +59,7 @@ import { getAllEvents } from '@/api/event.service'
 import { getAllInstructions } from '@/api/instruction.service'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'HomeHeaderConnected',
 
@@ -69,7 +70,12 @@ export default {
         LpiLoader,
         LpiButton,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             events: [],
@@ -84,7 +90,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         displayableEvents() {
@@ -134,7 +140,7 @@ export default {
                 ordering: '-updated_at',
                 members: [this.$store.getters['users/id']],
                 member_role: ['owners', 'members', 'reviewers'],
-                organizations: this.$store.getters['organizations/current'].code,
+                organizations: this.organizationsStore.current.code,
             }
             const response = await searchProjects('', filters)
             this.projects = response.results.map((result) => result.project)
@@ -144,7 +150,7 @@ export default {
             const todayAtZero = new Date()
             todayAtZero.setHours(0, 0, 0, 0)
             this.events = (
-                await getAllEvents(this.$store.getters['organizations/current']?.code, {
+                await getAllEvents(this.organizationsStore.current?.code, {
                     ordering: 'event_date',
                     from_date: todayAtZero.toISOString(),
                     limit: this.summaryMaxEvents,
@@ -154,7 +160,7 @@ export default {
 
         async loadInstructions() {
             this.instructions = (
-                await getAllInstructions(this.$store.getters['organizations/current']?.code, {
+                await getAllInstructions(this.organizationsStore.current?.code, {
                     ordering: '-publication_date',
                     to_date: new Date().toISOString(),
                     limit: 1,

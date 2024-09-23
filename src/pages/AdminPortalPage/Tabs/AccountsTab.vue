@@ -134,7 +134,7 @@ import { axios } from '@/api/api.config'
 
 import { searchPeopleAdmin } from '@/api/people.service'
 import ToolTip from '@/components/base/ToolTip.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'AccountsTab',
 
@@ -148,7 +148,12 @@ export default {
         LinkButton,
         ToolTip,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             isOpenEditRoleDrawer: false,
@@ -214,7 +219,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         filteredUsers() {

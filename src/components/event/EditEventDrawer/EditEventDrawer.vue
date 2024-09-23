@@ -17,7 +17,7 @@ import { createEvent, putEvent } from '@/api/event.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import EventForm, { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EditEventDrawer',
 
@@ -29,8 +29,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -97,15 +99,12 @@ export default {
                 let savedEvent
                 if (this.event?.id) {
                     savedEvent = await putEvent(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.event.id,
                         formData
                     )
                 } else {
-                    savedEvent = await createEvent(
-                        this.$store.getters['organizations/current']?.code,
-                        formData
-                    )
+                    savedEvent = await createEvent(this.organizationsStore.current?.code, formData)
                 }
                 this.toaster.pushSuccess(this.$t('event.save.success'))
 

@@ -179,7 +179,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupForm',
 
@@ -200,7 +200,12 @@ export default {
         ImageEditor,
         FieldErrors,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         isAddMode: {
             type: Boolean,
@@ -304,7 +309,7 @@ export default {
             // to allow edition of groups on the meta portal (PROJ-1032)
             const orgCode = this.modelValue.organization
                 ? this.modelValue.organization
-                : this.$store.state.organizations.current.code
+                : this.organizationsStore.current.code
             this.groups = (await getHierarchyGroups(orgCode)).children
 
             this.loading = false
@@ -325,7 +330,7 @@ export default {
         },
         async removeGroup() {
             this.loading = true
-            let organization = this.$store.getters['organizations/current'].code
+            let organization = this.organizationsStore.current.code
             await deleteGroup(organization, this.$route.params.groupId)
             this.loading = false
             this.$router.push({

@@ -42,6 +42,7 @@ import {
     removeFeaturedProject,
 } from '@/api/organizations.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'FeaturedProjectAdminBlock',
@@ -54,8 +55,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -77,7 +80,7 @@ export default {
             return this.$t('admin.portal.featured-projects') + extra
         },
         organizationCode() {
-            return this.$store.getters['organizations/current']?.code
+            return this.organizationsStore.current?.code
         },
     },
 
