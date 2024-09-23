@@ -4,6 +4,10 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -12,12 +16,6 @@ const i18n = {
 
 const store = {
     modules: {
-        // projectCategories: {
-        //     namespaced: true,
-        //     getters: {
-        //         allOrderedByOrderId: vi.fn().mockReturnValue([]),
-        //     },
-        // },
         organizations: {
             state: {
                 current: { id: 'TEST', code: 'TEST' },
@@ -57,6 +55,11 @@ const connectedStore = {
 const router = [{ name: 'Home', path: '/', component: NewHomePage }]
 
 describe('NewHomePage', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    })
+
     it('should render NewHomePage', () => {
         let wrapper = lpiShallowMount(NewHomePage, { store, router, i18n })
 

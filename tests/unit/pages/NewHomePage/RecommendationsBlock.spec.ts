@@ -6,6 +6,9 @@ import flushPromises from 'flush-promises'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { UserFactory } from '../../../factories/user.factory'
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
@@ -28,12 +31,6 @@ const i18n = {
 
 const storeFactory = (loggedIn) => ({
     modules: {
-        // projectCategories: {
-        //     namespaced: true,
-        //     getters: {
-        //         allOrderedByOrderId: vi.fn().mockReturnValue([]),
-        //     },
-        // },
         organizations: {
             state: {
                 current: { id: 'TEST', code: 'TEST' },
@@ -57,6 +54,10 @@ const router = [{ name: 'Home', path: '/', component: MockComponent }]
 const props = {}
 
 describe('RecommendationBlock', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    })
     it('should render RecommendationBlock', async () => {
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props,

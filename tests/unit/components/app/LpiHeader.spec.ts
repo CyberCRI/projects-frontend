@@ -4,6 +4,8 @@ import LpiHeader from '@/components/app/LpiHeader.vue'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import MockComponent from '../../../helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 
 import { axios } from '@/api/api.config'
 // quick fix for vi error
@@ -58,15 +60,6 @@ const store = {
                 all: () => organizations,
             },
         },
-        // projectCategories: {
-        //     namespaced: true,
-        //     actions: {
-        //         getAllProjectCategories: () => ProjectCategoryOutputFactory.generateMany(2),
-        //     },
-        //     getters: {
-        //         all: () => ProjectCategoryOutputFactory.generateMany(2),
-        //     },
-        // },
     },
 }
 
@@ -75,6 +68,8 @@ describe('LpiHeader.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
         defaultParams = {
             props: {},
             i18n,

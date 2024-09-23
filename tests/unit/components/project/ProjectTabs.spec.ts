@@ -3,6 +3,8 @@ import ProjectTabs from '@/components/project/ProjectTabs.vue'
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
@@ -21,13 +23,6 @@ const route = {
 
 const store = {
     modules: {
-        // projectCategories: {
-        //     namespaced: true,
-        //     getters: {
-        //         allOrderedByOrderId: vi.fn(() => ProjectCategoryOutputFactory.generateMany(2)),
-        //     },
-        // },
-
         organizations: {
             namespaced: true,
             getters: {
@@ -56,6 +51,10 @@ const factory = (props?) => {
 }
 
 describe('ProjectTabs.vue', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    })
     it('should render component', () => {
         const wrapper = factory()
         expect(wrapper.exists()).toBe(true)

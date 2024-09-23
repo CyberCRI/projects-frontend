@@ -2,28 +2,15 @@ import { lpiMount } from '../../../../helpers/LpiMount'
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 
+import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-// function buildStore() {
-//     return {
-//         modules: {
-//             projectCategories: {
-//                 namespaced: true,
-//                 getters: {
-//                     hierarchy: () => ProjectCategoryOutputFactory.generateMany(8),
-//                 },
-//             },
-//         },
-//     }
-// }
 
 const factory = (props?) => {
     return lpiMount(CategoriesFilterEditor, {
         props: {
             ...props,
         },
-        //store: buildStore(),
     })
 }
 

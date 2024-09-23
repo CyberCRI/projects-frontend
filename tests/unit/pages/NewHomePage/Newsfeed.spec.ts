@@ -6,6 +6,9 @@ import flushPromises from 'flush-promises'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 
 const i18n = {
     locale: 'en',
@@ -15,12 +18,6 @@ const i18n = {
 
 const store = {
     modules: {
-        // projectCategories: {
-        //     namespaced: true,
-        //     getters: {
-        //         allOrderedByOrderId: vi.fn().mockReturnValue([]),
-        //     },
-        // },
         organizations: {
             state: {
                 current: { id: 'TEST', code: 'TEST' },
@@ -60,6 +57,10 @@ const connectedStore = {
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 describe('Newsfeed', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    })
     it('should render NewsFeed', async () => {
         let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, store, router, i18n })
         await flushPromises()
