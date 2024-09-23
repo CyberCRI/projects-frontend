@@ -4,11 +4,11 @@ import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { flushPromises } from '@vue/test-utils'
 
-import { getGroup } from '@/api/group.service'
+import { getGroup } from '@/api/groups.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
-vi.mock('@/api/group.service', () => ({
+vi.mock('@/api/groups.service', () => ({
     getGroup: vi.fn().mockResolvedValue({ results: {} }),
 }))
 

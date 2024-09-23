@@ -60,7 +60,7 @@
 </template>
 <script>
 import debounce from 'lodash.debounce'
-import { getHierarchyGroups } from '@/api/group.service.ts'
+import { getHierarchyGroups } from '@/api/groups.service.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions'
 import CardList from '@/components/base/CardList.vue'

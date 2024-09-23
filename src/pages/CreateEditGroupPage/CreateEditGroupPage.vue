@@ -69,7 +69,7 @@ import {
     patchGroup,
     removeGroupMember,
     removeGroupProject,
-} from '@/api/group.service'
+} from '@/api/groups.service'
 import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
 import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'

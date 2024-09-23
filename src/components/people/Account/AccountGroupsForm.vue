@@ -80,7 +80,7 @@
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
+import { getPeopleGroupsHierarchy } from '@/api/groups.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 export default {

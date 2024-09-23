@@ -4,14 +4,14 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { flushPromises } from '@vue/test-utils'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
+import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
 import pinia from '@/stores'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 
-vi.mock('@/api/group.service', () => ({
+vi.mock('@/api/groups.service', () => ({
     getGroup: vi.fn().mockResolvedValue({
         id: 123,
         permissions: [], // TODO: remove from model

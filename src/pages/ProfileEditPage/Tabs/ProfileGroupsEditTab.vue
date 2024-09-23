@@ -30,7 +30,7 @@
 <script>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
-import { getGroup } from '@/api/group.service'
+import { getGroup } from '@/api/groups.service'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 export default {
     name: 'ProfileGroupsEditTab',

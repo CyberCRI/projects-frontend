@@ -101,60 +101,6 @@ export async function removeGroupMember({
     ).data
 }
 
-export async function getPeopleGroups(org_code, params) {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/people-group/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function getPeopleGroupsHierarchy(org_code, params) {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/people-groups-hierarchy/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function addUserPeopleGroup(org_code, people_group_id, body) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/people-group/${people_group_id}/member/add/`,
-            body
-        )
-    ).data
-}
-
-export async function removeUserPeopleGroup(org_code, people_group_id, body) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/people-group/${people_group_id}/member/remove/`,
-            body
-        )
-    ).data
-}
-
-export async function getPeopleGroupById(org_code, group_id) {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/people-group/${group_id}/`
-        )
-    ).data
-}
-
 export async function postAccessRequest(org_code, body) {
     return (
         await axios.post(

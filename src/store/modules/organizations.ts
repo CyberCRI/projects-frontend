@@ -4,8 +4,9 @@ import {
     patchOrganization,
     addGroupMember,
     removeGroupMember,
-    getPeopleGroups,
 } from '@/api/organizations.service'
+
+import { getPeopleGroups } from '@/api/groups.service'
 import { APIResponseList } from '@/api/types'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
