@@ -28,12 +28,12 @@ const i18n = {
 
 const storeFactory = (loggedIn) => ({
     modules: {
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                allOrderedByOrderId: vi.fn().mockReturnValue([]),
-            },
-        },
+        // projectCategories: {
+        //     namespaced: true,
+        //     getters: {
+        //         allOrderedByOrderId: vi.fn().mockReturnValue([]),
+        //     },
+        // },
         organizations: {
             state: {
                 current: { id: 'TEST', code: 'TEST' },

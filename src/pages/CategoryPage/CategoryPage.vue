@@ -67,8 +67,6 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import { mapGetters } from 'vuex'
-import store from '@/store'
 import formatHtml from '@/mixins/formatHtml.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
 
@@ -84,7 +82,7 @@ import {
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
-
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'CategoryPage',
 
@@ -96,6 +94,11 @@ export default {
         CategoryCardImage,
         BreadCrumbs,
         ProjectSearchTab,
+    },
+
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        return { projectCategoriesStore }
     },
 
     pageTitle() {
@@ -134,14 +137,10 @@ export default {
             return [...this.category.children]?.sort((a, b) => a.order_index - b.oreder_index) || []
         },
 
-        ...mapGetters({
-            getProjectCategoryById: 'projectCategories/getOneById',
-        }),
-
         category() {
             if (this.$route.params.id) {
                 window.scrollTo(0, 0)
-                return this.getProjectCategoryById(this.$route.params.id)
+                return this.projectCategoriesStore.allByIds[this.$route.params.id]
             }
 
             return null
@@ -231,11 +230,12 @@ export default {
         }, 500),
     },
 
-    beforeRouteEnter(to, from, next) {
+    beforeRouteEnter(_to, _from, next) {
         // if it is the first page navigated (deep link), categories are not initialized yet
         // so prevent navigation before it is
-        if (!store.state.projectCategories.all || !store.state.projectCategories.all.length) {
-            store.dispatch('projectCategories/getAllProjectCategories').then(() => next())
+        const projectCategoriesStore = useProjectCategories()
+        if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
+            projectCategoriesStore.getAllProjectCategories().then(() => next())
         } else {
             next()
         }

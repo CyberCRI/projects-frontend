@@ -4,7 +4,7 @@ import { createI18n } from 'vue-i18n'
 import { config, mount, shallowMount } from '@vue/test-utils'
 import { capitalize, isNotGroup, isGroup } from '@/filters'
 import { clickOutside, disableFocus } from '@/directives'
-import { createTestingPinia } from '@pinia/testing'
+import pinia from './test-pinia'
 
 config.global.mocks = {
     $filters: {
@@ -23,7 +23,7 @@ function buildOptions(options: any = {}) {
         plugins.push(store)
     }
 
-    plugins.push(createTestingPinia())
+    plugins.push(pinia)
 
     let i18n
     if (options.i18n) {

@@ -227,6 +227,7 @@ import analytics from '@/analytics'
 import { getAnnouncements } from '@/api/announcements.service'
 
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 
 export default {
     name: 'HomePage',
@@ -251,6 +252,13 @@ export default {
         SearchInput,
         LpiSelect,
         OnboardingTodoBlock,
+    },
+
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        return {
+            projectCategoriesStore,
+        }
     },
 
     data() {
@@ -282,7 +290,7 @@ export default {
         },
 
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         PlusOrMinusIcon() {

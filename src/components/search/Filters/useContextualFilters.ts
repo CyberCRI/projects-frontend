@@ -1,6 +1,5 @@
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useStore } from 'vuex'
 import useSectionFilters, {
     PROJECT_SECTION_KEY,
     PEOPLE_SECTION_KEY,
@@ -15,6 +14,7 @@ import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
 import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories'
 
 export const ALL_FILTERS_MODE = 'all-filters'
 
@@ -35,9 +35,8 @@ export default function useContextualFilters({
 }) {
     const { t } = useI18n()
 
-    const store = useStore()
     const languagesStore = useLanguagesStore()
-
+    const projectCategoriesStore = useProjectCategories()
     const { sectionFilters } = useSectionFilters({ selectedSection })
 
     watch(selectedSection, (neo, old) => {
@@ -127,7 +126,7 @@ export default function useContextualFilters({
                 componentEditor: SkillsFilterEditor,
             }),
             // CATEGORIES
-            ...(store.getters['projectCategories/all'].length
+            ...(projectCategoriesStore.all?.length
                 ? {
                       categories: makeFilterButton({
                           label: t('search.category'),

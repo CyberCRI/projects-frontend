@@ -183,7 +183,7 @@ import ProjectCategoriesDropdownElementButton from '@/components/category/Projec
 import { postTemplateImage } from '@/api/templates.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
-
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'TemplatesTab',
 
@@ -205,10 +205,12 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
         return {
             toaster,
             v$: useVuelidate(),
             languagesStore,
+            projectCategoriesStore,
         }
     },
 
@@ -250,7 +252,7 @@ export default {
     },
 
     async created() {
-        await this.$store.dispatch('projectCategories/getAllProjectCategories')
+        await projectCategoriesStore.getAllProjectCategories()
     },
 
     computed: {
@@ -266,7 +268,7 @@ export default {
         // },
 
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         otherFieldDisabled() {

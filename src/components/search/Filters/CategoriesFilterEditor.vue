@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 
 export default {
     name: 'CategoriesFilterEditor',
@@ -32,6 +32,12 @@ export default {
 
     components: {
         CategoryPicker,
+    },
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        return {
+            projectCategoriesStore,
+        }
     },
 
     props: {
@@ -49,9 +55,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            categories: 'projectCategories/hierarchy',
-        }),
+        categories() {
+            return this.projectCategoriesStore.hierarchy
+        },
     },
 
     methods: {

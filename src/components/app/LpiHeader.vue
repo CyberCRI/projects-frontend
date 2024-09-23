@@ -27,7 +27,7 @@
                 <!--TODO: put this back once the new page is created-->
                 <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
                 <HeaderLink
-                    v-if="$store.getters['projectCategories/all'].length"
+                    v-if="projectCategoriesStore.all?.length"
                     :label="$t('projects')"
                     :routes="[
                         'Categories',
@@ -182,6 +182,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'LpiHeader',
 
@@ -201,8 +202,10 @@ export default {
 
     setup() {
         const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
         return {
             languagesStore,
+            projectCategoriesStore,
         }
     },
 
@@ -220,7 +223,7 @@ export default {
     },
 
     async mounted() {
-        await this.$store.dispatch('projectCategories/getAllProjectCategories')
+        await this.projectCategoriesStore.getAllProjectCategories()
         document.addEventListener('scroll', this.onScroll)
 
         await this.getGlobalAnnouncements()
@@ -485,7 +488,7 @@ export default {
                     label: this.$t('projects'),
                     action: () => this.goTo('Categories'),
                     leftIcon: null,
-                    condition: this.$store.getters['projectCategories/all'].length,
+                    condition: this.projectCategoriesStore.all?.length,
                     dataTest: 'search',
                 },
                 {

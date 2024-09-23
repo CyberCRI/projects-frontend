@@ -34,12 +34,12 @@ const store = {
                 updateLoading: vi.fn(),
             },
         },
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                allOrderedByOrderId: vi.fn(() => ProjectCategoryOutputFactory.generateMany(2)),
-            },
-        },
+        // projectCategories: {
+        //     namespaced: true,
+        //     getters: {
+        //         allOrderedByOrderId: vi.fn(() => ProjectCategoryOutputFactory.generateMany(2)),
+        //     },
+        // },
 
         organizations: {
             namespaced: true,

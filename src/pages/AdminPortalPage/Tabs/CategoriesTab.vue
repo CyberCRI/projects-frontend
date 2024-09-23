@@ -102,6 +102,7 @@ import { Sortable } from 'sortablejs-vue3'
 import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'CategoriesTab',
 
@@ -121,8 +122,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const projectCategoriesStore = useProjectCategories()
         return {
             toaster,
+            projectCategoriesStore,
         }
     },
 
@@ -146,7 +149,7 @@ export default {
 
     computed: {
         categoryTree() {
-            return this.$store.getters['projectCategories/hierarchy']
+            return this.projectCategoriesStore.hierarchy
         },
         dragOptions() {
             return {
@@ -238,7 +241,7 @@ export default {
                         : []
 
                 await Promise.all([...newParentPromises, ...oldParentPromises])
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                await this.projectCategoriesStore.getAllProjectCategories()
                 this.dropTargetCategory = newParent
             } catch (error) {
                 console.error(error)
@@ -300,7 +303,7 @@ export default {
                     })
                 )
 
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                await this.projectCategoriesStore.getAllProjectCategories()
                 this.toaster.pushSuccess(this.$t('toasts.category-update.success'))
             } catch (error) {
                 this.toaster.pushError(`${this.$t('toasts.category-update.error')} (${error})`)
@@ -333,7 +336,7 @@ export default {
                 await deleteProjectCategory(this.categoryToDelete.id)
                 this.toaster.pushSuccess(this.$t('admin.portal.categories.delete-category-success'))
 
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                await this.projectCategoriesStore.getAllProjectCategories()
             } catch (err) {
                 console.error(err)
                 this.toaster.pushError(this.$t('admin.portal.categories.delete-category-error'))

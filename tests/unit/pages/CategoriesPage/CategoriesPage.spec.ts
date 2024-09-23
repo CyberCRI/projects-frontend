@@ -5,12 +5,12 @@ import { describe, expect, it } from 'vitest'
 
 const store = {
     modules: {
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                hierarchy: vi.fn().mockReturnValue([]),
-            },
-        },
+        // projectCategories: {
+        //     namespaced: true,
+        //     getters: {
+        //         hierarchy: vi.fn().mockReturnValue([]),
+        //     },
+        // },
         organizations: {
             state: {
                 current: { id: 'TEST', code: 'TEST' },

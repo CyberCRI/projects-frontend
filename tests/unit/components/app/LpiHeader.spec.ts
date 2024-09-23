@@ -58,15 +58,15 @@ const store = {
                 all: () => organizations,
             },
         },
-        projectCategories: {
-            namespaced: true,
-            actions: {
-                getAllProjectCategories: () => ProjectCategoryOutputFactory.generateMany(2),
-            },
-            getters: {
-                all: () => ProjectCategoryOutputFactory.generateMany(2),
-            },
-        },
+        // projectCategories: {
+        //     namespaced: true,
+        //     actions: {
+        //         getAllProjectCategories: () => ProjectCategoryOutputFactory.generateMany(2),
+        //     },
+        //     getters: {
+        //         all: () => ProjectCategoryOutputFactory.generateMany(2),
+        //     },
+        // },
     },
 }
 

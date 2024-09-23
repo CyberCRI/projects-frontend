@@ -3,25 +3,25 @@ import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilte
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            projectCategories: {
-                namespaced: true,
-                getters: {
-                    all: () => ProjectCategoryOutputFactory.generateMany(8),
-                },
-            },
-        },
-    }
-}
+// function buildStore() {
+//     return {
+//         modules: {
+//             projectCategories: {
+//                 namespaced: true,
+//                 getters: {
+//                     all: () => ProjectCategoryOutputFactory.generateMany(8),
+//                 },
+//             },
+//         },
+//     }
+// }
 
 const factory = (props?) => {
     return lpiMount(CategoriesFilterSummary, {
         props: {
             ...props,
         },
-        store: buildStore(),
+        //store: buildStore(),
     })
 }
 

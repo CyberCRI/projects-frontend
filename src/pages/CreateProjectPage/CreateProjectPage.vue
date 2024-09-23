@@ -61,6 +61,7 @@ import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 
 export default {
     name: 'CreateProjectPage',
@@ -74,9 +75,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
         return {
             toaster,
             languagesStore,
+            projectCategoriesStore,
         }
     },
 
@@ -154,7 +157,7 @@ export default {
 
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         formNotEmpty() {
@@ -171,7 +174,7 @@ export default {
 
     async mounted() {
         if (!this.categories.length) {
-            await this.$store.dispatch('projectCategories/getAllProjectCategories')
+            await this.projectCategoriesStore.getAllProjectCategories()
         }
     },
 

@@ -32,6 +32,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import ProjectCategoriesDropdownElement from '@/components/category/ProjectCategoriesDropdownElement.vue'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'ProjectCategoriesDropdown',
 
@@ -40,6 +41,13 @@ export default {
     components: {
         IconImage,
         ProjectCategoriesDropdownElement,
+    },
+
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        return {
+            projectCategoriesStore,
+        }
     },
 
     props: {
@@ -56,7 +64,7 @@ export default {
     },
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/hierarchy']
+            return this.projectCategoriesStore.hierarchy
         },
     },
     methods: {

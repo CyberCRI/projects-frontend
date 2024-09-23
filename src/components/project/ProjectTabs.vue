@@ -37,6 +37,7 @@ import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import AddToProjectDropdown from '@/components/project/AddToProjectDropdown.vue'
 import permissions from '@/mixins/permissions.ts'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 
 export default {
     name: 'ProjectTabs',
@@ -58,6 +59,13 @@ export default {
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
 
     mixins: [permissions],
+
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        return {
+            projectCategoriesStore,
+        }
+    },
 
     props: {
         project: {
@@ -121,7 +129,7 @@ export default {
 
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/hierarchy']
+            return this.projectCategoriesStore.hierarchy
         },
 
         isMemberOrAdmin() {
