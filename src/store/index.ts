@@ -1,4 +1,3 @@
-import groups, { GroupsState } from '@/store/modules/groups'
 import organizations, { OrganizationsState } from '@/store/modules/organizations'
 import projectCategories, { ProjectCategoriesState } from '@/store/modules/project-categories'
 import projects, { ProjectState } from '@/store/modules/projects'
@@ -10,13 +9,11 @@ export interface State {
     projects: ProjectState
     organizations: OrganizationsState
     users: UsersState
-    groups: GroupsState
 }
 
 export default createStore({
     strict: import.meta.env.NODE_ENV !== 'production', // WTF ???
     modules: {
-        groups,
         organizations,
         projectCategories,
         projects,

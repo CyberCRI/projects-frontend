@@ -31,6 +31,7 @@
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
+import { getGroups } from '@/api/groups.service'
 
 import ToolTip from '@/components/base/ToolTip.vue'
 
@@ -70,10 +71,7 @@ export default {
         }
 
         if (this.selectedUser) {
-            const result = await this.$store.dispatch(
-                'groups/getGroups',
-                this.$store.getters['organizations/current'].id
-            )
+            const result = await getGroups(this.$store.getters['organizations/current'].id)
 
             const groups = [...result.results]
 

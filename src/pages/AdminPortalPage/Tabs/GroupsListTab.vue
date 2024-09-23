@@ -37,12 +37,13 @@
             :initial-group="initialGroup"
             :forbidden-ids="forbiddenIds"
             :rooted="groupToBeEdited"
+            :asyncing="groupDrawerAsyncing"
         />
     </div>
 </template>
 
 <script>
-import { getHierarchyGroups } from '@/api/groups.service.ts'
+import { getHierarchyGroups, addParentGroup } from '@/api/groups.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
 import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
@@ -76,6 +77,7 @@ export default {
             child: null,
             initialGroup: null,
             forbiddenIds: [],
+            groupDrawerAsyncing: false,
         }
     },
     async mounted() {
@@ -132,20 +134,16 @@ export default {
                 parent: this.parent?.id || null, // parent is null if it's a root group
                 organization: orgCode,
             }
-            const payload = {
-                orgId: orgCode,
-                groupId: this.child.id,
-                body: body,
-            }
+            this.groupDrawerAsyncing = true
             try {
-                await this.$store.dispatch('groups/addParent', payload)
-
+                await addParentGroup(orgCode, this.child.id, body)
+                // no await here for a more reactive ui
                 this.loadGroups()
                 this.toaster.pushSuccess(this.$t('toasts.group-added.success'))
             } catch (error) {
                 this.toaster.pushError(`${this.$t('toasts.group-added.error')} (${error})`)
             } finally {
-                this.loading = false
+                this.groupDrawerAsyncing = false
             }
             this.groupToBeAdded = false
             this.groupToBeEdited = false
