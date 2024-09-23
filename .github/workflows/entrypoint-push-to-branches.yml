@@ -52,63 +52,63 @@ jobs:
       registry-username: ${{ secrets.DOCKER_PROD_USERNAME }}
       registry-password: ${{ secrets.DOCKER_PROD_PASSWORD }}
 
-  upload-source-map:
-    runs-on: frontend-upload-source-map-runner
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install Yarn
-        run: npm install -g yarn
-      - name: Install dependencies
-        run: yarn install --pure-lockfile
-      - name: Install sentry cli
-        run: yarn add @sentry/cli
-      - name: Login to sentry
-        run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
-      - name: Check if release exists
-        id: release_exists
-        run: |
-          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} releases info \
-          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
-          ${{ github.sha }} | true
-          if [ ${PIPESTATUS[0]} -eq 0 ]; then
-            echo "::set-output name=release_exists::true"
-            echo "Release already exists"
-          else
-            echo "::set-output name=release_exists::false"
-          fi
-      - name: Build with source map
-        if: steps.release_exists.outputs.release_exists == 'false'
-        run: NODE_OPTIONS=--max_old_space_size=2048 VERSION_HASH=${{ github.sha }} yarn build:sourcemaps
-      - name: Upload source map (dev)
-        if: steps.release_exists.outputs.release_exists == 'false'
-        run: |
-          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
-          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
-          --project projects-frontend \
-          --release ${{ github.sha }} \
-          --url-prefix '/' \
-          dist
-      - name: Upload source map (staging)
-        if: steps.release_exists.outputs.release_exists == 'false'
-        run: |
-          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
-          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
-          --project projects-frontend-staging \
-          --release ${{ github.sha }} \
-          --url-prefix '/' \
-          dist
-      - name: Upload source map (production)
-        if: steps.release_exists.outputs.release_exists == 'false'
-        run: |
-          ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
-          --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
-          --project projects-frontend-production \
-          --release ${{ github.sha }} \
-          --url-prefix '/' \
-          dist
+  # upload-source-map:
+  #   runs-on: frontend-upload-source-map-runner
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #     - name: Install Yarn
+  #       run: npm install -g yarn
+  #     - name: Install dependencies
+  #       run: yarn install --pure-lockfile
+  #     - name: Install sentry cli
+  #       run: yarn add @sentry/cli
+  #     - name: Login to sentry
+  #       run: ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} login --auth-token ${{secrets.GLITCHTIP_RELEASE_SOURCEMAP_TOKEN}}
+  #     - name: Check if release exists
+  #       id: release_exists
+  #       run: |
+  #         ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} releases info \
+  #         --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+  #         ${{ github.sha }} | true
+  #         if [ ${PIPESTATUS[0]} -eq 0 ]; then
+  #           echo "::set-output name=release_exists::true"
+  #           echo "Release already exists"
+  #         else
+  #           echo "::set-output name=release_exists::false"
+  #         fi
+  #     - name: Build with source map
+  #       if: steps.release_exists.outputs.release_exists == 'false'
+  #       run: NODE_OPTIONS=--max_old_space_size=2048 VERSION_HASH=${{ github.sha }} yarn build:sourcemaps
+  #     - name: Upload source map (dev)
+  #       if: steps.release_exists.outputs.release_exists == 'false'
+  #       run: |
+  #         ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+  #         --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+  #         --project projects-frontend \
+  #         --release ${{ github.sha }} \
+  #         --url-prefix '/' \
+  #         dist
+  #     - name: Upload source map (staging)
+  #       if: steps.release_exists.outputs.release_exists == 'false'
+  #       run: |
+  #         ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+  #         --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+  #         --project projects-frontend-staging \
+  #         --release ${{ github.sha }} \
+  #         --url-prefix '/' \
+  #         dist
+  #     - name: Upload source map (production)
+  #       if: steps.release_exists.outputs.release_exists == 'false'
+  #       run: |
+  #         ./node_modules/.bin/sentry-cli --url ${{vars.GLITCHTIP_URL}} sourcemaps upload \
+  #         --org ${{vars.GLITCHTIP_ORGANIZATION_NAME}} \
+  #         --project projects-frontend-production \
+  #         --release ${{ github.sha }} \
+  #         --url-prefix '/' \
+  #         dist
 
   tag-deploy:
     needs:
