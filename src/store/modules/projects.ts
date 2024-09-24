@@ -1,18 +1,18 @@
-import { APIResponseList, SearchParams } from '@/api/types'
+// import { APIResponseList, SearchParams } from '@/api/types'
 import { ProjectOutput, ProjectPatchInput } from '@/models/project.model'
 import {
-    createProject,
-    deleteProject,
-    duplicateProject,
-    getAllProjects,
-    getAllRandomProjects,
-    getAllRecommendedProjects,
+    // createProject,
+    // deleteProject,
+    // duplicateProject,
+    // getAllProjects,
+    // getAllRandomProjects,
+    // getAllRecommendedProjects,
     getProject,
     patchProject,
     lockUnlockProject,
 } from '@/api/projects.service'
-import analytics from '@/analytics'
-import { ProjectPublicationStatusType } from '@/models/types'
+// import analytics from '@/analytics'
+// import { ProjectPublicationStatusType } from '@/models/types'
 
 export interface ProjectState {
     project: ProjectOutput
@@ -29,20 +29,20 @@ const getters = {
 }
 
 const actions = {
-    async addProject({ dispatch, getters }, project): Promise<ProjectOutput> {
-        try {
-            const result = await createProject(project)
+    // async addProject({ dispatch, getters }, project): Promise<ProjectOutput> {
+    //     try {
+    //         const result = await createProject(project)
 
-            // fetch updated project list from user so permissions as set correctly
-            dispatch('users/getUser', getters['users/id'], { root: true })
+    //         // fetch updated project list from user so permissions as set correctly
+    //         dispatch('users/getUser', getters['users/id'], { root: true })
 
-            analytics.project.create({ id: result.id, title: result.title })
+    //         analytics.project.create({ id: result.id, title: result.title })
 
-            return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return result
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
     async updateProject(
         { commit },
@@ -62,32 +62,32 @@ const actions = {
         return result
     },
 
-    async deleteProject(store, id: string) {
-        try {
-            const result = await deleteProject(id)
+    // async deleteProject(store, id: string) {
+    //     try {
+    //         const result = await deleteProject(id)
 
-            analytics.project.delete({ id: id })
+    //         analytics.project.delete({ id: id })
 
-            return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return result
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
-    async duplicateProject({ dispatch, getters }, id: string) {
-        try {
-            const result = await duplicateProject(id)
+    // async duplicateProject({ dispatch, getters }, id: string) {
+    //     try {
+    //         const result = await duplicateProject(id)
 
-            // fetch updated project list from user so permissions as set correctly
-            dispatch('users/getUser', getters['users/id'], { root: true })
+    //         // fetch updated project list from user so permissions as set correctly
+    //         dispatch('users/getUser', getters['users/id'], { root: true })
 
-            analytics.project.duplicate(id, result.id)
+    //         analytics.project.duplicate(id, result.id)
 
-            return result
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return result
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
     async getProject({ commit }, slugOrId: string): Promise<ProjectOutput> {
         try {
@@ -101,56 +101,56 @@ const actions = {
         }
     },
 
-    async getAllRecommendedProjects(
-        _,
-        params: SearchParams = {}
-    ): Promise<APIResponseList<ProjectOutput>> {
-        try {
-            // TODO: use pinia store
-            // If no organizations set use default one
-            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
-            if (!params.organizations)
-                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
+    // async getAllRecommendedProjects(
+    //     _,
+    //     params: SearchParams = {}
+    // ): Promise<APIResponseList<ProjectOutput>> {
+    //     try {
+    //         // TODO: use pinia store
+    //         // If no organizations set use default one
+    //         // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+    //         if (!params.organizations)
+    //             params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
-            return await getAllRecommendedProjects(params)
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return await getAllRecommendedProjects(params)
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
-    async getAllRandomProjects(
-        _,
-        params: SearchParams = {}
-    ): Promise<APIResponseList<ProjectOutput>> {
-        try {
-            // TODO: use pinia store
-            // If no organizations set use default one
-            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
-            if (!params.organizations)
-                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
+    // async getAllRandomProjects(
+    //     _,
+    //     params: SearchParams = {}
+    // ): Promise<APIResponseList<ProjectOutput>> {
+    //     try {
+    //         // TODO: use pinia store
+    //         // If no organizations set use default one
+    //         // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+    //         if (!params.organizations)
+    //             params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
-            return await getAllRandomProjects(params)
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return await getAllRandomProjects(params)
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
-    async getAllProjects(_, params: SearchParams = {}): Promise<APIResponseList<ProjectOutput>> {
-        try {
-            // TODO: use pinia store
-            // If no organizations set use default one
-            // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
-            if (!params.organizations)
-                params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
+    // async getAllProjects(_, params: SearchParams = {}): Promise<APIResponseList<ProjectOutput>> {
+    //     try {
+    //         // TODO: use pinia store
+    //         // If no organizations set use default one
+    //         // if (!params.organizations) params.organizations = [rootState.organizations.current.code]
+    //         if (!params.organizations)
+    //             params.organizations = [import.meta.env.VITE_APP_API_ORG_CODE]
 
-            const projects = await getAllProjects(params)
-            analytics.project.search(params)
+    //         const projects = await getAllProjects(params)
+    //         analytics.project.search(params)
 
-            return projects
-        } catch (err) {
-            throw new Error(err)
-        }
-    },
+    //         return projects
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // },
 
     async lockUnlockProject({ commit }, { project_id, context }): Promise<ProjectOutput> {
         try {
@@ -161,13 +161,13 @@ const actions = {
         }
     },
 
-    updateCurrentProjectDescription({ commit }, description: string): void {
-        commit('SET_PROJECT_DESCRIPTION', description)
-    },
+    // updateCurrentProjectDescription({ commit }, description: string): void {
+    //     commit('SET_PROJECT_DESCRIPTION', description)
+    // },
 
-    updateProjectVisibility({ commit }, project: ProjectOutput): void {
-        commit('SET_PROJECT_VISIBILITY', project.publication_status)
-    },
+    // updateProjectVisibility({ commit }, project: ProjectOutput): void {
+    //     commit('SET_PROJECT_VISIBILITY', project.publication_status)
+    // },
 }
 
 const mutations = {
@@ -178,12 +178,12 @@ const mutations = {
     DELETE_CURRENT_PROJECT: (state: ProjectState) => {
         state.project = null
     },
-    SET_PROJECT_DESCRIPTION: (state: ProjectState, description: string) => {
-        state.project.description = description
-    },
-    SET_PROJECT_VISIBILITY: (state: ProjectState, status: ProjectPublicationStatusType) => {
-        state.project.publication_status = status
-    },
+    // SET_PROJECT_DESCRIPTION: (state: ProjectState, description: string) => {
+    //     state.project.description = description
+    // },
+    // SET_PROJECT_VISIBILITY: (state: ProjectState, status: ProjectPublicationStatusType) => {
+    //     state.project.publication_status = status
+    // },
     SET_PROJECT_LOCK: (state: ProjectState, value: boolean) => {
         state.project.is_locked = value
     },

@@ -72,23 +72,23 @@ describe('Store module | projects | actions', () => {
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
     })
-    it('addProject', async () => {
-        const project = ProjectOutputFactory.generate()
-        const formData = new FormData()
-        for (const key in project) {
-            formData.append(key, project[key])
-        }
-        const createProjectMock = createProject as Mock
-        const createMock = analytics.project.create as Mock
+    // it('addProject', async () => {
+    //     const project = ProjectOutputFactory.generate()
+    //     const formData = new FormData()
+    //     for (const key in project) {
+    //         formData.append(key, project[key])
+    //     }
+    //     const createProjectMock = createProject as Mock
+    //     const createMock = analytics.project.create as Mock
 
-        createProjectMock.mockResolvedValue(project)
+    //     createProjectMock.mockResolvedValue(project)
 
-        const result = await projectsStore.actions.addProject({ dispatch, getters }, formData)
+    //     const result = await projectsStore.actions.addProject({ dispatch, getters }, formData)
 
-        expect(createProjectMock).toHaveBeenCalledWith(formData)
-        expect(result).toBe(project)
-        expect(createMock).toHaveBeenCalledWith({ id: result.id, title: result.title })
-    })
+    //     expect(createProjectMock).toHaveBeenCalledWith(formData)
+    //     expect(result).toBe(project)
+    //     expect(createMock).toHaveBeenCalledWith({ id: result.id, title: result.title })
+    // })
 
     it('updateProject', async () => {
         const project = ProjectOutputFactory.generate()
@@ -106,36 +106,40 @@ describe('Store module | projects | actions', () => {
         expect(commit).toHaveBeenCalledWith('SET_CURRENT_PROJECT', result)
     })
 
-    it('deleteProject', async () => {
-        const project = ProjectOutputFactory.generate()
-        const deleteProjectMock = deleteProject as Mock
-        const deleteMock = analytics.project.delete as Mock
+    // removed from store
 
-        deleteProjectMock.mockResolvedValue(project)
+    // it('deleteProject', async () => {
+    //     const project = ProjectOutputFactory.generate()
+    //     const deleteProjectMock = deleteProject as Mock
+    //     const deleteMock = analytics.project.delete as Mock
 
-        const result = await projectsStore.actions.deleteProject({}, project.id)
+    //     deleteProjectMock.mockResolvedValue(project)
 
-        expect(deleteProjectMock).toHaveBeenCalledWith(project.id)
-        expect(result).toBe(project)
-        expect(deleteMock).toHaveBeenCalledWith({ id: project.id })
-    })
+    //     const result = await projectsStore.actions.deleteProject({}, project.id)
 
-    it('duplicateProject', async () => {
-        const project = ProjectOutputFactory.generate()
-        const duplicateProjectMock = duplicateProject as Mock
-        const duplicateMock = analytics.project.duplicate as Mock
+    //     expect(deleteProjectMock).toHaveBeenCalledWith(project.id)
+    //     expect(result).toBe(project)
+    //     expect(deleteMock).toHaveBeenCalledWith({ id: project.id })
+    // })
 
-        duplicateProjectMock.mockResolvedValue(project)
+    // removed from store
 
-        const result = await projectsStore.actions.duplicateProject(
-            { dispatch, getters },
-            project.id
-        )
+    // it('duplicateProject', async () => {
+    //     const project = ProjectOutputFactory.generate()
+    //     const duplicateProjectMock = duplicateProject as Mock
+    //     const duplicateMock = analytics.project.duplicate as Mock
 
-        expect(duplicateProjectMock).toHaveBeenCalledWith(project.id)
-        expect(result).toBe(project)
-        expect(duplicateMock).toHaveBeenCalledWith(project.id, result.id)
-    })
+    //     duplicateProjectMock.mockResolvedValue(project)
+
+    //     const result = await projectsStore.actions.duplicateProject(
+    //         { dispatch, getters },
+    //         project.id
+    //     )
+
+    //     expect(duplicateProjectMock).toHaveBeenCalledWith(project.id)
+    //     expect(result).toBe(project)
+    //     expect(duplicateMock).toHaveBeenCalledWith(project.id, result.id)
+    // })
 
     it('getProject', async () => {
         const project = ProjectOutputFactory.generate()
@@ -150,58 +154,64 @@ describe('Store module | projects | actions', () => {
         expect(commit).toHaveBeenCalledWith('SET_CURRENT_PROJECT', result)
     })
 
-    it('getAllRecommendedProjects', async () => {
-        const projects = ProjectOutputFactory.generateMany(2)
-        const getAllRecommendedProjectsMock = getAllRecommendedProjects as Mock
-        const params = {
-            // TODO: use pinia store
-            // organizations: [rootState.organizations.current.code],
-            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
-        }
+    // removed from store
 
-        getAllRecommendedProjectsMock.mockResolvedValue(projects)
+    // it('getAllRecommendedProjects', async () => {
+    //     const projects = ProjectOutputFactory.generateMany(2)
+    //     const getAllRecommendedProjectsMock = getAllRecommendedProjects as Mock
+    //     const params = {
+    //         // TODO: use pinia store
+    //         // organizations: [rootState.organizations.current.code],
+    //         organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
+    //     }
 
-        const result = await projectsStore.actions.getAllRecommendedProjects({ rootState }, {})
+    //     getAllRecommendedProjectsMock.mockResolvedValue(projects)
 
-        expect(getAllRecommendedProjectsMock).toHaveBeenCalledWith(params)
-        expect(result).toBe(projects)
-    })
+    //     const result = await projectsStore.actions.getAllRecommendedProjects({ rootState }, {})
 
-    it('getAllRandomProjects', async () => {
-        const projects = ProjectOutputFactory.generateMany(2)
-        const getAllRandomProjectsMock = getAllRandomProjects as Mock
-        const params = {
-            // TODO: use pinia store
-            // organizations: [rootState.organizations.current.code],
-            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
-        }
+    //     expect(getAllRecommendedProjectsMock).toHaveBeenCalledWith(params)
+    //     expect(result).toBe(projects)
+    // })
 
-        getAllRandomProjectsMock.mockResolvedValue(projects)
+    // removed from store
 
-        const result = await projectsStore.actions.getAllRandomProjects({ rootState }, {})
+    // it('getAllRandomProjects', async () => {
+    //     const projects = ProjectOutputFactory.generateMany(2)
+    //     const getAllRandomProjectsMock = getAllRandomProjects as Mock
+    //     const params = {
+    //         // TODO: use pinia store
+    //         // organizations: [rootState.organizations.current.code],
+    //         organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
+    //     }
 
-        expect(getAllRandomProjectsMock).toHaveBeenCalledWith(params)
-        expect(result).toBe(projects)
-    })
+    //     getAllRandomProjectsMock.mockResolvedValue(projects)
 
-    it('getAllProjects', async () => {
-        const projects = ProjectOutputFactory.generateMany(2)
-        const getAllProjectsMock = getAllProjects as Mock
-        const searchProjectsMock = analytics.project.search as Mock
-        const params = {
-            // TODO: use pinia store
-            // organizations: [rootState.organizations.current.code],
-            organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
-        }
+    //     const result = await projectsStore.actions.getAllRandomProjects({ rootState }, {})
 
-        getAllProjectsMock.mockResolvedValue(projects)
+    //     expect(getAllRandomProjectsMock).toHaveBeenCalledWith(params)
+    //     expect(result).toBe(projects)
+    // })
 
-        const result = await projectsStore.actions.getAllProjects({ rootState }, {})
+    // removed from store
 
-        expect(getAllProjectsMock).toHaveBeenCalledWith(params)
-        expect(searchProjectsMock).toHaveBeenCalledWith(params)
-        expect(result).toBe(projects)
-    })
+    // it('getAllProjects', async () => {
+    //     const projects = ProjectOutputFactory.generateMany(2)
+    //     const getAllProjectsMock = getAllProjects as Mock
+    //     const searchProjectsMock = analytics.project.search as Mock
+    //     const params = {
+    //         // TODO: use pinia store
+    //         // organizations: [rootState.organizations.current.code],
+    //         organizations: [import.meta.env.VITE_APP_API_ORG_CODE],
+    //     }
+
+    //     getAllProjectsMock.mockResolvedValue(projects)
+
+    //     const result = await projectsStore.actions.getAllProjects({ rootState }, {})
+
+    //     expect(getAllProjectsMock).toHaveBeenCalledWith(params)
+    //     expect(searchProjectsMock).toHaveBeenCalledWith(params)
+    //     expect(result).toBe(projects)
+    // })
 
     it('lockUnlockProject context lock', async () => {
         const project = ProjectOutputFactory.generate()
@@ -256,19 +266,19 @@ describe('Store module | projects | mutations', () => {
         projectsStore.mutations.SET_CURRENT_PROJECT(state, payload)
     })
 
-    it('SET_PROJECT_DESCRIPTION', () => {
-        const payload = '123456'
-        projectsStore.mutations.SET_PROJECT_DESCRIPTION(state, payload)
+    // it('SET_PROJECT_DESCRIPTION', () => {
+    //     const payload = '123456'
+    //     projectsStore.mutations.SET_PROJECT_DESCRIPTION(state, payload)
 
-        expect(state.project.description).toEqual(payload)
-    })
+    //     expect(state.project.description).toEqual(payload)
+    // })
 
-    it('SET_PROJECT_VISIBILITY', () => {
-        const payload = 'public'
-        projectsStore.mutations.SET_PROJECT_VISIBILITY(state, payload)
+    // it('SET_PROJECT_VISIBILITY', () => {
+    //     const payload = 'public'
+    //     projectsStore.mutations.SET_PROJECT_VISIBILITY(state, payload)
 
-        expect(state.project.publication_status).toEqual(payload)
-    })
+    //     expect(state.project.publication_status).toEqual(payload)
+    // })
 
     it('SET_PROJECT_LOCK', () => {
         const payload = true

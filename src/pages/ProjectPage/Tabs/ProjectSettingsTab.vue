@@ -229,6 +229,7 @@ import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { deleteProject, duplicateProject } from '@/api/projects.service'
 export default {
     name: 'ProjectSettingsTab',
 
@@ -315,12 +316,12 @@ export default {
 
             async set(status) {
                 try {
-                    const response = await this.$store.dispatch('projects/updateProject', {
+                    await this.$store.dispatch('projects/updateProject', {
                         id: this.project.id,
                         project: { publication_status: status },
                     })
 
-                    this.$store.dispatch('projects/updateProjectVisibility', response)
+                    // this.$store.dispatch('projects/updateProjectVisibility', response)
 
                     this.toaster.pushSuccess(this.$t('toasts.project-visibility-update.success'))
 
@@ -486,21 +487,28 @@ export default {
         async duplicateProject() {
             try {
                 this.$emit('asyncing', true)
-                const project = await this.$store.dispatch(
-                    'projects/duplicateProject',
-                    this.project.id
-                )
+
+                const originalProject = this.project
+
+                const projectCopy = await duplicateProject(originalProject.id)
+
+                // fetch updated project list from user so permissions as set correctly
+                await this.$store.dispatch('users/getUser', this.$store.getters['users/id'], {
+                    root: true,
+                })
+
+                analytics.project.duplicate(originalProject.id, projectCopy.id)
 
                 await this.$store.dispatch('projects/updateProject', {
-                    id: project.id,
+                    id: projectCopy.id,
                     project: {
-                        title: `${this.project.title} ${this.$t('project.copy')}`,
+                        title: `${originalProject.title} ${this.$t('project.copy')}`,
                     },
                 })
 
                 this.$router.push({
                     name: 'projectSummary',
-                    params: { slugOrId: project.slug },
+                    params: { slugOrId: projectCopy.slug },
                 })
 
                 this.toaster.pushSuccess(this.$t('toasts.project-duplication.success'))
@@ -538,7 +546,9 @@ export default {
         },
         async destroyProject() {
             try {
-                await this.$store.dispatch('projects/deleteProject', this.project.id)
+                const id = this.project.id
+                await deleteProject(id)
+                analytics.project.delete({ id: id })
                 this.toaster.pushSuccess(this.$t('toasts.project-destroy.success'))
 
                 this.$router.push({ name: 'HomeRoot' })

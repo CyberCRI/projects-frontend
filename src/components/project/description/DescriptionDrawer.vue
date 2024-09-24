@@ -177,10 +177,10 @@ export default {
                                 },
                             })
 
-                            await this.$store.dispatch(
-                                'projects/updateCurrentProjectDescription',
-                                this.editorDescription
-                            )
+                            // await this.$store.dispatch(
+                            //     'projects/updateCurrentProjectDescription',
+                            //     this.editorDescription
+                            // )
 
                             this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
 

@@ -63,6 +63,10 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
+import analytics from '@/analytics'
+import { createProject } from '@/api/projects.service'
+
 export default {
     name: 'CreateProjectPage',
 
@@ -211,7 +215,14 @@ export default {
             }
             this.isSaving = true
             try {
-                const project = await this.$store.dispatch('projects/addProject', payload)
+                const project = await createProject(payload)
+
+                // fetch updated project list from user so permissions as set correctly
+                await this.$store.dispatch('users/getUser', this.$store.getters['users/id'], {
+                    root: true,
+                })
+
+                analytics.project.create({ id: project.id, title: project.title })
 
                 /* Until backend allows adding tags in the addProject request, add them after project creation */
                 if (this.form.wikipedia_tags.length || this.form.organization_tags.length) {
