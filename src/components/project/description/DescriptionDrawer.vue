@@ -52,6 +52,7 @@ import analytics from '@/analytics'
 import retry from 'async-retry'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'DescriptionDrawer',
 
@@ -61,9 +62,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             organizationsStore,
+            projectsStore,
         }
     },
 
@@ -110,12 +113,12 @@ export default {
         },
 
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.projectsStore.currentProjectSlug
         },
 
         providerParams() {
             return {
-                projectId: this.$store.getters['projects/currentProjectId'],
+                projectId: this.projectsStore.currentProjectId,
                 organizationId: this.organizationsStore.current.id,
             }
         },
@@ -170,17 +173,12 @@ export default {
                 await retry(
                     async () => {
                         try {
-                            const res = await this.$store.dispatch('projects/updateProject', {
+                            const res = await this.projectsStore.updateProject({
                                 id: this.project.id,
                                 project: {
                                     description: this.editorDescription,
                                 },
                             })
-
-                            // await this.$store.dispatch(
-                            //     'projects/updateCurrentProjectDescription',
-                            //     this.editorDescription
-                            // )
 
                             this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
 

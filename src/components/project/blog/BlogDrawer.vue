@@ -100,6 +100,7 @@ import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 
 export default {
     name: 'BlogDrawer',
@@ -120,9 +121,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             organizationsStore,
+            projectsStore,
         }
     },
 
@@ -183,7 +186,7 @@ export default {
 
     computed: {
         project() {
-            return this.$store.getters['projects/project']
+            return this.projectsStore.project
         },
 
         titlePlaceholder() {
@@ -199,7 +202,7 @@ export default {
         providerParams() {
             return {
                 blogId: this.editedBlog ? this.editedBlog.id : null,
-                projectId: this.$store.getters['projects/currentProjectId'],
+                projectId: this.projectsStore.currentProjectId,
                 organizationId: this.organizationsStore.current.id,
             }
         },
@@ -245,7 +248,7 @@ export default {
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO necessary ?
-            formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            formData.append('project_id', this.projectsStore.currentProjectId)
 
             return postBlogEntryImage({
                 project_id: this.project.id,

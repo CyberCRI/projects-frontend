@@ -50,6 +50,7 @@ import ProjectCard from '@/components/project/ProjectCard.vue'
 import analytics from '@/analytics'
 import { addLinkedProject, patchLinkedProject } from '@/api/projects.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 
 export default {
     name: 'LinkedProjectDrawer',
@@ -59,8 +60,10 @@ export default {
     components: { BaseDrawer, LinkedProjectSelection, ProjectCard },
     setup() {
         const toaster = useToasterStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
+            projectsStore,
         }
     },
 
@@ -177,7 +180,7 @@ export default {
                     this.$router.push({
                         name: 'projectLinkedProjects',
                         params: {
-                            slugOrId: this.$store.getters['projects/currentProjectSlug'],
+                            slugOrId: this.projectsStore.currentProjectSlug,
                         },
                     })
                 }

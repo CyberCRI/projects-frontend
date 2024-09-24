@@ -184,6 +184,7 @@ import { postTemplateImage } from '@/api/templates.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'TemplatesTab',
 
@@ -206,11 +207,13 @@ export default {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const projectCategoriesStore = useProjectCategories()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             v$: useVuelidate(),
             languagesStore,
             projectCategoriesStore,
+            projectsStore,
         }
     },
 
@@ -294,7 +297,7 @@ export default {
         saveTemplateImage(file) {
             const formData = new FormData()
             formData.append('file', file, file.name)
-            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            // formData.append('project_id', this.projectsStore.currentProjectId)
             return postTemplateImage({ id: this.selectedCategory.id, body: formData })
         },
 

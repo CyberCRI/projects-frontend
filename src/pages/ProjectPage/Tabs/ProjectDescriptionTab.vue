@@ -48,6 +48,8 @@ import utils from '@/functs/functions.ts'
 import fixEditorContent from '@/functs/editorUtils.ts'
 import throttle from 'lodash.throttle'
 import IconImage from '@/components/base/media/IconImage.vue'
+import useProjectsStore from '@/stores/useProjects.ts'
+
 export default {
     name: 'ProjectDescriptionTab',
 
@@ -59,7 +61,12 @@ export default {
     },
 
     mixins: [permissions, ProjectTab],
-
+    setup() {
+        const projectsStore = useProjectsStore()
+        return {
+            projectsStore,
+        }
+    },
     props: {
         project: {
             type: Object,
@@ -118,11 +125,11 @@ export default {
 
     computed: {
         description() {
-            return this.$store.getters['projects/project'].description
+            return this.projectsStore.project.description
         },
 
         updatedProject() {
-            return this.$store.getters['projects/project']
+            return this.projectsStore.project
         },
 
         showDescriptionPlaceHolder() {

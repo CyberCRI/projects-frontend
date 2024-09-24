@@ -64,7 +64,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 import { postReview, patchReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'ReviewDrawer',
 
@@ -82,8 +82,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
+            projectsStore,
         }
     },
 
@@ -217,7 +219,7 @@ export default {
                 } else {
                     projectData.life_status = 'running'
                 }
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.project.id,
                     project: projectData,
                 })

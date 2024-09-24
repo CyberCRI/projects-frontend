@@ -97,6 +97,7 @@ import analytics from '@/analytics'
 import { postAttachmentFiles, patchAttachmentFile } from '@/api/attachment-files.service'
 import { postAttachmentLinks, patchAttachmentLink } from '@/api/attachment-links.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'ResourceDrawer',
 
@@ -105,8 +106,10 @@ export default {
     components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
     setup() {
         const toaster = useToasterStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
+            projectsStore,
         }
     },
 
@@ -192,7 +195,7 @@ export default {
         },
 
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.projectsStore.currentProjectSlug
         },
 
         projectId() {
@@ -232,7 +235,7 @@ export default {
         },
         linkExists() {
             return (
-                this.$store.getters['projects/project'].links.filter(
+                this.projectsStore.project.links.filter(
                     (link) => utils.removePrefix(link.site_url) === utils.removePrefix(this.link)
                 ).length > 0
             )

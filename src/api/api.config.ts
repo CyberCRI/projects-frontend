@@ -1,8 +1,7 @@
 import a, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
-import store from '@/store'
 import useToasterStore from '@/stores/useToaster'
-
+import useProjectsStore from '@/stores/useProjects'
 import i18n from '@/locales/i18n'
 
 export const axios = a.create({
@@ -126,11 +125,12 @@ axiosNoErrorMessage.interceptors.response.use(response, responseNoToatError)
 
 // TODO: remove functions below once we moved everything to new API
 export const getAxiosConfig = (etag?) => {
+    const projectsStore = useProjectsStore()
     const header = {
         headers: {
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache',
-            'Cur-Project-ID': store.state.projects.project.id,
+            'Cur-Project-ID': projectsStore.currentProjectId,
             'Api-Base-Org-ID': import.meta.env.VITE_APP_API_ORG_CODE,
         },
     }

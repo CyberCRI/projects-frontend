@@ -63,6 +63,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 
 import analytics from '@/analytics'
 import { createProject } from '@/api/projects.service'
@@ -81,11 +82,13 @@ export default {
         const languagesStore = useLanguagesStore()
         const projectCategoriesStore = useProjectCategories()
         const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             languagesStore,
             projectCategoriesStore,
             organizationsStore,
+            projectsStore,
         }
     },
 
@@ -226,7 +229,7 @@ export default {
 
                 /* Until backend allows adding tags in the addProject request, add them after project creation */
                 if (this.form.wikipedia_tags.length || this.form.organization_tags.length) {
-                    await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: project.id,
                         project: {
                             wikipedia_tags_ids: this.form.wikipedia_tags.map(

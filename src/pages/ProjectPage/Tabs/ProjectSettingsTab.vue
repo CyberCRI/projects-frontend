@@ -229,6 +229,7 @@ import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 import { deleteProject, duplicateProject } from '@/api/projects.service'
 export default {
     name: 'ProjectSettingsTab',
@@ -252,9 +253,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             organizationsStore,
+            projectsStore,
         }
     },
 
@@ -316,12 +319,10 @@ export default {
 
             async set(status) {
                 try {
-                    await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: this.project.id,
                         project: { publication_status: status },
                     })
-
-                    // this.$store.dispatch('projects/updateProjectVisibility', response)
 
                     this.toaster.pushSuccess(this.$t('toasts.project-visibility-update.success'))
 
@@ -339,7 +340,7 @@ export default {
 
             async set(status) {
                 try {
-                    await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: this.project.id,
                         project: { life_status: status },
                     })
@@ -450,7 +451,7 @@ export default {
                 : this.organizations_codes.filter((orgCode) => orgCode !== value.code)
 
             try {
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.project.id,
                     project: {
                         organizations_codes: payload,
@@ -469,7 +470,7 @@ export default {
 
         async setCategory(value) {
             try {
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.project.id,
                     project: {
                         project_categories_ids: [value.id],
@@ -499,7 +500,7 @@ export default {
 
                 analytics.project.duplicate(originalProject.id, projectCopy.id)
 
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: projectCopy.id,
                     project: {
                         title: `${originalProject.title} ${this.$t('project.copy')}`,

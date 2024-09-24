@@ -4,6 +4,7 @@ import store from '@/store'
 import { mapState } from 'pinia'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
 
 export default {
     methods: {
@@ -24,13 +25,17 @@ export default {
             // unique name so it doesn(t conflict with a name in the component)
             currentOrganizationForPermissions: 'current',
         }),
+        ...mapState(useProjectsStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            currentProjectIdForPermissions: 'currentProjectId',
+        }),
         isOwner() {
             return (
                 this.$store.getters['users/isConnected'] &&
                 (this.hasPermission(
                     'projects',
                     'delete_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                     this.hasPermission(
                         'organizations',
@@ -92,7 +97,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
@@ -109,7 +114,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
@@ -127,7 +132,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'add_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
@@ -145,7 +150,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
@@ -163,7 +168,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
@@ -197,7 +202,7 @@ export default {
                     'projects',
                     'member',
                     null,
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
@@ -223,7 +228,7 @@ export default {
             // this.hasPermission(
             //     'projects',
             //     'add_comment',
-            //     this.$store.getters['projects/currentProjectId']
+            //     this.currentProjectIdForPermissions
             // ) ||
             // this.hasPermission(
             //     'organizations',
@@ -240,7 +245,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_comment',
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
@@ -258,7 +263,7 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_comment',
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',

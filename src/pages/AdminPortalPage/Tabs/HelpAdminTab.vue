@@ -58,7 +58,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getFaq, createFaq, putFaq, deleteFaq, postFaqImage } from '@/api/faqs.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-
+import useProjectsStore from '@/stores/useProjects.ts'
 function defaultFaq() {
     return {
         content: '<p></p>',
@@ -78,9 +78,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
         return {
             toaster,
             organizationsStore,
+            projectsStore,
         }
     },
 
@@ -126,7 +128,7 @@ export default {
         saveFaqImage(file) {
             const formData = new FormData()
             formData.append('file', file, file.name)
-            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            // formData.append('project_id', this.projectsStore.currentProjectId)
             return postFaqImage({
                 orgCode: this.currentOrgCode,
                 body: formData,

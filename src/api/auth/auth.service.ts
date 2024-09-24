@@ -2,7 +2,7 @@ import { axios } from '@/api/api.config'
 import * as oauth from '@panva/oauth4webapi'
 import keycloak from '@/api/auth/keycloak'
 import router from '@/router'
-import store from '@/store'
+import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dashboard`
@@ -69,6 +69,7 @@ function cleanUpKeycloak() {
 }
 
 function getLogoutRedirectUri() {
+    const projectsStore = useProjectsStore()
     // redirect to current page after logout
     let redirectUri = keycloak.getCurrentUrl()
     const currentRoute = router.currentRoute
@@ -95,7 +96,7 @@ function getLogoutRedirectUri() {
         currentRoute.value.matched &&
         currentRoute.value.matched.some((route) => route.name === 'pageProject')
     ) {
-        const project = store.getters['projects/project']
+        const project = projectsStore.project
         if (!project || project.publication_status !== 'public') {
             redirectUri = DASHBOARD_URL
         }
