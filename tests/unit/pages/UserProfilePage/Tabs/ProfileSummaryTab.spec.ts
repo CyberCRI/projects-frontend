@@ -8,6 +8,9 @@ import { getUserFollows } from '@/api/follows.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 vi.mock('@/api/follows.service', () => ({
     getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
@@ -31,12 +34,6 @@ const store = {
                 getUser: vi.fn(),
             },
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
     },
 }
 
@@ -49,6 +46,11 @@ const buildParams = (user) => ({
 })
 
 describe('ProfileSummaryTab', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
+
     it('should render ProfileSummaryTab component', () => {
         let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(UserFactory.generate()))
 

@@ -4,6 +4,7 @@ import store from '@/store'
 import { mapState } from 'pinia'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations'
+
 export default {
     methods: {
         hasPermission(scope, action, pk?) {

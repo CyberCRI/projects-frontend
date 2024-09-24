@@ -6,6 +6,10 @@ import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -23,17 +27,6 @@ const store = {
             },
             actions: {
                 getUser: vi.fn(),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
-            },
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
             },
         },
     },
@@ -78,6 +71,10 @@ const buildParams = (props) => ({
 })
 
 describe('GroupSnapshotTab', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+    })
     it('should render GroupSnapshotTab component', () => {
         let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
 

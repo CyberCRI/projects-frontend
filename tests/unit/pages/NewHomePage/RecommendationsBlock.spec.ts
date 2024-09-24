@@ -9,6 +9,8 @@ import { UserFactory } from '../../../factories/user.factory'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
@@ -31,15 +33,6 @@ const i18n = {
 
 const storeFactory = (loggedIn) => ({
     modules: {
-        organizations: {
-            state: {
-                current: { id: 'TEST', code: 'TEST' },
-            },
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST', code: 'TEST' }),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -57,6 +50,9 @@ describe('RecommendationBlock', () => {
     beforeEach(() => {
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
     })
     it('should render RecommendationBlock', async () => {
         let wrapper = lpiShallowMount(RecommendationBlock, {

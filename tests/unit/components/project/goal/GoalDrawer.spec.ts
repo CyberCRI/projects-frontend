@@ -4,6 +4,8 @@ import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
 import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -28,25 +30,6 @@ const store = {
             },
             currentProjectSlug: vi.fn(() => project.slug),
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-        goals: {
-            namespaced: true,
-            actions: {
-                patchGoal: vi.fn(),
-                createGoal: vi.fn(),
-            },
-        },
-        notifications: {
-            namespaced: true,
-            actions: {
-                pushToast: vi.fn(),
-            },
-        },
     },
 }
 
@@ -55,6 +38,8 @@ describe('GoalDrawer.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
             store,

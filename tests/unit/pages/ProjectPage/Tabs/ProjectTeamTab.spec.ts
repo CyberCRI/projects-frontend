@@ -5,6 +5,8 @@ import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import utils from '@/functs/functions'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
@@ -25,17 +27,15 @@ const store = {
                 project: () => ProjectOutputFactory.generate(),
             },
         },
-
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
     },
 }
 
 describe('ProjectTeamTab.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
+
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectTeamTab, {
             i18n,

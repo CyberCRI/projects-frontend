@@ -3,6 +3,9 @@ import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { UserFactory } from '../../../../factories/user.factory'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
     locale: 'en',
@@ -14,12 +17,10 @@ const i18n = {
 
 const store = {
     modules: {
-        organizations: {
+        users: {
             namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
+            getters: {
+                isConnected: () => false,
             },
         },
     },
@@ -36,6 +37,8 @@ describe('BrowseLayout', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
         defaultParams = {
             props: {
                 isAddMode: true,

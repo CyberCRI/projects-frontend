@@ -9,6 +9,8 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 import projectAnalytic from '@/analytics/project.analytic'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
 const i18n = {
@@ -21,12 +23,6 @@ const i18n = {
 
 const store = {
     modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn(() => OrganizationOutputFactory.generate()),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -39,6 +35,10 @@ const store = {
 }
 
 describe('Tab.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
     it('should render component', () => {
         const project = ProjectOutputFactory.generate()
         const wrapper = lpiShallowMount(ProjectSummaryTab, {

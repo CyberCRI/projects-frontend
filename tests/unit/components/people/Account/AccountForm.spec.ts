@@ -4,6 +4,8 @@ import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { UserFactory } from '../../../../factories/user.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -13,35 +15,19 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn(() => OrganizationOutputFactory.generate()),
-            },
-        },
-        notifications: {
-            namespaced: true,
-            actions: {
-                pushToast: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('AccountForm', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             props: {
                 isAddMode: true,
                 selectedUser: UserFactory.generate(),
             },
             i18n,
-            store,
         }
     })
 

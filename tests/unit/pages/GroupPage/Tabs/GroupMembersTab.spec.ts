@@ -4,6 +4,10 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { DOMWrapper, flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
 const i18n = {
@@ -23,17 +27,6 @@ const store = {
             },
             actions: {
                 getUser: vi.fn(),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
-            },
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
             },
         },
     },
@@ -62,6 +55,11 @@ const buildParams = (props) => ({
 })
 
 describe('GroupMembersTab', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+    })
+
     it('should render GroupMembersTab component', () => {
         let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
 

@@ -7,6 +7,8 @@ import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
     locale: 'en',
@@ -18,13 +20,10 @@ const i18n = {
 
 const store = {
     modules: {
-        organizations: {
-            state: {
-                current: { id: 'TEST', code: 'TEST' },
-            },
+        users: {
             namespaced: true,
             getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST', code: 'TEST' }),
+                IScONNECTED: vi.fn().mockReturnValue(false),
             },
         },
     },
@@ -34,6 +33,8 @@ const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 describe('CategoriesPage', () => {
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { ID: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(8)
     })

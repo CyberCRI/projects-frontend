@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -24,12 +26,6 @@ const store = {
                 currentProjectId: vi.fn(() => 123),
             },
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -40,12 +36,6 @@ const store = {
                 keycloak_id: '123',
             },
         },
-        blogEntries: {
-            namespaced: true,
-            actions: {
-                postBlogEntry: vi.fn(),
-            },
-        },
     },
 }
 
@@ -54,6 +44,8 @@ describe('BlogDrawer.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             props: {
                 isOpened: true,

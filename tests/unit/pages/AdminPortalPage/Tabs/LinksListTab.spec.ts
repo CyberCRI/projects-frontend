@@ -4,6 +4,10 @@ import english from '@/locales/en.json'
 import * as invitationSrv from '@/api/invitations.service'
 import flushPromises from 'flush-promises'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/invitations.service.ts', () => {
     return {
@@ -21,28 +25,18 @@ const i18n = {
     },
 }
 
-function buildStore() {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                state: {
-                    current: { code: 'FOOBAR' },
-                },
-            },
-        },
-    }
-}
-
 const factory = (props?) => {
     return lpiMount(LinkListTab, {
         props,
         i18n,
-        store: buildStore(),
     })
 }
 
 describe('LinkListTab.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+    })
     it('should mount the component', () => {
         const wrapper = factory({ projects: [] })
         const vm: any = wrapper.vm

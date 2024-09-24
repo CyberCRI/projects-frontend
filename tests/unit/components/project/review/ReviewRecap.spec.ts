@@ -2,7 +2,8 @@ import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
-
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
@@ -11,13 +12,6 @@ vi.mock('y-prosemirror', () => ({ default: {} }))
 function buildStore(permissions) {
     return {
         modules: {
-            organizations: {
-                namespaced: true,
-                getters: {
-                    current: vi.fn(() => OrganizationOutputFactory.generate()),
-                    all: vi.fn(() => OrganizationOutputFactory.generateMany(2)),
-                },
-            },
             projects: {
                 namespaced: true,
                 getters: {
@@ -87,6 +81,11 @@ function setUpComponent(props, store) {
 }
 
 describe('ReviewRecap.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        organizationsStore.all = OrganizationOutputFactory.generateMany(2)
+    })
     it('should render component', () => {
         const wrapper = setUpComponent(
             {

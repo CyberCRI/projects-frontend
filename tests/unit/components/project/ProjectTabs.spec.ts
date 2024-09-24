@@ -5,7 +5,8 @@ import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
-
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
     locale: 'en',
@@ -23,12 +24,10 @@ const route = {
 
 const store = {
     modules: {
-        organizations: {
+        users: {
             namespaced: true,
             getters: {
-                current: () => ({
-                    id: 123,
-                }),
+                iConnected: () => false,
             },
         },
     },
@@ -54,6 +53,8 @@ describe('ProjectTabs.vue', () => {
     beforeEach(() => {
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 123 } as unknown as OrganizationOutput
     })
     it('should render component', () => {
         const wrapper = factory()

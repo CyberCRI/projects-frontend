@@ -17,6 +17,8 @@ import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import TagFactory from '../../../factories/wikipedia-tag.factory'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/projects.service')
 vi.mock('@/analytics')
@@ -29,8 +31,6 @@ const rootState = {
             linked_projects: [{ id: 1, project: ProjectFactory.generate(), reason: 'Inspiré de' }],
         },
     },
-
-    organizations: { current: OrganizationOutputFactory.generate() },
 }
 
 const getters = {
@@ -44,7 +44,10 @@ describe('Store module | projects | getters', () => {
         currentProjectId: project.id,
         currentProjectSlug: project.slug,
     }
-
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
     it('project', () => {
         const result = projectsStore.getters.project(state)
 
@@ -65,7 +68,10 @@ describe('Store module | projects | getters', () => {
 describe('Store module | projects | actions', () => {
     const commit = vi.fn()
     const dispatch = vi.fn()
-
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
     it('addProject', async () => {
         const project = ProjectOutputFactory.generate()
         const formData = new FormData()
@@ -227,6 +233,10 @@ describe('Store module | projects | mutations', () => {
         projectNotification: null,
         projectFollowNotification: null,
     }
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
 
     // PROJECT
     it('SET_CURRENT_PROJECT', () => {

@@ -8,6 +8,9 @@ import { getGroup } from '@/api/groups.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 vi.mock('@/api/groups.service', () => ({
     getGroup: vi.fn().mockResolvedValue({ results: {} }),
 }))
@@ -31,15 +34,6 @@ const store = {
                 getUser: vi.fn(),
             },
         },
-        organizations: {
-            namespaced: true,
-            state: {
-                current: { id: 'TEST' },
-            },
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
     },
 }
 
@@ -52,6 +46,11 @@ const buildParams = (user) => ({
 })
 
 describe('ProfileGroupsTab', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
+
     it('should render ProfileGroupsTab component', () => {
         let wrapper = lpiShallowMount(ProfileGroupsTab, buildParams(UserFactory.generate()))
 

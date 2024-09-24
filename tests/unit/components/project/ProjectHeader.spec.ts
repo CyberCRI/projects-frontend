@@ -4,6 +4,9 @@ import ProjectHeader from '@/components/project/ProjectHeader.vue'
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import permissions from '@/mixins/permissions'
 import MockComponent from '../../../helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/mixins/permissions')
@@ -27,23 +30,16 @@ function buildStore() {
                     id: () => 123,
                 },
             },
-            follows: {
-                namespaced: true,
-                dispatch: vi.fn(),
-            },
-            organizations: {
-                namespaced: true,
-                getters: {
-                    current: () => ({
-                        code: 'foo',
-                    }),
-                },
-            },
         },
     }
 }
 
 describe('ProjectHeader.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'foo' } as unknown as OrganizationOutput
+    })
+
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectHeader, {
             store: buildStore(),

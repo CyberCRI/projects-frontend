@@ -4,6 +4,8 @@ import { describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
     locale: 'en',
@@ -30,12 +32,6 @@ const store = {
                 updateProject: vi.fn(),
             },
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -51,6 +47,8 @@ describe('DescriptionDrawer.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
             props: {

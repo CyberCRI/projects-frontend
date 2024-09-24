@@ -3,6 +3,9 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 import { flushPromises } from '@vue/test-utils'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
@@ -25,12 +28,6 @@ const store = {
                 getUser: vi.fn(),
             },
         },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
     },
 }
 
@@ -43,6 +40,11 @@ const buildParams = (user) => ({
 })
 
 describe('ProfileSkillTab', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
+
     it('should render ProfileSkillTab component', () => {
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(UserFactory.generate()))
 

@@ -10,6 +10,9 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
 import pinia from '@/stores'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 vi.mock('@/api/groups.service', () => ({
     getGroup: vi.fn().mockResolvedValue({
@@ -53,17 +56,6 @@ const store = {
                 getUser: vi.fn(),
             },
         },
-        organizations: {
-            namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
-            },
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
     },
 }
 
@@ -82,6 +74,8 @@ const buildParams = (groupId) => ({
 describe('GroupPageInner', () => {
     beforeEach(() => {
         usePeopleGroupsStore(pinia)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
     })
     it('should render GroupPageInner component', () => {
         let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))

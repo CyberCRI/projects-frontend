@@ -134,9 +134,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
-            useOrganizationsStore,
+            organizationsStore,
         }
     },
 

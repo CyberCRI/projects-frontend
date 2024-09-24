@@ -4,11 +4,11 @@ import english from '@/locales/en.json'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { axios, configFormData } from '@/api/api.config'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-
-import { axios, configFormData } from '@/api/api.config'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/api/api.config', () => {
@@ -29,31 +29,6 @@ const i18n = {
 
 const store = {
     modules: {
-        app: {
-            namespaced: true,
-            actions: {
-                updateLoading: vi.fn(),
-            },
-        },
-
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn(() => OrganizationOutputFactory.generate()),
-                all: vi.fn(() => OrganizationOutputFactory.generateMany(2)),
-            },
-            actions: {
-                getAllOrganizations: vi.fn(),
-            },
-        },
-
-        announcements: {
-            namespaced: true,
-            actions: {
-                getAnnouncements: vi.fn(() => ({ results: AnnouncementFactory.generateMany(2) })),
-            },
-        },
-
         users: {
             namespaced: true,
             getters: {
@@ -68,6 +43,9 @@ describe('Button', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        organizationsStore.all = OrganizationOutputFactory.generateMany(2)
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
         defaultParams = {
