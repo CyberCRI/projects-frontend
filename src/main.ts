@@ -91,7 +91,7 @@ async function main(): Promise<void> {
     // refresh token (the refresh loop come later and is async,
     // so it doesn't return soon enough for route guards like requireAdmin)
     if (localStorage.getItem('ACCESS_TOKEN')) {
-        await store.dispatch('users/refreshToken')
+        await usersStore.doRefreshToken()
     }
 
     const loginSearchParams = new URLSearchParams(window.location.search)

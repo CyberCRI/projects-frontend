@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations /*, mapActions*/ } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import debounce from 'lodash.debounce'
 
@@ -89,9 +89,6 @@ export default {
     },
 
     methods: {
-        ...mapMutations({
-            resetUser: 'users/RESET_USER',
-        }),
         toggleReportBugModal() {
             this.reportBugModalActive = !this.reportBugModalActive
         },
@@ -100,7 +97,7 @@ export default {
             const accessToken = localStorage.getItem('ACCESS_TOKEN')
 
             const _logout = () => {
-                this.resetUser()
+                this.usersStore.resetUser()
                 this.closeModal()
                 // navigate to /dashboard
                 if (!this.$route || this.$route.name !== 'Home') {

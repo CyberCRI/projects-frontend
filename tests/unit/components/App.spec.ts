@@ -45,6 +45,7 @@ function mockLocalStorage() {
     }
 }
 
+// TODO pinia this is now a store action
 function buildStore(isLogged, resetUser) {
     const mutations = {
         RESET_USER: resetUser,

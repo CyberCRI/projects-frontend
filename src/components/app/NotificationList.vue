@@ -79,7 +79,7 @@ export default {
             try {
                 const result = await getNotifications()
                 this.notifications = result.results
-                this.$store.commit('users/SET_NOTIFICATIONS_COUNT', 0)
+                usersStore.notifications = 0
             } catch (err) {
                 console.error(err)
             } finally {

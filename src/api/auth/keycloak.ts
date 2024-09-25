@@ -94,7 +94,7 @@ export default {
                     if (this.loopId) clearTimeout(parseInt(this.loopId))
                     this.loopId = null
                     // refresh
-                    store.dispatch('users/refreshToken').then(() => {
+                    usersStore.doRefreshToken().then(() => {
                         // schedule next refresh
                         const interval = getRefreshTokenInterval()
                         if (interval > 0) {
