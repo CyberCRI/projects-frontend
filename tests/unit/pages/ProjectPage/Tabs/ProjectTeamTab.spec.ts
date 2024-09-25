@@ -4,8 +4,8 @@ import ProjectTeamTab from '@/pages/ProjectPage/Tabs/ProjectTeamTab.vue'
 import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import utils from '@/functs/functions'
-
 import pinia from '@/stores'
+import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/functs/functions')
@@ -19,27 +19,21 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ProjectOutputFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProjectTeamTab.vue', () => {
     beforeEach(() => {
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
+        const projectsStore = useProjectsStore(pinia)
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
     })
 
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectTeamTab, {
             i18n,
-            store,
             provide: {
                 projectLayoutToggleAddModal: vi.fn(),
             },

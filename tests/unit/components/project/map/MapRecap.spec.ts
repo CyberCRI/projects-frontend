@@ -1,20 +1,21 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import MapRecap from '@/components/project/map/MapRecap.vue'
-
+import pinia from '@/stores'
+import useProjectsStore from '@/stores/useProjects'
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('MapRecap.vue', () => {
     it('should render component', () => {
+        beforeEach(() => {
+            const projectsStore = useProjectsStore(pinia)
+
+            projectsStore.project = {
+                ...ProjectOutputFactory.generate(),
+                files: [],
+                links: [],
+            }
+        })
         const wrapper = lpiShallowMount(MapRecap, {
-            store: {
-                modules: {
-                    projects: {
-                        module: true,
-                        getters: {
-                            project: () => ({ id: 1 }),
-                        },
-                    },
-                },
-            },
             provide: {
                 projectLayoutToggleAddModal: vi.fn(),
             },

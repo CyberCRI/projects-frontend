@@ -7,6 +7,7 @@ import { OrganizationOutputFactory } from '../../../factories/organization.facto
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
 
@@ -20,16 +21,6 @@ const i18n = {
 
 const store = {
     modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    files: [],
-                    links: [],
-                }),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -47,6 +38,12 @@ describe('AddToProjectDropdown', () => {
     beforeEach(() => {
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
+        const projectsStore = useProjectsStore(pinia)
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
         defaultParams = {
             i18n,
             store,

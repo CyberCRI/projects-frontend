@@ -6,6 +6,7 @@ import { OrganizationOutputFactory } from '../../../../factories/organization.fa
 import { loadLocaleMessages } from '@/locales/i18n'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
 
 const i18n = {
     locale: 'en',
@@ -13,25 +14,8 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const project = ProjectOutputFactory.generate()
-
 const store = {
     modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    files: [],
-                    links: [],
-                }),
-                currentProjectSlug: vi.fn(() => project.slug),
-                currentProjectId: vi.fn(() => project.id),
-            },
-            actions: {
-                updateProject: vi.fn(),
-            },
-        },
         users: {
             namespaced: true,
             getters: {
@@ -47,6 +31,13 @@ describe('DescriptionDrawer.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const projectsStore = useProjectsStore(pinia)
+
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
