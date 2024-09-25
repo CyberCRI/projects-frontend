@@ -218,8 +218,7 @@ export default {
                 const apiData = this.adaptFormToApi()
                 await patchUserPrivacy(this.user.id, apiData)
 
-                if (this.user.id === this.$store.getters['users/id'])
-                    this.$store.dispatch('users/getUser', this.user.id)
+                if (this.user.id === this.usersStore.id) this.usersStore.getUser(this.user.id)
                 else getUser(this.user.id)
 
                 this.$emit('profile-edited')

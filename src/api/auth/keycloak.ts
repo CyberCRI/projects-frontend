@@ -168,8 +168,8 @@ export default {
             )
             const tokens = await this.processKeycloakResponse(result)
 
-            await store
-                .dispatch('users/logIn', {
+            await usersStore
+                .logIn({
                     ...tokens,
                     fromURL: state.fromURL,
                 })

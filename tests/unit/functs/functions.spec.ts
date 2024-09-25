@@ -40,6 +40,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(null)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
             },
@@ -49,7 +50,7 @@ describe('Function projectCanBeEdited', () => {
             store: _store,
         })
 
-        expect(store.getters['users/user']).toBe(null)
+        expect(usersStore.user).toBe(null)
     })
 
     test('that project can be edited if user is super-admin', () => {
@@ -59,6 +60,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(true)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
             },
@@ -68,7 +70,7 @@ describe('Function projectCanBeEdited', () => {
             store: _store,
         })
 
-        expect(store.getters['users/user']).toBe(true)
+        expect(usersStore.user).toBe(true)
     })
 
     test('that project can be edited if user is org-admin of one of the organisations the project belongs to', () => {
@@ -80,6 +82,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(user)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
                 'organizations/current': vi.fn(() => ({
@@ -92,7 +95,7 @@ describe('Function projectCanBeEdited', () => {
             store: _store,
         })
 
-        expect(store.getters['users/user']).toBe(user)
+        expect(usersStore.user).toBe(user)
     })
 
     test('that project cannot be edited if user is org-admin but of an organisation with no link with the project', () => {
@@ -109,6 +112,7 @@ describe('Function projectCanBeEdited', () => {
                 },
             },
             getters: {
+                // TODO pinia
                 'users/user': userDefined,
             },
         }
@@ -116,7 +120,7 @@ describe('Function projectCanBeEdited', () => {
         const { wrapper, store } = lpiMountExtra(FunctionImporter, {
             store: _store,
         })
-        expect(store.getters['users/user']).toBe(user)
+        expect(usersStore.user).toBe(user)
     })
 
     test("that project can be edited if user is one of project's owners and project is not locked", () => {
@@ -132,6 +136,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(user)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
                 id: () => user.id,
@@ -141,7 +146,7 @@ describe('Function projectCanBeEdited', () => {
             store: _store,
         })
 
-        expect(store.getters['users/user']).toBe(user)
+        expect(usersStore.user).toBe(user)
     })
 
     test("that project cannot be edited if user is one of project's owners but project is locked", () => {
@@ -151,6 +156,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(true)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
             },
@@ -162,7 +168,7 @@ describe('Function projectCanBeEdited', () => {
         const { wrapper, store } = lpiMountExtra(FunctionImporter, {
             store: _store,
         })
-        expect(store.getters['users/user']).toBe(true)
+        expect(usersStore.user).toBe(true)
     })
 
     // TODO projects: when reviewers is added to the function update test
@@ -173,7 +179,7 @@ describe('Function projectCanBeEdited', () => {
     //     const userDefined = vi.fn()
     //     userDefined.mockReturnValue(true)
     //
-    //     const store = createStore({
+    //     const store = createStore({ // TODO pinia
     //         getters: {
     //             'users/user': userDefined,
     //         },
@@ -187,7 +193,7 @@ describe('Function projectCanBeEdited', () => {
     //         store,
     //     })
     //
-    //     expect(wrapper.vm.$store.getters['users/user']).toBe(true)
+    //     expect(wrapper.vm.usersStore.user).toBe(true)
     //     expect(wrapper.vm.$data.funct.projectCanBeEdited(project, store)).toBe(true)
     // })
 
@@ -198,6 +204,7 @@ describe('Function projectCanBeEdited', () => {
         userDefined.mockReturnValue(user)
 
         const _store = {
+            // TODO pinia
             getters: {
                 'users/user': userDefined,
             },
@@ -209,6 +216,6 @@ describe('Function projectCanBeEdited', () => {
         const { wrapper, store } = lpiMountExtra(FunctionImporter, {
             store: _store,
         })
-        expect(store.getters['users/user']).toBe(user)
+        expect(usersStore.user).toBe(user)
     })
 })

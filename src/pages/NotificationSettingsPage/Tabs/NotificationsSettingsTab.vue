@@ -48,13 +48,13 @@ export default {
     },
 
     async mounted() {
-        await this.$store.dispatch('users/getNotifications', this.$store.getters['users/id'])
+        await this.usersStore.getNotifications(this.usersStore.id)
         this.initNotificationSettings()
     },
 
     computed: {
         notifications() {
-            return this.$store.getters['users/getNotificationsSettings'] || {}
+            return this.usersStore.getNotificationsSettings || {}
         },
 
         options() {
@@ -157,11 +157,11 @@ export default {
             payload[setting] = !this.notifications[setting]
 
             const body = {
-                id: this.$store.getters['users/id'],
+                id: this.usersStore.id,
                 payload: payload,
             }
 
-            await this.$store.dispatch('users/patchNotifications', body)
+            await this.usersStore.patchNotifications(body)
         },
     },
 }

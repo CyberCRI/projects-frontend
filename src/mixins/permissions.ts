@@ -10,8 +10,8 @@ export default {
     methods: {
         hasPermission(scope, action, pk?) {
             const permissions = this.$store
-                ? this.$store.getters['users/getPermissions']
-                : store.getters['users/getPermissions']
+                ? this.usersStore.getPermissions
+                : usersStore.getPermissions
             return utils.hasPermission(permissions, scope, action, pk)
         },
     },
@@ -31,7 +31,7 @@ export default {
         }),
         isOwner() {
             return (
-                this.$store.getters['users/isConnected'] &&
+                this.usersStore.isConnected &&
                 (this.hasPermission(
                     'projects',
                     'delete_project',
@@ -48,16 +48,16 @@ export default {
 
         isSuperAdmin() {
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some((role) => role === 'superadmins')
+                this.usersStore.isConnected &&
+                this.usersStore.getUserRoles.some((role) => role === 'superadmins')
             )
         },
 
         isFacilitator() {
             const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some(
+                this.usersStore.isConnected &&
+                this.usersStore.getUserRoles.some(
                     (role) => role === `organization:#${orgId}:facilitators`
                 )
             )
@@ -66,8 +66,8 @@ export default {
         isOrgAdmin() {
             const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some(
+                this.usersStore.isConnected &&
+                this.usersStore.getUserRoles.some(
                     (role) => role === `organization:#${orgId}:admins`
                 )
             )
@@ -75,8 +75,7 @@ export default {
 
         isAdmin() {
             return (
-                (this.$store.getters['users/isConnected'] &&
-                    this.hasPermission('organizations', 'destroy')) ||
+                (this.usersStore.isConnected && this.hasPermission('organizations', 'destroy')) ||
                 this.isSuperAdmin ||
                 this.isOrgAdmin
             )
@@ -89,7 +88,7 @@ export default {
         /* PROJECTS */
 
         canCreateProject() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         canEditProject() {
@@ -223,7 +222,7 @@ export default {
             // so for now assume that if the user is connected and can see the project
             // s.he can comment
             // TODO: rethink this with backend and P.O.
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
 
             // this.hasPermission(
             //     'projects',

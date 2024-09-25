@@ -51,7 +51,7 @@ export default {
 
     computed: {
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         title() {

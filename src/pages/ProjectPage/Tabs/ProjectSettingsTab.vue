@@ -435,7 +435,7 @@ export default {
 
         isMember() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return members.find((user) => this.$store.getters['users/id'] === user.id)
+            return members.find((user) => this.usersStore.id === user.id)
         },
     },
 
@@ -494,7 +494,7 @@ export default {
                 const projectCopy = await duplicateProject(originalProject.id)
 
                 // fetch updated project list from user so permissions as set correctly
-                await this.$store.dispatch('users/getUser', this.$store.getters['users/id'], {
+                await this.usersStore.getUser(this.usersStore.id, {
                     root: true,
                 })
 
@@ -540,7 +540,7 @@ export default {
             if (
                 this.team.owners &&
                 this.team.owners.length === 1 &&
-                this.team.owners.find((user) => this.$store.getters['users/id'] === user.id)
+                this.team.owners.find((user) => this.usersStore.id === user.id)
             )
                 this.showQuitIsImposible = true
             else this.showConfirmQuit = true

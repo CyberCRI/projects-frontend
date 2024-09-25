@@ -84,7 +84,7 @@
                 :search="{
                     limit: 12,
                     ordering: '-updated_at',
-                    members: [$store.getters['users/id']],
+                    members: [usersStore.id],
                     member_role: ['owners', 'members', 'reviewers'],
                 }"
                 mode="projects"
@@ -308,7 +308,7 @@ export default {
         },
 
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         orderOptions() {
             return [
@@ -330,7 +330,7 @@ export default {
         showOnbordingTodos() {
             if (!this.isConnected) return false
             if (!this.organization?.onboarding_enabled) return false
-            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
+            const status = this.usersStore.userFromApi?.onboarding_status || {}
             return (
                 status.show_progress &&
                 (status.complete_profile ||

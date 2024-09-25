@@ -88,7 +88,7 @@ export default {
         },
 
         currentUser() {
-            return this.$store.getters['users/userFromApi']
+            return this.usersStore.userFromApi
         },
 
         iconName() {

@@ -106,8 +106,8 @@ const hideSoloWarning = ref(false)
 const updateIsBlocked = ref(true)
 
 // computed:
-const user = computed(() => store.getters['users/userFromApi'])
-const accessToken = computed(() => store.getters['users/accessToken'])
+const user = computed(() => usersStore.userFromApi)
+const accessToken = computed(() => usersStore.accessToken)
 
 const onlineAndConnected = computed(() => online.value && status.value === 'connected')
 

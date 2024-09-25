@@ -137,7 +137,7 @@ export default {
                 !this.hasAddIcon &&
                 !this.customIcon &&
                 !this.hasCloseIcon &&
-                this.$store.getters['users/isConnected']
+                this.usersStore.isConnected
             )
         },
 
@@ -147,7 +147,7 @@ export default {
                 !this.hasCloseIcon &&
                 !this.customIcon &&
                 this.follow.is_followed &&
-                this.$store.getters['users/isConnected']
+                this.usersStore.isConnected
             )
         },
 
@@ -232,7 +232,7 @@ export default {
                     this.follow.is_followed = false
                 } else {
                     const result = await followUtils.follow({
-                        follower_id: this.$store.state.users.id,
+                        follower_id: this.usersStore.id,
                         project_id: this.project.id,
                     })
                     this.follow = result.project.is_followed

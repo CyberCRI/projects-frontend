@@ -39,12 +39,11 @@ const useUsersStore = defineStore('users', {
         checkExpiredToken()
         return {
             refreshToken: localStorage.getItem('REFRESH_TOKEN'),
-            //
             userFromToken: null,
             userFromApi: null,
             accessToken: localStorage.getItem('ACCESS_TOKEN'),
             keycloak_id: '',
-            loginLocked: false,
+            loginLocked: false, // not used ?
             permissions: {},
             id_token: localStorage.getItem('ID_TOKEN'),
             roles: [],
@@ -93,6 +92,7 @@ const useUsersStore = defineStore('users', {
         // },
 
         // TODO useless renaming of loginLocked
+        // not used ?
         isLoginLocked(): boolean {
             return this.loginLocked
         },
@@ -211,6 +211,7 @@ const useUsersStore = defineStore('users', {
         },
 
         // TODO useless action on state
+        // not used ?
         lockLogin(lock: boolean) {
             this.loginLocked = lock
         },
@@ -243,6 +244,7 @@ const useUsersStore = defineStore('users', {
 
         // ex mutations
 
+        // POI
         setUser(payload: UsersState) {
             localStorage.setItem('REFRESH_TOKEN', payload.refreshToken)
             localStorage.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)

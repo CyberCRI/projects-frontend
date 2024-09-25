@@ -183,7 +183,7 @@ export default {
             return import.meta.env.VITE_APP_VERSION
         },
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         showOnboardingScreen() {
             return this.organizationsStore.current?.onboarding_enabled

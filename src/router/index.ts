@@ -22,7 +22,7 @@ router.beforeEach((to, _from, next) => {
     if (to.matched.some((route) => route.meta.resetScroll)) {
         utils.resetScroll()
     }
-    if (to.matched.some((route) => route.meta.requiresAuth) && !store.getters['users/isLoggedIn']) {
+    if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isLoggedIn) {
         let proceed = true
 
         // if the page allow last minute login

@@ -134,9 +134,7 @@ export default {
 
         isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return (
-                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
-            )
+            return this.isAdmin || members.find((user) => this.usersStore.id === user.id)
         },
 
         projectTabs() {

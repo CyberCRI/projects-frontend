@@ -278,11 +278,11 @@ export default {
         },
 
         currentUserId() {
-            return this.$store.getters['users/id'] ? this.$store.getters['users/id'] : null
+            return this.usersStore.id ? this.usersStore.id : null
         },
 
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         userImage() {

@@ -221,7 +221,7 @@ export default {
                 const project = await createProject(payload)
 
                 // fetch updated project list from user so permissions as set correctly
-                await this.$store.dispatch('users/getUser', this.$store.getters['users/id'], {
+                await this.usersStore.getUser(this.usersStore.id, {
                     root: true,
                 })
 
@@ -242,8 +242,8 @@ export default {
                 await this.onboardingTrap('create_project', false)
                 // reload current to user to get new permissions
                 // maybe set a endpoint to fetch only permission ?
-                const user = this.$store.getters['users/userFromApi']
-                if (user) this.$store.dispatch('users/getUser', user.id)
+                const user = this.usersStore.userFromApi
+                if (user) this.usersStore.getUser(user.id)
                 this.$router.push({
                     name: 'projectDescription',
                     params: { slugOrId: project.slug },

@@ -101,7 +101,7 @@ export default {
 
     computed: {
         isSelf() {
-            const connectedUser = this.$store.getters['users/userFromApi']
+            const connectedUser = this.usersStore.userFromApi
             return connectedUser && this.user.id === connectedUser.id
         },
     },
@@ -132,7 +132,7 @@ export default {
                 this.$emit('profile-edited')
 
                 // update store if self
-                if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
+                if (this.isSelf) this.usersStore.getUser(this.user.id)
                 this.toaster.pushSuccess(this.$t('profile.edit.bio.save-success'))
             } catch (error) {
                 this.toaster.pushError(`${this.$t('profile.edit.bio.save-error')} (${error})`)

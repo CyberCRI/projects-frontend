@@ -55,7 +55,7 @@ export default {
     },
 
     created() {
-        const status = this.$store.getters['users/userFromApi']?.onboarding_status
+        const status = this.usersStore.userFromApi?.onboarding_status
 
         this.showWelcomeModal = !!status?.show_welcome
 

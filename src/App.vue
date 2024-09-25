@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 import debounce from 'lodash.debounce'
 
 import LpiFooter from '@/components/app/LpiFooter.vue'
@@ -45,9 +43,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            isLoggedIn: 'users/isLoggedIn',
-        }),
+        isLoggedIn() {
+            return this.usersStore.isLoggedIn
+        },
 
         currentRouteName() {
             // Fix buefy class overwrite css since we renamed concepts->tags

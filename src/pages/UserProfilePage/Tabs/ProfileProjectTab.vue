@@ -81,12 +81,12 @@ export default {
 
     computed: {
         isMyProfileAndCanCreateProject() {
-            const loggedAsID = this.$store.getters['users/id']
+            const loggedAsID = this.usersStore.id
             return loggedAsID && this.user.id === loggedAsID && this.canCreateProject
         },
 
         isCurrentUser() {
-            return this.$store.getters['users/id'] === this.user.id
+            return this.usersStore.id === this.user.id
         },
 
         noFollowLabel() {

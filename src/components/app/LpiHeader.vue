@@ -258,7 +258,7 @@ export default {
         },
 
         async logOutUser() {
-            await this.$store.dispatch('users/logOut')
+            await this.usersStore.logOut()
         },
 
         closeNav() {
@@ -301,7 +301,7 @@ export default {
                 }
                 // dont wait for termination, user update take a while
                 // and we dont want the UI to freeze meanwhile
-                patchUser(this.$store.getters['users/id'], body)
+                patchUser(this.usersStore.id, body)
             }
 
             this.languagesStore.current = lang
@@ -337,7 +337,7 @@ export default {
 
     computed: {
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         langMenu() {
@@ -547,7 +547,7 @@ export default {
 
         loginName() {
             if (!this.isConnected) return ''
-            return this.$store.getters['users/user'].name.firstname.toUpperCase()
+            return this.usersStore.user.name.firstname.toUpperCase()
         },
 
         AdminLabel() {
@@ -558,7 +558,7 @@ export default {
         },
 
         notificationCount() {
-            return this.$store.getters['users/getNotificationCount']
+            return this.usersStore.getNotificationCount
         },
         organisation() {
             return this.organizationsStore.current

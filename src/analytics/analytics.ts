@@ -67,18 +67,18 @@ export const identifyUser = (userId: string) => {
  */
 export const setUserProperties = () => {
     try {
-        const fullName = `${store.getters['users/user'].name.firstname} ${store.getters['users/user'].name.lastname}`
+        const fullName = `${usersStore.user.name.firstname} ${usersStore.user.name.lastname}`
 
         Mixpanel.people.set({
             // Only add user properties if not null
-            ...(store.getters['users/user'] && {
+            ...(usersStore.user && {
                 // Common properties with Mixpanel
                 $name: fullName,
-                $email: store.getters['users/user'].email,
+                $email: usersStore.user.email,
                 // Custom properties on our side
-                id: store.state.users.id,
-                roles: store.getters['users/user'].roles,
-                orgs: store.getters['users/user'].orgs,
+                id: usersStore.id,
+                roles: usersStore.user.roles,
+                orgs: usersStore.user.orgs,
             }),
         })
         // Set "page_views" only if it doesn't exist yet, to not overwrite previous value

@@ -98,10 +98,7 @@ export default {
         try {
             if (!this.userId) {
                 // get the connected user
-                this.user = await this.$store.dispatch(
-                    'users/getUser',
-                    this.$store.getters['users/id']
-                )
+                this.user = await this.usersStore.getUser(this.usersStore.id)
             } else {
                 // get another user
                 this.user = await getUser(this.userId)
@@ -116,7 +113,7 @@ export default {
 
     computed: {
         isSelf() {
-            const connectedUser = this.$store.getters['users/userFromApi']
+            const connectedUser = this.usersStore.userFromApi
             return connectedUser && this.user.id === connectedUser.id
         },
 

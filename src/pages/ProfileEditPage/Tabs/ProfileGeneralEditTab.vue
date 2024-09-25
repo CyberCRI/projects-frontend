@@ -397,7 +397,7 @@ export default {
             return this.v$.$anyDirty
         },
         isSelf() {
-            const connectedUser = this.$store.getters['users/userFromApi']
+            const connectedUser = this.usersStore.userFromApi
             return connectedUser && this.user.id === connectedUser.id
         },
     },
@@ -473,7 +473,7 @@ export default {
                     // give extra time for profile-edited event to be consumed
                     await new Promise((resolve) => setTimeout(resolve, 50))
                     // reload user if self to update store info
-                    if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
+                    if (this.isSelf) this.usersStore.getUser(this.user.id)
                     // confirm success
                     this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
                 }

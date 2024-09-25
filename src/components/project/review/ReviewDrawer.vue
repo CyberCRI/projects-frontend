@@ -192,7 +192,7 @@ export default {
                         },
                     }
                 }
-                this.newReview.data.reviewer = this.$store.getters['users/id']
+                this.newReview.data.reviewer = this.usersStore.id
             },
             immediate: true,
         },

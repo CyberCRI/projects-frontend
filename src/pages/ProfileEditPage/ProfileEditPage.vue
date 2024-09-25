@@ -51,7 +51,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.userId || this.$store.getters['users/id'])
+                this.user = await getUser(this.userId || this.usersStore.id)
                 // safe check for isSelf beacuse this.userId might be a slug in fact
             } catch (error) {
                 console.error(error)
@@ -59,7 +59,7 @@ export default {
         },
 
         async onProfileEdited() {
-            if (this.user?.id == this.$store.getters['users/id']) {
+            if (this.user?.id == this.usersStore.id) {
                 this.onboardingTrap('complete_profile', false)
             }
         },

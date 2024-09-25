@@ -63,7 +63,7 @@ export default {
         },
 
         loggedIn() {
-            return this.$store.getters['users/isLoggedIn']
+            return this.usersStore.isLoggedIn
         },
     },
 

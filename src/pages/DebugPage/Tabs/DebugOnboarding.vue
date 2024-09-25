@@ -1,13 +1,13 @@
 <template>
     <div class="debug-onboarding">
         <p class="notice">Restart onboarding process for the current user.</p>
-        <p v-if="!$store.getters['users/userFromApi']">Login first !</p>
+        <p v-if="!usersStore.userFromApi">Login first !</p>
         <LpiButton
             class="reset-button"
             @click="resetOnboardingStatus"
             :btn-icon="reseting ? 'LoaderSimple' : 'RotateRight'"
             :label="'Reset onboarding status'"
-            :disabled="!$store.getters['users/userFromApi'] || reseting"
+            :disabled="!usersStore.userFromApi || reseting"
         ></LpiButton>
     </div>
 </template>
@@ -35,10 +35,10 @@ export default {
             this.reseting = true
             try {
                 const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
-                const user = this.$store.getters['users/userFromApi']
+                const user = this.usersStore.userFromApi
                 const keycloak_id = user.keycloak_id
                 await patchUser(keycloak_id, payload)
-                await this.$store.dispatch('users/getUser', keycloak_id)
+                await this.usersStore.getUser(keycloak_id)
                 this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
             } catch (error) {
                 this.toaster.pushError(`Error while reseting onboarding status`)

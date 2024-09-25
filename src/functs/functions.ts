@@ -90,7 +90,7 @@ export default {
     },
 
     isConnected() {
-        return store.getters['users/user']
+        return usersStore.user
     },
 
     isValidMail(email) {

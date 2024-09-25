@@ -101,7 +101,7 @@ export default {
 
     computed: {
         user() {
-            return this.$store.getters['users/userFromApi']
+            return this.usersStore.userFromApi
         },
 
         username() {
@@ -109,7 +109,7 @@ export default {
         },
 
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         status() {
             return (this.isConnected && this.user?.onboarding_status) || {}
@@ -138,7 +138,7 @@ export default {
             const payload = { onboarding_status: { ...this.status, [key]: val } }
             try {
                 await patchUser(this.user.id, payload)
-                await this.$store.dispatch('users/getUser', this.user.id)
+                await this.usersStore.getUser(this.user.id)
             } catch (err) {
                 console.error(err)
             } finally {

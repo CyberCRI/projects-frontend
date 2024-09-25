@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/store', () => ({
     default: {
         getters: {
-            ['users/isLoggedIn']: false,
+            ['users/isLoggedIn']: false, // TODO pinia
         },
     },
 }))

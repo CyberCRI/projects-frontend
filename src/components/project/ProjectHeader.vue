@@ -220,7 +220,7 @@
                     <div v-if="!loading" class="project-actions-ctn">
                         <div class="end-buttons">
                             <ExternalLabelButton
-                                v-if="$store.getters['users/isLoggedIn']"
+                                v-if="usersStore.isLoggedIn"
                                 class="space-button bg-on-hover"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
                                 :btn-icon="followed ? 'Heart' : 'HeartOutline'"
@@ -666,11 +666,11 @@ export default {
                     this.$emit('update-follow', { is_followed: false })
                 } else {
                     await followUtils.follow({
-                        follower_id: this.$store.getters['users/id'],
+                        follower_id: this.usersStore.id,
                         project_id: this.project.id,
                     })
                     this.$emit('update-follow', {
-                        follower_id: this.$store.state.users.id,
+                        follower_id: this.usersStore.id,
                         is_followed: true,
                     })
                 }

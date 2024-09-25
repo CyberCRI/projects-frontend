@@ -106,7 +106,7 @@ export default {
         },
 
         loggedIn() {
-            return this.$store.getters['users/isLoggedIn']
+            return this.usersStore.isLoggedIn
         },
 
         numberOfSummaryBlock() {
@@ -138,7 +138,7 @@ export default {
             const filters = {
                 limit: 3,
                 ordering: '-updated_at',
-                members: [this.$store.getters['users/id']],
+                members: [this.usersStore.id],
                 member_role: ['owners', 'members', 'reviewers'],
                 organizations: this.organizationsStore.current.code,
             }

@@ -132,8 +132,7 @@ async function main(): Promise<void> {
 
     languagesStore.current = lang
 
-    if (store.state.users?.keycloak_id)
-        await store.dispatch('users/getUser', store.state.users.keycloak_id)
+    if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
 
     // Get org information on init
     const organizationsStore = useOrganizationsStore()

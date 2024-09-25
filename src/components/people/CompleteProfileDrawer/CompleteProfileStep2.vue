@@ -44,7 +44,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/id'])
+                this.user = await getUser(this.usersStore.id)
             } catch (error) {
                 console.error(error)
             }

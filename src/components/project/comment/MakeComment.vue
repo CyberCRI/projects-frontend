@@ -111,9 +111,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            isLoggedIn: 'users/isLoggedIn',
-        }),
+        isLoggedIn() {
+            return this.usersStore.isLoggedIn
+        },
 
         canSubmitComment() {
             return this.isEdited && this.canCreateComments

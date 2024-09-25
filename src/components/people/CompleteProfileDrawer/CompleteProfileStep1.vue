@@ -342,7 +342,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/id'])
+                this.user = await getUser(this.usersStore.id)
                 this.form.picture = this.user.profile_picture || null
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
@@ -413,7 +413,7 @@ export default {
                     await this.onboardingTrap('complete_profile', false)
 
                     // reload user
-                    this.$store.dispatch('users/getUser', this.user.id)
+                    this.usersStore.getUser(this.user.id)
                     // confirm success
                     this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
                 } else {

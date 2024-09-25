@@ -77,13 +77,13 @@ export default {
         },
 
         loggedIn() {
-            return this.$store.getters['users/isLoggedIn']
+            return this.usersStore.isLoggedIn
         },
 
         showOnbordingTodos() {
             if (!this.loggedIn) return false
             if (!this.organization?.onboarding_enabled) return false
-            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
+            const status = this.usersStore.userFromApi?.onboarding_status || {}
             return (
                 status.show_progress &&
                 (status.complete_profile ||

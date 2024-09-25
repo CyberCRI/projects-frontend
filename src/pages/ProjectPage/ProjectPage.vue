@@ -311,13 +311,11 @@ export default {
 
         isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return (
-                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
-            )
+            return this.isAdmin || members.find((user) => this.usersStore.id === user.id)
         },
 
         accessToken() {
-            return this.$store.getters['users/accessToken']
+            return this.usersStore.accessToken
         },
         mergedTeam() {
             // this is damn ugly but necessary for compatibility with TeamResultList

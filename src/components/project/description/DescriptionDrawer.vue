@@ -182,10 +182,10 @@ export default {
 
                             this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
 
-                            const connectedUser = this.$store.getters['users/userFromApi']
+                            const connectedUser = this.usersStore.userFromApi
 
                             this.notifyPatch({
-                                pid: this.$store.state.users.id,
+                                pid: this.usersStore.id,
                                 author_name: connectedUser
                                     ? connectedUser.given_name + ' ' + connectedUser.family_name
                                     : '',

@@ -100,7 +100,7 @@ export default {
 
     computed: {
         isCurrentUser() {
-            return this.$store.getters['users/id'] === this.user.id
+            return this.usersStore.id === this.user.id
         },
 
         noFollowLabel() {
