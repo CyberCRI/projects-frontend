@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-import store from '@/store'
 import routes from './routes'
 import analytics from '@/analytics'
 import isAdmin from '@/functs/isAdmin'
 import isAdminOrFacilitator from '@/functs/isAdminOrFacilitator'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import utils from '@/functs/functions'
+import useUsersStore from '@/stores/useUsers'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -22,6 +21,7 @@ router.beforeEach((to, _from, next) => {
     if (to.matched.some((route) => route.meta.resetScroll)) {
         utils.resetScroll()
     }
+    const usersStore = useUsersStore()
     if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isLoggedIn) {
         let proceed = true
 
@@ -65,11 +65,11 @@ router.beforeEach((to, _from, next) => {
             // else next('/dashboard')
             next({ name: 'Home' })
         }
-    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin(store)) {
+    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin()) {
         next({ name: 'Home' })
     } else if (
         to.matched.some((route) => route.meta.requiresAdminOrFacilitator) &&
-        !isAdminOrFacilitator(store)
+        !isAdminOrFacilitator()
     ) {
         next({ name: 'Home' })
     } else {

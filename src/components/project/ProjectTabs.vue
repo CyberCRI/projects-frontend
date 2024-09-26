@@ -38,6 +38,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import AddToProjectDropdown from '@/components/project/AddToProjectDropdown.vue'
 import permissions from '@/mixins/permissions.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProjectTabs',
@@ -61,9 +62,11 @@ export default {
     mixins: [permissions],
 
     setup() {
+        const usersStore = useUsersStore()
         const projectCategoriesStore = useProjectCategories()
         return {
             projectCategoriesStore,
+            usersStore,
         }
     },
 

@@ -264,6 +264,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 function defaultForm() {
     return {
@@ -304,8 +305,10 @@ export default {
     mixins: [imageMixin],
     setup() {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
+            usersStore,
         }
     },
 

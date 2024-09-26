@@ -184,6 +184,7 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'LpiHeader',
 
@@ -205,10 +206,12 @@ export default {
         const languagesStore = useLanguagesStore()
         const projectCategoriesStore = useProjectCategories()
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             languagesStore,
             projectCategoriesStore,
             organizationsStore,
+            usersStore,
         }
     },
 

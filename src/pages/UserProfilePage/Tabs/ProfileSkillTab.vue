@@ -25,6 +25,7 @@
 import UserSkills from '@/components/people/skill/UserSkills.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileSkillTab',
@@ -34,7 +35,12 @@ export default {
         SkillLevelTip,
         LinkButton,
     },
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     props: {
         user: {
             type: Object,

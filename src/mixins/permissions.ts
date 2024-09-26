@@ -1,17 +1,15 @@
 import utils from '@/functs/functions'
-import store from '@/store'
 
 import { mapState } from 'pinia'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
 
 export default {
     methods: {
         hasPermission(scope, action, pk?) {
-            const permissions = this.$store
-                ? this.usersStore.getPermissions
-                : usersStore.getPermissions
+            const permissions = this.getPermissionsForPermissions
             return utils.hasPermission(permissions, scope, action, pk)
         },
     },
@@ -29,9 +27,15 @@ export default {
             // unique name so it doesn(t conflict with a name in the component)
             currentProjectIdForPermissions: 'currentProjectId',
         }),
+        ...mapState(useUsersStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            isConnectedForPermissions: 'isConnected',
+            getPermissionsForPermissions: 'getPermissions',
+            getUserRolesForPermissions: 'getUserRoles',
+        }),
         isOwner() {
             return (
-                this.usersStore.isConnected &&
+                this.isConnectedForPermissions &&
                 (this.hasPermission(
                     'projects',
                     'delete_project',
@@ -48,16 +52,16 @@ export default {
 
         isSuperAdmin() {
             return (
-                this.usersStore.isConnected &&
-                this.usersStore.getUserRoles.some((role) => role === 'superadmins')
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some((role) => role === 'superadmins')
             )
         },
 
         isFacilitator() {
             const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.usersStore.isConnected &&
-                this.usersStore.getUserRoles.some(
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some(
                     (role) => role === `organization:#${orgId}:facilitators`
                 )
             )
@@ -66,8 +70,8 @@ export default {
         isOrgAdmin() {
             const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.usersStore.isConnected &&
-                this.usersStore.getUserRoles.some(
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some(
                     (role) => role === `organization:#${orgId}:admins`
                 )
             )
@@ -75,7 +79,8 @@ export default {
 
         isAdmin() {
             return (
-                (this.usersStore.isConnected && this.hasPermission('organizations', 'destroy')) ||
+                (this.isConnectedForPermissions &&
+                    this.hasPermission('organizations', 'destroy')) ||
                 this.isSuperAdmin ||
                 this.isOrgAdmin
             )
@@ -88,7 +93,7 @@ export default {
         /* PROJECTS */
 
         canCreateProject() {
-            return this.usersStore.isConnected
+            return this.isConnectedForPermissions
         },
 
         canEditProject() {
@@ -222,7 +227,7 @@ export default {
             // so for now assume that if the user is connected and can see the project
             // s.he can comment
             // TODO: rethink this with backend and P.O.
-            return this.usersStore.isConnected
+            return this.isConnectedForPermissions
 
             // this.hasPermission(
             //     'projects',

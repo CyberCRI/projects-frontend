@@ -3,6 +3,7 @@ import FunctionImporter from './FunctionImporter.vue'
 import { lpiMountExtra } from '../../helpers/LpiMount'
 import { ProjectOutputFactory } from '../../factories/project.factory'
 import { UserFactory } from '../../factories/user.factory'
+import useUsersStore from '@/stores/useUsers'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/router/index', () => ({
@@ -12,6 +13,10 @@ vi.mock('@/router/index', () => ({
 }))
 
 describe('Function getOrgsFromRoles', () => {
+    let usersStore
+    beforeEach(() => {
+        usersStore = useUsersStore()
+    })
     it('should return empty array', () => {
         const roles = []
         const result = funct.getOrgsFromRoles(roles)
@@ -35,6 +40,10 @@ describe('Function getOrgsFromRoles', () => {
 })
 
 describe('Function projectCanBeEdited', () => {
+    let usersStore
+    beforeEach(() => {
+        usersStore = useUsersStore()
+    })
     test('that project cannot be edited if there is no user', () => {
         const userDefined = vi.fn()
         userDefined.mockReturnValue(null)

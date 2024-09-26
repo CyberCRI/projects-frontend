@@ -229,6 +229,7 @@ import { getAnnouncements } from '@/api/announcements.service'
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'HomePage',
 
@@ -257,9 +258,11 @@ export default {
     setup() {
         const projectCategoriesStore = useProjectCategories()
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             projectCategoriesStore,
             organizationsStore,
+            usersStore,
         }
     },
 

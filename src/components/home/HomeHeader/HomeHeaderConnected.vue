@@ -60,6 +60,7 @@ import { getAllInstructions } from '@/api/instruction.service'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'HomeHeaderConnected',
 
@@ -72,8 +73,10 @@ export default {
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             organizationsStore,
+            usersStore,
         }
     },
     data() {

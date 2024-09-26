@@ -1,8 +1,8 @@
 // Full API reference: https://developer.mixpanel.com/docs/javascript-full-api-reference
 import Mixpanel, { RequestOptions } from 'mixpanel-browser'
 
-import store from '@/store'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 export const mixpanel = Mixpanel
 
@@ -66,6 +66,7 @@ export const identifyUser = (userId: string) => {
  * Set additional information about the user identity
  */
 export const setUserProperties = () => {
+    const usersStore = useUsersStore()
     try {
         const fullName = `${usersStore.user.name.firstname} ${usersStore.user.name.lastname}`
 

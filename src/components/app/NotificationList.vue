@@ -30,6 +30,7 @@ import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import NotificationItem from '@/components/app/NotificationItem.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { getNotifications } from '@/api/notifications.service'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'NotificationList',
@@ -37,6 +38,12 @@ export default {
     emits: ['go-to', 'close'],
 
     components: { NotificationItem, LpiLoader, BaseDrawer },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
 
     props: {
         isOpened: {

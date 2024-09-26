@@ -60,6 +60,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 function defaultForm() {
     return {
@@ -80,8 +81,10 @@ export default {
     emits: ['profile-edited'],
     setup() {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
+            usersStore,
         }
     },
 

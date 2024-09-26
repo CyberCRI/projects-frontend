@@ -19,6 +19,7 @@
 <script>
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'NotificationsSettingsTab',
@@ -28,6 +29,12 @@ export default {
         GroupButton,
     },
 
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     data() {
         return {
             form: {

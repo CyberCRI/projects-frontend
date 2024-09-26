@@ -53,6 +53,8 @@ import retry from 'async-retry'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
     name: 'DescriptionDrawer',
 
@@ -63,10 +65,12 @@ export default {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
             organizationsStore,
             projectsStore,
+            usersStore,
         }
     },
 

@@ -39,6 +39,7 @@ import { getGroup } from '@/api/groups.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileGroupsTab',
@@ -53,8 +54,10 @@ export default {
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             organizationsStore,
+            usersStore,
         }
     },
     props: {

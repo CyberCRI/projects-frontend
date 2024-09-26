@@ -123,7 +123,7 @@ const useUsersStore = defineStore('users', {
 
     actions: {
         logOut(): Promise<any> {
-            return new Promise(function (resolve) {
+            return new Promise((resolve) => {
                 this.loginLocked = true
                 removeApiCookie()
                     .catch(console.error)

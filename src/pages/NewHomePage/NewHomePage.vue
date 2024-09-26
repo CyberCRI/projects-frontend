@@ -50,6 +50,7 @@ import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymou
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import LocationsLink from '@/components/home/LocationsLink/LocationsLink.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'NewHomePage',
 
@@ -67,8 +68,10 @@ export default {
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             organizationsStore,
+            usersStore,
         }
     },
     computed: {

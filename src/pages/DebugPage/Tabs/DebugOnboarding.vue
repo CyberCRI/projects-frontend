@@ -15,13 +15,17 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
     name: 'DebugOnboarding',
     components: { LpiButton },
     setup() {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
+            usersStore,
         }
     },
 

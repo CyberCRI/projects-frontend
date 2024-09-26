@@ -324,6 +324,8 @@ import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
     name: 'ProjectHeader',
 
@@ -346,8 +348,10 @@ export default {
     mixins: [permissions, imageMixin],
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             organizationsStore,
+            usersStore,
         }
     },
     props: {

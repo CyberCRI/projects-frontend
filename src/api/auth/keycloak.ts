@@ -4,8 +4,8 @@ import {
     createRandomString,
     getRefreshTokenInterval,
 } from '@/api/auth/keycloakUtils'
-import store from '@/store'
 import router from '@/router/index'
+import useUsersStore from '@/stores/useUsers'
 
 import useToasterStore from '@/stores/useToaster'
 import i18n from '@/locales/i18n'
@@ -90,6 +90,7 @@ export default {
 
             if (localStorage.getItem('ACCESS_TOKEN')) {
                 const _refresh = () => {
+                    const usersStore = useUsersStore()
                     // clear previous loop for safety
                     if (this.loopId) clearTimeout(parseInt(this.loopId))
                     this.loopId = null
@@ -120,6 +121,7 @@ export default {
 
     async loginIfValidState(loginSearchParams: URLSearchParams): Promise<void> {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         try {
             const state = loginSearchParams.get('state')
                 ? JSON.parse(loginSearchParams.get('state') as string)

@@ -107,6 +107,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from '@/api/people.service.ts'
 import { getUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 function defaultForm() {
     return {
@@ -141,8 +142,10 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
+            usersStore,
         }
     },
 

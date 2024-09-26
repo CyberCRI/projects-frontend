@@ -11,6 +11,7 @@
 
 <script>
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileBioTab',
@@ -24,6 +25,12 @@ export default {
             type: Object,
             required: true,
         },
+    },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     computed: {

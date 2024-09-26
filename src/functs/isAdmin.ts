@@ -1,6 +1,7 @@
 import utils from '@/functs/functions'
 // import permissions from '@/mixins/permissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 // const isAdmin = (store) => {
 //     const organizationsStore = useOrganizationsStore()
 //     return !!(
@@ -13,7 +14,8 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 //     )
 // }
 
-const isAdmin = (store) => {
+const isAdmin = () => {
+    const usersStore = useUsersStore()
     const organizationsStore = useOrganizationsStore()
     function _hasPermission(scope, action, pk?) {
         const permissions = usersStore.getPermissions

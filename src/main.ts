@@ -30,6 +30,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useToasterStore from '@/stores/useToaster'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 // Resolves an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
@@ -90,6 +91,7 @@ async function main(): Promise<void> {
 
     // refresh token (the refresh loop come later and is async,
     // so it doesn't return soon enough for route guards like requireAdmin)
+    const usersStore = useUsersStore()
     if (localStorage.getItem('ACCESS_TOKEN')) {
         await usersStore.doRefreshToken()
     }

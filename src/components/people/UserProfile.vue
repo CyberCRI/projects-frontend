@@ -44,6 +44,7 @@ import ProfileTabs from '@/pages/UserProfilePage/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'UserProfile',
@@ -57,6 +58,13 @@ export default {
         LoaderSimple,
         ProfileTabs,
         ProfileHeader,
+    },
+
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     props: {

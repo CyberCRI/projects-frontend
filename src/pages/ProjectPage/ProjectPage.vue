@@ -151,6 +151,7 @@ import { getReviews } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProjectPage',
@@ -176,6 +177,7 @@ export default {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
 
         const modals = ref({
             project: {
@@ -266,6 +268,7 @@ export default {
             goToTab,
             organizationsStore,
             projectsStore,
+            usersStore,
         }
     },
 

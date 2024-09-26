@@ -1,6 +1,7 @@
 import utils from '@/functs/functions'
 // import permissions from '@/mixins/permissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 // const isAdminOrFacilitator = (store) => {
 //     const organizationsStore = useOrganizationsStore()
 //     const orgId = organizationsStore.current.id
@@ -16,7 +17,8 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 //     )
 // }
 
-const isAdminOrFacilitator = (store) => {
+const isAdminOrFacilitator = () => {
+    const usersStore = useUsersStore()
     const organizationsStore = useOrganizationsStore()
     function _hasPermission(scope, action, pk?) {
         const permissions = usersStore.getPermissions

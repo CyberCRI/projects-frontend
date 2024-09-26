@@ -150,6 +150,7 @@ import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'CommentItem',
@@ -168,8 +169,10 @@ export default {
     components: { ConfirmModal, IconImage, ExternalLabelButton, MakeComment, CroppedImage },
     setup() {
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
+            usersStore,
         }
     },
 

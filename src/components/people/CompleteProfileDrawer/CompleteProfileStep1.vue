@@ -215,6 +215,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -235,9 +236,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
             languagesStore,
+            usersStore,
         }
     },
 

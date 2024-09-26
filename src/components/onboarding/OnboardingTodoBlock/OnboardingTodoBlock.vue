@@ -75,6 +75,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from '@/api/people.service.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'OnboardingTodoBlock',
@@ -84,6 +85,13 @@ export default {
         LpiButton,
         IconImage,
         LinkButton,
+    },
+
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     data() {

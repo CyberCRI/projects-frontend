@@ -16,6 +16,7 @@
 import { getUser } from '@/api/people.service.ts'
 import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'ProfileEditPage',
 
@@ -24,7 +25,12 @@ export default {
     },
 
     mixins: [onboardingStatusMixin],
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     provide() {
         return {
             profileEditReloadUser: this.loadUser,

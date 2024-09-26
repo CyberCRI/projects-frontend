@@ -50,6 +50,7 @@ import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue
 import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { getUserFollows } from '@/api/follows.service'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileProjectTab',
@@ -60,7 +61,12 @@ export default {
         UserProjectList,
         LpiButton,
     },
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     props: {
         user: {
             type: Object,

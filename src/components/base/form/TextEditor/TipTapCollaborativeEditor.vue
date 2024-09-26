@@ -24,10 +24,9 @@ import {
     useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
-import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 
-const store = useStore()
+import useUsersStore from '@/stores/useUsers.ts'
 const { t } = useI18n()
 import useToasterStore from '@/stores/useToaster.ts'
 
@@ -106,6 +105,7 @@ const hideSoloWarning = ref(false)
 const updateIsBlocked = ref(true)
 
 // computed:
+const usersStore = useUsersStore()
 const user = computed(() => usersStore.userFromApi)
 const accessToken = computed(() => usersStore.accessToken)
 

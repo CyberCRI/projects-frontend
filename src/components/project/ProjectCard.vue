@@ -67,6 +67,7 @@ import followUtils from '@/functs/followUtils.ts'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProjectCard',
@@ -89,6 +90,12 @@ export default {
         CroppedImage,
     },
 
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     props: {
         project: {
             type: Object,

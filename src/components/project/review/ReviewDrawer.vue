@@ -65,6 +65,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postReview, patchReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'ReviewDrawer',
 
@@ -83,9 +84,11 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
             projectsStore,
+            usersStore,
         }
     },
 

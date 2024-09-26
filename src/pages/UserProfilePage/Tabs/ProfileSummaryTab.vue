@@ -68,6 +68,7 @@ import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import { getUserFollows } from '@/api/follows.service'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileSummaryTab',
@@ -76,6 +77,13 @@ export default {
         UserProjectList,
         UserDescriptions,
         SkillSummary,
+    },
+
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     props: {

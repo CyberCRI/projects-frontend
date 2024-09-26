@@ -139,6 +139,7 @@ import OnboardingScreens from '@/components/onboarding/OnboardingScreens/Onboard
 import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'LpiFooter',
     mixins: [imageMixin],
@@ -153,9 +154,11 @@ export default {
     setup() {
         const languagesStore = useLanguagesStore()
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             languagesStore,
             organizationsStore,
+            usersStore,
         }
     },
     data() {

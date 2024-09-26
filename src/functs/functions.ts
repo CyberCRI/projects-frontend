@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from '@/store'
+import useUsersStore from '@/stores/useUsers'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
@@ -90,6 +90,7 @@ export default {
     },
 
     isConnected() {
+        const usersStore = useUsersStore()
         return usersStore.user
     },
 

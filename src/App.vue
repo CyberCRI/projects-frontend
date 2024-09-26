@@ -20,6 +20,7 @@ import LpiFooter from '@/components/app/LpiFooter.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 import LpiHeader from '@/components/app/LpiHeader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 import keycloak from '@/api/auth/keycloak.ts'
 
@@ -53,6 +54,12 @@ export default {
 
             return this.$route.name
         },
+    },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     mounted() {

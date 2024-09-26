@@ -64,6 +64,7 @@ import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 import analytics from '@/analytics'
 import { createProject } from '@/api/projects.service'
@@ -83,12 +84,14 @@ export default {
         const projectCategoriesStore = useProjectCategories()
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
             languagesStore,
             projectCategoriesStore,
             organizationsStore,
             projectsStore,
+            usersStore,
         }
     },
 
