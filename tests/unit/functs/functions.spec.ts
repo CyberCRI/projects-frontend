@@ -3,14 +3,17 @@ import FunctionImporter from './FunctionImporter.vue'
 import { lpiMountExtra } from '../../helpers/LpiMount'
 import { ProjectOutputFactory } from '../../factories/project.factory'
 import { UserFactory } from '../../factories/user.factory'
-import useUsersStore from '@/stores/useUsers'
-
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
+import useOrganizationsStore from '@/stores/useOrganizations'
 vi.mock('@/router/index', () => ({
     default: {
         push: vi.fn(),
     },
 }))
+
+// TODO make those test useful....
 
 describe('Function getOrgsFromRoles', () => {
     let usersStore
@@ -41,23 +44,19 @@ describe('Function getOrgsFromRoles', () => {
 
 describe('Function projectCanBeEdited', () => {
     let usersStore
+    let organizationsStore
     beforeEach(() => {
-        usersStore = useUsersStore()
+        usersStore = useUsersStore(pinia)
+        organizationsStore = useOrganizationsStore(pinia)
+    })
+    afterEach(() => {
+        usersStore.$reset()
+        organizationsStore.$reset()
     })
     test('that project cannot be edited if there is no user', () => {
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(null)
+        usersStore.user = null // getters are writable only in tests
 
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-            },
-        }
-
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
 
         expect(usersStore.user).toBe(null)
     })
@@ -65,21 +64,12 @@ describe('Function projectCanBeEdited', () => {
     test('that project can be edited if user is super-admin', () => {
         const project = {}
 
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(true)
+        const user = UserFactory.generate()
+        usersStore.user = user // getters are writable only in tests
 
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-            },
-        }
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
 
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
-
-        expect(usersStore.user).toBe(true)
+        expect(usersStore.user).toBe(user)
     })
 
     test('that project can be edited if user is org-admin of one of the organisations the project belongs to', () => {
@@ -87,22 +77,10 @@ describe('Function projectCanBeEdited', () => {
         const project = ProjectOutputFactory.generate()
         project.categories[0].organization.code = 'CRI' // Add same org code from project factory generated
 
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(user)
+        organizationsStore.current = { code: 'CRI' } // getters are writable only in tests
+        usersStore.user = user // getters are writable only in tests
 
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-                'organizations/current': vi.fn(() => ({
-                    code: 'CRI',
-                })),
-            },
-        }
-
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
 
         expect(usersStore.user).toBe(user)
     })
@@ -111,24 +89,10 @@ describe('Function projectCanBeEdited', () => {
         const user = UserFactory.generate()
         const project = ProjectOutputFactory.generate()
 
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(user)
+        usersStore.user = user // getters are writable only in tests
+        usersStore.id = user.id // getters are writable only in tests
 
-        const _store = {
-            state: {
-                users: {
-                    id: user.id,
-                },
-            },
-            getters: {
-                // TODO pinia
-                'users/user': userDefined,
-            },
-        }
-
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
         expect(usersStore.user).toBe(user)
     })
 
@@ -141,43 +105,22 @@ describe('Function projectCanBeEdited', () => {
         }
         project.is_locked = false
 
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(user)
-
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-                id: () => user.id,
-            },
-        }
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
+        usersStore.user = user // getters are writable only in tests
+        usersStore.id = user.id // getters are writable only in tests
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
 
         expect(usersStore.user).toBe(user)
     })
 
     test("that project cannot be edited if user is one of project's owners but project is locked", () => {
+        const user = UserFactory.generate()
         const project = ProjectOutputFactory.generate()
         project.is_locked = true
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(true)
 
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-            },
-            state: {
-                users: { id: '1234' },
-            },
-        }
-
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
-        expect(usersStore.user).toBe(true)
+        usersStore.user = user // getters are writable only in tests
+        usersStore.id = user.id // getters are writable only in tests
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
+        expect(usersStore.user).toBe(user)
     })
 
     // TODO projects: when reviewers is added to the function update test
@@ -209,22 +152,9 @@ describe('Function projectCanBeEdited', () => {
     test('that project cannot be edited if user is not super-admin and not part of the project', () => {
         const project = ProjectOutputFactory.generate()
         const user = UserFactory.generate()
-        const userDefined = vi.fn()
-        userDefined.mockReturnValue(user)
-
-        const _store = {
-            // TODO pinia
-            getters: {
-                'users/user': userDefined,
-            },
-            state: {
-                users: { id: user.id },
-            },
-        }
-
-        const { wrapper, store } = lpiMountExtra(FunctionImporter, {
-            store: _store,
-        })
+        usersStore.user = user // getters are writable only in tests
+        usersStore.id = user.id // getters are writable only in tests
+        const { wrapper, store } = lpiMountExtra(FunctionImporter)
         expect(usersStore.user).toBe(user)
     })
 })

@@ -3,7 +3,9 @@ import * as keycloakUtils from '@/api/auth/keycloakUtils'
 import keycloak from '@/api/auth/keycloak'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+
 import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 vi.mock('@/api/auth/keycloakUtils')
 
@@ -19,6 +21,9 @@ vi.mock('@/router/index', () => ({
 vi.mock('@/api/auth/keycloakUtils')
 
 describe('Keycloak | codeVerifier', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+    })
     it('generate', () => {
         const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
 
@@ -45,6 +50,9 @@ describe('Keycloak | codeVerifier', () => {
 })
 
 describe('Keycloak | codeChallenge', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+    })
     it('get', async () => {
         Storage.prototype.getItem = vi.fn(() => '1234')
 
@@ -54,6 +62,9 @@ describe('Keycloak | codeChallenge', () => {
 })
 
 describe('Keycloak | appSecret', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+    })
     it('generate', () => {
         const createRandomStringMock = keycloakUtils.createRandomString as Mock
         createRandomStringMock.mockReturnValue('randomString')
@@ -82,6 +93,9 @@ describe('Keycloak | appSecret', () => {
 })
 
 describe('Keycloak | refreshTokenLoop', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+    })
     vi.spyOn(globalThis, 'setTimeout').mockImplementation(
         vi.fn(() => {
             // dont trigger callback here as it will result in infinite loop
@@ -110,6 +124,9 @@ describe('Keycloak | refreshTokenLoop', () => {
 })
 
 describe('Keycloak | loginIfValidState', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+    })
     beforeEach(() => {
         useToasterStore(pinia)
     })

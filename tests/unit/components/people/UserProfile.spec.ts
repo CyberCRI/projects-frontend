@@ -8,9 +8,11 @@ import { flushPromises } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
 import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import users from '@/store/modules/users'
 vi.mock('@/api/people.service.ts', () => ({
     getUser: vi.fn(),
 }))
@@ -21,25 +23,8 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn().mockReturnValue(12),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
-}
-
 const buildParams = (userId, showPageLink) => ({
     i18n,
-    store,
     props: {
         userId, // UserFactory.generate(),
         showPageLink,
@@ -47,9 +32,18 @@ const buildParams = (userId, showPageLink) => ({
 })
 
 describe('UserProfile', () => {
+    let usersStore
     beforeEach(() => {
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+        usersStore = useUsersStore()
+        usersStore.id = 12
+        usersStore.userFromApi = {}
+        usersStore.getPermissions = {}
+        usersStore.getUser = vi.fn()
+    })
+    afterEach(() => {
+        usersStore.$reset()
     })
     it('should render UserProfile component', () => {
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
@@ -60,7 +54,7 @@ describe('UserProfile', () => {
     it('should use logged user if no id is provided', () => {
         let wrapper = lpiShallowMount(UserProfile, buildParams(null, false))
 
-        expect(store.modules.users.actions.getUser).toHaveBeenCalled()
+        expect(usersStore.getUser).toHaveBeenCalled()
     })
 
     it("should emit 'user-not-found' if no user found", async () => {
@@ -75,7 +69,7 @@ describe('UserProfile', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         vi.mocked(getUser).mockResolvedValue(user)
-        store.modules.users.getters.userFromApi.mockReturnValue(user)
+        usersStore.userFromApi = user
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
         let vm: any = wrapper.vm
         await flushPromises()
@@ -89,7 +83,7 @@ describe('UserProfile', () => {
 
         const user2: any = UserFactory.generate()
         user.id = '456'
-        store.modules.users.getters.userFromApi.mockReturnValue(user2)
+        usersStore.userFromApi = user2
 
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
         let vm: any = wrapper.vm
@@ -101,7 +95,7 @@ describe('UserProfile', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         vi.mocked(getUser).mockResolvedValue(user)
-        store.modules.users.getters.userFromApi.mockReturnValue(user)
+        usersStore.userFromApi = user
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
         await flushPromises()
         expect(wrapper.find('.edit-btn').exists()).toBe(true)
@@ -114,7 +108,7 @@ describe('UserProfile', () => {
 
         const user2: any = UserFactory.generate()
         user.id = '456'
-        store.modules.users.getters.userFromApi.mockReturnValue(user2)
+        usersStore.userFromApi = user2
 
         let wrapper = lpiShallowMount(UserProfile, buildParams('123', false))
         await flushPromises()

@@ -5,7 +5,9 @@ import { describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+
 import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
@@ -16,53 +18,39 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isLoggedIn: vi.fn().mockReturnValue(false),
-            },
-        },
-    },
-}
-
-const connectedStore = {
-    modules: {
-        ...store.modules,
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-                isLoggedIn: vi.fn().mockReturnValue(true),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
+function connectedStore(usersStore) {
+    usersStore.id = 123
+    usersStore.userFromApi = {}
+    usersStore.getPermissions = {}
+    usersStore.isLoggedIn = true
+    usersStore.getUser = vi.fn()
 }
 
 const router = [{ name: 'Home', path: '/', component: NewHomePage }]
 
 describe('NewHomePage', () => {
+    let usersStore
     beforeEach(() => {
+        usersStore = useUsersStore(pinia)
+        usersStore.isLoggedIn = false
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
     })
 
+    afterEach(() => {
+        usersStore.$reset()
+    })
+
     it('should render NewHomePage', () => {
-        let wrapper = lpiShallowMount(NewHomePage, { store, router, i18n })
+        let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
     it('should contain site header as non connected user', () => {
-        let wrapper = lpiShallowMount(NewHomePage, { store, router, i18n })
+        let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
         // org header should be visible
         expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(true)
         // user header should NOT be visible
@@ -80,7 +68,8 @@ describe('NewHomePage', () => {
     })
 
     it('should contain user header as a connected user', async () => {
-        let wrapper = lpiShallowMount(NewHomePage, { store: connectedStore, router, i18n })
+        connectedStore(usersStore)
+        let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
         // TODO mock loadEvent and loadInstructions
         await flushPromises() // wait for data to be "loaded"
         // org header should not be visible

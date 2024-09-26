@@ -3,6 +3,8 @@ import CommentItem from '@/components/project/comment/CommentItem.vue'
 import english from '@/locales/en.json'
 import { CommentFactory } from '../../../../factories/comment.factory'
 
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // localVue.filter('toLocaleDateString', (data) => data)
 
@@ -37,6 +39,11 @@ describe('CommentItem', () => {
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.isSuperAdmin = true
+        usersStore.user = {}
+        usersStore.isConnected = true
+        usersStore.id = 123
         defaultParams = {
             props: {
                 comment: CommentFactory.generate(),

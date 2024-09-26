@@ -5,6 +5,7 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { flushPromises } from '@vue/test-utils'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -15,34 +16,26 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
-}
-
 const buildParams = (user) => ({
     i18n,
-    store,
     props: {
         user,
     },
 })
 
 describe('ProfileSkillTab', () => {
+    let usersStore
     beforeEach(() => {
+        usersStore = useUsersStore(pinia)
+        usersStore.id = 123
+        usersStore.userFromApi = {}
+        usersStore.getPermissions = {}
+        usersStore.getUser = vi.fn()
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
+    afterEach(() => {
+        usersStore.$reset()
     })
 
     it('should render ProfileSkillTab component', () => {
@@ -56,7 +49,7 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = id
 
-        store.modules.users.getters.id.mockReturnValue(id)
+        usersStore.id = id
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(vm.isCurrentUser).toBeTruthy()
@@ -66,7 +59,7 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
 
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
@@ -77,7 +70,7 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
 
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
@@ -89,7 +82,7 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         user.skills = [{ id: '123', type: 'skill' }]
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
@@ -101,7 +94,7 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         user.skills = [{ id: '123', type: 'hobby' }]
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
@@ -116,7 +109,7 @@ describe('ProfileSkillTab', () => {
             { id: '123', type: 'skill' },
             { id: '123', type: 'hobby' },
         ]
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
@@ -131,7 +124,7 @@ describe('ProfileSkillTab', () => {
             { id: '123', type: 'skill' },
             { id: '123', type: 'hobby' },
         ]
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
 
