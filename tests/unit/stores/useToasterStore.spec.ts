@@ -5,19 +5,6 @@ import useToasterStore, { Toast, ToastType } from '@/stores/useToaster'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/api/notifications.service')
 
-vi.mock('vuex')
-const commit = vi.fn()
-const initialState = {
-    toastList: [
-        {
-            message: '',
-            isOpened: false,
-            type: '',
-        },
-    ],
-    notifications: [],
-}
-
 describe('Toaster Store', () => {
     beforeEach(() => {
         // creates a fresh pinia and makes it active

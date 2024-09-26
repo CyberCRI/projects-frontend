@@ -39,8 +39,8 @@
 <script>
 import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { mapGetters } from 'vuex'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
+import useUsersStore from '@/stores/useUsers'
 
 export default {
     name: 'TeamSection',
@@ -63,11 +63,16 @@ export default {
         TeamDrawer,
         IconImage,
     },
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     computed: {
-        ...mapGetters({
-            currentUser: 'users/userFromApi',
-        }),
+        currentUser() {
+            return usersStore.userFromApi
+        },
 
         adaptedCurrentUser() {
             /* Only selecting what we need for the card */

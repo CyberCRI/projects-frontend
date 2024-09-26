@@ -12,7 +12,6 @@ import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import users from '@/store/modules/users'
 vi.mock('@/api/people.service.ts', () => ({
     getUser: vi.fn(),
 }))

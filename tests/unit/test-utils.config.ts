@@ -3,7 +3,6 @@
 // import { createLocalVue } from '@vue/test-utils'
 // import VueAxios from 'vue-axios'
 // import axios from 'axios'
-// import Vuex from 'vuex'
 
 // import store from '@/store'
 // import i18n from '@/locales/i18n'

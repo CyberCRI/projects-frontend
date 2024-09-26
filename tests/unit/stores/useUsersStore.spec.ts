@@ -16,7 +16,6 @@ vi.mock('@/router/index', () => ({
     },
 }))
 
-// vi.mock('vuex') // this shal no be mocked here ! no ! no ! no !
 vi.mock('@/api/people.service')
 vi.mock('@/api/auth/auth.service')
 vi.mock('@/analytics')

@@ -1,4 +1,3 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { config, mount, shallowMount } from '@vue/test-utils'
@@ -16,12 +15,6 @@ config.global.mocks = {
 
 function buildOptions(options: any = {}) {
     const plugins = []
-
-    let store
-    if (options.store) {
-        store = createStore(options.store)
-        plugins.push(store)
-    }
 
     plugins.push(pinia)
 
@@ -63,7 +56,6 @@ function buildOptions(options: any = {}) {
         },
         plugins: {
             i18n,
-            store,
             router,
         },
     }

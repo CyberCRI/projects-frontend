@@ -9,8 +9,6 @@ import { checkExpiredToken } from './api/auth/keycloakUtils'
 
 import i18n from './locales/i18n'
 
-import store from './store'
-
 import pinia from './stores'
 
 import { capitalize, isNotGroup, isGroup } from '@/filters'
@@ -80,7 +78,6 @@ async function main(): Promise<void> {
 
     app.use(router)
 
-    app.use(store)
     app.use(pinia)
 
     // Init analytics
