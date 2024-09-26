@@ -14,18 +14,6 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                userFromApi: vi.fn().mockReturnValue({}),
-                accessToken: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('DescriptionDrawer.vue', () => {
     let wrapper
     let defaultParams
@@ -49,7 +37,6 @@ describe('DescriptionDrawer.vue', () => {
                 },
                 isOpened: true,
             },
-            store,
             provide: {
                 projectLayoutProjectPatched: vi.fn(),
             },

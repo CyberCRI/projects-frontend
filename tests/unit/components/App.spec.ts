@@ -105,9 +105,6 @@ describe('On tab focus', () => {
     })
 
     test('logout if token has expired', () => {
-        // const resetUser = vi.fn(() => true)
-        // const store = buildStore(true, resetUser)
-
         usersStore.accessToken = 'acces_token' // pretend user is logged in
 
         const { wrapper, router } = _mount()
@@ -126,9 +123,6 @@ describe('On tab focus', () => {
     })
 
     test('logout if logged in but has no more user token', () => {
-        // const resetUser = vi.fn(() => true)
-        //const store = buildStore(true, resetUser)
-
         const { wrapper, router } = _mount()
         vi.spyOn(router, 'push')
 
@@ -146,9 +140,6 @@ describe('On tab focus', () => {
     })
 
     test('do not logout if not logged in', () => {
-        // const resetUser = vi.fn(() => true)
-        // const store = buildStore(false, resetUser)
-
         const { wrapper, router } = _mount()
         vi.spyOn(router, 'push')
 

@@ -5,6 +5,7 @@ import { CommentFactory } from '../../../../factories/comment.factory'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // localVue.filter('toLocaleDateString', (data) => data)
 
@@ -20,37 +21,31 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isSuperAdmin: vi.fn(() => true),
-                user: vi.fn(() => true),
-                isConnected: vi.fn(() => true),
-                id: () => 123,
-            },
-        },
-    },
-}
-
 describe('CommentItem', () => {
     let wrapper
     let defaultParams
-
+    let usersStore
     beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
-        usersStore.isSuperAdmin = true
-        usersStore.user = {}
-        usersStore.isConnected = true
-        usersStore.id = 123
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.$patch({
+            current: { id: 123 },
+        } as any)
+
+        usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            user: { id: 123 },
+            userFromApi: { id: 123 },
+            userFromToken: { id: 123 },
+        } as any)
         defaultParams = {
             props: {
-                comment: CommentFactory.generate(),
+                comment: { ...CommentFactory.generate(), author: { id: 123 } },
             },
-            store,
             i18n,
         }
+    })
+    afterEach(() => {
+        usersStore.$reset()
     })
 
     it('should render CommentItem component', () => {

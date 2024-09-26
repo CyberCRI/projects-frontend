@@ -4,7 +4,9 @@ import LpiFooter from '@/components/app/LpiFooter.vue'
 import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '../../../helpers/MockComponent.vue'
+
 import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
@@ -12,17 +14,6 @@ const i18n = {
     fallbackLocale: 'en',
     messages: {
         en: english,
-    },
-}
-
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isConnected: vi.fn(),
-            },
-        },
     },
 }
 
@@ -47,11 +38,11 @@ describe('LpiFooter', () => {
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
-            store,
             router,
         }
     })

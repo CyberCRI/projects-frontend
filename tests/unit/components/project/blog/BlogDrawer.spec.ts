@@ -7,6 +7,7 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
     locale: 'en',
@@ -14,26 +15,18 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                userFromApi: vi.fn(),
-                accessToken: vi.fn(),
-            },
-            state: {
-                keycloak_id: '123',
-            },
-        },
-    },
-}
-
 describe('BlogDrawer.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            id: 123,
+            userFromApi: {},
+            getPermissions: {},
+            getUser: vi.fn(),
+        } as any)
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
         const projectsStore = useProjectsStore(pinia)
@@ -49,7 +42,6 @@ describe('BlogDrawer.vue', () => {
                 initialStep: 2,
             },
             i18n,
-            store,
             provide: {
                 projectLayoutProjectPatched: vi.fn(),
             },

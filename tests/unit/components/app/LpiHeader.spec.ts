@@ -62,7 +62,6 @@ describe('LpiHeader.vue', () => {
         defaultParams = {
             props: {},
             i18n,
-            //store,
             router: [
                 { path: '/', component: MockComponent },
                 { path: '/blank', component: MockComponent, name: 'blank' },

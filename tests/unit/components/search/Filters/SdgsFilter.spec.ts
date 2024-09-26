@@ -10,25 +10,11 @@ for (const sdg of sdgs) {
     sdgsSelection[sdg.id] = false
 }
 
-function buildStore() {
-    return {
-        modules: {
-            sdgs: {
-                namespaced: true,
-                getters: {
-                    all: () => sdgs,
-                },
-            },
-        },
-    }
-}
-
 function params(modelValue) {
     return {
         props: {
             modelValue,
         },
-        store: buildStore(),
     }
 }
 

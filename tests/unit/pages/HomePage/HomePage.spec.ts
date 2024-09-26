@@ -9,6 +9,7 @@ import { axios, configFormData } from '@/api/api.config'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/api/api.config', () => {
@@ -27,17 +28,6 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                getPermissions: vi.fn(() => []),
-            },
-        },
-    },
-}
-
 describe('Button', () => {
     let wrapper
     let defaultParams
@@ -48,10 +38,10 @@ describe('Button', () => {
         organizationsStore.all = OrganizationOutputFactory.generateMany(2)
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+        const usersStore = useUsersStore(pinia)
         defaultParams = {
             props: {},
             i18n,
-            store,
         }
     })
 

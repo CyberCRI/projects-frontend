@@ -87,7 +87,6 @@ export default {
         loopId: null,
         start(): void {
             cleanLocalStorage()
-
             if (localStorage.getItem('ACCESS_TOKEN')) {
                 const _refresh = () => {
                     const usersStore = useUsersStore()

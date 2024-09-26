@@ -7,6 +7,8 @@ import permissions from '@/mixins/permissions'
 
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
+
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
@@ -25,19 +27,12 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            state: {
-                user: UserFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProjectDescriptionTab.vue', () => {
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            user: UserFactory.generate(),
+        } as any)
         const projectsStore = useProjectsStore(pinia)
 
         projectsStore.project = {
@@ -52,7 +47,6 @@ describe('ProjectDescriptionTab.vue', () => {
             props: {
                 project: ProjectFactory.generate(),
             },
-            store,
             i18n,
         })
         expect(wrapper.exists()).toBe(true)

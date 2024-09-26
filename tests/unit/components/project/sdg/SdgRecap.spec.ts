@@ -13,23 +13,11 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                getPermissions: vi.fn(() => []),
-            },
-        },
-    },
-}
-
 const factory = (propsData?) => {
     return lpiShallowMount(SdgRecap, {
         props: {
             ...propsData,
         },
-        store,
         i18n,
         provide: { projectLayoutToggleAddModal: vi.fn() },
     })

@@ -22,17 +22,6 @@ const route = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                iConnected: () => false,
-            },
-        },
-    },
-}
-
 const factory = (props?) => {
     return lpiShallowMount(ProjectTabs, {
         props: {
@@ -40,7 +29,6 @@ const factory = (props?) => {
             ...props,
         },
         i18n,
-        store,
         global: {
             mocks: {
                 $route: route,

@@ -21,19 +21,6 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                getUserGroups: vi.fn(() => []),
-                getPermissions: vi.fn(() => []),
-                isCOnnected: vi.fn(() => false),
-            },
-        },
-    },
-}
-
 describe('Tab.vue', () => {
     beforeEach(() => {
         const organizationsStore = useOrganizationsStore(pinia)
@@ -47,7 +34,6 @@ describe('Tab.vue', () => {
                 comments: [CommentFactory.generate()],
                 team: project.team,
             },
-            store,
             i18n,
         })
         expect(wrapper.exists()).toBe(true)

@@ -15,17 +15,6 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isConnecetd: () => true,
-            },
-        },
-    },
-}
-
 describe('TakeTourModal.vue', () => {
     let wrapper
     let defaultParams
@@ -35,7 +24,6 @@ describe('TakeTourModal.vue', () => {
         organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
-            store,
             router: [
                 {
                     path: '/',

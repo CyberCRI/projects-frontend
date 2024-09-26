@@ -21,25 +21,8 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
-}
-
 const buildParams = (user) => ({
     i18n,
-    store,
     props: {
         user,
     },

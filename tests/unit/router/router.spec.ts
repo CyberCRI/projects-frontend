@@ -5,13 +5,6 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-vi.mock('@/store', () => ({
-    default: {
-        getters: {
-            ['users/isLoggedIn']: false, // TODO pinia
-        },
-    },
-}))
 
 vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 

@@ -26,8 +26,12 @@ describe('AddToProjectDropdown', () => {
 
     beforeEach(() => {
         const usersStore = useUsersStore(pinia)
-        usersStore.isConnected = true
-        usersStore.id = 123
+        usersStore.$patch({
+            user: { id: 123 },
+            userFromApi: { id: 123 },
+            userFromToken: { id: 123 },
+        } as any)
+
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = OrganizationOutputFactory.generate()
         const projectsStore = useProjectsStore(pinia)

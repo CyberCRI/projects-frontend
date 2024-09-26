@@ -10,6 +10,7 @@ import { ProjectCategoryOutputFactory } from '../../../factories/project-categor
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
@@ -18,28 +19,18 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isLoggedIn: vi.fn().mockReturnValue(false),
-            },
-        },
-    },
-}
-
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 describe('Newsfeed', () => {
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
         const projectCategories = useProjectCategoriesStore(pinia)
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
     })
     it('should render NewsFeed', async () => {
-        let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, store, router, i18n })
+        let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, router, i18n })
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
     })
@@ -52,7 +43,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'project', project: ProjectOutputFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -68,7 +58,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'announcement', announcement: AnnouncementFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -84,7 +73,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'news', news: { id: 2 } },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -101,7 +89,6 @@ describe('Newsfeed', () => {
                     { id: 3, type: 'project', project: ProjectOutputFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })

@@ -16,7 +16,6 @@ import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
-import users from '@/store/modules/users'
 
 vi.mock('@/api/recommendations.service', () => ({
     getRandomProjectsRecommendationsForUser: vi.fn(),

@@ -4,6 +4,9 @@ import GroupTeamSection from '@/components/group/GroupForm/GroupTeamSection.vue'
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory } from '../../../../factories/project.factory'
 
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -12,28 +15,17 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                userFromApi: vi.fn().mockReturnValue({}),
-            },
-        },
-    },
-}
-
 describe('GroupTeamSection.vue', () => {
     let wrapper
     let defaultParams
-
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+
         defaultParams = {
             i18n,
             props: {
                 modelValue: ProjectFactory.generateMany(2),
             },
-            store,
         }
     })
 
@@ -46,6 +38,6 @@ describe('GroupTeamSection.vue', () => {
             const vm: any = wrapper.vm
 
             vm.addUsers([])
-            expect(wrapper.emitted('update-team')).toBeTruthy()
+            expect(wrapper.emitted('update:model-value')).toBeTruthy()
         })
 })

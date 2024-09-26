@@ -60,9 +60,9 @@
 <script>
 import GroupTeamDrawer from '@/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { mapGetters } from 'vuex'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import useUsersStore from '@/stores/useUsers'
 
 export default {
     name: 'GroupTeamSection',
@@ -74,6 +74,12 @@ export default {
         GroupTeamDrawer,
         IconImage,
         LinkButton,
+    },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     props: {
@@ -93,9 +99,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            currentUser: 'users/userFromApi',
-        }),
+        currentUser() {
+            return this.usersStore.userFromApi
+        },
 
         shortList() {
             return this.modelValue.slice(0, 8)

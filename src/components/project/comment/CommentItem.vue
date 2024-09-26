@@ -151,11 +151,12 @@ import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import permissions from '@/mixins/permissions'
 
 export default {
     name: 'CommentItem',
 
-    mixins: [imageMixin],
+    mixins: [imageMixin, permissions],
 
     emits: [
         'comment-posted',
@@ -274,14 +275,11 @@ export default {
 
     computed: {
         canEdit() {
-            return (
-                this.comment.author.id === this.currentUserId ||
-                this.$store.getters['users/isSuperAdmin']
-            )
+            return this.comment.author.id === this.currentUserId || this.isAdmin
         },
 
         currentUserId() {
-            return this.usersStore.id ? this.usersStore.id : null
+            return this.usersStore.id || null
         },
 
         isConnected() {

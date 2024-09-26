@@ -15,17 +15,6 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isConnected: () => false,
-            },
-        },
-    },
-}
-
 const route = {
     query: {
         section: 'all',
@@ -45,7 +34,6 @@ describe('BrowseLayout', () => {
                 selectedUser: UserFactory.generate(),
             },
             i18n,
-            store,
             global: {
                 mocks: {
                     $route: route,
