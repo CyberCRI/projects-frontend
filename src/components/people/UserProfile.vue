@@ -69,7 +69,7 @@ export default {
 
     props: {
         userId: {
-            type: String,
+            type: Number,
             default: null,
         },
         showPageLink: {
@@ -81,23 +81,25 @@ export default {
     data() {
         return {
             user: null,
-            projectUser: null,
-            isEditMode: false,
-            canEdit: false,
-            payload: {
-                editorShortDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-                editorProfessionalDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-                editorPersonalDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-            },
+
+            // TODO: add back once we can edit user
+            // projectUser: null,
+            // isEditMode: false,
+            // canEdit: false,
+            // payload: {
+            //     editorShortDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            //     editorProfessionalDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            //     editorPersonalDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            // },
             isLoading: true,
         }
     },
@@ -112,7 +114,7 @@ export default {
                 this.user = await getUser(this.userId)
             }
         } catch (err) {
-            console.error(err)
+            // TODO distinguish 404 from real error
             this.$emit('user-not-found', err)
         } finally {
             this.isLoading = false
@@ -120,9 +122,12 @@ export default {
     },
 
     computed: {
+        connectedUser() {
+            return this.usersStore.userFromApi
+        },
+
         isSelf() {
-            const connectedUser = this.usersStore.userFromApi
-            return connectedUser && this.user.id === connectedUser.id
+            return this.connectedUser && this.user.id === this.connectedUser.id
         },
 
         editButtonLabel() {
