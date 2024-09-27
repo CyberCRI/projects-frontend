@@ -86,7 +86,7 @@ export default {
             try {
                 const result = await getNotifications()
                 this.notifications = result.results
-                usersStore.notifications = 0
+                this.usersStore.notificationsCount = 0
             } catch (err) {
                 console.error(err)
             } finally {

@@ -7,8 +7,8 @@ import useUsersStore from '@/stores/useUsers'
 //     return !!(
 //         utils.isConnected() &&
 //         (permissions.methods.hasPermission('organization', 'delete_organization') ||
-//             usersStore.getUserRoles.some((role) => role === 'superadmins') ||
-//             usersStore.getUserRoles.some(
+//             usersStore.roles.some((role) => role === 'superadmins') ||
+//             usersStore.roles.some(
 //                 (role) => role === `organization:#${organizationsStore.current.id}:admins`
 //             ))
 //     )
@@ -18,14 +18,14 @@ const isAdmin = () => {
     const usersStore = useUsersStore()
     const organizationsStore = useOrganizationsStore()
     function _hasPermission(scope, action, pk?) {
-        const permissions = usersStore.getPermissions
+        const permissions = usersStore.permissions
         return utils.hasPermission(permissions, scope, action, pk)
     }
     return !!(
         utils.isConnected() &&
         (_hasPermission('organization', 'delete_organization') ||
-            usersStore.getUserRoles.some((role) => role === 'superadmins') ||
-            usersStore.getUserRoles.some(
+            usersStore.roles.some((role) => role === 'superadmins') ||
+            usersStore.roles.some(
                 (role) => role === `organization:#${organizationsStore.current.id}:admins`
             ))
     )

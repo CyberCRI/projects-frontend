@@ -44,7 +44,7 @@ describe('GroupProjectsTab', () => {
         usersStore.$patch({
             id: 123,
             userFromApi: {},
-            getPermissions: {},
+            permissions: {},
             getUser: vi.fn(),
         } as any)
         const organizationsStore = useOrganizationsStore(pinia)

@@ -105,7 +105,6 @@ describe('Store module | users | getters', () => {
         id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
         id_token: 'foobar',
         keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
-        loginLocked: false,
         userFromApi: {
             birthdate: null,
             pronouns: '',
@@ -176,7 +175,7 @@ describe('Store module | users | getters', () => {
             'organization.group',
         ],
         roles: [],
-        notifications: 0,
+        notificationsCount: 0,
         notificationsSettings: null,
     }
     const stateWithoutSessionToken = {
@@ -186,7 +185,6 @@ describe('Store module | users | getters', () => {
         id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
         id_token: 'foobar',
         keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
-        loginLocked: false,
         permissions: [
             'organization.create',
             'organization.retrieve',
@@ -201,7 +199,7 @@ describe('Store module | users | getters', () => {
         userFromToken: null,
         userFromApi: null,
         roles: [],
-        notifications: 0,
+        notificationsCount: 0,
         notificationsSettings: null,
     }
     const stateWithUserWithSpecialCharacter = {
@@ -212,7 +210,6 @@ describe('Store module | users | getters', () => {
         id: '6a5b1c40-6740-4665-a7f5-95b6d70cfd5f',
         id_token: 'foobar',
         keycloak_id: 'xtECRsVj-GOq3qv7mUIL7_ACcCbGgspCalhNyZwJo38',
-        loginLocked: false,
         userFromApi: {
             profile: {
                 birthdate: null,
@@ -274,7 +271,7 @@ describe('Store module | users | getters', () => {
             'organization.group',
         ],
         roles: [],
-        notifications: 0,
+        notificationsCount: 0,
         notificationsSettings: null,
     }
 
@@ -413,7 +410,6 @@ describe('Store module | users | actions', () => {
         //     accessToken: access_token,
         //     id_token: id_token,
         //     keycloak_id: keycloakID,
-        //     loginLocked: false,
         //     userFromToken: parsedToken,
         // })
         expect(identifyUserMock).toHaveBeenCalledWith(keycloakID)
@@ -476,7 +472,6 @@ describe('Store module | users | actions', () => {
             refreshTokenExp: 123456,
             accessToken: access_token,
             keycloak_id: keycloakID,
-            loginLocked: false,
             userFromToken: parsedToken,
             id_token: id_token,
         })
@@ -503,13 +498,12 @@ describe('Store module | users | mutations', () => {
             accessToken: '',
             id_token: '',
             keycloak_id: '',
-            loginLocked: false,
             permissions: {},
             userFromToken: null,
             userFromApi: null,
 
             roles: [],
-            notifications: 0,
+            notificationsCount: 0,
             notificationsSettings: null,
         }
         for (let key of Object.keys(desiredState)) {
@@ -523,7 +517,6 @@ describe('Store module | users | mutations', () => {
             accessToken: 'randomSessionToken',
             keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
             id_token: 'foobar',
-            loginLocked: false,
             userFromToken: {
                 email: 'foo@bar.com',
             },
@@ -536,7 +529,6 @@ describe('Store module | users | mutations', () => {
             accessToken: 'randomSessionToken',
             keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
             id_token: 'foobar',
-            loginLocked: false,
             userFromToken: {
                 email: 'foo@bar.com',
             },

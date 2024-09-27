@@ -82,7 +82,7 @@ describe('ReviewRecap.vue', () => {
         usersStore.$reset()
     })
     it('should render component', () => {
-        usersStore.getPermissions = {}
+        usersStore.permissions = {}
         const wrapper = setUpComponent({
             project,
             reviews,
@@ -91,7 +91,7 @@ describe('ReviewRecap.vue', () => {
     })
 
     it('should contain review data', async () => {
-        usersStore.getPermissions = {}
+        usersStore.permissions = {}
         const wrapper = setUpComponent({
             project,
             reviews,
@@ -105,7 +105,7 @@ describe('ReviewRecap.vue', () => {
     })
 
     it('should display edit button if allowed', async () => {
-        usersStore.getPermissions = { 'projects.add_review': true }
+        usersStore.permissions = { 'projects.add_review': true }
         const wrapper = setUpComponent({
             project,
             reviews,
@@ -115,7 +115,7 @@ describe('ReviewRecap.vue', () => {
     })
 
     it('should not display edit button if not allowed', async () => {
-        usersStore.getPermissions = {}
+        usersStore.permissions = {}
         const wrapper = setUpComponent({
             project,
             reviews,

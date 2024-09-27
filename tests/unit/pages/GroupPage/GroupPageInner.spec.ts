@@ -65,7 +65,7 @@ describe('GroupPageInner', () => {
         usersStore = useUsersStore(pinia)
         usersStore.id = 123
         usersStore.userFromApi = {}
-        usersStore.getPermissions = {}
+        usersStore.permissions = {}
         usersStore.getUser = vi.fn()
     })
     afterEach(() => {
@@ -110,7 +110,7 @@ describe('GroupPageInner', () => {
     })
 
     it('should display a edit button button if allowed', async () => {
-        usersStore.getPermissions = {
+        usersStore.permissions = {
             'organizations.change_peoplegroup': true,
         }
         let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))

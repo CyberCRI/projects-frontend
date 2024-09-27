@@ -561,7 +561,7 @@ export default {
         },
 
         notificationCount() {
-            return this.usersStore.getNotificationCount
+            return this.usersStore.notificationsCount
         },
         organisation() {
             return this.organizationsStore.current

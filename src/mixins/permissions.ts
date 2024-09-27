@@ -30,8 +30,8 @@ export default {
         ...mapState(useUsersStore, {
             // unique name so it doesn(t conflict with a name in the component)
             isConnectedForPermissions: 'isConnected',
-            getPermissionsForPermissions: 'getPermissions',
-            getUserRolesForPermissions: 'getUserRoles',
+            getPermissionsForPermissions: 'permissions',
+            getUserRolesForPermissions: 'roles',
         }),
         isOwner() {
             return (

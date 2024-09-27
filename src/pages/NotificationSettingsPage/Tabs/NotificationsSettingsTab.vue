@@ -61,7 +61,7 @@ export default {
 
     computed: {
         notifications() {
-            return this.usersStore.getNotificationsSettings || {}
+            return this.usersStore.notificationsSettings || {}
         },
 
         options() {

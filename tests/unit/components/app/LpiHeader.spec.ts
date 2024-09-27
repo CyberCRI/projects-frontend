@@ -53,8 +53,8 @@ describe('LpiHeader.vue', () => {
         projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
         usersStore = useUsersStore(pinia)
         usersStore.isConnected = false
-        usersStore.getUserRoles = roles
-        usersStore.getPermissions = permissions
+        usersStore.roles = roles
+        usersStore.permissions = permissions
         usersStore.user = user
         usersStore.roles = roles
         usersStore.permissions = permissions
@@ -124,7 +124,7 @@ describe('LpiHeader.vue', () => {
     it('should find the user menu content to equal only 4 as user is connected and is not admin', () => {
         usersStore.isConnected = true
 
-        usersStore.getUserRoles = ['notadmin']
+        usersStore.roles = ['notadmin']
 
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 

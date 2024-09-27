@@ -21,7 +21,7 @@ const i18n = {
 function connectedStore(usersStore) {
     usersStore.id = 123
     usersStore.userFromApi = {}
-    usersStore.getPermissions = {}
+    usersStore.permissions = {}
     usersStore.isLoggedIn = true
     usersStore.getUser = vi.fn()
 }

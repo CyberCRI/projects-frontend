@@ -23,13 +23,12 @@ export interface UsersState {
     accessToken?: string
     id?: string
     keycloak_id?: string
-    loginLocked: boolean
     userFromToken: any
     userFromApi: any
     permissions: object
     id_token: string
     roles: string[]
-    notifications: number
+    notificationsCount: number
     notificationsSettings: NotificationsSettings
 }
 
@@ -43,11 +42,10 @@ const useUsersStore = defineStore('users', {
             userFromApi: null,
             accessToken: localStorage.getItem('ACCESS_TOKEN'),
             keycloak_id: '',
-            loginLocked: false, // not used ?
             permissions: {},
             id_token: localStorage.getItem('ID_TOKEN'),
             roles: [],
-            notifications: 0,
+            notificationsCount: 0,
             notificationsSettings: null,
         }
     },
@@ -55,6 +53,11 @@ const useUsersStore = defineStore('users', {
     getters: {
         isLoggedIn(): boolean {
             return !!this.accessToken
+        },
+
+        // TODO duplicate use of isLoggedIn ?
+        isConnected(): boolean {
+            return !!this.userFromToken
         },
 
         id(): string | undefined {
@@ -78,53 +81,11 @@ const useUsersStore = defineStore('users', {
 
             return null
         },
-
-        // userFromApi: (state: UsersState) => {
-        //     return state.userFromApi
-        // },
-
-        // accessToken: (state: UsersState) => {
-        //     return state.accessToken
-        // },
-
-        // refreshToken: (state: UsersState) => {
-        //     return state.refreshToken
-        // },
-
-        // TODO useless renaming of loginLocked
-        // not used ?
-        isLoginLocked(): boolean {
-            return this.loginLocked
-        },
-
-        // TODO useless renaming of permissions
-        getPermissions(): object {
-            return this.permissions
-        },
-        // TODO useless renaming of roles
-        getUserRoles(): string[] {
-            return this.roles
-        },
-
-        // TODO duplicate use of isLoggedIn ?
-        isConnected(): boolean {
-            return !!this.userFromToken
-        },
-
-        // useless renaming of notifications (witch should be named notificationsCount...)
-        getNotificationCount(): number {
-            return this.notifications
-        },
-        // useless renaming of notificationsSettings
-        getNotificationsSettings(): NotificationsSettings {
-            return this.notificationsSettings
-        },
     },
 
     actions: {
         logOut(): Promise<any> {
             return new Promise((resolve) => {
-                this.loginLocked = true
                 removeApiCookie()
                     .catch(console.error)
                     .finally(() => {
@@ -148,7 +109,6 @@ const useUsersStore = defineStore('users', {
                 refreshTokenExp: refresh_token_exp,
                 accessToken: access_token,
                 keycloak_id: keycloakID,
-                loginLocked: false,
                 userFromToken: parsedToken,
                 id_token: id_token,
             })
@@ -171,7 +131,6 @@ const useUsersStore = defineStore('users', {
                         accessToken: access_token,
                         id_token,
                         keycloak_id: keycloakID,
-                        loginLocked: false,
                         userFromToken: parsedToken,
                     })
                 } else {
@@ -198,7 +157,7 @@ const useUsersStore = defineStore('users', {
                 this.permissions = permissions
 
                 this.roles = user.roles
-                this.notifications = user.notifications
+                this.notificationsCount = user.notifications
                 this.userFromApi = user
 
                 languagesStore.current = user.language as LanguageType
@@ -207,12 +166,6 @@ const useUsersStore = defineStore('users', {
             } catch (err) {
                 console.error(err)
             }
-        },
-
-        // TODO useless action on state
-        // not used ?
-        lockLogin(lock: boolean) {
-            this.loginLocked = lock
         },
 
         async getNotifications(id) {
@@ -242,8 +195,6 @@ const useUsersStore = defineStore('users', {
         },
 
         // ex mutations
-
-        // POI
         setUser(payload: UsersState) {
             localStorage.setItem('REFRESH_TOKEN', payload.refreshToken)
             localStorage.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
@@ -252,7 +203,6 @@ const useUsersStore = defineStore('users', {
             this.refreshToken = payload.refreshToken
             this.accessToken = payload.accessToken
             this.keycloak_id = payload.keycloak_id
-            this.loginLocked = payload.loginLocked || false
             this.userFromToken = payload.userFromToken
             this.id_token = payload.id_token
             // API proxy cookie
@@ -272,10 +222,9 @@ const useUsersStore = defineStore('users', {
             this.userFromToken = null
             this.id_token = ''
             this.userFromApi = null
-            this.loginLocked = false
             this.permissions = {}
             this.roles = []
-            this.notifications = 0
+            this.notificationsCount = 0
             this.notificationsSettings = null
             // API proxy cookie
             document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
@@ -284,275 +233,3 @@ const useUsersStore = defineStore('users', {
 })
 
 export default useUsersStore
-
-/*
-
-// const state = (): UsersState => {
-//     // store is initialized before app is started, so we must check expiration here too
-//     checkExpiredToken()
-//     return {
-//         refreshToken: localStorage.getItem('REFRESH_TOKEN'),
-//         userFromToken: null,
-//         userFromApi: null,
-//         accessToken: localStorage.getItem('ACCESS_TOKEN'),
-//         keycloak_id: '',
-//         loginLocked: false,
-//         permissions: {},
-//         id_token: localStorage.getItem('ID_TOKEN'),
-//         roles: [],
-//         notifications: 0,
-//         notificationsSettings: null,
-//     }
-// }
-
-// const getters = {
-//     isLoggedIn: (state: UsersState) => {
-//         return !!state.accessToken
-//     },
-
-//     id(state: UsersState) {
-//         return state.userFromApi?.id
-//     },
-
-//     user: (state: UsersState): UserModel | null => {
-//         if (state.userFromToken) {
-//             return {
-//                 id: state.userFromToken.pid,
-//                 name: {
-//                     firstname: state.userFromToken.given_name,
-//                     lastname: state.userFromToken.family_name,
-//                 },
-//                 email: state.userFromToken.email,
-//                 roles: state.userFromToken.roles || [],
-//                 orgs: funct.getOrgsFromRoles(state.userFromToken.roles),
-//                 permissions: state.permissions,
-//             }
-//         }
-
-//         return null
-//     },
-
-//     userFromApi: (state: UsersState) => {
-//         return state.userFromApi
-//     },
-
-//     accessToken: (state: UsersState) => {
-//         return state.accessToken
-//     },
-
-//     refreshToken: (state: UsersState) => {
-//         return state.refreshToken
-//     },
-
-//     isLoginLocked: (state: UsersState) => {
-//         return state.loginLocked
-//     },
-
-//     getPermissions: (state: UsersState) => {
-//         return state.permissions
-//     },
-
-//     getUserRoles: (state: UsersState) => {
-//         return state.roles
-//     },
-
-//     isConnected: (state: UsersState) => {
-//         return !!state.userFromToken
-//     },
-
-//     getNotificationCount: (state: UsersState) => {
-//         return state.notifications
-//     },
-
-//     getNotificationsSettings: (state: UsersState) => {
-//         return state.notificationsSettings
-//     },
-// }
-
-// const actions = {
-//     logOut({ commit }): Promise<any> {
-//         return new Promise(function (resolve) {
-//             commit('UPDATE_LOGIN_LOCK', true)
-//             removeApiCookie()
-//                 .catch(console.error)
-//                 .finally(function () {
-//                     logoutFromKeycloak()
-//                     commit('RESET_USER')
-//                     resolve(true)
-//                 })
-//         })
-//     },
-
-//     async logIn(
-//         { commit },
-//         { access_token, refresh_token, refresh_token_exp, parsedToken, id_token }: AuthResult
-//     ): Promise<string> {
-//         const keycloakID = parsedToken.sub
-//         commit('SET_USER', {
-//             refreshToken: refresh_token,
-//             refreshTokenExp: refresh_token_exp,
-//             accessToken: access_token,
-//             keycloak_id: keycloakID,
-//             loginLocked: false,
-//             userFromToken: parsedToken,
-//             id_token: id_token,
-//         })
-//         analytics.identifyUser(keycloakID)
-
-//         return access_token
-//     },
-
-//     refreshToken({ commit, dispatch }): Promise<string> {
-//         return refreshAccessToken()
-//             .then(({ refresh_token, access_token, parsedToken, refresh_token_exp, id_token }) => {
-//                 if (refresh_token && access_token && parsedToken) {
-//                     const keycloakID = parsedToken.sub
-//                     commit('SET_USER', {
-//                         refreshToken: refresh_token,
-//                         refreshTokenExp: refresh_token_exp,
-//                         accessToken: access_token,
-//                         id_token,
-//                         keycloak_id: keycloakID,
-//                         loginLocked: false,
-//                         userFromToken: parsedToken,
-//                     })
-//                 } else {
-//                     commit('RESET_USER')
-//                 }
-//                 return access_token
-//             })
-//             .catch((err) => {
-//                 console.error('Error refreshing the user token :', err)
-//                 dispatch('logOut')
-//             })
-//     },
-
-//     async getUser({ commit }, id) {
-//         const languagesStore = useLanguagesStore()
-//         // id is keycloak_id OR django user id OR slug
-//         try {
-//             const user = await getUser(id)
-
-//             commit('SET_USER_PERMISSIONS', user.permissions)
-//             commit('SET_USER_ROLES', user.roles)
-//             commit('SET_NOTIFICATIONS_COUNT', user.notifications)
-//             commit('SET_USER_FROM_API', user)
-
-//             languagesStore.current = user.language as LanguageType
-
-//             return user
-//         } catch (err) {
-//             console.error(err)
-//         }
-//     },
-
-//     lockLogin({ commit }, lock: boolean) {
-//         commit('UPDATE_LOGIN_LOCK', lock)
-//     },
-
-//     async getNotifications({ commit }, id) {
-//         // TODO: should be getNotificationsSetting
-//         try {
-//             const result = await getNotifications(id)
-
-//             commit('SET_NOTIFICATIONS_SETTINGS', result)
-
-//             return result
-//         } catch (err) {
-//             throw new Error(err)
-//         }
-//     },
-
-//     async patchNotifications({ commit }, { id, payload }) {
-//         // TODO: should be patchNotificationsSetting
-//         try {
-//             const result = await patchNotifications({ id, payload })
-
-//             commit('SET_NOTIFICATIONS_SETTINGS', result)
-
-//             return result
-//         } catch (err) {
-//             throw new Error(err)
-//         }
-//     },
-// }
-
-// const mutations = {
-// // changed to action
-//     // RESET_USER(state: UsersState) {
-//     //     localStorage.removeItem('REFRESH_TOKEN')
-//     //     localStorage.removeItem('REFRESH_TOKEN_EXP')
-//     //     localStorage.removeItem('ACCESS_TOKEN')
-//     //     localStorage.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
-//     //     localStorage.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
-//     //     localStorage.removeItem('ID_TOKEN')
-//     //     state.refreshToken = ''
-//     //     state.accessToken = ''
-//     //     state.keycloak_id = ''
-//     //     state.userFromToken = null
-//     //     state.id_token = ''
-//     //     state.userFromApi = null
-//     //     state.loginLocked = false
-//     //     state.permissions = {}
-//     //     state.roles = []
-//     //     state.notifications = 0
-//     //     state.notificationsSettings = null
-//     //     // API proxy cookie
-//     //     document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
-//     // },
-
-//     // changed to an action
-//     // SET_USER(state: UsersState, payload: UsersState) {
-//     //     localStorage.setItem('REFRESH_TOKEN', payload.refreshToken)
-//     //     localStorage.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
-//     //     localStorage.setItem('ACCESS_TOKEN', payload.accessToken)
-//     //     localStorage.setItem('ID_TOKEN', payload.id_token)
-//     //     state.refreshToken = payload.refreshToken
-//     //     state.accessToken = payload.accessToken
-//     //     state.keycloak_id = payload.keycloak_id
-//     //     state.loginLocked = payload.loginLocked || false
-//     //     state.userFromToken = payload.userFromToken
-//     //     state.id_token = payload.id_token
-//     //     // API proxy cookie
-//     //     document.cookie = `jwt_access_token=${payload.accessToken}; path=/;`
-//     // },
-
-//     // SET_USER_PERMISSIONS(state: UsersState, payload: string[]) {
-//     //     const permissions = {}
-
-//     //     for (const key of payload) {
-//     //         permissions[key] = true
-//     //     }
-
-//     //     state.permissions = permissions
-//     // },
-
-//     // SET_USER_ROLES(state: UsersState, roles: string[]) {
-//     //     state.roles = roles
-//     // },
-
-//     // SET_NOTIFICATIONS_COUNT(state: UsersState, notifications: number) {
-//     //     state.notifications = notifications
-//     // },
-
-//     // SET_USER_FROM_API(state: UsersState, user: object) {
-//     //     state.userFromApi = user
-//     // },
-
-//     // UPDATE_LOGIN_LOCK(state: UsersState, lock: boolean): void {
-//     //     state.loginLocked = lock
-//     // },
-
-//     // SET_NOTIFICATIONS_SETTINGS(state: UsersState, notifications: NotificationsSettings) {
-//     //     state.notificationsSettings = notifications
-//     // },
-// }
-
-// export default {
-//     namespaced: true,
-//     state,
-//     getters,
-//     actions,
-//     mutations,
-// }
-*/

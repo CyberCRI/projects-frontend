@@ -20,7 +20,7 @@ describe('CompleteProfileStep1.vue', () => {
         usersStore.$patch({
             id: 123,
             userFromApi: {},
-            getPermissions: {},
+            permissions: {},
             getUser: vi.fn(),
         } as any)
         defaultParams = {

@@ -39,7 +39,7 @@ describe('UserProfile', () => {
         usersStore.$patch({
             id: 12,
             userFromApi: {},
-            getPermissions: {},
+            permissions: {},
             getUser: vi.fn(),
         })
     })

@@ -60,7 +60,7 @@ describe('GroupSnapshotTab', () => {
         usersStore.$patch({
             id: 123,
             userFromApi: {},
-            getPermissions: {},
+            permissions: {},
             getUser: vi.fn(),
         } as any)
 
