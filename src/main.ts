@@ -88,7 +88,6 @@ async function main(): Promise<void> {
     // so it doesn't return soon enough for route guards like requireAdmin)
     const usersStore = useUsersStore()
     if (localStorage.getItem('ACCESS_TOKEN')) {
-        console.log('SET USER')
         await usersStore.doRefreshToken()
     }
 

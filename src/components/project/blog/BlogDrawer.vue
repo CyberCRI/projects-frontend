@@ -56,7 +56,6 @@
                 :save-image-callback="saveBlogImage"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
-                @update="updateContent"
                 @blur="v$.editorBlogEntry.$validate"
             />
             <TipTapCollaborativeEditor
@@ -72,7 +71,6 @@
                 @unauthorized="closeDrawer"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
-                @update="updateContent"
                 @socket-ready="socketReady = $event"
                 @blur="v$.editorBlogEntry.$validate"
                 @falled-back-to-solo-edit="inSoloMode = true"

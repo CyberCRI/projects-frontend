@@ -25,36 +25,30 @@ const props = defineProps({
 
 const isSelected = ref(false)
 
-watchEffect(
-    () => {
-        isSelected.value =
-            props.selectedCategory?.id === props.category.id ||
-            props.selectedCategories?.some(({ id }) => id == props.category.id)
-    },
-    { deep: true }
-)
+watchEffect(() => {
+    isSelected.value =
+        props.selectedCategory?.id === props.category.id ||
+        props.selectedCategories?.some(({ id }) => id == props.category.id)
+})
 
 const hasChildren = computed(() => {
     return props.category.children?.length
 })
 const showChild = ref(false)
-watchEffect(
-    () => {
-        if (
-            props.selectedCategory?.hierarchy?.find(
-                ({ id: parentId }) => parentId == props.category.id
-            ) ||
-            props.selectedCategories?.some(
-                (selectedCategory) =>
-                    !!selectedCategory?.hierarchy?.find(
-                        ({ id: parentId }) => parentId == props.category.id
-                    )
-            )
+watchEffect(() => {
+    if (
+        props.selectedCategory?.hierarchy?.find(
+            ({ id: parentId }) => parentId == props.category.id
+        ) ||
+        props.selectedCategories?.some(
+            (selectedCategory) =>
+                !!selectedCategory?.hierarchy?.find(
+                    ({ id: parentId }) => parentId == props.category.id
+                )
         )
-            showChild.value = true
-    },
-    { deep: true }
-)
+    )
+        showChild.value = true
+})
 
 const chevronImage = computed(() => {
     return !hasChildren.value ? 'ChevronRight' : showChild.value ? 'ChevronUp' : 'ChevronDown'

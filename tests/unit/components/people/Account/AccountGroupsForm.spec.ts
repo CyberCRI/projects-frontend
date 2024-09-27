@@ -23,7 +23,6 @@ describe('GroupForm', () => {
         organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             props: {
-                isAddMode: true,
                 modelValue: {},
             },
             i18n,

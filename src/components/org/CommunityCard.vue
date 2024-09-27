@@ -20,7 +20,7 @@
                     :fill="patatoidColors.fill"
                 ></PatatoidIcon>
 
-                <h3 :class="{ 'white-name': selected }" class="community-card__name">
+                <h3 class="community-card__name">
                     {{ community.name }}
                 </h3>
             </div>
@@ -55,7 +55,6 @@ export default {
         },
 
         patatoidColors() {
-            if (this.selected) return { fill: '#4b929d', background: '#1d727c' }
             return { fill: '#D6F3FF', background: '#fff' }
         },
     },
@@ -101,10 +100,6 @@ export default {
         position: absolute;
         text-align: center;
         transition: color 0.15s ease;
-
-        &.white-name {
-            color: $white;
-        }
     }
 
     .gradient-ctn {

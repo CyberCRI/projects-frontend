@@ -21,7 +21,6 @@ router.beforeEach((to, _from, next) => {
     if (to.matched.some((route) => route.meta.resetScroll)) {
         utils.resetScroll()
     }
-    console.log('BEFORE EACH')
     const usersStore = useUsersStore()
     if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isLoggedIn) {
         let proceed = true
