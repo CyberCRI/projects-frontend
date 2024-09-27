@@ -76,8 +76,6 @@ async function main(): Promise<void> {
 
     app.use(i18n)
 
-    app.use(router)
-
     app.use(pinia)
 
     // Init analytics
@@ -90,8 +88,34 @@ async function main(): Promise<void> {
     // so it doesn't return soon enough for route guards like requireAdmin)
     const usersStore = useUsersStore()
     if (localStorage.getItem('ACCESS_TOKEN')) {
+        console.log('SET USER')
         await usersStore.doRefreshToken()
     }
+
+    const languagesStore = useLanguagesStore()
+
+    watchEffect(() => {
+        const lang = languagesStore.current
+        localStorage.setItem('lang', lang)
+        i18n.global.locale.value = lang
+        // Set lang attribute for non translated langages to be translated by browser extensions
+        const html = document.documentElement
+        html.setAttribute('lang', lang)
+    })
+
+    const lang = localStorage.getItem('lang')
+        ? localStorage.getItem('lang').toLowerCase()
+        : import.meta.env.VITE_APP_I18N_LOCALE || 'en'
+
+    languagesStore.current = lang
+
+    if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
+
+    // Get org information on init
+    const organizationsStore = useOrganizationsStore()
+    await organizationsStore.getCurrentOrganization(import.meta.env.VITE_APP_API_ORG_CODE)
+
+    app.use(router)
 
     const loginSearchParams = new URLSearchParams(window.location.search)
     // Log in user after redirection is successful from keycloack
@@ -108,42 +132,6 @@ async function main(): Promise<void> {
         }
         router.push(nextPage)
     }
-
-    const languagesStore = useLanguagesStore()
-
-    watchEffect(() => {
-        const lang = languagesStore.current
-        localStorage.setItem('lang', lang)
-        i18n.global.locale.value = lang
-        // Set lang attribute for non translated langages to be translated by browser extensions
-        const html = document.documentElement
-        html.setAttribute('lang', lang)
-    })
-
-    // Get & Set lang from localstorage
-    // if (localStorage.getItem('lang'))
-    //     i18n.global.locale.value = localStorage.getItem('lang').toLowerCase()
-    // else i18n.global.locale.value = import.meta.env.VITE_APP_I18N_LOCALE || 'en'
-
-    const lang = localStorage.getItem('lang')
-        ? localStorage.getItem('lang').toLowerCase()
-        : import.meta.env.VITE_APP_I18N_LOCALE || 'en'
-
-    languagesStore.current = lang
-
-    if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
-
-    // Get org information on init
-    const organizationsStore = useOrganizationsStore()
-    await organizationsStore.getCurrentOrganization(import.meta.env.VITE_APP_API_ORG_CODE)
-
-    // eslint-disable-next-line vue/require-name-property
-    // const app = Vue.createApp({
-    //     router,
-    //     store,
-    //     i18n,
-    //     render: (h) => h(App),
-    // })
 
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {

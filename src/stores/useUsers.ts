@@ -158,31 +158,30 @@ const useUsersStore = defineStore('users', {
         },
 
         // was refreshTock
-        doRefreshToken(): Promise<string> {
-            return refreshAccessToken()
-                .then(
-                    ({ refresh_token, access_token, parsedToken, refresh_token_exp, id_token }) => {
-                        if (refresh_token && access_token && parsedToken) {
-                            const keycloakID = parsedToken.sub
-                            this.setUser({
-                                refreshToken: refresh_token,
-                                refreshTokenExp: refresh_token_exp,
-                                accessToken: access_token,
-                                id_token,
-                                keycloak_id: keycloakID,
-                                loginLocked: false,
-                                userFromToken: parsedToken,
-                            })
-                        } else {
-                            this.resetUser()
-                        }
-                        return access_token
-                    }
-                )
-                .catch((err) => {
-                    console.error('Error refreshing the user token :', err)
-                    this.logOut()
-                })
+        async doRefreshToken(): Promise<string> {
+            try {
+                const { refresh_token, access_token, parsedToken, refresh_token_exp, id_token } =
+                    await refreshAccessToken()
+
+                if (refresh_token && access_token && parsedToken) {
+                    const keycloakID = parsedToken.sub
+                    this.setUser({
+                        refreshToken: refresh_token,
+                        refreshTokenExp: refresh_token_exp,
+                        accessToken: access_token,
+                        id_token,
+                        keycloak_id: keycloakID,
+                        loginLocked: false,
+                        userFromToken: parsedToken,
+                    })
+                } else {
+                    this.resetUser()
+                }
+                return access_token
+            } catch (err) {
+                console.error('Error refreshing the user token :', err)
+                this.logOut()
+            }
         },
 
         async getUser(id) {

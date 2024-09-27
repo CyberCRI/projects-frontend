@@ -17,6 +17,9 @@ import useUsersStore from '@/stores/useUsers'
 const isAdmin = () => {
     const usersStore = useUsersStore()
     const organizationsStore = useOrganizationsStore()
+    console.log('IS ADMIN')
+    console.log(usersStore.getUserRoles)
+    console.log(organizationsStore.current)
     function _hasPermission(scope, action, pk?) {
         const permissions = usersStore.getPermissions
         return utils.hasPermission(permissions, scope, action, pk)

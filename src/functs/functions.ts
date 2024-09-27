@@ -91,6 +91,8 @@ export default {
 
     isConnected() {
         const usersStore = useUsersStore()
+        console.log('IS CONNECTED')
+        console.log(usersStore.user)
         return usersStore.user
     },
 
