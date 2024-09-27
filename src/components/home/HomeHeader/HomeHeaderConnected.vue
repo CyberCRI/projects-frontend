@@ -109,7 +109,7 @@ export default {
         },
 
         loggedIn() {
-            return this.usersStore.isLoggedIn
+            return this.usersStore.isConnected
         },
 
         numberOfSummaryBlock() {

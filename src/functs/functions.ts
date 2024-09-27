@@ -1,5 +1,4 @@
 import axios from 'axios'
-import useUsersStore from '@/stores/useUsers'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
@@ -87,11 +86,6 @@ export default {
         if (day.length < 2) day = '0' + day
 
         return [year, month, day].join('-')
-    },
-
-    isConnected() {
-        const usersStore = useUsersStore()
-        return usersStore.user
     },
 
     isValidMail(email) {

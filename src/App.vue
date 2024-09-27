@@ -44,8 +44,8 @@ export default {
     },
 
     computed: {
-        isLoggedIn() {
-            return this.usersStore.isLoggedIn
+        usersStoreToken() {
+            return this.usersStore.accessToken
         },
 
         currentRouteName() {
@@ -110,15 +110,15 @@ export default {
                 }
             }
 
-            if (this.isLoggedIn && accessToken) {
+            if (this.usersStoreToken && accessToken) {
                 // logged in, verify token is still fresh
                 if (checkExpiredToken()) {
                     _logout()
                 }
-            } else if (this.isLoggedIn && !accessToken) {
+            } else if (this.usersStoreToken && !accessToken) {
                 // logged out in another tab
                 _logout()
-            } else if (!this.isLoggedIn && accessToken) {
+            } else if (!this.usersStoreToken && accessToken) {
                 // logged in in another tab
                 keycloak.refreshTokenLoop.start()
             }

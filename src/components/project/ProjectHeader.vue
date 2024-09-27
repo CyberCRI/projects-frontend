@@ -220,7 +220,7 @@
                     <div v-if="!loading" class="project-actions-ctn">
                         <div class="end-buttons">
                             <ExternalLabelButton
-                                v-if="usersStore.isLoggedIn"
+                                v-if="usersStore.isConnected"
                                 class="space-button bg-on-hover"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
                                 :btn-icon="followed ? 'Heart' : 'HeartOutline'"

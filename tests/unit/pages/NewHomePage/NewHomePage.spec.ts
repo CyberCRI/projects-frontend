@@ -22,7 +22,7 @@ function connectedStore(usersStore) {
     usersStore.id = 123
     usersStore.userFromApi = {}
     usersStore.permissions = {}
-    usersStore.isLoggedIn = true
+    usersStore.isConnected = true
     usersStore.getUser = vi.fn()
 }
 
@@ -32,7 +32,7 @@ describe('NewHomePage', () => {
     let usersStore
     beforeEach(() => {
         usersStore = useUsersStore(pinia)
-        usersStore.isLoggedIn = false
+        usersStore.isConnected = false
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
         const projectCategories = useProjectCategoriesStore(pinia)

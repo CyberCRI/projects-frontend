@@ -2,20 +2,6 @@ import utils from '@/functs/functions'
 // import permissions from '@/mixins/permissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-// const isAdminOrFacilitator = (store) => {
-//     const organizationsStore = useOrganizationsStore()
-//     const orgId = organizationsStore.current.id
-//     return !!(
-//         utils.isConnected() &&
-//         (permissions.methods.hasPermission('organization', 'delete_organization') ||
-//             usersStore.roles.some(
-//                 (role) =>
-//                     role === 'superadmins' ||
-//                     role === `organization:#${orgId}:admins` ||
-//                     role === `organization:#${orgId}:facilitators`
-//             ))
-//     )
-// }
 
 const isAdminOrFacilitator = () => {
     const usersStore = useUsersStore()
@@ -26,7 +12,7 @@ const isAdminOrFacilitator = () => {
     }
     const orgId = organizationsStore.current.id
     return !!(
-        utils.isConnected() &&
+        usersStore.isConnected &&
         (_hasPermission('organization', 'delete_organization') ||
             usersStore.roles.some(
                 (role) =>

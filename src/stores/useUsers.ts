@@ -51,11 +51,6 @@ const useUsersStore = defineStore('users', {
     },
 
     getters: {
-        isLoggedIn(): boolean {
-            return !!this.accessToken
-        },
-
-        // TODO duplicate use of isLoggedIn ?
         isConnected(): boolean {
             return !!this.userFromToken
         },

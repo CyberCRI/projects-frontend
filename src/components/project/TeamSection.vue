@@ -71,7 +71,7 @@ export default {
     },
     computed: {
         currentUser() {
-            return usersStore.userFromApi
+            return this.usersStore.userFromApi
         },
 
         adaptedCurrentUser() {

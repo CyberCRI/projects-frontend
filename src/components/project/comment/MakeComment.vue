@@ -114,7 +114,7 @@ export default {
 
     computed: {
         isLoggedIn() {
-            return this.usersStore.isLoggedIn
+            return this.usersStore.isConnected
         },
 
         canSubmitComment() {

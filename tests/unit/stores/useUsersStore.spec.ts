@@ -30,20 +30,17 @@ describe('Store module | users | init', () => {
     afterEach(() => {
         usersStore.$reset()
     })
+    const access_token =
+        'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4dEVDUnNWai1HT3EzcXY3bVVJTDdfQUNjQ2JHZ3NwQ2FsaE55WndKbzM4In0.eyJleHAiOjE2NDYzNTM5NDUsImlhdCI6MTY0NjMxNzk0OCwiYXV0aF90aW1lIjoxNjQ2MzE3OTQ1LCJqdGkiOiI5ZTdiNmJkYS1hNzY4LTQ3MTAtOGE1NS1lMDA5ZDU0NjA2NDciLCJpc3MiOiJodHRwczovL2lkLmxlYXJuaW5nLXBsYW5ldC5vcmcvYXV0aC9yZWFsbXMvbHAiLCJzdWIiOiI0MDA1ZGRmNy0xNzIxLTQ0MGUtYWYyYS00ZGFmZTFmNDI4YzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwcm9qZWN0cy1mcm9udGVuZC1kZXYiLCJzZXNzaW9uX3N0YXRlIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2ZpbGUucHJvamVjdHMuZGV2LmxwLWkuZGV2IiwiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cDovLzEyNy4wLjAuMTo4MDgwIiwiaHR0cHM6Ly9wcm9qZWN0cy5kZXYuY3JpLXBhcmlzLm9yZyIsImh0dHBzOi8vMTI3LjAuMC4xOjgwODAiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Imp1bGllbiBkcm91bGV6IiwiZ3JvdXBzIjpbIi9wcm9qZWN0cy9hZG1pbmlzdHJhdG9ycyJdLCJwaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqdWxpZW4uZHJvdWxlekBjcmktcGFyaXMub3JnIiwiZ2l2ZW5fbmFtZSI6Imp1bGllbiIsImZhbWlseV9uYW1lIjoiZHJvdWxleiIsInVzZXIiOnsiaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQifSwiZW1haWwiOiJqdWxpZW4uZHJvdWxlekBmcmVlLmZyIn0.MQivUAcfBX-SpXvT6dAXKOOouv169ukjJcXdsFDk_XaAROvHjkoEKIaG0xMcKLDVlS6sYl4Wfdm0YV0Xpe3cCaU-OZDCES7A_Zw9icGsYIYNJLAz-ncVF09Ao3AfA_4OuSQv9lpByOh-F4TekVlVWdTbrdFcn1Y4p6UTl6w6yhcXWeFOd9db2_M0vjc9s8fffpTZIWZM-CkQBvW9wO0bQd1wBKXFfARHHsXQ6B1FNE67UWHztEJepvPdXNC0CLdzFGg-K7hDeNMrCm75ymosy44N3u_DZq1qEjnt0Ext5VJyE4RbITOdN4mxM3CAZFTeNzNb56GgkyHEgLpovWastw'
+    const refresh_token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDYzMTk3NDgsImlhdCI6MTY0NjMxNzk0OCwianRpIjoiYWRhYTBkMmQtZTZkYS00MTdmLWI3NmEtODI4M2RhODIzNGM2IiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiNDAwNWRkZjctMTcyMS00NDBlLWFmMmEtNGRhZmUxZjQyOGMwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIn0.-etAqxw8b0Q3VxF2SjyT-nCHMXSGcwtq70RqtbdF_84'
+    const id_token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDYzMTk3NDgsImlhdCI6MTY0NjMxNzk0OCwianRpIjoiYWRhYTBkMmQtZTZkYS00MTdmLWI3NmEtODI4M2RhODIzNGM2IiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiNDAwNWRkZjctMTcyMS00NDBlLWFmMmEtNGRhZmUxZjQyOGMwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIn0.-etAqxw8b0Q3VxF2SjyT-nCHMXSGcwtq70RqtbdF_84'
     function setTokens() {
-        window.localStorage.setItem(
-            'ACCESS_TOKEN',
-            'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4dEVDUnNWai1HT3EzcXY3bVVJTDdfQUNjQ2JHZ3NwQ2FsaE55WndKbzM4In0.eyJleHAiOjE2NDYzNTM5NDUsImlhdCI6MTY0NjMxNzk0OCwiYXV0aF90aW1lIjoxNjQ2MzE3OTQ1LCJqdGkiOiI5ZTdiNmJkYS1hNzY4LTQ3MTAtOGE1NS1lMDA5ZDU0NjA2NDciLCJpc3MiOiJodHRwczovL2lkLmxlYXJuaW5nLXBsYW5ldC5vcmcvYXV0aC9yZWFsbXMvbHAiLCJzdWIiOiI0MDA1ZGRmNy0xNzIxLTQ0MGUtYWYyYS00ZGFmZTFmNDI4YzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwcm9qZWN0cy1mcm9udGVuZC1kZXYiLCJzZXNzaW9uX3N0YXRlIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2ZpbGUucHJvamVjdHMuZGV2LmxwLWkuZGV2IiwiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cDovLzEyNy4wLjAuMTo4MDgwIiwiaHR0cHM6Ly9wcm9qZWN0cy5kZXYuY3JpLXBhcmlzLm9yZyIsImh0dHBzOi8vMTI3LjAuMC4xOjgwODAiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Imp1bGllbiBkcm91bGV6IiwiZ3JvdXBzIjpbIi9wcm9qZWN0cy9hZG1pbmlzdHJhdG9ycyJdLCJwaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqdWxpZW4uZHJvdWxlekBjcmktcGFyaXMub3JnIiwiZ2l2ZW5fbmFtZSI6Imp1bGllbiIsImZhbWlseV9uYW1lIjoiZHJvdWxleiIsInVzZXIiOnsiaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQifSwiZW1haWwiOiJqdWxpZW4uZHJvdWxlekBmcmVlLmZyIn0.MQivUAcfBX-SpXvT6dAXKOOouv169ukjJcXdsFDk_XaAROvHjkoEKIaG0xMcKLDVlS6sYl4Wfdm0YV0Xpe3cCaU-OZDCES7A_Zw9icGsYIYNJLAz-ncVF09Ao3AfA_4OuSQv9lpByOh-F4TekVlVWdTbrdFcn1Y4p6UTl6w6yhcXWeFOd9db2_M0vjc9s8fffpTZIWZM-CkQBvW9wO0bQd1wBKXFfARHHsXQ6B1FNE67UWHztEJepvPdXNC0CLdzFGg-K7hDeNMrCm75ymosy44N3u_DZq1qEjnt0Ext5VJyE4RbITOdN4mxM3CAZFTeNzNb56GgkyHEgLpovWastw'
-        )
-        window.localStorage.setItem(
-            'REFRESH_TOKEN',
-            'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDYzMTk3NDgsImlhdCI6MTY0NjMxNzk0OCwianRpIjoiYWRhYTBkMmQtZTZkYS00MTdmLWI3NmEtODI4M2RhODIzNGM2IiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiNDAwNWRkZjctMTcyMS00NDBlLWFmMmEtNGRhZmUxZjQyOGMwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIn0.-etAqxw8b0Q3VxF2SjyT-nCHMXSGcwtq70RqtbdF_84'
-        )
+        window.localStorage.setItem('ACCESS_TOKEN', access_token)
+        window.localStorage.setItem('REFRESH_TOKEN', refresh_token)
 
-        window.localStorage.setItem(
-            'ID_TOKEN',
-            'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDYzMTk3NDgsImlhdCI6MTY0NjMxNzk0OCwianRpIjoiYWRhYTBkMmQtZTZkYS00MTdmLWI3NmEtODI4M2RhODIzNGM2IiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiNDAwNWRkZjctMTcyMS00NDBlLWFmMmEtNGRhZmUxZjQyOGMwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIn0.-etAqxw8b0Q3VxF2SjyT-nCHMXSGcwtq70RqtbdF_84'
-        )
+        window.localStorage.setItem('ID_TOKEN', id_token)
 
         window.localStorage.setItem('REFRESH_TOKEN_EXP', '10000')
     }
@@ -55,34 +52,34 @@ describe('Store module | users | init', () => {
         window.localStorage.removeItem('REFRESH_TOKEN_EXP')
     }
 
-    it('should not log user with expired token', () => {
+    it('should not set token with expired token', () => {
         const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
         const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
         setTokens()
         usersStore.$reset()
-        expect(usersStore.isLoggedIn).toBe(false)
+        expect(usersStore.accessToken).toBe(null)
         window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
         window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
     })
 
-    it('should log user with valid token', () => {
+    it('should set access with valid token', () => {
         const checkExpiredTokenSpy = vi.spyOn(keycloakUtils, 'checkExpiredToken')
         checkExpiredTokenSpy.mockImplementationOnce(() => false)
         const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
         const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
         setTokens()
         usersStore.$reset()
-        expect(usersStore.isLoggedIn).toBe(true)
+        expect(usersStore.accessToken).toBe(access_token)
         window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
         window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
     })
 
-    it('should not log user with no token', () => {
+    it('should not set access token with no token', () => {
         const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
         const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
         unsetTokens()
         usersStore.$reset()
-        expect(usersStore.isLoggedIn).toBe(false)
+        expect(usersStore.accessToken).toBe(null)
         window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
         window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
     })
@@ -275,12 +272,12 @@ describe('Store module | users | getters', () => {
         notificationsSettings: null,
     }
 
-    it('isLoggedIn', () => {
+    it('isConnected', () => {
         usersStore.$patch(stateWithSessionToken)
-        expect(usersStore.isLoggedIn).toBe(true)
+        expect(usersStore.isConnected).toBe(true)
 
         usersStore.$patch(stateWithoutSessionToken)
-        expect(usersStore.isLoggedIn).toBe(false)
+        expect(usersStore.isConnected).toBe(false)
     })
 
     it('user', () => {

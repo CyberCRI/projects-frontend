@@ -255,7 +255,7 @@ export default {
     },
 
     async created() {
-        await projectCategoriesStore.getAllProjectCategories()
+        await this.projectCategoriesStore.getAllProjectCategories()
     },
 
     computed: {

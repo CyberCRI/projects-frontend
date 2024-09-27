@@ -51,7 +51,7 @@ describe('RecommendationBlock', () => {
         usersStore.$reset()
     })
     it('should render RecommendationBlock', async () => {
-        usersStore.isLoggedIn = false
+        usersStore.isConnected = false
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props,
             router,
@@ -62,7 +62,7 @@ describe('RecommendationBlock', () => {
     })
 
     it('should display projects reco for non connected user', async () => {
-        usersStore.isLoggedIn = false
+        usersStore.isConnected = false
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props,
             router,
@@ -74,7 +74,7 @@ describe('RecommendationBlock', () => {
     })
 
     it('should display project and user reco for connected user', async () => {
-        usersStore.isLoggedIn = true
+        usersStore.isConnected = true
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props: props,
             router,

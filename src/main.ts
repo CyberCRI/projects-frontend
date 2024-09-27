@@ -91,6 +91,11 @@ async function main(): Promise<void> {
         await usersStore.doRefreshToken()
     }
 
+    const loginSearchParams = new URLSearchParams(window.location.search)
+    // Log in user after redirection is successful from keycloack
+    await keycloak.loginIfValidState(loginSearchParams)
+
+    if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
     const languagesStore = useLanguagesStore()
 
     watchEffect(() => {
@@ -108,17 +113,11 @@ async function main(): Promise<void> {
 
     languagesStore.current = lang
 
-    if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
-
     // Get org information on init
     const organizationsStore = useOrganizationsStore()
     await organizationsStore.getCurrentOrganization(import.meta.env.VITE_APP_API_ORG_CODE)
 
     app.use(router)
-
-    const loginSearchParams = new URLSearchParams(window.location.search)
-    // Log in user after redirection is successful from keycloack
-    await keycloak.loginIfValidState(loginSearchParams)
 
     const state = loginSearchParams.get('state')
         ? JSON.parse(loginSearchParams.get('state') as string)
