@@ -6,6 +6,9 @@ import { OrganizationOutputFactory } from '../../../../factories/organization.fa
 import { UserFactory } from '../../../../factories/user.factory'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -14,28 +17,18 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProfileHeader', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             props: {
                 user: UserFactory.generate(),
             },
             i18n,
-            store,
             router: [
                 {
                     path: '/',

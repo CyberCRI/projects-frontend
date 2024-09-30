@@ -3,25 +3,15 @@ import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { UserFactory } from '../../../../factories/user.factory'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
     messages: {
         en: english,
-    },
-}
-
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
-            },
-        },
     },
 }
 
@@ -36,13 +26,14 @@ describe('BrowseLayout', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
         defaultParams = {
             props: {
                 isAddMode: true,
                 selectedUser: UserFactory.generate(),
             },
             i18n,
-            store,
             global: {
                 mocks: {
                     $route: route,

@@ -13,12 +13,20 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SdgIcon',
     emits: ['toggled'],
     mixins: [imageMixin],
     components: { IconImage },
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         sdgId: {
             type: [Number, String],
@@ -39,7 +47,7 @@ export default {
 
     computed: {
         lang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
     },
 }

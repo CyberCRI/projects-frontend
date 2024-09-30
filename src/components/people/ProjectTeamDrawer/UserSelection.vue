@@ -56,7 +56,7 @@ import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import TeamResultList from '@/components/people/ProjectTeamDrawer/TeamResultList.vue'
 import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import { searchPeopleProject } from '@/api/people.service'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'UserSelection',
 
@@ -75,7 +75,12 @@ export default {
             userSelectionSelectUser: this.selectUser,
         }
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     mounted() {
         this.$refs['search-input-ctn'].$refs['search-input'].focus()
     },
@@ -153,17 +158,17 @@ export default {
 
             const userFilters = {
                 limit: 30,
-                organizations: [this.$store.getters['organizations/current'].code], // return only users from current org
+                organizations: [this.organizationsStore.current.code], // return only users from current org
             }
             this.userRequest = await searchPeopleProject({
                 search: this.queryString,
-                org_id: this.$store.getters['organizations/current'].id,
+                org_id: this.organizationsStore.current.id,
                 params: userFilters,
             })
 
             const groupFilters = {
                 limit: 30,
-                organizations: this.$store.getters['organizations/current'].code,
+                organizations: this.organizationsStore.current.code,
             }
             this.groupRequest = await searchGroupsAlgolia(
                 encodeURIComponent(this.queryString),

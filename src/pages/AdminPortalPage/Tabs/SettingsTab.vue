@@ -89,6 +89,9 @@ import WordingAdminBlock from '@/components/admin/GeneralAdminBlocks/Wording/Wor
 import ChatAdminBlock from '@/components/admin/GeneralAdminBlocks/Chat/ChatAdminBlock.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'SettingsTab',
 
@@ -107,14 +110,21 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+
         return {
             v$: useVuelidate(),
+            toaster,
+            languagesStore,
+            organizationsStore,
         }
     },
 
     computed: {
         languageOptions() {
-            return this.$store.getters['languages/all'].map((lang) => {
+            return this.languagesStore.all.map((lang) => {
                 return {
                     value: lang,
                     label: this.$t(`language.label-${lang}`),
@@ -124,7 +134,7 @@ export default {
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         visibilityOptions() {
@@ -214,16 +224,12 @@ export default {
             const data = { ...this.form }
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', data)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-general-update.success'),
-                    type: 'success',
-                })
+                await this.organizationsStore.updateCurrentOrganization(data)
+                this.toaster.pushSuccess(this.$t('toasts.organization-general-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-general-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-general-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false

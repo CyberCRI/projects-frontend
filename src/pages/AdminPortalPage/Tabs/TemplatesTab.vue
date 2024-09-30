@@ -181,7 +181,10 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'TemplatesTab',
 
@@ -201,8 +204,16 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
+        const projectsStore = useProjectsStore()
         return {
+            toaster,
             v$: useVuelidate(),
+            languagesStore,
+            projectCategoriesStore,
+            projectsStore,
         }
     },
 
@@ -244,13 +255,13 @@ export default {
     },
 
     async created() {
-        await this.$store.dispatch('projectCategories/getAllProjectCategories')
+        await this.projectCategoriesStore.getAllProjectCategories()
     },
 
     computed: {
         // TODO: delete or uncomment when we decide what to do about languages in categories
         // languages() {
-        //     return this.$store.getters['languages/all']
+        //     return this.languagesStore.all
         // },
 
         // languagesOptions() {
@@ -260,7 +271,7 @@ export default {
         // },
 
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         otherFieldDisabled() {
@@ -286,7 +297,7 @@ export default {
         saveTemplateImage(file) {
             const formData = new FormData()
             formData.append('file', file, file.name)
-            // formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            // formData.append('project_id', this.projectsStore.currentProjectId)
             return postTemplateImage({ id: this.selectedCategory.id, body: formData })
         },
 
@@ -313,8 +324,7 @@ export default {
                     this.selectedCategory?.template.goal_description || '<p></p>'
 
                 /* Language */
-                this.form.language =
-                    this.selectedCategory?.lang || this.$store.state.languages.current
+                this.form.language = this.selectedCategory?.lang || this.languagesStore.current
 
                 /* Tags */
                 this.form.organizationTags = this.selectedCategory?.organization_tags
@@ -347,15 +357,11 @@ export default {
             try {
                 await patchProjectCategory(this.selectedCategory?.id, updatedData)
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.category-template-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.category-template-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.category-template-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.category-template-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false

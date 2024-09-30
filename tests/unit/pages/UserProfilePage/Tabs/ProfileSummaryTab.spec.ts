@@ -8,6 +8,10 @@ import { getUserFollows } from '@/api/follows.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 vi.mock('@/api/follows.service', () => ({
     getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
@@ -18,37 +22,28 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
-    },
-}
-
 const buildParams = (user) => ({
     i18n,
-    store,
     props: {
         user,
     },
 })
 
 describe('ProfileSummaryTab', () => {
+    let usersStore
+    beforeEach(() => {
+        usersStore = useUsersStore(pinia)
+        usersStore.id = 123
+        usersStore.userFromApi = {}
+        usersStore.permissions = {}
+        usersStore.getUser = vi.fn()
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    })
+
+    afterEach(() => {
+        usersStore.$reset()
+    })
     it('should render ProfileSummaryTab component', () => {
         let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(UserFactory.generate()))
 
@@ -60,7 +55,7 @@ describe('ProfileSummaryTab', () => {
         const user: any = UserFactory.generate()
         user.id = id
 
-        store.modules.users.getters.id.mockReturnValue(id)
+        usersStore.id = id
         let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(vm.isCurrentUser).toBeTruthy()
@@ -70,7 +65,7 @@ describe('ProfileSummaryTab', () => {
         const user: any = UserFactory.generate()
         user.id = 123
 
-        store.modules.users.getters.id.mockReturnValue('456')
+        usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
         let vm: any = wrapper.vm

@@ -106,6 +106,8 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { patchUserPrivacy } from '@/api/people.service.ts'
 import { getUser } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 function defaultForm() {
     return {
@@ -137,6 +139,14 @@ export default {
     components: {
         GroupButton,
         LoaderSimple,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            usersStore,
+        }
     },
 
     props: {
@@ -211,21 +221,14 @@ export default {
                 const apiData = this.adaptFormToApi()
                 await patchUserPrivacy(this.user.id, apiData)
 
-                if (this.user.id === this.$store.getters['users/id'])
-                    this.$store.dispatch('users/getUser', this.user.id)
+                if (this.user.id === this.usersStore.id) this.usersStore.getUser(this.user.id)
                 else getUser(this.user.id)
 
                 this.$emit('profile-edited')
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('profile.edit.privacy.save-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('profile.edit.privacy.save-success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.privacy.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.privacy.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

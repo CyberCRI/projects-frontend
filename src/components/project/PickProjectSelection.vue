@@ -61,6 +61,7 @@ import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'PickProjectSelection',
@@ -75,6 +76,12 @@ export default {
         PaginationButtons,
     },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             queryString: '',
@@ -134,7 +141,7 @@ export default {
 
             const filters = {
                 limit: 24,
-                organizations: this.$store.getters['organizations/current'].code,
+                organizations: this.organizationsStore.current.code,
             }
 
             if (this.queryString) {

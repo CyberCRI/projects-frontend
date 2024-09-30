@@ -14,6 +14,7 @@ import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEdit
 import { getUser } from '@/api/people.service.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'CompleteProfileStep2',
@@ -23,7 +24,12 @@ export default {
     components: { ProfileSkillsEditTab, ProfileEditBlock, LoaderSimple },
 
     mixins: [onboardingStatusMixin],
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     data() {
         return { user: null, loading: false }
     },
@@ -44,7 +50,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/id'])
+                this.user = await getUser(this.usersStore.id)
             } catch (error) {
                 console.error(error)
             }

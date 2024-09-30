@@ -161,7 +161,8 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import { getOrgUnits } from '@/api/google.service'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'AccountForm',
 
@@ -181,6 +182,14 @@ export default {
         AccountSection,
         FieldErrors,
         LpiSelect,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     props: {
@@ -264,7 +273,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         hasRoleInCurrentOrg() {
             return this.selectedRole && this.selectedRole != 0
@@ -272,7 +281,7 @@ export default {
 
         hasGoogleSync() {
             // whether to give option to create user in google too
-            return this.$store.getters['organizations/current'].google_sync_enabled
+            return this.organizationsStore.current.google_sync_enabled
         },
         roleNone() {
             return {
@@ -288,17 +297,17 @@ export default {
                 {
                     name: 'users',
                     label: this.$t('account.role.user'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:users`,
+                    value: `organization:#${this.organizationsStore.current.id}:users`,
                 },
                 {
                     name: 'facilitators',
                     label: this.$t('account.role.facilitator'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:facilitators`,
+                    value: `organization:#${this.organizationsStore.current.id}:facilitators`,
                 },
                 {
                     name: 'admins',
                     label: this.$t('account.role.admin'),
-                    value: `organization:#${this.$store.getters['organizations/current'].id}:admins`,
+                    value: `organization:#${this.organizationsStore.current.id}:admins`,
                 },
             ]
 
@@ -345,15 +354,9 @@ export default {
         async resetPassword() {
             try {
                 await resetUserPassword(this.selectedUser.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('account.password-reset.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('account.password-reset.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('account.password-reset.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('account.password-reset.error')} (${error})`)
                 console.error(error)
             }
         },
@@ -411,15 +414,9 @@ export default {
         async deleteUser() {
             try {
                 await deleteUser(this.selectedUser.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('account.delete-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('account.delete-success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('account.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('account.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.close()
@@ -454,7 +451,7 @@ export default {
                     allRolesToAdd.push(this.selectedRole)
                 } else if (this.selectedUser) {
                     allRolesToRemove.push(
-                        `organization:#${this.$store.getters['organizations/current'].id}:${this.selectedUser.current_org_role}`
+                        `organization:#${this.organizationsStore.current.id}:${this.selectedUser.current_org_role}`
                     )
                 }
 
@@ -501,10 +498,7 @@ export default {
 
                     await postUser(formData)
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('account.create-success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('account.create-success'))
                 } else {
                     // UPDATE
                     // patch still use old api style
@@ -540,16 +534,10 @@ export default {
                     } else if (user && user.profile_picture) {
                         await patchUserPicture(user.id, user.profile_picture.id, formData)
                     }
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('account.update-success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('account.update-success'))
                 }
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('account.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('account.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncSave = false

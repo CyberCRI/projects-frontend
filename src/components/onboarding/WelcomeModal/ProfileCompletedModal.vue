@@ -37,13 +37,19 @@
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProfileCompletedModal',
 
     emits: ['close', 'take-tour'],
 
     components: { BaseModal, LpiButton },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             asyncing: false,
@@ -62,7 +68,7 @@ export default {
 
     computed: {
         organizationLogo() {
-            return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
+            return this.organizationsStore.current?.logo_image?.variations?.medium
         },
     },
 }

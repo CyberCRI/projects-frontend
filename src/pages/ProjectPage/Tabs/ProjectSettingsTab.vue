@@ -227,6 +227,11 @@ import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import CategoryPicker from '@/components/category/CategoryPicker.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+import { deleteProject, duplicateProject } from '@/api/projects.service'
 export default {
     name: 'ProjectSettingsTab',
 
@@ -245,6 +250,18 @@ export default {
         ConfirmModal,
         ReviewDrawer,
         CategoryPicker,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            organizationsStore,
+            projectsStore,
+            usersStore,
+        }
     },
 
     props: {
@@ -281,7 +298,7 @@ export default {
     },
 
     async created() {
-        const organizations = await this.$store.dispatch('organizations/getAllOrganizations')
+        const organizations = await this.organizationsStore.getAllOrganizations()
         this.allOrganizations = organizations.results.map((org) => ({
             ...org,
             selected: !!this.project.organizations.find((projOrg) => projOrg.code === org.code),
@@ -291,8 +308,7 @@ export default {
             this.project.categories.length > 0
                 ? {
                       ...this.project.categories.find(
-                          (cat) =>
-                              cat.organization == this.$store.getters['organizations/current'].code
+                          (cat) => cat.organization == this.organizationsStore.current.code
                       ),
                   }
                 : {}
@@ -306,17 +322,12 @@ export default {
 
             async set(status) {
                 try {
-                    const response = await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: this.project.id,
                         project: { publication_status: status },
                     })
 
-                    this.$store.dispatch('projects/updateProjectVisibility', response)
-
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-visibility-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.project-visibility-update.success'))
 
                     analytics.project.updateVisibility({ id: this.project.id })
                 } catch (error) {
@@ -332,15 +343,12 @@ export default {
 
             async set(status) {
                 try {
-                    await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: this.project.id,
                         project: { life_status: status },
                     })
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.project-life-status-update.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.project-life-status-update.success'))
 
                     analytics.project.updateStatus({ id: this.project.id })
                 } catch (error) {
@@ -425,14 +433,12 @@ export default {
         },
 
         currentOrgSelected() {
-            return this.organizations_codes.includes(
-                this.$store.getters['organizations/current'].code
-            )
+            return this.organizations_codes.includes(this.organizationsStore.current.code)
         },
 
         isMember() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return members.find((user) => this.$store.getters['users/id'] === user.id)
+            return members.find((user) => this.usersStore.id === user.id)
         },
     },
 
@@ -448,21 +454,17 @@ export default {
                 : this.organizations_codes.filter((orgCode) => orgCode !== value.code)
 
             try {
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.project.id,
                     project: {
                         organizations_codes: payload,
                     },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-organizations-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-organizations-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-organizations-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.project-organizations-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false
@@ -471,21 +473,17 @@ export default {
 
         async setCategory(value) {
             try {
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.project.id,
                     project: {
                         project_categories_ids: [value.id],
                     },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-categories-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-categories-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-categories-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.project-categories-update.error')} (${error})`
+                )
                 console.error(error)
             }
         },
@@ -493,32 +491,33 @@ export default {
         async duplicateProject() {
             try {
                 this.$emit('asyncing', true)
-                const project = await this.$store.dispatch(
-                    'projects/duplicateProject',
-                    this.project.id
-                )
 
-                await this.$store.dispatch('projects/updateProject', {
-                    id: project.id,
+                const originalProject = this.project
+
+                const projectCopy = await duplicateProject(originalProject.id)
+
+                // fetch updated project list from user so permissions as set correctly
+                await this.usersStore.getUser(this.usersStore.id, {
+                    root: true,
+                })
+
+                analytics.project.duplicate(originalProject.id, projectCopy.id)
+
+                await this.projectsStore.updateProject({
+                    id: projectCopy.id,
                     project: {
-                        title: `${this.project.title} ${this.$t('project.copy')}`,
+                        title: `${originalProject.title} ${this.$t('project.copy')}`,
                     },
                 })
 
                 this.$router.push({
                     name: 'projectSummary',
-                    params: { slugOrId: project.slug },
+                    params: { slugOrId: projectCopy.slug },
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-duplication.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-duplication.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-duplication.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-duplication.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('asyncing', false)
@@ -544,24 +543,21 @@ export default {
             if (
                 this.team.owners &&
                 this.team.owners.length === 1 &&
-                this.team.owners.find((user) => this.$store.getters['users/id'] === user.id)
+                this.team.owners.find((user) => this.usersStore.id === user.id)
             )
                 this.showQuitIsImposible = true
             else this.showConfirmQuit = true
         },
         async destroyProject() {
             try {
-                await this.$store.dispatch('projects/deleteProject', this.project.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-destroy.success'),
-                    type: 'success',
-                })
+                const id = this.project.id
+                await deleteProject(id)
+                analytics.project.delete({ id: id })
+                this.toaster.pushSuccess(this.$t('toasts.project-destroy.success'))
+
                 this.$router.push({ name: 'HomeRoot' })
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-destroy.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-destroy.error')} (${error})`)
                 console.error(error)
             }
         },
@@ -588,10 +584,7 @@ export default {
                     projectNoMoreVisible = true
                 }
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-quit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-quit.success'))
             } catch (error) {
                 console.error(error)
                 /**
@@ -609,10 +602,7 @@ export default {
                     /**
                      * here this is just a "standard" error, so display it
                      */
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.project-quit.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.project-quit.error')} (${error})`)
                 }
             } finally {
                 this.showConfirmQuit = false

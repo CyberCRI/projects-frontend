@@ -38,6 +38,8 @@ import CardList from '@/components/base/CardList.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
 import { axios } from '@/api/api.config'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'UserRecommendationPage',
 
@@ -45,6 +47,12 @@ export default {
         UserCard,
         CardList,
         PaginationButtons,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     data() {
@@ -73,7 +81,7 @@ export default {
     async mounted() {
         this.isLoading = true
         this.usersRecommendationsRequest = await getUsersRecommendationsForUser(
-            this.$store.getters['organizations/current'].code,
+            this.organizationsStore.current.code,
             { limit: this.limit }
         )
         this.isLoading = false

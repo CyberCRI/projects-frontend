@@ -70,6 +70,7 @@ import CompleteProfileStep1 from '@/components/people/CompleteProfileDrawer/Comp
 import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'CompleteProfileDrawer',
 
@@ -78,7 +79,12 @@ export default {
     emits: ['close', 'completed'],
 
     mixins: [onboardingStatusMixin],
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         isOpened: {
             type: Boolean,
@@ -115,7 +121,7 @@ export default {
         docUrl() {
             const url = new URL(import.meta.env.VITE_APP_DOC)
             // uppercase lang code are mandatory for this service
-            url.searchParams.append('lang', this.$store.state.languages.current)
+            url.searchParams.append('lang', this.languagesStore.current)
 
             return url
         },

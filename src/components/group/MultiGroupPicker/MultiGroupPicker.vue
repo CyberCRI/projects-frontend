@@ -52,9 +52,10 @@
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import throttle from 'lodash/throttle'
 import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
-import { getHierarchyGroups } from '@/api/group.service.ts'
+import { getHierarchyGroups } from '@/api/groups.service.ts'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'MultiGroupPicker',
 
@@ -66,6 +67,14 @@ export default {
         FilterValue,
         FilterSearchInput,
     },
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
+
     props: {
         modelValue: {
             type: Object,
@@ -143,7 +152,7 @@ export default {
     methods: {
         async loadGroups() {
             this.allGroups = (
-                await getHierarchyGroups(this.$store.state.organizations.current.code)
+                await getHierarchyGroups(this.organizationsStore.current.code)
             ).children
         },
         onToggleGroup(group) {

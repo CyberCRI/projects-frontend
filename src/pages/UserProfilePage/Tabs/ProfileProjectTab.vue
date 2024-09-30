@@ -50,6 +50,7 @@ import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue
 import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { getUserFollows } from '@/api/follows.service'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileProjectTab',
@@ -60,7 +61,12 @@ export default {
         UserProjectList,
         LpiButton,
     },
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     props: {
         user: {
             type: Object,
@@ -81,12 +87,12 @@ export default {
 
     computed: {
         isMyProfileAndCanCreateProject() {
-            const loggedAsID = this.$store.getters['users/id']
+            const loggedAsID = this.usersStore.id
             return loggedAsID && this.user.id === loggedAsID && this.canCreateProject
         },
 
         isCurrentUser() {
-            return this.$store.getters['users/id'] === this.user.id
+            return this.usersStore.id === this.user.id
         },
 
         noFollowLabel() {

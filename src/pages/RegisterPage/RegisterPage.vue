@@ -139,6 +139,9 @@ import { getInvitation } from '@/api/invitations.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'RegisterPage',
 
@@ -151,6 +154,17 @@ export default {
         LoaderSimple,
         SignUpWrapper,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+
+        return {
+            toaster,
+            languagesStore,
+            organizationsStore,
+        }
     },
 
     props: {
@@ -211,7 +225,7 @@ export default {
     async mounted() {
         this.isLinkValid = await this.validateToken()
         this.verifyingLink = false
-        this.contactEmail = this.$store.getters['organizations/current']?.contact_email
+        this.contactEmail = this.organizationsStore.current?.contact_email
     },
     computed: {
         backgroundImageUrl() {
@@ -221,10 +235,7 @@ export default {
     methods: {
         async validateToken() {
             try {
-                const token = await getInvitation(
-                    this.$store.getters['organizations/current'].code,
-                    this.token
-                )
+                const token = await getInvitation(this.organizationsStore.current.code, this.token)
                 const expirationDate = Date.parse(token.expire_at)
                 if (expirationDate > new Date()) {
                     return true
@@ -258,24 +269,18 @@ export default {
                     formData.append(key, this.form[key])
                 })
 
-                formData.append('language', this.$store.getters['languages/current'])
+                formData.append('language', this.languagesStore.current)
 
                 await postUserWithInvitation(this.token, formData)
 
                 this.confirm = true
             } catch (error) {
                 if (error?.response?.status === 409) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.email-already-exists')}`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('register.email-already-exists')}`)
                 } else {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('register.save-error')} ${
-                            error?.response?.data?.error || ''
-                        }`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('register.save-error')} ${error?.response?.data?.error || ''}`
+                    )
                 }
 
                 console.error(error)

@@ -35,9 +35,11 @@
 <script>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
-import { getGroup } from '@/api/group.service'
+import { getGroup } from '@/api/groups.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileGroupsTab',
@@ -49,6 +51,14 @@ export default {
         GroupCard,
         LpiLoader,
         EmptyCard,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            organizationsStore,
+            usersStore,
+        }
     },
     props: {
         user: {
@@ -71,7 +81,7 @@ export default {
                 this.user.people_groups.map(async (group) => {
                     try {
                         return await getGroup(
-                            this.$store.state.organizations.current.code,
+                            this.organizationsStore.current.code,
                             group.id,
                             true // no error toast
                         )
@@ -96,7 +106,7 @@ export default {
 
     computed: {
         isCurrentUser() {
-            return this.$store.getters['users/id'] === this.user.id
+            return this.usersStore.id === this.user.id
         },
 
         noGroupLabel() {

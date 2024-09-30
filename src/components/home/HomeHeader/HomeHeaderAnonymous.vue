@@ -76,6 +76,7 @@ import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'HomeHeaderAnonymous',
     components: {
@@ -84,7 +85,12 @@ export default {
         LpiButton,
         LinkButton,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             styleDescription: {},
@@ -96,7 +102,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
         bannerUrl() {
             return this.organization?.banner_image?.variations?.medium

@@ -4,6 +4,9 @@ import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
 import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
 
 const i18n = {
     locale: 'en',
@@ -13,51 +16,22 @@ const i18n = {
     },
 }
 
-const project = ProjectOutputFactory.generate()
-
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    files: [],
-                    links: [],
-                }),
-            },
-            currentProjectSlug: vi.fn(() => project.slug),
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-        goals: {
-            namespaced: true,
-            actions: {
-                patchGoal: vi.fn(),
-                createGoal: vi.fn(),
-            },
-        },
-        notifications: {
-            namespaced: true,
-            actions: {
-                pushToast: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('GoalDrawer.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const projectsStore = useProjectsStore(pinia)
+
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
-            store,
         }
     })
     it('should render component', () => {

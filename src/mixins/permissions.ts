@@ -1,29 +1,50 @@
 import utils from '@/functs/functions'
-import store from '@/store'
+
+import { mapState } from 'pinia'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
 
 export default {
     methods: {
         hasPermission(scope, action, pk?) {
-            const permissions = this.$store
-                ? this.$store.getters['users/getPermissions']
-                : store.getters['users/getPermissions']
+            const permissions = this.getPermissionsForPermissions
             return utils.hasPermission(permissions, scope, action, pk)
         },
     },
 
     computed: {
+        ...mapState(usePeopleGroupsStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            currentPeopleGroupIdForPermissions: 'currentId',
+        }),
+        ...mapState(useOrganizationsStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            currentOrganizationForPermissions: 'current',
+        }),
+        ...mapState(useProjectsStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            currentProjectIdForPermissions: 'currentProjectId',
+        }),
+        ...mapState(useUsersStore, {
+            // unique name so it doesn(t conflict with a name in the component)
+            isConnectedForPermissions: 'isConnected',
+            getPermissionsForPermissions: 'permissions',
+            getUserRolesForPermissions: 'roles',
+        }),
         isOwner() {
             return (
-                this.$store.getters['users/isConnected'] &&
+                this.isConnectedForPermissions &&
                 (this.hasPermission(
                     'projects',
                     'delete_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                     this.hasPermission(
                         'organizations',
                         'delete_project',
-                        this.$store.getters['organizations/current'].id
+                        this.currentOrganizationForPermissions.id
                     ) ||
                     this.hasPermission('projects', 'delete_project'))
             )
@@ -31,26 +52,26 @@ export default {
 
         isSuperAdmin() {
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some((role) => role === 'superadmins')
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some((role) => role === 'superadmins')
             )
         },
 
         isFacilitator() {
-            const orgId = this.$store.getters['organizations/current'].id
+            const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some(
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some(
                     (role) => role === `organization:#${orgId}:facilitators`
                 )
             )
         },
 
         isOrgAdmin() {
-            const orgId = this.$store.getters['organizations/current'].id
+            const orgId = this.currentOrganizationForPermissions.id
             return (
-                this.$store.getters['users/isConnected'] &&
-                this.$store.getters['users/getUserRoles'].some(
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some(
                     (role) => role === `organization:#${orgId}:admins`
                 )
             )
@@ -58,7 +79,7 @@ export default {
 
         isAdmin() {
             return (
-                (this.$store.getters['users/isConnected'] &&
+                (this.isConnectedForPermissions &&
                     this.hasPermission('organizations', 'destroy')) ||
                 this.isSuperAdmin ||
                 this.isOrgAdmin
@@ -72,7 +93,7 @@ export default {
         /* PROJECTS */
 
         canCreateProject() {
-            return this.$store.getters['users/isConnected']
+            return this.isConnectedForPermissions
         },
 
         canEditProject() {
@@ -80,12 +101,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'change_project',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('projects', 'change_project') ||
                 this.isAdmin
@@ -97,12 +118,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_project',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'delete_project',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('projects', 'delete_project') ||
                 this.isAdmin
@@ -115,12 +136,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'add_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
                     'add_review',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organization', 'add_review') ||
                 this.hasPermission('projects', 'add_review') ||
@@ -133,12 +154,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
                     'change_review',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organization', 'change_review') ||
                 this.hasPermission('projects', 'change_review') ||
@@ -151,12 +172,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_review',
-                    this.$store.getters['projects/currentProjectId'] || null
+                    this.currentProjectIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organization',
                     'delete_review',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organization', 'delete_review') ||
                 this.hasPermission('projects', 'delete_review') ||
@@ -172,26 +193,26 @@ export default {
                     'organizations',
                     'member',
                     null,
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organizations', 'member', 'projects') ||
                 this.hasPermission(
                     'organizations',
                     'member',
                     'projects',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission(
                     'projects',
                     'member',
                     null,
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'update',
                     'member',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organizations', 'member') ||
                 this.hasPermission('project-member', 'update') ||
@@ -206,17 +227,17 @@ export default {
             // so for now assume that if the user is connected and can see the project
             // s.he can comment
             // TODO: rethink this with backend and P.O.
-            return this.$store.getters['users/isConnected']
+            return this.isConnectedForPermissions
 
             // this.hasPermission(
             //     'projects',
             //     'add_comment',
-            //     this.$store.getters['projects/currentProjectId']
+            //     this.currentProjectIdForPermissions
             // ) ||
             // this.hasPermission(
             //     'organizations',
             //     'add_comment',
-            //     this.$store.getters['organizations/current'].id
+            //     this.currentOrganizationForPermissions.id
             // ) ||
             // this.hasPermission('organizations', 'add_comment') ||
             // this.hasPermission('projects', 'add_comment') ||
@@ -228,12 +249,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'change_comment',
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'change_comment',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organizations', 'change_comment') ||
                 this.hasPermission('projects', 'change_comment') ||
@@ -246,12 +267,12 @@ export default {
                 this.hasPermission(
                     'projects',
                     'delete_comment',
-                    this.$store.getters['projects/currentProjectId']
+                    this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'delete_comment',
-                    this.$store.getters['organizations/current'].id
+                    this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organizations', 'delete_comment') ||
                 this.hasPermission('projects', 'delete_comment') ||
@@ -265,7 +286,7 @@ export default {
                 this.hasPermission(
                     'organizations',
                     'add_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId']
+                    this.currentPeopleGroupIdForPermissions
                 ) ||
                 this.hasPermission('organizations', 'add_peoplegroup') ||
                 this.hasPermission('peoplegroup', 'add_peoplegroup') ||
@@ -279,12 +300,12 @@ export default {
                 this.hasPermission(
                     'accounts',
                     'change_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId'] || null
+                    this.currentPeopleGroupIdForPermissions || null
                 ) ||
                 this.hasPermission(
                     'organizations',
                     'change_peoplegroup',
-                    this.$store.getters['peopleGroups/currentId'] || null
+                    this.currentPeopleGroupIdForPermissions || null
                 ) ||
                 this.hasPermission('organizations', 'change_peoplegroup') ||
                 this.hasPermission('peoplegroup', 'update')

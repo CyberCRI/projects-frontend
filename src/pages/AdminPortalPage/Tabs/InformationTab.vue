@@ -103,6 +103,9 @@ import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'InformationTab',
@@ -118,14 +121,20 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
         return {
+            toaster,
             v$: useVuelidate(),
+            languagesStore,
+            organizationsStore,
         }
     },
 
     computed: {
         languageOptions() {
-            return this.$store.getters['languages/all'].map((lang) => {
+            return this.languagesStore.all.map((lang) => {
                 return {
                     value: lang,
                     label: this.$t(`language.label-${lang}`),
@@ -135,7 +144,7 @@ export default {
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         visibilityOptions() {
@@ -245,7 +254,7 @@ export default {
                 const logoFormData = new FormData()
                 logoFormData.append('file', this.organizationLogo, this.organizationLogo.name)
                 const apiResponse = await postOrganisationLogo({
-                    code: this.$store.state.organizations.current.code,
+                    code: this.organizationsStore.current.code,
                     body: logoFormData,
                 })
                 data.logo_image_id = apiResponse.id
@@ -255,23 +264,19 @@ export default {
                 const bannerFormData = new FormData()
                 bannerFormData.append('file', this.organizationBanner, this.organizationBanner.name)
                 const apiResponse = await postOrganisationBanner({
-                    code: this.$store.state.organizations.current.code,
+                    code: this.organizationsStore.current.code,
                     body: bannerFormData,
                 })
                 data.banner_image_id = apiResponse.id
             }
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', data)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-general-update.success'),
-                    type: 'success',
-                })
+                await this.organizationsStore.updateCurrentOrganization(data)
+                this.toaster.pushSuccess(this.$t('toasts.organization-general-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-general-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-general-update.error')} (${error})`
+                )
                 console.error(error)
             } finally {
                 this.isLoading = false

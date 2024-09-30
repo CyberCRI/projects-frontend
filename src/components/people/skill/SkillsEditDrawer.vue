@@ -104,6 +104,7 @@ import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import debounce from 'lodash.debounce'
 import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'SkillsEditDrawer',
@@ -115,6 +116,12 @@ export default {
             from: 'profileEditReloadUser',
             default: () => () => {},
         },
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     components: {
@@ -292,10 +299,7 @@ export default {
                 )
             } catch (error) {
                 errorDuringSave = true
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.skills.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.skills.save-error')} (${error})`)
                 console.error(error)
             }
             try {
@@ -310,15 +314,13 @@ export default {
             } catch (error) {
                 errorDuringSave = true
                 if (error.response.status === 409) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t(`profile.edit.skills.${this.type}.already-added`)}`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t(`profile.edit.skills.${this.type}.already-added`)}`
+                    )
                 } else {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('profile.edit.skills.save-error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('profile.edit.skills.save-error')} (${error})`
+                    )
                 }
             }
             try {
@@ -332,10 +334,7 @@ export default {
                 )
             } catch (error) {
                 errorDuringSave = true
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.skills.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.skills.save-error')} (${error})`)
                 console.error(error)
             }
 
@@ -344,10 +343,7 @@ export default {
             // confirm success
             if (!errorDuringSave) {
                 this.$emit('skills-updated')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('profile.edit.skills.save-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
             }
             this.asyncing = false
             this.$emit('close')

@@ -17,13 +17,19 @@
 <script>
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'LinkedProjectsRecap',
 
     components: {
         SectionHeader,
         LinkedProjects,
+    },
+    setup() {
+        const projectsStore = useProjectsStore()
+        return {
+            projectsStore,
+        }
     },
 
     props: {
@@ -37,7 +43,7 @@ export default {
         goToLinkedProjectsView() {
             this.$router.push({
                 name: 'projectLinkedProjects',
-                params: { slugOrId: this.$store.getters['projects/currentProjectSlug'] },
+                params: { slugOrId: this.projectsStore.currentProjectSlug },
                 hash: '#tab',
             })
         },

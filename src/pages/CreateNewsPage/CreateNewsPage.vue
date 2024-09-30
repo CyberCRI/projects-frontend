@@ -30,13 +30,23 @@ import NewsForm, { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createNews, postNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'CreateNewsPage',
     components: {
         NewsForm,
         LpiButton,
     },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
+    },
+
     data() {
         return {
             form: defaultForm(),
@@ -64,10 +74,7 @@ export default {
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                const savedNews = await createNews(
-                    this.$store.getters['organizations/current']?.code,
-                    payload
-                )
+                const savedNews = await createNews(this.organizationsStore.current?.code, payload)
 
                 if (this.form.header_image instanceof File) {
                     const formData = new FormData()
@@ -81,21 +88,15 @@ export default {
                     imageSizesFormData(formData, this.form.imageSizes)
 
                     await postNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         savedNews.id,
                         formData
                     )
                 }
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.save.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

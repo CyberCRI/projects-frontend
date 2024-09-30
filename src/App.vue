@@ -9,18 +9,18 @@
             <LpiFooter @on-click="toggleReportBugModal" />
         </div>
 
-        <AppToastList :toast-list="toastList" @delete-toast="deleteToast($event)" />
+        <AppToastList />
     </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 
 import LpiFooter from '@/components/app/LpiFooter.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 import LpiHeader from '@/components/app/LpiHeader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 import keycloak from '@/api/auth/keycloak.ts'
 
@@ -44,10 +44,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters({
-            toastList: 'notifications/getToastList',
-            isLoggedIn: 'users/isLoggedIn',
-        }),
+        usersStoreToken() {
+            return this.usersStore.accessToken
+        },
 
         currentRouteName() {
             // Fix buefy class overwrite css since we renamed concepts->tags
@@ -55,6 +54,12 @@ export default {
 
             return this.$route.name
         },
+    },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     mounted() {
@@ -89,14 +94,6 @@ export default {
     },
 
     methods: {
-        ...mapMutations({
-            resetUser: 'users/RESET_USER',
-        }),
-
-        ...mapActions({
-            deleteToast: 'notifications/deleteToast',
-        }),
-
         toggleReportBugModal() {
             this.reportBugModalActive = !this.reportBugModalActive
         },
@@ -105,7 +102,7 @@ export default {
             const accessToken = localStorage.getItem('ACCESS_TOKEN')
 
             const _logout = () => {
-                this.resetUser()
+                this.usersStore.resetUser()
                 this.closeModal()
                 // navigate to /dashboard
                 if (!this.$route || this.$route.name !== 'Home') {
@@ -113,15 +110,15 @@ export default {
                 }
             }
 
-            if (this.isLoggedIn && accessToken) {
+            if (this.usersStoreToken && accessToken) {
                 // logged in, verify token is still fresh
                 if (checkExpiredToken()) {
                     _logout()
                 }
-            } else if (this.isLoggedIn && !accessToken) {
+            } else if (this.usersStoreToken && !accessToken) {
                 // logged out in another tab
                 _logout()
-            } else if (!this.isLoggedIn && accessToken) {
+            } else if (!this.usersStoreToken && accessToken) {
                 // logged in in another tab
                 keycloak.refreshTokenLoop.start()
             }

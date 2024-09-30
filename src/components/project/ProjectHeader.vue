@@ -220,7 +220,7 @@
                     <div v-if="!loading" class="project-actions-ctn">
                         <div class="end-buttons">
                             <ExternalLabelButton
-                                v-if="$store.getters['users/isLoggedIn']"
+                                v-if="usersStore.isConnected"
                                 class="space-button bg-on-hover"
                                 :label="followed ? $t('project.followed') : $t('project.follow')"
                                 :btn-icon="followed ? 'Heart' : 'HeartOutline'"
@@ -323,6 +323,8 @@ import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProjectHeader',
@@ -344,7 +346,14 @@ export default {
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
 
     mixins: [permissions, imageMixin],
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            organizationsStore,
+            usersStore,
+        }
+    },
     props: {
         project: {
             type: Object,
@@ -453,8 +462,7 @@ export default {
 
         categoryForCurrentOrganization() {
             return this.project?.categories?.find(
-                (category) =>
-                    category.organization === this.$store.getters['organizations/current'].code
+                (category) => category.organization === this.organizationsStore.current.code
             )
         },
 
@@ -662,11 +670,11 @@ export default {
                     this.$emit('update-follow', { is_followed: false })
                 } else {
                     await followUtils.follow({
-                        follower_id: this.$store.getters['users/id'],
+                        follower_id: this.usersStore.id,
                         project_id: this.project.id,
                     })
                     this.$emit('update-follow', {
-                        follower_id: this.$store.state.users.id,
+                        follower_id: this.usersStore.id,
                         is_followed: true,
                     })
                 }

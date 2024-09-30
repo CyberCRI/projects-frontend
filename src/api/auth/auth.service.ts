@@ -2,7 +2,8 @@ import { axios } from '@/api/api.config'
 import * as oauth from '@panva/oauth4webapi'
 import keycloak from '@/api/auth/keycloak'
 import router from '@/router'
-import store from '@/store'
+import useProjectsStore from '@/stores/useProjects'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dashboard`
 
@@ -25,6 +26,7 @@ const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dash
  */
 
 export async function goToKeycloakLoginPage(): Promise<void> {
+    const organizationsStore = useOrganizationsStore()
     keycloak.codeVerifier.generate()
     keycloak.appSecret.generate()
     const currentUrl = new URL(keycloak.getCurrentUrl())
@@ -53,7 +55,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
             fromURL: fromUrl,
             // Store appSecret into keycloak state to verify keycloak authenticity when getting back the state
             appSecret: keycloak.appSecret.get(),
-            org: store.getters['organizations/current']?.code,
+            org: organizationsStore.current?.code,
         })
     )
 
@@ -67,6 +69,7 @@ function cleanUpKeycloak() {
 }
 
 function getLogoutRedirectUri() {
+    const projectsStore = useProjectsStore()
     // redirect to current page after logout
     let redirectUri = keycloak.getCurrentUrl()
     const currentRoute = router.currentRoute
@@ -93,7 +96,7 @@ function getLogoutRedirectUri() {
         currentRoute.value.matched &&
         currentRoute.value.matched.some((route) => route.name === 'pageProject')
     ) {
-        const project = store.getters['projects/project']
+        const project = projectsStore.project
         if (!project || project.publication_status !== 'public') {
             redirectUri = DASHBOARD_URL
         }
@@ -143,6 +146,7 @@ export async function refreshAccessToken(): Promise<any> {
 }
 
 export async function getNotifications(id) {
+    // TODO: should getNotificationsSetting
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`
@@ -151,6 +155,7 @@ export async function getNotifications(id) {
 }
 
 export async function patchNotifications({ id, payload }) {
+    // TODO: should patchNotificationsSetting
     return (
         await axios.patch(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`,

@@ -2,30 +2,23 @@ import { lpiMount } from '../../../../helpers/LpiMount'
 import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            projectCategories: {
-                namespaced: true,
-                getters: {
-                    all: () => ProjectCategoryOutputFactory.generateMany(8),
-                },
-            },
-        },
-    }
-}
 
 const factory = (props?) => {
     return lpiMount(CategoriesFilterSummary, {
         props: {
             ...props,
         },
-        store: buildStore(),
     })
 }
 
 describe('CategoriesFilterEditor.vue', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(8)
+    })
     it('should render component', () => {
         const wrapper = factory({ modelValue: [] })
         expect(wrapper.exists()).toBe(true)

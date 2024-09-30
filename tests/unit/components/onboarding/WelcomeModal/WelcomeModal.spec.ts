@@ -3,22 +3,12 @@ import WelcomedModal from '@/components/onboarding/WelcomeModal/WelcomeModal.vue
 import { describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
-
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
     messages: loadLocaleMessages(),
-}
-
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-    },
 }
 
 describe('WelcomedModal.vue', () => {
@@ -26,9 +16,10 @@ describe('WelcomedModal.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
             i18n,
-            store,
         }
     })
 

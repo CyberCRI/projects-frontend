@@ -3,18 +3,6 @@ import english from '@/locales/en.json'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            languages: {
-                namespaced: true,
-                getters: {
-                    all: () => ['en', 'fr'],
-                },
-            },
-        },
-    }
-}
 
 const i18n = {
     locale: 'en',
@@ -32,7 +20,6 @@ describe('TagsFilterSummary', () => {
         defaultParams = {
             props: { modelValue: [] },
             i18n,
-            store: buildStore(),
         }
     })
 

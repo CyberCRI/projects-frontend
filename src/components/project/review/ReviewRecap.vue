@@ -34,6 +34,7 @@ import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewItem from '@/components/project/review/ReviewItem.vue'
 import { deleteReview } from '@/api/reviews.service'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ReviewRecap',
 
@@ -44,6 +45,12 @@ export default {
         SectionHeader,
         ConfirmModal,
         ReviewItem,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -68,15 +75,9 @@ export default {
             try {
                 await deleteReview({ project_id: this.project.id, id: this.toDelete.id })
                 this.$emit('reload-reviews')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.review-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.review-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.review-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.review-delete.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.toDelete = null

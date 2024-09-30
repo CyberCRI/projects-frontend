@@ -41,6 +41,7 @@
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'WelcomeModal',
 
@@ -49,6 +50,13 @@ export default {
     components: { BaseModal, LpiButton },
 
     mixins: [onboardingStatusMixin],
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
 
     data() {
         return {
@@ -88,10 +96,10 @@ export default {
 
     computed: {
         organizationLogo() {
-            return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
+            return this.organizationsStore.current?.logo_image?.variations?.medium
         },
         organizationTitle() {
-            return this.$store.getters['organizations/current']?.name || ''
+            return this.organizationsStore.current?.name || ''
         },
     },
 }

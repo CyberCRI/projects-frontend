@@ -49,7 +49,8 @@ import HomeHeaderConnected from '@/components/home/HomeHeader/HomeHeaderConnecte
 import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymous.vue'
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
 import LocationsLink from '@/components/home/LocationsLink/LocationsLink.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'NewHomePage',
 
@@ -65,20 +66,27 @@ export default {
         HomeHeaderAnonymous,
         LocationsLink,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            organizationsStore,
+            usersStore,
+        }
+    },
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         loggedIn() {
-            return this.$store.getters['users/isLoggedIn']
+            return this.usersStore.isConnected
         },
 
         showOnbordingTodos() {
             if (!this.loggedIn) return false
             if (!this.organization?.onboarding_enabled) return false
-            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
+            const status = this.usersStore.userFromApi?.onboarding_status || {}
             return (
                 status.show_progress &&
                 (status.complete_profile ||

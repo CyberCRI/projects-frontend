@@ -7,14 +7,37 @@ import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+
+import { refreshAccessToken } from '@/api/auth/auth.service'
 
 vi.mock('y-prosemirror', () => ({
     default: {},
 }))
 
-vi.mock('../../../src/api/auth/keycloakUtils', () => {
+vi.mock('@/api/auth/keycloakUtils', () => {
     return {
         checkExpiredToken: vi.fn(),
+        cleanLocalStorage: vi.fn(),
+        getRefreshTokenInterval: vi.fn().mockReturnValue(1),
+    }
+})
+
+vi.mock('@/api/auth/auth.service', () => {
+    return {
+        refreshAccessToken: vi.fn(() =>
+            Promise.resolve({
+                access_token: 'access',
+                refresh_token: 'refresh',
+                refresh_token_exp: 1,
+                parsedToken: {},
+                fromURL: 'url',
+                id_token: 'id',
+            })
+        ),
     }
 })
 
@@ -42,82 +65,13 @@ function mockLocalStorage() {
     }
 }
 
-function buildStore(isLogged, resetUser) {
-    const mutations = {
-        RESET_USER: resetUser,
-    }
-
-    return {
-        modules: {
-            users: {
-                namespaced: true,
-                state: () => ({ all: [] }),
-                getters: {
-                    isLoggedIn: () => isLogged,
-                },
-                actions: {},
-                mutations: mutations,
-            },
-            organizations: {
-                namespaced: true,
-                state: () => ({ all: [] }),
-                getters: {
-                    theme: () => 'main',
-                    current: () => {
-                        return { code: '123' }
-                    },
-                },
-                actions: {},
-                mutations: {},
-            },
-            app: {
-                namespaced: true,
-                state: () => ({ loading: { visible: true, message: null } }),
-                getters: {
-                    loading: vi.fn(() => {
-                        return { visible: true, message: null }
-                    }),
-                },
-                actions: {
-                    updateLoading: vi.fn(),
-                },
-                mutations: {},
-            },
-            notifications: {
-                namespaced: true,
-                state: () => ({
-                    toastList: [
-                        {
-                            message: '',
-                            isOpened: false,
-                            type: '',
-                        },
-                    ],
-                }),
-                getters: {
-                    getToastList: vi.fn(() => [
-                        {
-                            message: '',
-                            isOpened: false,
-                            type: '',
-                        },
-                    ]),
-                },
-                actions: {
-                    deleteToast: vi.fn(),
-                },
-            },
-            faqs: {
-                namespaced: true,
-                actions: {
-                    getFaq: vi.fn(),
-                },
-            },
-        },
-    }
-}
-
 describe('On tab focus', () => {
+    let usersStore
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: '123' } as OrganizationOutput
+        usersStore = useUsersStore(pinia)
+    })
     const localStorageMock = mockLocalStorage()
 
     Object.defineProperty(window, 'localStorage', {
@@ -129,9 +83,8 @@ describe('On tab focus', () => {
 
     const $t = (v) => v
 
-    function _mount(store) {
+    function _mount() {
         return lpiShallowMountExtra(App, {
-            store,
             i18n,
             props: {},
             router: [
@@ -148,13 +101,13 @@ describe('On tab focus', () => {
 
     afterEach(() => {
         vi.clearAllMocks()
+        usersStore.$reset()
     })
 
     test('logout if token has expired', () => {
-        const resetUser = vi.fn(() => true)
-        const store = buildStore(true, resetUser)
+        usersStore.accessToken = 'acces_token' // pretend user is logged in
 
-        const { wrapper, router } = _mount(store)
+        const { wrapper, router } = _mount()
         vi.spyOn(router, 'push')
         ;(checkExpiredToken as Mock).mockImplementation(() => true)
 
@@ -162,7 +115,7 @@ describe('On tab focus', () => {
         window.dispatchEvent(new Event('focus'))
 
         expect(checkExpiredToken).toHaveBeenCalled()
-        expect(resetUser).toHaveBeenCalled()
+        expect(usersStore.resetUser).toHaveBeenCalled()
 
         expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
 
@@ -170,17 +123,16 @@ describe('On tab focus', () => {
     })
 
     test('logout if logged in but has no more user token', () => {
-        const resetUser = vi.fn(() => true)
-        const store = buildStore(true, resetUser)
-
-        const { wrapper, router } = _mount(store)
+        const { wrapper, router } = _mount()
         vi.spyOn(router, 'push')
+
+        usersStore.accessToken = 'acces_token' // pretend user is logged in
 
         window.localStorage.setItem('ACCESS_TOKEN', null)
 
         window.dispatchEvent(new Event('focus'))
 
-        expect(resetUser).toHaveBeenCalled()
+        expect(usersStore.resetUser).toHaveBeenCalled()
 
         expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
 
@@ -188,17 +140,14 @@ describe('On tab focus', () => {
     })
 
     test('do not logout if not logged in', () => {
-        const resetUser = vi.fn(() => true)
-        const store = buildStore(false, resetUser)
-
-        const { wrapper, router } = _mount(store)
+        const { wrapper, router } = _mount()
         vi.spyOn(router, 'push')
 
         window.localStorage.setItem('ACCESS_TOKEN', null)
 
         window.dispatchEvent(new Event('focus'))
 
-        expect(resetUser).not.toHaveBeenCalled()
+        expect(usersStore.resetUser).not.toHaveBeenCalled()
 
         expect(router.push).not.toHaveBeenCalled()
 

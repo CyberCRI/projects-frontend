@@ -6,44 +6,15 @@ import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
     messages: loadLocaleMessages(),
-}
-
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            state: {
-                current: {
-                    code: 'TEST',
-                },
-            },
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST' }),
-            },
-        },
-        peopleGroups: {
-            namespaced: true,
-            actions: {
-                getPeopleGroups: vi.fn(),
-                setCurrentId: vi.fn(),
-            },
-        },
-    },
 }
 
 const protoPropsLoading = () => ({
@@ -60,7 +31,6 @@ const protoPropsLoaded = (projects = []) => ({
 
 const buildParams = (props) => ({
     i18n,
-    store,
     router: [
         { path: '/', name: 'home', component: MockComponent },
         { path: '/page404', name: 'page404', component: MockComponent },
@@ -69,6 +39,19 @@ const buildParams = (props) => ({
 })
 
 describe('GroupProjectsTab', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            id: 123,
+            userFromApi: {},
+            permissions: {},
+            getUser: vi.fn(),
+        } as any)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.$patch({
+            current: { code: 'TEST' } as unknown as OrganizationOutput,
+        } as any)
+    })
     it('should render GroupProjectsTab component', () => {
         let wrapper = lpiShallowMount(GroupProjectsTab, buildParams(protoPropsLoading()))
 

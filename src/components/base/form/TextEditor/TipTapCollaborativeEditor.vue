@@ -24,11 +24,11 @@ import {
     useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
-import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 
-const store = useStore()
+import useUsersStore from '@/stores/useUsers.ts'
 const { t } = useI18n()
+import useToasterStore from '@/stores/useToaster.ts'
 
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
@@ -68,6 +68,8 @@ const props = defineProps({
     },
 })
 
+const toaster = useToasterStore()
+
 const {
     editor,
     editorInited,
@@ -79,7 +81,6 @@ const {
 } = useTipTap({
     props,
     emit,
-    store,
     t,
 })
 
@@ -104,8 +105,9 @@ const hideSoloWarning = ref(false)
 const updateIsBlocked = ref(true)
 
 // computed:
-const user = computed(() => store.getters['users/userFromApi'])
-const accessToken = computed(() => store.getters['users/accessToken'])
+const usersStore = useUsersStore()
+const user = computed(() => usersStore.userFromApi)
+const accessToken = computed(() => usersStore.accessToken)
 
 const onlineAndConnected = computed(() => online.value && status.value === 'connected')
 
@@ -192,10 +194,7 @@ function initCollaborativeEditor() {
         },
         onAuthenticationFailed: () => {
             emit('unauthorized')
-            store.dispatch('notifications/pushToast', {
-                message: t('multieditor.unauthorized'),
-                type: 'error',
-            })
+            toaster.pushError(t('multieditor.unauthorized'))
         },
         // it tell us if server is down or not
         // status is only reliable if we have a working connection

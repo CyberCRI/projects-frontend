@@ -11,18 +11,6 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
-    },
-}
-
 describe('SuggestedTags', () => {
     let wrapper
     let defaultParams
@@ -30,7 +18,6 @@ describe('SuggestedTags', () => {
     beforeEach(() => {
         defaultParams = {
             i18n,
-            store,
         }
     })
 

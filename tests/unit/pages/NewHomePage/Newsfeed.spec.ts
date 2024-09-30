@@ -6,6 +6,12 @@ import flushPromises from 'flush-promises'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
     locale: 'en',
@@ -13,55 +19,18 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                allOrderedByOrderId: vi.fn().mockReturnValue([]),
-            },
-        },
-        organizations: {
-            state: {
-                current: { id: 'TEST', code: 'TEST' },
-            },
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST', code: 'TEST' }),
-            },
-        },
-        users: {
-            namespaced: true,
-            getters: {
-                isLoggedIn: vi.fn().mockReturnValue(false),
-            },
-        },
-    },
-}
-
-const connectedStore = {
-    modules: {
-        ...store.modules,
-        users: {
-            namespaced: true,
-            getters: {
-                id: vi.fn(),
-                userFromApi: vi.fn(),
-                getPermissions: vi.fn().mockReturnValue({}),
-                isLoggedIn: vi.fn().mockReturnValue(true),
-            },
-            actions: {
-                getUser: vi.fn(),
-            },
-        },
-    },
-}
-
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 describe('Newsfeed', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    })
     it('should render NewsFeed', async () => {
-        let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, store, router, i18n })
+        let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, router, i18n })
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
     })
@@ -74,7 +43,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'project', project: ProjectOutputFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -90,7 +58,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'announcement', announcement: AnnouncementFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -106,7 +73,6 @@ describe('Newsfeed', () => {
                     { id: 2, type: 'news', news: { id: 2 } },
                 ],
             },
-            store,
             router,
             i18n,
         })
@@ -123,7 +89,6 @@ describe('Newsfeed', () => {
                     { id: 3, type: 'project', project: ProjectOutputFactory.generate() },
                 ],
             },
-            store,
             router,
             i18n,
         })

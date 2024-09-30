@@ -96,12 +96,22 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import analytics from '@/analytics'
 import { postAttachmentFiles, patchAttachmentFile } from '@/api/attachment-files.service'
 import { postAttachmentLinks, patchAttachmentLink } from '@/api/attachment-links.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'ResourceDrawer',
 
     emits: ['close', 'reload-link-resources', 'reload-file-resources'],
 
     components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
+    setup() {
+        const toaster = useToasterStore()
+        const projectsStore = useProjectsStore()
+        return {
+            toaster,
+            projectsStore,
+        }
+    },
 
     props: {
         project: {
@@ -185,7 +195,7 @@ export default {
         },
 
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.projectsStore.currentProjectSlug
         },
 
         projectId() {
@@ -225,7 +235,7 @@ export default {
         },
         linkExists() {
             return (
-                this.$store.getters['projects/project'].links.filter(
+                this.projectsStore.project.links.filter(
                     (link) => utils.removePrefix(link.site_url) === utils.removePrefix(this.link)
                 ).length > 0
             )
@@ -267,10 +277,7 @@ export default {
 
                     this.$emit('reload-link-resources')
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.link-create.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.link-create.success'))
 
                     if (this.$route && this.$route.name !== 'projectResources') {
                         this.$router.push({
@@ -279,20 +286,14 @@ export default {
                         })
                     }
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.link-create.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(`${this.$t('toasts.link-create.error')} (${error})`)
                     console.error(error)
                 } finally {
                     this.isSaving = false
                     this.close()
                 }
             } else {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.link-already-exists'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('toasts.link-already-exists'))
             }
         },
 
@@ -317,10 +318,7 @@ export default {
 
                 this.$emit('reload-file-resources')
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.file-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.file-create.success'))
 
                 if (this.$route.name !== 'projectResources') {
                     this.$router.push({
@@ -329,10 +327,7 @@ export default {
                     })
                 }
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.file-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.file-create.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false
@@ -362,15 +357,9 @@ export default {
 
                 this.$emit('reload-link-resources')
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.link-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.link-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.link-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.link-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false
@@ -399,15 +388,9 @@ export default {
                 })
 
                 this.$emit('reload-file-resources')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.file-update.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.file-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.file-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.file-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false

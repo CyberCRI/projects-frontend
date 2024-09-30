@@ -1,7 +1,8 @@
 // Full API reference: https://developer.mixpanel.com/docs/javascript-full-api-reference
 import Mixpanel, { RequestOptions } from 'mixpanel-browser'
 
-import store from '@/store'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 export const mixpanel = Mixpanel
 
@@ -27,14 +28,15 @@ export const init = () => {
  * Set organization properties for all analytic events sent
  */
 export const setOrganizationProperties = () => {
+    const organizationsStore = useOrganizationsStore()
     try {
         Mixpanel.register({
             // Only add organization properties if not null
-            ...(store.state.organizations.current && {
+            ...(organizationsStore.current && {
                 organization: {
-                    id: store.state.organizations.current.id,
-                    code: store.state.organizations.current.code,
-                    name: store.state.organizations.current.name,
+                    id: organizationsStore.current.id,
+                    code: organizationsStore.current.code,
+                    name: organizationsStore.current.name,
                 },
             }),
         })
@@ -64,19 +66,20 @@ export const identifyUser = (userId: string) => {
  * Set additional information about the user identity
  */
 export const setUserProperties = () => {
+    const usersStore = useUsersStore()
     try {
-        const fullName = `${store.getters['users/user'].name.firstname} ${store.getters['users/user'].name.lastname}`
+        const fullName = `${usersStore.user.name.firstname} ${usersStore.user.name.lastname}`
 
         Mixpanel.people.set({
             // Only add user properties if not null
-            ...(store.getters['users/user'] && {
+            ...(usersStore.user && {
                 // Common properties with Mixpanel
                 $name: fullName,
-                $email: store.getters['users/user'].email,
+                $email: usersStore.user.email,
                 // Custom properties on our side
-                id: store.state.users.id,
-                roles: store.getters['users/user'].roles,
-                orgs: store.getters['users/user'].orgs,
+                id: usersStore.id,
+                roles: usersStore.user.roles,
+                orgs: usersStore.user.orgs,
             }),
         })
         // Set "page_views" only if it doesn't exist yet, to not overwrite previous value

@@ -139,6 +139,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'ProjectForm',
@@ -162,6 +163,12 @@ export default {
         ProjectCategoriesDropdownElementButton,
     },
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         isAddMode: {
             type: Boolean,
@@ -218,7 +225,7 @@ export default {
         },
 
         languageOptions() {
-            return this.$store.getters['languages/all'].map((language) => {
+            return this.languagesStore.all.map((language) => {
                 return {
                     value: language,
                     label: this.$t(`language.label-${language}`),

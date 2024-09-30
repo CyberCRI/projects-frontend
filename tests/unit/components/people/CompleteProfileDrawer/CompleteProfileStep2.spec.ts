@@ -2,6 +2,8 @@ import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import { describe, expect, it } from 'vitest'
 import { loadLocaleMessages } from '@/locales/i18n'
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
     locale: 'en',
@@ -9,25 +11,20 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                kid: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('CompleteProfileStep1.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            id: 123,
+            userFromApi: {},
+            permissions: {},
+            getUser: vi.fn(),
+        } as any)
         defaultParams = {
             i18n,
-            store,
         }
     })
 

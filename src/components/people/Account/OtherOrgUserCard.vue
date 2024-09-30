@@ -84,8 +84,6 @@ export default {
             this.isLoadingOrgRoles = true
             // TODO: getOrganizations might be paginated if more than 100, we'll need to handle the case some day
             await Promise.all([getUser(this.user.id), getOrganizations()]).then(([user, orgs]) => {
-                // debugger
-
                 const orgIndex = orgs.results.reduce((acc, org) => {
                     acc['#' + org.id] = org // the # is prefixed to org id in role code
                     return acc

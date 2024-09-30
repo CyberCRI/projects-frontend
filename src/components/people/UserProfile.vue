@@ -44,6 +44,7 @@ import ProfileTabs from '@/pages/UserProfilePage/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'UserProfile',
@@ -59,9 +60,16 @@ export default {
         ProfileHeader,
     },
 
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
+
     props: {
         userId: {
-            type: String,
+            type: Number,
             default: null,
         },
         showPageLink: {
@@ -73,23 +81,25 @@ export default {
     data() {
         return {
             user: null,
-            projectUser: null,
-            isEditMode: false,
-            canEdit: false,
-            payload: {
-                editorShortDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-                editorProfessionalDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-                editorPersonalDescription: {
-                    savedContent: '',
-                    originalContent: '',
-                },
-            },
+
+            // TODO: add back once we can edit user
+            // projectUser: null,
+            // isEditMode: false,
+            // canEdit: false,
+            // payload: {
+            //     editorShortDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            //     editorProfessionalDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            //     editorPersonalDescription: {
+            //         savedContent: '',
+            //         originalContent: '',
+            //     },
+            // },
             isLoading: true,
         }
     },
@@ -98,16 +108,13 @@ export default {
         try {
             if (!this.userId) {
                 // get the connected user
-                this.user = await this.$store.dispatch(
-                    'users/getUser',
-                    this.$store.getters['users/id']
-                )
+                this.user = await this.usersStore.getUser(this.usersStore.id)
             } else {
                 // get another user
                 this.user = await getUser(this.userId)
             }
         } catch (err) {
-            console.error(err)
+            // TODO distinguish 404 from real error
             this.$emit('user-not-found', err)
         } finally {
             this.isLoading = false
@@ -115,9 +122,12 @@ export default {
     },
 
     computed: {
+        connectedUser() {
+            return this.usersStore.userFromApi
+        },
+
         isSelf() {
-            const connectedUser = this.$store.getters['users/userFromApi']
-            return connectedUser && this.user.id === connectedUser.id
+            return this.connectedUser && this.user.id === this.connectedUser.id
         },
 
         editButtonLabel() {

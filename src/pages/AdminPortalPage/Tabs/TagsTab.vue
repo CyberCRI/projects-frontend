@@ -78,7 +78,9 @@ import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'TagsTab',
 
@@ -88,6 +90,16 @@ export default {
         LpiButton,
         BaseDrawer,
         TagsFilterEditor,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            languagesStore,
+            organizationsStore,
+        }
     },
 
     async created() {
@@ -110,11 +122,11 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         currentLang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
     },
 
@@ -122,7 +134,7 @@ export default {
         async loadWikiTags() {
             this.wikipediaTags = (
                 await getAllWikiTags({
-                    organization: this.$store.state.organizations.current.code,
+                    organization: this.organizationsStore.current.code,
                 })
             ).results
         },
@@ -130,7 +142,7 @@ export default {
         async loadOrgTags() {
             this.organizationTags = await (
                 await getAllOrgTags({
-                    organization: this.$store.state.organizations.current.code,
+                    organization: this.organizationsStore.current.code,
                 })
             ).results
         },
@@ -144,17 +156,13 @@ export default {
                     })
                     await this.loadOrgTags()
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.organization-tag-create.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.organization-tag-create.success'))
 
                     this.newOrganizationTag = ''
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('toasts.organization-tag-create.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('toasts.organization-tag-create.error')} (${error})`
+                    )
                 } finally {
                     this.tagSearchIsOpened = false
                 }
@@ -165,22 +173,18 @@ export default {
             const newWikiIds = this.newWikipediaTags.map((tag) => tag.wikipedia_qid)
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', {
+                await this.organizationsStore.updateCurrentOrganization({
                     wikipedia_tags_ids: newWikiIds,
                 })
                 await this.loadWikiTags()
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-tag-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.organization-tag-create.success'))
 
                 this.tagSearchIsOpened = false
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-tag-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-tag-create.error')} (${error})`
+                )
                 console.error(error)
             }
         },
@@ -194,15 +198,11 @@ export default {
             try {
                 await deleteOrgTag(tag.id)
                 await this.loadOrgTags()
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-tag-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.organization-tag-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-tag-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-tag-delete.error')} (${error})`
+                )
                 console.error(error)
             }
         },
@@ -213,19 +213,15 @@ export default {
                 .map((tag) => tag.wikipedia_qid)
 
             try {
-                await this.$store.dispatch('organizations/updateCurrentOrganization', {
+                await this.organizationsStore.updateCurrentOrganization({
                     wikipedia_tags_ids: updatedWikipediaTagsIds,
                 })
                 await this.loadWikiTags()
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.organization-tag-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.organization-tag-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.organization-tag-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    `${this.$t('toasts.organization-tag-delete.error')} (${error})`
+                )
                 console.error(error)
             }
         },

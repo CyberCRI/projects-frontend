@@ -70,6 +70,7 @@ import { applyAnnouncement } from '@/api/announcements.service.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'ReplyAnnouncementDrawer',
@@ -82,6 +83,13 @@ export default {
         TextInput,
         FieldErrors,
     },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
+
     props: {
         isOpened: { type: Boolean, default: false },
         announcement: {
@@ -159,15 +167,9 @@ export default {
 
                     await applyAnnouncement(payload)
 
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('project.apply-succes'),
-                        type: 'succes',
-                    })
+                    this.toaster.pushSuccess(this.$t('project.apply-succes'))
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: error.toString(),
-                        type: 'error',
-                    })
+                    this.toaster.pushError(error.toString())
                     console.error(error)
                 } finally {
                     this.close()

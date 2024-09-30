@@ -60,7 +60,7 @@
 </template>
 <script>
 import debounce from 'lodash.debounce'
-import { getHierarchyGroups } from '@/api/group.service.ts'
+import { getHierarchyGroups } from '@/api/groups.service.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions'
 import CardList from '@/components/base/CardList.vue'
@@ -69,6 +69,7 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import {
     updateFiltersFromURL,
     updateSearchQuery,
@@ -90,6 +91,12 @@ export default {
         GlobalSearchTab,
     },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         groupId: {
             type: String,
@@ -110,7 +117,7 @@ export default {
                 languages: [],
                 skills: [],
                 section: 'all',
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
                 ordering: '-updated_at',
                 limit: 30,
                 page: 1,
@@ -187,7 +194,7 @@ export default {
     methods: {
         async loadGroups() {
             this.isLoading = true
-            const groups = await getHierarchyGroups(this.$store.state.organizations.current.code)
+            const groups = await getHierarchyGroups(this.organizationsStore.current.code)
             this.rootId = groups.id
             this.buildIndex(groups)
             this.isLoading = false

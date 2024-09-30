@@ -7,6 +7,9 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import { ProjectOutputFactory } from '../../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 import blog from '@/analytics/blog'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
 
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
@@ -19,31 +22,19 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    blog_entries: [],
-                    slug: 'test',
-                }),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProjectBlogEntriesTab.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        const projectsStore = useProjectsStore(pinia)
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
+    })
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectBlogEntriesTab, {
-            store,
             i18n,
             provide: {
                 projectLayoutToggleAddModal: vi.fn(),

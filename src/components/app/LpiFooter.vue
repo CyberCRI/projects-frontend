@@ -137,6 +137,9 @@ import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'LpiFooter',
     mixins: [imageMixin],
@@ -148,7 +151,16 @@ export default {
         OnboardingScreens,
         FooterEnglishTips,
     },
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            languagesStore,
+            organizationsStore,
+            usersStore,
+        }
+    },
     data() {
         return {
             reportBugOpen: false,
@@ -157,10 +169,10 @@ export default {
     },
     computed: {
         canOpen() {
-            return this.$store.state.languages.current === 'fr'
+            return this.languagesStore.current === 'fr'
         },
         showDirectoryLink() {
-            const organization = this.$store.getters['organizations/current']
+            const organization = this.organizationsStore.current
             if (organization && organization.code === 'DEFAULT') {
                 return false
             }
@@ -174,10 +186,10 @@ export default {
             return import.meta.env.VITE_APP_VERSION
         },
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         showOnboardingScreen() {
-            return this.$store.getters['organizations/current']?.onboarding_enabled
+            return this.organizationsStore.current?.onboarding_enabled
         },
     },
 }

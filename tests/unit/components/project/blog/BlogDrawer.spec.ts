@@ -4,6 +4,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
     locale: 'en',
@@ -11,63 +15,33 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    files: [],
-                    links: [],
-                }),
-                currentProjectId: vi.fn(() => 123),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-        users: {
-            namespaced: true,
-            getters: {
-                userFromApi: vi.fn(),
-                accessToken: vi.fn(),
-            },
-            state: {
-                keycloak_id: '123',
-            },
-        },
-        blogEntries: {
-            namespaced: true,
-            actions: {
-                postBlogEntry: vi.fn(),
-            },
-        },
-        languages: {
-            namespaced: true,
-            state: {
-                current: 'en',
-                all: ['en', 'fr'],
-            },
-        },
-    },
-}
-
 describe('BlogDrawer.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            id: 123,
+            userFromApi: {},
+            permissions: {},
+            getUser: vi.fn(),
+        } as any)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        const projectsStore = useProjectsStore(pinia)
+
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
         defaultParams = {
             props: {
                 isOpened: true,
                 initialStep: 2,
             },
             i18n,
-            store,
             provide: {
                 projectLayoutProjectPatched: vi.fn(),
             },

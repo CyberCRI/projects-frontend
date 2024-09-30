@@ -56,7 +56,6 @@
                 :save-image-callback="saveBlogImage"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
-                @update="updateContent"
                 @blur="v$.editorBlogEntry.$validate"
             />
             <TipTapCollaborativeEditor
@@ -72,7 +71,6 @@
                 @unauthorized="closeDrawer"
                 @image="handleImage"
                 @saved="submitBlogEntry(false)"
-                @update="updateContent"
                 @socket-ready="socketReady = $event"
                 @blur="v$.editorBlogEntry.$validate"
                 @falled-back-to-solo-edit="inSoloMode = true"
@@ -98,6 +96,10 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postBlogEntryImage } from '@/api/blogentries.service'
 import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'BlogDrawer',
@@ -114,6 +116,18 @@ export default {
         BaseDrawer,
         ConfirmModal,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            organizationsStore,
+            projectsStore,
+            usersStore,
+        }
     },
 
     inject: {
@@ -173,7 +187,7 @@ export default {
 
     computed: {
         project() {
-            return this.$store.getters['projects/project']
+            return this.projectsStore.project
         },
 
         titlePlaceholder() {
@@ -189,8 +203,8 @@ export default {
         providerParams() {
             return {
                 blogId: this.editedBlog ? this.editedBlog.id : null,
-                projectId: this.$store.getters['projects/currentProjectId'],
-                organizationId: this.$store.getters['organizations/current'].id,
+                projectId: this.projectsStore.currentProjectId,
+                organizationId: this.organizationsStore.current.id,
             }
         },
     },
@@ -235,7 +249,7 @@ export default {
             const formData = new FormData()
             formData.append('file', file, file.name)
             // TODO necessary ?
-            formData.append('project_id', this.$store.getters['projects/currentProjectId'])
+            formData.append('project_id', this.projectsStore.currentProjectId)
 
             return postBlogEntryImage({
                 project_id: this.project.id,
@@ -280,10 +294,10 @@ export default {
                     blogEntry: result,
                 })
 
-                const connectedUser = this.$store.getters['users/userFromApi']
+                const connectedUser = this.usersStore.userFromApi
 
                 this.notifyPatch({
-                    pid: this.$store.state.users.id,
+                    pid: this.usersStore.id,
                     author_name: connectedUser
                         ? connectedUser.given_name + ' ' + connectedUser.family_name
                         : '',
@@ -296,10 +310,7 @@ export default {
                 this.$emit('reload-blog-entries')
 
                 this.asyncing = false
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.blog-create.success'))
 
                 if (closeWindowAfterCreate) this.closeDrawer()
 
@@ -310,10 +321,7 @@ export default {
                     })
             } catch (error) {
                 console.error(error)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-create.error'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('toasts.blog-create.error'))
             } finally {
                 this.asyncing = false
             }
@@ -342,9 +350,9 @@ export default {
                     blogEntry: result,
                 })
 
-                const connectedUser = this.$store.getters['users/userFromApi']
+                const connectedUser = this.usersStore.userFromApi
                 this.notifyPatch({
-                    pid: this.$store.state.users.id,
+                    pid: this.usersStore.id,
                     author_name: connectedUser
                         ? connectedUser.given_name + ' ' + connectedUser.family_name
                         : '',
@@ -361,16 +369,10 @@ export default {
                 if (closeWindowAfterPatch) {
                     this.closeDrawer()
                 }
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-update.success')}`,
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(`${this.$t('toasts.blog-update.success')}`)
             } catch (error) {
                 console.log(error)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.blog-update.error')}`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.blog-update.error')}`)
             } finally {
                 this.asyncing = false
             }

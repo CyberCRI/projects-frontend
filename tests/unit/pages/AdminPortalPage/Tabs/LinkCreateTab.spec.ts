@@ -6,6 +6,11 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import MockComponent from '../../../../helpers/MockComponent.vue'
 import { axios, configFormData } from '@/api/api.config'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+
 // fix unhnadled rejection due to invalid url
 vi.mock('@/api/api.config', () => {
     return {
@@ -31,24 +36,10 @@ const i18n = {
     },
 }
 
-function buildStore() {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                state: {
-                    current: { code: 'FOOBAR' },
-                },
-            },
-        },
-    }
-}
-
 const factory = (props?) => {
     return lpiMount(LinkCreateTab, {
         props,
         i18n,
-        store: buildStore(),
         router: [
             { name: 'Home', path: '/', component: MockComponent },
             { name: 'Help', path: '/help', component: MockComponent },
@@ -58,6 +49,11 @@ const factory = (props?) => {
 }
 
 describe('LinkCreateTab.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+    })
+
     it('should mount the component', () => {
         const wrapper = factory({ projects: [] })
         const vm: any = wrapper.vm

@@ -31,12 +31,24 @@ import InstructionForm, {
 } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { createInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'CreateInstructionPage',
     components: {
         InstructionForm,
         LpiButton,
     },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
+    },
+
     data() {
         return {
             form: defaultForm(),
@@ -64,19 +76,10 @@ export default {
                         .filter(([, value]) => value)
                         .map(([id]) => id),
                 }
-                await createInstruction(
-                    this.$store.getters['organizations/current']?.code,
-                    formData
-                )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.save.success'),
-                    type: 'success',
-                })
+                await createInstruction(this.organizationsStore.current?.code, formData)
+                this.toaster.pushSuccess(this.$t('instructions.save.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

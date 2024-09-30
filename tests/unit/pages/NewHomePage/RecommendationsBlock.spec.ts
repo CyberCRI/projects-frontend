@@ -6,6 +6,12 @@ import flushPromises from 'flush-promises'
 import MockComponent from '../../../helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { UserFactory } from '../../../factories/user.factory'
+import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import {
     getRandomProjectsRecommendationsForUser,
     getRandomUsersRecommendationsForUser,
@@ -26,41 +32,28 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-const storeFactory = (loggedIn) => ({
-    modules: {
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                allOrderedByOrderId: vi.fn().mockReturnValue([]),
-            },
-        },
-        organizations: {
-            state: {
-                current: { id: 'TEST', code: 'TEST' },
-            },
-            namespaced: true,
-            getters: {
-                current: vi.fn().mockReturnValue({ id: 'TEST', code: 'TEST' }),
-            },
-        },
-        users: {
-            namespaced: true,
-            getters: {
-                isLoggedIn: vi.fn().mockReturnValue(loggedIn),
-            },
-        },
-    },
-})
-
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 const props = {}
 
 describe('RecommendationBlock', () => {
+    let usersStore
+
+    beforeEach(() => {
+        usersStore = useUsersStore(pinia)
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
+    })
+    afterEach(() => {
+        usersStore.$reset()
+    })
     it('should render RecommendationBlock', async () => {
+        usersStore.isConnected = false
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props,
-            store: storeFactory(false),
             router,
             i18n,
         })
@@ -69,9 +62,9 @@ describe('RecommendationBlock', () => {
     })
 
     it('should display projects reco for non connected user', async () => {
+        usersStore.isConnected = false
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props,
-            store: storeFactory(false),
             router,
             i18n,
         })
@@ -81,9 +74,9 @@ describe('RecommendationBlock', () => {
     })
 
     it('should display project and user reco for connected user', async () => {
+        usersStore.isConnected = true
         let wrapper = lpiShallowMount(RecommendationBlock, {
             props: props,
-            store: storeFactory(true),
             router,
             i18n,
         })

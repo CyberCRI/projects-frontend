@@ -1,7 +1,7 @@
 import a, { AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 
-import store from '@/store'
-
+import useToasterStore from '@/stores/useToaster'
+import useProjectsStore from '@/stores/useProjects'
 import i18n from '@/locales/i18n'
 
 export const axios = a.create({
@@ -57,6 +57,7 @@ const response = (response: AxiosResponse) => response
 
 // Handle errors on responses
 const responseError = (error: AxiosError) => {
+    const toaster = useToasterStore()
     const originalRequest: any = error.config
 
     // We could add specific notification to display the errors
@@ -70,15 +71,9 @@ const responseError = (error: AxiosError) => {
                     message += `${key}: ${data.errors[key].join(' ')}`
                 }
 
-                store.dispatch('notifications/pushToast', {
-                    message: message,
-                    type: 'error',
-                })
+                toaster.pushError(message)
             } else {
-                store.dispatch('notifications/pushToast', {
-                    message: data.detail,
-                    type: 'error',
-                })
+                toaster.pushError(data.detail)
             }
             // other error cases are kept for backward compatibility
         } else if (status === 400) {
@@ -87,28 +82,22 @@ const responseError = (error: AxiosError) => {
             const firstValue = data[firstKey][0]
             const message = `${firstKey}: ${firstValue}`
 
-            store.dispatch('notifications/pushToast', {
-                message: message,
-                type: 'warning',
-            })
+            toaster.pushWarning(message)
         } else if (status === 401) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 //message: i18n.messages[i18n.locale].message['error']['unauthorized'],
-                message: i18n.global.t('message.error.unauthorized'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.unauthorized')
+            )
         } else if (status === 422) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 // message: i18n.messages[i18n.locale].message['error']['unprocessable-entity'],
-                message: i18n.global.t('message.error.unprocessable-entity'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.unprocessable-entity')
+            )
         } else if (status === 502) {
-            store.dispatch('notifications/pushToast', {
+            toaster.pushError(
                 // message: i18n.messages[i18n.locale].message['error']['bad-gateway'],
-                message: i18n.global.t('message.error.bad-gateway'),
-                type: 'error',
-            })
+                i18n.global.t('message.error.bad-gateway')
+            )
         }
 
         // TODO : is this still used ?
@@ -136,11 +125,12 @@ axiosNoErrorMessage.interceptors.response.use(response, responseNoToatError)
 
 // TODO: remove functions below once we moved everything to new API
 export const getAxiosConfig = (etag?) => {
+    const projectsStore = useProjectsStore()
     const header = {
         headers: {
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache',
-            'Cur-Project-ID': store.state.projects.project.id,
+            'Cur-Project-ID': projectsStore.currentProjectId,
             'Api-Base-Org-ID': import.meta.env.VITE_APP_API_ORG_CODE,
         },
     }

@@ -26,6 +26,7 @@
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'SkillSummary',
@@ -40,6 +41,13 @@ export default {
             default: () => {},
         },
     },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
+
     props: {
         user: {
             type: Object,
@@ -67,7 +75,7 @@ export default {
         },
 
         isCurrentUser() {
-            return this.$store.getters['users/id'] === this.user.id
+            return this.usersStore.id === this.user.id
         },
 
         noSkillLabel() {

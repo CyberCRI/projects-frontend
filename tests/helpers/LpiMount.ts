@@ -1,9 +1,9 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { config, mount, shallowMount } from '@vue/test-utils'
 import { capitalize, isNotGroup, isGroup } from '@/filters'
 import { clickOutside, disableFocus } from '@/directives'
+import pinia from './test-pinia'
 
 config.global.mocks = {
     $filters: {
@@ -16,11 +16,7 @@ config.global.mocks = {
 function buildOptions(options: any = {}) {
     const plugins = []
 
-    let store
-    if (options.store) {
-        store = createStore(options.store)
-        plugins.push(store)
-    }
+    plugins.push(pinia)
 
     let i18n
     if (options.i18n) {
@@ -60,7 +56,6 @@ function buildOptions(options: any = {}) {
         },
         plugins: {
             i18n,
-            store,
             router,
         },
     }

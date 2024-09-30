@@ -34,13 +34,19 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ErrorPage',
     components: { LpiButton },
 
     mixins: [imageMixin, pageTitle],
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     pageTitle() {
         return this.$t('page404.page-title')
     },
@@ -51,7 +57,7 @@ export default {
 
     computed: {
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         title() {

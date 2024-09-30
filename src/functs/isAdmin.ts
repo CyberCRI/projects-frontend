@@ -1,16 +1,22 @@
 import utils from '@/functs/functions'
-import permissions from '@/mixins/permissions'
+// import permissions from '@/mixins/permissions'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
-const isAdmin = (store) => {
+const isAdmin = () => {
+    const usersStore = useUsersStore()
+    const organizationsStore = useOrganizationsStore()
+    function _hasPermission(scope, action, pk?) {
+        const permissions = usersStore.permissions
+        return utils.hasPermission(permissions, scope, action, pk)
+    }
     return !!(
-        utils.isConnected() &&
-        (permissions.methods.hasPermission('organization', 'delete_organization') ||
-            store.getters['users/getUserRoles'].some((role) => role === 'superadmins') ||
-            store.getters['users/getUserRoles'].some(
-                (role) =>
-                    role === `organization:#${store.getters['organizations/current'].id}:admins`
+        usersStore.isConnected &&
+        (_hasPermission('organization', 'delete_organization') ||
+            usersStore.roles.some((role) => role === 'superadmins') ||
+            usersStore.roles.some(
+                (role) => role === `organization:#${organizationsStore.current.id}:admins`
             ))
     )
 }
-
 export default isAdmin

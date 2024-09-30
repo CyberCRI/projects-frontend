@@ -4,9 +4,10 @@ import {
     createRandomString,
     getRefreshTokenInterval,
 } from '@/api/auth/keycloakUtils'
-import store from '@/store'
 import router from '@/router/index'
+import useUsersStore from '@/stores/useUsers'
 
+import useToasterStore from '@/stores/useToaster'
 import i18n from '@/locales/i18n'
 
 export type AuthResult = {
@@ -86,14 +87,14 @@ export default {
         loopId: null,
         start(): void {
             cleanLocalStorage()
-
             if (localStorage.getItem('ACCESS_TOKEN')) {
                 const _refresh = () => {
+                    const usersStore = useUsersStore()
                     // clear previous loop for safety
                     if (this.loopId) clearTimeout(parseInt(this.loopId))
                     this.loopId = null
                     // refresh
-                    store.dispatch('users/refreshToken').then(() => {
+                    usersStore.doRefreshToken().then(() => {
                         // schedule next refresh
                         const interval = getRefreshTokenInterval()
                         if (interval > 0) {
@@ -118,6 +119,8 @@ export default {
     },
 
     async loginIfValidState(loginSearchParams: URLSearchParams): Promise<void> {
+        const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         try {
             const state = loginSearchParams.get('state')
                 ? JSON.parse(loginSearchParams.get('state') as string)
@@ -166,8 +169,8 @@ export default {
             )
             const tokens = await this.processKeycloakResponse(result)
 
-            await store
-                .dispatch('users/logIn', {
+            await usersStore
+                .logIn({
                     ...tokens,
                     fromURL: state.fromURL,
                 })
@@ -179,14 +182,9 @@ export default {
                 })
         } catch (e) {
             console.error(e)
-            store.dispatch(
-                'notifications/pushToast',
-                {
-                    // message: i18n.messages[i18n.locale].message['error-login'],
-                    message: i18n.global.t('message.error-login'),
-                    type: 'error',
-                },
-                { root: true }
+            toaster.pushError(
+                // message: i18n.messages[i18n.locale].message['error-login'],
+                i18n.global.t('message.error-login')
             )
         }
     },
@@ -206,11 +204,9 @@ export default {
     },
 
     onLoginError(): void {
+        const toaster = useToasterStore()
         const home = '/dashboard'
-        store.dispatch('notifications/pushToast', {
-            message: i18n.global.t('message.error-login'),
-            type: 'error',
-        })
+        toaster.pushError(i18n.global.t('message.error-login'))
         router.push(home)
     },
 }

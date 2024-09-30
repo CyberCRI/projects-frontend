@@ -1,4 +1,5 @@
 import { patchUser } from '@/api/people.service'
+import useUsersStore from '@/stores/useUsers'
 
 type OnboardingKey =
     | 'show_welcome'
@@ -18,22 +19,26 @@ export type OnboardingStatusType = {
 export default {
     methods: {
         async onboardingTrap(key: OnboardingKey, val: boolean) {
-            const connected = this.$store.getters['users/isConnected']
+            // TODO pinia check this
+            const usersStore = useUsersStore()
+            const connected = usersStore.isConnected
             if (connected) {
-                const user = this.$store.getters['users/userFromApi']
+                const user = usersStore.userFromApi
                 const status = user?.onboarding_status || {}
                 if (status[key] !== val) {
                     const payload = { onboarding_status: { ...status, [key]: val } }
                     await patchUser(user.id, payload)
-                    await this.$store.dispatch('users/getUser', user.id)
+                    await usersStore.getUser(user.id)
                 }
             }
         },
 
         async onboardingTrapAll(newStatus: OnboardingStatusType) {
-            const connected = this.$store.getters['users/isConnected']
+            // TODO pinia check this
+            const usersStore = useUsersStore()
+            const connected = usersStore.isConnected
             if (connected) {
-                const user = this.$store.getters['users/userFromApi']
+                const user = usersStore.userFromApi
                 const status = user?.onboarding_status || {}
 
                 const statusIsDifferent = Object.keys(newStatus).some(
@@ -43,7 +48,7 @@ export default {
                 if (statusIsDifferent) {
                     const payload = { onboarding_status: { ...status, ...newStatus } }
                     await patchUser(user.id, payload)
-                    await this.$store.dispatch('users/getUser', user.id)
+                    await usersStore.getUser(user.id)
                 }
             }
         },

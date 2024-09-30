@@ -11,19 +11,6 @@ const i18n = {
     },
 }
 
-function buildStore() {
-    return {
-        modules: {
-            languages: {
-                namespaced: true,
-                state: {
-                    current: 'fr',
-                },
-            },
-        },
-    }
-}
-
 const stats = [
     {
         name_fr: 'éducation',
@@ -74,7 +61,6 @@ describe('TagChart.vue', () => {
                 stats,
             },
             i18n,
-            store: buildStore(),
         })
         expect(wrapper.exists()).toBe(true)
     })

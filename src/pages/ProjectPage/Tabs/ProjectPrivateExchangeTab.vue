@@ -35,6 +35,7 @@ import MakeComment from '@/components/project/comment/MakeComment.vue'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProjectPrivateExchangeTab',
@@ -45,6 +46,12 @@ export default {
 
     components: { CommentItem, NoItem, MakeComment },
 
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     props: {
         project: {
             type: Object,
@@ -63,9 +70,7 @@ export default {
     computed: {
         isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return (
-                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
-            )
+            return this.isAdmin || members.find((user) => this.usersStore.id === user.id)
         },
     },
 

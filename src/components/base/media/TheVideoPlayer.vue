@@ -16,9 +16,15 @@
 </template>
 
 <script>
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'TheVideoPlayer',
-
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     data() {
         return {
             videos: {
@@ -81,13 +87,13 @@ export default {
 
     mounted() {
         if (this.videos) {
-            this.video = this.videos[this.$store.state.languages.current][0]
+            this.video = this.videos[this.languagesStore.current][0]
         }
     },
 
     computed: {
         videoSrc() {
-            return this.$store.state.languages.current === 'fr'
+            return this.languagesStore.current === 'fr'
                 ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
                 : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
         },

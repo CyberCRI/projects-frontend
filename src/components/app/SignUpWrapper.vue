@@ -23,7 +23,7 @@
 </template>
 <script>
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'SignUpWrapper',
 
@@ -31,6 +31,12 @@ export default {
         ProjectLogo,
     },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         signUpTitle: {
             type: String,
@@ -40,7 +46,7 @@ export default {
 
     computed: {
         organizationLogo() {
-            return this.$store.getters['organizations/current']?.logo_image?.variations?.medium
+            return this.organizationsStore.current?.logo_image?.variations?.medium
         },
         orgLogoStyle() {
             return { 'background-image': `url(${this.organizationLogo})` }

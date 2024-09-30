@@ -32,6 +32,7 @@ import LoaderComplex from '@/components/base/loader/LoaderComplex.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import { getLocations } from '@/api/locations.services'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'MapPage',
@@ -43,7 +44,12 @@ export default {
         MapPointer,
         BaseMap,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     pageTitle() {
         return this.$t('map.page-title')
     },
@@ -83,7 +89,7 @@ export default {
         async getLocations(page = null) {
             this.loading = true
             const locations = await getLocations(
-                { organizations: [this.$store.getters['organizations/current'].code] },
+                { organizations: [this.organizationsStore.current.code] },
                 page
             )
             this.projectLocations.push(...locations)

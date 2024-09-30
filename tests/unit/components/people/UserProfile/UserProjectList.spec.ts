@@ -5,6 +5,9 @@ import { describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '../../../../factories/project-member.factory'
 import PeopleFactory from '../../../../factories/people.factory'
 import MockComponent from '../../../../helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 const i18n = {
     locale: 'en',
@@ -14,29 +17,19 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            state: {
-                current: { code: 'FOOBAR' },
-            },
-        },
-    },
-}
-
 const router = [{ name: 'Home', path: '/', component: MockComponent }]
 describe('UserProjectList.vue', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
         defaultParams = {
             i18n,
             props: {
                 user: PeopleFactory.generate(),
             },
-            store,
             router,
         }
     })

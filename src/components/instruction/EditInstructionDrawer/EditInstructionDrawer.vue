@@ -21,6 +21,8 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import InstructionForm from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { createInstruction, putInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'EditInstructionDrawer',
 
@@ -29,6 +31,14 @@ export default {
     components: {
         BaseDrawer,
         InstructionForm,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     props: {
@@ -92,26 +102,21 @@ export default {
                 let savedInstruction
                 if (this.instruction?.id) {
                     savedInstruction = await putInstruction(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.instruction?.id,
                         formData
                     )
                 } else {
                     savedInstruction = await createInstruction(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         formData
                     )
                 }
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.save.success'))
+
                 this.$emit('instruction-edited', savedInstruction)
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

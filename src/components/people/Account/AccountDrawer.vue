@@ -26,12 +26,19 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import AccountLayout from '@/components/people/Account/AccountLayout.vue'
 import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
 
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'AccountDrawer',
 
     emits: ['close'],
 
     components: { AccountLayout, BaseDrawer, ExistingAccountChecker },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         isOpened: {
@@ -67,12 +74,11 @@ export default {
             this.targetUser = targetUser
             this.$nextTick(() => {
                 if (!this.isAddMode) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        type: 'warning',
-                        message: this.isInviteMode
+                    this.toaster.pushWarning(
+                        this.isInviteMode
                             ? this.$t('account.switch-to-invite')
-                            : this.$t('account.switch-to-edit'),
-                    })
+                            : this.$t('account.switch-to-edit')
+                    )
                 }
             })
         },

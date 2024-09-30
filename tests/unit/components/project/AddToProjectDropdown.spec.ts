@@ -5,6 +5,10 @@ import utils from '@/functs/functions'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
 
@@ -16,42 +20,28 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    ...ProjectOutputFactory.generate(),
-                    files: [],
-                    links: [],
-                }),
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
-        users: {
-            namespaced: true,
-            getters: {
-                isConnected: () => true,
-                id: () => 123,
-            },
-        },
-    },
-}
-
 describe('AddToProjectDropdown', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            user: { id: 123 },
+            userFromApi: { id: 123 },
+            userFromToken: { id: 123 },
+        } as any)
+
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        const projectsStore = useProjectsStore(pinia)
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
         defaultParams = {
             i18n,
-            store,
             provide: {
                 projectLayoutToggleAddModal: vi.fn(),
                 projectLayoutGoToTab: vi.fn(),

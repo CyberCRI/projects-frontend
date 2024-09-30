@@ -36,6 +36,7 @@ import PaginationButtons from '@/components/base/navigation/PaginationButtons.vu
 import { axios } from '@/api/api.config'
 import { searchEquals } from '@/functs/search.ts'
 import { toRaw } from 'vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'ProjectListSearch',
@@ -44,6 +45,12 @@ export default {
 
     components: {
         PaginationButtons,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     props: {
@@ -100,7 +107,7 @@ export default {
         },
 
         organisation() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 
@@ -146,7 +153,7 @@ export default {
         async _loadProjects(specificPageIndex) {
             const filters = {
                 ...this.search,
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
             }
             const query = encodeURIComponent(filters.search)
             delete filters.search

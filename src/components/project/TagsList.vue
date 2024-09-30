@@ -125,6 +125,7 @@
 <script>
 import debounce from 'lodash.debounce'
 import BadgeItem from '@/components/base/BadgeItem.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'TagsList',
@@ -133,6 +134,12 @@ export default {
         BadgeItem,
     },
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     data() {
         return {
             moreOrgTags: [],
@@ -262,7 +269,7 @@ export default {
 
     computed: {
         currentLang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
         moreTagsCount() {
             return this.moreOrgTags.length + this.moreWikiTags.length + this.moreInfoTags.length

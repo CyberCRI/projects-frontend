@@ -3,29 +3,23 @@ import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilter
 import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            projectCategories: {
-                namespaced: true,
-                getters: {
-                    hierarchy: () => ProjectCategoryOutputFactory.generateMany(8),
-                },
-            },
-        },
-    }
-}
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
 
 const factory = (props?) => {
     return lpiMount(CategoriesFilterEditor, {
         props: {
             ...props,
         },
-        store: buildStore(),
     })
 }
 
 describe('CategoriesFilterEditor.vue', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(8)
+    })
+
     it('should render component', () => {
         const wrapper = factory({ modelValue: [] })
         expect(wrapper.exists()).toBe(true)

@@ -56,10 +56,11 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
 import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
 import GroupTabs from './Tabs/GroupTabs.vue'
-import { getGroup, getGroupMember, getGroupProject } from '@/api/group.service'
+import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupPageInner',
     components: {
@@ -70,6 +71,14 @@ export default {
         LinkButton,
     },
     mixins: [permissions],
+    setup() {
+        const peopleGroupsStore = usePeopleGroupsStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            peopleGroupsStore,
+            organizationsStore,
+        }
+    },
     props: {
         groupId: {
             type: String,
@@ -98,7 +107,7 @@ export default {
 
     computed: {
         currentOrganizationCode() {
-            return this.$store.state.organizations.current.code
+            return this.organizationsStore.current.code
         },
         editGroupLabel() {
             return this.$t('group.edit-group')
@@ -111,7 +120,7 @@ export default {
             this.isProjectsLoading = true
             this.isMembersLoading = true
 
-            this.$store.dispatch('peopleGroups/setCurrentId', this.groupId)
+            this.peopleGroupsStore.currentId = this.groupId
             try {
                 await Promise.all([
                     this.loadGroup(),
@@ -155,7 +164,7 @@ export default {
                 this.groupChildren = groupData.children
 
                 // we can't use "this.groupId" because it might be a slug and not an id....
-                this.$store.dispatch('peopleGroups/setCurrentId', groupData.id)
+                this.peopleGroupsStore.currentId = groupData.id
             } catch (e) {
                 this.$router.replace({
                     name: 'page404',

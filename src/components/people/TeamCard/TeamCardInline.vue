@@ -43,6 +43,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'TeamCardInline',
@@ -52,6 +53,12 @@ export default {
     components: { IconImage, CroppedImage },
 
     emits: ['user-clicked'],
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
 
     props: {
         user: {
@@ -88,7 +95,7 @@ export default {
         },
 
         currentUser() {
-            return this.$store.getters['users/userFromApi']
+            return this.usersStore.userFromApi
         },
 
         iconName() {

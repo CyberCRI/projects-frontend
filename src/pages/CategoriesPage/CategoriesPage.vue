@@ -61,12 +61,14 @@ import LpiCategoryCard from '@/components/category/LpiCategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 import {
     updateFiltersFromURL,
     updateSearchQuery,
     resetPaginationIfNeeded,
 } from '@/functs/search.ts'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'CategoriesPage',
 
@@ -77,6 +79,15 @@ export default {
         LpiCategoryCard,
         SearchOptions,
         GlobalSearchTab,
+    },
+
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            projectCategoriesStore,
+            organizationsStore,
+        }
     },
 
     data() {
@@ -91,7 +102,7 @@ export default {
                 languages: [],
                 skills: [],
                 section: 'all',
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
                 ordering: '-updated_at',
                 limit: 30,
                 page: 1,
@@ -123,7 +134,7 @@ export default {
 
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/hierarchy']
+            return this.projectCategoriesStore.hierarchy
         },
 
         hasSearch() {

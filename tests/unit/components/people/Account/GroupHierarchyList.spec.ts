@@ -2,7 +2,6 @@ import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.v
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { UserFactory } from '../../../../factories/user.factory'
 
 const i18n = {
     locale: 'en',
@@ -20,7 +19,7 @@ describe('GroupHierarchyList', () => {
         defaultParams = {
             props: {
                 isAddMode: true,
-                selectedUser: UserFactory.generate(),
+                selectedGroups: {},
             },
             i18n,
         }

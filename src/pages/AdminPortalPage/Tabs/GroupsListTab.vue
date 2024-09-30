@@ -37,17 +37,19 @@
             :initial-group="initialGroup"
             :forbidden-ids="forbiddenIds"
             :rooted="groupToBeEdited"
+            :asyncing="groupDrawerAsyncing"
         />
     </div>
 </template>
 
 <script>
-import { getHierarchyGroups } from '@/api/group.service.ts'
+import { getHierarchyGroups, addParentGroup } from '@/api/groups.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
 import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupsListTab',
     components: {
@@ -55,6 +57,14 @@ export default {
         GroupsElement,
         PickGroupDrawer,
         LoaderSimple,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     data() {
@@ -69,6 +79,7 @@ export default {
             child: null,
             initialGroup: null,
             forbiddenIds: [],
+            groupDrawerAsyncing: false,
         }
     },
     async mounted() {
@@ -77,9 +88,7 @@ export default {
     methods: {
         async loadGroups() {
             this.loading = true
-            this.groups = (
-                await getHierarchyGroups(this.$store.state.organizations.current.code)
-            ).children
+            this.groups = (await getHierarchyGroups(this.organizationsStore.current.code)).children
 
             this.loading = false
         },
@@ -115,7 +124,7 @@ export default {
             } else if (this.groupToBeEdited) {
                 this.parent = group
             }
-            const orgCode = this.$store.getters['organizations/current'].code
+            const orgCode = this.organizationsStore.current.code
 
             const body = {
                 name: this.child.name,
@@ -125,26 +134,16 @@ export default {
                 parent: this.parent?.id || null, // parent is null if it's a root group
                 organization: orgCode,
             }
-            const payload = {
-                orgId: orgCode,
-                groupId: this.child.id,
-                body: body,
-            }
+            this.groupDrawerAsyncing = true
             try {
-                await this.$store.dispatch('groups/addParent', payload)
-
+                await addParentGroup(orgCode, this.child.id, body)
+                // no await here for a more reactive ui
                 this.loadGroups()
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.group-added.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.group-added.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.group-added.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.group-added.error')} (${error})`)
             } finally {
-                this.loading = false
+                this.groupDrawerAsyncing = false
             }
             this.groupToBeAdded = false
             this.groupToBeEdited = false

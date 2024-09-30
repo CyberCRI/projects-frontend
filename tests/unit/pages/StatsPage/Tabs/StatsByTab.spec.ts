@@ -4,23 +4,14 @@ import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
     messages: {
         en: english,
-    },
-}
-
-const store = {
-    modules: {
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => OrganizationOutputFactory.generate(),
-            },
-        },
     },
 }
 
@@ -273,8 +264,9 @@ describe('StatsByTab.vue', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
         defaultParams = {
-            store,
             props: {
                 filter: '',
             },

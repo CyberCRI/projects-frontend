@@ -75,6 +75,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from '@/api/people.service.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'OnboardingTodoBlock',
@@ -84,6 +85,13 @@ export default {
         LpiButton,
         IconImage,
         LinkButton,
+    },
+
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
 
     data() {
@@ -101,7 +109,7 @@ export default {
 
     computed: {
         user() {
-            return this.$store.getters['users/userFromApi']
+            return this.usersStore.userFromApi
         },
 
         username() {
@@ -109,7 +117,7 @@ export default {
         },
 
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         status() {
             return (this.isConnected && this.user?.onboarding_status) || {}
@@ -138,7 +146,7 @@ export default {
             const payload = { onboarding_status: { ...this.status, [key]: val } }
             try {
                 await patchUser(this.user.id, payload)
-                await this.$store.dispatch('users/getUser', this.user.id)
+                await this.usersStore.getUser(this.user.id)
             } catch (err) {
                 console.error(err)
             } finally {

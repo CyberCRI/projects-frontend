@@ -30,6 +30,7 @@ import CardList from '@/components/base/CardList.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getProjectsRecommendationsForUser } from '@/api/recommendations.service'
 import { axios } from '@/api/api.config'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProjectRecommendationPage',
 
@@ -38,7 +39,12 @@ export default {
         CardList,
         PaginationButtons,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             projectRecommendationsRequest: null,
@@ -65,7 +71,7 @@ export default {
     async mounted() {
         this.isLoading = true
         this.projectRecommendationsRequest = await getProjectsRecommendationsForUser(
-            this.$store.getters['organizations/current'].code,
+            this.organizationsStore.current.code,
             { limit: this.limit }
         )
         this.isLoading = false

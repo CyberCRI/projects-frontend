@@ -80,16 +80,22 @@
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import { getPeopleGroupsHierarchy } from '@/api/organizations.service'
+import { getPeopleGroupsHierarchy } from '@/api/groups.service'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'AccountGroupsForm',
 
     emits: ['update:modelValue'],
 
     components: { GroupHierarchyList, FilterValue, LpiCheckbox, LoaderSimple, AccountSection },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         modelValue: {
             // can contain also groups from other orgs
@@ -150,8 +156,8 @@ export default {
             // We get the current org group hierarchy and we selected the groups already added to the user.
             this.isLoading = true
             try {
-                await getPeopleGroupsHierarchy(this.$store.getters['organizations/current'].code, {
-                    organizations: this.$store.getters['organizations/current'].code,
+                await getPeopleGroupsHierarchy(this.organizationsStore.current.code, {
+                    organizations: this.organizationsStore.current.code,
                 }).then((peopleGroupsHierarchy) => {
                     this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
                 })

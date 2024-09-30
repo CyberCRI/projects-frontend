@@ -135,7 +135,6 @@ import utils from '@/functs/functions.ts'
 
 import { getSuggestedProjects } from '@/api/welearn.service.ts'
 import { ref, provide, computed, toRaw } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import permissions from '@/mixins/permissions.ts'
@@ -149,6 +148,11 @@ import { getBlogEntries } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
 import { getProject } from '@/api/projects.service'
 import { getReviews } from '@/api/reviews.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
     name: 'ProjectPage',
 
@@ -170,6 +174,11 @@ export default {
     },
 
     setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
+
         const modals = ref({
             project: {
                 visible: false,
@@ -213,13 +222,12 @@ export default {
                 editedItem: null,
             },
         })
-        const store = useStore()
         const route = useRoute()
         const router = useRouter()
         const project = computed({
             // getter
             get() {
-                return store.getters['projects/project']
+                return projectsStore.project
             },
         })
 
@@ -254,9 +262,13 @@ export default {
         provide('projectLayoutGoToTab', goToTab)
 
         return {
+            toaster,
             modals,
             toggleAddModal,
             goToTab,
+            organizationsStore,
+            projectsStore,
+            usersStore,
         }
     },
 
@@ -297,18 +309,16 @@ export default {
 
     computed: {
         project() {
-            return this.$store.getters['projects/project']
+            return this.projectsStore.project
         },
 
         isMemberOrAdmin() {
             const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-            return (
-                this.isAdmin || members.find((user) => this.$store.getters['users/id'] === user.id)
-            )
+            return this.isAdmin || members.find((user) => this.usersStore.id === user.id)
         },
 
         accessToken() {
-            return this.$store.getters['users/accessToken']
+            return this.usersStore.accessToken
         },
         mergedTeam() {
             // this is damn ugly but necessary for compatibility with TeamResultList
@@ -357,10 +367,7 @@ export default {
             // real update, notify user
             let message = data.author_name + ' ' + this.$t(data.scope)
 
-            this.$store.dispatch('notifications/pushToast', {
-                message: message,
-                type: 'info',
-            })
+            this.toaster.pushInfo(message)
         },
         // toggleAddModal(modalType, editedItem) {
         //     if (editedItem) this.modals[modalType].editedItem = editedItem
@@ -474,8 +481,8 @@ export default {
 
         setProject(projectSlugOrId = this.$route.params.slugOrId) {
             this.loading = true
-            this.$store
-                .dispatch('projects/getProject', projectSlugOrId)
+            this.projectsStore
+                .getProject(projectSlugOrId)
                 .then(async (project) => {
                     this.follow = project.is_followed
                     this.goals = this.project.goals
@@ -514,7 +521,7 @@ export default {
         },
 
         async reloadProject() {
-            return await this.$store.dispatch('projects/getProject', this.project.id)
+            return await this.projectsStore.getProject(this.project.id)
         },
 
         connectToSocket() {
@@ -522,8 +529,8 @@ export default {
             if (this.canEditProject) {
                 try {
                     const providerParams = {
-                        projectId: this.$store.getters['projects/currentProjectId'],
-                        organizationId: this.$store.getters['organizations/current'].id,
+                        projectId: this.projectsStore.currentProjectId,
+                        organizationId: this.organizationsStore.current.id,
                     }
 
                     this.provider = new HocuspocusProvider({
@@ -555,7 +562,7 @@ export default {
             try {
                 this.similarProjects = await getSuggestedProjects(
                     this.project.id,
-                    this.$store.getters['organizations/current']?.code
+                    this.organizationsStore.current?.code
                 )
             } catch (err) {
                 console.error(err)

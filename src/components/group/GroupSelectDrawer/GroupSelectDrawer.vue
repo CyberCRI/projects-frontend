@@ -47,13 +47,20 @@ import SearchInput from '@/components/base/form/SearchInput.vue'
 import { searchGroups } from '@/api/search.service.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'GroupSelectDrawer',
 
     emits: ['close', 'select-group'],
 
     components: { BaseDrawer, GroupCard, SearchInput, LpiButton, LoaderSimple },
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
 
     data() {
         return {
@@ -78,7 +85,7 @@ export default {
 
     methods: {
         getOrganizationCode() {
-            return this.$store.getters['organizations/current']?.code
+            return this.organizationsStore.current?.code
         },
         async init() {
             this.isLoading = true

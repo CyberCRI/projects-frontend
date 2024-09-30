@@ -152,6 +152,7 @@ import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 import { deleteProjectMembers } from '@/api/project-members.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectTeamTab',
 
@@ -172,6 +173,12 @@ export default {
     inject: ['projectLayoutToggleAddModal'],
 
     mixins: [permissions, ProjectTab],
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -276,15 +283,9 @@ export default {
                 }
 
                 if (memberType === 'user') {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.team-member-delete.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.team-member-delete.success'))
                 } else {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('toasts.team-group-delete.success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('toasts.team-group-delete.success'))
                 }
             } catch (error) {
                 console.error(error)
@@ -304,15 +305,13 @@ export default {
                      * here this is just a "standard" error, so display it
                      */
                     if (memberType === 'user') {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.team-member-delete.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(
+                            `${this.$t('toasts.team-member-delete.error')} (${error})`
+                        )
                     } else {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.team-group-delete.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(
+                            `${this.$t('toasts.team-group-delete.error')} (${error})`
+                        )
                     }
                 }
             } finally {

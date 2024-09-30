@@ -3,6 +3,9 @@ import english from '@/locales/en.json'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
+
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',
@@ -11,25 +14,20 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                userFromApi: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('OnboardingScreens', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            id: '123',
+            userFromApi: {},
+            permissions: {},
+            getUser: vi.fn(),
+        } as any)
         defaultParams = {
             i18n,
-            store,
         }
     })
 

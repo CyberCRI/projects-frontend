@@ -40,6 +40,7 @@ import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { getAllOrgTags } from '@/api/organization-tags.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'TagsFilterEditor',
 
@@ -51,7 +52,12 @@ export default {
         SuggestedTags,
         WikipediaResults,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     props: {
         modelValue: {
             type: Array,
@@ -98,12 +104,12 @@ export default {
     async created() {
         await Promise.all([
             getAllOrgTags({
-                organization: this.$store.state.organizations.current.code,
+                organization: this.organizationsStore.current.code,
             }).then(({ results }) => {
                 this.organizationTags = results
             }),
             getAllWikiTags({
-                organization: this.$store.state.organizations.current.code,
+                organization: this.organizationsStore.current.code,
             }).then(({ results }) => {
                 this.wikipediaTags = results
             }),

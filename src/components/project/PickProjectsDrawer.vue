@@ -52,6 +52,7 @@ import PickProjectSelection from '@/components/project/PickProjectSelection.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { toRaw } from 'vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'PickProjectsDrawer',
@@ -59,6 +60,12 @@ export default {
     emits: ['close', 'picked-projects'],
 
     components: { BaseDrawer, PickProjectSelection, ProjectCard, LinkButton },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         drawerTitle: {
@@ -133,10 +140,8 @@ export default {
     methods: {
         async addProject(project) {
             if (!this.canPickMore) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('featured-projects.drawer.max-pick-reached'),
-                    type: 'warning',
-                })
+                this.toaster.pushWarning(this.$t('featured-projects.drawer.max-pick-reached'))
+
                 return
             }
             this.listProjects.push(project)
@@ -147,10 +152,8 @@ export default {
                 .slice(0)
                 .filter((p) => !(this.listProjects || []).some((lp) => lp.id === p.id))
             if (this.maxPick && this.listProjects.length + projectsToAdd.length >= this.maxPick) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('featured-projects.drawer.max-pick-reached'),
-                    type: 'warning',
-                })
+                this.toaster.pushWarning(this.$t('featured-projects.drawer.max-pick-reached'))
+
                 return
             }
 

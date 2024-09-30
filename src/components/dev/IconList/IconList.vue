@@ -16,11 +16,18 @@
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'IconList',
 
     components: { IconImage },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     data() {
         return {
@@ -126,10 +133,7 @@ export default {
     methods: {
         async copy(name) {
             await navigator.clipboard.writeText(name)
-            this.$store.dispatch('notifications/pushToast', {
-                message: `"${name}" copied to clipboard`,
-                type: 'success',
-            })
+            this.toaster.pushSuccess(`"${name}" copied to clipboard`)
         },
     },
 }

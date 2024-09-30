@@ -6,6 +6,11 @@ import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import { getAllOrgTags } from '@/api/organization-tags.service'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+
 vi.mock('@/api/organization-tags.service', () => ({
     getAllOrgTags: vi.fn().mockResolvedValue({ results: [] }),
 }))
@@ -15,20 +20,6 @@ vi.mock('@/api/wikipedia-tags.service', () => ({
 }))
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                state: {
-                    current: {
-                        code: 'test',
-                    },
-                },
-            },
-        },
-    }
-}
 
 const i18n = {
     locale: 'en',
@@ -43,9 +34,10 @@ describe('TagsFilterEditor', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'test' } as unknown as OrganizationOutput
         defaultParams = {
             props: {},
-            store: buildStore(),
             i18n,
         }
     })

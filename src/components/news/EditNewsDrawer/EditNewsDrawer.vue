@@ -18,6 +18,8 @@ import NewsForm from '@/components/news/NewsForm/NewsForm.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '@/api/news.service.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'EditNewsDrawer',
@@ -27,6 +29,14 @@ export default {
     components: {
         BaseDrawer,
         NewsForm,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     props: {
@@ -96,15 +106,12 @@ export default {
 
                 if (this.news.id) {
                     savedNews = await patchNews(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.news.id,
                         payloadNews
                     )
                 } else {
-                    savedNews = await createNews(
-                        this.$store.getters['organizations/current']?.code,
-                        payloadNews
-                    )
+                    savedNews = await createNews(this.organizationsStore.current?.code, payloadNews)
                 }
 
                 const formData = new FormData()
@@ -121,21 +128,21 @@ export default {
                     imageSizesFormData(formData, this.form.imageSizes)
                     payload.header_image_id = (
                         await postNewsHeader(
-                            this.$store.getters['organizations/current']?.code,
+                            this.organizationsStore.current?.code,
                             savedNews.id,
                             formData
                         )
                     ).id
                     formData.delete('file')
                     await patchNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         savedNews.id,
                         payload.header_image_id,
                         formData
                     )
                 } else if (savedNews.header_image?.id) {
                     await patchNewsHeader(
-                        this.$store.getters['organizations/current']?.code,
+                        this.organizationsStore.current?.code,
                         this.news.id,
                         this.news.header_image.id,
                         formData
@@ -143,15 +150,9 @@ export default {
                 }
 
                 this.$emit('news-edited', savedNews)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('news.save.success'))
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.asyncing = false

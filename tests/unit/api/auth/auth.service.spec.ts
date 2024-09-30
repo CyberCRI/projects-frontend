@@ -4,6 +4,9 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import keycloak from '@/api/auth/keycloak'
 vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 vi.mock('@/router/index', () => ({
     default: {
         push: vi.fn(),
@@ -30,6 +33,10 @@ describe('auth.service', () => {
         vi.resetModules() // Most important - it clears the cache
         process.env = { ...OLD_ENV } // Make a copy
         window.happyDOM.setURL('https://localhost:3000')
+    })
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: '123' } as unknown as OrganizationOutput
     })
     afterAll(() => {
         process.env = OLD_ENV // Restore old environment

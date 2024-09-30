@@ -6,18 +6,6 @@ const stubs = {
     IconImage: true,
 }
 
-const store = {
-    modules: {
-        languages: {
-            namespaced: true,
-            getters: {
-                current: () => 'en',
-                all: () => ['en', 'fr'],
-            },
-        },
-    },
-}
-
 describe('GroupButton', () => {
     let wrapper
     let defaultParams
@@ -45,7 +33,6 @@ describe('GroupButton', () => {
                 size: 'default',
             },
             stubs,
-            store,
         }
     })
 

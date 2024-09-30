@@ -74,6 +74,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, url, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useToasterStore from '@/stores/useToaster.ts'
 
 function defaultForm() {
     return {
@@ -90,6 +91,12 @@ export default {
     emits: ['close'],
 
     components: { TextInput, BaseDrawer, FieldErrors },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     data() {
         return {
@@ -148,15 +155,9 @@ export default {
                 if (this.type === 'abuse') {
                     try {
                         await reportAbuse(this.form)
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.abuse-report.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.abuse-report.success'))
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.abuse-report.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(`${this.$t('toasts.abuse-report.error')} (${error})`)
                         console.error(error)
                     } finally {
                         this.isLoading = false
@@ -165,15 +166,9 @@ export default {
                 } else if (this.type === 'bug') {
                     try {
                         await reportBug(this.form)
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.bug-report.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.bug-report.success'))
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.bug-report.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(`${this.$t('toasts.bug-report.error')} (${error})`)
                         console.error(error)
                     } finally {
                         this.isLoading = false

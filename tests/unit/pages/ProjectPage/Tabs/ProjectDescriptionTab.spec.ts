@@ -5,6 +5,12 @@ import { ProjectFactory } from '../../../../factories/project.factory'
 import { UserFactory } from '../../../../factories/user.factory'
 import permissions from '@/mixins/permissions'
 
+import pinia from '@/stores'
+import useProjectsStore from '@/stores/useProjects'
+import useUsersStore from '@/stores/useUsers'
+
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 vi.mock('@/mixins/permissions')
 ;(permissions.computed.canEditProject as Mock).mockImplementation(() => true)
@@ -21,32 +27,26 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        projects: {
-            namespaced: true,
-            getters: {
-                project: () => ({
-                    description: '<h1>Origine du projet</h1>',
-                }),
-            },
-        },
-        users: {
-            namespaced: true,
-            state: {
-                user: UserFactory.generate(),
-            },
-        },
-    },
-}
-
 describe('ProjectDescriptionTab.vue', () => {
+    beforeEach(() => {
+        const usersStore = useUsersStore(pinia)
+        usersStore.$patch({
+            user: UserFactory.generate(),
+        } as any)
+        const projectsStore = useProjectsStore(pinia)
+
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
+    })
+
     it('should render component', () => {
         const wrapper = lpiShallowMount(ProjectDescriptionTab, {
             props: {
                 project: ProjectFactory.generate(),
             },
-            store,
             i18n,
         })
         expect(wrapper.exists()).toBe(true)

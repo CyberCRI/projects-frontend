@@ -42,6 +42,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 
 import { deleteGoal } from '@/api/goals.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'ProjectGoalsTab',
@@ -51,6 +52,12 @@ export default {
     mixins: [permissions, ProjectTab],
 
     components: { SdgRecap, GoalItem, ConfirmModal, LpiButton },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
+    },
 
     props: {
         project: {
@@ -100,15 +107,9 @@ export default {
                     },
                     goal: this.goalToBeDeleted,
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.goal-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.goal-delete.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.goal-delete.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.goal-delete.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

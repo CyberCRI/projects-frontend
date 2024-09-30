@@ -76,6 +76,7 @@
         "lodash.throttle": "^4.1.1",
         "lowlight": "^3.1.0",
         "mixpanel-browser": "^2.48.1",
+        "pinia": "^2.2.2",
         "remixicon": "^2",
         "sortablejs": "^1.15.2",
         "sortablejs-vue3": "^1.2.11",
@@ -91,7 +92,6 @@
         "vue-property-decorator": "^9",
         "vue-router": "^4.3.0",
         "vue3-popper": "^1.5.0",
-        "vuex": "^4.0.2",
         "y-prosemirror": "^1.2.2",
         "y-protocols": "^1.0.6",
         "yjs": "^13.6.12"
@@ -99,6 +99,7 @@
     "devDependencies": {
         "@commitlint/cli": "^16.2.3",
         "@commitlint/config-conventional": "^16.2.1",
+        "@pinia/testing": "^0.1.5",
         "@playwright/test": "^1.46.1",
         "@trust/webcrypto": "^0.9.2",
         "@types/faker": "5",

@@ -101,6 +101,8 @@ import { toRaw } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
 import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'CategoriesTab',
 
@@ -117,6 +119,14 @@ export default {
         Sortable,
         LoaderSimple,
         ConfirmModal,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const projectCategoriesStore = useProjectCategories()
+        return {
+            toaster,
+            projectCategoriesStore,
+        }
     },
 
     data() {
@@ -139,7 +149,7 @@ export default {
 
     computed: {
         categoryTree() {
-            return this.$store.getters['projectCategories/hierarchy']
+            return this.projectCategoriesStore.hierarchy
         },
         dragOptions() {
             return {
@@ -231,7 +241,7 @@ export default {
                         : []
 
                 await Promise.all([...newParentPromises, ...oldParentPromises])
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                await this.projectCategoriesStore.getAllProjectCategories()
                 this.dropTargetCategory = newParent
             } catch (error) {
                 console.error(error)
@@ -293,16 +303,10 @@ export default {
                     })
                 )
 
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.category-update.success'),
-                    type: 'success',
-                })
+                await this.projectCategoriesStore.getAllProjectCategories()
+                this.toaster.pushSuccess(this.$t('toasts.category-update.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.category-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.category-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.closeCategoryDrawer()
@@ -323,25 +327,19 @@ export default {
                 this.categoryToDelete.children?.length ||
                 this.categoryToDelete.projects_count !== 0
             ) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.categories.delete-category-has-children'),
-                    type: 'error',
-                })
+                this.toaster.pushError(
+                    this.$t('admin.portal.categories.delete-category-has-children')
+                )
                 return
             }
             try {
                 await deleteProjectCategory(this.categoryToDelete.id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.categories.delete-category-success'),
-                    type: 'success',
-                })
-                await this.$store.dispatch('projectCategories/getAllProjectCategories')
+                this.toaster.pushSuccess(this.$t('admin.portal.categories.delete-category-success'))
+
+                await this.projectCategoriesStore.getAllProjectCategories()
             } catch (err) {
                 console.error(err)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.portal.categories.delete-category-error'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('admin.portal.categories.delete-category-error'))
             } finally {
                 this.categoryToDelete = null
             }

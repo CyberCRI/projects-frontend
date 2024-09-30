@@ -14,6 +14,7 @@
 
 <script>
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'CurrentTags',
@@ -22,6 +23,12 @@ export default {
 
     components: { FilterValue },
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         currentTags: {
             type: Array,
@@ -35,7 +42,7 @@ export default {
         },
 
         tagLabel(tag) {
-            return tag[`name_${this.$store.getters['languages/current']}`] || tag.name
+            return tag[`name_${this.languagesStore.current}`] || tag.name
         },
     },
 }

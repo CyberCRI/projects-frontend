@@ -31,7 +31,6 @@ test(`test-${users.admin.email}`, async ({ page }) => {
     }
 
     for (const right of rights) {
-        console.log(right)
         try {
             await logOut(page)
             await logIn(page, users.admin)

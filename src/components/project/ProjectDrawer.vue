@@ -31,13 +31,25 @@ import ProjectForm from '@/components/project/ProjectForm.vue'
 import { postProjectHeader, patchProjectHeader } from '@/api/projects.service'
 import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useProjectsStore from '@/stores/useProjects.ts'
 export default {
     name: 'ProjectDrawer',
 
     components: { BaseDrawer, ProjectForm },
 
     emits: ['close'],
+    setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const projectsStore = useProjectsStore()
+        return {
+            toaster,
+            languagesStore,
+            projectsStore,
+        }
+    },
 
     props: {
         isOpened: {
@@ -60,7 +72,7 @@ export default {
                         small: undefined,
                     },
                 },
-                language: this.$store.state.languages.current,
+                language: this.languagesStore.current,
                 wikipedia_tags: [],
                 organization_tags: [],
             },
@@ -119,7 +131,7 @@ export default {
 
     computed: {
         currentProject() {
-            return this.$store.getters['projects/project']
+            return this.projectsStore.project
         },
     },
 
@@ -215,19 +227,13 @@ export default {
             delete payload.imageSizes
 
             try {
-                await this.$store.dispatch('projects/updateProject', {
+                await this.projectsStore.updateProject({
                     id: this.currentProject.id,
                     project: payload,
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-edit.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-edit.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-edit.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-edit.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.isSaving = false

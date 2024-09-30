@@ -51,6 +51,7 @@ import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteBlogEntry } from '@/api/blogentries.service'
+import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectBlogEntriesTab',
 
@@ -65,6 +66,12 @@ export default {
         BlogSummaryBlock,
         ConfirmModal,
         LpiButton,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -140,16 +147,10 @@ export default {
                     blogEntry: this.currentBlogEntry,
                 })
 
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.blog-delete.success'))
             } catch (error) {
                 console.error(error)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.blog-delete.error'),
-                    type: 'error',
-                })
+                this.toaster.pushError(this.$t('toasts.blog-delete.error'))
             } finally {
                 this.asyncing = false
                 this.confirmModalVisible = false

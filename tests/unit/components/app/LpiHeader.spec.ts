@@ -4,6 +4,10 @@ import LpiHeader from '@/components/app/LpiHeader.vue'
 import { OrganizationOutputFactory } from '../../../factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
 import MockComponent from '../../../helpers/MockComponent.vue'
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 import { axios } from '@/api/api.config'
 // quick fix for vi error
@@ -36,62 +40,36 @@ const user = {
         lastname: 'test',
     },
 }
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                isConnected: () => false,
-                getUserRoles: () => roles,
-                getPermissions: () => permissions,
-                user: () => user,
-            },
-            state: {
-                roles: roles,
-                permissions: permissions,
-            },
-        },
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => organization,
-                all: () => organizations,
-            },
-        },
-        projectCategories: {
-            namespaced: true,
-            actions: {
-                getAllProjectCategories: () => ProjectCategoryOutputFactory.generateMany(2),
-            },
-            getters: {
-                all: () => ProjectCategoryOutputFactory.generateMany(2),
-            },
-        },
-
-        languages: {
-            namespaced: true,
-            getters: {
-                current: () => 'en',
-                all: () => ['en', 'fr'],
-            },
-        },
-    },
-}
 
 describe('LpiHeader.vue', () => {
     let wrapper
     let defaultParams
-
+    let usersStore
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = organization
+        organizationsStore.all = organizations
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+        usersStore = useUsersStore(pinia)
+        usersStore.isConnected = false
+        usersStore.roles = roles
+        usersStore.permissions = permissions
+        usersStore.user = user
+        usersStore.roles = roles
+        usersStore.permissions = permissions
+
         defaultParams = {
             props: {},
             i18n,
-            store,
             router: [
                 { path: '/', component: MockComponent },
                 { path: '/blank', component: MockComponent, name: 'blank' },
             ],
         }
+    })
+    afterEach(() => {
+        usersStore.$reset()
     })
 
     it('should render LpiHeader component', () => {
@@ -122,7 +100,7 @@ describe('LpiHeader.vue', () => {
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 
         // Notifications
-        const notificationDrawer = wrapper.findAll('base-drawer-stub')
+        const notificationDrawer = wrapper.findAll('notification-list-stub')
         expect(notificationDrawer.length).toEqual(1)
         // contact form
         const contactDrawer = wrapper.findAll('contact-drawer-stub')
@@ -136,7 +114,7 @@ describe('LpiHeader.vue', () => {
     })
 
     it('should find the user menu content to equal only 6 as user is connected and is admin', () => {
-        defaultParams.store.modules.users.getters.isConnected = () => true
+        usersStore.isConnected = true
 
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 
@@ -144,8 +122,9 @@ describe('LpiHeader.vue', () => {
     })
 
     it('should find the user menu content to equal only 4 as user is connected and is not admin', () => {
-        defaultParams.store.modules.users.getters.isConnected = () => true
-        defaultParams.store.modules.users.getters.getUserRoles = () => ['notadmin']
+        usersStore.isConnected = true
+
+        usersStore.roles = ['notadmin']
 
         wrapper = lpiShallowMount(LpiHeader, defaultParams)
 

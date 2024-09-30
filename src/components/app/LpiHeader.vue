@@ -27,7 +27,7 @@
                 <!--TODO: put this back once the new page is created-->
                 <!--                <HeaderLink :label="$t('search.peoples')" route="people" :to="{name: 'People'}" />-->
                 <HeaderLink
-                    v-if="$store.getters['projectCategories/all'].length"
+                    v-if="projectCategoriesStore.all?.length"
                     :label="$t('projects')"
                     :routes="[
                         'Categories',
@@ -80,7 +80,7 @@
                     :rounded-icon="true"
                     data-test="dropdown-plus"
                 />
-                <HeaderLink v-if="isConnected" @click="getNotifications">
+                <HeaderLink v-if="isConnected" @click="showNotificationDrawer = true">
                     <NotificationIcon :notification-count="notificationCount" />
                 </HeaderLink>
                 <HeaderLink
@@ -111,7 +111,7 @@
                     icon="Account"
                 />
                 <HeaderDropDown
-                    :label="$store.getters['languages/current'].toUpperCase()"
+                    :label="languagesStore.current.toUpperCase()"
                     :menu-items="langMenu"
                     data-test="dropdown-lang"
                 />
@@ -155,22 +155,11 @@
             </aside>
         </Transition>
 
-        <BaseDrawer
-            :custom-style="customNotificationStyle"
-            :has-footer="false"
+        <NotificationList
             :is-opened="showNotificationDrawer"
-            class="small"
-            confirm-action-name=""
-            title="Notifications"
+            @go-to="notificationAction"
             @close="closeDrawer"
-        >
-            <NotificationList
-                v-if="showNotificationDrawer"
-                :is-loading="isLoading"
-                :notifications="filteredNotifications"
-                @go-to="notificationAction"
-            />
-        </BaseDrawer>
+        />
 
         <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
     </div>
@@ -186,14 +175,16 @@ import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
 import HeaderDropDown from '@/components/base/navigation/HeaderDropDown.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import NotificationIcon from '@/components/app/NotificationIcon.vue'
 import NotificationList from '@/components/app/NotificationList.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
-
+import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'LpiHeader',
 
@@ -208,8 +199,20 @@ export default {
         HeaderLink,
         HeaderDropDown,
         NotificationIcon,
-        BaseDrawer,
         IconImage,
+    },
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            languagesStore,
+            projectCategoriesStore,
+            organizationsStore,
+            usersStore,
+        }
     },
 
     data() {
@@ -218,20 +221,15 @@ export default {
             categoriesModalActive: false,
             openPortalNav: false,
             faqModalActive: false,
-            isLoading: true,
             showNotificationDrawer: false,
             showContactUsDrawer: false,
             scrolled: false,
             announcements: [],
-            customNotificationStyle: {
-                maxHeight: 'unset',
-                padding: 'unset',
-            },
         }
     },
 
     async mounted() {
-        await this.$store.dispatch('projectCategories/getAllProjectCategories')
+        await this.projectCategoriesStore.getAllProjectCategories()
         document.addEventListener('scroll', this.onScroll)
 
         await this.getGlobalAnnouncements()
@@ -263,7 +261,7 @@ export default {
         },
 
         async logOutUser() {
-            await this.$store.dispatch('users/logOut')
+            await this.usersStore.logOut()
         },
 
         closeNav() {
@@ -274,20 +272,13 @@ export default {
             this.isNavOpen = !this.isNavOpen
         },
 
-        async getNotifications() {
-            this.showNotificationDrawer = !this.showNotificationDrawer
-            await this.$store.dispatch('notifications/getNotifications')
-            this.$store.commit('users/SET_NOTIFICATIONS_COUNT', 0)
-            this.isLoading = false
-        },
-
         closeDrawer() {
             this.showNotificationDrawer = false
             this.showContactUsDrawer = false
         },
 
         notificationAction(notification) {
-            this.showNotificationDrawer = !this.showNotificationDrawer
+            this.showNotificationDrawer = false
             if (
                 notification.type === 'invitation_week_reminder' ||
                 notification.type === 'invitation_today_reminder'
@@ -306,17 +297,17 @@ export default {
             }
         },
 
-        async updateLanguage(lang) {
+        updateLanguage(lang) {
             if (this.isConnected) {
                 const body = {
                     language: lang,
                 }
                 // dont wait for termination, user update take a while
                 // and we dont want the UI to freeze meanwhile
-                patchUser(this.$store.getters['users/id'], body)
+                patchUser(this.usersStore.id, body)
             }
 
-            await this.$store.dispatch('languages/updateCurrentLanguage', lang)
+            this.languagesStore.current = lang
         },
 
         async toAnnouncements() {
@@ -349,22 +340,20 @@ export default {
 
     computed: {
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
 
         langMenu() {
-            return this.$store.getters['languages/all']
+            return this.languagesStore.all
                 .map((lang) => ({
                     label: lang.toUpperCase(),
                     action: () => this.updateLanguage(lang),
                 }))
-                .filter(
-                    (lang) => lang.label !== this.$store.getters['languages/current'].toUpperCase()
-                )
+                .filter((lang) => lang.label !== this.languagesStore.current.toUpperCase())
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         userMenu() {
@@ -505,7 +494,7 @@ export default {
                     label: this.$t('projects'),
                     action: () => this.goTo('Categories'),
                     leftIcon: null,
-                    condition: this.$store.getters['projectCategories/all'].length,
+                    condition: this.projectCategoriesStore.all?.length,
                     dataTest: 'search',
                 },
                 {
@@ -530,7 +519,9 @@ export default {
                 },
                 {
                     label: this.$t('notifications.header'),
-                    action: () => this.getNotifications(),
+                    action: () => {
+                        this.showNotificationDrawer = true
+                    },
                     leftIcon: 'Bell',
                     condition: this.isConnected,
                     dataTest: 'notifications',
@@ -549,7 +540,7 @@ export default {
                     dataTest: 'user-dropdown-menu',
                 },
                 {
-                    label: this.$store.getters['languages/current'].toUpperCase(),
+                    label: this.languagesStore.current.toUpperCase(),
                     childItems: this.langMenu,
                     condition: true,
                     dataTest: 'lang',
@@ -559,7 +550,7 @@ export default {
 
         loginName() {
             if (!this.isConnected) return ''
-            return this.$store.getters['users/user'].name.firstname.toUpperCase()
+            return this.usersStore.user.name.firstname.toUpperCase()
         },
 
         AdminLabel() {
@@ -569,24 +560,11 @@ export default {
             return ''
         },
 
-        filteredNotifications() {
-            return this.notifications.map((notification) => ({
-                ...notification,
-                icon: !notification.is_viewed ? 'Circle' : null,
-                action: () => this.notificationAction(notification),
-            }))
-        },
-
         notificationCount() {
-            return this.$store.getters['users/getNotificationCount']
+            return this.usersStore.notificationsCount
         },
-
-        notifications() {
-            return this.$store.getters['notifications/notifications']
-        },
-
         organisation() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
     },
 }

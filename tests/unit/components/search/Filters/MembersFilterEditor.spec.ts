@@ -6,22 +6,12 @@ import english from '@/locales/en.json'
 import { searchPeopleProject } from '@/api/people.service'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
 vi.mock('@/api/people.service.ts', () => ({
     searchPeopleProject: () => PeopleFactory.generateMany(8),
 }))
-
-function buildStore() {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                getters: {
-                    current: () => OrganizationOutputFactory.generate(),
-                },
-            },
-        },
-    }
-}
 
 const i18n = {
     locale: 'en',
@@ -36,12 +26,15 @@ const factory = (props?) => {
         props: {
             ...props,
         },
-        store: buildStore(),
         i18n,
     })
 }
 
 describe('MembersFilterEditor.vue', () => {
+    beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+    })
     it('should render component', () => {
         const wrapper = factory({ modelValue: [] })
         expect(wrapper.exists()).toBe(true)

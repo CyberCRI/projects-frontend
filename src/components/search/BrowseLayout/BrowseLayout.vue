@@ -26,7 +26,7 @@ import {
 } from '@/functs/search.ts'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'BrowseLayout',
 
@@ -44,6 +44,12 @@ export default {
         GlobalSearchTab,
     },
 
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             search: {
@@ -56,7 +62,7 @@ export default {
                 languages: [],
                 skills: [],
                 section: ALL_SECTION_KEY,
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
                 ordering: '-updated_at',
                 limit: 30,
                 page: 1,

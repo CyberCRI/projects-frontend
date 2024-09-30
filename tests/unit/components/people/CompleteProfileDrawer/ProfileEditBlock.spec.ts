@@ -11,24 +11,12 @@ const i18n = {
     },
 }
 
-const store = {
-    modules: {
-        users: {
-            namespaced: true,
-            getters: {
-                kid: vi.fn(),
-            },
-        },
-    },
-}
-
 describe('CompleteProfileStep1.vue', () => {
     let defaultParams
 
     beforeEach(() => {
         defaultParams = {
             i18n,
-            store,
             props: {
                 blockTitle: 'test',
             },

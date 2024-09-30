@@ -1,22 +1,34 @@
 <template>
     <div class="debug-onboarding">
         <p class="notice">Restart onboarding process for the current user.</p>
-        <p v-if="!$store.getters['users/userFromApi']">Login first !</p>
+        <p v-if="!usersStore.userFromApi">Login first !</p>
         <LpiButton
             class="reset-button"
             @click="resetOnboardingStatus"
             :btn-icon="reseting ? 'LoaderSimple' : 'RotateRight'"
             :label="'Reset onboarding status'"
-            :disabled="!$store.getters['users/userFromApi'] || reseting"
+            :disabled="!usersStore.userFromApi || reseting"
         ></LpiButton>
     </div>
 </template>
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
     name: 'DebugOnboarding',
     components: { LpiButton },
+    setup() {
+        const toaster = useToasterStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            usersStore,
+        }
+    },
+
     data() {
         return {
             reseting: false,
@@ -27,19 +39,13 @@ export default {
             this.reseting = true
             try {
                 const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
-                const user = this.$store.getters['users/userFromApi']
+                const user = this.usersStore.userFromApi
                 const keycloak_id = user.keycloak_id
                 await patchUser(keycloak_id, payload)
-                await this.$store.dispatch('users/getUser', keycloak_id)
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `Onboarding reseted for ${user.email}`,
-                    type: 'success',
-                })
+                await this.usersStore.getUser(keycloak_id)
+                this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `Error while reseting onboarding status`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`Error while reseting onboarding status`)
             } finally {
                 this.reseting = false
             }

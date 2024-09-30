@@ -30,8 +30,10 @@
 <script>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
-import { getGroup } from '@/api/group.service'
+import { getGroup } from '@/api/groups.service'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
     name: 'ProfileGroupsEditTab',
     components: {
@@ -39,6 +41,14 @@ export default {
         GroupCard,
         EmptyCard,
     },
+
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
+
     props: {
         user: {
             type: Object,
@@ -58,10 +68,7 @@ export default {
             this.groups = await Promise.all(
                 this.user.people_groups.map(async (group) => {
                     try {
-                        return await getGroup(
-                            this.$store.state.organizations.current.code,
-                            group.id
-                        )
+                        return await getGroup(this.organizationsStore.current.code, group.id)
                     } catch (error) {
                         console.error(error)
                         return null

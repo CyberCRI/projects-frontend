@@ -2,45 +2,15 @@ import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
-
+import pinia from '@/stores'
+import useUsersStore from '@/stores/useUsers'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useProjectsStore from '@/stores/useProjects'
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))
-
-function buildStore(permissions) {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                getters: {
-                    current: vi.fn(() => OrganizationOutputFactory.generate()),
-                    all: vi.fn(() => OrganizationOutputFactory.generateMany(2)),
-                },
-            },
-            projects: {
-                namespaced: true,
-                getters: {
-                    currentProjectId: vi.fn(() => 123),
-                },
-            },
-            languages: {
-                namespaced: true,
-                state: {
-                    current: 'en',
-                    all: ['en', 'fr'],
-                },
-            },
-            users: {
-                namespaced: true,
-                getters: {
-                    getPermissions: vi.fn(() => permissions || {}),
-                    accessToken: vi.fn(() => 456),
-                },
-            },
-        },
-    }
-}
 
 const project = {
     id: 123,
@@ -85,34 +55,47 @@ const i18n = {
     },
 }
 
-function setUpComponent(props, store) {
+function setUpComponent(props) {
     return lpiMount(ReviewRecap, {
         props,
         i18n,
-        store,
     })
 }
 
 describe('ReviewRecap.vue', () => {
+    let usersStore
+    beforeEach(() => {
+        const projectsStore = useProjectsStore(pinia)
+        projectsStore.project = {
+            ...ProjectOutputFactory.generate(),
+            files: [],
+            links: [],
+        }
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = OrganizationOutputFactory.generate()
+        organizationsStore.all = OrganizationOutputFactory.generateMany(2)
+
+        usersStore = useUsersStore(pinia)
+        usersStore.accessToken = 123
+    })
+    afterEach(() => {
+        usersStore.$reset()
+    })
     it('should render component', () => {
-        const wrapper = setUpComponent(
-            {
-                project,
-                reviews,
-            },
-            buildStore({})
-        )
+        usersStore.permissions = {}
+        const wrapper = setUpComponent({
+            project,
+            reviews,
+        })
         expect(wrapper.exists()).toBe(true)
     })
 
     it('should contain review data', async () => {
-        const wrapper = setUpComponent(
-            {
-                project,
-                reviews,
-            },
-            buildStore({})
-        )
+        usersStore.permissions = {}
+        const wrapper = setUpComponent({
+            project,
+            reviews,
+        })
 
         expect(wrapper.text()).toMatch(/La grande revue/)
         expect(wrapper.text()).toMatch(/C'était très intéressant/)
@@ -122,25 +105,21 @@ describe('ReviewRecap.vue', () => {
     })
 
     it('should display edit button if allowed', async () => {
-        const wrapper = setUpComponent(
-            {
-                project,
-                reviews,
-            },
-            buildStore({ 'projects.add_review': true })
-        )
+        usersStore.permissions = { 'projects.add_review': true }
+        const wrapper = setUpComponent({
+            project,
+            reviews,
+        })
 
         expect(wrapper.findAll('.edit-btn').length).toBe(2)
     })
 
     it('should not display edit button if not allowed', async () => {
-        const wrapper = setUpComponent(
-            {
-                project,
-                reviews,
-            },
-            buildStore({})
-        )
+        usersStore.permissions = {}
+        const wrapper = setUpComponent({
+            project,
+            reviews,
+        })
 
         expect(wrapper.findAll('.edit-btn').length).toBe(0)
     })

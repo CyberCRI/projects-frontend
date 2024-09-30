@@ -59,6 +59,15 @@ import permissions from '@/mixins/permissions.ts'
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+
+import analytics from '@/analytics'
+import { createProject } from '@/api/projects.service'
 
 export default {
     name: 'CreateProjectPage',
@@ -68,6 +77,23 @@ export default {
     emits: ['close'],
 
     components: { ProjectForm, LpiButton, LpiSnackbar },
+
+    setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            languagesStore,
+            projectCategoriesStore,
+            organizationsStore,
+            projectsStore,
+            usersStore,
+        }
+    },
 
     data() {
         return {
@@ -80,7 +106,7 @@ export default {
                 category: undefined,
                 header_image: null,
 
-                language: this.$store.state.languages.current,
+                language: this.languagesStore.current,
 
                 wikipedia_tags: [],
                 organization_tags: [],
@@ -143,11 +169,11 @@ export default {
 
     computed: {
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         formNotEmpty() {
-            if (this.$store.getters['organizations/isDefault']) {
+            if (this.organizationsStore.isDefault) {
                 return !!this.form.title && !!this.form.purpose
             }
             return (
@@ -160,7 +186,7 @@ export default {
 
     async mounted() {
         if (!this.categories.length) {
-            await this.$store.dispatch('projectCategories/getAllProjectCategories')
+            await this.projectCategoriesStore.getAllProjectCategories()
         }
     },
 
@@ -185,7 +211,7 @@ export default {
                 is_shareable: false,
                 publication_status: 'private',
                 life_status: 'running',
-                organizations_codes: [this.$store.getters['organizations/current'].code],
+                organizations_codes: [this.organizationsStore.current.code],
                 wikipedia_tags_ids: this.form.wikipedia_tags.map((tag) => tag.wikipedia_qid),
                 organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
             }
@@ -195,11 +221,18 @@ export default {
             }
             this.isSaving = true
             try {
-                const project = await this.$store.dispatch('projects/addProject', payload)
+                const project = await createProject(payload)
+
+                // fetch updated project list from user so permissions as set correctly
+                await this.usersStore.getUser(this.usersStore.id, {
+                    root: true,
+                })
+
+                analytics.project.create({ id: project.id, title: project.title })
 
                 /* Until backend allows adding tags in the addProject request, add them after project creation */
                 if (this.form.wikipedia_tags.length || this.form.organization_tags.length) {
-                    await this.$store.dispatch('projects/updateProject', {
+                    await this.projectsStore.updateProject({
                         id: project.id,
                         project: {
                             wikipedia_tags_ids: this.form.wikipedia_tags.map(
@@ -212,21 +245,15 @@ export default {
                 await this.onboardingTrap('create_project', false)
                 // reload current to user to get new permissions
                 // maybe set a endpoint to fetch only permission ?
-                const user = this.$store.getters['users/userFromApi']
-                if (user) this.$store.dispatch('users/getUser', user.id)
+                const user = this.usersStore.userFromApi
+                if (user) this.usersStore.getUser(user.id)
                 this.$router.push({
                     name: 'projectDescription',
                     params: { slugOrId: project.slug },
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('toasts.project-create.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('toasts.project-create.success'))
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.project-create.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.project-create.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.loading = false

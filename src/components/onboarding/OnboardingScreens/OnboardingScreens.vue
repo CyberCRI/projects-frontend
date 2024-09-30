@@ -29,6 +29,7 @@ import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileC
 import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'OnboardingScreens',
 
@@ -41,7 +42,12 @@ export default {
         ProfileCompletedModal,
         LoaderSimple,
     },
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     data() {
         return {
             showWelcomeModal: false,
@@ -55,7 +61,7 @@ export default {
     },
 
     created() {
-        const status = this.$store.getters['users/userFromApi']?.onboarding_status
+        const status = this.usersStore.userFromApi?.onboarding_status
 
         this.showWelcomeModal = !!status?.show_welcome
 

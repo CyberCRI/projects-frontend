@@ -35,6 +35,7 @@
 import AdminBlock from '../AdminBlock.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import EditChatDrawer from '@/components/admin/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ChatAdminBlock',
 
@@ -43,7 +44,12 @@ export default {
         LinkButton,
         EditChatDrawer,
     },
-
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
+    },
     data() {
         return {
             editChatIsOpen: false,
@@ -52,7 +58,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         blockTitle() {
@@ -73,7 +79,7 @@ export default {
 
     methods: {
         reloadOrganization() {
-            this.$store.dispatch('organizations/getCurrentOrganization', this.organization.code)
+            this.organizationsStore.getCurrentOrganization(this.organization.code)
         },
     },
 }

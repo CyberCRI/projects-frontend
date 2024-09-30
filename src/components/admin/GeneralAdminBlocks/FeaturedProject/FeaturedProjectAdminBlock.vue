@@ -41,6 +41,8 @@ import {
     addFeaturedProject,
     removeFeaturedProject,
 } from '@/api/organizations.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'FeaturedProjectAdminBlock',
@@ -50,6 +52,14 @@ export default {
         SummaryAction,
         PickProjectsDrawer,
         FeaturedProjectAdminListItem,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     data() {
@@ -70,7 +80,7 @@ export default {
             return this.$t('admin.portal.featured-projects') + extra
         },
         organizationCode() {
-            return this.$store.getters['organizations/current']?.code
+            return this.organizationsStore.current?.code
         },
     },
 
@@ -99,17 +109,11 @@ export default {
                 await removeFeaturedProject(this.organizationCode, {
                     featured_projects_ids: toRemove,
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('featured-projects.save.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('featured-projects.save.success'))
 
                 this.featuredProjects = (await getFeaturedProjects(this.organizationCode)).results
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('featured-projects.save.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('featured-projects.save.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.isLoading = false

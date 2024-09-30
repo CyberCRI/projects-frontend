@@ -50,6 +50,10 @@ import { postProjectImage } from '@/api/projects.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
 import retry from 'async-retry'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useProjectsStore from '@/stores/useProjects.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'DescriptionDrawer',
@@ -57,6 +61,18 @@ export default {
     components: { Drawer, TipTapCollaborativeEditor, ConfirmModal },
 
     emits: ['close'],
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        const projectsStore = useProjectsStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            organizationsStore,
+            projectsStore,
+            usersStore,
+        }
+    },
 
     props: {
         project: {
@@ -101,13 +117,13 @@ export default {
         },
 
         projectSlug() {
-            return this.$store.getters['projects/currentProjectSlug']
+            return this.projectsStore.currentProjectSlug
         },
 
         providerParams() {
             return {
-                projectId: this.$store.getters['projects/currentProjectId'],
-                organizationId: this.$store.getters['organizations/current'].id,
+                projectId: this.projectsStore.currentProjectId,
+                organizationId: this.organizationsStore.current.id,
             }
         },
     },
@@ -161,27 +177,19 @@ export default {
                 await retry(
                     async () => {
                         try {
-                            const res = await this.$store.dispatch('projects/updateProject', {
+                            const res = await this.projectsStore.updateProject({
                                 id: this.project.id,
                                 project: {
                                     description: this.editorDescription,
                                 },
                             })
 
-                            await this.$store.dispatch(
-                                'projects/updateCurrentProjectDescription',
-                                this.editorDescription
-                            )
+                            this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
 
-                            this.$store.dispatch('notifications/pushToast', {
-                                message: this.$t('toasts.description-update.success'),
-                                type: 'success',
-                            })
-
-                            const connectedUser = this.$store.getters['users/userFromApi']
+                            const connectedUser = this.usersStore.userFromApi
 
                             this.notifyPatch({
-                                pid: this.$store.state.users.id,
+                                pid: this.usersStore.id,
                                 author_name: connectedUser
                                     ? connectedUser.given_name + ' ' + connectedUser.family_name
                                     : '',
@@ -202,10 +210,7 @@ export default {
                     }
                 )
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('toasts.description-update.error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('toasts.description-update.error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

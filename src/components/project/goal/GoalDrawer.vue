@@ -79,6 +79,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 import { createGoal, patchGoal } from '@/api/goals.service'
 import analytics from '@/analytics'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
     name: 'GoalDrawer',
@@ -94,6 +95,12 @@ export default {
         SwitchInput,
         GroupButton,
         FieldErrors,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        return {
+            toaster,
+        }
     },
 
     props: {
@@ -238,15 +245,9 @@ export default {
 
                         this.$emit('reload-goals')
 
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.goal-update.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.goal-update.success'))
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.goal-update.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(`${this.$t('toasts.goal-update.error')} (${error})`)
                         console.error(error)
                     } finally {
                         this.asyncing = false
@@ -269,10 +270,8 @@ export default {
 
                         this.$emit('reload-goals')
 
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: this.$t('toasts.goal-create.success'),
-                            type: 'success',
-                        })
+                        this.toaster.pushSuccess(this.$t('toasts.goal-create.success'))
+
                         if (this.$route.name !== 'projectGoals') {
                             this.$router.push({
                                 name: 'projectGoals',
@@ -280,10 +279,7 @@ export default {
                             })
                         }
                     } catch (error) {
-                        this.$store.dispatch('notifications/pushToast', {
-                            message: `${this.$t('toasts.goal-create.error')} (${error})`,
-                            type: 'error',
-                        })
+                        this.toaster.pushError(`${this.$t('toasts.goal-create.error')} (${error})`)
                         console.error(error)
                     } finally {
                         this.asyncing = false

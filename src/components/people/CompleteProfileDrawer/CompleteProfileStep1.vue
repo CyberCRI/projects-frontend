@@ -213,6 +213,9 @@ import { helpers, required } from '@vuelidate/validators'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -230,6 +233,16 @@ export default {
     },
 
     mixins: [imageMixin, onboardingStatusMixin],
+    setup() {
+        const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            languagesStore,
+            usersStore,
+        }
+    },
 
     data() {
         const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
@@ -291,7 +304,7 @@ export default {
 
     computed: {
         lang() {
-            return this.$store.getters['languages/current']
+            return this.languagesStore.current
         },
         hasBioExemple() {
             return this.researcherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId
@@ -332,7 +345,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.$store.getters['users/id'])
+                this.user = await getUser(this.usersStore.id)
                 this.form.picture = this.user.profile_picture || null
                 this.form.imageSizes = this.user.profile_picture
                     ? pictureApiToImageSizes(this.user.profile_picture)
@@ -403,22 +416,16 @@ export default {
                     await this.onboardingTrap('complete_profile', false)
 
                     // reload user
-                    this.$store.dispatch('users/getUser', this.user.id)
+                    this.usersStore.getUser(this.user.id)
                     // confirm success
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('profile.edit.general.save-success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
                 } else {
                     // invalid
                     success = false
                 }
             } catch (error) {
                 success = false
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.general.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.general.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.$emit('saving', false)

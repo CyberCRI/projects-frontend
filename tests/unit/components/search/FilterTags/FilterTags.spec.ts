@@ -13,21 +13,12 @@ vi.mock('@/api/wikipedia-tags.service', () => ({
     getAllWikiTags: vi.fn().mockResolvedValue({ results: [] }),
 }))
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-function buildStore() {
-    return {
-        modules: {
-            organizations: {
-                namespaced: true,
-                state: {
-                    current: {
-                        code: 'test',
-                    },
-                },
-            },
-        },
-    }
-}
 
 const i18n = {
     locale: 'en',
@@ -42,12 +33,13 @@ describe('FilterTags', () => {
     let defaultParams
 
     beforeEach(() => {
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { code: 'test' } as unknown as OrganizationOutput
         defaultParams = {
             props: {
                 label: 'FilterTags',
                 triggerUpdate: false,
             },
-            store: buildStore(),
             i18n,
         }
     })

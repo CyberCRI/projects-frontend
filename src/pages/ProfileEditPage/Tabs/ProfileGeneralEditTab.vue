@@ -263,6 +263,8 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 function defaultForm() {
     return {
@@ -301,6 +303,14 @@ export default {
     emits: ['profile-edited'],
 
     mixins: [imageMixin],
+    setup() {
+        const toaster = useToasterStore()
+        const usersStore = useUsersStore()
+        return {
+            toaster,
+            usersStore,
+        }
+    },
 
     props: {
         user: {
@@ -390,7 +400,7 @@ export default {
             return this.v$.$anyDirty
         },
         isSelf() {
-            const connectedUser = this.$store.getters['users/userFromApi']
+            const connectedUser = this.usersStore.userFromApi
             return connectedUser && this.user.id === connectedUser.id
         },
     },
@@ -466,18 +476,12 @@ export default {
                     // give extra time for profile-edited event to be consumed
                     await new Promise((resolve) => setTimeout(resolve, 50))
                     // reload user if self to update store info
-                    if (this.isSelf) this.$store.dispatch('users/getUser', this.user.id)
+                    if (this.isSelf) this.usersStore.getUser(this.user.id)
                     // confirm success
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('profile.edit.general.save-success'),
-                        type: 'success',
-                    })
+                    this.toaster.pushSuccess(this.$t('profile.edit.general.save-success'))
                 }
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('profile.edit.general.save-error')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('profile.edit.general.save-error')} (${error})`)
                 console.error(error)
             } finally {
                 this.asyncing = false

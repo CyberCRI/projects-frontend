@@ -47,7 +47,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 
 import SearchFilters from '@/components/search/Filters/SearchFilters.vue'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
-
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 function defaultSearch() {
     return ''
 }
@@ -62,6 +62,12 @@ export default {
         SearchInput,
         LpiButton,
         SearchFilters,
+    },
+    setup() {
+        const organizationsStore = useOrganizationsStore()
+        return {
+            organizationsStore,
+        }
     },
 
     props: {
@@ -160,7 +166,7 @@ export default {
                         .map((tag) => tag.wikipedia_qid) || [],
                 organization_tags:
                     filters.tags?.filter((tag) => 'organization' in tag).map((tag) => tag.id) || [],
-                organizations: [this.$store.state.organizations.current.code],
+                organizations: [this.organizationsStore.current.code],
                 skills: filters.skills?.map((tag) => tag.wikipedia_qid) || [],
             }
             delete adaptedFilters['tags']

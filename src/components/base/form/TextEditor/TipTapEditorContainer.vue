@@ -1,6 +1,5 @@
 <script setup>
-import { useStore } from 'vuex'
-const store = useStore()
+import useLanguagesStore from '@/stores/useLanguages'
 
 const props = defineProps({
     mode: { type: String, required: true },
@@ -13,12 +12,14 @@ function focusEditor() {
         props.editor.commands.focus('end')
     }
 }
+
+const languagesStore = useLanguagesStore()
 </script>
 <template>
     <div
         :class="{
             ['editor editor-' + mode]: true,
-            ['lang-' + store.state.languages.current]: true,
+            ['lang-' + languagesStore.current]: true,
         }"
         @click.self="focusEditor"
     >

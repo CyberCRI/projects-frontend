@@ -3,7 +3,10 @@ import ProjectTabs from '@/components/project/ProjectTabs.vue'
 import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
 import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
-
+import pinia from '@/stores'
+import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
     locale: 'en',
@@ -19,26 +22,6 @@ const route = {
     },
 }
 
-const store = {
-    modules: {
-        projectCategories: {
-            namespaced: true,
-            getters: {
-                allOrderedByOrderId: vi.fn(() => ProjectCategoryOutputFactory.generateMany(2)),
-            },
-        },
-
-        organizations: {
-            namespaced: true,
-            getters: {
-                current: () => ({
-                    id: 123,
-                }),
-            },
-        },
-    },
-}
-
 const factory = (props?) => {
     return lpiShallowMount(ProjectTabs, {
         props: {
@@ -46,7 +29,6 @@ const factory = (props?) => {
             ...props,
         },
         i18n,
-        store,
         global: {
             mocks: {
                 $route: route,
@@ -56,6 +38,12 @@ const factory = (props?) => {
 }
 
 describe('ProjectTabs.vue', () => {
+    beforeEach(() => {
+        const projectCategories = useProjectCategoriesStore(pinia)
+        projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+        const organizationsStore = useOrganizationsStore(pinia)
+        organizationsStore.current = { id: 123 } as unknown as OrganizationOutput
+    })
     it('should render component', () => {
         const wrapper = factory()
         expect(wrapper.exists()).toBe(true)

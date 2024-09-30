@@ -64,7 +64,8 @@ import permissions from '@/mixins/permissions.ts'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
-
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'NewsListPage',
 
@@ -77,6 +78,15 @@ export default {
         ConfirmModal,
         NewsListItemSkeleton,
         PaginationButtons,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     data() {
@@ -125,20 +135,12 @@ export default {
         async deleteNews() {
             this.isDeletingNews = true
             try {
-                await deleteNews(
-                    this.$store.getters['organizations/current']?.code,
-                    this.newsToDelete.id
-                )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('news.delete.success'),
-                    type: 'success',
-                })
+                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
+                this.toaster.pushSuccess(this.$t('news.delete.success'))
+
                 this.loadNews()
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('news.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.newsToDelete = null
@@ -151,10 +153,11 @@ export default {
                 this.canEditNews || this.canDeleteNews ? {} : { to_date: new Date().toISOString() }
 
             this.loading = true
-            this.newsRequest = await getAllNews(
-                this.$store.getters['organizations/current']?.code,
-                { ordering: '-publication_date', limit: this.maxNewsPerPage, ...dateLimit }
-            )
+            this.newsRequest = await getAllNews(this.organizationsStore.current?.code, {
+                ordering: '-publication_date',
+                limit: this.maxNewsPerPage,
+                ...dateLimit,
+            })
             this.loading = false
         },
 

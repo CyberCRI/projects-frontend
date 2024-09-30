@@ -115,6 +115,8 @@ import {
     declineAccessRequest,
 } from '@/api/organizations.service.ts'
 import ToolTip from '@/components/base/ToolTip.vue'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'RequestsAdminTab',
@@ -125,6 +127,14 @@ export default {
         PaginationButtons,
         ToolTip,
         LpiCheckbox,
+    },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
     },
 
     data() {
@@ -169,7 +179,7 @@ export default {
 
     computed: {
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         filteredUsers() {
@@ -243,32 +253,22 @@ export default {
                 await declineAccessRequest(this.organization.code, {
                     access_requests: [request.id],
                 })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.requests.decline-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('admin.requests.decline-success'))
+
                 await this.searchRequest()
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('admin.requests.decline-failed')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('admin.requests.decline-failed')} (${error})`)
             }
         },
 
         async acceptRequest(request) {
             try {
                 await acceptAccessRequest(this.organization.code, { access_requests: [request.id] })
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('admin.requests.accept-success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('admin.requests.accept-success'))
+
                 await this.searchRequest()
             } catch (error) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('admin.requests.accept-failed')} (${error})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('admin.requests.accept-failed')} (${error})`)
             }
         },
     },

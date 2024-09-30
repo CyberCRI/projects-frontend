@@ -16,6 +16,7 @@
 import { getUser } from '@/api/people.service.ts'
 import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'ProfileEditPage',
 
@@ -24,7 +25,12 @@ export default {
     },
 
     mixins: [onboardingStatusMixin],
-
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     provide() {
         return {
             profileEditReloadUser: this.loadUser,
@@ -51,7 +57,7 @@ export default {
     methods: {
         async loadUser() {
             try {
-                this.user = await getUser(this.userId || this.$store.getters['users/id'])
+                this.user = await getUser(this.userId || this.usersStore.id)
                 // safe check for isSelf beacuse this.userId might be a slug in fact
             } catch (error) {
                 console.error(error)
@@ -59,7 +65,7 @@ export default {
         },
 
         async onProfileEdited() {
-            if (this.user?.id == this.$store.getters['users/id']) {
+            if (this.user?.id == this.usersStore.id) {
                 this.onboardingTrap('complete_profile', false)
             }
         },

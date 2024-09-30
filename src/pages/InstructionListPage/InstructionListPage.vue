@@ -52,6 +52,8 @@ import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawe
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'InstructionListPage',
@@ -64,6 +66,14 @@ export default {
     },
 
     mixins: [permissions],
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
+        return {
+            toaster,
+            organizationsStore,
+        }
+    },
 
     data() {
         return {
@@ -91,7 +101,7 @@ export default {
                     : { to_date: new Date().toISOString() }
             this.loading = true
             this.allInstructions = (
-                await getAllInstructions(this.$store.getters['organizations/current']?.code, {
+                await getAllInstructions(this.organizationsStore.current?.code, {
                     ordering: 'publication_date',
                     ...dateLimit,
                 })
@@ -103,19 +113,14 @@ export default {
             this.isDeletingInstruction = true
             try {
                 await deleteInstruction(
-                    this.$store.getters['organizations/current']?.code,
+                    this.organizationsStore.current?.code,
                     this.instructionToDelete.id
                 )
-                this.$store.dispatch('notifications/pushToast', {
-                    message: this.$t('instructions.delete.success'),
-                    type: 'success',
-                })
+                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
+
                 this.loadInstructions()
             } catch (err) {
-                this.$store.dispatch('notifications/pushToast', {
-                    message: `${this.$t('instructions.delete.error')} (${err})`,
-                    type: 'error',
-                })
+                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
                 console.error(err)
             } finally {
                 this.instructionToDelete = null

@@ -12,6 +12,7 @@
 
 <script>
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'LanguageFilter',
@@ -20,6 +21,12 @@ export default {
 
     components: { LpiCheckbox },
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
     props: {
         modelValue: {
             type: Array,
@@ -29,7 +36,7 @@ export default {
 
     data() {
         return {
-            languages: this.$store.getters['languages/all'].map((lang) => ({
+            languages: this.languagesStore.all.map((lang) => ({
                 label: lang,
                 selected: this.modelValue.some((l) => l == lang),
             })),

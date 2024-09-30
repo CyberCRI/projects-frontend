@@ -84,7 +84,7 @@
                 :search="{
                     limit: 12,
                     ordering: '-updated_at',
-                    members: [$store.getters['users/id']],
+                    members: [usersStore.id],
                     member_role: ['owners', 'members', 'reviewers'],
                 }"
                 mode="projects"
@@ -227,7 +227,9 @@ import analytics from '@/analytics'
 import { getAnnouncements } from '@/api/announcements.service'
 
 import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
-
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'HomePage',
 
@@ -253,6 +255,17 @@ export default {
         OnboardingTodoBlock,
     },
 
+    setup() {
+        const projectCategoriesStore = useProjectCategories()
+        const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
+        return {
+            projectCategoriesStore,
+            organizationsStore,
+            usersStore,
+        }
+    },
+
     data() {
         return {
             announcements: [],
@@ -265,7 +278,7 @@ export default {
     },
 
     created() {
-        this.$store.dispatch('organizations/getAllOrganizations')
+        this.organizationsStore.getAllOrganizations()
     },
 
     mounted() {
@@ -274,15 +287,15 @@ export default {
 
     computed: {
         organizations() {
-            return this.$store.getters['organizations/all']
+            return this.organizationsStore.all
         },
 
         organization() {
-            return this.$store.getters['organizations/current']
+            return this.organizationsStore.current
         },
 
         categories() {
-            return this.$store.getters['projectCategories/allOrderedByOrderId']
+            return this.projectCategoriesStore.allOrderedByOrderId
         },
 
         PlusOrMinusIcon() {
@@ -298,7 +311,7 @@ export default {
         },
 
         isConnected() {
-            return this.$store.getters['users/isConnected']
+            return this.usersStore.isConnected
         },
         orderOptions() {
             return [
@@ -320,7 +333,7 @@ export default {
         showOnbordingTodos() {
             if (!this.isConnected) return false
             if (!this.organization?.onboarding_enabled) return false
-            const status = this.$store.getters['users/userFromApi']?.onboarding_status || {}
+            const status = this.usersStore.userFromApi?.onboarding_status || {}
             return (
                 status.show_progress &&
                 (status.complete_profile ||
