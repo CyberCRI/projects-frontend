@@ -17,6 +17,7 @@
             <ProjectTabs
                 v-else
                 :project="project"
+                @reload-project="reloadProject"
                 :locations="locations"
                 :comments="comments"
                 @reload-comments="getComments(project.id)"

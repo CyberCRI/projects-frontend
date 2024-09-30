@@ -55,6 +55,7 @@ export default {
         'reload-team',
         'reload-reviews',
         'reload-linked-projects',
+        'reload-project',
     ],
 
     components: { TabsLayout, LpiButton, AddToProjectDropdown },
@@ -159,6 +160,7 @@ export default {
                         reviews: this.reviews,
                         linkedProjects: this.linkedProjects,
                         onReloadReviews: () => this.$emit('reload-reviews'),
+                        onReloadProject: () => this.$emit('reload-project'),
                     },
                     condition: true,
                     dataTest: 'project-summary',
@@ -294,6 +296,7 @@ export default {
                         categories: this.categories,
                         onReloadTeam: () => this.$emit('reload-team'),
                         onReloadReviews: () => this.$emit('reload-reviews'),
+                        onReloadProject: () => this.$emit('reload-project'),
                     },
                     dataTest: 'project-settings',
                 },

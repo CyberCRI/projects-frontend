@@ -30,6 +30,7 @@
                     :project="project"
                     :reviews="reviews"
                     @reload-reviews="$emit('reload-reviews')"
+                    @reload-project="reloadProject"
                 />
             </div>
 
