@@ -49,6 +49,7 @@
             v-if="modals.project.visible"
             :is-opened="modals.project.visible"
             @close="toggleAddModal('project')"
+            @project-edited="reloadProject"
         />
         <GoalDrawer
             :project="project"
@@ -224,11 +225,8 @@ export default {
         })
         const route = useRoute()
         const router = useRouter()
-        const project = computed({
-            // getter
-            get() {
-                return projectsStore.project
-            },
+        const project = computed(() => {
+            return projectsStore.project
         })
 
         const toggleAddModal = (modalType, editedItem = null) => {

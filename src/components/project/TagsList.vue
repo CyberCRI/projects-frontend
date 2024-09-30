@@ -281,19 +281,25 @@ export default {
 
     watch: {
         organizationTags: {
-            handler: 'layoutTags',
+            handler: function () {
+                this.layoutTags()
+            },
             deep: true,
             immediate: false,
         },
 
         wikipediaTags: {
-            handler: 'layoutTags',
+            handler: function () {
+                this.layoutTags()
+            },
             deep: true,
             immediate: false,
         },
 
         infoTags: {
-            handler: 'layoutTags',
+            handler: function () {
+                this.layoutTags()
+            },
             deep: true,
             immediate: false,
         },

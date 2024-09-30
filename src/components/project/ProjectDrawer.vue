@@ -39,7 +39,7 @@ export default {
 
     components: { BaseDrawer, ProjectForm },
 
-    emits: ['close'],
+    emits: ['close', 'project-edited'],
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
@@ -236,6 +236,7 @@ export default {
                 this.toaster.pushError(`${this.$t('toasts.project-edit.error')} (${error})`)
                 console.error(error)
             } finally {
+                this.$emit('project-edited')
                 this.isSaving = false
             }
         },
