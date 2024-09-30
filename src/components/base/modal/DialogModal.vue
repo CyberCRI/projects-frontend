@@ -17,44 +17,43 @@
         </template>
 
         <!-- These buttons can be changed for future purposes -->
-        <template #footer v-if="hasFooter">
-            <button
-                v-bind="firstButtonOptions"
-                type="button"
-                class="button-footer shadow-box"
-                @click="close"
-                aria-label="first-button"
-                data-test="cancel-destroy"
-            >
-                <slot name="button-1"></slot>
-            </button>
+        <template #footer v-if="!noFooter">
+            <div class="modal-footer">
+                <LpiButton
+                    :disabled="asyncing"
+                    :label="cancelButtonLabel || $t('common.cancel')"
+                    secondary
+                    class="button-footer"
+                    @click="close"
+                    data-test="cancel-destroy"
+                />
 
-            <slot v-if="$slots['extra-buttons']" name="extra-buttons"></slot>
+                <slot v-if="$slots['extra-buttons']" name="extra-buttons"></slot>
 
-            <button
-                v-if="$slots['button-2']"
-                v-bind="secondButtonOptions"
-                type="button"
-                class="button-footer button-footer--submit shadow-box"
-                @click="submit"
-                aria-label="second-button"
-                data-test="confirm-destroy"
-            >
-                <slot name="button-2"></slot>
-            </button>
+                <LpiButton
+                    v-if="!noSecondButton"
+                    :disabled="disabled || asyncing"
+                    :label="confirmButtonLabel || $t('common.confirm')"
+                    :btn-icon="asyncing ? 'LoaderSimple' : null"
+                    class="button-footer"
+                    @click="submit"
+                    data-test="confirm-destroy"
+                />
+            </div>
         </template>
     </BaseModal>
 </template>
 
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'DialogModal',
 
     emits: ['close', 'submit'],
 
-    components: { BaseModal },
+    components: { BaseModal, LpiButton },
 
     props: {
         width: {
@@ -77,14 +76,31 @@ export default {
             default: false,
         },
 
-        firstButtonOptions: {
-            type: Object,
+        asyncing: {
+            type: Boolean,
+            default: false,
+        },
+
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        confirmButtonLabel: {
+            type: String,
+            default: null,
+        },
+        cancelButtonLabel: {
+            type: String,
             default: null,
         },
 
-        secondButtonOptions: {
-            type: Object,
-            default: null,
+        noFooter: {
+            type: Boolean,
+            default: false,
+        },
+        noSecondButton: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -94,13 +110,7 @@ export default {
         },
 
         submit() {
-            this.$emit('submit')
-        },
-    },
-
-    computed: {
-        hasFooter() {
-            return !!this.$slots['button-1'] || !!this.$slots['extra-buttons']
+            if (!this.disabled && !this.asyncing) this.$emit('submit')
         },
     },
 }
@@ -109,45 +119,10 @@ export default {
 <style scoped lang="scss">
 .modal-footer {
     display: flex;
-    place-content: space-between center;
-
-    button {
-        cursor: pointer;
-    }
+    gap: $space-l;
 }
 
 .modal-body {
     max-height: 80vh;
-}
-
-/* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */
-.button-footer {
-    color: $primary-dark;
-    background: $white;
-    padding: pxToRem(10px) pxToRem(34px);
-    border: $border-width-s solid $primary-dark;
-    font-weight: 700;
-    border-radius: 24px;
-    text-transform: capitalize;
-}
-
-/* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */
-.button-footer--submit {
-    background: $primary-dark;
-    color: $white;
-    margin-left: pxToRem(20px);
-}
-
-/* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */
-.button-footer[disabled] {
-    opacity: 0.7;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-/* dont use deep() here beacause of a teleport (see BaseModal) weirdness with slot  */
-.button-footer:not([disabled]):hover {
-    color: $white;
-    background: $primary-dark;
 }
 </style>

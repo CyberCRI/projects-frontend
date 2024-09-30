@@ -101,7 +101,7 @@ describe('ReviewRecap.vue', () => {
         expect(wrapper.text()).toMatch(/C'était très intéressant/)
         expect(wrapper.text()).toMatch(/test auto/i)
         // js locale is french on locale test server, english on remote
-        expect(wrapper.text()).toMatch(new RegExp(new Date('2022-10-20').toLocaleDateString()))
+        expect(wrapper.text()).toMatch(new RegExp(new Date('2022-10-20').toLocaleDateString('en')))
     })
 
     it('should display edit button if allowed', async () => {
