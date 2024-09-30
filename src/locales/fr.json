@@ -914,12 +914,12 @@
         "short-title": {
             "events": "Calendrier",
             "projects": "Vos projets",
-            "instructions": "À ne pas manquer"
+            "instructions": "Instructions"
         },
         "long-title": {
             "events": "Calendrier",
             "projects": "Vos projets",
-            "instructions": "À ne pas manquer"
+            "instructions": "Instructions"
         },
         "create-project": "Créer un projet",
         "check-locations": "Voir nos emplacements",
