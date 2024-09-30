@@ -126,13 +126,15 @@
                 <div class="section section--green">
                     <h3 class="label">{{ $t('project.actions') }}</h3>
 
-                    <LinkButton
-                        :label="$filters.capitalize($t('project.duplicate'))"
-                        class="button"
-                        btn-icon="Copy"
-                        @click="duplicateProject"
-                    />
-                    <div class="separator"></div>
+                    <template v-if="canEditProject">
+                        <LinkButton
+                            :label="$filters.capitalize($t('project.duplicate'))"
+                            class="button"
+                            btn-icon="Copy"
+                            @click="duplicateProject"
+                        />
+                        <div class="separator"></div>
+                    </template>
                     <LinkButton
                         :label="$t('report.bug')"
                         class="button"
