@@ -6,6 +6,7 @@
         <div class="news-title-ctn mobile">
             <h3 class="news-title">{{ news.title }}</h3>
             <ContextActionMenu
+                v-if="canEditNews || canDeleteNews"
                 class="news-actions"
                 @edit="$emit('edit-news', news)"
                 :can-edit="canEditNews"
@@ -27,6 +28,7 @@
                 <h3 class="news-title">{{ news.title }}</h3>
 
                 <ContextActionMenu
+                    v-if="canEditNews || canDeleteNews"
                     class="news-actions"
                     @edit="$emit('edit-news', news)"
                     :can-edit="canEditNews"

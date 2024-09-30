@@ -19,10 +19,10 @@
                         <span class="separator">&bull;</span>
                         <span class="date">
                             <span v-if="showEditDate">
-                                {{ new Date(comment.updated_at).toLocaleDateString() }}
+                                {{ $d(new Date(comment.updated_at)) }}
                             </span>
                             <span v-else>
-                                {{ new Date(comment.created_at).toLocaleDateString() }}
+                                {{ $d(new Date(comment.created_at)) }}
                             </span>
                         </span>
                     </div>
@@ -87,7 +87,7 @@
                                 ? $t('comment.private-exchange.deleted')
                                 : $t('comment.deleted')
                         }}
-                        {{ new Date(comment.deleted_at).toLocaleDateString() }}
+                        {{ $d(new Date(comment.deleted_at)) }}
                     </span>
                 </div>
             </div>

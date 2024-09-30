@@ -164,7 +164,7 @@ export default {
     computed: {
         displayedDate() {
             return this.modelValue.publication_date
-                ? new Date(this.modelValue.publication_date).toLocaleDateString()
+                ? this.$d(new Date(this.modelValue.publication_date))
                 : ''
         },
         organization() {

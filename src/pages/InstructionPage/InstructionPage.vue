@@ -127,7 +127,7 @@ export default {
 
         publicationDate() {
             return this.instruction?.publication_date
-                ? new Date(this.instruction.publication_date).toLocaleDateString()
+                ? this.$d(new Date(this.instruction.publication_date))
                 : ''
         },
     },

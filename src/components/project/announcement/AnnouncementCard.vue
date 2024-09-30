@@ -3,7 +3,7 @@
         <div class="announcement-card shadow-box" @click="$emit('know-more-clicked', announcement)">
             <div class="announcement-header horizontal-padding top-padding">
                 <span class="date-ctn">
-                    {{ new Date(announcement.updated_at).toLocaleDateString() }}
+                    {{ $d(new Date(announcement.updated_at)) }}
                 </span>
                 <span v-if="announcement.type && announcement.type !== 'na'" class="dot">
                     &#9679;

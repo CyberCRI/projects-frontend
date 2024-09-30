@@ -12,7 +12,7 @@
         </div>
 
         <GoalItem
-            v-for="goal in goals"
+            v-for="goal in sortedGoals"
             :key="goal.id"
             :goal="goal"
             :can-edit-goal="canEditProject"
@@ -82,6 +82,22 @@ export default {
             goalToBeDeleted: null,
             asyncing: false,
         }
+    },
+
+    computed: {
+        sortedGoals() {
+            return [...this.goals].sort((a, b) => {
+                if (!a.deadline_at && !b.deadline_at) {
+                    return a.title < b.title ? -1 : 1
+                } else if (!a.deadline_at) {
+                    return -1
+                } else if (!b.deadline_at) {
+                    return 1
+                } else {
+                    return a.deadline_at < b.deadline_at ? -1 : 1
+                }
+            })
+        },
     },
 
     inject: ['projectLayoutToggleAddModal'],

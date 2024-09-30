@@ -158,9 +158,7 @@ export default {
         },
 
         publicationDate() {
-            return this.news?.publication_date
-                ? new Date(this.news.publication_date).toLocaleDateString()
-                : ''
+            return this.news?.publication_date ? this.$d(new Date(this.news.publication_date)) : ''
         },
 
         imageSizes() {

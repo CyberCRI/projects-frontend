@@ -231,10 +231,7 @@ export default {
             this.validityType = 'pick-date'
             this.showDatePicker = true
         },
-        formatDate(isoDate) {
-            const date = new Date(isoDate)
-            return date.toLocaleDateString(this.$i18n.locale)
-        },
+
         onDateSelected(modelData) {
             this.form.expire_at = modelData
             this.fixDateTime()
@@ -254,7 +251,7 @@ export default {
         },
         displayDate() {
             if (this.form.expire_at) {
-                return this.formatDate(this.form.expire_at)
+                return this.$d(this.form.expire_at)
             }
             return ''
         },

@@ -10,7 +10,7 @@
 
         <div v-if="goals.length" class="goals-ctn">
             <GoalSummaryItem
-                v-for="(goal, index) in goals"
+                v-for="(goal, index) in sortedGoals"
                 :key="index"
                 :goal="goal"
                 class="goal"
@@ -37,7 +37,21 @@ export default {
             required: true,
         },
     },
-
+    computed: {
+        sortedGoals() {
+            return [...this.goals].sort((a, b) => {
+                if (!a.deadline_at && !b.deadline_at) {
+                    return a.title < b.title ? -1 : 1
+                } else if (!a.deadline_at) {
+                    return -1
+                } else if (!b.deadline_at) {
+                    return 1
+                } else {
+                    return a.deadline_at < b.deadline_at ? -1 : 1
+                }
+            })
+        },
+    },
     methods: {
         goToGoalPage() {
             this.$router.push({

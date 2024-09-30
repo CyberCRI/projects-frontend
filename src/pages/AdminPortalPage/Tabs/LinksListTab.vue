@@ -89,7 +89,7 @@
                         <td>
                             <BadgeItem
                                 class="date-watch"
-                                :label="formatDate(link.expire_at)"
+                                :label="$d(new Date(link.expire_at))"
                                 :colors="dateColor(link.expire_at)"
                             />
                         </td>
@@ -175,10 +175,6 @@ export default {
 
                 console.error('Failed to copy: ', err)
             }
-        },
-        formatDate(isoDate) {
-            const date = new Date(isoDate)
-            return date.toLocaleDateString()
         },
         deleteLink(id) {
             this.linkToDelete = id

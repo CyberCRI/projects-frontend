@@ -86,7 +86,7 @@
                         </ToolTip>
                     </td>
                     <td>
-                        {{ user.created_at ? new Date(user.created_at).toLocaleDateString() : '-' }}
+                        {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
                     </td>
                     <td>
                         {{

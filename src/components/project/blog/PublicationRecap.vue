@@ -11,9 +11,7 @@
 
         <div class="publication-body custom-scrollbar">
             <div class="publication-meta">
-                <span class="date">{{
-                    new Date(lastPublication.updated_at).toLocaleDateString()
-                }}</span>
+                <span class="date">{{ $d(new Date(lastPublication.updated_at)) }}</span>
             </div>
             <h3 class="publication-title">
                 <span v-if="isBlog">{{ lastPublication.title }}</span>

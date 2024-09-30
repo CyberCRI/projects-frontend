@@ -129,9 +129,7 @@ export default {
 
     computed: {
         displayedDate() {
-            return this.modelValue.event_date
-                ? new Date(this.modelValue.event_date).toLocaleDateString()
-                : ''
+            return this.modelValue.event_date ? this.$d(new Date(this.modelValue.event_date)) : ''
         },
     },
 

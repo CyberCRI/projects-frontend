@@ -24,6 +24,7 @@
             </p>
         </div>
         <ContextActionMenu
+            v-if="canEditEvent || canDeleteEvent"
             class="event-controls"
             @edit="editEvent(event)"
             :can-edit="canEditEvent"
