@@ -5,8 +5,6 @@ import analytics from '@/analytics'
 async function follow(follow: FollowInput): Promise<FollowOutput> {
     const result = await postFollow(follow)
 
-    // commit('projects/ADD_FOLLOW', result, { root: true })
-
     analytics.follow.follow({
         project: {
             id: follow.project_id,
@@ -30,7 +28,6 @@ async function followMany({ id, body }: { id: string; body: any }) {
     for (let i = 0; i < result.length; i++) {
         const follow = result[i]
         if (targets.includes(follow.project['id'])) {
-            // commit('projects/ADD_FOLLOW', follow, { root: true })
             analytics.follow.follow({
                 project: {
                     id: follow.project.id,
@@ -47,8 +44,6 @@ async function followMany({ id, body }: { id: string; body: any }) {
 
 async function unfollow({ follower_id, project_id }: FollowInput): Promise<void> {
     const result = await deleteFollow({ follower_id, project_id })
-
-    // commit('projects/DELETE_FOLLOW', { root: true })
 
     analytics.follow.unfollow({
         project: {

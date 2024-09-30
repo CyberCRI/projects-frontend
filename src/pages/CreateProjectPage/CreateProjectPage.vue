@@ -115,6 +115,7 @@ export default {
                     owners: null,
                     members: null,
                     reviewers: null,
+                    people_groups: null,
                 },
                 imageSizes: null,
             },
@@ -224,9 +225,7 @@ export default {
                 const project = await createProject(payload)
 
                 // fetch updated project list from user so permissions as set correctly
-                await this.usersStore.getUser(this.usersStore.id, {
-                    root: true,
-                })
+                await this.usersStore.getUser(this.usersStore.id)
 
                 analytics.project.create({ id: project.id, title: project.title })
 

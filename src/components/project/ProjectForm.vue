@@ -317,11 +317,12 @@ export default {
             this.form.team.members = []
             this.form.team.owners = []
             this.form.team.reviewers = []
+            this.form.team.people_groups = []
 
             team.forEach((user) => {
-                /* This condition let us skip the first user (connected user) */
                 if (this.$filters.isNotGroup(user.user))
                     this.form.team[user.role].push(user.user.id)
+                else this.form.team.people_groups.push(user.user.id)
             })
         },
 

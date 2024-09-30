@@ -499,9 +499,7 @@ export default {
                 const projectCopy = await duplicateProject(originalProject.id)
 
                 // fetch updated project list from user so permissions as set correctly
-                await this.usersStore.getUser(this.usersStore.id, {
-                    root: true,
-                })
+                await this.usersStore.getUser(this.usersStore.id)
 
                 analytics.project.duplicate(originalProject.id, projectCopy.id)
 
