@@ -98,7 +98,7 @@ export default {
                 this.goal.status === 'complete'
                     ? this.$t('goal.completed-on-the')
                     : this.$t('goal.planned-for-the')
-            } ${new Date(this.goal.deadline_at).toLocaleDateString()}`
+            } ${this.$d(new Date(this.goal.deadline_at))}`
         },
 
         hasDescription() {

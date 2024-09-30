@@ -4,6 +4,7 @@ export const capitalize = (value) => {
     return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
+// TODO: dead code ?
 export const toLocaleDateString = (date) => new Date(date).toLocaleDateString()
 
 export const stripTags = (str) => (str ? str.replace(/(<([^>]+)>)/gi, '') : str)

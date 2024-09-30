@@ -11,7 +11,7 @@
         <div class="goal-title">{{ goal.title }}</div>
 
         <div v-if="goal.deadline_at" class="deadline">
-            {{ new Date(goal.deadline_at).toLocaleDateString() }}
+            {{ $d(new Date(goal.deadline_at)) }}
         </div>
     </div>
 </template>

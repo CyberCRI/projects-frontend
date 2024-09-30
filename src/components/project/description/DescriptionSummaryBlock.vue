@@ -37,7 +37,7 @@
                     >
                         <span>{{ item.label }}</span>
                         <span v-if="item.date" class="item-date">{{
-                            new Date(item.date).toLocaleDateString()
+                            $d(new Date(item.date))
                         }}</span>
                     </p>
                 </li>

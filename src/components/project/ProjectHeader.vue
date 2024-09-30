@@ -546,9 +546,9 @@ export default {
             let viewField = 'header.views'
             let nbViews = this.project.views
             let creationDate = 'header.creation'
-            let info2 = new Date(this.project.created_at).toLocaleDateString()
+            let info2 = this.$d(new Date(this.project.created_at))
             let updatedDate = 'header.update'
-            let info3 = new Date(this.project.updated_at).toLocaleDateString()
+            let info3 = this.$d(new Date(this.project.updated_at))
             return {
                 icon: 'Poll',
                 title: viewField,

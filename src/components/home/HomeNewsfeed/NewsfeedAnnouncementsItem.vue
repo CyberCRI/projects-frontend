@@ -22,7 +22,7 @@
         </h3>
         <div class="announcement-infos">
             <span class="date-ctn">
-                {{ new Date(announcement.updated_at).toLocaleDateString() }}
+                {{ $d(new Date(announcement.updated_at)) }}
             </span>
             <span v-if="announcement.type && announcement.type !== 'na'" class="dot">
                 &#9679;

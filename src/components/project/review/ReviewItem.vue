@@ -28,7 +28,7 @@
 
             <div class="date">
                 &nbsp;<span v-html="$t('project.reviewed-on-the')" />
-                {{ new Date(review.created_at).toLocaleDateString() }}
+                {{ $d(new Date(review.created_at)) }}
             </div>
         </div>
 

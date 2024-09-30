@@ -4,6 +4,7 @@
             <h3 class="instruction-title">{{ instruction.title }}</h3>
 
             <ContextActionMenu
+                v-if="canEditInstruction || canDeleteInstruction"
                 class="instruction-actions"
                 @edit="$emit('edit-instruction', instruction)"
                 :can-edit="canEditInstruction"

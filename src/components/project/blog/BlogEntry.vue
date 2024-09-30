@@ -5,7 +5,7 @@
                 <div class="entry-title">{{ blogEntry.title }}</div>
 
                 <div class="date">
-                    {{ new Date(blogEntry.created_at).toLocaleDateString() }}
+                    {{ $d(new Date(blogEntry.created_at)) }}
                 </div>
             </div>
 
