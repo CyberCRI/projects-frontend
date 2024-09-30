@@ -1,5 +1,10 @@
 <template>
-    <DialogModal @close="$emit('close')" @submit="submit">
+    <DialogModal
+        @close="$emit('close')"
+        @submit="submit"
+        :confirm-button-label="locationToBeEdited ? $t('common.edit') : $t('common.add')"
+        :cancel-button-label="$t('common.cancel')"
+    >
         <template #header>
             {{
                 locationToBeEdited
@@ -29,14 +34,12 @@
             />
         </template>
 
-        <template #button-1>{{ $t('common.cancel') }}</template>
         <template #extra-buttons v-if="locationToBeEdited">
-            <button @click="deleteLocation" class="delete-button">
-                {{ $filters.capitalize($t('common.delete')) }}
-            </button>
-        </template>
-        <template #button-2
-            >{{ locationToBeEdited ? $t('common.edit') : $t('common.add') }}
+            <LpiButton
+                @click="deleteLocation"
+                class="delete-button"
+                :label="$filters.capitalize($t('common.delete'))"
+            />
         </template>
     </DialogModal>
 </template>
@@ -48,13 +51,14 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
 import useToasterStore from '@/stores/useToaster.ts'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'LocationForm',
 
     emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
 
-    components: { DialogModal, TextInput, GroupButton },
+    components: { DialogModal, TextInput, GroupButton, LpiButton },
 
     props: {
         locationToBeEdited: {
@@ -213,12 +217,5 @@ export default {
 .delete-button {
     color: $white;
     background: $salmon;
-    width: 100%;
-    padding: $space-m 0;
-    font-weight: 700;
-    text-transform: capitalize;
-    cursor: pointer;
-    border: none;
-    border-top: $border-width-s solid $primary;
 }
 </style>

@@ -1,5 +1,11 @@
 <template>
-    <DialogModal @close="closeModal" @submit="setColor" :is-small="true">
+    <DialogModal
+        @close="closeModal"
+        @submit="setColor"
+        :is-small="true"
+        :confirm-button-label="mode === 'add' ? $t('common.add') : $t('common.edit')"
+        :cancel-button-label="$t('common.cancel')"
+    >
         <template #header
             >{{
                 $filters.capitalize(
@@ -37,34 +43,30 @@
             </div>
         </template>
 
-        <template #button-1>{{ $t('common.cancel') }}</template>
-
         <template #extra-buttons>
-            <button
+            <LpiButton
                 v-if="mode === 'edit'"
                 type="button"
                 @click="removeColor"
                 class="button-footer button-delete"
                 aria-label="delete-button"
                 data-test="delete-color-button"
-            >
-                <span>{{ $t('common.delete') }}</span>
-            </button>
+                :label="$t('common.delete')"
+            />
         </template>
-
-        <template #button-2>{{ mode === 'add' ? $t('common.add') : $t('common.edit') }}</template>
     </DialogModal>
 </template>
 
 <script>
 import DialogModal from '@/components/base/modal/DialogModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'EditorModalColor',
 
     emits: ['closeModal'],
 
-    components: { DialogModal },
+    components: { DialogModal, LpiButton },
 
     data() {
         return {
@@ -131,20 +133,8 @@ export default {
 
 <style lang="scss" scoped>
 .button-delete {
-    cursor: pointer;
     color: $white;
     background: $salmon;
-    margin-left: pxToRem(16px);
-    padding: $space-m pxToRem(11px);
-    border: $border-width-s solid $primary-dark;
-    font-weight: 700;
-    border-radius: 24px;
-    text-transform: capitalize;
-
-    &:hover {
-        color: $white;
-        background: $primary-dark;
-    }
 }
 
 .inter-title {

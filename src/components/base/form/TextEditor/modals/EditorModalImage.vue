@@ -2,7 +2,10 @@
     <DialogModal
         @close="closeModal"
         @submit="insertImage"
-        :second-button-options="secondButtonOptions"
+        :confirm-button-label="$t('common.confirm')"
+        :cancel-button-label="$t('common.cancel')"
+        :disabled="!file"
+        :asyncing="uploading"
     >
         <template #header>{{ $filters.capitalize($t('file.add-image')) }}</template>
 
@@ -16,10 +19,6 @@
                 @upload-image="fileChange"
             />
         </template>
-
-        <template #button-1>{{ $t('common.cancel') }}</template>
-
-        <template #button-2>{{ $t('common.confirm') }}</template>
     </DialogModal>
 </template>
 
@@ -43,24 +42,13 @@ export default {
         }
     },
 
-    computed: {
-        validImage() {
-            return this.validImageExtension && this.validImageSize
-        },
-
-        validImageExtension() {
-            return this.imageSrc.match(/\.(jpeg|jpg|gif|png|jfif|webp)$/i) != null
-        },
-
-        validImageSize() {
-            return this.file && this.file.size < MAX_FILE_SIZE
-        },
-
-        secondButtonOptions() {
-            return {
-                disabled: !this.file,
-            }
-        },
+    data() {
+        return {
+            imageSrc: '',
+            file: undefined,
+            uploading: false,
+            displayedImage: undefined,
+        }
     },
 
     props: {
@@ -76,13 +64,18 @@ export default {
         },
     },
 
-    data() {
-        return {
-            imageSrc: '',
-            file: undefined,
-            uploading: false,
-            displayedImage: undefined,
-        }
+    computed: {
+        validImage() {
+            return this.validImageExtension && this.validImageSize
+        },
+
+        validImageExtension() {
+            return this.imageSrc.match(/\.(jpeg|jpg|gif|png|jfif|webp)$/i) != null
+        },
+
+        validImageSize() {
+            return this.file && this.file.size < MAX_FILE_SIZE
+        },
     },
 
     methods: {
@@ -118,27 +111,26 @@ export default {
             }
         },
 
-        insertImage() {
+        async insertImage() {
             if (!this.validImage) return
             if (!this.saveImageCallback) {
                 this.toaster.pushError(this.$t('resource.cannot-upload-image'))
                 console.error('saveImageCallback is not defined')
             } else {
                 this.uploading = true
-                this.saveImageCallback(this.file)
-                    .then((image) => {
-                        this.handleImageModalConfirmed(image)
-                        this.$nextTick(() => {
-                            this.$emit('image', image)
-                            this.closeModal()
-                        })
+                try {
+                    const image = await this.saveImageCallback(this.file)
+                    this.handleImageModalConfirmed(image)
+                    this.$nextTick(() => {
+                        this.$emit('image', image)
+                        this.closeModal()
                     })
-                    .catch(() => {
-                        this.toaster.pushError(this.$t('resource.error-uploading-image'))
-                    })
+                    this.uploading = false
+                } catch (_e) {
+                    this.toaster.pushError(this.$t('resource.error-uploading-image'))
+                    this.uploading = false
+                }
             }
-
-            this.uploading = false
         },
 
         handleImageModalConfirmed(img) {

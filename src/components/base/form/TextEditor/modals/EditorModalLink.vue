@@ -2,7 +2,9 @@
     <DialogModal
         @close="closeModal"
         @submit="insertLink"
-        :second-button-options="secondButtonOptions"
+        :confirm-button-label="mode === 'add' ? $t('common.add') : $t('common.edit')"
+        :cancel-button-label="$t('common.cancel')"
+        :disabled="disabled"
     >
         <template #header
             >{{
@@ -29,22 +31,16 @@
             />
         </template>
 
-        <template #button-1>{{ $t('common.cancel') }}</template>
-
         <template #extra-buttons>
-            <button
+            <LpiButton
                 v-if="mode === 'edit'"
-                type="button"
                 @click="removeLink"
                 class="button-footer button-delete"
                 aria-label="delete-button"
                 data-test="delete-link-button"
-            >
-                <span>{{ $t('common.delete') }}</span>
-            </button>
+                :label="$t('common.delete')"
+            />
         </template>
-
-        <template #button-2>{{ mode === 'add' ? $t('common.add') : $t('common.edit') }}</template>
     </DialogModal>
 </template>
 
@@ -52,13 +48,14 @@
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import funct from '@/functs/functions.ts'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'EditorModalLink',
 
     emits: ['closeModal'],
 
-    components: { DialogModal, TextInput },
+    components: { DialogModal, TextInput, LpiButton },
 
     props: {
         editor: { type: Object, required: true },
@@ -82,10 +79,8 @@ export default {
         mode() {
             return this.linkHref !== undefined ? 'edit' : 'add'
         },
-        secondButtonOptions() {
-            return {
-                disabled: !this.link || (this.needText && !this.text),
-            }
+        disabled() {
+            return !this.link || (this.needText && !this.text)
         },
         linkHref() {
             return this.editor.getAttributes('link').href
@@ -153,20 +148,8 @@ export default {
 
 <style lang="scss" scoped>
 .button-delete {
-    cursor: pointer;
     color: $white;
     background: $salmon;
-    margin-left: pxToRem(16px);
-    padding: $space-m pxToRem(11px);
-    border: $border-width-s solid $primary-dark;
-    font-weight: 700;
-    border-radius: 24px;
-    text-transform: capitalize;
-
-    &:hover {
-        color: $white;
-        background: $primary-dark;
-    }
 }
 
 label {

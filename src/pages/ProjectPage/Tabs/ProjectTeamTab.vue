@@ -115,7 +115,7 @@
             v-if="showQuitIsImposible"
             :content="$t('common.cant-quit-other')"
             :title="$t('project.quit')"
-            :has-second-button="false"
+            no-second-button
             :cancel-button-label="$t('common.ok')"
             @cancel="toggleShowQuitIsImposibleVisible"
         />
