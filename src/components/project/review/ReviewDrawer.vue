@@ -71,7 +71,7 @@ export default {
 
     mixins: [permissions],
 
-    emits: ['reload-reviews', 'close'],
+    emits: ['reload-reviews', 'close', 'reload-project'],
 
     components: {
         ConfirmModal,
@@ -240,15 +240,15 @@ export default {
             }
 
             try {
-                // await this.$store.dispatch('reviews/postReview', body)
-
                 await postReview(body)
                 this.$emit('reload-reviews')
 
-                await this.$store.dispatch('projects/lockUnlockProject', {
+                await this.projectsStore.lockUnlockProject({
                     project_id: this.project.id,
                     context: this.lock ? 'lock' : 'unlock',
                 })
+                await this.$nextTick()
+                this.$emit('reload-project')
 
                 this.toaster.pushSuccess(this.$t('toasts.review-create.success'))
             } catch (error) {
@@ -267,7 +267,6 @@ export default {
             }
 
             try {
-                // await this.$store.dispatch('reviews/patchReview', body)
                 await patchReview(body)
                 this.$emit('reload-reviews')
                 this.toaster.pushSuccess(this.$t('toasts.review-update.success'))

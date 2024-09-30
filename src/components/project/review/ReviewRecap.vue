@@ -18,6 +18,7 @@
             :project="project"
             @close="editReview = null"
             @reload-reviews="$emit('reload-reviews')"
+            @reload-project="$emit('reload-project')"
         />
         <ConfirmModal
             v-if="toDelete"
@@ -38,7 +39,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ReviewRecap',
 
-    emits: ['reload-reviews'],
+    emits: ['reload-reviews', 'reload-project'],
 
     components: {
         ReviewDrawer,

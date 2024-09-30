@@ -210,6 +210,7 @@
             :project="project"
             @reload-reviews="$emit('reload-reviews')"
             @close="toggleReviewDrawer"
+            @reload-project="$emit('reload-project')"
         />
     </div>
 </template>
@@ -237,7 +238,7 @@ import { deleteProject, duplicateProject } from '@/api/projects.service'
 export default {
     name: 'ProjectSettingsTab',
 
-    emits: ['asyncing', 'reload-team', 'reload-reviews'],
+    emits: ['asyncing', 'reload-team', 'reload-reviews', 'reload-project'],
 
     mixins: [permissions, viewportWidth],
 
