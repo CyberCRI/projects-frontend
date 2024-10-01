@@ -9,15 +9,7 @@
             ></div>
         </Transition>
         <Transition appear name="drawer-slide">
-            <div
-                v-if="isOpened"
-                :class="{
-                    'no-footer': !hasFooter,
-                    padding: padding,
-                }"
-                class="drawer"
-                data-test="drawer-layout-container"
-            >
+            <div v-if="isOpened" class="drawer" data-test="drawer-layout-container">
                 <header :class="{ scrolled }" class="drawer__header">
                     <div class="header-text">
                         <slot name="header_prefix" />
@@ -38,7 +30,7 @@
                     <slot></slot>
                 </main>
 
-                <footer v-if="hasFooter" class="drawer__footer">
+                <footer v-if="!noFooter" class="drawer__footer">
                     <slot name="footer">
                         <LpiButton
                             :disabled="asyncing"
@@ -101,9 +93,9 @@ export default {
             default: null,
         },
 
-        hasFooter: {
+        noFooter: {
             type: Boolean,
-            default: true,
+            default: false,
         },
 
         customStyle: {
@@ -119,11 +111,6 @@ export default {
         asyncing: {
             type: Boolean,
             deafault: false,
-        },
-
-        padding: {
-            type: Boolean,
-            default: true,
         },
     },
 
@@ -173,8 +160,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$header-height: 64px;
-$footer-height: 42px;
 $slide-duration: 400ms;
 
 .background {
@@ -225,6 +210,7 @@ $slide-duration: 400ms;
         flex-grow: 1;
         display: flex;
         flex-flow: column nowrap;
+        max-height: 100%;
     }
 
     &.drawer-slide-leave-active,
@@ -250,10 +236,6 @@ $slide-duration: 400ms;
         }
     }
 
-    &.padding {
-        padding: pxToRem(16px);
-    }
-
     .small > & {
         width: pxToRem(450px);
         max-width: 100vw;
@@ -271,7 +253,7 @@ $slide-duration: 400ms;
 
     &__header {
         flex-shrink: 0;
-        height: $header-height;
+        min-height: 64px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -299,12 +281,6 @@ $slide-duration: 400ms;
 
         button ~ button {
             text-transform: capitalize;
-        }
-    }
-
-    &.no-footer {
-        &__main {
-            max-height: calc(100vh - $space-l - $header-height);
         }
     }
 }

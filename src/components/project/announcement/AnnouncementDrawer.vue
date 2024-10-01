@@ -312,6 +312,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.announcement-form {
+    overflow: hidden;
+}
+
 .announcement-form,
 .description-section {
     display: flex;
@@ -323,6 +327,10 @@ export default {
     flex-grow: 1;
 }
 
+.description-section {
+    overflow: auto;
+}
+
 .form-section:not(:first-child) {
     margin-top: $space-l;
 }
@@ -332,6 +340,7 @@ export default {
     font-weight: bold;
     margin-bottom: $space-m;
     color: $black;
+    margin-right: 1rem;
 }
 
 .datepicker {

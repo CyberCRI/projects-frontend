@@ -136,6 +136,7 @@ export default {
     display: flex;
     flex-flow: column;
     justify-content: stretch;
+    overflow: hidden;
 }
 
 .error-description {

@@ -42,7 +42,7 @@
                 <FieldErrors :errors="v$.form.applicant_email.$errors" />
             </div>
 
-            <div class="form-section">
+            <div class="form-section editor-section">
                 <label for="motivation" class="label">
                     {{ $filters.capitalize($t('recruit.about-you')) }}
                 </label>
@@ -238,14 +238,36 @@ export default {
     font-size: $font-size-l;
 }
 
+.announcement-reply {
+    display: flex;
+    flex-direction: column;
+    gap: $space-s;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
 .form-section {
-    margin-bottom: $space-m;
+    flex-shrink: 0;
 
     .label {
         font-size: $font-size-s;
         font-weight: bold;
-        margin-bottom: $space-l;
+        margin-bottom: $space-m;
         color: $black;
+    }
+}
+
+.editor-section {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .editor {
+        flex-grow: 1;
+        flex-shrink: 1;
+        overflow: auto;
     }
 }
 </style>

@@ -118,6 +118,7 @@ function openImageModal() {
     justify-content: space-between;
     border-bottom: $border-width-s solid $primary;
     top: 0;
+    box-sizing: border-box;
 
     .icons {
         align-items: center;

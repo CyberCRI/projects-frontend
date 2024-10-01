@@ -13,14 +13,14 @@
         @close="closeDrawer"
         @confirm="saveReview"
     >
-        <div>
+        <div class="review-form">
             <div class="review-entry">
                 <label>{{ $filters.capitalize($t('common.title')) }}</label>
                 <TextInput v-model="newReview.data.title" @blur="v$.newReview.data.title.$touch" />
                 <FieldErrors :errors="v$.newReview.data.title.$errors" />
             </div>
 
-            <div class="review-entry">
+            <div class="review-entry editor-entry">
                 <label>{{ $t('form.description') }}</label>
                 <TipTapEditor
                     v-model="newReview.data.description"
@@ -168,7 +168,7 @@ export default {
 
     computed: {
         isEdited() {
-            return rdata?.id
+            return this.rdata?.id
                 ? this.rdata.title != this.newReview.data.title ||
                       this.rdata.description != this.newReview.data.description
                 : this.newReview.data.title != '' || this.newReview.data.description != '<p></p>'
@@ -298,6 +298,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.review-form {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
 .review-switch {
     display: flex;
     flex-direction: row;
@@ -308,6 +315,19 @@ export default {
 .review-entry {
     margin-bottom: $space-l;
     text-align: left;
+    flex-shrink: 0;
+}
+
+.editor-entry {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .editor {
+        flex-grow: 1;
+    }
 }
 
 .review-entry:last-child {

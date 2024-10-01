@@ -1,11 +1,5 @@
 <template>
-    <BaseDrawer
-        :is-opened="isOpened"
-        title=""
-        @close="$emit('close')"
-        class="full"
-        :has-footer="false"
-    >
+    <BaseDrawer :is-opened="isOpened" title="" @close="$emit('close')" class="full" no-footer>
         <ExistingAccountChecker
             v-if="isAddMode && !targetUser"
             @check-done="onCheckDone"

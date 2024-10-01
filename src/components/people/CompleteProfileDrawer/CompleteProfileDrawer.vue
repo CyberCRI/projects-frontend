@@ -4,7 +4,6 @@
         title=""
         @close="cancel"
         class="full"
-        :padding="false"
         :data-test="`onboarding-step-${step}`"
     >
         <template #header_prefix>
@@ -56,7 +55,6 @@
         :title="$t('faq.portal')"
         @close="helpOpened = false"
         @confirm="helpOpened = false"
-        :padding="false"
     >
         <LpiLoader v-if="helpIsLoading" class="help-loader" type="simple" />
         <iframe :src="docUrl" @load="helpIsLoading = false" />

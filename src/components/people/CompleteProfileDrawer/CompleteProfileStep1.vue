@@ -181,7 +181,7 @@
             </div>
         </ProfileEditBlock>
         <BaseDrawer
-            :has-footer="false"
+            no-footer
             :is-opened="exempleToShow"
             :title="$t('profile.drawer_title')"
             @close="exempleToShow = null"

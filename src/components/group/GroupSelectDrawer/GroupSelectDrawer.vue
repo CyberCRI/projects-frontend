@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :is-opened="isOpened"
-        :has-footer="false"
+        no-footer
         :title="$t('group.select-group')"
         @close="closeModal"
         class="medium"
@@ -27,7 +27,7 @@
         <section v-if="isLoading" class="loader-ctn">
             <LoaderSimple />
         </section>
-        <section v-else class="results-ctn">
+        <section v-else class="results-ctn custom-scrollbar">
             <GroupCard
                 v-for="group in listGroups"
                 :key="group.id"
@@ -152,6 +152,7 @@ export default {
     align-items: center;
     justify-content: stretch;
     gap: $space-m;
+    padding-bottom: $space-l;
 }
 
 .loader-ctn {
@@ -166,8 +167,8 @@ export default {
     flex-wrap: wrap;
     align-content: flex-start;
     gap: $space-m;
-    padding-top: $space-l;
     padding-bottom: $space-l;
+    overflow: auto;
 
     .selected-card {
         background-color: $primary-lighter;

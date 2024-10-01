@@ -330,11 +330,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 .form,
 .goal-description-section {
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .goal-title,
