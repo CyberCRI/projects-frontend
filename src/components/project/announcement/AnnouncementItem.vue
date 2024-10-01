@@ -168,7 +168,7 @@ export default {
     }
 }
 
-.description::v-deep {
+:deep(.description) {
     strong {
         font-weight: 700 !important;
     }

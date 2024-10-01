@@ -228,7 +228,7 @@ $annoucement-padding: pxToRem(20px);
     }
 }
 
-.description::v-deep {
+:deep(.description) {
     strong {
         font-weight: 700;
     }
