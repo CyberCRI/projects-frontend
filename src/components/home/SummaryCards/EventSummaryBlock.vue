@@ -1,9 +1,5 @@
 <template>
-    <BaseListSummaryBlock
-        :title="events.length > 2 ? $t(`home.short-title.events`) : $t(`home.long-title.events`)"
-        :items="events"
-        :inlined="inlined"
-    >
+    <BaseListSummaryBlock :title="$t(`home.short-title.events`)" :items="events" :inlined="inlined">
         <template #default>
             <EventItem
                 v-for="event in events"

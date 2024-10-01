@@ -916,12 +916,7 @@
         "short-title": {
             "events": "Calendar",
             "projects": "Your projects",
-            "instructions": "Do not miss"
-        },
-        "long-title": {
-            "events": "Calendar",
-            "projects": "Your projects",
-            "instructions": "Do not miss"
+            "instructions": "Instructions"
         },
         "create-project": "Create a project",
         "check-locations": "Check our locations",

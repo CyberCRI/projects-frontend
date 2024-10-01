@@ -916,11 +916,6 @@
             "projects": "Vos projets",
             "instructions": "Instructions"
         },
-        "long-title": {
-            "events": "Calendrier",
-            "projects": "Vos projets",
-            "instructions": "Instructions"
-        },
         "create-project": "Créer un projet",
         "check-locations": "Voir nos emplacements",
         "our-locations": "Nos emplacements"
