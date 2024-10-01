@@ -1,10 +1,6 @@
 <template>
     <BaseListSummaryBlock
-        :title="
-            instructions.length > 2
-                ? $t(`home.short-title.instructions`)
-                : $t(`home.long-title.instructions`)
-        "
+        :title="$t(`home.short-title.instructions`)"
         :items="instructions"
         :inlined="inlined"
     >
