@@ -14,6 +14,7 @@
             @blur="$emit('blur', $event)"
             :data-test="dataTest"
             :maxlength="maxLength"
+            :rows="rows"
         />
 
         <span class="input-wrapper" :class="{ 'is-password': inputType == 'password' }" v-else>
@@ -102,6 +103,10 @@ export default {
         maxLength: {
             type: Number,
             default: null,
+        },
+        rows: {
+            type: [Number, String],
+            default: 3,
         },
     },
 

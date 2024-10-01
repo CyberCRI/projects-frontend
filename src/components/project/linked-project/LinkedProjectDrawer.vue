@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :is-opened="isOpened"
-        :has-footer="hasFooter"
+        :no-footer="!hasFooter"
         :title="
             editedLinkedProject
                 ? $t('project.edit-linked-project')

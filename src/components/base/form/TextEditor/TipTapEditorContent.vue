@@ -35,7 +35,6 @@ const dataTest = computed(() =>
     color: $black;
     padding: 8px;
     overflow-y: auto;
-    max-height: 430px;
     min-height: 100px;
     flex-grow: 1;
     margin-right: $space-2xs;

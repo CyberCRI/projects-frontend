@@ -1,7 +1,7 @@
 <template>
     <div v-if="!!projectId">
         <BaseDrawer
-            :has-footer="false"
+            no-footer
             :is-opened="isOpened"
             :title="$t('project.edit-map')"
             @close="$emit('close')"

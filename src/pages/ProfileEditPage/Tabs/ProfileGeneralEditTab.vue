@@ -211,20 +211,6 @@
             />
         </div>
     </div>
-    <BaseDrawer
-        :confirm-action-name="$t('common.confirm')"
-        :is-opened="showTagsDrawer"
-        :title="$t('profile.edit.general.tags.label')"
-        class="medium"
-        @close="showTagsDrawer = false"
-        @confirm="selectTags"
-    >
-        <TagsFilterEditor
-            v-if="showTagsDrawer"
-            :hide-organization-tags="true"
-            v-model="tagsSelection"
-        />
-    </BaseDrawer>
     <!-- sdgss selector -->
     <BaseDrawer
         :confirm-action-name="$t('common.confirm')"
@@ -251,7 +237,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import useVuelidate from '@vuelidate/core'
@@ -292,7 +277,6 @@ export default {
         ConfirmModal,
         TextInput,
         LpiButton,
-        TagsFilterEditor,
         BaseDrawer,
         SdgsFilter,
         LinkButton,
@@ -322,7 +306,6 @@ export default {
         return {
             form: defaultForm(),
             asyncing: false,
-            showTagsDrawer: false,
             tagsSelection: [],
             showSdgsDrawer: false,
             sdgsSelection: [],
@@ -523,11 +506,6 @@ export default {
             } else {
                 this.form = defaultForm()
             }
-        },
-
-        selectTags() {
-            this.form.tags = [...this.tagsSelection]
-            this.showTagsDrawer = false
         },
 
         openSdgsDrawer() {

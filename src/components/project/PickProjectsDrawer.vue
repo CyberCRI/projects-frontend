@@ -2,7 +2,6 @@
     <BaseDrawer
         :is-opened="isOpened"
         :title="drawerTitleWithLimit"
-        :padding="true"
         @close="close"
         @confirm="confirm"
         :asyncing="asyncing"

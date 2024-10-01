@@ -39,6 +39,8 @@ export default {
 $filter-value-icon-size: 16px;
 
 .filter-value {
+    flex-grow: 0;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;

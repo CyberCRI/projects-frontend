@@ -13,7 +13,7 @@
             ref="search-input"
         />
     </section>
-    <div>
+    <div class="group-list custom-scrollbar">
         <ul>
             <GroupsElementRadio
                 v-for="group in rooted ? rootedGroups : groups"
@@ -185,5 +185,10 @@ export default {
 <style lang="scss" scoped>
 .search-section {
     margin-block: 1rem;
+    flex-shrink: 0;
+}
+
+.group-list {
+    overflow: auto;
 }
 </style>

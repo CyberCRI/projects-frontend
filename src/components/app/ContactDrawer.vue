@@ -46,6 +46,7 @@
             <div class="form-input">
                 <h4 class="title">{{ $filters.capitalize($t('form.contact.content')) }}</h4>
                 <TextInput
+                    rows="10"
                     input-type="textarea"
                     v-model="form.content"
                     class="text-input"

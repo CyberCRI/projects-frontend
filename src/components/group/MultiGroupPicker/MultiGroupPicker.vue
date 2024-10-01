@@ -229,6 +229,7 @@ export default {
 <style lang="scss" scoped>
 .selected-groups {
     display: flex;
+    flex-wrap: wrap;
     gap: $space-m;
     margin-bottom: $space-m;
 }

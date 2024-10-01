@@ -8,7 +8,7 @@
         @close="close"
         @confirm="saveWording"
     >
-        <div>
+        <div class="field-section title-section">
             <TextInput
                 v-model="title"
                 :label="$t('admin.portal.general.wording.fields.title')"
@@ -17,7 +17,7 @@
             />
         </div>
 
-        <div class="editor-section">
+        <div class="field-section editor-section">
             <h4 class="field-label">
                 {{ $t('admin.portal.general.wording.fields.description') }}
             </h4>
@@ -134,6 +134,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.field-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-section {
+    flex-shrink: 0;
+}
+
+.editor-section {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
 .field-label {
     font-size: $font-size-s;
     margin-top: $space-l;

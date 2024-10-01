@@ -2,7 +2,7 @@
     <div class="project-form">
         <BaseDrawer
             :confirm-action-disabled="v$.$invalid || hasFileError"
-            :has-footer="resourceTypeSelected || !isAddMode"
+            :no-footer="!resourceTypeSelected && isAddMode"
             :confirm-action-name="$t('common.save')"
             :is-opened="isOpened"
             :title="$filters.capitalize(label)"

@@ -13,10 +13,10 @@
         @confirm="confirm"
     >
         <div class="add-skill-mode" v-if="mode == 'add'">
-            <p class="notice">
+            <p class="notice no-shrink">
                 {{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}
             </p>
-            <div class="selected-list">
+            <div class="selected-list no-shrink">
                 <FilterValue
                     v-for="skill in selection"
                     :key="skill.wikipedia_tag.wikipedia_qid"
@@ -26,7 +26,7 @@
                     @click="removeFromSelection(skill)"
                 />
             </div>
-            <div class="search-field">
+            <div class="search-field no-shrink">
                 <SearchInput
                     v-model="search"
                     @delete-query="onDeleteQuery"
@@ -37,10 +37,11 @@
                 />
                 <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
             </div>
-            <p v-if="confirmedSearch" class="notice">
+            <p v-if="confirmedSearch" class="notice no-shrink">
                 {{ $t('search.choose-skill') }}
             </p>
             <WikipediaResults
+                class="flexed-search-results-ctn custom-scrollbar"
                 v-if="confirmedSearch"
                 :query-string="confirmedSearch"
                 :existing-tags="selectionAsTags"
@@ -371,7 +372,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.no-shrink {
+    flex-shrink: 0;
+}
+
 .add-skill-mode {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+
     .notice {
         margin-top: $space-m;
     }
@@ -397,6 +407,10 @@ export default {
                 width: 100%;
             }
         }
+    }
+
+    .flexed-search-results {
+        overflow: auto;
     }
 
     .search-results {

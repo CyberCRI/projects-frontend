@@ -1,7 +1,6 @@
 <template>
     <BaseDrawer
         :title="drawerTitle"
-        :footer="true"
         :is-opened="isOpened"
         class="small"
         :confirm-action-name="$t('common.save')"

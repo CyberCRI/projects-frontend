@@ -1,7 +1,7 @@
 <template>
     <BaseDrawer
         :custom-style="customNotificationStyle"
-        :has-footer="false"
+        no-footer
         :is-opened="isOpened"
         class="small"
         confirm-action-name=""

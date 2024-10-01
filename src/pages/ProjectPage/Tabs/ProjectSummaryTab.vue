@@ -65,7 +65,7 @@
         />
 
         <BaseDrawer
-            :has-footer="false"
+            no-footer
             :is-opened="profileDrawer.isOpened"
             :title="$t('profile.drawer_title')"
             @close="closeProfileDrawer"
