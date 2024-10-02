@@ -213,8 +213,11 @@ $dimension: 200px;
             text-decoration: underline;
         }
 
-        a:hover {
-            text-decoration: underline !important;
+        a {
+            color: $primary-dark;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 

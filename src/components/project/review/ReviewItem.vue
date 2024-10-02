@@ -154,8 +154,11 @@ export default {
         text-decoration: underline;
     }
 
-    a:hover {
-        text-decoration: underline;
+    a {
+        color: $primary-dark;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 </style>
