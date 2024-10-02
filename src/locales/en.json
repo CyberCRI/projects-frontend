@@ -397,13 +397,13 @@
         "no-comments": "no comment has been made yet ...",
         "private-exchange": {
             "tab": "Internal Messages",
-            "no-message": "No private message yet...",
-            "notice": "Private messages are visible only to project team members.",
+            "no-message": "No internal message yet...",
+            "notice": "Internal messages are visible only to project team members.",
             "send": "Send",
-            "title": "Add your private message",
+            "title": "Add your internal message",
             "delete-title": "Delete definitely?",
-            "delete-description": "Are you sure you want to permanently delete your private message? This action will be irreversible.",
-            "deleted": "Private message deleted on the"
+            "delete-description": "Are you sure you want to permanently delete your internal message? This action will be irreversible.",
+            "deleted": "Internal message deleted on the"
         },
         "publish": "Publish your comment",
         "delete-title": "Delete definitely?",
@@ -2021,16 +2021,16 @@
             "success": "The project life status has been updated successfully"
         },
         "project-message-create": {
-            "success": "The private message has been added successfully",
-            "error": "Error during the private message creation"
+            "success": "The internal message has been added successfully",
+            "error": "Error during the internal message creation"
         },
         "project-message-delete": {
-            "success": "The private message has been deleted successfully",
-            "error": "Error during the private message deletion"
+            "success": "The internal message has been deleted successfully",
+            "error": "Error during the internal message deletion"
         },
         "project-message-update": {
-            "success": "The private message has been updated successfully",
-            "error": "Error during the private message update"
+            "success": "The internal message has been updated successfully",
+            "error": "Error during the internal message update"
         },
         "project-organizations-update": {
             "success": "The project organizations have been updated successfully",
