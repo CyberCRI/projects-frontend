@@ -96,7 +96,10 @@ export default {
 
     a {
         color: $primary-dark;
-        text-decoration: underline;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 </style>
