@@ -102,7 +102,7 @@ export default {
 
     mixins: [ProjectTab, permissions],
 
-    emits: ['reload-reviews'],
+    emits: ['reload-reviews', 'reload-project'],
 
     components: {
         DescriptionPlaceholder,
