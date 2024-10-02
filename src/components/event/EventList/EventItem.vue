@@ -155,9 +155,7 @@ export default {
     }
 
     &.is-new {
-        .event-name,
-        .event-information,
-        .event-groups {
+        .event-name {
             font-weight: 900;
         }
 
