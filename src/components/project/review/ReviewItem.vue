@@ -140,4 +140,22 @@ export default {
         }
     }
 }
+
+:deep(.des) {
+    strong {
+        font-weight: 700;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
 </style>
