@@ -42,7 +42,7 @@
             <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
             <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
         </div>
-        <div v-else-if="news" class="news-content" v-html="news.content"></div>
+        <div v-else-if="news" ref="newscontent" class="news-content" v-html="news.content"></div>
     </div>
 
     <div class="other-news page-section-narrow">
@@ -95,6 +95,7 @@ import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import fixEditorContent from '@/functs/editorUtils.ts'
 export default {
     name: 'NewsPage',
 
@@ -178,6 +179,12 @@ export default {
             await this.loadNews()
             await this.loadOtherNews()
             this.loading = false
+            this.$nextTick(() => {
+                console.log('content changed3', this.$refs)
+                const contentNode = this.$refs.newscontent
+                console.log('contentNode', contentNode)
+                fixEditorContent(contentNode)
+            })
         },
         async loadNews() {
             try {
