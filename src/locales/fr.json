@@ -225,7 +225,7 @@
             }
         },
         "groups": {
-            "intro": "Register links allow users who want to create a Projects account on your portal to do so. All you need to do is share with them the link. Many people can subscribe using one link.   You can control what group they will be part of when creating the link.",
+            "intro": "Utilisez les groupes pour gérer vos utilisateurs plus efficacement. Vous pouvez créer des groupes et y ajouter des utilisateurs. Vous pouvez également créer des sous-groupes.",
             "create-group": "Créer un groupe",
             "add-modal-title-1": "Ajouter un groupe enfant au groupe \"",
             "add-modal-title-2": "\"",
