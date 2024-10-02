@@ -10,6 +10,10 @@ import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
+
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useProjectsStore from '@/stores/useProjects'
+
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 vi.mock('@/api/follows.service', () => ({
@@ -40,6 +44,8 @@ describe('ProfileProjectTab', () => {
         usersStore.getUser = vi.fn()
         const organizationsStore = useOrganizationsStore(pinia)
         organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+        usePeopleGroupsStore(pinia)
+        useProjectsStore(pinia)
     })
     afterEach(() => {
         usersStore.$reset()

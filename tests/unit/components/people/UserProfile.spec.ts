@@ -12,8 +12,9 @@ import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import permissions from '@/mixins/permissions'
 vi.mock('@/api/people.service.ts', () => ({
-    getUser: vi.fn(),
+    getUser: vi.fn(() => Promise.resolve({ id: 12, permissions: [] })),
 }))
 
 const i18n = {
@@ -40,7 +41,6 @@ describe('UserProfile', () => {
             id: 12,
             userFromApi: {},
             permissions: {},
-            getUser: vi.fn(),
         })
     })
     afterEach(() => {
