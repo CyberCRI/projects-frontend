@@ -183,6 +183,7 @@ export default {
 
     a {
         color: $primary-dark;
+
         &:hover {
             text-decoration: underline;
         }

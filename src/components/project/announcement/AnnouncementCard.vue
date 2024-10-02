@@ -243,6 +243,7 @@ $annoucement-padding: pxToRem(20px);
 
     a {
         color: $primary-dark;
+
         &:hover {
             text-decoration: underline;
         }
