@@ -14,14 +14,15 @@
         <div class="texts">
             <h4 class="event-name">{{ event.title }}</h4>
             <div class="event-information" v-html="event.content"></div>
-            <p class="event-groups" v-if="event.people_groups.length">
+            <!-- TODO: put back group list when api send back their names ?-->
+            <!--p class="event-groups" v-if="event.people_groups.length">
                 <span>{{
                     event.people_groups.length > 1
                         ? $t('event.groups-label')
                         : $t('event.group-label')
                 }}</span>
                 {{ event.people_groups.map((group) => group.name).join(', ') }}
-            </p>
+            </p-->
         </div>
         <ContextActionMenu
             v-if="canEditEvent || canDeleteEvent"
