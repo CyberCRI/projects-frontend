@@ -32,7 +32,7 @@
             </span>
         </div>
         <div class="announcement-description">
-            <p class="clamped">{{ description }}</p>
+            <HtmlLimiter :html="description" />
         </div>
 
         <SummaryAction class="announcement-action" :action-label="$t('common.read')" />
@@ -44,12 +44,13 @@ import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import ImageMixin from '@/mixins/imageMixin.ts'
+import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 export default {
     name: 'NewsfeedAnnouncementsItem',
 
     mixins: [ImageMixin],
 
-    components: { SummaryAction, CroppedImage },
+    components: { SummaryAction, CroppedImage, HtmlLimiter },
 
     props: {
         announcement: {
@@ -75,8 +76,7 @@ export default {
         },
 
         description() {
-            const sanitized = this.announcement?.description.replace(/<[^>]+>/g, ' ') || ''
-            return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
+            return this.announcement?.description || ''
         },
 
         imageSizes() {
@@ -195,18 +195,33 @@ $dimension: 200px;
     flex-grow: 1;
     grid-column: 2;
     grid-row: 3;
+    display: flex;
+    place-self: stretch stretch;
+
+    :deep(.outer) {
+        flex-grow: 1;
+
+        strong {
+            font-weight: 700 !important;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        u {
+            text-decoration: underline;
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
+    }
 
     @media screen and (max-width: $min-tablet) {
         grid-column: 1;
         grid-row: 4;
     }
-}
-
-.clamped {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .announcement-action {
