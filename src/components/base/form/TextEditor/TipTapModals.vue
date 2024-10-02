@@ -93,7 +93,11 @@ function openImageModal() {
         @saved="$emit('saved')"
     />
 
-    <TableMenuBar v-if="showMenu && mode === 'full'" :editor="editor" class="editortablemenu" />
+    <TableMenuBar
+        v-if="showMenu && mode != 'node' && mode != 'simple'"
+        :editor="editor"
+        class="editortablemenu"
+    />
 
     <LinkMenuBar
         v-if="showMenu && mode !== 'none'"
