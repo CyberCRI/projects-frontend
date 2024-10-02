@@ -2,7 +2,7 @@
     <div class="loader-ctn" v-if="loading">
         <LoaderSimple />
     </div>
-    <form v-else>
+    <form class="group-form" v-else>
         <!--  Group Name -->
         <div>
             <TextInput
@@ -144,25 +144,24 @@
                 @click="openRemoveOrQuit"
             />
         </div>
-
-        <GroupDescriptionDrawer
-            :original-description="form.description"
-            :is-add-mode="isAddMode"
-            :is-opened="descriptionIsOpened"
-            @close="closeDescription"
-            @update-description="updateDescription"
-        />
-
-        <ConfirmModal
-            v-if="showRemoveQuit"
-            :content="$t('common.remove-group')"
-            :title="$t('project.remove-group')"
-            :cancel-button-label="'common.cancel'"
-            :confirm-button-label="'project.remove-group'"
-            @cancel="toggleShowRemoveGroupVisible"
-            @confirm="removeGroup"
-        />
     </form>
+    <GroupDescriptionDrawer
+        :original-description="form.description"
+        :is-add-mode="isAddMode"
+        :is-opened="descriptionIsOpened"
+        @close="closeDescription"
+        @update-description="updateDescription"
+    />
+
+    <ConfirmModal
+        v-if="showRemoveQuit"
+        :content="$t('common.remove-group')"
+        :title="$t('project.remove-group')"
+        :cancel-button-label="'common.cancel'"
+        :confirm-button-label="'project.remove-group'"
+        @cancel="toggleShowRemoveGroupVisible"
+        @confirm="removeGroup"
+    />
 </template>
 
 <script>
@@ -180,6 +179,7 @@ import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import fixEditorContent from '@/functs/editorUtils.ts'
 export default {
     name: 'GroupForm',
 
@@ -299,6 +299,20 @@ export default {
             handler: function () {
                 this.$emit('update:modelValue', this.form)
             },
+        },
+        'form.description': {
+            handler: function (neo, old) {
+                if (neo != old) {
+                    // give time to render content
+                    this.$nextTick(() => {
+                        const contentNode = document.querySelector(
+                            '.group-form .description-content'
+                        )
+                        fixEditorContent(contentNode)
+                    })
+                }
+            },
+            immediate: true,
         },
     },
 
