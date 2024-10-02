@@ -62,7 +62,7 @@ export default {
                 if (event) {
                     this.form = {
                         ...event,
-                        event_date: new Date(event.event_date),
+                        event_date: (event.event_date && new Date(event.event_date)) || '',
                         // build group "object" from array if it is an array
                         people_groups: event.people_groups.reduce
                             ? event.people_groups.reduce((acc, groupId) => {
