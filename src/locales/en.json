@@ -1348,7 +1348,7 @@
         "bio_pro": "Professional Bio",
         "bio_personal": "Personal Bio",
         "cancel-title": "Cancel profile editing",
-        "cancel-content": "Are you sure you want to cancel your profile edition. Any change made will be lost."
+        "cancel-content": "Are you sure you want to cancel your profile edition? Any change made will be lost."
     },
     "profile-completed-modal": {
         "notice-congratulation": "You are now ready to use the projects platform.",
