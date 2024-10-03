@@ -230,6 +230,8 @@
         :title="$t('profile.cancel-title')"
         @cancel="showCancelConfirmModal = false"
         @confirm="resetAndLeaveEditPage"
+        :cancel-button-label="$t('common.no')"
+        :confirm-button-label="$t('common.yes')"
     />
 </template>
 <script>
