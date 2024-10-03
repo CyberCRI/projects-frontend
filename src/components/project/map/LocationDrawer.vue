@@ -23,6 +23,7 @@
                     <div class="map">
                         <BaseMap
                             ref="map"
+                            :key="mapkey"
                             :config="config"
                             v-if="isOpened"
                             @contextmenu="
@@ -115,6 +116,7 @@ export default {
 
     data() {
         return {
+            mapkey: 0,
             config: {
                 mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
                 zoom: 2,
@@ -134,6 +136,11 @@ export default {
             mapVisible: true,
         }
     },
+    watch: {
+        locations() {
+            this.mapkey++
+        },
+    },
 
     methods: {
         centerMap() {
@@ -143,7 +150,6 @@ export default {
         openEditModal(location) {
             if (this.canEditProject) {
                 // restart from source locations because the map ones are not reactive
-                console.log('location', location)
                 this.locationToBeEdited = this.locations.find((loc) => loc.id === location.id)
                 this.formVisible = true
             }

@@ -4,6 +4,7 @@
         @submit="submit"
         :confirm-button-label="locationToBeEdited ? $t('common.edit') : $t('common.add')"
         :cancel-button-label="$t('common.cancel')"
+        :asyncing="asyncing"
     >
         <template #header>
             {{
@@ -38,6 +39,8 @@
             <LpiButton
                 @click="deleteLocation"
                 class="delete-button"
+                :disabled="asyncing"
+                :btn-icon="asyncing ? 'LoaderSimple' : null"
                 :label="$filters.capitalize($t('common.delete'))"
             />
         </template>
@@ -91,6 +94,7 @@ export default {
 
     data() {
         return {
+            asyncing: false,
             form: {
                 type: 'team',
                 title: '',
@@ -117,6 +121,7 @@ export default {
 
         async addLocation() {
             try {
+                this.asyncing = true
                 const location = {
                     ...this.form,
                     lat: this.newCoordinates[0],
@@ -141,11 +146,13 @@ export default {
                 console.error(error)
             } finally {
                 this.$emit('close')
+                this.asyncing = false
             }
         },
 
         async editLocation() {
             try {
+                this.asyncing = true
                 const result = await patchLocation(this.form)
 
                 analytics.location.updateLocationMapPoint({
@@ -163,11 +170,13 @@ export default {
                 console.error(error)
             } finally {
                 this.$emit('close')
+                this.asyncing = false
             }
         },
 
         async deleteLocation() {
             try {
+                this.asyncing = true
                 await deleteLocation(this.form)
 
                 analytics.location.deleteLocationMapPoint({
@@ -186,6 +195,7 @@ export default {
                 console.error(error)
             } finally {
                 this.$emit('close')
+                this.asyncing = true
             }
         },
     },
