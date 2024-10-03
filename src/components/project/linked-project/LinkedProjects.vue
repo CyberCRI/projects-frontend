@@ -27,6 +27,7 @@
             :title="$t('common.delete')"
             @cancel="confirmModalVisible = false"
             @confirm="deleteLinkedProject"
+            :asyncing="isDeleting"
         />
     </div>
 </template>
@@ -82,6 +83,7 @@ export default {
         return {
             confirmModalVisible: false,
             projectToBeDeleted: null,
+            isDeleting: false,
         }
     },
 
@@ -106,6 +108,7 @@ export default {
         },
 
         async deleteLinkedProject() {
+            this.isDeleting = true
             try {
                 await deleteLinkedProject({
                     project_id: this.project.id,
@@ -130,6 +133,7 @@ export default {
             } finally {
                 this.confirmModalVisible = false
                 this.projectToBeDeleted = null
+                this.isDeleting = false
             }
         },
     },

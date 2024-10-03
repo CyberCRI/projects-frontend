@@ -133,6 +133,7 @@
             "
             @cancel="openConfirmModal"
             @confirm="deleteComment"
+            :asyncing="isDeleting"
         />
     </div>
 </template>
@@ -209,6 +210,7 @@ export default {
             editing: false,
             confirmDeleteComment: false,
             imageError: false,
+            isDeleting: false,
         }
     },
 
@@ -226,6 +228,7 @@ export default {
         },
 
         async deleteComment() {
+            this.isDeleting = true
             if (this.isPrivate) {
                 try {
                     await deleteProjectMessage(this.project.id, this.comment.id)
@@ -247,6 +250,7 @@ export default {
                     console.error(error)
                 } finally {
                     this.confirmDeleteComment = false
+                    this.isDeleting = false
                 }
             } else {
                 try {
@@ -265,6 +269,7 @@ export default {
                     console.error(error)
                 } finally {
                     this.confirmDeleteComment = false
+                    this.isDeleting = false
                 }
             }
         },

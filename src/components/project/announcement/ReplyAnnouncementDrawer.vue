@@ -7,6 +7,7 @@
         :confirm-action-name="$t('recruit.apply')"
         @confirm="sendApplication"
         :confirm-action-disabled="v$.$invalid || !captchatoken"
+        :asyncing="asyncing"
     >
         <div class="announcement-reply">
             <h4 class="reply-to" v-if="announcement">{{ announcement.title }}</h4>
@@ -110,6 +111,7 @@ export default {
             },
             recaptcha: false,
             captchatoken: false,
+            asyncing: false,
         }
     },
 
@@ -158,6 +160,7 @@ export default {
 
             if (isValid)
                 try {
+                    this.asyncing = true
                     const payload = {
                         ...this.form,
                         project_id: this.announcement.project.id,
@@ -173,6 +176,7 @@ export default {
                     console.error(error)
                 } finally {
                     this.close()
+                    this.asyncing = false
                 }
         },
 

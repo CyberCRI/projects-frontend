@@ -12,6 +12,7 @@
         class="review-drawer medium"
         @close="closeDrawer"
         @confirm="saveReview"
+        :asyncing="asyncing"
     >
         <div class="review-form">
             <div class="review-entry">
@@ -110,6 +111,7 @@ export default {
 
     data() {
         return {
+            asyncing: false,
             v$: useVuelidate(),
             showConfirmModal: false,
             editorOption: {
@@ -205,6 +207,7 @@ export default {
         async saveReview() {
             const isValid = await this.v$.$validate()
             if (isValid) {
+                this.asyncing = true
                 if (!this.rdata?.id) {
                     // add
                     await this.createReview()
@@ -212,21 +215,24 @@ export default {
                     //edit
                     await this.updateReview()
                 }
-
-                // Update other project properties
-                const projectData = { life_status: 'private', is_locked: false }
-                if (this.publish) projectData.publication_status = 'public'
-                if (this.lock) {
-                    projectData.is_locked = true
-                    projectData.life_status = 'completed'
-                } else {
-                    projectData.life_status = 'running'
+                try {
+                    // Update other project properties
+                    const projectData = { life_status: 'private', is_locked: false }
+                    if (this.publish) projectData.publication_status = 'public'
+                    if (this.lock) {
+                        projectData.is_locked = true
+                        projectData.life_status = 'completed'
+                    } else {
+                        projectData.life_status = 'running'
+                    }
+                    await this.projectsStore.updateProject({
+                        id: this.project.id,
+                        project: projectData,
+                    })
+                } catch (error) {
+                    console.error(error)
                 }
-                await this.projectsStore.updateProject({
-                    id: this.project.id,
-                    project: projectData,
-                })
-
+                this.asyncing = false
                 this.closeDrawerNoConfirm()
             }
         },
