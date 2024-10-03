@@ -225,6 +225,7 @@ export default {
         },
 
         async updateComment() {
+            this.asyncing = true
             if (this.isPrivate) {
                 const projectMessage = {
                     id: this.originalComment.id,
@@ -250,6 +251,8 @@ export default {
                         `${this.$t('toasts.project-message-update.error')} (${error})`
                     )
                     console.error(error)
+                } finally {
+                    this.asyncing = false
                 }
             } else {
                 const comment = {
@@ -273,6 +276,8 @@ export default {
                 } catch (error) {
                     this.toaster.pushError(`${this.$t('toasts.comment-update.error')} (${error})`)
                     console.error(error)
+                } finally {
+                    this.asyncing = false
                 }
             }
         },
