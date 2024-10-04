@@ -179,16 +179,15 @@ export default {
             await this.loadNews()
             await this.loadOtherNews()
             this.loading = false
-            this.$nextTick(() => {
-                console.log('content changed3', this.$refs)
-                const contentNode = this.$refs.newscontent
-                console.log('contentNode', contentNode)
-                fixEditorContent(contentNode)
-            })
         },
         async loadNews() {
             try {
                 this.news = await getNews(this.organizationsStore.current?.code, this.slugOrId)
+
+                this.$nextTick(() => {
+                    const contentNode = this.$refs.newscontent
+                    fixEditorContent(contentNode)
+                })
             } catch (err) {
                 console.error(err)
                 this.$router.replace({
