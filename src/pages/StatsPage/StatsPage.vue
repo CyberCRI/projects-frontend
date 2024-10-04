@@ -37,6 +37,12 @@ export default {
                     component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'private' },
                 },
+                {
+                    key: 'stats-community',
+                    label: this.$t('project.community'),
+                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+                    props: { filter: 'org' },
+                },
             ],
         }
     },

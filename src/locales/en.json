@@ -1377,6 +1377,7 @@
         "announcements": "announcement | announcements",
         "at-coordinates": "at coordinates",
         "categories": "Projects categories",
+        "community": "Community's projects",
         "create-project": "Create a project",
         "create": {
             "choose-category-first": "Please choose a category first",
