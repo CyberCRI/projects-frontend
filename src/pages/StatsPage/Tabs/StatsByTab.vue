@@ -1,5 +1,10 @@
 <template>
     <div class="stats-by-tab">
+        <StatCard :title="$t('stats.number-projects-total')">
+            <LpiLoader v-if="isLoading" />
+            <TotalChart v-else :stats="stats.total" />
+        </StatCard>
+
         <StatCard :title="$t('stats.number-projects-sdg')">
             <LpiLoader v-if="isLoading" />
             <SdgChart v-else :stats="stats.by_sdg" />
@@ -25,6 +30,7 @@ import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
 import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
 import { getStats } from '@/api/stats.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import TotalChart from '@/components/stats/Charts/TotalChart.vue'
 
 export default {
     name: 'StatsByTab',
@@ -35,6 +41,7 @@ export default {
         SdgChart,
         TagChart,
         TimeOrgChart,
+        TotalChart,
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
