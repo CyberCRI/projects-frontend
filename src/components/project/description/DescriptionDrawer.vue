@@ -28,6 +28,7 @@
         />
         <TipTapCollaborativeEditor
             ref="tiptapEditor"
+            :key="editorKey"
             v-model="editorDescription"
             :room="room"
             save-icon-visible
@@ -96,6 +97,7 @@ export default {
 
     data() {
         return {
+            editorKey: 0,
             isFullScreen: false,
             editorDescription: '',
             room: '',
@@ -239,6 +241,7 @@ export default {
 
         loadProject(project) {
             this.editorDescription = this.getProjectDescription(project)
+            this.editorKey++
             this.room = 'description_' + project.id
         },
 
