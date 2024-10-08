@@ -21,7 +21,6 @@ export default {
         }
     },
     mounted() {
-        clearInterval(this.interval)
         if (this.chartData === this.displayedNumber) return
         this.interval = window.setInterval(() => {
             const change = (this.number - this.displayedNumber) / 10
