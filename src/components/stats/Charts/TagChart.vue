@@ -32,7 +32,7 @@ export default {
             chartData: undefined,
             language: this.languagesStore.current,
             options: {
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 responsive: true,
                 plugins: {
                     legend: {
