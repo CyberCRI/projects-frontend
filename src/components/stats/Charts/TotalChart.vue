@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <LpiSingleStatChart :chart-data="stats" />
+        <LpiSingleStatChart :number="stats" />
     </div>
 </template>
 

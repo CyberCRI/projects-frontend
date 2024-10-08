@@ -1,6 +1,7 @@
 <template>
     <div class="total-container">
-        <span class="projects-count">{{ chartData }}</span> <span class="projects-word">{{ $t('stats.projects') }}</span>
+        <span class="projects-count">{{ displayedNumber }}</span>
+        <span class="projects-word">{{ $t('stats.projects') }}</span>
     </div>
 </template>
 
@@ -8,10 +9,24 @@
 export default {
     name: 'LpiSingleStatChart',
     props: {
-        chartData: {
+        number: {
             type: Number,
             default: null,
         },
+    },
+    data() {
+        return {
+            displayedNumber: 0,
+            interval: false,
+        }
+    },
+    mounted() {
+        clearInterval(this.interval)
+        if (this.chartData === this.displayedNumber) return
+        this.interval = window.setInterval(() => {
+            const change = (this.number - this.displayedNumber) / 10
+            this.displayedNumber += change > 0 ? Math.ceil(change) : Math.floor(change)
+        }, 20)
     },
 }
 </script>
@@ -25,14 +40,14 @@ export default {
     .projects-count {
         font-size: 7rem;
         font-weight: 700;
-        color: $primary-dark;
+        color: $primary;
         margin-bottom: -10px;
     }
 
     .projects-word {
         font-size: 1.5rem;
         font-weight: 700;
-        color: $salmon;
+        color: $primary-dark;
     }
 }
 </style>
