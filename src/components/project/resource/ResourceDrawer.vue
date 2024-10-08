@@ -176,7 +176,7 @@ export default {
         isLink() {
             return this.isAddMode
                 ? this.selectedType === 'link' // if link is a video it become "video" after saving
-                : ['link', 'video'].includes(this.selectedItem.attachment_type)
+                : ['link', 'video', 'image'].includes(this.selectedItem.attachment_type) // leagy check for video and image
         },
 
         isFile() {
