@@ -16,9 +16,9 @@ export default {
         TabsLayout,
     },
 
-    data() {
-        return {
-            tabs: [
+    computed: {
+        tabs() {
+            return [
                 {
                     key: 'stats-all',
                     label: this.$t('home.all-projects'),
@@ -27,24 +27,24 @@ export default {
                 },
                 {
                     key: 'stats-public',
-                    label: this.$t('project.public'),
+                    label: this.$t('group.visibility-public'),
                     component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'public' },
                 },
                 {
                     key: 'stats-private',
-                    label: this.$t('project.private'),
+                    label: this.$t('group.visibility-private'),
                     component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'private' },
                 },
                 {
                     key: 'stats-community',
-                    label: this.$t('project.community'),
+                    label: this.$t('group.visibility-org'),
                     component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
                     props: { filter: 'org' },
                 },
-            ],
-        }
+            ]
+        },
     },
 }
 </script>
