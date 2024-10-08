@@ -28,6 +28,9 @@ export default {
             this.displayedNumber += change > 0 ? Math.ceil(change) : Math.floor(change)
         }, 20)
     },
+    beforeUnmount() {
+        clearInterval(this.interval)
+    },
 }
 </script>
 
