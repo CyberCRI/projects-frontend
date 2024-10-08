@@ -37,6 +37,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .projects-count {
         font-size: 7rem;
         font-weight: 700;
