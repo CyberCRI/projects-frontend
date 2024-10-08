@@ -4,7 +4,7 @@
             <div :style="style" class="description description-limited">
                 <HtmlLimiter
                     :html="description"
-                    :striped-tags="['table']"
+                    :striped-tags="[]"
                     class="description-content"
                     @computed="layoutComputed"
                     @computing="computeLayout"

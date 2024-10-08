@@ -151,6 +151,11 @@ export default {
                         'wbr',
                         'video',
                         'table',
+                        'thead',
+                        'tbody',
+                        'colgroup',
+                        'tfoot',
+                        'tr',
                         'ul',
                         'ol',
                     ]
@@ -181,6 +186,32 @@ export default {
         },
 
         async traverseNode(root, outer) {
+            function removeNode(root) {
+                let rootRemoved = false
+                if (
+                    root.nodeType == Node.ELEMENT_NODE &&
+                    ['td', 'th'].includes(root.tagName.toLowerCase())
+                ) {
+                    let removeRow = true
+                    for (const other of [...root.parentElement.children]) {
+                        if (other.childNodes.length != 0) {
+                            removeRow = false
+                            break
+                        }
+                    }
+                    if (removeRow) {
+                        for (const other of [...root.parentElement.children]) {
+                            other.remove()
+                            rootRemoved = true
+                        }
+                    }
+                } else {
+                    rootRemoved = true
+                    root.remove()
+                }
+                return rootRemoved
+            }
+
             let rootRemoved = false
             // depth first backwrad async dom tree iteration
             const children = Array.from(root.childNodes).reverse()
@@ -231,15 +262,13 @@ export default {
                 range.detach()
                 // remove node if it is empty
                 if (root.nodeValue == '') {
-                    rootRemoved = true
-                    root.remove()
+                    rootRemoved = removeNode(root)
                 }
             } else if (root.nodeType == Node.ELEMENT_NODE) {
                 // remove empty node
                 // (if it is a node with no children (img...) and it is overlapping we dont keep it anyway)
                 if (root.childNodes.length == 0) {
-                    rootRemoved = true
-                    root.remove()
+                    rootRemoved = removeNode(root)
                 }
             }
             return rootRemoved
