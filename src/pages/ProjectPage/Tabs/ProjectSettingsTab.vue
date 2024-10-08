@@ -482,6 +482,7 @@ export default {
                         project_categories_ids: [value.id],
                     },
                 })
+                this.$emit('reload-project')
                 this.toaster.pushSuccess(this.$t('toasts.project-categories-update.success'))
             } catch (error) {
                 this.toaster.pushError(
