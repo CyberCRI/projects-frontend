@@ -23,7 +23,7 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
     } else if (rightToSet === 'manager') {
         await delay(1000)
         // TODO find a better way to avoid changing right of non super admin user
-        await page.locator(`[data-test="managers"]`).last().click()
+        await page.locator(`[data-test="editors"]`).last().click()
     } else if (rightToSet === 'leader') {
         await delay(1000)
         // TODO find a better way to avoid changing right of non super admin user
