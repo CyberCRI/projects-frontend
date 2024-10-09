@@ -43,6 +43,8 @@
             :image-sizes="imageSizes"
             :src="croppedImageSrc"
             class="picture"
+            @error="placeHolderImg"
+            @load="onImageLoaded"
         />
         <div
             :class="{ 'has-description': project.purpose && project.purpose.length }"
@@ -122,6 +124,8 @@ export default {
             fullProject: null,
             isLoading: true,
             follow: this.project.is_followed,
+            imageLoaded: false,
+            imageError: false,
         }
     },
 
@@ -215,13 +219,20 @@ export default {
         },
 
         croppedImageSrc() {
-            return this.project && this.project.header_image
-                ? this.project.header_image.variations.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
+            return this.imageError
+                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
+                : this.project.header_image?.variations.medium
         },
     },
 
     methods: {
+        onImageLoaded() {
+            this.imageLoaded = true
+        },
+        placeHolderImg() {
+            this.imageError = true
+            this.imageLoaded = true
+        },
         toProject() {
             // this is a quick and dirty fix to make whole card clickable for selection
             if (this.hasAddIcon) this.$emit('add')
