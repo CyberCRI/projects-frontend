@@ -89,6 +89,7 @@ export default {
 
     props: {
         groupId: {
+            // watch out : this can be a slug or an id
             type: [String, null],
             default: null,
         },
@@ -166,51 +167,64 @@ export default {
     },
 
     async mounted() {
-        this.peopleGroupsStore.currentId = this.groupId || null
-        // check right to create (if no grouip id passed) or edit (if group id passed)
-        // and 404 if not allowed
-        if ((this.groupId && !this.canEditGroup) || (!this.groupId && !this.canCreateGroup)) {
-            this.$router.replace({
-                name: 'page404',
-                params: { pathMatch: this.$route.path.substring(1).split('/') },
-            })
-            return
+        if (!this.groupId) {
+            this.peopleGroupsStore.currentId = null
+            // check right to create (if no grouip id passed) or edit (if group id passed)
+            // and 404 if not allowed
+            if (!this.canCreateGroup) {
+                this.redirectTo404()
+                return
+            }
         }
 
         if (this.groupId) {
             // load data
             // general data
-            const groupData = await getGroup(this.orgCode, this.groupId)
-            this.groupData = groupData
-            this.form.name = groupData.name
-            this.form.description = groupData.description
-            this.form.short_description = groupData.short_description
-            this.form.email = groupData.email
-            // first group in hierarchy is always org group
-            // witch is not diplayed and considered null parent for the form and api purpose
-            // parent group is always the last group in hierarchy
-            this.form.parentGroup =
-                groupData.hierarchy?.length > 1
-                    ? groupData.hierarchy[groupData.hierarchy.length - 1]
-                    : null
-            this.form.organization = groupData.organization
-            this.form.type = groupData.type
-            this.form.publication_status = groupData.publication_status
-            // header image
-            this.form.header_image = groupData.header_image
-            this.form.imageSizes = pictureApiToImageSizes(groupData.header_image)
+            try {
+                const groupData = await getGroup(this.orgCode, this.groupId)
 
-            // fetch members
-            const groupMemberData = (await getGroupMember(this.orgCode, this.groupId)).results
-            this.groupMemberData = groupMemberData.map((member) => ({ ...member })) // mapping and destructiring to avoid updating both arrays/object at the same time
-            this.form.members = groupMemberData.map((member) => ({ ...member })) // this.groupMemberData will serve as reference for add/delete ops
+                // now we can get the real id (not slug)
+                this.peopleGroupsStore.currentId = groupData.id
+                if (!this.canEditGroup) {
+                    this.redirectTo404()
+                    return
+                }
 
-            // fetch featured projects
-            // TODO this is paginated
-            // so if there's more than 100 featured projects we're screwed
-            const groupProjectData = (await getGroupProject(this.orgCode, this.groupId)).results
-            this.groupProjectData = groupProjectData.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
-            this.form.featuredProjects = groupProjectData.map((project) => ({ ...project })) // this.groupProjectData  will serve as reference for add/delete ops
+                this.groupData = groupData
+                this.form.name = groupData.name
+                this.form.description = groupData.description
+                this.form.short_description = groupData.short_description
+                this.form.email = groupData.email
+                // first group in hierarchy is always org group
+                // witch is not diplayed and considered null parent for the form and api purpose
+                // parent group is always the last group in hierarchy
+                this.form.parentGroup =
+                    groupData.hierarchy?.length > 1
+                        ? groupData.hierarchy[groupData.hierarchy.length - 1]
+                        : null
+                this.form.organization = groupData.organization
+                this.form.type = groupData.type
+                this.form.publication_status = groupData.publication_status
+                // header image
+                this.form.header_image = groupData.header_image
+                this.form.imageSizes = pictureApiToImageSizes(groupData.header_image)
+
+                // fetch members
+                const groupMemberData = (await getGroupMember(this.orgCode, this.groupId)).results
+                this.groupMemberData = groupMemberData.map((member) => ({ ...member })) // mapping and destructiring to avoid updating both arrays/object at the same time
+                this.form.members = groupMemberData.map((member) => ({ ...member })) // this.groupMemberData will serve as reference for add/delete ops
+
+                // fetch featured projects
+                // TODO this is paginated
+                // so if there's more than 100 featured projects we're screwed
+                const groupProjectData = (await getGroupProject(this.orgCode, this.groupId)).results
+                this.groupProjectData = groupProjectData.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
+                this.form.featuredProjects = groupProjectData.map((project) => ({ ...project })) // this.groupProjectData  will serve as reference for add/delete ops
+            } catch (error) {
+                console.log(error)
+                this.redirectTo404()
+                return
+            }
         }
     },
 
@@ -231,6 +245,12 @@ export default {
     },
 
     methods: {
+        redirectTo404() {
+            this.$router.replace({
+                name: 'page404',
+                params: { pathMatch: this.$route.path.substring(1).split('/') },
+            })
+        },
         cancel() {
             if (this.groupId) {
                 this.$router.push({ name: 'Group', params: { groupId: this.groupId } })
