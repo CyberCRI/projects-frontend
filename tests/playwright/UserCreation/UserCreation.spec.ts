@@ -9,6 +9,7 @@ test(`test-user-creation ${usersDict.admin.email}`, async ({ context }) => {
     const pageOne = await context.newPage()
     logger.info(` User creation test ${usersDict.admin.email}`)
     try {
+        await pageOne.goto('/')
         await logIn(pageOne, usersDict.admin)
         logger.info('Login successful')
     } catch (err) {

@@ -7,6 +7,7 @@ const logger = new Logger(LogLevel.Debug)
 
 for (let i = 0; i < users.length; i++) {
     test(`test-${users[i].email}`, async ({ page }) => {
+        await page.goto('/')
         logger.info(` LOGIN/LOGOUT TEST : ${users[i].email} `)
         try {
             await logIn(page, users[i])
