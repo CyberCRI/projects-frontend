@@ -18,6 +18,7 @@ for (let i = 0; i < users.length; i++) {
     test(`test-${users[i].email}`, async ({ page }) => {
         logger.info(` ADD/EDIT DESCRIPTION TEST : ${users[i].email} `)
         try {
+            await page.goto('/')
             await logIn(page, users[i])
             logger.info('Login successful')
         } catch (err) {

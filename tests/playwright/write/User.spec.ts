@@ -10,6 +10,7 @@ for (const user of users) {
         logger.info(` User edit ${user.email} `)
         await page.goto('/')
         try {
+            await page.goto('/')
             await logIn(page, user)
             logger.info('Login successful')
         } catch (err) {
