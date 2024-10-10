@@ -8,7 +8,7 @@
   - [Getting started](#getting-started)
   - [Contributing](#contributing)
   - [End-to-end testing](#end-to-end-testing)
-  - [Unit testing](#unit-testing)
+  - [Unit Testing](#unit-testing)
   - [Internationalization](#internationalization)
   - [Vue Style Guide](#vue-style-guide)
   - [Typescript](#typescript)
@@ -103,7 +103,7 @@ Running Codegen :
 yarn test:gen
 ```
 
-## Unit testing
+## Unit Testing
 
 [Vitest](https://vitest.dev/) is used to test store modules, components and functions.
 Testing is still quite new in our workflow, so if you find yourself working on a component that does not have any test consider adding one.
