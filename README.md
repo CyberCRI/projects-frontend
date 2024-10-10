@@ -20,8 +20,8 @@
 An annuary to display and manage projects related to the UN sustainable goals.
 This is the source running the frontend for the website [projects.directory](https://projects.directory)
 
-> Share your projects to increase impact.
-> Fill your profile with your skills and goals
+> Share your projects to increase impact,
+> Fill your profile with your skills and goals,
 > Use the Projects platform to showcase your projects,
 > facilitate synergies and foster collaboration for common good.
 
