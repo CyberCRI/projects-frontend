@@ -3,7 +3,7 @@
 ![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
 - [Projects](#projects)
-  - [stack](#stack)
+  - [Stack](#stack)
   - [Team tools](#team-tools)
   - [Getting started](#getting-started)
   - [Contributing](#contributing)
@@ -26,7 +26,7 @@ This is the source running the frontend for the website [projects.directory](htt
 > facilitate synergies and foster collaboration for common good.
 
 
-## stack
+## Stack
 
 this project depends on a few others (backend, websocket server), we provide a fullstack repository : [projects-fullstack](https://github.com/CyberCRI/projects-fullstack) please refer to it for further documentation
 
