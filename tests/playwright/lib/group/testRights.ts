@@ -11,6 +11,7 @@ export async function testRights(
     rightToTest: string
 ): Promise<void> {
     logger.info(`Group to test ${groupName}`)
+    await page.locator('[data-test="lpi-logo"]').click() // go to home page to have search bar
     await page.locator('[data-test="search-input"]').fill(groupName)
     await page.locator('[data-test="search-input-button"]').click()
     await delay(2000) // wait for the different serach page redirections (query string building)
