@@ -28,7 +28,7 @@ export default {
             formattedData: undefined,
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
                 legend: {
                     display: false,
                 },
