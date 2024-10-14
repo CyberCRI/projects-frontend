@@ -118,6 +118,9 @@ export default {
                 'DotsVertical',
                 'DotsHorizontal',
                 'DotsGrid',
+                'HumanMaleChild',
+                'School',
+                'TextBoxOutline',
             ],
         }
     },

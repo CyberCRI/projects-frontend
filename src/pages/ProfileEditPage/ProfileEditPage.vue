@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="my-profile-edit page-section-medium">
+        <div class="my-profile-edit">
             <h1 class="title">{{ $t('profile.edit.edit-my-profile') }}</h1>
             <p class="notice">
                 {{ $t('profile.edit.notice') }}

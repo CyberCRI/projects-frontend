@@ -8,6 +8,12 @@
         :border="false"
         :tabs="ProfileTabs"
         class="profile-edit-tabs"
+        :header-classes="{ 'page-section-medium': true }"
+        :content-classes="{
+            'page-section-medium': currentTab?.key !== 'skills',
+            'page-section-extra-wide': currentTab?.key === 'skills',
+        }"
+        @tab-changed="currentTab = $event"
     />
 </template>
 
@@ -38,6 +44,12 @@ export default {
             type: Object,
             default: null,
         },
+    },
+
+    data() {
+        return {
+            currentTab: null,
+        }
     },
 
     computed: {
