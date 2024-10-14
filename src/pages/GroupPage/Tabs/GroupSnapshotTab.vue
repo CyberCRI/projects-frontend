@@ -75,22 +75,22 @@
                 </CardList>
             </div>
         </div>
-    </div>
-    <BaseDrawer
-        no-footer
-        :is-opened="profileDrawer.isOpened"
-        :title="$t('profile.drawer_title')"
-        @close="closeProfileDrawer"
-        @confirm="closeProfileDrawer"
-    >
-        <UserProfile
-            v-if="profileDrawer.isOpened"
-            ref="profile-user"
-            :can-edit="false"
-            :user-id="profileDrawer.user_id"
+        <BaseDrawer
+            no-footer
+            :is-opened="profileDrawer.isOpened"
+            :title="$t('profile.drawer_title')"
             @close="closeProfileDrawer"
-        />
-    </BaseDrawer>
+            @confirm="closeProfileDrawer"
+        >
+            <UserProfile
+                v-if="profileDrawer.isOpened"
+                ref="profile-user"
+                :can-edit="false"
+                :user-id="profileDrawer.user_id"
+                @close="closeProfileDrawer"
+            />
+        </BaseDrawer>
+    </div>
 </template>
 
 <script>
