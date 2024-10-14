@@ -21,7 +21,7 @@
             {{ $t('blog.last-publication') }}
         </div>
 
-        <div v-show="isExpanded" class="entry-body" v-html="blogEntry.content"></div>
+        <TipTapOutput v-if="isExpanded" class="entry-body" :content="blogEntry.content" />
 
         <div
             v-if="canEdit || canDelete"
@@ -47,7 +47,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 export default {
     name: 'BlogEntry',
@@ -57,6 +57,7 @@ export default {
     components: {
         IconImage,
         ContextActionButton,
+        TipTapOutput,
     },
 
     props: {
@@ -89,21 +90,6 @@ export default {
     methods: {
         toggleExpand() {
             this.$emit('toggle-expand', this.blogEntry)
-        },
-    },
-
-    watch: {
-        'blogEntry.content': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.entry-body')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
         },
     },
 }
