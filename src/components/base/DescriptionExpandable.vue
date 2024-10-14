@@ -6,6 +6,7 @@
                     :html="description"
                     :striped-tags="[]"
                     class="description-content"
+                    preprocess
                     @computed="layoutComputed"
                     @computing="computeLayout"
                 />
@@ -22,6 +23,7 @@
 
 <script>
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import fixEditorContent from '@/functs/editorUtils.ts'
 export default {
     name: 'DescriptionExpandable',
     components: { HtmlLimiter },
@@ -53,6 +55,16 @@ export default {
         layoutComputed(event) {
             this.style = { height: event.height + 'px' }
             this.isLimited = event.croppedHtml != this.description
+        },
+    },
+    watch: {
+        showLess(neo, old) {
+            if (neo !== old && !neo) {
+                this.$nextTick(() => {
+                    const contentNode = this.$el.querySelector('.description')
+                    fixEditorContent(contentNode)
+                })
+            }
         },
     },
 }

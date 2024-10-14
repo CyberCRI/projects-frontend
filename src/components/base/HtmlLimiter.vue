@@ -5,6 +5,7 @@
 </template>
 <script>
 import debounce from 'lodash.debounce'
+import fixEditorContent from '@/functs/editorUtils.ts'
 
 const _timer = 0 // set this to some thing like 1000 for visual debugging
 
@@ -37,6 +38,11 @@ export default {
             type: Array,
             default: () => [],
         },
+        preprocess: {
+            // preprocess the html before computing
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -49,7 +55,7 @@ export default {
         }
     },
 
-    mounted() {
+    async mounted() {
         this.compute()
         window.addEventListener('resize', this.debouncedCompute)
     },
@@ -83,7 +89,13 @@ export default {
             this.$emit('computing')
             this.computing = true
             this.croppedHtml = this.html
+
             this.$refs.inner.innerHTML = this.croppedHtml
+            if (this.preprocess) {
+                // preprocess html
+                await this.$nextTick()
+                fixEditorContent(this.$refs.inner)
+            }
             await this.unblock()
             // filter unwanted tags
             await this.filterTags(this.$refs.inner)
