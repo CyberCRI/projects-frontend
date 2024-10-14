@@ -1,15 +1,15 @@
 <template>
     <div class="on-boarding-page">
-        <div v-html="onBoardingData.content" class="onboarding-content"></div>
+        <TipTapOutput :content="onBoardingData.content" class="onboarding-content" />
     </div>
 </template>
 
 <script>
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'OnBoardingTab',
 
-    components: {},
+    components: { TipTapOutput },
 
     inject: {
         hasFaq: { from: 'helpPageHasFaq', default: false },
@@ -27,21 +27,6 @@ export default {
             this.$router.replace({ name: 'HelpHelpTab' })
         }
         this.getCustomData()
-    },
-
-    watch: {
-        'onBoardingData.content': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.onboarding-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
-        },
     },
 
     methods: {

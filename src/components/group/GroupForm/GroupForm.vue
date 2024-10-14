@@ -80,7 +80,7 @@
                 </span>
             </label>
             <div v-if="form.description">
-                <div class="description-content" v-html="form.description"></div>
+                <TipTapOutput class="description-content" :content="form.description" />
                 <!-- TODO htmllimiter-->
             </div>
         </div>
@@ -179,7 +179,7 @@ import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'GroupForm',
 
@@ -199,6 +199,7 @@ export default {
         ConfirmModal,
         ImageEditor,
         FieldErrors,
+        TipTapOutput,
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
@@ -299,20 +300,6 @@ export default {
             handler: function () {
                 this.$emit('update:modelValue', this.form)
             },
-        },
-        'form.description': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = document.querySelector(
-                            '.group-form .description-content'
-                        )
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
         },
     },
 

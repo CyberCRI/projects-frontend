@@ -21,7 +21,10 @@
                     </div>
 
                     <div v-show="descriptionVisible" class="goal-description-wrapper">
-                        <div class="goal-description-content" v-html="goal.description" />
+                        <TipTapOutput
+                            class="goal-description-content"
+                            :content="goal.description"
+                        />
                     </div>
                 </div>
             </div>
@@ -38,7 +41,7 @@
 <script>
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 export default {
     name: 'GoalItem',
@@ -64,7 +67,7 @@ export default {
 
     mixins: ['permissions'],
 
-    components: { ContextActionButton, IconImage },
+    components: { ContextActionButton, IconImage, TipTapOutput },
 
     data() {
         return {
@@ -103,33 +106,6 @@ export default {
 
         hasDescription() {
             return this.goal.description && this.goal.description != '<p></p>'
-        },
-    },
-
-    watch: {
-        'goal.description': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.goal-description-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
-        },
-        descriptionVisible: {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.goal-description-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
         },
     },
 }

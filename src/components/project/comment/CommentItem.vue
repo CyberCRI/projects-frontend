@@ -40,7 +40,7 @@
                         @project-message-edited="$emit('project-message-posted', $event)"
                     />
                 </div>
-                <p v-else class="comment-content" v-html="comment.content"></p>
+                <TipTapOutput v-else class="comment-content" :content="comment.content" />
 
                 <div class="comment-footer">
                     <div v-if="isConnected" class="actions">
@@ -146,13 +146,13 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
 import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import permissions from '@/mixins/permissions'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 export default {
     name: 'CommentItem',
@@ -168,7 +168,14 @@ export default {
         'project-message-deleted',
     ],
 
-    components: { ConfirmModal, IconImage, ExternalLabelButton, MakeComment, CroppedImage },
+    components: {
+        ConfirmModal,
+        IconImage,
+        ExternalLabelButton,
+        MakeComment,
+        CroppedImage,
+        TipTapOutput,
+    },
     setup() {
         const toaster = useToasterStore()
         const usersStore = useUsersStore()
@@ -310,20 +317,6 @@ export default {
                 new Date(this.comment.updated_at).toLocaleString() !==
                 new Date(this.comment.created_at).toLocaleString()
             )
-        },
-    },
-    watch: {
-        'comment.content': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.comment-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
         },
     },
 }

@@ -27,7 +27,7 @@
                 :project="project"
             ></DescriptionPlaceholder>
 
-            <div v-else class="description-content" v-html="description" />
+            <TipTapOutput v-else class="description-content" :content="description" />
         </div>
 
         <DescriptionDrawer
@@ -45,7 +45,7 @@ import permissions from '@/mixins/permissions.ts'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import throttle from 'lodash.throttle'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useProjectsStore from '@/stores/useProjects.ts'
@@ -58,6 +58,7 @@ export default {
         DescriptionSummaryBlock,
         DescriptionPlaceholder,
         IconImage,
+        TipTapOutput,
     },
 
     mixins: [permissions, ProjectTab],
@@ -141,19 +142,6 @@ export default {
     },
 
     watch: {
-        description: {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.description-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
-        },
-
         showEditButton: {
             handler: function (neo, old) {
                 if (neo != old) {

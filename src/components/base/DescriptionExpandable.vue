@@ -12,7 +12,7 @@
                 />
             </div>
         </template>
-        <div v-else class="description" v-html="description"></div>
+        <TipTapOutput v-else class="description" :content="description" />
         <div class="toggle-ctn" v-if="isLimited">
             <span class="toggle" @click="toggleDescription">
                 {{ showLess ? $t('group.see-more') : $t('group.see-less') }}
@@ -23,10 +23,10 @@
 
 <script>
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'DescriptionExpandable',
-    components: { HtmlLimiter },
+    components: { HtmlLimiter, TipTapOutput },
     props: {
         description: {
             type: String,
@@ -55,16 +55,6 @@ export default {
         layoutComputed(event) {
             this.style = { height: event.height + 'px' }
             this.isLimited = event.croppedHtml != this.description
-        },
-    },
-    watch: {
-        showLess(neo, old) {
-            if (neo !== old && !neo) {
-                this.$nextTick(() => {
-                    const contentNode = this.$el.querySelector('.description')
-                    fixEditorContent(contentNode)
-                })
-            }
         },
     },
 }

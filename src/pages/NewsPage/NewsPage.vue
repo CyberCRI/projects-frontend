@@ -42,7 +42,7 @@
             <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
             <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
         </div>
-        <div v-else-if="news" ref="newscontent" class="news-content" v-html="news.content"></div>
+        <TipTapOutput v-else-if="news" class="news-content" :content="news.content" />
     </div>
 
     <div class="other-news page-section-narrow">
@@ -95,7 +95,7 @@ import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'NewsPage',
 
@@ -110,6 +110,7 @@ export default {
         EditNewsDrawer,
         SkeletonComponent,
         NewsListItemSkeleton,
+        TipTapOutput,
     },
     setup() {
         const toaster = useToasterStore()
@@ -179,11 +180,6 @@ export default {
             await this.loadNews()
             await this.loadOtherNews()
             this.loading = false
-
-            this.$nextTick(() => {
-                const contentNode = this.$refs.newscontent
-                fixEditorContent(contentNode)
-            })
         },
         async loadNews() {
             try {

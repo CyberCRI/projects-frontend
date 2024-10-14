@@ -21,22 +21,21 @@
                 </span>
             </h3>
 
-            <div class="publication-content">
-                <div v-html="lastPublication.content"></div>
-            </div>
+            <TipTapOutput class="publication-content" :content="lastPublication.content" />
         </div>
     </div>
 </template>
 
 <script>
 import SectionHeader from '@/components/base/SectionHeader.vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 export default {
     name: 'PublicationRecap',
 
     components: {
         SectionHeader,
+        TipTapOutput,
     },
 
     props: {
@@ -69,21 +68,6 @@ export default {
                 params: { slugOrId: this.$route.params.slugOrId },
                 hash: '#tab',
             })
-        },
-    },
-
-    watch: {
-        'lastPublication.content': {
-            handler: function (neo, old) {
-                if (neo != old) {
-                    // give time to render content
-                    this.$nextTick(() => {
-                        const contentNode = this.$el.querySelector('.publication-content')
-                        fixEditorContent(contentNode)
-                    })
-                }
-            },
-            immediate: true,
         },
     },
 }
