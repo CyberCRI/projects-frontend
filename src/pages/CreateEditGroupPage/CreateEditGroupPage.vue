@@ -198,10 +198,9 @@ export default {
                 // first group in hierarchy is always org group
                 // witch is not diplayed and considered null parent for the form and api purpose
                 // parent group is always the last group in hierarchy
-                this.form.parentGroup =
-                    groupData.hierarchy?.length > 1
-                        ? groupData.hierarchy[groupData.hierarchy.length - 1]
-                        : null
+                this.form.parentGroup = groupData.hierarchy?.length
+                    ? groupData.hierarchy[groupData.hierarchy.length - 1]
+                    : null
                 this.form.organization = groupData.organization
                 this.form.type = groupData.type
                 this.form.publication_status = groupData.publication_status
