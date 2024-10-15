@@ -1,4 +1,4 @@
-import { axios, configFormData } from '@/api/api.config'
+import { axios, axiosNoErrorMessage, configFormData } from '@/api/api.config'
 import {
     AddLinkedProjectInput,
     AddManyLinkedProjectInput,
@@ -125,9 +125,14 @@ export async function deleteLinkedProject({
     )
 }
 
-export async function getProject(slugOrId: string): Promise<ProjectOutput> {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${slugOrId}/`))
-        .data
+export async function getProject(
+    slugOrId: string,
+    noError: boolean = false
+): Promise<ProjectOutput> {
+    const _axios = noError ? axiosNoErrorMessage : axios
+    return (
+        await _axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${slugOrId}/`)
+    ).data
 }
 
 export async function getAllRecommendedProjects(
