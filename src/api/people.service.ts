@@ -6,8 +6,9 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 // New user service using projects API
-export async function getUser(id: string): Promise<PeopleModel> {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`)).data
+export async function getUser(id: string, noError: boolean = false): Promise<PeopleModel> {
+    const _axios = noError ? axiosNoErrorMessage : axios
+    return (await _axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${id}/`)).data
 }
 
 export async function postUser(payload: FormData): Promise<PeopleModel> {

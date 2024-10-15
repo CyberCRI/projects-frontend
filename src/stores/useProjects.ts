@@ -34,7 +34,7 @@ const useProjectsStore = defineStore('projects', {
 
         async getProject(slugOrId: string): Promise<ProjectOutput> {
             try {
-                const result = await getProject(slugOrId)
+                const result = await getProject(slugOrId, true)
                 this.project = result
                 return result
             } catch (err) {

@@ -108,10 +108,10 @@ export default {
         try {
             if (!this.userId) {
                 // get the connected user
-                this.user = await this.usersStore.getUser(this.usersStore.id)
+                this.user = await this.usersStore.getUser(this.usersStore.id, true)
             } else {
                 // get another user
-                this.user = await getUser(this.userId)
+                this.user = await getUser(this.userId, true)
             }
         } catch (err) {
             // TODO distinguish 404 from real error
