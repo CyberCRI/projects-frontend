@@ -5,10 +5,11 @@
         <div :style="style" class="description-content-ctn">
             <HtmlLimiter
                 :html="description"
-                :striped-tags="['table']"
+                :striped-tags="[]"
                 class="description-content"
                 @computed="layoutComputed"
                 @computing="computeLayout"
+                preprocess
             />
         </div>
 

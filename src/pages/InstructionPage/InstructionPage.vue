@@ -44,7 +44,7 @@
         <SkeletonComponent class="text-skeleton" height="16px" />
     </div>
     <div class="page-section-narrow" v-else-if="instruction">
-        <div class="instruction-content" v-html="instruction.content"></div>
+        <TipTapOutput class="instruction-content" :content="instruction.content" />
     </div>
     <EditInstructionDrawer
         :is-opened="!!editedInstruction"
@@ -73,6 +73,7 @@ import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import { getInstruction, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'InstructionPage',
 
@@ -84,6 +85,7 @@ export default {
         EditInstructionDrawer,
         ConfirmModal,
         SkeletonComponent,
+        TipTapOutput,
     },
     setup() {
         const toaster = useToasterStore()
