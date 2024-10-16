@@ -37,7 +37,7 @@
                 :sdgs="sdgs"
                 @reload-sdgs="getSdgs"
                 :team="team"
-                @reload-team="getTeam"
+                @reload-team="reloadTeam"
                 :reviews="reviews"
                 @reload-reviews="getReviews"
                 :linked-projects="linkedProjects"
@@ -66,7 +66,7 @@
             :edited-user="modals.teamMember?.editedItem || null"
             :is-opened="modals.teamMember.visible"
             @close="toggleAddModal('teamMember')"
-            @reload-team="getTeam"
+            @reload-team="reloadTeam"
         />
         <ResourceDrawer
             :project="project"
@@ -422,6 +422,13 @@ export default {
                 console.error(err)
             }
         },
+
+        async reloadTeam() {
+            await this.getTeam()
+            // reload current user rights in case they changed
+            await this.usersStore.getUser(this.usersStore.userFromApi.id)
+        },
+
         async getBlogEntries() {
             try {
                 const response = await getBlogEntries(this.project.id)
