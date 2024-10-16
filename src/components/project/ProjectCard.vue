@@ -70,6 +70,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'ProjectCard',
@@ -200,22 +201,7 @@ export default {
         },
 
         imageSizes() {
-            if (
-                this.project &&
-                this.project.header_image &&
-                this.project.header_image.scale_x &&
-                this.project.header_image.scale_y &&
-                this.project.header_image.natural_ratio
-            ) {
-                return {
-                    scaleX: this.project.header_image.scale_x,
-                    scaleY: this.project.header_image.scale_y,
-                    naturalRatio: this.project.header_image.natural_ratio,
-                    left: this.project.header_image.left || 0,
-                    top: this.project.header_image.top || 0,
-                }
-            }
-            return null
+            return pictureApiToImageSizes(this.project?.header_image)
         },
 
         croppedImageSrc() {

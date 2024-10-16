@@ -10,21 +10,12 @@
                 :class="{ 'all-projects-visible': allProjectsVisible }"
                 class="similar-projects-grid"
             >
-                <div
+                <SimilarProjectsItem
                     v-for="project in similarProjectsDisplayed"
                     :key="project.id"
                     class="similar-project"
-                    @click="goToProject(project.slug)"
-                >
-                    <CroppedImage
-                        v-if="project.header_image && project.header_image.variations"
-                        :alt="`${project.title} image`"
-                        :src="project.header_image.variations.small"
-                        :image-sizes="imageSizes(project)"
-                    />
-
-                    <p>{{ project.title }}</p>
-                </div>
+                    :project="project"
+                />
             </div>
 
             <LpiButton
@@ -46,14 +37,14 @@
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import SimilarProjectsItem from '@/components/project/SimilarProjectsItem.vue'
 
 export default {
     name: 'SimilarProjects',
 
     mixins: [viewportWidth],
 
-    components: { LpiButton, CroppedImage },
+    components: { LpiButton, SimilarProjectsItem },
 
     props: {
         similarProjects: {
@@ -86,36 +77,8 @@ export default {
     },
 
     methods: {
-        goToProject(slug) {
-            this.$router.push({
-                name: 'projectSummary',
-                params: {
-                    slugOrId: slug,
-                },
-            })
-        },
-
         toggleAllVisible() {
             this.allProjectsVisible = !this.allProjectsVisible
-        },
-
-        imageSizes(project) {
-            if (
-                project &&
-                project.header_image &&
-                project.header_image.scale_x &&
-                project.header_image.scale_y &&
-                project.header_image.natural_ratio
-            ) {
-                return {
-                    scaleX: project.header_image.scale_x,
-                    scaleY: project.header_image.scale_y,
-                    naturalRatio: project.header_image.natural_ratio,
-                    left: project.header_image.left || 0,
-                    top: project.header_image.top || 0,
-                }
-            }
-            return null
         },
     },
 }
@@ -160,25 +123,6 @@ export default {
 
                 .similar-project {
                     min-width: 200px;
-                }
-            }
-
-            .similar-project {
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-
-                .cropped-image {
-                    margin-right: $space-s;
-                    flex: 0 0 72px;
-                    height: 72px;
-                    border-radius: $border-radius-xs;
-                }
-
-                p {
-                    color: $white;
-                    font-size: $font-size-s;
-                    font-weight: 400;
                 }
             }
         }
