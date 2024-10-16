@@ -7,12 +7,9 @@
             @error="placeHolderImg"
             class="picture"
         />
-        <span class="badge" v-if="user.is_leader" data-test="leader-badge">{{
-            $t('userItem.teamLeader')
-        }}</span>
-
-        <!--        TODO: ask Api to send information-->
-        <div v-if="user.role" class="role">{{ user.role }}</div>
+        <span class="badge" v-if="roleLabel" data-test="leader-badge">
+            {{ $t(roleLabel) }}
+        </span>
 
         <div v-if="$filters.isNotGroup(user)" class="name-ctn">
             <h4 class="user-name">{{ userName }}</h4>
@@ -81,6 +78,16 @@ export default {
         userName() {
             return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
         },
+        roleLabel() {
+            if (this.user) {
+                if (this.user.is_leader && this.user.is_manager)
+                    return 'group.role.leaders-managers.label'
+                else if (this.user.is_manager) return 'group.role.managers.label'
+                else if (this.user.is_leader) return 'group.role.leaders.label'
+                else return 'group.role.members.label'
+            }
+            return null
+        },
     },
 }
 </script>
@@ -98,13 +105,6 @@ export default {
         object-fit: cover;
         object-position: top center;
         border-radius: 50%;
-    }
-
-    .role {
-        background: $primary;
-        color: $primary-dark;
-        padding: $space-3xs $space-2xs;
-        margin-top: $space-xs;
     }
 
     .badge {
