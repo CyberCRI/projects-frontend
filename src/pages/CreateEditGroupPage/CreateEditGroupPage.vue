@@ -76,6 +76,7 @@ import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesU
 import isEqual from 'lodash.isequal'
 import useToasterStore from '@/stores/useToaster.ts'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import useUsersStore from '@/stores/useUsers.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
@@ -98,10 +99,12 @@ export default {
         const toaster = useToasterStore()
         const peopleGroupsStore = usePeopleGroupsStore()
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
         return {
             toaster,
             peopleGroupsStore,
             organizationsStore,
+            usersStore,
         }
     },
 
@@ -293,8 +296,11 @@ export default {
                 // save members
                 await this.updateGroupMembers(newGroupId)
 
-                //save featured projects
+                // save featured projects
                 await this.updateGroupProjects(newGroupId)
+
+                // reload current user rights in case they changed
+                await this.usersStore.getUser(this.usersStore.userFromApi.id)
 
                 this.$router.push({ name: 'Group', params: { groupId: newGroupId } })
 
@@ -332,6 +338,9 @@ export default {
 
                 //save featured projects
                 await this.updateGroupProjects(this.groupId)
+
+                // reload current user rights in case they changed
+                await this.usersStore.getUser(this.usersStore.userFromApi.id)
 
                 this.$router.push({ name: 'Group', params: { groupId: this.groupId } })
 
