@@ -10,6 +10,8 @@
                 :src="croppedImageSrc"
                 class="project-img"
                 :ratio="1 / 1"
+                @error="placeHolderImg"
+                @load="onImageLoaded"
             />
         </div>
         <h3 class="project-title">{{ $filters.capitalize(project.title) }}</h3>
@@ -53,14 +55,23 @@ export default {
         },
 
         croppedImageSrc() {
-            return this.project && this.project.header_image
-                ? this.project?.header_image.variations?.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
+            return this.imageError
+                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
+                : this.project.header_image?.variations?.medium
         },
 
         purpose() {
             const sanitized = this.project?.purpose.replace(/<[^>]+>/g, ' ') || ''
             return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
+        },
+    },
+    methods: {
+        onImageLoaded() {
+            this.imageLoaded = true
+        },
+        placeHolderImg() {
+            this.imageError = true
+            this.imageLoaded = true
         },
     },
 }
