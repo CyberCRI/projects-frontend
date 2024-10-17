@@ -14,6 +14,8 @@
                 :src="croppedImageSrc"
                 class="project-img"
                 :ratio="1 / 1"
+                @error="placeHolderImg"
+                @load="onImageLoaded"
             />
             <div :style="announcementStyle" class="announcement-overlay"></div>
         </div>
@@ -84,9 +86,19 @@ export default {
         },
 
         croppedImageSrc() {
-            return this.announcement?.project && this.announcement.project?.header_image
-                ? this.announcement?.project?.header_image.variations?.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
+            const src = this.announcement.project?.header_image?.variations?.small
+            return this.imageError || !src
+                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
+                : src
+        },
+    },
+    methods: {
+        onImageLoaded() {
+            this.imageLoaded = true
+        },
+        placeHolderImg() {
+            this.imageError = true
+            this.imageLoaded = true
         },
     },
 }
