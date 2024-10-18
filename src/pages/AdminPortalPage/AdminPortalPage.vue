@@ -32,17 +32,7 @@ export default {
                   ]
                 : []
 
-            const generalTabs = new Map()
-
-            generalTabs.set('old', [
-                {
-                    key: 'admin-infos',
-                    label: this.$t('admin.tabs.information'),
-                    view: { name: 'general' },
-                },
-            ])
-
-            generalTabs.set('new', [
+            return [
                 {
                     key: 'admin-infos',
                     label: this.$t('admin.tabs.information'),
@@ -53,10 +43,6 @@ export default {
                     label: this.$t('admin.tabs.settings'),
                     view: { name: 'AdminSettings' },
                 },
-            ])
-
-            return [
-                ...(generalTabs.get(import.meta.env.VITE_APP_HOME) || generalTabs.get('old')),
                 {
                     key: 'admin-categories',
                     label: this.$t('admin.tabs.categories'),
