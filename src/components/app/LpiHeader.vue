@@ -310,16 +310,6 @@ export default {
             this.languagesStore.current = lang
         },
 
-        async toAnnouncements() {
-            /* TODO: Rework this once we have skeletons on all components */
-            await this.$router.push({ name: 'Home' })
-
-            setTimeout(() => {
-                const el = document.getElementById('announcements')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
-            }, 500)
-        },
-
         async getGlobalAnnouncements() {
             try {
                 const announcements = await getAnnouncements({
@@ -406,18 +396,7 @@ export default {
         },
 
         moreMenu() {
-            const moreExtras = new Map()
-            moreExtras.set('old', [
-                {
-                    label: this.$t('home.announcements').toUpperCase(),
-                    action: () => this.toAnnouncements(),
-                    leftIcon: 'BullhornOutline',
-                    condition: this.announcements.length > 0,
-                    dataTest: 'announcements',
-                },
-            ])
-
-            moreExtras.set('new', [
+            return [
                 {
                     label: this.$t('home.calendar').toUpperCase(),
                     to: { name: 'CalendarPage' },
@@ -453,10 +432,6 @@ export default {
                     condition: true,
                     dataTest: 'map',
                 },
-            ])
-
-            return [
-                ...(moreExtras.get(import.meta.env.VITE_APP_HOME) || moreExtras.get('old') || []),
                 {
                     label: this.$t('home.communities').toUpperCase(),
                     to: { name: 'Portal' },
