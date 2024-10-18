@@ -17,12 +17,12 @@
             />
         </div>
         <div class="reviewed-by" v-if="review.reviewer">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${review.reviewer.given_name} ${review.reviewer.family_name} image`"
-                :image-sizes="imageSizes"
-                :src="imageError ? defaultImage : userImage"
-                @error="placeHolderImg"
                 class="image"
+                :picture-data="review?.reviewer?.profile_picture"
+                picture-size="medium"
+                default-picture="/placeholders/user_placeholder.svg"
             />
             <p class="name">{{ review.reviewer.given_name }} {{ review.reviewer.family_name }}</p>
 
@@ -40,10 +40,8 @@
     </div>
 </template>
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import permissions from '@/mixins/permissions.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 export default {
@@ -51,10 +49,10 @@ export default {
 
     emits: ['delete-review', 'edit-review'],
 
-    mixins: [imageMixin, permissions],
+    mixins: [permissions],
 
     components: {
-        CroppedImage,
+        CroppedApiImage,
         ContextActionButton,
     },
 
@@ -62,34 +60,6 @@ export default {
         review: {
             type: Object,
             required: true,
-        },
-    },
-
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
-    computed: {
-        userImage() {
-            return this.review?.reviewer?.profile_picture
-                ? this.review?.reviewer?.profile_picture.variations.medium
-                : null
-        },
-        imageSizes() {
-            return this.imageError
-                ? null
-                : pictureApiToImageSizes(this.review?.reviewer?.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

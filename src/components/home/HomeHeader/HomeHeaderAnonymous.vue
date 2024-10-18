@@ -5,12 +5,13 @@
                 {{ organization.dashboard_title }}
             </h1>
             <div class="banner-wrapper" v-if="hasBannerImage">
-                <CroppedImage
+                <CroppedApiImage
                     alt="welcome image"
-                    :image-sizes="bannerImageSizes"
-                    :src="bannerUrl"
                     class="organization-banner"
                     :ratio="1 / 1"
+                    :picture-data="organization?.banner_image"
+                    picture-size="medium"
+                    default-picture="/placeholders/user_placeholder.svg"
                 />
             </div>
             <div
@@ -71,8 +72,7 @@
 </template>
 <script>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
@@ -80,7 +80,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'HomeHeaderAnonymous',
     components: {
-        CroppedImage,
+        CroppedApiImage,
         HtmlLimiter,
         LpiButton,
         LinkButton,
@@ -103,13 +103,6 @@ export default {
     computed: {
         organization() {
             return this.organizationsStore.current
-        },
-        bannerUrl() {
-            return this.organization?.banner_image?.variations?.medium
-        },
-
-        bannerImageSizes() {
-            return pictureApiToImageSizes(this.organization?.banner_image)
         },
         hasBannerImage() {
             return this.organization && this.organization.banner_image

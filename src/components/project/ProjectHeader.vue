@@ -16,25 +16,14 @@
         <div :class="{ loading, moreInfo }" class="project-header-ctn">
             <div class="img-position">
                 <div class="img-mobile-ctn">
-                    <SkeletonComponent v-if="loading || !imageLoaded" height="100%" width="100%" />
+                    <SkeletonComponent v-if="loading" height="100%" width="100%" />
 
-                    <CroppedImage
-                        v-if="
-                            !loading &&
-                            project &&
-                            project.header_image &&
-                            project.header_image.variations
-                        "
+                    <CroppedApiImage
+                        v-if="!loading && project?.header_image?.variations"
+                        :picture-data="project.header_image"
+                        picture-size="medium"
+                        default-picture="/placeholders/header_placeholder.png"
                         ref="projectImg"
-                        :alt="`${project.title} image`"
-                        :src="
-                            imageError
-                                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                                : project.header_image.variations.medium
-                        "
-                        @error="placeHolderImg"
-                        @load="onImageLoaded"
-                        :image-sizes="imageError ? null : imageSizes"
                     />
                 </div>
             </div>
@@ -42,29 +31,15 @@
                 <div :class="{ 'has-sdg': sdgs?.length }" class="main-info-ctn">
                     <div class="img-block">
                         <div class="img-ctn">
-                            <SkeletonComponent
-                                v-if="loading || !imageLoaded"
-                                height="100%"
-                                width="100%"
-                            />
+                            <SkeletonComponent v-if="loading" height="100%" width="100%" />
 
-                            <CroppedImage
-                                v-if="
-                                    !loading &&
-                                    project &&
-                                    project.header_image &&
-                                    project.header_image.variations
-                                "
+                            <CroppedApiImage
+                                v-if="!loading && project?.header_image?.variations"
+                                :picture-data="project.header_image"
+                                :picture-size="medium"
+                                default-picture="/placeholders/header_placeholder.png"
                                 ref="projectImg"
                                 :alt="`${project.title} image`"
-                                :src="
-                                    imageError
-                                        ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                                        : project.header_image.variations.medium
-                                "
-                                @error="placeHolderImg"
-                                @load="onImageLoaded"
-                                :image-sizes="imageError ? null : imageSizes"
                             />
                         </div>
                     </div>
@@ -319,13 +294,12 @@ import ToolTip from '@/components/base/ToolTip.vue'
 import permissions from '@/mixins/permissions.ts'
 import TagsList from '@/components/project/TagsList.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'ProjectHeader',
@@ -338,7 +312,7 @@ export default {
         IconImage,
         ToolTip,
         TagsList,
-        CroppedImage,
+        CroppedApiImage,
         InfoSentence,
         LinkButton,
         BreadCrumbs,
@@ -414,14 +388,11 @@ export default {
     data() {
         return {
             sharedUrl: window.location.origin,
-            imageLoaded: false,
             imageAlertDismissed: false,
-            nonSquareImage: false,
             showFullTitle: false,
             showFullPurpose: false,
             showFullTitleIcon: false,
             showFullPurposeIcon: false,
-            imageError: false,
             moreInfo: false,
             plusButton: 0,
         }
@@ -440,10 +411,6 @@ export default {
             return (
                 this.project && this.project.purpose !== '   ' && this.project.purpose.length !== 0
             )
-        },
-
-        imageSizes() {
-            return pictureApiToImageSizes(this.project?.header_image)
         },
 
         categoryForCurrentOrganization() {
@@ -586,20 +553,6 @@ export default {
         },
     },
     watch: {
-        imageLoaded(neo, old) {
-            if (neo && neo !== old) {
-                const img =
-                    this.$refs.projectImg &&
-                    this.$refs.projectImg.$el &&
-                    this.$refs.projectImg.$el.querySelector('img')
-                if (img && img.naturalWidth && img.naturalHeight) {
-                    const ratio = img.naturalWidth / img.naturalHeight
-                    // float precision
-                    this.nonSquareImage = Math.abs(ratio - 1) > 0.05
-                }
-            }
-        },
-
         loading() {
             this.setToggleIcon()
         },
@@ -625,15 +578,6 @@ export default {
                       purpose.scrollHeight > purpose.clientHeight
                     : false
             })
-        },
-
-        placeHolderImg() {
-            this.imageError = true
-            this.imageLoaded = true
-        },
-
-        onImageLoaded() {
-            this.imageLoaded = true
         },
 
         browseProjectsWithQuery(queryField, queryValue) {

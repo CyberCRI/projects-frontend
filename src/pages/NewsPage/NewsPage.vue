@@ -3,13 +3,14 @@
         <div class="news-header">
             <div class="news-img-ctn">
                 <SkeletonComponent width="100%" height="100%" v-if="loading" />
-                <CroppedImage
+                <CroppedApiImage
                     v-else-if="news"
                     :alt="`${news.title} image`"
-                    :image-sizes="imageSizes"
-                    :src="croppedImageSrc"
                     class="picture"
                     :ratio="4 / 3"
+                    :picture-data="news.header_image"
+                    picture-size="medium"
+                    default-picture="/patatoids-project/Patatoid-1.png"
                 />
             </div>
             <div class="header-texts">
@@ -83,9 +84,8 @@
 <script>
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
 import permissions from '@/mixins/permissions.ts'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
@@ -103,7 +103,7 @@ export default {
 
     components: {
         BreadCrumbs,
-        CroppedImage,
+        CroppedApiImage,
         NewsListItem,
         ContextActionButton,
         ConfirmModal,
@@ -161,16 +161,6 @@ export default {
 
         publicationDate() {
             return this.news?.publication_date ? this.$d(new Date(this.news.publication_date)) : ''
-        },
-
-        imageSizes() {
-            return pictureApiToImageSizes(this.news?.header_image)
-        },
-
-        croppedImageSrc() {
-            return this.news && this.news.header_image
-                ? this.news.header_image.variations.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
         },
     },
 

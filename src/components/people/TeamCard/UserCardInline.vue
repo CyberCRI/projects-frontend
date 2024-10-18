@@ -6,16 +6,16 @@
         :data-test="`user-card-${user.given_name}`"
     >
         <div class="user-container">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="
                     user.keycloack_id
                         ? `${user.given_name} ${user.family_name} image`
                         : `${user.name} image`
                 "
-                :image-sizes="imageSizes"
-                :src="imageError ? defaultImage : userImage"
-                @error="placeHolderImg"
                 class="img-container"
+                :picture-data="userImage"
+                picture-size="medium"
+                default-picture="/placeholders/user_placeholder.svg"
             />
             <div class="user-info">
                 <div v-if="$filters.isNotGroup(user)" class="name">
@@ -42,18 +42,14 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'UserCardInline',
 
-    mixins: [imageMixin],
-
     emits: ['user-clicked'],
 
-    components: { IconImage, CroppedImage },
+    components: { IconImage, CroppedApiImage },
 
     props: {
         user: {
@@ -79,11 +75,6 @@ export default {
             default: false,
         },
     },
-    data() {
-        return {
-            imageError: false,
-        }
-    },
 
     computed: {
         roleLabel() {
@@ -98,24 +89,8 @@ export default {
         userImage() {
             if (this.$filters.isNotGroup(this.user)) {
                 return this.user.profile_picture
-                    ? this.user.profile_picture.variations.medium
-                    : null
             }
-            return this.user.header_image ? this.user.header_image.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError
-                ? null
-                : pictureApiToImageSizes(this.user.profile_picture || this.user.header_image)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
+            return this.user.header_image
         },
     },
 }

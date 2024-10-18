@@ -5,12 +5,12 @@
                 <IconImage class="icon" name="EmailOutline" @click="mailTo" />
             </slot>
         </template>
-        <CroppedImage
+        <CroppedApiImage
             :alt="`${user.given_name} ${user.family_name} image`"
-            :image-sizes="imageSizes"
-            :src="imageError ? defaultImage : userImage"
-            @error="placeHolderImg"
             class="picture picture-user"
+            :picture-data="user.profile_picture"
+            picture-size="medium"
+            default-picture="/placeholders/user_placeholder.svg"
         />
         <div class="text text-limit">
             <div class="card-type">{{ userGroups }}</div>
@@ -22,21 +22,17 @@
 <script>
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'UserCard',
 
     emits: ['click'],
 
-    mixins: [imageMixin],
-
     components: {
         BasicCard,
         IconImage,
-        CroppedImage,
+        CroppedApiImage,
     },
 
     props: {
@@ -53,20 +49,10 @@ export default {
     data() {
         return {
             isDetailOpen: false,
-            imageError: false,
         }
     },
 
     computed: {
-        userImage() {
-            return this.user.profile_picture ? this.user.profile_picture.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.user.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
         isPrivateUser() {
             // Private users do not return an iD from API call
             return !this.user.id
@@ -81,9 +67,6 @@ export default {
     methods: {
         mailTo() {
             document.location.href = 'mailto:' + this.user.email
-        },
-        placeHolderImg() {
-            this.imageError = true
         },
         userAction(event) {
             if (this.isPrivateUser) return

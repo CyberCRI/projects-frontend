@@ -16,12 +16,12 @@
             />
         </template>
 
-        <CroppedImage
+        <CroppedApiImage
             :alt="`${group.name} image`"
-            :image-sizes="imageSizes"
-            :src="imageError ? defaultImage : userImage"
-            @error="placeHolderImg"
             class="picture picture-group"
+            :picture-data="group.header_image"
+            picture-size="medium"
+            default-picture="/placeholders/user_placeholder.svg"
         />
 
         <div class="text text-limit">
@@ -45,21 +45,17 @@
 <script>
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'GroupCard',
 
     emits: ['add', 'unselect', 'click', 'navigated-away'],
 
-    mixins: [imageMixin],
-
     components: {
         BasicCard,
         IconImage,
-        CroppedImage,
+        CroppedApiImage,
     },
 
     props: {
@@ -83,23 +79,7 @@ export default {
         },
     },
 
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
     computed: {
-        userImage() {
-            return this.group.header_image ? this.group.header_image.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.group.header_image)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-
         showAddButton() {
             return this.hasAddIcon
         },
@@ -126,9 +106,7 @@ export default {
             // this is a quick and dirty fix to make whole card clickable for selection
             this.hasAddIcon ? this.$emit('add') : this.$emit('navigated-away')
         },
-        placeHolderImg() {
-            this.imageError = true
-        },
+
         gotoSubgroup(group) {
             this.$router.push({ name: 'Groups', params: { groupId: group.id } })
         },

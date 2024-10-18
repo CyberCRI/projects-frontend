@@ -6,16 +6,16 @@
         :data-test="`user-card-${user.id}`"
     >
         <div class="user-container">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="
                     user.keycloack_id
                         ? `${user.given_name} ${user.family_name} image`
                         : `${user.name} image`
                 "
-                :image-sizes="imageSizes"
-                :src="imageError ? defaultImage : userImage"
-                @error="placeHolderImg"
                 class="img-container"
+                :picture-data="user.profile_picture"
+                picture-size="medium"
+                default-picture="/placeholders/user_placeholder.svg"
             />
 
             <div class="user-info">
@@ -40,17 +40,13 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'TeamCardInline',
 
-    mixins: [imageMixin],
-
-    components: { IconImage, CroppedImage },
+    components: { IconImage, CroppedApiImage },
 
     emits: ['user-clicked'],
     setup() {
@@ -77,23 +73,7 @@ export default {
         },
     },
 
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
     computed: {
-        userImage() {
-            return this.user.profile_picture ? this.user.profile_picture.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.user.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-
         currentUser() {
             return this.usersStore.userFromApi
         },
@@ -101,12 +81,6 @@ export default {
         iconName() {
             if (this.icon) return this.icon
             return this.user.id !== this.currentUser.id ? 'Close' : null
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

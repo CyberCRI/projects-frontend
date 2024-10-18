@@ -4,10 +4,11 @@
         :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
     >
         <div class="project-image">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${project.title} image`"
-                :image-sizes="imageSizes"
-                :src="croppedImageSrc"
+                :picture-data="project.header_image"
+                picture-size="small"
+                default-picture="/placeholders/header_placeholder.png"
                 class="picture"
             />
         </div>
@@ -18,49 +19,19 @@
 </template>
 
 <script>
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'FeaturedProjectAdminListItem',
 
     components: {
-        CroppedImage,
+        CroppedApiImage,
     },
-
-    mixins: [imageMixin],
 
     props: {
         project: {
             type: Object,
             required: true,
-        },
-    },
-
-    computed: {
-        imageSizes() {
-            if (
-                this.project &&
-                this.project.header_image &&
-                this.project.header_image.scale_x &&
-                this.project.header_image.scale_y &&
-                this.project.header_image.natural_ratio
-            ) {
-                return {
-                    scaleX: this.project.header_image.scale_x,
-                    scaleY: this.project.header_image.scale_y,
-                    naturalRatio: this.project.header_image.natural_ratio,
-                    left: this.project.header_image.left || 0,
-                    top: this.project.header_image.top || 0,
-                }
-            }
-            return null
-        },
-
-        croppedImageSrc() {
-            return this.project && this.project.header_image
-                ? this.project.header_image.variations.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
         },
     },
 }
@@ -81,6 +52,10 @@ export default {
         width: 4rem;
         height: 4rem;
         overflow: hidden;
+    }
+
+    .picture {
+        flex-grow: 1;
     }
 
     .title {

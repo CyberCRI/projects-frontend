@@ -8,13 +8,12 @@
             },
         }"
     >
-        <CroppedImage
-            v-if="project.header_image && project.header_image.variations"
+        <CroppedApiImage
+            v-if="project?.header_image"
             :alt="`${project.title} image`"
-            :src="croppedImageSrc"
-            :image-sizes="imageSizes"
-            @error="placeHolderImg"
-            @load="onImageLoaded"
+            :picture-data="project.header_image"
+            picture-size="small"
+            default-picture="/placeholders/header_placeholder.png"
         />
 
         <p>{{ project.title }}</p>
@@ -22,50 +21,17 @@
 </template>
 
 <script>
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'SimilarProjectsItem',
 
-    components: { CroppedImage },
-
-    mixins: [imageMixin],
+    components: { CroppedApiImage },
 
     props: {
         project: {
             type: Object,
             default: () => ({}),
-        },
-    },
-
-    data() {
-        return {
-            imageError: false,
-            imageLoaded: false,
-        }
-    },
-
-    computed: {
-        croppedImageSrc() {
-            return this.imageError
-                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                : this.project.header_image?.variations.small
-        },
-        imageSizes() {
-            return pictureApiToImageSizes(this.project?.header_image)
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
-            this.imageLoaded = true
-        },
-
-        onImageLoaded() {
-            this.imageLoaded = true
         },
     },
 }

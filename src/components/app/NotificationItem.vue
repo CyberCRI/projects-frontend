@@ -9,16 +9,12 @@
         @click="$emit('go-to')"
     >
         <IconImage v-if="notification.icon" :name="notification.icon" class="icon" />
-        <CroppedImage
+        <CroppedApiImage
             alt="user image"
-            :image-sizes="imageSizes"
-            :src="
-                imageError
-                    ? defaultImage
-                    : notification.sender?.profile_picture?.variations?.medium || ''
-            "
-            @error="placeHolderImg"
             class="img-container"
+            :picture-data="notification.sender?.profile_picture"
+            picture-size="medium"
+            default-picture="/placeholders/user_placeholder.svg"
         />
         <div class="container">
             <i18n-t :keypath="`notifications.type.${notification.type}`" tag="p">
@@ -181,30 +177,20 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import utils from '@/functs/functions.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'NotificationItem',
 
     emits: ['go-to'],
 
-    mixins: [imageMixin],
-
-    components: { IconImage, CroppedImage },
+    components: { IconImage, CroppedApiImage },
 
     props: {
         notification: {
             type: Object,
             required: true,
         },
-    },
-
-    data() {
-        return {
-            imageError: false,
-        }
     },
 
     computed: {
@@ -215,20 +201,6 @@ export default {
         context() {
             if (utils.isEmpty(this.notification.context)) return null
             return this.notification.context
-        },
-        imageSizes() {
-            return this.imageError
-                ? null
-                : pictureApiToImageSizes(this.notification?.sender?.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

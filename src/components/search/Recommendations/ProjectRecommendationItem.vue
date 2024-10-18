@@ -7,17 +7,13 @@
                 params: { slugOrId: recommendation.slug },
             }"
         >
-            <CroppedImage
-                v-if="
-                    recommendation &&
-                    recommendation.header_image &&
-                    recommendation.header_image.variations
-                "
+            <CroppedApiImage
                 ref="projectImg"
                 :alt="`${recommendation.title} image`"
-                :src="imageError ? defaultImage : recommendation.header_image.variations.small"
-                @error="placeHolderImg"
                 class="img-container"
+                :picture-data="recommendation?.header_image"
+                picture-size="small"
+                default-picture="/placeholders/header_placeholder.png"
             />
             <div class="text-container">
                 <span class="project-title">
@@ -32,38 +28,17 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'ProjectRecommendationItem',
 
-    mixins: [imageMixin],
-
-    components: { CroppedImage },
+    components: { CroppedApiImage },
 
     props: {
         recommendation: {
             type: Object,
             required: true,
-        },
-    },
-
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
-    computed: {
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

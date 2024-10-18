@@ -8,14 +8,13 @@
         }"
     >
         <div class="announcement-img-container">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${announcement?.project?.title} image`"
-                :image-sizes="imageSizes"
-                :src="croppedImageSrc"
                 class="project-img"
                 :ratio="1 / 1"
-                @error="placeHolderImg"
-                @load="onImageLoaded"
+                :picture-data="announcement.project?.header_image"
+                picture-size="medium"
+                default-picture="/placeholders/header_placeholder.png"
             />
             <div :style="announcementStyle" class="announcement-overlay"></div>
         </div>
@@ -43,29 +42,18 @@
 
 <script>
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import ImageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 export default {
     name: 'NewsfeedAnnouncementsItem',
 
-    mixins: [ImageMixin],
-
-    components: { SummaryAction, CroppedImage, HtmlLimiter },
+    components: { SummaryAction, CroppedApiImage, HtmlLimiter },
 
     props: {
         announcement: {
             type: Object,
             default: () => {},
         },
-    },
-
-    data() {
-        return {
-            imageError: false,
-            imageLoaded: false,
-        }
     },
 
     computed: {
@@ -79,26 +67,6 @@ export default {
 
         description() {
             return this.announcement?.description || ''
-        },
-
-        imageSizes() {
-            return pictureApiToImageSizes(this.announcement.project?.header_image)
-        },
-
-        croppedImageSrc() {
-            const src = this.announcement.project?.header_image?.variations?.small
-            return this.imageError || !src
-                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                : src
-        },
-    },
-    methods: {
-        onImageLoaded() {
-            this.imageLoaded = true
-        },
-        placeHolderImg() {
-            this.imageError = true
-            this.imageLoaded = true
         },
     },
 }

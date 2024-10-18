@@ -1,11 +1,11 @@
 <template>
     <div class="header-group" v-if="!isLoading">
         <div class="header-group-image">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${title} image`"
-                :src="imageError ? defaultImage : groupImage"
-                @error="placeHolderImg"
-                :image-sizes="imageSizes"
+                :picture-data="image"
+                picture-size="medium"
+                default-picture="/placeholders/user_placeholder.svg"
             />
         </div>
         <div class="header-group-infos">
@@ -74,9 +74,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import GroupHeaderSkeleton from '@/components/group/GroupHeader/GroupHeaderSkeleton.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'GroupHeader',
@@ -85,9 +83,8 @@ export default {
         ToolTip,
         ExternalLabelButton,
         GroupHeaderSkeleton,
-        CroppedImage,
+        CroppedApiImage,
     },
-    mixins: [imageMixin],
     props: {
         title: {
             type: String,
@@ -119,21 +116,9 @@ export default {
     data() {
         return {
             sharedUrl: window.location.origin,
-            imageError: false,
         }
     },
     computed: {
-        groupImage() {
-            return this.image ? this.image.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.image)
-        },
-
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg` // TODO: change to group placeholder
-        },
-
         groupVisibilityLabel() {
             if (this.visibility === 'public') return this.$t('group.visibility-public')
             else if (this.visibility === 'private') return this.$t('group.visibility-private')
@@ -153,9 +138,6 @@ export default {
         },
         linkedinShare() {
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
-        },
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

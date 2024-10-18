@@ -1,11 +1,11 @@
 <template>
     <div class="user" @click="$emit('user-click', user)">
-        <CroppedImage
+        <CroppedApiImage
             :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
-            :image-sizes="imageSizes"
-            :src="imageError ? defaultImage : userImage"
-            @error="placeHolderImg"
             class="picture"
+            :picture-data="user.profile_picture"
+            picture-size="medium"
+            default-picture="/placeholders/user_placeholder.svg"
         />
         <span class="badge" v-if="roleLabel" data-test="leader-badge">
             {{ $t(roleLabel) }}
@@ -25,19 +25,15 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'GroupMemberItem',
 
     emits: ['user-click'],
 
-    mixins: [imageMixin],
-
     components: {
-        CroppedImage,
+        CroppedApiImage,
     },
 
     props: {
@@ -47,34 +43,7 @@ export default {
         },
     },
 
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
-        },
-    },
-
     computed: {
-        userImage() {
-            if (this.user.id) {
-                return this.user.profile_picture
-                    ? this.user.profile_picture.variations.medium
-                    : null
-            }
-            return this.user.header_image ? this.user.header_image.variations.medium : null
-        },
-        imageSizes() {
-            return this.imageError ? null : pictureApiToImageSizes(this.user.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-
         userName() {
             return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
         },
