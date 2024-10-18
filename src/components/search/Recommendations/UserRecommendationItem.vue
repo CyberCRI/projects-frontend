@@ -4,17 +4,13 @@
             class="recommendation"
             :to="{ name: 'ProfileOtherUser', params: { userId: recommendation.slug } }"
         >
-            <CroppedImage
-                v-if="recommendation"
+            <CroppedApiImage
                 ref="userImg"
                 :alt="`${recommendation.slug} image`"
-                :src="
-                    imageError
-                        ? defaultImage
-                        : recommendation?.profile_picture?.variations?.small || ''
-                "
-                @error="placeHolderImg"
                 class="img-container"
+                :picture-data="recommendation?.profile_picture"
+                picture-size="small"
+                default-picture="/placeholders/user_placeholder.svg"
             />
             <div class="text-container">
                 <span class="name">
@@ -69,19 +65,16 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'UserRecommendationItem',
 
     emits: ['go-to-user'],
 
-    mixins: [imageMixin],
-
-    components: { CroppedImage, BadgeItem, ToolTip },
+    components: { CroppedApiImage, BadgeItem, ToolTip },
 
     props: {
         recommendation: {
@@ -92,16 +85,11 @@ export default {
 
     data() {
         return {
-            imageError: false,
             skillsLimit: 3,
         }
     },
 
     computed: {
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-
         skills() {
             return (this.recommendation.skills || []).filter((s) => s.type == 'skill')
         },
@@ -124,12 +112,6 @@ export default {
 
         hasMoreTags() {
             return this.moreSkills.length > 0
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

@@ -3,13 +3,13 @@
         :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
         class="line"
     >
-        <CroppedImage
-            v-if="project && project.header_image && project.header_image.variations"
+        <CroppedApiImage
             ref="projectImg"
             :alt="`${project.title} image`"
-            :src="imageError ? defaultImage : project.header_image.variations.small"
-            @error="placeHolderImg"
             class="img-container"
+            :picture-data="project?.header_image"
+            picture-size="medium"
+            default-picture="/placeholders/header_placeholder.png"
         />
         <div class="project-title">
             {{ $filters.capitalize(project.title) }}
@@ -18,38 +18,17 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'ProjectLine',
 
-    mixins: [imageMixin],
-
-    components: { CroppedImage },
+    components: { CroppedApiImage },
 
     props: {
         project: {
             type: Object,
             required: true,
-        },
-    },
-
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
-    computed: {
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

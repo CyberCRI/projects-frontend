@@ -1,15 +1,15 @@
 <template>
     <div class="other-org-account-card">
-        <CroppedImage
+        <CroppedApiImage
             :alt="
                 user?.keycloack_id
                     ? `${user.given_name} ${user.family_name} image`
                     : `${user.name} image`
             "
-            :image-sizes="imageSizes"
-            :src="imageError ? defaultImage : user?.profile_picture?.variations?.small"
-            @error="placeHolderImg"
             class="img-container"
+            :picture-data="user.profile_picture"
+            picture-size="small"
+            default-picture="/placeholders/user_placeholder.svg"
         />
         <div class="text-wrapper">
             <h3 class="name">{{ user?.given_name }} {{ user?.family_name }}</h3>
@@ -32,9 +32,7 @@
     </div>
 </template>
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
 import { getOrganizations } from '@/api/organizations.service.ts'
@@ -42,9 +40,7 @@ import { getOrganizations } from '@/api/organizations.service.ts'
 export default {
     name: 'OtherOrgUserCard',
 
-    mixins: [imageMixin],
-
-    components: { CroppedImage, LoaderSimple },
+    components: { CroppedApiImage, LoaderSimple },
 
     props: {
         user: {
@@ -54,7 +50,6 @@ export default {
     },
     data() {
         return {
-            imageError: false,
             isLoadingOrgRoles: false,
             orgRoles: [],
         }
@@ -64,22 +59,7 @@ export default {
         this.loadRoles()
     },
 
-    computed: {
-        imageSizes() {
-            return this.imageError
-                ? null
-                : pictureApiToImageSizes(this.user.profile_picture || this.user.header_image)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-    },
-
     methods: {
-        placeHolderImg() {
-            this.imageError = true
-        },
-
         async loadRoles() {
             this.isLoadingOrgRoles = true
             // TODO: getOrganizations might be paginated if more than 100, we'll need to handle the case some day

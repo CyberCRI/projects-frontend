@@ -2,12 +2,12 @@
     <div class="comment-ctn">
         <div v-if="!comment.deleted_at" :class="{ 'is-reply': isReply }" class="comment">
             <div class="comment-picture">
-                <CroppedImage
+                <CroppedApiImage
                     :alt="`${comment.author.given_name} ${comment.author.family_name} image`"
-                    :image-sizes="imageSizes"
-                    :src="imageError ? defaultImage : userImage"
-                    @error="placeHolderImg"
                     class="image"
+                    :picture-data="comment.author.profile_picture"
+                    picture-size="medium"
+                    default-picture="/placeholders/user_placeholder.svg"
                 />
             </div>
             <div class="comment-body">
@@ -143,9 +143,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
@@ -157,7 +155,7 @@ import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
     name: 'CommentItem',
 
-    mixins: [imageMixin, permissions],
+    mixins: [permissions],
 
     emits: [
         'comment-posted',
@@ -173,7 +171,7 @@ export default {
         IconImage,
         ExternalLabelButton,
         MakeComment,
-        CroppedImage,
+        CroppedApiImage,
         TipTapOutput,
     },
     setup() {
@@ -216,7 +214,6 @@ export default {
             replying: false,
             editing: false,
             confirmDeleteComment: false,
-            imageError: false,
             isDeleting: false,
         }
     },
@@ -280,9 +277,6 @@ export default {
                 }
             }
         },
-        placeHolderImg() {
-            this.imageError = true
-        },
     },
 
     computed: {
@@ -296,20 +290,6 @@ export default {
 
         isConnected() {
             return this.usersStore.isConnected
-        },
-
-        userImage() {
-            return this.comment.author.profile_picture
-                ? this.comment.author.profile_picture.variations.medium
-                : null
-        },
-        imageSizes() {
-            return this.imageError
-                ? null
-                : pictureApiToImageSizes(this.comment.author.profile_picture)
-        },
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
         },
 
         showEditDate() {

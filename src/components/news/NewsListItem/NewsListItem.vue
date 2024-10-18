@@ -15,12 +15,13 @@
             />
         </div>
         <div class="news-img-ctn">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${news.title} image`"
-                :image-sizes="imageSizes"
-                :src="croppedImageSrc"
                 class="picture"
                 :ratio="4 / 3"
+                :picture-data="news?.header_image"
+                picture-size="small"
+                default-picture="/patatoids-project/Patatoid-1.png"
             />
         </div>
         <div class="news-texts" :style="textsStyle">
@@ -52,23 +53,21 @@
     </RouterLink>
 </template>
 <script>
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'NewsListItem',
 
-    mixins: [imageMixin, permissions],
+    mixins: [permissions],
 
     emits: ['delete-news', 'edit-news'],
 
     components: {
-        CroppedImage,
+        CroppedApiImage,
         SummaryAction,
         HtmlLimiter,
         ContextActionMenu,
@@ -86,18 +85,6 @@ export default {
             style: {},
             textsStyle: {},
         }
-    },
-
-    computed: {
-        imageSizes() {
-            return pictureApiToImageSizes(this.news?.header_image)
-        },
-
-        croppedImageSrc() {
-            return this.news && this.news.header_image
-                ? this.news.header_image.variations.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
-        },
     },
 
     methods: {

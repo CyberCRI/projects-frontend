@@ -1,12 +1,13 @@
 <template>
     <RouterLink class="news-list-item" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
         <div class="news-img-ctn">
-            <CroppedImage
+            <CroppedApiImage
                 :alt="`${news.title} image`"
-                :image-sizes="imageSizes"
-                :src="croppedImageSrc"
                 class="picture"
                 :ratio="4 / 3"
+                :picture-data="news?.header_image"
+                picture-size="small"
+                default-picture="/patatoids-project/Patatoid-1.png"
             />
         </div>
         <div class="news-texts">
@@ -24,21 +25,19 @@
     </RouterLink>
 </template>
 <script>
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'NewsAdminListItem',
 
-    mixins: [imageMixin, permissions],
+    mixins: [permissions],
 
     emits: ['delete-news', 'edit-news'],
 
     components: {
-        CroppedImage,
+        CroppedApiImage,
         ContextActionMenu,
     },
 
@@ -53,15 +52,6 @@ export default {
         canEditNews() {
             // TODO: implement logic
             return true
-        },
-        imageSizes() {
-            return pictureApiToImageSizes(this.news?.header_image)
-        },
-
-        croppedImageSrc() {
-            return this.news && this.news.header_image
-                ? this.news.header_image.variations.small
-                : `${this.PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`
         },
     },
 }

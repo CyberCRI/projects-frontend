@@ -38,13 +38,12 @@
                 @click="$emit('custom-icon-click', project)"
             />
         </template>
-        <CroppedImage
+        <CroppedApiImage
+            :picture-data="project.header_image"
+            picture-size="medium"
+            default-picture="/placeholders/header_placeholder.png"
             :alt="`${project.title} image`"
-            :image-sizes="imageSizes"
-            :src="croppedImageSrc"
             class="picture"
-            @error="placeHolderImg"
-            @load="onImageLoaded"
         />
         <div
             :class="{ 'has-description': project.purpose && project.purpose.length }"
@@ -67,10 +66,8 @@
 import BasicCard from '@/components/base/BasicCard.vue'
 import followUtils from '@/functs/followUtils.ts'
 import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'ProjectCard',
@@ -85,12 +82,10 @@ export default {
         'custom-icon-click',
     ],
 
-    mixins: [imageMixin],
-
     components: {
         BasicCard,
         IconImage,
-        CroppedImage,
+        CroppedApiImage,
     },
 
     setup() {
@@ -199,26 +194,9 @@ export default {
             }
             return map[this.project.publication_status] || ''
         },
-
-        imageSizes() {
-            return pictureApiToImageSizes(this.project?.header_image)
-        },
-
-        croppedImageSrc() {
-            return this.imageError
-                ? `${this.PUBLIC_BINARIES_PREFIX}/placeholders/header_placeholder.png`
-                : this.project.header_image?.variations.medium
-        },
     },
 
     methods: {
-        onImageLoaded() {
-            this.imageLoaded = true
-        },
-        placeHolderImg() {
-            this.imageError = true
-            this.imageLoaded = true
-        },
         toProject() {
             // this is a quick and dirty fix to make whole card clickable for selection
             if (this.hasAddIcon) this.$emit('add')

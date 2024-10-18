@@ -2,12 +2,12 @@
     <div class="user-card-wrapper">
         <div class="user-card-ctn">
             <div :class="[size, tint]" class="user-card">
-                <CroppedImage
+                <CroppedApiImage
                     :alt="`${user.name} image`"
-                    :image-sizes="imageError ? null : user.imageSizes"
-                    :src="imageError ? defaultImage : user.picture"
-                    @error="placeHolderImg"
                     class="picture"
+                    :picture-data="user.profile_picture"
+                    picture-size="medium"
+                    default-picture="/placeholders/user_placeholder.svg"
                 />
                 <div class="description">
                     <div :style="{ borderLeftColor: user.color }" class="name">
@@ -21,16 +21,15 @@
 
 <script>
 import formatHtml from '@/mixins/formatHtml.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'UserPresenceCard',
 
-    mixins: [formatHtml, imageMixin],
+    mixins: [formatHtml],
 
     components: {
-        CroppedImage,
+        CroppedApiImage,
     },
 
     props: {
@@ -47,24 +46,6 @@ export default {
         tint: {
             type: String,
             default: '',
-        },
-    },
-
-    data() {
-        return {
-            imageError: false,
-        }
-    },
-
-    computed: {
-        defaultImage() {
-            return `${this.PUBLIC_BINARIES_PREFIX}/placeholders/user_placeholder.svg`
-        },
-    },
-
-    methods: {
-        placeHolderImg() {
-            this.imageError = true
         },
     },
 }

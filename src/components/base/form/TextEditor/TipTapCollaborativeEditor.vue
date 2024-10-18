@@ -14,7 +14,6 @@ import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
 import { HocuspocusProvider } from '@hocuspocus/provider'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 
@@ -134,10 +133,7 @@ function getCollaborativeExtensions() {
                 name: user.value.given_name + ' ' + user.value.family_name,
                 color: props.color,
                 pid: user.value.id,
-                picture: user.value.profile_picture
-                    ? user.value.profile_picture.variations.medium
-                    : null,
-                imageSizes: pictureApiToImageSizes(user.value.profile_picture),
+                profile_picture: user.value.profile_picture,
             },
         })
     )

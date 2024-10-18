@@ -22,14 +22,7 @@ defineProps({
                 <UserCard
                     v-for="(u, index) in users"
                     :key="index"
-                    :user="{
-                        name: u.name,
-                        id: u.clientId,
-                        people_id: u.pid,
-                        color: u.color,
-                        picture: u.picture,
-                        imageSizes: u.imageSizes,
-                    }"
+                    :user="u"
                     mode="full"
                     size="s"
                     tint="inverse"
