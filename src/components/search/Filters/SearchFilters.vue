@@ -1,4 +1,5 @@
 <script setup>
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getProjectCategory } from '@/api/project-categories.service'
 import { getTags } from '@/api/tag-classification.service'
 
@@ -74,6 +75,8 @@ async function initFilters() {
     emit('search-filters-inited', false)
     // converts host component "search" (arrays of id)
     // to arrays of object (needed in this component for displayinf them)
+
+    const organizationsStore = useOrganizationsStore()
 
     const rawFilters = props.search || {}
     const filters = {}
