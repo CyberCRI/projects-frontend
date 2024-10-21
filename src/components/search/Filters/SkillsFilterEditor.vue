@@ -20,7 +20,7 @@
         <p v-if="confirmedSearch" class="skill-description">
             {{ $t('search.choose-skill') }}
         </p>
-        <WikipediaResults
+        <TagResults
             v-if="confirmedSearch"
             :ambiguous-results-visible="ambiguousTagsOpen"
             :existing-tags="skills"
@@ -35,7 +35,7 @@
 
 <script>
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import debounce from 'lodash.debounce'
@@ -48,7 +48,7 @@ export default {
 
     components: {
         CurrentTags,
-        WikipediaResults,
+        TagResults,
         LpiButton,
         SearchInput,
     },

@@ -55,8 +55,7 @@ export default {
             search: {
                 search: '',
                 categories: [],
-                organization_tags: [],
-                wikipedia_tags: [],
+                tags: [],
                 members: [],
                 sdgs: [],
                 languages: [],
@@ -117,8 +116,7 @@ export default {
             const map = {
                 search: true,
                 categories: this.selectedSection === 'projects',
-                organization_tags: this.selectedSection === 'projects',
-                wikipedia_tags: this.selectedSection === 'projects',
+                tags: this.selectedSection === 'projects',
                 members: false,
                 sdgs: this.selectedSection === 'projects' || this.selectedSection === 'people',
                 languages: this.selectedSection === 'projects',
@@ -140,6 +138,7 @@ export default {
         },
 
         updateSearch: debounce(function (newSearch) {
+            if (!this.searchOptionsInitiated) return
             // reset pagination to page 1 if other criterion have changed
             // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
             // and so seem always different than this.search

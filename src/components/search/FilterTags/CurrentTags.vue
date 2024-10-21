@@ -42,7 +42,7 @@ export default {
         },
 
         tagLabel(tag) {
-            return tag[`name_${this.languagesStore.current}`] || tag.name
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

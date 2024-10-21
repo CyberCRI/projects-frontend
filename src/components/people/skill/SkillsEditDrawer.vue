@@ -40,7 +40,7 @@
             <p v-if="confirmedSearch" class="notice no-shrink">
                 {{ $t('search.choose-skill') }}
             </p>
-            <WikipediaResults
+            <TagResults
                 class="flexed-search-results-ctn custom-scrollbar"
                 v-if="confirmedSearch"
                 :query-string="confirmedSearch"
@@ -97,7 +97,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { toRaw } from 'vue'
 import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
@@ -130,7 +130,7 @@ export default {
         IconImage,
         SearchInput,
         FilterValue,
-        WikipediaResults,
+        TagResults,
         SkillLevelTip,
         LpiButton,
     },

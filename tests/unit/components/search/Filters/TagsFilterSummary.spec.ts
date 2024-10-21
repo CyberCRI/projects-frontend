@@ -35,8 +35,8 @@ describe('TagsFilterSummary', () => {
             ...{
                 props: {
                     modelValue: [
-                        { name: 'Test', id: 1 },
-                        { name: 'Test', id: 2 },
+                        { title: 'Test', id: 1 },
+                        { title: 'Test', id: 2 },
                     ],
                 },
             },
@@ -54,8 +54,8 @@ describe('TagsFilterSummary', () => {
             ...{
                 props: {
                     modelValue: [
-                        { name: 'Test', id: 1 },
-                        { name: 'Test', id: 2 },
+                        { title: 'Test', id: 1 },
+                        { title: 'Test', id: 2 },
                     ],
                 },
             },

@@ -52,15 +52,9 @@ export default function useContextualFilters({
                 label: t('search.tag'),
                 names: filterBlackList.value.includes('tags')
                     ? []
-                    : selectedFilters.value?.tags?.map((tag) => {
-                          if (tag.wikipedia_qid) {
-                              // wikipedia tags
-                              return tag[`name_${languagesStore.current}`] || tag['name']
-                          } else {
-                              // org tags
-                              return tag.name
-                          }
-                      }) || [],
+                    : selectedFilters.value?.tags?.map(
+                          (tag) => tag[`title_${languagesStore.current}`] || tag.title
+                      ) || [],
                 dataTest: 'contextual-filter-tags',
                 condition:
                     selectedSection.value === PROJECT_SECTION_KEY &&

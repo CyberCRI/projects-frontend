@@ -4,7 +4,7 @@
             <LoaderSimple />
         </div>
         <div v-else-if="displayableTags.length" class="suggested-tags-ctn">
-            <div v-for="(tag, index) in displayableTags" :key="index">
+            <div v-for="tag in displayableTags" :key="tag.id">
                 <FilterValue
                     v-if="tagLabel(tag)"
                     :label="tagLabel(tag)"
@@ -54,7 +54,8 @@ export default {
     computed: {
         displayableTags() {
             return this.suggestedTags.filter(
-                (tag) => !this.currentTags.some((currentTag) => currentTag.name === tag.name)
+                // (tag) => !this.currentTags.some((currentTag) => currentTag.name === tag.name)
+                (tag) => !this.currentTags.some((currentTag) => currentTag.title === tag.title)
             )
         },
     },
@@ -65,7 +66,8 @@ export default {
         },
 
         tagLabel(tag) {
-            return tag[`name_${this.languagesStore.current}`] || tag.name
+            // return tag[`name_${this.languagesStore.current}`] || tag.name
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

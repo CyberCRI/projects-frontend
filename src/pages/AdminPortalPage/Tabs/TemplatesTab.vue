@@ -155,11 +155,7 @@
             @close="closeTags"
             @confirm="updateTemplateTags"
         >
-            <TagsFilterEditor
-                v-model="newTags"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
-            />
+            <TagsFilterEditor v-model="newTags" />
         </BaseDrawer>
     </div>
 </template>
