@@ -108,8 +108,7 @@ export default {
 
                 language: this.languagesStore.current,
 
-                wikipedia_tags: [],
-                organization_tags: [],
+                tags: [],
 
                 team: {
                     owners: null,
@@ -213,8 +212,7 @@ export default {
                 publication_status: 'private',
                 life_status: 'running',
                 organizations_codes: [this.organizationsStore.current.code],
-                wikipedia_tags_ids: this.form.wikipedia_tags.map((tag) => tag.wikipedia_qid),
-                organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
+                tags: this.form.tags.map((tag) => tag.id),
             }
 
             if (this.form.category) {
@@ -229,18 +227,6 @@ export default {
 
                 analytics.project.create({ id: project.id, title: project.title })
 
-                /* Until backend allows adding tags in the addProject request, add them after project creation */
-                if (this.form.wikipedia_tags.length || this.form.organization_tags.length) {
-                    await this.projectsStore.updateProject({
-                        id: project.id,
-                        project: {
-                            wikipedia_tags_ids: this.form.wikipedia_tags.map(
-                                (tag) => tag.wikipedia_qid
-                            ),
-                            organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
-                        },
-                    })
-                }
                 await this.onboardingTrap('create_project', false)
                 // reload current to user to get new permissions
                 // maybe set a endpoint to fetch only permission ?

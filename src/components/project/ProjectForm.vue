@@ -197,7 +197,7 @@ export default {
             displayedImage: '',
             selectedCategory: undefined,
             form: JSON.parse(JSON.stringify(this.modelValue)),
-            tags: [...this.modelValue.organization_tags, ...this.modelValue.wikipedia_tags],
+            tags: [...this.modelValue.tags],
             tagSearchIsOpened: false,
             showImageResizer: false,
             tagsInProcess: [],
@@ -267,10 +267,7 @@ export default {
                     (category) => category.id === categoryId
                 )
             // set default tags according to selected category
-            this.tags = [
-                ...this.selectedCategory.organization_tags,
-                ...this.selectedCategory.wikipedia_tags,
-            ]
+            this.tags = [...this.selectedCategory.tags]
         },
 
         form: {
@@ -303,9 +300,7 @@ export default {
         },
 
         updateTags() {
-            this.form.organization_tags = this.tags.filter((tag) => tag.organization)
-
-            this.form.wikipedia_tags = this.tags.filter((tag) => tag.wikipedia_qid)
+            this.form.tags = this.tags
         },
 
         updateTeam(team) {
