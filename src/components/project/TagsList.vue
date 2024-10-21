@@ -132,7 +132,6 @@ export default {
                 async function () {
                     /* for each tag, we check if it fit in the wrapper
                      * if it doesn't, we hide it and add it to the more tags
-                     * we do this for both org and wiki tags
                      */
                     if (this && this.$el) {
                         const wrapperRight = this.$el.getBoundingClientRect().right

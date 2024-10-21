@@ -2,8 +2,7 @@ import BaseModel from '@/models/base.model'
 import { FaqModel } from '@/models/faq.model'
 import { LanguageType } from '@/models/types'
 import { OrganizationDirectoryModel } from '@/models/organization-directory.model'
-import { WikipediaTagModel } from '@/models/wikipedia-tag.model'
-import { OrganizationTagModel } from './organization-tag.model'
+import { TagModel } from './tag.model'
 
 /**
  * @name OrganizationModel
@@ -34,25 +33,20 @@ export interface OrganizationModel extends BaseModel {
     main_org_logo_visibility: boolean
     is_logo_visible_on_parent_dashboard: boolean
     name: string
-    wikipedia_concepts: string[]
     website_url: string
     faq: FaqModel
-    wikipedia_tags: WikipediaTagModel[]
-    tags: OrganizationTagModel[]
     children: string[]
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
-    wikipedia_tags_ids?: string[]
-    tags_ids?: number[]
+    tags?: number[]
 }
 
 export type OrganizationOutput = BaseModel &
     Required<OrganizationModel> & {
         faq: FaqModel
         organization_directory: OrganizationDirectoryModel
-        wikipedia_tags: WikipediaTagModel[]
-        tags: OrganizationTagModel[]
+        tags: TagModel[]
         children: string[]
         access_request_enabled?: boolean
     }

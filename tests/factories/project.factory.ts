@@ -2,7 +2,6 @@ import { createFactory } from 'faker-create-factory'
 
 import { ProjectModel, ProjectOutput } from '@/models/project.model'
 import { BaseFactory } from './base.factory'
-import TagFactory from './wikipedia-tag.factory'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'
 import LocationFactory from './location.factory'
@@ -17,8 +16,7 @@ import { CommentFactory } from './comment.factory'
 import { ReviewFactory } from './review.factory'
 import { TemplateFactory } from './template.factory'
 import BlogEntryFactory from './blog-entry.factory'
-import WikipediaTagFactory from './wikipedia-tag.factory'
-import OrganizationTagFactory from './organization-tag.factory'
+import TagFactory from './tag.factory'
 
 // Remove id type number
 const { id, ...restBaseFactory } = BaseFactory.generate()
@@ -54,8 +52,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
     life_status: 'running',
     reviews: ReviewFactory.generateMany(2),
     organizations: OrganizationOutputFactory.generate(),
-    wikipedia_tags: WikipediaTagFactory.generateMany(2),
-    organization_tags: OrganizationTagFactory.generateMany(2),
+    tags: TagFactory.generateMany(2),
     links: AttachmentLinkFactory.generateMany(2),
     files: AttachmentFileFactory.generateMany(2),
     follows: [],
