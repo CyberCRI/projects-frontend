@@ -102,7 +102,6 @@ export default {
             ambiguousResultsVisible: false,
             queryString: '',
             tags: [],
-            wikipediaTags: [],
             suggestedTagsisLoading: false,
             selectedClassificatonId: null,
         }
