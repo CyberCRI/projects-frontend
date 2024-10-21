@@ -26,7 +26,7 @@
             :loading="suggestedTagsisLoading"
         />
 
-        <WikipediaResults
+        <TagResults
             v-else
             :in-modal="inModal"
             :query-string="queryString"
@@ -40,7 +40,7 @@
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import CurrentTags from './CurrentTags.vue'
 import SuggestedTags from './SuggestedTags.vue'
-import WikipediaResults from './WikipediaResults.vue'
+import TagResults from './TagResults.vue'
 import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { getAllOrgTags } from '@/api/organization-tags.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -53,7 +53,7 @@ export default {
         SearchInput,
         CurrentTags,
         SuggestedTags,
-        WikipediaResults,
+        TagResults,
     },
     setup() {
         const organizationsStore = useOrganizationsStore()

@@ -19,8 +19,6 @@
                 :is="filters[focusedFilter].componentEditor"
                 v-if="focusedFilter"
                 v-model="selection[focusedFilter]"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                @ambiguous-menu="toggleAmbiguousMenu"
             />
 
             <div v-else v-for="(filter, key) in filters" :key="key" class="filter-wrapper">
@@ -39,12 +37,7 @@
             </div>
         </template>
         <template v-else>
-            <Component
-                :is="filters[mode].componentEditor"
-                v-model="selection[mode]"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                @ambiguous-menu="toggleAmbiguousMenu"
-            />
+            <Component :is="filters[mode].componentEditor" v-model="selection[mode]" />
         </template>
     </Drawer>
 </template>
@@ -87,7 +80,6 @@ export default {
         return {
             selection: JSON.parse(JSON.stringify(this.preselection)),
             focusedFilter: null,
-            ambiguousTagsOpen: false,
             allFiltersMode: ALL_FILTERS_MODE,
         }
     },
@@ -103,10 +95,7 @@ export default {
                 return this.$t('search.all-filters')
             }
 
-            const title =
-                this.mode === 'tags' && this.ambiguousTagsOpen
-                    ? 'ambiguousTag'
-                    : this.filters[this.mode].title
+            const title = this.filters[this.mode].title
             return this.$t(`search.${title}`)
         },
     },
@@ -123,21 +112,12 @@ export default {
             this.focusedFilter = filterKey
         },
 
-        toggleAmbiguousMenu(value) {
-            this.ambiguousTagsOpen = value
-        },
-
         closeFocusedOrModeFilter() {
-            if (!this.ambiguousTagsOpen)
-                if (this.focusedFilter) this.focusedFilter = null
-                else this.$emit('close')
-            else {
-                this.ambiguousTagsOpen = false
-            }
+            if (this.focusedFilter) this.focusedFilter = null
+            else this.$emit('close')
         },
 
         close() {
-            this.ambiguousTagsOpen = false
             this.$emit('close')
         },
     },

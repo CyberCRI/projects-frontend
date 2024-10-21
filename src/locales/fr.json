@@ -1694,6 +1694,7 @@
         "geo-map-description": "Découvrez les projets sur une carte du monde",
         "tag-map-description": "Découvrez les projets sur une carte des tags Wikipédia",
         "open-map": "Ouvrir la carte",
+        "current-classification-description": "Choisissez un référentiel de tags",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
         "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
         "disambiguate": "(HOMONYMIE)",

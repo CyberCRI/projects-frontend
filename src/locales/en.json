@@ -1697,6 +1697,7 @@
         "geo-map-description": "Discover projects on a world map",
         "tag-map-description": "Discover projetcs on a Wikipédia tag map",
         "open-map": "Open the map",
+        "current-classification-description": "Choose a tag classification",
         "current-tag-description": "Type tag’s first letters and select the right tag",
         "current-skill-description": "Type skill’s label and select the right skill",
         "disambiguate": "(DISAMBIGUATION)",

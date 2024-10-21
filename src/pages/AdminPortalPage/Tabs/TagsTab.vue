@@ -60,12 +60,7 @@
             @close="closeWikipediaTags"
             @confirm="saveWikipediaTags"
         >
-            <TagsFilterEditor
-                v-model="newWikipediaTags"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                :hide-organization-tags="true"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
-            />
+            <TagsFilterEditor v-model="newWikipediaTags" hide-organization-tags />
         </BaseDrawer>
     </div>
 </template>
@@ -114,7 +109,6 @@ export default {
             orgConfirmModalVisible: false,
             wikiConfirmModalVisible: false,
             tagSearchIsOpened: false,
-            ambiguousTagsOpen: false,
             wikipediaTags: [],
             organizationTags: [],
         }

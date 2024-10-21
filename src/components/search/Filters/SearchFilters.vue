@@ -1,7 +1,7 @@
 <script setup>
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getProjectCategory } from '@/api/project-categories.service'
-import { getWikiTag } from '@/api/wikipedia-tags.service'
-import { getOrgTag } from '@/api/organization-tags.service'
+import { getOrgTag } from '@/api/tag-classification.service'
 
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
@@ -20,7 +20,6 @@ function defaultFilters() {
         sdgs: [],
         tags: [],
         skills: [],
-        wikipedia_tags: [],
     }
 }
 
@@ -77,6 +76,8 @@ async function initFilters() {
     // converts host component "search" (arrays of id)
     // to arrays of object (needed in this component for displayinf them)
 
+    const organizationsStore = useOrganizationsStore()
+
     const rawFilters = props.search || {}
     const filters = {}
 
@@ -84,15 +85,11 @@ async function initFilters() {
         (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
     )
 
-    const wikipediaTags = await Promise.all(
-        (rawFilters.wikipedia_tags || []).map(async (wikiTagId) => await getWikiTag(wikiTagId))
+    filters.tags = filters.tags = await Promise.all(
+        (rawFilters.tags || []).map(
+            async (tagId) => await getOrgTag(organizationsStore.current.code, tagId)
+        )
     )
-
-    const organizationTags = await Promise.all(
-        (rawFilters.organization_tags || []).map(async (orgTagId) => await getOrgTag(orgTagId))
-    )
-
-    filters.tags = [...wikipediaTags, ...organizationTags]
 
     filters.sdgs = rawFilters.sdgs || []
 

@@ -1,35 +1,47 @@
 <template>
     <div :class="{ inline }" class="tags-filter-editor">
-        <CurrentTags :current-tags="tags" class="current-tags" @remove-tag="removeTag" />
+        <div class="section">
+            <CurrentTags :current-tags="tags" class="current-tags" @remove-tag="removeTag" />
+        </div>
 
-        <p v-if="isAddMode" class="tag-description">{{ $t('search.current-tag-description') }}</p>
+        <div class="section">
+            <p class="notice">{{ $t('search.current-classification-description') }}</p>
 
-        <FilterSearchInput
-            v-show="!ambiguousTagsOpen"
-            ref="search-input-component"
-            v-model.trim="queryString"
-            :placeholder="$t('search.search-tag')"
-            class="search-input-ctn"
-        />
+            <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
+        </div>
 
-        <SuggestedTags
-            v-if="isAddMode && !hideOrganizationTags"
-            :current-tags="tags"
-            :suggested-tags="suggestedTags"
-            @add-tag="addTag"
-            :loading="suggestedTagsisLoading"
-        />
+        <div v-if="suggestedTags.length" class="section">
+            <SuggestedTags
+                :current-tags="tags"
+                :suggested-tags="suggestedTags"
+                @add-tag="addTag"
+                :loading="suggestedTagsisLoading"
+            />
+        </div>
 
-        <WikipediaResults
-            v-else-if="queryString"
-            :ambiguous-results-visible="ambiguousTagsOpen"
-            :existing-tags="tags"
-            :inline="inline"
-            :query-string="queryString"
-            @add-tag="onAddTag"
-            @go-back="goBackToAddMode"
-            @ambiguous-menu="setAmbiguousMenuValue"
-        />
+        <div v-show="showTagSearch" class="section">
+            <p class="notice">{{ $t('search.current-tag-description') }}</p>
+
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="queryString"
+                :placeholder="$t('search.search-tag')"
+                class="search-input-ctn"
+            />
+
+            <TagResults
+                v-if="queryString"
+                :classification-id="selectedClassificatonId"
+                :existing-tags="tags"
+                :inline="inline"
+                :query-string="queryString"
+                @add-tag="onAddTag"
+                @go-back="goBackToAddMode"
+                @ambiguous-menu="setAmbiguousMenuValue"
+            />
+        </div>
+
+        <template> </template>
     </div>
 </template>
 
@@ -37,10 +49,10 @@
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
-import { getAllWikiTags } from '@/api/wikipedia-tags.service'
-import { getAllOrgTags } from '@/api/organization-tags.service'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
+import { getOrgClassificationTags } from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
 export default {
     name: 'TagsFilterEditor',
 
@@ -50,7 +62,8 @@ export default {
         FilterSearchInput,
         CurrentTags,
         SuggestedTags,
-        WikipediaResults,
+        TagResults,
+        LpiSelect,
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
@@ -65,11 +78,6 @@ export default {
         },
 
         triggerUpdate: {
-            type: Boolean,
-            default: false,
-        },
-
-        ambiguousTagsOpen: {
             type: Boolean,
             default: false,
         },
@@ -92,31 +100,39 @@ export default {
         return {
             suggestedTags: [],
             ambiguousResultsVisible: false,
-            isAddMode: true,
             queryString: '',
             tags: [],
             wikipediaTags: [],
-            organizationTags: [],
-            suggestedTagsisLoading: true,
+            suggestedTagsisLoading: false,
+            selectedClassificatonId: null,
         }
     },
 
-    async created() {
-        await Promise.all([
-            getAllOrgTags({
-                organization: this.organizationsStore.current.code,
-            }).then(({ results }) => {
-                this.organizationTags = results
-            }),
-            getAllWikiTags({
-                organization: this.organizationsStore.current.code,
-            }).then(({ results }) => {
-                this.wikipediaTags = results
-            }),
-        ])
+    computed: {
+        orgClassifications() {
+            return this.organizationsStore.current.enabled_tag_classifications
+        },
 
-        this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
-        this.suggestedTagsisLoading = false
+        orgClassificationOptions() {
+            return [
+                {
+                    label: 'suggested tags',
+                    value: null,
+                },
+                ...this.orgClassifications.map((c) => ({
+                    label: c.slug, // TODO: need a title field
+                    value: c.id,
+                })),
+            ]
+        },
+
+        organizationTags() {
+            return this.hideOrganizationTags ? [] : this.organizationsStore.current.tags
+        },
+
+        showTagSearch() {
+            return this.selectedClassificatonId !== null && !this.suggestedTags.length // wiki and esco return no results
+        },
     },
 
     mounted() {
@@ -124,6 +140,23 @@ export default {
     },
 
     methods: {
+        async loadSelectedClassificationTags() {
+            if (!this.selectedClassificatonId) {
+                this.suggestedTags = this.organizationTags
+            } else {
+                this.suggestedTagsisLoading = true
+
+                this.suggestedTags = (
+                    await getOrgClassificationTags(
+                        this.organizationsStore.current.code,
+                        this.selectedClassificatonId
+                    )
+                ).results
+
+                this.suggestedTagsisLoading = false
+            }
+        },
+
         addTag(tag) {
             this.tags.push(tag)
             if (this.progressiveUpdate) {
@@ -134,21 +167,20 @@ export default {
         },
 
         focusInput() {
-            const searchInput = this.$refs['search-input-component'].$refs['search-input']
-            this.$nextTick(() => {
-                searchInput.focus()
-            })
+            const searchInput = this.$refs['search-input-component']?.$refs['search-input']
+            if (searchInput)
+                this.$nextTick(() => {
+                    searchInput.focus()
+                })
         },
 
         goBackToAddMode() {
-            this.isAddMode = true
             this.queryString = ''
             this.focusInput()
         },
 
         onAddTag(result) {
             this.addTag(result)
-            this.isAddMode = true
             this.queryString = ''
             this.focusInput()
         },
@@ -171,9 +203,15 @@ export default {
     },
 
     watch: {
+        selectedClassificatonId: {
+            handler: function () {
+                this.loadSelectedClassificationTags()
+            },
+            immediate: true,
+        },
+
         queryString(val) {
             if (val.length >= 3) {
-                this.isAddMode = false
                 this.focusInput()
             }
         },
@@ -194,9 +232,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tag-description {
+.section {
+    margin-bottom: $space-m;
+}
+
+.notice {
     font-size: $font-size-s;
-    margin-top: $space-l;
+    margin-bottom: $space-s;
 }
 
 .current-tags {
@@ -208,11 +250,6 @@ export default {
     font-size: $font-size-2xl;
     font-weight: 700;
     margin: pxToRem(46px) auto;
-}
-
-.search-input-ctn {
-    margin-bottom: $space-l;
-    margin-top: $space-l;
 }
 
 .input-ctn {
@@ -240,5 +277,9 @@ export default {
     color: $primary-dark;
     font-weight: 700;
     margin: 0 0 $space-s $space-l;
+}
+
+.lpi-select {
+    width: 100%;
 }
 </style>

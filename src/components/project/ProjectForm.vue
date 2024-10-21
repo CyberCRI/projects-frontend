@@ -115,10 +115,7 @@
             <TagsFilterEditor
                 v-model="tags"
                 :value="tags"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                :hide-organization-tags="false"
                 :progressive-update="false"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
                 @update-tags="updateTagsInProcess"
             />
         </BaseDrawer>
@@ -200,7 +197,6 @@ export default {
             displayedImage: '',
             selectedCategory: undefined,
             form: JSON.parse(JSON.stringify(this.modelValue)),
-            ambiguousTagsOpen: false,
             tags: [...this.modelValue.organization_tags, ...this.modelValue.wikipedia_tags],
             tagSearchIsOpened: false,
             showImageResizer: false,
@@ -299,7 +295,6 @@ export default {
         },
         closeTagSearchTags() {
             this.tagSearchIsOpened = false
-            this.ambiguousTagsOpen = false
         },
 
         saveTags() {

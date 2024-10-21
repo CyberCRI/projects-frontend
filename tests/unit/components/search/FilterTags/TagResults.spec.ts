@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -23,10 +23,10 @@ const i18n = {
 }
 
 const mockSearch = vi
-    .spyOn((WikipediaResults as any).methods, 'launchSearch')
+    .spyOn((TagResults as any).methods, 'launchSearch')
     .mockImplementation(() => Promise.resolve())
 
-describe('WikipediaResults', () => {
+describe('TagResults', () => {
     beforeEach(() => {
         // tell vitest we use mocked time
         vi.useFakeTimers()
@@ -45,8 +45,8 @@ describe('WikipediaResults', () => {
         }
     })
 
-    it('should render WikipediaResults component', async () => {
-        wrapper = lpiShallowMount(WikipediaResults, defaultParams)
+    it('should render TagResults component', async () => {
+        wrapper = lpiShallowMount(TagResults, defaultParams)
 
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
