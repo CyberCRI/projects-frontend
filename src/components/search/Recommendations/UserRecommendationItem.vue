@@ -24,7 +24,7 @@
                     <BadgeItem
                         v-for="(skill, index) in displayedSkills"
                         :key="index"
-                        :label="skill.wikipedia_tag.name"
+                        :label="skill?.wikipedia_tag?.name"
                         size="small"
                         colors="primary-light"
                         class="skill-badge"
@@ -42,7 +42,7 @@
                                 <BadgeItem
                                     v-for="(skill, index) in moreSkills"
                                     :key="index"
-                                    :label="skill.wikipedia_tag.name"
+                                    :label="skill.wikipedia_tag?.name"
                                     size="small"
                                     colors="primary-light"
                                     class="skill-badge"
