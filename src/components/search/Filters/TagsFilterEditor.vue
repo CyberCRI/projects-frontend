@@ -106,23 +106,6 @@ export default {
     },
 
     methods: {
-        async loadSelectedClassificationTags() {
-            if (!this.selectedClassificatonId) {
-                this.suggestedTags = this.organizationTags
-            } else {
-                this.suggestedTagsisLoading = true
-
-                this.suggestedTags = (
-                    await getOrgClassificationTags(
-                        this.organizationsStore.current.code,
-                        this.selectedClassificatonId
-                    )
-                ).results
-
-                this.suggestedTagsisLoading = false
-            }
-        },
-
         addTag(tag) {
             this.tags.push(tag)
             if (this.progressiveUpdate) {
@@ -165,13 +148,6 @@ export default {
     },
 
     watch: {
-        selectedClassificatonId: {
-            handler: function () {
-                this.loadSelectedClassificationTags()
-            },
-            immediate: true,
-        },
-
         queryString(val) {
             if (val.length >= 3) {
                 this.focusInput()

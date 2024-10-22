@@ -100,6 +100,19 @@ export async function getOrgClassificationAutocomplete(
     ).data
 }
 
+export async function getOrgClassificationAutocomplete(
+    orgCode: string,
+    classificationId: number,
+    params?: APIParams
+): Promise<APIResponseList<any>> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
+            { params }
+        )
+    ).data
+}
+
 export async function getOrgTag(
     orgCode: string,
     tagId: number,

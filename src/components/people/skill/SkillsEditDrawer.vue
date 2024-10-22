@@ -133,7 +133,11 @@ export default {
         return {
             toaster,
             languagesStore,
+<<<<<<< HEAD
             ...useTagSearch({ useSkills: true }),
+=======
+            ...useTagSearch(),
+>>>>>>> fix: use new tag api for skill and refacto tag search to composable
         }
     },
 
