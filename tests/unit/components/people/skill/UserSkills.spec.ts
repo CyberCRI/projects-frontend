@@ -9,9 +9,9 @@ const factory = (props) => {
                 {
                     id: 14685,
                     user: '1cb609f9-b5c5-4f09-89cd-218a00545c70',
-                    wikipedia_tag: {
-                        wikipedia_qid: 'Q11634',
-                        name: 'art of sculpture',
+                    tag: {
+                        id: 'Q11634',
+                        title: 'art of sculpture',
                     },
                     level: 4,
                     level_to_reach: 4,
@@ -19,9 +19,9 @@ const factory = (props) => {
                 {
                     id: 14683,
                     user: '1cb609f9-b5c5-4f09-89cd-218a00545c70',
-                    wikipedia_tag: {
-                        wikipedia_qid: 'Q11190',
-                        name: 'medicine',
+                    tag: {
+                        id: 'Q11190',
+                        title: 'medicine',
                     },
                     level: 3,
                     level_to_reach: 4,
@@ -29,9 +29,9 @@ const factory = (props) => {
                 {
                     id: 14684,
                     user: '1cb609f9-b5c5-4f09-89cd-218a00545c70',
-                    wikipedia_tag: {
-                        wikipedia_qid: 'Q8034374',
-                        name: 'word usage',
+                    tag: {
+                        id: 'Q8034374',
+                        title: 'word usage',
                     },
                     level: 1,
                     level_to_reach: 2,

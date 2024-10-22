@@ -49,7 +49,7 @@ describe('TagsFilterEditor', () => {
 
     it('should fetch  tags', async () => {
         wrapper = lpiMount(TagsFilterEditor, defaultParams)
-        wrapper.vm.$data.selectedClassificatonId = 123
+        wrapper.vm.selectedClassificatonId = 123
         await waitForExpect(() => {
             expect(getOrgClassificationTags).toHaveBeenCalled()
         })
@@ -59,9 +59,9 @@ describe('TagsFilterEditor', () => {
         wrapper = lpiMount(TagsFilterEditor, defaultParams)
         const vm: any = wrapper.vm
 
-        vm.queryString = 'test'
+        vm.search = 'test'
         vm.goBackToAddMode()
-        expect(vm.queryString).toBe('')
+        expect(vm.search).toBe('')
     })
 
     it('adds a non-added tag', () => {
@@ -93,11 +93,11 @@ describe('TagsFilterEditor', () => {
     //     const vm: any = wrapper.vm
 
     //     expect(vm.isAddMode).toBe(true)
-    //     vm.queryString += 'a'
+    //     vm.search += 'a'
     //     expect(vm.isAddMode).toBe(true)
-    //     vm.queryString += 'b'
+    //     vm.search += 'b'
     //     expect(vm.isAddMode).toBe(true)
-    //     vm.queryString += 'c'
+    //     vm.search += 'c'
     //     await waitForExpect(() => {
     //         expect(vm.isAddMode).toBe(false)
     //     })

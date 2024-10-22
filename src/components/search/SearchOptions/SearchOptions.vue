@@ -162,7 +162,7 @@ export default {
                 sdgs: filters.sdgs ? [...filters.sdgs] : [], // need to deconstruct to avoid reactivity issue when removing sdg
                 tags: filters.tags?.map((tag) => tag.id) || [],
                 organizations: [this.organizationsStore.current.code],
-                skills: filters.skills?.map((tag) => tag.wikipedia_qid) || [],
+                skills: filters.skills?.map((tag) => tag.id) || [],
             }
             return adaptedFilters
         },

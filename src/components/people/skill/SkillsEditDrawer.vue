@@ -13,29 +13,42 @@
         @confirm="confirm"
     >
         <div class="add-skill-mode" v-if="mode == 'add'">
-            <p class="notice no-shrink">
-                {{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}
-            </p>
             <div class="selected-list no-shrink">
                 <FilterValue
                     v-for="skill in selection"
-                    :key="skill.wikipedia_tag.wikipedia_qid"
-                    :label="skill.wikipedia_tag.name"
+                    :key="skill.tag.id"
+                    :label="skillLabel(skill)"
                     icon="Close"
                     type="actionable"
                     @click="removeFromSelection(skill)"
                 />
             </div>
-            <div class="search-field no-shrink">
-                <SearchInput
-                    v-model="search"
-                    @delete-query="onDeleteQuery"
-                    @enter="doSearch"
-                    :suggestions="suggestions"
-                    @keyup="suggest"
-                    :placeholder="$t(`profile.edit.skills.${type}.drawer.add.placeholder`)"
+            <div class="section">
+                <p class="notice">{{ $t('search.current-classification-description') }}</p>
+
+                <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
+            </div>
+            <div v-if="suggestedTags.length" class="section">
+                <SuggestedTags
+                    :current-tags="selectionAsTags"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="addToSelection"
+                    :loading="suggestedTagsisLoading"
                 />
-                <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
+            </div>
+            <div v-show="showTagSearch">
+                <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}</p>
+                <div class="search-field no-shrink">
+                    <SearchInput
+                        v-model="search"
+                        @delete-query="onDeleteQuery"
+                        @enter="doSearch"
+                        :suggestions="suggestions"
+                        @keyup="suggest"
+                        :placeholder="$t(`profile.edit.skills.${type}.drawer.add.placeholder`)"
+                    />
+                    <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
+                </div>
             </div>
             <p v-if="confirmedSearch" class="notice no-shrink">
                 {{ $t('search.choose-skill') }}
@@ -43,12 +56,11 @@
             <TagResults
                 class="flexed-search-results-ctn custom-scrollbar"
                 v-if="confirmedSearch"
-                :query-string="confirmedSearch"
+                :classification-id="selectedClassificatonId"
                 :existing-tags="selectionAsTags"
-                :ambiguous-results-visible="ambiguousTagsOpen"
+                inline
+                :search="confirmedSearch"
                 @add-tag="addToSelection"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
-                :inline="true"
             />
         </div>
         <div class="edit-skill-mode" v-else-if="mode == 'edit'">
@@ -63,12 +75,8 @@
                 </SkillLevelTip>
             </p>
             <div class="level-editor-list">
-                <div
-                    class="entry"
-                    v-for="skill in selection"
-                    :key="skill.wikipedia_tag.wikipedia_qid"
-                >
-                    <h4 class="skill-name">{{ skill.wikipedia_tag.name }}</h4>
+                <div class="entry" v-for="skill in selection" :key="skill.tag.id">
+                    <h4 class="skill-name">{{ skillLabel(skill) }}</h4>
                     <div class="level-editor">
                         <label
                             class="level"
@@ -103,10 +111,11 @@ import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.ser
 import isEqual from 'lodash.isequal'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import debounce from 'lodash.debounce'
-import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
 import useToasterStore from '@/stores/useToaster.ts'
-
+import useLanguagesStore from '@/stores/useLanguages'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
+import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 export default {
     name: 'SkillsEditDrawer',
 
@@ -120,8 +129,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const languagesStore = useLanguagesStore()
         return {
             toaster,
+            languagesStore,
+            ...useTagSearch(),
         }
     },
 
@@ -133,6 +145,8 @@ export default {
         TagResults,
         SkillLevelTip,
         LpiButton,
+        LpiSelect,
+        SuggestedTags,
     },
 
     props: {
@@ -155,14 +169,9 @@ export default {
     },
     data() {
         return {
-            search: '',
             confirmedSearch: '',
             selection: [],
-            searchResults: [],
-            isSearching: false,
-            ambiguousTagsOpen: false,
             asyncing: false,
-            suggestions: [],
         }
     },
     computed: {
@@ -188,7 +197,7 @@ export default {
             ]
         },
         selectionAsTags() {
-            return this.selection.map((s) => s.wikipedia_tag)
+            return this.selection.map((s) => s.tag)
         },
         allSkills() {
             return this.user.skills || []
@@ -208,7 +217,6 @@ export default {
                 this.selection = this.getSkillOfType(this.type)
                     ? this.getSkillOfType(this.type).map((item) => ({ ...toRaw(item) }))
                     : []
-                this.searchResults = []
                 this.$nextTick(this.focusInput)
             }
         },
@@ -224,17 +232,6 @@ export default {
                 searchInput?.focus()
             })
         },
-
-        suggest: debounce(async function (evt) {
-            this.suggestions = []
-            if (evt.key === 'Enter') return // dont show suggestion when triggering search
-            if (!this.search || this.search.length < 3) return
-            try {
-                this.suggestions = await wikiAutocomplete(this.search)
-            } catch (e) {
-                console.error(e)
-            }
-        }, 100),
 
         doSearch() {
             this.suggestions = []
@@ -308,7 +305,7 @@ export default {
                     talentsToAdd.map((talent) => {
                         return postUserSkill({
                             ...talent,
-                            wikipedia_tag: talent.wikipedia_tag.wikipedia_qid,
+                            tag: talent.tag.id,
                         })
                     })
                 )
@@ -329,7 +326,7 @@ export default {
                     talentsToUpdate.map((talent) => {
                         return patchUserSkill(talent.id, {
                             ...talent,
-                            wikipedia_tag: talent.wikipedia_tag.wikipedia_qid,
+                            tag: talent.tag.id,
                         })
                     })
                 )
@@ -350,13 +347,11 @@ export default {
             this.$emit('close')
         },
         removeFromSelection(skill) {
-            this.selection = this.selection.filter(
-                (s) => s.wikipedia_tag.wikipedia_qid !== skill.wikipedia_tag.wikipedia_qid
-            )
+            this.selection = this.selection.filter((s) => s.tag.id !== skill.tag.id)
         },
         addToSelection(tag) {
             const skill = {
-                wikipedia_tag: tag,
+                tag: tag,
                 level: 1,
                 level_to_reach: 1,
                 type: this.type == 'hobbies' ? 'hobby' : 'skill',
@@ -367,6 +362,14 @@ export default {
         },
         setSkillLevel(skill, level) {
             skill.level = level
+        },
+
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }
@@ -383,7 +386,8 @@ export default {
     overflow: hidden;
 
     .notice {
-        margin-top: $space-m;
+        font-size: $font-size-s;
+        margin-bottom: $space-s;
     }
 
     .selected-list {

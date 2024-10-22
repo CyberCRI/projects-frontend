@@ -36,6 +36,7 @@ export interface OrganizationModel extends BaseModel {
     website_url: string
     faq: FaqModel
     children: string[]
+    enabled_tag_classifications: Object[] // TODO: define this type
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {

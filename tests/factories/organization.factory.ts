@@ -37,6 +37,7 @@ const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
     faq: FaqFactory.generate(),
     tags: TagFactory.generateMany(2),
     children: [],
+    enabled_tag_classifications: [], // TODO: define this type
 }))
 
 export const OrganizationOutputFactory = createFactory<OrganizationOutput>(() => ({

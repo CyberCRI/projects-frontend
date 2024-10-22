@@ -2,6 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
+import { TagModel } from './tag.model'
 export interface UserModel {
     id: string
     name: {
@@ -87,7 +88,7 @@ export interface UserPrivacyPatchModel {
 
 export interface UserSkillModel {
     user: string
-    wikipedia_tag: string
+    tag: TagModel
     level: number
     level_to_reach: number
     category: string

@@ -108,7 +108,9 @@ export default function useContextualFilters({
                 label: t('search.skills'),
                 names: filterBlackList.value.includes('skills')
                     ? []
-                    : selectedFilters.value?.skills?.map((skill) => skill.name) || [],
+                    : selectedFilters.value?.skills?.map(
+                          (skill) => skill[`title_${languagesStore.current}`] || skill.title
+                      ) || [],
                 condition:
                     selectedSection.value === PEOPLE_SECTION_KEY &&
                     !filterBlackList.value.includes('skills'),
