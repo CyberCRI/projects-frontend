@@ -13,7 +13,7 @@
                     <SkillItem
                         v-if="(idx + idxOffset) % columnCount.length == column"
                         :key="skill.id"
-                        :label="skill.wikipedia_tag.name"
+                        :label="skillLabel(skill)"
                         :level="Number(skill.level)"
                     />
                 </template>
@@ -24,11 +24,17 @@
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'UserSkills',
 
     components: { SkillItem },
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return { languagesStore }
+    },
 
     data() {
         return {
@@ -106,6 +112,13 @@ export default {
                     this.columnCount[i] = 'empty'
                 }
             }
+        },
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

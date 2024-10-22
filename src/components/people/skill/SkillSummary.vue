@@ -14,7 +14,7 @@
                 <SkillItem
                     v-for="skill in visibleSkills"
                     :key="skill.id"
-                    :label="skill.wikipedia_tag.name"
+                    :label="skillLabel(skill)"
                     :level="Number(skill.level)"
                 />
             </template>
@@ -27,6 +27,7 @@
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SkillSummary',
@@ -43,8 +44,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
+        const languagesStore = useLanguagesStore()
         return {
             usersStore,
+            languagesStore,
         }
     },
 
@@ -86,6 +89,14 @@ export default {
     methods: {
         goToSkillTab() {
             this.selectTab(4)
+        },
+
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

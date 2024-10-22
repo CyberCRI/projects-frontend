@@ -1,10 +1,9 @@
+import { TagModel } from './tag.model'
+
 export interface SkillModel {
     id: number
     user: string
-    wikipedia_tag: {
-        wikipedia_qid: string
-        name: string
-    }
+    tag: TagModel
     level: number
     level_to_reach: number
 }

@@ -24,20 +24,19 @@
 
             <FilterSearchInput
                 ref="search-input-component"
-                v-model.trim="queryString"
+                v-model.trim="search"
                 :placeholder="$t('search.search-tag')"
                 class="search-input-ctn"
             />
 
             <TagResults
-                v-if="queryString"
+                v-if="search"
                 :classification-id="selectedClassificatonId"
                 :existing-tags="tags"
                 :inline="inline"
-                :query-string="queryString"
+                :search="search"
                 @add-tag="onAddTag"
                 @go-back="goBackToAddMode"
-                @ambiguous-menu="setAmbiguousMenuValue"
             />
         </div>
 
@@ -50,13 +49,12 @@ import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
 export default {
     name: 'TagsFilterEditor',
 
-    emits: ['update:modelValue', 'ambiguous-menu', 'update-tags'],
+    emits: ['update:modelValue', 'update-tags'],
 
     components: {
         FilterSearchInput,
@@ -65,18 +63,12 @@ export default {
         TagResults,
         LpiSelect,
     },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
+
     props: {
         modelValue: {
             type: Array,
             default: () => [],
         },
-
         triggerUpdate: {
             type: Boolean,
             default: false,
@@ -95,43 +87,16 @@ export default {
             default: true,
         },
     },
-
-    data() {
+    setup(props) {
         return {
-            suggestedTags: [],
-            ambiguousResultsVisible: false,
-            queryString: '',
-            tags: [],
-            suggestedTagsisLoading: false,
-            selectedClassificatonId: null,
+            ...useTagSearch(props.hideOrganizationTags),
         }
     },
 
-    computed: {
-        orgClassifications() {
-            return this.organizationsStore.current.enabled_tag_classifications
-        },
-
-        orgClassificationOptions() {
-            return [
-                {
-                    label: 'suggested tags',
-                    value: null,
-                },
-                ...this.orgClassifications.map((c) => ({
-                    label: c.slug, // TODO: need a title field
-                    value: c.id,
-                })),
-            ]
-        },
-
-        organizationTags() {
-            return this.hideOrganizationTags ? [] : this.organizationsStore.current.tags
-        },
-
-        showTagSearch() {
-            return this.selectedClassificatonId !== null && !this.suggestedTags.length // wiki and esco return no results
-        },
+    data() {
+        return {
+            tags: [],
+        }
     },
 
     mounted() {
@@ -139,23 +104,6 @@ export default {
     },
 
     methods: {
-        async loadSelectedClassificationTags() {
-            if (!this.selectedClassificatonId) {
-                this.suggestedTags = this.organizationTags
-            } else {
-                this.suggestedTagsisLoading = true
-
-                this.suggestedTags = (
-                    await getOrgClassificationTags(
-                        this.organizationsStore.current.code,
-                        this.selectedClassificatonId
-                    )
-                ).results
-
-                this.suggestedTagsisLoading = false
-            }
-        },
-
         addTag(tag) {
             this.tags.push(tag)
             if (this.progressiveUpdate) {
@@ -174,13 +122,13 @@ export default {
         },
 
         goBackToAddMode() {
-            this.queryString = ''
+            this.search = ''
             this.focusInput()
         },
 
         onAddTag(result) {
             this.addTag(result)
-            this.queryString = ''
+            this.search = ''
             this.focusInput()
         },
 
@@ -195,20 +143,9 @@ export default {
                 this.$emit('update-tags', this.tags)
             }
         },
-
-        setAmbiguousMenuValue(value) {
-            this.$emit('ambiguous-menu', value)
-        },
     },
 
     watch: {
-        selectedClassificatonId: {
-            handler: function () {
-                this.loadSelectedClassificationTags()
-            },
-            immediate: true,
-        },
-
         queryString(val) {
             if (val.length >= 3) {
                 this.focusInput()

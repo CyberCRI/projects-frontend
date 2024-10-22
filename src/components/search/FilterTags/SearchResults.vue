@@ -10,7 +10,7 @@
             >
                 <TagResult
                     :is-ambiguous="tag.ambiguous"
-                    :label="tag.name"
+                    :label="tagLabel(tag)"
                     :description="tag.description"
                 />
             </div>
@@ -23,6 +23,8 @@
 
 <script>
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
+import useUsersStore from '@/stores/useUsers.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SearchResults',
@@ -30,7 +32,14 @@ export default {
     emits: ['result-clicked'],
 
     components: { TagResult },
-
+    setup() {
+        const usersStore = useUsersStore()
+        const languagesStore = useLanguagesStore()
+        return {
+            usersStore,
+            languagesStore,
+        }
+    },
     props: {
         tagResults: {
             type: Array,
@@ -49,6 +58,9 @@ export default {
     methods: {
         tagClicked(tag) {
             this.$emit('result-clicked', tag)
+        },
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

@@ -56,7 +56,7 @@
                         <SkillItem
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
-                            :label="skill.wikipedia_tag.name"
+                            :label="skillLabel(skill)"
                             :level="Number(skill.level)"
                         />
                     </div>
@@ -89,6 +89,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
@@ -101,6 +102,10 @@ export default {
 
     emits: ['edited', 'profile-edited'],
 
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return { languagesStore }
+    },
     props: {
         user: {
             type: Object,
@@ -147,6 +152,13 @@ export default {
         getSkillOfType(type) {
             if (type == 'skills') return this.skills
             else return this.hobbies
+        },
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

@@ -9,8 +9,16 @@
 </template>
 
 <script>
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'TagResult',
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
 
     props: {
         label: {

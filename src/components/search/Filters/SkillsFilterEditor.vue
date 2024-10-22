@@ -2,34 +2,47 @@
     <div :class="{ inline }">
         <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
 
-        <p v-if="isAddMode" class="skill-description">
-            {{ $t('search.current-skill-description') }}
-        </p>
+        <div class="section">
+            <p class="notice">{{ $t('search.current-classification-description') }}</p>
 
-        <div class="search-field">
-            <SearchInput
-                v-model="queryString"
-                @delete-query="onDeleteQuery"
-                @enter="doSearch"
-                :placeholder="$t('search.search-skill')"
-                :suggestions="suggestions"
-                @keyup="suggest"
-            />
-            <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
+            <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
         </div>
-        <p v-if="confirmedSearch" class="skill-description">
-            {{ $t('search.choose-skill') }}
-        </p>
-        <TagResults
-            v-if="confirmedSearch"
-            :ambiguous-results-visible="ambiguousTagsOpen"
-            :existing-tags="skills"
-            :inline="inline"
-            :query-string="confirmedSearch"
-            @add-tag="onAddSkill"
-            @go-back="goBackToAddMode"
-            @ambiguous-menu="setAmbiguousMenuValue"
-        />
+
+        <div v-if="suggestedTags.length" class="section">
+            <SuggestedTags
+                :current-tags="skills"
+                :suggested-tags="suggestedTags"
+                @add-tag="onAddSkill"
+                :loading="suggestedTagsisLoading"
+            />
+        </div>
+
+        <div v-show="showTagSearch" class="section">
+            <p class="notice">{{ $t('search.current-skill-description') }}</p>
+
+            <div class="search-field">
+                <SearchInput
+                    v-model="search"
+                    @delete-query="onDeleteQuery"
+                    @enter="doSearch"
+                    :placeholder="$t('search.search-skill')"
+                    :suggestions="suggestions"
+                    @keyup="suggest"
+                />
+                <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
+            </div>
+            <p v-if="confirmedSearch" class="skill-description">
+                {{ $t('search.choose-skill') }}
+            </p>
+            <TagResults
+                v-if="confirmedSearch"
+                :existing-tags="skills"
+                :inline="inline"
+                :search="confirmedSearch"
+                @add-tag="onAddSkill"
+                @go-back="goBackToAddMode"
+            />
+        </div>
     </div>
 </template>
 
@@ -38,19 +51,22 @@ import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
-import debounce from 'lodash.debounce'
-import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
+import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 
 export default {
     name: 'SkillsFilterEditor',
 
-    emits: ['update:modelValue', 'ambiguous-menu'],
+    emits: ['update:modelValue'],
 
     components: {
         CurrentTags,
         TagResults,
         LpiButton,
         SearchInput,
+        LpiSelect,
+        SuggestedTags,
     },
 
     props: {
@@ -64,23 +80,20 @@ export default {
             default: false,
         },
 
-        ambiguousTagsOpen: {
-            type: Boolean,
-            default: false,
-        },
         inline: {
             type: Boolean,
             default: false,
         },
     },
 
+    setup() {
+        return {
+            ...useTagSearch(),
+        }
+    },
     data() {
         return {
-            isAddMode: true,
-            queryString: '',
-            confirmedSearch: '',
             skills: [],
-            suggestions: [],
         }
     },
 
@@ -89,25 +102,14 @@ export default {
     },
 
     methods: {
-        suggest: debounce(async function (evt) {
-            this.suggestions = []
-            if (evt.key === 'Enter') return // dont show suggestion when triggering search
-            if (!this.queryString || this.queryString.length < 3) return
-            try {
-                this.suggestions = await wikiAutocomplete(this.queryString)
-            } catch (e) {
-                console.error(e)
-            }
-        }, 100),
-
         doSearch() {
             this.suggestions = []
-            this.confirmedSearch = this.queryString
+            this.confirmedSearch = this.search
         },
 
         onDeleteQuery() {
             this.confirmedSearch = ''
-            this.queryString = ''
+            this.search = ''
         },
 
         addSkill(skill) {
@@ -123,16 +125,14 @@ export default {
         },
 
         goBackToAddMode() {
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.confirmedSearch = ''
             this.focusInput()
         },
 
         onAddSkill(result) {
             this.addSkill(result)
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.confirmedSearch = ''
             this.focusInput()
         },
@@ -143,10 +143,6 @@ export default {
             )
             this.skills.splice(skillIndex, 1)
             this.$emit('update:modelValue', this.skills)
-        },
-
-        setAmbiguousMenuValue(value) {
-            this.$emit('ambiguous-menu', value)
         },
     },
 

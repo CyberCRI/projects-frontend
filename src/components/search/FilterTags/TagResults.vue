@@ -31,10 +31,6 @@ import SearchResults from './SearchResults.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-/**
- * TODO: remove ambiguous tag handling logic, it is not needed anymore
- */
-
 export default {
     name: 'TagResults',
 
@@ -53,7 +49,7 @@ export default {
     },
 
     props: {
-        queryString: {
+        search: {
             type: String,
             default: '',
         },
@@ -87,7 +83,7 @@ export default {
     },
 
     async mounted() {
-        await this.launchSearch(this.queryString)
+        await this.launchSearch(this.search)
     },
 
     methods: {
@@ -101,7 +97,7 @@ export default {
                 const req = await getOrgClassificationTags(
                     this.organizationsStore.current.code,
                     this.classificationId,
-                    { search: this.queryString }
+                    { search: this.search }
                 ).catch(() => ({
                     results: [],
                 }))

@@ -66,8 +66,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 
 export type ProjectCreateInput = Required<ProjectModel> & {
     project_categories_ids: number
-    wikipedia_tags_ids?: number[]
-    organization_tags_ids?: number[]
+    tags?: number[]
     sdgs_ids?: number[]
 }
 

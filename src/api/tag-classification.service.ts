@@ -29,11 +29,24 @@ export async function getOrgClassification(
 export async function getOrgClassificationTags(
     orgCode: string,
     classificationId: number,
-    params: APIParams
+    params?: APIParams
 ): Promise<APIResponseList<any>> {
     return (
         await axios.get(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/`,
+            { params }
+        )
+    ).data
+}
+
+export async function getOrgClassificationAutocomplete(
+    orgCode: string,
+    classificationId: number,
+    params?: APIParams
+): Promise<APIResponseList<any>> {
+    return (
+        await axios.get(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
             { params }
         )
     ).data
@@ -49,5 +62,14 @@ export async function getOrgTag(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag/${tagId}/`,
             { params }
         )
+    ).data
+}
+
+export async function getTags(ids: number[], params?: APIParams): Promise<APIResponseList<any>> {
+    return (
+        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/tag/`, {
+            ...params,
+            ids: ids.join(','),
+        } as any)
     ).data
 }
