@@ -1,15 +1,11 @@
 import { computed, watch, ref } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import {
-<<<<<<< HEAD
     getAllOrgClassifications,
-=======
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
     getOrgClassificationTags,
     getOrgClassificationAutocomplete,
 } from '@/api/tag-classification.service'
 import debounce from 'lodash.debounce'
-<<<<<<< HEAD
 export default function useTagSearch({
     useSkills,
     useProjects,
@@ -57,39 +53,11 @@ export default function useTagSearch({
             ...suggest,
             ...orgClassifications.value.map((c) => ({
                 label: c.title,
-=======
-export default function useTagSearch(hideOrganizationTags) {
-    const organizationsStore = useOrganizationsStore()
-
-    // data
-
-    const suggestedTagsisLoading = ref(false)
-    const selectedClassificatonId = ref(null)
-    const search = ref('')
-    const suggestedTags = ref([]) // org pinned tags
-    const suggestions = ref([]) // auto complete suggest
-
-    // computed
-
-    const orgClassifications = computed(() => {
-        return organizationsStore.current.enabled_tag_classifications
-    })
-
-    const orgClassificationOptions = computed(() => {
-        return [
-            {
-                label: 'suggested tags',
-                value: null,
-            },
-            ...orgClassifications.value.map((c) => ({
-                label: c.slug, // TODO: need a title field
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
                 value: c.id,
             })),
         ]
     })
 
-<<<<<<< HEAD
     const defaultClassificationId = () =>
         (orgClassificationOptions.value.length && orgClassificationOptions.value[0].value) || null
 
@@ -130,34 +98,18 @@ export default function useTagSearch(hideOrganizationTags) {
 
     const showTagSearch = computed(() => {
         return selectedClassificationId.value !== null && !suggestedTags.value.length // wiki and esco return no results
-=======
-    const organizationTags = computed(() => {
-        return hideOrganizationTags ? [] : organizationsStore.current.tags
-    })
-
-    const showTagSearch = computed(() => {
-        return selectedClassificatonId.value !== null && !suggestedTags.value.length // wiki and esco return no results
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
     })
 
     // methods
     async function loadSelectedClassificationTags() {
-<<<<<<< HEAD
         if (!selectedClassificationId.value) {
-=======
-        if (!selectedClassificatonId.value) {
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
             suggestedTags.value = organizationTags.value
         } else {
             suggestedTagsisLoading.value = true
 
             const classificationReq = await getOrgClassificationTags(
                 organizationsStore.current.code,
-<<<<<<< HEAD
                 selectedClassificationId.value,
-=======
-                selectedClassificatonId.value,
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
                 // temp hackish fix until we have count int he org data
                 { search: '' }
             )
@@ -176,11 +128,7 @@ export default function useTagSearch(hideOrganizationTags) {
         try {
             suggestions.value = await getOrgClassificationAutocomplete(
                 organizationsStore.current.code,
-<<<<<<< HEAD
                 selectedClassificationId.value,
-=======
-                selectedClassificatonId.value,
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
                 { search: search.value }
             )
         } catch (e) {
@@ -190,7 +138,6 @@ export default function useTagSearch(hideOrganizationTags) {
 
     // watch
 
-<<<<<<< HEAD
     watch(selectedClassificationId, loadSelectedClassificationTags, { immediate: true })
 
     const resetTagSearch = () => {
@@ -202,13 +149,6 @@ export default function useTagSearch(hideOrganizationTags) {
         suggestedTagsisLoading,
         selectedClassificationId,
         selectedClassification,
-=======
-    watch(selectedClassificatonId, loadSelectedClassificationTags, { immediate: true })
-
-    return {
-        suggestedTagsisLoading,
-        selectedClassificatonId,
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
         search,
         suggestions,
         suggestedTags,
@@ -219,12 +159,9 @@ export default function useTagSearch(hideOrganizationTags) {
         showTagSearch,
         suggest,
         loadSelectedClassificationTags,
-<<<<<<< HEAD
         resetTagSearch,
         allOrgClassifications,
         isLoadingOrgClassifications,
         fetchAllClassifications,
-=======
->>>>>>> fix: use new tag api for skill and refacto tag search to composable
     }
 }
