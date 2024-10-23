@@ -125,14 +125,7 @@ export default {
                 page: this.$route.query.page || 1,
             },
             searchOptionsInited: false,
-            filterQueryParams: [
-                'search',
-                'sdgs',
-                'organization_tags',
-                'wikipedia_tags',
-                'languages',
-                'page',
-            ],
+            filterQueryParams: ['search', 'sdgs', 'tags', 'languages', 'page'],
             query: '',
         }
     },
