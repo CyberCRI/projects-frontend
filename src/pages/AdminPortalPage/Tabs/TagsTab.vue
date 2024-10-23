@@ -69,7 +69,7 @@
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import { getAllWikiTags } from '@/api/wikipedia-tags.service'
+// import { getAllWikiTags } from '@/api/wikipedia-tags.service'
 import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
@@ -126,11 +126,12 @@ export default {
 
     methods: {
         async loadWikiTags() {
-            this.wikipediaTags = (
-                await getAllWikiTags({
-                    organization: this.organizationsStore.current.code,
-                })
-            ).results
+            // this.wikipediaTags = (
+            //     await getAllWikiTags({
+            //         organization: this.organizationsStore.current.code,
+            //     })
+            // ).results
+            this.wikipediaTags = []
         },
 
         async loadOrgTags() {
