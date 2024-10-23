@@ -25,6 +25,7 @@
                 :key="group.id"
                 :group="group"
                 @move="moveGroup"
+                @edit="editGroup"
             />
         </div>
         <PickGroupDrawer
@@ -111,6 +112,13 @@ export default {
             this.child = group
             this.initialGroup = this.findParent(group)
             this.forbiddenIds = [group.id] // cant be a child of itself
+        },
+
+        editGroup(group) {
+            this.$router.push({
+                name: 'frontEditGroup',
+                params: { groupId: group.slug || group.id },
+            })
         },
 
         closeDrawer() {

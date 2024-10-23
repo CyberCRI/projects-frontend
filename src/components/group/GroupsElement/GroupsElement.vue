@@ -35,6 +35,13 @@
                     <div class="icon-td">
                         <IconImage
                             class="icon green-color clickable"
+                            name="Pen"
+                            @click="editGroup(group)"
+                        />
+                    </div>
+                    <div class="icon-td">
+                        <IconImage
+                            class="icon green-color clickable"
                             name="Eye"
                             @click="goTo(group)"
                         />
