@@ -290,6 +290,7 @@ export default {
             team: { owners: [], members: [], reviewers: [] },
             reviews: [],
             linkedProjects: [],
+            commentLoop: null,
         }
     },
 
@@ -299,6 +300,7 @@ export default {
     },
 
     beforeUnmount() {
+        if (this.commentLoop) clearInterval(this.commentLoop)
         this.cleanupProvider()
     },
 
@@ -514,6 +516,17 @@ export default {
                         )
                     }
                     await Promise.all(extraData)
+                    if (!this.commentLoop) {
+                        this.commentLoop = setInterval(
+                            () => {
+                                this.getComments(project.id)
+                                if (this.isMemberOrAdmin) {
+                                    this.getProjectMessages(project.id)
+                                }
+                            },
+                            5 * 60 * 1000
+                        )
+                    }
                     this.connectToSocket(project.id)
                     this.loading = false
                 })
@@ -585,6 +598,7 @@ export default {
 
     beforeRouteUpdate(to, from, next) {
         if (to.params.slugOrId !== from.params.slugOrId) {
+            if (this.commentLoop) clearInterval(this.commentLoop)
             this.cleanupProvider()
             this.setProject(to.params.slugOrId)
             utils.resetScroll()
