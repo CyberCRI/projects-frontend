@@ -23,11 +23,16 @@ export default function useTagSearch(hideOrganizationTags) {
     })
 
     const orgClassificationOptions = computed(() => {
+        const suggest = hideOrganizationTags
+            ? []
+            : [
+                  {
+                      label: 'suggested tags',
+                      value: null,
+                  },
+              ]
         return [
-            {
-                label: 'suggested tags',
-                value: null,
-            },
+            ...suggest,
             ...orgClassifications.value.map((c) => ({
                 label: c.slug, // TODO: need a title field
                 value: c.id,

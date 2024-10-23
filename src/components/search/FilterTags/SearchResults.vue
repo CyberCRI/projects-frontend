@@ -8,11 +8,7 @@
                 tabindex="0"
                 @click="tagClicked(tag)"
             >
-                <TagResult
-                    :is-ambiguous="tag.ambiguous"
-                    :label="tagLabel(tag)"
-                    :description="tag.description"
-                />
+                <TagResult :label="tagLabel(tag)" :description="tagDescription(tag)" />
             </div>
         </div>
         <div v-else class="no-result">
@@ -61,6 +57,9 @@ export default {
         },
         tagLabel(tag) {
             return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
+        tagDescription(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }

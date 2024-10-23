@@ -8,39 +8,10 @@
                 <FilterValue
                     v-for="tag in organizationTags"
                     :key="tag.id"
-                    :label="tag.name"
+                    :label="tagLabel(tag)"
                     icon="Close"
                     @click="deleteOrganizationTag(tag)"
                 />
-            </div>
-
-            <div class="input-container">
-                <TextInput
-                    v-model="newOrganizationTag"
-                    class="input-tag"
-                    @enter="addOrganizationTag"
-                />
-                <LpiButton
-                    :label="$filters.capitalize($t('common.add'))"
-                    @click="addOrganizationTag"
-                />
-            </div>
-        </div>
-
-        <div class="block-container">
-            <label class="label">{{ $t('tag.add-wiki') }}</label>
-            <small class="hint">{{ $t('tag.add-wiki-info') }}</small>
-            <p>{{ $t('project.tag-warning') }}</p>
-
-            <div class="tags-ctn">
-                <div v-for="tag in wikipediaTags" :key="tag.id">
-                    <FilterValue
-                        v-if="tag[`name_${currentLang}`] || tag.name"
-                        :label="tag[`name_${currentLang}`] || tag.name"
-                        icon="Close"
-                        @click="deleteWikipediaTag(tag)"
-                    />
-                </div>
             </div>
 
             <div class="rel-ctn">
@@ -57,20 +28,17 @@
             :is-opened="tagSearchIsOpened"
             :title="$t('tag.add-wiki')"
             class="small"
-            @close="closeWikipediaTags"
-            @confirm="saveWikipediaTags"
+            @close="closeTagsSelector"
+            @confirm="saveOrganizationTags"
         >
-            <TagsFilterEditor v-model="newWikipediaTags" hide-organization-tags />
+            <TagsFilterEditor v-model="newTags" hide-organization-tags />
         </BaseDrawer>
     </div>
 </template>
 
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-// import { getAllWikiTags } from '@/api/wikipedia-tags.service'
-import { createOrgTag, getAllOrgTags, deleteOrgTag } from '@/api/organization-tags.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -81,7 +49,6 @@ export default {
 
     components: {
         FilterValue,
-        TextInput,
         LpiButton,
         BaseDrawer,
         TagsFilterEditor,
@@ -97,20 +64,12 @@ export default {
         }
     },
 
-    async created() {
-        await this.loadOrgTags()
-        await this.loadWikiTags()
-    },
-
     data() {
         return {
             newOrganizationTag: '',
-            newWikipediaTags: [],
-            orgConfirmModalVisible: false,
-            wikiConfirmModalVisible: false,
+            newTags: [],
+            confirmModalVisible: false,
             tagSearchIsOpened: false,
-            wikipediaTags: [],
-            organizationTags: [],
         }
     },
 
@@ -119,62 +78,24 @@ export default {
             return this.organizationsStore.current
         },
 
-        currentLang() {
-            return this.languagesStore.current
+        organizationTags() {
+            return this.organization.tags
         },
     },
 
     methods: {
-        async loadWikiTags() {
-            // this.wikipediaTags = (
-            //     await getAllWikiTags({
-            //         organization: this.organizationsStore.current.code,
-            //     })
-            // ).results
-            this.wikipediaTags = []
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
-
-        async loadOrgTags() {
-            this.organizationTags = await (
-                await getAllOrgTags({
-                    organization: this.organizationsStore.current.code,
-                })
-            ).results
-        },
-
-        async addOrganizationTag() {
-            if (this.newOrganizationTag.length) {
-                try {
-                    await createOrgTag({
-                        name: this.newOrganizationTag,
-                        organization: this.organization.code,
-                    })
-                    await this.loadOrgTags()
-
-                    this.toaster.pushSuccess(this.$t('toasts.organization-tag-create.success'))
-
-                    this.newOrganizationTag = ''
-                } catch (error) {
-                    this.toaster.pushError(
-                        `${this.$t('toasts.organization-tag-create.error')} (${error})`
-                    )
-                } finally {
-                    this.tagSearchIsOpened = false
-                }
-            }
-        },
-
-        async saveWikipediaTags() {
-            const newWikiIds = this.newWikipediaTags.map((tag) => tag.wikipedia_qid)
+        async saveOrganizationTags() {
+            const newTagsIds = this.newTags.map((tag) => tag.id)
+            const oldTagsIds = this.organizationTags.map((tag) => tag.id)
 
             try {
                 await this.organizationsStore.updateCurrentOrganization({
-                    wikipedia_tags_ids: newWikiIds,
+                    tags: [...oldTagsIds, ...newTagsIds],
                 })
-                await this.loadWikiTags()
-
                 this.toaster.pushSuccess(this.$t('toasts.organization-tag-create.success'))
-
                 this.tagSearchIsOpened = false
             } catch (error) {
                 this.toaster.pushError(
@@ -184,34 +105,15 @@ export default {
             }
         },
 
-        closeWikipediaTags() {
-            this.newWikipediaTags = [...this.wikipediaTags]
+        closeTagsSelector() {
             this.tagSearchIsOpened = false
         },
 
         async deleteOrganizationTag(tag) {
             try {
-                await deleteOrgTag(tag.id)
-                await this.loadOrgTags()
-                this.toaster.pushSuccess(this.$t('toasts.organization-tag-delete.success'))
-            } catch (error) {
-                this.toaster.pushError(
-                    `${this.$t('toasts.organization-tag-delete.error')} (${error})`
-                )
-                console.error(error)
-            }
-        },
-
-        async deleteWikipediaTag(tagToDelete) {
-            const updatedWikipediaTagsIds = this.organization.wikipedia_tags
-                .filter((tag) => tag.wikipedia_qid !== tagToDelete.wikipedia_qid)
-                .map((tag) => tag.wikipedia_qid)
-
-            try {
                 await this.organizationsStore.updateCurrentOrganization({
-                    wikipedia_tags_ids: updatedWikipediaTagsIds,
+                    tags: this.organizationTags.filter((t) => t.id != tag.id).map((t) => t.id),
                 })
-                await this.loadWikiTags()
                 this.toaster.pushSuccess(this.$t('toasts.organization-tag-delete.success'))
             } catch (error) {
                 this.toaster.pushError(
@@ -219,16 +121,6 @@ export default {
                 )
                 console.error(error)
             }
-        },
-    },
-
-    watch: {
-        wikipediaTags: {
-            handler: function (neo) {
-                this.newWikipediaTags = [...neo]
-            },
-            immediate: true,
-            deep: true,
         },
     },
 }
