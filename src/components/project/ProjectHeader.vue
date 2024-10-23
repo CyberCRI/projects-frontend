@@ -36,7 +36,7 @@
                             <CroppedApiImage
                                 v-if="!loading && project?.header_image?.variations"
                                 :picture-data="project.header_image"
-                                :picture-size="medium"
+                                picture-size="medium"
                                 default-picture="/placeholders/header_placeholder.png"
                                 ref="projectImg"
                                 :alt="`${project.title} image`"

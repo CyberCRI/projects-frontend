@@ -30,6 +30,7 @@ export interface UsersState {
     roles: string[]
     notificationsCount: number
     notificationsSettings: NotificationsSettings
+    userDataRefreshLoop: number | null
 }
 
 const useUsersStore = defineStore('users', {
@@ -47,6 +48,7 @@ const useUsersStore = defineStore('users', {
             roles: [],
             notificationsCount: 0,
             notificationsSettings: null,
+            userDataRefreshLoop: null,
         }
     },
 
@@ -81,6 +83,7 @@ const useUsersStore = defineStore('users', {
     actions: {
         logOut(): Promise<any> {
             return new Promise((resolve) => {
+                this.stopUserDataRefreshLoop()
                 removeApiCookie()
                     .catch(console.error)
                     .finally(() => {
@@ -138,6 +141,24 @@ const useUsersStore = defineStore('users', {
             }
         },
 
+        startUserDataRefreshLoop() {
+            if (this.id && !this.userDataRefreshLoop) {
+                this.userDataRefreshLoop = setInterval(
+                    () => {
+                        this.getUser(this.id)
+                    },
+                    1000 * 60 * 5 // 5 minutes
+                )
+            }
+        },
+
+        stopUserDataRefreshLoop() {
+            if (this.userDataRefreshLoop) {
+                clearInterval(this.userDataRefreshLoop)
+                this.userDataRefreshLoop = null
+            }
+        },
+
         async getUser(id) {
             const languagesStore = useLanguagesStore()
             // id is keycloak_id OR django user id OR slug
@@ -156,6 +177,8 @@ const useUsersStore = defineStore('users', {
                 this.userFromApi = user
 
                 languagesStore.current = user.language as LanguageType
+
+                this.startUserDataRefreshLoop()
 
                 return user
             } catch (err) {
