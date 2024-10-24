@@ -111,7 +111,7 @@ export default {
     },
 
     watch: {
-        queryString(neo) {
+        search(neo) {
             if (neo.length >= 3) this.launchSearch()
         },
     },

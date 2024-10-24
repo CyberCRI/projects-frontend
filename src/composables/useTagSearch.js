@@ -5,22 +5,24 @@ import {
     getOrgClassificationAutocomplete,
 } from '@/api/tag-classification.service'
 import debounce from 'lodash.debounce'
-export default function useTagSearch(hideOrganizationTags) {
+export default function useTagSearch({
+    useSkills,
+    useProjects,
+    hideOrganizationTags,
+    classificationType,
+}) {
     const organizationsStore = useOrganizationsStore()
-
-    // data
-
-    const suggestedTagsisLoading = ref(false)
-    const selectedClassificatonId = ref(null)
-    const search = ref('')
-    const suggestedTags = ref([]) // org pinned tags
-    const suggestions = ref([]) // auto complete suggest
 
     // computed
 
-    const orgClassifications = computed(() => {
-        return organizationsStore.current.enabled_tag_classifications
-    })
+    const orgClassifications = computed(() =>
+        organizationsStore.allClassifications.filter(
+            (c) =>
+                (!classificationType || c.type === classificationType) &&
+                (!useProjects || c.is_enabled_for_projects) &&
+                (!useSkills || c.is_enabled_for_skills)
+        )
+    )
 
     const orgClassificationOptions = computed(() => {
         const suggest = hideOrganizationTags
@@ -34,30 +36,58 @@ export default function useTagSearch(hideOrganizationTags) {
         return [
             ...suggest,
             ...orgClassifications.value.map((c) => ({
-                label: c.slug, // TODO: need a title field
+                label: c.title,
                 value: c.id,
             })),
         ]
     })
 
+    const defaultClassificationId = () =>
+        (orgClassificationOptions.value.length && orgClassificationOptions.value[0].value) || null
+
+    const selectedClassificationId = ref(defaultClassificationId())
+
+    // data
+
+    const suggestedTagsisLoading = ref(false)
+    const search = ref('')
+    const suggestedTags = ref([]) // org pinned tags
+    const suggestions = ref([]) // auto complete suggest
+
+    // computed
+
+    const selectedClassification = computed(() => {
+        return orgClassifications.value.find((c) => {
+            return c.id === selectedClassificationId.value
+        })
+    })
+
     const organizationTags = computed(() => {
-        return hideOrganizationTags ? [] : organizationsStore.current.tags
+        const orgTags = []
+        if (useSkills) {
+            orgTags.push(...organizationsStore.current.default_skills_tags)
+        }
+
+        if (useProjects) {
+            orgTags.push(...organizationsStore.current.default_projects_tags)
+        }
+        return hideOrganizationTags ? [] : orgTags
     })
 
     const showTagSearch = computed(() => {
-        return selectedClassificatonId.value !== null && !suggestedTags.value.length // wiki and esco return no results
+        return selectedClassificationId.value !== null && !suggestedTags.value.length // wiki and esco return no results
     })
 
     // methods
     async function loadSelectedClassificationTags() {
-        if (!selectedClassificatonId.value) {
+        if (!selectedClassificationId.value) {
             suggestedTags.value = organizationTags.value
         } else {
             suggestedTagsisLoading.value = true
 
             const classificationReq = await getOrgClassificationTags(
                 organizationsStore.current.code,
-                selectedClassificatonId.value,
+                selectedClassificationId.value,
                 // temp hackish fix until we have count int he org data
                 { search: '' }
             )
@@ -76,7 +106,7 @@ export default function useTagSearch(hideOrganizationTags) {
         try {
             suggestions.value = await getOrgClassificationAutocomplete(
                 organizationsStore.current.code,
-                selectedClassificatonId.value,
+                selectedClassificationId.value,
                 { search: search.value }
             )
         } catch (e) {
@@ -86,11 +116,17 @@ export default function useTagSearch(hideOrganizationTags) {
 
     // watch
 
-    watch(selectedClassificatonId, loadSelectedClassificationTags, { immediate: true })
+    watch(selectedClassificationId, loadSelectedClassificationTags, { immediate: true })
+
+    const resetTagSearch = () => {
+        search.value = ''
+        selectedClassificationId.value = defaultClassificationId()
+    }
 
     return {
         suggestedTagsisLoading,
-        selectedClassificatonId,
+        selectedClassificationId,
+        selectedClassification,
         search,
         suggestions,
         suggestedTags,
@@ -101,5 +137,6 @@ export default function useTagSearch(hideOrganizationTags) {
         showTagSearch,
         suggest,
         loadSelectedClassificationTags,
+        resetTagSearch,
     }
 }

@@ -1,8 +1,11 @@
 <template>
     <div class="tags-tab">
         <div class="block-container">
-            <label class="label">{{ $t('tag.add-specific') }}</label>
-            <small class="hint">{{ $t('tag.add-specific-info') }}</small>
+            <label class="label">Suggested tags</label>
+            <small class="hint"
+                >Select tags that will be suggested by default when searching or creating project
+                and profiles</small
+            >
 
             <div class="tags-ctn">
                 <FilterValue
@@ -23,6 +26,28 @@
                 </div>
             </div>
         </div>
+        <div class="block-container">
+            <label class="label">Classifications</label>
+            <small class="hint">Manage your custom classifications</small>
+            <LpiButton
+                label="Create classification"
+                btn-icon="Plus"
+                @click="createClassificationIsOpen = true"
+            />
+
+            <p v-if="!orgClassifications.length">No custom classification yet</p>
+
+            <LpiSelect
+                v-else-if="orgClassifications.length > 1"
+                v-model="selectedClassificationId"
+                :options="orgClassificationOptions"
+            />
+            <TagClassificationAdmin
+                v-if="selectedClassification"
+                :classification="selectedClassification"
+                @delete-classification="deleteClassification"
+            />
+        </div>
         <BaseDrawer
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
@@ -33,6 +58,11 @@
         >
             <TagsFilterEditor v-model="newTags" hide-organization-tags />
         </BaseDrawer>
+        <EditClassification
+            :classification="null"
+            :is-open="createClassificationIsOpen"
+            @close="createClassificationIsOpen = false"
+        />
     </div>
 </template>
 
@@ -44,6 +74,10 @@ import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
+import EditClassification from '@/components/admin/EditClassification.vue'
 export default {
     name: 'TagsTab',
 
@@ -52,6 +86,9 @@ export default {
         LpiButton,
         BaseDrawer,
         TagsFilterEditor,
+        LpiSelect,
+        TagClassificationAdmin,
+        EditClassification,
     },
     setup() {
         const toaster = useToasterStore()
@@ -61,6 +98,10 @@ export default {
             toaster,
             languagesStore,
             organizationsStore,
+            ...useTagSearch({
+                hideOrganizationTags: true,
+                classificationType: 'custom',
+            }),
         }
     },
 
@@ -70,6 +111,7 @@ export default {
             newTags: [],
             confirmModalVisible: false,
             tagSearchIsOpened: false,
+            createClassificationIsOpen: false,
         }
     },
 
@@ -84,6 +126,11 @@ export default {
     },
 
     methods: {
+        async deleteClassification(classification) {
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+            this.toaster.pushSuccess(`Classification ${classification.title} deleted`)
+        },
+
         tagLabel(tag) {
             return tag[`title_${this.languagesStore.current}`] || tag.title
         },

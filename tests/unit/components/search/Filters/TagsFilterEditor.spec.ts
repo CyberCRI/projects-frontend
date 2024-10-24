@@ -33,7 +33,10 @@ describe('TagsFilterEditor', () => {
         organizationsStore.current = {
             code: 'test',
             tags: [],
-            enabled_tag_classifications: [{ id: 123, slug: 'test' }],
+            enabled_projects_tag_classifications: [{ id: 123, slug: 'test' }],
+            enabled_skills_tag_classifications: [{ id: 123, slug: 'test' }],
+            default_projects_tags: [],
+            default_skills_tags: [],
         } as unknown as OrganizationOutput
         defaultParams = {
             props: {},
@@ -49,7 +52,7 @@ describe('TagsFilterEditor', () => {
 
     it('should fetch  tags', async () => {
         wrapper = lpiMount(TagsFilterEditor, defaultParams)
-        wrapper.vm.selectedClassificatonId = 123
+        wrapper.vm.selectedClassificationId = 123
         await waitForExpect(() => {
             expect(getOrgClassificationTags).toHaveBeenCalled()
         })
