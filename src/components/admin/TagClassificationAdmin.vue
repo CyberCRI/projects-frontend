@@ -124,6 +124,7 @@ watch(
 )
 
 const tagCount = ref(0)
+<<<<<<< HEAD
 const fetchTagStats = async () => {
     const data = (
         await getOrgClassificationTags(organizationsStore.current.code, props.classification.id, {
@@ -134,11 +135,19 @@ const fetchTagStats = async () => {
     ).data
     tagCount.value = data.count
 }
+=======
+watchEffect(() => {
+    if (request.value && !search.value) {
+        tagCount.value = request.value.count
+    }
+})
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
 
 const getTags = debounce(async function () {
     isLoading.value = refreshTokenGrantRequest
     try {
         //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
+<<<<<<< HEAD
         const axiosReq = await getOrgClassificationTags(
             organizationsStore.current.code,
             props.classification.id,
@@ -148,6 +157,13 @@ const getTags = debounce(async function () {
         currentAxiosRequestConfig.value = axiosReq.config
     } catch (e) {
         request.value = {
+=======
+        request.value = await getOrgClassificationTags(
+            organizationsStore.current.code,
+            props.classification.id,
+            { search: search.value, order_by: 'title', limit: props.pageLimit }
+        ).catch(() => ({
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
             results: [],
             count: 0,
             current_page: 1,
@@ -156,13 +172,19 @@ const getTags = debounce(async function () {
             next: null,
             first: null,
             last: null,
+<<<<<<< HEAD
         }
+=======
+        }))
+    } catch (e) {
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
         console.error(e)
     } finally {
         isLoading.value = false
     }
 }, 500)
 
+<<<<<<< HEAD
 const reloadClassification = async () => {
     isLoading.value = true
     try {
@@ -184,6 +206,8 @@ const reloadClassification = async () => {
     isLoading.value = false
 }
 
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
 const pagination = computed(() => {
     if (!request.value) return { total: 0 }
     return {
@@ -198,14 +222,19 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
     isLoading.value = true
+<<<<<<< HEAD
     const axiosReq = await axios.get(requestedPage)
     request.value = axiosReq.data
     currentAxiosRequestConfig.value = axiosReq.config
+=======
+    request.value = (await axios.get(requestedPage)).data
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
     isLoading.value = false
     // const el = document.querySelector('.group-user-selection .search-section')
     // if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
+<<<<<<< HEAD
 const onTagEdited = async () => {
     await reloadClassification()
     editTagIsOpen.value = false
@@ -223,6 +252,8 @@ const onClassificationEdited = async (classification) => {
 }
 
 watch(() => [props.classification.value], fetchTagStats, { immediate: true })
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
 watch(() => [props.classification.value, search.value], getTags, { immediate: true })
 </script>
 <template>
@@ -239,17 +270,24 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         </h2>
 
         <div class="add-tag-ctn">
+<<<<<<< HEAD
             <p v-if="classification.is_enabled_for_projects">
                 {{ t('admin.classifications.enabled-for-projects') }}
             </p>
             <p v-if="classification.is_enabled_for_skills">
                 {{ t('admin.classifications.enabled-for-skills') }}
             </p>
+=======
+            <h3>{{ tagCount }} tags</h3>
+            <p v-if="classification.is_enabled_for_projects">enabled for projects</p>
+            <p v-if="classification.is_enabled_for_skills">enabled for skills</p>
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
             <p
                 v-if="
                     !classification.is_enabled_for_projects && !classification.is_enabled_for_skills
                 "
             >
+<<<<<<< HEAD
                 {{ t('admin.classifications.disabled') }}
             </p>
         </div>
@@ -271,13 +309,34 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                 class="search-input-ctn"
             />
         </div>
+=======
+                disabled
+            </p>
+        </div>
+        <div class="add-tag-ctn">
+            <LpiButton label="Create tag" btn-icon="Plus" @click="createTag()" />
+        </div>
+
+        <FilterSearchInput
+            ref="search-input-component"
+            v-model.trim="search"
+            :placeholder="$t('search.search-tag')"
+            class="search-input-ctn"
+        />
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
 
         <table class="table">
             <thead>
                 <tr>
+<<<<<<< HEAD
                     <th>{{ t('admin.classifications.table.tag') }}</th>
                     <th width="*">{{ t('admin.classifications.table.description') }}</th>
                     <th width="60">{{ t('admin.classifications.table.actions') }}</th>
+=======
+                    <th>Tag</th>
+                    <th width="*">Description</th>
+                    <th width="60">Actions</th>
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
                 </tr>
             </thead>
             <tbody ref="tableBody">
@@ -325,14 +384,20 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :tag="editedTag"
             :classification="classification"
             @close="editTagIsOpen = false"
+<<<<<<< HEAD
             @tag-edited="onTagEdited"
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
         />
         <EditClassification
             :classification="classification"
             :is-open="editClassificationIsOpen"
             @close="editClassificationIsOpen = false"
+<<<<<<< HEAD
             @classification-edited="onClassificationEdited"
             @classification-created="onClassificationCreated"
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
         />
 
         <ConfirmModal
@@ -340,24 +405,34 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :asyncing="isDeletingTag"
             @cancel="tagToDelete = null"
             @confirm="deleteTag"
+<<<<<<< HEAD
             :title="t('admin.classifications.tag-delete.confirm.title')"
             :content="
                 t('admin.classifications.tag-delete.confirm.description', {
                     tagName: tagToDelete?.title,
                 })
             "
+=======
+            title="Delete tag?"
+            :content="`Are you sure you want to delete the tag '${tagToDelete?.title}'?`"
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
         />
         <ConfirmModal
             v-if="showConfirmClassificationDelete"
             :asyncing="isDeletingClassification"
             @cancel="showConfirmClassificationDelete = null"
             @confirm="deleteClassification"
+<<<<<<< HEAD
             :title="t('admin.classifications.delete-classification.title')"
             :content="
                 t('admin.classifications.delete-classification.content', {
                     title: classification?.title,
                 })
             "
+=======
+            title="Delete classification?"
+            :content="`Are you sure you want to delete the classification '${classification?.title}'?`"
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
         />
     </div>
 </template>
@@ -371,8 +446,12 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
     gap: 1rem;
 }
 
+<<<<<<< HEAD
 .add-tag-ctn,
 .tags-filter {
+=======
+.add-tag-ctn {
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
     display: flex;
     align-items: center;
     justify-content: center;
@@ -381,11 +460,14 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
     margin-bottom: 1rem;
 }
 
+<<<<<<< HEAD
 .filter-label {
     flex-shrink: 0;
     font-weight: 700;
 }
 
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -407,7 +489,10 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
 
     th {
         font-weight: 700;
+<<<<<<< HEAD
         text-align: left;
+=======
+>>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
     }
 
     td,

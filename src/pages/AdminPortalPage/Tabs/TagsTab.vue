@@ -38,7 +38,6 @@
                 @classification-deleted="onClassificationDeleted"
             />
         </div>
-
         <EditClassification
             :classification="null"
             :is-open="createClassificationIsOpen"
