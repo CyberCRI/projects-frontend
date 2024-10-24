@@ -5,7 +5,7 @@
         <div class="section">
             <p class="notice">{{ $t('search.current-classification-description') }}</p>
 
-            <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
+            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
 
         <div v-if="suggestedTags.length" class="section">
@@ -88,7 +88,7 @@ export default {
 
     setup() {
         return {
-            ...useTagSearch(),
+            ...useTagSearch({ useSkills: true }),
         }
     },
     data() {

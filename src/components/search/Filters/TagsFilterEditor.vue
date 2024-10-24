@@ -7,7 +7,7 @@
         <div class="section">
             <p class="notice">{{ $t('search.current-classification-description') }}</p>
 
-            <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
+            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
 
         <div v-if="suggestedTags.length" class="section">
@@ -31,7 +31,7 @@
 
             <TagResults
                 v-if="search"
-                :classification-id="selectedClassificatonId"
+                :classification-id="selectedClassificationId"
                 :existing-tags="tags"
                 :inline="inline"
                 :search="search"
@@ -89,7 +89,10 @@ export default {
     },
     setup(props) {
         return {
-            ...useTagSearch(props.hideOrganizationTags),
+            ...useTagSearch({
+                useProjects: true,
+                hideOrganizationTags: props.hideOrganizationTags,
+            }),
         }
     },
 
@@ -101,6 +104,7 @@ export default {
 
     mounted() {
         this.focusInput()
+        this.resetTagSearch()
     },
 
     methods: {

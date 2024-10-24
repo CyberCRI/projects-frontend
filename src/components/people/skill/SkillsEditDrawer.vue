@@ -26,7 +26,7 @@
             <div class="section">
                 <p class="notice">{{ $t('search.current-classification-description') }}</p>
 
-                <LpiSelect v-model="selectedClassificatonId" :options="orgClassificationOptions" />
+                <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
             </div>
             <div v-if="suggestedTags.length" class="section">
                 <SuggestedTags
@@ -56,7 +56,7 @@
             <TagResults
                 class="flexed-search-results-ctn custom-scrollbar"
                 v-if="confirmedSearch"
-                :classification-id="selectedClassificatonId"
+                :classification-id="selectedClassificationId"
                 :existing-tags="selectionAsTags"
                 inline
                 :search="confirmedSearch"
@@ -133,7 +133,7 @@ export default {
         return {
             toaster,
             languagesStore,
-            ...useTagSearch(),
+            ...useTagSearch({ useSkills: true }),
         }
     },
 
