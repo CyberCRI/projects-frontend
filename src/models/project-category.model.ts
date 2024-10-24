@@ -1,7 +1,7 @@
 import BaseModel from '@/models/base.model'
-import { WikipediaTagOutput } from '@/models/wikipedia-tag.model'
 import { OrganizationOutput } from '@/models/organization.model'
 import { TemplateOutput } from '@/models/template.model'
+import { TagOutput } from '@/models/tag.model'
 
 /**
  * @name ProjectCategoryModel
@@ -29,22 +29,22 @@ export interface ProjectCategoryModel extends BaseModel {
 
 export type ProjectCategoryCreateInput = Required<ProjectCategoryModel> & {
     organization_code: string
-    wikipedia_tags_ids?: number[]
+    tags?: number[]
 }
 
 export type ProjectCategoryPutInput = Required<ProjectCategoryModel> & {
-    wikipedia_tags_ids: number[]
+    tags: number[]
 }
 
 export type ProjectCategoryPatchInput = Partial<ProjectCategoryModel> & {
-    wikipedia_tags_ids?: number[]
+    tags?: number[]
 }
 
 export type ProjectCategoryOutput = BaseModel &
     Required<ProjectCategoryModel> & {
         template: TemplateOutput
         organization: OrganizationOutput
-        tags: WikipediaTagOutput[]
+        tags: TagOutput[]
     }
 
 export interface ProjectCategoryBackgroundOutput {

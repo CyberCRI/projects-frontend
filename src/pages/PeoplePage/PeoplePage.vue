@@ -46,8 +46,7 @@ export default {
             search: {
                 search: '',
                 categories: [],
-                organization_tags: [],
-                wikipedia_tags: [],
+                tags: [],
                 members: [],
                 sdgs: [],
                 languages: [],

@@ -95,8 +95,7 @@ export default {
             search: {
                 search: '',
                 categories: [],
-                organization_tags: [],
-                wikipedia_tags: [],
+                tags: [],
                 members: [],
                 sdgs: [],
                 languages: [],
@@ -109,15 +108,7 @@ export default {
             },
             projectsCount: 0,
             searchOptionsInitiated: false,
-            filterQueryParams: [
-                'search',
-                'sdgs',
-                'categories',
-                'organization_tags',
-                'wikipedia_tags',
-                'languages',
-                'page',
-            ],
+            filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
             selectedSection: 'all',
             forceSearch: false,
         }
@@ -140,7 +131,7 @@ export default {
         hasSearch() {
             return (
                 !!this.search.search ||
-                ['sdgs', 'categories', 'organization_tags', 'wikipedia_tags', 'languages'].reduce(
+                ['sdgs', 'categories', 'tags', 'languages'].reduce(
                     (acc, key) => acc || this.search[key].length > 0,
                     false
                 )

@@ -110,8 +110,7 @@ export default {
             search: {
                 search: '',
                 categories: [],
-                organization_tags: [],
-                wikipedia_tags: [],
+                tags: [],
                 members: [],
                 sdgs: [],
                 languages: [],
@@ -125,15 +124,7 @@ export default {
             groupsIndex: null,
             rootId: null,
             searchOptionsInitiated: false,
-            filterQueryParams: [
-                'search',
-                'sdgs',
-                'categories',
-                'organization_tags',
-                'wikipedia_tags',
-                'languages',
-                'page',
-            ],
+            filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
             selectedSection: 'all',
         }
     },

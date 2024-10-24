@@ -2,15 +2,20 @@
     <div class="tag-label" :data-test="`tag-label-${label}`">
         <span class="tag-name">{{ label }}</span>
         <span class="tag-description">{{ description }}</span>
-        <span v-if="isAmbiguous && !hasDisambiguationTerm"
-            >&nbsp;{{ $t('search.disambiguate') }}</span
-        >
     </div>
 </template>
 
 <script>
+import useLanguagesStore from '@/stores/useLanguages'
 export default {
     name: 'TagResult',
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        return {
+            languagesStore,
+        }
+    },
 
     props: {
         label: {
@@ -18,20 +23,9 @@ export default {
             required: true,
         },
 
-        isAmbiguous: {
-            type: Boolean,
-            required: true,
-        },
-
         description: {
             type: String,
             default: '',
-        },
-    },
-
-    computed: {
-        hasDisambiguationTerm() {
-            return this.label.includes('(disambiguation)') || this.label.includes('(homonymie)')
         },
     },
 }

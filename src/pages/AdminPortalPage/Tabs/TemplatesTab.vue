@@ -37,33 +37,19 @@
                         />
                     </div>
 
-                    <div v-if="form.organizationTags.length" class="tag-grid">
+                    <div v-if="form.tags.length" class="tag-grid">
                         <FilterValue
-                            v-for="tag in form.organizationTags"
+                            v-for="tag in form.tags"
                             :key="tag.id"
-                            :label="tag.name"
+                            :label="tagTitle(tag)"
                             icon="Close"
                             @click="deleteOrganizationTag(tag)"
                         />
                     </div>
 
-                    <br v-if="form.organizationTags.length && form.wikipediaTags.length" />
-
-                    <div v-if="form.wikipediaTags.length" class="tag-grid">
-                        <FilterValue
-                            v-for="tag in form.wikipediaTags"
-                            :key="tag.id"
-                            :label="tag.name"
-                            icon="Close"
-                            @click="deleteWikipediaTag(tag)"
-                        />
-                    </div>
-
-                    <span
-                        v-if="!form.organizationTags.length && !form.wikipediaTags.length"
-                        class="description"
-                        >{{ $t('template.no-tag-set') }}</span
-                    >
+                    <span v-if="!form.tags.length" class="description">{{
+                        $t('template.no-tag-set')
+                    }}</span>
                 </div>
             </FieldDisabler>
 
@@ -155,11 +141,7 @@
             @close="closeTags"
             @confirm="updateTemplateTags"
         >
-            <TagsFilterEditor
-                v-model="newTags"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
-            />
+            <TagsFilterEditor v-model="newTags" />
         </BaseDrawer>
     </div>
 </template>
@@ -228,15 +210,13 @@ export default {
                 blogContent: '<p></p>',
                 goalTitle: '',
                 goal_description: '<p></p>',
-                organizationTags: [],
-                wikipediaTags: [],
+                tags: [],
             },
             isLoading: false,
             selectedCategory: null,
             tagSearchIsOpened: false,
             editorKey: 0,
             newTags: [],
-            ambiguousTagsOpen: false,
             fetchingTemplate: false,
         }
     },
@@ -279,7 +259,7 @@ export default {
         },
 
         allTags() {
-            return [...(this.form || {}).organizationTags, ...(this.form || {}).wikipediaTags]
+            return [...this.form.tags]
         },
 
         selectedCategoryLabel() {
@@ -290,6 +270,9 @@ export default {
     },
 
     methods: {
+        tagTitle(tag) {
+            return tag['title_' + this.languagesStore.current] || tag.title
+        },
         setCategory(category) {
             this.selectedCategory = category
             this.$refs.categoryDropdown?.close()
@@ -327,8 +310,7 @@ export default {
                 this.form.language = this.selectedCategory?.lang || this.languagesStore.current
 
                 /* Tags */
-                this.form.organizationTags = this.selectedCategory?.organization_tags
-                this.form.wikipediaTags = this.selectedCategory?.wikipedia_tags
+                this.form.tags = this.selectedCategory?.tags
             }
             this.editorKey += 1
             this.fetchingTemplate = false
@@ -350,8 +332,7 @@ export default {
 
             const updatedData = {
                 template: { ...template },
-                organization_tags_ids: this.form.organizationTags.map((tag) => tag.id),
-                wikipedia_tags_ids: this.form.wikipediaTags.map((tag) => tag.wikipedia_qid),
+                tags: this.form.tags.map((tag) => tag.id),
             }
 
             try {
@@ -370,26 +351,20 @@ export default {
 
         updateTemplateTags() {
             // memoize the newtags first
-            const wikiTags = this.newTags.filter((tag) => tag.wikipedia_qid)
-            const orgTags = this.newTags.filter((tag) => !tag.wikipedia_qid)
+            const tags = [...this.newTags]
             // or form update will trigger watcher
             // that will reset newTags and then skip one or the other depending on watchers schedule
-            this.form.organizationTags = orgTags
-            this.form.wikipediaTags = wikiTags
+            this.form.tags = tags
             this.tagSearchIsOpened = false
         },
 
         closeTags() {
-            this.newTags = [...this.form.organizationTags, ...this.form.wikipediaTags]
+            this.newTags = [...this.form.tags]
             this.tagSearchIsOpened = false
         },
 
-        deleteWikipediaTag(tag) {
-            this.form.wikipediaTags = this.form.wikipediaTags.filter((t) => t !== tag)
-        },
-
         deleteOrganizationTag(tag) {
-            this.form.organizationTags = this.form.organizationTags.filter((t) => t !== tag)
+            this.form.tags = this.form.tags.filter((t) => t !== tag)
         },
     },
     watch: {

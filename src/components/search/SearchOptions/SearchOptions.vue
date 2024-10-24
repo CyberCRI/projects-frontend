@@ -160,16 +160,10 @@ export default {
                 categories: filters.categories?.map((cat) => cat.id) || [],
                 languages: filters.languages ? [...filters.languages] : [], // need to deconstruct to avoid reactivity issue when removing language
                 sdgs: filters.sdgs ? [...filters.sdgs] : [], // need to deconstruct to avoid reactivity issue when removing sdg
-                wikipedia_tags:
-                    filters.tags
-                        ?.filter((tag) => 'wikipedia_qid' in tag)
-                        .map((tag) => tag.wikipedia_qid) || [],
-                organization_tags:
-                    filters.tags?.filter((tag) => 'organization' in tag).map((tag) => tag.id) || [],
+                tags: filters.tags?.map((tag) => tag.id) || [],
                 organizations: [this.organizationsStore.current.code],
-                skills: filters.skills?.map((tag) => tag.wikipedia_qid) || [],
+                skills: filters.skills?.map((tag) => tag.id) || [],
             }
-            delete adaptedFilters['tags']
             return adaptedFilters
         },
 

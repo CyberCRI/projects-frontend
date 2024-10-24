@@ -1,7 +1,6 @@
 <script setup>
 import { getProjectCategory } from '@/api/project-categories.service'
-import { getWikiTag } from '@/api/wikipedia-tags.service'
-import { getOrgTag } from '@/api/organization-tags.service'
+import { getTags } from '@/api/tag-classification.service'
 
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
@@ -20,7 +19,6 @@ function defaultFilters() {
         sdgs: [],
         tags: [],
         skills: [],
-        wikipedia_tags: [],
     }
 }
 
@@ -84,23 +82,15 @@ async function initFilters() {
         (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
     )
 
-    const wikipediaTags = await Promise.all(
-        (rawFilters.wikipedia_tags || []).map(async (wikiTagId) => await getWikiTag(wikiTagId))
-    )
-
-    const organizationTags = await Promise.all(
-        (rawFilters.organization_tags || []).map(async (orgTagId) => await getOrgTag(orgTagId))
-    )
-
-    filters.tags = [...wikipediaTags, ...organizationTags]
+    filters.tags = filters.tags = rawFilters.tags?.length
+        ? await getTags(rawFilters.tags).results
+        : []
 
     filters.sdgs = rawFilters.sdgs || []
 
     filters.languages = rawFilters.languages || []
 
-    filters.skills = await Promise.all(
-        (rawFilters.skills || []).map(async (skillId) => await getWikiTag(skillId))
-    )
+    filters.skills = rawFilters.skills?.length ? await getTags(rawFilters.skills).results : []
 
     selectedFilters.value = filters
     filtersInited.value = true

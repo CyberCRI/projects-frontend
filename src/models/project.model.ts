@@ -3,7 +3,6 @@ import { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@
 import { ProjectTeamOutput } from '@/models/project-member.model'
 import { ProjectCategoryOutput } from '@/models/project-category.model'
 import { LocationOutput } from '@/models/location.model'
-import { WikipediaTagModel, WikipediaTagOutput } from '@/models/wikipedia-tag.model'
 import { SdgOutput } from '@/models/sdg.model'
 import { GoalOutput } from '@/models/goal.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
@@ -16,7 +15,7 @@ import { ReviewModel } from '@/models/review.model'
 import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import { FollowOutput } from '@/models/follow.model'
 import { TemplateModel } from '@/models/template.model'
-import { OrganizationTagModel } from '@/models/organization-tag.model'
+import { TagModel, TagOutput } from '@/models/tag.model'
 
 interface HeaderImage {
     id: Number
@@ -51,8 +50,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     publication_status: ProjectPublicationStatusType
     life_status: ProjectStatusType
     reviews: ReviewModel[]
-    wikipedia_tags: WikipediaTagModel[]
-    organization_tags: OrganizationTagModel[]
+    tags: TagModel[]
     is_followed: {
         is_followed: boolean
         follow_id: number
@@ -68,8 +66,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 
 export type ProjectCreateInput = Required<ProjectModel> & {
     project_categories_ids: number
-    wikipedia_tags_ids?: number[]
-    organization_tags_ids?: number[]
+    tags?: number[]
     sdgs_ids?: number[]
 }
 
@@ -104,7 +101,7 @@ export type ProjectOutput = Required<ProjectModel> & {
     organizations: OrganizationOutput[]
     categories: ProjectCategoryOutput[]
     geolocation_coordinates: LocationOutput
-    tags: WikipediaTagOutput[]
+    tags: TagOutput[]
     sdgs: SdgOutput[]
     goals: GoalOutput[]
     links: AttachmentLinkOutput[]

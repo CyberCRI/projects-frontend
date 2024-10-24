@@ -28,12 +28,8 @@ const filtersFromUrl = {
         filters.categories = routeQueryToArray(query.categories)
     },
 
-    wikipedia_tags: function updateTagFilterFromURL(query, filters) {
-        filters.wikipedia_tags = routeQueryToArray(query.wikipedia_tags)
-    },
-
-    organization_tags: function updateTagFilterFromURL(query, filters) {
-        filters.organization_tags = routeQueryToArray(query.organization_tags)
+    tags: function updateTagFilterFromURL(query, filters) {
+        filters.tags = routeQueryToArray(query.tags)
     },
 
     skills: function updateTagFilterFromURL(query, filters) {

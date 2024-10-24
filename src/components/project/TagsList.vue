@@ -2,22 +2,15 @@
     <div class="wrapper">
         <div class="tag-ctn">
             <router-link
-                v-for="tag in displayedOrgTags || []"
+                v-for="tag in displayedTags || []"
                 :key="prefix + tag.id"
-                :to="browsePageWithQuery('organization_tags', tag.id)"
-                class="tag-elt tag-elt-anim"
-            >
-                <BadgeItem v-if="tag.name" :key="prefix + tag.id" :label="tag.name" size="small" />
-            </router-link>
-            <router-link
-                v-for="tag in displayedWikiTags || []"
-                :key="tag.wikipedia_qid"
-                :to="browsePageWithQuery('wikipedia_tags', tag.wikipedia_qid)"
+                :to="browsePageWithQuery('tags', tag.id)"
                 class="tag-elt tag-elt-anim"
             >
                 <BadgeItem
-                    v-if="tag[`name_${currentLang}`] || tag.name"
-                    :label="tag[`name_${currentLang}`] || tag.name"
+                    v-if="tagTitle(tag)"
+                    :key="prefix + tag.id"
+                    :label="tagTitle(tag)"
                     size="small"
                 />
             </router-link>
@@ -69,25 +62,14 @@
         </div>
         <div class="extra-tags" v-if="showExtraTags" :class="{ 'straight-corner': straightCorner }">
             <router-link
-                v-for="tag in moreOrgTags || []"
+                v-for="tag in moreTags || []"
                 :key="tag.id"
-                :to="browsePageWithQuery('organization_tags', tag.id)"
+                :to="browsePageWithQuery('tags', tag.id)"
                 class="extra-tag-elt tag-elt-anim"
             >
-                <BadgeItem v-if="tag.name" :label="tag.name" size="small" />
+                <BadgeItem v-if="tagTitle(tag)" :label="tagTitle(tag)" size="small" />
             </router-link>
-            <router-link
-                v-for="tag in moreWikiTags || []"
-                :key="tag.wikipedia_qid"
-                :to="browsePageWithQuery('wikipedia_tags', tag.wikipedia_qid)"
-                class="extra-tag-elt tag-elt-anim"
-            >
-                <BadgeItem
-                    v-if="tag[`name_${currentLang}`] || tag.name"
-                    :label="tag[`name_${currentLang}`] || tag.name"
-                    size="small"
-                />
-            </router-link>
+
             <template v-if="internal">
                 <router-link
                     v-for="tag in moreInfoTags || []"
@@ -142,17 +124,14 @@ export default {
     },
     data() {
         return {
-            moreOrgTags: [],
-            moreWikiTags: [],
+            moreTags: [],
             moreInfoTags: [],
-            displayedOrgTags: [],
-            displayedWikiTags: [],
+            displayedTags: [],
             displayedInfoTags: [],
             layoutTags: debounce(
                 async function () {
                     /* for each tag, we check if it fit in the wrapper
                      * if it doesn't, we hide it and add it to the more tags
-                     * we do this for both org and wiki tags
                      */
                     if (this && this.$el) {
                         const wrapperRight = this.$el.getBoundingClientRect().right
@@ -160,11 +139,9 @@ export default {
                         let hideNext = false
 
                         // reset the arrays
-                        this.displayedOrgTags.splice(0)
-                        this.displayedWikiTags.splice(0)
+                        this.displayedTags.splice(0)
                         this.displayedInfoTags.splice(0)
-                        this.moreOrgTags.splice(0)
-                        this.moreWikiTags.splice(0)
+                        this.moreTags.splice(0)
                         this.moreInfoTags.splice(0)
 
                         // for code factorization
@@ -209,12 +186,7 @@ export default {
                         }
 
                         // do the actual job
-                        await iterate(
-                            this.organizationTags,
-                            this.displayedOrgTags,
-                            this.moreOrgTags
-                        )
-                        await iterate(this.wikipediaTags, this.displayedWikiTags, this.moreWikiTags)
+                        await iterate(this.tags, this.displayedTags, this.moreTags)
                         await iterate(this.infoTags, this.displayedInfoTags, this.moreInfoTags)
 
                         // fix border radius if extra tags container is too short
@@ -245,11 +217,7 @@ export default {
     },
 
     props: {
-        organizationTags: {
-            type: Array,
-            default: () => [],
-        },
-        wikipediaTags: {
+        tags: {
             type: Array,
             default: () => [],
         },
@@ -272,7 +240,7 @@ export default {
             return this.languagesStore.current
         },
         moreTagsCount() {
-            return this.moreOrgTags.length + this.moreWikiTags.length + this.moreInfoTags.length
+            return this.moreTags.length + this.moreInfoTags.length
         },
         hasMoreTags() {
             return this.moreTagsCount > 0
@@ -280,15 +248,7 @@ export default {
     },
 
     watch: {
-        organizationTags: {
-            handler: function () {
-                this.layoutTags()
-            },
-            deep: true,
-            immediate: false,
-        },
-
-        wikipediaTags: {
+        tags: {
             handler: function () {
                 this.layoutTags()
             },
@@ -306,6 +266,9 @@ export default {
     },
 
     methods: {
+        tagTitle(tag) {
+            return tag[`title_${this.currentLang}`] || tag.title
+        },
         async layoutTagsBis() {
             // NEEDED FOR THE RESIZE
 
@@ -319,11 +282,9 @@ export default {
             let hideNext = false
 
             // reset the arrays
-            this.displayedOrgTags.splice(0)
-            this.displayedWikiTags.splice(0)
+            this.displayedTags.splice(0)
             this.displayedInfoTags.splice(0)
-            this.moreOrgTags.splice(0)
-            this.moreWikiTags.splice(0)
+            this.moreTags.splice(0)
             this.moreInfoTags.splice(0)
 
             // for code factorization
@@ -368,8 +329,7 @@ export default {
             }
 
             // do the actual job
-            await iterate(this.organizationTags, this.displayedOrgTags, this.moreOrgTags)
-            await iterate(this.wikipediaTags, this.displayedWikiTags, this.moreWikiTags)
+            await iterate(this.tags, this.displayedTags, this.moreTags)
             await iterate(this.infoTags, this.displayedInfoTags, this.moreInfoTags)
 
             // fix border radius if extra tags container is too short
