@@ -42,7 +42,7 @@
                                 <BadgeItem
                                     v-for="(skill, index) in moreSkills"
                                     :key="index"
-                                    :label="skillLable(skill)"
+                                    :label="skillLabel(skill)"
                                     size="small"
                                     colors="primary-light"
                                     class="skill-badge"

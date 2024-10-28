@@ -1,11 +1,8 @@
 <template>
     <div class="tags-tab">
         <div class="block-container">
-            <label class="label">Suggested tags</label>
-            <small class="hint"
-                >Select tags that will be suggested by default when searching or creating project
-                and profiles</small
-            >
+            <label class="label">{{ $t('admin.featured-tags.title') }}</label>
+            <small class="hint">{{ $t('admin.featured-tags.notice') }}</small>
 
             <div class="tags-ctn">
                 <FilterValue
@@ -27,27 +24,33 @@
             </div>
         </div>
         <div class="block-container">
-            <label class="label">Classifications</label>
-            <small class="hint">Manage your custom classifications</small>
+            <label class="label">{{ $t('admin.classifications.title') }}</label>
+            <small class="hint">{{ $t('admin.classifications.subtitle') }}</small>
             <LpiButton
-                label="Create classification"
+                :label="$t('admin.classifications.create-classification')"
                 btn-icon="Plus"
                 @click="createClassificationIsOpen = true"
             />
 
-            <p v-if="!orgClassifications.length">No custom classification yet</p>
+            <div v-if="isLoadingOrgClassifications" class="loader">
+                <LoaderSimple />
+            </div>
+            <template v-else>
+                <p v-if="!orgClassifications.length">{{ $t('admin.classifications.no-custom') }}</p>
 
-            <LpiSelect
-                v-else-if="orgClassifications.length > 1"
-                v-model="selectedClassificationId"
-                :options="orgClassificationOptions"
-            />
-            <TagClassificationAdmin
-                v-if="selectedClassification"
-                :classification="selectedClassification"
-                @delete-classification="deleteClassification"
-            />
+                <LpiSelect
+                    v-else-if="orgClassifications.length > 1"
+                    v-model="selectedClassificationId"
+                    :options="orgClassificationOptions"
+                />
+                <TagClassificationAdmin
+                    v-if="selectedClassification"
+                    :classification="selectedClassification"
+                    @classification-deleted="onClassificationDeleted"
+                />
+            </template>
         </div>
+
         <BaseDrawer
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
@@ -62,6 +65,8 @@
             :classification="null"
             :is-open="createClassificationIsOpen"
             @close="createClassificationIsOpen = false"
+            @classification-edited="onClassificationEdited"
+            @classification-created="onClassificationCreated"
         />
     </div>
 </template>
@@ -78,6 +83,7 @@ import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import EditClassification from '@/components/admin/EditClassification.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'TagsTab',
 
@@ -89,6 +95,7 @@ export default {
         LpiSelect,
         TagClassificationAdmin,
         EditClassification,
+        LoaderSimple,
     },
     setup() {
         const toaster = useToasterStore()
@@ -126,9 +133,17 @@ export default {
     },
 
     methods: {
-        async deleteClassification(classification) {
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            this.toaster.pushSuccess(`Classification ${classification.title} deleted`)
+        async onClassificationEdited() {
+            await this.fetchAllClassifications()
+        },
+        async onClassificationCreated(classification) {
+            await this.fetchAllClassifications()
+            this.selectedClassificationId = classification.id
+            this.createClassificationIsOpen = false
+        },
+        async onClassificationDeleted() {
+            await this.fetchAllClassifications()
+            this.selectedClassificationId = this.allOrgClassifications[0].id
         },
 
         tagLabel(tag) {

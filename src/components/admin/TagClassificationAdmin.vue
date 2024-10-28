@@ -1,7 +1,11 @@
 <script setup>
-import { ref, watch, watchEffect, computed, nextTick } from 'vue'
+import { ref, watch, computed, nextTick } from 'vue'
 import debounce from 'lodash.debounce'
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
+import {
+    getOrgClassificationTags,
+    deleteClassificationTag,
+    deleteOrgClassification,
+} from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { refreshTokenGrantRequest } from '@panva/oauth4webapi'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
@@ -14,11 +18,18 @@ import EditTagDrawer from '@/components/admin/EditTagDrawer.vue'
 import EditClassification from '@/components/admin/EditClassification.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()
 
-const emit = defineEmits(['delete-classification'])
+const emit = defineEmits([
+    'classification-edited',
+    'classification-created',
+    'classification-deleted',
+])
 
 const props = defineProps({
     classification: { type: Object, required: true },
@@ -38,13 +49,29 @@ const tagToDelete = ref(null)
 const isDeletingTag = ref(false)
 const showConfirmTagDelete = computed(() => !!tagToDelete.value)
 
+const currentAxiosRequestConfig = ref(null)
+
 const deleteTag = async () => {
     isDeletingTag.value = true
-    // TODO
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    toaster.pushSuccess(`Tag '${tagToDelete.value.title}' deleted`)
-    isDeletingTag.value = false
-    tagToDelete.value = null
+    try {
+        await deleteClassificationTag(
+            organizationsStore.current.code,
+            props.classification.id,
+            tagToDelete.value.id
+        )
+        toaster.pushSuccess(
+            t('admin.classification.tag-delete.success', { tagName: tagToDelete.value.title })
+        )
+        reloadClassification()
+    } catch (e) {
+        console.error(e)
+        toaster.pushError(
+            t('admin.classification.tag-delete.error', { tagName: tagToDelete.value.title })
+        )
+    } finally {
+        isDeletingTag.value = false
+        tagToDelete.value = null
+    }
 }
 
 const isDeletingClassification = ref(false)
@@ -52,10 +79,17 @@ const showConfirmClassificationDelete = ref(false)
 
 const deleteClassification = async () => {
     isDeletingClassification.value = true
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    emit('delete-classification', props.classification)
-    isDeletingClassification.value = false
-    showConfirmClassificationDelete.value = false
+    try {
+        await deleteOrgClassification(organizationsStore.current.code, props.classification.id)
+        toaster.pushSuccess(t('admin.classification.delete-classification.success'))
+        emit('classification-deleted', props.classification)
+    } catch (err) {
+        toaster.pushError(t('admin.classification.delete-classification.error'))
+        console.log(err)
+    } finally {
+        isDeletingClassification.value = false
+        showConfirmClassificationDelete.value = false
+    }
 }
 
 const createTag = () => {
@@ -90,21 +124,30 @@ watch(
 )
 
 const tagCount = ref(0)
-watchEffect(() => {
-    if (request.value && !search.value) {
-        tagCount.value = request.value.count
-    }
-})
+const fetchTagStats = async () => {
+    const data = (
+        await getOrgClassificationTags(organizationsStore.current.code, props.classification.id, {
+            search: '',
+            order_by: 'title',
+            limit: 1,
+        })
+    ).data
+    tagCount.value = data.count
+}
 
 const getTags = debounce(async function () {
     isLoading.value = refreshTokenGrantRequest
     try {
         //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
-        request.value = await getOrgClassificationTags(
+        const axiosReq = await getOrgClassificationTags(
             organizationsStore.current.code,
             props.classification.id,
             { search: search.value, order_by: 'title', limit: props.pageLimit }
-        ).catch(() => ({
+        )
+        request.value = axiosReq.data
+        currentAxiosRequestConfig.value = axiosReq.config
+    } catch (e) {
+        request.value = {
             results: [],
             count: 0,
             current_page: 1,
@@ -113,13 +156,33 @@ const getTags = debounce(async function () {
             next: null,
             first: null,
             last: null,
-        }))
-    } catch (e) {
+        }
         console.error(e)
     } finally {
         isLoading.value = false
     }
 }, 500)
+
+const reloadClassification = async () => {
+    isLoading.value = true
+    try {
+        fetchTagStats()
+        request.value = (await axios.request(currentAxiosRequestConfig.value)).data
+    } catch (e) {
+        console.log(e)
+        // request.value = {
+        //     results: [],
+        //     count: 0,
+        //     current_page: 1,
+        //     total_page: 1,
+        //     previous: null,
+        //     next: null,
+        //     first: null,
+        //     last: null,
+        // }
+    }
+    isLoading.value = false
+}
 
 const pagination = computed(() => {
     if (!request.value) return { total: 0 }
@@ -135,12 +198,31 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
     isLoading.value = true
-    request.value = (await axios.get(requestedPage)).data
+    const axiosReq = await axios.get(requestedPage)
+    request.value = axiosReq.data
+    currentAxiosRequestConfig.value = axiosReq.config
     isLoading.value = false
     // const el = document.querySelector('.group-user-selection .search-section')
     // if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
+const onTagEdited = async () => {
+    await reloadClassification()
+    editTagIsOpen.value = false
+}
+
+const onClassificationCreated = async (classification) => {
+    reloadClassification()
+    emit('classification-created', classification)
+    editClassificationIsOpen.value = false
+}
+const onClassificationEdited = async (classification) => {
+    reloadClassification()
+    emit('classification-edited', classification)
+    editClassificationIsOpen.value = false
+}
+
+watch(() => [props.classification.value], fetchTagStats, { immediate: true })
 watch(() => [props.classification.value, search.value], getTags, { immediate: true })
 </script>
 <template>
@@ -157,19 +239,27 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         </h2>
 
         <div class="add-tag-ctn">
-            <h3>{{ tagCount }} tags</h3>
-            <p v-if="classification.is_enabled_for_projects">enabled for projects</p>
-            <p v-if="classification.is_enabled_for_skills">enabled for skills</p>
+            <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
+            <p v-if="classification.is_enabled_for_projects">
+                {{ t('admin.classifications.enabled-for-projects') }}
+            </p>
+            <p v-if="classification.is_enabled_for_skills">
+                {{ t('admin.classifications.enabled-for-skills') }}
+            </p>
             <p
                 v-if="
                     !classification.is_enabled_for_projects && !classification.is_enabled_for_skills
                 "
             >
-                disabled
+                {{ t('admin.classifications.disabled') }}
             </p>
         </div>
         <div class="add-tag-ctn">
-            <LpiButton label="Create tag" btn-icon="Plus" @click="createTag()" />
+            <LpiButton
+                :label="t('admin.classifications.create-tag')"
+                btn-icon="Plus"
+                @click="createTag()"
+            />
         </div>
 
         <FilterSearchInput
@@ -182,9 +272,9 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         <table class="table">
             <thead>
                 <tr>
-                    <th>Tag</th>
-                    <th width="*">Description</th>
-                    <th width="60">Actions</th>
+                    <th>{{ t('admin.classifications.table.tag') }}</th>
+                    <th width="*">{{ t('admin.classifications.table.description') }}</th>
+                    <th width="60">{{ t('admin.classifications.table.actions') }}</th>
                 </tr>
             </thead>
             <tbody ref="tableBody">
@@ -232,11 +322,14 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :tag="editedTag"
             :classification="classification"
             @close="editTagIsOpen = false"
+            @tag-edited="onTagEdited"
         />
         <EditClassification
             :classification="classification"
             :is-open="editClassificationIsOpen"
             @close="editClassificationIsOpen = false"
+            @classification-edited="onClassificationEdited"
+            @classification-created="onClassificationCreated"
         />
 
         <ConfirmModal
@@ -244,16 +337,24 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :asyncing="isDeletingTag"
             @cancel="tagToDelete = null"
             @confirm="deleteTag"
-            title="Delete tag?"
-            :content="`Are you sure you want to delete the tag '${tagToDelete?.title}'?`"
+            :title="t('admin.classifications.tag-delete.confirm.title')"
+            :content="
+                t('admin.classifications.tag-delete.confirm.description', {
+                    tagName: tagToDelete?.title,
+                })
+            "
         />
         <ConfirmModal
             v-if="showConfirmClassificationDelete"
             :asyncing="isDeletingClassification"
             @cancel="showConfirmClassificationDelete = null"
             @confirm="deleteClassification"
-            title="Delete classification?"
-            :content="`Are you sure you want to delete the classification '${classification?.title}'?`"
+            :title="t('admin.classifications.delete-classification.title')"
+            :content="
+                t('admin.classifications.delete-classification.content', {
+                    title: classification?.title,
+                })
+            "
         />
     </div>
 </template>

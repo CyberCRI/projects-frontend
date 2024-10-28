@@ -98,9 +98,11 @@ export default {
                     this.organizationsStore.current.code,
                     this.classificationId,
                     { search: this.search }
-                ).catch(() => ({
-                    results: [],
-                }))
+                )
+                    .then((r) => r.data)
+                    .catch(() => ({
+                        results: [],
+                    }))
                 this.tagResults = req.results
             } catch (e) {
                 console.error(e)

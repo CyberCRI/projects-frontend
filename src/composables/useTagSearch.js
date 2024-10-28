@@ -1,6 +1,7 @@
 import { computed, watch, ref } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import {
+    getAllOrgClassifications,
     getOrgClassificationTags,
     getOrgClassificationAutocomplete,
 } from '@/api/tag-classification.service'
@@ -13,10 +14,25 @@ export default function useTagSearch({
 }) {
     const organizationsStore = useOrganizationsStore()
 
+    const allOrgClassifications = ref([])
+    const isLoadingOrgClassifications = ref(false)
+
+    const fetchAllClassifications = async () => {
+        isLoadingOrgClassifications.value = true
+        try {
+            const res = await getAllOrgClassifications(organizationsStore.current.code)
+            allOrgClassifications.value = res.results
+        } catch (e) {
+            console.error(e)
+        } finally {
+            isLoadingOrgClassifications.value = false
+        }
+    }
+
     // computed
 
     const orgClassifications = computed(() =>
-        organizationsStore.allClassifications.filter(
+        allOrgClassifications.value.filter(
             (c) =>
                 (!classificationType || c.type === classificationType) &&
                 (!useProjects || c.is_enabled_for_projects) &&
@@ -46,6 +62,12 @@ export default function useTagSearch({
         (orgClassificationOptions.value.length && orgClassificationOptions.value[0].value) || null
 
     const selectedClassificationId = ref(defaultClassificationId())
+
+    fetchAllClassifications().then(() => {
+        //  TODO use org default classification
+        if (!selectedClassificationId.value)
+            selectedClassificationId.value = defaultClassificationId()
+    })
 
     // data
 
@@ -138,5 +160,8 @@ export default function useTagSearch({
         suggest,
         loadSelectedClassificationTags,
         resetTagSearch,
+        allOrgClassifications,
+        isLoadingOrgClassifications,
+        fetchAllClassifications,
     }
 }

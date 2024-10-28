@@ -5,8 +5,14 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '../base/button/LpiButton.vue'
 import LpiCheckbox from '../base/form/LpiCheckbox.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { postOrgClassification, putOrgClassification } from '@/api/tag-classification.service'
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
 
 const defaultForm = () => ({
     id: null,
@@ -15,7 +21,7 @@ const defaultForm = () => ({
     is_enabled_for_skills: false,
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'classification-created', 'classification-edited'])
 
 const props = defineProps({
     classification: {
@@ -48,36 +54,82 @@ const isAddMode = computed(() => !form.value.id)
 const saveClassification = async () => {
     asyncing.value = true
 
-    // TODO
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    const payload = {
+        ...form.value,
+    }
 
-    toaster.pushSuccess(`Classification ${isAddMode.value ? 'added' : 'updated'}`)
-    asyncing.value = false
-    emit('close')
+    try {
+        if (isAddMode.value) {
+            delete payload.id
+            const classification = await postOrgClassification(
+                organizationsStore.current.code,
+                payload
+            )
+            toaster.pushSuccess(t('admin.classifications.add-classification.success'))
+            emit('classification-created', classification)
+        } else {
+            const classification = await putOrgClassification(
+                organizationsStore.current.code,
+                form.value.id,
+                payload
+            )
+            toaster.pushSuccess(t('admin.classifications.add-classification.success'))
+            emit('classification-edited', classification)
+        }
+    } catch (error) {
+        console.log(error)
+        if (isAddMode.value) {
+            toaster.pushError(t('admin.classifications.add-classification.error'))
+        } else {
+            toaster.pushError(t('admin.classifications.edit-classification.error'))
+        }
+        emit('close')
+    } finally {
+        asyncing.value = false
+    }
 }
 </script>
 <template>
     <BaseModal v-if="isOpen">
         <template #header-title>
-            {{ isAddMode ? 'Add classification' : 'Edit Classification' }}
+            {{
+                isAddMode
+                    ? t('admin.classifications.add-classification.title')
+                    : t('admin.classifications.edit-classification.title')
+            }}
         </template>
 
         <template #content>
             <div class="form-section">
-                <TextInput v-model="form.title" label="Title" placeholder="Enter title" required />
+                <TextInput
+                    v-model="form.title"
+                    label="Title"
+                    :placeholder="t('admin.classifications.enter-title')"
+                    required
+                />
             </div>
             <div class="form-section checkboxes">
-                <LpiCheckbox v-model="form.is_enabled_for_skills" label="Is Skills" />
-                <LpiCheckbox v-model="form.is_enabled_for_projects" label="Is Tags" />
+                <LpiCheckbox
+                    v-model="form.is_enabled_for_skills"
+                    :label="t('admin.classifications.enabled-for-skills')"
+                />
+                <LpiCheckbox
+                    v-model="form.is_enabled_for_projects"
+                    :label="t('admin.classifications.enabled-for-projects')"
+                />
             </div>
         </template>
 
         <template #footer>
             <div class="actions">
-                <LpiButton :disabled="asyncing" label="cancel" @click="emit('close')" />
+                <LpiButton
+                    :disabled="asyncing"
+                    :label="t('common.cancel')"
+                    @click="emit('close')"
+                />
                 <LpiButton
                     :loading="asyncing"
-                    label="Save"
+                    :label="t('common.save')"
                     :disabled="!form.title || asyncing"
                     :btn-icon="asyncing ? 'LoaderSimple' : null"
                     @click="saveClassification"

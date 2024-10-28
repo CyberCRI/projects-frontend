@@ -125,6 +125,68 @@
                 "activation-no": "Non"
             }
         },
+        "featured-tags": {
+            "title": "Tags mis en avant",
+            "notice": "Choisissez les tags que vous souhaitez mettre en avant lors des recherches et de la crétion de projet ou de profile."
+        },
+        "classifications": {
+            "title": "Classifications",
+            "subtitle": "Gérer vos classifications personnalisées",
+            "enter-title": "Entrez un titre",
+            "add-classification": {
+                "title": "Ajouter une classification",
+                "error": "Erreur lors de la sauvegarde de la classification",
+                "success": "La classification a été créée"
+            },
+            "edit-classification": {
+                "title": "Modifier une classification",
+                "error": "Erreur lors de la modification de la classificaiton",
+                "success": "La classification a été modifiée"
+            },
+            "delete-classification": {
+                "title": "Supprimer la classification",
+                "content": "Confirmez-vous vouloir supprimer la classification '{title}'?",
+                "error": "Erreur lors de la suppresssion de la classification",
+                "success": "La classification a été supprimée"
+            },
+            "create-classification": "Créer une classification",
+            "create-tag": "Créer un tag",
+            "tags": "tags",
+            "enabled-for-projects": "Activée pour les projets",
+            "enabled-for-skills": "Activée pour les compétences",
+            "disbaled": "Désactivée",
+            "no-custom": "Pas de classification personnalisée",
+            "table": {
+                "tag": "Tag",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "add-tag": {
+                "title": "Ajouter un tag",
+                "success": "Le tag a été créé",
+                "error": "Erreur lors de la création du tag"
+            },
+            "edit-tag": {
+                "title": "Modifier un tag",
+                "success": "Le tag a été modifié",
+                "error": "Erreur lors de la modification du tag"
+            },
+            "tag-form": {
+                "title-en": "Titre (EN)",
+                "title-fr": "Titre (FR)",
+                "description-en": "Description (EN)",
+                "description-fr": "Description (FR)",
+                "required-error": "Ce champ est requis"
+            },
+            "tag-delete": {
+                "confirm": {
+                    "title": "Supprimer le tag ?",
+                    "description": "Êtes vous sûr de vouloir supprimer le tag '{tagName}' ?"
+                },
+                "success": "Le tag '{tagName}' a été supprimé",
+                "error": "Erreur lors de la suppression du tag '{tagName}'"
+            }
+        },
         "tabs": {
             "information": "Général",
             "categories": "Catégories",

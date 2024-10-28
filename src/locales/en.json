@@ -125,6 +125,68 @@
                 "activation-no": "No"
             }
         },
+        "featured-tags": {
+            "title": "Suggested tags",
+            "notice": "Select tags that will be suggested by default when searching or creating project and profiles"
+        },
+        "classifications": {
+            "title": "Classifications",
+            "subtitle": "Manage your custom classifications",
+            "enter-title": "Enter a title",
+            "add-classification": {
+                "title": "Add a classification",
+                "error": "Error while saving the classification",
+                "success": "The classification was successfully created"
+            },
+            "edit-classification": {
+                "title": "Edit a classification",
+                "error": "Error while modifying the classification",
+                "success": "The classification was successfully modified"
+            },
+            "delete-classification": {
+                "title": "Delete the classification",
+                "content": "Are you sure you want to delete the classification '{title}'?",
+                "error": "Error while deleting the classification",
+                "success": "The classification was successfully deleted"
+            },
+            "create-classification": "Create a classification",
+            "create-tag": "Create a tag",
+            "tags": "tags",
+            "enabled-for-projects": "Enabled for projects",
+            "enabled-for-skills": "Enabled for Skills",
+            "disabled": "Disabled",
+            "no-custom": "No custom classification yet",
+            "table": {
+                "tag": "Tag",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "add-tag": {
+                "title": "Add tag",
+                "success": "The tag was successfully created",
+                "error": "Error while creating the tag"
+            },
+            "edit-tag": {
+                "title": "Edit tag",
+                "success": "The tag was successfully modified",
+                "error": "Error while modifying the tag"
+            },
+            "tag-form": {
+                "title-en": "Title (EN)",
+                "title-fr": "Title (FR)",
+                "description-en": "Description (EN)",
+                "description-fr": "Description (FR)",
+                "required-error": "This field is required"
+            },
+            "tag-delete": {
+                "confirm": {
+                    "title": "Delete tag?",
+                    "description": "`Are you sure you want to delete the tag '{tagName}'?"
+                },
+                "success": "Tag '{tagName}' deleted",
+                "error": "Error while deleting tag '{tagName}'"
+            }
+        },
         "tabs": {
             "information": "General",
             "categories": "Categories",
