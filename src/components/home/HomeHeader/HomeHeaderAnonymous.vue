@@ -60,6 +60,7 @@
                 <div class="image-account-buttons">
                     <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
                     <LpiButton
+                        v-if="isAccessRequestEnabled"
                         :label="$t('home.account-request')"
                         :secondary="true"
                         class="login-button"
@@ -109,6 +110,9 @@ export default {
         },
         hasDescription() {
             return !!this.organization?.description
+        },
+        isAccessRequestEnabled() {
+            return this.organization?.access_request_enabled
         },
     },
     methods: {
