@@ -125,6 +125,9 @@ watch(
 
 const tagCount = ref(0)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 const fetchTagStats = async () => {
     const data = (
         await getOrgClassificationTags(organizationsStore.current.code, props.classification.id, {
@@ -135,6 +138,7 @@ const fetchTagStats = async () => {
     ).data
     tagCount.value = data.count
 }
+<<<<<<< HEAD
 =======
 watchEffect(() => {
     if (request.value && !search.value) {
@@ -142,11 +146,14 @@ watchEffect(() => {
     }
 })
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 
 const getTags = debounce(async function () {
     isLoading.value = refreshTokenGrantRequest
     try {
         //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
+<<<<<<< HEAD
 <<<<<<< HEAD
         const axiosReq = await getOrgClassificationTags(
             organizationsStore.current.code,
@@ -164,6 +171,17 @@ const getTags = debounce(async function () {
             { search: search.value, order_by: 'title', limit: props.pageLimit }
         ).catch(() => ({
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+        const axiosReq = await getOrgClassificationTags(
+            organizationsStore.current.code,
+            props.classification.id,
+            { search: search.value, order_by: 'title', limit: props.pageLimit }
+        )
+        request.value = axiosReq.data
+        currentAxiosRequestConfig.value = axiosReq.config
+    } catch (e) {
+        request.value = {
+>>>>>>> fix: create edit delete classifications with real api call
             results: [],
             count: 0,
             current_page: 1,
@@ -173,11 +191,15 @@ const getTags = debounce(async function () {
             first: null,
             last: null,
 <<<<<<< HEAD
+<<<<<<< HEAD
         }
 =======
         }))
     } catch (e) {
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+        }
+>>>>>>> fix: create edit delete classifications with real api call
         console.error(e)
     } finally {
         isLoading.value = false
@@ -185,6 +207,9 @@ const getTags = debounce(async function () {
 }, 500)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 const reloadClassification = async () => {
     isLoading.value = true
     try {
@@ -206,8 +231,11 @@ const reloadClassification = async () => {
     isLoading.value = false
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 const pagination = computed(() => {
     if (!request.value) return { total: 0 }
     return {
@@ -223,18 +251,27 @@ const pagination = computed(() => {
 const onClickPagination = async (requestedPage) => {
     isLoading.value = true
 <<<<<<< HEAD
+<<<<<<< HEAD
     const axiosReq = await axios.get(requestedPage)
     request.value = axiosReq.data
     currentAxiosRequestConfig.value = axiosReq.config
 =======
     request.value = (await axios.get(requestedPage)).data
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+    const axiosReq = await axios.get(requestedPage)
+    request.value = axiosReq.data
+    currentAxiosRequestConfig.value = axiosReq.config
+>>>>>>> fix: create edit delete classifications with real api call
     isLoading.value = false
     // const el = document.querySelector('.group-user-selection .search-section')
     // if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 const onTagEdited = async () => {
     await reloadClassification()
     editTagIsOpen.value = false
@@ -252,8 +289,11 @@ const onClassificationEdited = async (classification) => {
 }
 
 watch(() => [props.classification.value], fetchTagStats, { immediate: true })
+<<<<<<< HEAD
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
 watch(() => [props.classification.value, search.value], getTags, { immediate: true })
 </script>
 <template>
@@ -271,22 +311,30 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
 
         <div class="add-tag-ctn">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
+>>>>>>> fix: create edit delete classifications with real api call
             <p v-if="classification.is_enabled_for_projects">
                 {{ t('admin.classifications.enabled-for-projects') }}
             </p>
             <p v-if="classification.is_enabled_for_skills">
                 {{ t('admin.classifications.enabled-for-skills') }}
             </p>
+<<<<<<< HEAD
 =======
             <h3>{{ tagCount }} tags</h3>
             <p v-if="classification.is_enabled_for_projects">enabled for projects</p>
             <p v-if="classification.is_enabled_for_skills">enabled for skills</p>
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
             <p
                 v-if="
                     !classification.is_enabled_for_projects && !classification.is_enabled_for_skills
                 "
             >
+<<<<<<< HEAD
 <<<<<<< HEAD
                 {{ t('admin.classifications.disabled') }}
             </p>
@@ -311,10 +359,17 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         </div>
 =======
                 disabled
+=======
+                {{ t('admin.classifications.disabled') }}
+>>>>>>> fix: create edit delete classifications with real api call
             </p>
         </div>
         <div class="add-tag-ctn">
-            <LpiButton label="Create tag" btn-icon="Plus" @click="createTag()" />
+            <LpiButton
+                :label="t('admin.classifications.create-tag')"
+                btn-icon="Plus"
+                @click="createTag()"
+            />
         </div>
 
         <FilterSearchInput
@@ -329,6 +384,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             <thead>
                 <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <th>{{ t('admin.classifications.table.tag') }}</th>
                     <th width="*">{{ t('admin.classifications.table.description') }}</th>
                     <th width="60">{{ t('admin.classifications.table.actions') }}</th>
@@ -337,6 +393,11 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                     <th width="*">Description</th>
                     <th width="60">Actions</th>
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+                    <th>{{ t('admin.classifications.table.tag') }}</th>
+                    <th width="*">{{ t('admin.classifications.table.description') }}</th>
+                    <th width="60">{{ t('admin.classifications.table.actions') }}</th>
+>>>>>>> fix: create edit delete classifications with real api call
                 </tr>
             </thead>
             <tbody ref="tableBody">
@@ -385,19 +446,28 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :classification="classification"
             @close="editTagIsOpen = false"
 <<<<<<< HEAD
+<<<<<<< HEAD
             @tag-edited="onTagEdited"
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+            @tag-edited="onTagEdited"
+>>>>>>> fix: create edit delete classifications with real api call
         />
         <EditClassification
             :classification="classification"
             :is-open="editClassificationIsOpen"
             @close="editClassificationIsOpen = false"
 <<<<<<< HEAD
+<<<<<<< HEAD
             @classification-edited="onClassificationEdited"
             @classification-created="onClassificationCreated"
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+            @classification-edited="onClassificationEdited"
+            @classification-created="onClassificationCreated"
+>>>>>>> fix: create edit delete classifications with real api call
         />
 
         <ConfirmModal
@@ -406,16 +476,22 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             @cancel="tagToDelete = null"
             @confirm="deleteTag"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: create edit delete classifications with real api call
             :title="t('admin.classifications.tag-delete.confirm.title')"
             :content="
                 t('admin.classifications.tag-delete.confirm.description', {
                     tagName: tagToDelete?.title,
                 })
             "
+<<<<<<< HEAD
 =======
             title="Delete tag?"
             :content="`Are you sure you want to delete the tag '${tagToDelete?.title}'?`"
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
         />
         <ConfirmModal
             v-if="showConfirmClassificationDelete"
@@ -423,16 +499,22 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             @cancel="showConfirmClassificationDelete = null"
             @confirm="deleteClassification"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: create edit delete classifications with real api call
             :title="t('admin.classifications.delete-classification.title')"
             :content="
                 t('admin.classifications.delete-classification.content', {
                     title: classification?.title,
                 })
             "
+<<<<<<< HEAD
 =======
             title="Delete classification?"
             :content="`Are you sure you want to delete the classification '${classification?.title}'?`"
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: create edit delete classifications with real api call
         />
     </div>
 </template>

@@ -79,7 +79,7 @@ export async function deleteOrgClassification(
 export async function getOrgClassificationTags(
     orgCode: string,
     classificationId: number,
-    params?: APIParams
+    classification: any // TODO: Add type
 ): Promise<APIResponseList<any>> {
     return await axios.get(
         `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/`,
@@ -98,6 +98,41 @@ export async function getOrgClassificationAutocomplete(
             { params }
         )
     ).data
+}
+
+export async function patchOrgClassification(
+    orgCode: string,
+    classificationId: number,
+    classification: any // TODO: Add type
+): Promise<APIResponseList<any>> {
+    return (
+        await axios.patch(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`,
+            classification
+        )
+    ).data
+}
+
+export async function deleteOrgClassification(
+    orgCode: string,
+    classificationId: number
+): Promise<APIResponseList<any>> {
+    return (
+        await axios.delete(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`
+        )
+    ).data
+}
+
+export async function getOrgClassificationTags(
+    orgCode: string,
+    classificationId: number,
+    params?: APIParams
+): Promise<APIResponseList<any>> {
+    return await axios.get(
+        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/`,
+        { params }
+    )
 }
 
 export async function getOrgClassificationAutocomplete(
