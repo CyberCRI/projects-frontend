@@ -267,9 +267,9 @@ export default {
             if (this.isFormCorrect) {
                 this.isSaving = true
                 if (this.isEdit) {
-                    this.updateProject()
+                    await this.updateProject()
                 } else {
-                    this.createProject()
+                    await this.createProject()
                 }
             }
         },
@@ -277,6 +277,24 @@ export default {
         async createProject() {
             this.isSaving = true
             try {
+                const team = {
+                    leaders: [],
+                    managers: [],
+                    members: [],
+                }
+
+                this.form.members.forEach((member) => {
+                    if (member.is_manager) {
+                        team.managers.push(member.id)
+                    } else {
+                        team.members.push(member.id)
+                    }
+                    // also add it as leader if it is
+                    if (member.is_leader) {
+                        team.leaders.push(member.id)
+                    }
+                })
+
                 // save base group
                 const payload = {
                     name: this.form.name,
@@ -287,17 +305,13 @@ export default {
                     parent: this.form.parentGroup?.id,
                     organization: this.orgCode,
                     publication_status: this.form.publication_status,
+                    team,
+                    featured_projects: this.form.featuredProjects.map((project) => project.id),
                 }
                 const newGroupId = (await postGroup(this.orgCode, payload)).id
 
                 // save header
                 await this.updateHeader(newGroupId)
-
-                // save members
-                await this.updateGroupMembers(newGroupId)
-
-                // save featured projects
-                await this.updateGroupProjects(newGroupId)
 
                 // reload current user rights in case they changed
                 await this.usersStore.getUser(this.usersStore.userFromApi.id)
@@ -316,6 +330,23 @@ export default {
         async updateProject() {
             this.isSaving = true
             try {
+                const team = {
+                    leaders: [],
+                    managers: [],
+                    members: [],
+                }
+
+                this.form.members.forEach((member) => {
+                    if (member.is_manager) {
+                        team.managers.push(member.id)
+                    } else {
+                        team.members.push(member.id)
+                    }
+                    // also add it as leader if it is
+                    if (member.is_leader) {
+                        team.leaders.push(member.id)
+                    }
+                })
                 // save base group
                 const payload = {
                     id: this.groupId,
@@ -327,6 +358,8 @@ export default {
                     parent: this.form.parentGroup?.id || null, // undefined unset the key, null set it to null
                     organization: this.orgCode,
                     publication_status: this.form.publication_status,
+                    team,
+                    featured_projects: this.form.featuredProjects.map((project) => project.id),
                 }
                 await patchGroup(this.orgCode, this.groupId, payload)
 
