@@ -43,7 +43,7 @@ export default {
     },
     watch: {
         selected(neo) {
-            this.$emit('update:model-value', neo.value)
+            this.$emit('update:model-value', neo ? neo.value : null)
         },
         options: {
             handler: function (neo) {
