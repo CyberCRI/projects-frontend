@@ -18,6 +18,9 @@ quickLogin()
 // TODO: check if it is still needed
 fixLeaflet()
 
+// add org code to html class for personalized fonts
+document.querySelector('html')?.classList.add('org-' + import.meta.env.VITE_APP_API_ORG_CODE)
+
 // TODO: this is probably not used anymore, check this
 window['socket'] = { connected: false }
 
