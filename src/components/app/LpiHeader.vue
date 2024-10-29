@@ -155,11 +155,7 @@
             </aside>
         </Transition>
 
-        <NotificationList
-            :is-opened="showNotificationDrawer"
-            @go-to="notificationAction"
-            @close="closeDrawer"
-        />
+        <NotificationList :is-opened="showNotificationDrawer" @close="closeDrawer" />
 
         <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
     </div>
@@ -275,26 +271,6 @@ export default {
         closeDrawer() {
             this.showNotificationDrawer = false
             this.showContactUsDrawer = false
-        },
-
-        notificationAction(notification) {
-            this.showNotificationDrawer = false
-            if (
-                notification.type === 'invitation_week_reminder' ||
-                notification.type === 'invitation_today_reminder'
-            ) {
-                return
-            } else if (
-                notification.type === 'access_request' ||
-                notification.type === 'pending_access_requests'
-            ) {
-                this.$router.push({ name: 'RequestsAdminTab' })
-            } else {
-                this.$router.push({
-                    name: 'projectSummary',
-                    params: { slugOrId: notification.project.slug },
-                })
-            }
         },
 
         updateLanguage(lang) {

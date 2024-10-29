@@ -2109,7 +2109,9 @@
             "member": "Ajout de membres au projet",
             "member-sub": "Être notifié quand un membre est ajouté au projet",
             "comment": "Commentaires",
-            "comment-sub": "Être notifié quand une personne ajoute un commentaire",
+            "comment-sub": "Être notifié quand une personne ajoute un commentaire à vos projets",
+            "internal-message": "Messages internes",
+            "internal-message-sub": "Être notifié quand une personne ajoute un message interne à vos projets",
             "project": "Votre projet",
             "project-sub": "Être notifié si d'autres membres modifient vos projets",
             "announcement": "Annonces",
@@ -2139,6 +2141,7 @@
         "read-all": "Lire toutes notifications",
         "type": {
             "comment": "{sender} a laissé un commentaire sur {project}",
+            "project_message": "{sender} a laissé un message interne sur {project}",
             "reply": "{sender} a répondu à votre commentaire sur {project}",
             "review": "{sender} a révisé votre projet {project}",
             "ready_for_review": "{sender} a marqué son projet comme prêt à être revisé. Vous pouvez maintenant réviser le projet {project}",

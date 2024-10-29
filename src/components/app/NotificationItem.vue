@@ -2,128 +2,77 @@
     <li
         v-if="notification"
         :class="{
-            'notification--spacer': !notification.icon,
+            'notification--spacer': !icon,
         }"
         class="notification"
         tabindex="0"
-        @click="$emit('go-to')"
+        @click="$emit('navigated', notification)"
     >
-        <IconImage v-if="notification.icon" :name="notification.icon" class="icon" />
-        <CroppedApiImage
-            alt="user image"
-            class="img-container"
-            :picture-data="notification.sender?.profile_picture"
-            picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
-        />
-        <div class="container">
-            <i18n-t :keypath="`notifications.type.${notification.type}`" tag="p">
-                <template #sender>
-                    <span
-                        v-if="
-                            notification.sender &&
-                            notification.sender.given_name &&
-                            notification.sender.family_name
-                        "
-                        class="strong"
-                        place="sender"
-                        >{{ notification.sender.given_name.toLowerCase() }}
-                        {{ notification.sender.family_name.toLowerCase() }}</span
-                    >
-                    <span
-                        v-else-if="notification.sender && notification.sender.given_name"
-                        class="strong"
-                        place="sender"
-                        >{{ notification.sender.given_name.toLowerCase() }}</span
-                    >
-                    <span
-                        v-else-if="notification.sender && notification.sender.family_name"
-                        class="strong"
-                        place="sender"
-                        >{{ notification.sender.family_name.toLowerCase() }}</span
-                    >
-                </template>
+        <component
+            :is="notificationRoute ? 'RouterLink' : 'div'"
+            :to="notificationRoute"
+            class="notification-link"
+        >
+            <IconImage v-if="icon" :name="icon" class="icon" />
+            <CroppedApiImage
+                alt="user image"
+                class="img-container"
+                :picture-data="notification.sender?.profile_picture"
+                picture-size="medium"
+                default-picture="/placeholders/user_placeholder.svg"
+            />
+            <div class="container">
+                <i18n-t :keypath="`notifications.type.${notification.type}`" tag="p">
+                    <template #sender>
+                        <strong v-if="senderName">
+                            {{ senderName }}
+                        </strong>
+                    </template>
 
-                <template #project>
-                    <span v-if="notification.project" class="strong" place="project">{{
-                        notification.project.title
-                    }}</span>
-                </template>
+                    <template #project>
+                        <strong v-if="notification.project">
+                            {{ notification.project?.title }}
+                        </strong>
+                    </template>
 
-                <template #applicant>
-                    <span
-                        v-if="
-                            context &&
-                            context.application &&
-                            context.application.applicant_firstname
-                        "
-                        class="strong"
-                        place="applicant"
-                    >
-                        {{ context.application.applicant_firstname.toLowerCase() }}
-                        {{ context.application.applicant_name.toLowerCase() }}
-                    </span>
-                </template>
+                    <template #applicant>
+                        <strong v-if="applicantName">
+                            {{ applicantName }}
+                        </strong>
+                    </template>
 
-                <template #user>
-                    <span
-                        v-if="
-                            context &&
-                            context.deleted_members &&
-                            context.deleted_members.length > 0 &&
-                            context.deleted_members[0].given_name &&
-                            context.deleted_members[0].family_name
-                        "
-                        class="strong"
-                        place="user"
-                    >
-                        {{ context.deleted_members[0].given_name.toLowerCase() }}
-                        {{ context.deleted_members[0].family_name.toLowerCase() }}
-                    </span>
-                    <span
-                        v-if="
-                            context &&
-                            context.modified_members &&
-                            context.modified_members.length > 0 &&
-                            context.modified_members[0].given_name &&
-                            context.modified_members[0].family_name
-                        "
-                        class="strong"
-                        place="user"
-                    >
-                        {{ context.modified_members[0].given_name.toLowerCase() }}
-                        {{ context.modified_members[0].family_name.toLowerCase() }}
-                    </span>
-                </template>
-                <template #week_group>
-                    <span
-                        v-if="notification.type === 'invitation_week_reminder'"
-                        class="strong"
-                        place="week_group"
-                    >
-                        {{ notification.invitation?.people_group.name }}
-                    </span>
-                </template>
-                <template #today_group>
-                    <span
-                        v-if="notification.type === 'invitation_today_reminder'"
-                        class="strong"
-                        place="today_group"
-                    >
+                    <template #user>
+                        <strong v-if="deletedName">
+                            {{ deletedName }}
+                        </strong>
+                        <strong v-if="modifiedName">
+                            {{ modifiedName }}
+                        </strong>
+                    </template>
+                    <template #week_group>
+                        <strong v-if="notification.type === 'invitation_week_reminder'">
+                            {{ notification.invitation?.people_group?.name }}
+                        </strong>
+                    </template>
+                    <template #today_group>
                         <router-link
-                            :to="`/group/${notification.invitation?.people_group.id}/snapshot`"
-                            >{{ notification.invitation?.people_group.name }}</router-link
+                            v-if="notification.type === 'invitation_today_reminder'"
+                            :to="{
+                                name: 'groupSnapshot',
+                                params: {
+                                    groupId:
+                                        notification.invitation?.people_group?.slug ||
+                                        notification.invitation?.people_group?.id,
+                                },
+                            }"
                         >
-                    </span>
-                </template>
+                            {{ notification.invitation?.people_group?.name }}
+                        </router-link>
+                    </template>
 
-                <template #group>
-                    <span
-                        v-if="notification.context && notification.context.group"
-                        class="strong"
-                        place="group"
-                    >
+                    <template #group>
                         <router-link
+                            v-if="notification?.context?.group"
                             :to="{
                                 name: 'Group',
                                 params: {
@@ -132,45 +81,35 @@
                                         notification.context.group.id,
                                 },
                             }"
-                            >{{ notification.context.group.name }}</router-link
                         >
-                    </span>
-                </template>
+                            {{ notification.context.group.name }}
+                        </router-link>
+                    </template>
 
-                <template #link>
-                    <span
-                        v-if="notification.type === 'invitation_today_reminder'"
-                        class="strong"
-                        place="today_group"
-                    >
-                        <router-link to="/admin/links/list">{{
-                            $t('notifications.type.register-link')
-                        }}</router-link>
-                    </span>
-                </template>
+                    <template #link>
+                        <router-link
+                            :to="{ name: 'linksList' }"
+                            v-if="notification.type === 'invitation_today_reminder'"
+                        >
+                            {{ $t('notifications.type.register-link') }}
+                        </router-link>
+                    </template>
 
-                <template #access_request_nb>
-                    <span
-                        v-if="notification.type === 'access_request'"
-                        class="strong"
-                        place="access_request_nb"
-                    >
-                        {{ notification.context.access_request_nb }}
-                    </span>
-                </template>
+                    <template #access_request_nb>
+                        <strong v-if="notification.type === 'access_request'">
+                            {{ notification?.context?.access_request_nb }}
+                        </strong>
+                    </template>
 
-                <template #requests_count>
-                    <span
-                        v-if="notification.type === 'pending_access_requests'"
-                        class="strong"
-                        place="requests_count"
-                    >
-                        {{ notification.context.requests_count }}
-                    </span>
-                </template>
-            </i18n-t>
-            <span class="date">{{ timePassed }}</span>
-        </div>
+                    <template #requests_count>
+                        <strong v-if="notification.type === 'pending_access_requests'">
+                            {{ notification?.context?.requests_count }}
+                        </strong>
+                    </template>
+                </i18n-t>
+                <span class="date">{{ timePassed }}</span>
+            </div>
+        </component>
     </li>
 </template>
 
@@ -182,7 +121,7 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 export default {
     name: 'NotificationItem',
 
-    emits: ['go-to'],
+    emits: ['navigated'],
 
     components: { IconImage, CroppedApiImage },
 
@@ -194,6 +133,31 @@ export default {
     },
 
     computed: {
+        icon() {
+            return this.notification?.is_viewed ? null : 'Circle'
+        },
+        deletedName() {
+            const givenName = this.context?.deleted_members?.[0]?.given_name || ''
+            const familyName = this.context?.deleted_members?.[0]?.family_name || ''
+            return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
+        },
+
+        modifiedName() {
+            const givenName = this.context?.modified_members?.[0]?.given_name || ''
+            const familyName = this.context?.modified_members?.[0]?.family_name || ''
+            return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
+        },
+
+        applicantName() {
+            const firstName = this.context?.application?.applicant_firstname || ''
+            const name = this.context?.application?.applicant_name || ''
+            return (firstName.toLowerCase() + ' ' + name.toLowerCase()).trim()
+        },
+        senderName() {
+            const givenName = this.notification.sender?.given_name || ''
+            const familyName = this.notification.sender?.family_name || ''
+            return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
+        },
         timePassed() {
             return utils.getTimePassed(new Date(this.notification.created))
         },
@@ -202,6 +166,34 @@ export default {
             if (utils.isEmpty(this.notification.context)) return null
             return this.notification.context
         },
+
+        notificationRoute() {
+            if (
+                this.notification.type === 'invitation_week_reminder' ||
+                this.notification.type === 'invitation_today_reminder'
+            ) {
+                return null
+            } else if (
+                this.notification.type === 'access_request' ||
+                this.notification.type === 'pending_access_requests'
+            ) {
+                return { name: 'RequestsAdminTab' }
+            } else if (this.notification.type === 'comment') {
+                return {
+                    name: 'projectComments',
+                    params: { slugOrId: this.notification.project.slug },
+                }
+            } else if (this.notification.type === 'project_message') {
+                return {
+                    name: 'projectPrivateExchange',
+                    params: { slugOrId: this.notification.project.slug },
+                }
+            }
+            return {
+                name: 'projectSummary',
+                params: { slugOrId: this.notification.project.slug },
+            }
+        },
     },
 }
 </script>
@@ -209,10 +201,6 @@ export default {
 <style lang="scss" scoped>
 .notification {
     margin: $space-m 0;
-    display: flex;
-    align-items: center;
-    padding: $space-s;
-    cursor: pointer;
 
     &--spacer {
         padding: $space-s 16px;
@@ -221,6 +209,13 @@ export default {
     &:hover {
         background: $primary-lighter;
     }
+}
+
+.notification-link {
+    display: flex;
+    align-items: center;
+    padding: $space-s;
+    cursor: pointer;
 }
 
 .img-container {
@@ -249,9 +244,12 @@ export default {
     font-size: $font-size-xs;
 }
 
-.strong {
-    font-weight: 700;
-    color: $primary-dark;
-    text-transform: capitalize;
+.container {
+    strong,
+    a {
+        font-weight: 700;
+        color: $primary-dark;
+        text-transform: capitalize;
+    }
 }
 </style>
