@@ -2113,6 +2113,8 @@
             "member-sub": "Be notified when somebody adds you as a team member in a project",
             "comment": "Comments",
             "comment-sub": "Be notified when somebody comments your project",
+            "internal-message": "Internal messages",
+            "internal-message-sub": "Be notified when somebody add an internal message to your project",
             "project": "Your projects",
             "project-sub": "Be notified when other team members modify your projects",
             "announcement": "Announcements",
@@ -2142,6 +2144,7 @@
         "read-all": "Read all notifications",
         "type": {
             "comment": "{sender} commented {project}",
+            "project_message": "{sender} leaved an internal message {project}",
             "reply": "{sender} replied to your comment in {project}",
             "review": "{sender} reviewed project {project}",
             "ready_for_review": "{sender} marked his project as ready for review. You can now review project {project}",

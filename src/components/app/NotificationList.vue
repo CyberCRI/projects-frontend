@@ -10,16 +10,24 @@
     >
         <div class="notification-list">
             <LpiLoader v-if="isLoading" class="loading" type="simple" />
-            <ul v-else-if="filteredNotifications.length > 0">
+            <ul v-else-if="notifications.length">
                 <NotificationItem
-                    v-for="(notification, index) in filteredNotifications"
-                    :key="index"
+                    v-for="notification in notifications"
+                    :key="notification.id"
                     :notification="notification"
-                    @go-to="$emit('go-to', notification)"
+                    @navigated="$emit('close')"
                 />
             </ul>
             <div v-else>
                 <p class="empty-notification">{{ $t('notifications.empty') }}</p>
+            </div>
+            <div v-if="!isLoading && notifications.length && nextPage" class="load-more">
+                <LpiButton
+                    :disabled="isLoadingMore"
+                    :btn-icon="isLoadingMore ? 'LoaderSimple' : 'Plus'"
+                    :label="$t('common.more')"
+                    @click="loadNextPage"
+                />
             </div>
         </div>
     </BaseDrawer>
@@ -31,13 +39,15 @@ import NotificationItem from '@/components/app/NotificationItem.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { getNotifications } from '@/api/notifications.service'
 import useUsersStore from '@/stores/useUsers.ts'
+import LpiButton from '@/components//base/button/LpiButton.vue'
+import { axios } from '@/api/api.config'
 
 export default {
     name: 'NotificationList',
 
-    emits: ['go-to', 'close'],
+    emits: ['close'],
 
-    components: { NotificationItem, LpiLoader, BaseDrawer },
+    components: { NotificationItem, LpiLoader, BaseDrawer, LpiButton },
     setup() {
         const usersStore = useUsersStore()
         return {
@@ -60,18 +70,11 @@ export default {
             },
             notifications: [],
             isLoading: false,
+            isLoadingMore: false,
+            nextPage: null,
         }
     },
 
-    computed: {
-        filteredNotifications() {
-            return this.notifications.map((notification) => ({
-                ...notification,
-                icon: !notification.is_viewed ? 'Circle' : null,
-                action: () => this.notificationAction(notification),
-            }))
-        },
-    },
     watch: {
         isOpened(isOpened) {
             if (isOpened) {
@@ -84,13 +87,24 @@ export default {
         async getNotifications() {
             this.isLoading = true
             try {
-                const result = await getNotifications()
+                const result = await getNotifications({ limit: 20 })
                 this.notifications = result.results
+                this.nextPage = result.next
                 this.usersStore.notificationsCount = 0
             } catch (err) {
                 console.error(err)
             } finally {
                 this.isLoading = false
+            }
+        },
+
+        async loadNextPage() {
+            if (this.nextPage) {
+                this.isLoadingMore = true
+                const result = (await axios.get(this.nextPage)).data
+                this.notifications.push(...result.results)
+                this.nextPage = result.next
+                this.isLoadingMore = false
             }
         },
     },
@@ -113,5 +127,11 @@ export default {
     font-weight: 700;
     color: $primary-dark;
     font-size: 20px;
+}
+
+.load-more {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
 }
 </style>

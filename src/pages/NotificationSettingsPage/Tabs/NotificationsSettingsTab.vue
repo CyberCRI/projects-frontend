@@ -45,6 +45,7 @@ export default {
                 announcement_published: false,
                 project_ready_for_review: false,
                 project_has_been_reviewed: false,
+                project_has_new_private_message: false,
                 comment_received_a_response: false,
                 organization_has_new_access_request: false,
                 invitation_link_will_expire: false,
@@ -96,6 +97,12 @@ export default {
                     subLabel: this.$t('notifications.projects.comment-sub'),
                     value: this.form.project_has_been_commented,
                     settingValue: 'project_has_been_commented',
+                },
+                {
+                    label: this.$t('notifications.projects.internal-message'),
+                    subLabel: this.$t('notifications.projects.internal-message-sub'),
+                    value: this.form.project_has_new_private_message,
+                    settingValue: 'project_has_new_private_message',
                 },
                 {
                     label: this.$t('notifications.projects.project'),
