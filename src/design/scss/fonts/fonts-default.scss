@@ -235,70 +235,73 @@ h6,
 
 // begin with all font
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: italic;
     font-weight: 300;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftVyPN4E.woff2)
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftVyPN4E.woff2')
         format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: italic;
     font-weight: 400;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKej70l0k.woff2) format('woff2');
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKej70l0k.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: italic;
     font-weight: 500;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtFyPN4E.woff2)
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtFyPN4E.woff2')
         format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: italic;
     font-weight: 700;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPslyPN4E.woff2)
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPslyPN4E.woff2')
         format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: normal;
     font-weight: 300;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyN.woff2) format('woff2');
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyN.woff2')
+        format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfw72.woff2) format('woff2');
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfw72.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3jsGyN.woff2) format('woff2');
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3jsGyN.woff2')
+        format('woff2');
 }
 
 @font-face {
-    font-family: 'UbuntuAll';
+    font-family: UbuntuAll;
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyN.woff2) format('woff2');
+    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyN.woff2')
+        format('woff2');
 }
 
 .org-PATTERN {
@@ -311,7 +314,7 @@ h6,
     h5,
     h6,
     * {
-        font-family: 'UbuntuAll', 'Noto Sans SC', helvetica, arial, sans-serif;
+        font-family: UbuntuAll, 'Noto Sans SC', helvetica, arial, sans-serif;
     }
 }
 
