@@ -24,7 +24,7 @@
                 />
             </div>
             <div class="section">
-                <p class="notice">{{ $t('search.current-classification-description') }}</p>
+                <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
                 <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
             </div>

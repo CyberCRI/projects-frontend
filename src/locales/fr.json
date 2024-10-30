@@ -127,12 +127,17 @@
         },
         "featured-tags": {
             "title": "Tags mis en avant",
-            "notice": "Choisissez les tags que vous souhaitez mettre en avant lors des recherches et de la crétion de projet ou de profile."
+            "notice": "Choisissez les tags que vous souhaitez mettre en avant lors des recherches et de la création de projets."
+        },
+        "featured-skills": {
+            "title": "Compétences mises en avant",
+            "notice": "Choisissez les compétencess que vous souhaitez mettre en avant lors des recherches et de la création de profiles."
         },
         "classifications": {
             "title": "Classifications",
             "subtitle": "Gérer vos classifications personnalisées",
             "enter-title": "Entrez un titre",
+            "title-field": "Titre",
             "add-classification": {
                 "title": "Ajouter une classification",
                 "error": "Erreur lors de la sauvegarde de la classification",
@@ -154,9 +159,10 @@
             "tags": "tags",
             "enabled-for-projects": "Activée pour les projets",
             "enabled-for-skills": "Activée pour les compétences",
-            "disbaled": "Désactivée",
+            "disabled": "Désactivée",
             "no-custom": "Pas de classification personnalisée",
             "table": {
+                "filter": "Filtrer les tags",
                 "tag": "Tag",
                 "description": "Description",
                 "actions": "Actions"
@@ -1756,7 +1762,8 @@
         "geo-map-description": "Découvrez les projets sur une carte du monde",
         "tag-map-description": "Découvrez les projets sur une carte des tags Wikipédia",
         "open-map": "Ouvrir la carte",
-        "current-classification-description": "Choisissez un référentiel de tags",
+        "pick-tag-classification": "Choisissez un référentiel de tags",
+        "pick-skill-classification": "Choisissez un référentiel de compétences",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
         "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
         "disambiguate": "(HOMONYMIE)",

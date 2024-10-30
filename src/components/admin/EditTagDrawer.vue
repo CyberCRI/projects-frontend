@@ -144,3 +144,8 @@ async function saveTag() {
         </div>
     </BaseDrawer>
 </template>
+<style lang="scss" scoped>
+.form-section + .form-section {
+    margin-top: 1.5rem;
+}
+</style>

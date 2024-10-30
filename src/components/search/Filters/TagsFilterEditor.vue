@@ -5,7 +5,7 @@
         </div>
 
         <div class="section">
-            <p class="notice">{{ $t('search.current-classification-description') }}</p>
+            <p class="notice">{{ $t('search.pick-tag-classification') }}</p>
 
             <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
@@ -39,8 +39,6 @@
                 @go-back="goBackToAddMode"
             />
         </div>
-
-        <template> </template>
     </div>
 </template>
 
@@ -104,7 +102,7 @@ export default {
 
     mounted() {
         this.focusInput()
-        this.resetTagSearch()
+        // this.resetTagSearch()
     },
 
     methods: {
@@ -185,13 +183,6 @@ export default {
     margin-top: pxToRem(16px);
 }
 
-.tag-search-title {
-    text-align: center;
-    font-size: $font-size-2xl;
-    font-weight: 700;
-    margin: pxToRem(46px) auto;
-}
-
 .input-ctn {
     width: 100%;
 
@@ -202,21 +193,6 @@ export default {
     input {
         width: 100%;
     }
-}
-
-.add-modal .s-modal-wrapper .s-modal-content {
-    max-height: 526px;
-}
-
-.search-modal .s-modal-wrapper .s-modal-content {
-    max-height: 660px;
-}
-
-.tag-search-label {
-    font-size: $font-size-m;
-    color: $primary-dark;
-    font-weight: 700;
-    margin: 0 0 $space-s $space-l;
 }
 
 .lpi-select {

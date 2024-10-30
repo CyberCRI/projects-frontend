@@ -1,66 +1,44 @@
 <template>
     <div class="tags-tab">
-        <div class="block-container">
-            <label class="label">{{ $t('admin.featured-tags.title') }}</label>
-            <small class="hint">{{ $t('admin.featured-tags.notice') }}</small>
-
-            <div class="tags-ctn">
-                <FilterValue
-                    v-for="tag in organizationTags"
-                    :key="tag.id"
-                    :label="tagLabel(tag)"
-                    icon="Close"
-                    @click="deleteOrganizationTag(tag)"
-                />
-            </div>
-
-            <div class="rel-ctn">
-                <div class="input-container">
-                    <LpiButton
-                        :label="$filters.capitalize($t('common.add'))"
-                        @click="tagSearchIsOpened = true"
-                    />
-                </div>
-            </div>
+        <div class="block-container column-deskstop">
+            <DefaultTagsAdmin />
+            <DefaultSkillsAdmin />
         </div>
+
         <div class="block-container">
-            <label class="label">{{ $t('admin.classifications.title') }}</label>
-            <small class="hint">{{ $t('admin.classifications.subtitle') }}</small>
-            <LpiButton
-                :label="$t('admin.classifications.create-classification')"
-                btn-icon="Plus"
-                @click="createClassificationIsOpen = true"
-            />
+            <h2 class="title">{{ $t('admin.classifications.title') }}</h2>
+            <p class="notice">{{ $t('admin.classifications.subtitle') }}</p>
 
             <div v-if="isLoadingOrgClassifications" class="loader">
                 <LoaderSimple />
             </div>
-            <template v-else>
-                <p v-if="!orgClassifications.length">{{ $t('admin.classifications.no-custom') }}</p>
+            <div class="select-and-create" v-else>
+                <div>
+                    <p v-if="!orgClassifications.length">
+                        {{ $t('admin.classifications.no-custom') }}
+                    </p>
 
-                <LpiSelect
-                    v-else-if="orgClassifications.length > 1"
-                    v-model="selectedClassificationId"
-                    :options="orgClassificationOptions"
-                />
-                <TagClassificationAdmin
-                    v-if="selectedClassification"
-                    :classification="selectedClassification"
-                    @classification-deleted="onClassificationDeleted"
-                />
-            </template>
+                    <LpiSelect
+                        v-else-if="orgClassifications.length > 1"
+                        v-model="selectedClassificationId"
+                        :options="orgClassificationOptions"
+                    />
+                </div>
+                <div>
+                    <LpiButton
+                        :label="$t('admin.classifications.create-classification')"
+                        btn-icon="Plus"
+                        @click="createClassificationIsOpen = true"
+                    />
+                </div>
+            </div>
+            <TagClassificationAdmin
+                v-if="selectedClassification"
+                :classification="selectedClassification"
+                @classification-deleted="onClassificationDeleted"
+            />
         </div>
 
-        <BaseDrawer
-            :confirm-action-name="$t('common.confirm')"
-            :is-opened="tagSearchIsOpened"
-            :title="$t('tag.add-wiki')"
-            class="small"
-            @close="closeTagsSelector"
-            @confirm="saveOrganizationTags"
-        >
-            <TagsFilterEditor v-model="newTags" hide-organization-tags />
-        </BaseDrawer>
         <EditClassification
             :classification="null"
             :is-open="createClassificationIsOpen"
@@ -73,63 +51,36 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import EditClassification from '@/components/admin/EditClassification.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import DefaultTagsAdmin from '@/components/admin/DefaultTagsAdmin.vue'
+import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
 export default {
     name: 'TagsTab',
 
     components: {
-        FilterValue,
         LpiButton,
-        BaseDrawer,
-        TagsFilterEditor,
         LpiSelect,
         TagClassificationAdmin,
         EditClassification,
         LoaderSimple,
+        DefaultTagsAdmin,
+        DefaultSkillsAdmin,
     },
-    setup() {
-        const toaster = useToasterStore()
-        const languagesStore = useLanguagesStore()
-        const organizationsStore = useOrganizationsStore()
+
+    data() {
         return {
-            toaster,
-            languagesStore,
-            organizationsStore,
+            confirmModalVisible: false,
+            createClassificationIsOpen: false,
+
             ...useTagSearch({
                 hideOrganizationTags: true,
                 classificationType: 'custom',
             }),
         }
-    },
-
-    data() {
-        return {
-            newOrganizationTag: '',
-            newTags: [],
-            confirmModalVisible: false,
-            tagSearchIsOpened: false,
-            createClassificationIsOpen: false,
-        }
-    },
-
-    computed: {
-        organization() {
-            return this.organizationsStore.current
-        },
-
-        organizationTags() {
-            return this.organization.tags
-        },
     },
 
     methods: {
@@ -145,45 +96,6 @@ export default {
             await this.fetchAllClassifications()
             this.selectedClassificationId = this.allOrgClassifications[0].id
         },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
-        },
-        async saveOrganizationTags() {
-            const newTagsIds = this.newTags.map((tag) => tag.id)
-            const oldTagsIds = this.organizationTags.map((tag) => tag.id)
-
-            try {
-                await this.organizationsStore.updateCurrentOrganization({
-                    tags: [...oldTagsIds, ...newTagsIds],
-                })
-                this.toaster.pushSuccess(this.$t('toasts.organization-tag-create.success'))
-                this.tagSearchIsOpened = false
-            } catch (error) {
-                this.toaster.pushError(
-                    `${this.$t('toasts.organization-tag-create.error')} (${error})`
-                )
-                console.error(error)
-            }
-        },
-
-        closeTagsSelector() {
-            this.tagSearchIsOpened = false
-        },
-
-        async deleteOrganizationTag(tag) {
-            try {
-                await this.organizationsStore.updateCurrentOrganization({
-                    tags: this.organizationTags.filter((t) => t.id != tag.id).map((t) => t.id),
-                })
-                this.toaster.pushSuccess(this.$t('toasts.organization-tag-delete.success'))
-            } catch (error) {
-                this.toaster.pushError(
-                    `${this.$t('toasts.organization-tag-delete.error')} (${error})`
-                )
-                console.error(error)
-            }
-        },
     },
 }
 </script>
@@ -194,50 +106,27 @@ export default {
     margin: $space-l 0;
     background: $white;
     border-radius: $border-radius-l;
-
-    .tags-ctn {
-        display: flex;
-        flex-wrap: wrap;
-        gap: $space-m;
-        margin-bottom: $space-l;
-        margin-top: $space-l;
-    }
-
-    .wiki-input {
-        width: fit-content;
-        margin: 0 auto;
-    }
-
-    .wiki-results-ctn {
-        border: $border-width-m solid $primary-dark;
-        box-shadow: 0 0 15px rgb(0 0 0 / 50%);
-        border-radius: $border-radius-m;
-        margin-top: $space-s;
-        overflow: hidden;
-    }
 }
 
-.label {
+.select-and-create {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-block: $space-l;
+}
+
+.title {
     text-transform: uppercase;
     font-weight: bold;
     color: $primary-dark;
-    display: block;
     margin-bottom: $space-xl;
+    font-size: $font-size-l;
 }
 
-.hint {
-    display: block;
+.notice {
     margin-bottom: $space-l;
-}
-
-.input-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.input-tag {
-    margin-bottom: $space-m;
+    font-size: $font-size-s;
 }
 
 @media (min-width: $min-desktop) {
@@ -245,14 +134,9 @@ export default {
         margin: $space-l 0;
     }
 
-    .input-container {
-        justify-content: center;
-        flex-direction: row;
-    }
-
-    .input-tag {
-        margin-bottom: unset;
-        margin-right: $space-m;
+    .column-deskstop {
+        display: flex;
+        gap: $space-l;
     }
 }
 </style>

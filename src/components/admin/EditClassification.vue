@@ -90,7 +90,7 @@ const saveClassification = async () => {
 }
 </script>
 <template>
-    <BaseModal v-if="isOpen">
+    <BaseModal v-if="isOpen" @close="emit('close')">
         <template #header-title>
             {{
                 isAddMode
@@ -103,7 +103,7 @@ const saveClassification = async () => {
             <div class="form-section">
                 <TextInput
                     v-model="form.title"
-                    label="Title"
+                    :label="t('admin.classifications.title-field')"
                     :placeholder="t('admin.classifications.enter-title')"
                     required
                 />

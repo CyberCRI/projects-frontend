@@ -239,7 +239,6 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         </h2>
 
         <div class="add-tag-ctn">
-            <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
             <p v-if="classification.is_enabled_for_projects">
                 {{ t('admin.classifications.enabled-for-projects') }}
             </p>
@@ -255,6 +254,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             </p>
         </div>
         <div class="add-tag-ctn">
+            <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
             <LpiButton
                 :label="t('admin.classifications.create-tag')"
                 btn-icon="Plus"
@@ -262,12 +262,15 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             />
         </div>
 
-        <FilterSearchInput
-            ref="search-input-component"
-            v-model.trim="search"
-            :placeholder="$t('search.search-tag')"
-            class="search-input-ctn"
-        />
+        <div class="tags-filter">
+            <label class="filter-label">{{ t('admin.classifications.table.filter') }}</label>
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="search"
+                :placeholder="$t('search.search-tag')"
+                class="search-input-ctn"
+            />
+        </div>
 
         <table class="table">
             <thead>
@@ -368,13 +371,19 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
     gap: 1rem;
 }
 
-.add-tag-ctn {
+.add-tag-ctn,
+.tags-filter {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+.filter-label {
+    flex-shrink: 0;
+    font-weight: 700;
 }
 
 .pagination-container {
@@ -398,6 +407,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
 
     th {
         font-weight: 700;
+        text-align: left;
     }
 
     td,

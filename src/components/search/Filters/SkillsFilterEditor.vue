@@ -1,9 +1,11 @@
 <template>
-    <div :class="{ inline }">
-        <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
+    <div :class="{ inline }" class="skills-filter-editor">
+        <div class="section">
+            <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
+        </div>
 
         <div class="section">
-            <p class="notice">{{ $t('search.current-classification-description') }}</p>
+            <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
             <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
@@ -20,25 +22,19 @@
         <div v-show="showTagSearch" class="section">
             <p class="notice">{{ $t('search.current-skill-description') }}</p>
 
-            <div class="search-field">
-                <SearchInput
-                    v-model="search"
-                    @delete-query="onDeleteQuery"
-                    @enter="doSearch"
-                    :placeholder="$t('search.search-skill')"
-                    :suggestions="suggestions"
-                    @keyup="suggest"
-                />
-                <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
-            </div>
-            <p v-if="confirmedSearch" class="skill-description">
-                {{ $t('search.choose-skill') }}
-            </p>
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="search"
+                :placeholder="$t('search.search-skill')"
+                class="search-input-ctn"
+            />
+
             <TagResults
-                v-if="confirmedSearch"
+                v-if="search"
+                :classification-id="selectedClassificationId"
                 :existing-tags="skills"
                 :inline="inline"
-                :search="confirmedSearch"
+                :search="search"
                 @add-tag="onAddSkill"
                 @go-back="goBackToAddMode"
             />
@@ -47,10 +43,9 @@
 </template>
 
 <script>
+import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
@@ -61,12 +56,11 @@ export default {
     emits: ['update:modelValue'],
 
     components: {
+        FilterSearchInput,
         CurrentTags,
-        TagResults,
-        LpiButton,
-        SearchInput,
-        LpiSelect,
         SuggestedTags,
+        TagResults,
+        LpiSelect,
     },
 
     props: {
@@ -80,15 +74,20 @@ export default {
             default: false,
         },
 
+        hideOrganizationTags: {
+            type: Boolean,
+            default: false,
+        },
+
         inline: {
             type: Boolean,
             default: false,
         },
     },
 
-    setup() {
+    setup(props) {
         return {
-            ...useTagSearch({ useSkills: true }),
+            ...useTagSearch({ useSkills: true, hideOrganizationTags: props.hideOrganizationTags }),
         }
     },
     data() {
@@ -99,19 +98,10 @@ export default {
 
     mounted() {
         this.focusInput()
+        // this.resetTagSearch()
     },
 
     methods: {
-        doSearch() {
-            this.suggestions = []
-            this.confirmedSearch = this.search
-        },
-
-        onDeleteQuery() {
-            this.confirmedSearch = ''
-            this.search = ''
-        },
-
         addSkill(skill) {
             this.skills.push(skill)
             this.$emit('update:modelValue', this.skills)
@@ -147,6 +137,12 @@ export default {
     },
 
     watch: {
+        queryString(val) {
+            if (val.length >= 3) {
+                this.focusInput()
+            }
+        },
+
         triggerUpdate: function () {
             this.$emit('update:modelValue', this.skills)
         },
@@ -163,9 +159,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.skill-description {
+.section {
+    margin-bottom: $space-m;
+}
+
+.notice {
     font-size: $font-size-s;
-    margin-top: $space-l;
+    margin-bottom: $space-s;
 }
 
 .current-skill {
@@ -189,19 +189,7 @@ export default {
     }
 }
 
-.search-field {
-    margin-top: $space-m;
-    display: flex;
-    justify-content: stretch;
-    align-items: center;
-    gap: 1rem;
-
-    .search-input-ctn {
-        flex-grow: 1;
-
-        :deep(.search-input) {
-            width: 100%;
-        }
-    }
+.lpi-select {
+    width: 100%;
 }
 </style>
