@@ -198,8 +198,4 @@ export default {
 .lpi-select {
     width: 100%;
 }
-
-.lpi-select {
-    width: 100%;
-}
 </style>

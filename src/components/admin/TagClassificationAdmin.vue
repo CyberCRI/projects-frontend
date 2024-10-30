@@ -312,9 +312,12 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         <div class="add-tag-ctn">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
 >>>>>>> fix: create edit delete classifications with real api call
+=======
+>>>>>>> fix: use and edit default org tags and skills
             <p v-if="classification.is_enabled_for_projects">
                 {{ t('admin.classifications.enabled-for-projects') }}
             </p>
@@ -341,6 +344,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         </div>
         <div class="add-tag-ctn">
             <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
+<<<<<<< HEAD
             <LpiButton
                 :label="t('admin.classifications.create-tag')"
                 btn-icon="Plus"
@@ -365,6 +369,8 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             </p>
         </div>
         <div class="add-tag-ctn">
+=======
+>>>>>>> fix: use and edit default org tags and skills
             <LpiButton
                 :label="t('admin.classifications.create-tag')"
                 btn-icon="Plus"
@@ -372,6 +378,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             />
         </div>
 
+<<<<<<< HEAD
         <FilterSearchInput
             ref="search-input-component"
             v-model.trim="search"
@@ -379,6 +386,17 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             class="search-input-ctn"
         />
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+        <div class="tags-filter">
+            <label class="filter-label">{{ t('admin.classifications.table.filter') }}</label>
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="search"
+                :placeholder="$t('search.search-tag')"
+                class="search-input-ctn"
+            />
+        </div>
+>>>>>>> fix: use and edit default org tags and skills
 
         <table class="table">
             <thead>
@@ -529,11 +547,16 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .add-tag-ctn,
 .tags-filter {
 =======
 .add-tag-ctn {
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+.add-tag-ctn,
+.tags-filter {
+>>>>>>> fix: use and edit default org tags and skills
     display: flex;
     align-items: center;
     justify-content: center;
@@ -543,13 +566,19 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fix: use and edit default org tags and skills
 .filter-label {
     flex-shrink: 0;
     font-weight: 700;
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+>>>>>>> fix: use and edit default org tags and skills
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -572,9 +601,13 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
     th {
         font-weight: 700;
 <<<<<<< HEAD
+<<<<<<< HEAD
         text-align: left;
 =======
 >>>>>>> fix: tag classification admin and new verison of api witk skills and project tags
+=======
+        text-align: left;
+>>>>>>> fix: use and edit default org tags and skills
     }
 
     td,
