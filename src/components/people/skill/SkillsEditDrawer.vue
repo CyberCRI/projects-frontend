@@ -292,7 +292,7 @@ export default {
             try {
                 await Promise.all(
                     talentsToDelete.map((talent) => {
-                        return deleteUserSkill(talent.id)
+                        return deleteUserSkill(this.user.id, talent.id)
                     })
                 )
             } catch (error) {
@@ -303,7 +303,7 @@ export default {
             try {
                 await Promise.all(
                     talentsToAdd.map((talent) => {
-                        return postUserSkill({
+                        return postUserSkill(this.user.id, {
                             ...talent,
                             tag: talent.tag.id,
                         })
@@ -324,7 +324,7 @@ export default {
             try {
                 await Promise.all(
                     talentsToUpdate.map((talent) => {
-                        return patchUserSkill(talent.id, {
+                        return patchUserSkill(this.user.id, talent.id, {
                             ...talent,
                             tag: talent.tag.id,
                         })
