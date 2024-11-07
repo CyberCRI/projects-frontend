@@ -94,6 +94,7 @@ e2e:
     app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
   blobName: playwright
   storageAccountName: criparisdevlabproje2e
+  reportHost: projects-e2e.k8s.lp-i.dev
   notify:
     failure:
       enabled: true
