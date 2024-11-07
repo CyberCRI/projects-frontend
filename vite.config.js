@@ -10,7 +10,12 @@ const pathSegments = path.dirname(filename)
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '')
 
-    console.log('process.env.VITE_APP_API_URL', env.VITE_APP_API_URL)
+    console.log(`Build:      ${process.env.NODE_ENV == 'production' ? 'PROD' : 'DEV'}`)
+    console.log(`Mode:       ${mode}`)
+    console.log(`Org:        ${env.VITE_APP_API_ORG_CODE}`)
+    console.log(`API:        ${env.VITE_APP_API_URL}`)
+    console.log('')
+
     const apiProxy = {
         '^/v[0-9]+/': {
             target: `${env.VITE_APP_API_URL}`,
