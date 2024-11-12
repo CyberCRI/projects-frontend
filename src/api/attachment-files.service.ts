@@ -34,7 +34,6 @@ export async function postAttachmentFiles(
     fd.append('title', body.title)
     fd.append('project_id', body.project_id)
 
-    fd.append('src', body.file, body.file.name)
     fd.append('file', body.file)
     fd.append('mime', body.file.type || 'file')
     return (
