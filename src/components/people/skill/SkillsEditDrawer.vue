@@ -130,10 +130,45 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const {
+            suggestedTagsisLoading,
+            selectedClassificationId,
+            selectedClassification,
+            search,
+            suggestions,
+            suggestedTags,
+            organizationsStore,
+            orgClassifications,
+            orgClassificationOptions,
+            organizationTags,
+            showTagSearch,
+            suggest,
+            loadSelectedClassificationTags,
+            resetTagSearch,
+            allOrgClassifications,
+            isLoadingOrgClassifications,
+            fetchAllClassifications,
+        } = useTagSearch({ useSkills: true })
         return {
             toaster,
             languagesStore,
-            ...useTagSearch({ useSkills: true }),
+            suggestedTagsisLoading,
+            selectedClassificationId,
+            selectedClassification,
+            search,
+            suggestions,
+            suggestedTags,
+            organizationsStore,
+            orgClassifications,
+            orgClassificationOptions,
+            organizationTags,
+            showTagSearch,
+            suggest,
+            loadSelectedClassificationTags,
+            resetTagSearch,
+            allOrgClassifications,
+            isLoadingOrgClassifications,
+            fetchAllClassifications,
         }
     },
 
@@ -217,6 +252,8 @@ export default {
                 this.selection = this.getSkillOfType(this.type)
                     ? this.getSkillOfType(this.type).map((item) => ({ ...toRaw(item) }))
                     : []
+
+                this.resetTagSearch()
                 this.$nextTick(this.focusInput)
             }
         },

@@ -1,5 +1,6 @@
 import { computed, watch, ref } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useLanguagesStore from '@/stores/useLanguages'
 import {
     getAllOrgClassifications,
     getOrgClassificationTags,
@@ -13,7 +14,7 @@ export default function useTagSearch({
     classificationType,
 }) {
     const organizationsStore = useOrganizationsStore()
-
+    const languagesStore = useLanguagesStore()
     const allOrgClassifications = ref([])
     const isLoadingOrgClassifications = ref(false)
 
@@ -129,7 +130,7 @@ export default function useTagSearch({
             suggestions.value = await getOrgClassificationAutocomplete(
                 organizationsStore.current.code,
                 selectedClassificationId.value,
-                { search: search.value }
+                { search: search.value, language: languagesStore.current }
             )
         } catch (e) {
             console.error(e)
