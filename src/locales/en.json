@@ -1725,6 +1725,7 @@
         "language": "language",
         "people": "people",
         "tag": "tag",
+        "or": "or",
         "ambiguousTag": "Ambiguous Tag",
         "subtitle-ambiguous-tag": "This tag has different meanings. Select the one you are interested in:",
         "sdg": "SDG",

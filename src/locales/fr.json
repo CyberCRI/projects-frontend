@@ -1720,6 +1720,7 @@
         "language": "langue",
         "people": "personnes",
         "tag": "tag",
+        "or": "ou",
         "ambiguousTag": "Tag ambigu",
         "subtitle-ambiguous-tag": "Ce tag a différentes significations. Sélectionnez celle qui vous intéresse :",
         "sdg": "ODD",
