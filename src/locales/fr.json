@@ -182,7 +182,8 @@
                 "title-fr": "Titre (FR)",
                 "description-en": "Description (EN)",
                 "description-fr": "Description (FR)",
-                "required-error": "Ce champ est requis"
+                "required-error": "Ce champ est requis",
+                "too-long-error": "Ce champ est trop long"
             },
             "tag-delete": {
                 "confirm": {

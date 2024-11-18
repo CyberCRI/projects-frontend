@@ -6,6 +6,10 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { postClassificationTag, putClassificationTag } from '@/api/tag-classification.service'
 import { useI18n } from 'vue-i18n'
+import CharCounter from '@/components/base/form/CharCounter.vue'
+import useValidate from '@vuelidate/core'
+import { helpers, required } from '@vuelidate/validators'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 const { t } = useI18n()
 
@@ -19,6 +23,16 @@ const defaultForm = () => ({
     title_fr: '',
     description_fr: '',
 })
+
+const rules = computed(() => ({
+    title_en: {
+        required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
+    },
+
+    title_fr: {
+        required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
+    },
+}))
 
 const props = defineProps({
     tag: {
@@ -41,15 +55,19 @@ const asyncing = ref(false)
 
 const form = ref(defaultForm())
 
+const v$ = useValidate(rules, form)
+
 watchEffect(() => {
-    form.value = defaultForm()
-    if (props.tag) {
-        form.value = {
-            id: props.tag.id,
-            title_en: props.tag.title_en,
-            description_en: props.tag.description_en,
-            title_fr: props.tag.title_fr,
-            description_fr: props.tag.description_fr,
+    if (props.isOpen) {
+        form.value = defaultForm()
+        if (props.tag) {
+            form.value = {
+                id: props.tag.id,
+                title_en: props.tag.title_en,
+                description_en: props.tag.description_en,
+                title_fr: props.tag.title_fr,
+                description_fr: props.tag.description_fr,
+            }
         }
     }
 })
@@ -107,6 +125,7 @@ async function saveTag() {
 <template>
     <BaseDrawer
         :confirm-action-name="$t('common.save')"
+        :confirm-action-disabled="v$.$invalid"
         :is-opened="isOpen"
         :title="drawerTitle"
         class="small"
@@ -116,36 +135,70 @@ async function saveTag() {
     >
         <div class="form-section">
             <TextInput
-                v-model="form.title_en"
+                v-model.trim="form.title_en"
                 :label="t('admin.classifications.tag-form.title-en')"
                 :required="true"
+                max-length="50"
+                @blur="v$.title_en.$validate"
             />
+            <div class="input-footer">
+                <FieldErrors :errors="v$.title_en.$errors" />
+                <CharCounter :text="form.title_en" :max-length="50" />
+            </div>
         </div>
         <div class="form-section">
             <TextInput
-                v-model="form.title_fr"
+                v-model.trim="form.title_fr"
                 :label="t('admin.classifications.tag-form.title-fr')"
                 :required="true"
+                max-length="50"
+                @blur="v$.title_fr.$validate"
             />
+            <div class="input-footer">
+                <FieldErrors :errors="v$.title_fr.$errors" />
+                <CharCounter :text="form.title_fr" :max-length="50" />
+            </div>
         </div>
         <div class="form-section">
             <TextInput
-                v-model="form.description_en"
+                v-model.trim="form.description_en"
                 :label="t('admin.classifications.tag-form.description-en')"
                 :required="true"
+                input-type="textarea"
+                max-length="500"
             />
+
+            <div class="input-footer">
+                <CharCounter :text="form.description_en" :max-length="500" />
+            </div>
         </div>
         <div class="form-section">
             <TextInput
-                v-model="form.description_fr"
+                v-model.trim="form.description_fr"
                 :label="t('admin.classifications.tag-form.description-fr')"
                 :required="true"
+                input-type="textarea"
+                max-length="500"
             />
+            <div class="input-footer">
+                <CharCounter :text="form.description_fr" :max-length="500" />
+            </div>
         </div>
     </BaseDrawer>
 </template>
 <style lang="scss" scoped>
 .form-section + .form-section {
     margin-top: 1.5rem;
+}
+
+.input-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    .char-counter {
+        margin-left: auto;
+    }
 }
 </style>
