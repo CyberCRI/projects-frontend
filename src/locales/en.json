@@ -1304,6 +1304,7 @@
                 "save-error": "Error while saving profile.",
                 "save-success": "Profile saved.",
                 "search": "search",
+                "suggested-skills": "Or pick a suggested skill",
                 "skills": {
                     "add": "Add professional skills",
                     "edit-items": "Edit skills",
@@ -1322,7 +1323,8 @@
                             "notice": "Indicate your level of mastery.",
                             "help": "More about skill levels",
                             "confirm": "Save"
-                        }
+                        },
+                        "selection": "Selected skills"
                     }
                 },
                 "hobbies": {
@@ -1344,7 +1346,8 @@
                             "help": "More about the hobbies levels",
                             "confirm": "Save"
                         }
-                    }
+                    },
+                    "selection": "Selected hobbies"
                 },
                 "levels": {
                     "curious": "Curious",

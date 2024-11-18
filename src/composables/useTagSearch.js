@@ -12,6 +12,7 @@ export default function useTagSearch({
     useProjects,
     hideOrganizationTags,
     classificationType,
+    searchAll,
 }) {
     const organizationsStore = useOrganizationsStore()
     const languagesStore = useLanguagesStore()
@@ -101,6 +102,14 @@ export default function useTagSearch({
         return selectedClassificationId.value !== null && !suggestedTags.value.length // wiki and esco return no results
     })
 
+    // watch(selectedClassificationId, function () {
+    //     console.log('showTagSearch', showTagSearch.value)
+    //     if (!selectedClassificationId.value) {
+    //         console.log('resetting search')
+    //         search.value = ''
+    //     }
+    // })
+
     // methods
     async function loadSelectedClassificationTags() {
         if (!selectedClassificationId.value) {
@@ -127,11 +136,31 @@ export default function useTagSearch({
         if (evt.key === 'Enter') return // dont show suggestion when triggering search
         if (!search.value || search.value.length < 3) return
         try {
-            suggestions.value = await getOrgClassificationAutocomplete(
-                organizationsStore.current.code,
-                selectedClassificationId.value,
-                { search: search.value, language: languagesStore.current }
-            )
+            if (searchAll) {
+                Promise.all(
+                    orgClassifications.value.map((c) =>
+                        getOrgClassificationAutocomplete(organizationsStore.current.code, c.id, {
+                            search: search.value,
+                            language: languagesStore.current,
+                        })
+                    )
+                ).then((res) => {
+                    const maxResults = Math.max(...res.map((r) => r.length))
+                    for (let i = 0; i < maxResults; i++) {
+                        res.forEach((r) => {
+                            if (r[i]) {
+                                suggestions.value.push(r[i])
+                            }
+                        })
+                    }
+                })
+            } else {
+                suggestions.value = await getOrgClassificationAutocomplete(
+                    organizationsStore.current.code,
+                    selectedClassificationId.value,
+                    { search: search.value, language: languagesStore.current }
+                )
+            }
         } catch (e) {
             console.error(e)
         }

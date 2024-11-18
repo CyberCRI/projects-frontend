@@ -91,11 +91,11 @@ const deleteOrganizationTag = async (tag) => {
             :confirm-action-name="t('common.confirm')"
             :is-opened="tagSearchIsOpened"
             :title="t('tag.add-wiki')"
-            class="small"
+            class="medium"
             @close="closeTagsSelector"
             @confirm="saveOrganizationTags"
         >
-            <TagsFilterEditor v-model="newTags" hide-organization-tags />
+            <TagsFilterEditor v-model="newTags" hide-organization-tags :all-search-mode="false" />
         </BaseDrawer>
     </div>
 </template>

@@ -126,12 +126,12 @@
             }
         },
         "featured-tags": {
-            "title": "Tags mis en avant",
+            "title": "Tags de projet mis en avant",
             "notice": "Choisissez les tags que vous souhaitez mettre en avant lors des recherches et de la création de projets."
         },
         "featured-skills": {
             "title": "Compétences mises en avant",
-            "notice": "Choisissez les compétencess que vous souhaitez mettre en avant lors des recherches et de la création de profiles."
+            "notice": "Choisissez les compétences que vous souhaitez mettre en avant lors des recherches et de la création de profils."
         },
         "classifications": {
             "title": "Classifications",
@@ -1299,6 +1299,7 @@
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
                 "save-error": "Erreur lors de la sauvegarde du profil.",
                 "save-success": "Le profil a été sauvegardé.",
+                "suggested-skills": "Ou choisissez parmi les compétences suggérées",
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
                     "edit-items": "Éditer les compétences",
@@ -1318,7 +1319,8 @@
                             "help": "Plus à propos des niveaux de compétences",
                             "confirm": "Sauvegarder"
                         }
-                    }
+                    },
+                    "selection": "Compétences sélectionnées"
                 },
                 "hobbies": {
                     "add": "Ajouter des hobbies",
@@ -1339,7 +1341,8 @@
                             "help": "En savoir plus sur les niveaux de hobby",
                             "confirm": "Sauvegarder"
                         }
-                    }
+                    },
+                    "selection": "Hobbies sélectionnés"
                 },
                 "levels": {
                     "curious": "Curieux",

@@ -13,34 +13,30 @@
         @confirm="confirm"
     >
         <div class="add-skill-mode" v-if="mode == 'add'">
-            <div class="selected-list no-shrink">
-                <FilterValue
-                    v-for="skill in selection"
-                    :key="skill.tag.id"
-                    :label="skillLabel(skill)"
-                    icon="Close"
-                    type="actionable"
-                    @click="removeFromSelection(skill)"
-                />
-            </div>
             <div class="section">
+                <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.selection`) }}</p>
+                <div class="selected-list no-shrink">
+                    <FilterValue
+                        v-for="skill in selection"
+                        :key="skill.tag.id"
+                        :label="skillLabel(skill)"
+                        icon="Close"
+                        type="actionable"
+                        @click="removeFromSelection(skill)"
+                    />
+                </div>
+            </div>
+            <div class="section" v-if="!searchAllMode">
                 <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
                 <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
             </div>
-            <div v-if="suggestedTags.length" class="section">
-                <SuggestedTags
-                    :current-tags="selectionAsTags"
-                    :suggested-tags="suggestedTags"
-                    @add-tag="addToSelection"
-                    :loading="suggestedTagsisLoading"
-                />
-            </div>
-            <div v-show="showTagSearch">
+
+            <div v-show="searchAllMode || showTagSearch" class="section">
                 <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}</p>
                 <div class="search-field no-shrink">
                     <SearchInput
-                        v-model="search"
+                        v-model.trim="search"
                         @delete-query="onDeleteQuery"
                         @enter="doSearch"
                         :suggestions="suggestions"
@@ -50,18 +46,33 @@
                     <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
                 </div>
             </div>
-            <p v-if="confirmedSearch" class="notice no-shrink">
-                {{ $t('search.choose-skill') }}
-            </p>
-            <TagResults
-                class="flexed-search-results-ctn custom-scrollbar"
-                v-if="confirmedSearch"
-                :classification-id="selectedClassificationId"
-                :existing-tags="selectionAsTags"
-                inline
-                :search="confirmedSearch"
-                @add-tag="addToSelection"
-            />
+
+            <div v-if="!search.length && suggestedTags.length" class="section">
+                <p class="notice">{{ $t('profile.edit.skills.suggested-skills') }}</p>
+                <SuggestedTags
+                    :current-tags="selectionAsTags"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="addToSelection"
+                    :loading="suggestedTagsisLoading"
+                />
+            </div>
+            <div class="section" v-if="search.length">
+                <p v-if="confirmedSearch && searchResultsCount" class="notice no-shrink">
+                    {{ $t('search.choose-skill') }}
+                </p>
+                <TagResults
+                    class="flexed-search-results-ctn custom-scrollbar"
+                    v-if="confirmedSearch"
+                    :classification-id="selectedClassificationId"
+                    :existing-tags="selectionAsTags"
+                    inline
+                    :search="confirmedSearch"
+                    @add-tag="addToSelection"
+                    @results-count="searchResultsCount = $event"
+                    :all-classifications="orgClassifications"
+                    :search-all="searchAllMode"
+                />
+            </div>
         </div>
         <div class="edit-skill-mode" v-else-if="mode == 'edit'">
             <p class="notice">
@@ -127,7 +138,7 @@ export default {
             default: () => () => {},
         },
     },
-    setup() {
+    setup(props) {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const {
@@ -148,7 +159,7 @@ export default {
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
-        } = useTagSearch({ useSkills: true })
+        } = useTagSearch({ useSkills: true, searchAll: props.searchAllMode })
         return {
             toaster,
             languagesStore,
@@ -201,12 +212,17 @@ export default {
             type: Object,
             required: true,
         },
+        searchAllMode: {
+            type: Boolean,
+            default: true,
+        },
     },
     data() {
         return {
             confirmedSearch: '',
             selection: [],
             asyncing: false,
+            searchResultsCount: 0,
         }
     },
     computed: {
@@ -420,10 +436,9 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow: hidden;
 
     .notice {
-        font-size: $font-size-s;
+        font-size: $font-size-m;
         margin-bottom: $space-s;
     }
 
@@ -584,5 +599,9 @@ export default {
         display: inline-block;
         vertical-align: middle;
     }
+}
+
+.section + .section {
+    margin-top: $space-l;
 }
 </style>

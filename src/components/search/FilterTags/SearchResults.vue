@@ -1,15 +1,16 @@
 <template>
     <div :class="{ 'in-modal': inModal, inline }" class="search-results">
         <div class="search-results-ctn" v-if="tagResults?.length">
-            <div
+            <TagResult
+                class="tag-result"
                 v-for="(tag, index) in tagResults"
                 :key="`${tag.name}-${index}`"
-                class="tag-result"
                 tabindex="0"
                 @click="tagClicked(tag)"
-            >
-                <TagResult :label="tagLabel(tag)" :description="tagDescription(tag)" />
-            </div>
+                :label="tagLabel(tag)"
+                :description="tagDescription(tag)"
+                :classification-name="tag.classificationName || ''"
+            />
         </div>
         <div v-else class="no-result">
             {{ $t('common.no-result') }}
@@ -90,26 +91,11 @@ export default {
         padding-bottom: $space-l;
         box-sizing: border-box;
 
-        > * {
-            flex: 1 1 calc(50% - $space-m);
-        }
-
         .tag-result {
             cursor: pointer;
             text-align: start;
+            flex-grow: 1;
         }
-    }
-
-    &.inline .search-results-ctn {
-        flex-direction: row;
-
-        > div {
-            flex: initial;
-        }
-    }
-
-    .tag-description {
-        text-align: start;
     }
 }
 

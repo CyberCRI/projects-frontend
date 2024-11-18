@@ -4,22 +4,13 @@
             <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
         </div>
 
-        <div class="section">
+        <div class="section" v-if="!allSearchMode">
             <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
             <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
 
-        <div v-if="suggestedTags.length" class="section">
-            <SuggestedTags
-                :current-tags="skills"
-                :suggested-tags="suggestedTags"
-                @add-tag="onAddSkill"
-                :loading="suggestedTagsisLoading"
-            />
-        </div>
-
-        <div v-show="showTagSearch" class="section">
+        <div v-show="allSearchMode || showTagSearch" class="section">
             <p class="notice">{{ $t('search.current-skill-description') }}</p>
 
             <FilterSearchInput
@@ -37,6 +28,16 @@
                 :search="search"
                 @add-tag="onAddSkill"
                 @go-back="goBackToAddMode"
+                :search-all="allSearchMode"
+                :all-classifications="orgClassifications"
+            />
+
+            <SuggestedTags
+                v-else
+                :current-tags="skills"
+                :suggested-tags="suggestedTags"
+                @add-tag="onAddSkill"
+                :loading="suggestedTagsisLoading"
             />
         </div>
     </div>
@@ -83,11 +84,19 @@ export default {
             type: Boolean,
             default: false,
         },
+        allSearchMode: {
+            type: Boolean,
+            default: true,
+        },
     },
 
     setup(props) {
         return {
-            ...useTagSearch({ useSkills: true, hideOrganizationTags: props.hideOrganizationTags }),
+            ...useTagSearch({
+                useSkills: true,
+                hideOrganizationTags: props.hideOrganizationTags,
+                allSearch: props.allSearchMode,
+            }),
         }
     },
     data() {

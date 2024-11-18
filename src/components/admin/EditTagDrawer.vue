@@ -128,7 +128,7 @@ async function saveTag() {
         :confirm-action-disabled="v$.$invalid"
         :is-opened="isOpen"
         :title="drawerTitle"
-        class="small"
+        class="medium"
         @close="emit('close')"
         @confirm="saveTag"
         :asyncing="asyncing"

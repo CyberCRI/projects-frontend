@@ -1,7 +1,10 @@
 <template>
     <div class="tag-label" :data-test="`tag-label-${label}`">
-        <span class="tag-name">{{ label }}</span>
-        <span class="tag-description">{{ description }}</span>
+        <div class="tag-header">
+            <span class="tag-name">{{ label }}</span>
+            <span class="classification" v-if="classificationName">{{ classificationName }}</span>
+        </div>
+        <p class="tag-description">{{ description }}</p>
     </div>
 </template>
 
@@ -27,22 +30,34 @@ export default {
             type: String,
             default: '',
         },
+        classificationName: {
+            type: String,
+            default: '',
+        },
     },
 }
 </script>
 
 <style lang="scss" scoped>
 .tag-label {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 0.8rem;
+    display: inline-block;
     background: $white;
     border: $border-width-s solid $primary;
     border-radius: $border-radius-l;
     padding: $space-s $space-m;
     color: $primary-dark;
     font-size: $font-size-m;
+}
+
+.tag-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.classification {
+    font-size: 0.7em;
+    color: $mid-gray;
 }
 
 .tag-name {

@@ -4,22 +4,13 @@
             <CurrentTags :current-tags="tags" class="current-tags" @remove-tag="removeTag" />
         </div>
 
-        <div class="section">
+        <div class="section" v-if="!allSearchMode">
             <p class="notice">{{ $t('search.pick-tag-classification') }}</p>
 
             <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
         </div>
 
-        <div v-if="suggestedTags.length" class="section">
-            <SuggestedTags
-                :current-tags="tags"
-                :suggested-tags="suggestedTags"
-                @add-tag="addTag"
-                :loading="suggestedTagsisLoading"
-            />
-        </div>
-
-        <div v-show="showTagSearch" class="section">
+        <div v-show="allSearchMode || showTagSearch" class="section">
             <p class="notice">{{ $t('search.current-tag-description') }}</p>
 
             <FilterSearchInput
@@ -37,6 +28,15 @@
                 :search="search"
                 @add-tag="onAddTag"
                 @go-back="goBackToAddMode"
+                :search-all="allSearchMode"
+                :all-classifications="orgClassifications"
+            />
+            <SuggestedTags
+                v-else
+                :current-tags="tags"
+                :suggested-tags="suggestedTags"
+                @add-tag="addTag"
+                :loading="suggestedTagsisLoading"
             />
         </div>
     </div>
@@ -84,12 +84,17 @@ export default {
             type: Boolean,
             default: true,
         },
+        allSearchMode: {
+            type: Boolean,
+            default: true,
+        },
     },
     setup(props) {
         return {
             ...useTagSearch({
                 useProjects: true,
                 hideOrganizationTags: props.hideOrganizationTags,
+                allSearch: props.allSearchMode,
             }),
         }
     },
