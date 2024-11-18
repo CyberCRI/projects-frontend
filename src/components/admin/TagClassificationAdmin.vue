@@ -318,6 +318,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                 @click="showConfirmClassificationDelete = true"
             />
         </h2>
+        <p class="classification-title">{{ classification.description }}</p>
 
         <div class="add-tag-ctn">
 <<<<<<< HEAD

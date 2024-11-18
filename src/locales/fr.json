@@ -137,7 +137,9 @@
             "title": "Classifications",
             "subtitle": "Gérer vos classifications personnalisées",
             "enter-title": "Entrez un titre",
+            "enter-description": "Entrez un description",
             "title-field": "Titre",
+            "description-field": "Description",
             "add-classification": {
                 "title": "Ajouter une classification",
                 "error": "Erreur lors de la sauvegarde de la classification",

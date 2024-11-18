@@ -17,6 +17,7 @@ const organizationsStore = useOrganizationsStore()
 const defaultForm = () => ({
     id: null,
     title: '',
+    description: '',
     is_enabled_for_projects: false,
     is_enabled_for_skills: false,
 })
@@ -43,6 +44,7 @@ watchEffect(() => {
         form.value = {
             id: props.classification.id,
             title: props.classification.title,
+            description: props.classification.description,
             is_enabled_for_projects: props.classification.is_enabled_for_projects,
             is_enabled_for_skills: props.classification.is_enabled_for_skills,
         }
@@ -102,10 +104,18 @@ const saveClassification = async () => {
         <template #content>
             <div class="form-section">
                 <TextInput
-                    v-model="form.title"
+                    v-model.trim="form.title"
                     :label="t('admin.classifications.title-field')"
                     :placeholder="t('admin.classifications.enter-title')"
                     required
+                />
+            </div>
+            <div class="form-section">
+                <TextInput
+                    v-model.trim="form.description"
+                    :label="t('admin.classifications.description-field')"
+                    :placeholder="t('admin.classifications.enter-description')"
+                    input-type="textarea"
                 />
             </div>
             <div class="form-section checkboxes">

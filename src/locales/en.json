@@ -126,7 +126,7 @@
             }
         },
         "featured-tags": {
-            "title": "Suggested tags",
+            "title": "Suggested project's tags",
             "notice": "Select tags that will be suggested by default when searching or creating projects"
         },
         "featured-skills": {
@@ -137,7 +137,9 @@
             "title": "Classifications",
             "subtitle": "Manage your custom classifications",
             "enter-title": "Enter a title",
+            "enter-description": "Enter a description",
             "title-field": "Title",
+            "description-field": "Description",
             "add-classification": {
                 "title": "Add a classification",
                 "error": "Error while saving the classification",

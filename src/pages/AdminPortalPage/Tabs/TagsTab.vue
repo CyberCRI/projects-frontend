@@ -36,6 +36,8 @@
                 v-if="selectedClassification"
                 :classification="selectedClassification"
                 @classification-deleted="onClassificationDeleted"
+                @classification-edited="onClassificationEdited"
+                @classification-created="onClassificationCreated"
             />
         </div>
         <EditClassification
