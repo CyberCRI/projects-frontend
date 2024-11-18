@@ -160,7 +160,7 @@ const getTags = debounce(async function () {
         const axiosReq = await getOrgClassificationTags(
             organizationsStore.current.code,
             props.classification.id,
-            { search: search.value, order_by: 'title', limit: props.pageLimit }
+            { search: search.value, ordering: 'title', limit: props.pageLimit }
         )
         request.value = axiosReq.data
         currentAxiosRequestConfig.value = axiosReq.config

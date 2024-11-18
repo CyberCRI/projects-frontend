@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 const props = defineProps({
     text: {
-        type: Object,
+        type: String,
         required: true,
     },
     maxLength: {

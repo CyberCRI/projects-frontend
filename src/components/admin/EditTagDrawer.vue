@@ -1,6 +1,6 @@
 <script setup>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { ref, watchEffect, computed } from 'vue'
+import { ref, watchEffect, computed, nextTick } from 'vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -28,8 +28,13 @@ const rules = computed(() => ({
     title_en: {
         required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
     },
-
     title_fr: {
+        required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
+    },
+    description_en: {
+        required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
+    },
+    description_fr: {
         required: helpers.withMessage(t('admin.classifications.tag-form.required-error'), required),
     },
 }))
@@ -59,6 +64,7 @@ const v$ = useValidate(rules, form)
 
 watchEffect(() => {
     if (props.isOpen) {
+        nextTick(() => v$.value.$reset())
         form.value = defaultForm()
         if (props.tag) {
             form.value = {
@@ -136,9 +142,9 @@ async function saveTag() {
         <div class="form-section">
             <TextInput
                 v-model.trim="form.title_en"
-                :label="t('admin.classifications.tag-form.title-en')"
+                :label="t('admin.classifications.tag-form.title-en') + ' *'"
                 :required="true"
-                max-length="50"
+                :max-length="50"
                 @blur="v$.title_en.$validate"
             />
             <div class="input-footer">
@@ -149,9 +155,9 @@ async function saveTag() {
         <div class="form-section">
             <TextInput
                 v-model.trim="form.title_fr"
-                :label="t('admin.classifications.tag-form.title-fr')"
+                :label="t('admin.classifications.tag-form.title-fr') + ' *'"
                 :required="true"
-                max-length="50"
+                :max-length="50"
                 @blur="v$.title_fr.$validate"
             />
             <div class="input-footer">
@@ -162,25 +168,29 @@ async function saveTag() {
         <div class="form-section">
             <TextInput
                 v-model.trim="form.description_en"
-                :label="t('admin.classifications.tag-form.description-en')"
+                :label="t('admin.classifications.tag-form.description-en') + ' *'"
                 :required="true"
                 input-type="textarea"
-                max-length="500"
+                :max-length="500"
+                @blur="v$.description_en.$validate"
             />
 
             <div class="input-footer">
+                <FieldErrors :errors="v$.description_en.$errors" />
                 <CharCounter :text="form.description_en" :max-length="500" />
             </div>
         </div>
         <div class="form-section">
             <TextInput
                 v-model.trim="form.description_fr"
-                :label="t('admin.classifications.tag-form.description-fr')"
+                :label="t('admin.classifications.tag-form.description-fr') + ' *'"
                 :required="true"
                 input-type="textarea"
-                max-length="500"
+                :max-length="500"
+                @blur="v$.description_fr.$validate"
             />
             <div class="input-footer">
+                <FieldErrors :errors="v$.description_fr.$errors" />
                 <CharCounter :text="form.description_fr" :max-length="500" />
             </div>
         </div>
