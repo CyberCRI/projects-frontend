@@ -19,8 +19,10 @@ import EditClassification from '@/components/admin/EditClassification.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useI18n } from 'vue-i18n'
+import useLanguagesStore from '@/stores/useLanguages'
 
 const { t } = useI18n()
+const languagesStore = useLanguagesStore()
 
 const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()
@@ -288,6 +290,14 @@ const onClassificationEdited = async (classification) => {
     editClassificationIsOpen.value = false
 }
 
+const tagLabel = (tag) => {
+    return tag[`title_${languagesStore.current}`] || tag.title
+}
+
+const tagDescription = (tag) => {
+    return tag[`description_${languagesStore.current}`] || tag.description
+}
+
 watch(() => [props.classification.value], fetchTagStats, { immediate: true })
 <<<<<<< HEAD
 =======
@@ -427,8 +437,8 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                     </td>
                 </tr>
                 <tr v-else v-for="tag in tagResults" :key="tag.id">
-                    <td>{{ tag.title }}</td>
-                    <td>{{ tag.description }}</td>
+                    <td>{{ tagLabel(tag) }}</td>
+                    <td>{{ tagDescription(tag) }}</td>
                     <td>
                         <div class="actions">
                             <ContextActionButton
