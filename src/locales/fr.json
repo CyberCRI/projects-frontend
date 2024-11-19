@@ -1523,6 +1523,7 @@
         "add-link-text-label": "Texte",
         "edit-link": "modifier un lien",
         "edit-file": "modifier un fichier",
+        "max-size": "Taille max. 10Mo",
         "invalid-image": "Fichier non supporté... est-ce bien une image ?",
         "error-uploading-image": "Erreur à la sauvegarde de l'image ",
         "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",

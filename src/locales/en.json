@@ -1527,6 +1527,7 @@
         "add-link-text-label": "Text",
         "edit-link": "edit a link",
         "edit-file": "edit a file",
+        "max-size": "Max size 10MB",
         "invalid-image": "Unsupported file ... is this an image ?",
         "error-uploading-image": "Error while uploading image ",
         "cannot-upload-image": "Cannot upload image for now",
