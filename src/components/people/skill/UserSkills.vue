@@ -14,6 +14,7 @@
                         v-if="(idx + idxOffset) % columnCount.length == column"
                         :key="skill.id"
                         :label="skillLabel(skill)"
+                        :description="skillDescription(skill)"
                         :level="Number(skill.level)"
                     />
                 </template>
@@ -120,6 +121,14 @@ export default {
         tagLabel(tag) {
             return tag[`title_${this.languagesStore.current}`] || tag.title
         },
+
+        skillDescription(skill) {
+            return this.descriptionLabel(skill.tag)
+        },
+
+        descriptionLabel(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
+        },
     },
 }
 </script>
@@ -161,8 +170,6 @@ export default {
     color: $primary-dark;
     font-size: $font-size-l;
     text-transform: uppercase;
-    padding-bottom: pxToRem(10px);
-    padding-top: pxToRem(8px);
 }
 
 .s-button {

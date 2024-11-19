@@ -57,6 +57,7 @@
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
                             :label="skillLabel(skill)"
+                            :description="skillDescription(skill)"
                             :level="Number(skill.level)"
                         />
                     </div>
@@ -131,10 +132,14 @@ export default {
             return this.user.skills || []
         },
         skills() {
-            return this.allSkills.filter((s) => s.type === 'skill')
+            return this.allSkills
+                .filter((s) => s.type === 'skill')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
         },
         hobbies() {
-            return this.allSkills.filter((s) => s.type === 'hobby')
+            return this.allSkills
+                .filter((s) => s.type === 'hobby')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
         },
     },
 
@@ -159,6 +164,13 @@ export default {
 
         tagLabel(tag) {
             return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
+        skillDescription(skill) {
+            return this.descriptionLabel(skill.tag)
+        },
+
+        descriptionLabel(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }

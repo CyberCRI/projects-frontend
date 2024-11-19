@@ -15,6 +15,7 @@
                     v-for="skill in visibleSkills"
                     :key="skill.id"
                     :label="skillLabel(skill)"
+                    :description="skillDescription(skill)"
                     :level="Number(skill.level)"
                 />
             </template>
@@ -74,7 +75,11 @@ export default {
         },
 
         visibleSkills() {
-            return this.allStepsVisible ? this.allSkills : this.allSkills.slice(0, this.maxSkills)
+            let skills = [...this.allSkills].sort(
+                (a, b) => b.level - a.level || this.skillLabel(a).localeCompare(this.skillLabel(b))
+            )
+            if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)
+            return skills
         },
 
         isCurrentUser() {
@@ -97,6 +102,13 @@ export default {
 
         tagLabel(tag) {
             return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
+        skillDescription(skill) {
+            return this.descriptionLabel(skill.tag)
+        },
+
+        descriptionLabel(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }
@@ -126,6 +138,7 @@ export default {
     .skills {
         display: flex;
         flex-direction: column;
+        gap: 0.75rem;
     }
 }
 
