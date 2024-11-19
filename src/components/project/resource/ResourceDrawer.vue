@@ -33,12 +33,15 @@
             <!-- ADD / EDIT LINK / FILE -->
             <div v-if="isLink || isFile">
                 <template v-if="isFile && isAddMode">
-                    <ImageInput
-                        id="add-file-input"
-                        :label="$filters.capitalize($t('file.upload') + ' *')"
-                        class="text-input"
-                        @upload-image="uploadImage"
-                    />
+                    <div class="file-input-ctn">
+                        <ImageInput
+                            id="add-file-input"
+                            :label="$filters.capitalize($t('file.upload') + ' *')"
+                            class="text-input"
+                            @upload-image="uploadImage"
+                        />
+                        <p>{{ $t('resource.max-size') }}</p>
+                    </div>
                     <p v-if="hasFileError" class="error error-file">
                         {{ $t('common.file-required') }}
                     </p>
@@ -431,6 +434,13 @@ export default {
             margin: $space-l;
         }
     }
+}
+
+.file-input-ctn {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
 :deep(.input-ctn) {
