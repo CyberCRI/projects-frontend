@@ -1309,45 +1309,27 @@
                 "suggested-skills": "Or pick a suggested skill",
                 "skills": {
                     "add": "Add professional skills",
-                    "edit-items": "Edit skills",
+                    "add-item": "Add a skill",
                     "edit-levels": "Edit levels",
                     "already-added": "Skill already added",
                     "levels-help": "Skill levels",
                     "drawer": {
-                        "add": {
-                            "title": "Add professional skills",
-                            "notice": "Type the label of your skill, and select the right one for you among suggestions.",
-                            "placeholder": "Type a skill",
-                            "confirm": "Next"
-                        },
-                        "edit": {
-                            "title": "Skill levels",
-                            "notice": "Indicate your level of mastery.",
-                            "help": "More about skill levels",
-                            "confirm": "Save"
-                        },
-                        "selection": "Selected skills"
-                    }
+                        "title": "Add professional skills",
+                        "notice": "Type the label of your skill, and select the right one for you among suggestions.",
+                        "placeholder": "Type a skill"
+                    },
+                    "selection": "Selected skills"
                 },
                 "hobbies": {
                     "add": "Add hobbies",
-                    "edit-items": "Edit hobbies",
+                    "add-item": "Add a hobby",
                     "already-added": "Hobby already added",
                     "edit-levels": "Edit levels",
                     "levels-help": "Hobbies levels",
                     "drawer": {
-                        "add": {
-                            "title": "Add personal hobbies",
-                            "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
-                            "placeholder": "Type a hobby",
-                            "confirm": "Next"
-                        },
-                        "edit": {
-                            "title": "Hobbies levels",
-                            "notice": "Indicate your level of mastery.",
-                            "help": "More about the hobbies levels",
-                            "confirm": "Save"
-                        }
+                        "title": "Add a personal hobby",
+                        "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
+                        "placeholder": "Type a hobby"
                     },
                     "selection": "Selected hobbies"
                 },

@@ -1304,45 +1304,27 @@
                 "suggested-skills": "Ou choisissez parmi les compétences suggérées",
                 "skills": {
                     "add": "Ajouter des compétences professionnelles",
-                    "edit-items": "Éditer les compétences",
+                    "add-item": "Ajouter une compétence",
                     "edit-levels": "Éditer les niveaux",
                     "levels-help": "Niveau de compétence",
                     "already-added": "Compétence déjà ajoutée",
                     "drawer": {
-                        "add": {
-                            "title": "Ajouter des compétences professionnelles",
-                            "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
-                            "placeholder": "Taper une compétence",
-                            "confirm": "Suivant"
-                        },
-                        "edit": {
-                            "title": "Niveaux de compétences",
-                            "notice": "Indiquez votre niveau de maîtrise.",
-                            "help": "Plus à propos des niveaux de compétences",
-                            "confirm": "Sauvegarder"
-                        }
+                        "title": "Ajouter des compétences professionnelles",
+                        "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
+                        "placeholder": "Taper une compétence"
                     },
                     "selection": "Compétences sélectionnées"
                 },
                 "hobbies": {
                     "add": "Ajouter des hobbies",
-                    "edit-items": "Éditer les hobbies",
+                    "add-item": "Ajouter un hobby",
                     "edit-levels": "Éditer les niveaux",
                     "levels-help": "Niveau des hobbies",
                     "already-added": "Hobby déjà ajouté",
                     "drawer": {
-                        "add": {
-                            "title": "Ajouter des hobbies personnels",
-                            "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
-                            "placeholder": "Tapez un hobby",
-                            "confirm": "Suivant"
-                        },
-                        "edit": {
-                            "title": "Niveaux des hobbies",
-                            "notice": "Indiquer votre niveau pour chaque hobby",
-                            "help": "En savoir plus sur les niveaux de hobby",
-                            "confirm": "Sauvegarder"
-                        }
+                        "title": "Ajouter des hobbies personnels",
+                        "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
+                        "placeholder": "Tapez un hobby"
                     },
                     "selection": "Hobbies sélectionnés"
                 },

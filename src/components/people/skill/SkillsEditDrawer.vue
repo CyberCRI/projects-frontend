@@ -1,31 +1,14 @@
 <template>
     <BaseDrawer
-        :confirm-action-disabled="asyncing"
-        :confirm-action-name="
-            selection && selection.length
-                ? $t(`profile.edit.skills.${type}.drawer.${mode}.confirm`)
-                : $t(`profile.edit.skills.${type}.drawer.edit.confirm`)
-        "
+        :confirm-action-disabled="asyncing || !addedTalent"
+        :confirm-action-name="$t('common.save')"
         :is-opened="isOpen"
-        :title="$t(`profile.edit.skills.${type}.drawer.${mode}.title`)"
+        :title="$t(`profile.edit.skills.${type}.drawer.title`)"
         class="medium"
         @close="$emit('close')"
-        @confirm="confirm"
+        @confirm="save"
     >
-        <div class="add-skill-mode" v-if="mode == 'add'">
-            <div class="section">
-                <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.selection`) }}</p>
-                <div class="selected-list no-shrink">
-                    <FilterValue
-                        v-for="skill in selection"
-                        :key="skill.tag.id"
-                        :label="skillLabel(skill)"
-                        icon="Close"
-                        type="actionable"
-                        @click="removeFromSelection(skill)"
-                    />
-                </div>
-            </div>
+        <div class="add-skill-mode" v-if="!addedTalent">
             <div class="section" v-if="!searchAllMode">
                 <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
@@ -33,7 +16,7 @@
             </div>
 
             <div v-show="searchAllMode || showTagSearch" class="section">
-                <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.add.notice`) }}</p>
+                <p class="notice">{{ $t(`profile.edit.skills.${type}.drawer.notice`) }}</p>
                 <div class="search-field no-shrink">
                     <SearchInput
                         v-model.trim="search"
@@ -41,7 +24,7 @@
                         @enter="doSearch"
                         :suggestions="suggestions"
                         @keyup="suggest"
-                        :placeholder="$t(`profile.edit.skills.${type}.drawer.add.placeholder`)"
+                        :placeholder="$t(`profile.edit.skills.${type}.drawer.placeholder`)"
                     />
                     <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
                 </div>
@@ -52,7 +35,7 @@
                 <SuggestedTags
                     :current-tags="selectionAsTags"
                     :suggested-tags="suggestedTags"
-                    @add-tag="addToSelection"
+                    @add-tag="selectTalent"
                     :loading="suggestedTagsisLoading"
                 />
             </div>
@@ -67,14 +50,14 @@
                     :existing-tags="selectionAsTags"
                     inline
                     :search="confirmedSearch"
-                    @add-tag="addToSelection"
+                    @add-tag="selectTalent"
                     @results-count="searchResultsCount = $event"
                     :all-classifications="orgClassifications"
                     :search-all="searchAllMode"
                 />
             </div>
         </div>
-        <div class="edit-skill-mode" v-else-if="mode == 'edit'">
+        <div class="edit-skill-mode" v-else>
             <p class="notice">
                 {{ $t(`profile.edit.skills.${type}.drawer.edit.notice`) }}
 
@@ -85,17 +68,21 @@
                     </a>
                 </SkillLevelTip>
             </p>
+
             <div class="level-editor-list">
-                <div class="entry" v-for="skill in selection" :key="skill.tag.id">
-                    <h4 class="skill-name">{{ skillLabel(skill) }}</h4>
+                <div class="entry" :key="`${addedTalent.id}-${addedTalent.level}`">
+                    <h4 class="skill-name">{{ skillLabel(addedTalent) }}</h4>
                     <div class="level-editor">
                         <label
                             class="level"
                             v-for="level in skillLevels"
-                            @click="setSkillLevel(skill, level.value)"
+                            @click="setTalentLevel(addedTalent, level.value)"
                             :key="level.value"
                         >
-                            <input type="radio" :checked="level.value == clampLevel(skill.level)" />
+                            <input
+                                type="radio"
+                                :checked="level.value == clampLevel(addedTalent.level)"
+                            />
                             <span class="level-name">{{ level.label }}</span>
                         </label>
                     </div>
@@ -103,7 +90,7 @@
                         <IconImage
                             name="TrashCanOutline"
                             class="delete-icon"
-                            @click="removeFromSelection(skill)"
+                            @click="addedTalent = null"
                         />
                     </div>
                 </div>
@@ -115,11 +102,9 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { toRaw } from 'vue'
-import { postUserSkill, patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
-import isEqual from 'lodash.isequal'
+import { postUserSkill } from '@/api/people.service.ts'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -187,7 +172,6 @@ export default {
         BaseDrawer,
         IconImage,
         SearchInput,
-        FilterValue,
         TagResults,
         SkillLevelTip,
         LpiButton,
@@ -202,10 +186,6 @@ export default {
         },
         type: {
             type: String, // skills | hobbies
-            required: true,
-        },
-        mode: {
-            type: String, // add | edit
             required: true,
         },
         user: {
@@ -223,9 +203,22 @@ export default {
             selection: [],
             asyncing: false,
             searchResultsCount: 0,
+            addedTalent: null,
         }
     },
     computed: {
+        selectionAsTags() {
+            return this.selection.map((s) => s.tag)
+        },
+        allSkills() {
+            return this.user.skills || []
+        },
+        skills() {
+            return this.allSkills.filter((s) => s.type === 'skill')
+        },
+        hobbies() {
+            return this.allSkills.filter((s) => s.type === 'hobby')
+        },
         skillLevels() {
             // CAUTION : this must be ordered from lowest to highest (see clampLevel())
             return [
@@ -247,22 +240,11 @@ export default {
                 },
             ]
         },
-        selectionAsTags() {
-            return this.selection.map((s) => s.tag)
-        },
-        allSkills() {
-            return this.user.skills || []
-        },
-        skills() {
-            return this.allSkills.filter((s) => s.type === 'skill')
-        },
-        hobbies() {
-            return this.allSkills.filter((s) => s.type === 'hobby')
-        },
     },
     watch: {
         isOpen(neo) {
             if (neo) {
+                this.addedTalent = null
                 this.search = ''
                 this.confirmedSearch = ''
                 this.selection = this.getSkillOfType(this.type)
@@ -275,6 +257,12 @@ export default {
         },
     },
     methods: {
+        clampLevel(level) {
+            return Math.min(
+                Math.max(level, this.skillLevels[0].value),
+                this.skillLevels[this.skillLevels.length - 1].value
+            )
+        },
         getSkillOfType(type) {
             if (type == 'skills') return this.skills
             else return this.hobbies
@@ -296,74 +284,19 @@ export default {
             this.confirmedSearch = ''
         },
 
-        clampLevel(level) {
-            return Math.min(
-                Math.max(level, this.skillLevels[0].value),
-                this.skillLevels[this.skillLevels.length - 1].value
-            )
-        },
-        async confirm() {
-            if (this.mode === 'add') {
-                if (this.selection && this.selection.length) this.$emit('switch-mode', 'edit')
-                else this.save() // no selection just delete everything and close
-            } else {
-                this.save()
-            }
-        },
-
         async save() {
             // save selection
             this.asyncing = true
 
-            // talents to add don't have id yet
-            const talentsToAdd = this.selection.filter((s) => !s.id)
-
-            const selectionMap = this.selection.reduce((acc, talent) => {
-                if (talent.id) acc[talent.id] = toRaw(talent)
-                return acc
-            }, {})
-
-            // talents to delete are in the user but not in the selection
-            const talentsToDelete = []
-            // talents to update are in the user and in the selection but have different values
-            const talentsToUpdate = []
-            // filter talents to delete and update
-            this.getSkillOfType(this.type).forEach((talent) => {
-                const rawTalent = toRaw(talent)
-                const selectedTalent = selectionMap[rawTalent.id]
-                if (selectedTalent) {
-                    if (!isEqual(rawTalent, selectedTalent)) {
-                        talentsToUpdate.push(selectedTalent)
-                    }
-                } else {
-                    talentsToDelete.push(rawTalent)
-                }
-            })
-
-            let errorDuringSave = false
-            // do needed api requests
             try {
-                await Promise.all(
-                    talentsToDelete.map((talent) => {
-                        return deleteUserSkill(this.user.id, talent.id)
-                    })
-                )
+                await postUserSkill(this.user.id, {
+                    ...this.addedTalent,
+                    tag: this.addedTalent.tag.id,
+                })
+                this.reloadUser()
+                this.$emit('skills-updated')
+                this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
             } catch (error) {
-                errorDuringSave = true
-                this.toaster.pushError(`${this.$t('profile.edit.skills.save-error')} (${error})`)
-                console.error(error)
-            }
-            try {
-                await Promise.all(
-                    talentsToAdd.map((talent) => {
-                        return postUserSkill(this.user.id, {
-                            ...talent,
-                            tag: talent.tag.id,
-                        })
-                    })
-                )
-            } catch (error) {
-                errorDuringSave = true
                 if (error.response.status === 409) {
                     this.toaster.pushError(
                         `${this.$t(`profile.edit.skills.${this.type}.already-added`)}`
@@ -373,36 +306,12 @@ export default {
                         `${this.$t('profile.edit.skills.save-error')} (${error})`
                     )
                 }
+            } finally {
+                this.asyncing = false
+                this.$emit('close')
             }
-            try {
-                await Promise.all(
-                    talentsToUpdate.map((talent) => {
-                        return patchUserSkill(this.user.id, talent.id, {
-                            ...talent,
-                            tag: talent.tag.id,
-                        })
-                    })
-                )
-            } catch (error) {
-                errorDuringSave = true
-                this.toaster.pushError(`${this.$t('profile.edit.skills.save-error')} (${error})`)
-                console.error(error)
-            }
-
-            // reload user
-            this.reloadUser()
-            // confirm success
-            if (!errorDuringSave) {
-                this.$emit('skills-updated')
-                this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
-            }
-            this.asyncing = false
-            this.$emit('close')
         },
-        removeFromSelection(skill) {
-            this.selection = this.selection.filter((s) => s.tag.id !== skill.tag.id)
-        },
-        addToSelection(tag) {
+        selectTalent(tag) {
             const skill = {
                 tag: tag,
                 level: 1,
@@ -411,10 +320,10 @@ export default {
                 category: '', // TODO: check what this is
                 user: this.user.id,
             }
-            this.selection = [...this.selection, skill]
+            this.addedTalent = skill
         },
-        setSkillLevel(skill, level) {
-            skill.level = level
+        setTalentLevel(talent, level) {
+            talent.level = level
         },
 
         skillLabel(skill) {
@@ -492,100 +401,6 @@ export default {
         margin-top: $space-m;
     }
 
-    .level-editor-list {
-        margin-top: $space-xl;
-
-        .entry {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: space-between;
-            gap: $space-unit;
-            align-items: center;
-            border-top: $border-width-s solid $lighter-gray;
-            padding: $space-l 0;
-
-            &:last-child {
-                border-bottom: $border-width-s solid $lighter-gray;
-            }
-
-            .skill-name {
-                font-weight: 700;
-            }
-
-            .level-editor {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: flex-end;
-                align-items: center;
-                gap: $space-m;
-                flex-shrink: 0;
-                flex-grow: 1;
-
-                .level {
-                    display: flex;
-                    flex-flow: row nowrap;
-                    justify-content: flex-start;
-                    align-items: center;
-                    gap: $space-s;
-                    margin: 0;
-                    font-size: 1rem;
-
-                    input[type='radio'] {
-                        appearance: none;
-                        background-color: $white;
-                        margin: 0;
-                        font: inherit;
-                        width: $font-size-l;
-                        height: $font-size-l;
-                        border: $border-width-s solid $primary-dark;
-                        border-radius: 100%;
-                        transform: translateY(-0.075em);
-                        display: inline-block;
-                        position: relative;
-                        cursor: pointer;
-                    }
-
-                    input[type='radio']::before {
-                        content: '';
-                        display: inline-block;
-                        width: $font-size-xs;
-                        height: $font-size-xs;
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%) scale(0);
-                        transition: 120ms transform ease-in-out;
-                        box-shadow: inset 1em 1em $primary-dark;
-                        border-radius: 100%;
-                    }
-
-                    input[type='radio']:checked::before {
-                        transform: translate(-50%, -50%) scale(1);
-                    }
-
-                    .level-name {
-                        color: $primary-dark;
-                        font-weight: 700;
-                    }
-                }
-            }
-
-            .delete-action {
-                padding: 0 $space-m;
-                flex-shrink: 0;
-
-                .delete-icon {
-                    width: $font-size-l;
-                    height: $font-size-l;
-                    fill: $primary-dark;
-                    display: inline-block;
-                    vertical-align: middle;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-
     .help-link {
         color: $primary-dark;
         text-decoration: underline;
@@ -603,5 +418,99 @@ export default {
 
 .section + .section {
     margin-top: $space-l;
+}
+
+.level-editor-list {
+    margin-top: $space-xl;
+
+    .entry {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        gap: $space-unit;
+        align-items: center;
+        border-top: $border-width-s solid $lighter-gray;
+        padding: $space-l 0;
+
+        &:last-child {
+            border-bottom: $border-width-s solid $lighter-gray;
+        }
+
+        .skill-name {
+            font-weight: 700;
+        }
+
+        .level-editor {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-end;
+            align-items: center;
+            gap: $space-m;
+            flex-shrink: 0;
+            flex-grow: 1;
+
+            .level {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+                align-items: center;
+                gap: $space-s;
+                margin: 0;
+                font-size: 1rem;
+
+                input[type='radio'] {
+                    appearance: none;
+                    background-color: $white;
+                    margin: 0;
+                    font: inherit;
+                    width: $font-size-l;
+                    height: $font-size-l;
+                    border: $border-width-s solid $primary-dark;
+                    border-radius: 100%;
+                    transform: translateY(-0.075em);
+                    display: inline-block;
+                    position: relative;
+                    cursor: pointer;
+                }
+
+                input[type='radio']::before {
+                    content: '';
+                    display: inline-block;
+                    width: $font-size-xs;
+                    height: $font-size-xs;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%) scale(0);
+                    transition: 120ms transform ease-in-out;
+                    box-shadow: inset 1em 1em $primary-dark;
+                    border-radius: 100%;
+                }
+
+                input[type='radio']:checked::before {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+
+                .level-name {
+                    color: $primary-dark;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .delete-action {
+            padding: 0 $space-m;
+            flex-shrink: 0;
+
+            .delete-icon {
+                width: $font-size-l;
+                height: $font-size-l;
+                fill: $primary-dark;
+                display: inline-block;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+        }
+    }
 }
 </style>
