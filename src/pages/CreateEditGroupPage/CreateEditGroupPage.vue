@@ -149,7 +149,7 @@ export default {
                 },
                 email: {
                     email: helpers.withMessage(
-                        this.$t('profile.edit.general.personal-email.is-email'),
+                        this.$t('profile.edit.general.professional-email.is-email'),
                         email
                     ),
                 },
@@ -409,10 +409,8 @@ export default {
 
                     // TODO: make this in POST when backend allows it
                     payloadHeader.delete('file')
-                    await patchGroupHeader(this.orgCode, groupId, payloadHeader)
-                } else if (this.groupProjectData?.header_image?.id) {
-                    await patchGroupHeader(this.orgCode, groupId, payloadHeader)
                 }
+                await patchGroupHeader(this.orgCode, groupId, payloadHeader)
             }
         },
 
