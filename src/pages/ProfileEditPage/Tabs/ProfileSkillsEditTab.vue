@@ -44,34 +44,13 @@
                         </SkillLevelTip>
                     </div>
                     <div class="level-editor-list">
-                        <div
-                            class="entry"
+                        <SkillEditor
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
-                        >
-                            <h4 class="skill-name">{{ skillLabel(skill) }}</h4>
-                            <div class="level-editor">
-                                <label
-                                    class="level"
-                                    v-for="level in skillLevels"
-                                    @click="setTalentLevel(skill, level.value)"
-                                    :key="level.value"
-                                >
-                                    <input
-                                        type="radio"
-                                        :checked="level.value == clampLevel(skill.level)"
-                                    />
-                                    <span class="level-name">{{ level.label }}</span>
-                                </label>
-                            </div>
-                            <div class="delete-action">
-                                <IconImage
-                                    name="TrashCanOutline"
-                                    class="delete-icon"
-                                    @click="removeTalent(skill)"
-                                />
-                            </div>
-                        </div>
+                            :skill="skill"
+                            @set-level="setTalentLevel($event.skill, $event.level)"
+                            @delete="removeTalent"
+                        />
                     </div>
                 </template>
                 <div v-else class="add-action">
@@ -101,9 +80,9 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import useLanguagesStore from '@/stores/useLanguages'
-import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import SkillEditor from '@/components/people/skill/SkillEditor.vue'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
@@ -111,7 +90,7 @@ export default {
         SkillsEditDrawer,
         SkillLevelTip,
         LinkButton,
-        IconImage,
+        SkillEditor,
     },
 
     emits: ['edited', 'profile-edited'],
@@ -304,95 +283,5 @@ export default {
 
 .level-editor-list {
     margin-top: $space-xl;
-
-    .entry {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        gap: $space-unit;
-        align-items: center;
-        border-top: $border-width-s solid $lighter-gray;
-        padding: $space-l 0;
-
-        &:last-child {
-            border-bottom: $border-width-s solid $lighter-gray;
-        }
-
-        .skill-name {
-            font-weight: 700;
-        }
-
-        .level-editor {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-end;
-            align-items: center;
-            gap: $space-m;
-            flex-shrink: 0;
-            flex-grow: 1;
-
-            .level {
-                display: flex;
-                flex-flow: row nowrap;
-                justify-content: flex-start;
-                align-items: center;
-                gap: $space-s;
-                margin: 0;
-                font-size: 1rem;
-
-                input[type='radio'] {
-                    appearance: none;
-                    background-color: $white;
-                    margin: 0;
-                    font: inherit;
-                    width: $font-size-l;
-                    height: $font-size-l;
-                    border: $border-width-s solid $primary-dark;
-                    border-radius: 100%;
-                    transform: translateY(-0.075em);
-                    display: inline-block;
-                    position: relative;
-                    cursor: pointer;
-                }
-
-                input[type='radio']::before {
-                    content: '';
-                    display: inline-block;
-                    width: $font-size-xs;
-                    height: $font-size-xs;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%) scale(0);
-                    transition: 120ms transform ease-in-out;
-                    box-shadow: inset 1em 1em $primary-dark;
-                    border-radius: 100%;
-                }
-
-                input[type='radio']:checked::before {
-                    transform: translate(-50%, -50%) scale(1);
-                }
-
-                .level-name {
-                    color: $primary-dark;
-                    font-weight: 700;
-                }
-            }
-        }
-
-        .delete-action {
-            padding: 0 $space-m;
-            flex-shrink: 0;
-
-            .delete-icon {
-                width: $font-size-l;
-                height: $font-size-l;
-                fill: $primary-dark;
-                display: inline-block;
-                vertical-align: middle;
-                cursor: pointer;
-            }
-        }
-    }
 }
 </style>
