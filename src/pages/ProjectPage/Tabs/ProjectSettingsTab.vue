@@ -126,7 +126,7 @@
                 <div class="section section--green">
                     <h3 class="label">{{ $t('project.actions') }}</h3>
 
-                    <template v-if="canEditProject">
+                    <template v-if="canEditProject || isOrgUser">
                         <LinkButton
                             :label="$filters.capitalize($t('project.duplicate'))"
                             class="button"
