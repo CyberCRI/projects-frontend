@@ -86,6 +86,16 @@ export default {
             )
         },
 
+        isOrgUser() {
+            const orgId = this.currentOrganizationForPermissions.id
+            return (
+                this.isConnectedForPermissions &&
+                this.getUserRolesForPermissions.some(
+                    (role) => role === `organization:#${orgId}:users`
+                )
+            )
+        },
+
         isAdminOrFacilitator() {
             return this.isAdmin || this.isFacilitator
         },
