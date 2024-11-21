@@ -225,11 +225,6 @@ export default {
 <style scoped lang="scss">
 @import './profile-form';
 
-.profile-edit-skills {
-    width: pxToRem(600px);
-    margin: 0 auto;
-}
-
 .initial-screen {
     .intro {
         margin-top: $space-xl;
