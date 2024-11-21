@@ -108,7 +108,7 @@
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
             :title="$t('project.form.add-tags')"
-            class="small"
+            class="medium"
             @close="closeTagSearchTags"
             @confirm="saveTags"
         >

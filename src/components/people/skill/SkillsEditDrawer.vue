@@ -59,12 +59,12 @@
         </div>
         <div class="edit-skill-mode" v-else>
             <p class="notice">
-                {{ $t(`profile.edit.skills.${type}.drawer.edit.notice`) }}
+                {{ $t(`profile.edit.skills.${type}.drawer.notice-levels`) }}
 
                 <SkillLevelTip>
                     <a href="#" class="help-link">
                         <IconImage name="HelpCircle" class="help-icon" />
-                        {{ $t(`profile.edit.skills.${type}.drawer.edit.help`) }}
+                        {{ $t(`profile.edit.skills.${type}.drawer.help-levels`) }}
                     </a>
                 </SkillLevelTip>
             </p>

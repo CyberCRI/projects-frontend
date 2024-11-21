@@ -1311,7 +1311,9 @@
                     "drawer": {
                         "title": "Ajouter des compétences professionnelles",
                         "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
-                        "placeholder": "Taper une compétence"
+                        "placeholder": "Taper une compétence",
+                        "notice-levels": "Indiquez votre niveau de maîtrise.",
+                        "help-levels": "Plus à propos des niveaux de compétences"
                     },
                     "selection": "Compétences sélectionnées"
                 },
@@ -1324,7 +1326,9 @@
                     "drawer": {
                         "title": "Ajouter des hobbies personnels",
                         "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
-                        "placeholder": "Tapez un hobby"
+                        "placeholder": "Tapez un hobby",
+                        "notice-levels": "Indiquer votre niveau pour chaque hobby",
+                        "help-levels": "En savoir plus sur les niveaux de hobby"
                     },
                     "selection": "Hobbies sélectionnés"
                 },

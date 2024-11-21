@@ -1316,7 +1316,9 @@
                     "drawer": {
                         "title": "Add professional skills",
                         "notice": "Type the label of your skill, and select the right one for you among suggestions.",
-                        "placeholder": "Type a skill"
+                        "placeholder": "Type a skill",
+                        "notice-levels": "Indicate your level of mastery.",
+                        "help-levels": "More about skill levels"
                     },
                     "selection": "Selected skills"
                 },
@@ -1329,7 +1331,9 @@
                     "drawer": {
                         "title": "Add a personal hobby",
                         "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
-                        "placeholder": "Type a hobby"
+                        "placeholder": "Type a hobby",
+                        "notice-levels": "Indicate your level of mastery.",
+                        "help-levels": "More about the hobbies levels"
                     },
                     "selection": "Selected hobbies"
                 },
