@@ -1304,6 +1304,9 @@
                 "save-success": "Le profil a été sauvegardé.",
                 "suggested-skills": "Ou choisissez parmi les compétences suggérées",
                 "skills": {
+                    "add-success": "Comptétence '{name}' ajoutée.",
+                    "edit-success": "Comptétence '{name}' éditée.",
+                    "delete-success": "Comptétence '{name}' suppriée.",
                     "add": "Ajouter des compétences professionnelles",
                     "add-item": "Ajouter une compétence",
                     "edit-levels": "Éditer les niveaux",
@@ -1319,6 +1322,9 @@
                     "selection": "Compétences sélectionnées"
                 },
                 "hobbies": {
+                    "add-success": "Hobby '{name}' ajouté.",
+                    "edit-success": "Hobby '{name}' édité.",
+                    "delete-success": "Hobby '{name}' supprimé.",
                     "add": "Ajouter des hobbies",
                     "add-item": "Ajouter un hobby",
                     "edit-levels": "Éditer les niveaux",

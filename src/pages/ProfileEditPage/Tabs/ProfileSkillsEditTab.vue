@@ -48,8 +48,8 @@
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
                             :skill="skill"
-                            @set-level="setTalentLevel($event.skill, $event.level)"
-                            @delete="removeTalent"
+                            @set-level="setTalentLevel(key, $event.skill, $event.level)"
+                            @delete="removeTalent(key, $event)"
                         />
                     </div>
                 </template>
@@ -165,7 +165,7 @@ export default {
     },
 
     methods: {
-        async setTalentLevel(talent, newLevel) {
+        async setTalentLevel(type, talent, newLevel) {
             if (this.clampLevel(talent.level) !== newLevel) {
                 try {
                     await patchUserSkill(this.user.id, talent.id, {
@@ -173,7 +173,11 @@ export default {
                         level: newLevel,
                         tag: talent.tag.id,
                     })
-                    this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
+                    this.toaster.pushSuccess(
+                        this.$t(`profile.edit.skills.${type}.edit-success`, {
+                            name: this.skillLabel(talent),
+                        })
+                    )
                     this.reloadUser()
                     this.$emit('profile-edited')
                 } catch (error) {
@@ -182,10 +186,14 @@ export default {
                 }
             }
         },
-        async removeTalent(talent) {
+        async removeTalent(type, talent) {
             try {
                 await deleteUserSkill(this.user.id, talent.id)
-                this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
+                this.toaster.pushSuccess(
+                    this.$t(`profile.edit.skills.${type}.delete-success`, {
+                        name: this.skillLabel(talent),
+                    })
+                )
                 this.reloadUser()
                 this.$emit('profile-edited')
             } catch (error) {

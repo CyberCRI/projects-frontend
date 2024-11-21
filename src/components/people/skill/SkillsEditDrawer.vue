@@ -251,7 +251,11 @@ export default {
                 })
                 this.reloadUser()
                 this.$emit('skills-updated')
-                this.toaster.pushSuccess(this.$t('profile.edit.skills.save-success'))
+                this.toaster.pushSuccess(
+                    this.$t(`profile.edit.skills.${this.type}.add-success`, {
+                        name: this.skillLabel(this.addedTalent),
+                    })
+                )
             } catch (error) {
                 if (error.response.status === 409) {
                     this.toaster.pushError(
@@ -280,6 +284,13 @@ export default {
         },
         setTalentLevel(talent, level) {
             talent.level = level
+        },
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

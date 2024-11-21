@@ -1309,6 +1309,9 @@
                 "search": "search",
                 "suggested-skills": "Or pick a suggested skill",
                 "skills": {
+                    "add-success": "Skill '{name}' added.",
+                    "edit-success": "Skill '{name}' edited.",
+                    "delete-success": "Skill '{name}' removed.",
                     "add": "Add professional skills",
                     "add-item": "Add a skill",
                     "edit-levels": "Edit levels",
@@ -1324,6 +1327,9 @@
                     "selection": "Selected skills"
                 },
                 "hobbies": {
+                    "add-success": "Hobby '{name}' added.",
+                    "edit-success": "Hobby '{name}' edited.",
+                    "delete-success": "Hobby '{name}' removed.",
                     "add": "Add hobbies",
                     "add-item": "Add a hobby",
                     "already-added": "Hobby already added",
