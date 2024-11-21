@@ -1,7 +1,12 @@
 <template>
     <div :class="{ inline }" class="skills-filter-editor">
         <div class="section">
-            <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
+            <CurrentTags
+                :current-tags="skills"
+                class="current-skills"
+                @remove-tag="removeSkill"
+                show-separator
+            />
         </div>
 
         <div class="section" v-if="!allSearchMode">

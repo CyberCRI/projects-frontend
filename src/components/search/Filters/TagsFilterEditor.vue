@@ -1,7 +1,12 @@
 <template>
     <div :class="{ inline }" class="tags-filter-editor">
         <div class="section">
-            <CurrentTags :current-tags="tags" class="current-tags" @remove-tag="removeTag" />
+            <CurrentTags
+                :current-tags="tags"
+                class="current-tags"
+                @remove-tag="removeTag"
+                show-separator
+            />
         </div>
 
         <div class="section" v-if="!allSearchMode">

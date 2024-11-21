@@ -1,7 +1,7 @@
 <template>
     <div v-if="currentTags.length" class="current-tags-ctn">
         <template v-for="(tag, index) in currentTags">
-            <span :key="tag.id" v-if="index > 0"> {{ $t('search.or') }} </span>
+            <span :key="tag.id" v-if="showSeparator && index > 0"> {{ $t('search.or') }} </span>
             <FilterValue
                 :key="tag.id"
                 v-if="tagLabel(tag)"
@@ -35,6 +35,11 @@ export default {
         currentTags: {
             type: Array,
             default: () => [],
+        },
+
+        showSeparator: {
+            type: Boolean,
+            default: false,
         },
     },
 
