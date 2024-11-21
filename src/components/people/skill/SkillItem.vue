@@ -1,7 +1,7 @@
 <template>
     <div class="skill" :class="{ 'is-open': isOpen }">
         <div class="summary-content" @click="isOpen = !isOpen">
-            <IconImage class="chevron" name="MenuDown" />
+            <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
             <span class="skill-title">{{ $filters.capitalize(label) }}</span>
             <SkillSteps :active-step="level" :steps="steps" class="steps" />
         </div>
@@ -60,13 +60,13 @@ export default {
 .chevron {
     flex-shrink: 0;
     width: 1rem;
-    transform: scale(2) translate(-0.2rem, 0.1rem) rotate(-90deg);
+    transform: scale(1.2) translate(-0.2rem, 0.1rem) rotate(-90deg);
     transition: all 400ms ease-in-out;
     transform-origin: center;
 }
 
 .is-open .chevron {
-    transform: scale(2) translateX(-0.2rem) rotate(0deg);
+    transform: scale(1.1) translate(-0.4rem, 0.2rem) rotate(0deg);
 }
 
 .skill-title {
