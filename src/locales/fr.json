@@ -1179,6 +1179,7 @@
     "profile": {
         "edit": {
             "edit-my-profile": "Éditer mon profil",
+            "edit-other-profile": "Éditer le profil de {name}",
             "edit-your-profile": "Éditer votre profil",
             "notice": "Les champs marqués * sont obligatoires.",
             "help": "Besoin d'aide ? On est là.",

@@ -1,15 +1,23 @@
 <template>
     <div class="skill-tab">
+        <div class="header">
+            <SkillLevelTip>
+                <LinkButton
+                    :label="$t(`me.levels-help-link`)"
+                    btn-icon="HelpCircle"
+                    data-test="skill-levels-help-button"
+                />
+            </SkillLevelTip>
+            <LinkButton
+                v-if="isCurrentUser || canEditUser"
+                class="edit-btn"
+                btn-icon="Pen"
+                :label="$t('common.edit')"
+                :to="editProfileSkillLink"
+                data-test="edit-skills"
+            />
+        </div>
         <template v-if="allSkills.length">
-            <div class="help">
-                <SkillLevelTip>
-                    <LinkButton
-                        :label="$t(`me.levels-help-link`)"
-                        btn-icon="HelpCircle"
-                        data-test="skill-levels-help-button"
-                    />
-                </SkillLevelTip>
-            </div>
             <section class="section" v-if="skills?.length">
                 <UserSkills :full-list="true" :skills="skills" :title="$t('me.skills')" />
             </section>
@@ -27,9 +35,12 @@ import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'ProfileSkillTab',
+
+    mixins: [permissions],
 
     components: {
         UserSkills,
@@ -52,6 +63,13 @@ export default {
     },
 
     computed: {
+        editProfileSkillLink() {
+            return {
+                name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
+                params: this.isCurrentUser ? {} : { userId: this.user.id },
+            }
+        },
+
         allSkills() {
             return this.user.skills || []
         },
@@ -107,6 +125,12 @@ export default {
 
 .section + .section {
     margin-top: $space-xl;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media screen and (max-width: $min-tablet) {

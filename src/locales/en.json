@@ -1182,7 +1182,8 @@
     },
     "profile": {
         "edit": {
-            "edit-my-profile": "Edit my Profile",
+            "edit-my-profile": "Edit my profile",
+            "edit-other-profile": "Edit {name} profile",
             "edit-your-profile": "Edit your profile",
             "notice": "Fields with * are mandatory.",
             "help": "Need help? We're here.",

@@ -178,10 +178,61 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/profile/edit',
         name: 'ProfileEdit',
+        redirect: { name: 'ProfileEditGeneral' },
         component: () =>
             import(
                 /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
+        children: [
+            {
+                path: 'general',
+                name: 'ProfileEditGeneral',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'
+                    ),
+            },
+            {
+                path: 'bio',
+                name: 'ProfileEditBio',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'
+                    ),
+            },
+            {
+                path: 'projects',
+                name: 'ProfileEditProjects',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'groups',
+                name: 'ProfileEditGroups',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileGroupsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'skills',
+                name: 'ProfileEditSkills',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'privacy',
+                name: 'ProfileEditPrivacy',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'
+                    ),
+            },
+        ],
         meta: {
             resetScroll: true,
             requiresAuth: true,
@@ -207,10 +258,61 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/profile/edit/:userId',
         name: 'ProfileEditOtherUser',
+        redirect: { name: 'ProfileEditGeneralOther' },
         component: () =>
             import(
                 /* webpackChunkName: "ProfileEditPage" */ '../pages/ProfileEditPage/ProfileEditPage.vue'
             ),
+        children: [
+            {
+                path: 'general',
+                name: 'ProfileEditGeneralOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'
+                    ),
+            },
+            {
+                path: 'bio',
+                name: 'ProfileEditBioOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'
+                    ),
+            },
+            {
+                path: 'projects',
+                name: 'ProfileEditProjectsOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'groups',
+                name: 'ProfileEditGroupsOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileGroupsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'skills',
+                name: 'ProfileEditSkillsOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
+                    ),
+            },
+            {
+                path: 'privacy',
+                name: 'ProfileEditPrivacyOther',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ProfileProjectTab" */ '../pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'
+                    ),
+            },
+        ],
         props: true,
         meta: {
             resetScroll: true,
