@@ -6,7 +6,7 @@
             :title="$t('project.edit')"
             :is-opened="isOpened"
             class="full"
-            :confirm-action-name="$t('project.form.edit-project')"
+            :confirm-action-name="$t('common.save')"
             :confirm-action-disabled="v$.$error"
             :asyncing="isSaving"
         >
