@@ -1761,6 +1761,8 @@
         "open-map": "Open the map",
         "pick-tag-classification": "Choose a tag classification",
         "pick-skill-classification": "Choose a skill classification",
+        "pick-tag-preset": "Or choose a suggested tag",
+        "pick-skill-preset": "Or choose a suggested skill",
         "current-tag-description": "Type tag’s first letters and select the right tag",
         "current-skill-description": "Type skill’s label and select the right skill",
         "disambiguate": "(DISAMBIGUATION)",

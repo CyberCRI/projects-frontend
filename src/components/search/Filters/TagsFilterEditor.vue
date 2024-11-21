@@ -31,13 +31,16 @@
                 :search-all="allSearchMode"
                 :all-classifications="orgClassifications"
             />
-            <SuggestedTags
-                v-else
-                :current-tags="tags"
-                :suggested-tags="suggestedTags"
-                @add-tag="addTag"
-                :loading="suggestedTagsisLoading"
-            />
+
+            <template v-else>
+                <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
+                <SuggestedTags
+                    :current-tags="tags"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="addTag"
+                    :loading="suggestedTagsisLoading"
+                />
+            </template>
         </div>
     </div>
 </template>
@@ -182,6 +185,10 @@ export default {
 .notice {
     font-size: $font-size-s;
     margin-bottom: $space-s;
+}
+
+.notice-suggested {
+    margin-top: $space-m;
 }
 
 .current-tags {

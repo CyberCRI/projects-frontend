@@ -1758,6 +1758,8 @@
         "open-map": "Ouvrir la carte",
         "pick-tag-classification": "Choisissez un référentiel de tags",
         "pick-skill-classification": "Choisissez un référentiel de compétences",
+        "pick-tag-preset": "Ou choisissez un tag suggéré",
+        "pick-skill-preset": "Ou choisissez une compétence suggérée",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
         "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
         "disambiguate": "(HOMONYMIE)",

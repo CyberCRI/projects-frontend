@@ -32,13 +32,16 @@
                 :all-classifications="orgClassifications"
             />
 
-            <SuggestedTags
-                v-else
-                :current-tags="skills"
-                :suggested-tags="suggestedTags"
-                @add-tag="onAddSkill"
-                :loading="suggestedTagsisLoading"
-            />
+            <template v-else>
+                <p class="notice notice-suggested">{{ $t('search.pick-skill-preset') }}</p>
+
+                <SuggestedTags
+                    :current-tags="skills"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="onAddSkill"
+                    :loading="suggestedTagsisLoading"
+                />
+            </template>
         </div>
     </div>
 </template>
@@ -175,6 +178,10 @@ export default {
 .notice {
     font-size: $font-size-s;
     margin-bottom: $space-s;
+}
+
+.notice-suggested {
+    margin-top: $space-m;
 }
 
 .current-skill {

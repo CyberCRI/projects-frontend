@@ -4,7 +4,7 @@
         :confirm-action-name="$t('common.confirm')"
         :is-opened="isOpened"
         :title="drawerTitle"
-        class="small"
+        class="medium"
         @close="close"
         @confirm="confirm"
     >
