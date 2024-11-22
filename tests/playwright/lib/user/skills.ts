@@ -13,59 +13,51 @@ export async function handleSkills(page) {
     await page.locator('[data-test="edit-profile"]').click()
     await page.locator('[data-test="skills"]').click()
     logger.info('Add Skills')
-    const addSkillBtn = await page.locator('[data-test="add-skills-button"]')
+    let addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
     logger.info(await addSkillBtn.count())
-    if ((await addSkillBtn.count()) > 0) {
-        addSkillBtn.click()
-        await addSkills(page, 'bio')
-        await page.locator('[data-test="edit-skills-button"]').click()
-        await editSkills(page)
-    } else {
-        await page.locator('[data-test="edit-skills-button"]').click()
-        await editSkills(page)
-        await page.locator('[data-test="add-skills-button"]')
-        await addSkills(page, 'bio')
+    if ((await addSkillBtn.count()) == 0) {
+        await removeSkills(page, 'skills')
+        addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
     }
+    addSkillBtn.click()
+    await addSkills(page, 'skills', 'bio')
+    await delay(1000)
+    await page.locator('[data-test="add-skills-button"]').click()
+    await addSkills(page, 'skills', 'bio')
+    await delay(1000)
+    //await removeSkills(page, 'skills')
+
     logger.info('Add Hobby')
-    const addHobbyBtn = await page.locator('[data-test="add-hobbies-button"]')
+    let addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
     logger.info(await addHobbyBtn.count())
-    if ((await addHobbyBtn.count()) > 0) {
-        addHobbyBtn.click()
-        await addSkills(page, 'test')
-        await page.locator('[data-test="edit-hobbies-button"]').click()
-    } else {
-        await page.locator('[data-test="edit-hobbies-button"]').click()
-        await editSkills(page)
-        await page.locator('[data-test="add-hobbies-button]')
-        await addSkills(page, 'test')
+    if ((await addHobbyBtn.count()) == 0) {
+        await removeSkills(page, 'hobbies')
+        addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
     }
+    addHobbyBtn.click()
+    await addSkills(page, 'hobbies', 'test')
+    await delay(1000)
+    await page.locator('[data-test="add-hobbies-button"]').click()
+    await addSkills(page, 'hobbies', 'test')
+    await delay(1000)
+    // await removeSkills(page, 'hobbies')
 }
 
-async function addSkills(page, query) {
+async function addSkills(page, _type, query) {
     await page.locator('[data-test="search-input"]').fill(query)
     await page.locator('[data-test="search-input"]').press('Enter')
     await delay(5000)
-    const inputs = await page.locator('[data-test^="tag-label-"]').all()
-    for (let i = 0; i < Math.min(5, inputs.length); i++) {
-        await inputs[i].click()
-    }
-    // const addedTags = await page.locator('[data-test^="tag-label"]').all()
-    // logger.info('Confirm Skills')
-    // logger.info(addedTags.length)
-    // for (const tag of addedTags) {
-    //     tag.click();
-    // }
-    await page.locator('[data-test="confirm-button"]').click()
+    await page.locator('[data-test^="tag-label-"]').first().click()
     await page.locator('[data-test="confirm-button"]').click()
 }
 
-async function editSkills(page) {
-    await delay(5000)
-    const addedTags = await page.locator('[data-test^="filter-value-"]').all()
+async function removeSkills(page, type) {
+    // remove all skills
+    const addedTags = await page.locator(`[data-test^="${type}-editor-"]`).all()
     logger.info(addedTags)
     for (const tag of addedTags) {
-        tag.getByRole('img').click()
+        await tag.locator(`[data-test^="delete-${type}-"]`).click()
     }
-    // dont close yet because we're adding skills after that
-    // await page.locator('[data-test="confirm-button"]').click()
+    // dont finnish yet because we're adding skills after that and nned all skill to be removed
+    await delay(5000)
 }

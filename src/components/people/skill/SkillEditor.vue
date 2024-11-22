@@ -4,7 +4,10 @@ import { useI18n } from 'vue-i18n'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useLanguagesStore from '@/stores/useLanguages'
 
-defineProps({ skill: { type: Object, required: true } })
+defineProps({
+    skill: { type: Object, required: true },
+    type: { type: String, required: true }, // "skills" or "hobbies"
+})
 defineEmits(['set-level', 'delete'])
 
 const { t } = useI18n()
@@ -48,7 +51,11 @@ function clampLevel(level) {
 }
 </script>
 <template>
-    <div class="entry" :key="`${skill.id}-${skill.level}`">
+    <div
+        class="entry"
+        :key="`${skill.id}-${skill.level}`"
+        :data-test="`${type}-editor-${skill.id}`"
+    >
         <h4 class="skill-name">{{ skillLabel(skill) }}</h4>
         <div class="level-editor">
             <label
@@ -62,7 +69,12 @@ function clampLevel(level) {
             </label>
         </div>
         <div class="delete-action">
-            <IconImage name="TrashCanOutline" class="delete-icon" @click="$emit('delete', skill)" />
+            <IconImage
+                name="TrashCanOutline"
+                :data-test="`delete-${type}-${skill.id}`"
+                class="delete-icon"
+                @click="$emit('delete', skill)"
+            />
         </div>
     </div>
 </template>
