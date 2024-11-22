@@ -72,6 +72,7 @@
             <div class="level-editor-list">
                 <SkillEditor
                     :skill="addedTalent"
+                    :type="type"
                     @set-level="setTalentLevel($event.skill, $event.level)"
                     @delete="addedTalent = null"
                 />

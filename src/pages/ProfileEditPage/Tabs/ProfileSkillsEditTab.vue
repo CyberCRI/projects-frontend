@@ -9,13 +9,13 @@
                     :label="$filters.capitalize($t('profile.edit.skills.skills.add'))"
                     btn-icon="Plus"
                     @click="openDrawer('skills', 'add')"
-                    data-test="add-skills-button"
+                    data-test="initial-add-skills-button"
                 />
                 <LpiButton
                     :label="$filters.capitalize($t('profile.edit.skills.hobbies.add'))"
                     btn-icon="Plus"
                     @click="openDrawer('hobbies', 'add')"
-                    data-test="add-hobbies-button"
+                    data-test="initial-add-hobbies-button"
                 />
             </div>
         </div>
@@ -28,7 +28,7 @@
                             :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
                             btn-icon="Plus"
                             @click="openDrawer(key)"
-                            :data-test="`edit-${key}-button`"
+                            :data-test="`add-${key}-button`"
                         />
 
                         <SkillLevelTip>
@@ -48,6 +48,7 @@
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
                             :skill="skill"
+                            :type="key"
                             @set-level="setTalentLevel(key, $event.skill, $event.level)"
                             @delete="removeTalent(key, $event)"
                         />
@@ -59,7 +60,7 @@
                         btn-icon="Plus"
                         :secondary="false"
                         @click="openDrawer(key, 'add')"
-                        :data-test="`add-${key}-button`"
+                        :data-test="`initial-add-${key}-button`"
                     />
                 </div>
             </div>
