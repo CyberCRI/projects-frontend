@@ -34,13 +34,7 @@
                     :placeholder="$t('form.contact.email-placeholder')"
                     @blur="v$.form.email.$validate"
                 />
-                <p
-                    v-for="error of v$.form.email.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.email.$errors" />
             </div>
 
             <div class="form-input">
@@ -54,13 +48,7 @@
                     :placeholder="$t('form.contact.content-placeholder')"
                     @blur="v$.form.content.$validate"
                 />
-                <p
-                    v-for="error of v$.form.content.$errors"
-                    :key="error.$uid"
-                    class="error-description"
-                >
-                    {{ error.$message }}
-                </p>
+                <FieldErrors :errors="v$.form.content.$errors" />
             </div>
         </form>
     </BaseDrawer>

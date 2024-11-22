@@ -64,4 +64,10 @@ export default {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
+
+@media screen and (min-width: $min-tablet) {
+    .sdg-filter-container {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+}
 </style>

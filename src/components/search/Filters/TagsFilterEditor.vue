@@ -1,35 +1,52 @@
 <template>
     <div :class="{ inline }" class="tags-filter-editor">
-        <CurrentTags :current-tags="tags" class="current-tags" @remove-tag="removeTag" />
+        <div class="section">
+            <CurrentTags
+                :current-tags="tags"
+                class="current-tags"
+                @remove-tag="removeTag"
+                show-separator
+            />
+        </div>
 
-        <p v-if="isAddMode" class="tag-description">{{ $t('search.current-tag-description') }}</p>
+        <div class="section" v-if="!allSearchMode">
+            <p class="notice">{{ $t('search.pick-tag-classification') }}</p>
 
-        <FilterSearchInput
-            v-show="!ambiguousTagsOpen"
-            ref="search-input-component"
-            v-model.trim="queryString"
-            :placeholder="$t('search.search-tag')"
-            class="search-input-ctn"
-        />
+            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+        </div>
 
-        <SuggestedTags
-            v-if="isAddMode && !hideOrganizationTags"
-            :current-tags="tags"
-            :suggested-tags="suggestedTags"
-            @add-tag="addTag"
-            :loading="suggestedTagsisLoading"
-        />
+        <div v-show="allSearchMode || showTagSearch" class="section">
+            <p class="notice">{{ $t('search.current-tag-description') }}</p>
 
-        <WikipediaResults
-            v-else-if="queryString"
-            :ambiguous-results-visible="ambiguousTagsOpen"
-            :existing-tags="tags"
-            :inline="inline"
-            :query-string="queryString"
-            @add-tag="onAddTag"
-            @go-back="goBackToAddMode"
-            @ambiguous-menu="setAmbiguousMenuValue"
-        />
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="search"
+                :placeholder="$t('search.search-tag')"
+                class="search-input-ctn"
+            />
+
+            <TagResults
+                v-if="search"
+                :classification-id="selectedClassificationId"
+                :existing-tags="tags"
+                :inline="inline"
+                :search="search"
+                @add-tag="onAddTag"
+                @go-back="goBackToAddMode"
+                :search-all="allSearchMode"
+                :all-classifications="orgClassifications"
+            />
+
+            <template v-else>
+                <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
+                <SuggestedTags
+                    :current-tags="tags"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="addTag"
+                    :loading="suggestedTagsisLoading"
+                />
+            </template>
+        </div>
     </div>
 </template>
 
@@ -37,39 +54,28 @@
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
-import { getAllWikiTags } from '@/api/wikipedia-tags.service'
-import { getAllOrgTags } from '@/api/organization-tags.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
 export default {
     name: 'TagsFilterEditor',
 
-    emits: ['update:modelValue', 'ambiguous-menu', 'update-tags'],
+    emits: ['update:modelValue', 'update-tags'],
 
     components: {
         FilterSearchInput,
         CurrentTags,
         SuggestedTags,
-        WikipediaResults,
+        TagResults,
+        LpiSelect,
     },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
+
     props: {
         modelValue: {
             type: Array,
             default: () => [],
         },
-
         triggerUpdate: {
-            type: Boolean,
-            default: false,
-        },
-
-        ambiguousTagsOpen: {
             type: Boolean,
             default: false,
         },
@@ -86,41 +92,30 @@ export default {
             type: Boolean,
             default: true,
         },
+        allSearchMode: {
+            type: Boolean,
+            default: true,
+        },
+    },
+    setup(props) {
+        return {
+            ...useTagSearch({
+                useProjects: true,
+                hideOrganizationTags: props.hideOrganizationTags,
+                allSearch: props.allSearchMode,
+            }),
+        }
     },
 
     data() {
         return {
-            suggestedTags: [],
-            ambiguousResultsVisible: false,
-            isAddMode: true,
-            queryString: '',
             tags: [],
-            wikipediaTags: [],
-            organizationTags: [],
-            suggestedTagsisLoading: true,
         }
-    },
-
-    async created() {
-        await Promise.all([
-            getAllOrgTags({
-                organization: this.organizationsStore.current.code,
-            }).then(({ results }) => {
-                this.organizationTags = results
-            }),
-            getAllWikiTags({
-                organization: this.organizationsStore.current.code,
-            }).then(({ results }) => {
-                this.wikipediaTags = results
-            }),
-        ])
-
-        this.suggestedTags = [...this.organizationTags, ...this.wikipediaTags]
-        this.suggestedTagsisLoading = false
     },
 
     mounted() {
         this.focusInput()
+        // this.resetTagSearch()
     },
 
     methods: {
@@ -134,22 +129,21 @@ export default {
         },
 
         focusInput() {
-            const searchInput = this.$refs['search-input-component'].$refs['search-input']
-            this.$nextTick(() => {
-                searchInput.focus()
-            })
+            const searchInput = this.$refs['search-input-component']?.$refs['search-input']
+            if (searchInput)
+                this.$nextTick(() => {
+                    searchInput.focus()
+                })
         },
 
         goBackToAddMode() {
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.focusInput()
         },
 
         onAddTag(result) {
             this.addTag(result)
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.focusInput()
         },
 
@@ -164,16 +158,11 @@ export default {
                 this.$emit('update-tags', this.tags)
             }
         },
-
-        setAmbiguousMenuValue(value) {
-            this.$emit('ambiguous-menu', value)
-        },
     },
 
     watch: {
         queryString(val) {
             if (val.length >= 3) {
-                this.isAddMode = false
                 this.focusInput()
             }
         },
@@ -194,25 +183,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tag-description {
+.section {
+    margin-bottom: $space-m;
+}
+
+.notice {
     font-size: $font-size-s;
-    margin-top: $space-l;
+    margin-bottom: $space-s;
+}
+
+.notice-suggested {
+    margin-top: $space-m;
 }
 
 .current-tags {
     margin-top: pxToRem(16px);
-}
-
-.tag-search-title {
-    text-align: center;
-    font-size: $font-size-2xl;
-    font-weight: 700;
-    margin: pxToRem(46px) auto;
-}
-
-.search-input-ctn {
-    margin-bottom: $space-l;
-    margin-top: $space-l;
 }
 
 .input-ctn {
@@ -227,18 +212,7 @@ export default {
     }
 }
 
-.add-modal .s-modal-wrapper .s-modal-content {
-    max-height: 526px;
-}
-
-.search-modal .s-modal-wrapper .s-modal-content {
-    max-height: 660px;
-}
-
-.tag-search-label {
-    font-size: $font-size-m;
-    color: $primary-dark;
-    font-weight: 700;
-    margin: 0 0 $space-s $space-l;
+.lpi-select {
+    width: 100%;
 }
 </style>

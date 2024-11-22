@@ -125,6 +125,77 @@
                 "activation-no": "No"
             }
         },
+        "featured-tags": {
+            "title": "Suggested project's tags",
+            "notice": "Select tags that will be suggested by default when searching or creating projects"
+        },
+        "featured-skills": {
+            "title": "Suggested skills",
+            "notice": "Select skills that will be suggested by default when searching or creating  profiles"
+        },
+        "classifications": {
+            "title": "Classifications",
+            "subtitle": "Manage your custom classifications",
+            "enter-title": "Enter a title",
+            "enter-description": "Enter a description",
+            "title-field": "Title",
+            "description-field": "Description",
+            "add-classification": {
+                "title": "Add a classification",
+                "error": "Error while saving the classification",
+                "success": "The classification was successfully created"
+            },
+            "edit-classification": {
+                "title": "Edit a classification",
+                "error": "Error while modifying the classification",
+                "success": "The classification was successfully modified"
+            },
+            "delete-classification": {
+                "title": "Delete the classification",
+                "content": "Are you sure you want to delete the classification '{title}'?",
+                "error": "Error while deleting the classification",
+                "success": "The classification was successfully deleted"
+            },
+            "create-classification": "Create a classification",
+            "create-tag": "Create a tag",
+            "tags": "tags",
+            "enabled-for-projects": "Enabled for projects",
+            "enabled-for-skills": "Enabled for Skills",
+            "disabled": "Disabled",
+            "no-custom": "No custom classification yet",
+            "table": {
+                "filter": "Filter tags",
+                "tag": "Tag",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "add-tag": {
+                "title": "Add tag",
+                "success": "The tag was successfully created",
+                "error": "Error while creating the tag"
+            },
+            "edit-tag": {
+                "title": "Edit tag",
+                "success": "The tag was successfully modified",
+                "error": "Error while modifying the tag"
+            },
+            "tag-form": {
+                "title-en": "Title (EN)",
+                "title-fr": "Title (FR)",
+                "description-en": "Description (EN)",
+                "description-fr": "Description (FR)",
+                "required-error": "This field is required",
+                "too-long-error": "This field is too long"
+            },
+            "tag-delete": {
+                "confirm": {
+                    "title": "Delete tag?",
+                    "description": "`Are you sure you want to delete the tag '{tagName}'?"
+                },
+                "success": "Tag '{tagName}' deleted",
+                "error": "Error while deleting tag '{tagName}'"
+            }
+        },
         "tabs": {
             "information": "General",
             "categories": "Categories",
@@ -1111,7 +1182,8 @@
     },
     "profile": {
         "edit": {
-            "edit-my-profile": "Edit my Profile",
+            "edit-my-profile": "Edit my profile",
+            "edit-other-profile": "Edit {name} profile",
             "edit-your-profile": "Edit your profile",
             "notice": "Fields with * are mandatory.",
             "help": "Need help? We're here.",
@@ -1235,47 +1307,42 @@
                 "save-error": "Error while saving profile.",
                 "save-success": "Profile saved.",
                 "search": "search",
+                "suggested-skills": "Or pick a suggested skill",
                 "skills": {
+                    "add-success": "Skill '{name}' added.",
+                    "edit-success": "Skill '{name}' edited.",
+                    "delete-success": "Skill '{name}' removed.",
                     "add": "Add professional skills",
-                    "edit-items": "Edit skills",
+                    "add-item": "Add a skill",
                     "edit-levels": "Edit levels",
                     "already-added": "Skill already added",
                     "levels-help": "Skill levels",
                     "drawer": {
-                        "add": {
-                            "title": "Add professional skills",
-                            "notice": "Type the label of your skill, and select the right one for you among suggestions.",
-                            "placeholder": "Type a skill",
-                            "confirm": "Next"
-                        },
-                        "edit": {
-                            "title": "Skill levels",
-                            "notice": "Indicate your level of mastery.",
-                            "help": "More about skill levels",
-                            "confirm": "Save"
-                        }
-                    }
+                        "title": "Add professional skills",
+                        "notice": "Type the label of your skill, and select the right one for you among suggestions.",
+                        "placeholder": "Type a skill",
+                        "notice-levels": "Indicate your level of mastery.",
+                        "help-levels": "More about skill levels"
+                    },
+                    "selection": "Selected skills"
                 },
                 "hobbies": {
+                    "add-success": "Hobby '{name}' added.",
+                    "edit-success": "Hobby '{name}' edited.",
+                    "delete-success": "Hobby '{name}' removed.",
                     "add": "Add hobbies",
-                    "edit-items": "Edit hobbies",
+                    "add-item": "Add a hobby",
                     "already-added": "Hobby already added",
                     "edit-levels": "Edit levels",
                     "levels-help": "Hobbies levels",
                     "drawer": {
-                        "add": {
-                            "title": "Add personal hobbies",
-                            "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
-                            "placeholder": "Type a hobby",
-                            "confirm": "Next"
-                        },
-                        "edit": {
-                            "title": "Hobbies levels",
-                            "notice": "Indicate your level of mastery.",
-                            "help": "More about the hobbies levels",
-                            "confirm": "Save"
-                        }
-                    }
+                        "title": "Add a personal hobby",
+                        "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
+                        "placeholder": "Type a hobby",
+                        "notice-levels": "Indicate your level of mastery.",
+                        "help-levels": "More about the hobbies levels"
+                    },
+                    "selection": "Selected hobbies"
                 },
                 "levels": {
                     "curious": "Curious",
@@ -1653,6 +1720,7 @@
         "language": "language",
         "people": "people",
         "tag": "tag",
+        "or": "or",
         "ambiguousTag": "Ambiguous Tag",
         "subtitle-ambiguous-tag": "This tag has different meanings. Select the one you are interested in:",
         "sdg": "SDG",
@@ -1697,6 +1765,10 @@
         "geo-map-description": "Discover projects on a world map",
         "tag-map-description": "Discover projetcs on a Wikipédia tag map",
         "open-map": "Open the map",
+        "pick-tag-classification": "Choose a tag classification",
+        "pick-skill-classification": "Choose a skill classification",
+        "pick-tag-preset": "Or choose a suggested tag",
+        "pick-skill-preset": "Or choose a suggested skill",
         "current-tag-description": "Type tag’s first letters and select the right tag",
         "current-skill-description": "Type skill’s label and select the right skill",
         "disambiguate": "(DISAMBIGUATION)",

@@ -1,56 +1,75 @@
 <template>
-    <div :class="{ inline }">
-        <CurrentTags :current-tags="skills" class="current-skills" @remove-tag="removeSkill" />
-
-        <p v-if="isAddMode" class="skill-description">
-            {{ $t('search.current-skill-description') }}
-        </p>
-
-        <div class="search-field">
-            <SearchInput
-                v-model="queryString"
-                @delete-query="onDeleteQuery"
-                @enter="doSearch"
-                :placeholder="$t('search.search-skill')"
-                :suggestions="suggestions"
-                @keyup="suggest"
+    <div :class="{ inline }" class="skills-filter-editor">
+        <div class="section">
+            <CurrentTags
+                :current-tags="skills"
+                class="current-skills"
+                @remove-tag="removeSkill"
+                show-separator
             />
-            <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
         </div>
-        <p v-if="confirmedSearch" class="skill-description">
-            {{ $t('search.choose-skill') }}
-        </p>
-        <WikipediaResults
-            v-if="confirmedSearch"
-            :ambiguous-results-visible="ambiguousTagsOpen"
-            :existing-tags="skills"
-            :inline="inline"
-            :query-string="confirmedSearch"
-            @add-tag="onAddSkill"
-            @go-back="goBackToAddMode"
-            @ambiguous-menu="setAmbiguousMenuValue"
-        />
+
+        <div class="section" v-if="!allSearchMode">
+            <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
+
+            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+        </div>
+
+        <div v-show="allSearchMode || showTagSearch" class="section">
+            <p class="notice">{{ $t('search.current-skill-description') }}</p>
+
+            <FilterSearchInput
+                ref="search-input-component"
+                v-model.trim="search"
+                :placeholder="$t('search.search-skill')"
+                class="search-input-ctn"
+            />
+
+            <TagResults
+                v-if="search"
+                :classification-id="selectedClassificationId"
+                :existing-tags="skills"
+                :inline="inline"
+                :search="search"
+                @add-tag="onAddSkill"
+                @go-back="goBackToAddMode"
+                :search-all="allSearchMode"
+                :all-classifications="orgClassifications"
+            />
+
+            <template v-else>
+                <p class="notice notice-suggested">{{ $t('search.pick-skill-preset') }}</p>
+
+                <SuggestedTags
+                    :current-tags="skills"
+                    :suggested-tags="suggestedTags"
+                    @add-tag="onAddSkill"
+                    :loading="suggestedTagsisLoading"
+                />
+            </template>
+        </div>
     </div>
 </template>
 
 <script>
+import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
-import WikipediaResults from '@/components/search/FilterTags/WikipediaResults.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import debounce from 'lodash.debounce'
-import { wikiAutocomplete } from '@/api/wikipedia-tags.service'
+import TagResults from '@/components/search/FilterTags/TagResults.vue'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import useTagSearch from '@/composables/useTagSearch.js'
+import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 
 export default {
     name: 'SkillsFilterEditor',
 
-    emits: ['update:modelValue', 'ambiguous-menu'],
+    emits: ['update:modelValue'],
 
     components: {
+        FilterSearchInput,
         CurrentTags,
-        WikipediaResults,
-        LpiButton,
-        SearchInput,
+        SuggestedTags,
+        TagResults,
+        LpiSelect,
     },
 
     props: {
@@ -64,52 +83,42 @@ export default {
             default: false,
         },
 
-        ambiguousTagsOpen: {
+        hideOrganizationTags: {
             type: Boolean,
             default: false,
         },
+
         inline: {
             type: Boolean,
             default: false,
         },
+        allSearchMode: {
+            type: Boolean,
+            default: true,
+        },
     },
 
+    setup(props) {
+        return {
+            ...useTagSearch({
+                useSkills: true,
+                hideOrganizationTags: props.hideOrganizationTags,
+                allSearch: props.allSearchMode,
+            }),
+        }
+    },
     data() {
         return {
-            isAddMode: true,
-            queryString: '',
-            confirmedSearch: '',
             skills: [],
-            suggestions: [],
         }
     },
 
     mounted() {
         this.focusInput()
+        // this.resetTagSearch()
     },
 
     methods: {
-        suggest: debounce(async function (evt) {
-            this.suggestions = []
-            if (evt.key === 'Enter') return // dont show suggestion when triggering search
-            if (!this.queryString || this.queryString.length < 3) return
-            try {
-                this.suggestions = await wikiAutocomplete(this.queryString)
-            } catch (e) {
-                console.error(e)
-            }
-        }, 100),
-
-        doSearch() {
-            this.suggestions = []
-            this.confirmedSearch = this.queryString
-        },
-
-        onDeleteQuery() {
-            this.confirmedSearch = ''
-            this.queryString = ''
-        },
-
         addSkill(skill) {
             this.skills.push(skill)
             this.$emit('update:modelValue', this.skills)
@@ -123,16 +132,14 @@ export default {
         },
 
         goBackToAddMode() {
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.confirmedSearch = ''
             this.focusInput()
         },
 
         onAddSkill(result) {
             this.addSkill(result)
-            this.isAddMode = true
-            this.queryString = ''
+            this.search = ''
             this.confirmedSearch = ''
             this.focusInput()
         },
@@ -144,13 +151,15 @@ export default {
             this.skills.splice(skillIndex, 1)
             this.$emit('update:modelValue', this.skills)
         },
-
-        setAmbiguousMenuValue(value) {
-            this.$emit('ambiguous-menu', value)
-        },
     },
 
     watch: {
+        queryString(val) {
+            if (val.length >= 3) {
+                this.focusInput()
+            }
+        },
+
         triggerUpdate: function () {
             this.$emit('update:modelValue', this.skills)
         },
@@ -167,9 +176,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.skill-description {
+.section {
+    margin-bottom: $space-m;
+}
+
+.notice {
     font-size: $font-size-s;
-    margin-top: $space-l;
+    margin-bottom: $space-s;
+}
+
+.notice-suggested {
+    margin-top: $space-m;
 }
 
 .current-skill {
@@ -193,19 +210,7 @@ export default {
     }
 }
 
-.search-field {
-    margin-top: $space-m;
-    display: flex;
-    justify-content: stretch;
-    align-items: center;
-    gap: 1rem;
-
-    .search-input-ctn {
-        flex-grow: 1;
-
-        :deep(.search-input) {
-            width: 100%;
-        }
-    }
+.lpi-select {
+    width: 100%;
 }
 </style>

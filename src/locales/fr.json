@@ -125,6 +125,77 @@
                 "activation-no": "Non"
             }
         },
+        "featured-tags": {
+            "title": "Tags de projet mis en avant",
+            "notice": "Choisissez les tags que vous souhaitez mettre en avant lors des recherches et de la création de projets."
+        },
+        "featured-skills": {
+            "title": "Compétences mises en avant",
+            "notice": "Choisissez les compétences que vous souhaitez mettre en avant lors des recherches et de la création de profils."
+        },
+        "classifications": {
+            "title": "Classifications",
+            "subtitle": "Gérer vos classifications personnalisées",
+            "enter-title": "Entrez un titre",
+            "enter-description": "Entrez un description",
+            "title-field": "Titre",
+            "description-field": "Description",
+            "add-classification": {
+                "title": "Ajouter une classification",
+                "error": "Erreur lors de la sauvegarde de la classification",
+                "success": "La classification a été créée"
+            },
+            "edit-classification": {
+                "title": "Modifier une classification",
+                "error": "Erreur lors de la modification de la classificaiton",
+                "success": "La classification a été modifiée"
+            },
+            "delete-classification": {
+                "title": "Supprimer la classification",
+                "content": "Confirmez-vous vouloir supprimer la classification '{title}'?",
+                "error": "Erreur lors de la suppresssion de la classification",
+                "success": "La classification a été supprimée"
+            },
+            "create-classification": "Créer une classification",
+            "create-tag": "Créer un tag",
+            "tags": "tags",
+            "enabled-for-projects": "Activée pour les projets",
+            "enabled-for-skills": "Activée pour les compétences",
+            "disabled": "Désactivée",
+            "no-custom": "Pas de classification personnalisée",
+            "table": {
+                "filter": "Filtrer les tags",
+                "tag": "Tag",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "add-tag": {
+                "title": "Ajouter un tag",
+                "success": "Le tag a été créé",
+                "error": "Erreur lors de la création du tag"
+            },
+            "edit-tag": {
+                "title": "Modifier un tag",
+                "success": "Le tag a été modifié",
+                "error": "Erreur lors de la modification du tag"
+            },
+            "tag-form": {
+                "title-en": "Titre (EN)",
+                "title-fr": "Titre (FR)",
+                "description-en": "Description (EN)",
+                "description-fr": "Description (FR)",
+                "required-error": "Ce champ est requis",
+                "too-long-error": "Ce champ est trop long"
+            },
+            "tag-delete": {
+                "confirm": {
+                    "title": "Supprimer le tag ?",
+                    "description": "Êtes vous sûr de vouloir supprimer le tag '{tagName}' ?"
+                },
+                "success": "Le tag '{tagName}' a été supprimé",
+                "error": "Erreur lors de la suppression du tag '{tagName}'"
+            }
+        },
         "tabs": {
             "information": "Général",
             "categories": "Catégories",
@@ -1108,6 +1179,7 @@
     "profile": {
         "edit": {
             "edit-my-profile": "Éditer mon profil",
+            "edit-other-profile": "Éditer le profil de {name}",
             "edit-your-profile": "Éditer votre profil",
             "notice": "Les champs marqués * sont obligatoires.",
             "help": "Besoin d'aide ? On est là.",
@@ -1230,47 +1302,42 @@
                 "intro": "Vous n'avez pas encore sélectionné de compétences. Les compétences professionnelles et les loisirs permettent à vos collègues et à votre communauté de vous trouver en fonction de ce que vous faites bien, de ce qui vous intéresse et de ce qui vous tient à cœur.",
                 "save-error": "Erreur lors de la sauvegarde du profil.",
                 "save-success": "Le profil a été sauvegardé.",
+                "suggested-skills": "Ou choisissez parmi les compétences suggérées",
                 "skills": {
+                    "add-success": "Comptétence '{name}' ajoutée.",
+                    "edit-success": "Comptétence '{name}' éditée.",
+                    "delete-success": "Comptétence '{name}' suppriée.",
                     "add": "Ajouter des compétences professionnelles",
-                    "edit-items": "Éditer les compétences",
+                    "add-item": "Ajouter une compétence",
                     "edit-levels": "Éditer les niveaux",
                     "levels-help": "Niveau de compétence",
                     "already-added": "Compétence déjà ajoutée",
                     "drawer": {
-                        "add": {
-                            "title": "Ajouter des compétences professionnelles",
-                            "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
-                            "placeholder": "Taper une compétence",
-                            "confirm": "Suivant"
-                        },
-                        "edit": {
-                            "title": "Niveaux de compétences",
-                            "notice": "Indiquez votre niveau de maîtrise.",
-                            "help": "Plus à propos des niveaux de compétences",
-                            "confirm": "Sauvegarder"
-                        }
-                    }
+                        "title": "Ajouter des compétences professionnelles",
+                        "notice": "Tapez le libellé de la compétence et sélectionnez celle qui vous convient",
+                        "placeholder": "Taper une compétence",
+                        "notice-levels": "Indiquez votre niveau de maîtrise.",
+                        "help-levels": "Plus à propos des niveaux de compétences"
+                    },
+                    "selection": "Compétences sélectionnées"
                 },
                 "hobbies": {
+                    "add-success": "Hobby '{name}' ajouté.",
+                    "edit-success": "Hobby '{name}' édité.",
+                    "delete-success": "Hobby '{name}' supprimé.",
                     "add": "Ajouter des hobbies",
-                    "edit-items": "Éditer les hobbies",
+                    "add-item": "Ajouter un hobby",
                     "edit-levels": "Éditer les niveaux",
                     "levels-help": "Niveau des hobbies",
                     "already-added": "Hobby déjà ajouté",
                     "drawer": {
-                        "add": {
-                            "title": "Ajouter des hobbies personnels",
-                            "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
-                            "placeholder": "Tapez un hobby",
-                            "confirm": "Suivant"
-                        },
-                        "edit": {
-                            "title": "Niveaux des hobbies",
-                            "notice": "Indiquer votre niveau pour chaque hobby",
-                            "help": "En savoir plus sur les niveaux de hobby",
-                            "confirm": "Sauvegarder"
-                        }
-                    }
+                        "title": "Ajouter des hobbies personnels",
+                        "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
+                        "placeholder": "Tapez un hobby",
+                        "notice-levels": "Indiquer votre niveau pour chaque hobby",
+                        "help-levels": "En savoir plus sur les niveaux de hobby"
+                    },
+                    "selection": "Hobbies sélectionnés"
                 },
                 "levels": {
                     "curious": "Curieux",
@@ -1648,6 +1715,7 @@
         "language": "langue",
         "people": "personnes",
         "tag": "tag",
+        "or": "ou",
         "ambiguousTag": "Tag ambigu",
         "subtitle-ambiguous-tag": "Ce tag a différentes significations. Sélectionnez celle qui vous intéresse :",
         "sdg": "ODD",
@@ -1694,6 +1762,10 @@
         "geo-map-description": "Découvrez les projets sur une carte du monde",
         "tag-map-description": "Découvrez les projets sur une carte des tags Wikipédia",
         "open-map": "Ouvrir la carte",
+        "pick-tag-classification": "Choisissez un référentiel de tags",
+        "pick-skill-classification": "Choisissez un référentiel de compétences",
+        "pick-tag-preset": "Ou choisissez un tag suggéré",
+        "pick-skill-preset": "Ou choisissez une compétence suggérée",
         "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
         "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
         "disambiguate": "(HOMONYMIE)",

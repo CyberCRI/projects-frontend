@@ -160,7 +160,7 @@ export default {
     transition: 0.15s fill ease-in-out;
     fill: $white;
     position: absolute;
-    inset: 5%;
+    inset: 12%;
 }
 
 .context-action-button.secondary :deep(svg) {

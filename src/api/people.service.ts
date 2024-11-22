@@ -136,25 +136,39 @@ export async function patchUserPrivacy(
     ).data
 }
 
-export async function postUserSkill(body: UserSkillModel): Promise<PeopleModel> {
-    return (await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/skill/`, body)).data
-}
-
-export async function patchUserSkill(
-    skill_id: number,
-    body: UserPrivacyPatchModel
+export async function postUserSkill(
+    user_id: string | number,
+    body: UserSkillModel
 ): Promise<PeopleModel> {
     return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/skill/${skill_id}/`,
+        await axios.post(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${user_id}/skill/`,
             body
         )
     ).data
 }
 
-export async function deleteUserSkill(skill_id: number): Promise<PeopleModel> {
+export async function patchUserSkill(
+    user_id: string | number,
+    skill_id: number,
+    body: UserPrivacyPatchModel
+): Promise<PeopleModel> {
     return (
-        await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/skill/${skill_id}/`)
+        await axios.patch(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${user_id}/skill/${skill_id}/`,
+            body
+        )
+    ).data
+}
+
+export async function deleteUserSkill(
+    user_id: string | number,
+    skill_id: number
+): Promise<PeopleModel> {
+    return (
+        await axios.delete(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${user_id}/skill/${skill_id}/`
+        )
     ).data
 }
 

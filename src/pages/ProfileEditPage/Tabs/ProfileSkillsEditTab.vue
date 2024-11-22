@@ -22,22 +22,13 @@
         <div class="following-screen" v-else>
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
                 <template v-if="getSkillOfType(key).length">
+                    <h3 class="talent-title">{{ $t(`profile.edit.skills.${key}.selection`) }}</h3>
                     <div class="actions">
                         <LinkButton
-                            :label="
-                                $filters.capitalize($t(`profile.edit.skills.${key}.edit-items`))
-                            "
-                            btn-icon="Pen"
-                            @click="openDrawer(key, 'add')"
+                            :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
+                            btn-icon="Plus"
+                            @click="openDrawer(key)"
                             :data-test="`edit-${key}-button`"
-                        />
-                        <LinkButton
-                            :label="
-                                $filters.capitalize($t(`profile.edit.skills.${key}.edit-levels`))
-                            "
-                            btn-icon="Pen"
-                            @click="openDrawer(key, 'edit')"
-                            data-test="edit-levels-button"
                         />
 
                         <SkillLevelTip>
@@ -52,12 +43,13 @@
                             />
                         </SkillLevelTip>
                     </div>
-                    <div class="skill-list">
-                        <SkillItem
+                    <div class="level-editor-list">
+                        <SkillEditor
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
-                            :label="skill.wikipedia_tag.name"
-                            :level="Number(skill.level)"
+                            :skill="skill"
+                            @set-level="setTalentLevel(key, $event.skill, $event.level)"
+                            @delete="removeTalent(key, $event)"
                         />
                     </div>
                 </template>
@@ -76,7 +68,6 @@
     <SkillsEditDrawer
         :is-open="drawerIsOpen"
         :user="user"
-        :mode="drawerMode"
         :type="drawerType"
         @close="closeDrawer"
         @switch-mode="drawerMode = $event"
@@ -86,21 +77,36 @@
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
+import useLanguagesStore from '@/stores/useLanguages'
+import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import SkillEditor from '@/components/people/skill/SkillEditor.vue'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
         LpiButton,
-        SkillItem,
         SkillsEditDrawer,
         SkillLevelTip,
         LinkButton,
+        SkillEditor,
     },
 
     emits: ['edited', 'profile-edited'],
 
+    inject: {
+        reloadUser: {
+            from: 'profileEditReloadUser',
+            default: () => () => {},
+        },
+    },
+
+    setup() {
+        const languagesStore = useLanguagesStore()
+        const toaster = useToasterStore()
+        return { languagesStore, toaster }
+    },
     props: {
         user: {
             type: Object,
@@ -126,17 +132,83 @@ export default {
             return this.user.skills || []
         },
         skills() {
-            return this.allSkills.filter((s) => s.type === 'skill')
+            return this.allSkills
+                .filter((s) => s.type === 'skill')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
         },
         hobbies() {
-            return this.allSkills.filter((s) => s.type === 'hobby')
+            return this.allSkills
+                .filter((s) => s.type === 'hobby')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
+        },
+        skillLevels() {
+            // CAUTION : this must be ordered from lowest to highest (see clampLevel())
+            return [
+                {
+                    label: this.$t('profile.edit.skills.levels.curious'),
+                    value: 1,
+                },
+                {
+                    label: this.$t('profile.edit.skills.levels.basic'),
+                    value: 2,
+                },
+                {
+                    label: this.$t('profile.edit.skills.levels.competent'),
+                    value: 3,
+                },
+                {
+                    label: this.$t('profile.edit.skills.levels.expert'),
+                    value: 4,
+                },
+            ]
         },
     },
 
     methods: {
-        openDrawer(type, mode) {
+        async setTalentLevel(type, talent, newLevel) {
+            if (this.clampLevel(talent.level) !== newLevel) {
+                try {
+                    await patchUserSkill(this.user.id, talent.id, {
+                        ...talent,
+                        level: newLevel,
+                        tag: talent.tag.id,
+                    })
+                    this.toaster.pushSuccess(
+                        this.$t(`profile.edit.skills.${type}.edit-success`, {
+                            name: this.skillLabel(talent),
+                        })
+                    )
+                    this.reloadUser()
+                    this.$emit('profile-edited')
+                } catch (error) {
+                    console.error(error)
+                    this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
+                }
+            }
+        },
+        async removeTalent(type, talent) {
+            try {
+                await deleteUserSkill(this.user.id, talent.id)
+                this.toaster.pushSuccess(
+                    this.$t(`profile.edit.skills.${type}.delete-success`, {
+                        name: this.skillLabel(talent),
+                    })
+                )
+                this.reloadUser()
+                this.$emit('profile-edited')
+            } catch (error) {
+                console.error(error)
+                this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
+            }
+        },
+        clampLevel(level) {
+            return Math.min(
+                Math.max(level, this.skillLevels[0].value),
+                this.skillLevels[this.skillLevels.length - 1].value
+            )
+        },
+        openDrawer(type) {
             this.drawerType = type
-            this.drawerMode = mode
             this.drawerIsOpen = true
         },
         closeDrawer() {
@@ -148,16 +220,18 @@ export default {
             if (type == 'skills') return this.skills
             else return this.hobbies
         },
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
     },
 }
 </script>
 <style scoped lang="scss">
 @import './profile-form';
-
-.profile-edit-skills {
-    width: pxToRem(600px);
-    margin: 0 auto;
-}
 
 .initial-screen {
     .intro {
@@ -199,5 +273,18 @@ export default {
         gap: $space-m;
         border-radius: $border-radius-l;
     }
+}
+
+.talent-title {
+    font-size: $font-size-l;
+    font-weight: 700;
+    color: $primary-dark;
+    margin-top: $space-l;
+    margin-bottom: $space-m;
+    text-align: center;
+}
+
+.level-editor-list {
+    margin-top: $space-xl;
 }
 </style>

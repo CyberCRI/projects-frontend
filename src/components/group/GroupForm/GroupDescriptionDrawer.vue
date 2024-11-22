@@ -138,10 +138,4 @@ export default {
     justify-content: stretch;
     overflow: hidden;
 }
-
-.error-description {
-    color: $red;
-    font-size: $font-size-s;
-    margin-left: $space-l;
-}
 </style>

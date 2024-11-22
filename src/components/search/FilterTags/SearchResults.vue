@@ -1,19 +1,16 @@
 <template>
     <div :class="{ 'in-modal': inModal, inline }" class="search-results">
         <div class="search-results-ctn" v-if="tagResults?.length">
-            <div
+            <TagResult
+                class="tag-result"
                 v-for="(tag, index) in tagResults"
                 :key="`${tag.name}-${index}`"
-                class="tag-result"
                 tabindex="0"
                 @click="tagClicked(tag)"
-            >
-                <TagResult
-                    :is-ambiguous="tag.ambiguous"
-                    :label="tag.name"
-                    :description="tag.description"
-                />
-            </div>
+                :label="tagLabel(tag)"
+                :description="tagDescription(tag)"
+                :classification-name="tag.classificationName || ''"
+            />
         </div>
         <div v-else class="no-result">
             {{ $t('common.no-result') }}
@@ -23,6 +20,8 @@
 
 <script>
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
+import useUsersStore from '@/stores/useUsers.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SearchResults',
@@ -30,7 +29,14 @@ export default {
     emits: ['result-clicked'],
 
     components: { TagResult },
-
+    setup() {
+        const usersStore = useUsersStore()
+        const languagesStore = useLanguagesStore()
+        return {
+            usersStore,
+            languagesStore,
+        }
+    },
     props: {
         tagResults: {
             type: Array,
@@ -49,6 +55,12 @@ export default {
     methods: {
         tagClicked(tag) {
             this.$emit('result-clicked', tag)
+        },
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
+        tagDescription(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }
@@ -79,26 +91,11 @@ export default {
         padding-bottom: $space-l;
         box-sizing: border-box;
 
-        > * {
-            flex: 1 1 calc(50% - $space-m);
-        }
-
         .tag-result {
             cursor: pointer;
             text-align: start;
+            flex-grow: 1;
         }
-    }
-
-    &.inline .search-results-ctn {
-        flex-direction: row;
-
-        > div {
-            flex: initial;
-        }
-    }
-
-    .tag-description {
-        text-align: start;
     }
 }
 

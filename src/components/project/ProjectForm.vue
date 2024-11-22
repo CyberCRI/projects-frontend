@@ -108,17 +108,14 @@
             :confirm-action-name="$t('common.confirm')"
             :is-opened="tagSearchIsOpened"
             :title="$t('project.form.add-tags')"
-            class="small"
+            class="medium"
             @close="closeTagSearchTags"
             @confirm="saveTags"
         >
             <TagsFilterEditor
                 v-model="tags"
                 :value="tags"
-                :ambiguous-tags-open="ambiguousTagsOpen"
-                :hide-organization-tags="false"
                 :progressive-update="false"
-                @ambiguous-menu="ambiguousTagsOpen = $event"
                 @update-tags="updateTagsInProcess"
             />
         </BaseDrawer>
@@ -200,8 +197,7 @@ export default {
             displayedImage: '',
             selectedCategory: undefined,
             form: JSON.parse(JSON.stringify(this.modelValue)),
-            ambiguousTagsOpen: false,
-            tags: [...this.modelValue.organization_tags, ...this.modelValue.wikipedia_tags],
+            tags: [...this.modelValue.tags],
             tagSearchIsOpened: false,
             showImageResizer: false,
             tagsInProcess: [],
@@ -271,10 +267,7 @@ export default {
                     (category) => category.id === categoryId
                 )
             // set default tags according to selected category
-            this.tags = [
-                ...this.selectedCategory.organization_tags,
-                ...this.selectedCategory.wikipedia_tags,
-            ]
+            this.tags = [...this.selectedCategory.tags]
         },
 
         form: {
@@ -299,7 +292,6 @@ export default {
         },
         closeTagSearchTags() {
             this.tagSearchIsOpened = false
-            this.ambiguousTagsOpen = false
         },
 
         saveTags() {
@@ -308,9 +300,7 @@ export default {
         },
 
         updateTags() {
-            this.form.organization_tags = this.tags.filter((tag) => tag.organization)
-
-            this.form.wikipedia_tags = this.tags.filter((tag) => tag.wikipedia_qid)
+            this.form.tags = this.tags
         },
 
         updateTeam(team) {

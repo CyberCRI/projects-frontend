@@ -1,13 +1,16 @@
 <template>
     <div>
         <div class="my-profile-edit page-section-medium">
-            <h1 class="title">{{ $t('profile.edit.edit-my-profile') }}</h1>
+            <h1 v-if="user && isSelf" class="title">{{ $t('profile.edit.edit-my-profile') }}</h1>
+            <h1 v-else-if="user" class="title">
+                {{ $t('profile.edit.edit-other-profile', { name: username }) }}
+            </h1>
             <p class="notice">
                 {{ $t('profile.edit.notice') }}
                 <router-link :to="{ name: 'Help' }">{{ $t('profile.edit.help') }}</router-link>
             </p>
             <div class="body">
-                <ProfileEditTabs :user="user" @profile-edited="onProfileEdited" />
+                <ProfileEditTabs :user="user" :is-self="isSelf" @profile-edited="onProfileEdited" />
             </div>
         </div>
     </div>
@@ -54,11 +57,20 @@ export default {
         await this.loadUser()
     },
 
+    computed: {
+        isSelf() {
+            // safe check for isSelf beacuse this.userId might be a slug in fact
+            return this.usersStore.userFromApi && this.user?.id === this.usersStore.userFromApi.id
+        },
+        username() {
+            return this.user ? this.user.given_name + ' ' + this.user.family_name : ''
+        },
+    },
+
     methods: {
         async loadUser() {
             try {
                 this.user = await getUser(this.userId || this.usersStore.id)
-                // safe check for isSelf beacuse this.userId might be a slug in fact
             } catch (error) {
                 console.error(error)
             }

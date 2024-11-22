@@ -6,7 +6,7 @@
             :title="$t('project.edit')"
             :is-opened="isOpened"
             class="full"
-            :confirm-action-name="$t('project.form.edit-project')"
+            :confirm-action-name="$t('common.save')"
             :confirm-action-disabled="v$.$error"
             :asyncing="isSaving"
         >
@@ -73,8 +73,7 @@ export default {
                     },
                 },
                 language: this.languagesStore.current,
-                wikipedia_tags: [],
-                organization_tags: [],
+                tags: [],
             },
             isSaving: false,
         }
@@ -162,8 +161,7 @@ export default {
                 this.form.categories = [...this.currentProject.categories]
                 this.form.language = this.currentProject.language
                 this.form.header_image = this.currentProject.header_image
-                this.form.wikipedia_tags = [...this.currentProject.wikipedia_tags]
-                this.form.organization_tags = [...this.currentProject.organization_tags]
+                this.form.tags = [...this.currentProject.tags]
                 this.form.imageSizes = null
                 if (
                     this.currentProject &&
@@ -188,8 +186,7 @@ export default {
             const payload = {
                 ...this.form,
                 header_image: this.form.header_image,
-                wikipedia_tags_ids: this.form.wikipedia_tags.map((tag) => tag.wikipedia_qid),
-                organization_tags_ids: this.form.organization_tags.map((tag) => tag.id),
+                tags: this.form.tags.map((tag) => tag.id),
             }
 
             const formData = new FormData()

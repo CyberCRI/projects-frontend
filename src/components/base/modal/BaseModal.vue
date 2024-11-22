@@ -99,7 +99,7 @@ export default {
         })
     },
 
-    unmounted() {
+    beforeUnmount() {
         document.querySelector('body').classList.remove(`has-open-modal-${this.uniqueId}`)
     },
 

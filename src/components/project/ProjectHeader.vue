@@ -84,13 +84,8 @@
                             </div>
 
                             <TagsList
-                                v-else-if="
-                                    project &&
-                                    (project.organization_tags.length ||
-                                        project.wikipedia_tags.length)
-                                "
-                                :organization-tags="organizationTags"
-                                :wikipedia-tags="wikipediaTags"
+                                v-else-if="project?.tags?.length"
+                                :tags="project.tags"
                                 class="tag-list"
                                 prefix="desktop"
                             />
@@ -131,13 +126,8 @@
                             </div>
 
                             <TagsList
-                                v-else-if="
-                                    project &&
-                                    (project.organization_tags.length ||
-                                        project.wikipedia_tags.length)
-                                "
-                                :organization-tags="organizationTags"
-                                :wikipedia-tags="wikipediaTags"
+                                v-else-if="project?.tags?.length"
+                                :tags="project.tags"
                                 class="tag-list"
                                 prefix="mobile"
                             />
@@ -399,14 +389,6 @@ export default {
     },
 
     computed: {
-        organizationTags() {
-            return this.project.organization_tags
-        },
-
-        wikipediaTags() {
-            return this.project.wikipedia_tags
-        },
-
         showPurposeWithEmptyContent() {
             return (
                 this.project && this.project.purpose !== '   ' && this.project.purpose.length !== 0

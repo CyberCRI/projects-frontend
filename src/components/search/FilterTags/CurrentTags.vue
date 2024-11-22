@@ -1,14 +1,16 @@
 <template>
     <div v-if="currentTags.length" class="current-tags-ctn">
-        <div v-for="tag in currentTags" :key="tag.id">
+        <template v-for="(tag, index) in currentTags">
+            <span :key="tag.id" v-if="showSeparator && index > 0"> {{ $t('search.or') }} </span>
             <FilterValue
+                :key="tag.id"
                 v-if="tagLabel(tag)"
                 :label="tagLabel(tag)"
                 class="actionable"
                 icon="Close"
                 @click="removeTag(tag)"
             />
-        </div>
+        </template>
     </div>
 </template>
 
@@ -34,6 +36,11 @@ export default {
             type: Array,
             default: () => [],
         },
+
+        showSeparator: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     methods: {
@@ -42,7 +49,7 @@ export default {
         },
 
         tagLabel(tag) {
-            return tag[`name_${this.languagesStore.current}`] || tag.name
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }
@@ -53,6 +60,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: $space-s;
+    align-items: center;
 }
 
 .clear-selection {

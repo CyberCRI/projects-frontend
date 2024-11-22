@@ -1,5 +1,14 @@
 <template>
     <div class="profile-bio">
+        <div class="header" v-if="isCurrentUser || canEditUser">
+            <LinkButton
+                class="edit-btn"
+                btn-icon="Pen"
+                :label="$t('common.edit')"
+                :to="editBioSkillLink"
+                data-test="edit-bio"
+            />
+        </div>
         <!-- User descriptions -->
         <UserDescriptions
             v-if="user.personal_description || user.professional_description"
@@ -12,12 +21,17 @@
 <script>
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'ProfileBioTab',
 
+    mixins: [permissions],
+
     components: {
         UserDescriptions,
+        LinkButton,
     },
 
     props: {
@@ -41,6 +55,12 @@ export default {
         noDescription() {
             return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
         },
+        editBioSkillLink() {
+            return {
+                name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
+                params: this.isCurrentUser ? {} : { userId: this.user.id },
+            }
+        },
     },
 }
 </script>
@@ -53,5 +73,11 @@ export default {
 .empty-field {
     color: $mid-gray;
     font-weight: 700;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 </style>

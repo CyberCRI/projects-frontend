@@ -1,15 +1,23 @@
 <template>
     <div class="skill-tab">
+        <div class="header">
+            <SkillLevelTip>
+                <LinkButton
+                    :label="$t(`me.levels-help-link`)"
+                    btn-icon="HelpCircle"
+                    data-test="skill-levels-help-button"
+                />
+            </SkillLevelTip>
+            <LinkButton
+                v-if="isCurrentUser || canEditUser"
+                class="edit-btn"
+                btn-icon="Pen"
+                :label="$t('common.edit')"
+                :to="editProfileSkillLink"
+                data-test="edit-skills"
+            />
+        </div>
         <template v-if="allSkills.length">
-            <div class="help">
-                <SkillLevelTip>
-                    <LinkButton
-                        :label="$t(`me.levels-help-link`)"
-                        btn-icon="HelpCircle"
-                        data-test="skill-levels-help-button"
-                    />
-                </SkillLevelTip>
-            </div>
             <section class="section" v-if="skills?.length">
                 <UserSkills :full-list="true" :skills="skills" :title="$t('me.skills')" />
             </section>
@@ -26,9 +34,13 @@ import UserSkills from '@/components/people/skill/UserSkills.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import permissions from '@/mixins/permissions.ts'
 
 export default {
     name: 'ProfileSkillTab',
+
+    mixins: [permissions],
 
     components: {
         UserSkills,
@@ -37,8 +49,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
+        const languagesStore = useLanguagesStore()
         return {
             usersStore,
+            languagesStore,
         }
     },
     props: {
@@ -49,16 +63,27 @@ export default {
     },
 
     computed: {
+        editProfileSkillLink() {
+            return {
+                name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
+                params: this.isCurrentUser ? {} : { userId: this.user.id },
+            }
+        },
+
         allSkills() {
             return this.user.skills || []
         },
 
         skills() {
-            return this.allSkills.filter((s) => s.type == 'skill')
+            return this.allSkills
+                .filter((s) => s.type == 'skill')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
         },
 
         hobbies() {
-            return this.allSkills.filter((s) => s.type == 'hobby')
+            return this.allSkills
+                .filter((s) => s.type == 'hobby')
+                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
         },
 
         isCurrentUser() {
@@ -67,6 +92,15 @@ export default {
 
         noSkillLabel() {
             return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
+        },
+    },
+    methods: {
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }
@@ -91,6 +125,12 @@ export default {
 
 .section + .section {
     margin-top: $space-xl;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media screen and (max-width: $min-tablet) {

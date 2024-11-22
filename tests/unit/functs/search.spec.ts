@@ -11,8 +11,7 @@ describe('updateFiltersFromURL', () => {
         const search = updateFiltersFromURL({}, [
             'search',
             'categories',
-            'organization_tags',
-            'wikipedia_tags',
+            'tags',
             'members',
             'sdgs',
             'languages',
@@ -21,8 +20,7 @@ describe('updateFiltersFromURL', () => {
         expect(search).toEqual({
             search: '',
             categories: [],
-            organization_tags: [],
-            wikipedia_tags: [],
+            tags: [],
             members: [],
             sdgs: [],
             languages: [],
@@ -35,29 +33,18 @@ describe('updateFiltersFromURL', () => {
             {
                 search: 'search',
                 categories: 'cat',
-                organization_tags: 'org',
-                wikipedia_tags: 'wiki',
+                tags: 'wiki',
                 members: 'member',
                 sdgs: 'sdg',
                 languages: 'lang',
                 page: '42',
             },
-            [
-                'search',
-                'categories',
-                'organization_tags',
-                'wikipedia_tags',
-                'members',
-                'sdgs',
-                'languages',
-                'page',
-            ]
+            ['search', 'categories', 'tags', 'members', 'sdgs', 'languages', 'page']
         )
         expect(search).toEqual({
             search: 'search',
             categories: ['cat'],
-            organization_tags: ['org'],
-            wikipedia_tags: ['wiki'],
+            tags: ['wiki'],
             members: ['member'],
             sdgs: ['sdg'],
             languages: ['lang'],
@@ -70,8 +57,7 @@ describe('updateFiltersFromURL', () => {
             {
                 search: 'search',
                 categories: 'cat',
-                organization_tags: 'org',
-                wikipedia_tags: 'wiki',
+                tags: 'wiki',
                 members: 'member',
                 sdgs: 'sdg',
                 languages: 'lang',

@@ -14,7 +14,8 @@
                 <SkillItem
                     v-for="skill in visibleSkills"
                     :key="skill.id"
-                    :label="skill.wikipedia_tag.name"
+                    :label="skillLabel(skill)"
+                    :description="skillDescription(skill)"
                     :level="Number(skill.level)"
                 />
             </template>
@@ -27,6 +28,7 @@
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SkillSummary',
@@ -43,8 +45,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
+        const languagesStore = useLanguagesStore()
         return {
             usersStore,
+            languagesStore,
         }
     },
 
@@ -71,7 +75,11 @@ export default {
         },
 
         visibleSkills() {
-            return this.allStepsVisible ? this.allSkills : this.allSkills.slice(0, this.maxSkills)
+            let skills = [...this.allSkills].sort(
+                (a, b) => b.level - a.level || this.skillLabel(a).localeCompare(this.skillLabel(b))
+            )
+            if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)
+            return skills
         },
 
         isCurrentUser() {
@@ -86,6 +94,21 @@ export default {
     methods: {
         goToSkillTab() {
             this.selectTab(4)
+        },
+
+        skillLabel(skill) {
+            return this.tagLabel(skill.tag)
+        },
+
+        tagLabel(tag) {
+            return tag[`title_${this.languagesStore.current}`] || tag.title
+        },
+        skillDescription(skill) {
+            return this.descriptionLabel(skill.tag)
+        },
+
+        descriptionLabel(tag) {
+            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }
@@ -115,6 +138,7 @@ export default {
     .skills {
         display: flex;
         flex-direction: column;
+        gap: 0.75rem;
     }
 }
 

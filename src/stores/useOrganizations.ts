@@ -26,6 +26,24 @@ const useOrganizationsStore = defineStore('organizations', {
         isDefault(): boolean {
             return this.current?.code === 'DEFAULT'
         },
+
+        allClassifications(): object[] {
+            const index = {}
+            this.current?.enabled_projects_tag_classifications.forEach((classification) => {
+                if (!index[classification.id]) {
+                    index[classification.id] = classification
+                }
+                index[classification.id].is_enabled_for_projects = true
+            })
+
+            this.current?.enabled_skills_tag_classifications.forEach((classification) => {
+                if (!index[classification.id]) {
+                    index[classification.id] = classification
+                }
+                index[classification.id].is_enabled_for_skills = true
+            })
+            return Object.values(index)
+        },
     },
     actions: {
         async getCurrentOrganization(code: string): Promise<OrganizationOutput> {
