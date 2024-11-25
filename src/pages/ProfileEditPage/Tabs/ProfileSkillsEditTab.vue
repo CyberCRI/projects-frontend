@@ -80,10 +80,10 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
+import useTagTexts from '@/composables/useTagTexts.js'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
@@ -104,9 +104,9 @@ export default {
     },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         const toaster = useToasterStore()
-        return { languagesStore, toaster }
+        return { tagTexts, toaster }
     },
     props: {
         user: {
@@ -222,11 +222,7 @@ export default {
             else return this.hobbies
         },
         skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
+            return this.tagTexts.title(skill.tag)
         },
     },
 }

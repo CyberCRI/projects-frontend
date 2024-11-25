@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import IconImage from '@/components/base/media/IconImage.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 defineProps({
     skill: { type: Object, required: true },
@@ -11,7 +11,7 @@ defineProps({
 defineEmits(['set-level', 'delete'])
 
 const { t } = useI18n()
-const languagesStore = useLanguagesStore()
+const tagTexts = useTagTexts()
 
 const skillLevels = computed(() =>
     // CAUTION : this must be ordered from lowest to highest (see clampLevel())
@@ -36,11 +36,7 @@ const skillLevels = computed(() =>
 )
 
 function skillLabel(skill) {
-    return tagLabel(skill.tag)
-}
-
-function tagLabel(tag) {
-    return tag[`title_${languagesStore.current}`] || tag.title
+    return tagTexts.title(skill.tag)
 }
 
 function clampLevel(level) {

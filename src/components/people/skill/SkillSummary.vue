@@ -97,18 +97,11 @@ export default {
         },
 
         skillLabel(skill) {
-            return this.tagLabel(skill.tag)
+            return this.tagTexts.title(skill.tag)
         },
 
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
-        },
         skillDescription(skill) {
-            return this.descriptionLabel(skill.tag)
-        },
-
-        descriptionLabel(tag) {
-            return tag[`description_${this.languagesStore.current}`] || tag.description
+            return this.tagTexts.description(skill.tag)
         },
     },
 }

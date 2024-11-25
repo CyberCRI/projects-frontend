@@ -4,26 +4,21 @@ import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
 const toaster = useToasterStore()
-const languagesStore = useLanguagesStore()
 const organizationsStore = useOrganizationsStore()
+const tagTexts = useTagTexts()
 
 const newTags = ref([])
 
 const tagSearchIsOpened = ref(false)
-
-const tagLabel = (tag) => {
-    return tag[`title_${languagesStore.current}`] || tag.title
-}
 
 const organizationTags = computed(() => {
     return organizationsStore.current.default_skills_tags
@@ -72,7 +67,7 @@ const deleteOrganizationTag = async (tag) => {
             <FilterValue
                 v-for="tag in organizationTags"
                 :key="tag.id"
-                :label="tagLabel(tag)"
+                :label="tagTexts.title(tag)"
                 icon="Close"
                 @click="deleteOrganizationTag(tag)"
             />

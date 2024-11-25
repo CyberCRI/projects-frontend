@@ -25,7 +25,7 @@
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
     name: 'UserSkills',
@@ -33,8 +33,8 @@ export default {
     components: { SkillItem },
 
     setup() {
-        const languagesStore = useLanguagesStore()
-        return { languagesStore }
+        const tagTexts = useTagTexts()
+        return { tagTexts }
     },
 
     data() {
@@ -115,19 +115,11 @@ export default {
             }
         },
         skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
+            return this.tagTexts.title(skill.tag)
         },
 
         skillDescription(skill) {
-            return this.descriptionLabel(skill.tag)
-        },
-
-        descriptionLabel(tag) {
-            return tag[`description_${this.languagesStore.current}`] || tag.description
+            return this.tagTexts.description(skill.tag)
         },
     },
 }

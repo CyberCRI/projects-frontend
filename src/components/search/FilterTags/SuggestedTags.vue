@@ -6,8 +6,8 @@
         <div v-else-if="displayableTags.length" class="suggested-tags-ctn">
             <div v-for="tag in displayableTags" :key="tag.id">
                 <FilterValue
-                    v-if="tagLabel(tag)"
-                    :label="tagLabel(tag)"
+                    v-if="tagTexts.title(tag)"
+                    :label="tagTexts.title(tag)"
                     class="actionable suggested"
                     @click="addTag(tag)"
                 />
@@ -19,7 +19,7 @@
 <script>
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
     name: 'SuggestedTags',
@@ -29,9 +29,9 @@ export default {
     components: { FilterValue, LoaderSimple },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         return {
-            languagesStore,
+            tagTexts,
         }
     },
     props: {
@@ -62,10 +62,6 @@ export default {
     methods: {
         addTag(tag) {
             this.$emit('add-tag', tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

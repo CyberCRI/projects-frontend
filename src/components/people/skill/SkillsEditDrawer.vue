@@ -95,6 +95,7 @@ import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
+import useTagTexts from '@/composables/useTagTexts.js'
 export default {
     name: 'SkillsEditDrawer',
 
@@ -109,6 +110,7 @@ export default {
     setup(props) {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         const {
             suggestedTagsisLoading,
             selectedClassificationId,
@@ -148,6 +150,7 @@ export default {
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
+            tagTexts,
         }
     },
 
@@ -287,11 +290,7 @@ export default {
             talent.level = level
         },
         skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
+            return this.tagTexts.title(skill.tag)
         },
     },
 }

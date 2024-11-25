@@ -34,7 +34,7 @@ import UserSkills from '@/components/people/skill/UserSkills.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
@@ -49,10 +49,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         return {
             usersStore,
-            languagesStore,
+            tagTexts,
         }
     },
     props: {
@@ -96,11 +96,7 @@ export default {
     },
     methods: {
         skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
+            return this.tagTexts.title(skill.tag)
         },
     },
 }
