@@ -13,8 +13,8 @@
                     <SkillItem
                         v-if="(idx + idxOffset) % columnCount.length == column"
                         :key="skill.id"
-                        :label="skillLabel(skill)"
-                        :description="skillDescription(skill)"
+                        :label="skillTexts.title(skill)"
+                        :description="skillTexts.description(skill)"
                         :level="Number(skill.level)"
                     />
                 </template>
@@ -25,7 +25,7 @@
 
 <script>
 import SkillItem from '@/components/people/skill/SkillItem.vue'
-import useTagTexts from '@/composables/useTagTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts.js'
 
 export default {
     name: 'UserSkills',
@@ -33,8 +33,8 @@ export default {
     components: { SkillItem },
 
     setup() {
-        const tagTexts = useTagTexts()
-        return { tagTexts }
+        const skillTexts = useSkillTexts()
+        return { skillTexts }
     },
 
     data() {
@@ -113,13 +113,6 @@ export default {
                     this.columnCount[i] = 'empty'
                 }
             }
-        },
-        skillLabel(skill) {
-            return this.tagTexts.title(skill.tag)
-        },
-
-        skillDescription(skill) {
-            return this.tagTexts.description(skill.tag)
         },
     },
 }

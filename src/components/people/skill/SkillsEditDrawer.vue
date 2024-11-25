@@ -95,7 +95,7 @@ import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
-import useTagTexts from '@/composables/useTagTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts.js'
 export default {
     name: 'SkillsEditDrawer',
 
@@ -110,7 +110,7 @@ export default {
     setup(props) {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
-        const tagTexts = useTagTexts()
+        const skillTexts = useSkillTexts()
         const {
             suggestedTagsisLoading,
             selectedClassificationId,
@@ -150,7 +150,7 @@ export default {
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
-            tagTexts,
+            skillTexts,
         }
     },
 
@@ -257,7 +257,7 @@ export default {
                 this.$emit('skills-updated')
                 this.toaster.pushSuccess(
                     this.$t(`profile.edit.skills.${this.type}.add-success`, {
-                        name: this.skillLabel(this.addedTalent),
+                        name: this.skillTexts.title(this.addedTalent),
                     })
                 )
             } catch (error) {
@@ -288,9 +288,6 @@ export default {
         },
         setTalentLevel(talent, level) {
             talent.level = level
-        },
-        skillLabel(skill) {
-            return this.tagTexts.title(skill.tag)
         },
     },
 }
