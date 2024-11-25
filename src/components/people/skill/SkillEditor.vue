@@ -1,24 +1,29 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
 
-defineProps({
+const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
+    scrollIntoView: { type: Boolean, default: false },
 })
 defineEmits(['set-level', 'delete'])
+
+const el = ref(null)
+onMounted(() => {
+    if (props.scrollIntoView) {
+        el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+})
 
 const skillTexts = useSkillTexts()
 
 const { skillLevels, clampLevel } = useSkillLevels()
 </script>
 <template>
-    <div
-        class="entry"
-        :key="`${skill.id}-${skill.level}`"
-        :data-test="`${type}-editor-${skill.id}`"
-    >
+    <div class="entry" :data-test="`${type}-editor-${skill.id}`" ref="el">
         <h4 class="skill-name">{{ skillTexts.title(skill) }}</h4>
         <div class="level-editor">
             <label
@@ -130,5 +135,35 @@ const { skillLevels, clampLevel } = useSkillLevels()
             cursor: pointer;
         }
     }
+}
+
+/* see TransitionGroup in ProfileSkillsEditTab */
+
+.skill-move {
+    transform: 0.4s ease-in-out;
+}
+
+.skill-enter-active {
+    transition: transform 0.4s ease-in-out;
+}
+
+.skill-enter-from {
+    transform: translateX(-100%);
+}
+
+.skill-leave-active {
+    transition:
+        opacity 0.4s ease-in-out,
+        transform 0.4s 0.2s ease-in-out;
+
+    .level-editor,
+    .delete-action {
+        visibility: hidden;
+    }
+}
+
+.skill-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
 }
 </style>
