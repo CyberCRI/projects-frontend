@@ -1306,7 +1306,7 @@
                 "skills": {
                     "add-success": "Comptétence '{name}' ajoutée.",
                     "edit-success": "Comptétence '{name}' éditée.",
-                    "delete-success": "Comptétence '{name}' suppriée.",
+                    "delete-success": "Comptétence '{name}' supprimée.",
                     "add": "Ajouter des compétences professionnelles",
                     "add-item": "Ajouter une compétence",
                     "edit-levels": "Éditer les niveaux",

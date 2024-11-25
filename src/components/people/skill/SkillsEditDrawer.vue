@@ -99,7 +99,7 @@ import useSkillTexts from '@/composables/useSkillTexts.js'
 export default {
     name: 'SkillsEditDrawer',
 
-    emits: ['close', 'switch-mode', 'confirm', 'skills-updated'],
+    emits: ['close', 'switch-mode', 'confirm', 'skill-added'],
 
     inject: {
         reloadUser: {
@@ -249,19 +249,20 @@ export default {
             this.asyncing = true
 
             try {
-                await postUserSkill(this.user.id, {
+                const newSkill = await postUserSkill(this.user.id, {
                     ...this.addedTalent,
                     tag: this.addedTalent.tag.id,
                 })
                 this.reloadUser()
-                this.$emit('skills-updated')
+                this.$emit('skill-added', newSkill)
                 this.toaster.pushSuccess(
                     this.$t(`profile.edit.skills.${this.type}.add-success`, {
                         name: this.skillTexts.title(this.addedTalent),
                     })
                 )
             } catch (error) {
-                if (error.response.status === 409) {
+                console.error(error)
+                if (error?.response?.status === 409) {
                     this.toaster.pushError(
                         `${this.$t(`profile.edit.skills.${this.type}.already-added`)}`
                     )

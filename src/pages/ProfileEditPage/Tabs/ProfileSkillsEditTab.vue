@@ -43,16 +43,18 @@
                             />
                         </SkillLevelTip>
                     </div>
-                    <div class="level-editor-list">
+                    <TransitionGroup tag="div" name="skill" class="level-editor-list">
                         <SkillEditor
                             v-for="skill in getSkillOfType(key)"
                             :key="`${skill.id}-${skill.level}`"
                             :skill="skill"
                             :type="key"
+                            :data-skill-id="skill.id"
                             @set-level="setTalentLevel(key, $event.skill, $event.level)"
                             @delete="removeTalent(key, $event)"
+                            :scroll-into-view="lastAddedTalent === skill.id"
                         />
-                    </div>
+                    </TransitionGroup>
                 </template>
                 <div v-else class="add-action">
                     <LpiButton
@@ -72,7 +74,7 @@
         :type="drawerType"
         @close="closeDrawer"
         @switch-mode="drawerMode = $event"
-        @skills-updated="$emit('profile-edited')"
+        @skill-added="onSkillAdded"
     />
 </template>
 <script>
@@ -121,6 +123,7 @@ export default {
             drawerType: 'skills', // skills | hobbies
             drawerMode: 'add', // add | edit
             drawerIsOpen: false,
+            lastAddedTalent: null,
         }
     },
     computed: {
@@ -135,9 +138,11 @@ export default {
             return this.user.skills || []
         },
         skills() {
-            return this.allSkills
-                .filter((s) => s.type === 'skill')
-                .sort(this.skillTexts.compareTitles)
+            return [
+                ...this.allSkills
+                    .filter((s) => s.type === 'skill')
+                    .sort(this.skillTexts.compareTitles),
+            ]
         },
         hobbies() {
             return this.allSkills
@@ -147,6 +152,10 @@ export default {
     },
 
     methods: {
+        onSkillAdded(newSkill) {
+            this.lastAddedTalent = newSkill.id
+            this.$emit('profile-edited')
+        },
         async setTalentLevel(type, talent, newLevel) {
             if (this.clampLevel(talent.level) !== newLevel) {
                 try {
@@ -256,5 +265,6 @@ export default {
 
 .level-editor-list {
     margin-top: $space-xl;
+    position: relative;
 }
 </style>
