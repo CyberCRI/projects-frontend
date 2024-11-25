@@ -19,13 +19,13 @@ import EditClassification from '@/components/admin/EditClassification.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useI18n } from 'vue-i18n'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 const { t } = useI18n()
-const languagesStore = useLanguagesStore()
 
 const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()
+const tagTexts = useTagTexts()
 
 const emit = defineEmits([
     'classification-edited',
@@ -224,14 +224,6 @@ const onClassificationEdited = async (classification) => {
     editClassificationIsOpen.value = false
 }
 
-const tagLabel = (tag) => {
-    return tag[`title_${languagesStore.current}`] || tag.title
-}
-
-const tagDescription = (tag) => {
-    return tag[`description_${languagesStore.current}`] || tag.description
-}
-
 watch(() => [props.classification.value], fetchTagStats, { immediate: true })
 watch(() => [props.classification.value, search.value], getTags, { immediate: true })
 </script>
@@ -300,8 +292,8 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                     </td>
                 </tr>
                 <tr v-else v-for="tag in tagResults" :key="tag.id">
-                    <td>{{ tagLabel(tag) }}</td>
-                    <td>{{ tagDescription(tag) }}</td>
+                    <td>{{ tagTexts.title(tag) }}</td>
+                    <td>{{ tagTexts.description(tag) }}</td>
                     <td>
                         <div class="actions">
                             <ContextActionButton

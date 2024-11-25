@@ -24,7 +24,7 @@
                     <BadgeItem
                         v-for="(skill, index) in displayedSkills"
                         :key="index"
-                        :label="skillLabel(skill)"
+                        :label="skillTexts.title(skill)"
                         size="small"
                         colors="primary-light"
                         class="skill-badge"
@@ -42,7 +42,7 @@
                                 <BadgeItem
                                     v-for="(skill, index) in moreSkills"
                                     :key="index"
-                                    :label="skillLabel(skill)"
+                                    :label="skillTexts.title(skill)"
                                     size="small"
                                     colors="primary-light"
                                     class="skill-badge"
@@ -68,7 +68,7 @@
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useSkillTexts from '@/composables/useSkillTexts.js'
 
 export default {
     name: 'UserRecommendationItem',
@@ -78,9 +78,9 @@ export default {
     components: { CroppedApiImage, BadgeItem, ToolTip },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const skillTexts = useSkillTexts()
         return {
-            languagesStore,
+            skillTexts,
         }
     },
 
@@ -120,16 +120,6 @@ export default {
 
         hasMoreTags() {
             return this.moreSkills.length > 0
-        },
-    },
-
-    methods: {
-        skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

@@ -4,8 +4,8 @@
             <span :key="tag.id" v-if="showSeparator && index > 0"> {{ $t('search.or') }} </span>
             <FilterValue
                 :key="tag.id"
-                v-if="tagLabel(tag)"
-                :label="tagLabel(tag)"
+                v-if="tagTexts.title(tag)"
+                :label="tagTexts.title(tag)"
                 class="actionable"
                 icon="Close"
                 @click="removeTag(tag)"
@@ -16,7 +16,7 @@
 
 <script>
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
     name: 'CurrentTags',
@@ -26,9 +26,9 @@ export default {
     components: { FilterValue },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         return {
-            languagesStore,
+            tagTexts,
         }
     },
     props: {
@@ -46,10 +46,6 @@ export default {
     methods: {
         removeTag(tag) {
             this.$emit('remove-tag', tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

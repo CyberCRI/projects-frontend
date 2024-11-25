@@ -7,7 +7,7 @@
 <script>
 import { CHART_COLORS } from '@/functs/constants.ts'
 import LpiBarChart from './Generic/LpiBarChart.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
     name: 'TagChart',
@@ -15,9 +15,9 @@ export default {
     components: { LpiBarChart },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         return {
-            languagesStore,
+            tagTexts,
         }
     },
     props: {
@@ -30,7 +30,6 @@ export default {
     data() {
         return {
             chartData: undefined,
-            language: this.languagesStore.current,
             options: {
                 maintainAspectRatio: true,
                 responsive: true,
@@ -62,7 +61,7 @@ export default {
                 const tagData = []
                 const tagColors = []
                 this.stats.forEach((tag, i) => {
-                    tagLabels.push(tag[`name_${this.language}`] || tag.name)
+                    tagLabels.push(this.tagTexts.title(tag))
                     tagData.push(tag.project_count)
                     tagColors.push(CHART_COLORS[i % CHART_COLORS.length])
                 })

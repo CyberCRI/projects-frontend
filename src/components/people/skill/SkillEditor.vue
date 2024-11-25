@@ -1,8 +1,7 @@
 <script setup>
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import IconImage from '@/components/base/media/IconImage.vue'
-import useLanguagesStore from '@/stores/useLanguages'
+import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillLevels from '@/composables/useSkillLevels.js'
 
 defineProps({
     skill: { type: Object, required: true },
@@ -10,45 +9,9 @@ defineProps({
 })
 defineEmits(['set-level', 'delete'])
 
-const { t } = useI18n()
-const languagesStore = useLanguagesStore()
+const skillTexts = useSkillTexts()
 
-const skillLevels = computed(() =>
-    // CAUTION : this must be ordered from lowest to highest (see clampLevel())
-    [
-        {
-            label: t('profile.edit.skills.levels.curious'),
-            value: 1,
-        },
-        {
-            label: t('profile.edit.skills.levels.basic'),
-            value: 2,
-        },
-        {
-            label: t('profile.edit.skills.levels.competent'),
-            value: 3,
-        },
-        {
-            label: t('profile.edit.skills.levels.expert'),
-            value: 4,
-        },
-    ]
-)
-
-function skillLabel(skill) {
-    return tagLabel(skill.tag)
-}
-
-function tagLabel(tag) {
-    return tag[`title_${languagesStore.current}`] || tag.title
-}
-
-function clampLevel(level) {
-    const levels = skillLevels.value
-    const min = levels[0].value
-    const max = levels[levels.length - 1].value
-    return Math.min(Math.max(level, min), max)
-}
+const { skillLevels, clampLevel } = useSkillLevels()
 </script>
 <template>
     <div
@@ -56,7 +19,7 @@ function clampLevel(level) {
         :key="`${skill.id}-${skill.level}`"
         :data-test="`${type}-editor-${skill.id}`"
     >
-        <h4 class="skill-name">{{ skillLabel(skill) }}</h4>
+        <h4 class="skill-name">{{ skillTexts.title(skill) }}</h4>
         <div class="level-editor">
             <label
                 class="level"

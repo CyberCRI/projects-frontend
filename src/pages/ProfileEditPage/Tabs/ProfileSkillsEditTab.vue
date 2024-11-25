@@ -80,10 +80,11 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
+import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillLevels from '@/composables/useSkillLevels.js'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
@@ -104,9 +105,10 @@ export default {
     },
 
     setup() {
-        const languagesStore = useLanguagesStore()
+        const skillTexts = useSkillTexts()
         const toaster = useToasterStore()
-        return { languagesStore, toaster }
+        const { skillLevels, clampLevel } = useSkillLevels()
+        return { skillTexts, toaster, skillLevels, clampLevel }
     },
     props: {
         user: {
@@ -135,33 +137,12 @@ export default {
         skills() {
             return this.allSkills
                 .filter((s) => s.type === 'skill')
-                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
+                .sort(this.skillTexts.compareTitles)
         },
         hobbies() {
             return this.allSkills
                 .filter((s) => s.type === 'hobby')
-                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
-        },
-        skillLevels() {
-            // CAUTION : this must be ordered from lowest to highest (see clampLevel())
-            return [
-                {
-                    label: this.$t('profile.edit.skills.levels.curious'),
-                    value: 1,
-                },
-                {
-                    label: this.$t('profile.edit.skills.levels.basic'),
-                    value: 2,
-                },
-                {
-                    label: this.$t('profile.edit.skills.levels.competent'),
-                    value: 3,
-                },
-                {
-                    label: this.$t('profile.edit.skills.levels.expert'),
-                    value: 4,
-                },
-            ]
+                .sort(this.skillTexts.compareTitles)
         },
     },
 
@@ -176,7 +157,7 @@ export default {
                     })
                     this.toaster.pushSuccess(
                         this.$t(`profile.edit.skills.${type}.edit-success`, {
-                            name: this.skillLabel(talent),
+                            name: this.skillTexts.title(talent),
                         })
                     )
                     this.reloadUser()
@@ -192,7 +173,7 @@ export default {
                 await deleteUserSkill(this.user.id, talent.id)
                 this.toaster.pushSuccess(
                     this.$t(`profile.edit.skills.${type}.delete-success`, {
-                        name: this.skillLabel(talent),
+                        name: this.skillTexts.title(talent),
                     })
                 )
                 this.reloadUser()
@@ -202,12 +183,7 @@ export default {
                 this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
             }
         },
-        clampLevel(level) {
-            return Math.min(
-                Math.max(level, this.skillLevels[0].value),
-                this.skillLevels[this.skillLevels.length - 1].value
-            )
-        },
+
         openDrawer(type) {
             this.drawerType = type
             this.drawerIsOpen = true
@@ -220,13 +196,6 @@ export default {
         getSkillOfType(type) {
             if (type == 'skills') return this.skills
             else return this.hobbies
-        },
-        skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

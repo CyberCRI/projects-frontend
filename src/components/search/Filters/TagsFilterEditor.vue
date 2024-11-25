@@ -5,7 +5,7 @@
                 :current-tags="tags"
                 class="current-tags"
                 @remove-tag="removeTag"
-                show-separator
+                :show-separator="!hideCurrentTagsSeparator"
             />
         </div>
 
@@ -95,6 +95,10 @@ export default {
         allSearchMode: {
             type: Boolean,
             default: true,
+        },
+        hideCurrentTagsSeparator: {
+            type: Boolean,
+            default: false,
         },
     },
     setup(props) {

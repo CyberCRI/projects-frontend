@@ -14,8 +14,8 @@
                 <SkillItem
                     v-for="skill in visibleSkills"
                     :key="skill.id"
-                    :label="skillLabel(skill)"
-                    :description="skillDescription(skill)"
+                    :label="skillTexts.title(skill)"
+                    :description="skillTexts.description(skill)"
                     :level="Number(skill.level)"
                 />
             </template>
@@ -28,7 +28,7 @@
 import SkillItem from '@/components/people/skill/SkillItem.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import useLanguagesStore from '@/stores/useLanguages'
+import useSkillTexts from '@/composables/useSkillTexts.js'
 
 export default {
     name: 'SkillSummary',
@@ -45,10 +45,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
-        const languagesStore = useLanguagesStore()
+        const skillTexts = useSkillTexts()
         return {
             usersStore,
-            languagesStore,
+            skillTexts,
         }
     },
 
@@ -76,7 +76,7 @@ export default {
 
         visibleSkills() {
             let skills = [...this.allSkills].sort(
-                (a, b) => b.level - a.level || this.skillLabel(a).localeCompare(this.skillLabel(b))
+                (a, b) => b.level - a.level || this.skillTexts.compareTitles(a, b)
             )
             if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)
             return skills
@@ -94,21 +94,6 @@ export default {
     methods: {
         goToSkillTab() {
             this.selectTab(4)
-        },
-
-        skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
-        },
-        skillDescription(skill) {
-            return this.descriptionLabel(skill.tag)
-        },
-
-        descriptionLabel(tag) {
-            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }

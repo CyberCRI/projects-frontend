@@ -34,7 +34,7 @@ import UserSkills from '@/components/people/skill/UserSkills.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import useLanguagesStore from '@/stores/useLanguages'
+import useSkillTexts from '@/composables/useSkillTexts.js'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
@@ -49,10 +49,10 @@ export default {
     },
     setup() {
         const usersStore = useUsersStore()
-        const languagesStore = useLanguagesStore()
+        const skillTexts = useSkillTexts()
         return {
             usersStore,
-            languagesStore,
+            skillTexts,
         }
     },
     props: {
@@ -77,13 +77,13 @@ export default {
         skills() {
             return this.allSkills
                 .filter((s) => s.type == 'skill')
-                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
+                .sort(this.skillTexts.compareTitles)
         },
 
         hobbies() {
             return this.allSkills
                 .filter((s) => s.type == 'hobby')
-                .sort((a, b) => this.skillLabel(a).localeCompare(this.skillLabel(b)))
+                .sort(this.skillTexts.compareTitles)
         },
 
         isCurrentUser() {
@@ -92,15 +92,6 @@ export default {
 
         noSkillLabel() {
             return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
-        },
-    },
-    methods: {
-        skillLabel(skill) {
-            return this.tagLabel(skill.tag)
-        },
-
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
         },
     },
 }

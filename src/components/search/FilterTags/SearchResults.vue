@@ -3,12 +3,12 @@
         <div class="search-results-ctn" v-if="tagResults?.length">
             <TagResult
                 class="tag-result"
-                v-for="(tag, index) in tagResults"
-                :key="`${tag.name}-${index}`"
+                v-for="tag in tagResults"
+                :key="tag.id"
                 tabindex="0"
                 @click="tagClicked(tag)"
-                :label="tagLabel(tag)"
-                :description="tagDescription(tag)"
+                :label="tagTexts.title(tag)"
+                :description="tagTexts.description(tag)"
                 :classification-name="tag.classificationName || ''"
             />
         </div>
@@ -21,7 +21,7 @@
 <script>
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import useLanguagesStore from '@/stores/useLanguages'
+import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
     name: 'SearchResults',
@@ -31,10 +31,10 @@ export default {
     components: { TagResult },
     setup() {
         const usersStore = useUsersStore()
-        const languagesStore = useLanguagesStore()
+        const tagTexts = useTagTexts()
         return {
             usersStore,
-            languagesStore,
+            tagTexts,
         }
     },
     props: {
@@ -55,12 +55,6 @@ export default {
     methods: {
         tagClicked(tag) {
             this.$emit('result-clicked', tag)
-        },
-        tagLabel(tag) {
-            return tag[`title_${this.languagesStore.current}`] || tag.title
-        },
-        tagDescription(tag) {
-            return tag[`description_${this.languagesStore.current}`] || tag.description
         },
     },
 }
