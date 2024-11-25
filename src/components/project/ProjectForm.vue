@@ -117,6 +117,7 @@
                 :value="tags"
                 :progressive-update="false"
                 @update-tags="updateTagsInProcess"
+                hide-current-tags-separator
             />
         </BaseDrawer>
     </form>
