@@ -1,21 +1,16 @@
 import { computed, watch, ref } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useLanguagesStore from '@/stores/useLanguages'
 import {
     getAllOrgClassifications,
     getOrgClassificationTags,
-    getOrgClassificationAutocomplete,
 } from '@/api/tag-classification.service'
-import debounce from 'lodash.debounce'
 export default function useTagSearch({
     useSkills,
     useProjects,
     hideOrganizationTags,
     classificationType,
-    searchAll,
 }) {
     const organizationsStore = useOrganizationsStore()
-    const languagesStore = useLanguagesStore()
     const allOrgClassifications = ref([])
     const isLoadingOrgClassifications = ref(false)
 
@@ -76,7 +71,6 @@ export default function useTagSearch({
     const suggestedTagsisLoading = ref(false)
     const search = ref('')
     const suggestedTags = ref([]) // org pinned tags
-    const suggestions = ref([]) // auto complete suggest
 
     // computed
 
@@ -131,41 +125,6 @@ export default function useTagSearch({
         }
     }
 
-    const suggest = debounce(async function (evt) {
-        suggestions.value = []
-        if (evt.key === 'Enter') return // dont show suggestion when triggering search
-        if (!search.value || search.value.length < 3) return
-        try {
-            if (searchAll) {
-                Promise.all(
-                    orgClassifications.value.map((c) =>
-                        getOrgClassificationAutocomplete(organizationsStore.current.code, c.id, {
-                            search: search.value,
-                            language: languagesStore.current,
-                        })
-                    )
-                ).then((res) => {
-                    const maxResults = Math.max(...res.map((r) => r.length))
-                    for (let i = 0; i < maxResults; i++) {
-                        res.forEach((r) => {
-                            if (r[i]) {
-                                suggestions.value.push(r[i])
-                            }
-                        })
-                    }
-                })
-            } else {
-                suggestions.value = await getOrgClassificationAutocomplete(
-                    organizationsStore.current.code,
-                    selectedClassificationId.value,
-                    { search: search.value, language: languagesStore.current }
-                )
-            }
-        } catch (e) {
-            console.error(e)
-        }
-    }, 100)
-
     // watch
 
     watch(selectedClassificationId, loadSelectedClassificationTags, { immediate: true })
@@ -180,14 +139,12 @@ export default function useTagSearch({
         selectedClassificationId,
         selectedClassification,
         search,
-        suggestions,
         suggestedTags,
         organizationsStore,
         orgClassifications,
         orgClassificationOptions,
         organizationTags,
         showTagSearch,
-        suggest,
         loadSelectedClassificationTags,
         resetTagSearch,
         allOrgClassifications,

@@ -138,6 +138,11 @@ export default {
     .column-deskstop {
         display: flex;
         gap: $space-l;
+
+        > * {
+            flex: 1;
+            flex-basis: 50%;
+        }
     }
 }
 </style>

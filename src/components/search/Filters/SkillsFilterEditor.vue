@@ -103,7 +103,6 @@ export default {
             ...useTagSearch({
                 useSkills: true,
                 hideOrganizationTags: props.hideOrganizationTags,
-                allSearch: props.allSearchMode,
             }),
         }
     },
