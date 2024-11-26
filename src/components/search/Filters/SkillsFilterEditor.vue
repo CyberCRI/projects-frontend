@@ -44,7 +44,7 @@
                     :current-tags="skills"
                     :suggested-tags="suggestedTags"
                     @add-tag="onAddSkill"
-                    :loading="suggestedTagsisLoading"
+                    :loading="suggestedTagsAreLoading"
                 />
             </template>
         </div>
@@ -99,11 +99,28 @@ export default {
     },
 
     setup(props) {
+        const {
+            suggestedTagsAreLoading,
+            selectedClassificationId,
+            search,
+            suggestedTags,
+            orgClassifications,
+            orgClassificationOptions,
+            showTagSearch,
+            resetTagSearch,
+        } = useTagSearch({
+            useSkills: true,
+            hideOrganizationTags: props.hideOrganizationTags,
+        })
         return {
-            ...useTagSearch({
-                useSkills: true,
-                hideOrganizationTags: props.hideOrganizationTags,
-            }),
+            suggestedTagsAreLoading,
+            selectedClassificationId,
+            search,
+            suggestedTags,
+            orgClassifications,
+            orgClassificationOptions,
+            showTagSearch,
+            resetTagSearch,
         }
     },
     data() {

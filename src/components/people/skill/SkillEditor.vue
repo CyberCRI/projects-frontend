@@ -137,6 +137,28 @@ const { skillLevels, clampLevel } = useSkillLevels()
     }
 }
 
+@media screen and (max-width: $min-tablet) {
+    .entry {
+        flex-wrap: wrap;
+
+        .skill-name {
+            flex-basis: 100%;
+            flex-shrink: 0;
+        }
+    }
+}
+
+@media screen and (max-width: $max-mobile) {
+    .entry {
+        flex-direction: column;
+
+        .level-editor {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+}
+
 /* see TransitionGroup in ProfileSkillsEditTab */
 
 .skill-move {

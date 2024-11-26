@@ -32,7 +32,7 @@
                     :current-tags="selectionAsTags"
                     :suggested-tags="suggestedTags"
                     @add-tag="selectTalent"
-                    :loading="suggestedTagsisLoading"
+                    :loading="suggestedTagsAreLoading"
                 />
             </div>
             <div class="section" v-if="search.length">
@@ -107,40 +107,26 @@ export default {
         const languagesStore = useLanguagesStore()
         const skillTexts = useSkillTexts()
         const {
-            suggestedTagsisLoading,
+            suggestedTagsAreLoading,
             selectedClassificationId,
-            selectedClassification,
             search,
             suggestedTags,
-            organizationsStore,
             orgClassifications,
             orgClassificationOptions,
-            organizationTags,
             showTagSearch,
-            loadSelectedClassificationTags,
             resetTagSearch,
-            allOrgClassifications,
-            isLoadingOrgClassifications,
-            fetchAllClassifications,
         } = useTagSearch({ useSkills: true })
         return {
             toaster,
             languagesStore,
-            suggestedTagsisLoading,
+            suggestedTagsAreLoading,
             selectedClassificationId,
-            selectedClassification,
             search,
             suggestedTags,
-            organizationsStore,
             orgClassifications,
             orgClassificationOptions,
-            organizationTags,
             showTagSearch,
-            loadSelectedClassificationTags,
             resetTagSearch,
-            allOrgClassifications,
-            isLoadingOrgClassifications,
-            fetchAllClassifications,
             skillTexts,
         }
     },

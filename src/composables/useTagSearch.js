@@ -68,7 +68,7 @@ export default function useTagSearch({
 
     // data
 
-    const suggestedTagsisLoading = ref(false)
+    const suggestedTagsAreLoading = ref(false)
     const search = ref('')
     const suggestedTags = ref([]) // org pinned tags
 
@@ -109,7 +109,7 @@ export default function useTagSearch({
         if (!selectedClassificationId.value) {
             suggestedTags.value = organizationTags.value
         } else {
-            suggestedTagsisLoading.value = true
+            suggestedTagsAreLoading.value = true
 
             const classificationReq = await getOrgClassificationTags(
                 organizationsStore.current.code,
@@ -121,7 +121,7 @@ export default function useTagSearch({
             // this will display the search input
             suggestedTags.value = classificationReq.count <= 20 ? classificationReq.results : []
 
-            suggestedTagsisLoading.value = false
+            suggestedTagsAreLoading.value = false
         }
     }
 
@@ -135,7 +135,7 @@ export default function useTagSearch({
     }
 
     return {
-        suggestedTagsisLoading,
+        suggestedTagsAreLoading,
         selectedClassificationId,
         selectedClassification,
         search,
