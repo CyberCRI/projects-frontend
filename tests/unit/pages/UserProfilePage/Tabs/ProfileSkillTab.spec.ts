@@ -1,8 +1,7 @@
 import ProfileSkillTab from '@/pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
-import { flushPromises } from '@vue/test-utils'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
@@ -81,7 +80,7 @@ describe('ProfileSkillTab', () => {
     it('should display one list if user has skill but no hobby', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.skills = [{ id: '123', type: 'skill' }]
+        user.skills = [{ id: '123', type: 'skill', tag: { title: '123' } }]
         usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
@@ -93,7 +92,7 @@ describe('ProfileSkillTab', () => {
     it('should display one list if user has hobbies but no skills', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
-        user.skills = [{ id: '123', type: 'hobby' }]
+        user.skills = [{ id: '123', type: 'hobby', tag: { title: '123' } }]
         usersStore.id = '456'
 
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
@@ -106,8 +105,8 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         user.skills = [
-            { id: '123', type: 'skill' },
-            { id: '123', type: 'hobby' },
+            { id: '123', type: 'skill', tag: { title: '123' } },
+            { id: '123', type: 'hobby', tag: { title: '123' } },
         ]
         usersStore.id = '456'
 
@@ -121,13 +120,13 @@ describe('ProfileSkillTab', () => {
         const user: any = UserFactory.generate()
         user.id = '123'
         user.skills = [
-            { id: '123', type: 'skill' },
-            { id: '123', type: 'hobby' },
+            { id: '123', type: 'skill', tag: { title: '123' } },
+            { id: '123', type: 'hobby', tag: { title: '123' } },
         ]
         usersStore.id = '456'
 
-        let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+        let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
 
-        expect(wrapper.find('skill-level-tip-stub').exists()).toBe(true)
+        expect(wrapper.find('[data-test="skill-levels-help-button"]').exists()).toBe(true)
     })
 })
