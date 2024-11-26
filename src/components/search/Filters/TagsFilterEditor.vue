@@ -106,7 +106,6 @@ export default {
             ...useTagSearch({
                 useProjects: true,
                 hideOrganizationTags: props.hideOrganizationTags,
-                allSearch: props.allSearchMode,
             }),
         }
     },

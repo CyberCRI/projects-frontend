@@ -21,12 +21,8 @@
                     <SearchInput
                         v-model.trim="search"
                         @delete-query="onDeleteQuery"
-                        @enter="doSearch"
-                        :suggestions="suggestions"
-                        @keyup="suggest"
                         :placeholder="$t(`profile.edit.skills.${type}.drawer.placeholder`)"
                     />
-                    <LpiButton :label="$t(`profile.edit.skills.search`)" @click="doSearch" />
                 </div>
             </div>
 
@@ -40,16 +36,16 @@
                 />
             </div>
             <div class="section" v-if="search.length">
-                <p v-if="confirmedSearch && searchResultsCount" class="notice no-shrink">
+                <p v-if="search && searchResultsCount" class="notice no-shrink">
                     {{ $t('search.choose-skill') }}
                 </p>
                 <TagResults
                     class="flexed-search-results-ctn custom-scrollbar"
-                    v-if="confirmedSearch"
+                    v-if="search"
                     :classification-id="selectedClassificationId"
                     :existing-tags="selectionAsTags"
                     inline
-                    :search="confirmedSearch"
+                    :search="search"
                     @add-tag="selectTalent"
                     @results-count="searchResultsCount = $event"
                     :all-classifications="orgClassifications"
@@ -88,7 +84,6 @@ import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { toRaw } from 'vue'
 import { postUserSkill } from '@/api/people.service.ts'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
@@ -107,7 +102,7 @@ export default {
             default: () => () => {},
         },
     },
-    setup(props) {
+    setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const skillTexts = useSkillTexts()
@@ -116,20 +111,18 @@ export default {
             selectedClassificationId,
             selectedClassification,
             search,
-            suggestions,
             suggestedTags,
             organizationsStore,
             orgClassifications,
             orgClassificationOptions,
             organizationTags,
             showTagSearch,
-            suggest,
             loadSelectedClassificationTags,
             resetTagSearch,
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
-        } = useTagSearch({ useSkills: true, searchAll: props.searchAllMode })
+        } = useTagSearch({ useSkills: true })
         return {
             toaster,
             languagesStore,
@@ -137,14 +130,12 @@ export default {
             selectedClassificationId,
             selectedClassification,
             search,
-            suggestions,
             suggestedTags,
             organizationsStore,
             orgClassifications,
             orgClassificationOptions,
             organizationTags,
             showTagSearch,
-            suggest,
             loadSelectedClassificationTags,
             resetTagSearch,
             allOrgClassifications,
@@ -160,7 +151,6 @@ export default {
         SearchInput,
         TagResults,
         SkillLevelTip,
-        LpiButton,
         LpiSelect,
         SuggestedTags,
         SkillEditor,
@@ -186,7 +176,6 @@ export default {
     },
     data() {
         return {
-            confirmedSearch: '',
             selection: [],
             asyncing: false,
             searchResultsCount: 0,
@@ -212,7 +201,6 @@ export default {
             if (neo) {
                 this.addedTalent = null
                 this.search = ''
-                this.confirmedSearch = ''
                 this.selection = this.getSkillOfType(this.type)
                     ? this.getSkillOfType(this.type).map((item) => ({ ...toRaw(item) }))
                     : []
@@ -234,14 +222,8 @@ export default {
             })
         },
 
-        doSearch() {
-            this.suggestions = []
-            this.confirmedSearch = this.search
-        },
-
         onDeleteQuery() {
             this.search = ''
-            this.confirmedSearch = ''
         },
 
         async save() {
