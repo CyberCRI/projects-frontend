@@ -73,14 +73,28 @@ export default {
     },
 
     data() {
+        const {
+            selectedClassificationId,
+            selectedClassification,
+            orgClassifications,
+            orgClassificationOptions,
+            allOrgClassifications,
+            isLoadingOrgClassifications,
+            fetchAllClassifications,
+        } = useTagSearch({
+            hideOrganizationTags: true,
+            classificationType: 'custom',
+        })
         return {
             confirmModalVisible: false,
             createClassificationIsOpen: false,
-
-            ...useTagSearch({
-                hideOrganizationTags: true,
-                classificationType: 'custom',
-            }),
+            selectedClassificationId,
+            selectedClassification,
+            orgClassifications,
+            orgClassificationOptions,
+            allOrgClassifications,
+            isLoadingOrgClassifications,
+            fetchAllClassifications,
         }
     },
 

@@ -43,7 +43,7 @@
                     :current-tags="tags"
                     :suggested-tags="suggestedTags"
                     @add-tag="addTag"
-                    :loading="suggestedTagsisLoading"
+                    :loading="suggestedTagsAreLoading"
                 />
             </template>
         </div>
@@ -102,11 +102,28 @@ export default {
         },
     },
     setup(props) {
+        const {
+            suggestedTagsAreLoading,
+            selectedClassificationId,
+            search,
+            suggestedTags,
+            orgClassifications,
+            orgClassificationOptions,
+            showTagSearch,
+            resetTagSearch,
+        } = useTagSearch({
+            useProjects: true,
+            hideOrganizationTags: props.hideOrganizationTags,
+        })
         return {
-            ...useTagSearch({
-                useProjects: true,
-                hideOrganizationTags: props.hideOrganizationTags,
-            }),
+            suggestedTagsAreLoading,
+            selectedClassificationId,
+            search,
+            suggestedTags,
+            orgClassifications,
+            orgClassificationOptions,
+            showTagSearch,
+            resetTagSearch,
         }
     },
 
