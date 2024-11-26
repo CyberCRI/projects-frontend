@@ -1,13 +1,6 @@
 <template>
     <div class="skill-tab">
         <div class="header">
-            <SkillLevelTip>
-                <LinkButton
-                    :label="$t(`me.levels-help-link`)"
-                    btn-icon="HelpCircle"
-                    data-test="skill-levels-help-button"
-                />
-            </SkillLevelTip>
             <LinkButton
                 v-if="isCurrentUser || canEditUser"
                 class="edit-btn"
@@ -31,7 +24,6 @@
 
 <script>
 import UserSkills from '@/components/people/skill/UserSkills.vue'
-import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
@@ -44,7 +36,6 @@ export default {
 
     components: {
         UserSkills,
-        SkillLevelTip,
         LinkButton,
     },
     setup() {
@@ -120,7 +111,7 @@ export default {
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
