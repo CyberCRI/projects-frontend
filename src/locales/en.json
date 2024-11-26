@@ -1862,8 +1862,9 @@
     "tag": {
         "add-specific": "Create tags to organize projects",
         "add-specific-info": "These tags make it possible to organize projects in addition to categories (examples: “Master 2 LiSc”, “MAT001”, “school year 2022-2023”, etc.). They are specific to your organization. They are useful for filtering your projects in the search.",
-        "add-wiki": "Put tags forward to link projects by theme",
-        "add-wiki-info": "When a user creates a project, they can add a thematic tag from Wikipedia (e.g. biochemistry, physics, etc.). This makes it easier to find the project and improve project recommendations by thematic similarity. You can highlight important thematic tags for your organization.",
+        "add-project-tag": "Put tags forward to link projects by theme",
+        "add-profile-tag": "Put skills forward for your users profiles",
+        "add-project-tag-info": "When a user creates a project, they can add a thematic tag from Wikipedia (e.g. biochemistry, physics, etc.). This makes it easier to find the project and improve project recommendations by thematic similarity. You can highlight important thematic tags for your organization.",
         "edit": "edit tags",
         "title": "Tags"
     },

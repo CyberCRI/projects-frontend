@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -19,7 +19,11 @@ const tagTexts = useTagTexts()
 const newTags = ref([])
 
 const tagSearchIsOpened = ref(false)
-
+watch(tagSearchIsOpened, (value) => {
+    if (value) {
+        newTags.value = []
+    }
+})
 const organizationTags = computed(() => {
     return organizationsStore.current.default_skills_tags
 })
@@ -84,8 +88,9 @@ const deleteOrganizationTag = async (tag) => {
         </div>
         <BaseDrawer
             :confirm-action-name="t('common.confirm')"
+            :confirm-action-disabled="!newTags.length"
             :is-opened="tagSearchIsOpened"
-            :title="t('tag.add-wiki')"
+            :title="t('tag.add-profile-tag')"
             class="medium"
             @close="closeTagsSelector"
             @confirm="saveOrganizationTags"
