@@ -37,7 +37,7 @@
                 :all-classifications="orgClassifications"
             />
 
-            <template v-else>
+            <template v-else-if="suggestedTags.length">
                 <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
                 <SuggestedTags
                     :current-tags="tags"
