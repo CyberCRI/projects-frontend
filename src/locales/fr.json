@@ -1859,8 +1859,9 @@
     "tag": {
         "add-specific": "Créer des tags pour organiser les projets",
         "add-specific-info": "Ces tags permettent d’organiser les projets en complément des catégories   (exemples : “Master 2 LiSc”, “MAT001”, “année scolaire 2022-2023”, etc.). Ils sont spécifiques à votre organisation. Ils sont utiles pour filtrer vos projets dans la recherche.",
-        "add-wiki": "Mettre en avant des tags pour lier les projets par thème",
-        "add-wiki-info": "Quand un utilisateur crée un projet, il peut rajouter un tag thématique issu de Wikipédia (ex : biochimie, physique, etc). Cela permet de plus facilement trouver le projet et d’améliorer les recommandations de projets par similarité thématique. Vous pouvez mettre en avant des tags thématiques importants pour votre organisation.",
+        "add-project-tag": "Mettre en avant des tags pour lier les projets par thème",
+        "add-profile-tag": "Mettre en avant des compétences pour les profils utilisateurs",
+        "add-project-tag-info": "Quand un utilisateur crée un projet, il peut rajouter un tag thématique issu de Wikipédia (ex : biochimie, physique, etc). Cela permet de plus facilement trouver le projet et d’améliorer les recommandations de projets par similarité thématique. Vous pouvez mettre en avant des tags thématiques importants pour votre organisation.",
         "edit": "modifier les tags",
         "title": "Tags"
     },
