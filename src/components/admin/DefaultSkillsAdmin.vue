@@ -84,13 +84,7 @@ const deleteOrganizationTag = async () => {
         </div>
 
         <div class="rel-ctn">
-            <div class="input-container">
-                <LpiButton
-                    btn-icon="Plus"
-                    :label="t('common.add')"
-                    @click="tagSearchIsOpened = true"
-                />
-            </div>
+            <LpiButton btn-icon="Plus" :label="t('common.add')" @click="tagSearchIsOpened = true" />
         </div>
         <BaseDrawer
             :confirm-action-name="t('common.confirm')"
@@ -135,18 +129,5 @@ const deleteOrganizationTag = async () => {
 .notice {
     margin-bottom: $space-l;
     font-size: $font-size-s;
-}
-
-.input-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-@media (min-width: $min-desktop) {
-    .input-container {
-        justify-content: center;
-        flex-direction: row;
-    }
 }
 </style>

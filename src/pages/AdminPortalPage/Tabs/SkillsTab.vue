@@ -1,24 +1,23 @@
 <template>
     <div class="tags-tab">
         <div class="block-container">
-            <DefaultTagsAdmin />
+            <DefaultSkillsAdmin />
         </div>
-
         <div class="block-container">
-            <ClassificationAdmin type="projects" />
+            <ClassificationAdmin type="skills" />
         </div>
     </div>
 </template>
 
 <script>
-import DefaultTagsAdmin from '@/components/admin/DefaultTagsAdmin.vue'
+import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
 import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
 export default {
-    name: 'TagsTab',
+    name: 'SkillsTab',
 
     components: {
+        DefaultSkillsAdmin,
         ClassificationAdmin,
-        DefaultTagsAdmin,
     },
 }
 </script>

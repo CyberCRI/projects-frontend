@@ -1,5 +1,5 @@
 <script setup>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
 import { ref, watchEffect, computed, nextTick } from 'vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -10,6 +10,7 @@ import CharCounter from '@/components/base/form/CharCounter.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import LpiButton from '../base/button/LpiButton.vue'
 
 const { t } = useI18n()
 
@@ -129,72 +130,82 @@ async function saveTag() {
 }
 </script>
 <template>
-    <BaseDrawer
-        :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="v$.$invalid"
-        :is-opened="isOpen"
-        :title="drawerTitle"
-        class="medium"
-        @close="emit('close')"
-        @confirm="saveTag"
-        :asyncing="asyncing"
-    >
-        <div class="form-section">
-            <TextInput
-                v-model.trim="form.title_en"
-                :label="t('admin.classifications.tag-form.title-en') + ' *'"
-                :required="true"
-                :max-length="50"
-                @blur="v$.title_en.$validate"
-            />
-            <div class="input-footer">
-                <FieldErrors :errors="v$.title_en.$errors" />
-                <CharCounter :text="form.title_en" :max-length="50" />
+    <BaseModal v-if="isOpen" @close="emit('close')">
+        <template #header-title>{{ drawerTitle }}</template>
+        <template #content>
+            <div class="form-section">
+                <TextInput
+                    v-model.trim="form.title_en"
+                    :label="t('admin.classifications.tag-form.title-en') + ' *'"
+                    :required="true"
+                    :max-length="50"
+                    @blur="v$.title_en.$validate"
+                />
+                <div class="input-footer">
+                    <FieldErrors :errors="v$.title_en.$errors" />
+                    <CharCounter :text="form.title_en" :max-length="50" />
+                </div>
             </div>
-        </div>
-        <div class="form-section">
-            <TextInput
-                v-model.trim="form.title_fr"
-                :label="t('admin.classifications.tag-form.title-fr') + ' *'"
-                :required="true"
-                :max-length="50"
-                @blur="v$.title_fr.$validate"
-            />
-            <div class="input-footer">
-                <FieldErrors :errors="v$.title_fr.$errors" />
-                <CharCounter :text="form.title_fr" :max-length="50" />
+            <div class="form-section">
+                <TextInput
+                    v-model.trim="form.title_fr"
+                    :label="t('admin.classifications.tag-form.title-fr') + ' *'"
+                    :required="true"
+                    :max-length="50"
+                    @blur="v$.title_fr.$validate"
+                />
+                <div class="input-footer">
+                    <FieldErrors :errors="v$.title_fr.$errors" />
+                    <CharCounter :text="form.title_fr" :max-length="50" />
+                </div>
             </div>
-        </div>
-        <div class="form-section">
-            <TextInput
-                v-model.trim="form.description_en"
-                :label="t('admin.classifications.tag-form.description-en') + ' *'"
-                :required="true"
-                input-type="textarea"
-                :max-length="500"
-                @blur="v$.description_en.$validate"
-            />
+            <div class="form-section">
+                <TextInput
+                    v-model.trim="form.description_en"
+                    :label="t('admin.classifications.tag-form.description-en') + ' *'"
+                    :required="true"
+                    input-type="textarea"
+                    :max-length="500"
+                    @blur="v$.description_en.$validate"
+                />
 
-            <div class="input-footer">
-                <FieldErrors :errors="v$.description_en.$errors" />
-                <CharCounter :text="form.description_en" :max-length="500" />
+                <div class="input-footer">
+                    <FieldErrors :errors="v$.description_en.$errors" />
+                    <CharCounter :text="form.description_en" :max-length="500" />
+                </div>
             </div>
-        </div>
-        <div class="form-section">
-            <TextInput
-                v-model.trim="form.description_fr"
-                :label="t('admin.classifications.tag-form.description-fr') + ' *'"
-                :required="true"
-                input-type="textarea"
-                :max-length="500"
-                @blur="v$.description_fr.$validate"
-            />
-            <div class="input-footer">
-                <FieldErrors :errors="v$.description_fr.$errors" />
-                <CharCounter :text="form.description_fr" :max-length="500" />
+            <div class="form-section">
+                <TextInput
+                    v-model.trim="form.description_fr"
+                    :label="t('admin.classifications.tag-form.description-fr') + ' *'"
+                    :required="true"
+                    input-type="textarea"
+                    :max-length="500"
+                    @blur="v$.description_fr.$validate"
+                />
+                <div class="input-footer">
+                    <FieldErrors :errors="v$.description_fr.$errors" />
+                    <CharCounter :text="form.description_fr" :max-length="500" />
+                </div>
             </div>
-        </div>
-    </BaseDrawer>
+        </template>
+        <template #footer>
+            <div class="actions">
+                <LpiButton
+                    :disabled="asyncing"
+                    :label="t('common.cancel')"
+                    @click="emit('close')"
+                />
+                <LpiButton
+                    :loading="asyncing"
+                    :label="t('common.save')"
+                    :disabled="v$.$invalid || asyncing"
+                    :btn-icon="asyncing ? 'LoaderSimple' : null"
+                    @click="saveTag"
+                />
+            </div>
+        </template>
+    </BaseModal>
 </template>
 <style lang="scss" scoped>
 .form-section + .form-section {
@@ -210,5 +221,13 @@ async function saveTag() {
     .char-counter {
         margin-left: auto;
     }
+}
+
+.actions,
+.checkboxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 </style>

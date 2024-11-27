@@ -1,13 +1,12 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue'
-import BaseModal from '@/components/base/modal/BaseModal.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '../base/button/LpiButton.vue'
-import LpiCheckbox from '../base/form/LpiCheckbox.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { postOrgClassification, putOrgClassification } from '@/api/tag-classification.service'
-
+import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -92,61 +91,51 @@ const saveClassification = async () => {
 }
 </script>
 <template>
-    <BaseModal v-if="isOpen" @close="emit('close')">
-        <template #header-title>
-            {{
-                isAddMode
-                    ? t('admin.classifications.add-classification.title')
-                    : t('admin.classifications.edit-classification.title')
-            }}
-        </template>
+    <BaseDrawer
+        :title="
+            isAddMode
+                ? t('admin.classifications.add-classification.title')
+                : t('admin.classifications.edit-classification.title')
+        "
+        :is-opened="isOpen"
+        @close="emit('close')"
+        @confirm="saveClassification"
+    >
+        <div class="form-section">
+            <TextInput
+                v-model.trim="form.title"
+                :label="t('admin.classifications.title-field')"
+                :placeholder="t('admin.classifications.enter-title')"
+                required
+            />
+        </div>
+        <div class="form-section">
+            <TextInput
+                v-model.trim="form.description"
+                :label="t('admin.classifications.description-field')"
+                :placeholder="t('admin.classifications.enter-description')"
+                input-type="textarea"
+            />
+        </div>
+        <div class="form-section checkboxes">
+            <LpiCheckbox
+                v-model="form.is_enabled_for_skills"
+                :label="t('admin.classifications.enabled-for-skills')"
+            />
+            <LpiCheckbox
+                v-model="form.is_enabled_for_projects"
+                :label="t('admin.classifications.enabled-for-projects')"
+            />
+        </div>
 
-        <template #content>
-            <div class="form-section">
-                <TextInput
-                    v-model.trim="form.title"
-                    :label="t('admin.classifications.title-field')"
-                    :placeholder="t('admin.classifications.enter-title')"
-                    required
-                />
-            </div>
-            <div class="form-section">
-                <TextInput
-                    v-model.trim="form.description"
-                    :label="t('admin.classifications.description-field')"
-                    :placeholder="t('admin.classifications.enter-description')"
-                    input-type="textarea"
-                />
-            </div>
-            <div class="form-section checkboxes">
-                <LpiCheckbox
-                    v-model="form.is_enabled_for_skills"
-                    :label="t('admin.classifications.enabled-for-skills')"
-                />
-                <LpiCheckbox
-                    v-model="form.is_enabled_for_projects"
-                    :label="t('admin.classifications.enabled-for-projects')"
-                />
-            </div>
-        </template>
-
-        <template #footer>
-            <div class="actions">
-                <LpiButton
-                    :disabled="asyncing"
-                    :label="t('common.cancel')"
-                    @click="emit('close')"
-                />
-                <LpiButton
-                    :loading="asyncing"
-                    :label="t('common.save')"
-                    :disabled="!form.title || asyncing"
-                    :btn-icon="asyncing ? 'LoaderSimple' : null"
-                    @click="saveClassification"
-                />
-            </div>
-        </template>
-    </BaseModal>
+        <TagClassificationAdmin
+            v-if="classification"
+            :classification="classification"
+            @classification-deleted="onClassificationDeleted"
+            @classification-edited="onClassificationEdited"
+            @classification-created="onClassificationCreated"
+        />
+    </BaseDrawer>
 </template>
 <style scoped lang="scss">
 .form-section + .form-section {
