@@ -134,35 +134,35 @@
             "notice": "Select skills that will be suggested by default when searching or creating  profiles"
         },
         "classifications": {
-            "title": "Classifications",
-            "subtitle": "Manage your custom classifications",
+            "title": "Frameworks",
+            "subtitle": "Manage your custom frameworks",
             "enter-title": "Enter a title",
             "enter-description": "Enter a description",
             "title-field": "Title",
             "description-field": "Description",
             "add-classification": {
-                "title": "Add a classification",
-                "error": "Error while saving the classification",
-                "success": "The classification was successfully created"
+                "title": "Add a framework",
+                "error": "Error while saving the framework",
+                "success": "The framework was successfully created"
             },
             "edit-classification": {
-                "title": "Edit a classification",
-                "error": "Error while modifying the classification",
-                "success": "The classification was successfully modified"
+                "title": "Edit a framework",
+                "error": "Error while modifying the framework",
+                "success": "The framework was successfully modified"
             },
             "delete-classification": {
-                "title": "Delete the classification",
-                "content": "Are you sure you want to delete the classification '{title}'?",
-                "error": "Error while deleting the classification",
-                "success": "The classification was successfully deleted"
+                "title": "Delete the framework",
+                "content": "Are you sure you want to delete the framework '{title}'?",
+                "error": "Error while deleting the framework",
+                "success": "The framework was successfully deleted"
             },
-            "create-classification": "Create a classification",
+            "create-classification": "Create a framework",
             "create-tag": "Create a tag",
             "tags": "tags",
             "enabled-for-projects": "Enabled for projects",
             "enabled-for-skills": "Enabled for Skills",
             "disabled": "Disabled",
-            "no-custom": "No custom classification yet",
+            "no-custom": "No custom framework yet",
             "table": {
                 "filter": "Filter tags",
                 "tag": "Tag",
@@ -1765,8 +1765,8 @@
         "geo-map-description": "Discover projects on a world map",
         "tag-map-description": "Discover projetcs on a Wikipédia tag map",
         "open-map": "Open the map",
-        "pick-tag-classification": "Choose a tag classification",
-        "pick-skill-classification": "Choose a skill classification",
+        "pick-tag-classification": "Choose a tag framework",
+        "pick-skill-classification": "Choose a skill framework",
         "pick-tag-preset": "Or choose a suggested tag",
         "pick-skill-preset": "Or choose a suggested skill",
         "current-tag-description": "Type tag’s first letters and select the right tag",
