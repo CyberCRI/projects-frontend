@@ -3,13 +3,14 @@ import { ref, onMounted } from 'vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 
 const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
     scrollIntoView: { type: Boolean, default: false },
 })
-defineEmits(['set-level', 'delete'])
+const emit = defineEmits(['set-level', 'delete'])
 
 const el = ref(null)
 onMounted(() => {
@@ -21,6 +22,13 @@ onMounted(() => {
 const skillTexts = useSkillTexts()
 
 const { skillLevels, clampLevel } = useSkillLevels()
+
+const confirmDelete = ref(false)
+const asyncing = ref(false)
+function deleteSkill() {
+    asyncing.value = true
+    emit('delete', props.skill)
+}
 </script>
 <template>
     <div class="entry" :data-test="`${type}-editor-${skill.id}`" ref="el">
@@ -41,9 +49,19 @@ const { skillLevels, clampLevel } = useSkillLevels()
                 name="TrashCanOutline"
                 :data-test="`delete-${type}-${skill.id}`"
                 class="delete-icon"
-                @click="$emit('delete', skill)"
+                @click="confirmDelete = true"
             />
         </div>
+        <ConfirmModal
+            v-if="confirmDelete"
+            :title="$t('common.confirm-delete')"
+            content=""
+            cancel-button-label="common.no"
+            confirm-button-label="common.yes"
+            :asyncing="asyncing"
+            @cancel="confirmDelete = false"
+            @confirm="deleteSkill"
+        />
     </div>
 </template>
 <style scoped lang="scss">

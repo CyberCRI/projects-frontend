@@ -4,7 +4,7 @@ import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useTagTexts from '@/composables/useTagTexts.js'
@@ -48,7 +48,10 @@ const closeTagsSelector = () => {
     tagSearchIsOpened.value = false
 }
 
-const deleteOrganizationTag = async (tag) => {
+const tagToDelete = ref(null)
+const deleteOrganizationTag = async () => {
+    const tag = tagToDelete.value
+    if (!tag) return
     try {
         await organizationsStore.updateCurrentOrganization({
             default_projects_tags: organizationTags.value
@@ -59,6 +62,8 @@ const deleteOrganizationTag = async (tag) => {
     } catch (error) {
         toaster.pushError(`{t('toasts.organization-tag-delete.error')} (${error})`)
         console.error(error)
+    } finally {
+        tagToDelete.value = null
     }
 }
 </script>
@@ -73,7 +78,7 @@ const deleteOrganizationTag = async (tag) => {
                 :key="tag.id"
                 :label="tagTexts.title(tag)"
                 icon="Close"
-                @click="deleteOrganizationTag(tag)"
+                @click="tagToDelete = tag"
             />
         </div>
 
@@ -97,6 +102,16 @@ const deleteOrganizationTag = async (tag) => {
         >
             <TagsFilterEditor v-model="newTags" hide-organization-tags :all-search-mode="false" />
         </BaseDrawer>
+        <ConfirmModal
+            v-if="tagToDelete"
+            :title="$t('common.confirm-delete')"
+            content=""
+            cancel-button-label="common.no"
+            confirm-button-label="common.yes"
+            :asyncing="asyncing"
+            @cancel="tagToDelete = null"
+            @confirm="deleteOrganizationTag(tag)"
+        />
     </div>
 </template>
 <style lang="scss" scoped>
