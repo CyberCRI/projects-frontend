@@ -134,11 +134,11 @@
             "notice": "Select skills that will be suggested by default when searching or creating  profiles"
         },
         "classifications": {
-            "title": "Frameworks",
-            "subtitle": "Manage your custom frameworks",
+            "title": "Custom frameworks",
+            "subtitle": "Projects uses Wikipedia for tags and ESCO for skills by default. You can also add your own repositories.",
             "enter-title": "Enter a title",
             "enter-description": "Enter a description",
-            "title-field": "Title",
+            "title-field": "Title of the framework",
             "description-field": "Description",
             "add-classification": {
                 "title": "Add a framework",
@@ -200,6 +200,7 @@
             "information": "General",
             "categories": "Categories",
             "tags": "Tags",
+            "skills": "Skills",
             "help": "Help",
             "links": "Links",
             "templates": "Templates",

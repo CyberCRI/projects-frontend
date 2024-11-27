@@ -1,37 +1,27 @@
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue'
 import debounce from 'lodash.debounce'
-import {
-    getOrgClassificationTags,
-    deleteClassificationTag,
-    deleteOrgClassification,
-} from '@/api/tag-classification.service'
+import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { refreshTokenGrantRequest } from '@panva/oauth4webapi'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import EditTagDrawer from '@/components/admin/EditTagDrawer.vue'
-import EditClassification from '@/components/admin/EditClassification.vue'
+import EditTagModal from '@/components/admin/EditTagModal.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useI18n } from 'vue-i18n'
 import useTagTexts from '@/composables/useTagTexts.js'
+
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 const { t } = useI18n()
 
 const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()
 const tagTexts = useTagTexts()
-
-const emit = defineEmits([
-    'classification-edited',
-    'classification-created',
-    'classification-deleted',
-])
 
 const props = defineProps({
     classification: { type: Object, required: true },
@@ -44,8 +34,6 @@ const request = ref(null)
 
 const editTagIsOpen = ref(false)
 const editedTag = ref(null)
-
-const editClassificationIsOpen = ref(false)
 
 const tagToDelete = ref(null)
 const isDeletingTag = ref(false)
@@ -76,24 +64,6 @@ const deleteTag = async () => {
     }
 }
 
-const isDeletingClassification = ref(false)
-const showConfirmClassificationDelete = ref(false)
-
-const deleteClassification = async () => {
-    isDeletingClassification.value = true
-    try {
-        await deleteOrgClassification(organizationsStore.current.code, props.classification.id)
-        toaster.pushSuccess(t('admin.classification.delete-classification.success'))
-        emit('classification-deleted', props.classification)
-    } catch (err) {
-        toaster.pushError(t('admin.classification.delete-classification.error'))
-        console.log(err)
-    } finally {
-        isDeletingClassification.value = false
-        showConfirmClassificationDelete.value = false
-    }
-}
-
 const createTag = () => {
     editedTag.value = null
     editTagIsOpen.value = true
@@ -102,10 +72,6 @@ const createTag = () => {
 const editTag = (tag) => {
     editedTag.value = tag
     editTagIsOpen.value = true
-}
-
-const editClassification = () => {
-    editClassificationIsOpen.value = true
 }
 
 const tableBody = ref(null)
@@ -213,49 +179,11 @@ const onTagEdited = async () => {
     editTagIsOpen.value = false
 }
 
-const onClassificationCreated = async (classification) => {
-    reloadClassification()
-    emit('classification-created', classification)
-    editClassificationIsOpen.value = false
-}
-const onClassificationEdited = async (classification) => {
-    reloadClassification()
-    emit('classification-edited', classification)
-    editClassificationIsOpen.value = false
-}
-
 watch(() => [props.classification.value], fetchTagStats, { immediate: true })
 watch(() => [props.classification.value, search.value], getTags, { immediate: true })
 </script>
 <template>
     <div class="classification-addmin">
-        <h2 class="classification-title">
-            {{ classification.title }}
-            <ContextActionButton class="small" action-icon="Pen" @click="editClassification" />
-            <ContextActionButton
-                secondary
-                class="small"
-                action-icon="TrashCanOutline"
-                @click="showConfirmClassificationDelete = true"
-            />
-        </h2>
-        <p class="classification-title">{{ classification.description }}</p>
-
-        <div class="add-tag-ctn">
-            <p v-if="classification.is_enabled_for_projects">
-                {{ t('admin.classifications.enabled-for-projects') }}
-            </p>
-            <p v-if="classification.is_enabled_for_skills">
-                {{ t('admin.classifications.enabled-for-skills') }}
-            </p>
-            <p
-                v-if="
-                    !classification.is_enabled_for_projects && !classification.is_enabled_for_skills
-                "
-            >
-                {{ t('admin.classifications.disabled') }}
-            </p>
-        </div>
         <div class="add-tag-ctn">
             <h3>{{ tagCount }} {{ t('admin.classifications.tags') }}</h3>
             <LpiButton
@@ -265,7 +193,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             />
         </div>
 
-        <div class="tags-filter">
+        <div class="tags-filter" v-show="tagResults?.length > 7">
             <label class="filter-label">{{ t('admin.classifications.table.filter') }}</label>
             <FilterSearchInput
                 ref="search-input-component"
@@ -292,7 +220,9 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                     </td>
                 </tr>
                 <tr v-else v-for="tag in tagResults" :key="tag.id">
-                    <td>{{ tagTexts.title(tag) }}</td>
+                    <td>
+                        <strong>{{ tagTexts.title(tag) }}</strong>
+                    </td>
                     <td>{{ tagTexts.description(tag) }}</td>
                     <td>
                         <div class="actions">
@@ -323,19 +253,12 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                 @update-pagination="onClickPagination"
             />
         </div>
-        <EditTagDrawer
+        <EditTagModal
             :is-open="editTagIsOpen"
             :tag="editedTag"
             :classification="classification"
             @close="editTagIsOpen = false"
             @tag-edited="onTagEdited"
-        />
-        <EditClassification
-            :classification="classification"
-            :is-open="editClassificationIsOpen"
-            @close="editClassificationIsOpen = false"
-            @classification-edited="onClassificationEdited"
-            @classification-created="onClassificationCreated"
         />
 
         <ConfirmModal
@@ -347,18 +270,6 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             :content="
                 t('admin.classifications.tag-delete.confirm.description', {
                     tagName: tagToDelete?.title,
-                })
-            "
-        />
-        <ConfirmModal
-            v-if="showConfirmClassificationDelete"
-            :asyncing="isDeletingClassification"
-            @cancel="showConfirmClassificationDelete = null"
-            @confirm="deleteClassification"
-            :title="t('admin.classifications.delete-classification.title')"
-            :content="
-                t('admin.classifications.delete-classification.content', {
-                    title: classification?.title,
                 })
             "
         />
@@ -395,17 +306,18 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
     margin: 1rem;
 }
 
+strong {
+    font-weight: bold;
+}
+
 .table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 
-    thead {
+    thead,
+    tbody tr {
         border-bottom: $border-width-s solid $mid-gray;
-    }
-
-    tbody tr:nth-child(even) {
-        background-color: $almost-white;
     }
 
     th {
