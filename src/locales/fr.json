@@ -134,35 +134,35 @@
             "notice": "Choisissez les compétences que vous souhaitez mettre en avant lors des recherches et de la création de profils."
         },
         "classifications": {
-            "title": "Classifications",
-            "subtitle": "Gérer vos classifications personnalisées",
+            "title": "Référentiels",
+            "subtitle": "Gérer vos référentiels personnalisées",
             "enter-title": "Entrez un titre",
             "enter-description": "Entrez un description",
             "title-field": "Titre",
             "description-field": "Description",
             "add-classification": {
-                "title": "Ajouter une classification",
-                "error": "Erreur lors de la sauvegarde de la classification",
-                "success": "La classification a été créée"
+                "title": "Ajouter un référentiel",
+                "error": "Erreur lors de la sauvegarde du référentiel",
+                "success": "Le référentiel a été créée"
             },
             "edit-classification": {
-                "title": "Modifier une classification",
-                "error": "Erreur lors de la modification de la classificaiton",
-                "success": "La classification a été modifiée"
+                "title": "Modifier un référentiel",
+                "error": "Erreur lors de la modification du référentiel",
+                "success": "Le référentiel a été modifiée"
             },
             "delete-classification": {
-                "title": "Supprimer la classification",
-                "content": "Confirmez-vous vouloir supprimer la classification '{title}'?",
-                "error": "Erreur lors de la suppresssion de la classification",
-                "success": "La classification a été supprimée"
+                "title": "Supprimer le référentiel",
+                "content": "Confirmez-vous vouloir supprimer le référentiel '{title}'?",
+                "error": "Erreur lors de la suppresssion du référentiel",
+                "success": "Le référentiel a été supprimée"
             },
-            "create-classification": "Créer une classification",
+            "create-classification": "Créer un référentiel",
             "create-tag": "Créer un tag",
             "tags": "tags",
-            "enabled-for-projects": "Activée pour les projets",
-            "enabled-for-skills": "Activée pour les compétences",
-            "disabled": "Désactivée",
-            "no-custom": "Pas de classification personnalisée",
+            "enabled-for-projects": "Activé pour les projets",
+            "enabled-for-skills": "Activé pour les compétences",
+            "disabled": "Désactivé",
+            "no-custom": "Pas de référentiel personnalisé",
             "table": {
                 "filter": "Filtrer les tags",
                 "tag": "Tag",
