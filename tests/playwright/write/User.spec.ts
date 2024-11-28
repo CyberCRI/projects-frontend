@@ -36,9 +36,9 @@ for (const user of users) {
         }
         try {
             await handleSkills(page)
-            logger.info('User Bio successful')
+            logger.info('User skills successful')
         } catch (err) {
-            logger.error('Edit Bio has failed')
+            logger.error('Edit skills has failed')
             logger.error(err)
             throw err
         }

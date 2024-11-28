@@ -4,7 +4,7 @@ import { delay } from '../index'
 const logger = new Logger(LogLevel.Debug)
 
 export async function handleSkills(page) {
-    logger.info('Edit Bio info')
+    logger.info('Edit Skill info')
     await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
     await page.locator('[data-test="dropdown-user-account"]').click()
     await page.locator('[data-test="my-profile"]').waitFor(20000)
@@ -57,6 +57,8 @@ async function removeSkills(page, type) {
     logger.info(addedTags)
     for (const tag of addedTags) {
         await tag.locator(`[data-test^="delete-${type}-"]`).click()
+        await page.locator(`.modal [data-test="confirm-destroy"]`).click()
+        await delay(1000)
     }
     // dont finnish yet because we're adding skills after that and nned all skill to be removed
     await delay(5000)
