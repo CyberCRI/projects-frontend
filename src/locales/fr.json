@@ -484,6 +484,8 @@
         "delete-description": "Etes-vous sûr de vouloir supprimer définitivement votre commentaire ? Cette action sera irréversible."
     },
     "common": {
+        "activate": "Activer",
+        "activated": "Activé",
         "add": "Ajouter",
         "added-on-the": "ajouté le",
         "back": "retour",

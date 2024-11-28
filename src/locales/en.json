@@ -482,6 +482,8 @@
         "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
     },
     "common": {
+        "activate": "Activate",
+        "activated": "Activated",
         "add": "Add",
         "added-on-the": "added on",
         "back": "back",
