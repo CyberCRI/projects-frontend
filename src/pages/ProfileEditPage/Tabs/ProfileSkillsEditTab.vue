@@ -46,7 +46,7 @@
                     <TransitionGroup tag="div" name="skill" class="level-editor-list">
                         <SkillEditor
                             v-for="skill in getSkillOfType(key)"
-                            :key="`${skill.id}-${skill.level}`"
+                            :key="skill.id"
                             :skill="skill"
                             :type="key"
                             :data-skill-id="skill.id"
