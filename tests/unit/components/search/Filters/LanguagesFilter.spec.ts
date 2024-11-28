@@ -29,7 +29,7 @@ describe('LanguageFilter.vue', () => {
 
     it('should display english and french buttons', () => {
         const wrapper = factory({ modelValue: [] })
-        const buttonContainers = wrapper.findAll('.checkbox')
+        const buttonContainers = wrapper.findAll('.lpi-checkbox')
 
         expect(buttonContainers.length).toBe(2)
     })

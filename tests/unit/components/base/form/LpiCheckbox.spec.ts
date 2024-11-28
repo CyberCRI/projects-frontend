@@ -32,7 +32,7 @@ describe('LpiCheckbox', () => {
     it('should render label and input', () => {
         wrapper = lpiShallowMount(LpiCheckbox, defaultParams)
 
-        const label = wrapper.find('.form-control')
+        const label = wrapper.find('.lpi-checkbox')
         const input = wrapper.find('input')
 
         expect(label.exists()).toBeTruthy()
