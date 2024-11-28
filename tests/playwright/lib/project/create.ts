@@ -45,7 +45,7 @@ export async function createProject(page, projectName, projId) {
     const tagTerms = currentLang == 'FR' ? 'biologie' : 'biology'
     logger.info(`Search for tag ${tagTerms}`)
     await page.locator('[data-test="search-input"]').fill(tagTerms)
-    await page.locator('[data-test^="tag-label-"]').first().click()
+    await page.locator('[data-test^="tag-label-"]:not(.disabled)').first().click()
     logger.info(`Add ${tagTerms} tag`)
     await page.locator('[data-test="confirm-button"]').click()
     logger.info(`Tag ${tagTerms} added`)

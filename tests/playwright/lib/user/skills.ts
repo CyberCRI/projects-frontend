@@ -47,7 +47,7 @@ async function addSkills(page, _type, query) {
     await page.locator('[data-test="search-input"]').fill(query)
     await page.locator('[data-test="search-input"]').press('Enter')
     await delay(5000)
-    await page.locator('[data-test^="tag-label-"]').first().click()
+    await page.locator('[data-test^="tag-label-"]:not(.disabled)').first().click()
     await page.locator('[data-test="confirm-button"]').click()
 }
 
