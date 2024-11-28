@@ -1305,6 +1305,7 @@
                 "save-error": "Erreur lors de la sauvegarde du profil.",
                 "save-success": "Le profil a été sauvegardé.",
                 "suggested-skills": "Ou choisissez parmi les compétences suggérées",
+                "already-added": "(déjà ajouté)",
                 "skills": {
                     "add-success": "Comptétence '{name}' ajoutée.",
                     "edit-success": "Comptétence '{name}' éditée.",

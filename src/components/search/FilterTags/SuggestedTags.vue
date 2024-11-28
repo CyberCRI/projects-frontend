@@ -53,9 +53,7 @@ export default {
 
     computed: {
         displayableTags() {
-            return this.suggestedTags.filter(
-                (tag) => !this.currentTags.some((currentTag) => currentTag.title === tag.title)
-            )
+            return this.suggestedTags.filter((tag) => !this.currentTags.includes(tag.id))
         },
     },
 

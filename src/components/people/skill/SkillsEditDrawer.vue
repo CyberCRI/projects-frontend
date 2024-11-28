@@ -29,7 +29,7 @@
             <div v-if="!search.length && suggestedTags.length" class="section">
                 <p class="notice">{{ $t('profile.edit.skills.suggested-skills') }}</p>
                 <SuggestedTags
-                    :current-tags="selectionAsTags"
+                    :current-tags="selectionAsTagIds"
                     :suggested-tags="suggestedTags"
                     @add-tag="selectTalent"
                     :loading="suggestedTagsAreLoading"
@@ -43,7 +43,7 @@
                     class="flexed-search-results-ctn custom-scrollbar"
                     v-if="search"
                     :classification-id="selectedClassificationId"
-                    :existing-tags="selectionAsTags"
+                    :existing-tags="selectionAsTagIds"
                     inline
                     :search="search"
                     @add-tag="selectTalent"
@@ -169,8 +169,8 @@ export default {
         }
     },
     computed: {
-        selectionAsTags() {
-            return this.selection.map((s) => s.tag)
+        selectionAsTagIds() {
+            return this.selection.map((s) => s.tag?.id)
         },
         allSkills() {
             return this.user.skills || []

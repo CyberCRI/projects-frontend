@@ -1,13 +1,17 @@
 <template>
     <div :class="{ 'in-modal': inModal, inline }" class="search-results">
-        <div class="search-results-ctn" v-if="tagResults?.length">
+        <div class="search-results-ctn" v-if="filteredTagResults?.length">
             <TagResult
-                class="tag-result"
-                v-for="tag in tagResults"
+                v-for="tag in filteredTagResults"
                 :key="tag.id"
-                tabindex="0"
+                class="tag-result"
+                :class="{ disabled: tag.disabled }"
+                :tabindex="tag.disabled ? -1 : 0"
                 @click="tagClicked(tag)"
-                :label="tagTexts.title(tag)"
+                :label="
+                    tagTexts.title(tag) +
+                    (tag.disabled ? ` ${$t('profile.edit.skills.already-added')}` : '')
+                "
                 :description="tagTexts.description(tag)"
                 :classification-name="tag.classificationName || ''"
             />
@@ -50,11 +54,24 @@ export default {
             type: Boolean,
             default: false,
         },
+        existingTags: {
+            type: Array,
+            default: () => [],
+        },
+    },
+
+    computed: {
+        filteredTagResults() {
+            return this.tagResults.map((tag) => ({
+                ...tag,
+                disabled: this.existingTags.includes(tag.id),
+            }))
+        },
     },
 
     methods: {
         tagClicked(tag) {
-            this.$emit('result-clicked', tag)
+            if (!tag.disabled) this.$emit('result-clicked', tag)
         },
     },
 }
@@ -89,6 +106,11 @@ export default {
             cursor: pointer;
             text-align: start;
             flex-grow: 1;
+
+            &.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
         }
     }
 }
