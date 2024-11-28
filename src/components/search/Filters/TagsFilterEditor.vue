@@ -28,7 +28,7 @@
             <TagResults
                 v-if="search"
                 :classification-id="selectedClassificationId"
-                :existing-tags="tags"
+                :existing-tags="alreadySelectedTags"
                 :inline="inline"
                 :search="search"
                 @add-tag="onAddTag"
@@ -40,7 +40,7 @@
             <template v-else-if="suggestedTags.length">
                 <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
                 <SuggestedTags
-                    :current-tags="tags"
+                    :current-tags="alreadySelectedTags"
                     :suggested-tags="suggestedTags"
                     @add-tag="addTag"
                     :loading="suggestedTagsAreLoading"
@@ -131,6 +131,12 @@ export default {
         return {
             tags: [],
         }
+    },
+
+    computed: {
+        alreadySelectedTags() {
+            return [...this.tags.map((t) => t.id)]
+        },
     },
 
     mounted() {
