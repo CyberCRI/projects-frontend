@@ -63,16 +63,15 @@
                         <div v-if="isLoading" class="loader-block">
                             <LpiLoader type="simple" class="loader" />
                         </div>
-                        <div v-for="org in organizations" :key="org.code">
-                            <div class="checkbox-item">
-                                <LpiCheckbox
-                                    v-model="org.selected"
-                                    :label="org.name"
-                                    :disabled="disableLastOrg(org)"
-                                    @input="setOrg(org)"
-                                />
-                            </div>
-                        </div>
+                        <LpiCheckbox
+                            v-for="org in organizations"
+                            :key="org.code"
+                            class="as-button"
+                            v-model="org.selected"
+                            :label="org.name"
+                            :disabled="disableLastOrg(org)"
+                            @input="setOrg(org)"
+                        />
                     </div>
                 </div>
 
@@ -727,30 +726,7 @@ export default {
 
     .organization-ctn {
         flex-wrap: wrap;
-
-        .checkbox-item {
-            border: 1px solid $primary-dark;
-            padding: $space-m;
-            margin: $space-s pxToRem(16px) $space-s 0;
-            border-radius: $border-radius-xs;
-            display: flex;
-            align-items: center;
-            text-align: right;
-
-            &:hover {
-                background-color: $primary-lighter;
-            }
-
-            > label {
-                font-weight: 700;
-                font-size: $font-size-m;
-                line-height: $line-height-tight;
-                color: $primary-dark;
-                margin: 0;
-                cursor: pointer;
-                margin-left: $space-s;
-            }
-        }
+        gap: $space-m;
     }
 
     .categories-ctn {

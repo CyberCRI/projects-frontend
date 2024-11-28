@@ -1,11 +1,11 @@
 <template>
     <div class="language-filter">
         <LpiCheckbox
+            class="as-button min-width"
             v-for="(language, index) in languages"
             :key="index"
             v-model="language.selected"
             :label="$t('language.label-' + language.label)"
-            class="checkbox"
         />
     </div>
 </template>
@@ -60,9 +60,8 @@ export default {
 <style lang="scss" scoped>
 .language-filter {
     width: 100%;
-
-    .checkbox {
-        align-items: center;
-    }
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1rem;
 }
 </style>

@@ -34,25 +34,20 @@
                         </td>
                         <td width="*">{{ classification.description }}</td>
                         <td>
-                            <div
+                            <LpiCheckbox
                                 v-if="type === 'skills'"
-                                class="checkbox-item"
-                                :class="{ on: classification.is_enabled_for_skills }"
-                            >
-                                <LpiCheckbox
-                                    v-model="classification.is_enabled_for_skills"
-                                    :label="
-                                        classification.is_enabled_for_skills
-                                            ? $t('common.activated')
-                                            : $t('common.activate')
-                                    "
-                                />
-                            </div>
+                                class="as-button min-width"
+                                v-model="classification.is_enabled_for_skills"
+                                :label="
+                                    classification.is_enabled_for_skills
+                                        ? $t('common.activated')
+                                        : $t('common.activate')
+                                "
+                            />
 
                             <LpiCheckbox
                                 v-if="type === 'projects'"
-                                class="checkbox-item"
-                                :class="{ on: classification.is_enabled_for_projects }"
+                                class="as-button min-width"
                                 v-model="classification.is_enabled_for_projects"
                                 :label="
                                     classification.is_enabled_for_projects
@@ -262,38 +257,6 @@ strong {
     .actions {
         display: flex;
         gap: $space-s;
-    }
-}
-
-.checkbox-item {
-    border: 1px solid $primary-dark;
-    padding: $space-m;
-    border-radius: $border-radius-xs;
-    display: flex;
-    width: min-content;
-    align-items: center;
-    text-align: right;
-    font-weight: 700;
-    font-size: $font-size-m;
-    line-height: $line-height-tight;
-    color: $primary-dark;
-    margin: 0;
-    cursor: pointer;
-    margin-left: $space-s;
-
-    // &:hover {
-    //     background-color: $primary-dark;
-    //     color: $white;
-    // }
-
-    &.on {
-        background-color: $primary-dark;
-        color: $white;
-
-        // &:hover {
-        //     background-color: $white;
-        //     color: $primary-dark;
-        // }
     }
 }
 </style>
