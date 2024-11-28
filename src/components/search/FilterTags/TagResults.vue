@@ -15,6 +15,7 @@
             :back-button="backButton"
             :in-modal="inModal"
             :tag-results="tagResults"
+            :existing-tags="existingTags"
             @result-clicked="handleResultClicked"
             @go-back="$emit('go-back')"
             :inline="inline"
@@ -80,6 +81,10 @@ export default {
         searchAll: {
             type: Boolean,
             default: false,
+        },
+        existingTags: {
+            type: Array,
+            default: () => [],
         },
     },
 

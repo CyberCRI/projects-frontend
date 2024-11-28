@@ -1310,6 +1310,7 @@
                 "save-success": "Profile saved.",
                 "search": "search",
                 "suggested-skills": "Or pick a suggested skill",
+                "already-added": "(already added)",
                 "skills": {
                     "add-success": "Skill '{name}' added.",
                     "edit-success": "Skill '{name}' edited.",
