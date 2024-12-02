@@ -13,6 +13,11 @@
             <p class="notice">{{ $t('search.pick-tag-classification') }}</p>
 
             <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+
+            <ClassificationDescription
+                v-if="selectedClassification"
+                :classification="selectedClassification"
+            />
         </div>
 
         <div v-show="allSearchMode || showTagSearch" class="section">
@@ -57,6 +62,7 @@ import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
+import ClassificationDescription from '@/components/admin/ClassificationDescription.vue'
 export default {
     name: 'TagsFilterEditor',
 
@@ -68,6 +74,7 @@ export default {
         SuggestedTags,
         TagResults,
         LpiSelect,
+        ClassificationDescription,
     },
 
     props: {
@@ -104,6 +111,7 @@ export default {
     setup(props) {
         const {
             suggestedTagsAreLoading,
+            selectedClassification,
             selectedClassificationId,
             search,
             suggestedTags,
@@ -117,6 +125,7 @@ export default {
         })
         return {
             suggestedTagsAreLoading,
+            selectedClassification,
             selectedClassificationId,
             search,
             suggestedTags,
@@ -240,5 +249,10 @@ export default {
 
 .lpi-select {
     width: 100%;
+}
+
+.classification-description {
+    margin-top: $space-m;
+    margin-left: $space-m;
 }
 </style>
