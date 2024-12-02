@@ -67,12 +67,14 @@
                                     no-border
                                     action-icon="Pen"
                                     @click="classificationToEdit = classification"
+                                    :disabled="classification.type != 'custom'"
                                 />
                                 <ContextActionButton
                                     secondary
                                     no-border
                                     action-icon="TrashCanOutline"
                                     @click="classificationToDelete = classification"
+                                    :disabled="classification.type != 'custom'"
                                 />
                             </div>
                         </td>
@@ -143,7 +145,6 @@ export default {
             fetchAllClassifications,
         } = useTagSearch({
             hideOrganizationTags: true,
-            classificationType: 'custom',
         })
         return {
             organizationsStore,
