@@ -37,7 +37,8 @@
                             <LpiCheckbox
                                 v-if="type === 'skills'"
                                 class="as-button min-width"
-                                v-model="classification.is_enabled_for_skills"
+                                :model-value="classification.is_enabled_for_skills"
+                                @update:model-value="set_enabled_for_skills(classification, $event)"
                                 :label="
                                     classification.is_enabled_for_skills
                                         ? $t('common.activated')
@@ -48,7 +49,10 @@
                             <LpiCheckbox
                                 v-if="type === 'projects'"
                                 class="as-button min-width"
-                                v-model="classification.is_enabled_for_projects"
+                                :model-value="classification.is_enabled_for_projects"
+                                @update:model-value="
+                                    set_enabled_for_projects(classification, $event)
+                                "
                                 :label="
                                     classification.is_enabled_for_projects
                                         ? $t('common.activated')
@@ -163,17 +167,65 @@ export default {
     },
 
     methods: {
+        async set_enabled_for_projects(classification, value) {
+            try {
+                // set enabled for projects
+                // we remove it anyway and (re-)add it if needed
+                const org_enabled_for_projects =
+                    this.organizationsStore.current.enabled_projects_tag_classifications
+                        .map((c) => c.id)
+                        .filter((id) => id != classification.id)
+                if (value) org_enabled_for_projects.push(classification.id)
+                await this.organizationsStore.updateCurrentOrganization({
+                    enabled_projects_tag_classifications: org_enabled_for_projects,
+                })
+                await this.fetchAllClassifications(true)
+
+                this.toaster.pushSuccess(
+                    value
+                        ? this.$t('admin.classifications.enabled-for-projects-success')
+                        : this.$t('admin.classifications.disabled-for-projects-success')
+                )
+            } catch (err) {
+                this.toaster.pushError(this.$t('admin.classifications.edit-classification.error'))
+                console.log(err)
+            }
+        },
+
+        async set_enabled_for_skills(classification, value) {
+            try {
+                // set enabled for skills
+                // we remove it anyway and (re-)add it if needed
+                const org_enabled_for_skills =
+                    this.organizationsStore.current.enabled_skills_tag_classifications
+                        .map((c) => c.id)
+                        .filter((id) => id != classification.id)
+                if (value) org_enabled_for_skills.push(classification.id)
+                await this.organizationsStore.updateCurrentOrganization({
+                    enabled_skills_tag_classifications: org_enabled_for_skills,
+                })
+                await this.fetchAllClassifications(true)
+                this.toaster.pushSuccess(
+                    value
+                        ? this.$t('admin.classifications.enabled-for-skills-success')
+                        : this.$t('admin.classifications.disabled-for-skills-success')
+                )
+            } catch (err) {
+                this.toaster.pushError(this.$t('admin.classifications.edit-classification.error'))
+                console.log(err)
+            }
+        },
         closeEditClassification() {
             this.classificationToEdit = null
             this.createClassificationIsOpen = false
         },
         async onClassificationEdited() {
             this.closeEditClassification()
-            await this.fetchAllClassifications()
+            await this.fetchAllClassifications(true)
         },
         async onClassificationCreated() {
             this.closeEditClassification()
-            await this.fetchAllClassifications()
+            await this.fetchAllClassifications(true)
         },
         async onClassificationDeleted() {
             await this.fetchAllClassifications()

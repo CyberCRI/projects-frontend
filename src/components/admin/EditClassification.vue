@@ -58,23 +58,44 @@ const saveClassification = async () => {
     const payload = {
         ...form.value,
     }
-
+    let classification
     try {
         if (isAddMode.value) {
             delete payload.id
-            const classification = await postOrgClassification(
-                organizationsStore.current.code,
-                payload
-            )
-            toaster.pushSuccess(t('admin.classifications.add-classification.success'))
-            emit('classification-created', classification)
+            classification = await postOrgClassification(organizationsStore.current.code, payload)
         } else {
-            const classification = await putOrgClassification(
+            classification = await putOrgClassification(
                 organizationsStore.current.code,
                 form.value.id,
                 payload
             )
+        }
+
+        // set enabled for skills
+        // we remove it anyway and (re-)add it if needed
+        const org_enabled_for_skills = organizationsStore.current.enabled_skills_tag_classifications
+            .map((c) => c.id)
+            .filter((id) => id != classification.id)
+        if (form.value.is_enabled_for_skills) org_enabled_for_skills.push(classification.id)
+        // set enabled for projects
+        // we remove it anyway and (re-)add it if needed
+        const org_enabled_for_projects =
+            organizationsStore.current.enabled_projects_tag_classifications
+                .map((c) => c.id)
+                .filter((id) => id != classification.id)
+        if (form.value.is_enabled_for_projects) org_enabled_for_projects.push(classification.id)
+
+        // patch organization
+        await organizationsStore.updateCurrentOrganization({
+            enabled_skills_tag_classifications: org_enabled_for_skills,
+            enabled_projects_tag_classifications: org_enabled_for_projects,
+        })
+
+        if (isAddMode.value) {
             toaster.pushSuccess(t('admin.classifications.add-classification.success'))
+            emit('classification-created', classification)
+        } else {
+            toaster.pushSuccess(t('admin.classifications.edit-classification.success'))
             emit('classification-edited', classification)
         }
     } catch (error) {
@@ -132,8 +153,8 @@ const saveClassification = async () => {
             v-if="classification"
             :classification="classification"
             @classification-deleted="onClassificationDeleted"
-            @classification-edited="onClassificationEdited"
-            @classification-created="onClassificationCreated"
+            @classification-edited="$emit('classification-edited', $event)"
+            @classification-created="$emit('classification-created', $event)"
         />
     </BaseDrawer>
 </template>
