@@ -32,7 +32,9 @@
                         <td>
                             <strong>{{ classification.title }}</strong>
                         </td>
-                        <td width="*">{{ classification.description }}</td>
+                        <td class="classification-description">
+                            <ClassificationDescription :classification="classification" />
+                        </td>
                         <td>
                             <LpiCheckbox
                                 v-if="type === 'skills'"
@@ -115,6 +117,7 @@ import { deleteOrgClassification } from '@/api/tag-classification.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useToasterStore from '@/stores/useToaster.ts'
+import ClassificationDescription from '@/components/admin/ClassificationDescription.vue'
 export default {
     name: 'ClassificationAdmin',
 
@@ -125,6 +128,7 @@ export default {
         LpiCheckbox,
         ContextActionButton,
         ConfirmModal,
+        ClassificationDescription,
     },
 
     props: {
