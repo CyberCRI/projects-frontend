@@ -49,14 +49,15 @@
                             {{ modifiedName }}
                         </strong>
                     </template>
-                    <template #week_group>
-                        <strong v-if="notification.type === 'invitation_week_reminder'">
+                    <template #week_group v-if="notification.type === 'invitation_week_reminder'">
+                        <strong v-if="notification.invitation?.people_group">
                             {{ notification.invitation?.people_group?.name }}
                         </strong>
+                        <strong v-else> ??? </strong>
                     </template>
-                    <template #today_group>
+                    <template #today_group v-if="notification.type === 'invitation_today_reminder'">
                         <router-link
-                            v-if="notification.type === 'invitation_today_reminder'"
+                            v-if="notification.invitation?.people_group"
                             :to="{
                                 name: 'groupSnapshot',
                                 params: {
@@ -68,6 +69,7 @@
                         >
                             {{ notification.invitation?.people_group?.name }}
                         </router-link>
+                        <strong v-else> ??? </strong>
                     </template>
 
                     <template #group>
@@ -188,10 +190,13 @@ export default {
                     name: 'projectPrivateExchange',
                     params: { slugOrId: this.notification.project.slug },
                 }
-            }
-            return {
-                name: 'projectSummary',
-                params: { slugOrId: this.notification.project.slug },
+            } else if (this.notification.project) {
+                return {
+                    name: 'projectSummary',
+                    params: { slugOrId: this.notification.project.slug },
+                }
+            } else {
+                return { name: 'HomeRoot' }
             }
         },
     },

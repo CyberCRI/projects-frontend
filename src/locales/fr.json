@@ -2241,6 +2241,7 @@
             "announcement": "{sender} a publié une nouvelle annonce sur {project}",
             "application": "{applicant} a postulé sur votre annonce {announcement} sur {project}",
             "blog_entry": "{sender} a publié une nouvelle publication sur {project}",
+            "invitation_reminder": "Une invitation que vous avez créé arrive à expiration bientôt",
             "invitation_today_reminder": "Un {link} que vous avez créé pour le groupe {today_group} arrive à expiration aujourd'hui",
             "invitation_week_reminder": "Un {link} que vous avez créé pour le groupe {week_group} arrivera à expiration dans une semaine",
             "register-link": "lien d’enregistrement",

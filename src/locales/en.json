@@ -2244,6 +2244,7 @@
             "announcement": "{sender} published a new announcement in the project {project}",
             "application": "{applicant} applied to your announcement {announcement} in the project {project}",
             "blog_entry": "{sender} published a new blog entry in the project {project}",
+            "invitation_reminder": "An invitation you created will expire soon",
             "invitation_today_reminder": "A {link} you created for the group {today_group} will expire today",
             "invitation_week_reminder": "A {link} you created for the group {week_group} will expire in a week",
             "register-link": "register link",
