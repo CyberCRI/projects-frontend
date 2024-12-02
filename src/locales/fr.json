@@ -161,6 +161,10 @@
             "tags": "tags",
             "enabled-for-projects": "Activé pour les projets",
             "enabled-for-skills": "Activé pour les compétences",
+            "enabled-for-projects-success": "Référentiel activé pour les projets",
+            "enabled-for-skills-success": "Référentiel activé pour les compétences",
+            "disabled-for-projects-success": "Référentiel désactivé pour les projets",
+            "disabled-for-skills-success": "Référentiel désactivé pour les compétences",
             "disabled": "Désactivé",
             "no-custom": "Pas de référentiel personnalisé",
             "table": {

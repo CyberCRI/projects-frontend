@@ -14,15 +14,15 @@ export default function useTagSearch({
     const allOrgClassifications = ref([])
     const isLoadingOrgClassifications = ref(false)
 
-    const fetchAllClassifications = async () => {
-        isLoadingOrgClassifications.value = true
+    const fetchAllClassifications = async (noLoading) => {
+        if (!noLoading) isLoadingOrgClassifications.value = true
         try {
             const res = await getAllOrgClassifications(organizationsStore.current.code)
             allOrgClassifications.value = res.results
         } catch (e) {
             console.error(e)
         } finally {
-            isLoadingOrgClassifications.value = false
+            if (!noLoading) isLoadingOrgClassifications.value = false
         }
     }
 

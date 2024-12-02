@@ -161,6 +161,10 @@
             "tags": "tags",
             "enabled-for-projects": "Enabled for projects",
             "enabled-for-skills": "Enabled for Skills",
+            "enabled-for-projects-success": "Framework enabled for projects",
+            "enabled-for-skills-success": "Framework enabled for Skills",
+            "disabled-for-projects-success": "Framework disabled for projects",
+            "disabled-for-skills-success": "Framework disabled for Skills",
             "disabled": "Disabled",
             "no-custom": "No custom framework yet",
             "table": {
