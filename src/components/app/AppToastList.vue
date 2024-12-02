@@ -4,11 +4,9 @@
             <LpiSnackbar
                 v-for="(toast, index) in snackbars"
                 :key="index"
-                :closable="true"
                 :type="toast.type"
                 class="toast"
                 :icon="toast.icon"
-                @close="close(index)"
             >
                 <div v-html="toast.message"></div>
             </LpiSnackbar>
@@ -50,12 +48,6 @@ export default {
                     type: toast.type || 'success',
                 }
             })
-        },
-    },
-
-    methods: {
-        close(toastIndex) {
-            this.toaster.deleteToast(toastIndex)
         },
     },
 }
