@@ -2,7 +2,8 @@ import { lpiShallowMount } from '../../../helpers/LpiMount'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
+import waitForExpect from 'wait-for-expect'
 import { nextTick } from 'vue'
 import useToasterStore from '@/stores/useToaster'
 
@@ -16,7 +17,7 @@ describe('AppToastList', () => {
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should emit close event when clicking close', async () => {
+    it('should auto close after a delay', async () => {
         wrapper = lpiShallowMount(AppToastList, defaultParams)
         const toaster = useToasterStore()
         toaster.toastList.push({
@@ -27,7 +28,6 @@ describe('AppToastList', () => {
         await nextTick()
         const snackbarComponent = wrapper.findComponent(LpiSnackbar)
         expect(snackbarComponent.exists()).toBeTruthy()
-        await snackbarComponent.vm.$emit('close', 0)
-        expect(toaster.deleteToast).toHaveBeenLastCalledWith(0)
+        waitForExpect(() => expect(toaster.deleteToast).toHaveBeenLastCalledWith(0))
     })
 })
