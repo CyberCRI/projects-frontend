@@ -6,13 +6,13 @@
             </p>
             <div class="actions">
                 <LpiButton
-                    :label="$filters.capitalize($t('profile.edit.skills.skills.add'))"
+                    :label="$filters.capitalize($t('profile.edit.skills.skills.add-item'))"
                     btn-icon="Plus"
                     @click="openDrawer('skills', 'add')"
                     data-test="initial-add-skills-button"
                 />
                 <LpiButton
-                    :label="$filters.capitalize($t('profile.edit.skills.hobbies.add'))"
+                    :label="$filters.capitalize($t('profile.edit.skills.hobbies.add-item'))"
                     btn-icon="Plus"
                     @click="openDrawer('hobbies', 'add')"
                     data-test="initial-add-hobbies-button"
@@ -58,7 +58,7 @@
                 </template>
                 <div v-else class="add-action">
                     <LpiButton
-                        :label="$filters.capitalize($t(`profile.edit.skills.${key}.add`))"
+                        :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
                         btn-icon="Plus"
                         :secondary="false"
                         @click="openDrawer(key, 'add')"
