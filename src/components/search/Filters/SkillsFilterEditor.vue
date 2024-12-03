@@ -29,12 +29,10 @@
                 v-if="search"
                 :classification-id="selectedClassificationId"
                 :existing-tags="skills"
-                :inline="inline"
                 :search="search"
                 @add-tag="onAddSkill"
-                @go-back="goBackToAddMode"
                 :search-all="allSearchMode"
-                :all-classifications="orgClassifications"
+                type="skills"
             />
 
             <template v-else-if="suggestedTags.length">
@@ -145,12 +143,6 @@ export default {
             this.$nextTick(() => {
                 searchInput?.focus()
             })
-        },
-
-        goBackToAddMode() {
-            this.search = ''
-            this.confirmedSearch = ''
-            this.focusInput()
         },
 
         onAddSkill(result) {

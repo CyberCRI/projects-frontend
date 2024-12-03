@@ -1,6 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 import useLanguagesStore from '@/stores/useLanguages.ts'
+import useTagSearch from '@/composables/useTagSearch.js'
+
+const { isEscoClassification } = useTagSearch()
 
 defineProps({
     classification: {
@@ -17,7 +20,7 @@ const escoLink = computed(
 <template>
     <p class="classification-description">
         {{ classification.description
-        }}<span v-if="classification.type == 'esco'">
+        }}<span v-if="isEscoClassification(classification)">
             <a target="_blank" :href="escoLink">{{ escoLink }}</a>
         </span>
     </p>

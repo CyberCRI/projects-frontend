@@ -44,12 +44,11 @@
                     v-if="search"
                     :classification-id="selectedClassificationId"
                     :existing-tags="selectionAsTagIds"
-                    inline
                     :search="search"
                     @add-tag="selectTalent"
                     @results-count="searchResultsCount = $event"
-                    :all-classifications="orgClassifications"
                     :search-all="searchAllMode"
+                    type="skills"
                 />
             </div>
         </div>

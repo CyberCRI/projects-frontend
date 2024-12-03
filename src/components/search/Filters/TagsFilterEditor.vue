@@ -31,15 +31,14 @@
             />
 
             <TagResults
-                v-if="search"
+                v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
                 :existing-tags="alreadySelectedTags"
-                :inline="inline"
                 :search="search"
                 @add-tag="onAddTag"
-                @go-back="goBackToAddMode"
                 :search-all="allSearchMode"
-                :all-classifications="orgClassifications"
+                :show-pre-search-list="showPreSearchList"
+                type="projects"
             />
 
             <template v-else-if="suggestedTags.length">
@@ -119,6 +118,7 @@ export default {
             orgClassificationOptions,
             showTagSearch,
             resetTagSearch,
+            isCustomClassification,
         } = useTagSearch({
             useProjects: true,
             hideOrganizationTags: props.hideOrganizationTags,
@@ -133,6 +133,7 @@ export default {
             orgClassificationOptions,
             showTagSearch,
             resetTagSearch,
+            isCustomClassification,
         }
     },
 
@@ -145,6 +146,14 @@ export default {
     computed: {
         alreadySelectedTags() {
             return [...this.tags.map((t) => t.id)]
+        },
+        showPreSearchList() {
+            return (
+                !this.allSearchMode &&
+                this.selectedClassification &&
+                //this.isCustomClassification(this.selectedClassification) &&
+                !this.search
+            )
         },
     },
 
@@ -169,11 +178,6 @@ export default {
                 this.$nextTick(() => {
                     searchInput.focus()
                 })
-        },
-
-        goBackToAddMode() {
-            this.search = ''
-            this.focusInput()
         },
 
         onAddTag(result) {
@@ -212,6 +216,15 @@ export default {
             },
             immediate: true,
             deep: true,
+        },
+
+        showPreSearchList: {
+            handler: function (val) {
+                if (val) {
+                    this.focusInput()
+                }
+            },
+            immediate: true,
         },
     },
 }
