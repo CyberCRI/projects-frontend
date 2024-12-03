@@ -94,7 +94,12 @@ const deleteOrganizationTag = async () => {
             @close="closeTagsSelector"
             @confirm="saveOrganizationTags"
         >
-            <TagsFilterEditor v-model="newTags" hide-organization-tags :all-search-mode="false" />
+            <TagsFilterEditor
+                v-model="newTags"
+                :blocked-tags="organizationTags"
+                hide-organization-tags
+                :all-search-mode="false"
+            />
         </BaseDrawer>
         <ConfirmModal
             v-if="tagToDelete"

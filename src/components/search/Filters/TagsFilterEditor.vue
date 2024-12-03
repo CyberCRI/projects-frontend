@@ -81,6 +81,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        blockedTags: {
+            type: Array,
+            default: () => [],
+        },
         triggerUpdate: {
             type: Boolean,
             default: false,
@@ -145,7 +149,7 @@ export default {
 
     computed: {
         alreadySelectedTags() {
-            return [...this.tags.map((t) => t.id)]
+            return [...this.tags.map((t) => t.id), ...this.blockedTags.map((t) => t.id)]
         },
         showPreSearchList() {
             return (

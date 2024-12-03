@@ -26,12 +26,13 @@
             />
 
             <TagResults
-                v-if="search"
+                v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
-                :existing-tags="skills"
+                :existing-tags="alreadySelectedSkills"
                 :search="search"
                 @add-tag="onAddSkill"
                 :search-all="allSearchMode"
+                :show-pre-search-list="showPreSearchList"
                 type="skills"
             />
 
@@ -39,7 +40,7 @@
                 <p class="notice notice-suggested">{{ $t('search.pick-skill-preset') }}</p>
 
                 <SuggestedTags
-                    :current-tags="skills"
+                    :current-tags="alreadySelectedSkills"
                     :suggested-tags="suggestedTags"
                     @add-tag="onAddSkill"
                     :loading="suggestedTagsAreLoading"
@@ -75,6 +76,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        blockedSkills: {
+            type: Array,
+            default: () => [],
+        },
 
         triggerUpdate: {
             type: Boolean,
@@ -100,6 +105,7 @@ export default {
         const {
             suggestedTagsAreLoading,
             selectedClassificationId,
+            selectedClassification,
             search,
             suggestedTags,
             orgClassifications,
@@ -113,6 +119,7 @@ export default {
         return {
             suggestedTagsAreLoading,
             selectedClassificationId,
+            selectedClassification,
             search,
             suggestedTags,
             orgClassifications,
@@ -125,6 +132,20 @@ export default {
         return {
             skills: [],
         }
+    },
+
+    computed: {
+        alreadySelectedSkills() {
+            return [...this.skills.map((s) => s.id), ...this.blockedSkills.map((s) => s.id)]
+        },
+        showPreSearchList() {
+            return (
+                !this.allSearchMode &&
+                this.selectedClassification &&
+                //this.isCustomClassification(this.selectedClassification) &&
+                !this.search
+            )
+        },
     },
 
     mounted() {
