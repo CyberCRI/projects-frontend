@@ -79,7 +79,7 @@ const deleteOrganizationTag = async () => {
                 :key="tag.id"
                 :label="tagTexts.title(tag)"
                 icon="Close"
-                @click="deleteOrganizationTag(tag)"
+                @click="tagToDelete = tag"
             />
         </div>
 
@@ -95,7 +95,12 @@ const deleteOrganizationTag = async () => {
             @close="closeTagsSelector"
             @confirm="saveOrganizationTags"
         >
-            <SkillsFilterEditor v-model="newTags" hide-organization-tags :all-search-mode="false" />
+            <SkillsFilterEditor
+                v-model="newTags"
+                :blocked-skills="organizationTags"
+                hide-organization-tags
+                :all-search-mode="false"
+            />
         </BaseDrawer>
         <ConfirmModal
             v-if="tagToDelete"

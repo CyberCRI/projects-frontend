@@ -9,7 +9,7 @@ export default function useTagSearch({
     useProjects,
     hideOrganizationTags,
     classificationType,
-}) {
+} = {}) {
     const organizationsStore = useOrganizationsStore()
     const allOrgClassifications = ref([])
     const isLoadingOrgClassifications = ref(false)
@@ -125,6 +125,22 @@ export default function useTagSearch({
         }
     }
 
+    function isClassificationOfType(classification, type) {
+        return classification.type === type
+    }
+
+    function isCustomClassification(classification) {
+        return isClassificationOfType(classification, 'Custom')
+    }
+
+    function isEscoClassification(classification) {
+        return isClassificationOfType(classification, 'ESCO')
+    }
+
+    function isWikipediaClassification(classification) {
+        return isClassificationOfType(classification, 'Wikipedia')
+    }
+
     // watch
 
     watch(selectedClassificationId, loadSelectedClassificationTags, { immediate: true })
@@ -150,5 +166,9 @@ export default function useTagSearch({
         allOrgClassifications,
         isLoadingOrgClassifications,
         fetchAllClassifications,
+        isClassificationOfType,
+        isCustomClassification,
+        isEscoClassification,
+        isWikipediaClassification,
     }
 }

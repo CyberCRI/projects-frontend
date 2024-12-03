@@ -58,15 +58,6 @@ describe('TagsFilterEditor', () => {
         })
     })
 
-    it('goes back to add mode', () => {
-        wrapper = lpiMount(TagsFilterEditor, defaultParams)
-        const vm: any = wrapper.vm
-
-        vm.search = 'test'
-        vm.goBackToAddMode()
-        expect(vm.search).toBe('')
-    })
-
     it('adds a non-added tag', () => {
         wrapper = lpiMount(TagsFilterEditor, defaultParams)
         const vm: any = wrapper.vm

@@ -3,24 +3,26 @@
         <LoaderSimple />
     </div>
 
-    <transition-group
-        v-else
-        :class="{ 'in-modal': inModal, inline }"
-        name="slideleft"
-        class="search-mode-ctn"
-        tag="div"
-    >
+    <div v-else class="search-mode-ctn">
         <SearchResults
             key="search-results"
-            :back-button="backButton"
-            :in-modal="inModal"
             :tag-results="tagResults"
             :existing-tags="existingTags"
             @result-clicked="handleResultClicked"
-            @go-back="$emit('go-back')"
-            :inline="inline"
         />
-    </transition-group>
+        <div
+            v-if="showPreSearchList"
+            :style="{ visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden' }"
+            class="pagination-container"
+        >
+            <PaginationButtons
+                :current="pagination.currentPage"
+                :pagination="pagination"
+                :total="pagination.total"
+                @update-pagination="onClickPagination"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -33,14 +35,18 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 
+import { axios } from '@/api/api.config'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+
 export default {
     name: 'TagResults',
 
-    emits: ['go-back', 'add-tag', 'results-count'],
+    emits: ['add-tag', 'results-count'],
 
     components: {
         SearchResults,
         LoaderSimple,
+        PaginationButtons,
     },
 
     setup() {
@@ -57,26 +63,13 @@ export default {
             type: String,
             default: '',
         },
-
-        backButton: {
-            type: Boolean,
-            default: true,
-        },
-        inModal: {
-            type: Boolean,
-            dafult: false,
-        },
-        inline: {
-            type: Boolean,
-            deault: false,
-        },
         classificationId: {
             type: Number,
             default: null,
         },
-        allClassifications: {
-            type: Array,
-            default: () => [],
+        type: {
+            type: String, // "skills" or "projects"
+            default: '',
         },
         searchAll: {
             type: Boolean,
@@ -86,16 +79,34 @@ export default {
             type: Array,
             default: () => [],
         },
+        showPreSearchList: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
         return {
-            ambiguousResults: [],
-            ambiguousTerm: '',
-            foundTags: [],
             isLoading: true,
-            tagResults: [],
+            request: null,
         }
+    },
+
+    computed: {
+        pagination() {
+            if (!this.request) return { total: 0, current: 1 }
+            return {
+                currentPage: this.request.current_page,
+                total: this.request.total_page,
+                previous: this.request.previous,
+                next: this.request.next,
+                first: this.request.first,
+                last: this.request.last,
+            }
+        },
+        tagResults() {
+            return this.request?.results || []
+        },
     },
 
     async mounted() {
@@ -110,69 +121,49 @@ export default {
         launchSearch: debounce(async function () {
             this.isLoading = true
             try {
-                let req
+                let classificationId = this.classificationId
                 if (this.searchAll) {
-                    req = await Promise.all(
-                        this.allClassifications.map((c) =>
-                            getOrgClassificationTags(this.organizationsStore.current.code, c.id, {
-                                search: this.search,
-
-                                language: this.languagesStore.current,
-                            })
-                        )
-                    )
-                        .then((classificationsResults) => {
-                            console.log(classificationsResults)
-                            const data = classificationsResults.map((r) => r.data)
-                            const maxLength = Math.max(...data.map((d) => d.count))
-                            const count = data.reduce((acc, d) => acc + d.count, 0)
-                            const results = []
-                            for (let i = 0; i < maxLength; i++) {
-                                for (let j = 0; j < this.allClassifications.length; j++) {
-                                    if (data[j]?.results[i])
-                                        results.push({
-                                            ...data[j]?.results[i],
-                                            classificationName: this.allClassifications[j].title,
-                                        })
-                                }
-                            }
-                            return { count, results }
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                            return {
-                                count: 0,
-                                results: [],
-                            }
-                        })
-                } else {
-                    req = await getOrgClassificationTags(
-                        this.organizationsStore.current.code,
-                        this.classificationId,
-                        { search: this.search, language: this.languagesStore.current }
-                    )
-                        .then((r) => r.data)
-                        .catch(() => ({
-                            count: 0,
-                            results: [],
-                        }))
+                    if (this.type == 'projects') classificationId = 'enabled-for-projects'
+                    if (this.type == 'skills') classificationId = 'enabled-for-skills'
                 }
-                this.$emit('results-count', req.count)
-                this.tagResults = req.results
+
+                const options = { search: this.search, language: this.languagesStore.current }
+                if (!this.search) options.ordering = 'title'
+
+                this.request = await getOrgClassificationTags(
+                    this.organizationsStore.current.code,
+                    classificationId,
+                    options
+                )
+                    .then((r) => r.data) // TODO: classificationName: this.allClassifications[j].title,
+                    .catch(() => ({
+                        count: 0,
+                        results: [],
+                    }))
+                this.$emit('results-count', this.request.count)
             } catch (e) {
                 console.error(e)
             } finally {
                 this.isLoading = false
             }
         }, 500),
+
+        async onClickPagination(requestedPage) {
+            this.isLoading = true
+            const axiosReq = await axios.get(requestedPage)
+            this.request = axiosReq.data
+            this.isLoading = false
+            // const el = document.querySelector('.group-user-selection .search-section')
+            // if (el) el.scrollIntoView({ behavior: 'smooth' })
+        },
     },
 
     watch: {
         search(neo) {
-            if (neo.length >= 3) this.launchSearch()
+            if (this.showPreSearchList || neo.length >= 3) this.launchSearch()
         },
         classificationId(neo) {
-            if (neo && this.search.length >= 3) this.launchSearch()
+            if (neo && (this.showPreSearchList || this.search.length >= 3)) this.launchSearch()
         },
     },
 }
@@ -182,22 +173,6 @@ export default {
 .search-mode-ctn {
     position: relative;
     width: 100%;
-
-    > div {
-        position: absolute;
-        width: 100%;
-    }
-
-    &.inline > div {
-        position: static;
-        overflow: auto;
-    }
-}
-
-.search-mode-ctn.in-modal {
-    > div {
-        position: static;
-    }
 }
 
 .loader-ctn {
@@ -205,5 +180,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
 }
 </style>
