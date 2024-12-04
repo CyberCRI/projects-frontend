@@ -87,7 +87,7 @@
         "vue-datepicker-ui": "^3.1.1",
         "vue-drag-resize": "^1",
         "vue-draggable-resizable": "^2",
-        "vue-i18n": "^9.7.0",
+        "vue-i18n": "^9.14.2",
         "vue-leaflet": "^0",
         "vue-property-decorator": "^9",
         "vue-router": "^4.3.0",
