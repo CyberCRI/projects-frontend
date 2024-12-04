@@ -118,6 +118,7 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import ClassificationDescription from '@/components/admin/ClassificationDescription.vue'
+import { isCustomClassification } from '@/functs/ClassificationUtils.ts'
 export default {
     name: 'ClassificationAdmin',
 
@@ -147,7 +148,6 @@ export default {
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
-            isCustomClassification,
         } = useTagSearch({
             hideOrganizationTags: true,
         })
@@ -159,7 +159,6 @@ export default {
             allOrgClassifications,
             isLoadingOrgClassifications,
             fetchAllClassifications,
-            isCustomClassification,
         }
     },
 
@@ -174,6 +173,9 @@ export default {
     },
 
     methods: {
+        isCustomClassification(classification) {
+            return isCustomClassification(classification)
+        },
         async set_enabled_for_projects(classification, value) {
             try {
                 // set enabled for projects

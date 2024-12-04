@@ -139,12 +139,7 @@ export default {
             return [...this.skills.map((s) => s.id), ...this.blockedSkills.map((s) => s.id)]
         },
         showPreSearchList() {
-            return (
-                !this.allSearchMode &&
-                this.selectedClassification &&
-                //this.isCustomClassification(this.selectedClassification) &&
-                !this.search
-            )
+            return !this.allSearchMode && this.selectedClassification && !this.search
         },
     },
 
