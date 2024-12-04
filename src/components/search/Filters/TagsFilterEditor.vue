@@ -122,7 +122,6 @@ export default {
             orgClassificationOptions,
             showTagSearch,
             resetTagSearch,
-            isCustomClassification,
         } = useTagSearch({
             useProjects: true,
             hideOrganizationTags: props.hideOrganizationTags,
@@ -137,7 +136,6 @@ export default {
             orgClassificationOptions,
             showTagSearch,
             resetTagSearch,
-            isCustomClassification,
         }
     },
 
@@ -152,12 +150,7 @@ export default {
             return [...this.tags.map((t) => t.id), ...this.blockedTags.map((t) => t.id)]
         },
         showPreSearchList() {
-            return (
-                !this.allSearchMode &&
-                this.selectedClassification &&
-                //this.isCustomClassification(this.selectedClassification) &&
-                !this.search
-            )
+            return !this.allSearchMode && this.selectedClassification && !this.search
         },
     },
 

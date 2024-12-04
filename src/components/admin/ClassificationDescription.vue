@@ -1,9 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import useLanguagesStore from '@/stores/useLanguages.ts'
-import useTagSearch from '@/composables/useTagSearch.js'
-
-const { isEscoClassification } = useTagSearch()
+import { isEscoClassification } from '@/functs/ClassificationUtils.ts'
 
 defineProps({
     classification: {
