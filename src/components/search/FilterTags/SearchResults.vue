@@ -43,6 +43,7 @@ export default {
     },
     props: {
         tagResults: {
+            // array of tag objects
             type: Array,
             default: () => [],
         },
@@ -55,6 +56,7 @@ export default {
             default: false,
         },
         existingTags: {
+            // array of tag ids
             type: Array,
             default: () => [],
         },

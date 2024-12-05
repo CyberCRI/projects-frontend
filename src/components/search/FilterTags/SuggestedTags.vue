@@ -36,11 +36,13 @@ export default {
     },
     props: {
         currentTags: {
+            // array of tag ids
             type: Array,
             default: () => [],
         },
 
         suggestedTags: {
+            // array of tag objects
             type: Array,
             default: () => [],
         },
