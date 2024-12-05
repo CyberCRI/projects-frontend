@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ inline }" class="skills-filter-editor">
+    <div class="skills-filter-editor">
         <div class="section">
             <CurrentTags
                 :current-tags="skills"
@@ -12,13 +12,18 @@
         <div class="section" v-if="!allSearchMode">
             <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
-            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+            <LpiSelect
+                data-test="classification-picker"
+                v-model="selectedClassificationId"
+                :options="orgClassificationOptions"
+            />
         </div>
 
         <div v-show="allSearchMode || showTagSearch" class="section">
             <p class="notice">{{ $t('search.current-skill-description') }}</p>
 
             <FilterSearchInput
+                data-test="tag-search-input"
                 ref="search-input-component"
                 v-model.trim="search"
                 :placeholder="$t('search.search-skill')"
@@ -26,6 +31,7 @@
             />
 
             <TagResults
+                data-test="tag-results"
                 v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
                 :existing-tags="alreadySelectedSkills"
@@ -40,6 +46,7 @@
                 <p class="notice notice-suggested">{{ $t('search.pick-skill-preset') }}</p>
 
                 <SuggestedTags
+                    data-test="suggested-tags"
                     :current-tags="alreadySelectedSkills"
                     :suggested-tags="suggestedTags"
                     @add-tag="onAddSkill"
@@ -77,25 +84,19 @@ export default {
             default: () => [],
         },
         blockedSkills: {
+            // unselctable skills (already selected ones)
             type: Array,
             default: () => [],
         },
 
-        triggerUpdate: {
-            type: Boolean,
-            default: false,
-        },
-
         hideOrganizationTags: {
-            type: Boolean,
-            default: false,
-        },
-
-        inline: {
+            // dont show org suggested skills
             type: Boolean,
             default: false,
         },
         allSearchMode: {
+            // search all org classification
+            // or a picked one
             type: Boolean,
             default: true,
         },
@@ -182,10 +183,6 @@ export default {
             if (val.length >= 3) {
                 this.focusInput()
             }
-        },
-
-        triggerUpdate: function () {
-            this.$emit('update:modelValue', this.skills)
         },
 
         modelValue: {

@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
@@ -51,5 +51,18 @@ describe('TagResults', () => {
         await flushPromises()
         expect(wrapper.exists()).toBeTruthy()
         expect(mockSearch).toHaveBeenCalled()
+    })
+
+    it('should pass existingTags to searchResults', async () => {
+        wrapper = lpiMount(TagResults, { ...defaultParams, props: { existingTags: [1, 2] } })
+
+        const vm: any = wrapper.vm
+        vm.isLoading = false
+        await flushPromises()
+        // should display search results
+        const resultsComp = wrapper.findComponent('[data-test="search-results"]')
+        expect(resultsComp.vm.existingTags.length).toBe(2)
+        expect(resultsComp.vm.existingTags[0]).toBe(1)
+        expect(resultsComp.vm.existingTags[1]).toBe(2)
     })
 })

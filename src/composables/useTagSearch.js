@@ -114,7 +114,7 @@ export default function useTagSearch({
             const classificationReq = await getOrgClassificationTags(
                 organizationsStore.current.code,
                 selectedClassificationId.value,
-                // temp hackish fix until we have count int he org data
+                // temp hackish fix until we have count in the org data
                 { search: '' }
             )
             // if there's too many tags, show none

@@ -5,6 +5,7 @@
 
     <div v-else class="search-mode-ctn">
         <SearchResults
+            data-test="search-results"
             key="search-results"
             :tag-results="tagResults"
             :existing-tags="existingTags"
@@ -60,26 +61,32 @@ export default {
 
     props: {
         search: {
+            // search query
             type: String,
             default: '',
         },
         classificationId: {
+            // classification id to limit search to (if not searchAll)
             type: Number,
             default: null,
         },
         type: {
-            type: String, // "skills" or "projects"
+            // "skills" or "projects"
+            type: String,
             default: '',
         },
         searchAll: {
+            // search all org classification
             type: Boolean,
             default: false,
         },
         existingTags: {
+            // array of tag ids
             type: Array,
             default: () => [],
         },
         showPreSearchList: {
+            // shwow all tags (aka empty search) before search
             type: Boolean,
             default: false,
         },

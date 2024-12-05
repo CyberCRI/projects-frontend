@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ inline }" class="tags-filter-editor">
+    <div class="tags-filter-editor">
         <div class="section">
             <CurrentTags
                 :current-tags="tags"
@@ -12,7 +12,11 @@
         <div class="section" v-if="!allSearchMode">
             <p class="notice">{{ $t('search.pick-tag-classification') }}</p>
 
-            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+            <LpiSelect
+                data-test="classification-picker"
+                v-model="selectedClassificationId"
+                :options="orgClassificationOptions"
+            />
 
             <ClassificationDescription
                 v-if="selectedClassification"
@@ -24,6 +28,7 @@
             <p class="notice">{{ $t('search.current-tag-description') }}</p>
 
             <FilterSearchInput
+                data-test="tag-search-input"
                 ref="search-input-component"
                 v-model.trim="search"
                 :placeholder="$t('search.search-tag')"
@@ -31,6 +36,7 @@
             />
 
             <TagResults
+                data-test="tag-results"
                 v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
                 :existing-tags="alreadySelectedTags"
@@ -44,6 +50,7 @@
             <template v-else-if="suggestedTags.length">
                 <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
                 <SuggestedTags
+                    data-test="suggested-tags"
                     :current-tags="alreadySelectedTags"
                     :suggested-tags="suggestedTags"
                     @add-tag="addTag"
@@ -82,31 +89,30 @@ export default {
             default: () => [],
         },
         blockedTags: {
+            // unselctable tags (already selected ones)
             type: Array,
             default: () => [],
         },
-        triggerUpdate: {
-            type: Boolean,
-            default: false,
-        },
 
         hideOrganizationTags: {
-            type: Boolean,
-            default: false,
-        },
-        inline: {
+            // dont show org suggested tags
             type: Boolean,
             default: false,
         },
         progressiveUpdate: {
+            // if false emit specific event instead of model update
+            // see ProjectForm
             type: Boolean,
             default: true,
         },
         allSearchMode: {
+            // search all org classification
+            // or a picked one
             type: Boolean,
             default: true,
         },
         hideCurrentTagsSeparator: {
+            // hide "or" separator between selected tags
             type: Boolean,
             default: false,
         },
@@ -201,10 +207,6 @@ export default {
             if (val.length >= 3) {
                 this.focusInput()
             }
-        },
-
-        triggerUpdate: function () {
-            this.$emit('update:modelValue', this.tags)
         },
 
         modelValue: {

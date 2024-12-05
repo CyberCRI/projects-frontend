@@ -33,7 +33,7 @@ describe('CategoriesFilterEditor.vue', () => {
     })
 
     it('should emit event update is triggered', async () => {
-        const wrapper = factory({ modelValue: [], triggerUpdate: true })
+        const wrapper = factory({ modelValue: [] })
         const vm: any = wrapper.vm
 
         const buttonContainer = wrapper.find('.category-picker-element input')
