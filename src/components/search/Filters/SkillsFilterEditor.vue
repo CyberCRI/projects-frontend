@@ -12,7 +12,11 @@
         <div class="section" v-if="!allSearchMode">
             <p class="notice">{{ $t('search.pick-skill-classification') }}</p>
 
-            <LpiSelect v-model="selectedClassificationId" :options="orgClassificationOptions" />
+            <LpiSelect
+                data-test="classification-picker"
+                v-model="selectedClassificationId"
+                :options="orgClassificationOptions"
+            />
         </div>
 
         <div v-show="allSearchMode || showTagSearch" class="section">
@@ -87,6 +91,7 @@ export default {
         },
 
         hideOrganizationTags: {
+            // dont show org suggested skills
             type: Boolean,
             default: false,
         },

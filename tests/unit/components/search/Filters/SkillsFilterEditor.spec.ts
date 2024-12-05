@@ -1,7 +1,7 @@
 import { lpiMount } from '../../../../helpers/LpiMount'
 import english from '@/locales/en.json'
 import waitForExpect from 'wait-for-expect'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
+import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
@@ -10,7 +10,6 @@ import { OrganizationOutput, OrganizationPatchInput } from '@/models/organizatio
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import flushPromises from 'flush-promises'
-
 import {
     getAllOrgClassifications,
     getOrgClassificationTags,
@@ -50,7 +49,7 @@ const i18n = {
     },
 }
 
-describe('TagsFilterEditor', () => {
+describe('SkillsFilterEditor', () => {
     let wrapper
     let defaultParams
 
@@ -76,41 +75,41 @@ describe('TagsFilterEditor', () => {
         }
     })
 
-    it('should render TagsFilterEditor component', () => {
-        wrapper = lpiMount(TagsFilterEditor, defaultParams)
+    it('should render SkillsFilterEditor component', () => {
+        wrapper = lpiMount(SkillsFilterEditor, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should fetch  tags', async () => {
-        wrapper = lpiMount(TagsFilterEditor, defaultParams)
+    it('should fetch  skills', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, defaultParams)
         wrapper.vm.selectedClassificationId = 123
         await waitForExpect(() => {
             expect(getOrgClassificationTags).toHaveBeenCalled()
         })
     })
 
-    it('adds a non-added tag', () => {
-        wrapper = lpiMount(TagsFilterEditor, defaultParams)
+    it('adds a non-added skill', () => {
+        wrapper = lpiMount(SkillsFilterEditor, defaultParams)
         const vm: any = wrapper.vm
 
-        const tag = {
+        const skill = {
             name: 'Test',
             alreadyAdded: false,
         }
-        vm.addTag(tag)
-        expect(vm.tags.find((tag) => tag.name === 'Test')).toBeTruthy()
+        vm.addSkill(skill)
+        expect(vm.skills.find((tag) => tag.name === 'Test')).toBeTruthy()
     })
 
-    it('removes a tag', () => {
-        wrapper = lpiMount(TagsFilterEditor, { ...defaultParams /*currentTags: ['evolution']*/ })
+    it('removes a skill', () => {
+        wrapper = lpiMount(SkillsFilterEditor, { ...defaultParams /*currentTags: ['evolution']*/ })
         const vm: any = wrapper.vm
 
-        const tag = { name: 'Test', id: 1 }
-        vm.tags = [tag]
+        const skill = { name: 'Test', id: 1 }
+        vm.skills = [skill]
 
-        vm.removeTag(tag)
-        expect(vm.tags.length).toBe(0)
+        vm.removeSkill(skill)
+        expect(vm.skills.length).toBe(0)
     })
 
     // TODO rework this
@@ -129,8 +128,8 @@ describe('TagsFilterEditor', () => {
     //     })
     // })
 
-    it('should not allow to pick a tag framework by default', () => {
-        wrapper = lpiMount(TagsFilterEditor, {
+    it('should not allow to pick a skill framework by default', () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
             ...defaultParams,
             props: {
                 // allSearchMode: true,
@@ -143,8 +142,8 @@ describe('TagsFilterEditor', () => {
         expect(select.exists()).toBeFalsy()
     })
 
-    it('should allow to pick a tag framework if all search mode is disabled', async () => {
-        wrapper = lpiMount(TagsFilterEditor, {
+    it('should allow to pick a skill framework if all search mode is disabled', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
             ...defaultParams,
             props: {
                 allSearchMode: false,
@@ -158,11 +157,11 @@ describe('TagsFilterEditor', () => {
 
         // resolve mock api call for classifcation options
         await flushPromises()
-
-        // should show only enabled classifications for tags
+        // should show only enabled classifications for skills
         const selectOptions = vm.orgClassificationOptions
+        console.log(selectOptions)
         expect(selectOptions.length).toBe(2)
-        expect(selectOptions[0].value).toBe(123)
+        expect(selectOptions[0].value).toBe(456)
         expect(selectOptions[1].value).toBe(789)
     })
 })
