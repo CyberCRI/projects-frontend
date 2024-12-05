@@ -16,7 +16,9 @@ import {
 } from '@/api/tag-classification.service'
 
 vi.mock('@/api/tag-classification.service', () => ({
-    getOrgClassificationTags: vi.fn().mockResolvedValue({ results: [] }),
+    getOrgClassificationTags: vi
+        .fn()
+        .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),
     getAllOrgClassifications: vi.fn().mockResolvedValue({
         results: [
             {
@@ -66,8 +68,8 @@ describe('SkillsFilterEditor', () => {
                 { id: 456, slug: 'for-skill' },
                 { id: 789, slug: 'for-skill-and-project' },
             ],
-            default_projects_tags: [],
-            default_skills_tags: [],
+            default_projects_tags: [{ id: 11 }, { id: 12 }, { id: 13 }],
+            default_skills_tags: [{ id: 21 }, { id: 22 }, { id: 23 }],
         } as unknown as OrganizationOutput
         defaultParams = {
             props: {},
@@ -142,6 +144,43 @@ describe('SkillsFilterEditor', () => {
         expect(select.exists()).toBeFalsy()
     })
 
+    it('should display suggested tags when searching all classification and there no query', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
+            ...defaultParams,
+            props: {
+                // allSearchMode: true,
+                hideOrganizationTags: false,
+            },
+        })
+        const vm: any = wrapper.vm
+        await flushPromises()
+        const select = wrapper.findComponent('[data-test="suggested-tags"]')
+        expect(select.exists()).toBeTruthy()
+        expect(vm.suggestedTags.length).toBe(3)
+        expect(vm.suggestedTags[0].id).toBe(21)
+        expect(vm.suggestedTags[1].id).toBe(22)
+        expect(vm.suggestedTags[2].id).toBe(23)
+    })
+
+    it('should display display result tags when searching', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
+            ...defaultParams,
+            props: {
+                // allSearchMode: true,
+                hideOrganizationTags: false,
+            },
+        })
+        const vm: any = wrapper.vm
+        // should diplay search input
+        const searchComp = wrapper.findComponent('[data-test="tag-search-input"]')
+        expect(searchComp.exists()).toBeTruthy()
+        vm.search = 'test'
+        await flushPromises()
+        // should display search results
+        const resultsComp = wrapper.findComponent('[data-test="tag-results"]')
+        expect(resultsComp.exists()).toBeTruthy()
+    })
+
     it('should allow to pick a skill framework if all search mode is disabled', async () => {
         wrapper = lpiMount(SkillsFilterEditor, {
             ...defaultParams,
@@ -159,7 +198,6 @@ describe('SkillsFilterEditor', () => {
         await flushPromises()
         // should show only enabled classifications for skills
         const selectOptions = vm.orgClassificationOptions
-        console.log(selectOptions)
         expect(selectOptions.length).toBe(2)
         expect(selectOptions[0].value).toBe(456)
         expect(selectOptions[1].value).toBe(789)

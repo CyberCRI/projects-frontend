@@ -28,6 +28,7 @@
             <p class="notice">{{ $t('search.current-tag-description') }}</p>
 
             <FilterSearchInput
+                data-test="tag-search-input"
                 ref="search-input-component"
                 v-model.trim="search"
                 :placeholder="$t('search.search-tag')"
@@ -35,6 +36,7 @@
             />
 
             <TagResults
+                data-test="tag-results"
                 v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
                 :existing-tags="alreadySelectedTags"
@@ -48,6 +50,7 @@
             <template v-else-if="suggestedTags.length">
                 <p class="notice notice-suggested">{{ $t('search.pick-tag-preset') }}</p>
                 <SuggestedTags
+                    data-test="suggested-tags"
                     :current-tags="alreadySelectedTags"
                     :suggested-tags="suggestedTags"
                     @add-tag="addTag"

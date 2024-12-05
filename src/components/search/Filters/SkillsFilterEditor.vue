@@ -23,6 +23,7 @@
             <p class="notice">{{ $t('search.current-skill-description') }}</p>
 
             <FilterSearchInput
+                data-test="tag-search-input"
                 ref="search-input-component"
                 v-model.trim="search"
                 :placeholder="$t('search.search-skill')"
@@ -30,6 +31,7 @@
             />
 
             <TagResults
+                data-test="tag-results"
                 v-if="search || showPreSearchList"
                 :classification-id="selectedClassificationId"
                 :existing-tags="alreadySelectedSkills"
@@ -44,6 +46,7 @@
                 <p class="notice notice-suggested">{{ $t('search.pick-skill-preset') }}</p>
 
                 <SuggestedTags
+                    data-test="suggested-tags"
                     :current-tags="alreadySelectedSkills"
                     :suggested-tags="suggestedTags"
                     @add-tag="onAddSkill"
