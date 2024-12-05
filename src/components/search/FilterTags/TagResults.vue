@@ -5,6 +5,7 @@
 
     <div v-else class="search-mode-ctn">
         <SearchResults
+            data-test="search-results"
             key="search-results"
             :tag-results="tagResults"
             :existing-tags="existingTags"

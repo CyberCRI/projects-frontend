@@ -202,4 +202,41 @@ describe('SkillsFilterEditor', () => {
         expect(selectOptions[0].value).toBe(456)
         expect(selectOptions[1].value).toBe(789)
     })
+
+    it('should pass blocked skills ids to result tags', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
+            ...defaultParams,
+            props: {
+                // allSearchMode: true,
+                hideOrganizationTags: false,
+                blockedSkills: [{ id: 1 }, { id: 2 }],
+            },
+        })
+        const vm: any = wrapper.vm
+        vm.search = 'test'
+        await flushPromises()
+        // should display search results
+        const resultsComp = wrapper.findComponent('[data-test="tag-results"]')
+        expect(resultsComp.vm.existingTags.length).toBe(2)
+        expect(resultsComp.vm.existingTags[0]).toBe(1)
+        expect(resultsComp.vm.existingTags[1]).toBe(2)
+    })
+
+    it('should pass blocked skills ids to suggested tags', async () => {
+        wrapper = lpiMount(SkillsFilterEditor, {
+            ...defaultParams,
+            props: {
+                // allSearchMode: true,
+                hideOrganizationTags: false,
+                blockedSkills: [{ id: 1 }, { id: 2 }],
+            },
+        })
+        const vm: any = wrapper.vm
+        await flushPromises()
+        // should display search results
+        const resultsComp = wrapper.findComponent('[data-test="suggested-tags"]')
+        expect(resultsComp.vm.currentTags.length).toBe(2)
+        expect(resultsComp.vm.currentTags[0]).toBe(1)
+        expect(resultsComp.vm.currentTags[1]).toBe(2)
+    })
 })
