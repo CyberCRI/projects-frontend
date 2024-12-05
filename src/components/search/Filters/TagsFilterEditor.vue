@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ inline }" class="tags-filter-editor">
+    <div class="tags-filter-editor">
         <div class="section">
             <CurrentTags
                 :current-tags="tags"
@@ -86,12 +86,9 @@ export default {
             default: () => [],
         },
         blockedTags: {
+            // unselctable tags (already selected ones)
             type: Array,
             default: () => [],
-        },
-        triggerUpdate: {
-            type: Boolean,
-            default: false,
         },
 
         hideOrganizationTags: {
@@ -99,11 +96,9 @@ export default {
             type: Boolean,
             default: false,
         },
-        inline: {
-            type: Boolean,
-            default: false,
-        },
         progressiveUpdate: {
+            // if false emit specific event instead of model update
+            // see ProjectForm
             type: Boolean,
             default: true,
         },
@@ -114,6 +109,7 @@ export default {
             default: true,
         },
         hideCurrentTagsSeparator: {
+            // hide "or" separator between selected tags
             type: Boolean,
             default: false,
         },
@@ -208,10 +204,6 @@ export default {
             if (val.length >= 3) {
                 this.focusInput()
             }
-        },
-
-        triggerUpdate: function () {
-            this.$emit('update:modelValue', this.tags)
         },
 
         modelValue: {

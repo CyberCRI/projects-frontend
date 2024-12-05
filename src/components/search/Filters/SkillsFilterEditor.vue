@@ -1,5 +1,5 @@
 <template>
-    <div :class="{ inline }" class="skills-filter-editor">
+    <div class="skills-filter-editor">
         <div class="section">
             <CurrentTags
                 :current-tags="skills"
@@ -81,13 +81,9 @@ export default {
             default: () => [],
         },
         blockedSkills: {
+            // unselctable skills (already selected ones)
             type: Array,
             default: () => [],
-        },
-
-        triggerUpdate: {
-            type: Boolean,
-            default: false,
         },
 
         hideOrganizationTags: {
@@ -95,12 +91,9 @@ export default {
             type: Boolean,
             default: false,
         },
-
-        inline: {
-            type: Boolean,
-            default: false,
-        },
         allSearchMode: {
+            // search all org classification
+            // or a picked one
             type: Boolean,
             default: true,
         },
@@ -187,10 +180,6 @@ export default {
             if (val.length >= 3) {
                 this.focusInput()
             }
-        },
-
-        triggerUpdate: function () {
-            this.$emit('update:modelValue', this.skills)
         },
 
         modelValue: {
