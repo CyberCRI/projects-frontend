@@ -3,7 +3,6 @@ import { ref, watch, computed, nextTick } from 'vue'
 import debounce from 'lodash.debounce'
 import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { refreshTokenGrantRequest } from '@panva/oauth4webapi'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
@@ -104,7 +103,7 @@ const fetchTagStats = async () => {
 }
 
 const getTags = debounce(async function () {
-    isLoading.value = refreshTokenGrantRequest
+    isLoading.value = true
     try {
         //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
         const axiosReq = await getOrgClassificationTags(
@@ -219,7 +218,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                         </div>
                     </td>
                 </tr>
-                <tr v-else v-for="tag in tagResults" :key="tag.id">
+                <tr v-else v-for="tag in tagResults" :key="tag.id" data-test="tag-entry">
                     <td>
                         <strong>{{ tagTexts.title(tag) }}</strong>
                     </td>
@@ -230,12 +229,14 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
                                 @click="editTag(tag)"
                                 class="small"
                                 action-icon="Pen"
+                                data-test="edit-tag-button"
                             />
                             <ContextActionButton
                                 @click="tagToDelete = tag"
                                 secondary
                                 class="small"
                                 action-icon="TrashCanOutline"
+                                data-test="delete-tag-button"
                             />
                         </div>
                     </td>
@@ -243,6 +244,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             </tbody>
         </table>
         <div
+            v-if="pagination.total > 1"
             :style="{ visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden' }"
             class="pagination-container"
         >
@@ -254,6 +256,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
             />
         </div>
         <EditTagModal
+            data-test="edit-tag-modal"
             :is-open="editTagIsOpen"
             :tag="editedTag"
             :classification="classification"
@@ -262,6 +265,7 @@ watch(() => [props.classification.value, search.value], getTags, { immediate: tr
         />
 
         <ConfirmModal
+            data-test="confirm-tag-delete-modal"
             v-if="showConfirmTagDelete"
             :asyncing="isDeletingTag"
             @cancel="tagToDelete = null"
