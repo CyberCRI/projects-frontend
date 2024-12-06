@@ -37,6 +37,7 @@
                         </td>
                         <td>
                             <LpiCheckbox
+                                data-test="classification-switch-for-skills"
                                 v-if="type === 'skills'"
                                 class="as-button min-width"
                                 :model-value="classification.is_enabled_for_skills"
@@ -49,6 +50,7 @@
                             />
 
                             <LpiCheckbox
+                                data-test="classification-switch-for-projects"
                                 v-if="type === 'projects'"
                                 class="as-button min-width"
                                 :model-value="classification.is_enabled_for_projects"
@@ -65,6 +67,7 @@
                         <td>
                             <div class="actions">
                                 <ContextActionButton
+                                    data-test="edit-classification-button"
                                     secondary
                                     no-border
                                     action-icon="Pen"
@@ -72,6 +75,7 @@
                                     :disabled="!isCustomClassification(classification)"
                                 />
                                 <ContextActionButton
+                                    data-test="delete-classification-button"
                                     secondary
                                     no-border
                                     action-icon="TrashCanOutline"
@@ -86,6 +90,7 @@
         </div>
 
         <ConfirmModal
+            data-test="confirm-delete-classification-modal"
             v-if="classificationToDelete"
             :asyncing="isDeletingClassification"
             @cancel="classificationToDelete = null"
@@ -93,12 +98,13 @@
             :title="$t('admin.classifications.delete-classification.title')"
             :content="
                 $t('admin.classifications.delete-classification.content', {
-                    title: classification?.title,
+                    title: classificationToDelete?.title,
                 })
             "
         />
     </div>
     <EditClassification
+        data-test="edit-classification-drawer"
         :classification="classificationToEdit"
         :is-open="classificationToEdit || createClassificationIsOpen"
         @close="closeEditClassification"
