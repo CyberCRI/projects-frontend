@@ -74,6 +74,7 @@ const deleteOrganizationTag = async () => {
 
         <div class="tags-ctn">
             <FilterValue
+                data-test="default-tag"
                 v-for="tag in organizationTags"
                 :key="tag.id"
                 :label="tagTexts.title(tag)"
@@ -83,9 +84,15 @@ const deleteOrganizationTag = async () => {
         </div>
 
         <div class="rel-ctn">
-            <LpiButton btn-icon="Plus" :label="t('common.add')" @click="tagSearchIsOpened = true" />
+            <LpiButton
+                data-test="add-default-tags"
+                btn-icon="Plus"
+                :label="t('common.add')"
+                @click="tagSearchIsOpened = true"
+            />
         </div>
         <BaseDrawer
+            data-test="add-default-tags-drawer"
             :confirm-action-name="t('common.confirm')"
             :confirm-action-disabled="!newTags.length"
             :is-opened="tagSearchIsOpened"
@@ -102,6 +109,7 @@ const deleteOrganizationTag = async () => {
             />
         </BaseDrawer>
         <ConfirmModal
+            data-test="confirm-delete-default-tag"
             v-if="tagToDelete"
             :title="$t('common.confirm-delete')"
             content=""
