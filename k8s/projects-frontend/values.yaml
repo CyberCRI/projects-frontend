@@ -109,3 +109,5 @@ e2e:
     limits:
       cpu: 1200m
       memory: 1.5Gi
+
+traefik: false
