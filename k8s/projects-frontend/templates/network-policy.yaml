@@ -1,7 +1,8 @@
 {{ include "common.security.networkPolicy" (dict
   "name" (tpl .Values.fullName .)
   "podSelector" (dict "matchLabels" (tpl (.Values.commonLabels | toJson) .| fromJson) )
-  "allowFromNginx" true
-  "allowDnsResolution" true
-  "additionalEgresses" ((tpl (dict "nest" .Values.networkPolicy.additionalEgresses | toJson) .) | fromJson).nest
+  "allowFromReverseProxy" true
+  "reverseProxyNamespace" (ternary "traefik" "ingress-nginx" .Values.traefik  )
+  "enableEgress" false
+  "commonLabels" (tpl (.Values.commonLabels | toJson) . | fromJson)
 ) }}

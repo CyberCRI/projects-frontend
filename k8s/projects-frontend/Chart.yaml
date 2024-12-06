@@ -26,4 +26,4 @@ dependencies:
 - name: common
   repository: oci://criprodprod.azurecr.io/helm
   # repository: file://../../../helm-helpers/common/
-  version: 0.3.2
+  version: 0.3.3
