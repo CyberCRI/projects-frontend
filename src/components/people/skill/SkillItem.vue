@@ -1,5 +1,5 @@
 <template>
-    <div class="skill" :class="{ 'is-open': isOpen }">
+    <div class="skill" :class="{ 'is-open': isOpen, 'no-description': !description?.length }">
         <div class="summary-content" @click="isOpen = !isOpen">
             <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
             <span class="skill-title">{{ $filters.capitalize(label) }}</span>
@@ -48,6 +48,10 @@ export default {
 <style lang="scss" scoped>
 .skill {
     width: 100%;
+
+    &.no-description {
+        pointer-events: none;
+    }
 }
 
 .summary-content {
@@ -61,7 +65,7 @@ export default {
     flex-shrink: 0;
     width: 1rem;
     transform: scale(1.2) translate(-0.2rem, 0.1rem) rotate(-90deg);
-    transition: all 400ms ease-in-out;
+    transition: transform 400ms ease-in-out;
     transform-origin: center;
 }
 
@@ -79,8 +83,18 @@ export default {
     color: $black;
 }
 
-.summary-content:hover .skill-title {
-    color: $primary-dark;
+.summary-content:hover {
+    .chevron {
+        fill: $primary-dark;
+    }
+
+    .skill-title {
+        color: $primary-dark;
+    }
+}
+
+.no-description .chevron {
+    fill: $light-gray;
 }
 
 .steps {
