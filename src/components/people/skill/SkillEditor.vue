@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
@@ -12,7 +12,19 @@ const props = defineProps({
 })
 const emit = defineEmits(['set-level', 'delete'])
 
+const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
+    const { top, left, bottom, right } = el.getBoundingClientRect()
+    const { innerHeight, innerWidth } = window
+    return partiallyVisible
+        ? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) &&
+              ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+        : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth
+}
+
 const el = ref(null)
+const needDelay = computed(
+    () => props.scrollIntoView && el.value && !elementIsVisibleInViewport(el.value, true)
+)
 onMounted(() => {
     if (props.scrollIntoView) {
         el.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -31,7 +43,12 @@ function deleteSkill() {
 }
 </script>
 <template>
-    <div class="entry" :data-test="`${type}-editor-${skill.id}`" ref="el">
+    <div
+        class="entry"
+        :class="{ 'delay-animation': needDelay }"
+        :data-test="`${type}-editor-${skill.id}`"
+        ref="el"
+    >
         <h4 class="skill-name">{{ skillTexts.title(skill) }}</h4>
         <div class="level-editor">
             <label
@@ -184,7 +201,12 @@ function deleteSkill() {
 }
 
 .skill-enter-active {
-    transition: transform 0.4s ease-in-out;
+    &.delay-animation {
+        // in effect: block transition until elemet has scrolled in view
+        transition-delay: 0.4s;
+    }
+
+    transition: transform 0.4s 0s ease-in-out;
 }
 
 .skill-enter-from {
