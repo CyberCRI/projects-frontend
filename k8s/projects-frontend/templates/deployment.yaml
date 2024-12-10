@@ -46,21 +46,20 @@ spec:
             {{- end }}
           resources: {{- .Values.resources |toYaml | nindent 12 }}
           livenessProbe:
-            initialDelaySeconds: 1
+            initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 1
             successThreshold: 1
-            failureThreshold: 5
+            failureThreshold: 10
             httpGet:
               scheme: HTTP
               path: /
               port: http
           readinessProbe:
-            initialDelaySeconds: 1
             periodSeconds: 10
             timeoutSeconds: 1
             successThreshold: 1
-            failureThreshold: 1
+            failureThreshold: 2
             httpGet:
               scheme: HTTP
               path: /
