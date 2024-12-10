@@ -1,8 +1,9 @@
 {{ include "common.security.networkPolicy" (dict
   "name" (tpl .Values.fullName .)
-  "podSelector" (dict "matchLabels" (tpl (.Values.commonLabels | toJson) .| fromJson) )
+  "root" .
+  "podSelector" (dict "matchLabels" .Values.commonLabels)
   "allowFromReverseProxy" true
   "reverseProxyNamespace" (ternary "traefik" "ingress-nginx" .Values.traefik  )
   "enableEgress" false
-  "commonLabels" (tpl (.Values.commonLabels | toJson) . | fromJson)
+  "commonLabels" .Values.commonLabels
 ) }}
