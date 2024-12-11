@@ -208,6 +208,7 @@ export default {
     margin: $space-m 0;
     font-size: $font-size-m;
     line-height: 1.2;
+
     &--spacer {
         padding: $space-s 16px;
     }
