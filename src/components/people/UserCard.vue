@@ -81,4 +81,8 @@ export default {
 .picture {
     border-radius: 100%;
 }
+
+.card-title {
+    text-transform: capitalize;
+}
 </style>
