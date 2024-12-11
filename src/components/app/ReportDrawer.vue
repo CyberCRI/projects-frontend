@@ -76,6 +76,7 @@ import useValidate from '@vuelidate/core'
 import { helpers, url, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 function defaultForm() {
     return {
@@ -94,8 +95,10 @@ export default {
     components: { TextInput, BaseDrawer, FieldErrors },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -105,6 +108,12 @@ export default {
             isLoading: false,
             form: defaultForm(),
         }
+    },
+
+    computed: {
+        orgCode() {
+            return this.organizationsStore?.current?.code
+        },
     },
 
     validations() {
@@ -155,7 +164,7 @@ export default {
 
                 if (this.type === 'abuse') {
                     try {
-                        await reportAbuse(this.form)
+                        await reportAbuse(this.orgCode, this.form)
                         this.toaster.pushSuccess(this.$t('toasts.abuse-report.success'))
                     } catch (error) {
                         this.toaster.pushError(`${this.$t('toasts.abuse-report.error')} (${error})`)
@@ -166,7 +175,7 @@ export default {
                     }
                 } else if (this.type === 'bug') {
                     try {
-                        await reportBug(this.form)
+                        await reportBug(this.orgCode, this.form)
                         this.toaster.pushSuccess(this.$t('toasts.bug-report.success'))
                     } catch (error) {
                         this.toaster.pushError(`${this.$t('toasts.bug-report.error')} (${error})`)

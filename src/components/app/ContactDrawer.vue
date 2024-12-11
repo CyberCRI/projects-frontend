@@ -62,6 +62,7 @@ import { email, helpers, required } from '@vuelidate/validators'
 import { contactUs } from '@/api/report.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 function defaultForm() {
     return {
@@ -79,8 +80,10 @@ export default {
     components: { TextInput, BaseDrawer, FieldErrors },
     setup() {
         const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
         return {
             toaster,
+            organizationsStore,
         }
     },
 
@@ -104,6 +107,11 @@ export default {
         }
     },
 
+    computed: {
+        orgCode() {
+            return this.organizationsStore?.current?.code
+        },
+    },
     validations() {
         return {
             form: {
@@ -135,7 +143,7 @@ export default {
                 this.isLoading = true
 
                 try {
-                    await contactUs(this.form)
+                    await contactUs(this.orgCode, this.form)
                     this.toaster.pushSuccess(this.$t('toasts.contact.success'))
                 } catch (error) {
                     this.toaster.pushError(`${this.$t('toasts.contact.error')} (${error})`)
