@@ -1392,8 +1392,8 @@
                     "label": "Picture visibility",
                     "notice": "Default : My portal"
                 },
-                "personal-email": {
-                    "label": "Personal mail visibility",
+                "email": {
+                    "label": "Mail visibility",
                     "notice": "Default : hidden for everyone"
                 },
                 "personal-phone": {

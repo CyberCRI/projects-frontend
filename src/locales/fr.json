@@ -1387,8 +1387,8 @@
                     "label": "Visibilité de la photo",
                     "notice": "Par défaut : mon portail"
                 },
-                "personal-email": {
-                    "label": "Visibilité de l'email personnel",
+                "email": {
+                    "label": "Visibilité de l'email",
                     "notice": "Par défaut : caché pour tous"
                 },
                 "personal-phone": {

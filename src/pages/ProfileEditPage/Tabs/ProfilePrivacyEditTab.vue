@@ -32,16 +32,16 @@
                 />
             </div>
         </div>
-        <!-- personal mail -->
+        <!-- email -->
         <div class="privacy-field">
             <div class="wording">
-                <label>{{ $t('profile.edit.privacy.personal-email.label') }}</label>
-                <p class="notice">{{ $t('profile.edit.privacy.personal-email.notice') }}</p>
+                <label>{{ $t('profile.edit.privacy.email.label') }}</label>
+                <p class="notice">{{ $t('profile.edit.privacy.email.notice') }}</p>
             </div>
             <div class="actions">
                 <GroupButton
-                    v-model="form.personal_email"
-                    :options="groupOptions.personal_email"
+                    v-model="form.email"
+                    :options="groupOptions.email"
                     :has-icon="true"
                     size="default"
                     @update:model-value="save"
@@ -113,7 +113,7 @@ function defaultForm() {
     return {
         publication_status: 'pub',
         profile_picture: 'org',
-        personal_email: 'hide',
+        email: 'hide',
         mobile_phone: 'hide',
         skills: 'hide',
         socials: 'org',
@@ -124,7 +124,7 @@ function dataMapping() {
     return {
         publication_status: ['publication_status'],
         profile_picture: ['profile_picture'],
-        personal_email: ['personal_email'],
+        email: ['email'],
         mobile_phone: ['mobile_phone'],
         skills: ['skills'],
         socials: ['socials'],
@@ -194,7 +194,7 @@ export default {
         groupOptions() {
             return {
                 profile_picture: [this.optionsMap.org, this.optionsMap.pub],
-                personal_email: [this.optionsMap.hide, this.optionsMap.org, this.optionsMap.pub],
+                email: [this.optionsMap.hide, this.optionsMap.org, this.optionsMap.pub],
                 mobile_phone: [this.optionsMap.hide, this.optionsMap.org, this.optionsMap.pub],
                 skills: [this.optionsMap.hide, this.optionsMap.org, this.optionsMap.pub],
                 socials: [this.optionsMap.org, this.optionsMap.pub],
