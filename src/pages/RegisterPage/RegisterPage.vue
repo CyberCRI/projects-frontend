@@ -66,6 +66,7 @@
                             />
                             <FieldErrors :errors="v$.form.email.$errors" />
                         </div>
+
                         <div class="form-group">
                             <TextInput
                                 input-type="password"
@@ -77,28 +78,46 @@
                             />
                             <FieldErrors :errors="v$.form.password.$errors" />
                         </div>
-                        <div class="action">
-                            <LpiButton
-                                :disabled="v$.form.$invalid || asyncing"
-                                @click="register"
-                                :label="$t('common.confirm')"
-                                :btn-icon="asyncing ? 'LoaderSimple' : null"
-                                class="register-btn"
-                                data-test="register-btn"
-                            />
-                            <i18n-t keypath="register.tos" tag="p" class="tos">
-                                <template #term>
-                                    <router-link to="/terms-of-service" class="link"
-                                        >{{ $t('register.term') }}
-                                    </router-link>
-                                </template>
+                        <div class="form-group">
+                            <div class="tos-wrapper">
+                                <LpiCheckbox
+                                    v-model="form.acceptedTOS"
+                                    label=""
+                                    data-test="accepted-tos"
+                                />
+                                <i18n-t keypath="register.tos" tag="p" class="tos">
+                                    <template #term>
+                                        <router-link
+                                            to="/terms-of-service"
+                                            class="link"
+                                            target="_blank"
+                                            >{{ $t('register.term') }}
+                                        </router-link>
+                                    </template>
 
-                                <template #privacy>
-                                    <router-link to="/personal-data" class="link"
-                                        >{{ $t('register.privacy') }}
-                                    </router-link>
-                                </template>
-                            </i18n-t>
+                                    <template #privacy>
+                                        <router-link
+                                            to="/personal-data"
+                                            class="link"
+                                            target="_blank"
+                                            >{{ $t('register.privacy') }}
+                                        </router-link>
+                                    </template>
+                                </i18n-t>
+                            </div>
+                            <FieldErrors :errors="v$.form.acceptedTOS.$errors" />
+                        </div>
+                        <div class="action">
+                            <div @click="validateIfInvalid">
+                                <LpiButton
+                                    :disabled="v$.form.$invalid || asyncing"
+                                    @click.stop="register"
+                                    :label="$t('common.confirm')"
+                                    :btn-icon="asyncing ? 'LoaderSimple' : null"
+                                    class="register-btn"
+                                    data-test="register-btn"
+                                />
+                            </div>
                         </div>
                     </div>
                 </transition>
@@ -142,6 +161,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 export default {
     name: 'RegisterPage',
 
@@ -154,6 +174,7 @@ export default {
         LoaderSimple,
         SignUpWrapper,
         FieldErrors,
+        LpiCheckbox,
     },
     setup() {
         const toaster = useToasterStore()
@@ -197,25 +218,34 @@ export default {
     validations() {
         return {
             form: {
+                acceptedTOS: {
+                    checked: helpers.withMessage(
+                        () => this.$t('register.tos-is-required'),
+                        (value) => value === true
+                    ),
+                },
                 email: {
-                    required: helpers.withMessage(this.$t('register.email.is-required'), required),
-                    email: helpers.withMessage(this.$t('register.email.is-invalid'), email),
+                    required: helpers.withMessage(
+                        () => this.$t('register.email.is-required'),
+                        required
+                    ),
+                    email: helpers.withMessage(() => this.$t('register.email.is-invalid'), email),
                 },
                 given_name: {
                     required: helpers.withMessage(
-                        this.$t('register.given_name.is-required'),
+                        () => this.$t('register.given_name.is-required'),
                         required
                     ),
                 },
                 family_name: {
                     required: helpers.withMessage(
-                        this.$t('register.family_name.is-required'),
+                        () => this.$t('register.family_name.is-required'),
                         required
                     ),
                 },
                 password: {
                     required: helpers.withMessage(
-                        this.$t('register.password.is-required'),
+                        () => this.$t('register.password.is-required'),
                         required
                     ),
                 },
@@ -233,6 +263,13 @@ export default {
         },
     },
     methods: {
+        validateIfInvalid() {
+            // force form error display even if save button is disabled
+            if (this.v$.form.$invalid) {
+                this.v$.form.$validate()
+            }
+        },
+
         async validateToken() {
             try {
                 const token = await getInvitation(this.organizationsStore.current.code, this.token)
@@ -305,16 +342,26 @@ export default {
     padding: $space-xl;
 }
 
+.tos-wrapper {
+    display: flex;
+    gap: $space-m;
+    align-items: flex-start;
+    justify-content: stretch;
+
+    > label {
+        margin-top: 4px;
+    }
+
+    > p {
+        flex-grow: 1;
+    }
+}
+
 .action {
     display: flex;
     padding-bottom: pxToRem(24px);
     flex-direction: column;
     align-items: center;
-
-    .tos {
-        font-size: pxToRem(12px);
-        padding-top: pxToRem(12px);
-    }
 
     .register-btn {
         width: 100%;

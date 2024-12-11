@@ -1650,6 +1650,7 @@
         "save-error": "Un problème technique est survenu. Veuillez réessayer plus tard.",
         "email-already-exists": "Cet email est déjà enregistré.",
         "tos": "En continuant, vous acceptez nos  {term} et notre {privacy}",
+        "tos-is-required": "Votre accord est nécessaire pour continuer",
         "term": "conditions d'utilisation",
         "privacy": "politique de confidentialité",
         "have-account": "Déjà un compte ?",

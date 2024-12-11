@@ -1654,6 +1654,7 @@
         "save-error": "A technical problem occured. Please retry later.",
         "email-already-exists": "This email is already registred.",
         "tos": "By continuing, you agree to our {term} and {privacy}",
+        "tos-is-required": "Agreement is required in order to proceed",
         "term": "term of service",
         "privacy": "privacy policy",
         "have-account": "Already an account?",
