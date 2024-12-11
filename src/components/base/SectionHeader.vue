@@ -69,7 +69,7 @@ export default {
     }
 
     .section-button {
-        font-size: 16px;
+        font-size: $font-size-m;
     }
 }
 </style>

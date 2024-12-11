@@ -197,6 +197,22 @@ h6,
             format('woff'),
         url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
             format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unistra A';
+    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
+    src:
+        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix')
+            format('embedded-opentype'),
+        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571')
+            format('woff2'),
+        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572')
+            format('woff'),
+        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
+            format('svg');
     font-weight: 700;
     font-style: normal;
 }
@@ -218,7 +234,12 @@ h6,
 }
 
 .org-OPUS {
-    --font-base-scale: 1.3;
+    --font-base-scale: 1.4;
+
+    body {
+        line-height: 1.1;
+        font-size: $font-size-m;
+    }
 
     h1,
     h2,
@@ -229,6 +250,32 @@ h6,
     * {
         font-family: 'Unistra A', 'Noto Sans SC', helvetica, arial, sans-serif;
     }
+
+    .search-input-ctn .search-input {
+        padding: 11px $space-2xl 10px; // 11 + 1 px border
+    }
+
+    .notification-icon svg {
+        height: $font-size-l;
+    }
+
+    .card-description,
+    .card-type {
+        line-height: 1.1;
+    }
+    /*
+    p {
+        font-size: $font-size-m;
+    }
+*/
+    .subgroups-title .name {
+        font-size: $font-size-s;
+    }
+    /*
+    .announcement-title {
+        line-height:1.21;
+    }
+    */
 }
 
 // end unistra

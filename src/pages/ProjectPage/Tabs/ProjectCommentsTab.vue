@@ -85,7 +85,7 @@ export default {
 
     .notice {
         margin-top: 1rem;
-        font-size: 1rem;
+        font-size: $font-size-m;
     }
 }
 

@@ -198,7 +198,7 @@ export default {
         color: $primary-dark;
         cursor: pointer;
         font-weight: 700;
-        font-size: 16px;
+        font-size: $font-size-m;
 
         svg {
             width: 18px;

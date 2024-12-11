@@ -363,7 +363,7 @@ export default {
     }
 
     p {
-        font-size: 16px;
+        font-size: $font-size-m;
         letter-spacing: 0.2px;
     }
 

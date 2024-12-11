@@ -127,7 +127,7 @@ export default {
             font-weight: 900;
 
             .day {
-                font-size: 1rem;
+                font-size: $font-size-m;
             }
 
             .month {
@@ -151,7 +151,7 @@ export default {
         color: $primary-dark;
 
         .event-name {
-            font-size: 1rem;
+            font-size: $font-size-m;
             font-weight: 400;
             margin-bottom: $space-2xs;
         }

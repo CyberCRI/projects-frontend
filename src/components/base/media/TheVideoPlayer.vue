@@ -124,7 +124,7 @@ export default {
 
     .title {
         display: block;
-        font-size: 16px;
+        font-size: $font-size-m;
         margin-bottom: 0;
         text-transform: uppercase;
     }
