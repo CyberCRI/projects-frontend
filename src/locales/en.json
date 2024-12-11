@@ -134,6 +134,7 @@
             "notice": "Select skills that will be suggested by default when searching or creating  profiles"
         },
         "classifications": {
+            "esco-link": "What is ESCO?",
             "title": "Custom frameworks",
             "subtitle": "Projects uses Wikipedia for tags and ESCO for skills by default. You can also add your own repositories.",
             "enter-title": "Enter a title",
