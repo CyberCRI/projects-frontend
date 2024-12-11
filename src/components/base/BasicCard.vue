@@ -94,8 +94,11 @@ export default {
     font-weight: 700;
     font-size: $font-size-m;
     line-height: $line-height-compact;
-    text-transform: capitalize;
     width: 100%;
+
+    &::first-letter {
+        text-transform: uppercase;
+    }
 }
 
 :deep(.card-type) {
