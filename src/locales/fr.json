@@ -134,6 +134,7 @@
             "notice": "Choisissez les compétences que vous souhaitez mettre en avant lors des recherches et de la création de profils."
         },
         "classifications": {
+            "esco-link": "Qu'est ce que ESCO ?",
             "title": "Référentiels personnalisés",
             "subtitle": "Projects utilise par défaut Wikipedia pour les tags et ESCO pour les compétences. Vous pouvez en plus ajouter des référentiels qui vous sont propres.",
             "enter-title": "Entrez un titre",
