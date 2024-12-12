@@ -133,7 +133,7 @@ export default {
 
 .card-type {
     font-weight: 700;
-    font-size: 16px;
+    font-size: $font-size-m;
     color: $almost-black;
 }
 

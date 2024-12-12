@@ -115,7 +115,7 @@ function deleteSkill() {
             align-items: center;
             gap: $space-s;
             margin: 0;
-            font-size: 1rem;
+            font-size: $font-size-m;
 
             input[type='radio'] {
                 appearance: none;

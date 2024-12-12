@@ -24,7 +24,7 @@
             &,
             & > * {
                 font-family: monospace;
-                font-size: 1rem;
+                font-size: $font-size-m;
                 tab-size: 2;
             }
         }
@@ -400,7 +400,7 @@
     }
 
     h3 {
-        font-size: 18px;
+        font-size: $font-size-xl;
         font-weight: 700;
         letter-spacing: 0;
         margin-bottom: $space-m;
@@ -519,7 +519,7 @@ table .custom-video-ctn {
 
 .ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper::after {
     color: white;
-    font-size: 16px;
+    font-size: $font-size-m;
     text-align: center;
     padding: 15%;
     background-color: rgb(0 0 0 / 50%);

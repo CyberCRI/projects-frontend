@@ -545,7 +545,7 @@ textarea {
     display: block;
     width: 100%;
     margin-bottom: pxToRem(21px);
-    font-size: 1rem;
+    font-size: $font-size-m;
     padding: 11px;
     border: $border-width-s solid $lighter-gray;
     box-sizing: border-box;

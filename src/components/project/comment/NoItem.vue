@@ -27,7 +27,7 @@ export default {
         text-align: center;
         margin: 100px 0 20px;
         color: grey;
-        font-size: 16px;
+        font-size: $font-size-m;
         font-weight: 600;
         text-transform: uppercase;
         background: transparent;

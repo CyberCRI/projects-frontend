@@ -190,7 +190,7 @@ iframe {
 }
 
 .notice {
-    font-size: 1rem;
+    font-size: $font-size-m;
     margin-bottom: pxToRem(48px);
 }
 

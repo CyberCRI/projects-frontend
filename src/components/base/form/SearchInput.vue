@@ -184,7 +184,7 @@ export default {
         flex-flow: column nowrap;
 
         .suggestions-label {
-            font-size: 1rem;
+            font-size: $font-size-m;
             padding: 0.5rem $border-radius-l;
             text-align: center;
             font-weight: normal;

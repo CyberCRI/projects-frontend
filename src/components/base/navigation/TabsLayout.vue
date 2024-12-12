@@ -431,7 +431,7 @@ export default {
                 .item {
                     font-style: normal;
                     font-weight: 500;
-                    font-size: 16px;
+                    font-size: $font-size-m;
                     line-height: $line-height-compact;
                     display: flex;
                     align-items: center;
@@ -505,6 +505,7 @@ export default {
             user-select: none; // avoid text selection while clicking on tab
             transition: transform 0.3s ease-in-out;
             transform-origin: bottom center;
+            line-height: 1;
 
             &--no-border {
                 border-bottom: none;
