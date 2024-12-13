@@ -7,4 +7,5 @@
   "enableEgress" true
   "commonLabels" .Values.commonLabels
   "additionalEgresses" .Values.networkPolicy.additionalEgresses
+  "allowDnsResolution" true
 ) }}
