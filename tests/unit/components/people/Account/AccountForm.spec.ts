@@ -1,9 +1,9 @@
 import AccountForm from '@/components/people/Account/AccountForm.vue'
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { UserFactory } from '../../../../factories/user.factory'
-import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import { UserFactory } from '@/../tests/factories/user.factory'
+import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 

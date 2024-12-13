@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

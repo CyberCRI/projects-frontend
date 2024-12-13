@@ -1,4 +1,4 @@
-import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import BlogDrawer from '@/components/project/blog/BlogDrawer.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'

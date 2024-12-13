@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import ResourceCard from '@/components/project/resource/ResourceCard.vue'
 import english from '@/locales/en.json'
 

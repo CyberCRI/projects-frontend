@@ -1,7 +1,7 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
-import { ProjectFactory } from '../../../../factories/project.factory'
+import { ProjectFactory } from '@/../tests/factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

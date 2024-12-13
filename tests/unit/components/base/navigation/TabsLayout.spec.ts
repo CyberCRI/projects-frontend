@@ -1,7 +1,7 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
-import MockComponent from '../../../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import VueI18n from 'vue-i18n'
 import english from '@/locales/en.json'
 

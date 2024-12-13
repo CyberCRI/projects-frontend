@@ -1,8 +1,8 @@
-import { lpiMount, lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
 import { describe, expect, it } from 'vitest'
-import GroupMemberFactory from '../../../../factories/group-member.factory'
+import GroupMemberFactory from '@/../tests/factories/group-member.factory'
 
 const i18n = {
     locale: 'en',

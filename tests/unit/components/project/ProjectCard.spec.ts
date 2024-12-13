@@ -1,6 +1,6 @@
-import { lpiShallowMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import ProjectCard from '@/components/project/ProjectCard.vue'
-import { ProjectOutputFactory } from '../../../factories/project.factory'
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { loadLocaleMessages } from '@/locales/i18n'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

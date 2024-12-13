@@ -1,6 +1,6 @@
-import { lpiMount } from '../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import CardList from '@/components/base/CardList.vue'
-import { ProjectFactory } from '../../../factories/project.factory'
+import { ProjectFactory } from '@/../tests/factories/project.factory'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

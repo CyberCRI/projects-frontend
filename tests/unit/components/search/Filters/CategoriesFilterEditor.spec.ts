@@ -1,6 +1,6 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
-import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 import pinia from '@/stores'

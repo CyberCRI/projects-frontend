@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import OnboardingStepCard from '@/components/onboarding/OnboardingStepCard/OnboardingStepCard.vue'
 import english from '@/locales/en.json'
 

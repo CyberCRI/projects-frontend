@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ProjectDescriptionTab from '@/pages/ProjectPage/Tabs/ProjectDescriptionTab.vue'
-import { ProjectFactory } from '../../../../factories/project.factory'
-import { UserFactory } from '../../../../factories/user.factory'
+import { ProjectFactory } from '@/../tests/factories/project.factory'
+import { UserFactory } from '@/../tests/factories/user.factory'
 import permissions from '@/mixins/permissions'
 
 import pinia from '@/stores'

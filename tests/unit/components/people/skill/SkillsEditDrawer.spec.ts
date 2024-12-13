@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 
 import english from '@/locales/en.json'

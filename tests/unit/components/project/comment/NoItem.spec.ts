@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import english from '@/locales/en.json'
 

@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import TextInput from '@/components/base/form/TextInput.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

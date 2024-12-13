@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ParentGroupSection from '@/components/group/GroupForm/ParentGroupSection.vue'
 import { describe, expect, it } from 'vitest'

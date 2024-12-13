@@ -1,5 +1,5 @@
 import english from '@/locales/en.json'
-import { lpiShallowMount, lpiMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LinkListTab from '@/pages/AdminPortalPage/Tabs/LinksListTab.vue'
 import english from '@/locales/en.json'
 import * as invitationSrv from '@/api/invitations.service'

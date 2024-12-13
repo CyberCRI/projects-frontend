@@ -1,6 +1,6 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
-import { ProjectCategoryOutputFactory } from '../../../../factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
 
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'

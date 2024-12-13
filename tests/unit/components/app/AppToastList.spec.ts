@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 

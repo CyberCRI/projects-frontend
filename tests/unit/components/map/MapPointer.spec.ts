@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import MapPointer from '@/components/map/MapPointer.vue'
 import english from '@/locales/en.json'
 
