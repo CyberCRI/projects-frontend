@@ -111,3 +111,8 @@ e2e:
       memory: 1.5Gi
 
 traefik: false
+
+sablier:
+  enabled: false
+  groupName: projects
+  traefikMiddleware: "{{.Values.namespace}}-{{.Values.sablier.groupName}}-sablier@kubernetescrd"

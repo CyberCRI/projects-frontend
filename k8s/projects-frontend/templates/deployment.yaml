@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   labels:
     {{- tpl (.Values.commonLabels  | toYaml | nindent 4 ) $ }}
+    {{- if .Values.sablier.enabled }}
+    sablier.enable: "true"
+    sablier.group: {{ .Values.sablier.groupName }}
+    {{- end }}
   name: {{ tpl .Values.fullName . }}
 spec:
   selector:
