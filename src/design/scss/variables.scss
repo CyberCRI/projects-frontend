@@ -36,19 +36,34 @@ $space-2xl: calc(3 * $space-unit); // 48px
 $space-3xl: calc(6.25 * $space-unit); // 100px
 
 // FONT-SIZE
-$font-size-2xs: calc(var(--font-base-scale, 1) * 0.625rem); // 10px
-$font-size-xs: calc(var(--font-base-scale, 1) * 0.75rem); // 12px
-$font-size-s: calc(var(--font-base-scale, 1) * 0.875rem); // 14px
-$font-size-m: calc(var(--font-base-scale, 1) * 1rem); // 16px
-$font-size-l: calc(var(--font-base-scale, 1) * 1.25rem); // 20px
-$font-size-xl: calc(var(--font-base-scale, 1) * 1.375rem); // 22px
-$font-size-2xl: calc(var(--font-base-scale, 1) * 1.5rem); // 24px
-$font-size-3xl: calc(var(--font-base-scale, 1) * 2.125rem); // 34px
-$font-size-4xl: calc(var(--font-base-scale, 1) * 2.1875rem); // 35px
-$font-size-5xl: calc(var(--font-base-scale, 1) * 2.625rem); // 42px
-$font-size-6xl: calc(var(--font-base-scale, 1) * 2.8125rem); // 45px
-$font-size-7xl: calc(var(--font-base-scale, 1) * 3.75rem); // 60px
-$font-size-8xl: calc(var(--font-base-scale, 1) * 5.3125em); // 85px
+$layout-size-2xs: 0.625rem; // 10px
+$layout-size-xs: 0.75rem; // 12px
+$layout-size-s: 0.875rem; // 14px
+$layout-size-m: 1rem; // 16px
+$layout-size-l: 1.25rem; // 20px
+$layout-size-xl: 1.375rem; // 22px
+$layout-size-2xl: 1.5rem; // 24px
+$layout-size-3xl: 2.125rem; // 34px
+$layout-size-4xl: 2.1875rem; // 35px
+$layout-size-5xl: 2.625rem; // 42px
+$layout-size-6xl: 2.8125rem; // 45px
+$layout-size-7xl: 3.75rem; // 60px
+$layout-size-8xl: 5.3125em; // 85px
+
+// FONT-SIZE
+$font-size-2xs: calc(var(--font-base-scale, 1) * $layout-size-2xs); // 10px
+$font-size-xs: calc(var(--font-base-scale, 1) * $layout-size-xs); // 12px
+$font-size-s: calc(var(--font-base-scale, 1) * $layout-size-s); // 14px
+$font-size-m: calc(var(--font-base-scale, 1) * $layout-size-m); // 16px
+$font-size-l: calc(var(--font-base-scale, 1) * $layout-size-l); // 20px
+$font-size-xl: calc(var(--font-base-scale, 1) * $layout-size-xl); // 22px
+$font-size-2xl: calc(var(--font-base-scale, 1) * $layout-size-2xl); // 24px
+$font-size-3xl: calc(var(--font-base-scale, 1) * $layout-size-3xl); // 34px
+$font-size-4xl: calc(var(--font-base-scale, 1) * $layout-size-4xl); // 35px
+$font-size-5xl: calc(var(--font-base-scale, 1) * $layout-size-5xl); // 42px
+$font-size-6xl: calc(var(--font-base-scale, 1) * $layout-size-6xl); // 45px
+$font-size-7xl: calc(var(--font-base-scale, 1) * $layout-size-7xl); // 60px
+$font-size-8xl: calc(var(--font-base-scale, 1) * $layout-size-8xl); // 85px
 
 // LINE-HEIGHT
 $line-height-normal: 1.5;
