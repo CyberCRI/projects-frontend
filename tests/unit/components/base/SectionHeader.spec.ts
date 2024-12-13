@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'

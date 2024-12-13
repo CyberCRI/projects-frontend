@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
 import english from '@/locales/en.json'
 

@@ -1,8 +1,8 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import { describe, expect, it } from 'vitest'
-import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 const i18n = {

@@ -1,7 +1,7 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import { GoalFactory } from '../../../../factories/goal.factory'
+import { GoalFactory } from '@/../tests/factories/goal.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

@@ -4,7 +4,7 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 
-import { ProjectCategoryOutputFactory } from '../../../factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'

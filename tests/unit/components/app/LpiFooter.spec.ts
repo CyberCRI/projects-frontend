@@ -1,9 +1,9 @@
-import { lpiShallowMount, lpiMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import LpiFooter from '@/components/app/LpiFooter.vue'
-import { OrganizationOutputFactory } from '../../../../tests/factories/organization.factory'
+import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
-import MockComponent from '../../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'

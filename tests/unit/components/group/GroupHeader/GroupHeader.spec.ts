@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
 import { describe, expect, it } from 'vitest'

@@ -1,7 +1,7 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ResourceCount from '@/components/project/resource/ResourceCount.vue'
-import MockComponent from '../../../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

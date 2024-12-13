@@ -1,7 +1,7 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GoalsRecap from '@/components/project/goal/GoalsRecap.vue'
-import { GoalFactory } from '../../../../factories/goal.factory'
+import { GoalFactory } from '@/../tests/factories/goal.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {

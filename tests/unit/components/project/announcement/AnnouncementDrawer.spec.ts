@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import AnnouncementDrawer from '@/components/project/announcement/AnnouncementDrawer.vue'
 import waitForExpect from 'wait-for-expect'

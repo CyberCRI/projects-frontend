@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
-import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'

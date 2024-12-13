@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
 

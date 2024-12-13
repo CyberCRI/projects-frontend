@@ -1,8 +1,8 @@
-import { lpiShallowMountExtra } from '../../helpers/LpiMount'
+import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/locales/i18n'
 import App from '@/App.vue'
 
-import MockComponent from '../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import

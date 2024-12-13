@@ -1,9 +1,9 @@
 import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
-import { lpiShallowMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 
 import { beforeEach, describe, expect, it } from 'vitest'
-import { UserFactory } from '../../../../factories/user.factory'
+import { UserFactory } from '@/../tests/factories/user.factory'
 
 const i18n = {
     locale: 'en',

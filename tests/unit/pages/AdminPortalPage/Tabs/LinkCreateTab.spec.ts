@@ -1,9 +1,9 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LinkCreateTab from '@/pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
 import english from '@/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-import MockComponent from '../../../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { axios, configFormData } from '@/api/api.config'
 
 import pinia from '@/stores'

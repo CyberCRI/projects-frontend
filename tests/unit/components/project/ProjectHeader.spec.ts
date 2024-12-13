@@ -1,9 +1,9 @@
-import { lpiShallowMount } from '../../../helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ProjectHeader from '@/components/project/ProjectHeader.vue'
-import { ProjectFactory, ProjectOutputFactory } from '../../../factories/project.factory'
+import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import permissions from '@/mixins/permissions'
-import MockComponent from '../../../helpers/MockComponent.vue'
+import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'

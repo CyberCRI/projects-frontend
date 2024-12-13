@@ -1,4 +1,4 @@
-import { lpiShallowMount, lpiMount } from '../../../../helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 

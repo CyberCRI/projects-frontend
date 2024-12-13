@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import waitForExpect from 'wait-for-expect'
 import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'

@@ -1,4 +1,4 @@
-import { lpiMount } from '../../../../helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { loadLocaleMessages } from '@/locales/i18n'
 
