@@ -344,8 +344,8 @@ export default {
 
         .tab-nav,
         .tab-nav-ctn {
-            flex-basis: $font-size-4xl;
-            width: $font-size-4xl;
+            flex-basis: $layout-size-4xl;
+            width: $layout-size-4xl;
             fill: $primary-dark;
             flex-shrink: 0;
 

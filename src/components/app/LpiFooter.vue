@@ -239,7 +239,7 @@ footer {
 
                 img {
                     width: auto;
-                    height: 2em;
+                    height: $layout-size-2xl;
                 }
             }
         }

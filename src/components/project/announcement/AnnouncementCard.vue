@@ -166,7 +166,7 @@ $annoucement-padding: pxToRem(20px);
             align-items: flex-start;
 
             .icon {
-                width: $font-size-l;
+                width: $layout-size-l;
                 padding-right: $space-xs;
                 display: inline-block;
 

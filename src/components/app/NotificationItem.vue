@@ -244,7 +244,7 @@ export default {
 }
 
 .date {
-    color: #4d4d4d;
+    color: $mid-gray;
     font-weight: 400;
     width: 100%;
     display: inline-block;

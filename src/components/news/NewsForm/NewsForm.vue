@@ -246,7 +246,7 @@ export default {
 label {
     font-size: 0.875rem;
     font-weight: bold;
-    color: #000;
+    color: $black;
     display: block;
 }
 
@@ -274,7 +274,7 @@ label,
     font-weight: 700;
 
     .icon {
-        width: $font-size-2xl;
+        width: $layout-size-2xl;
         fill: $primary-dark;
     }
 }

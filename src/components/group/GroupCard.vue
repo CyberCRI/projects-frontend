@@ -147,14 +147,14 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: $font-size-xs;
+    gap: $layout-size-xs;
     cursor: pointer;
-    font-size: $font-size-s;
+    font-size: $font-size-xs;
 
     .arrow {
         fill: $white;
-        height: $font-size-s;
-        width: $font-size-s;
+        height: $layout-size-s;
+        width: $layout-size-s;
     }
 }
 </style>

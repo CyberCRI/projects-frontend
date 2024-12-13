@@ -201,7 +201,7 @@ export default {
         .labels {
             display: flex;
             flex-direction: column;
-            margin-bottom: $font-size-m;
+            margin-bottom: $layout-size-m;
 
             .sub-label {
                 font-size: $font-size-s;

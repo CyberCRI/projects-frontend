@@ -245,7 +245,7 @@ export default {
     font-size: $font-size-5xl;
     line-height: $line-height-tight;
     text-align: center;
-    margin-bottom: $font-size-l;
+    margin-bottom: $layout-size-l;
 }
 
 .intro {
@@ -315,7 +315,7 @@ table {
 
 .sort-icon {
     fill: $black;
-    width: $font-size-m;
+    width: $layout-size-m;
     display: inline-block;
     cursor: pointer;
 

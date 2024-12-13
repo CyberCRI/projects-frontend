@@ -46,6 +46,6 @@ export default {
 
 <style lang="scss" scoped>
 .on-boarding-page {
-    margin: $font-size-2xl;
+    margin: $layout-size-2xl;
 }
 </style>

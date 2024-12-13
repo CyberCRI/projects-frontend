@@ -196,7 +196,7 @@ export default {
     }
 
     .select-news {
-        height: $space-l;
+        height: $layout-size-2xl;
     }
 
     .news {

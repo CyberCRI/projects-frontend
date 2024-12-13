@@ -35,7 +35,7 @@ $space-42: calc(2.625 * $space-unit); // 42px
 $space-2xl: calc(3 * $space-unit); // 48px
 $space-3xl: calc(6.25 * $space-unit); // 100px
 
-// FONT-SIZE
+// LAYOUT-SIZE
 $layout-size-2xs: 0.625rem; // 10px
 $layout-size-xs: 0.75rem; // 12px
 $layout-size-s: 0.875rem; // 14px
@@ -61,9 +61,6 @@ $font-size-2xl: calc(var(--font-base-scale, 1) * $layout-size-2xl); // 24px
 $font-size-3xl: calc(var(--font-base-scale, 1) * $layout-size-3xl); // 34px
 $font-size-4xl: calc(var(--font-base-scale, 1) * $layout-size-4xl); // 35px
 $font-size-5xl: calc(var(--font-base-scale, 1) * $layout-size-5xl); // 42px
-$font-size-6xl: calc(var(--font-base-scale, 1) * $layout-size-6xl); // 45px
-$font-size-7xl: calc(var(--font-base-scale, 1) * $layout-size-7xl); // 60px
-$font-size-8xl: calc(var(--font-base-scale, 1) * $layout-size-8xl); // 85px
 
 // LINE-HEIGHT
 $line-height-normal: 1.5;

@@ -536,7 +536,7 @@ export default {
     }
 }
 
-$sdg-size: $font-size-4xl;
+$sdg-size: $layout-size-4xl;
 
 .tags-list,
 .sdgs-list {

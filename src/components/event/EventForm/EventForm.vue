@@ -166,7 +166,7 @@ export default {
     font-weight: 700;
 
     .icon {
-        width: $font-size-2xl;
+        width: $layout-size-2xl;
         fill: $primary-dark;
     }
 }

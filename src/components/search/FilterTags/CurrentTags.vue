@@ -69,7 +69,7 @@ export default {
     cursor: pointer;
 
     svg {
-        height: $space-m;
+        height: $layout-size-xs;
         fill: $primary-dark;
         margin-right: $space-s;
     }

@@ -239,7 +239,7 @@ export default {
     cursor: pointer;
 
     .icon {
-        width: $font-size-xl;
+        width: $layout-size-xl;
         fill: $white;
     }
 

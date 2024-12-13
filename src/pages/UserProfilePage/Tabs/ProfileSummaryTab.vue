@@ -222,7 +222,7 @@ export default {
         }
 
         .lists {
-            padding: 0 $font-size-2xs;
+            padding: 0 $layout-size-2xs;
         }
     }
 }

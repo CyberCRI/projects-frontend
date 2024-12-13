@@ -100,7 +100,7 @@ export default {
 }
 
 .notice {
-    padding-top: $font-size-3xl;
+    padding-top: $layout-size-3xl;
 
     a {
         color: $primary-dark;
@@ -109,7 +109,7 @@ export default {
 }
 
 .body {
-    padding-top: $font-size-7xl;
+    padding-top: $layout-size-7xl;
     padding-bottom: $space-2xl;
 }
 </style>

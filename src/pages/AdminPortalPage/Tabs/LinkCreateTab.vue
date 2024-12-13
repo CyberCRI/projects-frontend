@@ -269,7 +269,7 @@ export default {
     font-size: $font-size-5xl;
     line-height: $line-height-tight;
     text-align: center;
-    margin-bottom: $font-size-l;
+    margin-bottom: $layout-size-l;
 }
 
 .form {
@@ -335,7 +335,7 @@ export default {
     }
 
     .icon {
-        width: $font-size-2xl;
+        width: $layout-size-2xl;
         fill: $primary-dark;
     }
 }

@@ -319,7 +319,7 @@ $slide-duration: 400ms;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: $font-size-m;
+            width: $layout-size-m;
             fill: $primary-dark;
         }
     }

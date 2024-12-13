@@ -199,15 +199,15 @@ export default {
 .question-mark {
     display: inline-block;
     position: relative;
-    width: $font-size-m;
-    height: $font-size-m;
+    width: $layout-size-m;
+    height: $layout-size-m;
     background-color: transparent;
     border: 0 none;
     vertical-align: text-top;
     margin-left: $space-m;
 
     svg {
-        width: $font-size-m;
+        width: $layout-size-m;
         fill: $primary-dark;
         position: absolute;
         top: 50%;
