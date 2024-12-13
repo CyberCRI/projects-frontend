@@ -38,7 +38,7 @@ export default {
     position: relative;
 
     svg {
-        height: $font-size-2xl;
+        height: $layout-size-2xl;
         fill: $primary-dark;
     }
 

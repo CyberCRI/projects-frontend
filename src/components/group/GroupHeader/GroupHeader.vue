@@ -194,8 +194,8 @@ export default {
 
                 .icon svg {
                     fill: $primary-dark;
-                    width: $font-size-xl;
-                    height: $font-size-m;
+                    width: $layout-size-xl;
+                    height: $layout-size-m;
                 }
             }
         }

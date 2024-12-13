@@ -332,8 +332,8 @@ export default {
     }
 
     .help-icon {
-        width: $font-size-l;
-        height: $font-size-l;
+        width: $layout-size-l;
+        height: $layout-size-l;
         fill: $primary-dark;
         display: inline-block;
         vertical-align: middle;

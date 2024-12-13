@@ -122,8 +122,8 @@ function deleteSkill() {
                 background-color: $white;
                 margin: 0;
                 font: inherit;
-                width: $font-size-l;
-                height: $font-size-l;
+                width: $layout-size-l;
+                height: $layout-size-l;
                 border: $border-width-s solid $primary-dark;
                 border-radius: 100%;
                 transform: translateY(-0.075em);
@@ -135,8 +135,8 @@ function deleteSkill() {
             input[type='radio']::before {
                 content: '';
                 display: inline-block;
-                width: $font-size-xs;
-                height: $font-size-xs;
+                width: $layout-size-xs;
+                height: $layout-size-xs;
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -162,8 +162,8 @@ function deleteSkill() {
         flex-shrink: 0;
 
         .delete-icon {
-            width: $font-size-l;
-            height: $font-size-l;
+            width: $layout-size-l;
+            height: $layout-size-l;
             fill: $primary-dark;
             display: inline-block;
             vertical-align: middle;

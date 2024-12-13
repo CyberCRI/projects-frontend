@@ -48,7 +48,7 @@ export default {
         align-items: center;
 
         .icon {
-            width: $font-size-3xl;
+            width: $layout-size-3xl;
             fill: $primary-dark;
         }
 

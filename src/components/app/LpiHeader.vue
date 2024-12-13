@@ -596,8 +596,8 @@ export default {
             z-index: 10;
             right: 1rem;
             top: 1rem;
-            width: $font-size-2xl;
-            height: $font-size-2xl;
+            width: $layout-size-2xl;
+            height: $layout-size-2xl;
             fill: $white;
             cursor: pointer;
         }

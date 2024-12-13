@@ -156,7 +156,7 @@ export default {
 
     &.black {
         span {
-            color: #000;
+            color: $black;
         }
     }
 

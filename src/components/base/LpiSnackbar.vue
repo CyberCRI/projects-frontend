@@ -81,7 +81,7 @@ export default {
 
     .left-icon {
         margin-right: $space-m;
-        height: $font-size-xl;
+        height: $layout-size-xl;
         fill: $black;
     }
 
@@ -94,7 +94,7 @@ export default {
     .close-icon {
         cursor: pointer;
         margin-left: 10px;
-        height: $font-size-xl;
+        height: $layout-size-xl;
         fill: $black;
     }
 }

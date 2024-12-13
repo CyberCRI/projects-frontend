@@ -417,7 +417,7 @@ table {
     font-size: $font-size-s;
 
     svg {
-        $icon-dim: $font-size-m;
+        $icon-dim: $layout-size-m;
 
         width: $icon-dim;
         height: $icon-dim;

@@ -114,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 .onboarding-modal {
     .onboarding-modal-steps {
-        background-color: #fff;
+        background-color: $white;
         margin-left: 0; /* fix modal topping centering for steps, see negative margin in Steps component */
     }
 

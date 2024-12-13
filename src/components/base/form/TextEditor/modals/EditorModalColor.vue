@@ -158,8 +158,8 @@ export default {
 .swatch,
 [type='color'] {
     display: inline-block;
-    width: $space-xl;
-    height: $space-xl;
+    width: $layout-size-3xl;
+    height: $layout-size-3xl;
     border: 2px solid transparent;
     background: none;
     padding: 2px;

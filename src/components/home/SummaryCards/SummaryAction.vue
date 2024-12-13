@@ -59,8 +59,8 @@ export default {
 
     .icon {
         fill: $primary-dark;
-        height: $font-size-2xl;
-        width: $font-size-2xl;
+        height: $layout-size-2xl;
+        width: $layout-size-2xl;
     }
 
     .label {

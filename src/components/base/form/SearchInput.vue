@@ -145,23 +145,23 @@ export default {
     }
 
     .left-icon {
-        left: $font-size-s;
-        height: $font-size-l;
-        width: $font-size-l;
+        left: $layout-size-s;
+        height: $layout-size-l;
+        width: $layout-size-l;
         pointer-events: none;
     }
 
     .right-icon {
-        right: $font-size-s;
+        right: $layout-size-s;
         display: inline-block;
-        width: $font-size-s;
-        height: $font-size-s;
+        width: $layout-size-s;
+        height: $layout-size-s;
         background: $primary-dark;
         border: $border-width-m solid $primary-dark;
         border-radius: 100%;
 
         svg {
-            width: $font-size-s;
+            width: $layout-size-s;
             fill: $white;
             position: absolute;
             top: 50%;

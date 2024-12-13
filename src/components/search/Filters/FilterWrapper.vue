@@ -68,7 +68,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: pxToRem(16px);
-    color: #101010;
+    color: $almost-black;
     justify-content: flex-start;
 
     &.empty {

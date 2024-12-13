@@ -311,9 +311,9 @@ export default {
     display: inline-flex;
 
     .current-group-skeleton {
-        height: $font-size-l;
+        height: $layout-size-l;
         border-radius: $border-radius-m;
-        margin-right: $font-size-s;
+        margin-right: $layout-size-s;
     }
 }
 </style>

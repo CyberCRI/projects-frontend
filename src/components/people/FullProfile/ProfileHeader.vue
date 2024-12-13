@@ -184,7 +184,7 @@ export default {
         .main {
             flex-grow: 1;
             width: 100%;
-            margin-bottom: $font-size-5xl;
+            margin-bottom: $layout-size-5xl;
 
             > *:last-child {
                 margin-bottom: 0 !important;
@@ -274,7 +274,7 @@ export default {
         flex-basis: pxToRem(300px);
         justify-content: center;
         align-items: flex-start;
-        padding: $font-size-5xl;
+        padding: $layout-size-5xl;
         background-color: $primary-lighter;
         border-radius: $border-radius-l;
         border: $border-width-s solid $primary;
