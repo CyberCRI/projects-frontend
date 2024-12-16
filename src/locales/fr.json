@@ -1357,6 +1357,17 @@
                     "competent": "Compétent",
                     "expert": "Expert"
                 },
+                "mentorship": {
+                    "choose": "Choisir",
+                    "edit": "Mentorat pour \"{skill}\"",
+                    "error": "Erreur lors de la sauvegarde du mentorat.",
+                    "success": "Mentorat sauvegardé",
+                    "notice": "Vous souhaitez devenir mentor ou être mentoré pour cette compétence ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e ou votre mentor. Rassurez-vous, notre guide est là pour vous aider.",
+                    "can-mentor": "Je peux être mentor",
+                    "needs-mentor": "Je chercher un mentor",
+                    "comment": "Commentaire",
+                    "comment-placeholder": "Indiquez quelle aide vous pouvez offrir ou l’aide dont vous avez besoin (volume horaire, fréquence, etc...)"
+                },
                 "tip": {
                     "intro-edit": "Les différents niveaux parmi lesquels vous pouvez choisir :",
                     "curious": {

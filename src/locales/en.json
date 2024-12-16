@@ -1356,6 +1356,18 @@
                     },
                     "selection": "Selected hobbies"
                 },
+
+                "mentorship": {
+                    "choose": "Choose",
+                    "edit": "Mentorship for \"{skill}\"",
+                    "error": "Error while saving mentorship.",
+                    "success": "Mentorship saved",
+                    "notice": "Would you like to become a mentor or be mentee for this skill? You will determine the frequency of exchange that suits you with the mentee or your mentor. Rest assured, our guide is here to help you.",
+                    "can-mentor": "I can mentor",
+                    "needs-mentor": "I'm looking for a mentor",
+                    "comment": "Comment",
+                    "comment-placeholder": "Indicate what help you can offer or the help you need (hourly volume, frequency, etc.)"
+                },
                 "levels": {
                     "curious": "Curious",
                     "basic": "Basic",
