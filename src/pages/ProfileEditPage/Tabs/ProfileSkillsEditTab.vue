@@ -51,6 +51,7 @@
                             :type="key"
                             :data-skill-id="skill.id"
                             @set-level="setTalentLevel(key, $event.skill, $event.level)"
+                            @update-mentorship="updateMentorship(key, $event, skill)"
                             @delete="removeTalent(key, $event)"
                             :scroll-into-view="lastAddedTalent === skill.id"
                         />
@@ -175,6 +176,24 @@ export default {
                     console.error(error)
                     this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
                 }
+            }
+        },
+
+        async updateMentorship(type, data, talent) {
+            try {
+                await patchUserSkill(this.user.id, data.id, {
+                    ...data,
+                })
+                this.toaster.pushSuccess(
+                    this.$t(`profile.edit.skills.${type}.edit-success`, {
+                        name: this.skillTexts.title(talent),
+                    })
+                )
+                this.reloadUser()
+                this.$emit('profile-edited')
+            } catch (error) {
+                console.error(error)
+                this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
             }
         },
         async removeTalent(type, talent) {

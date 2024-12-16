@@ -4,13 +4,14 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-
+import EditMentorshipDrawer from '@/components/people/skill/EditMentorshipDrawer.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
     scrollIntoView: { type: Boolean, default: false },
 })
-const emit = defineEmits(['set-level', 'delete'])
+const emit = defineEmits(['set-level', 'update-mentorship', 'delete'])
 
 const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
     const { top, left, bottom, right } = el.getBoundingClientRect()
@@ -41,6 +42,12 @@ function deleteSkill() {
     asyncing.value = true
     emit('delete', props.skill)
 }
+
+const editMentorship = ref(false)
+function onUpdateMentorship(mentorship) {
+    emit('update-mentorship', mentorship)
+    editMentorship.value = false
+}
 </script>
 <template>
     <div
@@ -61,6 +68,13 @@ function deleteSkill() {
                 <span class="level-name">{{ level.label }}</span>
             </label>
         </div>
+        <div class="mentorship">
+            <LpiButton
+                secondary
+                @click="editMentorship = true"
+                :label="$t('profile.edit.skills.mentorship.choose')"
+            />
+        </div>
         <div class="delete-action">
             <IconImage
                 name="TrashCanOutline"
@@ -78,6 +92,12 @@ function deleteSkill() {
             :asyncing="asyncing"
             @cancel="confirmDelete = false"
             @confirm="deleteSkill"
+        />
+        <EditMentorshipDrawer
+            :is-opened="editMentorship"
+            :skill="skill"
+            @update-mentorship="onUpdateMentorship"
+            @close="editMentorship = false"
         />
     </div>
 </template>
