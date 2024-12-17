@@ -6,6 +6,7 @@ import useSkillLevels from '@/composables/useSkillLevels.js'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import EditMentorshipDrawer from '@/components/people/skill/EditMentorshipDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
@@ -60,8 +61,9 @@ function onUpdateMentorship(mentorship) {
         <div class="level-editor">
             <label
                 class="level"
+                :class="{ active: level.value == clampLevel(skill.level) }"
                 v-for="level in skillLevels"
-                @click="$emit('set-level', { skill, level: level.value })"
+                @click.prevent="$emit('set-level', { skill, level: level.value })"
                 :key="level.value"
             >
                 <input type="radio" :checked="level.value == clampLevel(skill.level)" />
@@ -70,10 +72,42 @@ function onUpdateMentorship(mentorship) {
         </div>
         <div class="mentorship">
             <LpiButton
+                class="squarish"
+                v-if="!skill.can_mentor && !skill.needs_mentor"
                 secondary
                 @click="editMentorship = true"
                 :label="$t('profile.edit.skills.mentorship.choose')"
             />
+
+            <ToolTip :content="skill.comment" v-else-if="skill.can_mentor" placement="bottom">
+                <LpiButton
+                    class="squarish"
+                    secondary
+                    reversed-order
+                    btn-icon="ChatBubble"
+                    :label="$t('profile.edit.skills.mentorship.can-mentor')"
+                />
+            </ToolTip>
+            <ToolTip :content="skill.comment" v-else-if="skill.needs_mentor" placement="bottom">
+                <LpiButton
+                    class="squarish"
+                    secondary
+                    reversed-order
+                    btn-icon="ChatBubble"
+                    :label="$t('profile.edit.skills.mentorship.needs-mentor')"
+                />
+            </ToolTip>
+        </div>
+        <div class="edit-action">
+            <LpiButton
+                v-if="skill.can_mentor || skill.needs_mentor"
+                secondary
+                @click="editMentorship = true"
+                label=""
+                btn-icon="Pen"
+                class="borderless"
+            />
+            <span v-else>&nbsp;</span>
         </div>
         <div class="delete-action">
             <IconImage
@@ -105,10 +139,10 @@ function onUpdateMentorship(mentorship) {
 .entry {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: stretch;
     gap: $space-unit;
     align-items: center;
-    border-top: $border-width-s solid $lighter-gray;
+    border-bottom: $border-width-s solid $lighter-gray;
     padding: $space-l 0;
 
     &:last-child {
@@ -116,17 +150,17 @@ function onUpdateMentorship(mentorship) {
     }
 
     .skill-name {
-        font-weight: 700;
+        font-weight: 400;
+        flex-basis: 30%;
     }
 
     .level-editor {
         display: flex;
         flex-flow: row nowrap;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         gap: $space-m;
-        flex-shrink: 0;
-        flex-grow: 1;
+        flex: 1 0 40%;
 
         .level {
             display: flex;
@@ -136,7 +170,33 @@ function onUpdateMentorship(mentorship) {
             gap: $space-s;
             margin: 0;
             font-size: $font-size-m;
+            border: $border-width-s solid $primary-dark;
+            border-radius: $border-radius-s;
+            position: relative;
+            padding: $space-2xs $space-s;
+            cursor: pointer;
 
+            .level-name {
+                color: $primary-dark;
+                font-weight: 400;
+            }
+
+            &.active {
+                background-color: $primary-dark;
+                cursor: default;
+
+                .level-name {
+                    color: $white;
+                    font-weight: 700;
+                }
+            }
+
+            input[type='radio'] {
+                visibility: hidden;
+                position: absolute;
+            }
+
+            /*
             input[type='radio'] {
                 appearance: none;
                 background-color: $white;
@@ -169,16 +229,20 @@ function onUpdateMentorship(mentorship) {
             input[type='radio']:checked::before {
                 transform: translate(-50%, -50%) scale(1);
             }
-
-            .level-name {
-                color: $primary-dark;
-                font-weight: 700;
-            }
+                */
         }
     }
 
-    .delete-action {
-        padding: 0 $space-m;
+    .mentorship {
+        flex-basis: 30%;
+        display: flex;
+        gap: $space-unit;
+        justify-content: center;
+    }
+
+    .delete-action,
+    .edit-action {
+        flex-basis: $layout-size-l;
         flex-shrink: 0;
 
         .delete-icon {

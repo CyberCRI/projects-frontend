@@ -39,7 +39,6 @@ const skillTexts = useSkillTexts()
         data-test="edit-mentorship-drawer"
         :confirm-action-name="$t('common.confirm')"
         :confirm-action-disabled="false"
-        :asyncing="asyncing"
         :is-opened="isOpened"
         :title="$t('profile.edit.skills.mentorship.edit', { skill: skillTexts.title(skill) })"
         class="medium"

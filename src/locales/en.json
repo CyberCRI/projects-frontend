@@ -1356,6 +1356,7 @@
                 },
 
                 "mentorship": {
+                    "mentorship": "Mentorship",
                     "choose": "Choose",
                     "edit": "Mentorship for \"{skill}\"",
                     "error": "Error while saving mentorship.",
