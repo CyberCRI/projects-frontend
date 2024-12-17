@@ -1,5 +1,6 @@
 <template>
     <div :class="{ border: hasBorder }" class="container">
+        <span v-if="showLabel" class="level-label"> {{ skillLevels[activeStep - 1]?.label }}</span>
         <span
             v-for="(step, index) in steps"
             :key="index"
@@ -10,8 +11,14 @@
 </template>
 
 <script>
+import useSkillLevels from '@/composables/useSkillLevels.js'
 export default {
     name: 'SkillSteps',
+
+    setup() {
+        const { skillLevels } = useSkillLevels()
+        return { skillLevels }
+    },
 
     props: {
         /* eslint-disable-next-line */
@@ -31,6 +38,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        showLabel: {
+            type: Boolean,
+            default: false,
+        },
     },
 }
 </script>
@@ -39,6 +50,7 @@ export default {
 .container {
     display: inline-flex;
     padding: $space-m calc($space-l / 1.5);
+    align-items: center;
 }
 
 .border {
@@ -54,6 +66,10 @@ export default {
     border: $border-width-m solid $primary-dark;
     border-radius: 50%;
     display: inline-block;
+}
+
+.level-label {
+    padding-right: $space-m;
 }
 
 .step-completed {
