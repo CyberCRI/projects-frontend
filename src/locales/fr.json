@@ -1331,25 +1331,25 @@
                         "notice-levels": "Indiquez votre niveau de maîtrise.",
                         "help-levels": "Plus à propos des niveaux de compétences"
                     },
-                    "selection": "Compétences sélectionnées"
+                    "selection": "Compétences"
                 },
                 "hobbies": {
-                    "add-success": "Hobby '{name}' ajouté.",
-                    "edit-success": "Hobby '{name}' édité.",
-                    "delete-success": "Hobby '{name}' supprimé.",
-                    "add": "Ajouter des hobbies",
-                    "add-item": "Ajouter un hobby",
+                    "add-success": "Loisir '{name}' ajouté.",
+                    "edit-success": "Loisir '{name}' édité.",
+                    "delete-success": "Loisir '{name}' supprimé.",
+                    "add": "Ajouter des loisirs",
+                    "add-item": "Ajouter un loisir",
                     "edit-levels": "Éditer les niveaux",
-                    "levels-help": "Niveau des hobbies",
-                    "already-added": "Hobby déjà ajouté",
+                    "levels-help": "Niveau",
+                    "already-added": "Loisir déjà ajouté",
                     "drawer": {
-                        "title": "Ajouter des hobbies personnels",
-                        "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
-                        "placeholder": "Tapez un hobby",
-                        "notice-levels": "Indiquer votre niveau pour chaque hobby",
-                        "help-levels": "En savoir plus sur les niveaux de hobby"
+                        "title": "Ajouter des loisirs personnels",
+                        "notice": "Tapez les premières lettres du loisir et sélectionnez celui qui vous convient",
+                        "placeholder": "Tapez un loisir",
+                        "notice-levels": "Indiquer votre niveau pour chaque loisir",
+                        "help-levels": "En savoir plus sur les niveaux de loisir"
                     },
-                    "selection": "Hobbies sélectionnés"
+                    "selection": "Loisirs"
                 },
                 "levels": {
                     "curious": "Curieux",
@@ -1358,13 +1358,14 @@
                     "expert": "Expert"
                 },
                 "mentorship": {
+                    "mentorship": "Mentorat",
                     "choose": "Choisir",
                     "edit": "Mentorat pour \"{skill}\"",
                     "error": "Erreur lors de la sauvegarde du mentorat.",
                     "success": "Mentorat sauvegardé",
                     "notice": "Vous souhaitez devenir mentor ou être mentoré pour cette compétence ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e ou votre mentor. Rassurez-vous, notre guide est là pour vous aider.",
                     "can-mentor": "Je peux être mentor",
-                    "needs-mentor": "Je chercher un mentor",
+                    "needs-mentor": "Je cherche un mentor",
                     "comment": "Commentaire",
                     "comment-placeholder": "Indiquez quelle aide vous pouvez offrir ou l’aide dont vous avez besoin (volume horaire, fréquence, etc...)"
                 },

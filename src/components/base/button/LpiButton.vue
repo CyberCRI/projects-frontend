@@ -111,6 +111,14 @@ export default {
         width: 35px;
         padding: 0;
     }
+
+    &.borderless {
+        border: 0 none;
+    }
+
+    &.squarish {
+        border-radius: $border-radius-s;
+    }
 }
 
 .lpi-button :deep(svg) {
