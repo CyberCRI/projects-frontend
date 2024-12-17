@@ -12,10 +12,10 @@
         </div>
         <template v-if="allSkills.length">
             <section class="section" v-if="skills?.length">
-                <UserSkills :full-list="true" :skills="skills" :title="$t('me.skills')" />
+                <UserSkillsFull :full-list="true" :skills="skills" :title="$t('me.skills')" />
             </section>
             <section class="section" v-if="hobbies?.length">
-                <UserSkills :full-list="true" :skills="hobbies" :title="$t('me.hobbies')" />
+                <UserSkillsFull :full-list="true" :skills="hobbies" :title="$t('me.hobbies')" />
             </section>
         </template>
         <p v-else class="empty-field">{{ noSkillLabel }}</p>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import UserSkills from '@/components/people/skill/UserSkills.vue'
+import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
@@ -35,7 +35,7 @@ export default {
     mixins: [permissions],
 
     components: {
-        UserSkills,
+        UserSkillsFull,
         LinkButton,
     },
     setup() {

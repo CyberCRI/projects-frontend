@@ -1358,6 +1358,36 @@
                 },
 
                 "mentorship": {
+                    "contact": {
+                        "title-ask": "Ask for mentorship",
+                        "title-offer": "Offer mentorship",
+                        "notice-ask": "Please specify the skill for which you are asking mentorship.",
+                        "notice-offer": "Please specify the skill for which you are offering mentorship.",
+                        "error": "Error while sending the request.",
+                        "success": "Your request was sent.",
+                        "fields": {
+                            "title": {
+                                "label": "Title",
+                                "placeholder-ask": "Eg. \"Can you be my mentor in Datascience?\"",
+                                "placeholder-offer": "Eg. \"Would you be my mentee in Datascience?\"",
+                                "required": "The title field is required."
+                            },
+                            "text": {
+                                "label": "Text",
+                                "notice-ask": "Add details about you and the kind of help you need (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "notice-offer": "Add details about you and the kind of help you provide (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "placeholder": "Start here",
+                                "required": "The text field is required."
+                            },
+                            "email": {
+                                "label": "Email reply",
+                                "notice": "This message will be sent as an email. To receive an answer, add your email.",
+                                "placeholder": "Eg. jane.doe{'@'}gmail.com",
+                                "invalid": "The email field is invalid.",
+                                "required": "The email field is required."
+                            }
+                        }
+                    },
                     "mentorship": "Mentorship",
                     "choose": "Choose",
                     "edit": "Mentorship for \"{skill}\"",
@@ -1440,7 +1470,11 @@
         "bio_pro": "Professional Bio",
         "bio_personal": "Personal Bio",
         "cancel-title": "Cancel profile editing",
-        "cancel-content": "Are you sure you want to cancel your profile edition? Any change made will be lost."
+        "cancel-content": "Are you sure you want to cancel your profile edition? Any change made will be lost.",
+        "can-mentor": "Can be mentor",
+        "needs-mentor": "Need a mentor",
+        "ask-mentorship": "Ask for mentorship",
+        "offer-mentorship": "Offer mentorship"
     },
     "profile-completed-modal": {
         "notice-congratulation": "You are now ready to use the projects platform.",

@@ -1358,6 +1358,37 @@
                     "expert": "Expert"
                 },
                 "mentorship": {
+                    "contact": {
+                        "title-ask": "Demander un mentorat",
+                        "title-offer": "Offrir un mentorat",
+                        "notice-ask": "Veuillez spécifier la compétence pour laquelle vous demandez un mentorat.",
+                        "notice-offer": "Veuillez spécifier la compétence pour laquelle vous offrez un mentorat.",
+                        "error": "Erreur lors de l'envoi de votre requête.",
+                        "success": "Votre requête a été envoyée.",
+                        "fields": {
+                            "title": {
+                                "label": "Titre",
+                                "placeholder-ask": "Ex. \"Pouvez-vous être mon mentor en Data Science ?\"",
+                                "placeholder-offer": "Ex. \"Voudriez-vous que je sois votre mentor en Data Science ?\"",
+                                "required": "Le champ titre est requis."
+                            },
+                            "text": {
+                                "label": "Texte",
+                                "notice-ask": "Ajoutez des détails sur vous et le type d'aide dont vous avez besoin (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "notice-offer": "Ajoutez des détails sur vous et le type d'aide dont vous offrez (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "placeholder": "Commencez ici",
+                                "required": "Le champ texte est requis."
+                            },
+                            "email": {
+                                "label": "Réponse par e-mail",
+                                "notice": "Ce message sera envoyé par e-mail. Pour recevoir une réponse, ajoutez votre e-mail.",
+                                "placeholder": "Ex. jane.doe{'@'}gmail.com",
+                                "invalid": "Le champ e-mail est invalide.",
+                                "required": "Le champ e-mail est requis."
+                            }
+                        }
+                    },
+
                     "mentorship": "Mentorat",
                     "choose": "Choisir",
                     "edit": "Mentorat pour \"{skill}\"",
@@ -1434,7 +1465,11 @@
         "bio_pro": "Bio professionnelle",
         "bio_personal": "Bio personnelle",
         "cancel-title": "Annuler la modification du profil",
-        "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue."
+        "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue.",
+        "can-mentor": "Peut mentorer",
+        "needs-mentor": "Cherche mentor",
+        "ask-mentorship": "Demander à être mentoré",
+        "offer-mentorship": "Proposer son mentorat"
     },
     "profile-completed-modal": {
         "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
