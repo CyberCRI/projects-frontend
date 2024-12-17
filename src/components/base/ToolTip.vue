@@ -115,6 +115,7 @@ export default {
     --popper-theme-text-color: #{$primary-dark};
     --popper-theme-box-shadow: none;
     --popper-theme-background-color-hover: var(--popper-theme-background-color);
+    --popper-theme-padding: #{$space-s};
 
     .popper {
         font-size: $font-size-xs;
