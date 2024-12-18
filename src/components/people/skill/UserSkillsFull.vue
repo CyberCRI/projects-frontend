@@ -1,14 +1,26 @@
 <template>
     <div>
-        <div v-if="title" class="title-wrapper">
-            <h3 class="title">{{ title }}</h3>
-            <SkillLevelTip>
-                <LinkButton
-                    :label="$t(`me.levels-help-link`)"
-                    btn-icon="HelpCircle"
-                    data-test="skill-levels-help-button"
-                />
-            </SkillLevelTip>
+        <div class="skill-columns-header" :key="`${key}-header`">
+            <div class="skill-name">
+                <span class="column-label" v-if="title">{{ title }}</span>
+            </div>
+            <div class="skill-level">
+                <span class="column-label">{{ $t(`profile.edit.skills.skills.levels-help`) }}</span>
+                <SkillLevelTip>
+                    <LinkButton
+                        label=""
+                        btn-icon="HelpCircle"
+                        data-test="skill-levels-help-button"
+                        secondary
+                        icon-only
+                    />
+                </SkillLevelTip>
+            </div>
+            <div class="mentorship">
+                <span class="column-label">{{
+                    $t(`profile.edit.skills.mentorship.mentorship`)
+                }}</span>
+            </div>
         </div>
         <div class="columns-wrapper">
             <SkillItemFull v-for="skill in skills" :key="skill.id" :skill="skill" />
@@ -41,23 +53,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$column-spacing: pxToRem(32px);
-
-.title-wrapper {
-    padding-left: $column-spacing;
-    margin-top: 1rem;
+.skill-columns-header {
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-}
+    justify-content: stretch;
+    gap: $space-unit;
+    align-items: center;
+    padding: $space-l 0;
+    border-bottom: $border-width-s solid $primary;
 
-.title {
-    color: $primary-dark;
-    font-size: $font-size-l;
-    text-transform: uppercase;
-}
+    .column-label {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $primary-dark;
+    }
 
-.s-button {
-    margin: $space-l auto 0;
+    .skill-name {
+        flex-basis: 30%;
+
+        @media screen and (max-width: $min-tablet) {
+            flex-basis: 100%;
+            text-align: center;
+        }
+    }
+
+    .skill-level {
+        flex-basis: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
+
+    .mentorship {
+        display: flex;
+        justify-content: center;
+        flex-basis: 25%;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
 }
 </style>

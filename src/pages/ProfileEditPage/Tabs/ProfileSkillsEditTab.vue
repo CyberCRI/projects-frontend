@@ -318,6 +318,11 @@ export default {
 
     .skill-name {
         flex-basis: 30%;
+
+        @media screen and (max-width: $min-tablet) {
+            flex-basis: 100%;
+            text-align: center;
+        }
     }
 
     .skill-level {
@@ -325,18 +330,30 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
     }
 
     .mentorship {
         display: flex;
         justify-content: center;
         flex-basis: 30%;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
     }
 
     .delete-action,
     .edit-action {
         flex-shrink: 0;
         flex-basis: $layout-size-l;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
     }
 }
 </style>

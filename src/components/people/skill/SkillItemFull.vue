@@ -2,8 +2,15 @@
     <div class="skill" :class="{ 'is-open': isOpen, 'no-description': !description?.length }">
         <div class="skill-content">
             <div class="skill-name" @click="isOpen = !isOpen">
-                <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
-                <span class="skill-title">{{ $filters.capitalize(label) }}</span>
+                <div class="skill-title">
+                    <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
+                    <span class="skill-title">{{ $filters.capitalize(label) }}</span>
+                </div>
+                <transition name="open">
+                    <div v-show="isOpen" class="description mobile">
+                        <p>{{ description }}</p>
+                    </div>
+                </transition>
             </div>
             <div class="skill-level">
                 <SkillSteps show-label :active-step="level" :steps="steps" class="steps" />
@@ -40,7 +47,7 @@
         </div>
 
         <transition name="open">
-            <div v-show="isOpen" class="description">
+            <div v-show="isOpen" class="description desktop">
                 <p>{{ description }}</p>
             </div>
         </transition>
@@ -113,13 +120,33 @@ export default {
     border-bottom: $border-width-s solid $lighter-gray;
     padding: $space-l 0;
 
+    .skill-content {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: stretch;
+        gap: $space-unit;
+        align-items: center;
+
+        @media screen and (max-width: $min-tablet) {
+            flex-flow: column nowrap;
+            align-items: flex-start;
+        }
+    }
+
     &.no-description {
         pointer-events: none;
     }
 
     .skill-name {
-        font-weight: 400;
         flex-basis: 30%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .skill-title {
+        font-weight: 400;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
@@ -132,6 +159,12 @@ export default {
         justify-content: flex-start;
         align-items: center;
         gap: $space-m;
+
+        @media screen and (max-width: $min-tablet) {
+            .container {
+                padding-left: 0 !important;
+            }
+        }
     }
 
     .mentorship {
@@ -147,6 +180,14 @@ export default {
         display: flex;
         justify-content: flex-end;
     }
+
+    .skill-level,
+    .mentorship,
+    .actions {
+        @media screen and (max-width: $min-tablet) {
+            padding-left: 1rem;
+        }
+    }
 }
 
 .skill-name:hover {
@@ -157,14 +198,6 @@ export default {
     .skill-title {
         color: $primary-dark;
     }
-}
-
-.skill-content {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: stretch;
-    gap: $space-unit;
-    align-items: center;
 }
 
 .chevron {
@@ -213,9 +246,31 @@ export default {
 
 .description {
     font-size: $font-size-s;
+    padding-top: $space-m;
     padding-left: 1rem;
     border-left: 1px solid $light-gray;
     align-self: flex-start;
+
+    @media screen and (min-width: $max-tablet) {
+        padding-right: calc(60%);
+        margin-right: #{4 * $space-m};
+    }
+
+    &.mobile {
+        display: none;
+
+        @media screen and (max-width: $min-tablet) {
+            display: block;
+        }
+    }
+
+    &.desktop {
+        display: block;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
 }
 
 .open-enter-active {
