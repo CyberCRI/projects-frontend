@@ -52,6 +52,7 @@
             </div>
         </transition>
         <MentorshipContactDrawer
+            :skill="skill"
             :is-open="mentorshipDrawerIsOpen"
             :is-offer="mentorshipDrawerIsOffer"
             @close="mentorshipDrawerIsOpen = false"

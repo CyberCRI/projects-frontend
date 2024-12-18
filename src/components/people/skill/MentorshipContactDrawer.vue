@@ -36,13 +36,13 @@
             </p>
             <TextInput
                 input-type="textarea"
-                v-model="form.text"
+                v-model="form.content"
                 class="text-input"
                 data-test="ask-mentorship-text"
                 :placeholder="$t('profile.edit.skills.mentorship.contact.fields.text.placeholder')"
-                @blur="v$.form.text.$validate"
+                @blur="v$.form.content.$validate"
             />
-            <FieldErrors :errors="v$.form.text.$errors" />
+            <FieldErrors :errors="v$.form.content.$errors" />
         </div>
 
         <div class="form-input">
@@ -53,27 +53,30 @@
                 {{ $t('profile.edit.skills.mentorship.contact.fields.email.notice') }}
             </p>
             <TextInput
-                v-model="form.email"
+                v-model="form.reply_to"
                 class="text-input"
                 data-test="ask-mentorship-email"
                 :placeholder="$t('profile.edit.skills.mentorship.contact.fields.email.placeholder')"
-                @blur="v$.form.email.$validate"
+                @blur="v$.form.reply_to.$validate"
             />
-            <FieldErrors :errors="v$.form.email.$errors" />
+            <FieldErrors :errors="v$.form.reply_to.$errors" />
         </div>
     </BaseDrawer>
 </template>
 <script>
+import useToasterStore from '@/stores/useToaster.ts'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { askMentorship, offerMentorship } from '@/api/skill.service.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export function defaultForm() {
     return {
         title: '',
-        text: '',
-        email: '',
+        content: '',
+        reply_to: '',
     }
 }
 
@@ -85,6 +88,10 @@ export default {
     components: { BaseDrawer, TextInput, FieldErrors },
 
     props: {
+        skill: {
+            type: Object,
+            required: true,
+        },
         isOpen: {
             type: Boolean,
             default: false,
@@ -99,7 +106,15 @@ export default {
             default: false,
         },
     },
+    setup() {
+        const toaster = useToasterStore()
+        const organizationsStore = useOrganizationsStore()
 
+        return {
+            toaster,
+            organizationsStore,
+        }
+    },
     data() {
         return {
             v$: useValidate(),
@@ -116,13 +131,13 @@ export default {
                         required
                     ),
                 },
-                text: {
+                content: {
                     required: helpers.withMessage(
                         this.$t('profile.edit.skills.mentorship.contact.fields.title.required'),
                         required
                     ),
                 },
-                email: {
+                reply_to: {
                     required: helpers.withMessage(
                         this.$t('profile.edit.skills.mentorship.contact.fields.title.required'),
                         required
@@ -156,16 +171,19 @@ export default {
             if (isValid) {
                 this.isLoading = true
                 try {
-                    await new Promise((resolve) => setTimeout(resolve, 1000))
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: this.$t('profile.edit.skills.mentorship.contact.success'),
-                        type: 'success',
-                    })
+                    const orgCode = this.organizationsStore.current?.code
+                    if (this.isOffer) {
+                        await offerMentorship(orgCode, this.skill, this.form)
+                    } else {
+                        await askMentorship(orgCode, this.skill, this.form)
+                    }
+                    this.toaster.pushSuccess(
+                        this.$t('profile.edit.skills.mentorship.contact.success')
+                    )
                 } catch (error) {
-                    this.$store.dispatch('notifications/pushToast', {
-                        message: `${this.$t('profile.edit.skills.mentorship.contact.error')} (${error})`,
-                        type: 'error',
-                    })
+                    this.toaster.pushError(
+                        `${this.$t('profile.edit.skills.mentorship.contact.error')} (${error})`
+                    )
                     console.error(error)
                 } finally {
                     this.isLoading = false
