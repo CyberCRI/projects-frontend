@@ -57,7 +57,29 @@ function onUpdateMentorship(mentorship) {
         :data-test="`${type}-editor-${skill.id}`"
         ref="el"
     >
-        <h4 class="skill-name">{{ skillTexts.title(skill) }}</h4>
+        <h4 class="skill-name">
+            <span>{{ skillTexts.title(skill) }}</span>
+
+            <div class="edit-action mobile">
+                <LpiButton
+                    v-if="skill.can_mentor || skill.needs_mentor"
+                    secondary
+                    @click="editMentorship = true"
+                    label=""
+                    btn-icon="Pen"
+                    class="borderless"
+                />
+                <span v-else>&nbsp;</span>
+            </div>
+            <div class="delete-action mobile">
+                <IconImage
+                    name="TrashCanOutline"
+                    :data-test="`delete-${type}-${skill.id}`"
+                    class="delete-icon"
+                    @click="confirmDelete = true"
+                />
+            </div>
+        </h4>
         <div class="level-editor">
             <label
                 class="level"
@@ -98,7 +120,7 @@ function onUpdateMentorship(mentorship) {
                 />
             </ToolTip>
         </div>
-        <div class="edit-action">
+        <div class="edit-action desktop">
             <LpiButton
                 v-if="skill.can_mentor || skill.needs_mentor"
                 secondary
@@ -109,7 +131,7 @@ function onUpdateMentorship(mentorship) {
             />
             <span v-else>&nbsp;</span>
         </div>
-        <div class="delete-action">
+        <div class="delete-action desktop">
             <IconImage
                 name="TrashCanOutline"
                 :data-test="`delete-${type}-${skill.id}`"
@@ -144,6 +166,11 @@ function onUpdateMentorship(mentorship) {
     align-items: center;
     border-bottom: $border-width-s solid $lighter-gray;
     padding: $space-l 0;
+
+    @media screen and (max-width: $min-tablet) {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+    }
 
     &:last-child {
         border-bottom: $border-width-s solid $lighter-gray;
@@ -253,6 +280,22 @@ function onUpdateMentorship(mentorship) {
             vertical-align: middle;
             cursor: pointer;
         }
+
+        &.mobile {
+            display: none;
+
+            @media screen and (max-width: $min-tablet) {
+                display: block;
+            }
+        }
+
+        &.desktop {
+            display: block;
+
+            @media screen and (max-width: $min-tablet) {
+                display: none;
+            }
+        }
     }
 }
 
@@ -261,8 +304,18 @@ function onUpdateMentorship(mentorship) {
         flex-wrap: wrap;
 
         .skill-name {
+            align-self: stretch;
+            width: 100%;
             flex-basis: 100%;
             flex-shrink: 0;
+            display: flex;
+            justify-content: stretch;
+            align-items: center;
+            gap: $space-unit;
+
+            span {
+                flex-grow: 1;
+            }
         }
     }
 }

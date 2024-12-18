@@ -1328,7 +1328,7 @@
                     "add-item": "Add a skill",
                     "edit-levels": "Edit levels",
                     "already-added": "Skill already added",
-                    "levels-help": "Skill levels",
+                    "levels-help": "Level",
                     "drawer": {
                         "title": "Add professional skills",
                         "notice": "Type the label of your skill, and select the right one for you among suggestions.",
@@ -1346,7 +1346,7 @@
                     "add-item": "Add a hobby",
                     "already-added": "Hobby already added",
                     "edit-levels": "Edit levels",
-                    "levels-help": "Hobbies levels",
+                    "levels-help": "Level",
                     "drawer": {
                         "title": "Add a personal hobby",
                         "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
