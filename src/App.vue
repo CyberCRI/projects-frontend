@@ -131,7 +131,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import 'src/design/scss/main';
+@import '@/design/scss/main';
 
 #APP {
     display: flex;
