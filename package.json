@@ -140,10 +140,10 @@
         "stylelint-scss": "^5.2.1",
         "trash-cli": "^5.0.0",
         "typescript": "^5.0.2",
-        "vite": "^5.2.7",
-        "vite-plugin-html": "^3.2.0",
-        "vitest": "^1.4.0",
-        "vitest-fetch-mock": "^0.2.2",
+        "vite": "^6.0.3",
+        "vite-plugin-html": "^3.2.2",
+        "vitest": "^2.1.8",
+        "vitest-fetch-mock": "^0.4.2",
         "vue-i18n-extract": "^2.0.7",
         "vue-loader": "^17.0.1",
         "vue-unused-components-checker": "^1",
@@ -177,7 +177,7 @@
         }
     ],
     "engines": {
-        "node": ">=20 <21"
+        "node": ">=22 <23"
     },
     "husky": {
         "hooks": {
