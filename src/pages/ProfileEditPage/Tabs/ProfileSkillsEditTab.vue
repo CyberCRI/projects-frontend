@@ -22,28 +22,35 @@
         <div class="following-screen" v-else>
             <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
                 <template v-if="getSkillOfType(key).length">
-                    <h3 class="talent-title">{{ $t(`profile.edit.skills.${key}.selection`) }}</h3>
-                    <div class="actions">
-                        <LinkButton
-                            :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
-                            btn-icon="Plus"
-                            @click="openDrawer(key)"
-                            :data-test="`add-${key}-button`"
-                        />
-
-                        <SkillLevelTip>
-                            <LinkButton
-                                :label="
-                                    $filters.capitalize(
-                                        $t(`profile.edit.skills.${key}.levels-help`)
-                                    )
-                                "
-                                btn-icon="HelpCircle"
-                                data-test="skill-levels-help-button"
-                            />
-                        </SkillLevelTip>
-                    </div>
                     <TransitionGroup tag="div" name="skill" class="level-editor-list">
+                        <div class="skill-columns-header" :key="`${key}-header`">
+                            <div class="skill-name">
+                                <span class="column-label">{{
+                                    $t(`profile.edit.skills.${key}.selection`)
+                                }}</span>
+                            </div>
+                            <div class="skill-level">
+                                <span class="column-label">{{
+                                    $t(`profile.edit.skills.${key}.levels-help`)
+                                }}</span>
+                                <SkillLevelTip>
+                                    <LinkButton
+                                        label=""
+                                        btn-icon="HelpCircle"
+                                        data-test="skill-levels-help-button"
+                                        secondary
+                                        icon-only
+                                    />
+                                </SkillLevelTip>
+                            </div>
+                            <div class="mentorship">
+                                <span class="column-label">{{
+                                    $t(`profile.edit.skills.mentorship.mentorship`)
+                                }}</span>
+                            </div>
+                            <div class="edit-action">&nbsp;</div>
+                            <div class="delete-action">&nbsp;</div>
+                        </div>
                         <SkillEditor
                             v-for="skill in getSkillOfType(key)"
                             :key="skill.id"
@@ -51,10 +58,19 @@
                             :type="key"
                             :data-skill-id="skill.id"
                             @set-level="setTalentLevel(key, $event.skill, $event.level)"
+                            @update-mentorship="updateMentorship(key, $event, skill)"
                             @delete="removeTalent(key, $event)"
                             :scroll-into-view="lastAddedTalent === skill.id"
                         />
                     </TransitionGroup>
+                    <div class="actions">
+                        <LinkButton
+                            :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
+                            btn-icon="Plus"
+                            @click="openDrawer(key)"
+                            :data-test="`add-${key}-button`"
+                        />
+                    </div>
                 </template>
                 <div v-else class="add-action">
                     <LpiButton
@@ -177,6 +193,24 @@ export default {
                 }
             }
         },
+
+        async updateMentorship(type, data, talent) {
+            try {
+                await patchUserSkill(this.user.id, data.id, {
+                    ...data,
+                })
+                this.toaster.pushSuccess(
+                    this.$t(`profile.edit.skills.${type}.edit-success`, {
+                        name: this.skillTexts.title(talent),
+                    })
+                )
+                this.reloadUser()
+                this.$emit('profile-edited')
+            } catch (error) {
+                console.error(error)
+                this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
+            }
+        },
         async removeTalent(type, talent) {
             try {
                 await deleteUserSkill(this.user.id, talent.id)
@@ -266,5 +300,60 @@ export default {
 .level-editor-list {
     margin-top: $space-xl;
     position: relative;
+}
+
+.skill-columns-header {
+    display: flex;
+    justify-content: stretch;
+    gap: $space-unit;
+    align-items: center;
+    padding: $space-l 0;
+    border-bottom: $border-width-s solid $primary;
+
+    .column-label {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $primary-dark;
+    }
+
+    .skill-name {
+        flex-basis: 30%;
+
+        @media screen and (max-width: $min-tablet) {
+            flex-basis: 100%;
+            text-align: center;
+        }
+    }
+
+    .skill-level {
+        flex-basis: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
+
+    .mentorship {
+        display: flex;
+        justify-content: center;
+        flex-basis: 30%;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
+
+    .delete-action,
+    .edit-action {
+        flex-shrink: 0;
+        flex-basis: $layout-size-l;
+
+        @media screen and (max-width: $min-tablet) {
+            display: none;
+        }
+    }
 }
 </style>

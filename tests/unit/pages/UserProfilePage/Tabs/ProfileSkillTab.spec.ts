@@ -74,7 +74,7 @@ describe('ProfileSkillTab', () => {
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(wrapper.find('.empty-field').exists()).toBe(true)
-        expect(wrapper.findAll('user-skills-stub').length).toBe(0)
+        expect(wrapper.findAll('user-skills-full-stub').length).toBe(0)
     })
 
     it('should display one list if user has skill but no hobby', () => {
@@ -86,7 +86,7 @@ describe('ProfileSkillTab', () => {
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(wrapper.find('.empty-field').exists()).toBe(false)
-        expect(wrapper.findAll('user-skills-stub').length).toBe(1)
+        expect(wrapper.findAll('user-skills-full-stub').length).toBe(1)
     })
 
     it('should display one list if user has hobbies but no skills', () => {
@@ -98,7 +98,7 @@ describe('ProfileSkillTab', () => {
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(wrapper.find('.empty-field').exists()).toBe(false)
-        expect(wrapper.findAll('user-skills-stub').length).toBe(1)
+        expect(wrapper.findAll('user-skills-full-stub').length).toBe(1)
     })
 
     it('should display two lists if user has hobbies and skills', () => {
@@ -113,7 +113,7 @@ describe('ProfileSkillTab', () => {
         let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
         let vm: any = wrapper.vm
         expect(wrapper.find('.empty-field').exists()).toBe(false)
-        expect(wrapper.findAll('user-skills-stub').length).toBe(2)
+        expect(wrapper.findAll('user-skills-full-stub').length).toBe(2)
     })
 
     it('should display a tip if list are displayed', () => {
