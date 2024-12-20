@@ -2,8 +2,7 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import { ref, watchEffect } from 'vue'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
+import MentorshipForm from '@/components/people/skill/MentorshipForm.vue'
 
 const emit = defineEmits(['close', 'update-mentorship'])
 
@@ -45,45 +44,6 @@ const skillTexts = useSkillTexts()
         @close="$emit('close')"
         @confirm="saveMentorship"
     >
-        <div class="form-group">
-            <p>{{ $t('profile.edit.skills.mentorship.notice') }}</p>
-        </div>
-        <div class="form-group">
-            <div class="buttons-group">
-                <LpiCheckbox
-                    v-model="mentorship.can_mentor"
-                    :label="$t('profile.edit.skills.mentorship.can-mentor')"
-                    class="as-button"
-                />
-
-                <LpiCheckbox
-                    v-model="mentorship.needs_mentor"
-                    :label="$t('profile.edit.skills.mentorship.needs-mentor')"
-                    class="as-button"
-                />
-            </div>
-        </div>
-        <div class="form-group">
-            <TextInput
-                v-model="mentorship.comment"
-                :label="$t('profile.edit.skills.mentorship.comment')"
-                input-type="textarea"
-                :placeholder="$t('profile.edit.skills.mentorship.comment-placeholder')"
-            />
-        </div>
+        <MentorshipForm v-model="mentorship" />
     </BaseDrawer>
 </template>
-<style lang="scss" scoped>
-.buttons-group {
-    display: flex;
-    gap: $space-unit;
-
-    > * {
-        flex-basis: 50%;
-    }
-}
-
-.form-group + .form-group {
-    margin-top: $space-unit;
-}
-</style>

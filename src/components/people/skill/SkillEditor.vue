@@ -11,6 +11,7 @@ const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
     scrollIntoView: { type: Boolean, default: false },
+    noMentorship: { type: Boolean, default: false },
 })
 const emit = defineEmits(['set-level', 'update-mentorship', 'delete'])
 
@@ -92,7 +93,7 @@ function onUpdateMentorship(mentorship) {
                 <span class="level-name">{{ level.label }}</span>
             </label>
         </div>
-        <div class="mentorship">
+        <div class="mentorship" v-if="!noMentorship">
             <LpiButton
                 class="squarish"
                 v-if="!skill.can_mentor && !skill.needs_mentor"
@@ -178,7 +179,8 @@ function onUpdateMentorship(mentorship) {
 
     .skill-name {
         font-weight: 400;
-        flex-basis: 30%;
+        flex-basis: 25%;
+        flex-shrink: 0;
     }
 
     .level-editor {
