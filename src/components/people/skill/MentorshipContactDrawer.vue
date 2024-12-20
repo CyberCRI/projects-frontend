@@ -72,6 +72,7 @@ import { email, helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { askMentorship, offerMentorship } from '@/api/skill.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 export function defaultForm() {
     return {
         title: '',
@@ -109,10 +110,12 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const organizationsStore = useOrganizationsStore()
+        const usersStore = useUsersStore()
 
         return {
             toaster,
             organizationsStore,
+            usersStore,
         }
     },
     data() {
@@ -161,6 +164,8 @@ export default {
         isOpen() {
             this.v$.$reset()
             this.form = defaultForm()
+            // this.form.reply_to = this.usersStore.user?.email || '' // thhis is keycloak contact mail
+            this.form.reply_to = this.usersStore.userFromApi?.email || '' // this the login mail
         },
     },
 
