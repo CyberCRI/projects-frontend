@@ -27,32 +27,41 @@
                 </ToolTip>
             </div>
             <div class="actions">
-                <NeedLoginToolTip v-if="skill.can_mentor">
-                    <template #default="{ needLogin }">
-                        <LpiButton
-                            v-if="skill.can_mentor"
-                            class="squarish"
-                            :disabled="needLogin"
-                            secondary
-                            btn-icon="EmailOutline"
-                            :label="$t('profile.ask-mentorship')"
-                            @click="askMentorship(needLogin)"
-                        />
-                    </template>
-                </NeedLoginToolTip>
-
-                <NeedLoginToolTip v-if="skill.needs_mentor">
-                    <template #default="{ needLogin }">
-                        <LpiButton
-                            class="squarish"
-                            :disabled="needLogin"
-                            secondary
-                            btn-icon="EmailOutline"
-                            :label="$t('profile.offer-mentorship')"
-                            @click="offerMentorship(needLogin)"
-                        />
-                    </template>
-                </NeedLoginToolTip>
+                <template v-if="skill.can_mentor">
+                    <span class="mentorship-asked" v-if="mentorshipAsked(skill)">{{
+                        $t('profile.mentorship-asked')
+                    }}</span>
+                    <NeedLoginToolTip v-else>
+                        <template #default="{ needLogin }">
+                            <LpiButton
+                                v-if="skill.can_mentor"
+                                class="squarish"
+                                :disabled="needLogin"
+                                secondary
+                                btn-icon="EmailOutline"
+                                :label="$t('profile.ask-mentorship')"
+                                @click="askMentorship(needLogin)"
+                            />
+                        </template>
+                    </NeedLoginToolTip>
+                </template>
+                <template v-if="skill.needs_mentor">
+                    <span class="mentorship-offered" v-if="mentorshipOffered(skill)">{{
+                        $t('profile.mentorship-offered')
+                    }}</span>
+                    <NeedLoginToolTip v-else>
+                        <template #default="{ needLogin }">
+                            <LpiButton
+                                class="squarish"
+                                :disabled="needLogin"
+                                secondary
+                                btn-icon="EmailOutline"
+                                :label="$t('profile.offer-mentorship')"
+                                @click="offerMentorship(needLogin)"
+                            />
+                        </template>
+                    </NeedLoginToolTip>
+                </template>
             </div>
         </div>
 
@@ -131,6 +140,14 @@ export default {
         offerMentorship() {
             this.mentorshipDrawerIsOpen = true
             this.mentorshipDrawerIsOffer = true
+        },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        mentorshipAsked(skill) {
+            return false // TODO: need api stuff
+        },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        mentorshipOffered(skill) {
+            return false // TODO: need api stuff
         },
     },
 }
@@ -330,5 +347,12 @@ export default {
     p {
         opacity: 1;
     }
+}
+
+.mentorship-offered,
+.mentorship-asked {
+    font-style: italic;
+    font-weight: 400;
+    color: $primary-dark;
 }
 </style>
