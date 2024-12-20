@@ -49,10 +49,12 @@ const closeTagsSelector = () => {
 }
 
 const tagToDelete = ref(null)
+const asyncing = ref(false)
 const deleteOrganizationTag = async () => {
     const tag = tagToDelete.value
     if (!tag) return
     try {
+        asyncing.value = true
         await organizationsStore.updateCurrentOrganization({
             default_projects_tags: organizationTags.value
                 .filter((t) => t.id != tag.id)
@@ -63,6 +65,7 @@ const deleteOrganizationTag = async () => {
         toaster.pushError(`{t('toasts.organization-tag-delete.error')} (${error})`)
         console.error(error)
     } finally {
+        asyncing.value = false
         tagToDelete.value = null
     }
 }

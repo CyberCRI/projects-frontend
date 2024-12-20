@@ -2,7 +2,6 @@ import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupTeamDrawer from '@/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
 import { describe, expect, it } from 'vitest'
-import ProjectMemberFactory from '@/../tests/factories/project-member.factory'
 
 const i18n = {
     locale: 'en',
@@ -11,7 +10,16 @@ const i18n = {
         en: english,
     },
 }
-const members = ProjectMemberFactory.generateMany(2)
+const members = [
+    {
+        id: 1,
+        profile_picture: { variations: {} },
+    },
+    {
+        id: 2,
+        profile_picture: { variations: {} },
+    },
+]
 
 describe('GroupTeamDrawer.vue', () => {
     let wrapper

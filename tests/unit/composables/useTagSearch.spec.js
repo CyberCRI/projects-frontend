@@ -5,7 +5,9 @@ import { getAllOrgClassifications } from '@/api/tag-classification.service'
 
 vi.mock('@/stores/useOrganizations')
 vi.mock('@/api/tag-classification.service', () => ({
-    getAllOrgClassifications: vi.fn(),
+    getAllOrgClassifications: vi
+        .fn()
+        .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),
     getOrgClassificationTags: vi
         .fn()
         .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),

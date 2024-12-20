@@ -19,6 +19,7 @@ export const GroupMemberFactory = createFactory<any>((faker) => ({
     family_name: faker.name.lastName(),
     is_leader: false,
     is_manager: false,
+    profile_picture: { variations: {} },
 }))
 
 export default GroupMemberFactory

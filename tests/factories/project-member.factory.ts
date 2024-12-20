@@ -15,6 +15,7 @@ export const ProjectMemberFactory = createFactory<ProjectMemberModel>((faker) =>
     project: faker.datatype.string(),
     user: {
         id: faker.datatype.number(),
+        profile_picture: { variations: {} },
     },
     group: 'members',
 }))

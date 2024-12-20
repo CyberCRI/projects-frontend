@@ -149,13 +149,7 @@ const saveClassification = async () => {
             />
         </div>
 
-        <TagClassificationAdmin
-            v-if="classification"
-            :classification="classification"
-            @classification-deleted="onClassificationDeleted"
-            @classification-edited="$emit('classification-edited', $event)"
-            @classification-created="$emit('classification-created', $event)"
-        />
+        <TagClassificationAdmin v-if="classification" :classification="classification" />
     </BaseDrawer>
 </template>
 <style scoped lang="scss">

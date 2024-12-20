@@ -29,6 +29,7 @@ const reviews = [
             email: 'test.auto@external.cri-paris.org',
             family_name: 'auto',
             pronouns: '',
+            profile_picture: { variations: {} },
         },
     },
     {
@@ -43,6 +44,7 @@ const reviews = [
             email: 'test.auto@external.cri-paris.org',
             family_name: 'auto',
             pronouns: '',
+            profile_picture: { variations: {} },
         },
     },
 ]
