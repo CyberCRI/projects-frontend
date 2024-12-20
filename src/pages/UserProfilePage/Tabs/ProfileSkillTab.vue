@@ -57,7 +57,7 @@ export default {
         editProfileSkillLink() {
             return {
                 name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
-                params: this.isCurrentUser ? {} : { userId: this.user.id },
+                params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
             }
         },
 

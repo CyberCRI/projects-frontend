@@ -30,8 +30,9 @@
 
         <ProfileTabs
             v-if="user && !isLoading"
-            :user="user"
             :is-current-user="userId === null"
+            :user="user"
+            :routable="routableTabs"
             @close="$emit('close')"
         />
     </div>
@@ -69,12 +70,16 @@ export default {
 
     props: {
         userId: {
-            type: Number,
+            type: [Number, String, null],
             default: null,
         },
         showPageLink: {
             type: Boolean,
             default: true,
+        },
+        routableTabs: {
+            type: Boolean,
+            default: false,
         },
     },
 

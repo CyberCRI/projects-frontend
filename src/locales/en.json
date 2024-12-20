@@ -1193,6 +1193,7 @@
     },
     "profile": {
         "edit": {
+            "back-to-profile": "Back to profile",
             "edit-my-profile": "Edit my profile",
             "edit-other-profile": "Edit {name} profile",
             "edit-your-profile": "Edit your profile",
