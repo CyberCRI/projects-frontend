@@ -1,5 +1,14 @@
 <template>
     <div class="profile-edit-skills">
+        <div class="header">
+            <LinkButton
+                class="edit-btn"
+                btn-icon="Eye"
+                :label="$t('profile.edit.back-to-profile')"
+                :to="profileSkillLink"
+                data-test="edit-bio"
+            />
+        </div>
         <div class="initial-screen" v-if="isInitial">
             <p class="intro">
                 {{ $t('profile.edit.skills.intro') }}
@@ -103,6 +112,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
+import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'ProfileSkillsEditTab',
     components: {
@@ -125,8 +135,9 @@ export default {
     setup() {
         const skillTexts = useSkillTexts()
         const toaster = useToasterStore()
+        const usersStore = useUsersStore()
         const { skillLevels, clampLevel } = useSkillLevels()
-        return { skillTexts, toaster, skillLevels, clampLevel }
+        return { skillTexts, toaster, usersStore, skillLevels, clampLevel }
     },
     props: {
         user: {
@@ -164,6 +175,18 @@ export default {
             return this.allSkills
                 .filter((s) => s.type === 'hobby')
                 .sort(this.skillTexts.compareTitles)
+        },
+
+        isSelf() {
+            const connectedUser = this.usersStore.userFromApi
+            return connectedUser && this.user.id === connectedUser.id
+        },
+
+        profileSkillLink() {
+            return {
+                name: 'ProfileSkills' + (this.isSelf ? '' : 'Other'),
+                params: this.isSelf ? {} : { userId: this.user.slug || this.user.id },
+            }
         },
     },
 
@@ -355,5 +378,12 @@ export default {
             display: none;
         }
     }
+}
+
+.header {
+    padding-top: $space-m;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 </style>

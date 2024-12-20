@@ -1188,6 +1188,7 @@
     },
     "profile": {
         "edit": {
+            "back-to-profile": "Retour au profil",
             "edit-my-profile": "Éditer mon profil",
             "edit-other-profile": "Éditer le profil de {name}",
             "edit-your-profile": "Éditer votre profil",

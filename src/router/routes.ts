@@ -193,14 +193,41 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/profile/:userId',
         name: 'ProfileOtherUser',
+        redirect: { name: 'ProfileSummaryOther' },
         component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
         props: true,
         meta: {
             resetScroll: true,
-            props: true,
             loginFromNotification: true,
             loginFromNotificationNewQueryParam: 'editNotifications',
         },
+        children: [
+            {
+                path: 'summary',
+                name: 'ProfileSummaryOther',
+                component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
+            },
+            {
+                path: 'bio',
+                name: 'ProfileBioOther',
+                component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
+            },
+            {
+                path: 'projects',
+                name: 'ProfileProjectsOther',
+                component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
+            },
+            {
+                path: 'groups',
+                name: 'ProfileGroupsOther',
+                component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
+            },
+            {
+                path: 'skills',
+                name: 'ProfileSkillsOther',
+                component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
+            },
+        ],
     },
     {
         path: '/profile/edit/:userId',

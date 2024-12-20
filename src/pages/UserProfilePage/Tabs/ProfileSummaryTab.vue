@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-summary">
+    <div class="profile-summary" v-if="user">
         <div class="top">
             <div class="left">
                 <!-- User descriptions -->
