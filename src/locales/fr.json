@@ -519,6 +519,7 @@
         "login": "connexion",
         "modify": "Modifier",
         "more": "plus",
+        "need-login": "Vous devez être connecté",
         "no": "non",
         "no-result": "Pas de résultat",
         "none": "aucun",

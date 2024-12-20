@@ -27,22 +27,32 @@
                 </ToolTip>
             </div>
             <div class="actions">
-                <LpiButton
-                    v-if="skill.can_mentor"
-                    class="squarish"
-                    secondary
-                    btn-icon="EmailOutline"
-                    :label="$t('profile.ask-mentorship')"
-                    @click="askMentorship"
-                />
-                <LpiButton
-                    v-if="skill.needs_mentor"
-                    class="squarish"
-                    secondary
-                    btn-icon="EmailOutline"
-                    :label="$t('profile.offer-mentorship')"
-                    @click="offerMentorship"
-                />
+                <NeedLoginToolTip v-if="skill.can_mentor">
+                    <template #default="{ needLogin }">
+                        <LpiButton
+                            v-if="skill.can_mentor"
+                            class="squarish"
+                            :disabled="needLogin"
+                            secondary
+                            btn-icon="EmailOutline"
+                            :label="$t('profile.ask-mentorship')"
+                            @click="askMentorship(needLogin)"
+                        />
+                    </template>
+                </NeedLoginToolTip>
+
+                <NeedLoginToolTip v-if="skill.needs_mentor">
+                    <template #default="{ needLogin }">
+                        <LpiButton
+                            class="squarish"
+                            :disabled="needLogin"
+                            secondary
+                            btn-icon="EmailOutline"
+                            :label="$t('profile.offer-mentorship')"
+                            @click="offerMentorship(needLogin)"
+                        />
+                    </template>
+                </NeedLoginToolTip>
             </div>
         </div>
 
@@ -66,9 +76,17 @@ import useSkillTexts from '@/composables/useSkillTexts.js'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import MentorshipContactDrawer from '@/components/people/skill/MentorshipContactDrawer.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
+import NeedLoginToolTip from '@/components/base/NeedLoginToolTip.vue'
 export default {
     name: 'SkillItemFull',
-    components: { SkillSteps, IconImage, LpiButton, MentorshipContactDrawer, ToolTip },
+    components: {
+        SkillSteps,
+        IconImage,
+        LpiButton,
+        MentorshipContactDrawer,
+        ToolTip,
+        NeedLoginToolTip,
+    },
     props: {
         skill: {
             type: Object,
@@ -104,9 +122,11 @@ export default {
     },
 
     methods: {
-        askMentorship() {
-            this.mentorshipDrawerIsOpen = true
-            this.mentorshipDrawerIsOffer = false
+        askMentorship(prevent) {
+            if (!prevent) {
+                this.mentorshipDrawerIsOpen = true
+                this.mentorshipDrawerIsOffer = false
+            }
         },
         offerMentorship() {
             this.mentorshipDrawerIsOpen = true
