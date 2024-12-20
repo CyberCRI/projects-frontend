@@ -176,7 +176,8 @@ export default {
     }
 
     .skill-name {
-        flex-basis: 30%;
+        flex-basis: 25%;
+        flex-shrink: 0;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
