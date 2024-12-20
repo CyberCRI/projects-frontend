@@ -106,7 +106,7 @@
     <EditClassification
         data-test="edit-classification-drawer"
         :classification="classificationToEdit"
-        :is-open="classificationToEdit || createClassificationIsOpen"
+        :is-open="!!(classificationToEdit || createClassificationIsOpen)"
         @close="closeEditClassification"
         @classification-edited="onClassificationEdited"
         @classification-created="onClassificationCreated"

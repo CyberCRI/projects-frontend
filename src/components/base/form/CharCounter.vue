@@ -4,6 +4,7 @@ const props = defineProps({
     text: {
         type: String,
         required: true,
+        default: '',
     },
     maxLength: {
         type: Number,

@@ -2,8 +2,6 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupTeamSection from '@/components/group/GroupForm/GroupTeamSection.vue'
 import { describe, expect, it } from 'vitest'
-import { ProjectFactory } from '@/../tests/factories/project.factory'
-
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
@@ -24,7 +22,16 @@ describe('GroupTeamSection.vue', () => {
         defaultParams = {
             i18n,
             props: {
-                modelValue: ProjectFactory.generateMany(2),
+                modelValue: [
+                    {
+                        id: 1,
+                        profile_picture: { variations: {} },
+                    },
+                    {
+                        id: 2,
+                        profile_picture: { variations: {} },
+                    },
+                ],
             },
         }
     })

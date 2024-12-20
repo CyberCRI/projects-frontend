@@ -12,6 +12,8 @@ const factory = (props) => {
                     tag: {
                         id: 'Q11634',
                         title: 'art of sculpture',
+                        description:
+                            'art of making figures or designs in relief or the round by carving wood, moulding plaster, etc',
                     },
                     level: 4,
                     level_to_reach: 4,
@@ -22,6 +24,8 @@ const factory = (props) => {
                     tag: {
                         id: 'Q11190',
                         title: 'medicine',
+                        description:
+                            'science and practice of the diagnosis, treatment, and prevention of disease',
                     },
                     level: 3,
                     level_to_reach: 4,
@@ -32,6 +36,7 @@ const factory = (props) => {
                     tag: {
                         id: 'Q8034374',
                         title: 'word usage',
+                        description: 'the way in which words are used in a language',
                     },
                     level: 1,
                     level_to_reach: 2,

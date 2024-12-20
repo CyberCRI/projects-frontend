@@ -20,12 +20,33 @@ describe('ParentGroupSection.vue', () => {
         defaultParams = {
             i18n,
             props: {
-                modelValue: [1, 2, 3],
+                modelValue: {
+                    id: 123,
+                    name: '123',
+                    children: [],
+                    header_image: { variations: {} },
+                },
+
                 groups: [
                     {
                         id: 123,
                         name: '123',
                         children: [],
+                        header_image: { variations: {} },
+                    },
+                    ,
+                    {
+                        id: 2,
+                        name: '2',
+                        children: [],
+                        header_image: { variations: {} },
+                    },
+                    ,
+                    {
+                        id: 3,
+                        name: '3',
+                        children: [],
+                        header_image: { variations: {} },
                     },
                 ],
             },
