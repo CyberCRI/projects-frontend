@@ -517,6 +517,7 @@
         "login": "login",
         "modify": "Modify",
         "more": "more",
+        "need-login": "You need to be logged in",
         "no": "no",
         "no-result": "No result",
         "none": "none",
