@@ -1470,7 +1470,9 @@
         "can-mentor": "Peut mentorer",
         "needs-mentor": "Cherche mentor",
         "ask-mentorship": "Demander à être mentoré",
-        "offer-mentorship": "Proposer son mentorat"
+        "offer-mentorship": "Proposer son mentorat",
+        "mentorship-asked": "Vous avez demandé un mentorat",
+        "mentorship-offered": "Vous avez proposé un mentorat"
     },
     "profile-completed-modal": {
         "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",

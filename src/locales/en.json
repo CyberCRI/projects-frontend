@@ -1475,7 +1475,9 @@
         "can-mentor": "Can be mentor",
         "needs-mentor": "Need a mentor",
         "ask-mentorship": "Ask for mentorship",
-        "offer-mentorship": "Offer mentorship"
+        "offer-mentorship": "Offer mentorship",
+        "mentorship-asked": "You asked for mentorship",
+        "mentorship-offered": "You offered mentorship"
     },
     "profile-completed-modal": {
         "notice-congratulation": "You are now ready to use the projects platform.",
