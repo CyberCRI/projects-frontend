@@ -147,6 +147,12 @@ const routes: Array<RouteRecordRaw> = [
         ],
     },
     {
+        path: '/mentorship/respond/:token',
+        name: 'MentorhipRespondPage',
+        props: true,
+        component: () => import('../pages/MentorshipRespondPage/MentorshipRespondPage.vue'),
+    },
+    {
         path: '/profile/edit',
         name: 'ProfileEdit',
         redirect: { name: 'ProfileEditGeneral' },

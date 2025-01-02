@@ -1149,6 +1149,20 @@
             "link": "https://en.unesco.org/sustainabledevelopmentgoals"
         }
     },
+    "mentorship": {
+        "respond": {
+            "options": {
+                "accept": "Accept",
+                "decline": "Decline",
+                "need-infos": "Request more information"
+            },
+            "your-response": "Your response",
+            "add-comment": "Add a comment",
+            "comment-notice": "This comment will be sent by email to the mentee.",
+            "comment-placeholder": "Write here.",
+            "title": "Become a mentor"
+        }
+    },
     "onboarding": {
         "step": "step",
         "title": "What is Projects?"

@@ -1145,6 +1145,20 @@
             "link": "https://fr.unesco.org/sdgs"
         }
     },
+    "mentorship": {
+        "respond": {
+            "options": {
+                "accept": "Accepter",
+                "decline": "Refuser",
+                "need-infos": "Demander des précisions"
+            },
+            "your-response": "Votre réponse",
+            "add-comment": "Ajouter un commentaire",
+            "comment-notice": "Ce commentaire sera envoyé par mail au mentoré.",
+            "comment-placeholder": "Écrire ici.",
+            "title": "Devenir mentor"
+        }
+    },
     "onboarding": {
         "step": "étape",
         "title": "Qu'est-ce que Projects ?"
