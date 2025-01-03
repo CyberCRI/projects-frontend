@@ -18,16 +18,17 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+// import debounce from 'lodash.debounce'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import {
-    updateFiltersFromURL,
-    updateSearchQuery,
-    resetPaginationIfNeeded,
-} from '@/functs/search.ts'
+// import {
+//     updateFiltersFromURL,
+//     updateSearchQuery,
+//     resetPaginationIfNeeded,
+// } from '@/functs/search.ts'
 
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSearch from '@/composables/useSearch.js'
 export default {
     name: 'PeoplePage',
 
@@ -37,65 +38,85 @@ export default {
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const {
+            search,
+            searchOptionsInitiated,
+            selectedSection,
+            filterQueryParams,
+            rawSearch,
+            initSearch,
+            updateSearchQuery,
+            updateSearch,
+        } = useSearch()
         return {
             organizationsStore,
+            search,
+            searchOptionsInitiated,
+            selectedSection,
+            filterQueryParams,
+            rawSearch,
+            initSearch,
+            updateSearchQuery,
+            updateSearch,
         }
     },
     data() {
         return {
-            search: {
-                search: '',
-                categories: [],
-                tags: [],
-                members: [],
-                sdgs: [],
-                languages: [],
-                skills: [],
-                section: 'all',
-                organizations: [this.organizationsStore.current.code],
-                ordering: '-updated_at',
-                limit: 30,
-                page: 1,
-            },
+            // search: {
+            //     search: '',
+            //     categories: [],
+            //     tags: [],
+            //     members: [],
+            //     sdgs: [],
+            //     languages: [],
+            //     skills: [],
+            //     section: 'all',
+            //     organizations: [this.organizationsStore.current.code],
+            //     ordering: '-updated_at',
+            //     limit: 30,
+            //     page: 1,
+            // },
             projectsCount: 0,
-            searchOptionsInitiated: false,
-            filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
-            selectedSection: 'all',
+            // searchOptionsInitiated: false,
+            // TODO ???
+            // filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
+            // selectedSection: 'all',
         }
     },
 
-    computed: {
-        rawSearch() {
-            return JSON.parse(JSON.stringify(this.search))
-        },
-    },
+    // computed: {
+    //     rawSearch() {
+    //         return JSON.parse(JSON.stringify(this.search))
+    //     },
+    // },
 
     async mounted() {
-        Object.assign(
-            this.search,
-            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        )
-        this.searchOptionsInitiated = true
-        this.selectedSection = this.$route.query.section
+        // Object.assign(
+        //     this.search,
+        //     await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
+        // )
+        // this.searchOptionsInitiated = true
+        await this.initSearch()
+        // this.selectedSection = this.$route.query.section
     },
 
-    methods: {
-        updateSearch: debounce(function (newSearch) {
-            // reset pagination to page 1 if other criterion have changed
-            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-            // and so seem always different than this.search
-            const search = resetPaginationIfNeeded(this.search, {
-                ...this.search,
-                ...newSearch,
-            })
-            this.search = search
-            this.updateSearchQuery()
-        }, 500),
+    // methods: {
+    //     updateSearch: debounce(function (newSearch) {
+    //         // reset pagination to page 1 if other criterion have changed
+    //         // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
+    //         // and so seem always different than this.search
+    //         const search = resetPaginationIfNeeded(this.search, {
+    //             ...this.search,
+    //             ...newSearch,
+    //         })
+    //         this.search = search
+    //         this.updateSearchQuery()
+    //     }, 500),
 
-        updateSearchQuery() {
-            return updateSearchQuery(this, this.filterQueryParams)
-        },
-    },
+    //     updateSearchQuery() {
+    //         return updateSearchQuery(this, this.filterQueryParams)
+    //     },
+    // },
 }
 </script>
 
