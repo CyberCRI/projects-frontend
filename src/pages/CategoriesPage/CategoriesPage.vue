@@ -9,7 +9,6 @@
                     :limit="30"
                     :search="search"
                     section="projects"
-                    show-filters
                     @search-options-updated="updateSearch"
                 />
             </div>

@@ -2,32 +2,18 @@
     <div class="search-block">
         <div class="search-container">
             <div class="search-group">
-                <SearchOptionDropDown
-                    v-if="showSectionDropDown"
-                    v-model:selectedSection="selectedSection"
-                />
                 <SearchInput
                     class="search-input"
-                    :class="{ 'has-sections': showSectionDropDown }"
                     v-model="selectedQuery"
                     :full="true"
                     :placeholder="$t('browse.placeholder')"
                     @delete-query="deleteQuery"
                     @keyup.enter="emitSearchOptionsUpdated"
                 />
-                <LpiButton
-                    v-if="searchButton"
-                    class="search-button"
-                    :label="$t('browse.page-title')"
-                    :secondary="false"
-                    @click="emitSearchOptionsUpdated"
-                    data-test="search-input-button"
-                />
             </div>
         </div>
 
         <SearchFilters
-            v-show="hasSearchFilters"
             ref="searchFilters"
             v-model:selected-filters="selectedFilters"
             v-model:selected-section="selectedSection"
@@ -41,16 +27,9 @@
 
 <script>
 import SearchInput from '@/components/base/form/SearchInput.vue'
-
-import SearchOptionDropDown from '@/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-
 import SearchFilters from '@/components/search/Filters/SearchFilters.vue'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-function defaultSearch() {
-    return ''
-}
 
 export default {
     name: 'SearchOptions',
@@ -58,9 +37,7 @@ export default {
     emits: ['search-options-updated', 'filter-section-update'],
 
     components: {
-        SearchOptionDropDown,
         SearchInput,
-        LpiButton,
         SearchFilters,
     },
     setup() {
@@ -71,15 +48,6 @@ export default {
     },
 
     props: {
-        showFilters: {
-            type: Boolean,
-            default: false,
-        },
-        showSectionDropDown: {
-            type: Boolean,
-            default: false,
-        },
-
         search: {
             type: Object, // here filters are array of id (whereas in slectedFiletrs they are array of object)
             default: null,
@@ -100,11 +68,6 @@ export default {
             type: Array,
             default: () => [],
         },
-
-        searchButton: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     data() {
@@ -113,18 +76,14 @@ export default {
             filtersInited: false,
             // here filters are array of object (whereas in search they are array of id)
             selectedFilters: {},
-            selectedQuery: defaultSearch(),
+            selectedQuery: '',
             selectedSection: ALL_SECTION_KEY,
         }
     },
 
     computed: {
-        hasSearchFilters() {
-            return this.showFilters
-        },
-
         allInited() {
-            return this.areSectionAndQueryInited && (!this.hasSearchFilters || this.filtersInited)
+            return this.areSectionAndQueryInited && this.filtersInited
         },
     },
 
@@ -144,7 +103,7 @@ export default {
             // (i.e. in category page search we should not reset the category filter)
             this.selectedSection = this.$route.query.section || this.section || ALL_SECTION_KEY
 
-            this.selectedQuery = rawFilters.search || defaultSearch()
+            this.selectedQuery = rawFilters.search || ''
 
             this.areSectionAndQueryInited = true
         },
@@ -168,8 +127,8 @@ export default {
         },
 
         deleteQuery() {
-            this.selectedQuery = defaultSearch()
-            if (!this.searchButton) this.emitSearchOptionsUpdated()
+            this.selectedQuery = ''
+            this.emitSearchOptionsUpdated()
         },
 
         emitSearchOptionsUpdated() {
@@ -185,21 +144,21 @@ export default {
 
     watch: {
         selectedSection: function () {
-            if (!this.searchButton) this.emitSearchOptionsUpdated()
+            this.emitSearchOptionsUpdated()
         },
 
         selectedFilters: {
             handler() {
                 if (!this.allInited) return
                 // convert object to their id as it what's is expected by host components
-                if (!this.searchButton) this.emitSearchOptionsUpdated()
+                this.emitSearchOptionsUpdated()
             },
             deep: true,
         },
 
         selectedQuery: {
             handler() {
-                if (!this.searchButton) this.emitSearchOptionsUpdated()
+                this.emitSearchOptionsUpdated()
             },
         },
         'search.section': {
@@ -235,10 +194,6 @@ export default {
             flex-direction: row;
             width: 100%;
             justify-content: center;
-
-            .search-button {
-                margin-left: $space-l;
-            }
         }
     }
 }
@@ -253,15 +208,6 @@ export default {
 
     @media (min-width: $min-tablet) {
         margin-bottom: 0;
-
-        &.has-sections :deep(.search-input) {
-            border-top-left-radius: 0 !important;
-            border-bottom-left-radius: 0;
-        }
-    }
-
-    &.has-sections {
-        width: pxToRem(350px);
     }
 }
 </style>

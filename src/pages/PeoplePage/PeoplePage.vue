@@ -7,7 +7,6 @@
                     :limit="30"
                     :search="search"
                     section="people"
-                    show-filters
                     @search-options-updated="updateSearch"
                 />
             </div>

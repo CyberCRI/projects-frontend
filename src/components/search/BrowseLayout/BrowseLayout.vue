@@ -4,7 +4,6 @@
             <SearchOptions
                 :limit="30"
                 show-section-filter
-                show-filters
                 :search="search"
                 @search-options-updated="updateSearch"
             />

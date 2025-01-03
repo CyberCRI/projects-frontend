@@ -8,7 +8,6 @@
                 ref="searchOptions"
                 :search="search"
                 section="groups"
-                show-filters
                 @search-options-updated="updateSearch"
             />
         </div>
