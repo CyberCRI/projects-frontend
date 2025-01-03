@@ -72,6 +72,7 @@ export function searchEquals(search_a, search_b, ignoredKeys = null) {
     return true
 }
 
+// MOVED in useSearch
 export function updateSearchQuery(that, filterKeys) {
     // cleanup
     const search = JSON.parse(JSON.stringify(that.search))

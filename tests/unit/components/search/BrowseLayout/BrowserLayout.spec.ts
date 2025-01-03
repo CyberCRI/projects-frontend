@@ -34,6 +34,7 @@ describe('BrowseLayout', () => {
                 selectedUser: UserFactory.generate(),
             },
             i18n,
+            router: [],
             global: {
                 mocks: {
                     $route: route,
