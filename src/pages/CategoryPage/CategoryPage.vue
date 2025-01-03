@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+// import debounce from 'lodash.debounce'
 import formatHtml from '@/mixins/formatHtml.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
 
@@ -74,16 +74,17 @@ import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
-import {
-    updateFiltersFromURL,
-    updateSearchQuery,
-    resetPaginationIfNeeded,
-} from '@/functs/search.ts'
+// import {
+//     updateFiltersFromURL,
+//     updateSearchQuery,
+//     resetPaginationIfNeeded,
+// } from '@/functs/search.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSearch from '@/composables/useSearch.js'
 export default {
     name: 'CategoryPage',
 
@@ -100,9 +101,29 @@ export default {
     setup() {
         const projectCategoriesStore = useProjectCategories()
         const organizationsStore = useOrganizationsStore()
+        const {
+            search,
+            getDefaultSearch,
+            searchOptionsInitiated,
+            selectedSection,
+            filterQueryParams,
+            rawSearch,
+            initSearch,
+            updateSearchQuery,
+            updateSearch,
+        } = useSearch()
         return {
             projectCategoriesStore,
             organizationsStore,
+            search,
+            getDefaultSearch,
+            searchOptionsInitiated,
+            selectedSection,
+            filterQueryParams,
+            rawSearch,
+            initSearch,
+            updateSearchQuery,
+            updateSearch,
         }
     },
 
@@ -112,20 +133,21 @@ export default {
     data() {
         return {
             addProjectModalActive: false,
-            search: {
-                search: this.$route.query.search || '',
-                categories: [this.id],
-                tags: [],
-                members: [],
-                languages: [],
-                sdgs: [],
-                organizations: [this.organizationsStore.current.code],
-                ordering: '-updated_at',
-                limit: 30,
-                page: this.$route.query.page || 1,
-            },
-            searchOptionsInited: false,
-            filterQueryParams: ['search', 'sdgs', 'tags', 'languages', 'page'],
+            // search: {
+            //     search: this.$route.query.search || '',
+            //     categories: [this.id],
+            //     tags: [],
+            //     members: [],
+            //     languages: [],
+            //     sdgs: [],
+            //     organizations: [this.organizationsStore.current.code],
+            //     ordering: '-updated_at',
+            //     limit: 30,
+            //     page: this.$route.query.page || 1,
+            // },
+            // searchOptionsInited: false,
+            // TODO ???
+            // filterQueryParams: ['search', 'sdgs', 'tags', 'languages', 'page'],
             query: '',
         }
     },
@@ -182,51 +204,43 @@ export default {
     watch: {
         id: function (neo, old) {
             if (neo && neo != old) {
-                this.search = {
-                    search: this.$route.query.search || '',
-                    categories: [this.id],
-                    tags: [],
-                    members: [],
-                    languages: [],
-                    sdgs: [],
-                    organizations: [this.organizationsStore.current.code],
-                    ordering: '-updated_at',
-                    limit: 30,
-                    page: this.$route.query.page || 1,
-                }
+                this.search = this.getDefaultSearch()
+                this.search.categories = [neo]
             }
         },
     },
 
     async created() {
-        Object.assign(
-            this.search,
-            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        )
-        this.searchOptionsInited = true
+        // Object.assign(
+        //     this.search,
+        //     await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
+        // )
+        // this.searchOptionsInited = true
+        await this.initSearch()
+        this.search.categories = [this.id]
     },
 
     beforeUnmount() {
         document.title = 'Projects'
     },
 
-    methods: {
-        updateSearch(newSearch) {
-            // reset pagination to page 1 if other criterion have changed
-            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-            // and so seem always different than this.search
-            const search = resetPaginationIfNeeded(this.search, {
-                ...this.search,
-                ...newSearch,
-            })
-            this.search = search
-            this.updateSearchQuery()
-        },
+    // methods: {
+    //     updateSearch(newSearch) {
+    //         // reset pagination to page 1 if other criterion have changed
+    //         // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
+    //         // and so seem always different than this.search
+    //         const search = resetPaginationIfNeeded(this.search, {
+    //             ...this.search,
+    //             ...newSearch,
+    //         })
+    //         this.search = search
+    //         this.updateSearchQuery()
+    //     },
 
-        updateSearchQuery: debounce(function () {
-            return updateSearchQuery(this, this.filterQueryParams)
-        }, 500),
-    },
+    //     updateSearchQuery: debounce(function () {
+    //         return updateSearchQuery(this, this.filterQueryParams)
+    //     }, 500),
+    // },
 
     beforeRouteEnter(_to, _from, next) {
         // if it is the first page navigated (deep link), categories are not initialized yet

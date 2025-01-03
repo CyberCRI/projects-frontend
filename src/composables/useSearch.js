@@ -15,8 +15,8 @@ export default function useSearch() {
     const route = useRoute()
     const router = useRouter()
 
-    const defaultSearch = {
-        search: '',
+    const getDefaultSearch = () => ({
+        search: route.query.search || '',
         categories: [],
         tags: [],
         members: [],
@@ -27,10 +27,10 @@ export default function useSearch() {
         organizations: [organizationsStore.current.code],
         ordering: '-updated_at',
         limit: 30,
-        page: 1,
-    }
+        page: route.query.page || 1,
+    })
 
-    const search = ref(defaultSearch)
+    const search = ref(getDefaultSearch())
 
     const searchOptionsInitiated = ref(false)
 
@@ -101,6 +101,7 @@ export default function useSearch() {
 
     return {
         search,
+        getDefaultSearch,
         searchOptionsInitiated,
         selectedSection,
         filterQueryParams,
