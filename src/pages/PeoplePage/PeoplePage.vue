@@ -18,17 +18,10 @@
 </template>
 
 <script>
-// import debounce from 'lodash.debounce'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-// import {
-//     updateFiltersFromURL,
-//     updateSearchQuery,
-//     resetPaginationIfNeeded,
-// } from '@/functs/search.ts'
-
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useSearch from '@/composables/useSearch.js'
+
 export default {
     name: 'PeoplePage',
 
@@ -37,7 +30,6 @@ export default {
         GlobalSearchTab,
     },
     setup() {
-        const organizationsStore = useOrganizationsStore()
         const {
             search,
             searchOptionsInitiated,
@@ -49,7 +41,6 @@ export default {
             updateSearch,
         } = useSearch()
         return {
-            organizationsStore,
             search,
             searchOptionsInitiated,
             selectedSection,
@@ -62,61 +53,14 @@ export default {
     },
     data() {
         return {
-            // search: {
-            //     search: '',
-            //     categories: [],
-            //     tags: [],
-            //     members: [],
-            //     sdgs: [],
-            //     languages: [],
-            //     skills: [],
-            //     section: 'all',
-            //     organizations: [this.organizationsStore.current.code],
-            //     ordering: '-updated_at',
-            //     limit: 30,
-            //     page: 1,
-            // },
-            projectsCount: 0,
-            // searchOptionsInitiated: false,
             // TODO ???
-            // filterQueryParams: ['search', 'sdgs', 'skills', 'page'],
-            // selectedSection: 'all',
+            projectsCount: 0,
         }
     },
 
-    // computed: {
-    //     rawSearch() {
-    //         return JSON.parse(JSON.stringify(this.search))
-    //     },
-    // },
-
     async mounted() {
-        // Object.assign(
-        //     this.search,
-        //     await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        // )
-        // this.searchOptionsInitiated = true
         await this.initSearch()
-        // this.selectedSection = this.$route.query.section
     },
-
-    // methods: {
-    //     updateSearch: debounce(function (newSearch) {
-    //         // reset pagination to page 1 if other criterion have changed
-    //         // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-    //         // and so seem always different than this.search
-    //         const search = resetPaginationIfNeeded(this.search, {
-    //             ...this.search,
-    //             ...newSearch,
-    //         })
-    //         this.search = search
-    //         this.updateSearchQuery()
-    //     }, 500),
-
-    //     updateSearchQuery() {
-    //         return updateSearchQuery(this, this.filterQueryParams)
-    //     },
-    // },
 }
 </script>
 

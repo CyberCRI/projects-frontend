@@ -59,7 +59,6 @@
     </div>
 </template>
 <script>
-// import debounce from 'lodash.debounce'
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions'
@@ -70,12 +69,6 @@ import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-// import {
-//     updateFiltersFromURL,
-//     updateSearchQuery,
-//     resetPaginationIfNeeded,
-// } from '@/functs/search.ts'
-
 import useSearch from '@/composables/useSearch.js'
 
 export default {
@@ -129,39 +122,15 @@ export default {
     data() {
         return {
             isLoading: true,
-            // search: {
-            //     search: '',
-            //     categories: [],
-            //     tags: [],
-            //     members: [],
-            //     sdgs: [],
-            //     languages: [],
-            //     skills: [],
-            //     section: 'all',
-            //     organizations: [this.organizationsStore.current.code],
-            //     ordering: '-updated_at',
-            //     limit: 30,
-            //     page: 1,
-            // },
             groupsIndex: null,
             rootId: null,
-            // searchOptionsInitiated: false,
-
             // TODO ???
             // filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
-            // selectedSection: 'all',
         }
     },
 
     async mounted() {
-        // Object.assign(
-        //     this.search,
-        //     await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        // )
-        // this.searchOptionsInitiated = true
-
         await this.initSearch()
-
         // TODO ???
         this.selectedSection = this.$route.query.section
         await this.loadGroups()
@@ -191,10 +160,6 @@ export default {
 
         hasSearch() {
             return !!this.search.search
-            // keep for future development
-            // array to be populated with search filters keys for groups when ther'll be some
-            // ||
-            // [].reduce((acc, key) => acc || this.search[key].length > 0, false)
         },
     },
 
@@ -218,22 +183,6 @@ export default {
             this.buildIndex(groups)
             this.isLoading = false
         },
-
-        // updateSearch: debounce(function (newSearch) {
-        //     // reset pagination to page 1 if other criterion have changed
-        //     // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-        //     // and so seem always different than this.search
-        //     const search = resetPaginationIfNeeded(this.search, {
-        //         ...this.search,
-        //         ...newSearch,
-        //     })
-        //     this.search = search
-        //     this.updateSearchQuery()
-        // }, 500),
-
-        // updateSearchQuery() {
-        //     return updateSearchQuery(this, this.filterQueryParams)
-        // },
 
         buildIndex(groups) {
             const index = {}

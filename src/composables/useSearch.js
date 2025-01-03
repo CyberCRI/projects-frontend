@@ -23,7 +23,7 @@ export default function useSearch() {
         sdgs: [],
         languages: [],
         skills: [],
-        section: ALL_SECTION_KEY,
+        section: ALL_SECTION_KEY, // TOD: this.selectedSection = this.$route.query.section
         organizations: [organizationsStore.current.code],
         ordering: '-updated_at',
         limit: 30,
