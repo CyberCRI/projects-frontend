@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
@@ -50,6 +50,15 @@ export default function useSearch() {
 
         return Object.keys(map).filter((key) => map[key])
     })
+
+    const searchFromQuery = computed(() => {
+        const res = {}
+        for (const key in filterQueryParams.value) {
+            if (route.query[key]) res[key] = route.query[key]
+        }
+        return res
+    })
+
     const rawSearch = computed(() => {
         return JSON.parse(JSON.stringify(search.value))
     })
@@ -62,24 +71,23 @@ export default function useSearch() {
     }
 
     function updateSearchQuery() {
-        //return _updateSearchQuery(this, this.filterQueryParams)
-
-        // cleanup
-        const _search = JSON.parse(JSON.stringify(search.value))
-        // keep only keys we are interested in
-        for (const key in _search) {
-            if (!filterQueryParams.value || !filterQueryParams.value.includes(key))
-                delete _search[key]
-            else if (!_search[key]) delete _search[key]
-            else if (Array.isArray(search.value[key]) && !_search[key].length) delete _search[key]
-        }
-        // update url if search has changed
-        const updateUrl = !searchEquals(_search, route.query)
-        if (updateUrl)
-            router.replace({
-                path: route.path,
-                query: _search,
-            })
+        // //return _updateSearchQuery(this, this.filterQueryParams)
+        // // cleanup
+        // const _search = JSON.parse(JSON.stringify(search.value))
+        // // keep only keys we are interested in
+        // for (const key in _search) {
+        //     if (!filterQueryParams.value || !filterQueryParams.value.includes(key))
+        //         delete _search[key]
+        //     else if (!_search[key]) delete _search[key]
+        //     else if (Array.isArray(search.value[key]) && !_search[key].length) delete _search[key]
+        // }
+        // // update url if search has changed
+        // const updateUrl = !searchEquals(_search, route.query)
+        // if (updateUrl)
+        //     router.replace({
+        //         path: route.path,
+        //         query: _search,
+        //     })
     }
 
     const updateSearch = debounce(function _updateSearch(newSearch) {
@@ -105,5 +113,8 @@ export default function useSearch() {
         initSearch,
         updateSearchQuery,
         updateSearch,
+        //****
+        searchFromQuery,
+        //  */
     }
 }

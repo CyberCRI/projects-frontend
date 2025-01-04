@@ -1,6 +1,6 @@
 <script setup>
 import { getProjectCategory } from '@/api/project-categories.service'
-import { getTags } from '@/api/tag-classification.service'
+import { getAllTagsById } from '@/api/tag-classification.service'
 
 import FilterButton from '@/components/search/Filters/FilterButton.vue'
 import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
@@ -10,7 +10,7 @@ import useContextualFilters, {
     ALL_SECTION_KEY,
 } from '@/components/search/Filters/useContextualFilters.ts'
 
-import { ref, onMounted, toRef } from 'vue'
+import { ref, onMounted, toRef, watch, reactive } from 'vue'
 
 function defaultFilters() {
     return {
@@ -22,7 +22,7 @@ function defaultFilters() {
     }
 }
 
-const emit = defineEmits(['search-filters-inited'])
+const emit = defineEmits(['search-filters-inited', 'update:selectedFilters'])
 
 const props = defineProps({
     search: {
@@ -47,10 +47,12 @@ const selectedSection = defineModel('selectedSection', {
     default: () => ALL_SECTION_KEY,
 })
 
-const selectedFilters = defineModel('selectedFilters', {
-    type: Object,
-    default: () => ALL_SECTION_KEY,
-})
+// const selectedFilters = defineModel('selectedFilters', {
+//     type: Object,
+//     default: () => ALL_SECTION_KEY,
+// })
+
+const selectedFilters = ref(defaultFilters())
 
 const { contextualFilters, filterButtons } = useContextualFilters({
     selectedSection,
@@ -70,34 +72,6 @@ onMounted(async () => {
     await initFilters()
 })
 
-async function initFilters() {
-    emit('search-filters-inited', false)
-    // converts host component "search" (arrays of id)
-    // to arrays of object (needed in this component for displayinf them)
-
-    const rawFilters = props.search || {}
-    const filters = {}
-
-    filters.categories = await Promise.all(
-        (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
-    )
-
-    filters.tags = filters.tags = rawFilters.tags?.length
-        ? await getTags(rawFilters.tags).results
-        : []
-
-    filters.sdgs = rawFilters.sdgs || []
-
-    filters.languages = rawFilters.languages || []
-
-    filters.skills = rawFilters.skills?.length ? await getTags(rawFilters.skills).results : []
-
-    selectedFilters.value = filters
-    filtersInited.value = true
-
-    emit('search-filters-inited', true)
-}
-
 function openDrawer(drawer) {
     currentDrawer.value = drawer
     isRightDrawerOpened.value = true
@@ -105,6 +79,7 @@ function openDrawer(drawer) {
 
 function updateFiltersFromDrawer(/*filter,*/ event) {
     selectedFilters.value = { ...event }
+    emit('update:selectedFilters', selectedFilters.value)
 }
 
 function confirm($event) {
@@ -120,6 +95,109 @@ function clearSelectedFilters(key) {
 }
 
 defineExpose({ clearSelectedFilters })
+
+//////////////////////////////////
+
+const cache = reactive({
+    categories: {},
+    tags: {},
+    skills: {},
+})
+
+async function initFilters() {
+    emit('search-filters-inited', false)
+    // converts host component "search" (arrays of id)
+    // to arrays of object (needed in this component for displayinf them)
+
+    const rawFilters = props.search || {}
+    const filters = {}
+
+    filters.categories = await Promise.all(
+        (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
+    )
+
+    filters.tags = filters.tags = rawFilters.tags?.length
+        ? await getAllTagsById(rawFilters.tags).results
+        : []
+
+    filters.sdgs = rawFilters.sdgs || []
+
+    filters.languages = rawFilters.languages || []
+
+    filters.skills = rawFilters.skills?.length
+        ? (await getAllTagsById(rawFilters.skills)).results
+        : []
+
+    selectedFilters.value = filters
+    filtersInited.value = true
+
+    // memoize
+    filters.categories.forEach((cat) => {
+        cache.categories[cat.id] = cat
+    })
+    filters.tags.forEach((tag) => {
+        cache.tags[tag.id] = tag
+    })
+    filters.skills.forEach((skill) => {
+        cache.skills[skill.id] = skill
+    })
+
+    emit('search-filters-inited', true)
+}
+
+async function hydrateFilters() {
+    console.log('hydrating filters')
+    // emit('search-filters-inited', false)
+    // converts host component "search" (arrays of id)
+    // to arrays of object (needed in this component for displayinf them)
+
+    const rawFilters = props.search || {}
+    const filters = {}
+
+    filters.categories = await Promise.all(
+        (rawFilters.categories || []).map(async (catId) => {
+            if (!cache.categories[catId]) return await getProjectCategory(catId)
+            else return cache.categories[catId]
+        })
+    )
+
+    const newTagsId = (rawFilters.tags || []).filter((tagId) => !cache.tags[tagId])
+    const cachedTags = (rawFilters.tags || [])
+        .filter((tagId) => cache.tags[tagId])
+        .map((tagId) => cache.tags[tagId])
+    const newTags = newTagsId.length ? (await getAllTagsById(newTagsId)).results : []
+    filters.tags = [...cachedTags, ...newTags]
+
+    filters.sdgs = rawFilters.sdgs || []
+
+    filters.languages = rawFilters.languages || []
+
+    const newSkillsId = (rawFilters.skills || []).filter((skillId) => !cache.skills[skillId])
+    const cachedSkills = (rawFilters.skills || [])
+        .filter((skillId) => cache.skills[skillId])
+        .map((skillId) => cache.skills[skillId])
+
+    const newSkills = newSkillsId.length ? (await getAllTagsById(newSkillsId)).results : []
+    filters.skills = [...cachedSkills, ...newSkills]
+
+    // memoize
+    filters.categories.forEach((cat) => {
+        cache.categories[cat.id] = cat
+    })
+    filters.tags.forEach((tag) => {
+        cache.tags[tag.id] = tag
+    })
+    filters.skills.forEach((skill) => {
+        cache.skills[skill.id] = skill
+    })
+
+    selectedFilters.value = filters
+    filtersInited.value = true
+
+    // emit('search-filters-inited', true)
+}
+
+watch(() => props.search, hydrateFilters)
 </script>
 
 <template>

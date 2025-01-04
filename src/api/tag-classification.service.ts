@@ -122,6 +122,30 @@ export async function getTags(ids: number[], params?: APIParams): Promise<APIRes
     ).data
 }
 
+export async function getAllTagsById(
+    ids: number[],
+    params?: APIParams
+): Promise<APIResponseList<any>> {
+    return {
+        count: -1,
+        next: null,
+        previous: null,
+        results: await Promise.all(
+            ids.map(
+                async (id) =>
+                    (
+                        await axios.get(
+                            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/tag/${id}/`,
+                            {
+                                ...params,
+                            } as any
+                        )
+                    ).data
+            )
+        ),
+    }
+}
+
 export async function putClassificationTag(
     orgCode: string,
     classificationId: number,
