@@ -2,17 +2,11 @@
     <div class="page-section-extra-wide groups-layout page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('common.groups')) }}</h1>
 
-        <div v-if="!groupId && searchOptionsInitiated" class="search-input-container">
-            <SearchOptions
-                :limit="30"
-                ref="searchOptions"
-                :search="search"
-                section="groups"
-                @search-options-updated="updateSearch"
-            />
+        <div v-if="!groupId" class="search-input-container">
+            <SearchOptions :limit="30" ref="searchOptions" section="groups" />
         </div>
         <div class="page-section-wide" v-if="hasSearch">
-            <GlobalSearchTab :search="search" />
+            <GlobalSearchTab :search="fixedSearch" />
             <div class="btn-ctn">
                 <LpiButton :label="$t('people-groups.browse-tree')" @click="showCategories" />
             </div>
@@ -89,26 +83,28 @@ export default {
         const organizationsStore = useOrganizationsStore()
 
         const {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        } = useSearch()
+            // search,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
+        } = useSearch('groups')
 
         return {
             organizationsStore,
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
+            // search,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
         }
     },
     props: {
@@ -129,7 +125,7 @@ export default {
     },
 
     async mounted() {
-        await this.initSearch()
+        // await this.initSearch()
         await this.loadGroups()
     },
 
@@ -156,7 +152,14 @@ export default {
         },
 
         hasSearch() {
-            return !!this.search.search
+            return !!this.searchFromQuery.search
+        },
+
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                section: 'groups',
+            }
         },
     },
 

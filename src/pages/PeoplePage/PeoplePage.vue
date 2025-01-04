@@ -2,16 +2,11 @@
     <div class="page-section-extra-wide page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('common.people')) }}</h1>
         <div class="main-ctn">
-            <div v-if="searchOptionsInitiated" class="search-input-container">
-                <SearchOptions
-                    :limit="30"
-                    :search="search"
-                    section="people"
-                    @search-options-updated="updateSearch"
-                />
+            <div class="search-input-container">
+                <SearchOptions :limit="30" section="people" />
             </div>
 
-            <GlobalSearchTab :search="rawSearch" />
+            <GlobalSearchTab :search="fixedSearch" />
         </div>
     </div>
 </template>
@@ -30,24 +25,26 @@ export default {
     },
     setup() {
         const {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        } = useSearch()
+            // search,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
+        } = useSearch('people')
         return {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
+            // search,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
         }
     },
     data() {
@@ -57,9 +54,18 @@ export default {
         }
     },
 
-    async mounted() {
-        await this.initSearch()
+    computed: {
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                section: 'people',
+            }
+        },
     },
+
+    // async mounted() {
+    //     await this.initSearch()
+    // },
 }
 </script>
 

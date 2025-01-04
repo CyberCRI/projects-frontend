@@ -128,12 +128,12 @@ export default {
         },
     },
 
-    inject: {
-        browseLayoutUpdateProjectQuantity: {
-            from: 'browseLayoutUpdateProjectQuantity',
-            default: () => {},
-        },
-    },
+    // inject: {
+    //     browseLayoutUpdateProjectQuantity: {
+    //         from: 'browseLayoutUpdateProjectQuantity',
+    //         default: () => {},
+    //     },
+    // },
 
     methods: {
         onClickPagination(requestedPage) {
@@ -231,9 +231,9 @@ export default {
                 in this case we don't update the search projects count
                 luckily drawer is not a descendant of BrowseLayout so the quantity update method is not injected...
             */
-            if (this.$route.name === 'search' && this.browseLayoutUpdateProjectQuantity) {
-                this.browseLayoutUpdateProjectQuantity(response.count)
-            }
+            // if (this.$route.name === 'search' && this.browseLayoutUpdateProjectQuantity) {
+            //     this.browseLayoutUpdateProjectQuantity(response.count)
+            // }
 
             this.updatePagination(response)
             // Set new projects and end loading

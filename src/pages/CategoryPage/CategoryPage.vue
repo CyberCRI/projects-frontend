@@ -20,10 +20,7 @@
                     <div class="category-search">
                         <SearchOptions
                             ref="searchOptions"
-                            v-if="searchOptionsInited"
-                            :search="search"
                             class="container inline stretch"
-                            @search-options-updated="updateSearch"
                             section="projects"
                             :filter-black-list="['categories']"
                         />
@@ -59,7 +56,7 @@
                     data-test="create-project-from-category"
                 />
             </div>
-            <GlobalSearchTab :search="search" />
+            <GlobalSearchTab :search="fixedSearch" />
         </div>
     </div>
 </template>
@@ -92,27 +89,29 @@ export default {
     setup() {
         const projectCategoriesStore = useProjectCategories()
         const {
-            search,
-            getDefaultSearch,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        } = useSearch()
+            // search,
+            // getDefaultSearch,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
+        } = useSearch('projects')
         return {
             projectCategoriesStore,
-            search,
-            getDefaultSearch,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
+            // search,
+            // getDefaultSearch,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
         }
     },
 
@@ -133,7 +132,7 @@ export default {
         },
 
         category() {
-            if (this.$route.params.id) {
+            if (this.id) {
                 window.scrollTo(0, 0)
                 return this.projectCategoriesStore.allByIds[this.$route.params.id]
             }
@@ -167,6 +166,14 @@ export default {
                 },
             ]
         },
+
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                categories: [this.category?.id],
+                section: 'projects',
+            }
+        },
     },
 
     props: {
@@ -176,18 +183,19 @@ export default {
         },
     },
 
-    watch: {
-        id: function (neo, old) {
-            if (neo && neo != old) {
-                this.search = this.getDefaultSearch()
-                this.search.categories = [neo]
-            }
-        },
-    },
+    // watch: {
+    //     id: function (neo, old) {
+    //         if (neo && neo != old) {
+    //             // TODO ???
+    //             // this.search = this.getDefaultSearch()
+    //             this.search.categories = [neo]
+    //         }
+    //     },
+    // },
 
-    async created() {
-        await this.initSearch({ categories: [this.id] })
-    },
+    // async created() {
+    //     await this.initSearch({ categories: [this.id] })
+    // },
 
     beforeUnmount() {
         document.title = 'Projects'

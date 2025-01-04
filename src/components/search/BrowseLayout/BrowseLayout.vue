@@ -1,15 +1,10 @@
 <template>
     <div class="page-section-extra-wide browse-layout">
-        <div v-if="searchOptionsInitiated" class="browse-header">
-            <SearchOptions
-                :limit="30"
-                show-section-filter
-                :search="search"
-                @search-options-updated="updateSearch"
-            />
+        <div class="browse-header">
+            <SearchOptions :limit="30" show-section-filter />
         </div>
 
-        <GlobalSearchTab :search="rawSearch" />
+        <GlobalSearchTab :search="searchFromQuery" />
     </div>
 </template>
 
@@ -24,12 +19,12 @@ export default {
 
     mixins: [onboardingStatusMixin],
 
-    inject: {
-        browseLayoutUpdateProjectQuantity: {
-            from: 'browseLayoutUpdateProjectQuantity',
-            default: () => {},
-        },
-    },
+    // inject: {
+    //     browseLayoutUpdateProjectQuantity: {
+    //         from: 'browseLayoutUpdateProjectQuantity',
+    //         default: () => {},
+    //     },
+    // },
 
     components: {
         SearchOptions,
@@ -37,71 +32,53 @@ export default {
     },
 
     setup() {
-        const {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        } = useSearch()
-        return {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        }
+        const { searchFromQuery } = useSearch(null)
+        return { searchFromQuery }
     },
-    data() {
-        return {
-            projectsCount: 0,
-        }
-    },
+    // data() {
+    //     return {
+    //         projectsCount: 0,
+    //     }
+    // },
 
-    provide() {
-        return {
-            browseLayoutUpdateProjectQuantity: this.updateProjectQuantity,
-        }
-    },
+    // provide() {
+    //     return {
+    //         browseLayoutUpdateProjectQuantity: this.updateProjectQuantity,
+    //     }
+    // },
 
     async mounted() {
-        const section = this.$route.query.section
+        // const section = this.$route.query.section
 
-        // safeguard against smartpants who play with their URL and risk section / routes mismatch
-        const routesFromSection = {
-            projects: 'ProjectSearch',
-            groups: 'GroupSearch',
-            people: 'PeopleSearch',
-        }
-        if (
-            section &&
-            routesFromSection[section] &&
-            routesFromSection[section] !== this.$route.name
-        ) {
-            // section does not match current route, redirect to correct route
-            this.$router.push({ name: routesFromSection[section], query: this.$route.query })
-        }
+        // // safeguard against smartpants who play with their URL and risk section / routes mismatch
+        // const routesFromSection = {
+        //     projects: 'ProjectSearch',
+        //     groups: 'GroupSearch',
+        //     people: 'PeopleSearch',
+        // }
+        // if (
+        //     section &&
+        //     routesFromSection[section] &&
+        //     routesFromSection[section] !== this.$route.name
+        // ) {
+        //     // section does not match current route, redirect to correct route
+        //     this.$router.push({ name: routesFromSection[section], query: this.$route.query })
+        // }
 
-        // selectedSection must be inited first as it determines filterQueryParams
-        // TODO not .value ????
-        this.selectedSection = section
+        // // selectedSection must be inited first as it determines filterQueryParams
+        // // TODO not .value ????
+        // this.selectedSection = section
 
-        await this.initSearch()
+        // await this.initSearch()
 
         this.onboardingTrap('explore_projects', false)
     },
 
-    methods: {
-        updateProjectQuantity(quantity) {
-            this.projectsCount = quantity
-        },
-    },
+    // methods: {
+    //     updateProjectQuantity(quantity) {
+    //         this.projectsCount = quantity
+    //     },
+    // },
 }
 </script>
 

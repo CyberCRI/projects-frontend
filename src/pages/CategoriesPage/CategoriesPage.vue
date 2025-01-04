@@ -3,14 +3,8 @@
         <div class="page-section-extra-wide">
             <h1 class="page-title">{{ $filters.capitalize($t('projects')) }}</h1>
 
-            <div v-if="searchOptionsInitiated" class="search-input-container">
-                <SearchOptions
-                    ref="searchOptions"
-                    :limit="30"
-                    :search="search"
-                    section="projects"
-                    @search-options-updated="updateSearch"
-                />
+            <div class="search-input-container">
+                <SearchOptions ref="searchOptions" :limit="30" section="projects" />
             </div>
         </div>
 
@@ -25,7 +19,7 @@
         </div>
 
         <div class="page-section-wide" v-if="hasSearch || forceSearch">
-            <GlobalSearchTab :search="search" />
+            <GlobalSearchTab :search="fixedSearch" />
             <div class="btn-ctn">
                 <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
             </div>
@@ -78,25 +72,27 @@ export default {
     setup() {
         const projectCategoriesStore = useProjectCategories()
         const {
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
-        } = useSearch()
+            //     search,
+            //     searchOptionsInitiated,
+            //     selectedSection,
+            //     filterQueryParams,
+            //     rawSearch,
+            //     initSearch,
+            //     updateSearchQuery,
+            //     updateSearch,
+            searchFromQuery,
+        } = useSearch('projects')
         return {
             projectCategoriesStore,
-            search,
-            searchOptionsInitiated,
-            selectedSection,
-            filterQueryParams,
-            rawSearch,
-            initSearch,
-            updateSearchQuery,
-            updateSearch,
+            // search,
+            // searchOptionsInitiated,
+            // selectedSection,
+            // filterQueryParams,
+            // rawSearch,
+            // initSearch,
+            // updateSearchQuery,
+            // updateSearch,
+            searchFromQuery,
         }
     },
 
@@ -109,9 +105,9 @@ export default {
         }
     },
 
-    async mounted() {
-        await this.initSearch()
-    },
+    // async mounted() {
+    //     await this.initSearch()
+    // },
 
     computed: {
         categories() {
@@ -120,12 +116,18 @@ export default {
 
         hasSearch() {
             return (
-                !!this.search.search ||
+                !!this.searchFromQuery.search ||
                 ['sdgs', 'categories', 'tags', 'languages'].reduce(
-                    (acc, key) => acc || this.search[key].length > 0,
+                    (acc, key) => acc || this.searchFromQuery[key]?.length > 0,
                     false
                 )
             )
+        },
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                section: 'projects',
+            }
         },
     },
 
