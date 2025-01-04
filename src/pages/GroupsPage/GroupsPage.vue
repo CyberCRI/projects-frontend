@@ -130,8 +130,6 @@ export default {
 
     async mounted() {
         await this.initSearch()
-        // TODO ???
-        this.selectedSection = this.$route.query.section
         await this.loadGroups()
     },
 

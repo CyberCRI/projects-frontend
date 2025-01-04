@@ -59,7 +59,7 @@
                     data-test="create-project-from-category"
                 />
             </div>
-            <ProjectSearchTab :search="search" />
+            <GlobalSearchTab :search="search" />
         </div>
     </div>
 </template>
@@ -72,7 +72,7 @@ import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useSearch from '@/composables/useSearch.js'
 
@@ -86,7 +86,7 @@ export default {
         SearchOptions,
         CategoryCardImage,
         BreadCrumbs,
-        ProjectSearchTab,
+        GlobalSearchTab,
     },
 
     setup() {
@@ -186,8 +186,7 @@ export default {
     },
 
     async created() {
-        await this.initSearch()
-        this.search.categories = [this.id]
+        await this.initSearch({ categories: [this.id] })
     },
 
     beforeUnmount() {

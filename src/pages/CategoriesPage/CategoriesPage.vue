@@ -111,7 +111,6 @@ export default {
 
     async mounted() {
         await this.initSearch()
-        this.selectedSection = this.$route.query.section
     },
 
     computed: {

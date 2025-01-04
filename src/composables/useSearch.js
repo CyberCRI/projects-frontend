@@ -3,12 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
 import debounce from 'lodash.debounce'
-import {
-    updateFiltersFromURL,
-    // updateSearchQuery as _updateSearchQuery,
-    searchEquals,
-    resetPaginationIfNeeded,
-} from '@/functs/search.ts'
+import { updateFiltersFromURL, searchEquals, resetPaginationIfNeeded } from '@/functs/search.ts'
 
 export default function useSearch() {
     const organizationsStore = useOrganizationsStore()
@@ -23,7 +18,7 @@ export default function useSearch() {
         sdgs: [],
         languages: [],
         skills: [],
-        section: ALL_SECTION_KEY, // TOD: this.selectedSection = this.$route.query.section
+        section: route.query.section || ALL_SECTION_KEY,
         organizations: [organizationsStore.current.code],
         ordering: '-updated_at',
         limit: 30,
@@ -59,11 +54,10 @@ export default function useSearch() {
         return JSON.parse(JSON.stringify(search.value))
     })
 
-    async function initSearch() {
-        Object.assign(
-            search.value,
-            await updateFiltersFromURL(route.query, filterQueryParams.value)
-        )
+    async function initSearch(initOptions) {
+        const _initOptions = initOptions || {}
+        const filtersFromUrl = await updateFiltersFromURL(route.query, filterQueryParams.value)
+        search.value = { ...search.value, ...filtersFromUrl, ..._initOptions }
         searchOptionsInitiated.value = true
     }
 
