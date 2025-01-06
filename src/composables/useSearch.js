@@ -4,6 +4,8 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
 import debounce from 'lodash/debounce'
 export default function useSearch(forcedSection = null) {
+    const MAX_RESULTS = 30
+
     const organizationsStore = useOrganizationsStore()
     const route = useRoute()
     const router = useRouter()
@@ -23,7 +25,7 @@ export default function useSearch(forcedSection = null) {
         section: route.query.section || ALL_SECTION_KEY,
         organizations: [organizationsStore.current.code],
         ordering: '-updated_at',
-        limit: 30,
+        limit: MAX_RESULTS,
         page: route.query.page || 1,
     })
 
@@ -75,6 +77,8 @@ export default function useSearch(forcedSection = null) {
                 res[arrKey] = [res[arrKey]]
             }
         }
+
+        res.limit = MAX_RESULTS
         return res
     })
 
@@ -111,6 +115,7 @@ export default function useSearch(forcedSection = null) {
                 }
             }
         }
+        query.limit = MAX_RESULTS
         updateUrl(query)
     }
 
