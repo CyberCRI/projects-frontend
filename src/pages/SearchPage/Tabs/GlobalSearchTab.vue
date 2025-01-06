@@ -1,8 +1,8 @@
 <template>
     <ProjectListSearch
         :search="search"
-        :show-pagination="true"
         :mode="searchMode"
+        show-pagination
         @pagination-changed="onPaginationChange"
     >
         <template #default="ProjectListSearchSlotProps">

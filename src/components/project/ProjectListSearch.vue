@@ -146,8 +146,9 @@ export default {
 
             // if we forced a page (on page load only)
             // manually compute offset
-            if (this.search.page && this.search.page > 1) {
-                filters['offset'] = (this.search.page - 1) * filters.limit
+            const page = parseInt(filters.page || 1)
+            if (page > 1) {
+                filters['offset'] = (page - 1) * filters.limit
             }
             delete filters.page
 
