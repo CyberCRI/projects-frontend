@@ -66,7 +66,7 @@ export default {
         mode: {
             // global, projects, groups, people
             type: String,
-            default: 'projects',
+            default: 'global',
         },
         paginationButtonsIsVisible: {
             type: Boolean,
@@ -159,14 +159,14 @@ export default {
             if (specificPageIndex) {
                 response = (await axios.get(specificPageIndex)).data
             } else if (this.mode === 'projects') {
-                if (filters.member_role) {
-                    // search by role is not implemented in algolia
-                    // so fallback to old API for now
-                    // (used in user profile page)
-                    response = await getAllProjects(filters)
-                } else {
-                    response = await searchProjects(query, filters)
-                }
+                // if (filters.member_role) {
+                // search by role is not implemented in algolia
+                // so fallback to old API for now
+                // (used in user profile page)
+                //   response = await getAllProjects(filters)
+                // } else {
+                response = await searchProjects(query, filters)
+                // }
             } else if (this.mode === 'groups') {
                 response = await searchGroupsAlgolia(query, filters)
             } else if (this.mode === 'people') {

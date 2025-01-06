@@ -11,13 +11,13 @@
             />
         </div>
 
-        <div v-if="projects">
+        <div>
             <CardList
                 :is-preview="isPreview"
                 :desktop-columns-number="numberColumn"
                 :is-loading="projectsLoading"
                 :limit="limit"
-                :items="limit ? projects.slice(listStart, listStart + limit) : projects"
+                :items="croppedProjects"
             >
                 <template #default="projectListSlotProps">
                     <ProjectCard
@@ -41,43 +41,10 @@
                     :current="pagination.currentPage"
                     :pagination="pagination"
                     :total="pagination.total"
-                    @update-pagination="onClickPagination"
+                    @update-pagination="$emit('pagination-changed', $event)"
                 />
             </div>
         </div>
-
-        <SearchResults
-            v-else
-            :is-preview="isPreview"
-            :search="search"
-            mode="projects"
-            @number-project="setProjectCount"
-            show-pagination
-        >
-            <template #default="SearchResultsSlotProps">
-                <CardList
-                    :desktop-columns-number="numberColumn"
-                    :is-loading="SearchResultsSlotProps.isLoading"
-                    :limit="limit"
-                    :items="SearchResultsSlotProps.items"
-                >
-                    <template #default="projectListSlotProps">
-                        <ProjectCard
-                            v-if="projectListSlotProps.item"
-                            :horizontal-display="true"
-                            :project="projectListSlotProps.item"
-                            @navigated-away="$emit('navigated-away')"
-                            @card-update="$emit('card-update')"
-                        />
-                    </template>
-                    <template #empty>
-                        <div class="empty-ctn" :class="gridLayout">
-                            <EmptyCard class="empty-card" :label="emptyLabel" />
-                        </div>
-                    </template>
-                </CardList>
-            </template>
-        </SearchResults>
     </div>
 </template>
 
@@ -92,7 +59,7 @@ import PaginationButtons from '@/components/base/navigation/PaginationButtons.vu
 export default {
     name: 'UserProjectList',
 
-    emits: ['project-count', 'navigated-away', 'card-update'],
+    emits: ['project-count', 'navigated-away', 'card-update', 'pagination-changed'],
 
     components: {
         SearchResults,
@@ -114,7 +81,12 @@ export default {
         projects: {
             // use this to pass project list (without making a request here)
             type: [Array, Boolean],
-            default: false,
+            required: true,
+        },
+
+        allProjectCount: {
+            type: Number,
+            default: 0,
         },
 
         projectsLoading: {
@@ -156,66 +128,63 @@ export default {
             type: Number,
             default: 12,
         },
+        pagination: {
+            type: Object,
+            default: () => ({
+                // to check
+                currentPage: 1,
+                total: 1,
+                pageSize: 12,
+                next: null,
+                previous: null,
+                first: null,
+                last: null,
+            }),
+        },
     },
 
     data() {
         return {
-            allProjectCount: 0,
-            inited: false,
             currentPage: 1,
         }
     },
     computed: {
-        search() {
-            return {
-                limit: this.limit,
-                ordering: '-updated_at',
-                member_role: this.memberRole,
-                members: [this.user.id],
-            }
-        },
         gridLayout() {
             return `desktop-col--${this.numberColumn}`
         },
-        pagination() {
-            const total = Math.ceil(this.allProjectCount / this.limit)
-            return {
-                currentPage: this.currentPage,
-                total: total,
-                pageSize: this.limit,
-                next: this.currentPage < total ? this.currentPage + 1 : null,
-                previous: this.currentPage > 1 ? this.currentPage - 1 : null,
-                first: 1,
-                last: total,
-            }
-        },
+        // pagination() {
+        //     const total = Math.ceil(this.allProjectCount / this.limit)
+        //     return {
+        //         currentPage: this.currentPage,
+        //         total: total,
+        //         pageSize: this.limit,
+        //         next: this.currentPage < total ? this.currentPage + 1 : null,
+        //         previous: this.currentPage > 1 ? this.currentPage - 1 : null,
+        //         first: 1,
+        //         last: total,
+        //     }
+        // },
 
-        listStart() {
-            return (this.currentPage - 1) * this.limit
+        // listStart() {
+        //     return (this.currentPage - 1) * this.limit
+        // },
+
+        croppedProjects() {
+            const safeProjects = this.projects || []
+            // return this.limit
+            //     ? safeProjects.slice(this.listStart, this.listStart + this.limit)
+            //     : safeProjects
+
+            return safeProjects
         },
     },
     methods: {
-        setProjectCount(number) {
-            this.allProjectCount = number
-            this.inited = true
-            this.$emit('project-count', number)
-        },
-
         goToProfileProjects() {
             this.selectTab(2)
         },
-        onClickPagination(requestedPage) {
-            this.currentPage = requestedPage
-        },
-    },
-    watch: {
-        projects: {
-            handler: function (neo) {
-                if (neo) this.setProjectCount(neo.length)
-            },
-            deep: true,
-            immediate: true,
-        },
+        // onClickPagination(requestedPage) {
+        //     this.currentPage = requestedPage
+        // },
     },
 }
 </script>

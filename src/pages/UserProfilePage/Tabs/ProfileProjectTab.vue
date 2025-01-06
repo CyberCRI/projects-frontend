@@ -10,46 +10,72 @@
             />
         </div>
         <!-- user projects (Owners, Members) -->
-        <UserProjectList
-            :label="$filters.capitalize($t('me.projects-participate'))"
-            :empty-label="noParticipate"
-            :limit="12"
-            :member-role="['owners', 'members']"
-            :number-column="6"
-            :user="user"
-            class="project-list"
-        />
+
+        <UserProjectsSearch :limit="12" :member-roles="['owners', 'members']" :user="user">
+            <template
+                #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
+            >
+                <UserProjectList
+                    :label="$filters.capitalize($t('me.projects-participate'))"
+                    :empty-label="noParticipate"
+                    :number-column="6"
+                    :user="user"
+                    :projects="projects"
+                    :all-project-count="totalCount"
+                    :projects-loading="isLoading"
+                    :pagination="pagination"
+                    @pagination-changed="paginationAction"
+                    class="project-list"
+            /></template>
+        </UserProjectsSearch>
 
         <!-- user projects (Reviewers) -->
-        <UserProjectList
-            :label="$filters.capitalize($t('me.projects-reviewing'))"
-            :empty-label="noReviewLabel"
-            :limit="12"
-            :member-role="['reviewers']"
-            :number-column="6"
-            :user="user"
-            class="project-list"
-        />
+        <UserProjectsSearch :limit="12" :member-roles="['reviewers']" :user="user">
+            <template
+                #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
+            >
+                <UserProjectList
+                    :label="$filters.capitalize($t('me.projects-reviewing'))"
+                    :empty-label="noReviewLabel"
+                    :number-column="6"
+                    :user="user"
+                    :projects="projects"
+                    :all-project-count="totalCount"
+                    :projects-loading="isLoading"
+                    :pagination="pagination"
+                    @pagination-changed="paginationAction"
+                    class="project-list"
+                />
+            </template>
+        </UserProjectsSearch>
 
         <!-- user projects (Followed) -->
-        <UserProjectList
-            :label="$filters.capitalize($t('me.follow'))"
-            :empty-label="noFollowLabel"
-            :limit="12"
-            :number-column="6"
-            :user="user"
-            :projects="filteredFollowedProjects"
-            :projects-loading="followedProjectLoading"
-            class="project-list"
-        />
+        <UserProjectsSearch :limit="12" follow :user="user">
+            <template
+                #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
+            >
+                <UserProjectList
+                    :label="$filters.capitalize($t('me.follow'))"
+                    :empty-label="noFollowLabel"
+                    :limit="12"
+                    :number-column="6"
+                    :user="user"
+                    :projects="projects"
+                    :all-project-count="totalCount"
+                    :projects-loading="isLoading"
+                    :pagination="pagination"
+                    @pagination-changed="paginationAction"
+                    class="project-list"
+            /></template>
+        </UserProjectsSearch>
     </div>
 </template>
 
 <script>
+import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { getUserFollows } from '@/api/follows.service'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
@@ -57,10 +83,7 @@ export default {
 
     mixins: [permissions],
 
-    components: {
-        UserProjectList,
-        LpiButton,
-    },
+    components: { UserProjectsSearch, UserProjectList, LpiButton },
     setup() {
         const usersStore = useUsersStore()
         return {
@@ -72,13 +95,6 @@ export default {
             type: Object,
             required: true,
         },
-    },
-
-    data() {
-        return {
-            followedProjectLoading: true,
-            filteredFollowedProjects: [],
-        }
     },
 
     mounted() {
@@ -113,19 +129,7 @@ export default {
     },
 
     methods: {
-        setFollowedProject() {
-            getUserFollows({
-                follower_id: this.user.id,
-            }).then((resp) => {
-                this.followedProjects = resp.results
-                this.sortFollows()
-            })
-        },
-
-        sortFollows() {
-            this.filteredFollowedProjects = this.followedProjects.map((follow) => follow.project)
-            this.followedProjectLoading = false
-        },
+        setFollowedProject() {},
     },
 }
 </script>
