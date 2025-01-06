@@ -25,11 +25,7 @@
 <script>
 import debounce from 'lodash.debounce'
 import funct from '@/functs/functions.ts'
-import {
-    getAllProjects,
-    getAllRandomProjects,
-    getAllRecommendedProjects,
-} from '@/api/projects.service'
+import { getAllProjects } from '@/api/projects.service'
 import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
@@ -68,7 +64,7 @@ export default {
             default: false,
         },
         mode: {
-            // global, projects, groups, peoples
+            // global, projects, groups, people
             type: String,
             default: 'projects',
         },
@@ -136,12 +132,13 @@ export default {
             this.$emit('loading', true)
         },
 
-        async _loadProjects(specificPageIndex) {
+        async _loadProjects(specificPageIndex = null) {
             const filters = {
                 ...this.search,
                 organizations: [this.organizationsStore.current.code],
             }
-            const query = encodeURIComponent(filters.search)
+
+            const query = filters.search ? encodeURIComponent(filters.search) : null
             delete filters.search
 
             // if we forced a page (on page load only)
@@ -161,52 +158,26 @@ export default {
 
             if (specificPageIndex) {
                 response = (await axios.get(specificPageIndex)).data
-            } else if (filters.ordering === 'recommended') {
-                response = await getAllRecommendedProjects(filters)
-            } else if (filters.ordering === 'random') {
-                response = await getAllRandomProjects(filters)
-            } else if (this.search.search) {
-                if (this.mode === 'global')
-                    response = await searchAll(query, {
-                        limit: 30,
-                        organizations: this.organisation.code,
-                    })
-                else if (this.mode === 'projects') response = await searchProjects(query, filters)
-                else if (this.mode === 'groups')
-                    response = await searchGroupsAlgolia(query, filters)
-                else if (this.mode === 'peoples') response = await searchUser(query, filters)
-                // if this.search.search is undefined, query will be string "undefined"
-                // that's why we check on this.search.search and not query
-                else response = await searchProjects(query, filters)
+            } else if (this.mode === 'projects') {
+                if (filters.member_role) {
+                    // search by role is not implemented in algolia
+                    // so fallback to old API for now
+                    // (used in user profile page)
+                    response = await getAllProjects(filters)
+                } else {
+                    response = await searchProjects(query, filters)
+                }
+            } else if (this.mode === 'groups') {
+                response = await searchGroupsAlgolia(query, filters)
+            } else if (this.mode === 'people') {
+                response = await searchUser(query, filters)
             } else {
-                /* This is else when the page / tabs loads project with no particular search */
-                if (this.mode === 'global')
-                    response = await searchAll(null, {
-                        ...filters,
-                        limit: 30,
-                        organizations: this.organisation.code,
-                    })
-                else if (this.mode === 'projects')
-                    if (filters.member_role) {
-                        // search by role is not implemented in algolia
-                        // so fallback to old API for now
-                        // (used in user profile page)
-                        response = await getAllProjects(filters)
-                    } else {
-                        response = await searchProjects(null, filters)
-                    }
-                else if (this.mode === 'groups') response = await searchGroupsAlgolia(null, filters)
-                else if (this.mode === 'peoples') response = await searchUser(null, filters)
-                else
-                    response = await getAllProjects(
-                        {
-                            ...filters,
-                            ordering: '-updated_at',
-                        },
-                        { limit: this.searchLimit }
-                    )
+                // assume mode === 'global'
+                response = await searchAll(query, {
+                    limit: 30,
+                    organizations: this.organisation.code,
+                })
             }
-
             if (response && localRequest === this.lastRequest) this.updateProjectList(response)
         },
 

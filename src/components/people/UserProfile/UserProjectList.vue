@@ -49,15 +49,10 @@
         <SearchResults
             v-else
             :is-preview="isPreview"
-            :search="{
-                limit: limit,
-                ordering: '-updated_at',
-                member_role: memberRole,
-                members: [user.id],
-            }"
+            :search="search"
             mode="projects"
-            :show-pagination="true"
             @number-project="setProjectCount"
+            show-pagination
         >
             <template #default="SearchResultsSlotProps">
                 <CardList
@@ -171,6 +166,14 @@ export default {
         }
     },
     computed: {
+        search() {
+            return {
+                limit: this.limit,
+                ordering: '-updated_at',
+                member_role: this.memberRole,
+                members: [this.user.id],
+            }
+        },
         gridLayout() {
             return `desktop-col--${this.numberColumn}`
         },

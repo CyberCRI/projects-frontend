@@ -1,7 +1,7 @@
 <template>
     <SearchResults
         :search="search"
-        :mode="searchMode"
+        :mode="search.section || 'global'"
         show-pagination
         @pagination-changed="onPaginationChange"
     >
@@ -62,21 +62,6 @@ export default {
         search: {
             type: Object,
             default: () => {},
-        },
-    },
-
-    computed: {
-        searchMode() {
-            // translate src/components/search/SearchOptions/SearchOptions.vue sectionFilters key
-            // to SearchResults mode
-
-            if (this.search.section === 'projects') return 'projects'
-
-            if (this.search.section === 'people') return 'peoples'
-
-            if (this.search.section === 'groups') return 'groups'
-
-            return 'global'
         },
     },
 
