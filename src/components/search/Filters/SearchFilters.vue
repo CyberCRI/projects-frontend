@@ -47,11 +47,6 @@ const selectedSection = defineModel('selectedSection', {
     default: () => ALL_SECTION_KEY,
 })
 
-// const selectedFilters = defineModel('selectedFilters', {
-//     type: Object,
-//     default: () => ALL_SECTION_KEY,
-// })
-
 const selectedFilters = ref(defaultFilters())
 
 const { contextualFilters, filterButtons } = useContextualFilters({
@@ -65,8 +60,6 @@ const { contextualFilters, filterButtons } = useContextualFilters({
 
 const isRightDrawerOpened = ref(false)
 const currentDrawer = ref('')
-// const selectedFilters = ref(defaultFilters())
-// const filtersInited = ref(false)
 
 function openDrawer(drawer) {
     currentDrawer.value = drawer
@@ -92,61 +85,13 @@ function clearSelectedFilters(key) {
 
 defineExpose({ clearSelectedFilters })
 
-//////////////////////////////////
-
 const cache = reactive({
     categories: {},
     tags: {},
     skills: {},
 })
 
-// async function initFilters() {
-//     // emit('search-filters-inited', false)
-//     // converts host component "search" (arrays of id)
-//     // to arrays of object (needed in this component for displayinf them)
-
-//     const rawFilters = props.search || {}
-//     const filters = {}
-
-//     filters.categories = await Promise.all(
-//         (rawFilters.categories || []).map(async (catId) => await getProjectCategory(catId))
-//     )
-
-//     filters.tags = filters.tags = rawFilters.tags?.length
-//         ? (await getAllTagsById(rawFilters.tags)).results
-//         : []
-
-//     filters.sdgs = rawFilters.sdgs || []
-
-//     filters.languages = rawFilters.languages || []
-
-//     filters.skills = rawFilters.skills?.length
-//         ? (await getAllTagsById(rawFilters.skills)).results
-//         : []
-
-//     selectedFilters.value = filters
-//     filtersInited.value = true
-
-//     // memoize
-//     filters.categories?.forEach((cat) => {
-//         cache.categories[cat.id] = cat
-//     })
-//     filters.tags?.forEach((tag) => {
-//         cache.tags[tag.id] = tag
-//     })
-//     filters.skills?.forEach((skill) => {
-//         cache.skills[skill.id] = skill
-//     })
-
-//     // emit('search-filters-inited', true)
-// }
-
 async function hydrateFilters() {
-    // console.log('hydrating filters')
-    // emit('search-filters-inited', false)
-    // converts host component "search" (arrays of id)
-    // to arrays of object (needed in this component for displayinf them)
-
     const rawFilters = props.search || {}
     const filters = {}
 
@@ -188,14 +133,8 @@ async function hydrateFilters() {
     })
 
     selectedFilters.value = filters
-    // filtersInited.value = true
-
-    // emit('search-filters-inited', true)
 }
 
-// onMounted(async () => {
-//     await initFilters()
-// })
 onMounted(hydrateFilters)
 watch(() => props.search, hydrateFilters)
 </script>

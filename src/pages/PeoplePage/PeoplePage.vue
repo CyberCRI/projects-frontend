@@ -24,33 +24,9 @@ export default {
         GlobalSearchTab,
     },
     setup() {
-        const {
-            // search,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
-            searchFromQuery,
-        } = useSearch('people')
+        const { searchFromQuery } = useSearch('people')
         return {
-            // search,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
             searchFromQuery,
-        }
-    },
-    data() {
-        return {
-            // TODO ???
-            projectsCount: 0,
         }
     },
 
@@ -62,10 +38,6 @@ export default {
             }
         },
     },
-
-    // async mounted() {
-    //     await this.initSearch()
-    // },
 }
 </script>
 

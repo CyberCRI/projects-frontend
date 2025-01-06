@@ -19,13 +19,6 @@ export default {
 
     mixins: [onboardingStatusMixin],
 
-    // inject: {
-    //     browseLayoutUpdateProjectQuantity: {
-    //         from: 'browseLayoutUpdateProjectQuantity',
-    //         default: () => {},
-    //     },
-    // },
-
     components: {
         SearchOptions,
         GlobalSearchTab,
@@ -35,50 +28,10 @@ export default {
         const { searchFromQuery } = useSearch(null)
         return { searchFromQuery }
     },
-    // data() {
-    //     return {
-    //         projectsCount: 0,
-    //     }
-    // },
-
-    // provide() {
-    //     return {
-    //         browseLayoutUpdateProjectQuantity: this.updateProjectQuantity,
-    //     }
-    // },
 
     async mounted() {
-        // const section = this.$route.query.section
-
-        // // safeguard against smartpants who play with their URL and risk section / routes mismatch
-        // const routesFromSection = {
-        //     projects: 'ProjectSearch',
-        //     groups: 'GroupSearch',
-        //     people: 'PeopleSearch',
-        // }
-        // if (
-        //     section &&
-        //     routesFromSection[section] &&
-        //     routesFromSection[section] !== this.$route.name
-        // ) {
-        //     // section does not match current route, redirect to correct route
-        //     this.$router.push({ name: routesFromSection[section], query: this.$route.query })
-        // }
-
-        // // selectedSection must be inited first as it determines filterQueryParams
-        // // TODO not .value ????
-        // this.selectedSection = section
-
-        // await this.initSearch()
-
         this.onboardingTrap('explore_projects', false)
     },
-
-    // methods: {
-    //     updateProjectQuantity(quantity) {
-    //         this.projectsCount = quantity
-    //     },
-    // },
 }
 </script>
 

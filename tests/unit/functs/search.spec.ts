@@ -162,7 +162,7 @@ describe('searchEquals', () => {
         expect(searchEquals(search_a, search_b, ['bar', 'bar2'])).toBeTruthy()
     })
 })
-// TODO
+// TODO: this doesnt exist anymore, test the logic
 // describe('updateSearchQuery', () => {
 //     function makeThat(search, query) {
 //         return {

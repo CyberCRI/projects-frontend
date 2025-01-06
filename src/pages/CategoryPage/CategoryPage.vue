@@ -88,29 +88,9 @@ export default {
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
-        const {
-            // search,
-            // getDefaultSearch,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
-            searchFromQuery,
-        } = useSearch('projects')
+        const { searchFromQuery } = useSearch('projects')
         return {
             projectCategoriesStore,
-            // search,
-            // getDefaultSearch,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
             searchFromQuery,
         }
     },
@@ -121,8 +101,6 @@ export default {
     data() {
         return {
             addProjectModalActive: false,
-            // TODO ???
-            query: '',
         }
     },
 
@@ -182,21 +160,6 @@ export default {
             required: true,
         },
     },
-
-    // watch: {
-    //     id: function (neo, old) {
-    //         if (neo && neo != old) {
-    //             // TODO ???
-    //             // this.search = this.getDefaultSearch()
-    //             this.search.categories = [neo]
-    //         }
-    //     },
-    // },
-
-    // async created() {
-    //     await this.initSearch({ categories: [this.id] })
-    // },
-
     beforeUnmount() {
         document.title = 'Projects'
     },

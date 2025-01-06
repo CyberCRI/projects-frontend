@@ -71,43 +71,18 @@ export default {
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
-        const {
-            //     search,
-            //     searchOptionsInitiated,
-            //     selectedSection,
-            //     filterQueryParams,
-            //     rawSearch,
-            //     initSearch,
-            //     updateSearchQuery,
-            //     updateSearch,
-            searchFromQuery,
-        } = useSearch('projects')
+        const { searchFromQuery } = useSearch('projects')
         return {
             projectCategoriesStore,
-            // search,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
             searchFromQuery,
         }
     },
 
     data() {
         return {
-            projectsCount: 0,
-            // TODO ???
-            // filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
             forceSearch: false,
         }
     },
-
-    // async mounted() {
-    //     await this.initSearch()
-    // },
 
     computed: {
         categories() {

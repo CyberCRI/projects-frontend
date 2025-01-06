@@ -82,28 +82,10 @@ export default {
     setup() {
         const organizationsStore = useOrganizationsStore()
 
-        const {
-            // search,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
-            searchFromQuery,
-        } = useSearch('groups')
+        const { searchFromQuery } = useSearch('groups')
 
         return {
             organizationsStore,
-            // search,
-            // searchOptionsInitiated,
-            // selectedSection,
-            // filterQueryParams,
-            // rawSearch,
-            // initSearch,
-            // updateSearchQuery,
-            // updateSearch,
             searchFromQuery,
         }
     },
@@ -119,13 +101,10 @@ export default {
             isLoading: true,
             groupsIndex: null,
             rootId: null,
-            // TODO ???
-            // filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
         }
     },
 
     async mounted() {
-        // await this.initSearch()
         await this.loadGroups()
     },
 
