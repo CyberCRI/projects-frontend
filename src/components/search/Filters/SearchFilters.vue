@@ -81,6 +81,7 @@ function clearSelectedFilters(key) {
     if (!key || key === ALL_FILTERS_MODE) {
         selectedFilters.value = newValue
     } else selectedFilters.value[key] = newValue[key]
+    emit('update:selectedFilters', selectedFilters.value)
 }
 
 defineExpose({ clearSelectedFilters })
