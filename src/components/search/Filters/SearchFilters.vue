@@ -22,7 +22,7 @@ function defaultFilters() {
     }
 }
 
-const emit = defineEmits([/*'search-filters-inited',*/ 'update:selectedFilters'])
+const emit = defineEmits(['update:selectedFilters'])
 
 const props = defineProps({
     search: {
