@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
+import debounce from 'lodash/debounce'
 export default function useSearch(forcedSection = null) {
     const organizationsStore = useOrganizationsStore()
     const route = useRoute()
@@ -77,6 +78,10 @@ export default function useSearch(forcedSection = null) {
         return res
     })
 
+    const updateUrl = debounce(function _updateUrl(query) {
+        router.replace({ path: route.path, query: query })
+    }, 300)
+
     function updateSelectedQuery(search) {
         const query = { ...route.query } // destructure to break reactivity
         const oldSearch = query.search || ''
@@ -87,7 +92,7 @@ export default function useSearch(forcedSection = null) {
             } else {
                 query.search = _search
             }
-            router.replace({ path: route.path, query: query })
+            updateUrl(query)
         }
     }
 
@@ -106,8 +111,7 @@ export default function useSearch(forcedSection = null) {
                 }
             }
         }
-        // console.log('query', query)
-        router.replace({ path: route.path, query: query })
+        updateUrl(query)
     }
 
     function updatdeSelectedSection(section) {
@@ -121,14 +125,14 @@ export default function useSearch(forcedSection = null) {
             } else {
                 query.section = _section
             }
-            router.replace({ path: route.path, query: query })
+            updateUrl(query)
             // cleanup now invalid query params
             for (const [key, isValid] of Object.entries(validQueryParams.value)) {
                 if (!isValid) {
                     delete query[key]
                 }
             }
-            router.replace({ path: route.path, query: query })
+            updateUrl(query)
         }
     }
 
