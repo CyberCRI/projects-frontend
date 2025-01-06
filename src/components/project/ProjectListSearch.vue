@@ -124,13 +124,6 @@ export default {
         },
     },
 
-    // inject: {
-    //     browseLayoutUpdateProjectQuantity: {
-    //         from: 'browseLayoutUpdateProjectQuantity',
-    //         default: () => {},
-    //     },
-    // },
-
     methods: {
         onClickPagination(requestedPage) {
             this.loadProjects(requestedPage)
@@ -138,9 +131,6 @@ export default {
         },
 
         initProjectLoading() {
-            // this.projects = []
-            // this.groups = []
-            // this.peoples = []
             this.items = []
             this.isLoading = true
             this.$emit('loading', true)
