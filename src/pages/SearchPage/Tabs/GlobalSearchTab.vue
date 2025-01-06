@@ -1,16 +1,16 @@
 <template>
-    <ProjectListSearch
+    <SearchResults
         :search="search"
         :mode="searchMode"
         show-pagination
         @pagination-changed="onPaginationChange"
     >
-        <template #default="ProjectListSearchSlotProps">
+        <template #default="SearchResultsSlotProps">
             <CardList
                 :desktop-columns-number="6"
-                :is-loading="ProjectListSearchSlotProps.isLoading"
-                :limit="ProjectListSearchSlotProps.limit"
-                :items="ProjectListSearchSlotProps.items"
+                :is-loading="SearchResultsSlotProps.isLoading"
+                :limit="SearchResultsSlotProps.limit"
+                :items="SearchResultsSlotProps.items"
                 class="list-container"
             >
                 <template #default="projectListSlotProps">
@@ -37,13 +37,13 @@
                 </template>
             </CardList>
         </template>
-    </ProjectListSearch>
+    </SearchResults>
 </template>
 
 <script>
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import CardList from '@/components/base/CardList.vue'
-import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import SearchResults from '@/components/project/SearchResults.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import UserCard from '@/components/people/UserCard.vue'
 
@@ -55,7 +55,7 @@ export default {
         GroupCard,
         ProjectCard,
         CardList,
-        ProjectListSearch,
+        SearchResults,
     },
 
     props: {
@@ -68,7 +68,7 @@ export default {
     computed: {
         searchMode() {
             // translate src/components/search/SearchOptions/SearchOptions.vue sectionFilters key
-            // to ProjectListSearch mode
+            // to SearchResults mode
 
             if (this.search.section === 'projects') return 'projects'
 

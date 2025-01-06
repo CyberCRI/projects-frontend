@@ -39,7 +39,7 @@ import { toRaw } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
-    name: 'ProjectListSearch',
+    name: 'SearchResults',
 
     emits: ['number-project', 'list-updated', 'pagination-changed', 'loading'],
 

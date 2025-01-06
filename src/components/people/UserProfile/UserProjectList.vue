@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <ProjectListSearch
+        <SearchResults
             v-else
             :is-preview="isPreview"
             :search="{
@@ -59,12 +59,12 @@
             :show-pagination="true"
             @number-project="setProjectCount"
         >
-            <template #default="ProjectListSearchSlotProps">
+            <template #default="SearchResultsSlotProps">
                 <CardList
                     :desktop-columns-number="numberColumn"
-                    :is-loading="ProjectListSearchSlotProps.isLoading"
+                    :is-loading="SearchResultsSlotProps.isLoading"
                     :limit="limit"
-                    :items="ProjectListSearchSlotProps.items"
+                    :items="SearchResultsSlotProps.items"
                 >
                     <template #default="projectListSlotProps">
                         <ProjectCard
@@ -82,12 +82,12 @@
                     </template>
                 </CardList>
             </template>
-        </ProjectListSearch>
+        </SearchResults>
     </div>
 </template>
 
 <script>
-import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import SearchResults from '@/components/project/SearchResults.vue'
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
@@ -100,7 +100,7 @@ export default {
     emits: ['project-count', 'navigated-away', 'card-update'],
 
     components: {
-        ProjectListSearch,
+        SearchResults,
         CardList,
         ProjectCard,
         SeeMoreArrow,
@@ -239,7 +239,7 @@ export default {
     grid-template-columns: $card_width;
 }
 
-// taken from ProjectListSearch
+// taken from SearchResults
 // TODO factorize this
 .project-list-search__footer {
     padding-top: $space-l;

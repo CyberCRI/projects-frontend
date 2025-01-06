@@ -4,7 +4,7 @@
     </div>
 
     <div v-else class="search-mode-ctn">
-        <SearchResults
+        <TagSearchResults
             data-test="search-results"
             key="search-results"
             :tag-results="tagResults"
@@ -31,7 +31,7 @@ import debounce from 'lodash.debounce'
 
 import { getOrgClassificationTags } from '@/api/tag-classification.service'
 
-import SearchResults from './SearchResults.vue'
+import TagSearchResults from './TagSearchResults.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useLanguagesStore from '@/stores/useLanguages'
@@ -45,7 +45,7 @@ export default {
     emits: ['add-tag', 'results-count'],
 
     components: {
-        SearchResults,
+        TagSearchResults,
         LoaderSimple,
         PaginationButtons,
     },
