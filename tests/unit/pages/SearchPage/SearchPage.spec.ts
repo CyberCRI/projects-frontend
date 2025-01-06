@@ -1,4 +1,4 @@
-import BrowseLayout from '@/components/search/BrowseLayout/BrowseLayout.vue'
+import SearchPage from '@/pages/SearchPage/SearchPage.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -34,6 +34,7 @@ describe('BrowseLayout', () => {
                 selectedUser: UserFactory.generate(),
             },
             i18n,
+            router: [],
             global: {
                 mocks: {
                     $route: route,
@@ -43,7 +44,7 @@ describe('BrowseLayout', () => {
     })
 
     it('should render BrowseLayout component', () => {
-        wrapper = lpiShallowMount(BrowseLayout, defaultParams)
+        wrapper = lpiShallowMount(SearchPage, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })

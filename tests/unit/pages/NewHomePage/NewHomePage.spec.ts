@@ -58,7 +58,7 @@ describe('NewHomePage', () => {
         // categories dropdown visible
         expect(wrapper.find('project-categories-dropdown-stub').exists()).toBe(true)
         // search visible
-        expect(wrapper.find('search-options-stub').exists()).toBe(true)
+        expect(wrapper.find('home-search-options-stub').exists()).toBe(true)
         // newsfeed visible
         expect(wrapper.find('home-newsfeed-stub').exists()).toBe(true)
         // recommendation block visible
@@ -77,7 +77,7 @@ describe('NewHomePage', () => {
         // user header should be visible
         expect(wrapper.find('home-header-connected-stub').exists()).toBe(true)
         // search visible
-        expect(wrapper.find('search-options-stub').exists()).toBe(true)
+        expect(wrapper.find('home-search-options-stub').exists()).toBe(true)
         // categories dropdown visible
         expect(wrapper.find('project-categories-dropdown-stub').exists()).toBe(true)
         // newsfeed visible

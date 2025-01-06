@@ -7,13 +7,7 @@
 
     <div class="page-section-medium">
         <div class="search-input-container">
-            <SearchOptions
-                class="search-options"
-                show-section-drop-down
-                search-button
-                @search-options-updated="search"
-                @enter="search"
-            ></SearchOptions>
+            <HomeSearchOptions class="search-options" @search="search" />
         </div>
     </div>
     <div class="page-section-wide bottom-page">
@@ -39,7 +33,7 @@
 </template>
 
 <script>
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import HomeSearchOptions from '@/components/search/SearchOptions/HomeSearchOptions.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementLink from '@/components/category/ProjectCategoriesDropdownElementLink.vue'
 import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
@@ -56,7 +50,7 @@ export default {
 
     components: {
         OnboardingTodoBlock,
-        SearchOptions,
+        HomeSearchOptions,
         ProjectCategoriesDropdown,
         ProjectCategoriesDropdownElementLink,
         RecommendationBlock,

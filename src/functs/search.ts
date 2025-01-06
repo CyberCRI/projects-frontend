@@ -72,24 +72,6 @@ export function searchEquals(search_a, search_b, ignoredKeys = null) {
     return true
 }
 
-export function updateSearchQuery(that, filterKeys) {
-    // cleanup
-    const search = JSON.parse(JSON.stringify(that.search))
-    // keep only keys we are interested in
-    for (const key in search) {
-        if (!filterKeys || !filterKeys.includes(key)) delete search[key]
-        else if (!search[key]) delete search[key]
-        else if (Array.isArray(search[key]) && !search[key].length) delete search[key]
-    }
-    // update url if search has changed
-    const updateUrl = !searchEquals(search, that.$route.query)
-    if (updateUrl)
-        that.$router.replace({
-            path: that.$route.path,
-            query: search,
-        })
-}
-
 export function resetPaginationIfNeeded(oldSearch, newSearch) {
     const resetPage = !searchEquals(newSearch, oldSearch, ['page'])
     const search = { ...oldSearch, ...newSearch }

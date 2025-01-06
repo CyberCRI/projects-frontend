@@ -89,12 +89,8 @@ export default {
                 first: undefined,
                 last: undefined,
             },
-            // projects: [],
-            // groups: [],
-            // peoples: [],
             items: [],
             isLoading: true,
-            projectListTotal: 0,
             loadProjects: debounce(this._loadProjects, 40, { leading: false, trailing: true }),
             lastRequest: 0,
             totalCount: 0,
@@ -128,13 +124,6 @@ export default {
         },
     },
 
-    inject: {
-        browseLayoutUpdateProjectQuantity: {
-            from: 'browseLayoutUpdateProjectQuantity',
-            default: () => {},
-        },
-    },
-
     methods: {
         onClickPagination(requestedPage) {
             this.loadProjects(requestedPage)
@@ -142,9 +131,6 @@ export default {
         },
 
         initProjectLoading() {
-            // this.projects = []
-            // this.groups = []
-            // this.peoples = []
             this.items = []
             this.isLoading = true
             this.$emit('loading', true)
@@ -224,40 +210,11 @@ export default {
         },
 
         updateProjectList(response) {
-            this.projectListTotal = response.count
-            /*
-                update results quantity in search page only
-                BUT on this page, this component also appear in user profile drawer (through UserProfileList)
-                in this case we don't update the search projects count
-                luckily drawer is not a descendant of BrowseLayout so the quantity update method is not injected...
-            */
-            if (this.$route.name === 'search' && this.browseLayoutUpdateProjectQuantity) {
-                this.browseLayoutUpdateProjectQuantity(response.count)
-            }
-
             this.updatePagination(response)
             // Set new projects and end loading
             const maxResults = response.max_results || this.searchLimit
 
             this.$emit('number-project', response.count)
-
-            // if (this.mode === 'global') {
-            //     this.projects.push(...response[0].results.slice(0, maxResults))
-            //     this.peoples.push(...response[1].results.slice(0, maxResults))
-            //     this.groups.push(...response[2].results.slice(0, maxResults))
-            //     this.totalCount.projects = response[0].count
-            //     this.totalCount.peoples = response[1].count
-            //     this.totalCount.groups = response[2].count
-            // } else if (this.mode === 'projects') {
-            //     this.totalCount.projects = response.count
-            //     this.projects.push(...response.results.slice(0, maxResults))
-            // } else if (this.mode === 'groups') {
-            //     this.totalCount.groups = response.count
-            //     this.groups.push(...response.results.slice(0, maxResults))
-            // } else if (this.mode === 'peoples') {
-            //     this.totalCount.peoples = response.count
-            //     this.peoples.push(...response.results.slice(0, maxResults))
-            // }
 
             this.totalCount = response.count
             this.items.push(...response.results.slice(0, maxResults))

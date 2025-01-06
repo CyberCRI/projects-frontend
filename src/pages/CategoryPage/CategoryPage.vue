@@ -20,12 +20,8 @@
                     <div class="category-search">
                         <SearchOptions
                             ref="searchOptions"
-                            v-if="searchOptionsInited"
-                            :search="search"
                             class="container inline stretch"
-                            @search-options-updated="updateSearch"
                             section="projects"
-                            show-filters
                             :filter-black-list="['categories']"
                         />
                     </div>
@@ -60,30 +56,23 @@
                     data-test="create-project-from-category"
                 />
             </div>
-            <ProjectSearchTab :search="search" />
+            <GlobalSearchTab :search="fixedSearch" />
         </div>
     </div>
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
 import formatHtml from '@/mixins/formatHtml.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
-
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
-import {
-    updateFiltersFromURL,
-    updateSearchQuery,
-    resetPaginationIfNeeded,
-} from '@/functs/search.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-
-import ProjectSearchTab from '@/pages/SearchPage/Tabs/ProjectSearchTab.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSearch from '@/composables/useSearch.js'
+
 export default {
     name: 'CategoryPage',
 
@@ -94,15 +83,15 @@ export default {
         SearchOptions,
         CategoryCardImage,
         BreadCrumbs,
-        ProjectSearchTab,
+        GlobalSearchTab,
     },
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
-        const organizationsStore = useOrganizationsStore()
+        const { searchFromQuery } = useSearch('projects')
         return {
             projectCategoriesStore,
-            organizationsStore,
+            searchFromQuery,
         }
     },
 
@@ -112,21 +101,6 @@ export default {
     data() {
         return {
             addProjectModalActive: false,
-            search: {
-                search: this.$route.query.search || '',
-                categories: [this.id],
-                tags: [],
-                members: [],
-                languages: [],
-                sdgs: [],
-                organizations: [this.organizationsStore.current.code],
-                ordering: '-updated_at',
-                limit: 30,
-                page: this.$route.query.page || 1,
-            },
-            searchOptionsInited: false,
-            filterQueryParams: ['search', 'sdgs', 'tags', 'languages', 'page'],
-            query: '',
         }
     },
 
@@ -136,7 +110,7 @@ export default {
         },
 
         category() {
-            if (this.$route.params.id) {
+            if (this.id) {
                 window.scrollTo(0, 0)
                 return this.projectCategoriesStore.allByIds[this.$route.params.id]
             }
@@ -170,6 +144,14 @@ export default {
                 },
             ]
         },
+
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                categories: [this.category?.id],
+                section: 'projects',
+            }
+        },
     },
 
     props: {
@@ -178,54 +160,8 @@ export default {
             required: true,
         },
     },
-
-    watch: {
-        id: function (neo, old) {
-            if (neo && neo != old) {
-                this.search = {
-                    search: this.$route.query.search || '',
-                    categories: [this.id],
-                    tags: [],
-                    members: [],
-                    languages: [],
-                    sdgs: [],
-                    organizations: [this.organizationsStore.current.code],
-                    ordering: '-updated_at',
-                    limit: 30,
-                    page: this.$route.query.page || 1,
-                }
-            }
-        },
-    },
-
-    async created() {
-        Object.assign(
-            this.search,
-            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        )
-        this.searchOptionsInited = true
-    },
-
     beforeUnmount() {
         document.title = 'Projects'
-    },
-
-    methods: {
-        updateSearch(newSearch) {
-            // reset pagination to page 1 if other criterion have changed
-            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-            // and so seem always different than this.search
-            const search = resetPaginationIfNeeded(this.search, {
-                ...this.search,
-                ...newSearch,
-            })
-            this.search = search
-            this.updateSearchQuery()
-        },
-
-        updateSearchQuery: debounce(function () {
-            return updateSearchQuery(this, this.filterQueryParams)
-        }, 500),
     },
 
     beforeRouteEnter(_to, _from, next) {

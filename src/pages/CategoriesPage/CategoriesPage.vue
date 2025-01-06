@@ -3,15 +3,8 @@
         <div class="page-section-extra-wide">
             <h1 class="page-title">{{ $filters.capitalize($t('projects')) }}</h1>
 
-            <div v-if="searchOptionsInitiated" class="search-input-container">
-                <SearchOptions
-                    ref="searchOptions"
-                    :limit="30"
-                    :search="search"
-                    section="projects"
-                    show-filters
-                    @search-options-updated="updateSearch"
-                />
+            <div class="search-input-container">
+                <SearchOptions ref="searchOptions" :limit="30" section="projects" />
             </div>
         </div>
 
@@ -26,7 +19,7 @@
         </div>
 
         <div class="page-section-wide" v-if="hasSearch || forceSearch">
-            <GlobalSearchTab :search="search" />
+            <GlobalSearchTab :search="fixedSearch" />
             <div class="btn-ctn">
                 <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
             </div>
@@ -56,19 +49,14 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
 import LpiCategoryCard from '@/components/category/LpiCategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-import {
-    updateFiltersFromURL,
-    updateSearchQuery,
-    resetPaginationIfNeeded,
-} from '@/functs/search.ts'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSearch from '@/composables/useSearch.js'
+
 export default {
     name: 'CategoriesPage',
 
@@ -83,44 +71,17 @@ export default {
 
     setup() {
         const projectCategoriesStore = useProjectCategories()
-        const organizationsStore = useOrganizationsStore()
+        const { searchFromQuery } = useSearch('projects')
         return {
             projectCategoriesStore,
-            organizationsStore,
+            searchFromQuery,
         }
     },
 
     data() {
         return {
-            search: {
-                search: '',
-                categories: [],
-                tags: [],
-                members: [],
-                sdgs: [],
-                languages: [],
-                skills: [],
-                section: 'all',
-                organizations: [this.organizationsStore.current.code],
-                ordering: '-updated_at',
-                limit: 30,
-                page: 1,
-            },
-            projectsCount: 0,
-            searchOptionsInitiated: false,
-            filterQueryParams: ['search', 'sdgs', 'categories', 'tags', 'languages', 'page'],
-            selectedSection: 'all',
             forceSearch: false,
         }
-    },
-
-    async mounted() {
-        Object.assign(
-            this.search,
-            await updateFiltersFromURL(this.$route.query, this.filterQueryParams)
-        )
-        this.searchOptionsInitiated = true
-        this.selectedSection = this.$route.query.section
     },
 
     computed: {
@@ -130,12 +91,18 @@ export default {
 
         hasSearch() {
             return (
-                !!this.search.search ||
+                !!this.searchFromQuery.search ||
                 ['sdgs', 'categories', 'tags', 'languages'].reduce(
-                    (acc, key) => acc || this.search[key].length > 0,
+                    (acc, key) => acc || this.searchFromQuery[key]?.length > 0,
                     false
                 )
             )
+        },
+        fixedSearch() {
+            return {
+                ...this.searchFromQuery,
+                section: 'projects',
+            }
         },
     },
 
@@ -144,21 +111,6 @@ export default {
             this.$router.push({ name: 'Category', params: { id } })
         },
 
-        updateSearch: debounce(function (newSearch) {
-            // reset pagination to page 1 if other criterion have changed
-            // { ...this.search, ...newSearch } is needed as SearchOptions emitted value dont have some params like limit
-            // and so seem always different than this.search
-            const search = resetPaginationIfNeeded(this.search, {
-                ...this.search,
-                ...newSearch,
-            })
-            this.search = search
-            this.updateSearchQuery()
-        }, 500),
-
-        updateSearchQuery() {
-            return updateSearchQuery(this, this.filterQueryParams)
-        },
         showCategories() {
             this.$refs['searchOptions']?.deleteQuery()
             this.$refs['searchOptions']?.clearSelectedFilters()

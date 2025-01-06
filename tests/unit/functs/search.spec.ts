@@ -1,9 +1,4 @@
-import {
-    searchEquals,
-    updateSearchQuery,
-    resetPaginationIfNeeded,
-    updateFiltersFromURL,
-} from '@/functs/search'
+import { searchEquals, resetPaginationIfNeeded, updateFiltersFromURL } from '@/functs/search'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 describe('updateFiltersFromURL', () => {
@@ -167,45 +162,45 @@ describe('searchEquals', () => {
         expect(searchEquals(search_a, search_b, ['bar', 'bar2'])).toBeTruthy()
     })
 })
+// TODO: this doesnt exist anymore, test the logic
+// describe('updateSearchQuery', () => {
+//     function makeThat(search, query) {
+//         return {
+//             search: search,
+//             $route: {
+//                 path: 'path',
+//                 query: query,
+//             },
+//             $router: {
+//                 replace: vi.fn(),
+//             },
+//         }
+//     }
 
-describe('updateSearchQuery', () => {
-    function makeThat(search, query) {
-        return {
-            search: search,
-            $route: {
-                path: 'path',
-                query: query,
-            },
-            $router: {
-                replace: vi.fn(),
-            },
-        }
-    }
+//     it('should not update route if search is the same', () => {
+//         const search = { foo: 'bar' }
+//         const query = { foo: 'bar' }
+//         const that = makeThat(search, query)
+//         updateSearchQuery(that, ['foo'])
+//         expect(that.$router.replace).not.toHaveBeenCalled()
+//     })
 
-    it('should not update route if search is the same', () => {
-        const search = { foo: 'bar' }
-        const query = { foo: 'bar' }
-        const that = makeThat(search, query)
-        updateSearchQuery(that, ['foo'])
-        expect(that.$router.replace).not.toHaveBeenCalled()
-    })
+//     it('should update route if search is different', () => {
+//         const search = { foo: 'bar' }
+//         const query = { foo: '123' }
+//         const that = makeThat(search, query)
+//         updateSearchQuery(that, ['foo'])
+//         expect(that.$router.replace).toHaveBeenCalled()
+//     })
 
-    it('should update route if search is different', () => {
-        const search = { foo: 'bar' }
-        const query = { foo: '123' }
-        const that = makeThat(search, query)
-        updateSearchQuery(that, ['foo'])
-        expect(that.$router.replace).toHaveBeenCalled()
-    })
-
-    it('should not update route if non whitelisted key are different', () => {
-        const search = { foo: 'bar', baz: 123 }
-        const query = { foo: 'bar' }
-        const that = makeThat(search, query)
-        updateSearchQuery(that, ['foo'])
-        expect(that.$router.replace).not.toHaveBeenCalled()
-    })
-})
+//     it('should not update route if non whitelisted key are different', () => {
+//         const search = { foo: 'bar', baz: 123 }
+//         const query = { foo: 'bar' }
+//         const that = makeThat(search, query)
+//         updateSearchQuery(that, ['foo'])
+//         expect(that.$router.replace).not.toHaveBeenCalled()
+//     })
+// })
 
 describe('resetPaginationIfNeeded', () => {
     it('sould not reset page if other filter are the same', () => {
