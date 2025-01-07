@@ -38,7 +38,12 @@
         <hr class="separator" />
         <!-- follow -->
         <div class="form-group">
-            <UserProjectsSearch :limit="projectsLimit" follow :user="user">
+            <UserProjectsSearch
+                :limit="projectsLimit"
+                follow
+                :user="user"
+                :key="followedProjectsKey"
+            >
                 <template
                     #default="{
                         items: projects,
@@ -55,7 +60,7 @@
                         <LinkButton
                             :label="$t('profile.edit.projects.followed.add')"
                             btn-icon="Plus"
-                            @click="openFollowProjectDrawer"
+                            @click="showFollowProjectDrawer = true"
                         />
                     </div>
                     <p class="notice">{{ $t('profile.edit.projects.followed.notice') }}</p>
@@ -107,27 +112,20 @@
             </UserProjectsSearch>
         </div>
     </div>
-    <PickProjectsDrawer
-        v-if="showFollowProjectDrawer"
+    <ChooseFollowedProjectsDrawer
         :is-opened="showFollowProjectDrawer"
-        :pre-selected-projects="followedProjects"
-        @close="showFollowProjectDrawer = false"
-        @picked-projects="onProjectsPicked"
-        :title="$t('group.form.add-projects')"
-        :asyncing="followedProjectAsyncing"
+        @close="closeFollowProjectDrawer"
     />
 </template>
 <script>
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
-import followUtils from '@/functs/followUtils.ts'
-import { getUserFollows } from '@/api/follows.service'
+import ChooseFollowedProjectsDrawer from '@/components/project/ChooseFollowedProjectsDrawer.vue'
 
 export default {
     name: 'ProfileProjectsEditTab',
-    components: { UserProjectsSearch, UserProjectList, LinkButton, PickProjectsDrawer },
+    components: { UserProjectsSearch, UserProjectList, LinkButton, ChooseFollowedProjectsDrawer },
     emits: ['profile-edited'],
     props: {
         user: {
@@ -138,77 +136,16 @@ export default {
     data() {
         return {
             showFollowProjectDrawer: false,
-            followedProjects: [],
             projectsLimit: 12,
             projectColumns: 4,
-            followedProjectLoading: true,
-            followedProjectAsyncing: false,
+            followedProjectsKey: 1,
         }
     },
-    mounted() {
-        this.setFollowedProject()
-    },
     methods: {
-        openFollowProjectDrawer() {
-            this.showFollowProjectDrawer = true
-        },
-        async setFollowedProject() {
-            this.followedProjectLoading = true
-            try {
-                await getUserFollows({
-                    follower_id: this.user.id,
-                }).then((resp) => {
-                    this.followedProjects = resp.results.map((follow) => follow.project)
-                })
-            } catch (error) {
-                console.error(error)
-            } finally {
-                this.followedProjectLoading = false
-            }
-        },
-
-        async onProjectsPicked(projects) {
-            this.followedProjectAsyncing = true
-
-            const previousIndex = this.followedProjects.reduce((acc, project) => {
-                acc[project.id] = true
-                return acc
-            }, {})
-
-            const currentIndex = projects.reduce((acc, project) => {
-                acc[project.id] = true
-                return acc
-            }, {})
-
-            const toRemove = this.followedProjects.filter((project) => !currentIndex[project.id])
-            const toAdd = projects.filter((project) => !previousIndex[project.id])
-
-            if (toRemove.length) {
-                await Promise.all(
-                    toRemove.map((project) =>
-                        followUtils.unfollow({
-                            follower_id: project.is_followed.follow_id,
-                            project_id: project.id,
-                        })
-                    )
-                )
-            }
-
-            let listFollowedProjects = []
-            for (let i = 0; i < toAdd.length; i++) {
-                listFollowedProjects.push({
-                    project_id: toAdd[i].id,
-                })
-            }
-            let body = { follows: listFollowedProjects }
-            await followUtils.followMany({
-                id: this.user.id,
-                body: body,
-            })
-            this.$emit('profile-edited')
-            await this.setFollowedProject()
-            this.followedProjectAsyncing = false
+        closeFollowProjectDrawer() {
             this.showFollowProjectDrawer = false
+            // this will trigger followed projects reload
+            this.followedProjectsKey++
         },
     },
 }

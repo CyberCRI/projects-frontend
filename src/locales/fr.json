@@ -1293,7 +1293,8 @@
                 "followed": {
                     "label": "Projets que je suis",
                     "notice": "Lorsque vous suivez un projet, vous recevez des notifications sur toute nouvelle activité sur celui-ci. Si vous souhaitez suivre un projet, visitez-le et cliquez sur le bouton \"Suivre\" à côté de son titre.",
-                    "add": "Ajouter"
+                    "add": "Ajouter",
+                    "drawer-title": "Choisir les projets que je suis"
                 },
                 "reviewed": {
                     "label": "Projets que je révise",

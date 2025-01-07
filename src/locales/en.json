@@ -1297,7 +1297,8 @@
                 "followed": {
                     "label": "Projects I follow",
                     "notice": "When you follow a project you receive notifications about any new activity on it. If you want to follow a  project, visit it and click the \"Follow\" button next to its title.",
-                    "add": "Add"
+                    "add": "Add",
+                    "drawer-title": "Choose the projects I follow"
                 },
                 "reviewed": {
                     "label": "Projects I review",
