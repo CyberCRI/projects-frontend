@@ -1,32 +1,48 @@
 <template>
     <div class="groups-tab">
-        <div v-if="isLoading" class="loader">
-            <LpiLoader type="simple" />
-        </div>
-        <div v-else>
+        <div>
             <h4 class="title">
-                {{ $t('me.groups') }} <span>({{ groups.length }})</span>
+                {{ $t('me.groups') }} <span>({{ user?.people_groups?.length || 0 }})</span>
             </h4>
             <div class="list">
-                <CardList
-                    :desktop-columns-number="6"
-                    :is-loading="isLoading"
-                    :limit="6"
-                    :items="groups"
-                >
+                <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
                     <template #default="groupListSlotProps">
-                        <GroupCard
-                            v-if="groupListSlotProps.item"
-                            :group="groupListSlotProps.item"
-                            @navigated-away="$emit('close')"
-                        />
-                    </template>
-                    <template #empty>
-                        <div class="empty-ctn">
-                            <EmptyCard class="empty-card" :label="noGroupLabel" />
+                        <CardList
+                            :desktop-columns-number="6"
+                            :limit="listLimit"
+                            :items="groupListSlotProps.items || []"
+                            :is-loading="groupListSlotProps.isLoading"
+                        >
+                            <template #default="cardListSlotProps">
+                                <GroupCard
+                                    v-if="cardListSlotProps.item"
+                                    :group="cardListSlotProps.item"
+                                    @navigated-away="$emit('close')"
+                                />
+                            </template>
+                            <template #empty>
+                                <div class="empty-ctn">
+                                    <EmptyCard class="empty-card" :label="noGroupLabel" />
+                                </div>
+                            </template>
+                        </CardList>
+
+                        <div
+                            v-if="
+                                !groupListSlotProps.isLoading &&
+                                groupListSlotProps.pagination?.total > 1
+                            "
+                            class="pagination-container"
+                        >
+                            <PaginationButtons
+                                :current="groupListSlotProps.pagination.currentPage"
+                                :pagination="groupListSlotProps.pagination"
+                                :total="groupListSlotProps.pagination.total"
+                                @update-pagination="groupListSlotProps.paginationAction"
+                            />
                         </div>
                     </template>
-                </CardList>
+                </ListPaginator>
             </div>
         </div>
     </div>
@@ -35,11 +51,9 @@
 <script>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
-import { getGroup } from '@/api/groups.service'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 
 export default {
     name: 'ProfileGroupsTab',
@@ -49,16 +63,9 @@ export default {
     components: {
         CardList,
         GroupCard,
-        LpiLoader,
         EmptyCard,
-    },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        const usersStore = useUsersStore()
-        return {
-            organizationsStore,
-            usersStore,
-        }
+        ListPaginator,
+        PaginationButtons,
     },
     props: {
         user: {
@@ -66,41 +73,10 @@ export default {
             required: true,
         },
     },
+
     data() {
         return {
-            groups: [],
-            isLoading: false,
-        }
-    },
-
-    async mounted() {
-        this.isLoading = true
-        try {
-            // tricky stuff here, some group might not exist anymore
-            this.groups = await Promise.allSettled(
-                this.user.people_groups.map(async (group) => {
-                    try {
-                        return await getGroup(
-                            this.organizationsStore.current.code,
-                            group.id,
-                            true // no error toast
-                        )
-                    } catch (error) {
-                        console.error('missing group', group.id)
-                        return null
-                    }
-                })
-            ).then(
-                (results) =>
-                    results
-                        .filter((result) => result && result.status == 'fulfilled') // filter out failed requests
-                        .map((result) => result.value) // get the value of successful requests
-            )
-            this.groups = this.groups.filter((group) => !!group)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            this.isLoading = false
+            listLimit: 12,
         }
     },
 
@@ -143,6 +119,13 @@ export default {
         & > div {
             width: 100%;
         }
+    }
+
+    .pagination-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>
