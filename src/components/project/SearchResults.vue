@@ -1,5 +1,5 @@
 <template>
-    <div :id="projectListId">
+    <div>
         <slot
             :is-loading="isLoading"
             :limit="searchLimit"
@@ -7,12 +7,9 @@
             :total-count="totalCount"
         ></slot>
 
-        <div
-            v-if="showPagination && pagination.total > 1 && !isLoading && !isPreview"
-            class="project-list-search__footer"
-        >
+        <div v-if="pagination?.total > 1 && !isLoading" class="project-list-pagination">
             <PaginationButtons
-                v-if="paginationButtonsIsVisible"
+                v-if="pagination"
                 :current="pagination.currentPage"
                 :pagination="pagination"
                 :total="pagination.total"
@@ -23,8 +20,6 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
-import funct from '@/functs/functions.ts'
 import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
@@ -35,7 +30,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'SearchResults',
 
-    emits: ['number-project', 'list-updated', 'pagination-changed', 'loading'],
+    emits: ['loading'],
 
     components: {
         PaginationButtons,
@@ -48,35 +43,21 @@ export default {
     },
 
     props: {
-        showPagination: {
-            type: Boolean,
-            default: false,
-        },
         search: {
             type: Object,
             default: () => {},
-        },
-        isPreview: {
-            // used to prevent pagination from showing
-            type: Boolean,
-            default: false,
         },
         mode: {
             // global, projects, groups, people
             type: String,
             default: 'global',
         },
-        paginationButtonsIsVisible: {
-            type: Boolean,
-            default: true,
-        },
     },
 
     data() {
         return {
-            projectListId: funct.newSID(true),
             pagination: {
-                currentPage: this.search && this.search.page ? this.search.page : 1,
+                currentPage: this.search?.page || 1,
                 total: 1,
                 previous: undefined,
                 next: undefined,
@@ -85,7 +66,6 @@ export default {
             },
             items: [],
             isLoading: true,
-            loadProjects: debounce(this._loadProjects, 40, { leading: false, trailing: true }),
             lastRequest: 0,
             totalCount: 0,
         }
@@ -93,7 +73,7 @@ export default {
 
     computed: {
         searchLimit() {
-            return this.search && this.search.limit ? this.search.limit : 12
+            return this.search?.limit || 12
         },
 
         organisation() {
@@ -130,7 +110,7 @@ export default {
             this.$emit('loading', true)
         },
 
-        async _loadProjects(specificPageIndex = null) {
+        async loadProjects(specificPageIndex = null) {
             const filters = {
                 ...this.search,
                 organizations: [this.organizationsStore.current.code],
@@ -147,13 +127,14 @@ export default {
             }
             delete filters.page
 
+            // memoize request order
+            // to only update with response to the last one
             this.lastRequest++
             const localRequest = this.lastRequest
 
             this.initProjectLoading()
             // Get projects and update project list
             let response
-
             if (specificPageIndex) {
                 response = (await axios.get(specificPageIndex)).data
             } else if (this.mode === 'projects') {
@@ -169,61 +150,39 @@ export default {
                     organizations: this.organisation.code,
                 })
             }
+            // update with the ltest request result
+            // to fix concurrency issue when multiple request fired
             if (response && localRequest === this.lastRequest) this.updateProjectList(response)
         },
 
         updateProjectList(response) {
             this.updatePagination(response)
-            // Set new projects and end loading
             const maxResults = response.max_results || this.searchLimit
-
-            this.$emit('number-project', response.count)
-
             this.totalCount = response.count
             this.items.push(...response.results.slice(0, maxResults))
             this.isLoading = false
             this.$emit('loading', false)
-
-            // Make Home.vue show/hide my-projects section depending on new projects length
-            this.$emit('list-updated', response.count)
         },
 
         updatePagination(response) {
-            this.pagination.currentPage = response.current_page
-            const maxResults = response.max_results || 12
+            const maxResults = response.max_results || this.searchLimit
             this.pagination.total = response.total_page || Math.ceil(response.count / maxResults)
             this.pagination.previous = response.previous
             this.pagination.next = response.next
             this.pagination.first = response.first
             this.pagination.last = response.last
-
-            this.$emit('pagination-changed', this.pagination)
+            this.pagination.currentPage = response.current_page
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
-.project-list-search__footer {
+.project-list-pagination {
     padding-top: $space-l;
     padding-bottom: $space-2xl;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.additional-projects {
-    border: $border-width-l solid $primary-dark;
-    border-radius: $border-radius-l;
-    color: $primary-dark;
-    cursor: pointer;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &__counter {
-        font-weight: 700;
-    }
 }
 </style>

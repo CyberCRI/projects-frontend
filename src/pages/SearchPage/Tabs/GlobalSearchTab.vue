@@ -2,7 +2,6 @@
     <SearchResults
         :search="search"
         :mode="search.section || 'global'"
-        show-pagination
         @pagination-changed="onPaginationChange"
     >
         <template #default="SearchResultsSlotProps">
