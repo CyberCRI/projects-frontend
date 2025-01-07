@@ -2,69 +2,112 @@
     <div class="profile-edit-projects">
         <!-- member -->
         <div class="form-group">
-            <label>{{ $t('profile.edit.projects.member.label') }} ({{ memberProjectCount }})</label>
-            <p class="notice">{{ $t('profile.edit.projects.member.notice') }}</p>
-            <div class="project-list-wrapper">
-                <UserProjectList
-                    :empty-label="$t('me.no-project-participate')"
-                    :limit="projectsLimit"
-                    :member-role="['owners', 'members']"
-                    :number-column="projectColumns"
-                    :user="user"
-                    class="project-list"
-                    @project-count="setMemberProjectCount"
-                />
-            </div>
+            <UserProjectsSearch
+                :limit="projectsLimit"
+                :member-roles="['owners', 'members']"
+                :user="user"
+            >
+                <template
+                    #default="{
+                        items: projects,
+                        isLoading,
+                        totalCount,
+                        pagination,
+                        paginationAction,
+                    }"
+                >
+                    <label>
+                        {{ $t('profile.edit.projects.member.label') }} ({{ totalCount }})
+                    </label>
+                    <p class="notice">{{ $t('profile.edit.projects.member.notice') }}</p>
+                    <div class="project-list-wrapper">
+                        <UserProjectList
+                            :empty-label="$t('me.no-project-participate')"
+                            :limit="projectsLimit"
+                            :number-column="projectColumns"
+                            :projects="projects"
+                            :all-project-count="totalCount"
+                            :projects-loading="isLoading"
+                            :pagination="pagination"
+                            @pagination-changed="paginationAction"
+                            class="project-list"
+                        />
+                    </div>
+                </template>
+            </UserProjectsSearch>
         </div>
         <hr class="separator" />
         <!-- follow -->
         <div class="form-group">
-            <div class="label-wrapper">
-                <label
-                    >{{ $t('profile.edit.projects.followed.label') }} ({{
-                        followedProjects ? followedProjects.length : 0
-                    }})</label
+            <UserProjectsSearch :limit="projectsLimit" follow :user="user">
+                <template
+                    #default="{
+                        items: projects,
+                        isLoading,
+                        totalCount,
+                        pagination,
+                        paginationAction,
+                    }"
                 >
-                <LinkButton
-                    :label="$t('profile.edit.projects.followed.add')"
-                    btn-icon="Plus"
-                    @click="openFollowProjectDrawer"
-                />
-            </div>
-            <p class="notice">{{ $t('profile.edit.projects.followed.notice') }}</p>
-            <div class="project-list-wrapper">
-                <UserProjectList
-                    :empty-label="$t('me.no-follow')"
-                    :limit="projectsLimit"
-                    :number-column="projectColumns"
-                    :user="user"
-                    :projects="followedProjects"
-                    :projects-loading="followedProjectLoading"
-                    class="project-list"
-                    @card-update="updateFollows"
-                />
-            </div>
+                    <div class="label-wrapper">
+                        <label>
+                            {{ $t('profile.edit.projects.followed.label') }} ({{ totalCount }})
+                        </label>
+                        <LinkButton
+                            :label="$t('profile.edit.projects.followed.add')"
+                            btn-icon="Plus"
+                            @click="openFollowProjectDrawer"
+                        />
+                    </div>
+                    <p class="notice">{{ $t('profile.edit.projects.followed.notice') }}</p>
+                    <div class="project-list-wrapper">
+                        <UserProjectList
+                            :empty-label="$t('me.no-follow')"
+                            :limit="projectsLimit"
+                            :number-column="projectColumns"
+                            :projects="projects"
+                            :all-project-count="totalCount"
+                            :projects-loading="isLoading"
+                            :pagination="pagination"
+                            @pagination-changed="paginationAction"
+                            class="project-list"
+                        />
+                    </div>
+                </template>
+            </UserProjectsSearch>
         </div>
         <hr class="separator" />
         <!-- review -->
         <div class="form-group">
-            <label
-                >{{ $t('profile.edit.projects.reviewed.label') }} ({{
-                    reviewedProjectCount
-                }})</label
-            >
-            <p class="notice">{{ $t('profile.edit.projects.reviewed.notice') }}</p>
-            <div class="project-list-wrapper">
-                <UserProjectList
-                    :empty-label="$t('me.no-project-reviewing')"
-                    :limit="projectsLimit"
-                    :member-role="['reviewers']"
-                    :number-column="projectColumns"
-                    :user="user"
-                    class="project-list"
-                    @project-count="setReviewedProjectCount"
-                />
-            </div>
+            <UserProjectsSearch :limit="projectsLimit" :member-roles="['reviewers']" :user="user">
+                <template
+                    #default="{
+                        items: projects,
+                        isLoading,
+                        totalCount,
+                        pagination,
+                        paginationAction,
+                    }"
+                >
+                    <label>
+                        {{ $t('profile.edit.projects.reviewed.label') }} ({{ totalCount }})
+                    </label>
+                    <p class="notice">{{ $t('profile.edit.projects.reviewed.notice') }}</p>
+                    <div class="project-list-wrapper">
+                        <UserProjectList
+                            :empty-label="$t('me.no-project-reviewing')"
+                            :limit="projectsLimit"
+                            :number-column="projectColumns"
+                            :projects="projects"
+                            :all-project-count="totalCount"
+                            :projects-loading="isLoading"
+                            :pagination="pagination"
+                            @pagination-changed="paginationAction"
+                            class="project-list"
+                        />
+                    </div>
+                </template>
+            </UserProjectsSearch>
         </div>
     </div>
     <PickProjectsDrawer
@@ -78,6 +121,7 @@
     />
 </template>
 <script>
+import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
@@ -86,11 +130,7 @@ import { getUserFollows } from '@/api/follows.service'
 
 export default {
     name: 'ProfileProjectsEditTab',
-    components: {
-        UserProjectList,
-        LinkButton,
-        PickProjectsDrawer,
-    },
+    components: { UserProjectsSearch, UserProjectList, LinkButton, PickProjectsDrawer },
     emits: ['profile-edited'],
     props: {
         user: {
@@ -101,9 +141,7 @@ export default {
     data() {
         return {
             showFollowProjectDrawer: false,
-            memberProjectCount: 0,
             followedProjects: [],
-            reviewedProjectCount: 0,
             projectsLimit: 12,
             projectColumns: 4,
             followedProjectLoading: true,
@@ -130,12 +168,6 @@ export default {
             } finally {
                 this.followedProjectLoading = false
             }
-        },
-        setMemberProjectCount(count) {
-            this.memberProjectCount = count
-        },
-        setReviewedProjectCount(count) {
-            this.reviewedProjectCount = count
         },
 
         async onProjectsPicked(projects) {
@@ -180,9 +212,6 @@ export default {
             await this.setFollowedProject()
             this.followedProjectAsyncing = false
             this.showFollowProjectDrawer = false
-        },
-        updateFollows() {
-            this.setFollowedProject()
         },
     },
 }

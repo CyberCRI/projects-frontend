@@ -6,7 +6,7 @@
             :items="items"
             :total-count="totalCount"
             :pagination="pagination"
-            :paginationAction="onClickPagination"
+            :pagination-action="onClickPagination"
         ></slot>
     </div>
 </template>
@@ -16,19 +16,14 @@ import debounce from 'lodash.debounce'
 import funct from '@/functs/functions.ts'
 import { getAllProjects } from '@/api/projects.service'
 import { getUserFollows } from '@/api/follows.service'
-
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
-    name: 'UserProjectSearch',
+    name: 'UserProjectsSearch',
 
     emits: ['number-project', 'list-updated', 'pagination-changed', 'loading'],
 
-    components: {
-        PaginationButtons,
-    },
     setup() {
         const organizationsStore = useOrganizationsStore()
         return {
@@ -55,14 +50,6 @@ export default {
             type: Number,
             default: 12,
         },
-
-        ///////////////////
-
-        isPreview: {
-            // used to prevent pagination from showing
-            type: Boolean,
-            default: false,
-        },
     },
 
     data() {
@@ -71,7 +58,6 @@ export default {
             items: [],
             isLoading: true,
             loadProjects: debounce(this._loadProjects, 40, { leading: false, trailing: true }),
-            lastRequest: 0,
             totalCount: 0,
             pagination: {
                 currentPage: 1,
@@ -85,9 +71,6 @@ export default {
     },
 
     computed: {
-        organisation() {
-            return this.organizationsStore.current
-        },
         search() {
             return {
                 limit: this.limit,
@@ -118,13 +101,8 @@ export default {
         },
 
         async _loadProjects(specificPageIndex = null) {
-            this.lastRequest++
-            const localRequest = this.lastRequest
-
             this.initProjectLoading()
-            // Get projects and update project list
             let response
-
             if (specificPageIndex) {
                 response = (await axios.get(specificPageIndex)).data
             } else if (this.follow) {
@@ -137,8 +115,7 @@ export default {
             } else {
                 response = await getAllProjects(this.search)
             }
-
-            /*if (response && localRequest === this.lastRequest)*/ this.updateProjectList(response)
+            this.updateProjectList(response)
         },
 
         updateProjectList(response) {

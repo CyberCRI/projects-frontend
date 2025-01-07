@@ -18,44 +18,56 @@
         </div>
         <div class="lists">
             <!-- user projects (Owners, Members) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.projects-participate'))"
-                :empty-label="noParticipate"
+            <UserProjectsSearch
                 :limit="listLimit"
-                :member-role="['owners', 'members']"
-                :number-column="listLimit"
+                :member-roles="['owners', 'members']"
                 :user="user"
-                class="project-list"
-                @card-update="updateFollows"
-            />
-
+            >
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <UserProjectList
+                        is-preview
+                        :label="$filters.capitalize($t('me.projects-participate'))"
+                        :empty-label="noParticipate"
+                        :limit="listLimit"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :all-project-count="totalCount"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
             <!-- user projects (Reviewers) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.projects-reviewing'))"
-                :empty-label="noReviewLabel"
-                :limit="listLimit"
-                :member-role="['reviewers']"
-                :number-column="listLimit"
-                :user="user"
-                class="project-list"
-                @card-update="updateFollows"
-            />
-
+            <UserProjectsSearch :limit="listLimit" :member-roles="['reviewers']" :user="user">
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <UserProjectList
+                        is-preview
+                        :label="$filters.capitalize($t('me.projects-reviewing'))"
+                        :empty-label="noReviewLabel"
+                        :limit="listLimit"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :all-project-count="totalCount"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
             <!-- user projects (Followed) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.follow'))"
-                :empty-label="noFollowLabel"
-                :limit="listLimit"
-                :number-column="listLimit"
-                :user="user"
-                :projects="filteredFollowedProjects"
-                :projects-loading="followedProjectLoading"
-                class="project-list"
-                @card-update="updateFollows"
-            />
+            <UserProjectsSearch :limit="listLimit" follow :user="user">
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <UserProjectList
+                        is-preview
+                        :label="$filters.capitalize($t('me.follow'))"
+                        :empty-label="noFollowLabel"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :all-project-count="totalCount"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
         </div>
         <div class="skills-mobile">
             <SkillSummary :user="user" />
@@ -64,16 +76,17 @@
 </template>
 
 <script>
+import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
-import { getUserFollows } from '@/api/follows.service'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileSummaryTab',
 
     components: {
+        UserProjectsSearch,
         UserProjectList,
         UserDescriptions,
         SkillSummary,
@@ -95,15 +108,8 @@ export default {
 
     data() {
         return {
-            followedProjectLoading: true,
-            followedProjects: [],
-            filteredFollowedProjects: [],
             listLimit: 6,
         }
-    },
-
-    async mounted() {
-        if (this.user) this.setFollowedProject()
     },
 
     computed: {
@@ -129,34 +135,6 @@ export default {
 
         noDescription() {
             return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
-        },
-    },
-
-    methods: {
-        setFollowedProject() {
-            getUserFollows({
-                follower_id: this.user.id,
-            })
-                .then((resp) => {
-                    this.followedProjects = resp.results
-                    this.sortFollows()
-                })
-                .finally(() => {
-                    this.isLoading = false
-                })
-        },
-
-        sortFollows() {
-            this.filteredFollowedProjects = []
-            this.followedProjects.forEach((follow) => {
-                this.filteredFollowedProjects.push(follow.project)
-            })
-
-            this.followedProjectLoading = false
-        },
-
-        updateFollows() {
-            this.setFollowedProject()
         },
     },
 }

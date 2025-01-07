@@ -72,14 +72,6 @@ describe('ProfileSummaryTab', () => {
         expect(vm.isCurrentUser).toBeFalsy()
     })
 
-    it('should fetch user followed projects', async () => {
-        const user = UserFactory.generate()
-        let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
-
-        await flushPromises()
-        expect(getUserFollows).toHaveBeenCalled()
-    })
-
     it('should display a message if user has no bio set', async () => {
         const user = UserFactory.generate()
         user.personal_description = null

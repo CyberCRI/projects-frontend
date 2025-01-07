@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import SearchResults from '@/components/project/SearchResults.vue'
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
@@ -62,7 +61,6 @@ export default {
     emits: ['project-count', 'navigated-away', 'card-update', 'pagination-changed'],
 
     components: {
-        SearchResults,
         CardList,
         ProjectCard,
         SeeMoreArrow,
@@ -92,16 +90,6 @@ export default {
         projectsLoading: {
             type: Boolean,
             default: false,
-        },
-
-        user: {
-            type: Object,
-            required: true,
-        },
-
-        memberRole: {
-            type: Array,
-            default: () => ['owners', 'members', 'reviewers'],
         },
 
         label: {

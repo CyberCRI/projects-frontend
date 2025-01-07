@@ -25,9 +25,7 @@
 <script>
 import debounce from 'lodash.debounce'
 import funct from '@/functs/functions.ts'
-import { getAllProjects } from '@/api/projects.service'
 import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
-
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { axios } from '@/api/api.config'
 import { searchEquals } from '@/functs/search.ts'
@@ -159,14 +157,7 @@ export default {
             if (specificPageIndex) {
                 response = (await axios.get(specificPageIndex)).data
             } else if (this.mode === 'projects') {
-                // if (filters.member_role) {
-                // search by role is not implemented in algolia
-                // so fallback to old API for now
-                // (used in user profile page)
-                //   response = await getAllProjects(filters)
-                // } else {
                 response = await searchProjects(query, filters)
-                // }
             } else if (this.mode === 'groups') {
                 response = await searchGroupsAlgolia(query, filters)
             } else if (this.mode === 'people') {
