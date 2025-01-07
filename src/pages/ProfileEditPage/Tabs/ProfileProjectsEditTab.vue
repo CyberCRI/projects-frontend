@@ -26,7 +26,6 @@
                             :limit="projectsLimit"
                             :number-column="projectColumns"
                             :projects="projects"
-                            :all-project-count="totalCount"
                             :projects-loading="isLoading"
                             :pagination="pagination"
                             @pagination-changed="paginationAction"
@@ -66,7 +65,6 @@
                             :limit="projectsLimit"
                             :number-column="projectColumns"
                             :projects="projects"
-                            :all-project-count="totalCount"
                             :projects-loading="isLoading"
                             :pagination="pagination"
                             @pagination-changed="paginationAction"
@@ -99,7 +97,6 @@
                             :limit="projectsLimit"
                             :number-column="projectColumns"
                             :projects="projects"
-                            :all-project-count="totalCount"
                             :projects-loading="isLoading"
                             :pagination="pagination"
                             @pagination-changed="paginationAction"
@@ -218,4 +215,18 @@ export default {
 </script>
 <style scoped lang="scss">
 @import './profile-form';
+
+.project-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: $space-2xl 0 $space-l 0;
+
+    .title {
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
+        margin: 0;
+    }
+}
 </style>

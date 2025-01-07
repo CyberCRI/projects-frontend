@@ -24,14 +24,22 @@
                 :user="user"
             >
                 <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.projects-participate') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
                     <UserProjectList
-                        is-preview
-                        :label="$filters.capitalize($t('me.projects-participate'))"
                         :empty-label="noParticipate"
                         :limit="listLimit"
                         :number-column="listLimit"
                         :projects="projects"
-                        :all-project-count="totalCount"
                         :projects-loading="isLoading"
                         class="project-list"
                     />
@@ -40,14 +48,22 @@
             <!-- user projects (Reviewers) -->
             <UserProjectsSearch :limit="listLimit" :member-roles="['reviewers']" :user="user">
                 <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.projects-reviewing') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
                     <UserProjectList
-                        is-preview
-                        :label="$filters.capitalize($t('me.projects-reviewing'))"
                         :empty-label="noReviewLabel"
                         :limit="listLimit"
                         :number-column="listLimit"
                         :projects="projects"
-                        :all-project-count="totalCount"
                         :projects-loading="isLoading"
                         class="project-list"
                     />
@@ -56,13 +72,21 @@
             <!-- user projects (Followed) -->
             <UserProjectsSearch :limit="listLimit" follow :user="user">
                 <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.follow') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
                     <UserProjectList
-                        is-preview
-                        :label="$filters.capitalize($t('me.follow'))"
                         :empty-label="noFollowLabel"
                         :number-column="listLimit"
                         :projects="projects"
-                        :all-project-count="totalCount"
                         :projects-loading="isLoading"
                         class="project-list"
                     />
@@ -81,6 +105,7 @@ import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 export default {
     name: 'ProfileSummaryTab',
@@ -90,6 +115,7 @@ export default {
         UserProjectList,
         UserDescriptions,
         SkillSummary,
+        SeeMoreArrow,
     },
 
     setup() {
@@ -97,6 +123,13 @@ export default {
         return {
             usersStore,
         }
+    },
+
+    inject: {
+        selectTab: {
+            from: 'tabsLayoutSelectTab',
+            default: () => {},
+        },
     },
 
     props: {
@@ -135,6 +168,12 @@ export default {
 
         noDescription() {
             return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
+        },
+    },
+
+    methods: {
+        goToProfileProjects() {
+            this.selectTab(2)
         },
     },
 }
@@ -202,6 +241,20 @@ export default {
         .lists {
             padding: 0 $layout-size-2xs;
         }
+    }
+}
+
+.project-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: $space-2xl 0 $space-l 0;
+
+    .title {
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
+        margin: 0;
     }
 }
 

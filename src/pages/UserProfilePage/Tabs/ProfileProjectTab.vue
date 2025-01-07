@@ -15,12 +15,17 @@
             <template
                 #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
             >
+                <div class="project-list-header">
+                    <h4 class="title">
+                        {{ $filters.capitalize($t('me.projects-participate')) }}
+                        <span>({{ totalCount }})</span>
+                    </h4>
+                </div>
                 <UserProjectList
-                    :label="$filters.capitalize($t('me.projects-participate'))"
+                    :label="$t('me.projects-participate')"
                     :empty-label="noParticipate"
                     :number-column="6"
                     :projects="projects"
-                    :all-project-count="totalCount"
                     :projects-loading="isLoading"
                     :pagination="pagination"
                     @pagination-changed="paginationAction"
@@ -33,12 +38,16 @@
             <template
                 #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
             >
+                <div class="project-list-header">
+                    <h4 class="title">
+                        {{ $t('me.projects-reviewing') }}
+                        <span>({{ totalCount }})</span>
+                    </h4>
+                </div>
                 <UserProjectList
-                    :label="$filters.capitalize($t('me.projects-reviewing'))"
                     :empty-label="noReviewLabel"
                     :number-column="6"
                     :projects="projects"
-                    :all-project-count="totalCount"
                     :projects-loading="isLoading"
                     :pagination="pagination"
                     @pagination-changed="paginationAction"
@@ -52,13 +61,16 @@
             <template
                 #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
             >
+                <div class="project-list-header">
+                    <h4 class="title">
+                        {{ $t('me.follow') }} <span>({{ totalCount }})</span>
+                    </h4>
+                </div>
                 <UserProjectList
-                    :label="$filters.capitalize($t('me.follow'))"
                     :empty-label="noFollowLabel"
                     :limit="12"
                     :number-column="6"
                     :projects="projects"
-                    :all-project-count="totalCount"
                     :projects-loading="isLoading"
                     :pagination="pagination"
                     @pagination-changed="paginationAction"
@@ -137,13 +149,13 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: $space-l;
-}
 
-.title {
-    font-size: $font-size-m;
-    font-weight: 700;
-    color: $primary-dark;
-    margin: $space-l 0;
+    .title {
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
+        margin: $space-l 0;
+    }
 }
 
 .create-project {
