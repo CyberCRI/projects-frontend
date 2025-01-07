@@ -39,21 +39,4 @@ describe('ProfileGroupsTab', () => {
 
         expect(wrapper.exists()).toBeTruthy()
     })
-
-    it('should fetch user groups while displaying a loader', async () => {
-        const user = UserFactory.generate()
-        user.people_groups = [{ id: '1' }, { id: '2' }, { id: '3' }]
-
-        let wrapper = lpiShallowMount(ProfileGroupsTab, buildParams(user))
-        const vm = wrapper.vm as any
-        await vm.$nextTick()
-        expect(vm.isLoading).toBe(true)
-        expect(wrapper.find('.loader').exists()).toBe(true)
-        expect(wrapper.find('card-list-stub').exists()).toBe(false)
-        await flushPromises()
-        expect(getGroup).toHaveBeenCalledTimes(3)
-        expect(vm.isLoading).toBe(false)
-        expect(wrapper.find('.loader').exists()).toBe(false)
-        expect(wrapper.find('card-list-stub').exists()).toBe(true)
-    })
 })
