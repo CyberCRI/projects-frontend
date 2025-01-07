@@ -57,20 +57,12 @@ describe('ProfileProjectTab', () => {
         expect(wrapper.exists()).toBeTruthy()
     })
 
-    it('should fetch user followed projects', async () => {
-        const user = UserFactory.generate()
-        let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
-
-        await flushPromises()
-        expect(getUserFollows).toHaveBeenCalled()
-    })
-
     it('should display 3 project lists', async () => {
         const user = UserFactory.generate()
         let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
 
         await flushPromises()
-        expect(wrapper.findAll('user-project-list-stub').length).toBe(3)
+        expect(wrapper.findAll('user-projects-search-stub').length).toBe(3)
     })
 
     it('should not display a create project button if not on self profile', async () => {

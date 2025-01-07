@@ -1,16 +1,15 @@
 <template>
-    <ProjectListSearch
+    <SearchResults
         :search="search"
-        :mode="searchMode"
-        show-pagination
+        :mode="search.section || 'global'"
         @pagination-changed="onPaginationChange"
     >
-        <template #default="ProjectListSearchSlotProps">
+        <template #default="SearchResultsSlotProps">
             <CardList
                 :desktop-columns-number="6"
-                :is-loading="ProjectListSearchSlotProps.isLoading"
-                :limit="ProjectListSearchSlotProps.limit"
-                :items="ProjectListSearchSlotProps.items"
+                :is-loading="SearchResultsSlotProps.isLoading"
+                :limit="SearchResultsSlotProps.limit"
+                :items="SearchResultsSlotProps.items"
                 class="list-container"
             >
                 <template #default="projectListSlotProps">
@@ -37,13 +36,13 @@
                 </template>
             </CardList>
         </template>
-    </ProjectListSearch>
+    </SearchResults>
 </template>
 
 <script>
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import CardList from '@/components/base/CardList.vue'
-import ProjectListSearch from '@/components/project/ProjectListSearch.vue'
+import SearchResults from '@/components/project/SearchResults.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import UserCard from '@/components/people/UserCard.vue'
 
@@ -55,28 +54,13 @@ export default {
         GroupCard,
         ProjectCard,
         CardList,
-        ProjectListSearch,
+        SearchResults,
     },
 
     props: {
         search: {
             type: Object,
             default: () => {},
-        },
-    },
-
-    computed: {
-        searchMode() {
-            // translate src/components/search/SearchOptions/SearchOptions.vue sectionFilters key
-            // to ProjectListSearch mode
-
-            if (this.search.section === 'projects') return 'projects'
-
-            if (this.search.section === 'people') return 'peoples'
-
-            if (this.search.section === 'groups') return 'groups'
-
-            return 'global'
         },
     },
 

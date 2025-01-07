@@ -113,6 +113,11 @@ export default {
             type: String,
             default: '',
         },
+
+        followOnClick: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -133,7 +138,7 @@ export default {
         toLink() {
             // a to-link attribute make the basic card a router-link
             // witch we dont want when just selecting project
-            return this.hasAddIcon || this.hasCloseIcon
+            return this.hasAddIcon || this.hasCloseIcon || this.followOnClick
                 ? null
                 : `/projects/${this.slugOrId}/summary`
         },
@@ -201,6 +206,7 @@ export default {
             // this is a quick and dirty fix to make whole card clickable for selection
             if (this.hasAddIcon) this.$emit('add')
             else if (this.hasCloseIcon) this.$emit('unselect', this.project)
+            else if (this.followOnClick) this.updateFollow()
             else this.$emit('navigated-away')
         },
 

@@ -28,7 +28,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 import useTagTexts from '@/composables/useTagTexts.js'
 
 export default {
-    name: 'SearchResults',
+    name: 'TagSearchResults',
 
     emits: ['result-clicked'],
 

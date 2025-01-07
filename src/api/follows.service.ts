@@ -15,10 +15,14 @@ export async function getProjectFollows(body: FollowInput): Promise<APIResponseL
     ).data
 }
 
-export async function getUserFollows(body: FollowInput): Promise<APIResponseList<FollowOutput>> {
+export async function getUserFollows(
+    body: FollowInput,
+    params
+): Promise<APIResponseList<FollowOutput>> {
     return (
         await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${body.follower_id}/follow/`
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/user/${body.follower_id}/follow/`,
+            { params }
         )
     ).data
 }

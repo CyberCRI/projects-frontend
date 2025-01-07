@@ -18,44 +18,80 @@
         </div>
         <div class="lists">
             <!-- user projects (Owners, Members) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.projects-participate'))"
-                :empty-label="noParticipate"
+            <UserProjectsSearch
                 :limit="listLimit"
-                :member-role="['owners', 'members']"
-                :number-column="listLimit"
+                :member-roles="['owners', 'members']"
                 :user="user"
-                class="project-list"
-                @card-update="updateFollows"
-            />
-
+            >
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.projects-participate') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
+                    <UserProjectList
+                        :empty-label="noParticipate"
+                        :limit="listLimit"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
             <!-- user projects (Reviewers) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.projects-reviewing'))"
-                :empty-label="noReviewLabel"
-                :limit="listLimit"
-                :member-role="['reviewers']"
-                :number-column="listLimit"
-                :user="user"
-                class="project-list"
-                @card-update="updateFollows"
-            />
-
+            <UserProjectsSearch :limit="listLimit" :member-roles="['reviewers']" :user="user">
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.projects-reviewing') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
+                    <UserProjectList
+                        :empty-label="noReviewLabel"
+                        :limit="listLimit"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
             <!-- user projects (Followed) -->
-            <UserProjectList
-                :is-preview="true"
-                :label="$filters.capitalize($t('me.follow'))"
-                :empty-label="noFollowLabel"
-                :limit="listLimit"
-                :number-column="listLimit"
-                :user="user"
-                :projects="filteredFollowedProjects"
-                :projects-loading="followedProjectLoading"
-                class="project-list"
-                @card-update="updateFollows"
-            />
+            <UserProjectsSearch :limit="listLimit" follow :user="user">
+                <template #default="{ items: projects, isLoading, totalCount }">
+                    <div class="project-list-header">
+                        <h4 class="title">
+                            {{ $t('me.follow') }}
+                            <span>({{ totalCount }})</span>
+                        </h4>
+                        <SeeMoreArrow
+                            v-if="totalCount > listLimit"
+                            @click.prevent="goToProfileProjects"
+                            data-test="see-more"
+                        />
+                    </div>
+                    <UserProjectList
+                        :empty-label="noFollowLabel"
+                        :number-column="listLimit"
+                        :projects="projects"
+                        :projects-loading="isLoading"
+                        class="project-list"
+                    />
+                </template>
+            </UserProjectsSearch>
         </div>
         <div class="skills-mobile">
             <SkillSummary :user="user" />
@@ -64,19 +100,22 @@
 </template>
 
 <script>
+import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
-import { getUserFollows } from '@/api/follows.service'
 import useUsersStore from '@/stores/useUsers.ts'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 export default {
     name: 'ProfileSummaryTab',
 
     components: {
+        UserProjectsSearch,
         UserProjectList,
         UserDescriptions,
         SkillSummary,
+        SeeMoreArrow,
     },
 
     setup() {
@@ -84,6 +123,13 @@ export default {
         return {
             usersStore,
         }
+    },
+
+    inject: {
+        selectTab: {
+            from: 'tabsLayoutSelectTab',
+            default: () => {},
+        },
     },
 
     props: {
@@ -95,15 +141,8 @@ export default {
 
     data() {
         return {
-            followedProjectLoading: true,
-            followedProjects: [],
-            filteredFollowedProjects: [],
             listLimit: 6,
         }
-    },
-
-    async mounted() {
-        if (this.user) this.setFollowedProject()
     },
 
     computed: {
@@ -133,30 +172,8 @@ export default {
     },
 
     methods: {
-        setFollowedProject() {
-            getUserFollows({
-                follower_id: this.user.id,
-            })
-                .then((resp) => {
-                    this.followedProjects = resp.results
-                    this.sortFollows()
-                })
-                .finally(() => {
-                    this.isLoading = false
-                })
-        },
-
-        sortFollows() {
-            this.filteredFollowedProjects = []
-            this.followedProjects.forEach((follow) => {
-                this.filteredFollowedProjects.push(follow.project)
-            })
-
-            this.followedProjectLoading = false
-        },
-
-        updateFollows() {
-            this.setFollowedProject()
+        goToProfileProjects() {
+            this.selectTab(2)
         },
     },
 }
@@ -224,6 +241,20 @@ export default {
         .lists {
             padding: 0 $layout-size-2xs;
         }
+    }
+}
+
+.project-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: $space-2xl 0 $space-l 0;
+
+    .title {
+        font-size: $font-size-l;
+        font-weight: 700;
+        color: $primary-dark;
+        margin: 0;
     }
 }
 

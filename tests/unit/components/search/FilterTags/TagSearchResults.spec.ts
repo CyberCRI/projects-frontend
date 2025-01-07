@@ -1,6 +1,6 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
-import SearchResults from '@/components/search/FilterTags/SearchResults.vue'
+import TagSearchResults from '@/components/search/FilterTags/TagSearchResults.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
 const i18n = {
@@ -11,27 +11,27 @@ const i18n = {
     },
 }
 
-describe('SearchResults', () => {
+describe('TagSearchResults', () => {
     let wrapper
     let defaultParams
 
     beforeEach(() => {
         defaultParams = {
             props: {
-                label: 'SearchResults',
+                label: 'TagSearchResults',
             },
             i18n,
         }
     })
 
-    it('should render SearchResults component', () => {
-        wrapper = lpiShallowMount(SearchResults, defaultParams)
+    it('should render TagSearchResults component', () => {
+        wrapper = lpiShallowMount(TagSearchResults, defaultParams)
 
         expect(wrapper.exists()).toBeTruthy()
     })
 
     it('should mark disabled tags', () => {
-        wrapper = lpiMount(SearchResults, {
+        wrapper = lpiMount(TagSearchResults, {
             ...defaultParams,
             props: {
                 tagResults: [{ id: 1 }, { id: 2 }, { id: 3 }],
