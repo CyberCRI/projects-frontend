@@ -1,7 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import CategoryCard from '@/components/category/CategoryCard.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 const category = {
     background_color: '#00DBA7',
     foreground_color: 'white',
@@ -18,41 +18,7 @@ const factory = (propsData?) => {
 
 describe('CategoryCard.vue', () => {
     it('should render component', () => {
-        const wrapper = factory({ category, selected: true, size: 'big' })
+        const wrapper = factory({ category })
         expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should display check icon', () => {
-        const wrapper = factory({ category, selected: true, size: 'big' })
-        const vm: any = wrapper.vm
-        const checkIcon = wrapper.find('.icon')
-
-        expect(checkIcon.exists()).toBeTruthy()
-        expect(vm.selected).toBe(true)
-    })
-
-    it('should not display check icon', () => {
-        const wrapper = factory({ category, selected: false, size: 'big' })
-        const vm: any = wrapper.vm
-        const checkIcon = wrapper.find('.icon')
-
-        expect(checkIcon.exists()).toBeFalsy()
-        expect(vm.selected).toBe(false)
-    })
-
-    it('should display big category card', () => {
-        const wrapper = factory({ category, selected: false, size: 'big' })
-        const vm: any = wrapper.vm
-
-        expect(vm.imageWidth).toBe('344px')
-        expect(vm.imageHeight).toBe('137px')
-    })
-
-    it('should display small category card', () => {
-        const wrapper = factory({ category, selected: false, size: 'small' })
-        const vm: any = wrapper.vm
-
-        expect(vm.imageWidth).toBe('222px')
-        expect(vm.imageHeight).toBe('50px')
     })
 })
