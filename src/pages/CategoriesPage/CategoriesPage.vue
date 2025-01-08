@@ -31,13 +31,11 @@
                 </h2>
             </div>
             <div class="categories page-section-wide">
-                <LpiCategoryCard
+                <CategoryCard
                     v-for="(category, index) in categories"
                     :key="index"
                     :category="category"
                     class="category"
-                    size="small"
-                    @click="goTo"
                 />
             </div>
 
@@ -49,7 +47,7 @@
 </template>
 
 <script>
-import LpiCategoryCard from '@/components/category/LpiCategoryCard.vue'
+import CategoryCard from '@/components/category/CategoryCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
@@ -64,7 +62,7 @@ export default {
 
     components: {
         LpiButton,
-        LpiCategoryCard,
+        CategoryCard,
         SearchOptions,
         GlobalSearchTab,
     },
@@ -107,10 +105,6 @@ export default {
     },
 
     methods: {
-        goTo(id) {
-            this.$router.push({ name: 'Category', params: { id } })
-        },
-
         showCategories() {
             this.$refs['searchOptions']?.deleteQuery()
             this.$refs['searchOptions']?.clearSelectedFilters()
@@ -189,10 +183,7 @@ export default {
         flex-flow: row wrap;
         justify-content: center;
         align-items: stretch;
-
-        .category {
-            margin: $space-xs;
-        }
+        gap: $space-l;
     }
 }
 </style>

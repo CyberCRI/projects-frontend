@@ -120,7 +120,7 @@ export default {
 
         imageSource() {
             if (this.category.background_image)
-                return this.category.background_image.variations.large
+                return this.category.background_image.variations.full
             else return null
         },
 
