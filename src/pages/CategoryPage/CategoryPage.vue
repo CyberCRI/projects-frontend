@@ -10,6 +10,7 @@
                     :url="imageSource"
                     image-height="433px"
                     image-width="100%"
+                    :image-sizes="imageSizes"
                 />
             </div>
 
@@ -72,6 +73,7 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useSearch from '@/composables/useSearch.js'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'CategoryPage',
@@ -105,6 +107,10 @@ export default {
     },
 
     computed: {
+        imageSizes() {
+            const bgImage = this.category?.background_image
+            return (bgImage && pictureApiToImageSizes(bgImage)) || null
+        },
         sortedChildren() {
             return [...this.category.children]?.sort((a, b) => a.order_index - b.oreder_index) || []
         },

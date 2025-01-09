@@ -9,6 +9,7 @@
             :image-height="imageHeight"
             :image-width="imageWidth"
             :url="imageSource"
+            :image-sizes="imageSizes"
             class="category-card-image"
         />
 
@@ -21,6 +22,7 @@
 
 <script>
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 export default {
     name: 'CategoryCard',
@@ -47,6 +49,10 @@ export default {
 
         imageSource() {
             return this.category?.background_image?.variations?.small || null
+        },
+        imageSizes() {
+            const bgImage = this.category?.background_image
+            return (bgImage && pictureApiToImageSizes(bgImage)) || null
         },
     },
 }

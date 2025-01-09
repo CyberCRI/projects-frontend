@@ -93,8 +93,10 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import {
     postProjectCategoryBackground,
+    patchProjectCategoryBackground,
     deleteProjectCategory,
 } from '@/api/project-categories.service'
+import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { toRaw } from 'vue'
@@ -271,27 +273,41 @@ export default {
             this.categoryDrawerOpened = false
         },
 
-        async setImage(data, id) {
+        async setImage(data, id, imageSizes, imageId) {
             if (data.background_image instanceof File && id) {
                 const formData = new FormData()
                 formData.append('file', data.background_image, data.background_image.name)
-                await postProjectCategoryBackground({ id, body: formData })
+                const res = await postProjectCategoryBackground({ id, body: formData })
+                imageId = res.id
+            }
+            if (imageSizes && id) {
+                delete data.background_image
+                const formData = new FormData()
+                imageSizesFormData(formData, imageSizes)
+                await patchProjectCategoryBackground({ id, imageId, body: formData })
             }
         },
 
         async submitCategory(category) {
+            const imageSizes = category.imageSizes || null
+            const imageId = category.background_image?.id || null
+            delete category.imageSizes
             const data = {
                 ...category,
+                // some category have tags for historical reasons
+                // api expecty just ids
+                tags: category.tags?.map((tag) => tag.id) || [],
             }
             let categoryId = category.id
             if (!categoryId) {
                 const createCategory = await createProjectCategory(data)
                 categoryId = createCategory.id
-                await this.setImage(data, categoryId)
+                await this.setImage(data, categoryId, imageSizes, imageId)
             } else {
                 // edit catgeory
                 await patchProjectCategory(categoryId, data)
-                if (category.background_image) await this.setImage(data, categoryId)
+                if (category.background_image)
+                    await this.setImage(data, categoryId, imageSizes, imageId)
             }
             try {
                 // Update order index of children
