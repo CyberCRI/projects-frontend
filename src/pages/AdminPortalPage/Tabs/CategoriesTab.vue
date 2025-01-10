@@ -291,24 +291,23 @@ export default {
         async submitCategory(category) {
             const imageSizes = category.imageSizes || null
             const imageId = category.background_image?.id || null
-            delete category.imageSizes
             const data = {
                 ...category,
                 // some category have tags for historical reasons
                 // api expecty just ids
                 tags: category.tags?.map((tag) => tag.id) || [],
             }
+            delete data.imageSizes
             let categoryId = category.id
             if (!categoryId) {
-                const createCategory = await createProjectCategory(data)
-                categoryId = createCategory.id
-                await this.setImage(data, categoryId, imageSizes, imageId)
+                const newCategory = await createProjectCategory(data)
+                categoryId = newCategory.id
             } else {
                 // edit catgeory
                 await patchProjectCategory(categoryId, data)
-                if (category.background_image)
-                    await this.setImage(data, categoryId, imageSizes, imageId)
             }
+            await this.setImage(data, categoryId, imageSizes, imageId)
+
             try {
                 // Update order index of children
                 await Promise.all(
