@@ -47,16 +47,48 @@
                     <div v-html="$t('admin.portal.categories.tips-background-image')"></div>
                 </div>
 
-                <ImageInput
-                    id="category-image-input"
-                    :label="$t('admin.portal.categories.upload-picture')"
-                    :existing-image="
-                        category.background_image && category.background_image.variations
-                            ? category.background_image.variations.small
-                            : null
-                    "
-                    @upload-image="showNewImage"
-                />
+                <div style="display: flex; gap: 1rem">
+                    <ImageInput
+                        id="category-image-input"
+                        :label="$t('admin.portal.categories.upload-picture')"
+                        :existing-image="
+                            category.background_image && category.background_image.variations
+                                ? category.background_image.variations.small
+                                : null
+                        "
+                        @upload-image="showNewImage"
+                    />
+
+                    <LinkButton
+                        v-if="displayedImage"
+                        :label="$t('project.form.resize-image')"
+                        btn-icon="CropFree"
+                        @click="showImageResizer = true"
+                        data-test="resize-image-button"
+                    />
+                </div>
+
+                <BaseModal v-if="showImageResizer" @close="showImageResizer = false">
+                    <template #header-title>Reframe image</template>
+                    <template #content>
+                        <ImageResizer
+                            ref="imageResizer"
+                            :image="displayedImage"
+                            :image-sizes="category.imageSizes"
+                            :ratio="pictureRatio"
+                            from-center
+                    /></template>
+                    <template #footer>
+                        <div class="image-resizer-actions">
+                            <LpiButton
+                                :label="$t('common.cancel')"
+                                @click="showImageResizer = false"
+                                secondary
+                            />
+                            <LpiButton :label="$t('common.save')" @click="saveImageSizes" />
+                        </div>
+                    </template>
+                </BaseModal>
             </CategoryField>
 
             <CategoryField
@@ -65,18 +97,13 @@
             >
                 <div class="category-previewer">
                     <CategoryCardImage
-                        v-if="!displayedImage"
+                        :url="displayedImage"
                         :background-color="category.background_color || '#FFF'"
                         image-height="150px"
                         image-width="100%"
+                        :image-sizes="category.imageSizes"
                     />
-                    <div
-                        v-else
-                        :style="{
-                            'background-image': `url(${displayedImage})`,
-                        }"
-                        class="category-image"
-                    ></div>
+
                     <div class="category-preview">
                         <div v-if="category.name" class="category-preview-name">
                             {{ category.name }}
@@ -119,7 +146,7 @@
                     :component-data="{
                         tag: 'ul',
                         type: 'transition-group',
-                        name: !drag ? 'flip-list' : null,
+                        name: 'flip-list',
                     }"
                 >
                     <template #item="{ element: child }">
@@ -192,6 +219,12 @@ import RadioButton from '@/components/base/form/RadioButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { Sortable } from 'sortablejs-vue3'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import ImageResizer from '@/components/base/form/ImageResizer.vue'
+import imageMixin from '@/mixins/imageMixin.ts'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 export function defaultForm() {
     return {
         name: '',
@@ -216,6 +249,8 @@ export default {
 
     emits: ['close-modal', 'submit-category'],
 
+    mixins: [imageMixin],
+
     components: {
         Drawer,
         TextInput,
@@ -227,6 +262,10 @@ export default {
         RadioButton,
         IconImage,
         Sortable,
+        LinkButton,
+        ImageResizer,
+        BaseModal,
+        LpiButton,
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
@@ -255,12 +294,11 @@ export default {
             projects: [],
             displayedImage: null,
             asyncing: false,
+            pictureRatio: 16 / 9,
+            showImageResizer: false,
         }
     },
     computed: {
-        organization() {
-            return this.organizationsStore.current
-        },
         dragOptions() {
             return {
                 animation: 200,
@@ -279,6 +317,8 @@ export default {
         'category.background_color': function (val) {
             if (typeof val !== String && val.hex) this.category.background_color = val.hex
         },
+        // not using computed
+        // beacuse can also be set from a file object in form
         'category.background_image': function (val) {
             this.displayedImage = val && val.variations ? val.variations.small : null
         },
@@ -291,13 +331,33 @@ export default {
                 ...this.editedCategory,
                 description: this.editedCategory.description,
             }
+            this.image
         } else {
             this.category = { ...defaultForm(), parent: this.parentCategory }
         }
-        this.category.organization_code = this.organization.code
+        this.category.organization_code = this.organizationsStore.current?.code
+        const bgImage = this.category?.background_image
+        this.category.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
     },
 
     methods: {
+        saveImageSizes() {
+            // this.category.imageSizes = {
+            //     scale_x: this.$refs.imageResizer.scaleX || null,
+            //     scale_y: this.$refs.imageResizer.scaleY || null,
+            //     left: this.$refs.imageResizer.left || null,
+            //     top: this.$refs.imageResizer.top || null,
+            //     natura_ratio: this.$refs.imageResizer.naturalRatio || null,
+            // }
+            this.category.imageSizes = {
+                scaleX: this.$refs.imageResizer.scaleX || null,
+                scaleY: this.$refs.imageResizer.scaleY || null,
+                left: this.$refs.imageResizer.left || null,
+                top: this.$refs.imageResizer.top || null,
+                naturalRatio: this.$refs.imageResizer.naturalRatio || null,
+            }
+            this.showImageResizer = false
+        },
         onReorder(event) {
             const { newIndex, oldIndex } = event
             const movedChild = this.category.children[oldIndex]
@@ -502,5 +562,12 @@ export default {
 
 .field-tip {
     margin-block: 0.8rem;
+}
+
+.image-resizer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-xl;
 }
 </style>

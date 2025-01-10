@@ -93,6 +93,19 @@ export async function postProjectCategoryBackground({
     ).data
 }
 
+export async function patchProjectCategoryBackground({
+    id,
+    imageId,
+    body,
+}): Promise<ProjectCategoryBackgroundOutput> {
+    return (
+        await axios.patch(
+            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/category/${id}/background/${imageId}/`,
+            body
+        )
+    ).data
+}
+
 export async function deleteProjectCategoryBackground({ category_id, id }): Promise<void> {
     return await axios.delete(
         `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/category/${category_id}/background/${id}/`
