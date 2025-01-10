@@ -342,19 +342,12 @@ export default {
 
     methods: {
         saveImageSizes() {
-            // this.category.imageSizes = {
-            //     scale_x: this.$refs.imageResizer.scaleX || null,
-            //     scale_y: this.$refs.imageResizer.scaleY || null,
-            //     left: this.$refs.imageResizer.left || null,
-            //     top: this.$refs.imageResizer.top || null,
-            //     natura_ratio: this.$refs.imageResizer.naturalRatio || null,
-            // }
             this.category.imageSizes = {
-                scaleX: this.$refs.imageResizer.scaleX || null,
-                scaleY: this.$refs.imageResizer.scaleY || null,
-                left: this.$refs.imageResizer.left || null,
-                top: this.$refs.imageResizer.top || null,
-                naturalRatio: this.$refs.imageResizer.naturalRatio || null,
+                scaleX: this.$refs.imageResizer.scaleX,
+                scaleY: this.$refs.imageResizer.scaleY,
+                left: this.$refs.imageResizer.left,
+                top: this.$refs.imageResizer.top,
+                naturalRatio: this.$refs.imageResizer.naturalRatio,
             }
             this.showImageResizer = false
         },
