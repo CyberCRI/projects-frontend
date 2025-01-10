@@ -378,6 +378,7 @@ export default {
             fileReader.onload = (fileReaderEvent) => {
                 this.displayedImage = fileReaderEvent.target.result
             }
+            this.category.imageSizes = null // reset image framing
             this.category.background_image = image
         },
 
