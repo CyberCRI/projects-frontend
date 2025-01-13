@@ -12,10 +12,20 @@
         </div>
         <template v-if="allSkills.length">
             <section class="section" v-if="skills?.length">
-                <UserSkillsFull :full-list="true" :skills="skills" :title="$t('me.skills')" />
+                <UserSkillsFull
+                    :full-list="true"
+                    :skills="skills"
+                    :title="$t('me.skills')"
+                    :user-mentorship="userMentorship"
+                />
             </section>
             <section class="section" v-if="hobbies?.length">
-                <UserSkillsFull :full-list="true" :skills="hobbies" :title="$t('me.hobbies')" />
+                <UserSkillsFull
+                    :full-list="true"
+                    :skills="hobbies"
+                    :title="$t('me.hobbies')"
+                    :user-mentorship="userMentorship"
+                />
             </section>
         </template>
         <p v-else class="empty-field">{{ noSkillLabel }}</p>
@@ -28,6 +38,8 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import permissions from '@/mixins/permissions.ts'
+import { getUserMentorship } from '@/api/mentorship.service.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'ProfileSkillTab',
@@ -41,9 +53,11 @@ export default {
     setup() {
         const usersStore = useUsersStore()
         const skillTexts = useSkillTexts()
+        const organizationsStore = useOrganizationsStore()
         return {
             usersStore,
             skillTexts,
+            organizationsStore,
         }
     },
     props: {
@@ -51,6 +65,17 @@ export default {
             type: Object,
             required: true,
         },
+    },
+
+    data() {
+        return {
+            // mentorship of the logged user
+            userMentorship: {},
+        }
+    },
+
+    async mounted() {
+        if (this.usersStore.isConnected) this.getUserMentorship()
     },
 
     computed: {
@@ -83,6 +108,30 @@ export default {
 
         noSkillLabel() {
             return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
+        },
+    },
+    methods: {
+        async getUserMentorship() {
+            try {
+                const apiData = (await getUserMentorship(this.organizationsStore.current?.code))
+                    .results
+
+                this.userMentorship = apiData.reduce((acc, mentorship) => {
+                    const skillId = mentorship.skill?.id
+                    const mentorId = mentorship.mentor?.id
+                    const mentoreeId = mentorship.mentoree?.id
+                    if (mentorId == this.user.id) {
+                        acc[skillId] = 'mentoree'
+                    }
+                    if (mentoreeId == this.user.id) {
+                        acc[skillId] = 'mentor'
+                    }
+
+                    return acc
+                }, {})
+            } catch (error) {
+                console.error(error)
+            }
         },
     },
 }

@@ -2,6 +2,12 @@
     <div class="mentroship-respond-page page-section-narrow page-top" v-if="!isLoading">
         <h1 class="page-title">{{ $t('mentorship.respond.title') }}</h1>
 
+        <p>
+            <a href="#" @click.prevent="profileIsOpened = true">{{ mentoreeName }}</a> asked you to
+            be his mentor for
+            <strong>{{ skillLabel }}</strong>
+        </p>
+
         <div class="form-field">
             <h3 class="label">{{ $t('mentorship.respond.your-response') }} *</h3>
 
@@ -40,6 +46,19 @@
                 data-test="membership-respond-button"
             />
         </div>
+        <BaseDrawer
+            no-footer
+            :is-opened="profileIsOpened"
+            :title="$t('profile.drawer_title')"
+            @close="profileIsOpened = false"
+        >
+            <UserProfile
+                v-if="profileIsOpened"
+                ref="profile-user"
+                :can-edit="false"
+                :user-id="mentorship?.mentoree?.id"
+            />
+        </BaseDrawer>
     </div>
 </template>
 <script>
@@ -47,14 +66,21 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import { getMentorshipDetails, respondMentorship } from '@/api/mentorship.service.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSkillTexts from '@/composables/useSkillTexts.js'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import UserProfile from '@/components/people/UserProfile.vue'
 export default {
     name: 'MentorshipRespondPage',
 
-    components: { TextInput, RadioButton, LpiButton },
+    components: { TextInput, RadioButton, LpiButton, BaseDrawer, UserProfile },
 
     setup() {
         const usersStore = useUsersStore()
-        return { usersStore }
+        const organizationsStore = useOrganizationsStore()
+        const skillTexts = useSkillTexts()
+        return { usersStore, organizationsStore, skillTexts }
     },
 
     props: {
@@ -72,19 +98,33 @@ export default {
             },
             isSaving: false,
             isLoading: false,
+            mentorship: null,
+            profileIsOpened: false,
         }
     },
 
     computed: {
         answerOptions() {
             return [
-                { label: this.$t('mentorship.respond.options.accept'), value: 'accept' },
-                { label: this.$t('mentorship.respond.options.decline'), value: 'decline' },
-                { label: this.$t('mentorship.respond.options.need-infos'), value: 'need-infos' },
+                { label: this.$t('mentorship.respond.options.accept'), value: 'accepted' },
+                { label: this.$t('mentorship.respond.options.decline'), value: 'refused' },
+                { label: this.$t('mentorship.respond.options.need-infos'), value: 'pending' },
             ]
         },
         isConnected() {
             return this.usersStore.isConnected
+        },
+        skillLabel() {
+            return this.mentorship?.skill ? this.skillTexts.title(this.mentorship.skill) : ''
+        },
+
+        mentoreeName() {
+            if (this.mentorship?.mentoree) {
+                return (
+                    this.mentorship.mentoree.given_name + ' ' + this.mentorship.mentoree.family_name
+                )
+            }
+            return ''
         },
     },
 
@@ -96,10 +136,10 @@ export default {
 
         try {
             // TODO: Call API to get the mentorship request
-            await new Promise((resolve) => setTimeout(resolve, 1000))
-            if (this.token === '404') {
-                throw new Error('Not found')
-            }
+            this.mentorship = await getMentorshipDetails(
+                this.organizationsStore.current?.code,
+                this.token
+            )
             this.isLoading = false
         } catch (error) {
             console.error(error)
@@ -110,9 +150,18 @@ export default {
     methods: {
         async submit() {
             this.isSaving = true
+            const payload = {
+                status: this.form.answer,
+                content: this.form.comment,
+                reply_to: this.mentorship?.mentoree?.email,
+            }
             try {
                 // TODO: Call API to save the response
-                await new Promise((resolve) => setTimeout(resolve, 1000))
+                await respondMentorship(
+                    this.organizationsStore.current?.code,
+                    this.mentorship.id,
+                    payload
+                )
             } catch (error) {
                 console.error(error)
             } finally {
@@ -155,5 +204,13 @@ export default {
     display: flex;
     justify-content: center;
     margin-bottom: $space-2xl;
+}
+a,
+strong {
+    font-weight: bold;
+    color: $primary-dark;
+}
+a:hover {
+    text-decoration: underline;
 }
 </style>
