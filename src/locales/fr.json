@@ -1154,9 +1154,14 @@
             },
             "your-response": "Votre réponse",
             "add-comment": "Ajouter un commentaire",
-            "comment-notice": "Ce commentaire sera envoyé par mail au mentoré.",
-            "comment-placeholder": "Écrire ici.",
-            "title": "Devenir mentor"
+            "comment-notice-mentor": "Ce commentaire sera envoyé par mail au mentoré.",
+            "comment-notice-mentoree": "Ce commentaire sera envoyé par mail au mentor.",
+            "comment-placeholder": "Êcrire ici.",
+            "title-mentor": "Devenir mentor",
+            "title-mentoree": "Être mentoré",
+            "response-was-sent": "Votre réponse a été envoyée.",
+            "asked-you": "vous a demandé d'être son mentor en",
+            "offered-you": "vous a proposé d'être votre mentor en"
         }
     },
     "onboarding": {
@@ -1487,7 +1492,9 @@
         "ask-mentorship": "Demander à être mentoré",
         "offer-mentorship": "Proposer son mentorat",
         "mentorship-asked": "Vous avez demandé un mentorat",
-        "mentorship-offered": "Vous avez proposé un mentorat"
+        "mentorship-offered": "Vous avez proposé un mentorat",
+        "mentorship-asking": "Vous demandez un mentorat",
+        "mentorship-offering": "Vous proposez un mentorat"
     },
     "profile-completed-modal": {
         "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",

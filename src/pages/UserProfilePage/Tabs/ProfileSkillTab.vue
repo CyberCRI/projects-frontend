@@ -17,6 +17,7 @@
                     :skills="skills"
                     :title="$t('me.skills')"
                     :user-mentorship="userMentorship"
+                    :is-self="isCurrentUser"
                 />
             </section>
             <section class="section" v-if="hobbies?.length">
@@ -25,6 +26,7 @@
                     :skills="hobbies"
                     :title="$t('me.hobbies')"
                     :user-mentorship="userMentorship"
+                    :is-self="isCurrentUser"
                 />
             </section>
         </template>
@@ -117,6 +119,7 @@ export default {
                     .results
 
                 this.userMentorship = apiData.reduce((acc, mentorship) => {
+                    debugger
                     const skillId = mentorship.skill?.id
                     const mentorId = mentorship.mentor?.id
                     const mentoreeId = mentorship.mentoree?.id
@@ -129,6 +132,7 @@ export default {
 
                     return acc
                 }, {})
+                console.log(this.userMentorship)
             } catch (error) {
                 console.error(error)
             }

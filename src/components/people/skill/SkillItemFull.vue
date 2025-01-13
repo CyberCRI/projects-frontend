@@ -28,7 +28,10 @@
             </div>
             <div class="actions">
                 <template v-if="skill.can_mentor">
-                    <span class="mentorship-asked" v-if="hasAskedMentorship">{{
+                    <span class="mentorship-offering" v-if="isSelf">
+                        {{ $t('profile.mentorship-offering') }}
+                    </span>
+                    <span class="mentorship-asked" v-else-if="hasAskedMentorship">{{
                         $t('profile.mentorship-asked')
                     }}</span>
                     <NeedLoginToolTip v-else>
@@ -46,7 +49,10 @@
                     </NeedLoginToolTip>
                 </template>
                 <template v-if="skill.needs_mentor">
-                    <span class="mentorship-offered" v-if="hasOfferedMentorship">{{
+                    <span class="mentorship-asking" v-if="isSelf">
+                        {{ $t('profile.mentorship-asking') }}
+                    </span>
+                    <span class="mentorship-offered" v-else-if="hasOfferedMentorship">{{
                         $t('profile.mentorship-offered')
                     }}</span>
                     <NeedLoginToolTip v-else>
@@ -110,6 +116,10 @@ export default {
             default: false,
         },
         hasOfferedMentorship: {
+            type: Boolean,
+            default: false,
+        },
+        isSelf: {
             type: Boolean,
             default: false,
         },
@@ -350,6 +360,8 @@ export default {
     }
 }
 
+.mentorship-offering,
+.mentorship-asking,
 .mentorship-offered,
 .mentorship-asked {
     font-style: italic;

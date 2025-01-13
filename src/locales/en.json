@@ -1158,9 +1158,14 @@
             },
             "your-response": "Your response",
             "add-comment": "Add a comment",
-            "comment-notice": "This comment will be sent by email to the mentee.",
+            "comment-notice-mentor": "This comment will be sent by email to the mentee.",
+            "comment-notice-mentoree": "This comment will be sent by email to the mentor.",
             "comment-placeholder": "Write here.",
-            "title": "Become a mentor"
+            "title-mentor": "Become a mentor",
+            "title-mentoree": "Become a mentoree",
+            "response-was-sent": "Your response was sent.",
+            "asked-you": "asked you to be his mentor for",
+            "offered-you": "offered you to be his mentor for"
         }
     },
     "onboarding": {
@@ -1492,7 +1497,9 @@
         "ask-mentorship": "Ask for mentorship",
         "offer-mentorship": "Offer mentorship",
         "mentorship-asked": "You asked for mentorship",
-        "mentorship-offered": "You offered mentorship"
+        "mentorship-offered": "You offered mentorship",
+        "mentorship-asking": "You are asking for mentorship",
+        "mentorship-offering": "You are offering mentorship"
     },
     "profile-completed-modal": {
         "notice-congratulation": "You are now ready to use the projects platform.",
