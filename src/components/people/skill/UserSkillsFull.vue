@@ -27,8 +27,9 @@
                 v-for="skill in skills"
                 :key="skill.id"
                 :skill="skill"
-                :has-asked-mentorship="userMentorship[skill.id] === 'mentor'"
-                :has-offered-mentorship="userMentorship[skill.id] === 'mentoree'"
+                :is-self="isSelf"
+                :has-asked-mentorship="userMentorship[skill.id] === 'mentoree'"
+                :has-offered-mentorship="userMentorship[skill.id] === 'mentor'"
             />
         </div>
     </div>
@@ -57,6 +58,10 @@ export default {
         userMentorship: {
             type: Object, // {skillId: "mentor"| "mentoree"}
             default: () => ({}),
+        },
+        isSelf: {
+            type: Boolean,
+            default: false,
         },
     },
 }

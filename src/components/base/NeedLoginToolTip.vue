@@ -1,26 +1,31 @@
 <template>
-    <ToolTip :disabled="isOrgUser" interactive placement="top">
+    <ToolTip :disabled="usersStore.isConnected" interactive placement="top">
         <template #custom-content>
             <p class="notice">{{ $t('common.need-login') }}</p>
             <p class="action">
                 <LpiButton :label="$t('home.login')" :secondary="false" @click="logInUser" />
             </p>
         </template>
-        <slot :need-login="!isOrgUser"></slot>
+        <slot :need-login="!usersStore.isConnected"></slot>
     </ToolTip>
 </template>
 <script>
 import ToolTip from '@/components/base/ToolTip.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'NeedLoginToolTip',
-    mixins: [permissions],
     components: {
         ToolTip,
         LpiButton,
+    },
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
     },
     methods: {
         logInUser() {

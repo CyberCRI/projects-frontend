@@ -1,51 +1,72 @@
 <template>
     <div class="mentroship-respond-page page-section-narrow page-top" v-if="!isLoading">
-        <h1 class="page-title">{{ $t('mentorship.respond.title') }}</h1>
+        <h1 class="page-title">
+            {{
+                $t(
+                    isOffer
+                        ? 'mentorship.respond.title-mentoree'
+                        : 'mentorship.respond.title-mentor'
+                )
+            }}
+        </h1>
 
         <p>
-            <a href="#" @click.prevent="profileIsOpened = true">{{ mentoreeName }}</a> asked you to
-            be his mentor for
+            <a href="#" @click.prevent="profileIsOpened = true">{{ mentoreeName }}</a>
+            {{ $t(isOffer ? 'mentorship.respond.offered-you' : 'mentorship.respond.asked-you') }}
             <strong>{{ skillLabel }}</strong>
         </p>
 
-        <div class="form-field">
-            <h3 class="label">{{ $t('mentorship.respond.your-response') }} *</h3>
+        <p v-if="responseWasSent" class="response-sent">
+            {{ $t('mentorship.respond.response-was-sent') }}
+        </p>
+        <template v-else>
+            <div class="form-field">
+                <h3 class="label">{{ $t('mentorship.respond.your-response') }} *</h3>
 
-            <div class="answer-options">
-                <RadioButton
-                    v-for="answerOption in answerOptions"
-                    :key="answerOption.value"
-                    v-model="form.answer"
-                    :label="answerOption.label"
-                    :value="answerOption.value"
-                    radio-group="answer"
-                    as-button
+                <div class="answer-options">
+                    <RadioButton
+                        v-for="answerOption in answerOptions"
+                        :key="answerOption.value"
+                        v-model="form.answer"
+                        :label="answerOption.label"
+                        :value="answerOption.value"
+                        radio-group="answer"
+                        as-button
+                    />
+                </div>
+            </div>
+
+            <div class="form-field">
+                <h3 class="label">{{ $t('mentorship.respond.add-comment') }}</h3>
+                <p class="notice">
+                    {{
+                        $t(
+                            isOffer
+                                ? 'mentorship.respond.comment-notice-mentoree'
+                                : 'mentorship.respond.comment-notice-mentor'
+                        )
+                    }}
+                </p>
+                <TextInput
+                    v-model="form.comment"
+                    label=""
+                    :placeholder="$t('mentorship.respond.comment-placeholder')"
+                    input-type="textarea"
+                    rows="10"
                 />
             </div>
-        </div>
 
-        <div class="form-field">
-            <h3 class="label">{{ $t('mentorship.respond.add-comment') }}</h3>
-            <p class="notice">{{ $t('mentorship.respond.comment-notice') }}</p>
-            <TextInput
-                v-model="form.comment"
-                label=""
-                :placeholder="$t('mentorship.respond.comment-placeholder')"
-                input-type="textarea"
-                rows="10"
-            />
-        </div>
-
-        <div class="form-field submit-field">
-            <LpiButton
-                :disabled="!form.answer || isSaving"
-                :label="$t('common.send')"
-                :btn-icon="isSaving ? 'LoaderSimple' : null"
-                class="submit-btn"
-                @click="submit"
-                data-test="membership-respond-button"
-            />
-        </div>
+            <div class="form-field submit-field">
+                <LpiButton
+                    :disabled="!form.answer || isSaving"
+                    :label="$t('common.send')"
+                    :btn-icon="isSaving ? 'LoaderSimple' : null"
+                    class="submit-btn"
+                    @click="submit"
+                    data-test="membership-respond-button"
+                />
+            </div>
+        </template>
         <BaseDrawer
             no-footer
             :is-opened="profileIsOpened"
@@ -100,6 +121,7 @@ export default {
             isLoading: false,
             mentorship: null,
             profileIsOpened: false,
+            responseWasSent: false,
         }
     },
 
@@ -107,7 +129,7 @@ export default {
         answerOptions() {
             return [
                 { label: this.$t('mentorship.respond.options.accept'), value: 'accepted' },
-                { label: this.$t('mentorship.respond.options.decline'), value: 'refused' },
+                { label: this.$t('mentorship.respond.options.decline'), value: 'rejected' },
                 { label: this.$t('mentorship.respond.options.need-infos'), value: 'pending' },
             ]
         },
@@ -126,6 +148,10 @@ export default {
             }
             return ''
         },
+
+        isOffer() {
+            return this.mentorship?.mentor?.id === this.mentorship?.created_by
+        },
     },
 
     async mounted() {
@@ -140,6 +166,7 @@ export default {
                 this.organizationsStore.current?.code,
                 this.token
             )
+            this.responseWasSent = !!this.mentorship.status
             this.isLoading = false
         } catch (error) {
             console.error(error)
@@ -162,6 +189,7 @@ export default {
                     this.mentorship.id,
                     payload
                 )
+                this.responseWasSent = true
             } catch (error) {
                 console.error(error)
             } finally {
@@ -205,12 +233,22 @@ export default {
     justify-content: center;
     margin-bottom: $space-2xl;
 }
+
 a,
 strong {
     font-weight: bold;
     color: $primary-dark;
 }
+
 a:hover {
     text-decoration: underline;
+}
+
+.response-sent {
+    margin-top: $space-xl;
+    background-color: $primary-lighter;
+    text-align: center;
+    border-radius: $space-m;
+    padding: $space-xl $space-m;
 }
 </style>
