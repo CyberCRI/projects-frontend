@@ -12,10 +12,22 @@
         </div>
         <template v-if="allSkills.length">
             <section class="section" v-if="skills?.length">
-                <UserSkills :full-list="true" :skills="skills" :title="$t('me.skills')" />
+                <UserSkillsFull
+                    :full-list="true"
+                    :skills="skills"
+                    :title="$t('me.skills')"
+                    :user-mentorship="userMentorship"
+                    :is-self="isCurrentUser"
+                />
             </section>
             <section class="section" v-if="hobbies?.length">
-                <UserSkills :full-list="true" :skills="hobbies" :title="$t('me.hobbies')" />
+                <UserSkillsFull
+                    :full-list="true"
+                    :skills="hobbies"
+                    :title="$t('me.hobbies')"
+                    :user-mentorship="userMentorship"
+                    :is-self="isCurrentUser"
+                />
             </section>
         </template>
         <p v-else class="empty-field">{{ noSkillLabel }}</p>
@@ -23,11 +35,13 @@
 </template>
 
 <script>
-import UserSkills from '@/components/people/skill/UserSkills.vue'
+import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import permissions from '@/mixins/permissions.ts'
+import { getUserMentorship } from '@/api/mentorship.service.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
     name: 'ProfileSkillTab',
@@ -35,15 +49,17 @@ export default {
     mixins: [permissions],
 
     components: {
-        UserSkills,
+        UserSkillsFull,
         LinkButton,
     },
     setup() {
         const usersStore = useUsersStore()
         const skillTexts = useSkillTexts()
+        const organizationsStore = useOrganizationsStore()
         return {
             usersStore,
             skillTexts,
+            organizationsStore,
         }
     },
     props: {
@@ -53,11 +69,22 @@ export default {
         },
     },
 
+    data() {
+        return {
+            // mentorship of the logged user
+            userMentorship: {},
+        }
+    },
+
+    async mounted() {
+        if (this.usersStore.isConnected) this.getUserMentorship()
+    },
+
     computed: {
         editProfileSkillLink() {
             return {
                 name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
-                params: this.isCurrentUser ? {} : { userId: this.user.id },
+                params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
             }
         },
 
@@ -83,6 +110,31 @@ export default {
 
         noSkillLabel() {
             return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
+        },
+    },
+    methods: {
+        async getUserMentorship() {
+            try {
+                const apiData = (await getUserMentorship(this.organizationsStore.current?.code))
+                    .results
+
+                this.userMentorship = apiData.reduce((acc, mentorship) => {
+                    const skillId = mentorship.skill?.id
+                    const mentorId = mentorship.mentor?.id
+                    const mentoreeId = mentorship.mentoree?.id
+                    if (mentorId == this.user.id) {
+                        acc[skillId] = 'mentoree'
+                    }
+                    if (mentoreeId == this.user.id) {
+                        acc[skillId] = 'mentor'
+                    }
+
+                    return acc
+                }, {})
+                console.log(this.userMentorship)
+            } catch (error) {
+                console.error(error)
+            }
         },
     },
 }

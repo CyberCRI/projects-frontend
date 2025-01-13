@@ -4,13 +4,16 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import useSkillLevels from '@/composables/useSkillLevels.js'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-
+import EditMentorshipDrawer from '@/components/people/skill/EditMentorshipDrawer.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import ToolTip from '@/components/base/ToolTip.vue'
 const props = defineProps({
     skill: { type: Object, required: true },
     type: { type: String, required: true }, // "skills" or "hobbies"
     scrollIntoView: { type: Boolean, default: false },
+    noMentorship: { type: Boolean, default: false },
 })
-const emit = defineEmits(['set-level', 'delete'])
+const emit = defineEmits(['set-level', 'update-mentorship', 'delete'])
 
 const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
     const { top, left, bottom, right } = el.getBoundingClientRect()
@@ -41,6 +44,12 @@ function deleteSkill() {
     asyncing.value = true
     emit('delete', props.skill)
 }
+
+const editMentorship = ref(false)
+function onUpdateMentorship(mentorship) {
+    emit('update-mentorship', mentorship)
+    editMentorship.value = false
+}
 </script>
 <template>
     <div
@@ -49,19 +58,81 @@ function deleteSkill() {
         :data-test="`${type}-editor-${skill.id}`"
         ref="el"
     >
-        <h4 class="skill-name">{{ skillTexts.title(skill) }}</h4>
+        <h4 class="skill-name">
+            <span>{{ skillTexts.title(skill) }}</span>
+
+            <div class="edit-action mobile">
+                <LpiButton
+                    v-if="skill.can_mentor || skill.needs_mentor"
+                    secondary
+                    @click="editMentorship = true"
+                    label=""
+                    btn-icon="Pen"
+                    class="borderless"
+                />
+                <span v-else>&nbsp;</span>
+            </div>
+            <div class="delete-action mobile">
+                <IconImage
+                    name="TrashCanOutline"
+                    :data-test="`delete-${type}-${skill.id}`"
+                    class="delete-icon"
+                    @click="confirmDelete = true"
+                />
+            </div>
+        </h4>
         <div class="level-editor">
             <label
                 class="level"
+                :class="{ active: level.value == clampLevel(skill.level) }"
                 v-for="level in skillLevels"
-                @click="$emit('set-level', { skill, level: level.value })"
+                @click.prevent="$emit('set-level', { skill, level: level.value })"
                 :key="level.value"
             >
                 <input type="radio" :checked="level.value == clampLevel(skill.level)" />
                 <span class="level-name">{{ level.label }}</span>
             </label>
         </div>
-        <div class="delete-action">
+        <div class="mentorship" v-if="!noMentorship">
+            <LpiButton
+                class="squarish"
+                v-if="!skill.can_mentor && !skill.needs_mentor"
+                secondary
+                @click="editMentorship = true"
+                :label="$t('profile.edit.skills.mentorship.choose')"
+            />
+
+            <ToolTip :content="skill.comment" v-else-if="skill.can_mentor" placement="bottom">
+                <LpiButton
+                    class="squarish"
+                    secondary
+                    reversed-order
+                    btn-icon="ChatBubble"
+                    :label="$t('profile.edit.skills.mentorship.can-mentor')"
+                />
+            </ToolTip>
+            <ToolTip :content="skill.comment" v-else-if="skill.needs_mentor" placement="bottom">
+                <LpiButton
+                    class="squarish"
+                    secondary
+                    reversed-order
+                    btn-icon="ChatBubble"
+                    :label="$t('profile.edit.skills.mentorship.needs-mentor')"
+                />
+            </ToolTip>
+        </div>
+        <div class="edit-action desktop">
+            <LpiButton
+                v-if="skill.can_mentor || skill.needs_mentor"
+                secondary
+                @click="editMentorship = true"
+                label=""
+                btn-icon="Pen"
+                class="borderless"
+            />
+            <span v-else>&nbsp;</span>
+        </div>
+        <div class="delete-action desktop">
             <IconImage
                 name="TrashCanOutline"
                 :data-test="`delete-${type}-${skill.id}`"
@@ -79,34 +150,46 @@ function deleteSkill() {
             @cancel="confirmDelete = false"
             @confirm="deleteSkill"
         />
+        <EditMentorshipDrawer
+            :is-opened="editMentorship"
+            :skill="skill"
+            @update-mentorship="onUpdateMentorship"
+            @close="editMentorship = false"
+        />
     </div>
 </template>
 <style scoped lang="scss">
 .entry {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: stretch;
     gap: $space-unit;
     align-items: center;
-    border-top: $border-width-s solid $lighter-gray;
+    border-bottom: $border-width-s solid $lighter-gray;
     padding: $space-l 0;
+
+    @media screen and (max-width: $min-tablet) {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+    }
 
     &:last-child {
         border-bottom: $border-width-s solid $lighter-gray;
     }
 
     .skill-name {
-        font-weight: 700;
+        font-weight: 400;
+        flex-basis: 25%;
+        flex-shrink: 0;
     }
 
     .level-editor {
         display: flex;
         flex-flow: row nowrap;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         gap: $space-m;
-        flex-shrink: 0;
-        flex-grow: 1;
+        flex: 1 0 40%;
 
         .level {
             display: flex;
@@ -116,7 +199,33 @@ function deleteSkill() {
             gap: $space-s;
             margin: 0;
             font-size: $font-size-m;
+            border: $border-width-s solid $primary-dark;
+            border-radius: $border-radius-s;
+            position: relative;
+            padding: $space-2xs $space-s;
+            cursor: pointer;
 
+            .level-name {
+                color: $primary-dark;
+                font-weight: 400;
+            }
+
+            &.active {
+                background-color: $primary-dark;
+                cursor: default;
+
+                .level-name {
+                    color: $white;
+                    font-weight: 700;
+                }
+            }
+
+            input[type='radio'] {
+                visibility: hidden;
+                position: absolute;
+            }
+
+            /*
             input[type='radio'] {
                 appearance: none;
                 background-color: $white;
@@ -149,16 +258,20 @@ function deleteSkill() {
             input[type='radio']:checked::before {
                 transform: translate(-50%, -50%) scale(1);
             }
-
-            .level-name {
-                color: $primary-dark;
-                font-weight: 700;
-            }
+                */
         }
     }
 
-    .delete-action {
-        padding: 0 $space-m;
+    .mentorship {
+        flex-basis: 30%;
+        display: flex;
+        gap: $space-unit;
+        justify-content: center;
+    }
+
+    .delete-action,
+    .edit-action {
+        flex-basis: $layout-size-l;
         flex-shrink: 0;
 
         .delete-icon {
@@ -169,6 +282,22 @@ function deleteSkill() {
             vertical-align: middle;
             cursor: pointer;
         }
+
+        &.mobile {
+            display: none;
+
+            @media screen and (max-width: $min-tablet) {
+                display: block;
+            }
+        }
+
+        &.desktop {
+            display: block;
+
+            @media screen and (max-width: $min-tablet) {
+                display: none;
+            }
+        }
     }
 }
 
@@ -177,8 +306,18 @@ function deleteSkill() {
         flex-wrap: wrap;
 
         .skill-name {
+            align-self: stretch;
+            width: 100%;
             flex-basis: 100%;
             flex-shrink: 0;
+            display: flex;
+            justify-content: stretch;
+            align-items: center;
+            gap: $space-unit;
+
+            span {
+                flex-grow: 1;
+            }
         }
     }
 }

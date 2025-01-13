@@ -70,7 +70,11 @@
                     :type="type"
                     @set-level="setTalentLevel($event.skill, $event.level)"
                     @delete="addedTalent = null"
+                    no-mentorship
                 />
+            </div>
+            <div class="mentorship">
+                <MentorshipForm v-model="mentorship" />
             </div>
         </div>
     </BaseDrawer>
@@ -90,6 +94,16 @@ import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
+import MentorshipForm from '@/components/people/skill/MentorshipForm.vue'
+
+function defaultMentorship() {
+    return {
+        can_mentor: false,
+        needs_mentor: false,
+        comment: '',
+    }
+}
+
 export default {
     name: 'SkillsEditDrawer',
 
@@ -139,6 +153,7 @@ export default {
         LpiSelect,
         SuggestedTags,
         SkillEditor,
+        MentorshipForm,
     },
 
     props: {
@@ -165,6 +180,7 @@ export default {
             asyncing: false,
             searchResultsCount: 0,
             addedTalent: null,
+            mentorship: defaultMentorship(),
         }
     },
     computed: {
@@ -191,6 +207,7 @@ export default {
                     : []
 
                 this.resetTagSearch()
+                this.mentorship = defaultMentorship()
                 this.$nextTick(this.focusInput)
             }
         },
@@ -219,6 +236,7 @@ export default {
                 const newSkill = await postUserSkill(this.user.id, {
                     ...this.addedTalent,
                     tag: this.addedTalent.tag.id,
+                    ...this.mentorship,
                 })
                 this.reloadUser()
                 this.$emit('skill-added', newSkill)

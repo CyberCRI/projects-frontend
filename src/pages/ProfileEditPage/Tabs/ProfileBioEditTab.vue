@@ -1,5 +1,14 @@
 <template>
     <div class="profile-edit-bio">
+        <div class="header">
+            <LinkButton
+                class="edit-btn"
+                btn-icon="Eye"
+                :label="$t('profile.edit.back-to-profile')"
+                :to="profileBioLink"
+                data-test="edit-bio"
+            />
+        </div>
         <!-- short bio -->
         <div class="form-group">
             <TextInput
@@ -61,6 +70,7 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 
 function defaultForm() {
     return {
@@ -76,6 +86,7 @@ export default {
         TextInput,
         LpiButton,
         TipTapEditor,
+        LinkButton,
     },
 
     emits: ['profile-edited'],
@@ -106,6 +117,12 @@ export default {
         isSelf() {
             const connectedUser = this.usersStore.userFromApi
             return connectedUser && this.user.id === connectedUser.id
+        },
+        profileBioLink() {
+            return {
+                name: 'ProfileBio' + (this.isSelf ? '' : 'Other'),
+                params: this.isSelf ? {} : { userId: this.user.slug || this.user.id },
+            }
         },
     },
 
@@ -165,5 +182,12 @@ export default {
     position: sticky;
     bottom: 0;
     background-color: white;
+}
+
+.header {
+    padding-top: $space-m;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="my-profile-edit page-section-medium">
+        <div class="my-profile-edit page-section-wide">
             <h1 v-if="user && isSelf" class="title">{{ $t('profile.edit.edit-my-profile') }}</h1>
             <h1 v-else-if="user" class="title">
                 {{ $t('profile.edit.edit-other-profile', { name: username }) }}

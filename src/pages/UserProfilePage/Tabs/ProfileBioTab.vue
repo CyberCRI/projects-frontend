@@ -5,7 +5,7 @@
                 class="edit-btn"
                 btn-icon="Pen"
                 :label="$t('common.edit')"
-                :to="editBioSkillLink"
+                :to="editBioLink"
                 data-test="edit-bio"
             />
         </div>
@@ -55,10 +55,10 @@ export default {
         noDescription() {
             return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
         },
-        editBioSkillLink() {
+        editBioLink() {
             return {
                 name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
-                params: this.isCurrentUser ? {} : { userId: this.user.id },
+                params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
             }
         },
     },
