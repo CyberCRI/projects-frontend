@@ -119,7 +119,6 @@ export default {
                     .results
 
                 this.userMentorship = apiData.reduce((acc, mentorship) => {
-                    debugger
                     const skillId = mentorship.skill?.id
                     const mentorId = mentorship.mentor?.id
                     const mentoreeId = mentorship.mentoree?.id
