@@ -23,7 +23,13 @@
             </div>
         </div>
         <div class="columns-wrapper">
-            <SkillItemFull v-for="skill in skills" :key="skill.id" :skill="skill" />
+            <SkillItemFull
+                v-for="skill in skills"
+                :key="skill.id"
+                :skill="skill"
+                :has-asked-mentorship="userMentorship[skill.id] === 'mentor'"
+                :has-offered-mentorship="userMentorship[skill.id] === 'mentoree'"
+            />
         </div>
     </div>
 </template>
@@ -47,6 +53,10 @@ export default {
         title: {
             type: String,
             default: '',
+        },
+        userMentorship: {
+            type: Object, // {skillId: "mentor"| "mentoree"}
+            default: () => ({}),
         },
     },
 }

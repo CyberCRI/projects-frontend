@@ -11,21 +11,3 @@ export async function searchSkill(search) {
         })
     ).data
 }
-
-export async function offerMentorship(orgCode, skill, payload) {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/skill/${skill.id}/contact-mentoree/`,
-            payload
-        )
-    ).data
-}
-
-export async function askMentorship(orgCode, skill, payload) {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/skill/${skill.id}/contact-mentor/`,
-            payload
-        )
-    ).data
-}

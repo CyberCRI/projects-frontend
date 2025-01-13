@@ -70,7 +70,7 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { askMentorship, offerMentorship } from '@/api/skill.service.ts'
+import { askMentorship, offerMentorship } from '@/api/mentorship.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 export function defaultForm() {

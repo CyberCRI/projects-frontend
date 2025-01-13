@@ -28,7 +28,7 @@
             </div>
             <div class="actions">
                 <template v-if="skill.can_mentor">
-                    <span class="mentorship-asked" v-if="mentorshipAsked(skill)">{{
+                    <span class="mentorship-asked" v-if="hasAskedMentorship">{{
                         $t('profile.mentorship-asked')
                     }}</span>
                     <NeedLoginToolTip v-else>
@@ -46,7 +46,7 @@
                     </NeedLoginToolTip>
                 </template>
                 <template v-if="skill.needs_mentor">
-                    <span class="mentorship-offered" v-if="mentorshipOffered(skill)">{{
+                    <span class="mentorship-offered" v-if="hasOfferedMentorship">{{
                         $t('profile.mentorship-offered')
                     }}</span>
                     <NeedLoginToolTip v-else>
@@ -105,6 +105,14 @@ export default {
             type: Number,
             default: 4,
         },
+        hasAskedMentorship: {
+            type: Boolean,
+            default: false,
+        },
+        hasOfferedMentorship: {
+            type: Boolean,
+            default: false,
+        },
     },
     setup() {
         const skillTexts = useSkillTexts()
@@ -140,14 +148,6 @@ export default {
         offerMentorship() {
             this.mentorshipDrawerIsOpen = true
             this.mentorshipDrawerIsOffer = true
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        mentorshipAsked(skill) {
-            return false // TODO: need api stuff
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        mentorshipOffered(skill) {
-            return false // TODO: need api stuff
         },
     },
 }
