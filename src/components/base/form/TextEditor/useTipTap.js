@@ -53,7 +53,7 @@ export function useTipTap({ props, emit, t }) {
     const toaster = useToasterStore()
 
     const onUpdate = ({ editor }) => {
-        emit('update:modelValue', editor.value.getHTML())
+        emit('update:modelValue', editor.getHTML())
     }
 
     const onBlur = (e) => {
