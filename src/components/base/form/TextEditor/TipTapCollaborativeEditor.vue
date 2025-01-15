@@ -77,6 +77,9 @@ const {
     getExtensions,
     initialContent,
     resetContent,
+    onBlur,
+    onDrop,
+    onPaste,
 } = useTipTap({
     props,
     emit,
@@ -111,6 +114,10 @@ const accessToken = computed(() => usersStore.accessToken)
 const onlineAndConnected = computed(() => online.value && status.value === 'connected')
 
 const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected.value)
+
+const onUpdate = ({ editor }) => {
+    if (!updateIsBlocked.value) emit('update:modelValue', editor.getHTML())
+}
 
 // methods
 function fallbackToSoloMode() {
@@ -152,6 +159,7 @@ const getCollaborativeContent = () => {
 
 function initCollaborativeEditor() {
     updateIsBlocked.value = true
+
     // this prevents multiple init of editor
     // (that causes duplicate user/content bugs)
     if (!props.room) return
@@ -179,6 +187,7 @@ function initCollaborativeEditor() {
     }, cnxTimeout.value)
 
     provider.value = new HocuspocusProvider({
+        appId: 'Foo000',
         url: sockerserver,
         name: props.room,
         token: accessToken.value,
@@ -252,13 +261,15 @@ function initCollaborativeEditor() {
         parseOptions: {
             preserveWhitespace: 'full',
         },
+        onDrop,
+        onBlur,
+        onPaste,
+        onUpdate,
     })
-    editor.value.on('update', () => {
-        if (!updateIsBlocked.value) emit('update:modelValue', editor.value.getHTML())
-    })
-    editor.value.on('blur', (e) => {
-        emit('blur', e)
-    })
+    // editor.value.on('update', onUpdate)
+    // editor.value.on('blur', onBlur)
+    // editor.value.on('onDrop', onDrop) // yes event naming is weird
+    // editor.value.on('onPaste', onPaste) // yes event naming is weird
 }
 
 function setOnline() {
@@ -290,6 +301,10 @@ function destroyCollaborativeEditor() {
         provider.value.destroy()
         provider.value = null
     }
+    // editor.value?.off('update', onUpdate)
+    // editor.value?.off('blur', onBlur)
+    // editor.value?.off('drop', onDrop) // yes event naming is weird
+    // editor.value?.off('onPaste', onPaste) // yes event naming is weird
     destroyEditor()
 }
 

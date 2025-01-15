@@ -21,6 +21,7 @@ import lowlight from '@/functs/lowlight.ts'
 
 import { ref } from 'vue'
 import useLanguagesStore from '@/stores/useLanguages'
+import useToasterStore from '@/stores/useToaster.ts'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
@@ -49,6 +50,52 @@ export function useTipTap({ props, emit, t }) {
     const editorInited = ref(false)
     const initialContent = ref(props.modelValue)
     const languagesStore = useLanguagesStore()
+    const toaster = useToasterStore()
+
+    const onUpdate = ({ editor }) => {
+        emit('update:modelValue', editor.value.getHTML())
+    }
+
+    const onBlur = (e) => {
+        emit('blur', e)
+    }
+
+    const checkFileSizes = (files) => {
+        for (let i = 0; i < files?.length; i++) {
+            const file = files[i]
+            // get file size
+            const fileSize = file.size // in bytes
+            // check if file size is less than 1MB
+            if (fileSize > 1 * 1024 * 1024) {
+                throw new Error(`File ${file.name} is too big: ${fileSize} bytes`)
+            }
+        }
+    }
+
+    const onFileSizeError = (evt, err) => {
+        console.error(err)
+        evt.preventDefault()
+        toaster.pushError(t('common.file-too-big', { maxSize: '1' }))
+    }
+
+    const onDrop = (evt) => {
+        // get file from drop event
+        try {
+            checkFileSizes(evt?.dataTransfer?.files)
+        } catch (err) {
+            onFileSizeError(evt, err)
+        }
+    }
+
+    const onPaste = (evt) => {
+        console.log('onPaste', evt)
+        // get file from drop event
+        try {
+            checkFileSizes(evt?.clipboardData?.files)
+        } catch (err) {
+            onFileSizeError(evt, err)
+        }
+    }
 
     function appendTranslationsStyle() {
         if (!document.getElementById('multieditor-translations')) {
@@ -71,7 +118,7 @@ export function useTipTap({ props, emit, t }) {
     function getExtensions() {
         let exts = [
             // Collaborative (socket) use its own history
-            StarterKit.configure({ history: true }), // TODO: was !this.socket
+            StarterKit.configure({ history: true, codeBlock: false }), // TODO: was !this.socket
             Link.configure({
                 openOnClick: false,
             }),
@@ -126,18 +173,23 @@ export function useTipTap({ props, emit, t }) {
             parseOptions: {
                 preserveWhitespace: 'full',
             },
+            onUpdate,
+            onBlur,
+            onDrop,
+            onPaste,
         })
-        editor.value.on('update', () => {
-            emit('update:modelValue', editor.value.getHTML())
-        })
-        editor.value.on('blur', (e) => {
-            emit('blur', e)
-        })
+        // editor.value.on('update', onUpdate)
+        // editor.value.on('blur', onBlur)
+        // editor.value.on('onDrop', onDrop) // yes event naming is weird
+        // editor.value.on('onPaste', onPaste) // yes event naming is weird
     }
 
     function destroyEditor() {
         if (editor.value) {
-            editor.value.off('update')
+            // editor.value.off('update', onUpdate)
+            // editor.value.off('blur', onBlur)
+            // editor.value.off('onDrop', onDrop) // yes event naming is weird
+            // editor.value.off('onPaste', onPaste) // yes event naming is weird
             editor.value.destroy()
             editor.value = null
         }
@@ -158,5 +210,9 @@ export function useTipTap({ props, emit, t }) {
         getContent,
         initialContent,
         resetContent,
+        onUpdate,
+        onBlur,
+        onDrop,
+        onPaste,
     }
 }

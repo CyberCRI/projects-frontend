@@ -3,6 +3,7 @@ import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { mergeAttributes } from '@tiptap/core'
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
+import { PluginKey } from '@tiptap/pm/state'
 
 export const DEFAULT_THEME = 'light'
 export const DEFAULT_TAB = '2'
@@ -21,6 +22,7 @@ export default CodeBlockLowlight.extend<LpiBlockOptions>({
             tabClassPrefix: 'tab-',
             defaultTheme: DEFAULT_THEME,
             defaultTab: DEFAULT_TAB,
+            key: new PluginKey('lpiCodeBlock'),
         }
     },
 
