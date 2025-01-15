@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
 import {
     DEFAULT_THEME,
@@ -38,7 +39,7 @@ import {
 import lowlight from '@/functs/lowlight.ts'
 import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg'
 
-export default {
+export default defineComponent({
     name: 'LpiCodeBlockNodeView',
 
     components: {
@@ -106,7 +107,7 @@ export default {
                 })
         },
     },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -543,7 +543,8 @@
         "title": "titre",
         "yes": "oui",
         "disconnect": "Déconnexion",
-        "ok": "Ok"
+        "ok": "Ok",
+        "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)"
     },
     "complete-profile": {
         "bio": {

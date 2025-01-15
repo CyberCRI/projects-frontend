@@ -542,7 +542,8 @@
         "yes": "yes",
         "disconnect": "Disconnect",
         "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
-        "ok": "Ok"
+        "ok": "Ok",
+        "file-too-big": "File is too big (max: {maxSize}Mb)"
     },
     "complete-profile": {
         "bio": {

@@ -4,6 +4,7 @@ import { EditorView } from '@tiptap/pm/view'
 import tippy, { Instance, Props } from 'tippy.js'
 
 export interface LpiBubbleMenuPluginProps {
+    view?: EditorView
     pluginKey: PluginKey | string
     editor: Editor
     element: HTMLElement
@@ -296,6 +297,7 @@ export const LpiBubbleMenuPlugin = (options: LpiBubbleMenuPluginProps) => {
             typeof options.pluginKey === 'string'
                 ? new PluginKey(options.pluginKey)
                 : options.pluginKey,
-        view: (view) => new LpiBubbleMenuView({ view, ...options }),
+        view: (view) =>
+            new LpiBubbleMenuView({ view, ...options } as LpiBubbleMenuViewProps) as any,
     })
 }
