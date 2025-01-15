@@ -27,7 +27,7 @@ export default CodeBlockLowlight.extend<LpiBlockOptions>({
     },
 
     addNodeView() {
-        return VueNodeViewRenderer(LpiCodeBlockNodeView)
+        return VueNodeViewRenderer(LpiCodeBlockNodeView as any)
     },
 
     addAttributes() {

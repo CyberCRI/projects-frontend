@@ -115,10 +115,10 @@ export function useTipTap({ props, emit, t }) {
         }
     }
 
-    function getExtensions() {
+    function getExtensions(options) {
         let exts = [
             // Collaborative (socket) use its own history
-            StarterKit.configure({ history: true, codeBlock: false }), // TODO: was !this.socket
+            StarterKit.configure({ history: !options?.disableHistory, codeBlock: false }), // TODO: was !this.socket
             Link.configure({
                 openOnClick: false,
             }),

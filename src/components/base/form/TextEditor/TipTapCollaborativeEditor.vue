@@ -126,7 +126,7 @@ function fallbackToSoloMode() {
 }
 
 function getCollaborativeExtensions() {
-    const exts = getExtensions()
+    const exts = getExtensions({ disableHistory: true })
 
     exts.push(
         Collaboration.configure({
