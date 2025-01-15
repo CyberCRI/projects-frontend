@@ -110,8 +110,6 @@ e2e:
       cpu: 1200m
       memory: 1.5Gi
 
-traefik: false
-
 sablier:
   enabled: false
   groupName: projects

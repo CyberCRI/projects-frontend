@@ -3,7 +3,7 @@
   "root" .
   "podSelector" (dict "matchLabels" .Values.commonLabels)
   "allowFromReverseProxy" true
-  "reverseProxyNamespace" (ternary "traefik" "ingress-nginx" .Values.traefik  )
+  "reverseProxyNamespace" "traefik"
   "enableEgress" true
   "commonLabels" .Values.commonLabels
   "additionalEgresses" .Values.networkPolicy.additionalEgresses
