@@ -60,6 +60,12 @@ export function useTipTap({ props, emit, t }) {
         emit('blur', e)
     }
 
+    const isImageAuthorized = (files) => {
+        // TODO check file types
+        // dont block if no files (to allow text paste/drop)
+        return !files?.length || props.mode === 'full'
+    }
+
     const checkFileSizes = (files) => {
         for (let i = 0; i < files?.length; i++) {
             const file = files[i]
@@ -81,17 +87,18 @@ export function useTipTap({ props, emit, t }) {
     const onDrop = (evt) => {
         // get file from drop event
         try {
-            checkFileSizes(evt?.dataTransfer?.files)
+            if (!isImageAuthorized(evt?.dataTransfer?.files)) evt.preventDefault()
+            else checkFileSizes(evt?.dataTransfer?.files)
         } catch (err) {
             onFileSizeError(evt, err)
         }
     }
 
     const onPaste = (evt) => {
-        console.log('onPaste', evt)
         // get file from drop event
         try {
-            checkFileSizes(evt?.clipboardData?.files)
+            if (!isImageAuthorized(evt?.clipboardData?.files)) evt.preventDefault()
+            else checkFileSizes(evt?.clipboardData?.files)
         } catch (err) {
             onFileSizeError(evt, err)
         }
@@ -175,9 +182,11 @@ export function useTipTap({ props, emit, t }) {
             },
             onUpdate,
             onBlur,
-            onDrop,
+            // onDrop, for some reason doent work here, put it on component TipTapEditorContent
             onPaste,
         })
+
+        editor.value.view.dom.addEventListener('drop', onDrop, true)
         // editor.value.on('update', onUpdate)
         // editor.value.on('blur', onBlur)
         // editor.value.on('onDrop', onDrop) // yes event naming is weird

@@ -261,7 +261,7 @@ function initCollaborativeEditor() {
         parseOptions: {
             preserveWhitespace: 'full',
         },
-        onDrop,
+        // onDrop, for some reason doent work here, put it on component TipTapEditorContent,
         onBlur,
         onPaste,
         onUpdate,
@@ -398,6 +398,7 @@ defineExpose({
                 :editor="editor"
                 :editor-frozen="!disconnectionGrace"
                 is-connected
+                @drop="onDrop"
             />
         </template>
         <TipTapCollaborativeConnectingStatus
