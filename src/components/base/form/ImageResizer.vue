@@ -10,6 +10,8 @@ import 'croppr/dist/croppr.css'
 export default {
     name: 'ImageResizer',
 
+    emits: ['invalid-image-size'],
+
     props: {
         imageSizes: {
             type: Object,
@@ -77,6 +79,7 @@ export default {
             const img = this.$el.querySelector('.cropper-image')
             this.naturalWidth = img.naturalWidth
             this.naturalHeight = img.naturalHeight
+            if (!this.naturalWidth || !this.naturalHeight) this.$emit('invalid-image-size')
             this.naturalRatio = img.naturalWidth / this.naturalHeight
 
             // get container aspect ratio
@@ -142,17 +145,16 @@ export default {
 
             // init croppr
 
+            console.log(this.roundShape)
             const cropCircle = this.roundShape
                 ? (data) => {
-                      const imageClipped = this.$el.querySelector('.croppr-imageClipped')
                       let x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
                       let y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
                       // strangely it is always bboxHeight that works
                       let radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
-                      setTimeout(() => {
-                          if (imageClipped?.style)
-                              imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
-                      }, 1)
+                      const imageClipped = this.$el.querySelector('.croppr-imageClipped')
+                      if (imageClipped)
+                          imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
                   }
                 : () => {}
 
@@ -171,7 +173,13 @@ export default {
                         0, // transform origin is top left
                         0,
                     ])
+                    // timeout seem to fix bug where y and height are NaN
+                    setTimeout(() => {
+                        const data = instance.getValue()
+                        cropCircle(data)
+                    }, 1)
                 },
+                minSize: [1, 1, '%'],
             })
         },
 
@@ -179,13 +187,16 @@ export default {
             if (isNaN(data.x) || isNaN(data.y) || isNaN(data.width) || isNaN(data.height)) return
             // memoize the data so it can be acesses from parent comoponent
             // data need to be scaled according to the image display size (ie natural vs bbox)
-            this.left = (-100 * data.x) / this.naturalWidth // percentage, negated for recriprocal transformation
-            this.top = (-100 * data.y) / this.naturalHeight // percentage, negated for recriprocal transformation
 
             const scale =
                 (this.ratio || 1) > this.naturalRatio
                     ? this.naturalWidth / data.width
                     : this.naturalHeight / data.height
+            if (!isFinite(scale)) return
+
+            this.left = (-100 * data.x) / this.naturalWidth // percentage, negated for recriprocal transformation
+            this.top = (-100 * data.y) / this.naturalHeight // percentage, negated for recriprocal transformation
+
             this.scaleX = scale
             this.scaleY = scale
         },
