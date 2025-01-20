@@ -1379,6 +1379,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-code-block-lowlight/-/extension-code-block-lowlight-2.11.1.tgz#425088a3463d7f8a8012a34be9808b9ca62630e0"
   integrity sha512-mYZU+uZ8lgqZlgH6vdGg3qS3TkHYN+hNpwqy9qwhRxrI7xPh70/M+dlMv9eVjathgLMrdWBL1PGU0Ir1Uu9WDw==
 
+"@tiptap/extension-code-block@2.11.1":
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-code-block/-/extension-code-block-2.11.1.tgz#d8e45c714d771b53eaa3cda8aca4dada574755c8"
+  integrity sha512-wo5Kes/5OqPocfZasLRlwiPCu+OOlXI5KocLeLR114aHusTyLduX6Y4M7Gaiw78RkRRjc+xtIu18XFSsiaiYJg==
+
 "@tiptap/extension-code-block@^2.11.1":
   version "2.11.2"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-code-block/-/extension-code-block-2.11.2.tgz#81f43250c5514bcd24e04544e0d645c1a9f1ffce"
