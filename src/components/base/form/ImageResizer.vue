@@ -144,8 +144,6 @@ export default {
             }
 
             // init croppr
-
-            console.log(this.roundShape)
             const cropCircle = this.roundShape
                 ? (data) => {
                       let x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
