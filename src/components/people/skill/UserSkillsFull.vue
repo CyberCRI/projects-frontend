@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="skill-columns-header" :key="`${key}-header`">
+        <div class="skill-columns-header">
             <div class="skill-name">
                 <span class="column-label" v-if="title">{{ title }}</span>
             </div>

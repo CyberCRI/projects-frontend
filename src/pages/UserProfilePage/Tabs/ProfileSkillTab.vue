@@ -131,7 +131,6 @@ export default {
 
                     return acc
                 }, {})
-                console.log(this.userMentorship)
             } catch (error) {
                 console.error(error)
             }

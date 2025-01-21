@@ -20,9 +20,11 @@
                 <span v-if="skill.needs_mentor"> {{ $t('profile.needs-mentor') }}</span>
                 <ToolTip
                     v-if="skill.comment && (skill.can_mentor || skill.needs_mentor)"
-                    :content="skill.comment"
                     placement="bottom"
                 >
+                    <template #custom-content>
+                        <p v-html="escapeComment(skill.comment)"></p>
+                    </template>
                     <LpiButton class="squarish" secondary btn-icon="ChatBubble" label="" />
                 </ToolTip>
             </div>
@@ -158,6 +160,17 @@ export default {
         offerMentorship() {
             this.mentorshipDrawerIsOpen = true
             this.mentorshipDrawerIsOffer = true
+        },
+
+        escapeHTML(text) {
+            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        },
+        convertNewLineToBr(text) {
+            return text.replace(/\n/g, '<br>')
+        },
+
+        escapeComment(text) {
+            return this.convertNewLineToBr(this.escapeHTML(text))
         },
     },
 }
