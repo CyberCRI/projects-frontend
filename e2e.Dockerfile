@@ -14,7 +14,7 @@ RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} dotenv  && \
   chown -R 10000:10000 /.npm && \
   # /Bug with npm cache
   chown -R 10000:10000 /app &&\
-  npx -y playwright install chrome --with-deps &&\
+  npx -y playwright install --only-shell &&\
   mkdir /.cache &&\
   # Playwright installs in root user's folder, move it to root dir
   mv /root/.cache/ms-playwright /.cache/ &&\
