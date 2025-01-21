@@ -18,11 +18,12 @@ const emit = defineEmits(emitsDefinitions)
 // props
 const props = defineProps(propsDefinitions)
 
-const { editor, resetContent, appendTranslationsStyle, initEditor, destroyEditor } = useTipTap({
-    props,
-    emit,
-    t,
-})
+const { editor, onDrop, resetContent, appendTranslationsStyle, initEditor, destroyEditor } =
+    useTipTap({
+        props,
+        emit,
+        t,
+    })
 
 // lifecycle
 onMounted(() => {
@@ -53,6 +54,6 @@ defineExpose({
             @saved="emit('saved', $event)"
         />
 
-        <TipTapEditorContent :editor="editor" />
+        <TipTapEditorContent :editor="editor" @drop="onDrop" />
     </TipTapEditorContainer>
 </template>

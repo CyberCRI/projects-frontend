@@ -20,7 +20,7 @@ export default Image.extend({
             inline: true,
             HTMLAttributes: {},
             sizes: ['small', 'medium', 'large', 'full', 'custom', 'original'],
-            allowBase64: true,
+            allowBase64: false,
         }
     },
 
