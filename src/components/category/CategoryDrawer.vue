@@ -77,6 +77,7 @@
                             :image-sizes="category.imageSizes"
                             :ratio="pictureRatio"
                             from-center
+                            @invalid-image-size="showImageResizer = false"
                     /></template>
                     <template #footer>
                         <div class="image-resizer-actions">

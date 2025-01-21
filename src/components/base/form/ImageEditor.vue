@@ -62,6 +62,7 @@
                 :image-sizes="imageSizes"
                 :round-shape="roundPicture"
                 :ratio="pictureRatio"
+                @invalid-image-size="showImageResizer = false"
             />
         </BaseDrawer>
     </div>
