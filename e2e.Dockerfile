@@ -1,6 +1,6 @@
 FROM node:22
 
-ARG PLAYWRIGHT_VERSION=1.46.1
+ARG PLAYWRIGHT_VERSION=1.49.1
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN npm install @playwright/test@${PLAYWRIGHT_VERSION} dotenv  && \
   chown -R 10000:10000 /.npm && \
   # /Bug with npm cache
   chown -R 10000:10000 /app &&\
-  npx -y playwright install --only-shell &&\
+  npx -y playwright install --with-deps chromium &&\
   mkdir /.cache &&\
   # Playwright installs in root user's folder, move it to root dir
   mv /root/.cache/ms-playwright /.cache/ &&\

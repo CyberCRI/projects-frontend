@@ -77,9 +77,9 @@ export default defineConfig({
         //     use: { channel: 'msedge' },
         // },
         {
-            name: 'chrome',
+            name: 'chromium',
 
-            use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+            use: { ...devices['Desktop Chrome'] },
         },
     ],
 
