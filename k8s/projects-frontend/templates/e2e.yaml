@@ -74,7 +74,7 @@ spec:
           - npx
           - playwright
           - test
-          - --project=chrome
+          - --project=chromium
           envFrom:
           - configMapRef:
               name: {{ tpl .Values.e2e.name . }}
