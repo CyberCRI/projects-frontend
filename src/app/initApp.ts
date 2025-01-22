@@ -1,8 +1,5 @@
 import { createApp } from 'vue'
 
-import { axios } from '@/api/api.config'
-import VueAxios from 'vue-axios'
-
 import pinia from '@/stores'
 
 import { capitalize, isNotGroup, isGroup } from '@/filters'
@@ -39,8 +36,6 @@ export default async function initApp(inits) {
         isNotGroup,
         isGroup,
     }
-
-    app.use(VueAxios, axios)
 
     app.use(i18n)
 
