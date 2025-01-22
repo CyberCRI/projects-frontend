@@ -110,7 +110,7 @@
         "@vue/compiler-sfc": "^3.5.13",
         "@vue/eslint-config-prettier": "^8",
         "@vue/eslint-config-typescript": "^12",
-        "@vue/test-utils": "^2.3.2",
+        "@vue/test-utils": "^2.4.6",
         "babel-core": "^6",
         "babel-plugin-add-module-exports": "^1",
         "babel-plugin-require-context-hook": "^1",
