@@ -18,6 +18,7 @@ module.exports = (api) => {
     const plugins = [
         // Plugins required with vue-class-component
         // https://class-component.vuejs.org/guide/installation.html#manual-setup
+        // TODO: vue-class-component was removed do we need this ?
         ['@babel/proposal-decorators', { legacy: true }],
         ['@babel/plugin-proposal-class-properties'],
         ['@babel/plugin-proposal-nullish-coalescing-operator'],

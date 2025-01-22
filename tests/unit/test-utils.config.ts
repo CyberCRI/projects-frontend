@@ -9,8 +9,6 @@
 
 // const localVue = createLocalVue()
 
-// localVue.use(VueAxios, axios, Vuex)
-
 // const mocks = {
 //     GS: () => {},
 //     APISRV: 'mock-api-server.fr',
