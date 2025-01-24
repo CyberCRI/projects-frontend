@@ -1,6 +1,6 @@
 injectedEnv:
   nonSensitive:
-    VITE_APP_KEYCLOAK_URL: https://id.learning-planet.org/auth
+    VITE_APP_KEYCLOAK_URL: https://id.learningplanetinstitute.org
     VITE_APP_WSS_HOST: 'wss://hocus-pocus.k8s.lp-i.org'
     VITE_APP_META_PORTAL_URL: https://projects.directory
     VITE_APP_MIXPANEL_API_URL: https://mixpanel-proxy.lp-i.org
