@@ -129,7 +129,8 @@ spec:
       emptyDir: {}
     entrypoint: all
     serviceAccountName: {{ .Values.workflowRbac.serviceAccountName }}
-  schedule: {{ .Values.e2e.schedule }}
+  schedules:
+  - {{ .Values.e2e.schedule }}
   timezone: {{ .Values.e2e.timezone }}
   concurrencyPolicy: {{ .Values.e2e.concurrencyPolicy }}
 ---
