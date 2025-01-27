@@ -6,8 +6,6 @@
         "strict": false,
         "jsx": "preserve",
         "importHelpers": true,
-        "suppressExcessPropertyErrors": true,
-        "suppressImplicitAnyIndexErrors": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
         "experimentalDecorators": true,
