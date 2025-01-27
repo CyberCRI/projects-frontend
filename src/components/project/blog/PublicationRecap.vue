@@ -203,7 +203,7 @@ export default {
             color: $almost-black;
             position: relative;
             flex-grow: 1;
-            overflow: hidden hidden;
+            overflow: hidden;
 
             .gradient {
                 position: absolute;

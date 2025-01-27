@@ -101,7 +101,7 @@
                         :picture-alt="`${form.given_name} image`"
                         :contain="true"
                         :round-picture="true"
-                        v-model:imageSizes="form.imageSizes"
+                        v-model:image-sizes="form.imageSizes"
                         v-model:picture="form.picture"
                         :default-picture="defaultPictures"
                     >

@@ -114,7 +114,7 @@
                 :picture-alt="`${form.last_name} image`"
                 :contain="true"
                 :round-picture="true"
-                v-model:imageSizes="form.imageSizes"
+                v-model:image-sizes="form.imageSizes"
                 v-model:picture="form.picture"
                 :default-picture="`${PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`"
             ></ImageEditor>

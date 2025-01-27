@@ -49,7 +49,7 @@ export default Image.extend({
                         options = {
                             ...options,
                             size: 'original',
-                        }
+                        } as any // TODO: fix ts type
                     }
                     const { selection } = tr
                     const node = this.type.create(options)

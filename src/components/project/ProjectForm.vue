@@ -85,7 +85,7 @@
             <ImageEditor
                 :picture-alt="`${form.last_name} image`"
                 :contain="true"
-                v-model:imageSizes="form.imageSizes"
+                v-model:image-sizes="form.imageSizes"
                 v-model:picture="form.header_image"
                 :default-picture="defaultPictures"
                 :disabled="otherFieldDisabled"

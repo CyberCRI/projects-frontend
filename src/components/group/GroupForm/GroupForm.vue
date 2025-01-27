@@ -54,7 +54,7 @@
                 :picture-alt="`${form.name} image`"
                 :contain="true"
                 :round-picture="true"
-                v-model:imageSizes="form.imageSizes"
+                v-model:image-sizes="form.imageSizes"
                 v-model:picture="form.header_image"
                 :default-picture="defaultPictures"
             ></ImageEditor>

@@ -23,4 +23,5 @@ export interface SearchParams extends APIParams {
     organizations?: number[]
     sdgs?: number[]
     tags?: string[]
+    types?: string
 }

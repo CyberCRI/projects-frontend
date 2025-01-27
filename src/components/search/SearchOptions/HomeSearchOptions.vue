@@ -2,7 +2,7 @@
     <div class="search-block">
         <div class="search-container">
             <div class="search-group">
-                <SearchOptionDropDown v-model:selectedSection="selectedSection" />
+                <SearchOptionDropDown v-model:selected-section="selectedSection" />
                 <SearchInput
                     class="search-input has-sections"
                     v-model="selectedQuery"
