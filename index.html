@@ -73,6 +73,7 @@
                 margin: 0;
                 padding: 0;
             }
+
             .app-loader {
                 height: 100vh;
                 width: 100vw;
@@ -81,45 +82,55 @@
                 justify-content: center;
                 position: relative;
             }
+
             .app-version {
                 position: absolute;
                 bottom: 1rem;
                 right: 1rem;
                 font-size: 0.8rem;
             }
+
             .app-loader svg {
                 width: min(75vw, 75vh);
             }
+
             @keyframes app-loader-pulse {
                 0%,
                 10% {
                     transform: scale(1);
                     opacity: 0.5;
                 }
+
                 90%,
                 100% {
                     transform: scale(1.05);
                     opacity: 1;
                 }
             }
+
             .app-loader svg path {
                 animation: app-loader-pulse 1200ms ease-in-out infinite alternate;
                 transform-origin: center center;
             }
+
             .app-loader svg .trunk {
                 animation-delay: 0ms;
             }
+
             .app-loader svg .left-leaf {
                 animation-delay: -900ms;
             }
+
             .app-loader svg .top-leaf {
                 animation-delay: -600ms;
             }
+
             .app-loader svg .right-leaf {
                 animation-delay: -300ms;
             }
         </style>
     </head>
+
     <body>
         <div id="app">
             <div class="app-loader">

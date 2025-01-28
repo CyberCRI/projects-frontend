@@ -14,7 +14,13 @@ export default async function initApp(inits) {
     // init app
     const app = createApp(App)
     // Display errors / warnings
-    app.config.errorHandler = (err, vm, info) => {
+    app.config.errorHandler = (err: any, vm, info) => {
+        // silence aborted request (on home page mostly)
+        if (err?.code === 'ECONNABORTED') {
+            console.log('axios aborted request', err)
+            return
+        }
+
         const toaster = useToasterStore()
         const splitedError = err.toString().split(':')
         const title = splitedError.length > 1 ? splitedError[0] : 'Error'
