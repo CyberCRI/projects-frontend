@@ -110,6 +110,7 @@
         />
 
         <SdgsDrawer
+            class="medium"
             :project="project"
             :is-opened="modals.sdg.visible"
             :sdgs="sdgs || []"
