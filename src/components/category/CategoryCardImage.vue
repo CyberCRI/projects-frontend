@@ -82,7 +82,7 @@ export default {
     left: 50%;
     width: 100%;
     height: 0;
-    padding-bottom: 9/16 * 100%;
+    padding-bottom: calc((9 / 16) * 100%);
     transform: translate(-50%, -50%);
 }
 </style>
