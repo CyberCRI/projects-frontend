@@ -1,8 +1,21 @@
 <script setup>
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
+import { watchEffect } from 'vue'
 
 const model = defineModel({ type: Object, required: true })
+
+watchEffect(() => {
+    if (model.value.can_mentor) {
+        model.value.needs_mentor = false
+    }
+})
+
+watchEffect(() => {
+    if (model.value.needs_mentor) {
+        model.value.can_mentor = false
+    }
+})
 </script>
 
 <template>
