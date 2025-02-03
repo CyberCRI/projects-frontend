@@ -23,6 +23,15 @@
         "useDefineForClassFields": false,
         "ignoreDeprecations": "5.0"
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
+    "extends": "./.nuxt/tsconfig.json",
+    "include": [
+        "env.d.ts",
+        ".nuxt/nuxt.d.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "tests/**/*.ts",
+        "tests/**/*.tsx"
+    ],
     "exclude": ["node_modules"]
 }

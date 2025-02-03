@@ -1,33 +1,21 @@
-import { axios } from '@/api/api.config'
-import { APIResponseList } from '@/api/types'
-import { BlogEntryInput, BlogEntryOutput } from '@/models/blog-entry.model'
+import type { APIResponseList } from '@/api/types'
+import type { BlogEntryInput, BlogEntryOutput } from '@/models/blog-entry.model'
+import useAPI from '@/composables/useAPI'
 
-export async function getBlogEntries(id): Promise<APIResponseList<BlogEntryOutput>> {
-    return (
-        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${id}/blog-entry/`)
-    ).data
+export async function getBlogEntries(id) {
+    return (await useAPI(`/project/${id}/blog-entry/`, {})).data
 }
 
-export async function getBlogEntry(
-    body: BlogEntryInput
-): Promise<APIResponseList<BlogEntryOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                body.project_id
-            }/blog-entry/${body.blog_entry_id}`
-        )
-    ).data
+export async function getBlogEntry(body: BlogEntryInput) {
+    return (await useAPI(`/project/${body.project_id}/blog-entry/${body.blog_entry_id}`, {})).data
 }
 
-export async function postBlogEntry(blogEntry: BlogEntryInput): Promise<BlogEntryOutput> {
+export async function postBlogEntry(blogEntry: BlogEntryInput) {
     return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                blogEntry.project_id
-            }/blog-entry/`,
-            blogEntry
-        )
+        await useAPI(`/project/${blogEntry.project_id}/blog-entry/`, {
+            body: blogEntry,
+            method: 'POST',
+        })
     ).data
 }
 
@@ -37,36 +25,23 @@ export async function patchBlogEntry({
 }: {
     project_id: string
     body: BlogEntryInput
-}): Promise<BlogEntryOutput> {
+}) {
     return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/blog-entry/${
-                body.id
-            }/`,
-            body
-        )
+        await useAPI(`/project/${project_id}/blog-entry/${body.id}/`, { body, method: 'PATCH' })
     ).data
 }
 
-export async function deleteBlogEntry({
-    project_id,
-    id,
-}: {
-    project_id: string
-    id: number
-}): Promise<void> {
-    return await axios.delete(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/blog-entry/${id}/`
-    )
+export async function deleteBlogEntry({ project_id, id }: { project_id: string; id: number }) {
+    return await useAPI(`/project/${project_id}/blog-entry/${id}/`, { method: 'DELETE' })
 }
 
 export async function postBlogEntryImage({ body, project_id }) {
     return (
-        await axios.post(
+        await useAPI(
             `${
                 import.meta.env.VITE_APP_API_DEFAULT_VERSION
             }/project/${project_id}/blog-entry-image/`,
-            body
+            { body, method: 'POST' }
         )
     ).data
 }

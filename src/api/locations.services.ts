@@ -1,67 +1,50 @@
-import { axios } from '@/api/api.config'
-import { LocationInput, LocationOutput } from '@/models/location.model'
-import { APIResponseList } from '@/api/types'
+import type { LocationInput, LocationOutput } from '@/models/location.model'
+import type { APIResponseList } from '@/api/types'
 import utils from '@/functs/functions'
+import useAPI from '@/composables/useAPI'
 
-export async function getProjectLocations(projectId): Promise<APIResponseList<LocationOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/location/`
-        )
-    ).data
+export async function getProjectLocations(projectId) {
+    return (await useAPI(`/project/${projectId}/location/`, {})).data
 }
 
-export async function getProjectLocation(body): Promise<APIResponseList<LocationOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${body.projectId}/location/${
-                body.locationId
-            }`
-        )
-    ).data
+export async function getProjectLocation(body) {
+    return (await useAPI(`/project/${body.projectId}/location/${body.locationId}`, {})).data
 }
 
-export async function getLocations(params, next): Promise<APIResponseList<LocationOutput>> {
+export async function getLocations(params, next) {
     if (next) {
-        return (await axios.get(next)).data
+        // TODO: nuxt check next works
+        return (await useAPI(next, {})).data
     }
 
+    return (await useAPI(`/location/`, { params: utils.adaptParam(params) })).data
+}
+
+export async function postLocations(location: LocationInput) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/location/`,
-            utils.adaptParam(params)
-        )
+        await useAPI(`/project/${location.project_id}/location/`, {
+            body: location,
+            method: 'POST',
+        })
     ).data
 }
 
-export async function postLocations(location: LocationInput): Promise<LocationOutput> {
+export async function patchLocation(location: LocationInput) {
     return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                location.project_id
-            }/location/`,
-            location
-        )
+        await useAPI(`/project/${location.project.id}/location/${location.id}/`, {
+            body: location,
+            method: 'PATCH',
+        })
     ).data
 }
 
-export async function patchLocation(location: LocationInput): Promise<LocationOutput> {
+export async function deleteLocation(location: LocationInput) {
     return (
-        await axios.patch(
+        await useAPI(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
                 location.project.id
             }/location/${location.id}/`,
-            location
-        )
-    ).data
-}
-
-export async function deleteLocation(location: LocationInput): Promise<LocationOutput> {
-    return (
-        await axios.delete(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                location.project.id
-            }/location/${location.id}/`
+            { method: 'DELETE' }
         )
     ).data
 }
