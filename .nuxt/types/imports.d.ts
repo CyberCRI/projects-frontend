@@ -27,6 +27,7 @@ declare global {
     const getAppManifest: (typeof import('../../node_modules/nuxt/dist/app/composables/manifest'))['getAppManifest']
     const getCurrentInstance: (typeof import('vue'))['getCurrentInstance']
     const getCurrentScope: (typeof import('vue'))['getCurrentScope']
+    const getFormDataHeaders: (typeof import('../../src/composables/useAPI'))['getFormDataHeaders']
     const getRouteRules: (typeof import('../../node_modules/nuxt/dist/app/composables/manifest'))['getRouteRules']
     const h: (typeof import('vue'))['h']
     const hasInjectionContext: (typeof import('vue'))['hasInjectionContext']
@@ -261,6 +262,9 @@ declare module 'vue' {
         >
         readonly getCurrentInstance: UnwrapRef<(typeof import('vue'))['getCurrentInstance']>
         readonly getCurrentScope: UnwrapRef<(typeof import('vue'))['getCurrentScope']>
+        readonly getFormDataHeaders: UnwrapRef<
+            (typeof import('../../src/composables/useAPI'))['getFormDataHeaders']
+        >
         readonly getRouteRules: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/manifest'))['getRouteRules']
         >

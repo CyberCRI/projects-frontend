@@ -182,7 +182,7 @@ export {
     useServerSeoMeta,
     useServerHeadSafe,
 } from '@unhead/vue'
-export { default as useAPI } from '../src/composables/useAPI'
+export { default as useAPI, getFormDataHeaders } from '../src/composables/useAPI'
 export { default as useSearch } from '../src/composables/useSearch'
 export { default as useSkillLevels } from '../src/composables/useSkillLevels'
 export { default as useSkillTexts } from '../src/composables/useSkillTexts'
