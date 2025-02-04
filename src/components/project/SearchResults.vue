@@ -22,7 +22,7 @@
 <script>
 import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import { searchEquals } from '@/functs/search.ts'
 import { toRaw } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -136,7 +136,7 @@ export default {
             // Get projects and update project list
             let response
             if (specificPageIndex) {
-                response = (await axios.get(specificPageIndex)).data
+                response = (await useAPI(specificPageIndex, {})).data
             } else if (this.mode === 'projects') {
                 response = await searchProjects(query, filters)
             } else if (this.mode === 'groups') {

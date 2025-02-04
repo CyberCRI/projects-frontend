@@ -68,7 +68,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import useAPI from '@/composables/useAPI.ts'
 import ImageResizer from '@/components/base/form/ImageResizer.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
@@ -163,7 +163,7 @@ export default {
     methods: {
         async getFilesFromUrl(url) {
             const filename = url.split('/').pop() || 'default-image'
-            const result = await axios.get(url, { responseType: 'blob' })
+            const result = await useAPI(url, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], filename)
         },
 

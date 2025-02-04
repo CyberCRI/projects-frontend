@@ -75,8 +75,6 @@ export {
     navigateTo,
     useRoute,
     useRouter,
-    onBeforeRouteLeave,
-    onBeforeRouteUpdate,
 } from '#app/composables/router'
 export {
     isPrerendered,
@@ -92,6 +90,7 @@ export { useRequestURL } from '#app/composables/url'
 export { usePreviewMode } from '#app/composables/preview'
 export { useRouteAnnouncer } from '#app/composables/route-announcer'
 export { useRuntimeHook } from '#app/composables/runtime-hook'
+export { onBeforeRouteLeave, onBeforeRouteUpdate, useLink } from 'vue-router'
 export {
     withCtx,
     withDirectives,
@@ -183,3 +182,10 @@ export {
     useServerSeoMeta,
     useServerHeadSafe,
 } from '@unhead/vue'
+export { default as useAPI } from '../src/composables/useAPI'
+export { default as useSearch } from '../src/composables/useSearch'
+export { default as useSkillLevels } from '../src/composables/useSkillLevels'
+export { default as useSkillTexts } from '../src/composables/useSkillTexts'
+export { default as useTagSearch } from '../src/composables/useTagSearch'
+export { default as useTagTexts } from '../src/composables/useTagTexts'
+export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables'

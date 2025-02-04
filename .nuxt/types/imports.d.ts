@@ -18,6 +18,7 @@ declare global {
     const defineNuxtLink: (typeof import('../../node_modules/nuxt/dist/app/components/nuxt-link'))['defineNuxtLink']
     const defineNuxtPlugin: (typeof import('../../node_modules/nuxt/dist/app/nuxt'))['defineNuxtPlugin']
     const defineNuxtRouteMiddleware: (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['defineNuxtRouteMiddleware']
+    const definePageMeta: (typeof import('../../node_modules/nuxt/dist/pages/runtime/composables'))['definePageMeta']
     const definePayloadPlugin: (typeof import('../../node_modules/nuxt/dist/app/nuxt'))['definePayloadPlugin']
     const definePayloadReducer: (typeof import('../../node_modules/nuxt/dist/app/composables/payload'))['definePayloadReducer']
     const definePayloadReviver: (typeof import('../../node_modules/nuxt/dist/app/composables/payload'))['definePayloadReviver']
@@ -47,8 +48,8 @@ declare global {
     const nextTick: (typeof import('vue'))['nextTick']
     const onActivated: (typeof import('vue'))['onActivated']
     const onBeforeMount: (typeof import('vue'))['onBeforeMount']
-    const onBeforeRouteLeave: (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['onBeforeRouteLeave']
-    const onBeforeRouteUpdate: (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['onBeforeRouteUpdate']
+    const onBeforeRouteLeave: (typeof import('vue-router'))['onBeforeRouteLeave']
+    const onBeforeRouteUpdate: (typeof import('vue-router'))['onBeforeRouteUpdate']
     const onBeforeUnmount: (typeof import('vue'))['onBeforeUnmount']
     const onBeforeUpdate: (typeof import('vue'))['onBeforeUpdate']
     const onDeactivated: (typeof import('vue'))['onDeactivated']
@@ -92,6 +93,7 @@ declare global {
     const tryUseNuxtApp: (typeof import('../../node_modules/nuxt/dist/app/nuxt'))['tryUseNuxtApp']
     const unref: (typeof import('vue'))['unref']
     const updateAppConfig: (typeof import('../../node_modules/nuxt/dist/app/config'))['updateAppConfig']
+    const useAPI: (typeof import('../../src/composables/useAPI'))['default']
     const useAppConfig: (typeof import('../../node_modules/nuxt/dist/app/config'))['useAppConfig']
     const useAsyncData: (typeof import('../../node_modules/nuxt/dist/app/composables/asyncData'))['useAsyncData']
     const useAttrs: (typeof import('vue'))['useAttrs']
@@ -106,6 +108,7 @@ declare global {
     const useId: (typeof import('vue'))['useId']
     const useLazyAsyncData: (typeof import('../../node_modules/nuxt/dist/app/composables/asyncData'))['useLazyAsyncData']
     const useLazyFetch: (typeof import('../../node_modules/nuxt/dist/app/composables/fetch'))['useLazyFetch']
+    const useLink: (typeof import('vue-router'))['useLink']
     const useLoadingIndicator: (typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator'))['useLoadingIndicator']
     const useModel: (typeof import('vue'))['useModel']
     const useNuxtApp: (typeof import('../../node_modules/nuxt/dist/app/nuxt'))['useNuxtApp']
@@ -146,13 +149,18 @@ declare global {
     const useScriptVimeoPlayer: (typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs'))['useScriptVimeoPlayer']
     const useScriptXPixel: (typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs'))['useScriptXPixel']
     const useScriptYouTubePlayer: (typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs'))['useScriptYouTubePlayer']
+    const useSearch: (typeof import('../../src/composables/useSearch'))['default']
     const useSeoMeta: (typeof import('../../node_modules/@unhead/vue'))['useSeoMeta']
     const useServerHead: (typeof import('../../node_modules/@unhead/vue'))['useServerHead']
     const useServerHeadSafe: (typeof import('../../node_modules/@unhead/vue'))['useServerHeadSafe']
     const useServerSeoMeta: (typeof import('../../node_modules/@unhead/vue'))['useServerSeoMeta']
     const useShadowRoot: (typeof import('vue'))['useShadowRoot']
+    const useSkillLevels: (typeof import('../../src/composables/useSkillLevels'))['default']
+    const useSkillTexts: (typeof import('../../src/composables/useSkillTexts'))['default']
     const useSlots: (typeof import('vue'))['useSlots']
     const useState: (typeof import('../../node_modules/nuxt/dist/app/composables/state'))['useState']
+    const useTagSearch: (typeof import('../../src/composables/useTagSearch'))['default']
+    const useTagTexts: (typeof import('../../src/composables/useTagTexts'))['default']
     const useTemplateRef: (typeof import('vue'))['useTemplateRef']
     const useTransitionState: (typeof import('vue'))['useTransitionState']
     const watch: (typeof import('vue'))['watch']
@@ -234,6 +242,9 @@ declare module 'vue' {
         readonly defineNuxtRouteMiddleware: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['defineNuxtRouteMiddleware']
         >
+        readonly definePageMeta: UnwrapRef<
+            (typeof import('../../node_modules/nuxt/dist/pages/runtime/composables'))['definePageMeta']
+        >
         readonly definePayloadPlugin: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/nuxt'))['definePayloadPlugin']
         >
@@ -287,11 +298,9 @@ declare module 'vue' {
         readonly nextTick: UnwrapRef<(typeof import('vue'))['nextTick']>
         readonly onActivated: UnwrapRef<(typeof import('vue'))['onActivated']>
         readonly onBeforeMount: UnwrapRef<(typeof import('vue'))['onBeforeMount']>
-        readonly onBeforeRouteLeave: UnwrapRef<
-            (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['onBeforeRouteLeave']
-        >
+        readonly onBeforeRouteLeave: UnwrapRef<(typeof import('vue-router'))['onBeforeRouteLeave']>
         readonly onBeforeRouteUpdate: UnwrapRef<
-            (typeof import('../../node_modules/nuxt/dist/app/composables/router'))['onBeforeRouteUpdate']
+            (typeof import('vue-router'))['onBeforeRouteUpdate']
         >
         readonly onBeforeUnmount: UnwrapRef<(typeof import('vue'))['onBeforeUnmount']>
         readonly onBeforeUpdate: UnwrapRef<(typeof import('vue'))['onBeforeUpdate']>
@@ -370,6 +379,7 @@ declare module 'vue' {
         readonly updateAppConfig: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/config'))['updateAppConfig']
         >
+        readonly useAPI: UnwrapRef<(typeof import('../../src/composables/useAPI'))['default']>
         readonly useAppConfig: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/config'))['useAppConfig']
         >
@@ -402,6 +412,7 @@ declare module 'vue' {
         readonly useLazyFetch: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/fetch'))['useLazyFetch']
         >
+        readonly useLink: UnwrapRef<(typeof import('vue-router'))['useLink']>
         readonly useLoadingIndicator: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/loading-indicator'))['useLoadingIndicator']
         >
@@ -520,6 +531,7 @@ declare module 'vue' {
         readonly useScriptYouTubePlayer: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/script-stubs'))['useScriptYouTubePlayer']
         >
+        readonly useSearch: UnwrapRef<(typeof import('../../src/composables/useSearch'))['default']>
         readonly useSeoMeta: UnwrapRef<
             (typeof import('../../node_modules/@unhead/vue'))['useSeoMeta']
         >
@@ -533,9 +545,21 @@ declare module 'vue' {
             (typeof import('../../node_modules/@unhead/vue'))['useServerSeoMeta']
         >
         readonly useShadowRoot: UnwrapRef<(typeof import('vue'))['useShadowRoot']>
+        readonly useSkillLevels: UnwrapRef<
+            (typeof import('../../src/composables/useSkillLevels'))['default']
+        >
+        readonly useSkillTexts: UnwrapRef<
+            (typeof import('../../src/composables/useSkillTexts'))['default']
+        >
         readonly useSlots: UnwrapRef<(typeof import('vue'))['useSlots']>
         readonly useState: UnwrapRef<
             (typeof import('../../node_modules/nuxt/dist/app/composables/state'))['useState']
+        >
+        readonly useTagSearch: UnwrapRef<
+            (typeof import('../../src/composables/useTagSearch'))['default']
+        >
+        readonly useTagTexts: UnwrapRef<
+            (typeof import('../../src/composables/useTagTexts'))['default']
         >
         readonly useTemplateRef: UnwrapRef<(typeof import('vue'))['useTemplateRef']>
         readonly useTransitionState: UnwrapRef<(typeof import('vue'))['useTransitionState']>

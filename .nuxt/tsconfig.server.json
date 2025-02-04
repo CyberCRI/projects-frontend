@@ -14,8 +14,8 @@
         "jsxFragmentFactory": "Fragment",
         "paths": {
             "#imports": ["./types/nitro-imports"],
-            "~/*": ["../*", "../*"],
-            "@/*": ["../*", "../*"],
+            "~/*": ["../src/*", "../src/*"],
+            "@/*": ["../src/*", "../src/*"],
             "~~/*": ["../*", "../*"],
             "@@/*": ["../*", "../*"],
             "nitropack/types": ["../node_modules/nitropack/types"],
@@ -31,14 +31,15 @@
             "unplugin-vue-router/client": ["../node_modules/unplugin-vue-router/client"],
             "@nuxt/schema": ["../node_modules/@nuxt/schema"],
             "nuxt": ["../node_modules/nuxt"],
-            "~": ["./.."],
-            "@": ["./.."],
+            "~": ["../src"],
+            "@": ["../src"],
             "~~": ["./.."],
             "@@": ["./.."],
             "#shared": ["../shared"],
-            "assets": ["../assets"],
-            "public": ["../public"],
+            "assets": ["../src/assets"],
+            "public": ["../src/public"],
             "#build": ["./"],
+            "#build/*": ["./*"],
             "#internal/nuxt/paths": ["../node_modules/nuxt/dist/core/runtime/nitro/paths"],
             "#vue-router": ["./vue-router"]
         },
@@ -50,7 +51,7 @@
         "../node_modules/@nuxt/telemetry/runtime/server",
         "./types/nitro.d.ts",
         "../**/*",
-        "../server/**/*"
+        "../src/server/**/*"
     ],
     "exclude": [
         "../node_modules",

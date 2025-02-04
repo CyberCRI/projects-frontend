@@ -1,41 +1,30 @@
-import { axios } from '@/api/api.config'
-import { APIParams, APIResponseList } from '@/api/types'
-import { TagModel } from '@/models/tag.model'
+import useAPI from '@/composables/useAPI'
+import type { APIParams, APIResponseList } from '@/api/types'
+import type { TagModel } from '@/models/tag.model'
 
-export async function getAllOrgClassifications(
-    orgCode: string,
-    params: APIParams
-): Promise<APIResponseList<any>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/`,
-            { params }
-        )
-    ).data
+export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
+    return (await useAPI(`/organization/${orgCode}/tag-classification/`, { params })).data
 }
 
 export async function getOrgClassification(
     orgCode: string,
     classificationId: number,
     params: APIParams
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`,
-            { params }
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, { params })
     ).data
 }
 
 export async function postOrgClassification(
     orgCode: string,
     classification: any // TODO: Add type
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/`,
-            classification
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/`, {
+            body: classification,
+            method: 'POST',
+        })
     ).data
 }
 
@@ -43,12 +32,12 @@ export async function putOrgClassification(
     orgCode: string,
     classificationId: number,
     classification: any // TODO: Add type
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.put(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`,
-            classification
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+            body: classification,
+            method: 'PUT',
+        })
     ).data
 }
 
@@ -56,23 +45,20 @@ export async function patchOrgClassification(
     orgCode: string,
     classificationId: number,
     classification: any // TODO: Add type
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`,
-            classification
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+            body: classification,
+            method: 'PATCH',
+        })
     ).data
 }
 
-export async function deleteOrgClassification(
-    orgCode: string,
-    classificationId: number
-): Promise<APIResponseList<any>> {
+export async function deleteOrgClassification(orgCode: string, classificationId: number) {
     return (
-        await axios.delete(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/`
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+            method: 'DELETE',
+        })
     ).data
 }
 
@@ -80,52 +66,41 @@ export async function getOrgClassificationTags(
     orgCode: string,
     classificationId: number,
     params?: APIParams
-): Promise<APIResponseList<any>> {
-    return await axios.get(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/`,
-        { params }
-    )
+) {
+    return await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
+        params,
+    })
 }
 
 export async function getOrgClassificationAutocomplete(
     orgCode: string,
     classificationId: number,
     params?: APIParams
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
+        await useAPI(
+            `/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
             { params }
         )
     ).data
 }
 
-export async function getOrgTag(
-    orgCode: string,
-    tagId: number,
-    params: APIParams
-): Promise<APIResponseList<any>> {
+export async function getOrgTag(orgCode: string, tagId: number, params: APIParams) {
+    return (await useAPI(`/organization/${orgCode}/tag/${tagId}/`, { params })).data
+}
+
+export async function getTags(ids: number[], params?: APIParams) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag/${tagId}/`,
-            { params }
-        )
+        await useAPI(`/tag/`, {
+            params: {
+                ...params,
+                ids: ids.join(','),
+            } as any,
+        })
     ).data
 }
 
-export async function getTags(ids: number[], params?: APIParams): Promise<APIResponseList<any>> {
-    return (
-        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/tag/`, {
-            ...params,
-            ids: ids.join(','),
-        } as any)
-    ).data
-}
-
-export async function getAllTagsById(
-    ids: number[],
-    params?: APIParams
-): Promise<APIResponseList<any>> {
+export async function getAllTagsById(ids: number[], params?: APIParams) {
     return {
         count: -1,
         next: null,
@@ -134,12 +109,9 @@ export async function getAllTagsById(
             ids.map(
                 async (id) =>
                     (
-                        await axios.get(
-                            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/tag/${id}/`,
-                            {
-                                ...params,
-                            } as any
-                        )
+                        await useAPI(`/tag/${id}/`, {
+                            params,
+                        })
                     ).data
             )
         ),
@@ -151,11 +123,11 @@ export async function putClassificationTag(
     classificationId: number,
     tagtId: number,
     tag: TagModel
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.put(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
-            tag
+        await useAPI(
+            `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+            { body: tag, method: 'PUT' }
         )
     ).data
 }
@@ -165,11 +137,11 @@ export async function patchClassificationTag(
     classificationId: number,
     tagtId: number,
     tag: TagModel
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
-            tag
+        await useAPI(
+            `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+            { body: tag, method: 'PATCH' }
         )
     ).data
 }
@@ -178,10 +150,11 @@ export async function deleteClassificationTag(
     orgCode: string,
     classificationId: number,
     tagtId: number
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.delete(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`
+        await useAPI(
+            `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+            { method: 'DELETE' }
         )
     ).data
 }
@@ -190,11 +163,11 @@ export async function postClassificationTag(
     orgCode: string,
     classificationId: number,
     tag: TagModel
-): Promise<APIResponseList<any>> {
+) {
     return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/tag-classification/${classificationId}/tag/`,
-            tag
-        )
+        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
+            body: tag,
+            method: 'POST',
+        })
     ).data
 }

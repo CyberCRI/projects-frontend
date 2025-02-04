@@ -105,7 +105,7 @@ import debounce from 'lodash.debounce'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
@@ -222,7 +222,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.role-tab .search-input-container')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

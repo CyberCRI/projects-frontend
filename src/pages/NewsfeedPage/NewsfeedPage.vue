@@ -28,7 +28,7 @@
 <script>
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
 import NewsFeed from '@/components/app/NewsFeed.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -88,7 +88,7 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             window.scrollTo({ top: 0, behavior: 'smooth' })
             this.isLoading = false
         },

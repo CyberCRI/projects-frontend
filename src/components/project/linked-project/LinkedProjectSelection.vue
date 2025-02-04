@@ -58,7 +58,7 @@ import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import debounce from 'lodash.debounce'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'LinkedProjectSelection',
@@ -152,7 +152,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.project-selection .search-section')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

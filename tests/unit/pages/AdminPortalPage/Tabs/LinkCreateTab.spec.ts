@@ -2,21 +2,19 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LinkCreateTab from '@/pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
 import english from '@/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import { axios, configFormData } from '@/api/api.config'
+import useAPI from '@/composables/useAPI'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 // fix unhnadled rejection due to invalid url
-vi.mock('@/api/api.config', () => {
+vi.mock('@/composables/useAPI', () => {
     return {
-        axios: {
-            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
-        },
+        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 

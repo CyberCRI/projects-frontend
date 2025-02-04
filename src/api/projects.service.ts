@@ -1,5 +1,4 @@
-import { axios, axiosNoErrorMessage, configFormData } from '@/api/api.config'
-import {
+import type {
     AddLinkedProjectInput,
     AddManyLinkedProjectInput,
     LinkedProject,
@@ -7,13 +6,12 @@ import {
     ProjectOutput,
     ProjectPatchInput,
 } from '@/models/project.model'
-import { APIParams, APIResponseList, SearchParams } from '@/api/types'
+import type { APIParams, APIResponseList, SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
-export async function createProject(project): Promise<ProjectOutput> {
-    const result = (
-        await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/`, project)
-    ).data
+export async function createProject(project) {
+    const result: any = (await useAPI(`/project/`, { body: project })).data
 
     if (project.header_image instanceof File && result) {
         const headerFormData = new FormData()
@@ -26,7 +24,7 @@ export async function createProject(project): Promise<ProjectOutput> {
         headerFormData.append('top', imageSizes ? imageSizes.top : '')
         headerFormData.append('natural_ratio', imageSizes ? imageSizes.naturalRatio : '')
         project.header_image_id = (
-            await postProjectHeader({ project_id: result.id, body: headerFormData })
+            (await postProjectHeader({ project_id: result.id, body: headerFormData })) as any
         ).id
     }
     delete project.header_image
@@ -51,28 +49,18 @@ export async function createProject(project): Promise<ProjectOutput> {
     return result
 }
 
-export async function patchProject(
-    id: string,
-    project: ProjectPatchInput | FormData
-): Promise<ProjectOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${id}/`,
-            project,
-            project instanceof FormData ? configFormData : null
-        )
-    ).data
-}
-
-export async function deleteProject(id: string): Promise<void> {
-    return (await axios.delete(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${id}/`))
+export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
+    const extraHeaders = project instanceof FormData ? getFormDataHeaders() : {}
+    return (await useAPI(`/project/${id}/`, { body: project, method: 'PATCH', ...extraHeaders }))
         .data
 }
 
-export async function duplicateProject(id: string): Promise<ProjectOutput> {
-    return (
-        await axios.post(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${id}/duplicate/`)
-    ).data
+export async function deleteProject(id: string) {
+    return (await useAPI(`/project/${id}/`, { method: 'DELETE' })).data
+}
+
+export async function duplicateProject(id: string) {
+    return (await useAPI(`/project/${id}/duplicate/`, { method: 'POST' })).data
 }
 
 export async function addLinkedProject({
@@ -81,15 +69,8 @@ export async function addLinkedProject({
 }: {
     id: string
     body: AddManyLinkedProjectInput
-}): Promise<ProjectOutput> {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/project/${id}/linked-project/add-many/`,
-            body
-        )
-    ).data
+}) {
+    return (await useAPI(`/project/${id}/linked-project/add-many/`, { body, method: 'POST' })).data
 }
 
 export async function patchLinkedProject({
@@ -100,113 +81,59 @@ export async function patchLinkedProject({
     target_id: string
     id: number
     body: AddLinkedProjectInput
-}): Promise<LinkedProject> {
+}) {
+    return (await useAPI(`/project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' }))
+        .data
+}
+
+export async function deleteLinkedProject({ id, project_id }: { id: number; project_id: string }) {
+    return await useAPI(`/project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
+}
+
+export async function getProject(slugOrId: string, noError: boolean = false) {
     return (
-        await axios.patch(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/project/${target_id}/linked-project/${id}/`,
-            body
-        )
+        await useAPI(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${slugOrId}/`, {
+            noError: noError,
+        })
     ).data
 }
 
-export async function deleteLinkedProject({
-    id,
-    project_id,
-}: {
-    id: number
-    project_id: string
-}): Promise<void> {
-    return await axios.delete(
-        `${
-            import.meta.env.VITE_APP_API_DEFAULT_VERSION
-        }/project/${project_id}/linked-project/${id}/`
-    )
+export async function getAllRecommendedProjects(params: APIParams) {
+    return (await useAPI(`/project/misc/top/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
-export async function getProject(
-    slugOrId: string,
-    noError: boolean = false
-): Promise<ProjectOutput> {
-    const _axios = noError ? axiosNoErrorMessage : axios
-    return (
-        await _axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${slugOrId}/`)
-    ).data
+export async function getAllRandomProjects(params: APIParams) {
+    return (await useAPI(`/project/misc/random/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
-export async function getAllRecommendedProjects(
-    params: APIParams
-): Promise<APIResponseList<ProjectOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/misc/top/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
+export async function getAllProjects(params: SearchParams) {
+    return (await useAPI(`/project/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
-export async function getAllRandomProjects(
-    params: APIParams
-): Promise<APIResponseList<ProjectOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/misc/random/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
+export async function postProjectImage({ project_id, body }) {
+    return (await useAPI(`/project/${project_id}/image/`, { body, method: 'POST' })).data
 }
 
-export async function getAllProjects(
-    params: SearchParams
-): Promise<APIResponseList<ProjectOutput>> {
+export async function postProjectHeader({ project_id, body }) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
-}
-
-export async function postProjectImage({ project_id, body }): Promise<number> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/image/`,
-            body
-        )
-    ).data
-}
-
-export async function postProjectHeader({ project_id, body }): Promise<ProjectHeaderOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/header/`,
+        await useAPI(`/project/${project_id}/header/`, {
             body,
-            configFormData
-        )
+            method: 'POST',
+            ...getFormDataHeaders(),
+        })
     ).data
 }
 
-export async function patchProjectHeader({
-    project_id,
-    image_id,
-    body,
-}): Promise<ProjectHeaderOutput> {
+export async function patchProjectHeader({ project_id, image_id, body }) {
     return (
-        await axios.patch(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/project/${project_id}/header/${image_id}/`,
+        await useAPI(`/project/${project_id}/header/${image_id}/`, {
             body,
-            configFormData
-        )
+            method: 'PATCH',
+            ...getFormDataHeaders(),
+        })
     ).data
 }
 
-export async function lockUnlockProject({ project_id, context }): Promise<ProjectOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/${context}/`
-        )
-    ).data
+export async function lockUnlockProject({ project_id, context }) {
+    return (await useAPI(`/project/${project_id}/${context}/`, { method: 'POST' })).data
 }

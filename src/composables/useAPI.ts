@@ -2,6 +2,7 @@ import i18n from '@/locales/i18n'
 
 import useToasterStore from '@/stores/useToaster'
 import useProjectsStore from '@/stores/useProjects'
+import merge from 'lodash.merge'
 
 const defaultOptions = () => {
     return {
@@ -81,8 +82,14 @@ const defaultOptions = () => {
     }
 }
 
+export const getFormDataHeaders = () => ({
+    headers: {
+        'content-type': 'multipart/form-data',
+    },
+})
+
 const useAPI = (url: string, options) => {
-    const _options = { ...defaultOptions(), ...options }
+    const _options = merge(defaultOptions(), options)
     return useFetch(url, options)
 }
 

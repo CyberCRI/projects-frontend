@@ -1,12 +1,12 @@
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI'
 
 export async function getSkill(id) {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/skill/${id}`)).data
+    return (await useAPI(`/skill/${id}`, {})).data
 }
 
 export async function searchSkill(search) {
     return (
-        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/skill/`, {
+        await useAPI(`/skill/`, {
             params: { search },
         })
     ).data

@@ -5,16 +5,13 @@ import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import VueI18n from 'vue-i18n'
 import english from '@/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
-
-import { axios, configFormData } from '@/api/api.config'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import useAPI from '@/composables/useAPI'
 
 // fix unhnadled rejection due to invalid url
-vi.mock('@/api/api.config', () => {
+vi.mock('@/composables/useAPI', () => {
     return {
-        axios: {
-            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
-        },
+        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 const mockRouter = {
