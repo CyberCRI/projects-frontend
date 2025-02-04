@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
         class="line"
     >
@@ -14,7 +14,7 @@
         <div class="project-title">
             {{ $filters.capitalize(project.title) }}
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>

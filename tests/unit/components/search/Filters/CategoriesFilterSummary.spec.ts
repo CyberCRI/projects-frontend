@@ -4,7 +4,8 @@ import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-categ
 
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 const factory = (props?) => {
     return lpiMount(CategoriesFilterSummary, {

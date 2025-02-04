@@ -3,7 +3,7 @@
         <div class="subgroups-title">
             <span class="name">{{ $t('group.subgroups') }} : </span>
         </div>
-        <router-link
+        <NuxtLink
             :to="{ name: 'Group', params: { groupId: subgroup.slug || subgroup.id } }"
             class="subgroups-item"
             v-for="(subgroup, index) in subgroups"
@@ -11,7 +11,7 @@
         >
             <div class="vector"></div>
             <span class="name">{{ subgroup.name }}</span>
-        </router-link>
+        </NuxtLink>
     </div>
     <SubGroupsSkeleton v-else-if="isLoading" />
     <div v-else class="empty-subgroups"></div>

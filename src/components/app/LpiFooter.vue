@@ -15,28 +15,24 @@
             <div class="footer-lists">
                 <ul class="footer-links">
                     <li v-if="canOpen" class="list-item">
-                        <RouterLink to="/legal-notices"
-                            >{{ $t('footer.legal-notices') }}
-                        </RouterLink>
+                        <NuxtLink to="/legal-notices">{{ $t('footer.legal-notices') }} </NuxtLink>
                     </li>
                     <li v-else>
                         <FooterEnglishTips ref="copy-link-tooltip" item-title="legal notices">
-                            <RouterLink to="/legal-notices"
+                            <NuxtLink to="/legal-notices"
                                 >{{ $t('footer.legal-notices') }}
-                            </RouterLink>
+                            </NuxtLink>
                         </FooterEnglishTips>
                     </li>
 
                     <li v-if="canOpen" class="list-item">
-                        <RouterLink to="/personal-data"
-                            >{{ $t('footer.personal-data') }}
-                        </RouterLink>
+                        <NuxtLink to="/personal-data">{{ $t('footer.personal-data') }} </NuxtLink>
                     </li>
                     <li v-else>
                         <FooterEnglishTips ref="copy-link-tooltip" item-title="protection policy">
-                            <RouterLink to="/personal-data"
+                            <NuxtLink to="/personal-data"
                                 >{{ $t('footer.personal-data') }}
-                            </RouterLink>
+                            </NuxtLink>
                         </FooterEnglishTips>
                     </li>
                     <li class="list-item">
@@ -58,44 +54,42 @@
 
                 <ul class="footer-links">
                     <li v-if="canOpen" class="list-item">
-                        <RouterLink to="/terms-of-service">
+                        <NuxtLink to="/terms-of-service">
                             {{ $t('footer.terms-of-service') }}
-                        </RouterLink>
+                        </NuxtLink>
                     </li>
                     <li v-else>
                         <FooterEnglishTips ref="copy-link-tooltip" item-title="terms of use">
-                            <RouterLink to="/terms-of-service"
+                            <NuxtLink to="/terms-of-service"
                                 >{{ $t('footer.terms-of-service') }}
-                            </RouterLink>
+                            </NuxtLink>
                         </FooterEnglishTips>
                     </li>
 
                     <li v-if="canOpen" class="list-item">
-                        <RouterLink to="/cookies">{{ $t('footer.cookies') }}</RouterLink>
+                        <NuxtLink to="/cookies">{{ $t('footer.cookies') }}</NuxtLink>
                     </li>
                     <li v-else>
                         <FooterEnglishTips ref="copy-link-tooltip" item-title="cookies">
-                            <RouterLink to="/cookies">{{ $t('footer.cookies') }}</RouterLink>
+                            <NuxtLink to="/cookies">{{ $t('footer.cookies') }}</NuxtLink>
                         </FooterEnglishTips>
                     </li>
                 </ul>
 
                 <ul class="footer-links">
                     <li v-if="canOpen" class="list-item">
-                        <RouterLink to="/accessibility"
-                            >{{ $t('footer.accessibility') }}
-                        </RouterLink>
+                        <NuxtLink to="/accessibility">{{ $t('footer.accessibility') }} </NuxtLink>
                     </li>
                     <li v-else>
                         <FooterEnglishTips ref="copy-link-tooltip" item-title="accessibility">
-                            <RouterLink to="/accessibility"
+                            <NuxtLink to="/accessibility"
                                 >{{ $t('footer.accessibility') }}
-                            </RouterLink>
+                            </NuxtLink>
                         </FooterEnglishTips>
                     </li>
 
                     <li class="list-item">
-                        <RouterLink to="/help">{{ $t('footer.help') }}</RouterLink>
+                        <NuxtLink to="/help">{{ $t('footer.help') }}</NuxtLink>
                     </li>
                 </ul>
                 <ul class="footer-links">

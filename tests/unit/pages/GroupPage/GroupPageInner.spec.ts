@@ -6,7 +6,8 @@ import { flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'

@@ -4,9 +4,7 @@
 
         <p v-if="showHelp" class="sub-main-title">
             {{ $t('account.sub-title')
-            }}<router-link :to="{ name: 'Help' }" class="link">{{
-                $t('account.link')
-            }}</router-link>
+            }}<NuxtLink :to="{ name: 'Help' }" class="link">{{ $t('account.link') }}</NuxtLink>
         </p>
     </div>
 </template>

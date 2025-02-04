@@ -2,7 +2,8 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { loadLocaleMessages } from '@/locales/i18n'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

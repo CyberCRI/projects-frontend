@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'button'"
+        :is="to ? 'NuxtLink' : 'button'"
         :to="to"
         :class="{ 'icon-only': iconOnly }"
         type="button"

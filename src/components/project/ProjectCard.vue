@@ -136,7 +136,7 @@ export default {
         },
 
         toLink() {
-            // a to-link attribute make the basic card a router-link
+            // a to-link attribute make the basic card a NuxtLink
             // witch we dont want when just selecting project
             return this.hasAddIcon || this.hasCloseIcon || this.followOnClick
                 ? null

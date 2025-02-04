@@ -1,6 +1,6 @@
 <template>
     <div class="links-tab">
-        <router-view />
+        <NuxtPage />
     </div>
 </template>
 <script>

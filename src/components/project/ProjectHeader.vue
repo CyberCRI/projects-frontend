@@ -153,7 +153,7 @@
 
                         <div class="sdg-ctn" v-show="!loading && sdgs?.length">
                             <TransitionGroup name="sdg" tag="div">
-                                <router-link
+                                <NuxtLink
                                     v-for="sdg in sdgs || []"
                                     :key="sdg"
                                     :to="browseProjectsWithQuery('sdgs', sdg)"
@@ -164,7 +164,7 @@
                                         :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
                                         class="sdg"
                                     />
-                                </router-link>
+                                </NuxtLink>
                             </TransitionGroup>
                         </div>
 

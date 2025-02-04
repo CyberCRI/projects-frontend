@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 import * as oauth4webapi from '@panva/oauth4webapi'
 vi.mock('@panva/oauth4webapi', async function (importOriginal) {
     const actual = (await importOriginal()) as Object

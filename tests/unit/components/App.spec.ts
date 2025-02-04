@@ -4,13 +4,14 @@ import App from '@/App.vue'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import { refreshAccessToken } from '@/api/auth/auth.service'
 
@@ -95,7 +96,7 @@ describe('On tab focus', () => {
                 },
                 { path: '/blank', component: MockComponent, name: 'blank' },
             ],
-            stubs: { 'router-link': true, RouterView: true },
+            stubs: { NuxtLink: true, NuxtPage: true },
         })
     }
 

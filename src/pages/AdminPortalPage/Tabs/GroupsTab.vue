@@ -1,6 +1,6 @@
 <template>
     <div class="groups-tab">
-        <router-view />
+        <NuxtPage />
     </div>
 </template>
 

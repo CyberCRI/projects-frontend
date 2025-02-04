@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
         class="home-project-item shadow-box"
     >
@@ -18,7 +18,7 @@
             <p class="clamped">{{ purpose }}</p>
         </div>
         <SummaryAction class="project-action" :action-label="$t('common.read')" />
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>

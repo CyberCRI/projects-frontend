@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="home-announcement-item shadow-box"
         :to="{
             name: 'projectAnnouncements',
@@ -37,7 +37,7 @@
         </div>
 
         <SummaryAction class="announcement-action" :action-label="$t('common.read')" />
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>
