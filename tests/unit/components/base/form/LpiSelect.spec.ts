@@ -1,7 +1,8 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const props = {
     options: [
         {

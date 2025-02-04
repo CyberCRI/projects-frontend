@@ -9,7 +9,7 @@
         @click="$emit('navigated', notification)"
     >
         <component
-            :is="notificationRoute ? 'RouterLink' : 'div'"
+            :is="notificationRoute ? 'NuxtLink' : 'div'"
             :to="notificationRoute"
             class="notification-link"
         >
@@ -56,7 +56,7 @@
                         <strong v-else> ??? </strong>
                     </template>
                     <template #today_group v-if="notification.type === 'invitation_today_reminder'">
-                        <router-link
+                        <NuxtLink
                             v-if="notification.invitation?.people_group"
                             :to="{
                                 name: 'groupSnapshot',
@@ -68,12 +68,12 @@
                             }"
                         >
                             {{ notification.invitation?.people_group?.name }}
-                        </router-link>
+                        </NuxtLink>
                         <strong v-else> ??? </strong>
                     </template>
 
                     <template #group>
-                        <router-link
+                        <NuxtLink
                             v-if="notification?.context?.group"
                             :to="{
                                 name: 'Group',
@@ -85,16 +85,16 @@
                             }"
                         >
                             {{ notification.context.group.name }}
-                        </router-link>
+                        </NuxtLink>
                     </template>
 
                     <template #link>
-                        <router-link
+                        <NuxtLink
                             :to="{ name: 'linksList' }"
                             v-if="notification.type === 'invitation_today_reminder'"
                         >
                             {{ $t('notifications.type.register-link') }}
-                        </router-link>
+                        </NuxtLink>
                     </template>
 
                     <template #access_request_nb>

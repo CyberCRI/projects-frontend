@@ -2,7 +2,8 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import ProjectCommentsTab from '@/pages/ProjectPage/Tabs/ProjectCommentsTab.vue'
 import english from '@/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))

@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'a'"
+        :is="to ? 'NuxtLink' : 'a'"
         class="see-more-arrow"
         :to="to"
         :href="to ? undefined : '#'"

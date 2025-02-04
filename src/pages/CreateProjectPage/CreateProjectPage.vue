@@ -4,9 +4,9 @@
             <h1>{{ $t('project.create.title') }}</h1>
             <p>
                 {{ $t('project.create.notice') }}
-                <RouterLink :to="{ name: 'Help' }" class="help-link"
+                <NuxtLink :to="{ name: 'Help' }" class="help-link"
                     >{{ $t('project.create.help-link') }}
-                </RouterLink>
+                </NuxtLink>
             </p>
         </div>
 

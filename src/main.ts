@@ -24,7 +24,7 @@ document.querySelector('html').classList.add('org-' + import.meta.env.VITE_APP_A
 // TODO: this is probably not used anymore, check this
 window['socket'] = { connected: false }
 
-async function main(): Promise<void> {
+export default async function main(): Promise<void> {
     // init app
     await initApp(async (app) => {
         await initAnalytics()
@@ -36,4 +36,4 @@ async function main(): Promise<void> {
 }
 
 // let's go
-main()
+//main()

@@ -1,6 +1,7 @@
 import { goToKeycloakLoginPage, logoutFromKeycloak } from '@/api/auth/auth.service'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 import keycloak from '@/api/auth/keycloak'
 vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
 

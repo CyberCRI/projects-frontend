@@ -32,14 +32,14 @@
 
         <div class="category-body page-section-extra-wide">
             <div class="category-children" v-if="sortedChildren.length">
-                <RouterLink
+                <NuxtLink
                     :to="{ name: 'Category', params: { id: child.id } }"
                     v-for="child in sortedChildren"
                     class="category-child shadow-box"
                     :key="child.id"
                 >
                     <h3 class="child-title">{{ child.name }}</h3>
-                </RouterLink>
+                </NuxtLink>
             </div>
             <div class="category-search-header">
                 <LpiButton

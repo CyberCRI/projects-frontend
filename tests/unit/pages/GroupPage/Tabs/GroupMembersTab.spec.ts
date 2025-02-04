@@ -9,7 +9,8 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 const i18n = {
     locale: 'en',

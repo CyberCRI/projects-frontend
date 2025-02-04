@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'button'"
+        :is="to ? 'NuxtLink' : 'button'"
         :to="to"
         class="header-link"
         :class="{ underlined }"

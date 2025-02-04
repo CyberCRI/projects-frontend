@@ -5,7 +5,8 @@ import { loadLocaleMessages } from '@/locales/i18n'
 import { getUser } from '@/api/people.service'
 import { flushPromises } from '@vue/test-utils'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'

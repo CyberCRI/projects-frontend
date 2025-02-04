@@ -27,7 +27,7 @@
 
                     <div v-if="displayableGroups.length" class="group-ctn">
                         <div v-for="group in displayableGroups" :key="group.id">
-                            <RouterLink
+                            <NuxtLink
                                 :to="{
                                     name: 'Group',
                                     params: {
@@ -42,7 +42,7 @@
                                     class="group"
                                     size="small"
                                 />
-                            </RouterLink>
+                            </NuxtLink>
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                     />
 
                     <div v-if="user && user.sdgs && user.sdgs.length" class="sdg-ctn">
-                        <router-link
+                        <NuxtLink
                             v-for="sdg in user.sdgs"
                             :key="sdg"
                             :to="`/search/people?sdgs=${sdg}&section=people&page=1`"
@@ -63,7 +63,7 @@
                                 :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
                                 class="sdg-img"
                             />
-                        </router-link>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>

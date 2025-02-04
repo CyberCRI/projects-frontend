@@ -4,7 +4,7 @@
 
         <div id="scrollview" ref="scrollview" data-test="scrollview">
             <div class="main-view">
-                <RouterView />
+                <NuxtPage />
             </div>
             <LpiFooter @on-click="toggleReportBugModal" />
         </div>
@@ -23,6 +23,8 @@ import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 import keycloak from '@/api/auth/keycloak.ts'
+
+import main from './main.ts'
 
 export default {
     name: 'App',
@@ -55,7 +57,8 @@ export default {
             return this.$route.name
         },
     },
-    setup() {
+    async setup() {
+        await main()
         const usersStore = useUsersStore()
         return {
             usersStore,

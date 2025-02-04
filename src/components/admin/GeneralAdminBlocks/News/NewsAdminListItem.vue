@@ -1,5 +1,5 @@
 <template>
-    <RouterLink class="news-list-item" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
+    <NuxtLink class="news-list-item" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
         <div class="news-img-ctn">
             <CroppedApiImage
                 :alt="`${news.title} image`"
@@ -22,7 +22,7 @@
                 />
             </div>
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 <script>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'

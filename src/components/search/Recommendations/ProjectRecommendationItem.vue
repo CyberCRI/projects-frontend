@@ -1,6 +1,6 @@
 <template>
     <li v-if="recommendation" class="recommendation-item">
-        <router-link
+        <NuxtLink
             class="recommendation"
             :to="{
                 name: 'projectSummary',
@@ -23,7 +23,7 @@
                     {{ $t('recommendations.is-featured') }}
                 </span>
             </div>
-        </router-link>
+        </NuxtLink>
     </li>
 </template>
 

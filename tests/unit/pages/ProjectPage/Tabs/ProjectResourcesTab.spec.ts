@@ -7,7 +7,8 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 vi.mock('@/functs/functions')
 ;(utils.hasPermission as Mock).mockImplementation(() => true)
 

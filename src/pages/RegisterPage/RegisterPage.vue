@@ -87,21 +87,18 @@
                                 />
                                 <i18n-t keypath="register.tos" tag="p" class="tos">
                                     <template #term>
-                                        <router-link
+                                        <NuxtLink
                                             to="/terms-of-service"
                                             class="link"
                                             target="_blank"
                                             >{{ $t('register.term') }}
-                                        </router-link>
+                                        </NuxtLink>
                                     </template>
 
                                     <template #privacy>
-                                        <router-link
-                                            to="/personal-data"
-                                            class="link"
-                                            target="_blank"
+                                        <NuxtLink to="/personal-data" class="link" target="_blank"
                                             >{{ $t('register.privacy') }}
-                                        </router-link>
+                                        </NuxtLink>
                                     </template>
                                 </i18n-t>
                             </div>

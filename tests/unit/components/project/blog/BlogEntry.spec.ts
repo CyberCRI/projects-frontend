@@ -4,7 +4,8 @@ import english from '@/locales/en.json'
 import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import { BlogEntryFactory } from '@/../tests/factories/blog-entry.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

@@ -4,7 +4,8 @@ import ResourcesRecap from '@/components/project/resource/ResourcesRecap.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

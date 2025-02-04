@@ -9,7 +9,7 @@
 
         <component
             class="card-inner"
-            :is="toLink ? 'router-link' : 'div'"
+            :is="toLink ? 'NuxtLink' : 'div'"
             :to="toLink"
             @click="$emit('click')"
         >
