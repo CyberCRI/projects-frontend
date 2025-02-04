@@ -31,7 +31,7 @@
             "vue-demi": ["../node_modules/nuxt/dist/app/compat/vue-demi"],
             "#vue-router": ["../node_modules/vue-router"],
             "#imports": ["./imports"],
-            "#app-manifest": ["./manifest/meta/ff387093-bf7b-4550-b13f-6846ad9c27a5"],
+            "#app-manifest": ["./manifest/meta/8d6c0525-1eaa-4555-bf89-48e0fd43e0c0"],
             "#components": ["./components"],
             "#build": ["."],
             "#build/*": ["./*"]
