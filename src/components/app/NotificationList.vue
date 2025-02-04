@@ -40,7 +40,7 @@ import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { getNotifications } from '@/api/notifications.service'
 import useUsersStore from '@/stores/useUsers.ts'
 import LpiButton from '@/components//base/button/LpiButton.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 
 export default {
     name: 'NotificationList',
@@ -101,7 +101,7 @@ export default {
         async loadNextPage() {
             if (this.nextPage) {
                 this.isLoadingMore = true
-                const result = (await axios.get(this.nextPage)).data
+                const result = (await useAPI(this.nextPage, {})).data
                 this.notifications.push(...result.results)
                 this.nextPage = result.next
                 this.isLoadingMore = false

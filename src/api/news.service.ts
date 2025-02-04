@@ -1,105 +1,60 @@
-import { axios, configFormData } from '@/api/api.config'
-import { APIResponseList } from '@/api/types'
-import { NewsModel, NewsInput, NewsOutput, NewsHeaderOutput } from '@/models/news.model'
+import type { APIResponseList } from '@/api/types'
+import type { NewsModel, NewsInput, NewsOutput, NewsHeaderOutput } from '@/models/news.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
-export async function getAllNews(
-    orgCode: string,
-    params: any
-): Promise<APIResponseList<NewsModel>> {
+export async function getAllNews(orgCode: string, params: any) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
+    return (await useAPI(`/organization/${orgCode}/news/`, { params: adaptedParams })).data
+}
+
+export async function getNews(orgCode: string, idOrSlug: number | string) {
+    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, {})).data
+}
+
+export async function createNews(orgCode: string, body: NewsInput) {
     return (
-        await axios.get(
+        await useAPI(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/`,
-            adaptedParams
+            { body, method: 'POST' }
         )
     ).data
 }
 
-export async function getNews(
-    orgCode: string,
-    idOrSlug: number | string
-): Promise<APIResponseList<NewsModel>> {
+export async function putNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
     return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/${idOrSlug}/`
-        )
-    ).data
-}
-
-export async function createNews(
-    orgCode: string,
-    body: NewsInput
-): Promise<APIResponseList<NewsModel>> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/`,
-            body
-        )
-    ).data
-}
-
-export async function putNews(
-    orgCode: string,
-    idOrSlug: number | string,
-    body: NewsInput
-): Promise<NewsOutput> {
-    return (
-        await axios.put(
+        await useAPI(
             `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/${idOrSlug}/`,
-            body
+            { body, method: 'PUT' }
         )
     ).data
 }
 
-export async function patchNews(
-    orgCode: string,
-    idOrSlug: number | string,
-    body: NewsInput
-): Promise<NewsOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/${idOrSlug}/`,
-            body
-        )
-    ).data
+export async function patchNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
+    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PATCH' }))
+        .data
 }
 
-export async function deleteNews(orgCode: string, idOrSlug: number | string): Promise<NewsOutput> {
-    return (
-        await axios.delete(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/${idOrSlug}/`
-        )
-    ).data
+export async function deleteNews(orgCode: string, idOrSlug: number | string) {
+    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' })).data
 }
 
-export async function postNewsHeader(
-    orgCode: string,
-    idOrSlug: number | string,
-    body
-): Promise<NewsHeaderOutput> {
+export async function postNewsHeader(orgCode: string, idOrSlug: number | string, body) {
     return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/news/${idOrSlug}/header/`,
+        await useAPI(`/organization/${orgCode}/news/${idOrSlug}/header/`, {
             body,
-            configFormData
-        )
+            method: 'POST',
+            ...getFormDataHeaders(),
+        })
     ).data
 }
 
-export async function patchNewsHeader(
-    orgCode: string,
-    idOrSlug: number | string,
-    image_id,
-    body
-): Promise<NewsHeaderOutput> {
+export async function patchNewsHeader(orgCode: string, idOrSlug: number | string, image_id, body) {
     return (
-        await axios.patch(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`,
+        await useAPI(`/organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
             body,
-            configFormData
-        )
+            method: 'PATCH',
+            ...getFormDataHeaders(),
+        })
     ).data
 }

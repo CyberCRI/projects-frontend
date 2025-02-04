@@ -60,7 +60,7 @@ import ProjectCard from '@/components/project/ProjectCard.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
@@ -156,7 +156,7 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.project-selection .search-section')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

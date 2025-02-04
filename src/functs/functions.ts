@@ -1,4 +1,4 @@
-import axios from 'axios'
+import useAPI from '@/composables/useAPI'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
@@ -145,7 +145,7 @@ export default {
                 import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
             }/patatoids-project/Patatoid-${patatoidNumber}.png`
             const fileName = `patatoid-${patatoidNumber}.png`
-            const result = await axios.get(urlFile, { responseType: 'blob' })
+            const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], fileName)
         } catch {
             // In case it cannot find an image return first one
@@ -153,7 +153,7 @@ export default {
                 import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
             }/patatoids-project/Patatoid-1.png`
             const fileName = 'Patatoid-1.png'
-            const result = await axios.get(urlFile, { responseType: 'blob' })
+            const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], fileName)
         }
     },

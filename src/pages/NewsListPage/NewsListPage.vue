@@ -63,7 +63,7 @@ import { getAllNews, deleteNews } from '@/api/news.service.ts'
 import permissions from '@/mixins/permissions.ts'
 import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
@@ -163,7 +163,7 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.loading = true
-            this.newsRequest = (await axios.get(requestedPage)).data
+            this.newsRequest = (await useAPI(requestedPage, {})).data
             this.loading = false
             const el = document.querySelector('.page-title')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

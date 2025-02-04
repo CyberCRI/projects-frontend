@@ -17,7 +17,7 @@ export default async function initApp(inits) {
     app.config.errorHandler = (err: any, vm, info) => {
         // silence aborted request (on home page mostly)
         if (err?.code === 'ECONNABORTED') {
-            console.log('axios aborted request', err)
+            console.log('aborted request', err) // TODO nuxt check this
             return
         }
 

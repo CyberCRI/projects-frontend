@@ -9,19 +9,17 @@ import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI'
 // quick fix for vi error
 // "Cannot log after tests are done. Did you forget to wait for something async in your test?"
 // caused by error log af failing call to fetch announcement in LpiHeader
-vi.mock('@/api/api.config', function () {
+vi.mock('@/composables/useAPI', function () {
     return {
-        axios: {
-            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
-        },
+        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

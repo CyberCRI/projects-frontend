@@ -30,7 +30,7 @@
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 
 export default {
     name: 'GroupProjectsTab',
@@ -84,7 +84,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isPaginationLoading = true
-            this.projectsRequest = (await axios.get(requestedPage)).data
+            this.projectsRequest = (await useAPI(requestedPage, {})).data
             this.isPaginationLoading = false
             const el = document.querySelector('.group-projects .projects-header')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

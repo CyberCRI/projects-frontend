@@ -1,35 +1,19 @@
-import { axios } from '@/api/api.config'
-import { ProjectMembersAddInput, ProjectMembersDeleteInput } from '@/models/project-member.model'
-import { ProjectOutput } from '@/models/project.model'
+import type {
+    ProjectMembersAddInput,
+    ProjectMembersDeleteInput,
+} from '@/models/project-member.model'
+import type { ProjectOutput } from '@/models/project.model'
+import useAPI from '@/composables/useAPI'
 
-export async function addProjectMembers(
-    projectId: string,
-    data: ProjectMembersAddInput
-): Promise<ProjectOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/member/add/`,
-            data
-        )
-    ).data
+export async function addProjectMembers(projectId: string, data: ProjectMembersAddInput) {
+    return (await useAPI(`/project/${projectId}/member/add/`, { body: data, method: 'POST' })).data
 }
 
-export async function deleteProjectMembers(
-    projectId: string,
-    data: ProjectMembersDeleteInput
-): Promise<ProjectOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/member/remove/`,
-            data
-        )
-    ).data
+export async function deleteProjectMembers(projectId: string, data: ProjectMembersDeleteInput) {
+    return (await useAPI(`/project/${projectId}/member/remove/`, { body: data, method: 'POST' }))
+        .data
 }
 
-export async function deleteProjectMembersSelf(projectId: string): Promise<ProjectOutput> {
-    return (
-        await axios.delete(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/quit/`
-        )
-    ).data
+export async function deleteProjectMembersSelf(projectId: string) {
+    return (await useAPI(`/project/${projectId}/quit/`, { method: 'DELETE' })).data
 }
