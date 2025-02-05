@@ -3,11 +3,12 @@ import type { BlogEntryInput, BlogEntryOutput } from '@/models/blog-entry.model'
 import useAPI from '@/composables/useAPI'
 
 export async function getBlogEntries(id) {
-    return (await useAPI(`project/${id}/blog-entry/`, {})).data
+    return (await useAPI(`project/${id}/blog-entry/`, {})).data.value
 }
 
 export async function getBlogEntry(body: BlogEntryInput) {
     return (await useAPI(`project/${body.project_id}/blog-entry/${body.blog_entry_id}`, {})).data
+        .value
 }
 
 export async function postBlogEntry(blogEntry: BlogEntryInput) {
@@ -16,7 +17,7 @@ export async function postBlogEntry(blogEntry: BlogEntryInput) {
             body: blogEntry,
             method: 'POST',
         })
-    ).data
+    ).data.value
 }
 
 export async function patchBlogEntry({
@@ -27,7 +28,7 @@ export async function patchBlogEntry({
     body: BlogEntryInput
 }) {
     return (await useAPI(`project/${project_id}/blog-entry/${body.id}/`, { body, method: 'PATCH' }))
-        .data
+        .data.value
 }
 
 export async function deleteBlogEntry({ project_id, id }: { project_id: string; id: number }) {
@@ -35,12 +36,6 @@ export async function deleteBlogEntry({ project_id, id }: { project_id: string; 
 }
 
 export async function postBlogEntryImage({ body, project_id }) {
-    return (
-        await useAPI(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/project/${project_id}/blog-entry-image/`,
-            { body, method: 'POST' }
-        )
-    ).data
+    return (await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST' })).data
+        .value
 }

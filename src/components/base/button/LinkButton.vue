@@ -12,11 +12,13 @@
 
 <script>
 import ButtonContent from '@/components/base/button/ButtonContent.vue'
+import { NuxtLink } from '#components'
 export default {
     name: 'LinkButton',
 
     components: {
         ButtonContent,
+        NuxtLink,
     },
 
     props: {

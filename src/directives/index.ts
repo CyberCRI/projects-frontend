@@ -1,3 +1,5 @@
+import { defineNuxtPlugin } from '#imports'
+
 export const clickOutside = {
     beforeMount: (el, binding) => {
         const clickEventHandler = (event) => {
@@ -32,3 +34,8 @@ export const disableFocus = {
         }
     },
 }
+
+export default defineNuxtPlugin((nuxtApp) => {
+    nuxtApp.vueApp.directive('click-outside', clickOutside)
+    nuxtApp.vueApp.directive('disable-focus', disableFocus)
+})

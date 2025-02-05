@@ -3,21 +3,21 @@ import type { FaqModel, FaqInput, FaqOutput } from '@/models/faq.model'
 import useAPI from '@/composables/useAPI'
 
 export async function getFaq(orgCode: string) {
-    return (await useAPI(`organization/${orgCode}/faq/`, {})).data
+    return (await useAPI(`organization/${orgCode}/faq/`, {})).data.value
 }
 
 export async function createFaq(body: FaqInput) {
     return (await useAPI(`organization/${body.organization_code}/faq/`, { body, method: 'POST' }))
-        .data
+        .data.value
 }
 
 export async function putFaq(body: FaqInput) {
     return (await useAPI(`organization/${body.organization_code}/faq/`, { body, method: 'PUT' }))
-        .data
+        .data.value
 }
 
 export async function patchFaq(orgCode: string, body: FaqInput) {
-    return (await useAPI(`organization/${orgCode}/faq/`, { body, method: 'PATCH' })).data
+    return (await useAPI(`organization/${orgCode}/faq/`, { body, method: 'PATCH' })).data.value
 }
 
 export async function deleteFaq({ orgCode }) {
@@ -25,5 +25,5 @@ export async function deleteFaq({ orgCode }) {
 }
 
 export async function postFaqImage({ orgCode, body }) {
-    return (await useAPI(`organization/${orgCode}/faq-image/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${orgCode}/faq-image/`, { body, method: 'POST' })).data.value
 }

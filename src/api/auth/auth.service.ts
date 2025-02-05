@@ -156,10 +156,11 @@ export async function refreshAccessToken(): Promise<any> {
 
 export async function getNotifications(id) {
     // TODO: should getNotificationsSetting
-    return (await useAPI(`notifications-setting/${id}/`, {})).data
+    return (await useAPI(`notifications-setting/${id}/`, {})).data.value
 }
 
 export async function patchNotifications({ id, payload }) {
     // TODO: should patchNotificationsSetting
     return (await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })).data
+        .value
 }

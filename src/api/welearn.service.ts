@@ -9,7 +9,7 @@ export async function getSuggestedProjects(id, orgCode) {
     }
     try {
         const response = await useAPI(url, payload)
-        return response.data
+        return response.data.value
     } catch (error) {
         return []
     }

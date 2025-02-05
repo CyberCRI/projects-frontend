@@ -82,6 +82,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import { NuxtLink } from '#components'
 
 export default {
     name: 'HeaderDropDown',
@@ -89,6 +90,7 @@ export default {
     components: {
         LpiLoader,
         IconImage,
+        NuxtLink,
     },
 
     props: {

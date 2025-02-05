@@ -5,11 +5,11 @@ import type { AttachmentFileInput, AttachmentFileOutput } from '@/models/attachm
 import useAPI from '@/composables/useAPI'
 
 export async function getAttachmentFiles(id: string) {
-    return (await useAPI(`project/${id}/file/`, {})).data
+    return (await useAPI(`project/${id}/file/`, {})).data.value
 }
 
 export async function getAttachmentFile(body: AttachmentFileInput) {
-    return (await useAPI(`project/${body.project_id}/file/${body.file}`, {})).data
+    return (await useAPI(`project/${body.project_id}/file/${body.file}`, {})).data.value
 }
 
 export async function postAttachmentFiles(body: AttachmentFileInput) {
@@ -26,15 +26,12 @@ export async function postAttachmentFiles(body: AttachmentFileInput) {
     fd.append('file', body.file, body.file.name)
     fd.append('mime', body.file.type || 'file')
     return (
-        await useAPI(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${body.project_id}/file/`,
-            {
-                body: fd,
-                headers,
-                method: 'POST',
-            }
-        )
-    ).data
+        await useAPI(`project/${body.project_id}/file/`, {
+            body: fd,
+            headers,
+            method: 'POST',
+        })
+    ).data.value
 }
 
 export async function patchAttachmentFile(body: AttachmentFileInput) {
@@ -54,7 +51,7 @@ export async function patchAttachmentFile(body: AttachmentFileInput) {
             body: fd,
             method: 'PATCH',
         })
-    ).data
+    ).data.value
 }
 
 export async function deleteAttachmentFile({ id, projectId }) {

@@ -11,11 +11,13 @@
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
+import { NuxtLink } from '#components'
 export default {
     name: 'SeeMoreArrow',
 
     components: {
         IconImage,
+        NuxtLink,
     },
 
     props: {

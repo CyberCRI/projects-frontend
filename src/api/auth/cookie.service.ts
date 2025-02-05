@@ -14,5 +14,5 @@ export async function removeApiCookie() {
     // unset API cookie
     // TODO remove when API wioll not handle cookie set/remove anymore
     // https://github.com/CyberCRI/projects-api-Reloaded/issues/513
-    return (await useFetch(`/user/remove-authentication-cookie`, config)).data
+    return (await useFetch(`/user/remove-authentication-cookie`, config)).data.value
 }

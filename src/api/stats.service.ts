@@ -8,5 +8,5 @@ export async function getStats(status = 'all', org: string) {
                 publication_status: status,
             },
         })
-    ).data
+    ).data.value
 }

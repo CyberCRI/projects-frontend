@@ -16,15 +16,15 @@ export async function patchOrganization(
             method: 'PATCH',
             ...extraHeaders,
         })
-    ).data
+    ).data.value
 }
 
 export async function getOrganizationByCode(code: string) {
-    return (await useAPI(`organization/${code}/`, {})).data
+    return (await useAPI(`organization/${code}/`, {})).data.value
 }
 
 export async function getOrganizations() {
-    return (await useAPI(`organization/`, {})).data
+    return (await useAPI(`organization/`, {})).data.value
 }
 
 export async function postOrganisationBanner({
@@ -34,7 +34,7 @@ export async function postOrganisationBanner({
     code: string
     body: ImageOrganizationInput
 }) {
-    return (await useAPI(`organization/${code}/banner/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${code}/banner/`, { body, method: 'POST' })).data.value
 }
 
 export async function patchOrganisationBanner(
@@ -43,7 +43,7 @@ export async function patchOrganisationBanner(
     body: ImageOrganizationInput
 ) {
     return (await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' }))
-        .data
+        .data.value
 }
 
 export async function postOrganisationLogo({
@@ -53,11 +53,11 @@ export async function postOrganisationLogo({
     code: string
     body: ImageOrganizationInput
 }) {
-    return (await useAPI(`organization/${code}/logo/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${code}/logo/`, { body, method: 'POST' })).data.value
 }
 
 export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {
-    return (await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' })).data.value
 }
 
 export async function removeOrgMember({
@@ -68,18 +68,20 @@ export async function removeOrgMember({
     body: RemoveGroupModelInput[]
 }) {
     return (await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' })).data
+        .value
 }
 
 export async function postAccessRequest(org_code, body) {
     return (await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' })).data
+        .value
 }
 
 export async function getAccessRequests(org_code, params) {
     return (
         await useAPI(`organization/${org_code}/access-request/`, {
-            params: _adaptParamsToGetQuery(params),
+            ..._adaptParamsToGetQuery(params),
         })
-    ).data
+    ).data.value
 }
 
 export async function declineAccessRequest(org_code, params) {
@@ -88,7 +90,7 @@ export async function declineAccessRequest(org_code, params) {
             body: params,
             method: 'POST',
         })
-    ).data
+    ).data.value
 }
 
 export async function acceptAccessRequest(org_code, params) {
@@ -97,34 +99,29 @@ export async function acceptAccessRequest(org_code, params) {
             body: params,
             method: 'POST',
         })
-    ).data
+    ).data.value
 }
 
 export async function getFeaturedProjects(org_code, params) {
     return (
         await useAPI(`organization/${org_code}/featured-project/`, {
-            params: _adaptParamsToGetQuery(params),
+            ..._adaptParamsToGetQuery(params),
         })
-    ).data
+    ).data.value
 }
 
 export async function addFeaturedProject(org_code, body) {
     return (
         await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' })
-    ).data
+    ).data.value
 }
 
 export async function removeFeaturedProject(org_code, body) {
     return (
         await useAPI(`organization/${org_code}/featured-project/remove/`, { body, method: 'POST' })
-    ).data
+    ).data.value
 }
 
 export async function postOrganizationImage({ orgCode, body }) {
-    return (
-        await useAPI(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/image/`,
-            { body, method: 'POST' }
-        )
-    ).data
+    return (await useAPI(`organization/${orgCode}/image/`, { body, method: 'POST' })).data.value
 }

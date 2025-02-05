@@ -119,13 +119,13 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import utils from '@/functs/functions.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-
+import { NuxtLink } from '#components'
 export default {
     name: 'NotificationItem',
 
     emits: ['navigated'],
 
-    components: { IconImage, CroppedApiImage },
+    components: { IconImage, CroppedApiImage, NuxtLink },
 
     props: {
         notification: {

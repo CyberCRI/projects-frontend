@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     srcDir: 'src/',
     modules: ['@pinia/nuxt', '@nuxtjs/i18n'],
 
-    plugins: ['~/filters/index.ts'],
+    plugins: ['~/filters/index.ts', '~/directives/index.ts'],
     imports: {
         autoImport: false,
     },
