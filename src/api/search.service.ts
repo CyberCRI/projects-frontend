@@ -8,7 +8,7 @@ export async function searchProjects(search: string, params: SearchParams) {
     const url = search ? `search/${search}/` : 'search/'
 
     return (
-        await useAPI(`/${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'project' }) })
+        await useAPI(`${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'project' }) })
     ).data
 }
 
@@ -17,7 +17,7 @@ export async function searchGroupsAlgolia(search: string, params: SearchParams) 
     const url = search ? `search/${search}/` : 'search/'
 
     return (
-        await useAPI(`/${url}`, {
+        await useAPI(`${url}`, {
             params: _adaptParamsToGetQuery({ ...params, types: 'people_group' }),
         })
     ).data
@@ -25,7 +25,7 @@ export async function searchGroupsAlgolia(search: string, params: SearchParams) 
 
 export async function searchGroups(organization: string, params: SearchParams) {
     return (
-        await useAPI(`/organization/${organization}/people-group/`, {
+        await useAPI(`organization/${organization}/people-group/`, {
             params: _adaptParamsToGetQuery(params),
         })
     ).data
@@ -35,12 +35,12 @@ export async function searchUser(search: string, params: SearchParams) {
     // const url = search ? `search/user/${search}/` : 'search/user/'
     const url = search ? `search/${search}/` : 'search/'
     return (
-        await useAPI(`/${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'user' }) })
+        await useAPI(`${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'user' }) })
     ).data
 }
 
 export async function searchAll(search: string | null, params: SearchParams) {
     // const url = search ? `search/global/${search}/` : 'search/global/'
     const url = search ? `search/${search}/` : 'search/'
-    return (await useAPI(`/${url}`, { params: _adaptParamsToGetQuery(params) })).data
+    return (await useAPI(`${url}`, { params: _adaptParamsToGetQuery(params) })).data
 }

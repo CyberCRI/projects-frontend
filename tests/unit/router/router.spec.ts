@@ -51,9 +51,9 @@ describe('Router redirections on routes requiring auth', () => {
     // not used anymore, maybe later ? see routes.ts
     // it('should redirect user without organization trying to access auth-required route to /discover', async () => {
     //     // Temporary save env's api-base-org-id
-    //     const initialApiBaseOrgId = process.env.VITE_APP_API_ORG_CODE
+    //     const initialApiBaseOrgId = process.env.NUXT_PUBLIC_APP_API_ORG_CODE
     //     // Mock user with no organization
-    //     process.env.VITE_APP_API_ORG_CODE = ''
+    //     process.env.NUXT_PUBLIC_APP_API_ORG_CODE = ''
 
     //     router.push('/restricted').catch(() => {})
 
@@ -62,6 +62,6 @@ describe('Router redirections on routes requiring auth', () => {
     //     })
 
     //     // Reset env's api-base-org-id for next tests
-    //     process.env.VITE_APP_API_ORG_CODE = initialApiBaseOrgId
+    //     process.env.NUXT_PUBLIC_APP_API_ORG_CODE = initialApiBaseOrgId
     // })
 })

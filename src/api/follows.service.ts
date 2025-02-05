@@ -8,15 +8,15 @@ import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getProjectFollows(body: FollowInput) {
-    return (await useAPI(`/project/${body.project_id}/follow/`, {})).data
+    return (await useAPI(`project/${body.project_id}/follow/`, {})).data
 }
 
 export async function getUserFollows(body: FollowInput, params) {
-    return (await useAPI(`/user/${body.follower_id}/follow/`, { params })).data
+    return (await useAPI(`user/${body.follower_id}/follow/`, { params })).data
 }
 
 export async function postFollow(follow: FollowInput) {
-    return (await useAPI(`/project/${follow.project_id}/follow/`, { body: follow, method: 'POST' }))
+    return (await useAPI(`project/${follow.project_id}/follow/`, { body: follow, method: 'POST' }))
         .data
 }
 

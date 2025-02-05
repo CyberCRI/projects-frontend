@@ -1,8 +1,8 @@
-import { ProjectCategoryOutput } from '@/models/project-category.model'
+import type { ProjectCategoryOutput } from '@/models/project-category.model'
 import { getAllProjectCategories, ProjectCategoryParams } from '@/api/project-categories.service'
-import { APIResponseList } from '@/api/types'
+import type { APIResponseList } from '@/api/types'
 import { toRaw } from 'vue'
-
+import { useRuntimeConfig } from '#imports'
 import { defineStore } from 'pinia'
 
 export interface ProjectCategoriesState {
@@ -71,11 +71,12 @@ const useProjectCategoriesStore = defineStore('projectCategories', {
             // If no organization set in the param use default one
             // TODO check why rootState.organizations.current is sometimes null
             // the fallback on env value is a temporary fix
+            const runtimeConfig = useRuntimeConfig()
             if (!params.organization)
                 //params.organization =
                 // TODO use org store when available
                 // rootState.organizations?.current?.code || import.meta.env.VITE_APP_ORG_CODE
-                params.organization = import.meta.env.VITE_APP_API_ORG_CODE
+                params.organization = runtimeConfig.public.appApiOrgCode
 
             return new Promise((resolve, reject) => {
                 getAllProjectCategories(params)

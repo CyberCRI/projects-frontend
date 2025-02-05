@@ -40,6 +40,7 @@
         "@hocuspocus/provider": "^2.15.0",
         "@intlify/vue-i18n-loader": "^4.2.0",
         "@mdi/font": "^6",
+        "@nuxtjs/i18n": "9.1.5",
         "@panva/oauth4webapi": "^1.0.4",
         "@pinia/nuxt": "^0.9.0",
         "@sentry/vue": "^8.20.0",
@@ -191,5 +192,6 @@
     "lint-staged": {
         "**/*.{json,js,ts,vue,scss,sass,css,html,yml}": "prettier --write"
     },
-    "readme": "https://github.com/CyberCRI/projects-front-v2#readme"
+    "readme": "https://github.com/CyberCRI/projects-front-v2#readme",
+    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

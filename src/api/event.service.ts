@@ -5,24 +5,24 @@ import useAPI from '@/composables/useAPI'
 
 export async function getAllEvents(orgCode: string, params: any) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
-    return (await useAPI(`/organization/${orgCode}/event/`, { params: adaptedParams })).data
+    return (await useAPI(`organization/${orgCode}/event/`, { params: adaptedParams })).data
 }
 
 export async function getEvent(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`/organization/${orgCode}/event/${idOrSlug}/`, {})).data
+    return (await useAPI(`organization/${orgCode}/event/${idOrSlug}/`, {})).data
 }
 
 export async function createEvent(orgCode: string, body: EventInput) {
-    return (await useAPI(`/organization/${orgCode}/event/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${orgCode}/event/`, { body, method: 'POST' })).data
 }
 
 export async function putEvent(orgCode: string, idOrSlug: number | string, body: EventInput) {
-    return (await useAPI(`/organization/${orgCode}/event/${idOrSlug}/`, { body, method: 'PUT' }))
+    return (await useAPI(`organization/${orgCode}/event/${idOrSlug}/`, { body, method: 'PUT' }))
         .data
 }
 
 export async function patchEvent(orgCode: string, idOrSlug: number | string, body: EventInput) {
-    return (await useAPI(`/organization/${orgCode}/event/${idOrSlug}/`, { body, method: 'PATCH' }))
+    return (await useAPI(`organization/${orgCode}/event/${idOrSlug}/`, { body, method: 'PATCH' }))
         .data
 }
 

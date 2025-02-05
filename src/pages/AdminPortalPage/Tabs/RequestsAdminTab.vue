@@ -6,85 +6,91 @@
 
         <div class="user-list">
             <table>
-                <tr>
-                    <th v-for="(filter, index) in filters" :key="index">
-                        <span class="button">
-                            {{ $filters.capitalize($t(filter.label)) }}
-                        </span>
-                    </th>
-                    <th>
-                        <LpiCheckbox
-                            v-model="showPendingOnly"
-                            :label="$t('admin.requests.table.action')"
-                        />
-                    </th>
-                </tr>
-                <tr v-if="isLoading">
-                    <td class="pseudo-td" colspan="6">
-                        <LpiLoader class="loader" type="simple" />
-                    </td>
-                </tr>
-                <tr v-else-if="!filteredUsers.length">
-                    <td class="pseudo-td" colspan="6">
-                        {{ $t('admin.requests.table.no-result') }}
-                    </td>
-                </tr>
-                <tr v-else v-for="(user, index) in filteredUsers" :key="index">
-                    <td>{{ $filters.capitalize(user.family_name) }}</td>
-                    <td>{{ $filters.capitalize(user.given_name) }}</td>
-                    <td>
-                        <a class="mail-link" :href="`mailto:${user.email}`">{{ user.email }}</a>
-                    </td>
-                    <td>{{ $filters.capitalize(user.job) }}</td>
-                    <td class="has-more">
-                        <ToolTip
-                            arrow
-                            class="color-tip"
-                            :hover="true"
-                            :interactive="false"
-                            v-if="user.message?.length > 36"
-                        >
-                            <span class="more-items">
-                                {{ user.message.substring(0, 33) + '...' }}
+                <tbody>
+                    <tr>
+                        <th v-for="(filter, index) in filters" :key="index">
+                            <span class="button">
+                                {{ $filters.capitalize($t(filter.label)) }}
                             </span>
+                        </th>
+                        <th>
+                            <LpiCheckbox
+                                v-model="showPendingOnly"
+                                :label="$t('admin.requests.table.action')"
+                            />
+                        </th>
+                    </tr>
+                    <tr v-if="isLoading">
+                        <td class="pseudo-td" colspan="6">
+                            <LpiLoader class="loader" type="simple" />
+                        </td>
+                    </tr>
+                    <tr v-else-if="!filteredUsers.length">
+                        <td class="pseudo-td" colspan="6">
+                            {{ $t('admin.requests.table.no-result') }}
+                        </td>
+                    </tr>
+                    <tr v-else v-for="(user, index) in filteredUsers" :key="index">
+                        <td>{{ $filters.capitalize(user.family_name) }}</td>
+                        <td>{{ $filters.capitalize(user.given_name) }}</td>
+                        <td>
+                            <a class="mail-link" :href="`mailto:${user.email}`">{{ user.email }}</a>
+                        </td>
+                        <td>{{ $filters.capitalize(user.job) }}</td>
+                        <td class="has-more">
+                            <ToolTip
+                                arrow
+                                class="color-tip"
+                                :hover="true"
+                                :interactive="false"
+                                v-if="user.message?.length > 36"
+                            >
+                                <span class="more-items">
+                                    {{ user.message.substring(0, 33) + '...' }}
+                                </span>
 
-                            <template #custom-content>
-                                <div class="tooltip-div">
-                                    {{ user.message }}
-                                </div>
-                            </template>
-                        </ToolTip>
-                        <span v-else>{{ user.message }}</span>
-                    </td>
-                    <td>
-                        <div v-if="user.status == 'declined'">
-                            <span class="status-widget action-status declined-or-accepted">
-                                <IconImage name="Close" /> {{ $t('admin.requests.table.declined') }}
-                            </span>
-                        </div>
-                        <div v-else-if="user.status == 'accepted'">
-                            <span class="status-widget action-status declined-or-accepted">
-                                <IconImage name="Check" /> {{ $t('admin.requests.table.accepted') }}
-                            </span>
-                        </div>
-                        <div class="status-wrapper pending-wrapper" v-else>
-                            <button
-                                type="button"
-                                class="status-widget action-button decline-action"
-                                @click="declineRequest(user)"
-                            >
-                                <IconImage name="Close" /> {{ $t('admin.requests.table.decline') }}
-                            </button>
-                            <button
-                                type="button"
-                                class="status-widget action-button accept-action"
-                                @click="acceptRequest(user)"
-                            >
-                                <IconImage name="Check" /> {{ $t('admin.requests.table.accept') }}
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                                <template #custom-content>
+                                    <div class="tooltip-div">
+                                        {{ user.message }}
+                                    </div>
+                                </template>
+                            </ToolTip>
+                            <span v-else>{{ user.message }}</span>
+                        </td>
+                        <td>
+                            <div v-if="user.status == 'declined'">
+                                <span class="status-widget action-status declined-or-accepted">
+                                    <IconImage name="Close" />
+                                    {{ $t('admin.requests.table.declined') }}
+                                </span>
+                            </div>
+                            <div v-else-if="user.status == 'accepted'">
+                                <span class="status-widget action-status declined-or-accepted">
+                                    <IconImage name="Check" />
+                                    {{ $t('admin.requests.table.accepted') }}
+                                </span>
+                            </div>
+                            <div class="status-wrapper pending-wrapper" v-else>
+                                <button
+                                    type="button"
+                                    class="status-widget action-button decline-action"
+                                    @click="declineRequest(user)"
+                                >
+                                    <IconImage name="Close" />
+                                    {{ $t('admin.requests.table.decline') }}
+                                </button>
+                                <button
+                                    type="button"
+                                    class="status-widget action-button accept-action"
+                                    @click="acceptRequest(user)"
+                                >
+                                    <IconImage name="Check" />
+                                    {{ $t('admin.requests.table.accept') }}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
                 <PaginationButtons

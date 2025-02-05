@@ -8,9 +8,9 @@ services:
                 VITE_APP_API_URL: http://localhost:8000
                 VITE_APP_CAPTCHA_KEY: 6Lej3a4UAAAAAFzSbSGrznwFxeZzH0PXdrcTb7kN
                 VITE_APP_DOC: https://docs.projects.k8s.lp-i.dev/
-                VITE_APP_KEYCLOAK_URL: http://localhost:8001
-                VITE_APP_KEYCLOAK_CLIENT_ID: projects-backend-local
-                VITE_APP_KEYCLOAK_CLIENT_SECRET: 03nfDv4dHCc97w7E4uvtdyiW4xVD6GYw
+                NUXT_PUBLIC_APP_KEYCLOAK_URL: http://localhost:8001
+                NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_ID: projects-backend-local
+                NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_SECRET: 03nfDv4dHCc97w7E4uvtdyiW4xVD6GYw
                 VITE_APP_META_PORTAL_URL: https://projects.k8s.lp-i.dev
                 VITE_APP_MIXPANEL_API_URL: https://mixpanel-proxy.k8s.lp-i.dev
         ports:

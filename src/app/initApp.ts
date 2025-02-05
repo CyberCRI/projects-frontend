@@ -3,7 +3,7 @@ import { createApp } from 'vue'
 import pinia from '@/stores'
 
 import { capitalize, isNotGroup, isGroup } from '@/filters'
-import App from '@/App.vue'
+import App from '@/app.vue'
 import { clickOutside, disableFocus } from '@/directives'
 
 import i18n from '@/locales/i18n'

@@ -1,5 +1,5 @@
 import * as keycloakUtils from '@/api/auth/keycloakUtils'
-import keycloak from '@/api/auth/keycloak'
+import useKeycloak from '@/api/auth/keycloak'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
@@ -9,6 +9,8 @@ import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 import { flushPromises } from '@vue/test-utils'
 import { use } from 'chai'
+
+const keycloak = useKeycloak()
 vi.mock('@/api/auth/keycloakUtils')
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)

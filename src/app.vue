@@ -22,7 +22,7 @@ import LpiHeader from '@/components/app/LpiHeader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
-import keycloak from '@/api/auth/keycloak.ts'
+import useKeycloak from '@/api/auth/keycloak.ts'
 
 import main from './main.ts'
 
@@ -60,8 +60,10 @@ export default {
     async setup() {
         await main()
         const usersStore = useUsersStore()
+        const keycloak = useKeycloak()
         return {
             usersStore,
+            keycloak,
         }
     },
 
@@ -123,7 +125,7 @@ export default {
                 _logout()
             } else if (!this.usersStoreToken && accessToken) {
                 // logged in in another tab
-                keycloak.refreshTokenLoop.start()
+                this.keycloak.refreshTokenLoop.start()
             }
         },
 

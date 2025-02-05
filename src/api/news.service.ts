@@ -5,11 +5,11 @@ import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
 export async function getAllNews(orgCode: string, params: any) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
-    return (await useAPI(`/organization/${orgCode}/news/`, { params: adaptedParams })).data
+    return (await useAPI(`organization/${orgCode}/news/`, { params: adaptedParams })).data
 }
 
 export async function getNews(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, {})).data
+    return (await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, {})).data
 }
 
 export async function createNews(orgCode: string, body: NewsInput) {
@@ -31,17 +31,17 @@ export async function putNews(orgCode: string, idOrSlug: number | string, body: 
 }
 
 export async function patchNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PATCH' }))
+    return (await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PATCH' }))
         .data
 }
 
 export async function deleteNews(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`/organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' })).data
+    return (await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' })).data
 }
 
 export async function postNewsHeader(orgCode: string, idOrSlug: number | string, body) {
     return (
-        await useAPI(`/organization/${orgCode}/news/${idOrSlug}/header/`, {
+        await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/`, {
             body,
             method: 'POST',
             ...getFormDataHeaders(),
@@ -51,7 +51,7 @@ export async function postNewsHeader(orgCode: string, idOrSlug: number | string,
 
 export async function patchNewsHeader(orgCode: string, idOrSlug: number | string, image_id, body) {
     return (
-        await useAPI(`/organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
+        await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
             body,
             method: 'PATCH',
             ...getFormDataHeaders(),

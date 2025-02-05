@@ -1,4 +1,4 @@
-import { AuthResult } from '@/api/auth/keycloak'
+import type { AuthResult } from '@/api/auth/keycloak'
 
 import {
     logoutFromKeycloak,

@@ -2,7 +2,10 @@ import { goToKeycloakLoginPage, logoutFromKeycloak } from '@/api/auth/auth.servi
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-import keycloak from '@/api/auth/keycloak'
+import useKeycloak from '@/api/auth/keycloak'
+
+const keycloak = useKeycloak()
+
 vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
 
 import pinia from '@/stores'

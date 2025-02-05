@@ -16,33 +16,33 @@ import useAPI from '@/composables/useAPI'
 // HIERARCHY
 
 export async function getHierarchyGroups(org: string) {
-    return (await useAPI(`/organization/${org}/people-groups-hierarchy/`, {})).data
+    return (await useAPI(`organization/${org}/people-groups-hierarchy/`, {})).data
 }
 
 export async function getPeopleGroupsHierarchy(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/people-groups-hierarchy/`, {
+        await useAPI(`organization/${org_code}/people-groups-hierarchy/`, {
             params: _adaptParamsToGetQuery(params),
         })
     ).data
 }
 
 export async function getGroups(org_id) {
-    return (await useAPI(`/organization/${org_id}/people-group/`, {})).data
+    return (await useAPI(`organization/${org_id}/people-group/`, {})).data
 }
 
 // ALL GROUPS
 
 export async function getPeopleGroups(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/people-group/`, {
+        await useAPI(`organization/${org_code}/people-group/`, {
             params: _adaptParamsToGetQuery(params),
         })
     ).data
 }
 
 export async function postGroup(org: string, groupData: PostGroupData) {
-    return (await useAPI(`/organization/${org}/people-group/`, { body: groupData, method: 'POST' }))
+    return (await useAPI(`organization/${org}/people-group/`, { body: groupData, method: 'POST' }))
         .data
 }
 
@@ -54,7 +54,7 @@ export async function addParentGroup(
     body: AddParentGroupModelInput
 ) {
     return (
-        await useAPI(`/organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' })
+        await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' })
     ).data
 }
 
@@ -69,7 +69,7 @@ export async function getGroup(org: string, groupId: string, noError: boolean = 
 
 export async function patchGroup(org: string, group_id: number, groupData: Partial<PostGroupData>) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/`, {
             body: groupData,
             method: 'PATCH',
         })
@@ -78,7 +78,7 @@ export async function patchGroup(org: string, group_id: number, groupData: Parti
 
 export async function deleteGroup(org_code, group_id) {
     return (
-        await useAPI(`/organization/${org_code}/people-group/${group_id}/`, { method: 'DELETE' })
+        await useAPI(`organization/${org_code}/people-group/${group_id}/`, { method: 'DELETE' })
     ).data
 }
 
@@ -87,7 +87,7 @@ export async function deleteGroup(org_code, group_id) {
 export async function getGroupMember(org: string, groupId: string, noError: boolean = false) {
     return (
         // TODO nuxt check error silenced
-        (await useAPI(`/organization/${org}/people-group/${groupId}/member/`, { noError: noError }))
+        (await useAPI(`organization/${org}/people-group/${groupId}/member/`, { noError: noError }))
             .data
     )
 }
@@ -98,7 +98,7 @@ export async function postGroupMembers(
     membersData: AddGroupMembers
 ) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/member/add/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/member/add/`, {
             body: membersData,
             method: 'POST',
         })
@@ -111,7 +111,7 @@ export async function removeGroupMember(
     membersData: RemoveGroupMember
 ) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/member/remove/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/member/remove/`, {
             body: membersData,
             method: 'POST',
         })
@@ -122,7 +122,7 @@ export async function removeGroupMember(
 
 export async function getGroupProject(org: string, groupId: string, noError: boolean = false) {
     return (
-        await useAPI(`/organization/${org}/people-group/${groupId}/project/`, { noError: noError })
+        await useAPI(`organization/${org}/people-group/${groupId}/project/`, { noError: noError })
     ).data
 }
 
@@ -132,7 +132,7 @@ export async function postGroupProjects(
     projectsData: PostGroupProjects
 ) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/project/add/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/project/add/`, {
             body: projectsData,
             method: 'POST',
         })
@@ -145,7 +145,7 @@ export async function removeGroupProject(
     projectsData: RemoveGroupProject
 ) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/project/remove/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/project/remove/`, {
             body: projectsData,
             method: 'POST',
         })
@@ -156,7 +156,7 @@ export async function removeGroupProject(
 
 export async function postGroupHeader(org: string, group_id: number, headerData: FormData) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/header/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
             body: headerData,
             method: 'POST',
         })
@@ -165,7 +165,7 @@ export async function postGroupHeader(org: string, group_id: number, headerData:
 
 export async function patchGroupHeader(org: string, group_id: number, headerData: FormData) {
     return (
-        await useAPI(`/organization/${org}/people-group/${group_id}/header/`, {
+        await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
             body: headerData,
             method: 'PATCH',
         })
