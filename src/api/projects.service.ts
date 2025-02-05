@@ -11,7 +11,7 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
 export async function createProject(project) {
-    const result: any = (await useAPI(`/project/`, { body: project })).data
+    const result: any = (await useAPI(`project/`, { body: project })).data
 
     if (project.header_image instanceof File && result) {
         const headerFormData = new FormData()
@@ -51,16 +51,16 @@ export async function createProject(project) {
 
 export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
     const extraHeaders = project instanceof FormData ? getFormDataHeaders() : {}
-    return (await useAPI(`/project/${id}/`, { body: project, method: 'PATCH', ...extraHeaders }))
+    return (await useAPI(`project/${id}/`, { body: project, method: 'PATCH', ...extraHeaders }))
         .data
 }
 
 export async function deleteProject(id: string) {
-    return (await useAPI(`/project/${id}/`, { method: 'DELETE' })).data
+    return (await useAPI(`project/${id}/`, { method: 'DELETE' })).data
 }
 
 export async function duplicateProject(id: string) {
-    return (await useAPI(`/project/${id}/duplicate/`, { method: 'POST' })).data
+    return (await useAPI(`project/${id}/duplicate/`, { method: 'POST' })).data
 }
 
 export async function addLinkedProject({
@@ -70,7 +70,7 @@ export async function addLinkedProject({
     id: string
     body: AddManyLinkedProjectInput
 }) {
-    return (await useAPI(`/project/${id}/linked-project/add-many/`, { body, method: 'POST' })).data
+    return (await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' })).data
 }
 
 export async function patchLinkedProject({
@@ -82,12 +82,12 @@ export async function patchLinkedProject({
     id: number
     body: AddLinkedProjectInput
 }) {
-    return (await useAPI(`/project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' }))
+    return (await useAPI(`project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' }))
         .data
 }
 
 export async function deleteLinkedProject({ id, project_id }: { id: number; project_id: string }) {
-    return await useAPI(`/project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
+    return await useAPI(`project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
 }
 
 export async function getProject(slugOrId: string, noError: boolean = false) {
@@ -99,24 +99,24 @@ export async function getProject(slugOrId: string, noError: boolean = false) {
 }
 
 export async function getAllRecommendedProjects(params: APIParams) {
-    return (await useAPI(`/project/misc/top/`, { params: _adaptParamsToGetQuery(params) })).data
+    return (await useAPI(`project/misc/top/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
 export async function getAllRandomProjects(params: APIParams) {
-    return (await useAPI(`/project/misc/random/`, { params: _adaptParamsToGetQuery(params) })).data
+    return (await useAPI(`project/misc/random/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
 export async function getAllProjects(params: SearchParams) {
-    return (await useAPI(`/project/`, { params: _adaptParamsToGetQuery(params) })).data
+    return (await useAPI(`project/`, { params: _adaptParamsToGetQuery(params) })).data
 }
 
 export async function postProjectImage({ project_id, body }) {
-    return (await useAPI(`/project/${project_id}/image/`, { body, method: 'POST' })).data
+    return (await useAPI(`project/${project_id}/image/`, { body, method: 'POST' })).data
 }
 
 export async function postProjectHeader({ project_id, body }) {
     return (
-        await useAPI(`/project/${project_id}/header/`, {
+        await useAPI(`project/${project_id}/header/`, {
             body,
             method: 'POST',
             ...getFormDataHeaders(),
@@ -126,7 +126,7 @@ export async function postProjectHeader({ project_id, body }) {
 
 export async function patchProjectHeader({ project_id, image_id, body }) {
     return (
-        await useAPI(`/project/${project_id}/header/${image_id}/`, {
+        await useAPI(`project/${project_id}/header/${image_id}/`, {
             body,
             method: 'PATCH',
             ...getFormDataHeaders(),
@@ -135,5 +135,5 @@ export async function patchProjectHeader({ project_id, image_id, body }) {
 }
 
 export async function lockUnlockProject({ project_id, context }) {
-    return (await useAPI(`/project/${project_id}/${context}/`, { method: 'POST' })).data
+    return (await useAPI(`project/${project_id}/${context}/`, { method: 'POST' })).data
 }

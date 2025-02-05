@@ -12,8 +12,8 @@ export default defineConfig(({ command, mode }) => {
 
     console.log(`Build:      ${process.env.NODE_ENV == 'production' ? 'PROD' : 'DEV'}`)
     console.log(`Mode:       ${mode}`)
-    console.log(`Org:        ${env.VITE_APP_API_ORG_CODE}`)
-    console.log(`API:        ${env.VITE_APP_API_URL}`)
+    console.log(`Org:        ${env.NUXT_PUBLIC_APP_API_ORG_CODE}`)
+    console.log(`API:        ${env.NUXT_PUBLIC_APP_API_URL}`)
     console.log('')
 
     const apiProxy = {

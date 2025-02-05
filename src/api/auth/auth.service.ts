@@ -1,10 +1,10 @@
 import useAPI from '@/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
-import keycloak from '@/api/auth/keycloak'
+import useKeycloak from '@/api/auth/keycloak'
 import router from '@/router'
 import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
-
+import { useRuntimeConfig } from '#imports'
 const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dashboard`
 
 /**
@@ -26,13 +26,15 @@ const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dash
  */
 
 export async function goToKeycloakLoginPage(): Promise<void> {
+    const keycloak = useKeycloak()
+    const runtimeConfig = useRuntimeConfig()
     const organizationsStore = useOrganizationsStore()
     keycloak.codeVerifier.generate()
     keycloak.appSecret.generate()
     const currentUrl = new URL(keycloak.getCurrentUrl())
     const url = new URL(
-        `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-            import.meta.env.VITE_APP_KEYCLOAK_REALM
+        `${runtimeConfig.public.appKeycloakUrl}/realms/${
+            runtimeConfig.public.appKeycloakRealm
         }/protocol/openid-connect/auth`
     )
 
@@ -42,7 +44,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
     }
 
     url.searchParams.append('client_id', keycloak.client.get().client_id)
-    url.searchParams.append('client_secret', import.meta.env.VITE_APP_KEYCLOAK_CLIENT_SECRET)
+    url.searchParams.append('client_secret', runtimeConfig.public.appKeycloakClientSecret)
     // redirect_uri is not useful here but required by Keycloak
     // redirect_uri must also be the same as the one from getAccessToken()
     url.searchParams.append('redirect_uri', `${currentUrl.origin}/dashboard`)
@@ -65,12 +67,14 @@ export async function goToKeycloakLoginPage(): Promise<void> {
 }
 
 function cleanUpKeycloak() {
+    const keycloak = useKeycloak()
     keycloak.codeVerifier.remove()
     keycloak.appSecret.remove()
     keycloak.refreshTokenLoop.stop()
 }
 
 function getLogoutRedirectUri() {
+    const keycloak = useKeycloak()
     const projectsStore = useProjectsStore()
     // redirect to current page after logout
     let redirectUri = keycloak.getCurrentUrl()
@@ -107,26 +111,29 @@ function getLogoutRedirectUri() {
 }
 
 export function logoutFromKeycloak(): void {
+    const runtimeConfig = useRuntimeConfig()
     const redirectUri = getLogoutRedirectUri()
     cleanUpKeycloak()
-    window.location.href = `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-        import.meta.env.VITE_APP_KEYCLOAK_REALM
+    window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
+        runtimeConfig.public.appKeycloakRealm
     }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
         'ID_TOKEN'
     )}`
 }
 
 export function logoutFromKeycloakWithError(): void {
+    const runtimeConfig = useRuntimeConfig()
     const redirectUri = getLogoutRedirectUri()
     cleanUpKeycloak()
-    window.location.href = `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-        import.meta.env.VITE_APP_KEYCLOAK_REALM
+    window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
+        runtimeConfig.public.appKeycloakRealm
     }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
         'ID_TOKEN'
     )}&login-error=true`
 }
 
 export async function refreshAccessToken(): Promise<any> {
+    const keycloak = useKeycloak()
     const token = localStorage.getItem('REFRESH_TOKEN')
     const as = await keycloak.as.get()
     const client = keycloak.client.get()
@@ -149,10 +156,10 @@ export async function refreshAccessToken(): Promise<any> {
 
 export async function getNotifications(id) {
     // TODO: should getNotificationsSetting
-    return (await useAPI(`/notifications-setting/${id}/`, {})).data
+    return (await useAPI(`notifications-setting/${id}/`, {})).data
 }
 
 export async function patchNotifications({ id, payload }) {
     // TODO: should patchNotificationsSetting
-    return (await useAPI(`/notifications-setting/${id}/`, { body: payload, method: 'PATCH' })).data
+    return (await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })).data
 }

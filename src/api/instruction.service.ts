@@ -9,15 +9,15 @@ import useAPI from '@/composables/useAPI'
 
 export async function getAllInstructions(orgCode: string, params: any) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
-    return (await useAPI(`/organization/${orgCode}/instruction/`, { params: adaptedParams })).data
+    return (await useAPI(`organization/${orgCode}/instruction/`, { params: adaptedParams })).data
 }
 
 export async function getInstruction(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`/organization/${orgCode}/instruction/${idOrSlug}/`, {})).data
+    return (await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, {})).data
 }
 
 export async function createInstruction(orgCode: string, body: InstructionInput) {
-    return (await useAPI(`/organization/${orgCode}/instruction/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${orgCode}/instruction/`, { body, method: 'POST' })).data
 }
 
 export async function putInstruction(
@@ -26,7 +26,7 @@ export async function putInstruction(
     body: InstructionInput
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/instruction/${idOrSlug}/`, { body, method: 'PUT' })
+        await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { body, method: 'PUT' })
     ).data
 }
 
@@ -36,7 +36,7 @@ export async function patchInstruction(
     body: InstructionInput
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/instruction/${idOrSlug}/`, {
+        await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, {
             body,
             method: 'PATCH',
         })
@@ -44,6 +44,6 @@ export async function patchInstruction(
 }
 
 export async function deleteInstruction(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`/organization/${orgCode}/instruction/${idOrSlug}/`, { method: 'DELETE' }))
+    return (await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { method: 'DELETE' }))
         .data
 }

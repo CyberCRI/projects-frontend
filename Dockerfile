@@ -8,7 +8,7 @@ RUN yarn install --pure-lockfile --non-interactive &&\
 
 ARG VERSION_HASH \
     VITE_APP_API_DEFAULT_VERSION=/v1 \
-    VITE_APP_API_ORG_CODE=CRI \
+    NUXT_PUBLIC_APP_API_ORG_CODE=CRI \
     VITE_APP_API_URL=https://api.projects.k8s.lp-i.dev \
     VITE_APP_BASE_URL \
     VITE_APP_CAPTCHA_KEY=6Lej3a4UAAAAAFzSbSGrznwFxeZzH0PXdrcTb7kN \
@@ -16,10 +16,10 @@ ARG VERSION_HASH \
     VITE_APP_DOC=https://docs.projects.k8s.lp-i.dev/ \
     VITE_APP_I18N_FALLBACK_LOCALE=en \
     VITE_APP_I18N_LOCALE=fr \
-    VITE_APP_KEYCLOAK_CLIENT_ID \
-    VITE_APP_KEYCLOAK_CLIENT_SECRET \
-    VITE_APP_KEYCLOAK_REALM=lp \
-    VITE_APP_KEYCLOAK_URL=https://id.learning-planet.org/auth \
+    NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_ID \
+    NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_SECRET \
+    NUXT_PUBLIC_APP_KEYCLOAK_REALM=lp \
+    NUXT_PUBLIC_APP_KEYCLOAK_URL=https://id.learning-planet.org/auth \
     VITE_APP_MAX_SIZE_FILE=5000000 \
     VITE_APP_META_PORTAL_URL=https://projects.directory \
     VITE_APP_MIXPANEL_API_URL \

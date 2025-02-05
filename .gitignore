@@ -53,6 +53,11 @@ playwight-report/
 # helm
 charts/
 
-
-.nuxt/
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
 .env.nuxt

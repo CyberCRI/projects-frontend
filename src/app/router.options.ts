@@ -1,3 +1,4 @@
+import type { RouterConfig } from '@nuxt/schema'
 import type { RouteRecordRaw } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
@@ -16,7 +17,6 @@ const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-
         name: 'HomeRoot',
         component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
         meta: {
@@ -143,12 +143,6 @@ const routes: Array<RouteRecordRaw> = [
         ],
     },
     {
-        path: '/mentorship/respond/:token',
-        name: 'MentorhipRespondPage',
-        props: true,
-        component: () => import('../pages/MentorshipRespondPage/MentorshipRespondPage.vue'),
-    },
-    {
         path: '/profile/edit',
         name: 'ProfileEdit',
         redirect: { name: 'ProfileEditGeneral' },
@@ -195,41 +189,14 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/profile/:userId',
         name: 'ProfileOtherUser',
-        redirect: { name: 'ProfileSummaryOther' },
         component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
         props: true,
         meta: {
             resetScroll: true,
+            props: true,
             loginFromNotification: true,
             loginFromNotificationNewQueryParam: 'editNotifications',
         },
-        children: [
-            {
-                path: 'summary',
-                name: 'ProfileSummaryOther',
-                component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
-            },
-            {
-                path: 'bio',
-                name: 'ProfileBioOther',
-                component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
-            },
-            {
-                path: 'projects',
-                name: 'ProfileProjectsOther',
-                component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
-            },
-            {
-                path: 'groups',
-                name: 'ProfileGroupsOther',
-                component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
-            },
-            {
-                path: 'skills',
-                name: 'ProfileSkillsOther',
-                component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
-            },
-        ],
     },
     {
         path: '/profile/edit/:userId',
@@ -311,8 +278,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'faq',
                 name: 'faq',
-                // component: () => import('../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'),
-                redirect: { name: 'general' },
+                component: () => import('../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'),
             },
             {
                 path: 'templates',
@@ -836,4 +802,6 @@ const routes: Array<RouteRecordRaw> = [
     },
 ]
 
-export default routes
+export default {
+    routes: (_routes) => routes,
+} satisfies RouterConfig

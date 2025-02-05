@@ -11,7 +11,7 @@ export async function patchOrganization(
 ) {
     const extraHeaders = organization instanceof FormData ? getFormDataHeaders() : {}
     return (
-        await useAPI(`/organization/${code}/`, {
+        await useAPI(`organization/${code}/`, {
             body: organization,
             method: 'PATCH',
             ...extraHeaders,
@@ -20,11 +20,11 @@ export async function patchOrganization(
 }
 
 export async function getOrganizationByCode(code: string) {
-    return (await useAPI(`/organization/${code}/`, {})).data
+    return (await useAPI(`organization/${code}/`, {})).data
 }
 
 export async function getOrganizations() {
-    return (await useAPI(`/organization/`, {})).data
+    return (await useAPI(`organization/`, {})).data
 }
 
 export async function postOrganisationBanner({
@@ -34,7 +34,7 @@ export async function postOrganisationBanner({
     code: string
     body: ImageOrganizationInput
 }) {
-    return (await useAPI(`/organization/${code}/banner/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${code}/banner/`, { body, method: 'POST' })).data
 }
 
 export async function patchOrganisationBanner(
@@ -42,7 +42,7 @@ export async function patchOrganisationBanner(
     banner_id: number,
     body: ImageOrganizationInput
 ) {
-    return (await useAPI(`/organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' }))
+    return (await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' }))
         .data
 }
 
@@ -53,11 +53,11 @@ export async function postOrganisationLogo({
     code: string
     body: ImageOrganizationInput
 }) {
-    return (await useAPI(`/organization/${code}/logo/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${code}/logo/`, { body, method: 'POST' })).data
 }
 
 export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {
-    return (await useAPI(`/organization/${org_id}/member/add/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' })).data
 }
 
 export async function removeOrgMember({
@@ -67,17 +67,16 @@ export async function removeOrgMember({
     org_id: number
     body: RemoveGroupModelInput[]
 }) {
-    return (await useAPI(`/organization/${org_id}/member/remove/`, { body, method: 'POST' })).data
+    return (await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' })).data
 }
 
 export async function postAccessRequest(org_code, body) {
-    return (await useAPI(`/organization/${org_code}/access-request/`, { body, method: 'POST' }))
-        .data
+    return (await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' })).data
 }
 
 export async function getAccessRequests(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/access-request/`, {
+        await useAPI(`organization/${org_code}/access-request/`, {
             params: _adaptParamsToGetQuery(params),
         })
     ).data
@@ -85,7 +84,7 @@ export async function getAccessRequests(org_code, params) {
 
 export async function declineAccessRequest(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/access-request/decline/`, {
+        await useAPI(`organization/${org_code}/access-request/decline/`, {
             body: params,
             method: 'POST',
         })
@@ -94,7 +93,7 @@ export async function declineAccessRequest(org_code, params) {
 
 export async function acceptAccessRequest(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/access-request/accept/`, {
+        await useAPI(`organization/${org_code}/access-request/accept/`, {
             body: params,
             method: 'POST',
         })
@@ -103,7 +102,7 @@ export async function acceptAccessRequest(org_code, params) {
 
 export async function getFeaturedProjects(org_code, params) {
     return (
-        await useAPI(`/organization/${org_code}/featured-project/`, {
+        await useAPI(`organization/${org_code}/featured-project/`, {
             params: _adaptParamsToGetQuery(params),
         })
     ).data
@@ -111,13 +110,13 @@ export async function getFeaturedProjects(org_code, params) {
 
 export async function addFeaturedProject(org_code, body) {
     return (
-        await useAPI(`/organization/${org_code}/featured-project/add/`, { body, method: 'POST' })
+        await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' })
     ).data
 }
 
 export async function removeFeaturedProject(org_code, body) {
     return (
-        await useAPI(`/organization/${org_code}/featured-project/remove/`, { body, method: 'POST' })
+        await useAPI(`organization/${org_code}/featured-project/remove/`, { body, method: 'POST' })
     ).data
 }
 

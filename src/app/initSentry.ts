@@ -1,7 +1,9 @@
 import * as Sentry from '@sentry/vue'
 import router from '@/router'
+import { useRuntimeConfig } from '#imports'
 
 export default async function initSentry(app) {
+    const runtimeConfig = useRuntimeConfig()
     const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {
         Sentry.init({
@@ -12,7 +14,7 @@ export default async function initSentry(app) {
                 Sentry.replayIntegration(),
             ],
             environment: import.meta.env.VITE_APP_ENVIRONMENT,
-            tracePropagationTargets: ['localhost', import.meta.env.VITE_APP_API_URL],
+            tracePropagationTargets: ['localhost', runtimeConfig.public.appApiUrl],
 
             // Set tracesSampleRate to 1.0 to capture 100%
             // of transactions for tracing.

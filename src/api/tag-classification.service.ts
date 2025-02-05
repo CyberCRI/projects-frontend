@@ -3,7 +3,7 @@ import type { APIParams, APIResponseList } from '@/api/types'
 import type { TagModel } from '@/models/tag.model'
 
 export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
-    return (await useAPI(`/organization/${orgCode}/tag-classification/`, { params })).data
+    return (await useAPI(`organization/${orgCode}/tag-classification/`, { params })).data
 }
 
 export async function getOrgClassification(
@@ -12,7 +12,7 @@ export async function getOrgClassification(
     params: APIParams
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, { params })
+        await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, { params })
     ).data
 }
 
@@ -21,7 +21,7 @@ export async function postOrgClassification(
     classification: any // TODO: Add type
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/`, {
+        await useAPI(`organization/${orgCode}/tag-classification/`, {
             body: classification,
             method: 'POST',
         })
@@ -34,7 +34,7 @@ export async function putOrgClassification(
     classification: any // TODO: Add type
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+        await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
             body: classification,
             method: 'PUT',
         })
@@ -47,7 +47,7 @@ export async function patchOrgClassification(
     classification: any // TODO: Add type
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+        await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
             body: classification,
             method: 'PATCH',
         })
@@ -56,7 +56,7 @@ export async function patchOrgClassification(
 
 export async function deleteOrgClassification(orgCode: string, classificationId: number) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/`, {
+        await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
             method: 'DELETE',
         })
     ).data
@@ -67,7 +67,7 @@ export async function getOrgClassificationTags(
     classificationId: number,
     params?: APIParams
 ) {
-    return await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
+    return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
         params,
     })
 }
@@ -86,12 +86,12 @@ export async function getOrgClassificationAutocomplete(
 }
 
 export async function getOrgTag(orgCode: string, tagId: number, params: APIParams) {
-    return (await useAPI(`/organization/${orgCode}/tag/${tagId}/`, { params })).data
+    return (await useAPI(`organization/${orgCode}/tag/${tagId}/`, { params })).data
 }
 
 export async function getTags(ids: number[], params?: APIParams) {
     return (
-        await useAPI(`/tag/`, {
+        await useAPI(`tag/`, {
             params: {
                 ...params,
                 ids: ids.join(','),
@@ -109,7 +109,7 @@ export async function getAllTagsById(ids: number[], params?: APIParams) {
             ids.map(
                 async (id) =>
                     (
-                        await useAPI(`/tag/${id}/`, {
+                        await useAPI(`tag/${id}/`, {
                             params,
                         })
                     ).data
@@ -165,7 +165,7 @@ export async function postClassificationTag(
     tag: TagModel
 ) {
     return (
-        await useAPI(`/organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
+        await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
             body: tag,
             method: 'POST',
         })

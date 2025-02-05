@@ -1,6 +1,6 @@
 import useAPI from '@/composables/useAPI'
 import useLanguagesStore from '@/stores/useLanguages'
-
+import { useRuntimeConfig } from '#imports'
 export default {
     copyObject(obj) {
         // simple way to copy object - Not perfect, to rethink.
@@ -159,7 +159,8 @@ export default {
     },
 
     isDefaultPortal(): boolean {
-        return import.meta.env.VITE_APP_API_ORG_CODE === 'DEFAULT'
+        const runtimeConfig = useRuntimeConfig()
+        return runtimeConfig.public.appApiOrgCode === 'DEFAULT'
     },
 
     setTokenForWS(token) {

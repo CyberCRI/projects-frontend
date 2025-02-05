@@ -3,11 +3,11 @@ import i18n from '@/locales/i18n'
 import useToasterStore from '@/stores/useToaster'
 import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'
-
+import { useFetch, useRuntimeConfig } from '#imports'
 const defaultOptions = () => {
+    const runtimeConfig = useRuntimeConfig()
     return {
-        baseURL:
-            import.meta.env.VITE_APP_API_URL + '/' + import.meta.env.VITE_APP_API_DEFAULT_VERSION,
+        baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
         method: 'GET',
         onRequest({ request, options }) {
             const accessToken = localStorage.getItem('ACCESS_TOKEN')
@@ -90,7 +90,7 @@ export const getFormDataHeaders = () => ({
 
 const useAPI = (url: string, options) => {
     const _options = merge(defaultOptions(), options)
-    return useFetch(url, options)
+    return useFetch(url, _options)
 }
 
 export default useAPI

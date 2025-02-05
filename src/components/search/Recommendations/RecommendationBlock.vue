@@ -73,7 +73,8 @@ export default {
     async mounted() {
         let featuredrojects = []
         try {
-            featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
+            featuredrojects =
+                (await getFeaturedProjects(this.organization.code)).value.results || []
         } catch (err) {
             console.log(err)
             featuredrojects = []

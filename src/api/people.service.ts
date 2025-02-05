@@ -7,13 +7,13 @@ import useAPI from '@/composables/useAPI'
 
 // New user service using projects API
 export async function getUser(id: string, noError: boolean = false) {
-    return (await useAPI(`/user/${id}/`, { noError: noError })).data
+    return (await useAPI(`user/${id}/`, { noError: noError })).data
 }
 
 export async function postUser(payload: FormData) {
     const organizationsStore = useOrganizationsStore()
     return (
-        await useAPI(`/user/?organization=${organizationsStore.current?.code || ''}`, {
+        await useAPI(`user/?organization=${organizationsStore.current?.code || ''}`, {
             body: payload,
             method: 'POST',
         })
@@ -31,7 +31,7 @@ export async function postUserWithInvitation(inviteToken: string, payload: FormD
     }
     // dont override with eventual curretn user token
     return (
-        await useAPI(`/user/?organization=${organizationsStore.current?.code || ''}`, {
+        await useAPI(`user/?organization=${organizationsStore.current?.code || ''}`, {
             body: payload,
             method: 'POST',
             ...inviteTokenHeader,
@@ -43,7 +43,7 @@ export async function searchPeopleProject({ search, org_id, params }) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
 
     return (
-        await useAPI(`/user/?search=${search}&current_org_pk=${org_id}`, { params: adaptedParams })
+        await useAPI(`user/?search=${search}&current_org_pk=${org_id}`, { params: adaptedParams })
     ).data
 }
 
@@ -51,7 +51,7 @@ export async function searchPeopleAdmin({ search, org_id, params }) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
 
     return (
-        await useAPI(`/user/admin-list/?search=${search}&current_org_pk=${org_id}`, {
+        await useAPI(`user/admin-list/?search=${search}&current_org_pk=${org_id}`, {
             params: adaptedParams,
         })
     ).data
@@ -59,33 +59,33 @@ export async function searchPeopleAdmin({ search, org_id, params }) {
 
 export async function searchPeopleByExactMail(email: string, params: object) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : null
-    return (await useAPI(`/user/get-by-email/${email}/`, { params: adaptedParams, noError: true }))
+    return (await useAPI(`user/get-by-email/${email}/`, { params: adaptedParams, noError: true }))
         .data
 }
 
 export async function patchUser(id: string | number, body: UserPatchModel) {
-    return (await useAPI(`/user/${id}/`, { body, method: 'PATCH' })).data
+    return (await useAPI(`user/${id}/`, { body, method: 'PATCH' })).data
 }
 
 export async function patchUserPicture(id: string | number, pictureId: string, body: FormData) {
-    return (await useAPI(`/user/${id}/profile-picture/${pictureId}/`, { body, method: 'PATCH' }))
+    return (await useAPI(`user/${id}/profile-picture/${pictureId}/`, { body, method: 'PATCH' }))
         .data
 }
 
 export async function deleteUser(id: string) {
-    return await useAPI(`/user/${id}/`, { method: 'DELETE' })
+    return await useAPI(`user/${id}/`, { method: 'DELETE' })
 }
 
 export async function postUserPicture(id: string, body: FormData) {
-    return (await useAPI(`/user/${id}/profile-picture/`, { body, method: 'POST' })).data
+    return (await useAPI(`user/${id}/profile-picture/`, { body, method: 'POST' })).data
 }
 
 export async function patchUserPrivacy(id: string | number, body: UserPrivacyPatchModel) {
-    return (await useAPI(`/privacy-settings/${id}/`, { body, method: 'PATCH' })).data
+    return (await useAPI(`privacy-settings/${id}/`, { body, method: 'PATCH' })).data
 }
 
 export async function postUserSkill(user_id: string | number, body: UserSkillModel) {
-    return (await useAPI(`/user/${user_id}/skill/`, { body, method: 'POST' })).data
+    return (await useAPI(`user/${user_id}/skill/`, { body, method: 'POST' })).data
 }
 
 export async function patchUserSkill(
@@ -93,15 +93,15 @@ export async function patchUserSkill(
     skill_id: number,
     body: UserPrivacyPatchModel
 ) {
-    return (await useAPI(`/user/${user_id}/skill/${skill_id}/`, { body, method: 'PATCH' })).data
+    return (await useAPI(`user/${user_id}/skill/${skill_id}/`, { body, method: 'PATCH' })).data
 }
 
 export async function deleteUserSkill(user_id: string | number, skill_id: number) {
-    return (await useAPI(`/user/${user_id}/skill/${skill_id}/`, { method: 'DELETE' })).data
+    return (await useAPI(`user/${user_id}/skill/${skill_id}/`, { method: 'DELETE' })).data
 }
 
 export async function resetUserPassword(id: string | number) {
     const organizationsStore = useOrganizationsStore()
     const orgCode = organizationsStore.current?.code || ''
-    return (await useAPI(`/user/${id}/reset-password/?organization=${orgCode}`, {})).data
+    return (await useAPI(`user/${id}/reset-password/?organization=${orgCode}`, {})).data
 }
