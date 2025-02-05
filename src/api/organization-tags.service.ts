@@ -14,11 +14,11 @@ export async function createOrgTag(tag: TagCreateInput) {
             body: tag,
             method: 'POST',
         })
-    ).data
+    ).data.value
 }
 
 export async function getAllOrgTags(params: TagParams) {
-    return (await useAPI(`tag/`, { params })).data
+    return (await useAPI(`tag/`, { params })).data.value
 }
 
 export async function deleteOrgTag(tagId: number) {
@@ -28,5 +28,5 @@ export async function deleteOrgTag(tagId: number) {
 }
 
 export async function getOrgTag(id: number) {
-    return (await useAPI(`tag/${id}/`, {})).data
+    return (await useAPI(`tag/${id}/`, {})).data.value
 }

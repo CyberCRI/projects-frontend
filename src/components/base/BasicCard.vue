@@ -24,11 +24,15 @@
 </template>
 
 <script>
+import { NuxtLink } from '#components'
 export default {
     name: 'BasicCard',
 
     emits: ['click'],
 
+    components: {
+        NuxtLink,
+    },
     props: {
         toLink: {
             type: [String, Object],

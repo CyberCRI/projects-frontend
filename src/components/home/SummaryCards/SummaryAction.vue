@@ -6,10 +6,11 @@
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
+import { NuxtLink } from '#components'
 export default {
     name: 'SummaryAction',
 
-    components: { IconImage },
+    components: { IconImage, NuxtLink },
 
     props: {
         actionIcon: {

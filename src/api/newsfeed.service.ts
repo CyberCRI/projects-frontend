@@ -9,7 +9,6 @@ export interface NewsfeedParams {
 }
 
 export async function getNewsfeed(org: string, params: APIParams) {
-    return (
-        await useAPI(`organization/${org}/newsfeed/`, { params: _adaptParamsToGetQuery(params) })
-    ).data
+    return (await useAPI(`organization/${org}/newsfeed/`, { ..._adaptParamsToGetQuery(params) }))
+        .data.value
 }

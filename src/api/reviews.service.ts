@@ -3,12 +3,12 @@ import type { ReviewModel, ReviewModelInput } from '@/models/review.model'
 import useAPI from '@/composables/useAPI'
 
 export async function getReviews(projectId: string) {
-    return (await useAPI(`project/${projectId}/review/`, {})).data
+    return (await useAPI(`project/${projectId}/review/`, {})).data.value
 }
 
 export async function postReview(review: ReviewModelInput) {
     return (await useAPI(`project/${review.project_id}/review/`, { body: review, method: 'POST' }))
-        .data
+        .data.value
 }
 
 export async function patchReview(review: ReviewModelInput) {
@@ -17,7 +17,7 @@ export async function patchReview(review: ReviewModelInput) {
             body: review,
             method: 'PATCH',
         })
-    ).data
+    ).data.value
 }
 
 export async function deleteReview({ project_id, id }) {

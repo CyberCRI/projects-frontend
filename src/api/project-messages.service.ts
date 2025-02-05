@@ -3,7 +3,7 @@ import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getProjectMessages(project_id: string) {
-    return (await useAPI(`project/${project_id}/project-message/`, {})).data
+    return (await useAPI(`project/${project_id}/project-message/`, {})).data.value
 }
 
 export async function postProjectMessage(projectMessage: ProjectMessageInputModel) {
@@ -12,13 +12,13 @@ export async function postProjectMessage(projectMessage: ProjectMessageInputMode
             body: projectMessage,
             method: 'POST',
         })
-    ).data
+    ).data.value
 }
 
 export async function getProjectMessage(body: ProjectMessageInputModel) {
     return (
         await useAPI(`project/${body.project_id}/project-message/${body.project_message_id}/`, {})
-    ).data
+    ).data.value
 }
 
 export async function patchProjectMessage(id: number, projectMessage: ProjectMessageInputModel) {
@@ -27,7 +27,7 @@ export async function patchProjectMessage(id: number, projectMessage: ProjectMes
             body: projectMessage,
             method: 'PATCH',
         })
-    ).data
+    ).data.value
 }
 
 export async function deleteProjectMessage(project_id: string, id: number) {
@@ -35,5 +35,5 @@ export async function deleteProjectMessage(project_id: string, id: number) {
 }
 
 export async function postProjectMessageImage(project_id: string, body: any): Promise<any> {
-    return (await useAPI(`project/${project_id}/project-message-image/`, { body })).data
+    return (await useAPI(`project/${project_id}/project-message-image/`, { body })).data.value
 }

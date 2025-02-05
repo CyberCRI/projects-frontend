@@ -7,9 +7,8 @@ export async function searchProjects(search: string, params: SearchParams) {
     // const url = search ? `search/project/${search}/` : 'search/project/'
     const url = search ? `search/${search}/` : 'search/'
 
-    return (
-        await useAPI(`${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'project' }) })
-    ).data
+    return (await useAPI(`${url}`, { ..._adaptParamsToGetQuery({ ...params, types: 'project' }) }))
+        .data.value
 }
 
 export async function searchGroupsAlgolia(search: string, params: SearchParams) {
@@ -18,29 +17,28 @@ export async function searchGroupsAlgolia(search: string, params: SearchParams) 
 
     return (
         await useAPI(`${url}`, {
-            params: _adaptParamsToGetQuery({ ...params, types: 'people_group' }),
+            ..._adaptParamsToGetQuery({ ...params, types: 'people_group' }),
         })
-    ).data
+    ).data.value
 }
 
 export async function searchGroups(organization: string, params: SearchParams) {
     return (
         await useAPI(`organization/${organization}/people-group/`, {
-            params: _adaptParamsToGetQuery(params),
+            ..._adaptParamsToGetQuery(params),
         })
-    ).data
+    ).data.value
 }
 
 export async function searchUser(search: string, params: SearchParams) {
     // const url = search ? `search/user/${search}/` : 'search/user/'
     const url = search ? `search/${search}/` : 'search/'
-    return (
-        await useAPI(`${url}`, { params: _adaptParamsToGetQuery({ ...params, types: 'user' }) })
-    ).data
+    return (await useAPI(`${url}`, { ..._adaptParamsToGetQuery({ ...params, types: 'user' }) }))
+        .data.value
 }
 
 export async function searchAll(search: string | null, params: SearchParams) {
     // const url = search ? `search/global/${search}/` : 'search/global/'
     const url = search ? `search/${search}/` : 'search/'
-    return (await useAPI(`${url}`, { params: _adaptParamsToGetQuery(params) })).data
+    return (await useAPI(`${url}`, { ..._adaptParamsToGetQuery(params) })).data.value
 }

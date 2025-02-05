@@ -3,17 +3,17 @@ import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getComments(project_id: string) {
-    return (await useAPI(`project/${project_id}/comment/`, {})).data
+    return (await useAPI(`project/${project_id}/comment/`, {})).data.value
 }
 
 export async function postComment(comment: CommentInputModel) {
     return (
         await useAPI(`project/${comment.project_id}/comment/`, { body: comment, method: 'POST' })
-    ).data
+    ).data.value
 }
 
 export async function getComment(body: CommentInputModel) {
-    return (await useAPI(`project/${body.project_id}/comment/${body.comment_id}/`, {})).data
+    return (await useAPI(`project/${body.project_id}/comment/${body.comment_id}/`, {})).data.value
 }
 
 export async function patchComment(id: number, comment: CommentInputModel) {
@@ -22,7 +22,7 @@ export async function patchComment(id: number, comment: CommentInputModel) {
             body: comment,
             method: 'PATCH',
         })
-    ).data
+    ).data.value
 }
 
 export async function deleteComment(project_id: string, id: number) {
@@ -30,10 +30,6 @@ export async function deleteComment(project_id: string, id: number) {
 }
 
 export async function postCommentImage(project_id: string, body: any) {
-    return (
-        await useAPI(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/comment-image/`,
-            { body, method: 'POST' }
-        )
-    ).data
+    return (await useAPI(`project/${project_id}/comment-image/`, { body, method: 'POST' })).data
+        .value
 }
