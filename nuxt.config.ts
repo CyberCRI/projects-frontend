@@ -39,7 +39,7 @@ export default defineNuxtConfig({
                     additionalData: `
                         @use 'sass:math';
                         @import '@/design/scss/variables.scss';
-                        $PUBLIC_BINARIES_PREFIX: '${process.env.VITE_APP_PUBLIC_BINARIES_PREFIX}';
+                        $PUBLIC_BINARIES_PREFIX: '${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}';
                     `,
                 },
             },
@@ -72,6 +72,7 @@ export default defineNuxtConfig({
             appKeycloakRealm: '',
             appApiUrl: '',
             appApiDefaultVersion: '',
+            appPublicBinariesPrefix: '',
         },
     },
     i18n: {

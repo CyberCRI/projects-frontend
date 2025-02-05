@@ -48,6 +48,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import { stripTags } from '@/filters/index.ts'
+import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'AnnouncementCard',
@@ -65,10 +66,17 @@ export default {
         },
     },
 
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
+    },
+
     computed: {
         projectImage() {
             return `url(${this.announcement.project?.header_image?.variations?.small}), url(${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                this.runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-1.png)`
         },
     },
