@@ -216,6 +216,7 @@ import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useUsersStore from '@/stores/useUsers.ts'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'CompleteProfileStep1',
 
@@ -237,17 +238,19 @@ export default {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const usersStore = useUsersStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             toaster,
             languagesStore,
             usersStore,
+            runtimeConfig,
         }
     },
 
     data() {
         const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
             return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                this.runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${index}.png`
         })
         return {

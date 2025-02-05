@@ -159,6 +159,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'RegisterPage',
 
@@ -177,11 +178,13 @@ export default {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const organizationsStore = useOrganizationsStore()
+        const runtimeConfig = useRuntimeConfig()
 
         return {
             toaster,
             languagesStore,
             organizationsStore,
+            runtimeConfig,
         }
     },
 
@@ -256,7 +259,7 @@ export default {
     },
     computed: {
         backgroundImageUrl() {
-            return `${import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX}/page404/page-404.png`
+            return `${this.runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
         },
     },
     methods: {

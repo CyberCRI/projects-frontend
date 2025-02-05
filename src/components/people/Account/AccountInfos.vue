@@ -55,6 +55,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'AccountInfos',
 
@@ -76,10 +77,14 @@ export default {
             required: true,
         },
     },
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return { runtimeConfig }
+    },
     data() {
         const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
             return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                this.runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${index}.png`
         })
         return { defaultPictures }

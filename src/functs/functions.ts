@@ -140,9 +140,10 @@ export default {
     },
 
     async getPatatoidFile(patatoidNumber): Promise<File> {
+        const runtimeConfig = useRuntimeConfig()
         try {
             const urlFile = `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${patatoidNumber}.png`
             const fileName = `patatoid-${patatoidNumber}.png`
             const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
@@ -150,7 +151,7 @@ export default {
         } catch {
             // In case it cannot find an image return first one
             const urlFile = `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-1.png`
             const fileName = 'Patatoid-1.png'
             const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this

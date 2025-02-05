@@ -180,6 +180,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'GroupForm',
 
@@ -203,8 +204,10 @@ export default {
     },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             organizationsStore,
+            runtimeConfig,
         }
     },
     props: {
@@ -226,7 +229,7 @@ export default {
     data() {
         const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
             return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                this.runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${index}.png`
         })
         return {

@@ -114,6 +114,8 @@ declare module 'nuxt/schema' {
 
    appApiDefaultVersion: string,
 
+   appPublicBinariesPrefix: string,
+
    i18n: {
       baseUrl: string,
 
