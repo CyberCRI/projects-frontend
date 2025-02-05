@@ -1,4 +1,4 @@
-import { useFetch, useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#imports'
 
 export async function removeApiCookie() {
     const runtimeConfig = useRuntimeConfig()
@@ -14,5 +14,5 @@ export async function removeApiCookie() {
     // unset API cookie
     // TODO remove when API wioll not handle cookie set/remove anymore
     // https://github.com/CyberCRI/projects-api-Reloaded/issues/513
-    return (await useFetch(`/user/remove-authentication-cookie`, config)).data.value
+    return await $fetch(`/user/remove-authentication-cookie`, config) //.data.value
 }

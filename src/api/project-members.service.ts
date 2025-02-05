@@ -11,10 +11,10 @@ export async function addProjectMembers(projectId: string, data: ProjectMembersA
 }
 
 export async function deleteProjectMembers(projectId: string, data: ProjectMembersDeleteInput) {
-    return (await useAPI(`project/${projectId}/member/remove/`, { body: data, method: 'POST' }))
-        .data.value
+    return await useAPI(`project/${projectId}/member/remove/`, { body: data, method: 'POST' })
+    //.data.value
 }
 
 export async function deleteProjectMembersSelf(projectId: string) {
-    return (await useAPI(`project/${projectId}/quit/`, { method: 'DELETE' })).data.value
+    return await useAPI(`project/${projectId}/quit/`, { method: 'DELETE' }) //.data.value
 }

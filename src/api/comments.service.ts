@@ -3,26 +3,22 @@ import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getComments(project_id: string) {
-    return (await useAPI(`project/${project_id}/comment/`, {})).data.value
+    return await useAPI(`project/${project_id}/comment/`, {}) //.data.value
 }
 
 export async function postComment(comment: CommentInputModel) {
-    return (
-        await useAPI(`project/${comment.project_id}/comment/`, { body: comment, method: 'POST' })
-    ).data.value
+    return await useAPI(`project/${comment.project_id}/comment/`, { body: comment, method: 'POST' }) //.data.value
 }
 
 export async function getComment(body: CommentInputModel) {
-    return (await useAPI(`project/${body.project_id}/comment/${body.comment_id}/`, {})).data.value
+    return await useAPI(`project/${body.project_id}/comment/${body.comment_id}/`, {}) //.data.value
 }
 
 export async function patchComment(id: number, comment: CommentInputModel) {
-    return (
-        await useAPI(`project/${comment.project_id}/comment/${id}/`, {
-            body: comment,
-            method: 'PATCH',
-        })
-    ).data.value
+    return await useAPI(`project/${comment.project_id}/comment/${id}/`, {
+        body: comment,
+        method: 'PATCH',
+    }) //.data.value
 }
 
 export async function deleteComment(project_id: string, id: number) {

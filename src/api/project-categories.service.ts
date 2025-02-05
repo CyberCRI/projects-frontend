@@ -20,13 +20,11 @@ export async function createProjectCategory(category: ProjectCategoryCreateInput
 
 export async function putProjectCategory(id: number, category: ProjectCategoryPutInput | FormData) {
     const extraHeaders = category instanceof FormData ? getFormDataHeaders() : {}
-    return (
-        await useAPI(`category/${id}/`, {
-            body: category,
-            method: 'PATCH',
-            ...extraHeaders,
-        })
-    ).data.value
+    return await useAPI(`category/${id}/`, {
+        body: category,
+        method: 'PATCH',
+        ...extraHeaders,
+    }) //.data.value
 }
 
 export async function patchProjectCategory(
@@ -34,37 +32,33 @@ export async function patchProjectCategory(
     category: ProjectCategoryPatchInput | FormData
 ) {
     const extraHeaders = category instanceof FormData ? getFormDataHeaders() : {}
-    return (
-        await useAPI(`category/${id}/`, {
-            body: category,
-            method: 'PATCH',
-            ...extraHeaders,
-        })
-    ).data.value
+    return await useAPI(`category/${id}/`, {
+        body: category,
+        method: 'PATCH',
+        ...extraHeaders,
+    }) //.data.value
 }
 
 export async function deleteProjectCategory(id: number) {
-    return (await useAPI(`category/${id}/`, { method: 'DELETE' })).data.value
+    return await useAPI(`category/${id}/`, { method: 'DELETE' }) //.data.value
 }
 
 export async function getProjectCategory(id: number) {
-    return (await useAPI(`category/${id}/`, {})).data.value
+    return await useAPI(`category/${id}/`, {}) //.data.value
 }
 
 export async function getAllProjectCategories(params: ProjectCategoryParams) {
-    return (await useAPI(`category/`, { params })).data.value
+    return await useAPI(`category/`, { params }) //.data.value
 }
 
 export async function getProjectCategoriesHierarchy(rootId: number, params: ProjectCategoryParams) {
-    return (
-        await useAPI(`category/${rootId}/hierarchy/`, {
-            params,
-        })
-    ).data.value
+    return await useAPI(`category/${rootId}/hierarchy/`, {
+        params,
+    }) //.data.value
 }
 
 export async function postProjectCategoryBackground({ id, body }) {
-    return (await useAPI(`category/${id}/background/`, { body, method: 'POST' })).data.value
+    return await useAPI(`category/${id}/background/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function patchProjectCategoryBackground({ id, imageId, body }) {

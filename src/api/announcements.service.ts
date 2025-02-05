@@ -9,15 +9,13 @@ import utils from '@/functs/functions'
 import useAPI from '@/composables/useAPI'
 
 export async function getAnnouncements(params) {
-    return (await useAPI(`announcement/`, { query: utils.adaptParam(params) })).data.value
+    return await useAPI(`announcement/`, { query: utils.adaptParam(params) }) //.data.value
 }
 
 export async function getProjectAnnouncements(project_id: string, params: Object) {
-    return (
-        await useAPI(`project/${project_id}/announcement/`, {
-            query: utils.adaptParam(params || {}),
-        })
-    ).data.value
+    return await useAPI(`project/${project_id}/announcement/`, {
+        query: utils.adaptParam(params || {}),
+    }) //.data.value
 }
 
 export async function postAnnouncement(body: AnnouncementInput) {
@@ -26,12 +24,10 @@ export async function postAnnouncement(body: AnnouncementInput) {
 }
 
 export async function patchAnnouncement(body: AnnouncementInput) {
-    return (
-        await useAPI(`project/${body.project_id}/announcement/${body.id}/`, {
-            body,
-            method: 'PATCH',
-        })
-    ).data.value
+    return await useAPI(`project/${body.project_id}/announcement/${body.id}/`, {
+        body,
+        method: 'PATCH',
+    }) //.data.value
 }
 
 export async function deleteAnnouncement(body) {

@@ -10,33 +10,25 @@ export interface RecommendationsParams {
 }
 
 export async function getProjectsRecommendationsForUser(orgCode: string, params: any) {
-    return (
-        await useAPI(`organization/${orgCode}/recommended-project/user/`, {
-            ..._adaptParamsToGetQuery(params),
-        })
-    ).data.value
+    return await useAPI(`organization/${orgCode}/recommended-project/user/`, {
+        ..._adaptParamsToGetQuery(params),
+    }) //.data.value
 }
 
 export async function getRandomProjectsRecommendationsForUser(body: RecommendationsParams) {
-    return (
-        await useAPI(`organization/${body.organization}/recommended-project/user/random/`, {
-            ..._adaptParamsToGetQuery(body.params),
-        })
-    ).data.value
+    return await useAPI(`organization/${body.organization}/recommended-project/user/random/`, {
+        ..._adaptParamsToGetQuery(body.params),
+    }) //.data.value
 }
 
 export async function getUsersRecommendationsForUser(orgCode: string, params: any) {
-    return (
-        await useAPI(`organization/${orgCode}/recommended-user/user/`, {
-            ..._adaptParamsToGetQuery(params),
-        })
-    ).data.value
+    return await useAPI(`organization/${orgCode}/recommended-user/user/`, {
+        ..._adaptParamsToGetQuery(params),
+    }) //.data.value
 }
 
 export async function getRandomUsersRecommendationsForUser(body) {
-    return (
-        await useAPI(`organization/${body.organization}/recommended-user/user/random/`, {
-            ..._adaptParamsToGetQuery(body.params),
-        })
-    ).data.value
+    return await useAPI(`organization/${body.organization}/recommended-user/user/random/`, {
+        ..._adaptParamsToGetQuery(body.params),
+    }) //.data.value
 }
