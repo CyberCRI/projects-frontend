@@ -3,7 +3,7 @@ import i18n from '@/locales/i18n'
 import useToasterStore from '@/stores/useToaster'
 import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'
-import { useFetch, useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#imports'
 const defaultOptions = () => {
     const runtimeConfig = useRuntimeConfig()
     return {
@@ -90,7 +90,7 @@ export const getFormDataHeaders = () => ({
 
 const useAPI = (url: string, options) => {
     const _options = merge(defaultOptions(), options)
-    return useFetch(url, _options)
+    return $fetch(url, _options)
 }
 
 export default useAPI

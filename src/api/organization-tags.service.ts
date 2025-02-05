@@ -9,16 +9,14 @@ export interface TagParams extends APIParams {
 }
 
 export async function createOrgTag(tag: TagCreateInput) {
-    return (
-        await useAPI(`tag/`, {
-            body: tag,
-            method: 'POST',
-        })
-    ).data.value
+    return await useAPI(`tag/`, {
+        body: tag,
+        method: 'POST',
+    }) //.data.value
 }
 
 export async function getAllOrgTags(params: TagParams) {
-    return (await useAPI(`tag/`, { params })).data.value
+    return await useAPI(`tag/`, { params }) //.data.value
 }
 
 export async function deleteOrgTag(tagId: number) {
@@ -28,5 +26,5 @@ export async function deleteOrgTag(tagId: number) {
 }
 
 export async function getOrgTag(id: number) {
-    return (await useAPI(`tag/${id}/`, {})).data.value
+    return await useAPI(`tag/${id}/`, {}) //.data.value
 }
