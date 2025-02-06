@@ -1,7 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupMemberSection from '@/components/group/GroupMemberSection/GroupMemberSection.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { GroupMemberFactory } from '@/../tests/factories/group-member.factory'
 
 const i18n = {

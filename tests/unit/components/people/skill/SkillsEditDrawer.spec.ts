@@ -13,6 +13,8 @@ import {
 } from '@/api/tag-classification.service'
 import { postUserSkill } from '@/api/people.service'
 
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 vi.mock('@/api/people.service.ts', () => ({
     postUserSkill: vi.fn().mockResolvedValue({}),
 }))

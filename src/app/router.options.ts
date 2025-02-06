@@ -15,7 +15,7 @@ const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
     next()
 }
 
-const routes: ({ showDebug: boolean }) => Array<RouteRecordRaw> = ({ showDebug }) => [
+const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> => [
     {
         path: '/',
         name: 'HomeRoot',
@@ -807,6 +807,6 @@ const routes: ({ showDebug: boolean }) => Array<RouteRecordRaw> = ({ showDebug }
 export default {
     routes: (_routes) => {
         const runtimeConfig = useRuntimeConfig()
-        return routes({ showDebug: runtimeConfig.public.appShowDebug })
+        return routes({ showDebug: !!runtimeConfig.public.appShowDebug })
     },
 } satisfies RouterConfig

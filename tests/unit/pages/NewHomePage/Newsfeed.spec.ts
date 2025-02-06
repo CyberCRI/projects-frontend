@@ -1,7 +1,7 @@
 import NewsFeed from '@/components/app/NewsFeed.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../i18n.config'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'

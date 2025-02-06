@@ -1,9 +1,10 @@
 import { useRuntimeConfig } from '#imports'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     data() {
         const runtimeConfig = useRuntimeConfig() // TODO nuxt check this
         return {
             PUBLIC_BINARIES_PREFIX: runtimeConfig.public.appPublicBinariesPrefix || '',
         }
     },
-}
+})

@@ -23,14 +23,14 @@ export interface UsersState {
     accessToken?: string
     id?: string
     keycloak_id?: string
-    userFromToken: any
-    userFromApi: any
-    permissions: object
-    id_token: string
-    roles: string[]
-    notificationsCount: number
-    notificationsSettings: NotificationsSettings
-    userDataRefreshLoop: number | null
+    userFromToken?: any
+    userFromApi?: any
+    permissions?: object
+    id_token?: string
+    roles?: string[]
+    notificationsCount?: number
+    notificationsSettings?: NotificationsSettings
+    userDataRefreshLoop?: ReturnType<typeof setInterval> | null
 }
 
 const useUsersStore = defineStore('users', {

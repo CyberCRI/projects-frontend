@@ -4,7 +4,7 @@ import {
     cleanLocalStorage,
 } from '@/api/auth/keycloakUtils'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 const spiedLocalStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 

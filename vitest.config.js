@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
+import { defineVitestConfig } from '@nuxt/test-utils/config'
+
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineVitestConfig({
     plugins: [vue()],
     test: {
         include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
