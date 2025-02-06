@@ -9,7 +9,7 @@ import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
 export interface ProjectCategoryParams extends APIParams {
-    organization?: number // id
+    organization?: string // id
 }
 
 export async function createProjectCategory(category: ProjectCategoryCreateInput | FormData) {

@@ -29,14 +29,14 @@ const useOrganizationsStore = defineStore('organizations', {
 
         allClassifications(): object[] {
             const index = {}
-            this.current?.enabled_projects_tag_classifications.forEach((classification) => {
+            this.current?.enabled_projects_tag_classifications.forEach((classification: any) => {
                 if (!index[classification.id]) {
                     index[classification.id] = classification
                 }
                 index[classification.id].is_enabled_for_projects = true
             })
 
-            this.current?.enabled_skills_tag_classifications.forEach((classification) => {
+            this.current?.enabled_skills_tag_classifications.forEach((classification: any) => {
                 if (!index[classification.id]) {
                     index[classification.id] = classification
                 }

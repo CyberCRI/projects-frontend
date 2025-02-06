@@ -1,4 +1,5 @@
-export const projectInitialScroll = {
+import { defineComponent } from 'vue'
+export const projectInitialScroll = defineComponent({
     computed: {
         blogEntrySpecificUrl() {
             return this.$route.name === 'projectblog' && this.$route.query.b
@@ -20,9 +21,9 @@ export const projectInitialScroll = {
             })
         }
     },
-}
+})
 
-export const parallaxScrolling = {
+export const parallaxScrolling = defineComponent({
     data() {
         return {
             scrollState: 'full',
@@ -133,4 +134,4 @@ export const parallaxScrolling = {
             }
         },
     },
-}
+})

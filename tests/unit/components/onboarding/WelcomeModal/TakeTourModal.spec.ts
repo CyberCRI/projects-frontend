@@ -1,7 +1,7 @@
 import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import pinia from '@/stores'

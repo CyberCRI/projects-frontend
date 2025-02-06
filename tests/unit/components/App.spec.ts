@@ -4,7 +4,7 @@ import App from '@/App.vue'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'

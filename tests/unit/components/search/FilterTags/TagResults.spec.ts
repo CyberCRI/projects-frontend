@@ -3,7 +3,7 @@ import english from '@/locales/en.json'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import useAPI from '@/composables/useAPI'
 
 vi.mock('@/api/api.config', function () {

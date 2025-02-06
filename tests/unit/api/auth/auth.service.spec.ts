@@ -1,6 +1,6 @@
 import { goToKeycloakLoginPage, logoutFromKeycloak } from '@/api/auth/auth.service'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 import useKeycloak from '@/api/auth/keycloak'
 

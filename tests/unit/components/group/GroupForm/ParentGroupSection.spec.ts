@@ -1,7 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ParentGroupSection from '@/components/group/GroupForm/ParentGroupSection.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import useValidate from '@vuelidate/core'
 
 const i18n = {

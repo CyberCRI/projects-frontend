@@ -5,8 +5,8 @@ import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
 import useUsersStore from '@/stores/useUsers'
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     methods: {
         hasPermission(scope, action, pk?) {
             const permissions = this.getPermissionsForPermissions
@@ -202,25 +202,25 @@ export default {
                 this.hasPermission(
                     'organizations',
                     'member',
-                    null,
+                    // null,
                     this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission('organizations', 'member', 'projects') ||
                 this.hasPermission(
                     'organizations',
                     'member',
-                    'projects',
+                    //'projects',
                     this.currentOrganizationForPermissions.id
                 ) ||
                 this.hasPermission(
                     'projects',
                     'member',
-                    null,
+                    // null,
                     this.currentProjectIdForPermissions
                 ) ||
                 this.hasPermission(
                     'organizations',
-                    'update',
+                    // 'update',
                     'member',
                     this.currentOrganizationForPermissions.id
                 ) ||
@@ -358,4 +358,4 @@ export default {
             return this.isAdminOrFacilitator
         },
     },
-}
+})

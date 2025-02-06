@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
     devtools: { enabled: true },
     srcDir: 'src/',
-    modules: ['@pinia/nuxt', '@nuxtjs/i18n'],
+    modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
 
     plugins: ['~/filters/index.ts', '~/directives/index.ts'],
     imports: {
@@ -69,7 +69,7 @@ export default defineNuxtConfig({
             appApiOrgCode: '',
             appCaptchaKey: '',
             appPublicBinariesPrefix: '',
-            appMaxSizeFile: '',
+            appMaxSizeFile: 5_000_000,
             appProfileExempleResearcherSlugOrId: '',
             appProfileExempleProfessionalSlugOrId: '',
             appProfileExempleStudentSlugOrId: '',
@@ -85,7 +85,7 @@ export default defineNuxtConfig({
             appDoc: '',
             appI18nFallbackLocale: '',
             appI18nLocale: '',
-            appShowDebug: '',
+            appShowDebug: 0,
         },
     },
     i18n: {

@@ -2,7 +2,7 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
-import { describe, expect, it } from 'vitest'
+import { describe, beforeEach, expect, it } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

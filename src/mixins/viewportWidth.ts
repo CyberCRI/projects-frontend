@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce'
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     data() {
         return {
             viewportWidth: 0,
@@ -35,4 +35,4 @@ export default {
     unmounted() {
         window.removeEventListener('resize', () => {})
     },
-}
+})

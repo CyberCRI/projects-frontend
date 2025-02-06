@@ -1,7 +1,7 @@
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import english from '@/locales/en.json'
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
