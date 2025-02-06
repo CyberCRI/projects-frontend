@@ -52,6 +52,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteBlogEntry } from '@/api/blogentries.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'ProjectBlogEntriesTab',
 
@@ -69,8 +70,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const runtimeConfig = useRuntimeConfig()
+
         return {
             toaster,
+            runtimeConfig,
         }
     },
 
@@ -90,7 +94,7 @@ export default {
             expandedEntry: null,
             confirmModalVisible: false,
             currentBlogEntry: null,
-            sockerserver: import.meta.env.VITE_APP_WSS_HOST,
+            sockerserver: this.runtimeConfig.public.appWssHost,
             provider: null,
             asyncing: false,
         }
