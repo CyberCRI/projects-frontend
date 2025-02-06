@@ -1,5 +1,5 @@
 <template>
-    <div id="APP" :class="[themeclass, currentRouteName, { 'has-open-drawer': isLoading }]">
+    <div id="APP" :class="[/*themeclass,*/ currentRouteName, { 'has-open-drawer': isLoading }]">
         <LpiHeader />
 
         <div id="scrollview" ref="scrollview" data-test="scrollview">
@@ -37,9 +37,9 @@ export default {
 
     data() {
         return {
-            themeclass: false,
-            modalErrorOpen: false,
-            forcedark: false,
+            // themeclass: false,
+            // modalErrorOpen: false,
+            // forcedark: false,
             reportBugModalActive: false,
             isLoading: false,
         }
@@ -68,33 +68,38 @@ export default {
     },
 
     mounted() {
-        this.forcedark = true
+        // this.forcedark = true
 
-        if (this.theme !== 'main') {
-            this.themeclass = this.theme
-        }
+        // if (this.theme !== 'main') {
+        //     this.themeclass = this.theme
+        // }
         if (window.socket.connected) {
             socket.disconnect()
         }
 
-        if (this.$route.name === 'Home') {
-            this.setDarkTopbar = debounce(
-                () => {
-                    this.forcedark = this.$refs.scrollview.scrollTop > 300
-                },
-                150,
-                { leading: false, trailing: true }
-            )
-            this.$refs.scrollview.addEventListener('scroll', this.setDarkTopbar)
-            window.scrollTo(0, 0)
-        }
+        // if (this.$route.name === 'Home') {
+        //     this.setDarkTopbar = debounce(
+        //         () => {
+        //             this.forcedark = this.$refs.scrollview.scrollTop > 300
+        //         },
+        //         150,
+        //         { leading: false, trailing: true }
+        //     )
+        //     this.$refs.scrollview.addEventListener('scroll', this.setDarkTopbar)
+        //     window.scrollTo(0, 0)
+        // }
 
         // handle multiple tabs browsing for auth
         window.addEventListener('focus', this.onFocus)
+
+        document.querySelector('.app-loader')?.classList.add('fade-out')
+        setTimeout(() => {
+            document.querySelector('.app-loader')?.remove()
+        }, 200)
     },
 
     beforeUnmount() {
-        this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
+        // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
         window.removeEventListener('focus', this.onFocus)
     },
 
@@ -108,7 +113,7 @@ export default {
 
             const _logout = () => {
                 this.usersStore.resetUser()
-                this.closeModal()
+                // this.closeModal()
                 // navigate to /dashboard
                 if (!this.$route || this.$route.name !== 'Home') {
                     this.$router.push({ name: 'Home' })
@@ -129,9 +134,9 @@ export default {
             }
         },
 
-        closeModal() {
-            this.modalErrorOpen = false
-        },
+        // closeModal() {
+        //     this.modalErrorOpen = false
+        // },
     },
 }
 </script>
