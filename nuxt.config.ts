@@ -68,6 +68,8 @@ export default defineNuxtConfig({
             appVersion: '',
             appApiOrgCode: '',
             appCaptchaKey: '',
+            appMixpanelApiHost: '',
+            appMixpanelProjectToken: '',
             appPublicBinariesPrefix: '',
             appMaxSizeFile: 5_000_000,
             appProfileExempleResearcherSlugOrId: '',
@@ -86,6 +88,7 @@ export default defineNuxtConfig({
             appI18nFallbackLocale: '',
             appI18nLocale: '',
             appShowDebug: 0,
+            appDisconnectionGraceDuration: 0,
         },
     },
     i18n: {

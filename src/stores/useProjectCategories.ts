@@ -72,11 +72,7 @@ const useProjectCategoriesStore = defineStore('projectCategories', {
             // TODO check why rootState.organizations.current is sometimes null
             // the fallback on env value is a temporary fix
             const runtimeConfig = useRuntimeConfig()
-            if (!params.organization)
-                //params.organization =
-                // TODO use org store when available
-                // rootState.organizations?.current?.code || import.meta.env.VITE_APP_ORG_CODE
-                params.organization = runtimeConfig.public.appApiOrgCode
+            if (!params.organization) params.organization = runtimeConfig.public.appApiOrgCode
 
             return new Promise((resolve, reject) => {
                 getAllProjectCategories(params)
