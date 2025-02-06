@@ -1,7 +1,7 @@
 import ProfileSkillTab from '@/pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'

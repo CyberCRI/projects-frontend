@@ -1,5 +1,5 @@
 import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import App from '@/App.vue'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'

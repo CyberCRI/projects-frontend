@@ -1,7 +1,7 @@
 import ProfileSummaryTab from '@/pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import { flushPromises } from '@vue/test-utils'
 
 import { getUserFollows } from '@/api/follows.service'
