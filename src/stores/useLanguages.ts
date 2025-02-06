@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { LanguageType } from '@/models/types'
 import { ref, watchEffect } from 'vue'
 import { useRuntimeConfig } from '#imports'
-import { useI18n } from '#imports'
+import { useNuxtApp } from '#imports'
 
 export interface LanguageState {
     all: LanguageType[]
@@ -21,12 +21,11 @@ const useLanguagesStore = defineStore('languages', () => {
 
     const all = ref(allLanguages)
     const current = ref(initialLang)
-    const { setLocale } = useI18n()
 
     watchEffect(() => {
         const lang = current.value
         localStorage.setItem('lang', lang)
-        setLocale(lang)
+        useNuxtApp().$i18n.setLocale(lang)
         // Set lang attribute for non translated langages to be translated by browser extensions
         const html = document.documentElement
         html.setAttribute('lang', lang)
