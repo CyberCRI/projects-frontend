@@ -65,14 +65,27 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
+            appVersion: '',
             appApiOrgCode: '',
+            appCaptchaKey: '',
+            appPublicBinariesPrefix: '',
+            appMaxSizeFile: '',
+            appProfileExempleResearcherSlugOrId: '',
+            appProfileExempleProfessionalSlugOrId: '',
+            appProfileExempleStudentSlugOrId: '',
             appKeycloakUrl: '',
             appKeycloakClientId: '',
             appKeycloakClientSecret: '',
             appKeycloakRealm: '',
             appApiUrl: '',
             appApiDefaultVersion: '',
-            appPublicBinariesPrefix: '',
+            appMetaPortalUrl: '',
+            appWssHost: '',
+            appEnvironment: '',
+            appDoc: '',
+            appI18nFallbackLocale: '',
+            appI18nLocale: '',
+            appShowDebug: '',
         },
     },
     i18n: {

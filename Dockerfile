@@ -7,35 +7,35 @@ RUN yarn install --pure-lockfile --non-interactive &&\
     rm -rf /usr/local/share/.cache
 
 ARG VERSION_HASH \
-    VITE_APP_API_DEFAULT_VERSION=/v1 \
+    NUXT_PUBLIC_APP_API_DEFAULT_VERSION=/v1 \
     NUXT_PUBLIC_APP_API_ORG_CODE=CRI \
-    VITE_APP_API_URL=https://api.projects.k8s.lp-i.dev \
-    VITE_APP_BASE_URL \
-    VITE_APP_CAPTCHA_KEY=6Lej3a4UAAAAAFzSbSGrznwFxeZzH0PXdrcTb7kN \
-    VITE_APP_CURRENTTHEME="" \
-    VITE_APP_DOC=https://docs.projects.k8s.lp-i.dev/ \
-    VITE_APP_I18N_FALLBACK_LOCALE=en \
-    VITE_APP_I18N_LOCALE=fr \
+    NUXT_PUBLIC_APP_API_URL=https://api.projects.k8s.lp-i.dev \
+    NUXT_PUBLIC_APP_BASE_URL \
+    NUXT_PUBLIC_APP_CAPTCHA_KEY=6Lej3a4UAAAAAFzSbSGrznwFxeZzH0PXdrcTb7kN \
+    NUXT_PUBLIC_APP_CURRENTTHEME="" \
+    NUXT_PUBLIC_APP_DOC=https://docs.projects.k8s.lp-i.dev/ \
+    NUXT_PUBLIC_APP_I18N_FALLBACK_LOCALE=en \
+    NUXT_PUBLIC_APP_I18N_LOCALE=fr \
     NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_ID \
     NUXT_PUBLIC_APP_KEYCLOAK_CLIENT_SECRET \
     NUXT_PUBLIC_APP_KEYCLOAK_REALM=lp \
     NUXT_PUBLIC_APP_KEYCLOAK_URL=https://id.learning-planet.org/auth \
-    VITE_APP_MAX_SIZE_FILE=5000000 \
-    VITE_APP_META_PORTAL_URL=https://projects.directory \
-    VITE_APP_MIXPANEL_API_URL \
-    VITE_APP_MIXPANEL_PROJECT_TOKEN \
-    VITE_APP_PUBLIC_BINARIES_PREFIX=https://criparisprodprodassets.blob.core.windows.net/assets/public \
-    VITE_APP_VERSION\
-    VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
-    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
-    VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID="" \
-    VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID="" \
-    VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID=""\
-    VITE_APP_HOME="" \
-    VITE_APP_SENTRY_ENABLED \
-    VITE_APP_SENTRY_DSN \
-    VITE_APP_SENTRY_RELEASE \
-    VITE_APP_ENVIRONMENT
+    NUXT_PUBLIC_APP_MAX_SIZE_FILE=5000000 \
+    NUXT_PUBLIC_APP_META_PORTAL_URL=https://projects.directory \
+    NUXT_PUBLIC_APP_MIXPANEL_API_URL \
+    NUXT_PUBLIC_APP_MIXPANEL_PROJECT_TOKEN \
+    NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX=https://criparisprodprodassets.blob.core.windows.net/assets/public \
+    NUXT_PUBLIC_APP_VERSION\
+    NUXT_PUBLIC_APP_WELEARNSRV=https://welearn.cri-paris.org \
+    NUXT_PUBLIC_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID="" \
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID="" \
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID=""\
+    NUXT_PUBLIC_APP_HOME="" \
+    NUXT_PUBLIC_APP_SENTRY_ENABLED \
+    NUXT_PUBLIC_APP_SENTRY_DSN \
+    NUXT_PUBLIC_APP_SENTRY_RELEASE \
+    NUXT_PUBLIC_APP_ENVIRONMENT
 
 COPY . /app/
 
@@ -51,9 +51,9 @@ RUN apk update && \
     apk add bash
 
 ENV ADD_HEADER_HSTS="" \
-    VITE_APP_API_URL=https://api.projects.k8s.lp-i.dev \
-    VITE_APP_WELEARNSRV=https://welearn.cri-paris.org \
-    VITE_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
+    NUXT_PUBLIC_APP_API_URL=https://api.projects.k8s.lp-i.dev \
+    NUXT_PUBLIC_APP_WELEARNSRV=https://welearn.cri-paris.org \
+    NUXT_PUBLIC_APP_WSS_HOST=cri.projects.k8s.lp-i.dev \
     NGINX_RESOLVER=8.8.8.8 \
     API_PROXY_LOG_LEVEL=notice
 

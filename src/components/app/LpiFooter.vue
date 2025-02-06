@@ -134,6 +134,8 @@ import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { useRuntimeConfig } from '#imports'
+
 export default {
     name: 'LpiFooter',
     mixins: [imageMixin],
@@ -149,10 +151,12 @@ export default {
         const languagesStore = useLanguagesStore()
         const organizationsStore = useOrganizationsStore()
         const usersStore = useUsersStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             languagesStore,
             organizationsStore,
             usersStore,
+            runtimeConfig,
         }
     },
     data() {
@@ -177,7 +181,7 @@ export default {
             return this.$route.name === 'Register'
         },
         appVersion() {
-            return import.meta.env.VITE_APP_VERSION
+            return this.runtimeConfig.public.appVersion
         },
         isConnected() {
             return this.usersStore.isConnected

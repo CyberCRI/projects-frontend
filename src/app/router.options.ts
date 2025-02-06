@@ -1,6 +1,7 @@
 import type { RouterConfig } from '@nuxt/schema'
 import type { RouteRecordRaw } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { useRuntimeConfig } from '#imports'
 
 const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
     const organizationsStore = useOrganizationsStore()
@@ -14,7 +15,7 @@ const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
     next()
 }
 
-const routes: Array<RouteRecordRaw> = [
+const routes: ({ showDebug: boolean }) => Array<RouteRecordRaw> = ({ showDebug }) => [
     {
         path: '/',
         name: 'HomeRoot',
@@ -660,7 +661,8 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
-    ...(import.meta.env.VITE_APP_SHOW_DEBUG
+    // TDOD nuxt test this
+    ...(showDebug
         ? [
               {
                   path: '/debug',
@@ -803,5 +805,8 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 export default {
-    routes: (_routes) => routes,
+    routes: (_routes) => {
+        const runtimeConfig = useRuntimeConfig()
+        return routes({ showDebug: runtimeConfig.public.appShowDebug })
+    },
 } satisfies RouterConfig

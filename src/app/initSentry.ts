@@ -13,7 +13,7 @@ export default async function initSentry(app) {
                 Sentry.browserTracingIntegration({ router }),
                 Sentry.replayIntegration(),
             ],
-            environment: import.meta.env.VITE_APP_ENVIRONMENT,
+            environment: runtimeConfig.public.appEnvironment as string,
             tracePropagationTargets: ['localhost', runtimeConfig.public.appApiUrl],
 
             // Set tracesSampleRate to 1.0 to capture 100%

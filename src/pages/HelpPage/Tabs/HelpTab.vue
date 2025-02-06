@@ -9,6 +9,7 @@
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'HelpTab',
@@ -19,8 +20,11 @@ export default {
 
     setup() {
         const languagesStore = useLanguagesStore()
+        const runtimeConfig = useRuntimeConfig()
+
         return {
             languagesStore,
+            runtimeConfig,
         }
     },
     data() {
@@ -35,7 +39,7 @@ export default {
 
     computed: {
         docUrl() {
-            const url = new URL(import.meta.env.VITE_APP_DOC)
+            const url = new URL(this.runtimeConfig.public.appDoc)
             // uppercase lang code are mandatory for this service
             url.searchParams.append('lang', this.languagesStore.current)
 

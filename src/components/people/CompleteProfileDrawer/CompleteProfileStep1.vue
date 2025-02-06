@@ -313,13 +313,13 @@ export default {
             return this.researcherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId
         },
         researcherSlugOrId() {
-            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID
+            return this.runtimeConfig.public.appProfileExempleResearcherSlugOrId
         },
         professionalSlugOrId() {
-            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID
+            return this.runtimeConfig.public.appProfileExempleProfessionalSlugOrId
         },
         studentSlugOrId() {
-            return import.meta.env.VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID
+            return this.runtimeConfig.public.appProfileExempleStudentSlugOrId
         },
     },
 
