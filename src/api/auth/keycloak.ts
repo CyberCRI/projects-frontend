@@ -6,7 +6,7 @@ import {
 } from '@/api/auth/keycloakUtils'
 import router from '@/router/index'
 import useUsersStore from '@/stores/useUsers'
-import { useRuntimeConfig, useI18n } from '#imports'
+import { useRuntimeConfig, useNuxtApp } from '#imports'
 import useToasterStore from '@/stores/useToaster'
 
 export type AuthResult = {
@@ -184,8 +184,8 @@ export default function useKeycloak() {
                     })
             } catch (e) {
                 console.error(e)
-                const { t } = useI18n()
-                toaster.pushError(t('message.error-login'))
+                // const { t } = useI18n()
+                toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
             }
         },
 
@@ -207,8 +207,8 @@ export default function useKeycloak() {
         onLoginError(): void {
             const toaster = useToasterStore()
             const home = '/dashboard'
-            const { t } = useI18n()
-            toaster.pushError(t('message.error-login'))
+            // const { t } = useI18n()
+            toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
             router.push(home)
         },
     }
