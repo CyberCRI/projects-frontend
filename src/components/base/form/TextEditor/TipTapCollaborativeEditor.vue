@@ -24,7 +24,6 @@ import {
 } from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
-
 import { useRuntimeConfig } from '#imports'
 const runtimeConfig = useRuntimeConfig()
 
@@ -34,8 +33,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
-const DISCONNECTION_GRACE_DURATION =
-    import.meta.env.VITE_APP_DISCONNECTION_GRACE_DURATION || 6 * 1000
+const DISCONNECTION_GRACE_DURATION = runtimeConfig.public.appDisconnectionGraceDuration || 6 * 1000
 
 const emit = defineEmits([
     ...emitsDefinitions,

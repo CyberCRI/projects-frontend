@@ -1,5 +1,6 @@
 // Full API reference: https://developer.mixpanel.com/docs/javascript-full-api-reference
 import Mixpanel, { RequestOptions } from 'mixpanel-browser'
+import { useRuntimeConfig } from '#imports'
 
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
@@ -10,15 +11,17 @@ export const mixpanel = Mixpanel
  * Init Analytics libraries
  */
 export const init = () => {
-    if (!import.meta.env.VITE_APP_MIXPANEL_PROJECT_TOKEN) {
+    const runtimeConfig = useRuntimeConfig()
+
+    if (!runtimeConfig.public.appMixpanelProjectToken) {
         console.error('Analytics missing env variable VITE_APP_MIXPANEL_PROJECT_TOKEN')
         return
     }
     // Init Mixpanel
-    Mixpanel.init(import.meta.env.VITE_APP_MIXPANEL_PROJECT_TOKEN, {
+    Mixpanel.init(runtimeConfig.public.appMixpanelProjectToken, {
         // Force route data to EU servers: https://developer.mixpanel.com/docs/javascript#eu-data-residency
-        api_host: import.meta.env.VITE_APP_MIXPANEL_API_URL,
-        debug: import.meta.env.NODE_ENV === 'development',
+        api_host: runtimeConfig.public.appMixpanelApiHost,
+        debug: process.env.NODE_ENV === 'development',
     })
     // Useful for testing in dev
     // Mixpanel.reset()
