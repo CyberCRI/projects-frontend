@@ -1,6 +1,6 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'

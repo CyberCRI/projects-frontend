@@ -1,5 +1,4 @@
-import i18n from '@/locales/i18n'
-
+import { useI18n } from '#imports'
 import useToasterStore from '@/stores/useToaster'
 import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'
@@ -25,6 +24,8 @@ const defaultOptions = () => {
                 console.error(error)
                 return Promise.reject(error)
             }
+
+            const { t } = useI18n()
 
             const toaster = useToasterStore()
             const originalRequest: any = error.config
@@ -53,20 +54,11 @@ const defaultOptions = () => {
 
                     toaster.pushWarning(message)
                 } else if (status === 401) {
-                    toaster.pushError(
-                        //message: i18n.messages[i18n.locale].message['error']['unauthorized'],
-                        i18n.global.t('message.error.unauthorized')
-                    )
+                    toaster.pushError(t('message.error.unauthorized'))
                 } else if (status === 422) {
-                    toaster.pushError(
-                        // message: i18n.messages[i18n.locale].message['error']['unprocessable-entity'],
-                        i18n.global.t('message.error.unprocessable-entity')
-                    )
+                    toaster.pushError(t('message.error.unprocessable-entity'))
                 } else if (status === 502) {
-                    toaster.pushError(
-                        // message: i18n.messages[i18n.locale].message['error']['bad-gateway'],
-                        i18n.global.t('message.error.bad-gateway')
-                    )
+                    toaster.pushError(t('message.error.bad-gateway'))
                 }
 
                 // TODO : is this still used ?

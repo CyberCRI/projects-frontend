@@ -6,7 +6,7 @@ import { capitalize, isNotGroup, isGroup } from '@/filters'
 import App from '@/app.vue'
 import { clickOutside, disableFocus } from '@/directives'
 
-import i18n from '@/locales/i18n'
+import { useI18n } from '#imports'
 import useToasterStore from '@/stores/useToaster'
 import router from '@/router'
 
@@ -43,7 +43,7 @@ export default async function initApp(inits) {
         isGroup,
     }
 
-    app.use(i18n)
+    // app.use(i18n)
 
     app.use(pinia)
 

@@ -1,7 +1,7 @@
 import analytics from '@/analytics'
 import { GoalModel } from '@/models/goal.model'
 import { SdgOutput } from '@/models/sdg.model'
-import i18n from '@/locales/i18n'
+import { useI18n } from '#imports'
 export interface GoalAnalytic {
     project: {
         id: string
@@ -40,9 +40,10 @@ export default {
      * @param sdgs
      */
     updateSDG(project_id: string, sdgs: Array<SdgOutput>): void {
+        const { t } = useI18n()
         const sdgList = sdgs.map((sdg) => ({
             id: sdg,
-            title: i18n.global.t(`sdg.${sdg}.title`),
+            title: t(`sdg.${sdg}.title`),
         }))
         analytics.track('update_SDG', {
             project: {
