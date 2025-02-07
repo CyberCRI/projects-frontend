@@ -4,7 +4,7 @@ import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin((nitroApp) => {
     const runtimeConfig = useRuntimeConfig()
-    nitroApp.hooks.hook('render:html', (html, { event }) => {
+    nitroApp.hooks.hook('render:html', (html /*, { event }*/) => {
         html.head.push(
             `<title>Projects</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />

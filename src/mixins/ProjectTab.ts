@@ -1,3 +1,4 @@
+/* eslint-disable vue/require-name-property */
 import funct from '@/functs/functions'
 import { defineComponent } from 'vue'
 function scrollToTab() {

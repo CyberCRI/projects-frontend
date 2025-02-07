@@ -6,7 +6,6 @@ import { capitalize, isNotGroup, isGroup } from '@/filters'
 import App from '@/app.vue'
 import { clickOutside, disableFocus } from '@/directives'
 
-import { useI18n } from '#imports'
 import useToasterStore from '@/stores/useToaster'
 import router from '@/router'
 

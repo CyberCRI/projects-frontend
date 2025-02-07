@@ -1,5 +1,7 @@
-import type { APIResponseList } from '@/api/types'
-import type { NewsModel, NewsInput, NewsOutput, NewsHeaderOutput } from '@/models/news.model'
+// import type { APIResponseList } from '@/api/types'
+import type {
+    /*NewsModel, */ NewsInput /*, NewsOutput, NewsHeaderOutput*/,
+} from '@/models/news.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 

@@ -1,3 +1,4 @@
+/* eslint-disable vue/require-name-property */
 import { useRuntimeConfig } from '#imports'
 import { defineComponent } from 'vue'
 export default defineComponent({

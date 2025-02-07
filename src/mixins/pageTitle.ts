@@ -1,3 +1,4 @@
+/* eslint-disable vue/require-name-property */
 import { defineComponent } from 'vue'
 function getPageTitle(vm) {
     const { pageTitle } = vm.$options

@@ -1,3 +1,7 @@
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
+/* eslint-disable vue/one-component-per-file */
+
 import { defineComponent } from 'vue'
 export const projectInitialScroll = defineComponent({
     computed: {

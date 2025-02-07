@@ -1,11 +1,11 @@
 import fixLeaflet from '@/app/fixLeaflet'
 import quickLogin from '@/app/quickLogin'
 
-import initApp from '@/app/initApp'
+//import initApp from '@/app/initApp'
 import initAnalytics from '@/app/initAnalytics'
 import initUser from '@/app/initUser'
 import initOrganization from './app/initOrganization'
-import initSentry from '@/app/initSentry'
+// import initSentry from '@/app/initSentry'
 import { useRuntimeConfig } from '#imports'
 
 import '@/design/scss/reset.scss'

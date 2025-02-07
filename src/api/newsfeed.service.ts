@@ -1,5 +1,5 @@
-import type { NewsfeedModel } from '@/models/newsfeed.model'
-import type { APIParams, APIResponseList } from '@/api/types'
+// import type { NewsfeedModel } from '@/models/newsfeed.model'
+import type { APIParams /*, APIResponseList*/ } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 

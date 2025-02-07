@@ -1,5 +1,5 @@
-import type { LocationInput, LocationOutput } from '@/models/location.model'
-import type { APIResponseList } from '@/api/types'
+import type { LocationInput /*, LocationOutput*/ } from '@/models/location.model'
+// import type { APIResponseList } from '@/api/types'
 import utils from '@/functs/functions'
 import useAPI from '@/composables/useAPI'
 

@@ -1,5 +1,5 @@
-import type { APIResponseList } from '@/api/types'
-import type { EventModel, EventInput, EventOutput } from '@/models/event.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /*EventModel,*/ EventInput /*, EventOutput*/ } from '@/models/event.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 

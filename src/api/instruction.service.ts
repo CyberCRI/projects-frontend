@@ -1,8 +1,8 @@
-import type { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '@/api/types'
 import type {
-    InstructionModel,
+    // InstructionModel,
     InstructionInput,
-    InstructionOutput,
+    // InstructionOutput,
 } from '@/models/instruction.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'

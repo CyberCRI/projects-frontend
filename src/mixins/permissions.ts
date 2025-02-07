@@ -1,3 +1,6 @@
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
+
 import utils from '@/functs/functions'
 
 import { mapState } from 'pinia'
