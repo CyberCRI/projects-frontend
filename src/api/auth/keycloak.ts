@@ -55,6 +55,7 @@ export default function useKeycloak() {
             },
 
             get(): string {
+                console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT')
                 return localStorage.getItem('CODE_VERIFIER')
             },
 

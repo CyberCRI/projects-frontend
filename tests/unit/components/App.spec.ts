@@ -1,6 +1,6 @@
 import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../i18n.config'
-import App from '@/App.vue'
+import App from '@/app.vue'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
@@ -48,23 +48,27 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-function mockLocalStorage() {
-    let store = {}
-    return {
-        getItem: function (key) {
-            return store[key]
-        },
-        setItem: function (key, value) {
-            store[key] = value
-        },
-        clear: function () {
-            store = {}
-        },
-        removeItem: function (key) {
-            delete store[key]
-        },
-    }
-}
+// function mockLocalStorage() {
+//     let store = {}
+//     return {
+//         getItem: function (key) {
+//             return store[key]
+//         },
+//         setItem: function (key, value) {
+//             store[key] = value
+//         },
+//         clear: function () {
+//             store = {}
+//         },
+//         removeItem: function (key) {
+//             delete store[key]
+//         },
+//     }
+// }
+
+const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
+const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
+const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe('On tab focus', () => {
     let usersStore
@@ -73,13 +77,13 @@ describe('On tab focus', () => {
         organizationsStore.current = { code: '123' } as OrganizationOutput
         usersStore = useUsersStore(pinia)
     })
-    const localStorageMock = mockLocalStorage()
+    //const localStorageMock = mockLocalStorage()
 
-    Object.defineProperty(window, 'localStorage', {
-        value: localStorageMock,
-        configurable: true,
-        writable: true,
-    })
+    // Object.defineProperty(window, 'localStorage', {
+    //     value: localStorageMock,
+    //     configurable: true,
+    //     writable: true,
+    // })
     Object.defineProperty(window, 'socket', { value: { connected: false }, configurable: true })
 
     const $t = (v) => v
@@ -101,6 +105,12 @@ describe('On tab focus', () => {
     }
 
     afterEach(() => {
+        afterEach(() => {
+            localStorage.clear()
+            localStorageSetItem.mockClear()
+            localStorageGetItem.mockClear()
+            localStorageRemoveItem.mockClear()
+        })
         vi.clearAllMocks()
         usersStore.$reset()
     })
