@@ -114,3 +114,5 @@ sablier:
   enabled: false
   groupName: projects
   traefikMiddleware: "{{.Values.namespace}}-{{.Values.sablier.groupName}}-sablier@kubernetescrd"
+
+ingressMiddlewares: []

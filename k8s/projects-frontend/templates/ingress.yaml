@@ -7,8 +7,14 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod-traefik
+    {{- $middlewares := .Values.ingressMiddlewares }}
+
     {{- if .Values.sablier.enabled }}
-    traefik.ingress.kubernetes.io/router.middlewares: {{ tpl .Values.sablier.traefikMiddleware . }}
+    {{- $middlewares = append $middlewares (tpl .Values.sablier.traefikMiddleware .) }}
+    {{- end }}
+
+    {{- if $middlewares }}
+    traefik.ingress.kubernetes.io/router.middlewares: {{ join "," $middlewares }}
     {{- end }}
 spec:
   rules:
