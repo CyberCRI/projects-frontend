@@ -1,5 +1,5 @@
-import type { APIParams, APIResponseList } from '@/api/types'
-import type { TagCreateInput, TagOutput } from '@/models/tag.model'
+import type { APIParams /*, APIResponseList*/ } from '@/api/types'
+import type { TagCreateInput /*, TagOutput*/ } from '@/models/tag.model'
 import useAPI from '@/composables/useAPI'
 
 export interface TagParams extends APIParams {

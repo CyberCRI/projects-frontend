@@ -1,3 +1,5 @@
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
 import { defineComponent } from 'vue'
 export default defineComponent({
     methods: {

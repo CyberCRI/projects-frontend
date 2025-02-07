@@ -1,5 +1,5 @@
-import type { APIResponseList } from '@/api/types'
-import type { PeopleModel } from '@/models/people.model'
+// import type { APIResponseList } from '@/api/types'
+// import type { PeopleModel } from '@/models/people.model'
 import type { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useOrganizationsStore from '@/stores/useOrganizations'

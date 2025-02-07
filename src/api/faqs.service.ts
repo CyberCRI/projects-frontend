@@ -1,5 +1,5 @@
-import type { APIResponseList } from '@/api/types'
-import type { FaqModel, FaqInput, FaqOutput } from '@/models/faq.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /*FaqModel, */ FaqInput /*, FaqOutput*/ } from '@/models/faq.model'
 import useAPI from '@/composables/useAPI'
 
 export async function getFaq(orgCode: string) {

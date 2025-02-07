@@ -805,7 +805,7 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
 ]
 
 export default {
-    routes: (_routes) => {
+    routes: () => {
         const runtimeConfig = useRuntimeConfig()
         return routes({ showDebug: !!runtimeConfig.public.appShowDebug })
     },

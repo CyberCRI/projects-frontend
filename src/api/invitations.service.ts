@@ -1,5 +1,5 @@
-import type { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
-import type { APIResponseList } from '@/api/types'
+import type { /* InvitationModel,*/ InvitationModelInput } from '@/models/invitation.model'
+// import type { APIRespons1eList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getInvitation(organization: String, uuid: String) {

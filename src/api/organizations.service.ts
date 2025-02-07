@@ -1,7 +1,7 @@
-import type { APIResponseList } from '@/api/types'
-import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import type { ImageOrganizationOutput, ImageOrganizationInput } from '@/models/image.model'
-import type { GroupModel, GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /* OrganizationOutput,*/ OrganizationPatchInput } from '@/models/organization.model'
+import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
+import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 

@@ -1,6 +1,6 @@
-import type { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '@/api/types'
 
-import type { AttachmentLinkInput, AttachmentLinkOutput } from '@/models/attachment-link.model'
+import type { AttachmentLinkInput /*, AttachmentLinkOutput*/ } from '@/models/attachment-link.model'
 
 import useAPI from '@/composables/useAPI'
 

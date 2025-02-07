@@ -1,6 +1,6 @@
-import type { APIResponseList, SearchParams } from '@/api/types'
+import type { /*APIResponseList,*/ SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import type { ProjectOutput } from '@/models/project.model'
+// import type { ProjectOutput } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
 
 export async function searchProjects(search: string, params: SearchParams) {

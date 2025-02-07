@@ -1,6 +1,6 @@
 import { useI18n } from '#imports'
 import useToasterStore from '@/stores/useToaster'
-import useProjectsStore from '@/stores/useProjects'
+// import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'
 import { useRuntimeConfig } from '#imports'
 const defaultOptions = () => {
@@ -8,18 +8,18 @@ const defaultOptions = () => {
     return {
         baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
         method: 'GET',
-        onRequest({ request, options }) {
+        onRequest({ options }) {
             const accessToken = localStorage.getItem('ACCESS_TOKEN')
             if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
         },
-        onRequestError({ request, options, error }) {
+        onRequestError() {
             // Handle the request errors
         },
-        onResponse({ request, response, options }) {
+        onResponse({ response }) {
             // Process the response data
             localStorage.setItem('token', response._data.token)
         },
-        onResponseError({ request, response, options, error }) {
+        onResponseError({ options, error }) {
             if (options.noError) {
                 console.error(error)
                 return Promise.reject(error)

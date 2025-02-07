@@ -1,11 +1,11 @@
-import type { APIParams, APIResponseList } from '@/api/types'
+import type { APIParams /*, APIResponseList*/ } from '@/api/types'
 import type {
     ProjectCategoryCreateInput,
-    ProjectCategoryOutput,
+    // ProjectCategoryOutput,
     ProjectCategoryPatchInput,
     ProjectCategoryPutInput,
 } from '@/models/project-category.model'
-import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.model'
+// import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.model'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
 export interface ProjectCategoryParams extends APIParams {

@@ -1,12 +1,12 @@
 import type {
     AddLinkedProjectInput,
     AddManyLinkedProjectInput,
-    LinkedProject,
-    ProjectHeaderOutput,
-    ProjectOutput,
+    // LinkedProject,
+    // ProjectHeaderOutput,
+    // ProjectOutput,
     ProjectPatchInput,
 } from '@/models/project.model'
-import type { APIParams, APIResponseList, SearchParams } from '@/api/types'
+import type { APIParams /*, APIResponseList*/, SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 

@@ -13,100 +13,81 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import LpiFooter from '@/components/app/LpiFooter.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 import LpiHeader from '@/components/app/LpiHeader.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import useKeycloak from '@/api/auth/keycloak.ts'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-export default {
-    name: 'App',
+const route = useRoute()
+const router = useRouter()
+const usersStore = useUsersStore()
+const keycloak = useKeycloak()
 
-    components: {
-        LpiHeader,
-        LpiFooter,
-        AppToastList,
-    },
+const reportBugModalActive = ref(false)
+const isLoading = false
 
-    data() {
-        return {
-            reportBugModalActive: false,
-            isLoading: false,
-        }
-    },
+const usersStoreToken = computed(() => {
+    return usersStore.accessToken
+})
 
-    computed: {
-        usersStoreToken() {
-            return this.usersStore.accessToken
-        },
+const currentRouteName = computed(() => {
+    // Fix buefy class overwrite css since we renamed concepts->tags
+    if (route.name === 'tags') return ''
 
-        currentRouteName() {
-            // Fix buefy class overwrite css since we renamed concepts->tags
-            if (this.$route.name === 'tags') return ''
+    return route.name
+})
 
-            return this.$route.name
-        },
-    },
-    setup() {
-        const usersStore = useUsersStore()
-        const keycloak = useKeycloak()
-        return {
-            usersStore,
-            keycloak,
-        }
-    },
-
-    mounted() {
-        if (window.socket.connected) {
-            socket.disconnect()
-        }
-
-        // handle multiple tabs browsing for auth
-        window.addEventListener('focus', this.onFocus)
-
-        document.querySelector('.app-loader')?.classList.add('fade-out')
-        setTimeout(() => {
-            document.querySelector('.app-loader')?.remove()
-        }, 200)
-    },
-
-    beforeUnmount() {
-        // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
-        window.removeEventListener('focus', this.onFocus)
-    },
-
-    methods: {
-        toggleReportBugModal() {
-            this.reportBugModalActive = !this.reportBugModalActive
-        },
-
-        onFocus() {
-            const accessToken = localStorage.getItem('ACCESS_TOKEN')
-
-            const _logout = () => {
-                this.usersStore.resetUser()
-                // navigate to /dashboard
-                if (!this.$route || this.$route.name !== 'Home') {
-                    this.$router.push({ name: 'Home' })
-                }
-            }
-            if (this.usersStoreToken && accessToken) {
-                // logged in, verify token is still fresh
-                if (checkExpiredToken()) {
-                    _logout()
-                }
-            } else if (this.usersStoreToken && !accessToken) {
-                // logged out in another tab
-                _logout()
-            } else if (!this.usersStoreToken && accessToken) {
-                // logged in in another tab
-                this.keycloak.refreshTokenLoop.start()
-            }
-        },
-    },
+const toggleReportBugModal = () => {
+    reportBugModalActive.value = !reportBugModalActive.value
 }
+
+const onFocus = () => {
+    const accessToken = localStorage.getItem('ACCESS_TOKEN')
+
+    const _logout = () => {
+        usersStore.resetUser()
+        // navigate to /dashboard
+        if (!route || route.name !== 'Home') {
+            router.push({ name: 'Home' })
+        }
+    }
+    if (usersStoreToken.value && accessToken) {
+        // logged in, verify token is still fresh
+        if (checkExpiredToken()) {
+            _logout()
+        }
+    } else if (usersStoreToken.value && !accessToken) {
+        // logged out in another tab
+        _logout()
+    } else if (!usersStoreToken.value && accessToken) {
+        // logged in in another tab
+        keycloak.refreshTokenLoop.start()
+    }
+}
+
+onMounted(() => {
+    if (window.socket.connected) {
+        socket.disconnect()
+    }
+
+    // handle multiple tabs browsing for auth
+    window.addEventListener('focus', onFocus)
+
+    document.querySelector('.app-loader')?.classList.add('fade-out')
+    setTimeout(() => {
+        document.querySelector('.app-loader')?.remove()
+    }, 200)
+})
+
+onBeforeUnmount(() => {
+    // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
+    window.removeEventListener('focus', onFocus)
+})
 </script>
 <style lang="scss">
 @import '@/design/scss/main';

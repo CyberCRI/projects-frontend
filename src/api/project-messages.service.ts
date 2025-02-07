@@ -1,5 +1,7 @@
-import type { ProjectMessageInputModel, ProjectMessageOutput } from '@/models/project-message.model'
-import type { APIResponseList } from '@/api/types'
+import type {
+    ProjectMessageInputModel /*, ProjectMessageOutput */,
+} from '@/models/project-message.model'
+// import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 export async function getProjectMessages(project_id: string) {
