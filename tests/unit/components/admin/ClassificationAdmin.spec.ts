@@ -138,9 +138,7 @@ describe('ClassificationAdmin', () => {
 
         const vm: any = wrapper.vm
         await flushPromises()
-        let switchComp = wrapper.findComponent(
-            '[data-test="classification-switch-for-skills"]:nth(1)'
-        )
+        let switchComp = wrapper.findComponent('[data-test="classification-switch-for-skills"]')
 
         expect(switchComp.vm.modelValue).toBe(false)
 

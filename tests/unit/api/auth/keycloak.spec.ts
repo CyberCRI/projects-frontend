@@ -8,10 +8,9 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 import { flushPromises } from '@vue/test-utils'
-import { use } from 'chai'
 
-const keycloak = useKeycloak()
 vi.mock('@/api/auth/keycloakUtils')
+let keycloak = useKeycloak()
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
 
@@ -22,34 +21,33 @@ vi.mock('@/router/index', () => ({
         push: vi.fn(),
     },
 }))
-vi.mock('@/api/auth/keycloakUtils')
+const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
+const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
+const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe('Keycloak | codeVerifier', () => {
     beforeEach(() => {
         const usersStore = useUsersStore(pinia)
     })
+    afterEach(() => {
+        localStorage.clear()
+        localStorageSetItem.mockClear()
+        localStorageGetItem.mockClear()
+        localStorageRemoveItem.mockClear()
+    })
     it('generate', () => {
-        const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
-
         keycloak.codeVerifier.generate()
         expect(localStorageSetItem).toHaveBeenCalledWith('CODE_VERIFIER', 'CodeVerifierString')
-        localStorageSetItem.mockClear()
     })
 
     it('get', () => {
-        const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
-
         keycloak.codeVerifier.get()
         expect(localStorageGetItem).toHaveBeenCalledWith('CODE_VERIFIER')
-        localStorageGetItem.mockClear()
     })
 
     it('remove', () => {
-        const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
-
         keycloak.codeVerifier.remove()
         expect(localStorageRemoveItem).toHaveBeenCalledWith('CODE_VERIFIER')
-        localStorageRemoveItem.mockClear()
     })
 })
 
@@ -57,8 +55,14 @@ describe('Keycloak | codeChallenge', () => {
     beforeEach(() => {
         const usersStore = useUsersStore(pinia)
     })
+    afterEach(() => {
+        localStorage.clear()
+        localStorageSetItem.mockClear()
+        localStorageGetItem.mockClear()
+        localStorageRemoveItem.mockClear()
+    })
     it('get', async () => {
-        Storage.prototype.getItem = vi.fn(() => '1234')
+        localStorageGetItem.mockReturnValue('1234')
 
         const codeChallenge = await keycloak.codeChallenge.get()
         expect(codeChallenge).toEqual('CodeChallengeString')
@@ -69,30 +73,28 @@ describe('Keycloak | appSecret', () => {
     beforeEach(() => {
         const usersStore = useUsersStore(pinia)
     })
+
+    afterEach(() => {
+        localStorage.clear()
+        localStorageSetItem.mockClear()
+        localStorageGetItem.mockClear()
+        localStorageRemoveItem.mockClear()
+    })
     it('generate', () => {
         const createRandomStringMock = keycloakUtils.createRandomString as Mock
         createRandomStringMock.mockReturnValue('randomString')
-        const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
-
         keycloak.appSecret.generate()
         expect(localStorageSetItem).toHaveBeenCalledWith('APP_SECRET', 'randomString')
-        localStorageSetItem.mockClear()
     })
 
     it('get', () => {
-        const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
-
         keycloak.appSecret.get()
         expect(localStorageGetItem).toHaveBeenCalledWith('APP_SECRET')
-        localStorageGetItem.mockClear()
     })
 
     it('remove', () => {
-        const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
-
         keycloak.appSecret.remove()
         expect(localStorageRemoveItem).toHaveBeenCalledWith('APP_SECRET')
-        localStorageRemoveItem.mockClear()
     })
 })
 

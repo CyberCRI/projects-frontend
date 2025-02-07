@@ -14,7 +14,7 @@ import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organi
 // fix unhnadled rejection due to invalid url
 vi.mock('@/composables/useAPI', () => {
     return {
-        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+        default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 

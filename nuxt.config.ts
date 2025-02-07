@@ -1,5 +1,4 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
+import { alias } from './alias'
 
 const apiProxy = {
     '^/v[0-9]+/': {
@@ -9,9 +8,6 @@ const apiProxy = {
         withCredentials: true,
     },
 }
-
-const filename = fileURLToPath(import.meta.url)
-const pathSegments = path.dirname(filename)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -27,10 +23,7 @@ export default defineNuxtConfig({
     },
     vite: {
         resolve: {
-            alias: {
-                '@': path.resolve(pathSegments, './src'),
-                '~': path.resolve(pathSegments, './node_modules'),
-            },
+            alias,
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
         },
         css: {

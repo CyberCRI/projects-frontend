@@ -4,10 +4,6 @@ import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 import useKeycloak from '@/api/auth/keycloak'
 
-const keycloak = useKeycloak()
-
-vi.spyOn(keycloak, 'getCurrentUrl').mockImplementation(() => 'https://localhost:8080/dashboard')
-
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
@@ -17,12 +13,32 @@ vi.mock('@/router/index', () => ({
     },
 }))
 
-vi.spyOn(keycloak.appSecret, 'generate').mockImplementation(() => true)
-vi.spyOn(keycloak.appSecret, 'remove').mockImplementation(() => true)
-vi.spyOn(keycloak.codeVerifier, 'generate').mockImplementation(() => true)
-vi.spyOn(keycloak.codeVerifier, 'remove').mockImplementation(() => true)
-vi.spyOn(keycloak.refreshTokenLoop, 'stop').mockImplementation(() => true)
-vi.spyOn(keycloak.codeChallenge, 'get').mockResolvedValue('123')
+vi.mock('@/api/auth/keycloak', () => {
+    const kc = {
+        getCurrentUrl: vi.fn().mockReturnValue('https://localhost:8080/dashboard'),
+        appSecret: {
+            generate: vi.fn().mockReturnValue(true),
+            remove: vi.fn().mockReturnValue(true),
+            get: vi.fn().mockReturnValue('123'),
+        },
+        codeVerifier: {
+            generate: vi.fn().mockReturnValue(true),
+            remove: vi.fn().mockReturnValue(true),
+        },
+        refreshTokenLoop: {
+            stop: vi.fn().mockReturnValue(true),
+        },
+        codeChallenge: {
+            get: vi.fn().mockResolvedValue('123'),
+        },
+        client: {
+            get: vi.fn().mockReturnValue({ client_id: '123' }),
+        },
+    }
+    return {
+        default: () => kc,
+    }
+})
 
 declare global {
     interface Window {
@@ -33,10 +49,12 @@ declare global {
 describe('auth.service', () => {
     // Do this to test code that uses .env
     const OLD_ENV = process.env
+    let keycloak
     beforeEach(() => {
         vi.resetModules() // Most important - it clears the cache
         process.env = { ...OLD_ENV } // Make a copy
         window.happyDOM.setURL('https://localhost:3000')
+        keycloak = useKeycloak()
     })
     beforeEach(() => {
         const organizationsStore = useOrganizationsStore(pinia)

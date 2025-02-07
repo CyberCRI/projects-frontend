@@ -13,9 +13,9 @@ import useAPI from '@/composables/useAPI'
 // quick fix for vi error
 // "Cannot log after tests are done. Did you forget to wait for something async in your test?"
 // caused by error log af failing call to fetch announcement in LpiHeader
-vi.mock('@/composables/useAPI', function () {
+vi.mock('@/composables/useAPI', () => {
     return {
-        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+        default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 
