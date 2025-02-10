@@ -192,7 +192,7 @@ export default {
 
     data() {
         return {
-            peopleUrl: process.env.VITE_APP_PEOPLE,
+            peopleUrl: process.env.NUXT_PUBLIC_APP_PEOPLE,
             currentOffset: 0,
             scrollAtTop: true,
             coreTeam: [

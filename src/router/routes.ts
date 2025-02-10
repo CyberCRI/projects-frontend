@@ -694,7 +694,7 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
-    ...(import.meta.env.VITE_APP_SHOW_DEBUG
+    ...(import.meta.env.NUXT_PUBLIC_APP_SHOW_DEBUG
         ? [
               {
                   path: '/debug',
