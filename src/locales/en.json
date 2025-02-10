@@ -517,6 +517,7 @@
         "login": "login",
         "modify": "Modify",
         "more": "more",
+        "need-login": "You need to be logged in",
         "no": "no",
         "no-result": "No result",
         "none": "none",
@@ -1148,6 +1149,25 @@
             "link": "https://en.unesco.org/sustainabledevelopmentgoals"
         }
     },
+    "mentorship": {
+        "respond": {
+            "options": {
+                "accept": "Accept",
+                "decline": "Decline",
+                "need-infos": "Request more information"
+            },
+            "your-response": "Your response",
+            "add-comment": "Add a comment",
+            "comment-notice-mentor": "This comment will be sent by email to the mentee.",
+            "comment-notice-mentoree": "This comment will be sent by email to the mentor.",
+            "comment-placeholder": "Write here.",
+            "title-mentor": "Become a mentor",
+            "title-mentoree": "Become a mentoree",
+            "response-was-sent": "Your response was sent.",
+            "asked-you": "asked you to be his mentor for",
+            "offered-you": "offered you to be his mentor for"
+        }
+    },
     "onboarding": {
         "step": "step",
         "title": "What is Projects?"
@@ -1192,6 +1212,7 @@
     },
     "profile": {
         "edit": {
+            "back-to-profile": "Back to profile",
             "edit-my-profile": "Edit my profile",
             "edit-other-profile": "Edit {name} profile",
             "edit-your-profile": "Edit your profile",
@@ -1328,7 +1349,7 @@
                     "add-item": "Add a skill",
                     "edit-levels": "Edit levels",
                     "already-added": "Skill already added",
-                    "levels-help": "Skill levels",
+                    "levels-help": "Level",
                     "drawer": {
                         "title": "Add professional skills",
                         "notice": "Type the label of your skill, and select the right one for you among suggestions.",
@@ -1346,7 +1367,7 @@
                     "add-item": "Add a hobby",
                     "already-added": "Hobby already added",
                     "edit-levels": "Edit levels",
-                    "levels-help": "Hobbies levels",
+                    "levels-help": "Level",
                     "drawer": {
                         "title": "Add a personal hobby",
                         "notice": "Type the label of your hobby, and select the right one for you among suggestions.",
@@ -1355,6 +1376,49 @@
                         "help-levels": "More about the hobbies levels"
                     },
                     "selection": "Selected hobbies"
+                },
+
+                "mentorship": {
+                    "contact": {
+                        "title-ask": "Ask for mentorship",
+                        "title-offer": "Offer mentorship",
+                        "notice-ask": "Please specify the skill for which you are asking mentorship.",
+                        "notice-offer": "Please specify the skill for which you are offering mentorship.",
+                        "error": "Error while sending the request.",
+                        "success": "Your request was sent.",
+                        "fields": {
+                            "title": {
+                                "label": "Title",
+                                "placeholder-ask": "Eg. \"Can you be my mentor in Datascience?\"",
+                                "placeholder-offer": "Eg. \"Would you be my mentee in Datascience?\"",
+                                "required": "The title field is required."
+                            },
+                            "text": {
+                                "label": "Text",
+                                "notice-ask": "Add details about you and the kind of help you need (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "notice-offer": "Add details about you and the kind of help you provide (eg. number of hours, the nature of help - from simple feedback to lesson...).",
+                                "placeholder": "Start here",
+                                "required": "The text field is required."
+                            },
+                            "email": {
+                                "label": "Email reply",
+                                "notice": "This message will be sent as an email. To receive an answer, add your email.",
+                                "placeholder": "Eg. jane.doe{'@'}gmail.com",
+                                "invalid": "The email field is invalid.",
+                                "required": "The email field is required."
+                            }
+                        }
+                    },
+                    "mentorship": "Mentorship",
+                    "choose": "Choose",
+                    "edit": "Mentorship for \"{skill}\"",
+                    "error": "Error while saving mentorship.",
+                    "success": "Mentorship saved",
+                    "notice": "Would you like to become a mentor or be mentee for this skill? You will determine the frequency of exchange that suits you with the mentee or your mentor. Rest assured, our guide is here to help you.",
+                    "can-mentor": "I can mentor",
+                    "needs-mentor": "I'm looking for a mentor",
+                    "comment": "Comment",
+                    "comment-placeholder": "Indicate what help you can offer or the help you need (hourly volume, frequency, etc.)"
                 },
                 "levels": {
                     "curious": "Curious",
@@ -1427,7 +1491,15 @@
         "bio_pro": "Professional Bio",
         "bio_personal": "Personal Bio",
         "cancel-title": "Cancel profile editing",
-        "cancel-content": "Are you sure you want to cancel your profile edition? Any change made will be lost."
+        "cancel-content": "Are you sure you want to cancel your profile edition? Any change made will be lost.",
+        "can-mentor": "Can be mentor",
+        "needs-mentor": "Need a mentor",
+        "ask-mentorship": "Ask for mentorship",
+        "offer-mentorship": "Offer mentorship",
+        "mentorship-asked": "You asked for mentorship",
+        "mentorship-offered": "You offered mentorship",
+        "mentorship-asking": "You are asking for mentorship",
+        "mentorship-offering": "You are offering mentorship"
     },
     "profile-completed-modal": {
         "notice-congratulation": "You are now ready to use the projects platform.",

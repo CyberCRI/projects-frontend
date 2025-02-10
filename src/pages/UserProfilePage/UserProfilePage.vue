@@ -5,6 +5,7 @@
             :user-id="userId"
             :show-page-link="false"
             @user-not-found="display404"
+            routable-tabs
         />
     </div>
 </template>

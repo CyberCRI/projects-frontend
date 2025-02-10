@@ -52,3 +52,6 @@ playwight-report/
 
 # helm
 charts/
+
+
+.nuxt/

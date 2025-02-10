@@ -519,6 +519,7 @@
         "login": "connexion",
         "modify": "Modifier",
         "more": "plus",
+        "need-login": "Vous devez être connecté",
         "no": "non",
         "no-result": "Pas de résultat",
         "none": "aucun",
@@ -1144,6 +1145,25 @@
             "link": "https://fr.unesco.org/sdgs"
         }
     },
+    "mentorship": {
+        "respond": {
+            "options": {
+                "accept": "Accepter",
+                "decline": "Refuser",
+                "need-infos": "Demander des précisions"
+            },
+            "your-response": "Votre réponse",
+            "add-comment": "Ajouter un commentaire",
+            "comment-notice-mentor": "Ce commentaire sera envoyé par mail au mentoré.",
+            "comment-notice-mentoree": "Ce commentaire sera envoyé par mail au mentor.",
+            "comment-placeholder": "Êcrire ici.",
+            "title-mentor": "Devenir mentor",
+            "title-mentoree": "Être mentoré",
+            "response-was-sent": "Votre réponse a été envoyée.",
+            "asked-you": "vous a demandé d'être son mentor en",
+            "offered-you": "vous a proposé d'être votre mentor en"
+        }
+    },
     "onboarding": {
         "step": "étape",
         "title": "Qu'est-ce que Projects ?"
@@ -1188,6 +1208,7 @@
     },
     "profile": {
         "edit": {
+            "back-to-profile": "Retour au profil",
             "edit-my-profile": "Éditer mon profil",
             "edit-other-profile": "Éditer le profil de {name}",
             "edit-your-profile": "Éditer votre profil",
@@ -1322,7 +1343,7 @@
                     "add": "Ajouter des compétences professionnelles",
                     "add-item": "Ajouter une compétence",
                     "edit-levels": "Éditer les niveaux",
-                    "levels-help": "Niveau de compétence",
+                    "levels-help": "Niveau",
                     "already-added": "Compétence déjà ajoutée",
                     "drawer": {
                         "title": "Ajouter des compétences professionnelles",
@@ -1331,31 +1352,74 @@
                         "notice-levels": "Indiquez votre niveau de maîtrise.",
                         "help-levels": "Plus à propos des niveaux de compétences"
                     },
-                    "selection": "Compétences sélectionnées"
+                    "selection": "Compétences"
                 },
                 "hobbies": {
-                    "add-success": "Hobby '{name}' ajouté.",
-                    "edit-success": "Hobby '{name}' édité.",
-                    "delete-success": "Hobby '{name}' supprimé.",
-                    "add": "Ajouter des hobbies",
-                    "add-item": "Ajouter un hobby",
+                    "add-success": "Loisir '{name}' ajouté.",
+                    "edit-success": "Loisir '{name}' édité.",
+                    "delete-success": "Loisir '{name}' supprimé.",
+                    "add": "Ajouter des loisirs",
+                    "add-item": "Ajouter un loisir",
                     "edit-levels": "Éditer les niveaux",
-                    "levels-help": "Niveau des hobbies",
-                    "already-added": "Hobby déjà ajouté",
+                    "levels-help": "Niveau",
+                    "already-added": "Loisir déjà ajouté",
                     "drawer": {
-                        "title": "Ajouter des hobbies personnels",
-                        "notice": "Tapez les premières lettres de hobby et sélectionnez celui qui vous convient",
-                        "placeholder": "Tapez un hobby",
-                        "notice-levels": "Indiquer votre niveau pour chaque hobby",
-                        "help-levels": "En savoir plus sur les niveaux de hobby"
+                        "title": "Ajouter des loisirs personnels",
+                        "notice": "Tapez les premières lettres du loisir et sélectionnez celui qui vous convient",
+                        "placeholder": "Tapez un loisir",
+                        "notice-levels": "Indiquer votre niveau pour chaque loisir",
+                        "help-levels": "En savoir plus sur les niveaux de loisir"
                     },
-                    "selection": "Hobbies sélectionnés"
+                    "selection": "Loisirs"
                 },
                 "levels": {
                     "curious": "Curieux",
                     "basic": "Basique",
                     "competent": "Compétent",
                     "expert": "Expert"
+                },
+                "mentorship": {
+                    "contact": {
+                        "title-ask": "Demander un mentorat",
+                        "title-offer": "Offrir un mentorat",
+                        "notice-ask": "Veuillez spécifier la compétence pour laquelle vous demandez un mentorat.",
+                        "notice-offer": "Veuillez spécifier la compétence pour laquelle vous offrez un mentorat.",
+                        "error": "Erreur lors de l'envoi de votre requête.",
+                        "success": "Votre requête a été envoyée.",
+                        "fields": {
+                            "title": {
+                                "label": "Titre",
+                                "placeholder-ask": "Ex. \"Pouvez-vous être mon mentor en Data Science ?\"",
+                                "placeholder-offer": "Ex. \"Voudriez-vous que je sois votre mentor en Data Science ?\"",
+                                "required": "Le champ titre est requis."
+                            },
+                            "text": {
+                                "label": "Texte",
+                                "notice-ask": "Ajoutez des détails sur vous et le type d'aide dont vous avez besoin (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "notice-offer": "Ajoutez des détails sur vous et le type d'aide dont vous offrez (ex. nombre d'heures, nature de l'aide - d'un simple retour d'information à une leçon...).",
+                                "placeholder": "Commencez ici",
+                                "required": "Le champ texte est requis."
+                            },
+                            "email": {
+                                "label": "Réponse par e-mail",
+                                "notice": "Ce message sera envoyé par e-mail. Pour recevoir une réponse, ajoutez votre e-mail.",
+                                "placeholder": "Ex. jane.doe{'@'}gmail.com",
+                                "invalid": "Le champ e-mail est invalide.",
+                                "required": "Le champ e-mail est requis."
+                            }
+                        }
+                    },
+
+                    "mentorship": "Mentorat",
+                    "choose": "Choisir",
+                    "edit": "Mentorat pour \"{skill}\"",
+                    "error": "Erreur lors de la sauvegarde du mentorat.",
+                    "success": "Mentorat sauvegardé",
+                    "notice": "Vous souhaitez devenir mentor ou être mentoré pour cette compétence ? Vous déterminerez la fréquence d’échange qui vous arrange avec le/la mentoré·e ou votre mentor. Rassurez-vous, notre guide est là pour vous aider.",
+                    "can-mentor": "Je peux être mentor",
+                    "needs-mentor": "Je cherche un mentor",
+                    "comment": "Commentaire",
+                    "comment-placeholder": "Indiquez quelle aide vous pouvez offrir ou l’aide dont vous avez besoin (volume horaire, fréquence, etc...)"
                 },
                 "tip": {
                     "intro-edit": "Les différents niveaux parmi lesquels vous pouvez choisir :",
@@ -1422,7 +1486,15 @@
         "bio_pro": "Bio professionnelle",
         "bio_personal": "Bio personnelle",
         "cancel-title": "Annuler la modification du profil",
-        "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue."
+        "cancel-content": "Voulez-vous vraiment annuler l'édition de votre profil ? Toute modification apportée sera perdue.",
+        "can-mentor": "Peut mentorer",
+        "needs-mentor": "Cherche mentor",
+        "ask-mentorship": "Demander à être mentoré",
+        "offer-mentorship": "Proposer son mentorat",
+        "mentorship-asked": "Vous avez demandé un mentorat",
+        "mentorship-offered": "Vous avez proposé un mentorat",
+        "mentorship-asking": "Vous demandez un mentorat",
+        "mentorship-offering": "Vous proposez un mentorat"
     },
     "profile-completed-modal": {
         "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
