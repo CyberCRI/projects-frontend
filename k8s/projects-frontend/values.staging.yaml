@@ -1,9 +1,9 @@
 injectedEnv:
-    nonSensitive:
-        NUXT_PUBLIC_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
-        NUXT_PUBLIC_APP_VERSION: '{{ .Values.application.revision }}'
-        NUXT_PUBLIC_APP_KEYCLOAK_REALM: lp-staging
-        NUXT_PUBLIC_APP_ENVIRONMENT: staging
+  nonSensitive:
+    NUXT_PUBLIC_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
+    NUXT_PUBLIC_APP_VERSION: "{{ .Values.application.revision }}"
+    NUXT_PUBLIC_APP_KEYCLOAK_REALM: lp-staging
+    NUXT_PUBLIC_APP_ENVIRONMENT: staging
 
 domain: k8s.lp-i.xyz
 
