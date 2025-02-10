@@ -4,11 +4,11 @@ import { useRuntimeConfig } from '#imports'
 
 export default async function initSentry(app) {
     const runtimeConfig = useRuntimeConfig()
-    const SENTRY_ENABLED = import.meta.env.VITE_APP_SENTRY_ENABLED
+    const SENTRY_ENABLED = import.meta.env.NUXT_PUBLIC_APP_SENTRY_ENABLED
     if (SENTRY_ENABLED) {
         Sentry.init({
             app,
-            dsn: import.meta.env.VITE_APP_SENTRY_DSN,
+            dsn: import.meta.env.NUXT_PUBLIC_APP_SENTRY_DSN,
             integrations: [
                 Sentry.browserTracingIntegration({ router }),
                 Sentry.replayIntegration(),
@@ -25,7 +25,7 @@ export default async function initSentry(app) {
             // plus for 100% of sessions with an error
             replaysSessionSampleRate: 0.1,
             replaysOnErrorSampleRate: 1.0,
-            release: import.meta.env.VITE_APP_SENTRY_RELEASE,
+            release: import.meta.env.NUXT_PUBLIC_APP_SENTRY_RELEASE,
         })
     }
 }

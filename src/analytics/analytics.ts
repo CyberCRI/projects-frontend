@@ -14,7 +14,7 @@ export const init = () => {
     const runtimeConfig = useRuntimeConfig()
 
     if (!runtimeConfig.public.appMixpanelProjectToken) {
-        console.error('Analytics missing env variable VITE_APP_MIXPANEL_PROJECT_TOKEN')
+        console.error('Analytics missing env variable NUXT_PUBLIC_APP_MIXPANEL_PROJECT_TOKEN')
         return
     }
     // Init Mixpanel
