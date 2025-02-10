@@ -1,9 +1,9 @@
 injectedEnv:
     nonSensitive:
-        VITE_APP_API_URL: https://api-e2e.projects.k8s.lp-i.dev
-        VITE_APP_WSS_HOST: wss://hocus-pocus-e2e.k8s.lp-i.dev
-        VITE_APP_META_PORTAL_URL: https://e2e-meta.projects.k8s.lp-i.dev
+        NUXT_PUBLIC_APP_API_URL: https://api-e2e.projects.k8s.lp-i.dev
+        NUXT_PUBLIC_APP_WSS_HOST: wss://hocus-pocus-e2e.k8s.lp-i.dev
+        NUXT_PUBLIC_APP_META_PORTAL_URL: https://e2e-meta.projects.k8s.lp-i.dev
         NUXT_PUBLIC_APP_KEYCLOAK_REALM: e2e
-        # VITE_APP_DOC: todo: custom one ?
-        # VITE_APP_MIXPANEL_API_URL: todo: custom one ?
-        VITE_APP_ENVIRONMENT: e2e
+        # NUXT_PUBLIC_APP_DOC: todo: custom one ?
+        # NUXT_PUBLIC_APP_MIXPANEL_API_URL: todo: custom one ?
+        NUXT_PUBLIC_APP_ENVIRONMENT: e2e
