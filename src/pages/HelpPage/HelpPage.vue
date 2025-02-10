@@ -12,7 +12,7 @@
 <script>
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { getFaq } from '@/api/faqs.service'
+// import { getFaq } from '@/api/faqs.service'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import { computed } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -50,12 +50,12 @@ export default {
     },
 
     async mounted() {
-        try {
-            this.faq = await getFaq(this.organizationsStore.current.code)
-        } catch (err) {
-            console.error(err)
-            // ignore 404 error
-        }
+        // try {
+        //     this.faq = await getFaq(this.organizationsStore.current.code)
+        // } catch (err) {
+        //     console.error(err)
+        //     // ignore 404 error
+        // }
         this.setOnboardData()
 
         this.onboardingTrap('take_tour', false)

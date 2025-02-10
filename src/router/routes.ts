@@ -315,7 +315,8 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'faq',
                 name: 'faq',
-                component: () => import('../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'),
+                // component: () => import('../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'),
+                redirect: { name: 'general' },
             },
             {
                 path: 'templates',

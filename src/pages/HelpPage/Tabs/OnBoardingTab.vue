@@ -23,24 +23,24 @@ export default {
     },
 
     mounted() {
-        if (!this.hasFaq) {
-            this.$router.replace({ name: 'HelpHelpTab' })
-        }
-        this.getCustomData()
+        // if (!this.hasFaq) {
+        this.$router.replace({ name: 'HelpHelpTab' })
+        // }
+        // this.getCustomData()
     },
 
-    methods: {
-        async getCustomData() {
-            if (
-                this.hasFaq &&
-                this.faq.title &&
-                this.faq.content &&
-                this.faq.content !== '<p></p>'
-            ) {
-                this.onBoardingData = this.faq
-            }
-        },
-    },
+    // methods: {
+    //     async getCustomData() {
+    //         if (
+    //             this.hasFaq &&
+    //             this.faq.title &&
+    //             this.faq.content &&
+    //             this.faq.content !== '<p></p>'
+    //         ) {
+    //             this.onBoardingData = this.faq
+    //         }
+    //     },
+    // },
 }
 </script>
 

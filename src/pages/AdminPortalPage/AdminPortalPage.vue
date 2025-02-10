@@ -58,11 +58,11 @@ export default {
                     label: this.$t('admin.tabs.skills'),
                     view: { name: 'skills' },
                 },
-                {
-                    key: 'admin-help',
-                    label: this.$t('admin.tabs.help'),
-                    view: { name: 'faq' },
-                },
+                // {
+                //     key: 'admin-help',
+                //     label: this.$t('admin.tabs.help'),
+                //     view: { name: 'faq' },
+                // },
                 {
                     key: 'admin-templates',
                     label: this.$t('admin.tabs.templates'),
