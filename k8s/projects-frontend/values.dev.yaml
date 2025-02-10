@@ -1,4 +1,4 @@
-injectedEnv:
+config:
   nonSensitive:
     NUXT_PUBLIC_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
     NUXT_PUBLIC_APP_VERSION: "{{ .Values.application.revision }}"

@@ -1,4 +1,4 @@
-injectedEnv:
+config:
     nonSensitive:
         NUXT_PUBLIC_APP_API_URL: https://api-e2e.projects.k8s.lp-i.dev
         NUXT_PUBLIC_APP_WSS_HOST: wss://hocus-pocus-e2e.k8s.lp-i.dev
