@@ -28,8 +28,11 @@
                     <LpiButton class="squarish" secondary btn-icon="ChatBubble" label="" />
                 </ToolTip>
             </div>
-            <div class="actions">
-                <template v-if="skill.can_mentor">
+            <div class="actions" :class="{ 'is-loading': mentorshipIsLoading }">
+                <template v-if="mentorshipIsLoading && (skill.can_mentor || skill.needs_mentor)">
+                    <span class="mentorship-loading"><LoaderSimple /></span>
+                </template>
+                <template v-if="skill.can_mentor && !mentorshipIsLoading">
                     <span class="mentorship-offering" v-if="isSelf">
                         {{ $t('profile.mentorship-offering') }}
                     </span>
@@ -50,7 +53,7 @@
                         </template>
                     </NeedLoginToolTip>
                 </template>
-                <template v-if="skill.needs_mentor">
+                <template v-if="skill.needs_mentor && !mentorshipIsLoading">
                     <span class="mentorship-asking" v-if="isSelf">
                         {{ $t('profile.mentorship-asking') }}
                     </span>
@@ -83,6 +86,7 @@
             :is-open="mentorshipDrawerIsOpen"
             :is-offer="mentorshipDrawerIsOffer"
             @close="mentorshipDrawerIsOpen = false"
+            @mentorship-send="$emit('mentorship-send')"
         />
     </div>
 </template>
@@ -94,8 +98,12 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import MentorshipContactDrawer from '@/components/people/skill/MentorshipContactDrawer.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import NeedLoginToolTip from '@/components/base/NeedLoginToolTip.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
     name: 'SkillItemFull',
+
+    emits: ['mentorship-send'],
+
     components: {
         SkillSteps,
         IconImage,
@@ -103,6 +111,7 @@ export default {
         MentorshipContactDrawer,
         ToolTip,
         NeedLoginToolTip,
+        LoaderSimple,
     },
     props: {
         skill: {
@@ -122,6 +131,10 @@ export default {
             default: false,
         },
         isSelf: {
+            type: Boolean,
+            default: false,
+        },
+        mentorshipIsLoading: {
             type: Boolean,
             default: false,
         },
@@ -241,6 +254,10 @@ export default {
         flex-basis: 25%;
         display: flex;
         justify-content: flex-end;
+
+        &.is-loading {
+            justify-content: center;
+        }
     }
 
     .skill-level,
@@ -380,5 +397,13 @@ export default {
     font-style: italic;
     font-weight: 400;
     color: $primary-dark;
+}
+
+.mentorship-loading {
+    display: inline-block;
+
+    svg {
+        width: 1.2rem;
+    }
 }
 </style>

@@ -18,6 +18,8 @@
                     :title="$t('me.skills')"
                     :user-mentorship="userMentorship"
                     :is-self="isCurrentUser"
+                    :mentorship-is-loading="mentorshipIsLoading"
+                    @reload-mentorship="getUserMentorship"
                 />
             </section>
             <section class="section" v-if="hobbies?.length">
@@ -27,6 +29,8 @@
                     :title="$t('me.hobbies')"
                     :user-mentorship="userMentorship"
                     :is-self="isCurrentUser"
+                    :mentorship-is-loading="mentorshipIsLoading"
+                    @reload-mentorship="getUserMentorship"
                 />
             </section>
         </template>
@@ -73,6 +77,7 @@ export default {
         return {
             // mentorship of the logged user
             userMentorship: {},
+            mentorshipIsLoading: false,
         }
     },
 
@@ -114,6 +119,7 @@ export default {
     },
     methods: {
         async getUserMentorship() {
+            this.mentorshipIsLoading = true
             try {
                 const apiData = (await getUserMentorship(this.organizationsStore.current?.code))
                     .results
@@ -133,6 +139,8 @@ export default {
                 }, {})
             } catch (error) {
                 console.error(error)
+            } finally {
+                this.mentorshipIsLoading = false
             }
         },
     },

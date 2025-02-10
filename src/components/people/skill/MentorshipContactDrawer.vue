@@ -84,7 +84,7 @@ export function defaultForm() {
 export default {
     name: 'MentorshipContactDrawer',
 
-    emits: 'close',
+    emits: ['close', 'mentorship-send'],
 
     components: { BaseDrawer, TextInput, FieldErrors },
 
@@ -182,6 +182,8 @@ export default {
                     } else {
                         await askMentorship(orgCode, this.skill, this.form)
                     }
+                    this.$emit('mentorship-send')
+                    await this.$nextTick()
                     this.toaster.pushSuccess(
                         this.$t('profile.edit.skills.mentorship.contact.success')
                     )

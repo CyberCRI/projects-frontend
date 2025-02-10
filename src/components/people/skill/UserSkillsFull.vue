@@ -30,6 +30,8 @@
                 :is-self="isSelf"
                 :has-asked-mentorship="userMentorship[skill.id] === 'mentoree'"
                 :has-offered-mentorship="userMentorship[skill.id] === 'mentor'"
+                @mentorship-send="$emit('reload-mentorship')"
+                :mentorship-is-loading="mentorshipIsLoading"
             />
         </div>
     </div>
@@ -42,6 +44,8 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
     name: 'UserSkillsFull',
+
+    emits: ['reload-mentorship'],
 
     components: { SkillItemFull, LinkButton, SkillLevelTip },
 
@@ -60,6 +64,10 @@ export default {
             default: () => ({}),
         },
         isSelf: {
+            type: Boolean,
+            default: false,
+        },
+        mentorshipIsLoading: {
             type: Boolean,
             default: false,
         },
