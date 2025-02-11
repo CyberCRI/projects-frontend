@@ -55,3 +55,5 @@ charts/
 
 
 .nuxt/
+
+.env.nuxt
