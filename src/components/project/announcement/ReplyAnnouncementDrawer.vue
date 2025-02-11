@@ -246,7 +246,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: $space-s;
-    overflow: hidden;
     flex-grow: 1;
 }
 
