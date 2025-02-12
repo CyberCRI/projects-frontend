@@ -50,7 +50,7 @@ import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
@@ -123,7 +123,7 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.isPaginationLoading = true
-            this.membersRequest = (await axios.get(requestedPage)).data
+            this.membersRequest = (await useAPI(requestedPage, {})).data
             this.isPaginationLoading = false
             const el = document.querySelector('.group-members .members-header')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

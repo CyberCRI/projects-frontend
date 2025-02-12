@@ -7,7 +7,7 @@
             </h1>
             <p class="notice">
                 {{ $t('profile.edit.notice') }}
-                <router-link :to="{ name: 'Help' }">{{ $t('profile.edit.help') }}</router-link>
+                <NuxtLink :to="{ name: 'Help' }">{{ $t('profile.edit.help') }}</NuxtLink>
             </p>
             <div class="body">
                 <ProfileEditTabs :user="user" :is-self="isSelf" @profile-edited="onProfileEdited" />

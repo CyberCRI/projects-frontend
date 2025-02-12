@@ -1,7 +1,7 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-const checkAccessRequestEnabled = (to, _from, next) => {
+const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
     const organizationsStore = useOrganizationsStore()
     // check if access request is enabled and redirects to 404 if not
     if (!organizationsStore.current?.access_request_enabled) {
@@ -16,10 +16,6 @@ const checkAccessRequestEnabled = (to, _from, next) => {
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        // beforeEnter(_to, _from, next) {
-        //     if (import.meta.env.VITE_APP_API_ORG_CODE === '') next('/discover')
-        //     else next('/dashboard')
-        // },
 
         name: 'HomeRoot',
         component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
@@ -698,7 +694,7 @@ const routes: Array<RouteRecordRaw> = [
             resetScroll: true,
         },
     },
-    ...(import.meta.env.VITE_APP_SHOW_DEBUG
+    ...(import.meta.env.NUXT_PUBLIC_APP_SHOW_DEBUG
         ? [
               {
                   path: '/debug',

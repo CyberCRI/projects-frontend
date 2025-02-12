@@ -2,7 +2,7 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

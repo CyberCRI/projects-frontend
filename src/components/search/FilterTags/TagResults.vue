@@ -36,7 +36,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 
 export default {
@@ -157,8 +157,8 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            const axiosReq = await axios.get(requestedPage)
-            this.request = axiosReq.data
+            const apiReq = await useAPI(requestedPage, {})
+            this.request = apiReq.data
             this.isLoading = false
             // const el = document.querySelector('.group-user-selection .search-section')
             // if (el) el.scrollIntoView({ behavior: 'smooth' })

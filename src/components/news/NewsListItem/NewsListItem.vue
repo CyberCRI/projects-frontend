@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
         class="news-list-item shadow-box"
     >
@@ -50,7 +50,7 @@
                 <SummaryAction class="read-button" :action-label="$t('news.list.read-more')" />
             </div>
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 <script>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'

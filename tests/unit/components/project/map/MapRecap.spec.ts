@@ -3,7 +3,8 @@ import MapRecap from '@/components/project/map/MapRecap.vue'
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 describe('MapRecap.vue', () => {
     it('should render component', () => {
         beforeEach(() => {

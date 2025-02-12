@@ -26,8 +26,7 @@
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-
-const MAX_FILE_SIZE = Number(import.meta.env.VITE_APP_MAX_SIZE_FILE) || 5000000 // 5MB
+import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'EditorModalImage',
@@ -37,8 +36,11 @@ export default {
     components: { DialogModal, ImageInput },
     setup() {
         const toaster = useToasterStore()
+        const runtimeConfig = useRuntimeConfig()
+
         return {
             toaster,
+            runtimeConfig,
         }
     },
 
@@ -74,7 +76,11 @@ export default {
         },
 
         validImageSize() {
-            return this.file && this.file.size < MAX_FILE_SIZE
+            return this.file && this.file.size < this.maxFileSize
+        },
+
+        maxFileSize() {
+            return Number(this.runtimeConfig.public.appMaxSizeFile) || 5000000 // 5MB
         },
     },
 
@@ -85,7 +91,7 @@ export default {
         },
 
         fileChange(image) {
-            const sizeMax = MAX_FILE_SIZE / 1000 / 1000
+            const sizeMax = this.maxFileSize / 1000 / 1000
             this.file = image
             this.imageSrc = this.file.name
 

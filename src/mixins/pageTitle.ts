@@ -1,10 +1,12 @@
+/* eslint-disable vue/require-name-property */
+import { defineComponent } from 'vue'
 function getPageTitle(vm) {
     const { pageTitle } = vm.$options
     if (pageTitle) {
         return typeof pageTitle === 'function' ? pageTitle.call(vm) : pageTitle
     }
 }
-export default {
+export default defineComponent({
     mounted() {
         this.setPageTitle()
     },
@@ -27,4 +29,4 @@ export default {
     //         this.setPageTitle()
     //     },
     // },
-}
+})

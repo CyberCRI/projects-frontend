@@ -16,7 +16,7 @@ import debounce from 'lodash.debounce'
 import funct from '@/functs/functions.ts'
 import { getAllProjects } from '@/api/projects.service'
 import { getUserFollows } from '@/api/follows.service'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
@@ -104,7 +104,7 @@ export default {
             this.initProjectLoading()
             let response
             if (specificPageIndex) {
-                response = (await axios.get(specificPageIndex)).data
+                response = (await useAPI(specificPageIndex, {})).data
             } else if (this.follow) {
                 response = await getUserFollows(
                     {

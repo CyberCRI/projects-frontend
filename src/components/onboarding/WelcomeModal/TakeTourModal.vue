@@ -19,14 +19,14 @@
                 class="notice"
                 scope="global"
             >
-                <RouterLink
+                <NuxtLink
                     class="link"
                     :to="{ name: 'HelpVideoTab' }"
                     data-test="link-to-tutorials"
                     @click="$emit('close')"
                 >
                     {{ $t('plateform-tour-modal.tutorial') }}
-                </RouterLink>
+                </NuxtLink>
             </i18n-t>
         </template>
         <template #footer><!-- empty --></template>

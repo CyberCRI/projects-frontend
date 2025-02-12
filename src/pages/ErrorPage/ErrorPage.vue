@@ -4,9 +4,9 @@
             <div class="banner-404">
                 <h1 class="title">{{ title }}</h1>
                 <i18n-t :keypath="searchDescriptionPath" class="notice" tag="p">
-                    <router-link v-if="isConnected" :to="{ name: 'Search' }"
+                    <NuxtLink v-if="isConnected" :to="{ name: 'Search' }"
                         >{{ $t('page404.search-again') }}
-                    </router-link>
+                    </NuxtLink>
                     <a v-else href="" @click="login">{{ $t('page404.not-connected.login') }}</a>
                 </i18n-t>
                 <i18n-t class="notice" keypath="page404.contact" tag="p">

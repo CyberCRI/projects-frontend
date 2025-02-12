@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'button'"
+        :is="to ? 'NuxtLink' : 'button'"
         :to="to"
         class="header-link"
         :class="{ underlined }"
@@ -23,7 +23,7 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-
+import { NuxtLink } from '#components'
 export default {
     name: 'HeaderLink',
 
@@ -31,6 +31,7 @@ export default {
 
     components: {
         IconImage,
+        NuxtLink,
     },
 
     props: {

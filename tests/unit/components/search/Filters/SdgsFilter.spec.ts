@@ -2,7 +2,8 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import SdgFactory from '@/../tests/factories/sdg.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const sdgs = SdgFactory.generateMany(17).map((sdg, index) => ({ ...sdg, id: index + 1 }))
 
 const sdgsSelection = {}

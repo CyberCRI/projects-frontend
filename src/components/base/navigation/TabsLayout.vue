@@ -100,7 +100,7 @@
                     />
                 </KeepAlive>
             </template>
-            <router-view v-else-if="routerView" v-bind="currentTab.props"></router-view>
+            <NuxtPage v-else-if="routerView" v-bind="currentTab.props"></NuxtPage>
         </div>
     </div>
 </template>

@@ -4,9 +4,9 @@
             <h1>{{ isEdit ? $t('group.edit.title') : $t('group.create.title') }}</h1>
             <p>
                 {{ $t('group.create.notice') }}
-                <RouterLink :to="{ name: 'Help' }" class="help-link"
+                <NuxtLink :to="{ name: 'Help' }" class="help-link"
                     >{{ $t('group.create.help-link') }}
-                </RouterLink>
+                </NuxtLink>
             </p>
         </div>
 

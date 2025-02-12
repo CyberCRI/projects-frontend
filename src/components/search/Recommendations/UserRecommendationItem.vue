@@ -1,6 +1,6 @@
 <template>
     <li v-if="recommendation" class="recommendation-item">
-        <router-link
+        <NuxtLink
             class="recommendation"
             :to="{ name: 'ProfileOtherUser', params: { userId: recommendation.slug } }"
         >
@@ -60,7 +60,7 @@
                     </ToolTip>
                 </div>
             </div>
-        </router-link>
+        </NuxtLink>
     </li>
 </template>
 

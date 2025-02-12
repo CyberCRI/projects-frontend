@@ -1,11 +1,12 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import UserProfile from '@/components/people/UserProfile.vue'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import { getUser } from '@/api/people.service'
 import { flushPromises } from '@vue/test-utils'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'

@@ -182,40 +182,42 @@
                 réalisation.
             </p>
             <table>
-                <tr>
-                    <th>Type</th>
-                    <th>Action</th>
-                    <th>Détails</th>
-                    <th>Mise en oeuvre</th>
-                    <th>Avancement</th>
-                </tr>
-                <tr>
-                    <td>Audit</td>
-                    <td>Evaluation</td>
-                    <td>Evaluation de la plateforme Projects</td>
-                    <td>Avril 2023</td>
-                    <td>En cours</td>
-                </tr>
-                <tr>
-                    <td>Mise en conformité</td>
-                    <td>Mise en conformité RGAA sur les points majeurs révélés par l’audit</td>
-                    <td>
-                        Mise en conformité de la plateforme Projects sur les points majeurs révélés
-                        par l’audit
-                    </td>
-                    <td>Mai - septembre 2023</td>
-                    <td>A faire</td>
-                </tr>
-                <tr>
-                    <td>Mise en conformité</td>
-                    <td>Mise en conformité RGAA sur le reste des points problématiques</td>
-                    <td>
-                        Mise en conformité de la plateforme Projects sur le reste des points
-                        problématiques
-                    </td>
-                    <td>Octobre 2023 - mars 2024</td>
-                    <td>A faire</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>Type</th>
+                        <th>Action</th>
+                        <th>Détails</th>
+                        <th>Mise en oeuvre</th>
+                        <th>Avancement</th>
+                    </tr>
+                    <tr>
+                        <td>Audit</td>
+                        <td>Evaluation</td>
+                        <td>Evaluation de la plateforme Projects</td>
+                        <td>Avril 2023</td>
+                        <td>En cours</td>
+                    </tr>
+                    <tr>
+                        <td>Mise en conformité</td>
+                        <td>Mise en conformité RGAA sur les points majeurs révélés par l’audit</td>
+                        <td>
+                            Mise en conformité de la plateforme Projects sur les points majeurs
+                            révélés par l’audit
+                        </td>
+                        <td>Mai - septembre 2023</td>
+                        <td>A faire</td>
+                    </tr>
+                    <tr>
+                        <td>Mise en conformité</td>
+                        <td>Mise en conformité RGAA sur le reste des points problématiques</td>
+                        <td>
+                            Mise en conformité de la plateforme Projects sur le reste des points
+                            problématiques
+                        </td>
+                        <td>Octobre 2023 - mars 2024</td>
+                        <td>A faire</td>
+                    </tr>
+                </tbody>
             </table>
         </section>
     </div>

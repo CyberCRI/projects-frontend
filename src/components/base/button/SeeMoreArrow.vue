@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'a'"
+        :is="to ? 'NuxtLink' : 'a'"
         class="see-more-arrow"
         :to="to"
         :href="to ? undefined : '#'"
@@ -11,11 +11,13 @@
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
+import { NuxtLink } from '#components'
 export default {
     name: 'SeeMoreArrow',
 
     components: {
         IconImage,
+        NuxtLink,
     },
 
     props: {

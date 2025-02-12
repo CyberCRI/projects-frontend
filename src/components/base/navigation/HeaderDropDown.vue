@@ -40,7 +40,7 @@
                             class="drop-down-menu-item"
                         >
                             <Component
-                                :is="item.to ? 'router-link' : item.action ? 'button' : 'p'"
+                                :is="item.to ? 'NuxtLink' : item.action ? 'button' : 'p'"
                                 class="drop-down-menu-item-content"
                                 @click="menuAction(item)"
                                 :to="item.to"
@@ -82,6 +82,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import { NuxtLink } from '#components'
 
 export default {
     name: 'HeaderDropDown',
@@ -89,6 +90,7 @@ export default {
     components: {
         LpiLoader,
         IconImage,
+        NuxtLink,
     },
 
     props: {

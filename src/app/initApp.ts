@@ -3,10 +3,9 @@ import { createApp } from 'vue'
 import pinia from '@/stores'
 
 import { capitalize, isNotGroup, isGroup } from '@/filters'
-import App from '@/App.vue'
+import App from '@/app.vue'
 import { clickOutside, disableFocus } from '@/directives'
 
-import i18n from '@/locales/i18n'
 import useToasterStore from '@/stores/useToaster'
 import router from '@/router'
 
@@ -17,7 +16,7 @@ export default async function initApp(inits) {
     app.config.errorHandler = (err: any, vm, info) => {
         // silence aborted request (on home page mostly)
         if (err?.code === 'ECONNABORTED') {
-            console.log('axios aborted request', err)
+            console.log('aborted request', err) // TODO nuxt check this
             return
         }
 
@@ -43,7 +42,7 @@ export default async function initApp(inits) {
         isGroup,
     }
 
-    app.use(i18n)
+    // app.use(i18n)
 
     app.use(pinia)
 

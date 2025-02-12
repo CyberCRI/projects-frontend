@@ -87,21 +87,18 @@
                                 />
                                 <i18n-t keypath="register.tos" tag="p" class="tos">
                                     <template #term>
-                                        <router-link
+                                        <NuxtLink
                                             to="/terms-of-service"
                                             class="link"
                                             target="_blank"
                                             >{{ $t('register.term') }}
-                                        </router-link>
+                                        </NuxtLink>
                                     </template>
 
                                     <template #privacy>
-                                        <router-link
-                                            to="/personal-data"
-                                            class="link"
-                                            target="_blank"
+                                        <NuxtLink to="/personal-data" class="link" target="_blank"
                                             >{{ $t('register.privacy') }}
-                                        </router-link>
+                                        </NuxtLink>
                                     </template>
                                 </i18n-t>
                             </div>
@@ -162,6 +159,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'RegisterPage',
 
@@ -180,11 +178,13 @@ export default {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const organizationsStore = useOrganizationsStore()
+        const runtimeConfig = useRuntimeConfig()
 
         return {
             toaster,
             languagesStore,
             organizationsStore,
+            runtimeConfig,
         }
     },
 
@@ -259,7 +259,7 @@ export default {
     },
     computed: {
         backgroundImageUrl() {
-            return `${import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX}/page404/page-404.png`
+            return `${this.runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
         },
     },
     methods: {

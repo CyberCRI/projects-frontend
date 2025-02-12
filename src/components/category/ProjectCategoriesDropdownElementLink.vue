@@ -1,10 +1,10 @@
 <template>
-    <router-link
+    <NuxtLink
         class="drop-down-menu-item-content"
         :to="{ name: 'Category', params: { id: category.id } }"
     >
         <span class="label">{{ $filters.capitalize(category.name) }}</span>
-    </router-link>
+    </NuxtLink>
 </template>
 
 <script>

@@ -11,10 +11,10 @@ const useProjectsStore = defineStore('projects', {
         project: null,
     }),
     getters: {
-        currentProjectId() {
+        currentProjectId(): string | undefined {
             return this.project?.id
         },
-        currentProjectSlug() {
+        currentProjectSlug(): string | undefined {
             return this.project?.slug
         },
     },

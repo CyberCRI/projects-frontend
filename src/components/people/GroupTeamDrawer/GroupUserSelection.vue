@@ -71,7 +71,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import { searchPeopleProject } from '@/api/people.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
@@ -156,7 +156,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.group-user-selection .search-section')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

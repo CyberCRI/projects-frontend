@@ -7,9 +7,9 @@
             </p>
             <p>
                 {{ $t('invitation.create.notice') }}
-                <RouterLink :to="{ name: 'Help' }" class="help-link">{{
+                <NuxtLink :to="{ name: 'Help' }" class="help-link">{{
                     $t('invitation.create.link')
-                }}</RouterLink>
+                }}</NuxtLink>
             </p>
         </div>
         <div class="form">

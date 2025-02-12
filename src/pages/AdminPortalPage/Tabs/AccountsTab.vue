@@ -29,76 +29,78 @@
 
         <div v-if="filteredUsers.length && !isLoading" class="user-list">
             <table>
-                <tr>
-                    <th v-for="(filter, index) in filters" :key="index">
-                        <button
-                            class="button"
-                            @click="sortBy(filter)"
-                            :class="{ unsortable: filter.unsortable }"
-                        >
-                            {{ $filters.capitalize($t(filter.label)) }}
-                            <IconImage
-                                v-if="!filter.unsortable"
-                                :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
-                                class="icon"
-                                :style="{ opacity: filter.isActive ? 1 : 0.33 }"
-                            ></IconImage>
-                        </button>
-                    </th>
-                    <th></th>
-                </tr>
-                <tr v-for="(user, index) in filteredUsers" :key="index">
-                    <td>
-                        {{ $filters.capitalize(user.family_name) }}
-                    </td>
-                    <td>{{ $filters.capitalize(user.given_name) }}</td>
-                    <td>{{ $filters.capitalize(user.job) }}</td>
-                    <td class="has-more">
-                        {{
-                            user.current_org_role
-                                ? $t(`groups.roles.${user.current_org_role}`)
-                                : '-'
-                        }}
-                    </td>
-                    <td class="has-more">
-                        <span class="first-item">
-                            <template v-if="user.people_groups?.length">
-                                <span
-                                    :title="user.people_groups[0]"
-                                    v-if="user.people_groups[0].length > 28"
-                                >
-                                    {{ user.people_groups[0].substring(0, 25) + '...' }}
-                                </span>
-                                <span v-else>{{ user.people_groups[0] }}</span>
-                            </template>
-                            <template v-else> - </template>
-                        </span>
-                        <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
-                            <span class="more-items" v-if="user.people_groups?.length > 1">
-                                + {{ user.people_groups.length - 1 }}
+                <tbody>
+                    <tr>
+                        <th v-for="(filter, index) in filters" :key="index">
+                            <button
+                                class="button"
+                                @click="sortBy(filter)"
+                                :class="{ unsortable: filter.unsortable }"
+                            >
+                                {{ $filters.capitalize($t(filter.label)) }}
+                                <IconImage
+                                    v-if="!filter.unsortable"
+                                    :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
+                                    class="icon"
+                                    :style="{ opacity: filter.isActive ? 1 : 0.33 }"
+                                ></IconImage>
+                            </button>
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr v-for="(user, index) in filteredUsers" :key="index">
+                        <td>
+                            {{ $filters.capitalize(user.family_name) }}
+                        </td>
+                        <td>{{ $filters.capitalize(user.given_name) }}</td>
+                        <td>{{ $filters.capitalize(user.job) }}</td>
+                        <td class="has-more">
+                            {{
+                                user.current_org_role
+                                    ? $t(`groups.roles.${user.current_org_role}`)
+                                    : '-'
+                            }}
+                        </td>
+                        <td class="has-more">
+                            <span class="first-item">
+                                <template v-if="user.people_groups?.length">
+                                    <span
+                                        :title="user.people_groups[0]"
+                                        v-if="user.people_groups[0].length > 28"
+                                    >
+                                        {{ user.people_groups[0].substring(0, 25) + '...' }}
+                                    </span>
+                                    <span v-else>{{ user.people_groups[0] }}</span>
+                                </template>
+                                <template v-else> - </template>
                             </span>
+                            <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
+                                <span class="more-items" v-if="user.people_groups?.length > 1">
+                                    + {{ user.people_groups.length - 1 }}
+                                </span>
 
-                            <template #custom-content>
-                                <div class="tooltip-div">
-                                    {{ user.people_groups.slice(1).join(', ') }}
-                                </div>
-                            </template>
-                        </ToolTip>
-                    </td>
-                    <td>
-                        {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
-                    </td>
-                    <td>
-                        {{
-                            user.email_verified
-                                ? $t('admin.accounts.table.activation-yes')
-                                : $t('admin.accounts.table.activation-no')
-                        }}
-                    </td>
-                    <td>
-                        <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
-                    </td>
-                </tr>
+                                <template #custom-content>
+                                    <div class="tooltip-div">
+                                        {{ user.people_groups.slice(1).join(', ') }}
+                                    </div>
+                                </template>
+                            </ToolTip>
+                        </td>
+                        <td>
+                            {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
+                        </td>
+                        <td>
+                            {{
+                                user.email_verified
+                                    ? $t('admin.accounts.table.activation-yes')
+                                    : $t('admin.accounts.table.activation-no')
+                            }}
+                        </td>
+                        <td>
+                            <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
                 <PaginationButtons
@@ -130,7 +132,7 @@ import debounce from 'lodash.debounce'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 
 import { searchPeopleAdmin } from '@/api/people.service'
 import ToolTip from '@/components/base/ToolTip.vue'
@@ -254,7 +256,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
+            this.request = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.role-tab .search-input-container')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

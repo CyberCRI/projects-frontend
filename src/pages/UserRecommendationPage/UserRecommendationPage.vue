@@ -37,7 +37,7 @@ import UserCard from '@/components/people/UserCard.vue'
 import CardList from '@/components/base/CardList.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
@@ -90,7 +90,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.usersRecommendationsRequest = (await axios.get(requestedPage)).data
+            this.usersRecommendationsRequest = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.page-title')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

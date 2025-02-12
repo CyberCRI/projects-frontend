@@ -69,6 +69,8 @@ import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/Comp
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
+import { useRuntimeConfig } from '#imports'
+
 export default {
     name: 'CompleteProfileDrawer',
 
@@ -79,8 +81,11 @@ export default {
     mixins: [onboardingStatusMixin],
     setup() {
         const languagesStore = useLanguagesStore()
+        const runtimeConfig = useRuntimeConfig()
+
         return {
             languagesStore,
+            runtimeConfig,
         }
     },
     props: {
@@ -117,7 +122,7 @@ export default {
                 : 'complete-profile.save-and-finish'
         },
         docUrl() {
-            const url = new URL(import.meta.env.VITE_APP_DOC)
+            const url = new URL(this.runtimeConfig.public.appDoc)
             // uppercase lang code are mandatory for this service
             url.searchParams.append('lang', this.languagesStore.current)
 

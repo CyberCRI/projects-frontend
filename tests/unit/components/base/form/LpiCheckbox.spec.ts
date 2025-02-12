@@ -1,7 +1,8 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 describe('LpiCheckbox', () => {
     let wrapper
     let defaultParams

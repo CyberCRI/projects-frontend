@@ -29,7 +29,7 @@ import ProjectCard from '@/components/project/ProjectCard.vue'
 import CardList from '@/components/base/CardList.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { getProjectsRecommendationsForUser } from '@/api/recommendations.service'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'ProjectRecommendationPage',
@@ -80,7 +80,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.projectRecommendationsRequest = (await axios.get(requestedPage)).data
+            this.projectRecommendationsRequest = (await useAPI(requestedPage, {})).data
             this.isLoading = false
             const el = document.querySelector('.page-title')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

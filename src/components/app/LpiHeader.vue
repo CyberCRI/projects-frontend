@@ -2,14 +2,14 @@
     <div :class="{ scrolled }" class="header">
         <header class="header__container page-section-full">
             <div :class="{ 'header__arrows--nav-open': isNavOpen }" class="header__directory">
-                <router-link to="/" data-test="lpi-logo">
+                <NuxtLink to="/" data-test="lpi-logo">
                     <img
                         v-if="organisation && organisation.logo_image.variations"
                         :src="organisation.logo_image.variations.medium"
                         alt=""
                         class="header__logo"
                     />
-                </router-link>
+                </NuxtLink>
             </div>
 
             <div class="header__group-buttons">

@@ -5,7 +5,7 @@ import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-cla
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import EditTagModal from '@/components/admin/EditTagModal.vue'
@@ -38,7 +38,7 @@ const tagToDelete = ref(null)
 const isDeletingTag = ref(false)
 const showConfirmTagDelete = computed(() => !!tagToDelete.value)
 
-const currentAxiosRequestConfig = ref(null)
+const currentRequestConfig = ref(null)
 
 const deleteTag = async () => {
     isDeletingTag.value = true
@@ -106,13 +106,13 @@ const getTags = debounce(async function () {
     isLoading.value = true
     try {
         //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
-        const axiosReq = await getOrgClassificationTags(
+        const apiReq = await getOrgClassificationTags(
             organizationsStore.current.code,
             props.classification.id,
             { search: search.value, ordering: 'title', limit: props.pageLimit }
         )
-        request.value = axiosReq.data
-        currentAxiosRequestConfig.value = axiosReq.config
+        request.value = apiReq.data
+        currentRequestConfig.value = apiReq.config // TODO nuxt check this
     } catch (e) {
         request.value = {
             results: [],
@@ -134,7 +134,8 @@ const reloadClassification = async () => {
     isLoading.value = true
     try {
         fetchTagStats()
-        request.value = (await axios.request(currentAxiosRequestConfig.value)).data
+        // TODO nuxt check this
+        request.value = (await useAPI(currentRequestConfig.value, {})).data
     } catch (e) {
         console.log(e)
         // request.value = {
@@ -165,9 +166,9 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
     isLoading.value = true
-    const axiosReq = await axios.get(requestedPage)
-    request.value = axiosReq.data
-    currentAxiosRequestConfig.value = axiosReq.config
+    const apiReq = await useAPI(requestedPage, {}) // TODO nuxt check this
+    request.value = apiReq.data
+    currentRequestConfig.value = apiReq.config // TODO nuxt check this
     isLoading.value = false
     // const el = document.querySelector('.group-user-selection .search-section')
     // if (el) el.scrollIntoView({ behavior: 'smooth' })

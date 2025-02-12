@@ -1,6 +1,7 @@
 import { searchEquals, resetPaginationIfNeeded, updateFiltersFromURL } from '@/functs/search'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 describe('updateFiltersFromURL', () => {
     it('should returns defaults if no query parameter are set', () => {
         const search = updateFiltersFromURL({}, [

@@ -1,6 +1,6 @@
-import axios from 'axios'
+import useAPI from '@/composables/useAPI'
 import useLanguagesStore from '@/stores/useLanguages'
-
+import { useRuntimeConfig } from '#imports'
 export default {
     copyObject(obj) {
         // simple way to copy object - Not perfect, to rethink.
@@ -140,26 +140,28 @@ export default {
     },
 
     async getPatatoidFile(patatoidNumber): Promise<File> {
+        const runtimeConfig = useRuntimeConfig()
         try {
             const urlFile = `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${patatoidNumber}.png`
             const fileName = `patatoid-${patatoidNumber}.png`
-            const result = await axios.get(urlFile, { responseType: 'blob' })
+            const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], fileName)
         } catch {
             // In case it cannot find an image return first one
             const urlFile = `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-1.png`
             const fileName = 'Patatoid-1.png'
-            const result = await axios.get(urlFile, { responseType: 'blob' })
+            const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], fileName)
         }
     },
 
     isDefaultPortal(): boolean {
-        return import.meta.env.VITE_APP_API_ORG_CODE === 'DEFAULT'
+        const runtimeConfig = useRuntimeConfig()
+        return runtimeConfig.public.appApiOrgCode === 'DEFAULT'
     },
 
     setTokenForWS(token) {

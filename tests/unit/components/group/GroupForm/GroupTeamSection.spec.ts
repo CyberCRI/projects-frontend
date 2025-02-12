@@ -1,7 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupTeamSection from '@/components/group/GroupForm/GroupTeamSection.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 

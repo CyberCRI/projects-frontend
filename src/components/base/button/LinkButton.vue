@@ -1,6 +1,6 @@
 <template>
     <component
-        :is="to ? 'router-link' : 'button'"
+        :is="to ? 'NuxtLink' : 'button'"
         :to="to"
         :class="{ 'icon-only': iconOnly }"
         type="button"
@@ -12,11 +12,13 @@
 
 <script>
 import ButtonContent from '@/components/base/button/ButtonContent.vue'
+import { NuxtLink } from '#components'
 export default {
     name: 'LinkButton',
 
     components: {
         ButtonContent,
+        NuxtLink,
     },
 
     props: {

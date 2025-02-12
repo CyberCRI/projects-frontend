@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="featured-project-admin-list-item"
         :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
     >
@@ -15,7 +15,7 @@
         <div project-text>
             <h4 class="title">{{ project.title }}</h4>
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>

@@ -1,4 +1,7 @@
-export default {
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
+import { defineComponent } from 'vue'
+export default defineComponent({
     methods: {
         transformStringWeight(string, firstWeight, mainWeight) {
             const splitString = string.split(' ')
@@ -17,4 +20,4 @@ export default {
             return this.transformStringWeight(string, 'bold', 'reg')
         },
     },
-}
+})

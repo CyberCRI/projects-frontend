@@ -375,6 +375,8 @@ import CriPartners from '@/components/CriPartners.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
 import pageTitle from '@/mixins/pageTitle.ts'
 
+import { useRuntimeConfig } from '#imports'
+
 export default {
     name: 'DiscoverPage',
 
@@ -384,6 +386,14 @@ export default {
 
     pageTitle() {
         return this.$t('discover.page-title')
+    },
+
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+
+        return {
+            runtimeConfig,
+        }
     },
 
     data() {
@@ -502,7 +512,7 @@ export default {
             return this.testimonials.length
         },
         getMetaPortalUrl() {
-            return import.meta.env.VITE_APP_META_PORTAL_URL
+            return this.runtimeConfig.public.appMetaPortalUrl
         },
     },
 

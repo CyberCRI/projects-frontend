@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="similar-project"
         :to="{
             name: 'projectSummary',
@@ -17,7 +17,7 @@
         />
 
         <p>{{ project.title }}</p>
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>

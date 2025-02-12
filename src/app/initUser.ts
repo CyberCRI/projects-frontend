@@ -1,9 +1,10 @@
-import keycloak from '@/api/auth/keycloak'
+import useKeycloak from '@/api/auth/keycloak'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import useUsersStore from '@/stores/useUsers'
 import router from '@/router'
 
 export default async function initUser() {
+    const keycloak = useKeycloak()
     // Remove tokens if obsolete
     checkExpiredToken()
 

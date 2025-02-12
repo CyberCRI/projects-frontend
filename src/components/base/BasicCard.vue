@@ -9,7 +9,7 @@
 
         <component
             class="card-inner"
-            :is="toLink ? 'router-link' : 'div'"
+            :is="toLink ? 'NuxtLink' : 'div'"
             :to="toLink"
             @click="$emit('click')"
         >
@@ -24,11 +24,15 @@
 </template>
 
 <script>
+import { NuxtLink } from '#components'
 export default {
     name: 'BasicCard',
 
     emits: ['click'],
 
+    components: {
+        NuxtLink,
+    },
     props: {
         toLink: {
             type: [String, Object],

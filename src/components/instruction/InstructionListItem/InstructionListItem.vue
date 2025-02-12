@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="instruction-list-item shadow-box"
         :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
     >
@@ -26,7 +26,7 @@
         <div class="read-more-ctn">
             <SummaryAction class="read-button" :action-label="$t('instructions.list.read-more')" />
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 <script>
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'

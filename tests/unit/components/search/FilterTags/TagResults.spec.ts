@@ -3,14 +3,12 @@ import english from '@/locales/en.json'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { axios } from '@/api/api.config'
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
+import useAPI from '@/composables/useAPI'
 
 vi.mock('@/api/api.config', function () {
     return {
-        axios: {
-            get: vi.fn().mockResolvedValue({ data: { results: [] } }),
-        },
+        useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
     }
 })
 

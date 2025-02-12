@@ -1,16 +1,17 @@
 import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/locales/i18n'
-import App from '@/App.vue'
+import { loadLocaleMessages } from '@/../i18n.config'
+import App from '@/app.vue'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import { refreshAccessToken } from '@/api/auth/auth.service'
 
@@ -47,23 +48,27 @@ const i18n = {
     messages: loadLocaleMessages(),
 }
 
-function mockLocalStorage() {
-    let store = {}
-    return {
-        getItem: function (key) {
-            return store[key]
-        },
-        setItem: function (key, value) {
-            store[key] = value
-        },
-        clear: function () {
-            store = {}
-        },
-        removeItem: function (key) {
-            delete store[key]
-        },
-    }
-}
+// function mockLocalStorage() {
+//     let store = {}
+//     return {
+//         getItem: function (key) {
+//             return store[key]
+//         },
+//         setItem: function (key, value) {
+//             store[key] = value
+//         },
+//         clear: function () {
+//             store = {}
+//         },
+//         removeItem: function (key) {
+//             delete store[key]
+//         },
+//     }
+// }
+
+const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
+const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
+const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe('On tab focus', () => {
     let usersStore
@@ -72,13 +77,13 @@ describe('On tab focus', () => {
         organizationsStore.current = { code: '123' } as OrganizationOutput
         usersStore = useUsersStore(pinia)
     })
-    const localStorageMock = mockLocalStorage()
+    //const localStorageMock = mockLocalStorage()
 
-    Object.defineProperty(window, 'localStorage', {
-        value: localStorageMock,
-        configurable: true,
-        writable: true,
-    })
+    // Object.defineProperty(window, 'localStorage', {
+    //     value: localStorageMock,
+    //     configurable: true,
+    //     writable: true,
+    // })
     Object.defineProperty(window, 'socket', { value: { connected: false }, configurable: true })
 
     const $t = (v) => v
@@ -95,11 +100,17 @@ describe('On tab focus', () => {
                 },
                 { path: '/blank', component: MockComponent, name: 'blank' },
             ],
-            stubs: { 'router-link': true, RouterView: true },
+            stubs: { NuxtLink: true, NuxtPage: true },
         })
     }
 
     afterEach(() => {
+        afterEach(() => {
+            localStorage.clear()
+            localStorageSetItem.mockClear()
+            localStorageGetItem.mockClear()
+            localStorageRemoveItem.mockClear()
+        })
         vi.clearAllMocks()
         usersStore.$reset()
     })

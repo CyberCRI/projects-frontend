@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="tag-ctn">
-            <router-link
+            <NuxtLink
                 v-for="tag in displayedTags || []"
                 :key="prefix + tag.id"
                 :to="browsePageWithQuery('tags', tag.id)"
@@ -13,9 +13,9 @@
                     :label="tagTitle(tag)"
                     size="small"
                 />
-            </router-link>
+            </NuxtLink>
             <template v-if="internal">
-                <router-link
+                <NuxtLink
                     v-for="tag in displayedInfoTags || []"
                     :key="prefix + tag.name"
                     :to="tag.direction"
@@ -27,7 +27,7 @@
                         :label="tag.name"
                         size="small"
                     />
-                </router-link>
+                </NuxtLink>
             </template>
             <template v-else>
                 <a
@@ -61,17 +61,17 @@
             </span>
         </div>
         <div class="extra-tags" v-if="showExtraTags" :class="{ 'straight-corner': straightCorner }">
-            <router-link
+            <NuxtLink
                 v-for="tag in moreTags || []"
                 :key="tag.id"
                 :to="browsePageWithQuery('tags', tag.id)"
                 class="extra-tag-elt tag-elt-anim"
             >
                 <BadgeItem v-if="tagTitle(tag)" :label="tagTitle(tag)" size="small" />
-            </router-link>
+            </NuxtLink>
 
             <template v-if="internal">
-                <router-link
+                <NuxtLink
                     v-for="tag in moreInfoTags || []"
                     :key="prefix + tag.name"
                     :to="tag.direction"
@@ -83,7 +83,7 @@
                         :label="tag.name"
                         size="small"
                     />
-                </router-link>
+                </NuxtLink>
             </template>
             <template v-else>
                 <a

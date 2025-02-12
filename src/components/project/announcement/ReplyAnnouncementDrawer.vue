@@ -72,6 +72,7 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
+import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'ReplyAnnouncementDrawer',
@@ -86,8 +87,11 @@ export default {
     },
     setup() {
         const toaster = useToasterStore()
+        const runtimeConfig = useRuntimeConfig()
+
         return {
             toaster,
+            runtimeConfig,
         }
     },
 
@@ -191,7 +195,7 @@ export default {
             script.onload = () => {
                 grecaptcha.ready(() => {
                     this.recaptcha = grecaptcha.render('RECAPTCHA', {
-                        sitekey: import.meta.env.VITE_APP_CAPTCHA_KEY,
+                        sitekey: this.runtimeConfig.public.appCaptchaKey,
                         callback: captchaCB,
                     })
                 })
@@ -201,7 +205,7 @@ export default {
                 document.getElementsByTagName('head')[0].appendChild(script)
             } else {
                 this.recaptcha = grecaptcha.render('RECAPTCHA', {
-                    sitekey: import.meta.env.VITE_APP_CAPTCHA_KEY,
+                    sitekey: this.runtimeConfig.public.appCaptchaKey,
                     callback: captchaCB,
                 })
             }

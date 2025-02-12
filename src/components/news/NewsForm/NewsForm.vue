@@ -91,6 +91,7 @@ import throttle from 'lodash/throttle'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { useRuntimeConfig } from '#imports'
 
 export function defaultForm() {
     return {
@@ -123,8 +124,10 @@ export default {
 
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             organizationsStore,
+            runtimeConfig,
         }
     },
 
@@ -138,7 +141,7 @@ export default {
     data() {
         const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
             return `${
-                import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                this.runtimeConfig.public.appPublicBinariesPrefix
             }/patatoids-project/Patatoid-${index}.png`
         })
         return {

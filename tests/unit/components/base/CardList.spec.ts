@@ -3,7 +3,8 @@ import CardList from '@/components/base/CardList.vue'
 import { ProjectFactory } from '@/../tests/factories/project.factory'
 import english from '@/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const projects = ProjectFactory.generateMany(4)
 
 const i18n = {

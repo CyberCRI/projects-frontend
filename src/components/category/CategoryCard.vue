@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="category-card shadow-box"
         :style="{ width: imageWidth }"
         :to="{ name: 'Category', params: { id: category?.id } }"
@@ -17,7 +17,7 @@
             <h3 class="title">{{ $filters.capitalize(category.name) }}</h3>
             <p class="description" v-html="category.description"></p>
         </div>
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>

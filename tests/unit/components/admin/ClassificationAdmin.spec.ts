@@ -8,7 +8,8 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 import flushPromises from 'flush-promises'
 
 import {
@@ -137,9 +138,7 @@ describe('ClassificationAdmin', () => {
 
         const vm: any = wrapper.vm
         await flushPromises()
-        let switchComp = wrapper.findComponent(
-            '[data-test="classification-switch-for-skills"]:nth(1)'
-        )
+        let switchComp = wrapper.findComponent('[data-test="classification-switch-for-skills"]')
 
         expect(switchComp.vm.modelValue).toBe(false)
 

@@ -6,8 +6,8 @@ import {
 } from '@/api/organizations.service'
 
 // import { getPeopleGroups } from '@/api/groups.service'
-import { APIResponseList } from '@/api/types'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type { APIResponseList } from '@/api/types'
+import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
 import analytics from '@/analytics'
 
@@ -29,14 +29,14 @@ const useOrganizationsStore = defineStore('organizations', {
 
         allClassifications(): object[] {
             const index = {}
-            this.current?.enabled_projects_tag_classifications.forEach((classification) => {
+            this.current?.enabled_projects_tag_classifications.forEach((classification: any) => {
                 if (!index[classification.id]) {
                     index[classification.id] = classification
                 }
                 index[classification.id].is_enabled_for_projects = true
             })
 
-            this.current?.enabled_skills_tag_classifications.forEach((classification) => {
+            this.current?.enabled_skills_tag_classifications.forEach((classification: any) => {
                 if (!index[classification.id]) {
                     index[classification.id] = classification
                 }

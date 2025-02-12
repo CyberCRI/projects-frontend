@@ -5,7 +5,7 @@ import CompleteProfileStep1 from '@/components/people/CompleteProfileDrawer/Comp
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const i18n = {
     locale: 'en',

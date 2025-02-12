@@ -1,7 +1,7 @@
 import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 
 import pinia from '@/stores'

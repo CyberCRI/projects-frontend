@@ -3,7 +3,8 @@ import english from '@/locales/en.json'
 import ResourceCount from '@/components/project/resource/ResourceCount.vue'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 const i18n = {
     locale: 'en',
     fallbackLocale: 'en',

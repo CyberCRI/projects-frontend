@@ -1,7 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 const i18n = {
     locale: 'en',

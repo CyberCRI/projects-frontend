@@ -1,10 +1,11 @@
 import GroupProjectsTab from '@/pages/GroupPage/Tabs/GroupProjectsTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import { DOMWrapper, flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'

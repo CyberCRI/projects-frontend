@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="target" class="resource-count shadow-box">
+    <NuxtLink :to="target" class="resource-count shadow-box">
         <div class="icon-ctn">
             <div v-if="isFile" class="resource-type">
                 <IconImage name="Paperclip" />
@@ -12,7 +12,7 @@
         </div>
 
         <div class="count">{{ count }}</div>
-    </router-link>
+    </NuxtLink>
 </template>
 
 <script>

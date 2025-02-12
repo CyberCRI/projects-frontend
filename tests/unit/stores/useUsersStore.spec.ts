@@ -9,7 +9,8 @@ import useUsersStore from '@/stores/useUsers'
 
 import flushPromises from 'flush-promises'
 
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 vi.mock('@/router/index', () => ({
     default: {
         push: vi.fn(),

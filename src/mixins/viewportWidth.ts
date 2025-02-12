@@ -1,6 +1,9 @@
-import debounce from 'lodash.debounce'
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
 
-export default {
+import debounce from 'lodash.debounce'
+import { defineComponent } from 'vue'
+export default defineComponent({
     data() {
         return {
             viewportWidth: 0,
@@ -35,4 +38,4 @@ export default {
     unmounted() {
         window.removeEventListener('resize', () => {})
     },
-}
+})

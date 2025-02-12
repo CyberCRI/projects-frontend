@@ -1,5 +1,5 @@
 <template>
-    <RouterLink
+    <NuxtLink
         class="home-announcement-item shadow-box"
         :to="{
             name: 'projectAnnouncements',
@@ -37,13 +37,14 @@
         </div>
 
         <SummaryAction class="announcement-action" :action-label="$t('common.read')" />
-    </RouterLink>
+    </NuxtLink>
 </template>
 
 <script>
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import { useRuntimeConfig } from '#imports'
 export default {
     name: 'NewsfeedAnnouncementsItem',
 
@@ -56,11 +57,18 @@ export default {
         },
     },
 
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
+    },
+
     computed: {
         announcementStyle() {
             return {
                 'background-image': `url(${
-                    import.meta.env.VITE_APP_PUBLIC_BINARIES_PREFIX
+                    this.runtimeConfig.public.appPublicBinariesPrefix
                 }/placeholders/announcement_placeholder.png)`,
             }
         },

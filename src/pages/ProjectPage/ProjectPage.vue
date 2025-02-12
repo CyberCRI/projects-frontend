@@ -155,6 +155,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'ProjectPage',
@@ -181,6 +182,7 @@ export default {
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
         const usersStore = useUsersStore()
+        const runtimeConfig = useRuntimeConfig()
 
         const modals = ref({
             project: {
@@ -269,13 +271,14 @@ export default {
             organizationsStore,
             projectsStore,
             usersStore,
+            runtimeConfig,
         }
     },
 
     data() {
         return {
             similarProjects: [],
-            sockerserver: import.meta.env.VITE_APP_WSS_HOST,
+            sockerserver: this.runtimeConfig.public.appWssHost,
             provider: null,
             loading: true,
             comments: [],

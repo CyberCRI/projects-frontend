@@ -1,5 +1,9 @@
+/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/require-name-property */
 import { patchUser } from '@/api/people.service'
 import useUsersStore from '@/stores/useUsers'
+
+import { defineComponent } from 'vue'
 
 type OnboardingKey =
     | 'show_welcome'
@@ -15,8 +19,7 @@ type OnboardingKey =
 export type OnboardingStatusType = {
     [key in OnboardingKey]: boolean | number
 }
-
-export default {
+export default defineComponent({
     methods: {
         async onboardingTrap(key: OnboardingKey, val: boolean) {
             // TODO pinia check this
@@ -53,4 +56,4 @@ export default {
             }
         },
     },
-}
+})
