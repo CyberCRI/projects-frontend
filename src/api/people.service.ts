@@ -86,8 +86,7 @@ export async function patchUserSkill(
     skill_id: number,
     body: UserPrivacyPatchModel
 ) {
-    return (await useAPI(`user/${user_id}/skill/${skill_id}/`, { body, method: 'PATCH' })).data
-        .value
+    return await useAPI(`user/${user_id}/skill/${skill_id}/`, { body, method: 'PATCH' }) //.data.value
 }
 
 export async function deleteUserSkill(user_id: string | number, skill_id: number) {
