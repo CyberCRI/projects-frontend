@@ -14,7 +14,8 @@
 .news-content,
 .event-information,
 .instruction-content,
-.homepage-introduction-text {
+.homepage-introduction-text,
+.blog-entry .entry-body {
     pre.lpi-code-block {
         code.hljs {
             display: block;
@@ -332,6 +333,7 @@
             vertical-align: top;
             box-sizing: border-box;
             position: relative;
+            hyphens: auto;
         }
 
         td {
