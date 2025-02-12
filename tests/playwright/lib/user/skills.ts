@@ -56,7 +56,7 @@ async function removeSkills(page, type) {
     const addedTags = await page.locator(`[data-test^="${type}-editor-"]`).all()
     logger.info(addedTags)
     for (const tag of addedTags) {
-        await tag.locator(`[data-test^="delete-${type}-"]`).click()
+        await tag.locator(`.delete-action.desktop [data-test^="delete-${type}-"]`).click()
         await page.locator(`.modal [data-test="confirm-destroy"]`).click()
         await delay(1000)
     }
