@@ -28,6 +28,14 @@ export function fixTables(contentNode) {
         if (table.offsetWidth <= table.parentNode?.offsetWidth) {
             table.classList.add('auto-width')
         }
+
+        // fix a (transitional or resolved since ?) bug in tiptap table
+        // that affect some tables
+        const styleString = table.getAttribute('style')
+        if (styleString) {
+            const fixedStyle = styleString.replace('minWidth:', 'min-width:')
+            table.setAttribute('style', fixedStyle)
+        }
     })
 }
 
