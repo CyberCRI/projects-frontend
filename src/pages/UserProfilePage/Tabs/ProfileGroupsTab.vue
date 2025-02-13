@@ -54,6 +54,7 @@ import GroupCard from '@/components/group/GroupCard.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
     name: 'ProfileGroupsTab',
@@ -74,6 +75,12 @@ export default {
         },
     },
 
+    setup() {
+        const usersStore = useUsersStore()
+        return {
+            usersStore,
+        }
+    },
     data() {
         return {
             listLimit: 12,
