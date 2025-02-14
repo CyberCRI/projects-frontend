@@ -308,12 +308,12 @@ export default {
             this.form.team.members = []
             this.form.team.owners = []
             this.form.team.reviewers = []
-            this.form.team.people_groups = []
+            this.form.team.owner_groups = []
+            this.form.team.reviewer_groups = []
+            this.form.team.member_groups = []
 
             team.forEach((user) => {
-                if (this.$filters.isNotGroup(user.user))
-                    this.form.team[user.role].push(user.user.id)
-                else this.form.team.people_groups.push(user.user.id)
+                this.form.team[user.role].push(user.user.id)
             })
         },
 

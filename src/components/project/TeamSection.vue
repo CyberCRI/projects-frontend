@@ -109,19 +109,12 @@ export default {
     methods: {
         addUser(payload) {
             payload.forEach((user) => {
-                if (this.$filters.isNotGroup(user)) {
-                    // current user is automatically added as owner
-                    // so dont duplicate him
-                    if (user.id !== this.currentUser.id) {
-                        this.projectUsers.push({
-                            user: user,
-                            role: user.role,
-                        })
-                    }
-                } else {
+                // current user is automatically added as owner
+                // so dont duplicate him
+                if (this.$filters.isGroup(user) || user.id !== this.currentUser.id) {
                     this.projectUsers.push({
                         user: user,
-                        role: 'people_groups',
+                        role: user.role,
                     })
                 }
             })
@@ -142,6 +135,9 @@ export default {
                 if (role === 'owners') return 'role.editor'
                 else if (role === 'members') return 'role.teammate'
                 else if (role === 'reviewers') return 'role.reviewer'
+                else if (role === 'owner_groups') return 'role.editor-groups'
+                else if (role === 'reviewer_groups') return 'role.reviewer-groups'
+                else if (role === 'member_groups') return 'role.teammate-groups'
             }
             return null
         },

@@ -193,7 +193,9 @@ export default {
                 ...(this.team.owners || []),
                 ...(this.team.reviewers || []),
                 ...(this.team.members || []),
-                ...(this.team.people_groups || []),
+                ...(this.team.owner_groups || []),
+                ...(this.team.reviewer_groups || []),
+                ...(this.team.member_groups || []),
             ]
         },
 
