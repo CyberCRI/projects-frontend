@@ -37,12 +37,16 @@
                 </template>
             </ToolTip>
         </div>
-        <div class="role-option-list">
+        <!-- users -->
+        <div class="role-option-list" v-if="userList?.length">
+            <h4>
+                {{ userList?.length > 1 ? $t('result_box.people') : $t('result_box.person') }}
+            </h4>
             <div v-for="user in userList" :key="user.id" class="role-options-item">
                 <div>{{ user.given_name }} {{ user.family_name }}</div>
                 <div class="role-block">
                     <div
-                        v-for="roleOption in roleOptions"
+                        v-for="roleOption in userRoleOptions"
                         :key="roleOption.value"
                         class="role-item"
                     >
@@ -53,7 +57,36 @@
                                     :value="roleOption.value"
                                     :data-test="roleOption.dataTest"
                                     type="radio"
-                                    @change="selectRole(user, roleOption.value)"
+                                    @change="selectUserRole(user, roleOption.value)"
+                                />{{ $filters.capitalize(roleOption.label) }}</label
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- groups -->
+        <div class="role-option-list" v-if="groupList?.length">
+            <h4>
+                {{ groupList?.length > 1 ? $t('result_box.groups') : $t('result_box.group') }}
+            </h4>
+            <div v-for="group in groupList" :key="group.id" class="role-options-item">
+                <div>{{ group.name }}</div>
+                <div class="role-block">
+                    <div
+                        v-for="roleOption in groupRoleOptions"
+                        :key="roleOption.value"
+                        class="role-item"
+                    >
+                        <div v-if="roleOption.condition" class="radio-block">
+                            <label class="form-control">
+                                <input
+                                    v-model="group.role"
+                                    :value="roleOption.value"
+                                    :data-test="roleOption.dataTest"
+                                    type="radio"
+                                    @change="selectGroupRole(group, roleOption.value)"
                                 />{{ $filters.capitalize(roleOption.label) }}</label
                             >
                         </div>
@@ -94,7 +127,12 @@ export default {
             default: () => {},
         },
 
-        selectedRole: {
+        selectedUserRole: {
+            type: String,
+            default: null,
+        },
+
+        selectedGroupRole: {
             type: String,
             default: null,
         },
@@ -107,19 +145,25 @@ export default {
 
     data() {
         return {
-            role: 'owners',
+            // userRole: 'owners',
+            // groupRole: 'member_groups',
             userList: [],
             groupList: [],
         }
     },
 
     mounted() {
-        if (this.selectedRole && this.isEditMode) this.role = this.selectedRole
+        // if (this.selectedUserRole && this.isEditMode) this.userRole = this.selectedUerRole
+        // if (this.selectedGroupRole && this.isEditMode) this.groupRole = this.selectedGroupRole
+
         this.userList = this.selectedUsers.filter(this.$filters.isNotGroup).map((user) => ({
             ...user,
-            role: this.selectedRole || 'owners',
+            role: this.selectedUserRole || 'owners',
         }))
-        this.groupList = this.selectedUsers.filter(this.$filters.isGroup)
+        this.groupList = this.selectedUsers.filter(this.$filters.isGroup).map((user) => ({
+            ...user,
+            role: this.selectedGroupRole || 'member_groups',
+        }))
         /* This is call is here to set up and update the user status on all parents */
         /* Also this used to be a watcher */
         this.$emit('select-role', this.userList.concat(this.groupList))
@@ -141,7 +185,7 @@ export default {
                 return orgCategories.some((category) => category.is_reviewable)
             }
         },
-        roleOptions() {
+        userRoleOptions() {
             return [
                 {
                     value: 'owners',
@@ -166,13 +210,45 @@ export default {
                 },
             ].filter((option) => option.condition)
         },
+
+        groupRoleOptions() {
+            return [
+                {
+                    value: 'owner_groups',
+                    label: this.$filters.capitalize(this.$t('role.editor')),
+                    condition: true,
+                    dataTest: 'button-group-role-editor',
+                    tip: this.$t('role.role-editor'),
+                },
+                {
+                    value: 'reviewer_groups',
+                    label: this.$filters.capitalize(this.$t('role.reviewer')),
+                    condition: this.isReviewable,
+                    dataTest: 'button-group-role-reviewer',
+                    tip: this.$t('role.role-reviewer'),
+                },
+                {
+                    value: 'member_groups',
+                    label: this.$filters.capitalize(this.$t('role.teammate')),
+                    condition: true,
+                    dataTest: 'button-group-role-teammate',
+                    tip: this.$t('role.role-teammate'),
+                },
+            ].filter((option) => option.condition)
+        },
     },
 
     methods: {
-        selectRole(user, role) {
+        selectUserRole(user, role) {
             const index = this.userList.findIndex((usr) => usr.id === user.id)
 
             this.userList[index].role = role
+            this.$emit('select-role', this.userList.concat(this.groupList))
+        },
+        selectGroupRole(group, role) {
+            const index = this.groupList.findIndex((grp) => grp.id === group.id)
+
+            this.groupList[index].role = role
             this.$emit('select-role', this.userList.concat(this.groupList))
         },
     },

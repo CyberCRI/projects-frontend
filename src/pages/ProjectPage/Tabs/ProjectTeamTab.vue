@@ -8,6 +8,7 @@
             />
         </div>
 
+        <!-- owners -->
         <SectionHeader
             v-if="owners && owners.length"
             :has-button="false"
@@ -28,7 +29,7 @@
                 <UserCard :user="owner" @click="openProfileDrawer(owner)" />
             </ProjectTeamEditor>
         </DynamicGrid>
-
+        <!-- members -->
         <SectionHeader
             v-if="members && members.length"
             :has-button="false"
@@ -50,6 +51,7 @@
             </ProjectTeamEditor>
         </DynamicGrid>
 
+        <!-- reviewers -->
         <SectionHeader
             v-if="reviewers && reviewers.length"
             :has-button="false"
@@ -71,21 +73,84 @@
             </ProjectTeamEditor>
         </DynamicGrid>
 
+        <!-- owner groups -->
         <SectionHeader
-            v-if="groups && groups.length"
+            v-if="owner_groups && owner_groups.length"
             :has-button="false"
-            :quantity="groups.length"
-            :title="$filters.capitalize($t('role.group'))"
+            :quantity="owner_groups.length"
+            :title="$filters.capitalize($t('role.editor-groups'))"
         />
-        <DynamicGrid v-if="groups && groups.length" :min-gap="gridGap" class="user-card-ctn">
+        <DynamicGrid
+            v-if="owner_groups && owner_groups.length"
+            :min-gap="gridGap"
+            class="user-card-ctn"
+        >
             <ProjectTeamEditor
-                v-for="group in groups"
+                v-for="group in owner_groups"
                 :key="group.id"
-                :can-be-edited="false"
+                :can-be-edited="canEditProject"
                 :can-be-removed="canEditProject"
                 @remove-user="launchConfirmModal(group, 'groups')"
                 @edit-user="
-                    projectLayoutToggleAddModal('teamMember', { user: group, role: 'reviewers' })
+                    projectLayoutToggleAddModal('teamMember', { user: group, role: 'owner_groups' })
+                "
+            >
+                <GroupCard :group="group" />
+            </ProjectTeamEditor>
+        </DynamicGrid>
+
+        <!-- reviewer groups -->
+        <SectionHeader
+            v-if="reviewer_groups && reviewer_groups.length"
+            :has-button="false"
+            :quantity="reviewer_groups.length"
+            :title="$filters.capitalize($t('role.reviewer-groups'))"
+        />
+        <DynamicGrid
+            v-if="reviewer_groups && reviewer_groups.length"
+            :min-gap="gridGap"
+            class="user-card-ctn"
+        >
+            <ProjectTeamEditor
+                v-for="group in reviewer_groups"
+                :key="group.id"
+                :can-be-edited="canEditProject"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(group, 'groups')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', {
+                        user: group,
+                        role: 'reviewer_groups',
+                    })
+                "
+            >
+                <GroupCard :group="group" />
+            </ProjectTeamEditor>
+        </DynamicGrid>
+
+        <!-- reviewer groups -->
+        <SectionHeader
+            v-if="member_groups && member_groups.length"
+            :has-button="false"
+            :quantity="member_groups.length"
+            :title="$filters.capitalize($t('role.teammate-groups'))"
+        />
+        <DynamicGrid
+            v-if="member_groups && member_groups.length"
+            :min-gap="gridGap"
+            class="user-card-ctn"
+        >
+            <ProjectTeamEditor
+                v-for="group in member_groups"
+                :key="group.id"
+                :can-be-edited="canEditProject"
+                :can-be-removed="canEditProject"
+                @remove-user="launchConfirmModal(group, 'groups')"
+                @edit-user="
+                    projectLayoutToggleAddModal('teamMember', {
+                        user: group,
+                        role: 'member_groups',
+                    })
                 "
             >
                 <GroupCard :group="group" />
@@ -220,8 +285,16 @@ export default {
             return this.team.reviewers
         },
 
-        groups() {
-            return this.team.people_groups
+        owner_groups() {
+            return this.team.owner_groups
+        },
+
+        member_groups() {
+            return this.team.member_groups
+        },
+
+        reviewer_groups() {
+            return this.team.reviewer_groups
         },
     },
 

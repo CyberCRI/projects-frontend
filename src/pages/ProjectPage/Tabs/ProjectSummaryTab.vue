@@ -37,7 +37,7 @@
             <div class="right">
                 <MapRecap v-if="locations.length" :locations="locations" />
 
-                <GroupMemberSection
+                <ProjectMemberSection
                     v-if="mergedTeam?.length"
                     :members="mergedTeam"
                     @user-click="openProfileDrawer"
@@ -90,7 +90,7 @@ import MapRecap from '@/components/project/map/MapRecap.vue'
 import ResourcesRecap from '@/components/project/resource/ResourcesRecap.vue'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import SimilarProjects from '@/components/project/SimilarProjects.vue'
-import GroupMemberSection from '@/components/group/GroupMemberSection/GroupMemberSection.vue'
+import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import ProjectTab from '@/mixins/ProjectTab.ts'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
@@ -114,7 +114,7 @@ export default {
         ResourcesRecap,
         ReviewRecap,
         SimilarProjects,
-        GroupMemberSection,
+        ProjectMemberSection,
         UserProfile,
         BaseDrawer,
     },
@@ -190,10 +190,15 @@ export default {
 
         mergedTeam() {
             return [
-                ...(this.team.owners || []),
-                ...(this.team.reviewers || []),
-                ...(this.team.members || []),
-                ...(this.team.people_groups || []),
+                ...(this.team.owners || []).map((o) => ({ ...o, role: 'owners' })),
+                ...(this.team.reviewers || []).map((o) => ({ ...o, role: 'reviewers' })),
+                ...(this.team.members || []).map((o) => ({ ...o, role: 'members' })),
+                ...(this.team.owner_groups || []).map((o) => ({ ...o, role: 'owner_groups' })),
+                ...(this.team.reviewer_groups || []).map((o) => ({
+                    ...o,
+                    role: 'reviewer_groups',
+                })),
+                ...(this.team.member_groups || []).map((o) => ({ ...o, role: 'member_groups' })),
             ]
         },
 

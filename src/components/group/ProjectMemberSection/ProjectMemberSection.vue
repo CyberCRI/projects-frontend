@@ -8,7 +8,7 @@
                 @redirect-button-clicked="goTo"
             />
             <div class="team-ctn">
-                <GroupMemberItem
+                <ProjectMemberItem
                     v-for="member in members.slice(0, totalDisplayed)"
                     :key="member.id"
                     :user="member"
@@ -32,17 +32,17 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 
-import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
+import ProjectMemberItem from '@/components/people/ProjectMemberItem/ProjectMemberItem.vue'
 import viewportWidth from '@/mixins/viewportWidth.ts'
 
 export default {
-    name: 'GroupMemberSection',
+    name: 'ProjectMemberSection',
 
     emits: ['user-click'],
 
     mixins: [viewportWidth],
 
-    components: { LpiButton, GroupMemberItem, SectionHeader },
+    components: { LpiButton, ProjectMemberItem, SectionHeader },
 
     props: {
         members: {

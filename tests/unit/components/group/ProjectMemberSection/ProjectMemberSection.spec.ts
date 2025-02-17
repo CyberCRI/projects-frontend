@@ -1,6 +1,6 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
-import GroupMemberSection from '@/components/group/GroupMemberSection/GroupMemberSection.vue'
+import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { describe, expect, it } from 'vitest'
 import { GroupMemberFactory } from '@/../tests/factories/group-member.factory'
 
@@ -12,7 +12,7 @@ const i18n = {
     },
 }
 
-describe('GroupMemberSection.vue', () => {
+describe('ProjectMemberSection.vue', () => {
     let wrapper
     let defaultParams
 
@@ -25,8 +25,8 @@ describe('GroupMemberSection.vue', () => {
         }
     })
 
-    it('should render GroupMemberSection component', () => {
-        wrapper = lpiMount(GroupMemberSection, defaultParams)
+    it('should render ProjectMemberSection component', () => {
+        wrapper = lpiMount(ProjectMemberSection, defaultParams)
         expect(wrapper.exists()).toBe(true)
     })
 })

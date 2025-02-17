@@ -20,7 +20,8 @@
             v-if="isSelectingRoles"
             :is-edit-mode="!!this.editedUser"
             :selected-categories="selectedCategories"
-            :selected-role="selectedRole"
+            :selected-user-role="selectedUserRole"
+            :selected-group-role="selectedGroupRole"
             :selected-users="selectedUsers"
             @back-to-user-selection="goBackToUserSelection"
             @select-role="selectRole"
@@ -81,7 +82,8 @@ export default {
             isSelectingUser: true,
             validatePick: false,
             selectedUsers: [],
-            selectedRole: 'owners',
+            selectedUserRole: 'owners',
+            selectedGroupRole: 'owners',
             isSelectingRoles: false,
             asyncing: false,
             form: {
@@ -89,7 +91,9 @@ export default {
                     members: [],
                     owners: [],
                     reviewers: [],
-                    people_groups: [],
+                    member_groups: [],
+                    owner_groups: [],
+                    reviewer_groups: [],
                 },
             },
         }
@@ -110,12 +114,14 @@ export default {
             handler: function () {
                 if (this.editedUser) {
                     this.selectedUsers = [this.editedUser.user]
-                    this.selectedRole = this.editedUser.role
+                    this.selectedUserRole = this.editedUser.role
+                    this.selectedGroupRole = this.editedUser.role
                     this.isSelectingRoles = true
                     this.isSelectingUser = false
                 } else {
                     this.selectedUsers = []
-                    this.selectedRole = 'owners'
+                    this.selectedUserRole = 'owners'
+                    this.selectedGroupRole = 'member_groups'
                     this.isSelectingUser = true
                     this.isSelectingRoles = false
                 }
@@ -178,8 +184,7 @@ export default {
         },
 
         selectAction() {
-            let only_groups = this.selectedUsers.every(this.$filters.isGroup)
-            if (this.isSelectingRoles || only_groups) {
+            if (this.isSelectingRoles) {
                 this.isSelectingUser = false
                 this.updateTeam()
                 this.addTeamMember()
@@ -195,14 +200,12 @@ export default {
             this.form.team.members = []
             this.form.team.owners = []
             this.form.team.reviewers = []
-            this.form.team.people_groups = []
+            this.form.team.member_groups = []
+            this.form.team.owner_groups = []
+            this.form.team.reviewer_groups = []
 
             this.selectedUsers.forEach((user) => {
-                if (this.$filters.isNotGroup(user)) {
-                    this.form.team[user.role].push(user.id)
-                } else {
-                    this.form.team.people_groups.push(user.id)
-                }
+                this.form.team[user.role].push(user.id)
             })
         },
     },
