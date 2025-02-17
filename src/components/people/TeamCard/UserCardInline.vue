@@ -30,7 +30,11 @@
 
                 <div v-if="user.job" class="title">{{ user.job }}</div>
 
-                <div v-if="user.description" class="title" v-html="user.description"></div>
+                <div
+                    v-if="user.short_description"
+                    class="title"
+                    v-html="user.short_description"
+                ></div>
             </div>
         </div>
 
