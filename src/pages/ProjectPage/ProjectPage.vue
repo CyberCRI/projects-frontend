@@ -412,7 +412,6 @@ export default defineNuxtComponent({
 
         const getProjectMessages = async (project_id) => {
             try {
-                console.log('getprojmess')
                 const response = await getProjectMessagesApi(project_id)
                 projectMessages.value = response.results
             } catch (err) {
@@ -430,7 +429,6 @@ export default defineNuxtComponent({
         }
 
         const setProject = async (projectSlugOrId = route.params.slugOrId) => {
-            console.log('setProject')
             loading.value = true
             projectsStore
                 .getProject(projectSlugOrId)
@@ -452,8 +450,6 @@ export default defineNuxtComponent({
                         getLinkResources(),
                         getBlogEntries(),
                     ]
-
-                    console.log(isMemberOrAdmin.value)
 
                     if (isMemberOrAdmin.value) {
                         extraData.push(
@@ -583,54 +579,62 @@ export default defineNuxtComponent({
             cleanupProvider()
         })
 
-        const projectData = await getProject(route.params.slugOrId, true)
+        try {
+            // project might need access right
 
-        useHeadSafe({
-            title: projectData.title,
-            meta: [
-                {
-                    name: 'description',
-                    content: projectData.purpose,
-                },
+            const projectData = await getProject(route.params.slugOrId, true)
 
-                {
-                    name: 'og:title',
-                    content: projectData.title,
-                },
+            if (projectData)
+                useHeadSafe({
+                    title: projectData.title,
+                    meta: [
+                        {
+                            name: 'description',
+                            content: projectData.purpose,
+                        },
 
-                {
-                    name: 'og:description',
-                    content: projectData.purpose,
-                },
+                        {
+                            name: 'og:title',
+                            content: projectData.title,
+                        },
 
-                {
-                    name: 'og:url',
-                    content: useRequestURL().toString(),
-                },
+                        {
+                            name: 'og:description',
+                            content: projectData.purpose,
+                        },
 
-                {
-                    name: 'og:image',
-                    content: projectData?.header_image?.variations?.medium,
-                },
+                        {
+                            name: 'og:url',
+                            content: useRequestURL().toString(),
+                        },
 
-                // Twitter
+                        {
+                            name: 'og:image',
+                            content: projectData?.header_image?.variations?.medium,
+                        },
 
-                {
-                    name: 'twitter:title',
-                    content: projectData.title,
-                },
+                        // Twitter
 
-                {
-                    name: 'twitter:description',
-                    content: projectData.purpose,
-                },
+                        {
+                            name: 'twitter:title',
+                            content: projectData.title,
+                        },
 
-                {
-                    name: 'twitter:image',
-                    content: projectData?.header_image?.variations?.medium,
-                },
-            ],
-        })
+                        {
+                            name: 'twitter:description',
+                            content: projectData.purpose,
+                        },
+
+                        {
+                            name: 'twitter:image',
+                            content: projectData?.header_image?.variations?.medium,
+                        },
+                    ],
+                })
+        } catch (err) {
+            // dgaf
+            // console.log(err)
+        }
 
         //onCreated(() => {
         //onMounted(() => {

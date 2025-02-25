@@ -31,8 +31,8 @@ const useAPI = (url: string, options) => {
             },
             onResponseError({ options, error }) {
                 if (options.noError) {
-                    console.error(error)
-                    return Promise.reject(error)
+                    // console.error(error)
+                    return Promise.resolve(null)
                 }
 
                 const { t } = useI18n()
