@@ -18,7 +18,7 @@ export async function generalInfo(page, user) {
     await page
         .locator('[data-test="linkedin-input"]')
         .fill('https://www.linked.in/' + user.firstName)
-    await page.locator('[data-test="twitter-input"]').fill('https://www.x.com/' + user.firstName)
+    // await page.locator('[data-test="twitter-input"]').fill('https://www.x.com/' + user.firstName)
     await page.locator('[data-test="title-input"]').fill('Testting as ' + user.firstName)
     await page
         .locator('[data-test="location-input"]')
