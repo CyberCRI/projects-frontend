@@ -111,6 +111,7 @@ export default {
         },
 
         async loadProjects(specificPageIndex = null) {
+            if (!import.meta.client) return
             const filters = {
                 ...this.search,
                 organizations: [this.organizationsStore.current.code],

@@ -55,7 +55,7 @@
             @confirm="saveImageSizes"
             data-test="image-resizer-drawer"
         >
-            <ImageResizer
+            <LazyImageResizer
                 v-if="showImageResizer"
                 ref="imageResizer"
                 :image="displayedImage"
@@ -69,7 +69,7 @@
 </template>
 <script>
 import useAPI from '@/composables/useAPI.ts'
-import ImageResizer from '@/components/base/form/ImageResizer.vue'
+import { LazyImageResizer } from '#components'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
@@ -82,7 +82,7 @@ export default {
 
     mixins: [imageMixin],
 
-    components: { CroppedImage, ImageResizer, ImageInput, LinkButton, BaseDrawer },
+    components: { CroppedImage, LazyImageResizer, ImageInput, LinkButton, BaseDrawer },
 
     props: {
         imageSizes: {
@@ -137,6 +137,7 @@ export default {
             defaultPictureFiles: [],
             defaultPictureIndex: 0,
             displayableImage: '',
+            isOnClient: false,
         }
     },
 

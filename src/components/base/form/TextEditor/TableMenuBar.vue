@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { LpiBubbleMenu } from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
+import LpiBubbleMenu from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 import MenuItem from './MenuItem.vue'
 import { posToDOMRect } from '@tiptap/core'
 import ContextualToolMenu from './ContexttualToolMenu.vue'

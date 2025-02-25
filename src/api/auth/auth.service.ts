@@ -1,11 +1,13 @@
 import useAPI from '@/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
 import useKeycloak from '@/api/auth/keycloak'
-import router from '@/router'
+// import router from '@/router'
 import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { useRuntimeConfig } from '#imports'
-const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dashboard`
+
+// TODO fix this in uxt sever side (windows is undefined)
+const DASHBOARD_URL = `${window?.location?.protocol}//${window?.location?.host}/dashboard`
 
 /**
  *  The Authorization Code Flow with Proof Key for Code Exchange is described here :
@@ -78,7 +80,8 @@ function getLogoutRedirectUri() {
     const projectsStore = useProjectsStore()
     // redirect to current page after logout
     let redirectUri = keycloak.getCurrentUrl()
-    const currentRoute = router.currentRoute
+    // TODO do this the nuxt way
+    const currentRoute = null // router.currentRoute
 
     // redirect to home after logout if we are on 404 page
     if (currentRoute && currentRoute.value.name == 'page404') {

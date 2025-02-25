@@ -129,6 +129,7 @@ export default {
     watch: {
         isOpened: {
             handler: function (neo, old) {
+                if (!import.meta.client) return
                 if (neo !== old) {
                     if (neo) {
                         document
@@ -153,6 +154,7 @@ export default {
     },
 
     unmounted() {
+        if (!import.meta.client) return
         // if destroyed before closing, need to cleanup un-scrollable body
         document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
     },

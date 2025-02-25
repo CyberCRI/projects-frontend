@@ -1,31 +1,33 @@
 <template>
-    <!-- oboarding todos -->
-    <OnboardingTodoBlock v-if="showOnbordingTodos" />
+    <div>
+        <!-- oboarding todos -->
+        <OnboardingTodoBlock v-if="showOnbordingTodos" />
 
-    <HomeHeaderConnected v-if="loggedIn" />
-    <HomeHeaderAnonymous v-else />
+        <HomeHeaderConnected v-if="loggedIn" />
+        <HomeHeaderAnonymous v-else />
 
-    <div class="page-section-medium">
-        <div class="search-input-container">
-            <HomeSearchOptions class="search-options" @search="search" />
+        <div class="page-section-medium">
+            <div class="search-input-container">
+                <HomeSearchOptions class="search-options" @search="search" />
+            </div>
         </div>
-    </div>
-    <div class="page-section-wide bottom-page">
-        <div class="projects-and-people">
-            <ProjectCategoriesDropdown :dropdown-label="$t('project.categories')">
-                <template #default="{ category }">
-                    <ProjectCategoriesDropdownElementLink :category="category" />
-                </template>
-            </ProjectCategoriesDropdown>
-            <HomeButtons v-if="loggedIn" />
-            <LocationsLink />
-            <RecommendationBlock />
-        </div>
-        <div class="all-news">
-            <div class="select-news"></div>
-            <div class="news">
-                <div class="other-news">
-                    <HomeNewsfeed />
+        <div class="page-section-wide bottom-page">
+            <div class="projects-and-people">
+                <ProjectCategoriesDropdown :dropdown-label="$t('project.categories')">
+                    <template #default="{ category }">
+                        <ProjectCategoriesDropdownElementLink :category="category" />
+                    </template>
+                </ProjectCategoriesDropdown>
+                <HomeButtons v-if="loggedIn" />
+                <LocationsLink />
+                <RecommendationBlock />
+            </div>
+            <div class="all-news">
+                <div class="select-news"></div>
+                <div class="news">
+                    <div class="other-news">
+                        <HomeNewsfeed />
+                    </div>
                 </div>
             </div>
         </div>

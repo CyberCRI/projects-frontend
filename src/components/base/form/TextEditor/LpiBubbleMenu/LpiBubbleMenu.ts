@@ -12,7 +12,7 @@ import { defineComponent, h, onBeforeUnmount, onMounted, PropType, ref } from 'v
  * so we can do accurate check on current selection type
  */
 
-export const LpiBubbleMenu = defineComponent({
+export default defineComponent({
     name: 'LpiBubbleMenu',
 
     props: {

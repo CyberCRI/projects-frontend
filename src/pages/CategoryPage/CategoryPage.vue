@@ -117,7 +117,7 @@ export default {
 
         category() {
             if (this.id) {
-                window.scrollTo(0, 0)
+                if (import.meta.client) window.scrollTo(0, 0)
                 return this.projectCategoriesStore.allByIds[this.$route.params.id]
             }
 

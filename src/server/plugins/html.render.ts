@@ -6,35 +6,6 @@ export default defineNitroPlugin((nitroApp) => {
     const runtimeConfig = useRuntimeConfig()
     nitroApp.hooks.hook('render:html', (html /*, { event }*/) => {
         html.head.push(
-            `<title>Projects</title>
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
-
-        <meta content="Share your projects to increase impact" name="title" />
-        <meta
-            content="Projects is a platform to document and promote projects for common good"
-            name="description"
-        />`,
-
-            `<!-- open graph -->
-        <meta content="Share your projects to increase impact" property="og:title" />
-        <meta content="website" property="og:type" />
-        <meta
-            content="Projects is a platform to document and promote projects for common good"
-            property="og:description"
-        />
-        <meta content="https://${runtimeConfig.public.appApiUrl}" property="og:url" />
-        <meta property="og:locale" />
-        <meta content="${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png" property="og:image" />`,
-            `<!-- twitter -->
-        <meta content="Share your projects to increase impact" name="twitter:title" />
-        <meta
-            content="Projects is a platform to document and promote projects for common good"
-            name="twitter:description"
-        />`,
-            `<meta content="summary_large_image" name="twitter:card" />`,
-            `<meta content="${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_twt.png" name="twitter:image" />`,
-            `<link href="${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico" rel="icon" />`,
-
             `<style>
             body {
                 margin: 0;
@@ -103,6 +74,8 @@ export default defineNitroPlugin((nitroApp) => {
         </style>        
         `
         )
+
+        // TODO: remove ?
         html.htmlAttrs.push("data-theme='light'")
 
         html.body = [

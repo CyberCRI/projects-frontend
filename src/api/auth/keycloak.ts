@@ -4,7 +4,7 @@ import {
     createRandomString,
     getRefreshTokenInterval,
 } from '@/api/auth/keycloakUtils'
-import router from '@/router/index'
+// import router from '@/router/index'
 import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
 import useToasterStore from '@/stores/useToaster'
@@ -209,6 +209,8 @@ export default function useKeycloak() {
             const home = '/dashboard'
             // const { t } = useI18n()
             toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
+            // TOOO do this the nuxt way
+            const router = useRouter()
             router.push(home)
         },
     }

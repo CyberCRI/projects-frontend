@@ -17,6 +17,11 @@ import useLanguagesStore from '@/stores/useLanguages'
 import { LanguageType } from '@/models/types'
 import { defineStore } from 'pinia'
 
+// fix undefined localStaorage on sever
+let _localStorage = null
+if (import.meta.client) _localStorage = window.localStorage
+let localStorage = _localStorage
+
 export interface UsersState {
     refreshToken?: string
     refreshTokenExp?: number
@@ -36,15 +41,15 @@ export interface UsersState {
 const useUsersStore = defineStore('users', {
     state: (): UsersState => {
         // store is initialized before app is started, so we must check expiration here too
-        checkExpiredToken()
+        if (import.meta.client) checkExpiredToken()
         return {
-            refreshToken: localStorage.getItem('REFRESH_TOKEN'),
+            refreshToken: localStorage?.getItem('REFRESH_TOKEN'),
             userFromToken: null,
             userFromApi: null,
-            accessToken: localStorage.getItem('ACCESS_TOKEN'),
+            accessToken: localStorage?.getItem('ACCESS_TOKEN'),
             keycloak_id: '',
             permissions: {},
-            id_token: localStorage.getItem('ID_TOKEN'),
+            id_token: localStorage?.getItem('ID_TOKEN'),
             roles: [],
             notificationsCount: 0,
             notificationsSettings: null,
@@ -214,10 +219,10 @@ const useUsersStore = defineStore('users', {
 
         // ex mutations
         setUser(payload: UsersState) {
-            localStorage.setItem('REFRESH_TOKEN', payload.refreshToken)
-            localStorage.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
-            localStorage.setItem('ACCESS_TOKEN', payload.accessToken)
-            localStorage.setItem('ID_TOKEN', payload.id_token)
+            localStorage?.setItem('REFRESH_TOKEN', payload.refreshToken)
+            localStorage?.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
+            localStorage?.setItem('ACCESS_TOKEN', payload.accessToken)
+            localStorage?.setItem('ID_TOKEN', payload.id_token)
             this.refreshToken = payload.refreshToken
             this.accessToken = payload.accessToken
             this.keycloak_id = payload.keycloak_id
@@ -228,12 +233,12 @@ const useUsersStore = defineStore('users', {
         },
 
         resetUser() {
-            localStorage.removeItem('REFRESH_TOKEN')
-            localStorage.removeItem('REFRESH_TOKEN_EXP')
-            localStorage.removeItem('ACCESS_TOKEN')
-            localStorage.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
-            localStorage.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
-            localStorage.removeItem('ID_TOKEN')
+            localStorage?.removeItem('REFRESH_TOKEN')
+            localStorage?.removeItem('REFRESH_TOKEN_EXP')
+            localStorage?.removeItem('ACCESS_TOKEN')
+            localStorage?.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
+            localStorage?.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
+            localStorage?.removeItem('ID_TOKEN')
             this.refreshToken = ''
             this.accessToken = ''
             this.keycloak_id = ''
