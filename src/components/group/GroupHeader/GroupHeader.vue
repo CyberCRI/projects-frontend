@@ -49,9 +49,6 @@
                         <button @click="facebookShare">
                             <IconImage name="Facebook" />
                         </button>
-                        <button @click="twitterShare">
-                            <IconImage name="Twitter" />
-                        </button>
                         <button @click="linkedinShare">
                             <IconImage name="Linkedin" />
                         </button>
@@ -133,9 +130,7 @@ export default {
         facebookShare() {
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
         },
-        twitterShare() {
-            window.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
-        },
+
         linkedinShare() {
             window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
         },

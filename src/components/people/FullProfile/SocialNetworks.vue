@@ -4,10 +4,6 @@
             <IconImage name="Facebook" />
         </a>
 
-        <a v-if="user.twitter" :href="user.twitter" target="_blank">
-            <IconImage name="Twitter" />
-        </a>
-
         <a v-if="user.linkedin" :href="user.linkedin" target="_blank">
             <IconImage name="Linkedin" />
         </a>

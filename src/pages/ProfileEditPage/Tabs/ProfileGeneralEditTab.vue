@@ -94,7 +94,7 @@
         </div>
 
         <!-- twitter -->
-        <div class="form-group">
+        <!--div class="form-group">
             <TextInput
                 v-model="form.twitter"
                 :label="$t('profile.edit.general.twitter.label')"
@@ -103,7 +103,7 @@
                 data-test="twitter-input"
             ></TextInput>
             <FieldErrors :errors="v$.form.twitter.$errors" />
-        </div>
+        </div-->
 
         <hr class="form-separator" />
 
