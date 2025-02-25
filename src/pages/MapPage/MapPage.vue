@@ -5,20 +5,7 @@
                 <LoaderComplex :label="$t('location.loading')" />
             </div>
         </Transition>
-        <div class="leaflet-map" :class="{ loading }">
-            <BaseMap ref="map" :config="config" :use-cluster="true">
-                <template #default="slotProps">
-                    <MapPointer
-                        v-for="location in projectLocations"
-                        :key="location.id"
-                        @mounted="slotProps.addPointer"
-                        @unmounted="slotProps.removePointer(location)"
-                        :location="location"
-                        :has-project-tip="true"
-                    />
-                </template>
-            </BaseMap>
-        </div>
+        <LazyGeneralMap v-if="isClient" :locations="projectLocations" :loading="loading" />
         <div v-if="!loading && !projectLocations.length" class="empty-map">
             {{ $t('map.empty') }}
         </div>
@@ -27,51 +14,36 @@
 
 <script>
 import imageMixin from '@/mixins/imageMixin.ts'
-import pageTitle from '@/mixins/pageTitle.ts'
 import LoaderComplex from '@/components/base/loader/LoaderComplex.vue'
-import BaseMap from '@/components/map/BaseMap.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
 import { getLocations } from '@/api/locations.services'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { LazyGeneralMap } from '#components'
 
 export default {
     name: 'MapPage',
 
-    mixins: [imageMixin, pageTitle],
+    mixins: [imageMixin],
 
     components: {
         LoaderComplex,
-        MapPointer,
-        BaseMap,
+        LazyGeneralMap,
     },
     setup() {
+        const isClient = import.meta.client
         const organizationsStore = useOrganizationsStore()
         return {
             organizationsStore,
+            isClient,
         }
     },
-    pageTitle() {
-        return this.$t('map.page-title')
-    },
+    // pageTitle() {
+    //     return this.$t('map.page-title')
+    // },
 
     data() {
         return {
             projectLocations: [],
             loading: true,
-            config: {
-                mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-                zoom: 1,
-                maxZoom: 17,
-                minZoom: 0,
-                maxBounds: [
-                    [-90, -175],
-                    [84, 195],
-                ],
-                maxBoundsViscosity: 1.0,
-                iconSize: [80, 69],
-                useCluster: true,
-                worldCopyJump: true,
-            },
         }
     },
 
@@ -100,7 +72,7 @@ export default {
             // ) {
             //     await this.getLocations(locations.next)
             // } else
-            if (this.$refs && this.$refs.map) this.$refs.map.centerMap()
+            // if (this.$refs && this.$refs.map) this.$refs.map.centerMap()
             /*
              ** The previous line checks if the refs are still set, in case the user leaves the page to fast
              ** Not checking this might create an error after the API calls are done.
@@ -144,15 +116,6 @@ export default {
         svg {
             margin: 0 auto $space-m;
         }
-    }
-
-    .leaflet-map {
-        transition: filter 1s ease;
-        overflow: hidden;
-    }
-
-    .leaflet-map.loading {
-        filter: blur(4px);
     }
 
     .leaflet-top {

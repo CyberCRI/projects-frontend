@@ -9,7 +9,7 @@ export function loadLocaleMessages() {
     }
 }
 
-export default defineI18nConfig(() => {
+export default defineI18nConfig((): any => {
     const runtimeConfig = useRuntimeConfig()
     return {
         locale: runtimeConfig.public.appI18nLocale || 'en',

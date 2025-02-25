@@ -203,6 +203,7 @@ export default {
     },
 
     scrollTo(node) {
+        if (!import.meta.client) return
         if (!node || !node.getBoundingClientRect) return
         const nodePosition = node.getBoundingClientRect().top
         const header = document.querySelector('#APP > .header')
@@ -215,6 +216,7 @@ export default {
     },
 
     resetScroll() {
+        if (!import.meta.client) return
         window.scroll(0, 0)
     },
 }

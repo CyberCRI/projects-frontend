@@ -1,14 +1,12 @@
 <template>
     <div id="APP" :class="[/*themeclass,*/ currentRouteName, { 'has-open-drawer': isLoading }]">
         <LpiHeader />
-
         <div id="scrollview" ref="scrollview" data-test="scrollview">
             <div class="main-view">
                 <NuxtPage />
             </div>
             <LpiFooter @on-click="toggleReportBugModal" />
         </div>
-
         <AppToastList />
     </div>
 </template>
@@ -22,6 +20,10 @@ import useUsersStore from '@/stores/useUsers.ts'
 import useKeycloak from '@/api/auth/keycloak.ts'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+useRuntimeHook('app:error', (error) => {
+    console.log('app:error', error)
+})
 
 const route = useRoute()
 const router = useRouter()
@@ -71,7 +73,7 @@ const onFocus = () => {
 }
 
 onMounted(() => {
-    if (window.socket.connected) {
+    if (window?.socket?.connected) {
         socket.disconnect()
     }
 

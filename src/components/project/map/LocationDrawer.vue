@@ -21,7 +21,7 @@
             <div class="full-screen-map-ctn project-map-ctn">
                 <div class="map-inner-ctn">
                     <div class="map">
-                        <BaseMap
+                        <LazyBaseMap
                             ref="map"
                             :key="mapkey"
                             :config="config"
@@ -51,7 +51,7 @@
                                     />
                                 </template>
                             </template>
-                        </BaseMap>
+                        </LazyBaseMap>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@ import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from '@/components/project/map/LocationForm.vue'
 //import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import BaseMap from '@/components/map/BaseMap.vue'
+import { LazyBaseMap } from '#components'
 import permissions from '@/mixins/permissions.ts'
 
 export default {
@@ -94,7 +94,7 @@ export default {
         LocationForm,
         MapPointer,
         //LocationTooltip,
-        BaseMap,
+        LazyBaseMap,
     },
 
     props: {

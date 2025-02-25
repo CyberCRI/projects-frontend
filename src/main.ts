@@ -1,38 +1,37 @@
-import fixLeaflet from '@/app/fixLeaflet'
+// import fixLeaflet from '@/app/fixLeaflet'
 import quickLogin from '@/app/quickLogin'
 
 //import initApp from '@/app/initApp'
 import initAnalytics from '@/app/initAnalytics'
 import initUser from '@/app/initUser'
 import initOrganization from './app/initOrganization'
-// import initSentry from '@/app/initSentry'
-import { useRuntimeConfig } from '#imports'
+import initSentry from '@/app/initSentry'
+import { useRuntimeConfig, useNuxtApp } from '#imports'
 
 import '@/design/scss/reset.scss'
 import '@/design/scss/main.scss'
 
-// quick reirect to keycloak login if url says so
-quickLogin()
+if (import.meta.client) {
+    // quick redirect to keycloak login if url says so
+    quickLogin()
 
-// bug fix for leaflet's marker
-// TODO: check if it is still needed
-fixLeaflet()
+    // bug fix for leaflet's marker
+    // TODO: check if it is still needed
+    // if (import.meta.client) fixLeaflet()
 
-// TODO: this is probably not used anymore, check this
-window['socket'] = { connected: false }
+    window['socket'] = { connected: false }
+}
 
 export default async function main(): Promise<void> {
     const runtimeConfig = useRuntimeConfig()
+    const nuxtApp = useNuxtApp()
     // add org code to html class for personalized fonts
-    document.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
+    document?.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
 
-    // init app
-    //await initApp(async (app) => {
     await initAnalytics()
-    await initUser()
+    if (import.meta.client) await initUser()
     await initOrganization()
-    //await initSentry(app)
-    //})
+    if (import.meta.client) await initSentry(nuxtApp.vueApp)
 }
 
 // let's go

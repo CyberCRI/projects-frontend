@@ -7,6 +7,7 @@
 </template>
 <script>
 import * as L from 'leaflet'
+import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster/dist/leaflet.markercluster.js'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
@@ -36,6 +37,9 @@ export default {
 
             markers: new Map(),
         }
+    },
+    beforeMount() {
+        fixLeaflet()
     },
 
     mounted() {

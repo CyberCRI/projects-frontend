@@ -2,7 +2,7 @@
     <div class="page-section-medium introduction" data-test="home-organization-header">
         <div class="banner">
             <h1 class="mobile-not-connected-main-title">
-                {{ organization.dashboard_title }}
+                {{ organization?.dashboard_title }}
             </h1>
             <div class="banner-wrapper" v-if="hasBannerImage">
                 <CroppedApiImage
@@ -23,7 +23,7 @@
                 }"
             >
                 <h1 class="image-main-title">
-                    {{ organization.dashboard_title }}
+                    {{ organization?.dashboard_title }}
                 </h1>
                 <template v-if="hasDescription">
                     <div

@@ -11,16 +11,22 @@ const apiProxy = {
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    ssr: false,
+    // ssr: false,
     compatibilityDate: '2024-11-01',
     devtools: { enabled: true },
     srcDir: 'src/',
     modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
 
-    plugins: ['~/filters/index.ts', '~/directives/index.ts'],
+    plugins: ['~/filters/index.ts', '~/directives/index.ts', '~/plugins/errorHandler.ts'],
     imports: {
-        autoImport: false,
+        autoImport: true, //false,
     },
+    components: [
+        {
+            path: '~/components',
+            pathPrefix: false,
+        },
+    ],
     vite: {
         resolve: {
             alias,
@@ -86,5 +92,85 @@ export default defineNuxtConfig({
     },
     i18n: {
         vueI18n: './i18n.config.ts', // if you are using custom path, default
+        // temp fix for a ssr warning, see https://github.com/nuxt-modules/i18n/issues/3350
+        locales: [
+            { code: 'en', name: 'English' },
+            { code: 'fr', name: 'Français' },
+        ],
+    },
+
+    nitro: { minify: import.meta.dev },
+
+    app: {
+        head: {
+            title: 'Project',
+            charset: 'urf-8',
+            viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+            link: [
+                {
+                    rel: 'icon',
+                    href: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/favicon.ico`,
+                },
+            ],
+            meta: [
+                {
+                    name: 'description',
+                    content:
+                        'Projects is a platform to document and promote projects for common good',
+                },
+
+                // Open Graph
+
+                {
+                    name: 'og:title',
+                    content: 'Share your projects to increase impact',
+                },
+
+                {
+                    name: 'og:type',
+                    content: 'website',
+                },
+
+                {
+                    name: 'og:description',
+                    content:
+                        'Projects is a platform to document and promote projects for common good',
+                },
+
+                {
+                    // TODO change to frontend url
+                    name: 'og:url',
+                    content: process.env.NUXT_PUBLIC_APP_API_URL,
+                },
+
+                {
+                    name: 'og:image',
+                    content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_og.png`,
+                },
+
+                // Twitter
+
+                {
+                    name: 'twitter:title',
+                    content: 'Share your projects to increase impact',
+                },
+
+                {
+                    name: 'twitter:description',
+                    content:
+                        'Projects is a platform to document and promote projects for common good',
+                },
+
+                {
+                    name: 'twitter:card',
+                    content: 'summary_large_image',
+                },
+
+                {
+                    name: 'twitter:image',
+                    content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_twt.png`,
+                },
+            ],
+        },
     },
 })

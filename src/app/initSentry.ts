@@ -1,10 +1,11 @@
 import * as Sentry from '@sentry/vue'
-import router from '@/router'
+// import router from '@/router'
 import { useRuntimeConfig } from '#imports'
 
 export default async function initSentry(app) {
     const runtimeConfig = useRuntimeConfig()
     const SENTRY_ENABLED = import.meta.env.NUXT_PUBLIC_APP_SENTRY_ENABLED
+    const router = useRouter()
     if (SENTRY_ENABLED) {
         Sentry.init({
             app,

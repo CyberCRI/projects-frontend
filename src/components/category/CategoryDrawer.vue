@@ -71,14 +71,15 @@
                 <BaseModal v-if="showImageResizer" @close="showImageResizer = false">
                     <template #header-title>Reframe image</template>
                     <template #content>
-                        <ImageResizer
+                        <LazyImageResizer
                             ref="imageResizer"
                             :image="displayedImage"
                             :image-sizes="category.imageSizes"
                             :ratio="pictureRatio"
                             from-center
                             @invalid-image-size="showImageResizer = false"
-                    /></template>
+                        />
+                    </template>
                     <template #footer>
                         <div class="image-resizer-actions">
                             <LpiButton
@@ -221,7 +222,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import { Sortable } from 'sortablejs-vue3'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import ImageResizer from '@/components/base/form/ImageResizer.vue'
+import { LazyImageResizer } from '#components'
 import imageMixin from '@/mixins/imageMixin.ts'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
@@ -264,7 +265,7 @@ export default {
         IconImage,
         Sortable,
         LinkButton,
-        ImageResizer,
+        LazyImageResizer,
         BaseModal,
         LpiButton,
     },

@@ -377,7 +377,7 @@ export default {
 
     data() {
         return {
-            sharedUrl: window.location.origin,
+            sharedUrl: window?.location?.origin,
             imageAlertDismissed: false,
             showFullTitle: false,
             showFullPurpose: false,
@@ -513,7 +513,7 @@ export default {
             return ret
         },
         screenWidth() {
-            return window.innerWidth
+            return window?.innerWidth
         },
         mobileScreen() {
             return this.screenWidth <= 768
@@ -610,18 +610,18 @@ export default {
         },
 
         facebookShare() {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
+            window?.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
         },
         twitterShare() {
-            window.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
+            window?.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
         },
         linkedinShare() {
-            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
+            window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
         },
 
         /* TODO: Put this back once we figured out to who are we supposed to write to */
         // mailTo() {
-        //     window.open('mailto:projects.platform@learningplanetinstitute.org')
+        //     window?.open('mailto:projects.platform@learningplanetinstitute.org')
         // },
 
         constructString(infos, field, prefix = '', link = null) {

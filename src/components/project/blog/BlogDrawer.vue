@@ -122,11 +122,13 @@ export default {
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
         const usersStore = useUsersStore()
+        const v$ = useVuelidate()
         return {
             toaster,
             organizationsStore,
             projectsStore,
             usersStore,
+            v$,
         }
     },
 
@@ -158,7 +160,6 @@ export default {
 
     data() {
         return {
-            v$: useVuelidate(),
             editorBlogEntry: '',
             room: null,
             selectedDate: new Date(),
@@ -228,7 +229,7 @@ export default {
                     this.addedImages = []
                 }
                 this.$nextTick(() => {
-                    if (this.v$) this.v$.$reset()
+                    if (import.meta.client && this.v$) this.v$.$reset()
                 })
             },
             immediate: true,
@@ -405,7 +406,7 @@ export default {
         closeDrawer() {
             if (this.asyncing) return
             this.confirmModalIsOpen = false
-            this.v$.$reset()
+            if (import.meta.client) this.v$.$reset()
             this.$emit('close')
         },
 

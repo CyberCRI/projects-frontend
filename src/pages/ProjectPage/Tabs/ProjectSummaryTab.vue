@@ -35,7 +35,7 @@
             </div>
 
             <div class="right">
-                <MapRecap v-if="locations.length" :locations="locations" />
+                <LazyMapRecap v-if="locations.length" :locations="locations" />
 
                 <GroupMemberSection
                     v-if="mergedTeam?.length"
@@ -86,7 +86,7 @@ import DescriptionRecap from '@/components/project/description/DescriptionRecap.
 import GoalsRecap from '@/components/project/goal/GoalsRecap.vue'
 import PublicationRecap from '@/components/project/blog/PublicationRecap.vue'
 import LinkedProjectsRecap from '@/components/project/linked-project/LinkedProjectsRecap.vue'
-import MapRecap from '@/components/project/map/MapRecap.vue'
+import { LazyMapRecap } from '#components'
 import ResourcesRecap from '@/components/project/resource/ResourcesRecap.vue'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import SimilarProjects from '@/components/project/SimilarProjects.vue'
@@ -110,7 +110,7 @@ export default {
         GoalsRecap,
         PublicationRecap,
         LinkedProjectsRecap,
-        MapRecap,
+        LazyMapRecap,
         ResourcesRecap,
         ReviewRecap,
         SimilarProjects,

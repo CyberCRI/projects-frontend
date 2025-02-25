@@ -6,7 +6,7 @@ export type LpiBubbleMenuOptions = Omit<LpiBubbleMenuPluginProps, 'editor' | 'el
     element: HTMLElement | null
 }
 
-export const LpiBubbleMenu = Extension.create<LpiBubbleMenuOptions>({
+export default Extension.create<LpiBubbleMenuOptions>({
     name: 'lpiBubbleMenu',
 
     addOptions() {
