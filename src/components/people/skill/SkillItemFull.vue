@@ -1,7 +1,11 @@
 <template>
-    <div class="skill" :class="{ 'is-open': isOpen, 'no-description': !description?.length }">
+    <div class="skill" :class="{ 'is-open': isOpen }">
         <div class="skill-content">
-            <div class="skill-name" @click="isOpen = !isOpen">
+            <div
+                class="skill-name"
+                :class="{ 'no-description': !description?.length }"
+                @click="isOpen = !isOpen"
+            >
                 <div class="skill-title">
                     <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
                     <span class="skill-title">{{ $filters.capitalize(label) }}</span>
@@ -207,10 +211,6 @@ export default {
         }
     }
 
-    &.no-description {
-        pointer-events: none;
-    }
-
     .skill-name {
         flex-basis: 25%;
         flex-shrink: 0;
@@ -218,6 +218,10 @@ export default {
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: flex-start;
+
+        &.no-description {
+            pointer-events: none;
+        }
     }
 
     .skill-title {
