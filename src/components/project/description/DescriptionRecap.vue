@@ -15,7 +15,11 @@
 
         <SeeMoreArrow
             class="read-description-button"
-            :to="{ name: 'projectDescription', hash: '#tab' }"
+            :to="{
+                name: 'projectDescription',
+                hash: '#tab',
+                params: { slugOrId: $route.params.slugOrId },
+            }"
         />
     </div>
 </template>
