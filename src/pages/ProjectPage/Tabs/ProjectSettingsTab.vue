@@ -385,7 +385,10 @@ export default {
         },
 
         projectReviewers() {
-            return this.project?.team?.reviewers || []
+            return [
+                ...(this.project?.team?.reviewers || []),
+                ...(this.project?.team?.reviewer_groups || []),
+            ]
         },
 
         lifeStatusOptions() {
