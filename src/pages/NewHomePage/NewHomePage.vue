@@ -1,3 +1,50 @@
+<script setup>
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+const organizationsStore = useOrganizationsStore()
+const usersStore = useUsersStore()
+const router = useRouter()
+
+const organization = computed(() => {
+    return organizationsStore.current
+})
+
+const loggedIn = computed(() => {
+    return usersStore.isConnected
+})
+
+const showOnbordingTodos = computed(() => {
+    if (!loggedIn.value) return false
+    if (!organization.value?.onboarding_enabled) return false
+    const status = usersStore.userFromApi?.onboarding_status || {}
+    return (
+        status.show_progress &&
+        (status.complete_profile ||
+            status.explore_projects ||
+            status.create_project ||
+            status.take_tour)
+    )
+})
+
+const search = (options) => {
+    router.push({ name: 'Search', query: options })
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        organization?.dashboard_title,
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
+
 <template>
     <div>
         <!-- oboarding todos -->
@@ -33,73 +80,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import HomeSearchOptions from '@/components/search/SearchOptions/HomeSearchOptions.vue'
-import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
-import ProjectCategoriesDropdownElementLink from '@/components/category/ProjectCategoriesDropdownElementLink.vue'
-import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
-import HomeButtons from '@/components/home/HomeButtons/HomeButtons.vue'
-import HomeNewsfeed from '@/components/home/HomeNewsfeed/HomeNewsfeed.vue'
-import HomeHeaderConnected from '@/components/home/HomeHeader/HomeHeaderConnected.vue'
-import HomeHeaderAnonymous from '@/components/home/HomeHeader/HomeHeaderAnonymous.vue'
-import OnboardingTodoBlock from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodoBlock.vue'
-import LocationsLink from '@/components/home/LocationsLink/LocationsLink.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-export default {
-    name: 'NewHomePage',
-
-    components: {
-        OnboardingTodoBlock,
-        HomeSearchOptions,
-        ProjectCategoriesDropdown,
-        ProjectCategoriesDropdownElementLink,
-        RecommendationBlock,
-        HomeButtons,
-        HomeNewsfeed,
-        HomeHeaderConnected,
-        HomeHeaderAnonymous,
-        LocationsLink,
-    },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        const usersStore = useUsersStore()
-        return {
-            organizationsStore,
-            usersStore,
-        }
-    },
-    computed: {
-        organization() {
-            return this.organizationsStore.current
-        },
-
-        loggedIn() {
-            return this.usersStore.isConnected
-        },
-
-        showOnbordingTodos() {
-            if (!this.loggedIn) return false
-            if (!this.organization?.onboarding_enabled) return false
-            const status = this.usersStore.userFromApi?.onboarding_status || {}
-            return (
-                status.show_progress &&
-                (status.complete_profile ||
-                    status.explore_projects ||
-                    status.create_project ||
-                    status.take_tour)
-            )
-        },
-    },
-
-    methods: {
-        search(options) {
-            this.$router.push({ name: 'Search', query: options })
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .search-input-container {
