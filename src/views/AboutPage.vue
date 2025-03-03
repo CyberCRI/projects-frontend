@@ -177,18 +177,18 @@ import debounce from 'lodash.debounce'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import pageTitle from '@/mixins/pageTitle.ts'
+// import pageTitle from '@/mixins/pageTitle.ts'
 
 export default {
     name: 'AboutPage',
 
-    mixins: [imageMixin, pageTitle],
+    mixins: [imageMixin /*, pageTitle*/],
 
     components: { LpiButton, CriPartners },
 
-    pageTitle() {
-        return this.$t('about.page-title')
-    },
+    // pageTitle() {
+    //     return this.$t('about.page-title')
+    // },
 
     data() {
         return {

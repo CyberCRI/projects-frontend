@@ -1,6 +1,7 @@
 export default (url, title, description, image) => {
     useHeadSafe({
         title: title,
+        titleTemplate: (t) => (t && `Projects - ${t}`) || 'Projects',
         meta: [
             {
                 name: 'description',

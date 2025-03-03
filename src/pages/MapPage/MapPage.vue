@@ -1,3 +1,56 @@
+<script setup>
+import { getLocations } from '@/api/locations.services'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const isClient = import.meta.client
+const organizationsStore = useOrganizationsStore()
+const { t } = useI18n()
+
+const projectLocations = useState(() => [])
+const loading = useState(() => true)
+
+const loadLocations = async (page = null) => {
+    loading.value = true
+    const locations = await getLocations({ organizations: [organizationsStore.current.code] }, page)
+    projectLocations.value.push(...locations)
+    // if (
+    //     locations.total_page > 1 &&
+    //     !!locations.next_page &&
+    //     locations.current_page < locations.total_page // weird backend bug: if no location we still get a next page
+    // ) {
+    //     await this.loadLocations(locations.next)
+    // } else
+    // if (this.$refs && this.$refs.map) this.$refs.map.centerMap()
+    /*
+     ** The previous line checks if the refs are still set, in case the user leaves the page to fast
+     ** Not checking this might create an error after the API calls are done.
+     */
+    loading.value = false
+}
+
+onBeforeUnmount(() => {
+    document.getElementsByTagName('body')[0].classList.remove('map-no-scroll')
+})
+
+onMounted(async () => {
+    document.getElementsByTagName('body')[0].classList.add('map-no-scroll')
+    await loadLocations()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        t('map.page-title'),
+        t('map.page-title'),
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div id="projects-map">
         <Transition name="fade">
@@ -11,77 +64,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import LoaderComplex from '@/components/base/loader/LoaderComplex.vue'
-import { getLocations } from '@/api/locations.services'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { LazyGeneralMap } from '#components'
-
-export default {
-    name: 'MapPage',
-
-    mixins: [imageMixin],
-
-    components: {
-        LoaderComplex,
-        LazyGeneralMap,
-    },
-    setup() {
-        const isClient = import.meta.client
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-            isClient,
-        }
-    },
-    // pageTitle() {
-    //     return this.$t('map.page-title')
-    // },
-
-    data() {
-        return {
-            projectLocations: [],
-            loading: true,
-        }
-    },
-
-    beforeUnmount() {
-        document.getElementsByTagName('body')[0].classList.remove('map-no-scroll')
-        document.title = 'Projects'
-    },
-
-    async mounted() {
-        document.getElementsByTagName('body')[0].classList.add('map-no-scroll')
-        await this.getLocations()
-    },
-
-    methods: {
-        async getLocations(page = null) {
-            this.loading = true
-            const locations = await getLocations(
-                { organizations: [this.organizationsStore.current.code] },
-                page
-            )
-            this.projectLocations.push(...locations)
-            // if (
-            //     locations.total_page > 1 &&
-            //     !!locations.next_page &&
-            //     locations.current_page < locations.total_page // weird backend bug: if no location we still get a next page
-            // ) {
-            //     await this.getLocations(locations.next)
-            // } else
-            // if (this.$refs && this.$refs.map) this.$refs.map.centerMap()
-            /*
-             ** The previous line checks if the refs are still set, in case the user leaves the page to fast
-             ** Not checking this might create an error after the API calls are done.
-             */
-            this.loading = false
-        },
-    },
-}
-</script>
 
 <style lang="scss">
 // do NOT scope this style, it will break the map

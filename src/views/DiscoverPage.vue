@@ -373,20 +373,20 @@ import formatHtml from '@/mixins/formatHtml.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 import imageMixin from '@/mixins/imageMixin.ts'
-import pageTitle from '@/mixins/pageTitle.ts'
+// import pageTitle from '@/mixins/pageTitle.ts'
 
 import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'DiscoverPage',
 
-    mixins: [formatHtml, imageMixin, pageTitle],
+    mixins: [formatHtml, /*imageMixin,*/ pageTitle],
 
     components: { LpiButton, CriPartners },
 
-    pageTitle() {
-        return this.$t('discover.page-title')
-    },
+    // pageTitle() {
+    //     return this.$t('discover.page-title')
+    // },
 
     setup() {
         const runtimeConfig = useRuntimeConfig()
