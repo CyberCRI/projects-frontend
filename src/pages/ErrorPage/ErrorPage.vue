@@ -1,3 +1,43 @@
+<script setup>
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import useUsersStore from '@/stores/useUsers.ts'
+
+const runtimeConfig = useRuntimeConfig()
+const usersStore = useUsersStore()
+const { t } = useI18n()
+
+const isConnected = computed(() => {
+    return usersStore.isConnected
+})
+
+const title = computed(() => {
+    return isConnected.value ? t('page404.title') : t('page404.not-connected.title')
+})
+
+const searchDescriptionPath = computed(() => {
+    return isConnected.value ? 'page404.search' : 'page404.not-connected.connect'
+})
+
+const illustrationSrc = computed(() => {
+    return isConnected.value ? '/page404/page-404.png' : '/page404/not-connected-page-404.png'
+})
+
+const imageFullUrl = computed(() => {
+    return runtimeConfig.public.appPublicBinariesPrefix + illustrationSrc.value
+})
+
+const illustrationText = computed(() => {
+    return isConnected.value
+        ? t('page404.illustration-text')
+        : t('page404.not-connected.illustration-text')
+})
+
+const login = () => {
+    goToKeycloakLoginPage()
+}
+
+useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.value)
+</script>
 <template>
     <div class="page404">
         <div class="content">
@@ -20,7 +60,7 @@
                     @click="login"
                 />
                 <div class="illustration">
-                    <img :src="`${PUBLIC_BINARIES_PREFIX}${illustrationSrc}`" />
+                    <img :src="imageFullUrl" />
                     <a :class="{ 'text--connected': !isConnected }" class="text" @click="login">
                         {{ illustrationText }}
                     </a>
@@ -29,67 +69,6 @@
         </div>
     </div>
 </template>
-<script>
-import imageMixin from '@/mixins/imageMixin.ts'
-import pageTitle from '@/mixins/pageTitle.ts'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useUsersStore from '@/stores/useUsers.ts'
-
-export default {
-    name: 'ErrorPage',
-    components: { LpiButton },
-
-    mixins: [imageMixin, pageTitle],
-    setup() {
-        const usersStore = useUsersStore()
-        return {
-            usersStore,
-        }
-    },
-    pageTitle() {
-        return this.$t('page404.page-title')
-    },
-
-    beforeUnmount() {
-        document.title = 'Projects'
-    },
-
-    computed: {
-        isConnected() {
-            return this.usersStore.isConnected
-        },
-
-        title() {
-            return this.isConnected
-                ? this.$t('page404.title')
-                : this.$t('page404.not-connected.title')
-        },
-
-        searchDescriptionPath() {
-            return this.isConnected ? 'page404.search' : 'page404.not-connected.connect'
-        },
-
-        illustrationSrc() {
-            return this.isConnected
-                ? '/page404/page-404.png'
-                : '/page404/not-connected-page-404.png'
-        },
-
-        illustrationText() {
-            return this.isConnected
-                ? this.$t('page404.illustration-text')
-                : this.$t('page404.not-connected.illustration-text')
-        },
-    },
-
-    methods: {
-        login() {
-            goToKeycloakLoginPage()
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .page404 {
     display: flex;

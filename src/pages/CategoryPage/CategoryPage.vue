@@ -64,7 +64,6 @@
 
 <script>
 import formatHtml from '@/mixins/formatHtml.ts'
-import pageTitle from '@/mixins/pageTitle.ts'
 import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -78,7 +77,7 @@ import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 export default {
     name: 'CategoryPage',
 
-    mixins: [formatHtml, pageTitle, permissions],
+    mixins: [formatHtml, permissions],
 
     components: {
         LpiButton,
@@ -97,9 +96,6 @@ export default {
         }
     },
 
-    pageTitle() {
-        return this.$t('category.page-title') + (this.category ? ' ' + this.category.name : '')
-    },
     data() {
         return {
             addProjectModalActive: false,
