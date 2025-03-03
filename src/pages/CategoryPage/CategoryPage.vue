@@ -1,3 +1,84 @@
+<script setup>
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useSearch from '@/composables/useSearch.js'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+
+const props = defineProps({
+    id: {
+        type: [String, Number],
+        required: true,
+    },
+})
+
+const { t } = useI18n()
+const route = useRoute()
+const permissions = usePermissions()
+const projectCategoriesStore = useProjectCategories()
+const { searchFromQuery } = useSearch('projects')
+
+if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
+    await projectCategoriesStore.getAllProjectCategories()
+}
+
+const category = computed(() => {
+    if (props.id) {
+        if (import.meta.client) window.scrollTo(0, 0)
+        return projectCategoriesStore.allByIds[route.params.id]
+    }
+
+    return null
+})
+
+const imageSizes = computed(() => {
+    const bgImage = category.value?.background_image
+    return (bgImage && pictureApiToImageSizes(bgImage)) || null
+})
+const sortedChildren = computed(() => {
+    return [...category.value?.children]?.sort((a, b) => a.order_index - b.order_index) || []
+})
+
+const imageSource = computed(() => {
+    if (category.value?.background_image) return category.value.background_image?.variations?.full
+    else return null
+})
+
+const categoryHierarchy = computed(() => {
+    return [
+        {
+            name: t('home.home'),
+            route: { name: 'HomeRoot' },
+        },
+        {
+            name: t('category.title'),
+            route: { name: 'Categories' },
+        },
+        ...(category.value?.hierarchy || []).map((cat) => ({
+            name: cat.name,
+            route: { name: 'Category', params: { id: cat.id } },
+        })),
+        {
+            name: category.value?.name,
+            route: { name: 'Category', params: { id: category.value?.id } },
+        },
+    ]
+})
+
+const fixedSearch = computed(() => {
+    return {
+        ...searchFromQuery.value,
+        categories: [category.value?.id],
+        section: 'projects',
+    }
+})
+
+useLpiHead(
+    useRequestURL().toString(),
+    category.value?.name,
+    category.value?.description,
+    category.value?.background_image?.variations?.medium
+)
+</script>
 <template>
     <div v-if="category" id="type" :key="category.id" class="category-layout">
         <div class="breadcrumbs-ctn">
@@ -43,7 +124,7 @@
             </div>
             <div class="category-search-header">
                 <LpiButton
-                    v-if="canCreateProject"
+                    v-if="permissions.canCreateProject"
                     :label="$t('project.create-project')"
                     class="button"
                     btn-icon="Plus"
@@ -57,127 +138,12 @@
                     data-test="create-project-from-category"
                 />
             </div>
-            <GlobalSearchTab :search="fixedSearch" />
+            <ClientOnly>
+                <GlobalSearchTab :search="fixedSearch" />
+            </ClientOnly>
         </div>
     </div>
 </template>
-
-<script>
-import formatHtml from '@/mixins/formatHtml.ts'
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import permissions from '@/mixins/permissions.ts'
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useSearch from '@/composables/useSearch.js'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-
-export default {
-    name: 'CategoryPage',
-
-    mixins: [formatHtml, permissions],
-
-    components: {
-        LpiButton,
-        SearchOptions,
-        CategoryCardImage,
-        BreadCrumbs,
-        GlobalSearchTab,
-    },
-
-    setup() {
-        const projectCategoriesStore = useProjectCategories()
-        const { searchFromQuery } = useSearch('projects')
-        return {
-            projectCategoriesStore,
-            searchFromQuery,
-        }
-    },
-
-    data() {
-        return {
-            addProjectModalActive: false,
-        }
-    },
-
-    computed: {
-        imageSizes() {
-            const bgImage = this.category?.background_image
-            return (bgImage && pictureApiToImageSizes(bgImage)) || null
-        },
-        sortedChildren() {
-            return [...this.category.children]?.sort((a, b) => a.order_index - b.oreder_index) || []
-        },
-
-        category() {
-            if (this.id) {
-                if (import.meta.client) window.scrollTo(0, 0)
-                return this.projectCategoriesStore.allByIds[this.$route.params.id]
-            }
-
-            return null
-        },
-
-        imageSource() {
-            if (this.category.background_image)
-                return this.category.background_image.variations.full
-            else return null
-        },
-
-        categoryHierarchy() {
-            return [
-                {
-                    name: this.$t('home.home'),
-                    route: { name: 'HomeRoot' },
-                },
-                {
-                    name: this.$t('category.title'),
-                    route: { name: 'Categories' },
-                },
-                ...(this.category.hierarchy || []).map((cat) => ({
-                    name: cat.name,
-                    route: { name: 'Category', params: { id: cat.id } },
-                })),
-                {
-                    name: this.category.name,
-                    route: { name: 'Category', params: { id: this.category.id } },
-                },
-            ]
-        },
-
-        fixedSearch() {
-            return {
-                ...this.searchFromQuery,
-                categories: [this.category?.id],
-                section: 'projects',
-            }
-        },
-    },
-
-    props: {
-        id: {
-            type: [String, Number],
-            required: true,
-        },
-    },
-    beforeUnmount() {
-        document.title = 'Projects'
-    },
-
-    beforeRouteEnter(_to, _from, next) {
-        // if it is the first page navigated (deep link), categories are not initialized yet
-        // so prevent navigation before it is
-        const projectCategoriesStore = useProjectCategories()
-        if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
-            projectCategoriesStore.getAllProjectCategories().then(() => next())
-        } else {
-            next()
-        }
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .category-search-header {
