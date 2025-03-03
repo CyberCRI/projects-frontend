@@ -1,4 +1,4 @@
-import GroupPageInner from '@/pages/GroupPage/GroupPageInner.vue'
+import GroupPageInner from '@/components/group/GroupPageInner.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../i18n.config'
 import { flushPromises } from '@vue/test-utils'

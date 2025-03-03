@@ -55,7 +55,7 @@
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
 import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
-import GroupTabs from './Tabs/GroupTabs.vue'
+import GroupTabs from '@/pages/GroupPage/Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
@@ -116,6 +116,7 @@ export default {
 
     methods: {
         async load() {
+            if (!import.meta.client) return
             this.isLoading = true
             this.isProjectsLoading = true
             this.isMembersLoading = true

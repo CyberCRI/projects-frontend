@@ -115,7 +115,7 @@ export default {
     },
     data() {
         return {
-            sharedUrl: window.location.origin,
+            sharedUrl: useRequestURL().toString(),
         }
     },
     computed: {
