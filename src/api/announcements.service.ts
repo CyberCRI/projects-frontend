@@ -9,7 +9,7 @@ import utils from '@/functs/functions'
 import useAPI from '@/composables/useAPI'
 
 export async function getAnnouncements(params) {
-    return await useAPI(`announcement/`, { query: utils.adaptParam(params) }) //.data.value
+    return await useAPI(`announcement/`, { ...utils.adaptParam(params) }) //.data.value
 }
 
 export async function getProjectAnnouncements(project_id: string, params: Object) {
@@ -19,8 +19,7 @@ export async function getProjectAnnouncements(project_id: string, params: Object
 }
 
 export async function postAnnouncement(body: AnnouncementInput) {
-    return (await useAPI(`project/${body.project_id}/announcement/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`project/${body.project_id}/announcement/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function patchAnnouncement(body: AnnouncementInput) {
