@@ -137,7 +137,7 @@ export default {
             // Get projects and update project list
             let response
             if (specificPageIndex) {
-                response = (await useAPI(specificPageIndex, {})).data
+                response = await useAPI(specificPageIndex, {})
             } else if (this.mode === 'projects') {
                 response = await searchProjects(query, filters)
             } else if (this.mode === 'groups') {
