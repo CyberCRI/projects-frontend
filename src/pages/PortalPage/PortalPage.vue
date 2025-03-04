@@ -1,3 +1,31 @@
+<script setup>
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const organizationsStore = useOrganizationsStore()
+const { t } = useI18n()
+
+onMounted(organizationsStore.getAllOrganizations)
+
+const organisations = computed(() => {
+    return organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('home.communities'),
+        t('portal.sub-title'),
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
 <template>
     <div class="page-section-extra-wide portal-layout page-top">
         <h1 class="page-title">{{ $t('home.communities') }}</h1>
@@ -27,31 +55,6 @@
         </div>
     </div>
 </template>
-<script>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-    name: 'PortalPage',
-
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
-
-    async mounted() {
-        await this.organizationsStore.getAllOrganizations()
-    },
-
-    computed: {
-        organisations() {
-            return this.organizationsStore.all.filter(
-                (org) => org.is_logo_visible_on_parent_dashboard
-            )
-        },
-    },
-}
-</script>
 <style scoped lang="scss">
 .portal-layout {
     display: flex;
