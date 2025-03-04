@@ -290,7 +290,9 @@ export default {
     watch: {
         // recompute if content has changer
         html(neo, old) {
-            if (neo != old) this.compute()
+            if (import.meta.client) {
+                if (neo != old) this.compute()
+            }
         },
     },
 }

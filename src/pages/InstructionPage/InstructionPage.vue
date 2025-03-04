@@ -1,3 +1,95 @@
+<script setup>
+import { getInstruction, deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const props = defineProps({
+    slugOrId: {
+        type: String,
+        required: true,
+    },
+})
+
+const { d, t } = useI18n()
+const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const router = useRouter()
+const route = useRoute()
+
+const instruction = useState(() => null)
+const loading = useState(() => false)
+const editedInstruction = useState(() => null)
+const instructionToDelete = useState(() => null)
+const isDeletingInstruction = useState(() => false)
+
+const breadcrumbs = computed(() => {
+    return [
+        {
+            name: 'Instructions',
+            route: { name: 'InstructionListPage' },
+        },
+    ]
+})
+
+const publicationDate = computed(() => {
+    return instruction.value?.publication_date
+        ? d(new Date(instruction.value.publication_date))
+        : ''
+})
+
+const loadInstruction = async () => {
+    loading.value = true
+    // TODO: Fetch instuction
+    try {
+        instruction.value = await getInstruction(organizationsStore.current?.code, props.slugOrId)
+
+        loading.value = false
+    } catch (err) {
+        console.error(err)
+        router.replace({
+            name: 'page404',
+            params: { pathMatch: route.path.substring(1).split('/') },
+        })
+    }
+}
+
+const doDeleteInstruction = async () => {
+    isDeletingInstruction.value = true
+    try {
+        await deleteInstruction(organizationsStore.current?.code, instructionToDelete.value.id)
+        toaster.pushSuccess(t('instructions.delete.success'))
+    } catch (err) {
+        toaster.pushError(`${t('instructions.delete.error')} (${err})`)
+        console.error(err)
+    } finally {
+        instructionToDelete.value = null
+        isDeletingInstruction.value = false
+        router.push({ name: 'InstructionListPage' })
+    }
+}
+
+onMounted(() => {
+    loadInstruction()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    const inst = await getInstruction(runtimeConfig.public.appApiOrgCode, props.slugOrId)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        inst.title,
+        inst.content?.replace(/<[^>]+>/gi, ' ').replace(/\s+/gi, ' '),
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
 <template>
     <div class="instruction-list-page page-section-medium">
         <div class="instruction-header">
@@ -59,121 +151,10 @@
         cancel-button-label="common.cancel"
         confirm-button-label="common.delete"
         @cancel="instructionToDelete = null"
-        @confirm="deleteInstruction"
+        @confirm="doDeleteInstruction"
         :asyncing="isDeletingInstruction"
     />
 </template>
-<script>
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import permissions from '@/mixins/permissions'
-import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-import { getInstruction, deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-export default {
-    name: 'InstructionPage',
-
-    mixins: [permissions],
-
-    components: {
-        BreadCrumbs,
-        ContextActionButton,
-        EditInstructionDrawer,
-        ConfirmModal,
-        SkeletonComponent,
-        TipTapOutput,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    props: {
-        slugOrId: {
-            type: String,
-            required: true,
-        },
-    },
-
-    data() {
-        return {
-            instruction: null,
-            loading: false,
-            editedInstruction: null,
-            instructionToDelete: null,
-            isDeletingInstruction: false,
-        }
-    },
-
-    mounted() {
-        this.loadInstruction()
-    },
-
-    computed: {
-        breadcrumbs() {
-            return [
-                {
-                    name: 'Instructions',
-                    route: { name: 'InstructionListPage' },
-                },
-            ]
-        },
-
-        publicationDate() {
-            return this.instruction?.publication_date
-                ? this.$d(new Date(this.instruction.publication_date))
-                : ''
-        },
-    },
-
-    methods: {
-        async loadInstruction() {
-            this.loading = true
-            // TODO: Fetch instuction
-            try {
-                this.instruction = await getInstruction(
-                    this.organizationsStore.current?.code,
-                    this.slugOrId
-                )
-
-                this.loading = false
-            } catch (err) {
-                console.error(err)
-                this.$router.replace({
-                    name: 'page404',
-                    params: { pathMatch: this.$route.path.substring(1).split('/') },
-                })
-            }
-        },
-
-        async deleteInstruction() {
-            this.isDeletingInstruction = true
-            try {
-                await deleteInstruction(
-                    this.organizationsStore.current?.code,
-                    this.instructionToDelete.id
-                )
-                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.instructionToDelete = null
-                this.isDeletingInstruction = false
-                this.$router.push({ name: 'InstructionListPage' })
-            }
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .instruction-header {
     margin-top: 70px;
