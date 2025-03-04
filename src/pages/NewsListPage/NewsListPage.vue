@@ -1,3 +1,112 @@
+<script setup>
+import { getAllNews, deleteNews } from '@/api/news.service.ts'
+import useAPI from '@/composables/useAPI.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
+const router = useRouter()
+const { t } = useI18n()
+
+const loading = useState(() => false)
+const editedNews = useState(() => null)
+const newsToDelete = useState(() => null)
+const isDeletingNews = useState(() => false)
+const pagination = useState(() => ({
+    currentPage: 1,
+    total: 1,
+    previous: undefined,
+    next: undefined,
+    first: undefined,
+    last: undefined,
+}))
+const newsRequest = useState(() => null)
+const maxNewsPerPage = useState(() => 12)
+
+const allNews = computed(() => {
+    return newsRequest.value?.results || []
+})
+
+watchEffect(
+    () => [newsRequest],
+    (response) => {
+        updatePagination(response)
+    },
+    { deep: true }
+)
+
+const createNews = () => {
+    router.push({ name: 'CreateNewsPage' })
+}
+
+const loadNews = async () => {
+    const dateLimit =
+        canEditNews.value || canDeleteNews.value ? {} : { to_date: new Date().toISOString() }
+
+    loading.value = true
+    newsRequest.value = await getAllNews(organizationsStore.current?.code, {
+        ordering: '-publication_date',
+        limit: maxNewsPerPage.value,
+        ...dateLimit,
+    })
+    loading.value = false
+}
+
+const doDeleteNews = async () => {
+    isDeletingNews.value = true
+    try {
+        await deleteNews(organizationsStore.current?.code, newsToDelete.value.id)
+        toaster.pushSuccess(t('news.delete.success'))
+
+        loadNews()
+    } catch (err) {
+        toaster.pushError(`${t('news.delete.error')} (${err})`)
+        console.error(err)
+    } finally {
+        newsToDelete.value = null
+        isDeletingNews.value = false
+    }
+}
+
+const onClickPagination = async (requestedPage) => {
+    loading.value = true
+    newsRequest.value = (await useAPI(requestedPage, {})).data
+    loading.value = false
+    const el = document.querySelector('.page-title')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
+
+const updatePagination = (response) => {
+    pagination.value.currentPage = response.current_page
+    pagination.value.total = response.total_page
+    pagination.value.previous = response.previous
+    pagination.value.next = response.next
+    pagination.value.first = response.first
+    pagination.value.last = response.last
+}
+
+onMounted(() => {
+    loadNews()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('news.list.title'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
 <template>
     <div class="news-list-page page-section-medium page-top">
         <h1 class="page-title">{{ $t('news.list.title') }}</h1>
@@ -50,136 +159,10 @@
         cancel-button-label="common.cancel"
         confirm-button-label="common.delete"
         @cancel="newsToDelete = null"
-        @confirm="deleteNews"
+        @confirm="doDeleteNews"
         :asyncing="isDeletingNews"
     />
 </template>
-<script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import permissions from '@/mixins/permissions.ts'
-import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-    name: 'NewsListPage',
-
-    mixins: [permissions],
-
-    components: {
-        LpiButton,
-        NewsListItem,
-        EditNewsDrawer,
-        ConfirmModal,
-        NewsListItemSkeleton,
-        PaginationButtons,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    data() {
-        return {
-            loading: false,
-            editedNews: null,
-            newsToDelete: null,
-            isDeletingNews: false,
-            pagination: {
-                currentPage: 1,
-                total: 1,
-                previous: undefined,
-                next: undefined,
-                first: undefined,
-                last: undefined,
-            },
-            newsRequest: null,
-            maxNewsPerPage: 12,
-        }
-    },
-
-    mounted() {
-        this.loadNews()
-    },
-
-    computed: {
-        allNews() {
-            return this.newsRequest?.results || []
-        },
-    },
-
-    watch: {
-        newsRequest: {
-            handler(response) {
-                this.updatePagination(response)
-            },
-            deep: true,
-        },
-    },
-
-    methods: {
-        createNews() {
-            this.$router.push({ name: 'CreateNewsPage' })
-        },
-
-        async deleteNews() {
-            this.isDeletingNews = true
-            try {
-                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-                this.toaster.pushSuccess(this.$t('news.delete.success'))
-
-                this.loadNews()
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.newsToDelete = null
-                this.isDeletingNews = false
-            }
-        },
-
-        async loadNews() {
-            const dateLimit =
-                this.canEditNews || this.canDeleteNews ? {} : { to_date: new Date().toISOString() }
-
-            this.loading = true
-            this.newsRequest = await getAllNews(this.organizationsStore.current?.code, {
-                ordering: '-publication_date',
-                limit: this.maxNewsPerPage,
-                ...dateLimit,
-            })
-            this.loading = false
-        },
-
-        async onClickPagination(requestedPage) {
-            this.loading = true
-            this.newsRequest = (await useAPI(requestedPage, {})).data
-            this.loading = false
-            const el = document.querySelector('.page-title')
-            if (el) el.scrollIntoView({ behavior: 'smooth' })
-        },
-
-        updatePagination(response) {
-            this.pagination.currentPage = response.current_page
-            this.pagination.total = response.total_page
-            this.pagination.previous = response.previous
-            this.pagination.next = response.next
-            this.pagination.first = response.first
-            this.pagination.last = response.last
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .page-title {
     margin-bottom: $space-2xl;
