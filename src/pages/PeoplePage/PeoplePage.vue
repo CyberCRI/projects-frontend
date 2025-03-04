@@ -1,3 +1,35 @@
+<script setup>
+import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useSearch from '@/composables/useSearch.js'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const { searchFromQuery } = useSearch('people')
+const { t } = useI18n()
+
+const fixedSearch = computed(() => {
+    return {
+        ...searchFromQuery.value,
+        section: 'people',
+    }
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('common.people'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
+
 <template>
     <div class="page-section-extra-wide page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('common.people')) }}</h1>
@@ -10,36 +42,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useSearch from '@/composables/useSearch.js'
-
-export default {
-    name: 'PeoplePage',
-
-    components: {
-        SearchOptions,
-        GlobalSearchTab,
-    },
-    setup() {
-        const { searchFromQuery } = useSearch('people')
-        return {
-            searchFromQuery,
-        }
-    },
-
-    computed: {
-        fixedSearch() {
-            return {
-                ...this.searchFromQuery,
-                section: 'people',
-            }
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .main-ctn {

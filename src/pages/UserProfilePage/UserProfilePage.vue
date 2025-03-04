@@ -7,21 +7,19 @@ const props = defineProps({
         default: null,
     },
 })
-if (!import.meta.client) {
-    try {
-        const user = await getUser(props.userId, true)
-        if (user) {
-            useLpiHead(
-                useRequestURL().toString(),
-                `${user.given_name} ${user.family_name}`,
-                user.short_description,
-                user.profile_picture?.variations?.medium
-            )
-        }
-    } catch (err) {
-        // DGAF
-        console.log(err)
+try {
+    const user = await getUser(props.userId, true)
+    if (user) {
+        useLpiHead(
+            useRequestURL().toString(),
+            `${user.given_name} ${user.family_name}`,
+            user.short_description,
+            user.profile_picture?.variations?.medium
+        )
     }
+} catch (err) {
+    // DGAF
+    console.log(err)
 }
 
 const router = useRouter()
