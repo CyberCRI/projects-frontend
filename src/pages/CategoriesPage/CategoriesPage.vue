@@ -31,7 +31,7 @@ const fixedSearch = computed(() => {
     }
 })
 
-const searchOptions = ref('searchOptions')
+const searchOptions = useTemplateRef('searchOptions')
 
 const showCategories = () => {
     searchOptions.value?.deleteQuery()

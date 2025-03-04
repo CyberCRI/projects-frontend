@@ -1,3 +1,139 @@
+<script setup>
+import { getHierarchyGroups } from '@/api/groups.service.ts'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useSearch from '@/composables/useSearch.js'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const props = defineProps({
+    groupId: {
+        type: String,
+        default: '',
+    },
+})
+
+const organizationsStore = useOrganizationsStore()
+
+const { searchFromQuery } = useSearch('groups')
+
+const { t } = useI18n()
+
+// ???
+// const permissions = usePermissions()
+
+const router = useRouter()
+
+const isLoading = useState(() => true)
+const groupsIndex = useState(() => null)
+const rootId = useState(() => null)
+
+const currentGroup = computed(() => {
+    if (!groupsIndex.value) return null
+    if (!props.groupId) return groupsIndex.value[rootId.value]
+    return groupsIndex.value[props.groupId]
+})
+
+const childGroup = computed(() => {
+    return (currentGroup.value?.children || [])
+        .map((gid) => groupsIndex.value[gid])
+        .sort((a, b) => {
+            if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
+            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+
+            return 0
+        })
+})
+
+const hierarchy = computed(() => {
+    return (currentGroup.value?.hierarchy || []).map((groupId) => groupsIndex.value[groupId])
+})
+
+const hasSearch = computed(() => {
+    return !!searchFromQuery.value.search
+})
+
+const fixedSearch = computed(() => {
+    return {
+        ...searchFromQuery.value,
+        section: 'groups',
+    }
+})
+
+watchEffect(() => {
+    if (!currentGroup.value && groupsIndex.value && props.groupId) {
+        router.push({
+            name: 'Groups',
+        })
+    }
+})
+
+const buildIndex = (groups) => {
+    const index = {}
+    const iterate = (subgroups, hierarchy) => {
+        subgroups.forEach((group) => {
+            const route = {
+                name: 'Groups',
+            }
+            if (hierarchy.length !== 0) {
+                route.params = {
+                    groupId: group.id,
+                }
+            }
+            index[group.id] = {
+                ...group,
+                hierarchy: [...hierarchy],
+                route,
+                children: group.children?.map((g) => g.id) || [],
+            }
+            // use group id in hierachy an rehydrate when needed
+            // to avoid self reference hell
+            if (group.children && group.children.length)
+                iterate(group.children, [...hierarchy, group.id])
+        })
+    }
+
+    iterate(groups ? [groups] : [], [])
+
+    groupsIndex.value = index
+}
+
+const loadGroups = async () => {
+    isLoading.value = true
+    const groups = await getHierarchyGroups(organizationsStore.current.code)
+    rootId.value = groups.id
+    buildIndex(groups)
+    isLoading.value = false
+}
+
+const searchOptions = useTemplateRef('searchOptions')
+
+const showGroups = () => {
+    searchOptions.value?.deleteQuery()
+    searchOptions.value?.clearSelectedFilters()
+    nextTick(() => {
+        document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
+    })
+}
+
+onMounted(async () => {
+    await loadGroups()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('common.groups'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
 <template>
     <div class="page-section-extra-wide groups-layout page-top">
         <h1 class="page-title">{{ $filters.capitalize($t('common.groups')) }}</h1>
@@ -8,7 +144,7 @@
         <div class="page-section-wide" v-if="hasSearch">
             <GlobalSearchTab :search="fixedSearch" />
             <div class="btn-ctn">
-                <LpiButton :label="$t('people-groups.browse-tree')" @click="showCategories" />
+                <LpiButton :label="$t('people-groups.browse-tree')" @click="showGroups" />
             </div>
         </div>
         <template v-else>
@@ -51,157 +187,6 @@
         </template>
     </div>
 </template>
-<script>
-import { getHierarchyGroups } from '@/api/groups.service.ts'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import permissions from '@/mixins/permissions'
-import CardList from '@/components/base/CardList.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useSearch from '@/composables/useSearch.js'
-
-export default {
-    name: 'GroupsPage',
-
-    mixins: [permissions],
-
-    components: {
-        LpiButton,
-        CardList,
-        GroupCard,
-        BreadCrumbs,
-        SkeletonComponent,
-        SearchOptions,
-        GlobalSearchTab,
-    },
-
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-
-        const { searchFromQuery } = useSearch('groups')
-
-        return {
-            organizationsStore,
-            searchFromQuery,
-        }
-    },
-    props: {
-        groupId: {
-            type: String,
-            default: '',
-        },
-    },
-
-    data() {
-        return {
-            isLoading: true,
-            groupsIndex: null,
-            rootId: null,
-        }
-    },
-
-    async mounted() {
-        await this.loadGroups()
-    },
-
-    computed: {
-        currentGroup() {
-            if (!this.groupsIndex) return null
-            if (!this.groupId) return this.groupsIndex[this.rootId]
-            return this.groupsIndex[this.groupId]
-        },
-
-        childGroup() {
-            return (this.currentGroup?.children || [])
-                .map((gid) => this.groupsIndex[gid])
-                .sort((a, b) => {
-                    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-
-                    return 0
-                })
-        },
-
-        hierarchy() {
-            return (this.currentGroup?.hierarchy || []).map((groupId) => this.groupsIndex[groupId])
-        },
-
-        hasSearch() {
-            return !!this.searchFromQuery.search
-        },
-
-        fixedSearch() {
-            return {
-                ...this.searchFromQuery,
-                section: 'groups',
-            }
-        },
-    },
-
-    watch: {
-        currentGroup: {
-            handler: function (neo) {
-                if (!neo && this.groupsIndex && this.groupId) {
-                    this.$router.push({
-                        name: 'Groups',
-                    })
-                }
-            },
-        },
-    },
-
-    methods: {
-        async loadGroups() {
-            this.isLoading = true
-            const groups = await getHierarchyGroups(this.organizationsStore.current.code)
-            this.rootId = groups.id
-            this.buildIndex(groups)
-            this.isLoading = false
-        },
-
-        buildIndex(groups) {
-            const index = {}
-            const iterate = (subgroups, hierarchy) => {
-                subgroups.forEach((group) => {
-                    const route = {
-                        name: 'Groups',
-                    }
-                    if (hierarchy.length !== 0) {
-                        route.params = {
-                            groupId: group.id,
-                        }
-                    }
-                    index[group.id] = {
-                        ...group,
-                        hierarchy: [...hierarchy],
-                        route,
-                        children: group.children?.map((g) => g.id) || [],
-                    }
-                    // use group id in hierachy an rehydrate when needed
-                    // to avoid self reference hell
-                    if (group.children && group.children.length)
-                        iterate(group.children, [...hierarchy, group.id])
-                })
-            }
-
-            iterate(groups ? [groups] : [], [])
-
-            this.groupsIndex = index
-        },
-        showCategories() {
-            this.$refs['searchOptions']?.deleteQuery()
-            this.$refs['searchOptions']?.clearSelectedFilters()
-            this.$nextTick(() => {
-                this.$el?.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-            })
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .groups-layout {
