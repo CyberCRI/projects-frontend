@@ -1,3 +1,33 @@
+<script setup>
+import useOnboardingStatus from '@/composables/useOnboardingStatus.ts'
+import useSearch from '@/composables/useSearch.js'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const { searchFromQuery } = useSearch(null)
+
+const { onboardingTrap } = useOnboardingStatus()
+const { t } = useI18n()
+
+onMounted(async () => {
+    onboardingTrap('explore_projects', false)
+})
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('browse.page-title'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
+
 <template>
     <div class="page-section-extra-wide browse-layout" :key="$route.name">
         <div class="browse-header">
@@ -7,33 +37,6 @@
         <GlobalSearchTab :search="searchFromQuery" />
     </div>
 </template>
-
-<script>
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useSearch from '@/composables/useSearch.js'
-
-export default {
-    name: 'SearchPage',
-
-    mixins: [onboardingStatusMixin],
-
-    components: {
-        SearchOptions,
-        GlobalSearchTab,
-    },
-
-    setup() {
-        const { searchFromQuery } = useSearch(null)
-        return { searchFromQuery }
-    },
-
-    async mounted() {
-        this.onboardingTrap('explore_projects', false)
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .browse-layout {

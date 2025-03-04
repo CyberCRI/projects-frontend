@@ -233,6 +233,7 @@ useLpiHead(
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                line-clamp: 7;
                 -webkit-line-clamp: 7;
             }
 
