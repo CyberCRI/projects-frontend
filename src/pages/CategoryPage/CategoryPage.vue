@@ -13,7 +13,7 @@ const props = defineProps({
 
 const { t } = useI18n()
 const route = useRoute()
-const permissions = usePermissions()
+const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 
@@ -124,7 +124,7 @@ useLpiHead(
             </div>
             <div class="category-search-header">
                 <LpiButton
-                    v-if="permissions.canCreateProject"
+                    v-if="canCreateProject"
                     :label="$t('project.create-project')"
                     class="button"
                     btn-icon="Plus"

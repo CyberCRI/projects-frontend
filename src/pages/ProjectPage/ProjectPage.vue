@@ -28,7 +28,7 @@ const router = useRouter()
 
 const { t } = useI18n()
 
-const permissions = usePermissions()
+const { isAdmin, canEditProject } = usePermissions()
 
 const modals = ref({
     project: {
@@ -128,7 +128,7 @@ const commentLoop = useState(() => null)
 
 const isMemberOrAdmin = computed(() => {
     const members = [...team.value.members, ...team.value.owners, ...team.value.reviewers]
-    return permissions.isAdmin.value || members.find((user) => usersStore.id === user.id)
+    return isAdmin.value || members.find((user) => usersStore.id === user.id)
 })
 
 const accessToken = computed(() => usersStore.accessToken)
@@ -361,7 +361,7 @@ const onProjectUpdate = async () => {
 const connectToSocket = () => {
     // listen for description updates
     // TODO permission
-    if (permissions.canEditProject.value) {
+    if (canEditProject.value) {
         try {
             const providerParams = {
                 projectId: projectsStore.currentProjectId,
