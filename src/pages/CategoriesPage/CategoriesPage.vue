@@ -1,3 +1,63 @@
+<script setup>
+import useProjectCategories from '@/stores/useProjectCategories.ts'
+import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
+import useSearch from '@/composables/useSearch.js'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const { canCreateProject } = usePermissions()
+const projectCategoriesStore = useProjectCategories()
+const { searchFromQuery } = useSearch('projects')
+const { t } = useI18n()
+
+const forceSearch = useState(() => false)
+
+const categories = computed(() => {
+    return projectCategoriesStore.hierarchy
+})
+
+const hasSearch = computed(() => {
+    return (
+        !!searchFromQuery.value.search ||
+        ['sdgs', 'categories', 'tags', 'languages'].reduce(
+            (acc, key) => acc || searchFromQuery.value[key]?.length > 0,
+            false
+        )
+    )
+})
+const fixedSearch = computed(() => {
+    return {
+        ...searchFromQuery.value,
+        section: 'projects',
+    }
+})
+
+const searchOptions = ref('searchOptions')
+
+const showCategories = () => {
+    searchOptions.value?.deleteQuery()
+    searchOptions.value?.clearSelectedFilters()
+    forceSearch.value = false
+    nextTick(() => {
+        document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
+    })
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('projects'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
+
 <template>
     <div v-if="categories.length > 0" class="categories-layout page-top">
         <div class="page-section-extra-wide">
@@ -45,77 +105,6 @@
         </template>
     </div>
 </template>
-
-<script>
-import CategoryCard from '@/components/category/CategoryCard.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import permissions from '@/mixins/permissions.ts'
-import SearchOptions from '@/components/search/SearchOptions/SearchOptions.vue'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useSearch from '@/composables/useSearch.js'
-
-export default {
-    name: 'CategoriesPage',
-
-    mixins: [permissions],
-
-    components: {
-        LpiButton,
-        CategoryCard,
-        SearchOptions,
-        GlobalSearchTab,
-    },
-
-    setup() {
-        const projectCategoriesStore = useProjectCategories()
-        const { searchFromQuery } = useSearch('projects')
-        return {
-            projectCategoriesStore,
-            searchFromQuery,
-        }
-    },
-
-    data() {
-        return {
-            forceSearch: false,
-        }
-    },
-
-    computed: {
-        categories() {
-            return this.projectCategoriesStore.hierarchy
-        },
-
-        hasSearch() {
-            return (
-                !!this.searchFromQuery.search ||
-                ['sdgs', 'categories', 'tags', 'languages'].reduce(
-                    (acc, key) => acc || this.searchFromQuery[key]?.length > 0,
-                    false
-                )
-            )
-        },
-        fixedSearch() {
-            return {
-                ...this.searchFromQuery,
-                section: 'projects',
-            }
-        },
-    },
-
-    methods: {
-        showCategories() {
-            this.$refs['searchOptions']?.deleteQuery()
-            this.$refs['searchOptions']?.clearSelectedFilters()
-            this.forceSearch = false
-            this.$nextTick(() => {
-                this.$el?.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-            })
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .categories-layout {
