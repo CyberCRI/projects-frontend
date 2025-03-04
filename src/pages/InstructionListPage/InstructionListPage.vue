@@ -1,3 +1,76 @@
+<script setup>
+import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
+const router = useRouter()
+const { t } = useI18n()
+
+const allInstructions = useState(() => [])
+const loading = useState(() => false)
+const editedInstruction = useState(() => null)
+const instructionToDelete = useState(() => null)
+const isDeletingInstruction = () => false
+
+const createInstruction = () => {
+    router.push({ name: 'CreateInstructionPage' })
+}
+
+const loadInstructions = async () => {
+    const dateLimit =
+        canEditInstruction.value || canDeleteInstruction.value
+            ? {}
+            : { to_date: new Date().toISOString() }
+    loading.value = true
+    allInstructions.value = (
+        await getAllInstructions(organizationsStore.current?.code, {
+            ordering: 'publication_date',
+            ...dateLimit,
+        })
+    ).results
+    loading.value = false
+}
+
+const doDeleteInstruction = async () => {
+    isDeletingInstruction.value = true
+    try {
+        await deleteInstruction(organizationsStore.current?.code, instructionToDelete.value.id)
+        toaster.pushSuccess(t('instructions.delete.success'))
+
+        loadInstructions()
+    } catch (err) {
+        toaster.pushError(`${t('instructions.delete.error')} (${err})`)
+        console.error(err)
+    } finally {
+        instructionToDelete.value = null
+        isDeletingInstruction.value = false
+    }
+}
+
+onMounted(() => {
+    loadInstructions()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        t('instructions.list.title'),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
+
 <template>
     <div class="instruction-list-page page-section-medium page-top">
         <h1 class="page-title">{{ $t('instructions.list.title') }}</h1>
@@ -40,96 +113,10 @@
         cancel-button-label="common.cancel"
         confirm-button-label="common.delete"
         @cancel="instructionToDelete = null"
-        @confirm="deleteInstruction"
+        @confirm="doDeleteInstruction"
         :asyncing="isDeletingInstruction"
     />
 </template>
-<script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import InstructionListItemSkeleton from '@//components/instruction/InstructionListItem/InstructionListItemSkeleton.vue'
-import InstructionListItem from '@/components/instruction/InstructionListItem/InstructionListItem.vue'
-import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import permissions from '@/mixins/permissions.ts'
-import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-
-export default {
-    name: 'InstructionListPage',
-    components: {
-        LpiButton,
-        InstructionListItem,
-        EditInstructionDrawer,
-        ConfirmModal,
-        InstructionListItemSkeleton,
-    },
-
-    mixins: [permissions],
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    data() {
-        return {
-            allInstructions: [],
-            loading: false,
-            editedInstruction: null,
-            instructionToDelete: null,
-            isDeletingInstruction: false,
-        }
-    },
-
-    mounted() {
-        this.loadInstructions()
-    },
-
-    methods: {
-        createInstruction() {
-            this.$router.push({ name: 'CreateInstructionPage' })
-        },
-
-        async loadInstructions() {
-            const dateLimit =
-                this.canEditInstruction || this.canDeleteInstruction
-                    ? {}
-                    : { to_date: new Date().toISOString() }
-            this.loading = true
-            this.allInstructions = (
-                await getAllInstructions(this.organizationsStore.current?.code, {
-                    ordering: 'publication_date',
-                    ...dateLimit,
-                })
-            ).results
-            this.loading = false
-        },
-
-        async deleteInstruction() {
-            this.isDeletingInstruction = true
-            try {
-                await deleteInstruction(
-                    this.organizationsStore.current?.code,
-                    this.instructionToDelete.id
-                )
-                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
-
-                this.loadInstructions()
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.instructionToDelete = null
-                this.isDeletingInstruction = false
-            }
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .page-title {
     margin-bottom: $space-2xl;
