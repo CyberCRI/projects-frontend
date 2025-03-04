@@ -1,3 +1,117 @@
+<script setup>
+import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
+const props = defineProps({
+    slugOrId: {
+        type: String,
+        required: true,
+    },
+})
+
+const { d, t } = useI18n()
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const router = useRouter()
+const route = useRoute()
+const { canEditNews, canDeleteNews } = usePermissions()
+
+const news = useState(() => null)
+const otherNews = useState(() => [])
+const loading = useState(() => false)
+const editedNews = useState(() => null)
+const newsToDelete = useState(() => null)
+
+const breadcrumbs = computed(() => {
+    return [
+        {
+            name: 'News',
+            route: { name: 'NewsListPage' },
+        },
+    ]
+})
+
+const publicationDate = computed(() => {
+    return news.value?.publication_date ? d(new Date(news.value.publication_date)) : ''
+})
+
+const loadNews = async () => {
+    try {
+        news.value = await getNews(organizationsStore.current?.code, props.slugOrId)
+    } catch (err) {
+        console.error(err)
+        router.replace({
+            name: 'page404',
+            params: { pathMatch: route.path.substring(1).split('/') },
+        })
+    }
+}
+
+const loadOtherNews = async () => {
+    // fetch 3 news because we want to show 2 other news and one might be the current one
+    otherNews.value = (await getAllNews(organizationsStore.current?.code, { limit: 3 })).results
+        ?.filter((oNews) => !news.value || oNews.id !== news.value.id)
+        .slice(0, 2)
+}
+
+const load = async () => {
+    loading.value = true
+    await loadNews()
+    await loadOtherNews()
+    loading.value = false
+}
+
+const doDeleteNews = async () => {
+    isDeletingNews.value = true
+    try {
+        await deleteNews(organizationsStore.current?.code, newsToDelete.value.id)
+        toaster.pushSuccess(t('news.delete.success'))
+    } catch (err) {
+        toaster.pushError(`${t('news.delete.error')} (${err})`)
+        console.error(err)
+    } finally {
+        if (newsToDelete.value.id != news.value.id) {
+            loadOtherNews()
+            newsToDelete.value = null
+            isDeletingNews.value = false
+        } else {
+            router.push({ name: 'NewsListPage' })
+        }
+    }
+}
+const onNewsEdited = (editedNews) => {
+    if (editedNews.id === news.value.id) {
+        loadNews()
+    } else {
+        loadOtherNews()
+    }
+}
+
+watchEffect(() => [props.slugOrId], load)
+
+onMounted(async () => {
+    await load()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const news = await getNews(runtimeConfig.public.appApiOrgCode, props.slugOrId)
+
+    useLpiHead(
+        useRequestURL().toString(),
+        news?.title,
+        news?.content
+            ?.replace(/<[^>]+>/gi, ' ')
+            .replace(/\s+/gi, ' ')
+            .substring(0, 300),
+        news?.header_image?.variations?.medium
+    )
+} catch (err) {
+    // DGAF
+    console.log(err)
+}
+</script>
 <template>
     <div class="news-list-page page-section-medium">
         <div class="news-header">
@@ -77,149 +191,10 @@
         cancel-button-label="common.cancel"
         confirm-button-label="common.delete"
         @cancel="newsToDelete = null"
-        @confirm="deleteNews"
+        @confirm="doDeleteNews"
         :asyncing="isDeletingNews"
     />
 </template>
-<script>
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
-import permissions from '@/mixins/permissions.ts'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-import NewsListItemSkeleton from '@/components/news/NewsListItem/NewsListItemSkeleton.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-export default {
-    name: 'NewsPage',
-
-    mixins: [imageMixin, permissions],
-
-    components: {
-        BreadCrumbs,
-        CroppedApiImage,
-        NewsListItem,
-        ContextActionButton,
-        ConfirmModal,
-        EditNewsDrawer,
-        SkeletonComponent,
-        NewsListItemSkeleton,
-        TipTapOutput,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    props: {
-        slugOrId: {
-            type: String,
-            required: true,
-        },
-    },
-
-    data() {
-        return {
-            news: null,
-            otherNews: [],
-            loading: false,
-            style: {},
-            editedNews: null,
-            newsToDelete: null,
-        }
-    },
-
-    async mounted() {
-        await this.load()
-    },
-
-    watch: {
-        slugOrId() {
-            this.load()
-        },
-    },
-
-    computed: {
-        breadcrumbs() {
-            return [
-                {
-                    name: 'News',
-                    route: { name: 'NewsListPage' },
-                },
-            ]
-        },
-
-        publicationDate() {
-            return this.news?.publication_date ? this.$d(new Date(this.news.publication_date)) : ''
-        },
-    },
-
-    methods: {
-        async load() {
-            this.loading = true
-            await this.loadNews()
-            await this.loadOtherNews()
-            this.loading = false
-        },
-        async loadNews() {
-            try {
-                this.news = await getNews(this.organizationsStore.current?.code, this.slugOrId)
-            } catch (err) {
-                console.error(err)
-                this.$router.replace({
-                    name: 'page404',
-                    params: { pathMatch: this.$route.path.substring(1).split('/') },
-                })
-            }
-        },
-
-        async loadOtherNews() {
-            // fetch 3 news because we want to show 2 other news and one might be the current one
-            this.otherNews = (
-                await getAllNews(this.organizationsStore.current?.code, { limit: 3 })
-            ).results
-                ?.filter((news) => !this.news || news.id !== this.news.id)
-                .slice(0, 2)
-        },
-
-        async deleteNews() {
-            this.isDeletingNews = true
-            try {
-                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-                this.toaster.pushSuccess(this.$t('news.delete.success'))
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                if (this.newsToDelete.id != this.news.id) {
-                    this.loadOtherNews()
-                    this.newsToDelete = null
-                    this.isDeletingNews = false
-                } else {
-                    this.$router.push({ name: 'NewsListPage' })
-                }
-            }
-        },
-        onNewsEdited(editedNews) {
-            if (editedNews.id === this.news.id) {
-                this.loadNews()
-            } else {
-                this.loadOtherNews()
-            }
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .news-header {
     margin-top: 70px;

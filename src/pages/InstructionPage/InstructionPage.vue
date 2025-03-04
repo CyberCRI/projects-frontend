@@ -82,7 +82,10 @@ try {
     useLpiHead(
         useRequestURL().toString(),
         inst.title,
-        inst.content?.replace(/<[^>]+>/gi, ' ').replace(/\s+/gi, ' '),
+        inst.content
+            ?.replace(/<[^>]+>/gi, ' ')
+            .replace(/\s+/gi, ' ')
+            .substring(0, 300),
         organization?.banner_image?.variations?.medium
     )
 } catch (err) {
