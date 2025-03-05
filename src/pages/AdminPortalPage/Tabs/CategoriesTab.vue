@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import formatHtml from '@/mixins/formatHtml.ts'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
@@ -106,8 +105,6 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'CategoriesTab',
-
-    mixins: [formatHtml],
 
     emits: ['close'],
 

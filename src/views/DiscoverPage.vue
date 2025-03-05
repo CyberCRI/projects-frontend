@@ -368,8 +368,6 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import formatHtml from '@/mixins/formatHtml.ts'
-
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 
@@ -377,8 +375,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'DiscoverPage',
-
-    mixins: [formatHtml],
 
     components: { LpiButton, CriPartners },
 
