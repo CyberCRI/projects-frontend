@@ -20,13 +20,10 @@
 </template>
 
 <script>
-import formatHtml from '@/mixins/formatHtml.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
     name: 'UserPresenceCard',
-
-    mixins: [formatHtml],
 
     components: {
         CroppedApiImage,
