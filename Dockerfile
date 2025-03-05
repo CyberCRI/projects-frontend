@@ -5,6 +5,7 @@ FROM node:${NODE_VERSION}-alpine as base
 ARG PORT=3000
 
 WORKDIR /app
+RUN apk add --no-cache bash
 
 FROM base as builder
 
