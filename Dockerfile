@@ -20,4 +20,7 @@ RUN NODE_ENV=production yarn build
 FROM base
 
 COPY --from=builder /app/.output /app/.output
+
+EXPOSE ${PORT}
+
 CMD [ "node", ".output/server/index.mjs" ]

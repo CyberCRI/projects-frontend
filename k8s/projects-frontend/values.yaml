@@ -1,4 +1,4 @@
-targetPort: 8080
+targetPort: 3000
 
 commonLabels:
   app.kubernetes.io/name: projects-frontend
