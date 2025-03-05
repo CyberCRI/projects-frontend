@@ -4,7 +4,7 @@ FROM node:${NODE_VERSION}-alpine as base
 
 ARG PORT=3000
 
-WORKDIR /src
+WORKDIR /app
 
 FROM base as builder
 
