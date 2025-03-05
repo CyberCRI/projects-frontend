@@ -1,3 +1,19 @@
+<script setup>
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        'Accessibilité',
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div class="page-section-narrow legal-page accessibility page-top">
         <h1 class="page-title">Accessibilité</h1>
@@ -222,9 +238,3 @@
         </section>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'AccessibilityPage',
-}
-</script>

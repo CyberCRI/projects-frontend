@@ -1,3 +1,19 @@
+<script setup>
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        'Politique de protection des données personnelles',
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div class="page-section-narrow legal-page personal-data page-top">
         <h1 class="page-title">Politique de protection des données personnelles</h1>
@@ -590,9 +606,3 @@
         </section>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'PersonalDataPage',
-}
-</script>
