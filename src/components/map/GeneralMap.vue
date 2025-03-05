@@ -16,14 +16,11 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 
 export default {
     name: 'MapPage',
-
-    mixins: [imageMixin],
 
     components: {
         MapPointer,

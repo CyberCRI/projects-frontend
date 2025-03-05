@@ -171,7 +171,6 @@ import ProjectSection from './ProjectSection.vue'
 import ParentGroupSection from './ParentGroupSection.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import GroupDescriptionDrawer from './GroupDescriptionDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
@@ -183,8 +182,6 @@ import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { useRuntimeConfig } from '#imports'
 export default {
     name: 'GroupForm',
-
-    mixins: [imageMixin],
 
     emits: ['update:modelValue', 'close'],
 

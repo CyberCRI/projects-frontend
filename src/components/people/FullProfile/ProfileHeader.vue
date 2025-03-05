@@ -60,7 +60,7 @@
                         >
                             <img
                                 :alt="sdg"
-                                :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
+                                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
                                 class="sdg-img"
                             />
                         </NuxtLink>
@@ -108,19 +108,18 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
 export default {
     name: 'ProfileHeader',
-
-    mixins: [imageMixin],
 
     emits: ['edit-profile'],
 
     components: { IconImage, BadgeItem, SocialNetworks, CroppedApiImage },
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             organizationsStore,
+            runtimeConfig,
         }
     },
     props: {

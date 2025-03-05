@@ -72,15 +72,12 @@ import useAPI from '@/composables/useAPI.ts'
 import { LazyImageResizer } from '#components'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 export default {
     name: 'ImageEditor',
 
     emits: ['update:imageSizes', 'update:picture'],
-
-    mixins: [imageMixin],
 
     components: { CroppedImage, LazyImageResizer, ImageInput, LinkButton, BaseDrawer },
 

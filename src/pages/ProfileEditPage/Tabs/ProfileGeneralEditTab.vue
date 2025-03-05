@@ -116,7 +116,7 @@
                 :round-picture="true"
                 v-model:image-sizes="form.imageSizes"
                 v-model:picture="form.picture"
-                :default-picture="`${PUBLIC_BINARIES_PREFIX}/patatoids-project/Patatoid-1.png`"
+                :default-picture="`${runtimeConfig.public.appPublicBinariesPrefix}/patatoids-project/Patatoid-1.png`"
             ></ImageEditor>
         </div>
 
@@ -180,7 +180,7 @@
                     v-for="sdg in form.sdgs"
                     :key="sdg"
                     :alt="sdg"
-                    :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
+                    :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
                     class="sdg-picture"
                 />
             </TransitionGroup>
@@ -238,7 +238,6 @@
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import useVuelidate from '@vuelidate/core'
@@ -288,13 +287,14 @@ export default {
 
     emits: ['profile-edited'],
 
-    mixins: [imageMixin],
     setup() {
         const toaster = useToasterStore()
         const usersStore = useUsersStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             toaster,
             usersStore,
+            runtimeConfig,
         }
     },
 

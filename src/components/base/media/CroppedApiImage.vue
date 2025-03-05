@@ -12,11 +12,8 @@
 <script>
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
 export default {
     name: 'CroppedApiImage',
-
-    mixins: [imageMixin],
 
     components: { CroppedImage },
 
@@ -66,6 +63,13 @@ export default {
         },
     },
 
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
+    },
+
     computed: {
         _src() {
             return this.pictureData?.variations[this.pictureSize]
@@ -73,7 +77,7 @@ export default {
 
         src() {
             return this.imageError || !this._src
-                ? this.PUBLIC_BINARIES_PREFIX + this.defaultPicture
+                ? this.runtimeConfig.public.appPublicBinariesPrefix + this.defaultPicture
                 : this._src
         },
 

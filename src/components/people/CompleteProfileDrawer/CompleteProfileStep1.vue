@@ -119,7 +119,7 @@
                             <span
                                 class="sdg-pic"
                                 :style="{
-                                    'background-image': `url(${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdg.id}.svg)`,
+                                    'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg.id}.svg)`,
                                 }"
                                 @click="toggle"
                             >
@@ -198,7 +198,6 @@
 <script>
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import allSdgs from '@/data/sdgs.json'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
@@ -233,7 +232,7 @@ export default {
         FieldErrors,
     },
 
-    mixins: [imageMixin, onboardingStatusMixin],
+    mixins: [onboardingStatusMixin],
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()

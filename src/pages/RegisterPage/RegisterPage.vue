@@ -145,7 +145,6 @@ import useVuelidate from '@vuelidate/core'
 import { postUserWithInvitation } from '@/api/people.service.ts'
 import { helpers, required, email } from '@vuelidate/validators'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
 import utils from '@/functs/functions.ts'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -162,8 +161,6 @@ import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import { useRuntimeConfig } from '#imports'
 export default {
     name: 'RegisterPage',
-
-    mixins: [imageMixin],
 
     components: {
         TextInput,

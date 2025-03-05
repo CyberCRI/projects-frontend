@@ -1,7 +1,9 @@
 <template>
     <div
         :class="{ 'sdg--unselected': !selected }"
-        :style="{ 'background-image': `url(${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdgId}.svg)` }"
+        :style="{
+            'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdgId}.svg)`,
+        }"
         class="sdg"
         @click="toggle"
         :data-test="`sdg-${sdgId}`"
@@ -12,19 +14,19 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
     name: 'SdgIcon',
     emits: ['toggled'],
-    mixins: [imageMixin],
     components: { IconImage },
 
     setup() {
         const languagesStore = useLanguagesStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             languagesStore,
+            runtimeConfig,
         }
     },
     props: {

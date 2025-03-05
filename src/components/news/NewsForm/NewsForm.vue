@@ -82,7 +82,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -109,8 +108,6 @@ export default {
     name: 'NewsForm',
 
     emits: ['update:modelValue', 'invalid'],
-
-    mixins: [imageMixin],
 
     components: {
         TextInput,

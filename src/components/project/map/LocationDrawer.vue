@@ -77,7 +77,6 @@ import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from '@/components/project/map/LocationForm.vue'
 //import LocationTooltip from '@/components/map/LocationTooltip.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import { LazyBaseMap } from '#components'
 import permissions from '@/mixins/permissions.ts'
 
@@ -86,7 +85,7 @@ export default {
 
     emits: ['close', 'reload-locations'],
 
-    mixins: [imageMixin, permissions],
+    mixins: [permissions],
 
     components: {
         BaseDrawer,

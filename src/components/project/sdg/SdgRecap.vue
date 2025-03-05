@@ -2,7 +2,7 @@
     <div class="sdg-recap">
         <div>
             <div
-                :style="`background-image: url('${PUBLIC_BINARIES_PREFIX}/sdgs/logo.png')`"
+                :style="`background-image: url('${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo.png')`"
                 class="sdg-logo"
             />
 
@@ -10,7 +10,7 @@
                 <div
                     v-for="sdg in sdgs"
                     :key="sdg"
-                    :style="`background-image: url('${PUBLIC_BINARIES_PREFIX}/sdgs/${lang}/${sdg}.svg')`"
+                    :style="`background-image: url('${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg}.svg')`"
                 ></div>
             </TransitionGroup>
         </div>
@@ -27,7 +27,6 @@
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import permissions from '@/mixins/permissions.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
@@ -37,12 +36,14 @@ export default {
 
     inject: ['projectLayoutToggleAddModal'],
 
-    mixins: [permissions, imageMixin],
+    mixins: [permissions],
 
     setup() {
         const languagesStore = useLanguagesStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             languagesStore,
+            runtimeConfig,
         }
     },
     props: {
