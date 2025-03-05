@@ -29,7 +29,7 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('event.calendar.title'),
+        computed(() => t('event.calendar.title')),
         organization?.dashboard_subtitle,
         organization?.banner_image?.variations?.medium
     )

@@ -43,8 +43,8 @@ try {
     const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
     useLpiHead(
         useRequestURL().toString(),
-        t('map.page-title'),
-        t('map.page-title'),
+        computed(() => t('map.page-title')),
+        computed(() => t('map.page-title')),
         organization?.banner_image?.variations?.medium
     )
 } catch (err) {

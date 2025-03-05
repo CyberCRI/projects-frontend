@@ -125,7 +125,7 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('common.groups'),
+        computed(() => t('common.groups')),
         organization?.dashboard_subtitle,
         organization?.banner_image?.variations?.medium
     )

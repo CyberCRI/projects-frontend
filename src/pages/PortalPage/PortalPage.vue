@@ -17,8 +17,8 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('home.communities'),
-        t('portal.sub-title'),
+        computed(() => t('home.communities')),
+        computed(() => t('portal.sub-title')),
         organization?.banner_image?.variations?.medium
     )
 } catch (err) {
