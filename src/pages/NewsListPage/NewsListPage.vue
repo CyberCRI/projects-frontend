@@ -98,7 +98,7 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('news.list.title'),
+        computed(() => t('news.list.title')),
         organization?.dashboard_subtitle,
         organization?.banner_image?.variations?.medium
     )

@@ -41,7 +41,7 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('home.announcements'),
+        computed(() => t('home.announcements')),
         organization?.dashboard_subtitle,
         organization?.banner_image?.variations?.medium
     )

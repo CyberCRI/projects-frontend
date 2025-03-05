@@ -20,7 +20,7 @@ try {
 
     useLpiHead(
         useRequestURL().toString(),
-        t('common.people'),
+        computed(() => t('common.people')),
         organization?.dashboard_subtitle,
         organization?.banner_image?.variations?.medium
     )
