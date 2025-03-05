@@ -18,7 +18,7 @@
                 v-if="cloud"
                 class="icon"
                 :class="size"
-                :src="`${this.PUBLIC_BINARIES_PREFIX}/${data.icon}`"
+                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/${data.icon}`"
             />
             <IconImage v-else class="icon" :name="data.icon" />
             <div class="text">
@@ -72,8 +72,6 @@
 import TagsList from '@/components/project/TagsList.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-import imageMixin from '@/mixins/imageMixin.ts'
-
 export default {
     name: 'InfoSentence',
 
@@ -81,8 +79,6 @@ export default {
         TagsList,
         IconImage,
     },
-
-    mixins: [imageMixin],
 
     props: {
         data: {
@@ -118,7 +114,12 @@ export default {
             default: null,
         },
     },
-
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
+    },
     computed: {
         cloud() {
             return this.data.cloud || false

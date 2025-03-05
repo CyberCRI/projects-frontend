@@ -3,7 +3,7 @@
         <a
             :class="{ visible: !scrollAtTop }"
             :style="{
-                'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/icons/icon-top.svg)`,
+                'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/icon-top.svg)`,
             }"
             class="button btn-top"
             href="#"
@@ -12,7 +12,7 @@
 
         <div
             :style="{
-                'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/bg-projects-cri.jpg)`,
+                'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/bg-projects-cri.jpg)`,
             }"
             class="header"
         >
@@ -54,7 +54,7 @@
                     >
                         <div class="item-icon">
                             <img
-                                :src="`${PUBLIC_BINARIES_PREFIX}/discover/icons/${introListItem.icon})`"
+                                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/${introListItem.icon})`"
                             />
                         </div>
 
@@ -74,7 +74,7 @@
                     <div class="container">
                         <div class="feature-icon">
                             <img
-                                :src="`${PUBLIC_BINARIES_PREFIX}/discover/icons/${feature.icon})`"
+                                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/${feature.icon})`"
                             />
                         </div>
 
@@ -99,7 +99,7 @@
                                                     `discover.FEATURES[${featindex}].list[${index}].title`
                                                 )
                                             "
-                                            :src="`${PUBLIC_BINARIES_PREFIX}/discover/feat/${item.pic})`"
+                                            :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                                         />
                                     </a>
 
@@ -110,7 +110,7 @@
                                                 `discover.FEATURES[${featindex}].list[${index}].title`
                                             )
                                         "
-                                        :src="`${PUBLIC_BINARIES_PREFIX}/discover/feat/${item.pic})`"
+                                        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                                     />
                                 </li>
                             </ul>
@@ -147,7 +147,7 @@
                         <!-- TABLE MODE -->
                         <div v-if="feature.type == 'table'" class="feature-table">
                             <img
-                                :src="`${PUBLIC_BINARIES_PREFIX}/discover/feat/${feature.tablepic})`"
+                                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${feature.tablepic})`"
                             />
 
                             <div class="feature-table-list">
@@ -175,9 +175,9 @@
                                     :alt="
                                         $t(`discover.FEATURES[${featindex}].list[${index}].title`)
                                     "
-                                    :src="`${PUBLIC_BINARIES_PREFIX}/discover/feat/${item.pic})`"
+                                    :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                                     @click="
-                                        zoommedImg = `${PUBLIC_BINARIES_PREFIX}/discover/feat/${item.pic})`
+                                        zoommedImg = `${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`
                                     "
                                 />
 
@@ -196,7 +196,7 @@
                 <div
                     v-if="feature.pic"
                     :style="{
-                        'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/${feature.pic})`,
+                        'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/${feature.pic})`,
                     }"
                     class="feature-pic"
                 ></div>
@@ -212,7 +212,7 @@
                 <a :href="`${getMetaPortalUrl}/projects/PyimxKq5/summary`" class="projects-item">
                     <img
                         :alt="$t('discover.PROJECT.project.title')"
-                        :src="`${PUBLIC_BINARIES_PREFIX}/discover/project-0.jpg`"
+                        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/project-0.jpg`"
                     />
 
                     <div class="projects-item-title">
@@ -228,7 +228,7 @@
             <div class="container testimonials-container">
                 <a
                     :style="{
-                        'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/icons/icon-left.svg)`,
+                        'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/icon-left.svg)`,
                     }"
                     class="btn-prev"
                     href="#"
@@ -249,7 +249,7 @@
                     >
                         <img
                             :alt="$t(`discover.TESTIMONIALS.list[${index}].project.title`)"
-                            :src="`${PUBLIC_BINARIES_PREFIX}/discover/${item.project.pic})`"
+                            :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/${item.project.pic})`"
                         />
 
                         <div class="projects-item-title">
@@ -288,7 +288,7 @@
 
                 <a
                     :style="{
-                        'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/icons/icon-right.svg)`,
+                        'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/icon-right.svg)`,
                     }"
                     class="btn-next"
                     href="#"
@@ -318,7 +318,7 @@
                         target="_blank"
                     >
                         <img
-                            :src="`${PUBLIC_BINARIES_PREFIX}/discover/icons/_icon-user-white.svg)`"
+                            :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/_icon-user-white.svg)`"
                         />
 
                         <span class="button-text">{{
@@ -332,7 +332,7 @@
                         target="_blank"
                     >
                         <img
-                            :src="`${PUBLIC_BINARIES_PREFIX}/discover/icons/_icon-community-white.svg`"
+                            :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/_icon-community-white.svg`"
                         />
 
                         <span class="button-text">{{
@@ -372,15 +372,13 @@ import formatHtml from '@/mixins/formatHtml.ts'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-// import pageTitle from '@/mixins/pageTitle.ts'
 
 import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'DiscoverPage',
 
-    mixins: [formatHtml, /*imageMixin,*/ pageTitle],
+    mixins: [formatHtml],
 
     components: { LpiButton, CriPartners },
 

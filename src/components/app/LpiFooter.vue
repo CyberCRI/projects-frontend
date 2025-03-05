@@ -45,7 +45,7 @@
                                 {{ $t('footer.sourceText') }}
                             </span>
                             <img
-                                :src="`${PUBLIC_BINARIES_PREFIX}/source.png`"
+                                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/source.png`"
                                 alt="CC BY-NC-SA 4.0"
                             />
                         </a>
@@ -130,7 +130,6 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -138,7 +137,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'LpiFooter',
-    mixins: [imageMixin],
     components: {
         LpiLogo,
         ReportDrawer,

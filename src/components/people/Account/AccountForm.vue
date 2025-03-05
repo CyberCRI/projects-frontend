@@ -143,7 +143,6 @@ import {
     imageSizesFormDataPost,
     pictureApiToImageSizes,
 } from '@/functs/imageSizesUtils.ts'
-import imageMixin from '@/mixins/imageMixin.ts'
 import {
     postUser,
     patchUser,
@@ -167,8 +166,6 @@ export default {
     name: 'AccountForm',
 
     emits: ['close'],
-
-    mixins: [imageMixin],
 
     components: {
         TextInput,

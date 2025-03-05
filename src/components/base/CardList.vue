@@ -7,7 +7,7 @@
                 <div class="card-list__empty">
                     <p class="card-list__empty--text">{{ $t('project.nothing') }}</p>
                     <img
-                        :src="`${PUBLIC_BINARIES_PREFIX}/empties/emptyBox.svg`"
+                        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/empties/emptyBox.svg`"
                         alt="Nothing here"
                     />
                 </div>
@@ -24,14 +24,11 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import ProjectListSkeleton from '@/components/project/ProjectListSkeleton.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
     name: 'CardList',
-
-    mixins: [imageMixin],
 
     components: {
         ProjectListSkeleton,
@@ -53,6 +50,13 @@ export default {
             type: Number,
             default: 12,
         },
+    },
+
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
     },
 
     data() {

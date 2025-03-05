@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import imageMixin from '@/mixins/imageMixin.ts'
 import formatHtml from '@/mixins/formatHtml.ts'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
@@ -108,7 +107,7 @@ import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
     name: 'CategoriesTab',
 
-    mixins: [formatHtml, imageMixin],
+    mixins: [formatHtml],
 
     emits: ['close'],
 

@@ -3,7 +3,7 @@
         <a
             :class="{ visible: !scrollAtTop }"
             :style="{
-                'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/icons/icon-top.svg)`,
+                'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/icon-top.svg)`,
             }"
             class="button btn-top"
             href="#"
@@ -12,7 +12,7 @@
 
         <div
             :style="{
-                'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/bg-projects-cri.jpg)`,
+                'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/bg-projects-cri.jpg)`,
             }"
             class="header"
         >
@@ -89,7 +89,7 @@
                         <a :href="`${peopleUrl}/people/${coreTeamPerson.id}`" target="_blank">
                             <span
                                 :style="{
-                                    'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/people/${coreTeamPerson.pic})`,
+                                    'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/people/${coreTeamPerson.pic})`,
                                 }"
                                 class="img"
                             ></span>
@@ -118,7 +118,7 @@
                         <a :href="`${peopleUrl}/people/${contributor.id}`" target="_blank">
                             <span
                                 :style="{
-                                    'background-image': `url(${PUBLIC_BINARIES_PREFIX}/discover/people/${contributor.pic})`,
+                                    'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/discover/people/${contributor.pic})`,
                                 }"
                                 class="img"
                             ></span>
@@ -176,19 +176,18 @@
 import debounce from 'lodash.debounce'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
-// import pageTitle from '@/mixins/pageTitle.ts'
 
 export default {
     name: 'AboutPage',
 
-    mixins: [imageMixin /*, pageTitle*/],
-
     components: { LpiButton, CriPartners },
 
-    // pageTitle() {
-    //     return this.$t('about.page-title')
-    // },
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        return {
+            runtimeConfig,
+        }
+    },
 
     data() {
         return {

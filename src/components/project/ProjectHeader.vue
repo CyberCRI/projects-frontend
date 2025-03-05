@@ -161,7 +161,7 @@
                                 >
                                     <img
                                         :alt="sdg"
-                                        :src="`${PUBLIC_BINARIES_PREFIX}/sdgs/logo/SDG-${sdg}.svg`"
+                                        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
                                         class="sdg"
                                     />
                                 </NuxtLink>
@@ -280,7 +280,6 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import permissions from '@/mixins/permissions.ts'
 import TagsList from '@/components/project/TagsList.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
@@ -307,13 +306,15 @@ export default {
 
     inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
 
-    mixins: [permissions, imageMixin],
+    mixins: [permissions],
     setup() {
         const organizationsStore = useOrganizationsStore()
         const usersStore = useUsersStore()
+        const runtimeConfig = useRuntimeConfig()
         return {
             organizationsStore,
             usersStore,
+            runtimeConfig,
         }
     },
     props: {

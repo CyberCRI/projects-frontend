@@ -223,7 +223,6 @@ import { Sortable } from 'sortablejs-vue3'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { LazyImageResizer } from '#components'
-import imageMixin from '@/mixins/imageMixin.ts'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -250,8 +249,6 @@ export default {
     name: 'CategoryDrawer',
 
     emits: ['close-modal', 'submit-category'],
-
-    mixins: [imageMixin],
 
     components: {
         Drawer,

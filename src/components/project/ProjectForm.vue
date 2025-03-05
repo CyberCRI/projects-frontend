@@ -129,7 +129,6 @@ import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import TeamSection from '@/components/project/TeamSection.vue'
-import imageMixin from '@/mixins/imageMixin.ts'
 import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
@@ -142,8 +141,6 @@ import { useRuntimeConfig } from '#imports'
 
 export default {
     name: 'ProjectForm',
-
-    mixins: [imageMixin],
 
     emits: ['update:modelValue', 'close'],
 
