@@ -4,7 +4,8 @@ FROM node:${NODE_VERSION}-alpine as base
 
 ARG PORT=3000
 
-WORKDIR /src
+WORKDIR /app
+RUN apk add --no-cache bash
 
 FROM base as builder
 
@@ -20,4 +21,10 @@ RUN NODE_ENV=production yarn build
 FROM base
 
 COPY --from=builder /app/.output /app/.output
+COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
+
+EXPOSE ${PORT}
+
+ENTRYPOINT [ "./secrets-entrypoint.sh" ]
+
 CMD [ "node", ".output/server/index.mjs" ]
