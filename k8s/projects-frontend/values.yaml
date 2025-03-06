@@ -33,6 +33,7 @@ config:
     NUXT_PUBLIC_APP_SENTRY_RELEASE: "{{ .Values.application.revision }}"
     NUXT_PUBLIC_APP_API_ORG_CODE: "{{ .Values.orgCode }}"
     NUXT_PUBLIC_APP_I18N_LOCALE: "{{ .Values.defaultLanguage }}"
+    NUXT_PUBLIC_APP_API_DEFAULT_VERSION: /v1
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
