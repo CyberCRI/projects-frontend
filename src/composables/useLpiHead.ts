@@ -1,9 +1,16 @@
 import useLanguages from '@/stores/useLanguages'
 
 export default (url, title, description, image) => {
+    const runtimeConfig = useRuntimeConfig()
     const setHead = () =>
         useHeadSafe({
             title: title,
+            link: [
+                {
+                    rel: 'icon',
+                    href: `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`,
+                },
+            ],
             titleTemplate: (t) => (t && `Projects - ${t}`) || 'Projects',
             meta: [
                 {
