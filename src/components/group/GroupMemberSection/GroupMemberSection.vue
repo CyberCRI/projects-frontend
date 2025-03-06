@@ -33,14 +33,12 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 
 import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
-import viewportWidth from '@/mixins/viewportWidth.ts'
+import useViewportWidth from '@/composables/useViewportWidth.ts'
 
 export default {
     name: 'GroupMemberSection',
 
     emits: ['user-click'],
-
-    mixins: [viewportWidth],
 
     components: { LpiButton, GroupMemberItem, SectionHeader },
 
@@ -51,6 +49,11 @@ export default {
         },
     },
 
+    setup() {
+        const { isMobile, viewportWidth } = useViewportWidth()
+        return { isMobile, viewportWidth }
+    },
+
     computed: {
         additionalMembersLabel() {
             return this.$t('group.see-more-people-button', {
@@ -59,7 +62,7 @@ export default {
         },
 
         totalDisplayed() {
-            return this.isMobile ? 6 : 8
+            return this.isMobile.value ? 6 : 8
         },
     },
 
