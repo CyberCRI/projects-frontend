@@ -1,24 +1,26 @@
 <template>
-    <Popper
-        ref="popper-ctn"
-        :class="{ secondary }"
-        :content="content"
-        :disabled="disabled"
-        :show="forceShow"
-        :placement="placement"
-        :offset-distance="offsetDistance"
-        :offset-skid="offsetSkid"
-        :hover="hover"
-        :interactive="interactive"
-        :arrow="arrow"
-        class="tooltip"
-    >
-        <template #content v-if="!content">
-            <slot name="custom-content"></slot>
-        </template>
+    <ClientOnly>
+        <Popper
+            ref="popper-ctn"
+            :class="{ secondary }"
+            :content="content"
+            :disabled="disabled"
+            :show="forceShow"
+            :placement="placement"
+            :offset-distance="offsetDistance"
+            :offset-skid="offsetSkid"
+            :hover="hover"
+            :interactive="interactive"
+            :arrow="arrow"
+            class="tooltip"
+        >
+            <template #content v-if="!content">
+                <slot name="custom-content"></slot>
+            </template>
 
-        <slot class="trigger"></slot>
-    </Popper>
+            <slot class="trigger"></slot>
+        </Popper>
+    </ClientOnly>
 </template>
 
 <script>
