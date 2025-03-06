@@ -1,5 +1,7 @@
 import { defineNuxtPlugin } from '#imports'
 import main from '@/main'
+// https://stackoverflow.com/questions/61755999/uncaught-referenceerror-regeneratorruntime-is-not-defined-in-react
+import regeneratorRuntime from 'regenerator-runtime'
 
 export default defineNuxtPlugin((vueApp) => {
     vueApp.hook('app:beforeMount', async () => {
