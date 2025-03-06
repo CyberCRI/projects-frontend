@@ -23,7 +23,7 @@ jobs:
       image-tag: ${{ github.sha }}
       recursive-submodule-checkout: true
       build-args: |
-        VITE_APP_PUBLIC_BINARIES_PREFIX=${{ vars.PUBLIC_BINARIES_PREFIX }}
+        NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX=${{ vars.PUBLIC_BINARIES_PREFIX }}
     secrets:
       submodules-app-private-key: ${{ secrets.INFRA_BOT_APP_PRIVATE_KEY }}
       submodules-app-id: ${{ secrets.INFRA_BOT_APP_ID }}
