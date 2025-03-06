@@ -106,12 +106,12 @@ export default defineNuxtConfig({
             title: 'Projects',
             charset: 'urf-8',
             viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-            // link: [
-            //     {
-            //         rel: 'icon',
-            //         href: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/favicon.ico`,
-            //     },
-            // ],
+            link: [
+                {
+                    rel: 'icon',
+                    href: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/favicon.ico`,
+                },
+            ],
             meta: [
                 {
                     name: 'description',
@@ -137,16 +137,16 @@ export default defineNuxtConfig({
                         'Projects is a platform to document and promote projects for common good',
                 },
 
-                // {
-                //     // TODO change to frontend url
-                //     name: 'og:url',
-                //     content: process.env.NUXT_PUBLIC_APP_API_URL,
-                // },
+                {
+                    // TODO change to frontend url
+                    name: 'og:url',
+                    content: process.env.NUXT_PUBLIC_APP_API_URL,
+                },
 
-                // {
-                //     name: 'og:image',
-                //     content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_og.png`,
-                // },
+                {
+                    name: 'og:image',
+                    content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_og.png`,
+                },
 
                 // Twitter
 
@@ -166,10 +166,10 @@ export default defineNuxtConfig({
                     content: 'summary_large_image',
                 },
 
-                // {
-                //     name: 'twitter:image',
-                //     content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_twt.png`,
-                // },
+                {
+                    name: 'twitter:image',
+                    content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_twt.png`,
+                },
             ],
         },
     },
