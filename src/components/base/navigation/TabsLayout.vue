@@ -107,7 +107,7 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import viewportWidth from '@/mixins/viewportWidth.ts'
+import useViewportWidth from '@/composables/useViewportWidth.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import debounce from 'lodash.debounce'
 
@@ -118,7 +118,10 @@ export default {
 
     components: { LinkButton, IconImage },
 
-    mixins: [viewportWidth],
+    setup() {
+        const { isMobile } = useViewportWidth()
+        return { isMobile }
+    },
 
     props: {
         tabs: {

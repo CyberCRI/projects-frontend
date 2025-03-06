@@ -32,23 +32,26 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 
-import ProjectMemberItem from '@/components/people/ProjectMemberItem/ProjectMemberItem.vue'
-import viewportWidth from '@/mixins/viewportWidth.ts'
+import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
+import useViewportWidth from '@/composables/useViewportWidth.ts'
 
 export default {
     name: 'ProjectMemberSection',
 
     emits: ['user-click'],
 
-    mixins: [viewportWidth],
-
-    components: { LpiButton, ProjectMemberItem, SectionHeader },
+    components: { LpiButton, GroupMemberItem, SectionHeader },
 
     props: {
         members: {
             type: Array,
             required: true,
         },
+    },
+
+    setup() {
+        const { isMobile, viewportWidth } = useViewportWidth()
+        return { isMobile, viewportWidth }
     },
 
     computed: {
@@ -59,7 +62,7 @@ export default {
         },
 
         totalDisplayed() {
-            return this.isMobile ? 6 : 8
+            return this.isMobile.value ? 6 : 8
         },
     },
 
