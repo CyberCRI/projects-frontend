@@ -29,21 +29,26 @@ const useAPI = (url: string, options) => {
                 // Process the response data
                 localStorage?.setItem('token', response._data.token)
             },
-            onResponseError({ options, error }) {
-                if (options.noError) {
-                    // console.error(error)
-                    return Promise.resolve(null)
-                }
-
-                const { t } = useI18n()
+            async onResponseError({ request, options, response }) {
+                // // keep for futur debug
+                // console.error(response)
+                // var e = new Error()
+                // console.log(e.stack.split('\n').map((s) => s.substring(s.lastIndexOf('/'))))
+                // if (options.noError) {
+                //     // console.error(error)
+                //     return null
+                // }
 
                 const toaster = useToasterStore()
-                const originalRequest: any = error.config
+                const originalRequest: any = request // response.config
 
                 // We could add specific notification to display the errors
                 // And we could also handle refresh token there if needed when catching error
-                if (error.response) {
-                    const { data, status }: { data: any; status: number } = error.response
+                if (response) {
+                    const { status }: { data: any; status: number } = response
+
+                    const data: any = response._data
+
                     if (data.type && (data.errors || data.detail)) {
                         if (data.type === 'validation') {
                             let message = ''
@@ -64,22 +69,22 @@ const useAPI = (url: string, options) => {
 
                         toaster.pushWarning(message)
                     } else if (status === 401) {
-                        toaster.pushError(t('message.error.unauthorized'))
+                        toaster.pushError('message.error.unauthorized', { translate: true })
                     } else if (status === 422) {
-                        toaster.pushError(t('message.error.unprocessable-entity'))
+                        toaster.pushError('message.error.unprocessable-entity', { translate: true })
                     } else if (status === 502) {
-                        toaster.pushError(t('message.error.bad-gateway'))
+                        toaster.pushError('message.error.bad-gateway', { translate: true })
                     }
 
                     // TODO : is this still used ?
                     if (status === 403 && !originalRequest._retry) {
                         originalRequest._retry = true
 
-                        return Promise.reject(error)
+                        return Promise.reject(response)
                     }
                 }
 
-                return Promise.reject(error)
+                return Promise.reject(response)
             },
         }
     }

@@ -7,7 +7,6 @@ export default function useViewportWidth() {
 
     const getWindowWidth = () => {
         if (import.meta.client) {
-            console.log('ggg')
             viewportWidth.value = window.innerWidth
         }
     }
@@ -16,7 +15,6 @@ export default function useViewportWidth() {
 
     onMounted(() => {
         if (import.meta.client) {
-            console.log('ffff')
             getWindowWidth()
             window.addEventListener('resize', debouncedGetWindowWidth)
         }

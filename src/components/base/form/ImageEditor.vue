@@ -161,7 +161,7 @@ export default {
     methods: {
         async getFilesFromUrl(url) {
             const filename = url.split('/').pop() || 'default-image'
-            const result = await useAPI(url, { responseType: 'blob' }) // TODO nuxt check this
+            const result = await $fetch(url, { responseType: 'blob' }) // TODO nuxt check this
             return new File([result.data], filename)
         },
 

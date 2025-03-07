@@ -1,3 +1,26 @@
+<script setup>
+import useToasterStore from '@/stores/useToaster.ts'
+
+const toaster = useToasterStore()
+const { t } = useI18n()
+const snackbars = computed(() => {
+    return (toaster.toastList || []).map((toast) => {
+        const iconMap = {
+            error: 'Cancel',
+            warning: 'AlertOutline',
+            info: 'Check',
+            success: 'Check',
+        }
+        const icon = iconMap[toast.type || ''] || 'Check'
+        return {
+            message: toast.translate ? t(toast.mesage) : toast.message,
+            icon,
+            type: toast.type || 'success',
+        }
+    })
+})
+</script>
+
 <template>
     <div class="toast-list">
         <TransitionGroup name="toast" tag="div">
@@ -13,45 +36,6 @@
         </TransitionGroup>
     </div>
 </template>
-
-<script>
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-
-export default {
-    name: 'AppToastList',
-
-    components: {
-        LpiSnackbar,
-    },
-
-    setup() {
-        const toaster = useToasterStore()
-        return {
-            toaster,
-        }
-    },
-
-    computed: {
-        snackbars() {
-            return (this.toaster.toastList || []).map((toast) => {
-                const iconMap = {
-                    error: 'Cancel',
-                    warning: 'AlertOutline',
-                    info: 'Check',
-                    success: 'Check',
-                }
-                const icon = iconMap[toast.type || ''] || 'Check'
-                return {
-                    message: toast.message,
-                    icon,
-                    type: toast.type || 'success',
-                }
-            })
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .toast-list {

@@ -11,7 +11,7 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
 
 export async function createProject(project) {
-    const result: any = await useAPI(`project/`, { body: project }) //.data.value
+    const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
 
     if (project.header_image instanceof File && result) {
         const headerFormData = new FormData()
