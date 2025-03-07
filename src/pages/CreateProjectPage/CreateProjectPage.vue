@@ -1,252 +1,278 @@
-<template>
-    <div class="create-project">
-        <div class="header">
-            <h1>{{ $t('project.create.title') }}</h1>
-            <p>
-                {{ $t('project.create.notice') }}
-                <NuxtLink :to="{ name: 'Help' }" class="help-link"
-                    >{{ $t('project.create.help-link') }}
-                </NuxtLink>
-            </p>
-        </div>
-
-        <div class="project-form">
-            <ProjectForm
-                :categories="categories"
-                ref="projectForm"
-                v-model="form"
-                @close="$emit('close')"
-                :validation="v$"
-            />
-
-            <LpiSnackbar
-                v-if="!isFormCorrect"
-                class="completed-form-snackbar"
-                icon="ExclamationMark"
-                type="warning"
-            >
-                <div v-html="$t('project.form.completed-info-to-access-presentation')"></div>
-            </LpiSnackbar>
-
-            <div class="actions">
-                <LpiButton
-                    :disabled="isSaving"
-                    :label="$t('common.cancel')"
-                    :secondary="true"
-                    class="submit-btn"
-                    @click="cancel"
-                    data-test="cancel-project-create-button"
-                />
-                <LpiButton
-                    :disabled="!formNotEmpty || isSaving"
-                    :label="$t('project.form.create-project')"
-                    :btn-icon="isSaving ? 'LoaderSimple' : null"
-                    class="submit-btn"
-                    @click="submit"
-                    data-test="project-create-button"
-                />
-            </div>
-        </div>
-    </div>
-</template>
-
-<script>
-import ProjectForm from '@/components/project/ProjectForm.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import permissions from '@/mixins/permissions.ts'
+<script setup>
+// import ProjectForm from '@/components/project/ProjectForm.vue'
+// import LpiButton from '@/components/base/button/LpiButton.vue'
+// import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
+// import permissions from '@/mixins/permissions.ts'
 
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
+// import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
+// import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 import analytics from '@/analytics'
 import { createProject } from '@/api/projects.service'
+import { getOrganizationByCode } from '@/api/organizations.service'
 
-export default {
-    name: 'CreateProjectPage',
+// export default {
+//     name: 'CreateProjectPage',
 
-    mixins: [permissions, onboardingStatusMixin],
+//     mixins: [permissions, onboardingStatusMixin],
 
-    emits: ['close'],
+// emits: ['close'],
 
-    components: { ProjectForm, LpiButton, LpiSnackbar },
+const emit = defineEmits(['close'])
 
-    setup() {
-        const toaster = useToasterStore()
-        const languagesStore = useLanguagesStore()
-        const projectCategoriesStore = useProjectCategories()
-        const organizationsStore = useOrganizationsStore()
-        const projectsStore = useProjectsStore()
-        const usersStore = useUsersStore()
-        return {
-            toaster,
-            languagesStore,
-            projectCategoriesStore,
-            organizationsStore,
-            projectsStore,
-            usersStore,
-        }
+// components: { ProjectForm, LpiButton, LpiSnackbar },
+
+// setup() {
+const toaster = useToasterStore()
+const languagesStore = useLanguagesStore()
+const projectCategoriesStore = useProjectCategories()
+const organizationsStore = useOrganizationsStore()
+// const projectsStore = useProjectsStore()
+const usersStore = useUsersStore()
+const router = useRouter()
+
+// const permissions = usePermissions()
+const { onboardingTrap } = useOnboardingStatus()
+const { t } = useI18n()
+
+//     return {
+//         toaster,
+//         languagesStore,
+//         projectCategoriesStore,
+//         organizationsStore,
+//         projectsStore,
+//         usersStore,
+//     }
+// },
+
+// data() {
+// return {
+const isFormCorrect = useState(() => true)
+
+const form = useState(() => ({
+    title: '',
+    purpose: '',
+    category: undefined,
+    header_image: null,
+
+    language: languagesStore.current,
+
+    tags: [],
+
+    team: {
+        owners: null,
+        members: null,
+        reviewers: null,
+        people_groups: null,
     },
+    imageSizes: null,
+}))
+const isSaving = useState(() => false)
+//     }
+// },
 
-    data() {
-        return {
-            v$: useValidate(),
-            isFormCorrect: true,
-
-            form: {
-                title: '',
-                purpose: '',
-                category: undefined,
-                header_image: null,
-
-                language: this.languagesStore.current,
-
-                tags: [],
-
-                team: {
-                    owners: null,
-                    members: null,
-                    reviewers: null,
-                    people_groups: null,
-                },
-                imageSizes: null,
+// validations() {
+/* Custom 'secret' rule: 3 spaces */
+const rules = computed(() => {
+    const purposeRules =
+        form.value.purpose === '   '
+            ? {
+                  minLengthValue: helpers.withMessage(
+                      t('project.form.purpose-errors.min'),
+                      minLength(3)
+                  ),
+                  maxLengthValue: helpers.withMessage(
+                      t('project.form.purpose-errors.max'),
+                      maxLength(180)
+                  ),
+              }
+            : {
+                  required: helpers.withMessage(
+                      t('project.form.purpose-errors.required'),
+                      required
+                  ),
+                  minLengthValue: helpers.withMessage(
+                      t('project.form.purpose-errors.min'),
+                      minLength(3)
+                  ),
+                  maxLengthValue: helpers.withMessage(
+                      t('project.form.purpose-errors.max'),
+                      maxLength(180)
+                  ),
+              }
+    return {
+        form: {
+            title: {
+                required: helpers.withMessage(t('project.form.title-errors.required'), required),
+                maxLengthValue: helpers.withMessage(
+                    t('project.form.title-errors.max'),
+                    maxLength(120)
+                ),
             },
-            isSaving: false,
-        }
-    },
-
-    validations() {
-        /* Custom 'secret' rule: 3 spaces */
-        const rules =
-            this.form.purpose === '   '
-                ? {
-                      minLengthValue: helpers.withMessage(
-                          this.$t('project.form.purpose-errors.min'),
-                          minLength(3)
-                      ),
-                      maxLengthValue: helpers.withMessage(
-                          this.$t('project.form.purpose-errors.max'),
-                          maxLength(180)
-                      ),
-                  }
-                : {
-                      required: helpers.withMessage(
-                          this.$t('project.form.purpose-errors.required'),
-                          required
-                      ),
-                      minLengthValue: helpers.withMessage(
-                          this.$t('project.form.purpose-errors.min'),
-                          minLength(3)
-                      ),
-                      maxLengthValue: helpers.withMessage(
-                          this.$t('project.form.purpose-errors.max'),
-                          maxLength(180)
-                      ),
-                  }
-        return {
-            form: {
-                title: {
-                    required: helpers.withMessage(
-                        this.$t('project.form.title-errors.required'),
-                        required
-                    ),
-                    maxLengthValue: helpers.withMessage(
-                        this.$t('project.form.title-errors.max'),
-                        maxLength(120)
-                    ),
-                },
-                purpose: rules,
-            },
-        }
-    },
-
-    computed: {
-        categories() {
-            return this.projectCategoriesStore.allOrderedByOrderId
+            purpose: purposeRules,
         },
+    }
+})
 
-        formNotEmpty() {
-            if (this.organizationsStore.isDefault) {
-                return !!this.form.title && !!this.form.purpose
-            }
-            return (
-                !!this.form.title &&
-                !!this.form.purpose &&
-                (!this.categories?.length || !!this.form.category)
-            )
-        },
-    },
+const v$ = useValidate(rules, { form })
 
-    async mounted() {
-        if (!this.categories.length) {
-            await this.projectCategoriesStore.getAllProjectCategories()
-        }
-    },
+// },
 
-    methods: {
-        cancel() {
-            this.$router.push('/')
-        },
+// computed: {
+const categories = computed(() => {
+    return projectCategoriesStore.allOrderedByOrderId
+})
 
-        async submit() {
-            this.isFormCorrect = await this.v$.$validate()
+const formNotEmpty = computed(() => {
+    if (organizationsStore.isDefault) {
+        return !!form.value.title && !!form.value.purpose
+    }
+    return (
+        !!form.value.title &&
+        !!form.value.purpose &&
+        (!categories.value?.length || !!form.value.category)
+    )
+})
+// },
 
-            if (this.isFormCorrect) {
-                this.isSaving = true
-                this.createProject()
-            }
-        },
+onMounted(async () => {
+    if (!categories.value.length) {
+        await projectCategoriesStore.getAllProjectCategories()
+    }
+})
 
-        async createProject() {
-            const payload = {
-                ...this.form,
-                is_locked: false,
-                is_shareable: false,
-                publication_status: 'private',
-                life_status: 'running',
-                organizations_codes: [this.organizationsStore.current.code],
-                tags: this.form.tags.map((tag) => tag.id),
-            }
-
-            if (this.form.category) {
-                payload['project_categories_ids'] = [this.form.category.toString()]
-            }
-            this.isSaving = true
-            try {
-                const project = await createProject(payload)
-
-                // fetch updated project list from user so permissions as set correctly
-                await this.usersStore.getUser(this.usersStore.id)
-
-                analytics.project.create({ id: project.id, title: project.title })
-
-                await this.onboardingTrap('create_project', false)
-                // reload current to user to get new permissions
-                // maybe set a endpoint to fetch only permission ?
-                const user = this.usersStore.userFromApi
-                if (user) this.usersStore.getUser(user.id)
-                this.$router.push({
-                    name: 'projectDescription',
-                    params: { slugOrId: project.slug },
-                })
-                this.toaster.pushSuccess(this.$t('toasts.project-create.success'))
-            } catch (error) {
-                this.toaster.pushError(`${this.$t('toasts.project-create.error')} (${error})`)
-                console.error(error)
-            } finally {
-                this.loading = false
-            }
-        },
-    },
+// methods: {
+const cancel = () => {
+    router.push('/')
 }
+
+const doCreateProject = async () => {
+    const payload = {
+        ...form.value,
+        is_locked: false,
+        is_shareable: false,
+        publication_status: 'private',
+        life_status: 'running',
+        organizations_codes: [organizationsStore.current.code],
+        tags: form.value.tags.map((tag) => tag.id),
+    }
+
+    if (form.value.category) {
+        payload['project_categories_ids'] = [form.value.category.toString()]
+    }
+    isSaving.value = true
+    try {
+        const project = await createProject(payload)
+
+        // fetch updated project list from user so permissions as set correctly
+        await usersStore.getUser(usersStore.id)
+
+        analytics.project.create({ id: project.id, title: project.title })
+
+        await onboardingTrap('create_project', false)
+        // reload current to user to get new permissions
+        // maybe set a endpoint to fetch only permission ?
+        const user = usersStore.userFromApi
+        if (user) usersStore.getUser(user.id)
+        router.push({
+            name: 'projectDescription',
+            params: { slugOrId: project.slug },
+        })
+        toaster.pushSuccess(t('toasts.project-create.success'))
+    } catch (error) {
+        toaster.pushError(`${t('toasts.project-create.error')} (${error})`)
+        console.error(error)
+    } finally {
+        isSaving.value = false
+    }
+}
+
+const submit = async () => {
+    isFormCorrect.value = await v$.value.$validate()
+
+    if (isFormCorrect.value) {
+        isSaving.value = true
+        doCreateProject()
+    }
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('project.create.title')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+
+//     },
+// }
 </script>
+
+<template>
+    <ClientOnly>
+        <div class="create-project">
+            <div class="header">
+                <h1>{{ $t('project.create.title') }}</h1>
+                <p>
+                    {{ $t('project.create.notice') }}
+                    <NuxtLink :to="{ name: 'Help' }" class="help-link"
+                        >{{ $t('project.create.help-link') }}
+                    </NuxtLink>
+                </p>
+            </div>
+            <div class="project-form">
+                <LazyProjectForm
+                    :categories="categories"
+                    ref="projectForm"
+                    v-model="form"
+                    @close="$emit('close')"
+                    :validation="v$"
+                />
+
+                <LazyLpiSnackbar
+                    v-if="!isFormCorrect"
+                    class="completed-form-snackbar"
+                    icon="ExclamationMark"
+                    type="warning"
+                >
+                    <div v-html="$t('project.form.completed-info-to-access-presentation')"></div>
+                </LazyLpiSnackbar>
+
+                <div class="actions">
+                    <LpiButton
+                        :disabled="isSaving"
+                        :label="$t('common.cancel')"
+                        :secondary="true"
+                        class="submit-btn"
+                        @click="cancel"
+                        data-test="cancel-project-create-button"
+                    />
+                    <LpiButton
+                        :disabled="!formNotEmpty || isSaving"
+                        :label="$t('project.form.create-project')"
+                        :btn-icon="isSaving ? 'LoaderSimple' : null"
+                        class="submit-btn"
+                        @click="submit"
+                        data-test="project-create-button"
+                    />
+                </div>
+            </div>
+        </div>
+    </ClientOnly>
+</template>
+
 <style lang="scss" scoped>
 .create-project {
     width: 100%;

@@ -3,8 +3,6 @@
 import { patchUser } from '@/api/people.service'
 import useUsersStore from '@/stores/useUsers'
 
-import { defineComponent } from 'vue'
-
 type OnboardingKey =
     | 'show_welcome'
     | 'create_project'
