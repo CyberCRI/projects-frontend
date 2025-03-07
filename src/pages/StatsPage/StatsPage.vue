@@ -1,53 +1,59 @@
+<script setup>
+import { defineAsyncComponent } from 'vue'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const { t } = useI18n()
+const tabs = computed(() =>
+    import.meta.client
+        ? [
+              {
+                  key: 'stats-all',
+                  label: t('home.all-projects'),
+                  component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+                  props: { filter: 'all' },
+              },
+              {
+                  key: 'stats-public',
+                  label: t('group.visibility-public'),
+                  component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+                  props: { filter: 'public' },
+              },
+              {
+                  key: 'stats-private',
+                  label: t('group.visibility-private'),
+                  component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+                  props: { filter: 'private' },
+              },
+              {
+                  key: 'stats-community',
+                  label: t('group.visibility-org'),
+                  component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+                  props: { filter: 'org' },
+              },
+          ]
+        : []
+)
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('stats.page-title')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
+
 <template>
     <div class="page-section-wide page-top">
         <h1 class="page-title">{{ $t('stats.page-title') }}</h1>
-        <TabsLayout :tabs="tabs" :align-left="true" class="stats-tab" />
+        <LazyTabsLayout :tabs="tabs" :align-left="true" class="stats-tab" />
     </div>
 </template>
-
-<script>
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import { defineAsyncComponent } from 'vue'
-
-export default {
-    name: 'StatsPage',
-
-    components: {
-        TabsLayout,
-    },
-
-    computed: {
-        tabs() {
-            return [
-                {
-                    key: 'stats-all',
-                    label: this.$t('home.all-projects'),
-                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-                    props: { filter: 'all' },
-                },
-                {
-                    key: 'stats-public',
-                    label: this.$t('group.visibility-public'),
-                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-                    props: { filter: 'public' },
-                },
-                {
-                    key: 'stats-private',
-                    label: this.$t('group.visibility-private'),
-                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-                    props: { filter: 'private' },
-                },
-                {
-                    key: 'stats-community',
-                    label: this.$t('group.visibility-org'),
-                    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-                    props: { filter: 'org' },
-                },
-            ]
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .stats-tab {
