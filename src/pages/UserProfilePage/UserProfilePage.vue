@@ -1,29 +1,42 @@
 <script setup>
 import UserProfile from '@/components/people/UserProfile.vue'
 import { getUser } from '@/api/people.service.ts'
+
+import { getOrganizationByCode } from '@/api/organizations.service'
 const props = defineProps({
     userId: {
         type: [String, Number],
         default: null,
     },
 })
+
+const router = useRouter()
+const route = useRoute()
+const { t } = useI18n()
+
 try {
-    const user = await getUser(props.userId, true)
-    if (user) {
+    if (props.userId) {
+        const user = await getUser(props.userId, true)
         useLpiHead(
             useRequestURL().toString(),
             `${user.given_name} ${user.family_name}`,
             user.short_description,
             user.profile_picture?.variations?.medium
         )
+    } else {
+        const runtimeConfig = useRuntimeConfig()
+        const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+        useLpiHead(
+            useRequestURL().toString(),
+            computed(() => t('me.page-title')),
+            organization?.dashboard_subtitle,
+            organization?.banner_image?.variations?.medium
+        )
     }
 } catch (err) {
     // DGAF
     console.log(err)
 }
-
-const router = useRouter()
-const route = useRoute()
 
 function display404() {
     router.replace({
