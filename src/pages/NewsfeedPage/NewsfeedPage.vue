@@ -8,7 +8,7 @@ const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
 const isLoading = useState(() => false)
-const request = useState(() => ({}))
+const request = useState(() => ({ results: [] }))
 
 const newsfeed = computed(() => {
     return request.value ? request.value.results : []
