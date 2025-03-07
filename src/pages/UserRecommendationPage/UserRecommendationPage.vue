@@ -1,3 +1,54 @@
+<script setup>
+import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
+import useAPI from '@/composables/useAPI.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const organizationsStore = useOrganizationsStore()
+const { t } = useI18n()
+
+const usersRecommendationsRequest = useState(() => null)
+const limit = useState(() => 10)
+const isLoading = useState(() => false)
+const pagination = computed(() => ({
+    currentPage: usersRecommendationsRequest.value?.current_page || 1,
+    total: usersRecommendationsRequest.value?.total_page || 1,
+    previous: usersRecommendationsRequest.value?.previous || undefined,
+    next: usersRecommendationsRequest.value?.next || undefined,
+    first: usersRecommendationsRequest.value?.first || undefined,
+    last: usersRecommendationsRequest.value?.last || undefined,
+}))
+
+onMounted(async () => {
+    isLoading.value = true
+    usersRecommendationsRequest.value = await getUsersRecommendationsForUser(
+        organizationsStore.current.code,
+        { limit: limit.value }
+    )
+    isLoading.value = false
+})
+
+const onClickPagination = async (requestedPage) => {
+    isLoading.value = true
+    usersRecommendationsRequest.value = await useAPI(requestedPage, {})
+    isLoading.value = false
+    const el = document.querySelector('.page-title')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('recommendations.connect-to')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div class="page-section-wide page-top recommendation-page">
         <h1 class="page-title">{{ $t('recommendations.connect-to') }}</h1>
@@ -32,81 +83,7 @@
         </div>
     </div>
 </template>
-<script>
-import UserCard from '@/components/people/UserCard.vue'
-import CardList from '@/components/base/CardList.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-export default {
-    name: 'UserRecommendationPage',
-
-    components: {
-        UserCard,
-        CardList,
-        PaginationButtons,
-    },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
-
-    data() {
-        return {
-            usersRecommendationsRequest: null,
-            limit: 10,
-            isLoading: false,
-            pagination: {
-                currentPage: 1,
-                total: 1,
-                previous: undefined,
-                next: undefined,
-                first: undefined,
-                last: undefined,
-            },
-        }
-    },
-    watch: {
-        usersRecommendationsRequest: {
-            handler(response) {
-                this.updatePagination(response)
-            },
-            deep: true,
-        },
-    },
-    async mounted() {
-        this.isLoading = true
-        this.usersRecommendationsRequest = await getUsersRecommendationsForUser(
-            this.organizationsStore.current.code,
-            { limit: this.limit }
-        )
-        this.isLoading = false
-    },
-
-    methods: {
-        async onClickPagination(requestedPage) {
-            this.isLoading = true
-            this.usersRecommendationsRequest = (await useAPI(requestedPage, {})).data
-            this.isLoading = false
-            const el = document.querySelector('.page-title')
-            if (el) el.scrollIntoView({ behavior: 'smooth' })
-        },
-
-        updatePagination(response) {
-            this.pagination.currentPage = response.current_page
-            this.pagination.total = response.total_page
-            this.pagination.previous = response.previous
-            this.pagination.next = response.next
-            this.pagination.first = response.first
-            this.pagination.last = response.last
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .pagination-wrapper {
     width: 100%;
