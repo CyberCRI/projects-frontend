@@ -1,3 +1,76 @@
+<script setup>
+import { getUser } from '@/api/people.service.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const usersStore = useUsersStore()
+const { t } = useI18n()
+
+const { onboardingTrap } = useOnboardingStatus()
+
+const props = defineProps({
+    userId: {
+        type: [String, Number, null],
+        required: false,
+        default: null,
+    },
+})
+
+const user = useState(() => null)
+
+const isSelf = computed(() => {
+    // safe check for isSelf beacuse this.userId might be a slug in fact
+    return usersStore.userFromApi && user.value?.id === usersStore.userFromApi.id
+})
+const username = computed(() => {
+    return user.value ? user.value.given_name + ' ' + user.value.family_name : ''
+})
+
+const loadUser = async () => {
+    try {
+        user.value = await getUser(props.userId || usersStore.id)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const onProfileEdited = async () => {
+    if (user.value?.id == usersStore.id) {
+        onboardingTrap('complete_profile', false)
+    }
+}
+
+provide(() => {
+    return {
+        profileEditReloadUser: loadUser,
+    }
+})
+
+onMounted(async () => {
+    await loadUser()
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() =>
+            !user.value
+                ? undefined
+                : isSelf.value
+                  ? t('profile.edit.edit-my-profile')
+                  : t('profile.edit.edit-other-profile', { name: username.value })
+        ),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
+
 <template>
     <div>
         <div class="my-profile-edit page-section-wide">
@@ -15,75 +88,6 @@
         </div>
     </div>
 </template>
-<script>
-import { getUser } from '@/api/people.service.ts'
-import ProfileEditTabs from './Tabs/ProfileEditTabs.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-export default {
-    name: 'ProfileEditPage',
-
-    components: {
-        ProfileEditTabs,
-    },
-
-    mixins: [onboardingStatusMixin],
-    setup() {
-        const usersStore = useUsersStore()
-        return {
-            usersStore,
-        }
-    },
-    provide() {
-        return {
-            profileEditReloadUser: this.loadUser,
-        }
-    },
-    data() {
-        return {
-            user: null,
-        }
-    },
-
-    props: {
-        userId: {
-            type: [String, Number, null],
-            required: false,
-            default: null,
-        },
-    },
-
-    async mounted() {
-        await this.loadUser()
-    },
-
-    computed: {
-        isSelf() {
-            // safe check for isSelf beacuse this.userId might be a slug in fact
-            return this.usersStore.userFromApi && this.user?.id === this.usersStore.userFromApi.id
-        },
-        username() {
-            return this.user ? this.user.given_name + ' ' + this.user.family_name : ''
-        },
-    },
-
-    methods: {
-        async loadUser() {
-            try {
-                this.user = await getUser(this.userId || this.usersStore.id)
-            } catch (error) {
-                console.error(error)
-            }
-        },
-
-        async onProfileEdited() {
-            if (this.user?.id == this.usersStore.id) {
-                this.onboardingTrap('complete_profile', false)
-            }
-        },
-    },
-}
-</script>
 <style scoped lang="scss">
 .my-profile-edit {
     margin-top: $navbar-height;
