@@ -49,6 +49,8 @@ spec:
     templates:
       - name: all
         steps:
+        - - name: wake-up
+            template: wake-up
         - - name: run
             template: run
             continueOn:
@@ -65,6 +67,17 @@ spec:
               parameters:
               - name: status
                 value: {{ print "{{steps.run.status}}" | quote }}
+      - name: wake-up
+        steps:
+        - - name: wake-up
+            templateRef:
+              name: service-waker
+              template: wake-up
+              clusterScope: true
+            arguments:
+              parameters:
+              - name: group_name
+                value: {{ .Values.sablier.groupName }}
       - name: run
         container:
         {{- with $.Values.e2e.image }}
