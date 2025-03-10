@@ -50,8 +50,8 @@ export async function createProject(project) {
 }
 
 export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
-    const extraHeaders = project instanceof FormData ? getFormDataHeaders() : {}
-    return await useAPI(`project/${id}/`, { body: project, method: 'PATCH', ...extraHeaders })
+    //const extraHeaders = project instanceof FormData ? getFormDataHeaders() : {}
+    return await useAPI(`project/${id}/`, { body: project, method: 'PATCH' /*, ...extraHeaders*/ })
     //.data.value
 }
 
@@ -117,7 +117,7 @@ export async function postProjectHeader({ project_id, body }) {
     return await useAPI(`project/${project_id}/header/`, {
         body,
         method: 'POST',
-        ...getFormDataHeaders(),
+        /*...getFormDataHeaders(),*/
     }) //.data.value
 }
 
@@ -125,7 +125,7 @@ export async function patchProjectHeader({ project_id, image_id, body }) {
     return await useAPI(`project/${project_id}/header/${image_id}/`, {
         body,
         method: 'PATCH',
-        ...getFormDataHeaders(),
+        /*...getFormDataHeaders(),*/
     }) //.data.value
 }
 

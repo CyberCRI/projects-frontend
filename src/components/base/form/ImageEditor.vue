@@ -162,7 +162,7 @@ export default {
         async getFilesFromUrl(url) {
             const filename = url.split('/').pop() || 'default-image'
             const result = await $fetch(url, { responseType: 'blob' }) // TODO nuxt check this
-            return new File([result.data], filename)
+            return new File([result], filename)
         },
 
         setImage(image) {
