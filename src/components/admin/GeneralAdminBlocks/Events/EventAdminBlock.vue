@@ -9,6 +9,23 @@
                 @edit-event="editedEvent = event"
                 @delete-event="eventToDelete = event"
             ></EventAdminListItem>
+            <EditEventDrawer
+                :is-opened="!!editedEvent"
+                @close="editedEvent = null"
+                :event="editedEvent"
+                @event-edited="loadEvents"
+            />
+
+            <ConfirmModal
+                v-if="eventToDelete"
+                :content="$t('event.delete.message')"
+                :title="$t('event.delete.title')"
+                cancel-button-label="common.cancel"
+                confirm-button-label="common.delete"
+                @cancel="eventToDelete = null"
+                @confirm="deleteEvent"
+                :asyncing="isDeletingEvent"
+            />
         </template>
 
         <template #footer>
@@ -20,24 +37,6 @@
             />
         </template>
     </AdminBlock>
-
-    <EditEventDrawer
-        :is-opened="!!editedEvent"
-        @close="editedEvent = null"
-        :event="editedEvent"
-        @event-edited="loadEvents"
-    />
-
-    <ConfirmModal
-        v-if="eventToDelete"
-        :content="$t('event.delete.message')"
-        :title="$t('event.delete.title')"
-        cancel-button-label="common.cancel"
-        confirm-button-label="common.delete"
-        @cancel="eventToDelete = null"
-        @confirm="deleteEvent"
-        :asyncing="isDeletingEvent"
-    />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
