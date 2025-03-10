@@ -67,7 +67,18 @@ spec:
               parameters:
               - name: status
                 value: {{ print "{{steps.run.status}}" | quote }}
-      - name: wake-up
+      - name: wake-up-common
+        steps:
+        - - name: wake-up
+            templateRef:
+              name: service-waker
+              template: wake-up
+              clusterScope: true
+            arguments:
+              parameters:
+              - name: group_name
+                value: {{ .Values.sablier.commonGroupName }}
+      - name: wake-up-projects
         steps:
         - - name: wake-up
             templateRef:
