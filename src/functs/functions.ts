@@ -147,7 +147,7 @@ export default {
             }/patatoids-project/Patatoid-${patatoidNumber}.png`
             const fileName = `patatoid-${patatoidNumber}.png`
             const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
-            return new File([result.data], fileName)
+            return new File([result], fileName)
         } catch {
             // In case it cannot find an image return first one
             const urlFile = `${
@@ -155,7 +155,7 @@ export default {
             }/patatoids-project/Patatoid-1.png`
             const fileName = 'Patatoid-1.png'
             const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
-            return new File([result.data], fileName)
+            return new File([result], fileName)
         }
     },
 
