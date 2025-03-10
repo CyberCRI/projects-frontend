@@ -19,10 +19,10 @@ const router = useRouter()
 const route = useRoute()
 
 const instruction = useState(() => null)
-const loading = ref(() => false)
-const editedInstruction = ref(() => null)
-const instructionToDelete = ref(() => null)
-const isDeletingInstruction = ref(() => false)
+const loading = ref(false)
+const editedInstruction = ref(null)
+const instructionToDelete = ref(null)
+const isDeletingInstruction = ref(false)
 
 const breadcrumbs = computed(() => {
     return [
