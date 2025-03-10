@@ -35,7 +35,7 @@ export async function postNewsHeader(orgCode: string, idOrSlug: number | string,
     return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/`, {
         body,
         method: 'POST',
-        ...getFormDataHeaders(),
+        //...getFormDataHeaders(),
     }) //.data.value
 }
 
@@ -43,6 +43,6 @@ export async function patchNewsHeader(orgCode: string, idOrSlug: number | string
     return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
         body,
         method: 'PATCH',
-        ...getFormDataHeaders(),
+        //...getFormDataHeaders(),
     }) //.data.value
 }

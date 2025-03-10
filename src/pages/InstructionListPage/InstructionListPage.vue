@@ -11,10 +11,10 @@ const router = useRouter()
 const { t } = useI18n()
 
 const allInstructions = useState(() => [])
-const loading = useState(() => false)
-const editedInstruction = useState(() => null)
-const instructionToDelete = useState(() => null)
-const isDeletingInstruction = () => false
+const loading = ref(false)
+const editedInstruction = ref(null)
+const instructionToDelete = ref(null)
+const isDeletingInstruction = ref(false)
 
 const createInstruction = () => {
     router.push({ name: 'CreateInstructionPage' })

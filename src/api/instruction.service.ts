@@ -17,8 +17,7 @@ export async function getInstruction(orgCode: string, idOrSlug: number | string)
 }
 
 export async function createInstruction(orgCode: string, body: InstructionInput) {
-    return (await useAPI(`organization/${orgCode}/instruction/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`organization/${orgCode}/instruction/`, { body, method: 'POST' }) // .data.value
 }
 
 export async function putInstruction(

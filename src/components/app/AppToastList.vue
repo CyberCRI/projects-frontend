@@ -13,7 +13,7 @@ const snackbars = computed(() => {
         }
         const icon = iconMap[toast.type || ''] || 'Check'
         return {
-            message: toast.translate ? t(toast.mesage) : toast.message,
+            message: toast.translate ? t(toast.message) : toast.message,
             icon,
             type: toast.type || 'success',
         }
