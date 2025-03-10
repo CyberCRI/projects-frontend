@@ -27,7 +27,8 @@ const useAPI = (url: string, options) => {
             },
             onResponse({ response }) {
                 // Process the response data
-                localStorage?.setItem('token', response._data.token)
+                // TODO nuxt is this needed ?
+                if (response?._data) localStorage?.setItem('token', response._data.token)
             },
             async onResponseError({ request, options, response }) {
                 // // keep for futur debug
