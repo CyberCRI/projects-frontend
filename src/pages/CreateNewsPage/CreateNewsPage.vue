@@ -1,8 +1,84 @@
+<script setup>
+import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
+import { createNews, postNewsHeader } from '@/api/news.service.ts'
+import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const router = useRouter()
+const { t } = useI18n()
+
+const newsForm = useTemplateRef('newsForm')
+
+const form = ref(defaultForm())
+const asyncing = ref(false)
+const invalid = ref(false)
+
+const cancel = () => {
+    form.value = defaultForm()
+    router.push({ name: 'NewsListPage' })
+}
+
+const saveNews = async () => {
+    const isValid = await newsForm.value?.v$.$validate()
+    if (!isValid) {
+        return
+    }
+    try {
+        asyncing.value = true
+        // TODO: handle header_image and imageSize
+        const payload = {
+            ...form.value,
+            publication_date: form.value.publication_date,
+            people_groups: Object.entries(form.value.people_groups)
+                .filter(([, value]) => value)
+                .map(([id]) => id),
+        }
+        const savedNews = await createNews(organizationsStore.current?.code, payload)
+
+        if (form.value.header_image instanceof File) {
+            const formData = new FormData()
+
+            formData.append('file', form.value['header_image'], form.value['header_image'].name)
+
+            imageSizesFormData(formData, form.value.imageSizes)
+
+            await postNewsHeader(organizationsStore.current?.code, savedNews.id, formData)
+        }
+
+        toaster.pushSuccess(t('news.save.success'))
+    } catch (err) {
+        toaster.pushError(`${t('news.save.error')} (${err})`)
+        console.error(err)
+    } finally {
+        asyncing.value = false
+        router.push({ name: 'NewsListPage' })
+    }
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('news.create.title')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div class="create-news-page page-section-narrow">
         <h1 class="page-title">{{ $t('news.create.title') }}</h1>
 
-        <NewsForm ref="newsForm" v-model="form" @invalid="invalid = $event" />
+        <ClientOnly>
+            <NewsForm ref="newsForm" v-model="form" @invalid="invalid = $event" />
+        </ClientOnly>
 
         <div class="form-actions">
             <LpiButton
@@ -25,87 +101,6 @@
         </div>
     </div>
 </template>
-<script>
-import NewsForm, { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { createNews, postNewsHeader } from '@/api/news.service.ts'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-    name: 'CreateNewsPage',
-    components: {
-        NewsForm,
-        LpiButton,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    data() {
-        return {
-            form: defaultForm(),
-            asyncing: false,
-            invalid: false,
-        }
-    },
-    methods: {
-        cancel() {
-            this.form = defaultForm()
-            this.$router.push({ name: 'NewsListPage' })
-        },
-        async saveNews() {
-            const isValid = await this.$refs.newsForm.v$.$validate()
-            if (!isValid) {
-                return
-            }
-            try {
-                this.asyncing = true
-                // TODO: handle header_image and imageSize
-                const payload = {
-                    ...this.form,
-                    publication_date: this.form.publication_date,
-                    people_groups: Object.entries(this.form.people_groups)
-                        .filter(([, value]) => value)
-                        .map(([id]) => id),
-                }
-                const savedNews = await createNews(this.organizationsStore.current?.code, payload)
-
-                if (this.form.header_image instanceof File) {
-                    const formData = new FormData()
-
-                    formData.append(
-                        'file',
-                        this.form['header_image'],
-                        this.form['header_image'].name
-                    )
-
-                    imageSizesFormData(formData, this.form.imageSizes)
-
-                    await postNewsHeader(
-                        this.organizationsStore.current?.code,
-                        savedNews.id,
-                        formData
-                    )
-                }
-
-                this.toaster.pushSuccess(this.$t('news.save.success'))
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('news.save.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.asyncing = false
-                this.$router.push({ name: 'NewsListPage' })
-            }
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .page-title {
     margin-top: pxToRem(60px);

@@ -19,8 +19,7 @@ export async function createNews(orgCode: string, body: NewsInput) {
 }
 
 export async function putNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-    return (await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PUT' })).data
-        .value
+    return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PUT' }) //.data.value
 }
 
 export async function patchNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
@@ -29,8 +28,7 @@ export async function patchNews(orgCode: string, idOrSlug: number | string, body
 }
 
 export async function deleteNews(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' })).data
-        .value
+    return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' }) // .value.data
 }
 
 export async function postNewsHeader(orgCode: string, idOrSlug: number | string, body) {
