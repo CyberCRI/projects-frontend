@@ -27,6 +27,5 @@ export async function patchEvent(orgCode: string, idOrSlug: number | string, bod
 }
 
 export async function deleteEvent(orgCode: string, idOrSlug: number | string) {
-    return (await useAPI(`organization/${orgCode}/event/${idOrSlug}/`, { method: 'DELETE' })).data
-        .value
+    return await useAPI(`organization/${orgCode}/event/${idOrSlug}/`, { method: 'DELETE' }) //.data.value
 }
