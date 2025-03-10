@@ -1,5 +1,5 @@
 <template>
-    <div class="event" :class="{ editable: canEditEvents, 'is-new': isNew }">
+    <div class="event" :class="{ editable: canEditEvent, 'is-new': isNew }">
         <div class="date">
             <IconImage name="Calendar" class="icon" />
             <div class="day-month">

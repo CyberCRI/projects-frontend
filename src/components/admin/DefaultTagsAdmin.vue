@@ -25,7 +25,7 @@ watch(tagSearchIsOpened, (value) => {
     }
 })
 const organizationTags = computed(() => {
-    return organizationsStore.current.default_projects_tags
+    return organizationsStore.current?.default_projects_tags || []
 })
 
 const saveOrganizationTags = async () => {
