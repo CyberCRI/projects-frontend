@@ -113,6 +113,7 @@ e2e:
 sablier:
   enabled: false
   groupName: projects
+  commonGroupName: projects-common
   traefikMiddleware: "{{.Values.namespace}}-{{.Values.sablier.groupName}}-sablier@kubernetescrd"
 
 ingressMiddlewares: []
