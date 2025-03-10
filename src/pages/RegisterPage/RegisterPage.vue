@@ -1,3 +1,167 @@
+<script setup>
+import useVuelidate from '@vuelidate/core'
+import { helpers, required, email } from '@vuelidate/validators'
+import { postUserWithInvitation } from '@/api/people.service.ts'
+import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
+import utils from '@/functs/functions.ts'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import { getInvitation } from '@/api/invitations.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useLanguagesStore from '@/stores/useLanguages'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { useRuntimeConfig } from '#imports'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const props = defineProps({
+    token: {
+        type: String,
+        required: true,
+    },
+})
+
+const toaster = useToasterStore()
+const languagesStore = useLanguagesStore()
+const organizationsStore = useOrganizationsStore()
+const runtimeConfig = useRuntimeConfig()
+const { t } = useI18n()
+
+const form = ref({
+    email: '',
+    given_name: '',
+    family_name: '',
+    password: '',
+    profile_picture: '',
+})
+const asyncing = ref(false)
+const confirm = ref(false)
+const currentPatatoidIndex = ref(1)
+const showContactUsDrawer = ref(false)
+const isLinkValid = ref(false)
+const contactEmail = ref('')
+const verifyingLink = ref(true)
+
+const rules = {
+    form: {
+        acceptedTOS: {
+            checked: helpers.withMessage(
+                () => this.$t('register.tos-is-required'),
+                (value) => value === true
+            ),
+        },
+        email: {
+            required: helpers.withMessage(() => this.$t('register.email.is-required'), required),
+            email: helpers.withMessage(() => this.$t('register.email.is-invalid'), email),
+        },
+        given_name: {
+            required: helpers.withMessage(
+                () => this.$t('register.given_name.is-required'),
+                required
+            ),
+        },
+        family_name: {
+            required: helpers.withMessage(
+                () => this.$t('register.family_name.is-required'),
+                required
+            ),
+        },
+        password: {
+            required: helpers.withMessage(() => this.$t('register.password.is-required'), required),
+        },
+    },
+}
+
+const v$ = useVuelidate(rules, { form })
+
+const backgroundImageUrl = computed(() => {
+    return `${runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
+})
+
+const validateIfInvalid = () => {
+    // force form error display even if save button is disabled
+    if (v$.value.form.$invalid) {
+        v$.value.form.$validate()
+    }
+}
+
+const validateToken = async () => {
+    try {
+        const apiToken = await getInvitation(organizationsStore.current.code, props.token)
+        const expirationDate = Date.parse(apiToken.expire_at)
+        if (expirationDate > new Date()) {
+            return true
+        }
+    } catch (error) {
+        console.error(error)
+    }
+    return false
+}
+const register = async () => {
+    v$.value.form.$validate()
+    if (v$.value.form.$error) {
+        return
+    }
+    asyncing.value = true
+    try {
+        form.value.profile_picture = await utils.getPatatoidFile(currentPatatoidIndex.value)
+
+        const formData = new FormData()
+        imageSizesFormDataPost(formData)
+
+        if (form.value.profile_picture instanceof File) {
+            formData.append(
+                'profile_picture_file',
+                form.value['profile_picture'],
+                form.value['profile_picture'].name
+            )
+        }
+
+        ;['given_name', 'family_name', 'password', 'email'].forEach((key) => {
+            formData.append(key, form.value[key])
+        })
+
+        formData.append('language', languagesStore.current)
+
+        await postUserWithInvitation(props.token, formData)
+
+        confirm.value = true
+    } catch (error) {
+        if (error?.response?.status === 409) {
+            toaster.pushError(t('register.email-already-exists'))
+        } else {
+            toaster.pushError(`${t('register.save-error')} ${error?.response?.data?.error || ''}`)
+        }
+
+        console.error(error)
+    } finally {
+        asyncing.value = false
+    }
+}
+
+const login = () => goToKeycloakLoginPage
+
+const closeDrawer = () => {
+    showContactUsDrawer.value = false
+}
+
+onMounted(async () => {
+    isLinkValid.value = await validateToken()
+    verifyingLink.value = false
+    contactEmail.value = organizationsStore.current?.contact_email
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('register.title')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div v-if="verifyingLink" class="loader">
         <LoaderSimple />
@@ -140,199 +304,7 @@
 
     <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
 </template>
-<script>
-import useVuelidate from '@vuelidate/core'
-import { postUserWithInvitation } from '@/api/people.service.ts'
-import { helpers, required, email } from '@vuelidate/validators'
-import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
-import utils from '@/functs/functions.ts'
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ContactDrawer from '@/components/app/ContactDrawer.vue'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { getInvitation } from '@/api/invitations.service'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import { useRuntimeConfig } from '#imports'
-export default {
-    name: 'RegisterPage',
 
-    components: {
-        TextInput,
-        LpiButton,
-        ContactDrawer,
-        LoaderSimple,
-        SignUpWrapper,
-        FieldErrors,
-        LpiCheckbox,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const languagesStore = useLanguagesStore()
-        const organizationsStore = useOrganizationsStore()
-        const runtimeConfig = useRuntimeConfig()
-
-        return {
-            toaster,
-            languagesStore,
-            organizationsStore,
-            runtimeConfig,
-        }
-    },
-
-    props: {
-        token: {
-            type: String,
-            required: true,
-        },
-    },
-
-    data() {
-        return {
-            form: {
-                email: '',
-                given_name: '',
-                family_name: '',
-                password: '',
-                profile_picture: '',
-            },
-            asyncing: false,
-            confirm: false,
-            currentPatatoidIndex: 1,
-            v$: useVuelidate(),
-            showContactUsDrawer: false,
-            isLinkValid: false,
-            contactEmail: '',
-            verifyingLink: true,
-        }
-    },
-
-    validations() {
-        return {
-            form: {
-                acceptedTOS: {
-                    checked: helpers.withMessage(
-                        () => this.$t('register.tos-is-required'),
-                        (value) => value === true
-                    ),
-                },
-                email: {
-                    required: helpers.withMessage(
-                        () => this.$t('register.email.is-required'),
-                        required
-                    ),
-                    email: helpers.withMessage(() => this.$t('register.email.is-invalid'), email),
-                },
-                given_name: {
-                    required: helpers.withMessage(
-                        () => this.$t('register.given_name.is-required'),
-                        required
-                    ),
-                },
-                family_name: {
-                    required: helpers.withMessage(
-                        () => this.$t('register.family_name.is-required'),
-                        required
-                    ),
-                },
-                password: {
-                    required: helpers.withMessage(
-                        () => this.$t('register.password.is-required'),
-                        required
-                    ),
-                },
-            },
-        }
-    },
-    async mounted() {
-        this.isLinkValid = await this.validateToken()
-        this.verifyingLink = false
-        this.contactEmail = this.organizationsStore.current?.contact_email
-    },
-    computed: {
-        backgroundImageUrl() {
-            return `${this.runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
-        },
-    },
-    methods: {
-        validateIfInvalid() {
-            // force form error display even if save button is disabled
-            if (this.v$.form.$invalid) {
-                this.v$.form.$validate()
-            }
-        },
-
-        async validateToken() {
-            try {
-                const token = await getInvitation(this.organizationsStore.current.code, this.token)
-                const expirationDate = Date.parse(token.expire_at)
-                if (expirationDate > new Date()) {
-                    return true
-                }
-            } catch (error) {
-                console.error(error)
-            }
-            return false
-        },
-        async register() {
-            this.v$.form.$validate()
-            if (this.v$.form.$error) {
-                return
-            }
-            this.asyncing = true
-            try {
-                this.form.profile_picture = await utils.getPatatoidFile(this.currentPatatoidIndex)
-
-                const formData = new FormData()
-                imageSizesFormDataPost(formData)
-
-                if (this.form.profile_picture instanceof File) {
-                    formData.append(
-                        'profile_picture_file',
-                        this.form['profile_picture'],
-                        this.form['profile_picture'].name
-                    )
-                }
-
-                ;['given_name', 'family_name', 'password', 'email'].forEach((key) => {
-                    formData.append(key, this.form[key])
-                })
-
-                formData.append('language', this.languagesStore.current)
-
-                await postUserWithInvitation(this.token, formData)
-
-                this.confirm = true
-            } catch (error) {
-                if (error?.response?.status === 409) {
-                    this.toaster.pushError(`${this.$t('register.email-already-exists')}`)
-                } else {
-                    this.toaster.pushError(
-                        `${this.$t('register.save-error')} ${error?.response?.data?.error || ''}`
-                    )
-                }
-
-                console.error(error)
-            } finally {
-                this.asyncing = false
-            }
-        },
-
-        login() {
-            goToKeycloakLoginPage()
-        },
-
-        closeDrawer() {
-            this.showContactUsDrawer = false
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .confirm {
     border-radius: $border-radius-m;
