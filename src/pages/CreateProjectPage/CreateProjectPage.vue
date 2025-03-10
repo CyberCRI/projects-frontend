@@ -1,62 +1,29 @@
 <script setup>
-// import ProjectForm from '@/components/project/ProjectForm.vue'
-// import LpiButton from '@/components/base/button/LpiButton.vue'
-// import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-// import permissions from '@/mixins/permissions.ts'
-
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
-// import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-// import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 import analytics from '@/analytics'
 import { createProject } from '@/api/projects.service'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
-// export default {
-//     name: 'CreateProjectPage',
-
-//     mixins: [permissions, onboardingStatusMixin],
-
-// emits: ['close'],
-
 const emit = defineEmits(['close'])
 
-// components: { ProjectForm, LpiButton, LpiSnackbar },
-
-// setup() {
 const toaster = useToasterStore()
 const languagesStore = useLanguagesStore()
 const projectCategoriesStore = useProjectCategories()
 const organizationsStore = useOrganizationsStore()
-// const projectsStore = useProjectsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
-
-// const permissions = usePermissions()
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useI18n()
 
-//     return {
-//         toaster,
-//         languagesStore,
-//         projectCategoriesStore,
-//         organizationsStore,
-//         projectsStore,
-//         usersStore,
-//     }
-// },
-
-// data() {
-// return {
-const isFormCorrect = useState(() => true)
-
-const form = useState(() => ({
+const isFormCorrect = ref(true)
+const form = ref({
     title: '',
     purpose: '',
     category: undefined,
@@ -73,13 +40,9 @@ const form = useState(() => ({
         people_groups: null,
     },
     imageSizes: null,
-}))
-const isSaving = useState(() => false)
-//     }
-// },
+})
+const isSaving = ref(false)
 
-// validations() {
-/* Custom 'secret' rule: 3 spaces */
 const rules = computed(() => {
     const purposeRules =
         form.value.purpose === '   '
@@ -123,9 +86,6 @@ const rules = computed(() => {
 
 const v$ = useValidate(rules, { form })
 
-// },
-
-// computed: {
 const categories = computed(() => {
     return projectCategoriesStore.allOrderedByOrderId
 })
@@ -140,7 +100,6 @@ const formNotEmpty = computed(() => {
         (!categories.value?.length || !!form.value.category)
     )
 })
-// },
 
 onMounted(async () => {
     if (!categories.value.length) {
@@ -148,7 +107,6 @@ onMounted(async () => {
     }
 })
 
-// methods: {
 const cancel = () => {
     router.push('/')
 }
@@ -215,9 +173,6 @@ try {
 } catch (err) {
     console.log(err)
 }
-
-//     },
-// }
 </script>
 
 <template>
