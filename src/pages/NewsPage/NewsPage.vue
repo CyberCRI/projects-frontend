@@ -19,9 +19,9 @@ const { canEditNews, canDeleteNews } = usePermissions()
 
 const news = useState(() => null)
 const otherNews = useState(() => [])
-const loading = useState(() => false)
-const editedNews = useState(() => null)
-const newsToDelete = useState(() => null)
+const loading = ref(false)
+const editedNews = ref(null)
+const newsToDelete = ref(null)
 
 const breadcrumbs = computed(() => {
     return [

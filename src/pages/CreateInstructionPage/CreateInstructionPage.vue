@@ -1,8 +1,72 @@
+<script setup>
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
+import { createInstruction } from '@/api/instruction.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const router = useRouter()
+const { t } = useI18n()
+
+const form = ref(defaultForm())
+const asyncing = ref(false)
+const invalid = ref(false)
+
+const instructionForm = useTemplateRef('instructionForm')
+
+const cancel = () => {
+    form.value = defaultForm()
+    router.push({ name: 'InstructionListPage' })
+}
+
+const saveInstruction = async () => {
+    const isValid = await instructionForm.value?.v$.$validate()
+    if (!isValid) {
+        return
+    }
+    asyncing.value = true
+
+    try {
+        const formData = {
+            ...form.value,
+            publication_date: form.value.publication_date,
+            people_groups_ids: Object.entries(form.value.people_groups)
+                .filter(([, value]) => value)
+                .map(([id]) => id),
+        }
+        await createInstruction(organizationsStore.current?.code, formData)
+        toaster.pushSuccess(t('instructions.save.success'))
+    } catch (err) {
+        toaster.pushError(`${t('instructions.save.error')} (${err})`)
+        console.error(err)
+    } finally {
+        asyncing.value = false
+        router.push({ name: 'InstructionListPage' })
+    }
+}
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('instructions.create.title')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div class="create-instruction-page page-section-narrow">
         <h1 class="page-title">{{ $t('instructions.create.title') }}</h1>
 
-        <InstructionForm ref="instructionForm" v-model="form" @invalid="invalid = $event" />
+        <ClientOnly>
+            <InstructionForm ref="instructionForm" v-model="form" @invalid="invalid = $event" />
+        </ClientOnly>
 
         <div class="form-actions">
             <LpiButton
@@ -25,70 +89,6 @@
         </div>
     </div>
 </template>
-<script>
-import InstructionForm, {
-    defaultForm,
-} from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { createInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-
-export default {
-    name: 'CreateInstructionPage',
-    components: {
-        InstructionForm,
-        LpiButton,
-    },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
-
-    data() {
-        return {
-            form: defaultForm(),
-            asyncing: false,
-            invalid: false,
-        }
-    },
-    methods: {
-        cancel() {
-            this.form = defaultForm()
-            this.$router.push({ name: 'InstructionListPage' })
-        },
-        async saveInstruction() {
-            const isValid = await this.$refs.instructionForm.v$.$validate()
-            if (!isValid) {
-                return
-            }
-            this.asyncing = true
-
-            try {
-                const formData = {
-                    ...this.form,
-                    publication_date: this.form.publication_date,
-                    people_groups_ids: Object.entries(this.form.people_groups)
-                        .filter(([, value]) => value)
-                        .map(([id]) => id),
-                }
-                await createInstruction(this.organizationsStore.current?.code, formData)
-                this.toaster.pushSuccess(this.$t('instructions.save.success'))
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('instructions.save.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.asyncing = false
-                this.$router.push({ name: 'InstructionListPage' })
-            }
-        },
-    },
-}
-</script>
 <style lang="scss" scoped>
 .page-title {
     margin-top: pxToRem(60px);

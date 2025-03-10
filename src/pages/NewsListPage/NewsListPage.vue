@@ -11,10 +11,10 @@ const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
 const router = useRouter()
 const { t } = useI18n()
 
-const loading = useState(() => false)
-const editedNews = useState(() => null)
-const newsToDelete = useState(() => null)
-const isDeletingNews = useState(() => false)
+const loading = ref(false)
+const editedNews = ref(null)
+const newsToDelete = ref(null)
+const isDeletingNews = ref(false)
 const pagination = useState(() => ({
     currentPage: 1,
     total: 1,
@@ -23,8 +23,8 @@ const pagination = useState(() => ({
     first: undefined,
     last: undefined,
 }))
-const newsRequest = useState(() => null)
-const maxNewsPerPage = useState(() => 12)
+const newsRequest = ref(() => null)
+const maxNewsPerPage = ref(() => 12)
 
 const allNews = computed(() => {
     return newsRequest.value?.results || []
