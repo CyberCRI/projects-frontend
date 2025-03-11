@@ -39,7 +39,7 @@
         "@intlify/vue-i18n-loader": "^4.2.0",
         "@mdi/font": "^6",
         "@panva/oauth4webapi": "^1.0.4",
-        "@sentry/vue": "^8.20.0",
+        "@sentry/vue": "^8.52.0",
         "@tiptap/core": "^2.11.3",
         "@tiptap/extension-code-block": "^2.7.0",
         "@tiptap/extension-code-block-lowlight": "^2.11.3",
