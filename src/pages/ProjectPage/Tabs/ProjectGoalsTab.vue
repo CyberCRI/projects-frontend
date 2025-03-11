@@ -26,7 +26,7 @@
             :title="$t('goal.delete')"
             :content="$t('common.destroy-confirm')"
             @cancel="toggleDeleteConfirmModal"
-            @confirm="deleteGoal"
+            @confirm="doDeleteGoal"
             :asyncing="asyncing"
         />
     </div>
@@ -107,7 +107,7 @@ export default {
             this.projectLayoutToggleAddModal('goal', goal)
         },
 
-        async deleteGoal() {
+        async doDeleteGoal() {
             this.asyncing = true
             try {
                 await deleteGoal({

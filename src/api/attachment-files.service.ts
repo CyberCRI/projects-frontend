@@ -13,11 +13,6 @@ export async function getAttachmentFile(body: AttachmentFileInput) {
 }
 
 export async function postAttachmentFiles(body: AttachmentFileInput) {
-    const headers = {
-        'Content-Type': 'multipart/form-data',
-        'cache-control': 'no-cache',
-    }
-
     const fd = new FormData()
     fd.append('description', body.description)
     fd.append('title', body.title)
@@ -27,7 +22,6 @@ export async function postAttachmentFiles(body: AttachmentFileInput) {
     fd.append('mime', body.file.type || 'file')
     return await useAPI(`project/${body.project_id}/file/`, {
         body: fd,
-        headers,
         method: 'POST',
     }) //.data.value
 }

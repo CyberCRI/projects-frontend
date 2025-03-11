@@ -16,5 +16,5 @@ export async function patchGoal({ goal, project_id }: { goal: GoalInput; project
 }
 
 export async function deleteGoal({ id, project_id }) {
-    return await useAPI(`project/${project_id}/goal/${id}/`, {})
+    return await useAPI(`project/${project_id}/goal/${id}/`, { method: 'DELETE' })
 }

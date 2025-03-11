@@ -70,8 +70,7 @@ export async function addLinkedProject({
     id: string
     body: AddManyLinkedProjectInput
 }) {
-    return (await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function patchLinkedProject({

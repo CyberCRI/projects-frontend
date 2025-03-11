@@ -26,7 +26,7 @@
             :content="$t('project.linked-project-confirm-delete')"
             :title="$t('common.delete')"
             @cancel="confirmModalVisible = false"
-            @confirm="deleteLinkedProject"
+            @confirm="doDeleteLinkedProject"
             :asyncing="isDeleting"
         />
     </div>
@@ -107,7 +107,7 @@ export default {
             this.confirmModalVisible = true
         },
 
-        async deleteLinkedProject() {
+        async doDeleteLinkedProject() {
             this.isDeleting = true
             try {
                 await deleteLinkedProject({
