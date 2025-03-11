@@ -69,7 +69,13 @@ export default {
             try {
                 await patchProject(this.project.id, { sdgs })
 
-                analytics.goal.updateSDG(this.project.id, sdgs)
+                analytics.goal.updateSDG(
+                    this.project.id,
+                    sdgs.map((sdg) => ({
+                        id: sdg,
+                        title: this.$t(`sdg.${sdg}.title`),
+                    }))
+                )
 
                 this.$emit('reload-sdgs')
 

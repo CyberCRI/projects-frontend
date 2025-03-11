@@ -40,16 +40,11 @@ export default {
      * @param sdgs
      */
     updateSDG(project_id: string, sdgs: Array<SdgOutput>): void {
-        const { t } = useI18n()
-        const sdgList = sdgs.map((sdg) => ({
-            id: sdg,
-            title: t(`sdg.${sdg}.title`),
-        }))
         analytics.track('update_SDG', {
             project: {
                 id: project_id,
             },
-            sdgs: sdgList,
+            sdgs,
         })
     },
 }

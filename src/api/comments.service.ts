@@ -26,6 +26,5 @@ export async function deleteComment(project_id: string, id: number) {
 }
 
 export async function postCommentImage(project_id: string, body: any) {
-    return (await useAPI(`project/${project_id}/comment-image/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`project/${project_id}/comment-image/`, { body, method: 'POST' }) // .data.value
 }

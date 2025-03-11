@@ -65,13 +65,11 @@ export async function removeOrgMember({
     org_id: number
     body: RemoveGroupModelInput[]
 }) {
-    return (await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' }) // .data.value
 }
 
 export async function postAccessRequest(org_code, body) {
-    return (await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' })).data
-        .value
+    return await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function getAccessRequests(org_code, params) {

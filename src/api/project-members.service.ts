@@ -6,8 +6,7 @@ import type {
 import useAPI from '@/composables/useAPI'
 
 export async function addProjectMembers(projectId: string, data: ProjectMembersAddInput) {
-    return (await useAPI(`project/${projectId}/member/add/`, { body: data, method: 'POST' })).data
-        .value
+    return await useAPI(`project/${projectId}/member/add/`, { body: data, method: 'POST' }) // .data.value
 }
 
 export async function deleteProjectMembers(projectId: string, data: ProjectMembersDeleteInput) {
