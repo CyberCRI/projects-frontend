@@ -12,7 +12,7 @@ import { alias } from './alias'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     // ssr: false,
-    compatibilityDate: '2025-03-11',
+    compatibilityDate: '2024-11-01',
     devtools: { enabled: import.meta.dev },
     srcDir: 'src/',
     modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
