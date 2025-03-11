@@ -1,18 +1,18 @@
 import { alias } from './alias'
 
-const apiProxy = {
-    '^/v[0-9]+/': {
-        target: `${process.env.NUXT_PUBLIC_APP_API_URL}`,
-        changeOrigin: true,
-        secure: false, // required because local frontend is served over non secure http
-        withCredentials: true,
-    },
-}
+// const apiProxy = {
+//     '^/v[0-9]+/': {
+//         target: `${process.env.NUXT_PUBLIC_APP_API_URL}`,
+//         changeOrigin: true,
+//         secure: false, // required because local frontend is served over non secure http
+//         withCredentials: true,
+//     },
+// }
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     // ssr: false,
-    compatibilityDate: '2024-11-01',
+    compatibilityDate: '2025-03-11',
     devtools: { enabled: import.meta.dev },
     srcDir: 'src/',
     modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
@@ -47,9 +47,9 @@ export default defineNuxtConfig({
         server: {
             //host: '0.0.0.0',
             //port: 8080,
-            proxy: {
-                ...apiProxy,
-            },
+            // proxy: {
+            //     ...apiProxy,
+            // },
             watch: {
                 usePolling: true,
             },
@@ -98,8 +98,20 @@ export default defineNuxtConfig({
             { code: 'fr', name: 'Français' },
         ],
     },
-
-    nitro: { minify: import.meta.dev },
+    // routeRules: {
+    //     '/v1/**': {
+    //         proxy: `${process.env.NUXT_PUBLIC_APP_API_URL}/**`,
+    //         //{
+    //         //  to: ,
+    //         // changeOrigin: true,
+    //         // secure: !import.meta.dev, // required because local frontend is served over non secure http
+    //         // withCredentials: true,
+    //         //},
+    //     },
+    // },
+    nitro: {
+        minify: import.meta.dev,
+    },
 
     app: {
         head: {
