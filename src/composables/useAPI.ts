@@ -35,10 +35,10 @@ const useAPI = (url: string, options) => {
                 // console.error(response)
                 // var e = new Error()
                 // console.log(e.stack.split('\n').map((s) => s.substring(s.lastIndexOf('/'))))
-                // if (options.noError) {
-                //     // console.error(error)
-                //     return null
-                // }
+                if (options.noError) {
+                    // console.error(error)
+                    return null
+                }
 
                 const toaster = useToasterStore()
                 const originalRequest: any = request // response.config

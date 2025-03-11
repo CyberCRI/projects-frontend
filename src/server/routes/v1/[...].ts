@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     // check path
     const path = event.path
     const target = joinURL(proxyUrl, path)
-    console.log(target)
     // proxy it
     // h3 function, https://www.jsdocs.io/package/h3#proxyRequest
     return proxyRequest(event, target)
