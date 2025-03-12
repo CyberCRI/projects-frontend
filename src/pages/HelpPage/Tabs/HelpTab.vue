@@ -7,7 +7,6 @@
 
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import viewportWidth from '@/mixins/viewportWidth.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
 
@@ -16,15 +15,15 @@ export default {
 
     components: { LpiLoader },
 
-    mixins: [viewportWidth],
-
     setup() {
         const languagesStore = useLanguagesStore()
         const runtimeConfig = useRuntimeConfig()
-
+        const { isMobile, isTablet } = useViewportWidth()
         return {
             languagesStore,
             runtimeConfig,
+            isMobile,
+            isTablet,
         }
     },
     data() {

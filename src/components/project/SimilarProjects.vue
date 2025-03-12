@@ -36,13 +36,10 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import viewportWidth from '@/mixins/viewportWidth.ts'
 import SimilarProjectsItem from '@/components/project/SimilarProjectsItem.vue'
 
 export default {
     name: 'SimilarProjects',
-
-    mixins: [viewportWidth],
 
     components: { LpiButton, SimilarProjectsItem },
 
@@ -51,6 +48,14 @@ export default {
             type: Array,
             default: () => [],
         },
+    },
+
+    setup() {
+        const { isMobile, isTablet } = useViewportWidth()
+        return {
+            isMobile,
+            isTablet,
+        }
     },
 
     data() {

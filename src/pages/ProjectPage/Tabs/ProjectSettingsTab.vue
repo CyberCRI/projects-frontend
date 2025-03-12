@@ -218,7 +218,6 @@
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import permissions from '@/mixins/permissions.ts'
-import viewportWidth from '@/mixins/viewportWidth.ts'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -239,7 +238,7 @@ export default {
 
     emits: ['asyncing', 'reload-team', 'reload-reviews', 'reload-project'],
 
-    mixins: [permissions, viewportWidth],
+    mixins: [permissions],
 
     components: {
         LpiLoader,
@@ -258,11 +257,13 @@ export default {
         const organizationsStore = useOrganizationsStore()
         const projectsStore = useProjectsStore()
         const usersStore = useUsersStore()
+        const { isMobile } = useViewportWidth()
         return {
             toaster,
             organizationsStore,
             projectsStore,
             usersStore,
+            isMobile,
         }
     },
 
