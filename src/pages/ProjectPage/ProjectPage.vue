@@ -172,9 +172,9 @@ const getGoals = async () => {
         console.error(err)
     }
 }
-const getLinkedProjects = async (linkedProjects) => {
-    if (linkedProjects) {
-        linkedProjects.value = linkedProjects
+const getLinkedProjects = async (_linkedProjects) => {
+    if (_linkedProjects) {
+        linkedProjects.value = _linkedProjects
     } else {
         try {
             // TODO beg for a dedicated endpoint
