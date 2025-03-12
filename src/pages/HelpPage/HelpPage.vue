@@ -1,3 +1,88 @@
+<script setup>
+// import { getFaq } from '@/api/faqs.service'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+
+const organizationsStore = useOrganizationsStore()
+const { onboardingTrap } = useOnboardingStatus()
+const { t } = useI18n()
+
+provide(
+    'helpPageHasFaq',
+    computed(() => this.hasFaq)
+)
+provide(
+    'helpPageFaq',
+    computed(() => this.faq)
+)
+
+const isLoading = ref(true)
+const customTab = ref(null)
+const faq = ref(null)
+
+const hasFaq = computed(() => {
+    let _faq = faq.value
+    return _faq && _faq.title && _faq.content && _faq.content !== '<p></p>'
+})
+const tabs = computed(() => {
+    const res = []
+
+    if (customTab.value) res.push(customTab.value)
+
+    res.push({
+        key: 'help-help',
+        label: t('faq.portal'),
+        view: { name: 'HelpHelpTab' },
+    })
+    res.push({
+        key: 'help-video',
+        label: t('faq.video'),
+        view: { name: 'HelpVideoTab' },
+    })
+    return res
+})
+
+const setOnboardData = async () => {
+    try {
+        if (hasFaq.value) {
+            customTab.value = {
+                label: faq.value.title,
+                key: 'help-template',
+                view: { name: 'HelpFaqTab' },
+            }
+        }
+    } catch (error) {
+        console.error(error)
+    }
+
+    isLoading.value = false
+}
+
+onMounted(async () => {
+    // try {
+    //     this.faq = await getFaq(this.organizationsStore.current.code)
+    // } catch (err) {
+    //     console.error(err)
+    //     // ignore 404 error
+    // }
+    setOnboardData()
+
+    onboardingTrap('take_tour', false)
+})
+
+try {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+        useRequestURL().toString(),
+        computed(() => t('faq.portal')),
+        organization?.dashboard_subtitle,
+        organization?.banner_image?.variations?.medium
+    )
+} catch (err) {
+    console.log(err)
+}
+</script>
 <template>
     <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
         <div>
@@ -8,102 +93,6 @@
         <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs" router-view></TabsLayout>
     </div>
 </template>
-
-<script>
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-// import { getFaq } from '@/api/faqs.service'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-import { computed } from 'vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-
-export default {
-    name: 'HelpPage',
-
-    components: {
-        LpiLoader,
-        TabsLayout,
-    },
-
-    mixins: [onboardingStatusMixin],
-
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
-
-    provide() {
-        return {
-            helpPageHasFaq: computed(() => this.hasFaq),
-            helpPageFaq: computed(() => this.faq),
-        }
-    },
-
-    data() {
-        return {
-            isLoading: true,
-            customTab: null,
-            faq: null,
-        }
-    },
-
-    async mounted() {
-        // try {
-        //     this.faq = await getFaq(this.organizationsStore.current.code)
-        // } catch (err) {
-        //     console.error(err)
-        //     // ignore 404 error
-        // }
-        this.setOnboardData()
-
-        this.onboardingTrap('take_tour', false)
-    },
-
-    computed: {
-        hasFaq() {
-            let faq = this.faq
-            return faq && faq.title && faq.content && faq.content !== '<p></p>'
-        },
-        tabs() {
-            const res = []
-
-            if (this.customTab) res.push(this.customTab)
-
-            res.push({
-                key: 'help-help',
-                label: this.$t('faq.portal'),
-                view: { name: 'HelpHelpTab' },
-            })
-            res.push({
-                key: 'help-video',
-                label: this.$t('faq.video'),
-                view: { name: 'HelpVideoTab' },
-            })
-            return res
-        },
-    },
-
-    methods: {
-        async setOnboardData() {
-            try {
-                if (this.hasFaq) {
-                    this.customTab = {
-                        label: this.faq.title,
-                        key: 'help-template',
-                        view: { name: 'HelpFaqTab' },
-                    }
-                }
-            } catch (error) {
-                console.error(error)
-            }
-
-            this.isLoading = false
-        },
-    },
-}
-</script>
 
 <style lang="scss" scoped>
 .intro-ctn {
