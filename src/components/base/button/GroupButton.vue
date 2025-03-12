@@ -122,7 +122,7 @@ export default {
     },
 
     mounted() {
-        if (!this.options.some((button) => button.iconName)) this.$nextTick(this.setSliderStyle)
+        this.$nextTick(this.setSliderStyle)
 
         window.addEventListener('resize', debounce(this.setSliderStyle, 300))
     },
