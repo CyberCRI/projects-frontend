@@ -106,9 +106,9 @@ const goToTab = async (tab, dontFocusTab) => {
 // data
 
 const similarProjects = useState(() => [])
-const sockerserver = useState(() => runtimeConfig.public.appWssHost)
-const provider = useState(() => null)
-const loading = useState(() => true)
+const sockerserver = ref(runtimeConfig.public.appWssHost)
+const provider = ref(null)
+const loading = ref(true)
 const comments = useState(() => [])
 const projectMessages = useState(() => [])
 const locations = useState(() => [])
@@ -122,7 +122,7 @@ const sdgs = useState(() => [])
 const team = useState(() => ({ owners: [], members: [], reviewers: [] }))
 const reviews = useState(() => [])
 const linkedProjects = useState(() => [])
-const commentLoop = useState(() => null)
+const commentLoop = ref(null)
 
 // computed
 
