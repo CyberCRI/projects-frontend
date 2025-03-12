@@ -142,7 +142,7 @@ export default {
                     classificationId,
                     options
                 )
-                    .then((r) => r.data) // TODO: classificationName: this.allClassifications[j].title,
+                    //.then((r) => r.data) // TODO: classificationName: this.allClassifications[j].title,
                     .catch(() => ({
                         count: 0,
                         results: [],
@@ -158,7 +158,7 @@ export default {
         async onClickPagination(requestedPage) {
             this.isLoading = true
             const apiReq = await useAPI(requestedPage, {})
-            this.request = apiReq.data
+            this.request = apiReq
             this.isLoading = false
             // const el = document.querySelector('.group-user-selection .search-section')
             // if (el) el.scrollIntoView({ behavior: 'smooth' })
