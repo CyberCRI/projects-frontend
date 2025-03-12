@@ -32,6 +32,7 @@
                                 <ProjectCard
                                     :project="projectListSlotProps.item.project"
                                     follow-on-click
+                                    :target-user-id="targetUserId"
                                 />
                             </template>
                         </CardList>
@@ -71,6 +72,11 @@ export default {
         isOpened: {
             type: Boolean,
             default: false,
+        },
+        targetUserId: {
+            type: [Number, String, null],
+            required: true,
+            default: null,
         },
     },
 

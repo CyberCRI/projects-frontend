@@ -118,6 +118,12 @@ export default {
             type: Boolean,
             default: false,
         },
+
+        targetUserId: {
+            type: [Number, String, null],
+            required: false,
+            default: null,
+        },
     },
 
     data() {
@@ -220,7 +226,7 @@ export default {
                     this.follow.is_followed = false
                 } else {
                     const result = await followUtils.follow({
-                        follower_id: this.usersStore.id,
+                        follower_id: this.targetUserId || this.usersStore.id,
                         project_id: this.project.id,
                     })
                     this.follow = result.project.is_followed

@@ -115,6 +115,7 @@
     <ChooseFollowedProjectsDrawer
         :is-opened="showFollowProjectDrawer"
         @close="closeFollowProjectDrawer"
+        :target-user-id="user.id"
     />
 </template>
 <script>
