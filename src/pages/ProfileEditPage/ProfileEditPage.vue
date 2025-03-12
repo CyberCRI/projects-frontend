@@ -41,11 +41,7 @@ const onProfileEdited = async () => {
     }
 }
 
-provide(() => {
-    return {
-        profileEditReloadUser: loadUser,
-    }
-})
+provide('profileEditReloadUser', loadUser)
 
 onMounted(async () => {
     await loadUser()
