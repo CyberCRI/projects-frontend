@@ -13,7 +13,6 @@ import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileE
 import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '@/api/people.service.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
@@ -23,11 +22,12 @@ export default {
 
     components: { ProfileSkillsEditTab, ProfileEditBlock, LoaderSimple },
 
-    mixins: [onboardingStatusMixin],
     setup() {
         const usersStore = useUsersStore()
+        const { onboardingTrap } = useOnboardingStatus()
         return {
             usersStore,
+            onboardingTrap,
         }
     },
     data() {

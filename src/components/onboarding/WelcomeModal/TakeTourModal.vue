@@ -34,7 +34,6 @@
 </template>
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useLanguagesStore from '@/stores/useLanguages'
 export default {
@@ -44,11 +43,13 @@ export default {
 
     components: { BaseModal, LoaderSimple },
 
-    mixins: [onboardingStatusMixin],
     setup() {
         const languagesStore = useLanguagesStore()
+
+        const { onboardingTrap } = useOnboardingStatus()
         return {
             languagesStore,
+            onboardingTrap,
         }
     },
     mounted() {

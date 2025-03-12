@@ -40,7 +40,6 @@
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
     name: 'WelcomeModal',
@@ -49,12 +48,12 @@ export default {
 
     components: { BaseModal, LpiButton },
 
-    mixins: [onboardingStatusMixin],
-
     setup() {
         const organizationsStore = useOrganizationsStore()
+        const { onboardingTrapAll } = useOnboardingStatus()
         return {
             organizationsStore,
+            onboardingTrapAll,
         }
     },
 

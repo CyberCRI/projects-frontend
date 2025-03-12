@@ -209,7 +209,6 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -232,17 +231,18 @@ export default {
         FieldErrors,
     },
 
-    mixins: [onboardingStatusMixin],
     setup() {
         const toaster = useToasterStore()
         const languagesStore = useLanguagesStore()
         const usersStore = useUsersStore()
         const runtimeConfig = useRuntimeConfig()
+        const { onboardingTrap } = useOnboardingStatus()
         return {
             toaster,
             languagesStore,
             usersStore,
             runtimeConfig,
+            onboardingTrap,
         }
     },
 

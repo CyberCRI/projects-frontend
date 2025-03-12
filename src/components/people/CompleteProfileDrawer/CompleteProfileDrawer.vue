@@ -67,7 +67,6 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import CompleteProfileStep1 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
 import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
 
@@ -78,14 +77,14 @@ export default {
 
     emits: ['close', 'completed'],
 
-    mixins: [onboardingStatusMixin],
     setup() {
         const languagesStore = useLanguagesStore()
         const runtimeConfig = useRuntimeConfig()
-
+        const { onboardingTrapAll } = useOnboardingStatus()
         return {
             languagesStore,
             runtimeConfig,
+            onboardingTrapAll,
         }
     },
     props: {
