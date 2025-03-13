@@ -34,5 +34,5 @@ export async function deleteProjectMessage(project_id: string, id: number) {
 }
 
 export async function postProjectMessageImage(project_id: string, body: any): Promise<any> {
-    return await useAPI(`project/${project_id}/project-message-image/`, { body }) //.data.value
+    return await useAPI(`project/${project_id}/project-message-image/`, { body, method: 'POST' }) //.data.value
 }
