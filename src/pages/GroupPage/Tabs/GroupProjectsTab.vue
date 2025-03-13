@@ -84,7 +84,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isPaginationLoading = true
-            this.projectsRequest = (await useAPI(requestedPage, {})).data
+            this.projectsRequest = await useAPI(requestedPage, {})
             this.isPaginationLoading = false
             const el = document.querySelector('.group-projects .projects-header')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

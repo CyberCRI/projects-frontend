@@ -256,7 +256,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await useAPI(requestedPage, {})).data
+            this.request = await useAPI(requestedPage, {})
             this.isLoading = false
             const el = document.querySelector('.role-tab .search-input-container')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

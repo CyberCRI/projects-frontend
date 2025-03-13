@@ -156,7 +156,7 @@ export default {
     methods: {
         async onClickPagination(requestedPage) {
             this.isLoading = true
-            this.request = (await useAPI(requestedPage, {})).data
+            this.request = await useAPI(requestedPage, {})
             this.isLoading = false
             const el = document.querySelector('.group-user-selection .search-section')
             if (el) el.scrollIntoView({ behavior: 'smooth' })

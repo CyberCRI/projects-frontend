@@ -123,7 +123,7 @@ export default {
 
         async onClickPagination(requestedPage) {
             this.isPaginationLoading = true
-            this.membersRequest = (await useAPI(requestedPage, {})).data
+            this.membersRequest = await useAPI(requestedPage, {})
             this.isPaginationLoading = false
             const el = document.querySelector('.group-members .members-header')
             if (el) el.scrollIntoView({ behavior: 'smooth' })
