@@ -3,11 +3,7 @@ import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'
 import { useRuntimeConfig } from '#imports'
-export const getFormDataHeaders = () => ({
-    headers: {
-        'content-type': 'multipart/form-data',
-    },
-})
+
 const useAPI = (url: string, options) => {
     const defaultOptions = () => {
         let _localStorage = null

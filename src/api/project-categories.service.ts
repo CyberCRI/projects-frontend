@@ -6,23 +6,20 @@ import type {
     ProjectCategoryPutInput,
 } from '@/models/project-category.model'
 // import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.model'
-import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 export interface ProjectCategoryParams extends APIParams {
     organization?: string // id
 }
 
 export async function createProjectCategory(category: ProjectCategoryCreateInput | FormData) {
-    const extraHeaders = category instanceof FormData ? getFormDataHeaders() : {}
-    return await useAPI(`category/`, { body: category, method: 'POST', ...extraHeaders }) // .data.value
+    return await useAPI(`category/`, { body: category, method: 'POST' }) // .data.value
 }
 
 export async function putProjectCategory(id: number, category: ProjectCategoryPutInput | FormData) {
-    const extraHeaders = category instanceof FormData ? getFormDataHeaders() : {}
     return await useAPI(`category/${id}/`, {
         body: category,
         method: 'PATCH',
-        ...extraHeaders,
     }) //.data.value
 }
 
@@ -30,11 +27,9 @@ export async function patchProjectCategory(
     id: number,
     category: ProjectCategoryPatchInput | FormData
 ) {
-    const extraHeaders = category instanceof FormData ? getFormDataHeaders() : {}
     return await useAPI(`category/${id}/`, {
         body: category,
         method: 'PATCH',
-        ...extraHeaders,
     }) //.data.value
 }
 

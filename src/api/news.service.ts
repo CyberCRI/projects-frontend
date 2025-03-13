@@ -3,7 +3,7 @@ import type {
     /*NewsModel, */ NewsInput /*, NewsOutput, NewsHeaderOutput*/,
 } from '@/models/news.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 export async function getAllNews(orgCode: string, params: any) {
     const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
@@ -35,7 +35,6 @@ export async function postNewsHeader(orgCode: string, idOrSlug: number | string,
     return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/`, {
         body,
         method: 'POST',
-        //...getFormDataHeaders(),
     }) //.data.value
 }
 
@@ -43,6 +42,5 @@ export async function patchNewsHeader(orgCode: string, idOrSlug: number | string
     return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
         body,
         method: 'PATCH',
-        //...getFormDataHeaders(),
     }) //.data.value
 }

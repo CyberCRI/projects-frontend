@@ -3,17 +3,15 @@ import type { /* OrganizationOutput,*/ OrganizationPatchInput } from '@/models/o
 import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
 import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 export async function patchOrganization(
     code: string,
     organization: OrganizationPatchInput | FormData
 ) {
-    const extraHeaders = organization instanceof FormData ? getFormDataHeaders() : {}
     return await useAPI(`organization/${code}/`, {
         body: organization,
         method: 'PATCH',
-        ...extraHeaders,
     }) //.data.value
 }
 

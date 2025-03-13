@@ -27,18 +27,13 @@ export async function postAttachmentFiles(body: AttachmentFileInput) {
 }
 
 export async function patchAttachmentFile(body: AttachmentFileInput) {
-    const headers = {
-        'Content-Type': 'multipart/form-data',
-        'cache-control': 'no-cache',
-    }
-
     const fd = new FormData()
     fd.append('description', body.description)
     fd.append('title', body.title)
     fd.append('project_id', body.project_id)
 
     return await useAPI(`project/${body.project_id}/file/${body.id}/`, {
-        headers,
+        // headers,
         body: fd,
         method: 'PATCH',
     }) //.data.value

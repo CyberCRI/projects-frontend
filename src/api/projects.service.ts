@@ -8,7 +8,7 @@ import type {
 } from '@/models/project.model'
 import type { APIParams /*, APIResponseList*/, SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI, { getFormDataHeaders } from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 export async function createProject(project) {
     const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
@@ -50,7 +50,6 @@ export async function createProject(project) {
 }
 
 export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
-    //const extraHeaders = project instanceof FormData ? getFormDataHeaders() : {}
     return await useAPI(`project/${id}/`, { body: project, method: 'PATCH' /*, ...extraHeaders*/ })
     //.data.value
 }
@@ -116,7 +115,6 @@ export async function postProjectHeader({ project_id, body }) {
     return await useAPI(`project/${project_id}/header/`, {
         body,
         method: 'POST',
-        /*...getFormDataHeaders(),*/
     }) //.data.value
 }
 
@@ -124,7 +122,6 @@ export async function patchProjectHeader({ project_id, image_id, body }) {
     return await useAPI(`project/${project_id}/header/${image_id}/`, {
         body,
         method: 'PATCH',
-        /*...getFormDataHeaders(),*/
     }) //.data.value
 }
 

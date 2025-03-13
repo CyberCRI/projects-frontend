@@ -2,7 +2,7 @@ import type { APIParams } from '@/api/types'
 // import type { ProjectOutput } from '@/models/project.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 // import type { UserModel } from '@/models/user.model'
-import useAPI /*, { getFormDataHeaders }*/ from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 export interface RecommendationsParams {
     organization?: string // code
