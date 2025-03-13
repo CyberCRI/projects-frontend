@@ -7,10 +7,10 @@ export interface PeopleModel {
     roles?: Array<string>
     permissions?: Array<string>
     is_superuser?: boolean
-    people_groups: Array<Object>
+    people_groups: Array<object>
     notifications?: number
-    privacy_settings?: Object
-    skills: Array<Object>
+    privacy_settings?: object
+    skills: Array<object>
     id: number
     language: string
     email: string

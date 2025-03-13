@@ -1,71 +1,79 @@
 <template>
-    <BaseDrawer
-        :is-opened="isOpened"
-        :title="type ? $t(`report.${type}`) : ''"
-        class="report-form medium"
-        :confirm-action-name="$filters.capitalize($t('common.save'))"
-        :confirm-action-disabled="v$.$invalid"
-        @close="$emit('close')"
-        @confirm="submit"
-        :asyncing="isLoading"
-    >
-        <div class="form">
-            <div>
-                <h4 class="title">{{ $filters.capitalize($t('form.email-contact')) }}</h4>
-                <TextInput
-                    v-model="form.reported_by"
-                    class="text-input"
-                    data-test="report-email"
-                    @blur="v$.form.reported_by.$validate"
-                />
-                <FieldErrors :errors="v$.form.reported_by.$errors" />
-            </div>
+  <BaseDrawer
+    :is-opened="isOpened"
+    :title="type ? $t(`report.${type}`) : ''"
+    class="report-form medium"
+    :confirm-action-name="$filters.capitalize($t('common.save'))"
+    :confirm-action-disabled="v$.$invalid"
+    :asyncing="isLoading"
+    @close="$emit('close')"
+    @confirm="submit"
+  >
+    <div class="form">
+      <div>
+        <h4 class="title">
+          {{ $filters.capitalize($t('form.email-contact')) }}
+        </h4>
+        <TextInput
+          v-model="form.reported_by"
+          class="text-input"
+          data-test="report-email"
+          @blur="v$.form.reported_by.$validate"
+        />
+        <FieldErrors :errors="v$.form.reported_by.$errors" />
+      </div>
 
-            <div>
-                <h4 class="title">{{ $filters.capitalize($t('form.url')) }}</h4>
-                <span class="description">{{
-                    type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url')
-                }}</span>
-                <TextInput
-                    v-model="form.url"
-                    class="text-input"
-                    data-test="report-url"
-                    @blur="v$.form.url.$validate"
-                />
-                <FieldErrors :errors="v$.form.url.$errors" />
-            </div>
+      <div>
+        <h4 class="title">
+          {{ $filters.capitalize($t('form.url')) }}
+        </h4>
+        <span class="description">{{
+          type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url')
+        }}</span>
+        <TextInput
+          v-model="form.url"
+          class="text-input"
+          data-test="report-url"
+          @blur="v$.form.url.$validate"
+        />
+        <FieldErrors :errors="v$.form.url.$errors" />
+      </div>
 
-            <div>
-                <h4 class="title">{{ $t('form.title') }}</h4>
-                <span class="description">{{
-                    type === 'abuse' ? $t('report.abuse-title') : $t('report.bug-title')
-                }}</span>
-                <TextInput
-                    v-model="form.title"
-                    class="text-input"
-                    data-test="report-title"
-                    @blur="v$.form.title.$validate"
-                />
-                <FieldErrors :errors="v$.form.title.$errors" />
-            </div>
+      <div>
+        <h4 class="title">
+          {{ $t('form.title') }}
+        </h4>
+        <span class="description">{{
+          type === 'abuse' ? $t('report.abuse-title') : $t('report.bug-title')
+        }}</span>
+        <TextInput
+          v-model="form.title"
+          class="text-input"
+          data-test="report-title"
+          @blur="v$.form.title.$validate"
+        />
+        <FieldErrors :errors="v$.form.title.$errors" />
+      </div>
 
-            <div>
-                <h4 class="title">{{ $t('form.description') }}</h4>
-                <span class="description">{{
-                    type === 'abuse' ? $t('report.abuse-text') : $t('report.bug-text')
-                }}</span>
-                <TextInput
-                    v-model="form.message"
-                    class="text-input-test"
-                    input-type="textarea"
-                    rows="10"
-                    data-test="report-description"
-                    @blur="v$.form.message.$validate"
-                />
-                <FieldErrors :errors="v$.form.message.$errors" />
-            </div>
-        </div>
-    </BaseDrawer>
+      <div>
+        <h4 class="title">
+          {{ $t('form.description') }}
+        </h4>
+        <span class="description">{{
+          type === 'abuse' ? $t('report.abuse-text') : $t('report.bug-text')
+        }}</span>
+        <TextInput
+          v-model="form.message"
+          class="text-input-test"
+          input-type="textarea"
+          rows="10"
+          data-test="report-description"
+          @blur="v$.form.message.$validate"
+        />
+        <FieldErrors :errors="v$.form.message.$errors" />
+      </div>
+    </div>
+  </BaseDrawer>
 </template>
 
 <script>
@@ -79,125 +87,125 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 function defaultForm() {
-    return {
-        title: '',
-        message: '',
-        url: '',
-        reported_by: '',
-    }
+  return {
+    title: '',
+    message: '',
+    url: '',
+    reported_by: '',
+  }
 }
 
 export default {
-    name: 'ReportDrawer',
+  name: 'ReportDrawer',
 
-    emits: ['close'],
+  components: { TextInput, BaseDrawer, FieldErrors },
 
-    components: { TextInput, BaseDrawer, FieldErrors },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
+  props: {
+    type: {
+      type: String,
+      default: '',
+    },
+    isOpened: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: ['close'],
+  setup() {
+    const toaster = useToasterStore()
+    const organizationsStore = useOrganizationsStore()
+    return {
+      toaster,
+      organizationsStore,
+    }
+  },
+
+  data() {
+    return {
+      v$: useValidate(),
+      isLoading: false,
+      form: defaultForm(),
+    }
+  },
+
+  computed: {
+    orgCode() {
+      return this.organizationsStore?.current?.code
+    },
+  },
+
+  validations() {
+    return {
+      form: {
+        message: {
+          required: helpers.withMessage(this.$t('form.report.message'), required),
+        },
+        url: {
+          required: helpers.withMessage(this.$t('form.report.url.required'), required),
+          url: helpers.withMessage(this.$t('form.report.url.format'), url),
+        },
+        reported_by: {
+          required: helpers.withMessage(this.$t('form.report.email.required'), required),
+          email: helpers.withMessage(this.$t('form.report.email.format'), email),
+        },
+        title: {
+          required: helpers.withMessage(this.$t('form.report.title'), required),
+        },
+      },
+    }
+  },
+
+  watch: {
+    isOpened() {
+      this.v$.$reset()
+      this.form = defaultForm()
+    },
+  },
+
+  methods: {
+    async submit() {
+      const isValid = await this.v$.$validate()
+
+      if (isValid) {
+        this.isLoading = true
+
+        if (this.type === 'abuse') {
+          try {
+            await reportAbuse(this.orgCode, this.form)
+            this.toaster.pushSuccess(this.$t('toasts.abuse-report.success'))
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('toasts.abuse-report.error')} (${error})`)
+            console.error(error)
+          } finally {
+            this.isLoading = false
+            this.$emit('close')
+          }
+        } else if (this.type === 'bug') {
+          try {
+            await reportBug(this.orgCode, this.form)
+            this.toaster.pushSuccess(this.$t('toasts.bug-report.success'))
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('toasts.bug-report.error')} (${error})`)
+            console.error(error)
+          } finally {
+            this.isLoading = false
+            this.$emit('close')
+          }
         }
+      }
     },
-
-    data() {
-        return {
-            v$: useValidate(),
-            isLoading: false,
-            form: defaultForm(),
-        }
-    },
-
-    computed: {
-        orgCode() {
-            return this.organizationsStore?.current?.code
-        },
-    },
-
-    validations() {
-        return {
-            form: {
-                message: {
-                    required: helpers.withMessage(this.$t('form.report.message'), required),
-                },
-                url: {
-                    required: helpers.withMessage(this.$t('form.report.url.required'), required),
-                    url: helpers.withMessage(this.$t('form.report.url.format'), url),
-                },
-                reported_by: {
-                    required: helpers.withMessage(this.$t('form.report.email.required'), required),
-                    email: helpers.withMessage(this.$t('form.report.email.format'), email),
-                },
-                title: {
-                    required: helpers.withMessage(this.$t('form.report.title'), required),
-                },
-            },
-        }
-    },
-
-    props: {
-        type: {
-            type: String,
-            default: '',
-        },
-        isOpened: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
-    watch: {
-        isOpened() {
-            this.v$.$reset()
-            this.form = defaultForm()
-        },
-    },
-
-    methods: {
-        async submit() {
-            const isValid = await this.v$.$validate()
-
-            if (isValid) {
-                this.isLoading = true
-
-                if (this.type === 'abuse') {
-                    try {
-                        await reportAbuse(this.orgCode, this.form)
-                        this.toaster.pushSuccess(this.$t('toasts.abuse-report.success'))
-                    } catch (error) {
-                        this.toaster.pushError(`${this.$t('toasts.abuse-report.error')} (${error})`)
-                        console.error(error)
-                    } finally {
-                        this.isLoading = false
-                        this.$emit('close')
-                    }
-                } else if (this.type === 'bug') {
-                    try {
-                        await reportBug(this.orgCode, this.form)
-                        this.toaster.pushSuccess(this.$t('toasts.bug-report.success'))
-                    } catch (error) {
-                        this.toaster.pushError(`${this.$t('toasts.bug-report.error')} (${error})`)
-                        console.error(error)
-                    } finally {
-                        this.isLoading = false
-                        this.$emit('close')
-                    }
-                }
-            }
-        },
-    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .report-form {
-    padding: 0 1.5rem;
+  padding: 0 1.5rem;
 
-    h1 {
-        font-size: $font-size-l;
-        margin-bottom: $space-l;
-    }
+  h1 {
+    font-size: $font-size-l;
+    margin-bottom: $space-l;
+  }
 }
 </style>

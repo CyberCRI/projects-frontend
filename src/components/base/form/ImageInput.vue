@@ -1,26 +1,26 @@
 <template>
-    <div class="image-input-ctn">
-        <label :for="uniqueId" ref="label" class="image-button" data-test="upload-image-button">
-            <LinkButton
-                v-if="isLink"
-                btn-icon="Upload"
-                :label="displayedLabel"
-                v-disable-focus="unfocusable"
-                @click.prevent="this.$refs?.label?.click()"
-            />
+  <div class="image-input-ctn">
+    <label ref="label" :for="uniqueId" class="image-button" data-test="upload-image-button">
+      <LinkButton
+        v-if="isLink"
+        v-disable-focus="unfocusable"
+        btn-icon="Upload"
+        :label="displayedLabel"
+        @click.prevent="$refs?.label?.click()"
+      />
 
-            <LpiButton
-                v-else
-                btn-icon="Upload"
-                secondary
-                :label="displayedLabel"
-                v-disable-focus="unfocusable"
-                @click.prevent="this.$refs?.label?.click()"
-            />
-        </label>
+      <LpiButton
+        v-else
+        v-disable-focus="unfocusable"
+        btn-icon="Upload"
+        secondary
+        :label="displayedLabel"
+        @click.prevent="$refs?.label?.click()"
+      />
+    </label>
 
-        <input :id="uniqueId" :ref="uniqueId" type="file" @change="uploadImage" />
-    </div>
+    <input :id="uniqueId" :ref="uniqueId" type="file" @change="uploadImage" />
+  </div>
 </template>
 
 <script>
@@ -28,70 +28,70 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
-    name: 'ImageInput',
+  name: 'ImageInput',
 
-    emits: ['upload-image'],
+  components: {
+    LpiButton,
+    LinkButton,
+  },
 
-    components: {
-        LpiButton,
-        LinkButton,
+  props: {
+    existingImage: {
+      type: String,
+      default: null,
+    },
+    unfocusable: {
+      type: Boolean,
+      default: false,
     },
 
-    data() {
-        return {
-            uniqueId: (Math.random() + 1).toString(36).substring(7),
-        }
+    label: {
+      type: String,
+      default: null,
     },
-
-    props: {
-        existingImage: {
-            type: String,
-            default: null,
-        },
-        unfocusable: {
-            type: Boolean,
-            default: false,
-        },
-
-        label: {
-            type: String,
-            default: null,
-        },
-        isLink: {
-            type: Boolean,
-            default: false,
-        },
+    isLink: {
+      type: Boolean,
+      default: false,
     },
+  },
 
-    methods: {
-        uploadImage(event) {
-            this.$emit('upload-image', this.$refs[this.uniqueId].files[0])
-            event.target.value = ''
-        },
-    },
+  emits: ['upload-image'],
 
-    computed: {
-        displayedLabel() {
-            return this.label
-                ? this.label
-                : this.existingImage
-                  ? this.$t('picture.change-picture')
-                  : this.$t('picture.add-picture')
-        },
+  data() {
+    return {
+      uniqueId: (Math.random() + 1).toString(36).substring(7),
+    }
+  },
+
+  computed: {
+    displayedLabel() {
+      return this.label
+        ? this.label
+        : this.existingImage
+          ? this.$t('picture.change-picture')
+          : this.$t('picture.add-picture')
     },
+  },
+
+  methods: {
+    uploadImage(event) {
+      this.$emit('upload-image', this.$refs[this.uniqueId].files[0])
+      event.target.value = ''
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .image-input-ctn {
-    width: fit-content;
+  width: fit-content;
 
-    input[type='file'] {
-        display: none;
-    }
+  input[type='file'] {
+    display: none;
+  }
 
-    label {
-        cursor: pointer;
-    }
+  label {
+    cursor: pointer;
+  }
 }
 </style>

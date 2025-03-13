@@ -1,8 +1,8 @@
 <template>
-    <div class="total-container">
-        <span class="projects-count">{{ displayedNumber }}</span>
-        <span class="projects-word">{{ $t('stats.projects') }}</span>
-    </div>
+  <div class="total-container">
+    <span class="projects-count">{{ displayedNumber }}</span>
+    <span class="projects-word">{{ $t('stats.projects') }}</span>
+  </div>
 </template>
 
 <script>

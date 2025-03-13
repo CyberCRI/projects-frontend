@@ -1,4 +1,3 @@
-import { useI18n } from '#imports'
 import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
 import merge from 'lodash.merge'

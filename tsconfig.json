@@ -6,6 +6,10 @@
         "strict": false,
         "noImplicitAny": false,
         // disable "type" imports for now
-        "verbatimModuleSyntax": false
+        "verbatimModuleSyntax": false,
+        "paths": {
+            "@/*": ["./src/*"],
+            "#imports": ["./.nuxt/imports.d.ts"]
+        }
     }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable vue/require-name-property */
 import funct from '@/functs/functions'
 
 function scrollToTab() {

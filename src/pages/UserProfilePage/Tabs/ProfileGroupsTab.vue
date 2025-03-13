@@ -1,51 +1,48 @@
 <template>
-    <div class="groups-tab">
-        <div>
-            <h4 class="title">
-                {{ $t('me.groups') }} <span>({{ user?.people_groups?.length || 0 }})</span>
-            </h4>
-            <div class="list">
-                <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
-                    <template #default="groupListSlotProps">
-                        <CardList
-                            :desktop-columns-number="6"
-                            :limit="listLimit"
-                            :items="groupListSlotProps.items || []"
-                            :is-loading="groupListSlotProps.isLoading"
-                        >
-                            <template #default="cardListSlotProps">
-                                <GroupCard
-                                    v-if="cardListSlotProps.item"
-                                    :group="cardListSlotProps.item"
-                                    @navigated-away="$emit('close')"
-                                />
-                            </template>
-                            <template #empty>
-                                <div class="empty-ctn">
-                                    <EmptyCard class="empty-card" :label="noGroupLabel" />
-                                </div>
-                            </template>
-                        </CardList>
+  <div class="groups-tab">
+    <div>
+      <h4 class="title">
+        {{ $t('me.groups') }} <span>({{ user?.people_groups?.length || 0 }})</span>
+      </h4>
+      <div class="list">
+        <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
+          <template #default="groupListSlotProps">
+            <CardList
+              :desktop-columns-number="6"
+              :limit="listLimit"
+              :items="groupListSlotProps.items || []"
+              :is-loading="groupListSlotProps.isLoading"
+            >
+              <template #default="cardListSlotProps">
+                <GroupCard
+                  v-if="cardListSlotProps.item"
+                  :group="cardListSlotProps.item"
+                  @navigated-away="$emit('close')"
+                />
+              </template>
+              <template #empty>
+                <div class="empty-ctn">
+                  <EmptyCard class="empty-card" :label="noGroupLabel" />
+                </div>
+              </template>
+            </CardList>
 
-                        <div
-                            v-if="
-                                !groupListSlotProps.isLoading &&
-                                groupListSlotProps.pagination?.total > 1
-                            "
-                            class="pagination-container"
-                        >
-                            <PaginationButtons
-                                :current="groupListSlotProps.pagination.currentPage"
-                                :pagination="groupListSlotProps.pagination"
-                                :total="groupListSlotProps.pagination.total"
-                                @update-pagination="groupListSlotProps.paginationAction"
-                            />
-                        </div>
-                    </template>
-                </ListPaginator>
+            <div
+              v-if="!groupListSlotProps.isLoading && groupListSlotProps.pagination?.total > 1"
+              class="pagination-container"
+            >
+              <PaginationButtons
+                :current="groupListSlotProps.pagination.currentPage"
+                :pagination="groupListSlotProps.pagination"
+                :total="groupListSlotProps.pagination.total"
+                @update-pagination="groupListSlotProps.paginationAction"
+              />
             </div>
-        </div>
+          </template>
+        </ListPaginator>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -57,83 +54,83 @@ import PaginationButtons from '@/components/base/navigation/PaginationButtons.vu
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
-    name: 'ProfileGroupsTab',
+  name: 'ProfileGroupsTab',
 
-    emits: ['close'],
-
-    components: {
-        CardList,
-        GroupCard,
-        EmptyCard,
-        ListPaginator,
-        PaginationButtons,
+  components: {
+    CardList,
+    GroupCard,
+    EmptyCard,
+    ListPaginator,
+    PaginationButtons,
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true,
     },
-    props: {
-        user: {
-            type: Object,
-            required: true,
-        },
+  },
+
+  emits: ['close'],
+
+  setup() {
+    const usersStore = useUsersStore()
+    return {
+      usersStore,
+    }
+  },
+
+  data() {
+    return {
+      listLimit: 12,
+    }
+  },
+
+  computed: {
+    isCurrentUser() {
+      return this.usersStore.id === this.user.id
     },
 
-    setup() {
-        const usersStore = useUsersStore()
-        return {
-            usersStore,
-        }
+    noGroupLabel() {
+      return this.isCurrentUser ? this.$t('me.no-group') : this.$t('you.no-group')
     },
-
-    data() {
-        return {
-            listLimit: 12,
-        }
-    },
-
-    computed: {
-        isCurrentUser() {
-            return this.usersStore.id === this.user.id
-        },
-
-        noGroupLabel() {
-            return this.isCurrentUser ? this.$t('me.no-group') : this.$t('you.no-group')
-        },
-    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .groups-tab {
-    padding: $space-l 0;
+  padding: $space-l 0;
 
-    .loader {
-        padding: $space-3xl 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
+  .loader {
+    padding: $space-3xl 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .title {
+    font-size: $font-size-l;
+    font-weight: 700;
+    color: $primary-dark;
+    margin: $space-l 0;
+  }
+
+  .list {
+    display: flex;
+    gap: $space-l;
+    flex-wrap: wrap;
+
+    & > div {
+      width: 100%;
     }
+  }
 
-    .title {
-        font-size: $font-size-l;
-        font-weight: 700;
-        color: $primary-dark;
-        margin: $space-l 0;
-    }
-
-    .list {
-        display: flex;
-        gap: $space-l;
-        flex-wrap: wrap;
-
-        & > div {
-            width: 100%;
-        }
-    }
-
-    .pagination-container {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .pagination-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

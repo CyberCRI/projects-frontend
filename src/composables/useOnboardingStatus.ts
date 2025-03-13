@@ -1,5 +1,3 @@
-/* eslint-disable vue/no-unused-properties */
-/* eslint-disable vue/require-name-property */
 import { patchUser } from '@/api/people.service'
 import useUsersStore from '@/stores/useUsers'
 

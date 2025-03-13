@@ -1,7 +1,11 @@
 <template>
-    <div class="container">
-        <LpiBarChart id="tags-chart" :chart-data="chartData" :options="options" />
-    </div>
+  <div class="container">
+    <LpiBarChart
+      id="tags-chart"
+      :chart-data="chartData"
+      :options="options"
+    />
+  </div>
 </template>
 
 <script>
@@ -13,18 +17,18 @@ export default {
     name: 'TagChart',
 
     components: { LpiBarChart },
+    props: {
+        stats: {
+            type: Array,
+            default: () => [],
+        },
+    },
 
     setup() {
         const tagTexts = useTagTexts()
         return {
             tagTexts,
         }
-    },
-    props: {
-        stats: {
-            type: Array,
-            default: () => [],
-        },
     },
 
     data() {

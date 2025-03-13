@@ -36,8 +36,8 @@ export interface OrganizationModel extends BaseModel {
     website_url: string
     faq: FaqModel
     children: string[]
-    enabled_projects_tag_classifications: Object[] // TODO: define this type
-    enabled_skills_tag_classifications: Object[] // TODO: define this type
+    enabled_projects_tag_classifications: object[] // TODO: define this type
+    enabled_skills_tag_classifications: object[] // TODO: define this type
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {

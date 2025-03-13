@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        <LpiSingleStatChart :number="stats" />
-    </div>
+  <div class="container">
+    <LpiSingleStatChart :number="stats" />
+  </div>
 </template>
 
 <script>

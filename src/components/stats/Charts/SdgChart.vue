@@ -1,7 +1,10 @@
 <template>
-    <div class="container">
-        <LpiBarChart :chart-data="formattedData" :options="options" />
-    </div>
+  <div class="container">
+    <LpiBarChart
+      :chart-data="formattedData"
+      :options="options"
+    />
+  </div>
 </template>
 
 <script>

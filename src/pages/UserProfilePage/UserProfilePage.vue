@@ -4,10 +4,10 @@ import { getUser } from '@/api/people.service.ts'
 
 import { getOrganizationByCode } from '@/api/organizations.service'
 const props = defineProps({
-    userId: {
-        type: [String, Number],
-        default: null,
-    },
+  userId: {
+    type: [String, Number],
+    default: null,
+  },
 })
 
 const router = useRouter()
@@ -15,54 +15,54 @@ const route = useRoute()
 const { t } = useI18n()
 
 try {
-    if (props.userId) {
-        const user = await getUser(props.userId, true)
-        useLpiHead(
-            useRequestURL().toString(),
-            `${user.given_name} ${user.family_name}`,
-            user.short_description,
-            user.profile_picture?.variations?.medium
-        )
-    } else {
-        const runtimeConfig = useRuntimeConfig()
-        const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-        useLpiHead(
-            useRequestURL().toString(),
-            computed(() => t('me.page-title')),
-            organization?.dashboard_subtitle,
-            organization?.banner_image?.variations?.medium
-        )
-    }
+  if (props.userId) {
+    const user = await getUser(props.userId, true)
+    useLpiHead(
+      useRequestURL().toString(),
+      `${user.given_name} ${user.family_name}`,
+      user.short_description,
+      user.profile_picture?.variations?.medium
+    )
+  } else {
+    const runtimeConfig = useRuntimeConfig()
+    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    useLpiHead(
+      useRequestURL().toString(),
+      computed(() => t('me.page-title')),
+      organization?.dashboard_subtitle,
+      organization?.banner_image?.variations?.medium
+    )
+  }
 } catch (err) {
-    // DGAF
-    console.log(err)
+  // DGAF
+  console.log(err)
 }
 
 function display404() {
-    router.replace({
-        name: 'page404',
-        params: { pathMatch: route.path.substring(1).split('/') },
-    })
+  router.replace({
+    name: 'page404',
+    params: { pathMatch: route.path.substring(1).split('/') },
+  })
 }
 </script>
 <template>
-    <div class="page-section-extra-wide profile-page">
-        <UserProfile
-            :key="userId"
-            :user-id="userId"
-            :show-page-link="false"
-            @user-not-found="display404"
-            routable-tabs
-        />
-    </div>
+  <div class="page-section-extra-wide profile-page">
+    <UserProfile
+      :key="userId"
+      :user-id="userId"
+      :show-page-link="false"
+      routable-tabs
+      @user-not-found="display404"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .profile-page {
-    padding-top: 6.5rem;
-    padding-bottom: 6.5rem;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: stretch;
+  padding-top: 6.5rem;
+  padding-bottom: 6.5rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: stretch;
 }
 </style>

@@ -1,7 +1,3 @@
-/* eslint-disable vue/no-unused-properties */
-/* eslint-disable vue/require-name-property */
-
-import debounce from 'lodash.debounce'
 export default function useViewportWidth() {
     const viewportWidth = useState(() => 0)
 

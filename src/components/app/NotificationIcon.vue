@@ -1,72 +1,72 @@
 <template>
-    <span :class="{ [color]: !!color }" class="notification-icon" @click="$emit('click')">
-        <IconImage name="Bell" />
-        <span v-if="notificationCount > 0" class="count">
-            <span class="inner">{{ notificationCount }}</span>
-        </span>
+  <span :class="{ [color]: !!color }" class="notification-icon" @click="$emit('click')">
+    <IconImage name="Bell" />
+    <span v-if="notificationCount > 0" class="count">
+      <span class="inner">{{ notificationCount }}</span>
     </span>
+  </span>
 </template>
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 
 export default {
-    name: 'NotificationIcon',
+  name: 'NotificationIcon',
 
-    emits: ['click'],
+  components: {
+    IconImage,
+  },
 
-    components: {
-        IconImage,
+  props: {
+    notificationCount: {
+      type: Number,
+      default: 0,
     },
-
-    props: {
-        notificationCount: {
-            type: Number,
-            default: 0,
-        },
-        color: {
-            type: String,
-            default: '',
-        },
+    color: {
+      type: String,
+      default: '',
     },
+  },
+
+  emits: ['click'],
 }
 </script>
 
 <style lang="scss" scoped>
 .notification-icon {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 
+  svg {
+    height: $layout-size-2xl;
+    fill: $primary-dark;
+  }
+
+  &.white {
     svg {
-        height: $layout-size-2xl;
-        fill: $primary-dark;
+      fill: $white;
     }
+  }
 
-    &.white {
-        svg {
-            fill: $white;
-        }
+  .count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: pxToRem(16px);
+    max-width: pxToRem(32px);
+    height: pxToRem(16px);
+    border-radius: pxToRem(8px);
+    background-color: $salmon;
+
+    .inner {
+      font-size: $font-size-xs;
+      line-height: $line-height-squashed;
+      color: $white;
     }
-
-    .count {
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(25%, -25%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: pxToRem(16px);
-        max-width: pxToRem(32px);
-        height: pxToRem(16px);
-        border-radius: pxToRem(8px);
-        background-color: $salmon;
-
-        .inner {
-            font-size: $font-size-xs;
-            line-height: $line-height-squashed;
-            color: $white;
-        }
-    }
+  }
 }
 </style>

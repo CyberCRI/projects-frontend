@@ -10,7 +10,6 @@ import useUsersStore from '@/stores/useUsers'
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    // @ts-ignore
     scrollBehavior: (to) => {
         const isProjectPage = to.path.includes('projects') && !!to.params.slugOrId
         if (!isProjectPage) return { top: 0, behavior: 'smooth' }

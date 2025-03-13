@@ -1,35 +1,28 @@
 <template>
-    <div class="linked-projects">
-        <DynamicGrid
-            :min-gap="20"
-            class="linked-projects-ctn"
-            v-if="linkedProjectsReordered?.length"
-        >
-            <div
-                class="linked-project-card"
-                v-for="aLinkedProject in linkedProjectsReordered"
-                :key="aLinkedProject.id"
-            >
-                <ProjectCard :project="aLinkedProject.project" />
+  <div class="linked-projects">
+    <DynamicGrid v-if="linkedProjectsReordered?.length" :min-gap="20" class="linked-projects-ctn">
+      <div
+        v-for="aLinkedProject in linkedProjectsReordered"
+        :key="aLinkedProject.id"
+        class="linked-project-card"
+      >
+        <ProjectCard :project="aLinkedProject.project" />
 
-                <div v-if="canEditAndDelete" class="actions-ctn">
-                    <ContextActionButton
-                        action-icon="Close"
-                        @click="confirmDelete(aLinkedProject)"
-                    />
-                </div>
-            </div>
-        </DynamicGrid>
+        <div v-if="canEditAndDelete" class="actions-ctn">
+          <ContextActionButton action-icon="Close" @click="confirmDelete(aLinkedProject)" />
+        </div>
+      </div>
+    </DynamicGrid>
 
-        <ConfirmModal
-            v-if="confirmModalVisible"
-            :content="$t('project.linked-project-confirm-delete')"
-            :title="$t('common.delete')"
-            @cancel="confirmModalVisible = false"
-            @confirm="doDeleteLinkedProject"
-            :asyncing="isDeleting"
-        />
-    </div>
+    <ConfirmModal
+      v-if="confirmModalVisible"
+      :content="$t('project.linked-project-confirm-delete')"
+      :title="$t('common.delete')"
+      :asyncing="isDeleting"
+      @cancel="confirmModalVisible = false"
+      @confirm="doDeleteLinkedProject"
+    />
+  </div>
 </template>
 
 <script>
@@ -42,141 +35,139 @@ import analytics from '@/analytics'
 import { deleteLinkedProject } from '@/api/projects.service'
 import useToasterStore from '@/stores/useToaster.ts'
 export default {
-    name: 'LinkedProjects',
+  name: 'LinkedProjects',
 
-    mixins: [permissions],
+  components: {
+    ProjectCard,
+    ContextActionButton,
+    ConfirmModal,
+    DynamicGrid,
+  },
 
-    inject: ['projectLayoutToggleAddModal'],
+  mixins: [permissions],
 
-    emits: ['reload-linked-projects'],
+  inject: ['projectLayoutToggleAddModal'],
 
-    components: {
-        ProjectCard,
-        ContextActionButton,
-        ConfirmModal,
-        DynamicGrid,
+  props: {
+    project: {
+      type: Object,
+      default: () => ({}),
     },
-    setup() {
-        const toaster = useToasterStore()
-        return {
-            toaster,
-        }
-    },
-
-    props: {
-        project: {
-            type: Object,
-            default: () => ({}),
-        },
-        linkedProjects: {
-            type: Array,
-            default: () => [],
-        },
-
-        isEditable: {
-            type: Boolean,
-            default: false,
-        },
+    linkedProjects: {
+      type: Array,
+      default: () => [],
     },
 
-    data() {
-        return {
-            confirmModalVisible: false,
-            projectToBeDeleted: null,
-            isDeleting: false,
-        }
+    isEditable: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: ['reload-linked-projects'],
+  setup() {
+    const toaster = useToasterStore()
+    return {
+      toaster,
+    }
+  },
+
+  data() {
+    return {
+      confirmModalVisible: false,
+      projectToBeDeleted: null,
+      isDeleting: false,
+    }
+  },
+
+  computed: {
+    canEditAndDelete() {
+      return this.isEditable && this.canEditProject
     },
 
-    computed: {
-        canEditAndDelete() {
-            return this.isEditable && this.canEditProject
-        },
+    linkedProjectsReordered() {
+      return this.linkedProjects.reduce((acc, curr) => {
+        return curr.reason === 'other' || curr.reason === 'autre' || curr.reason === ''
+          ? [...acc, curr]
+          : [curr, ...acc]
+      }, [])
+    },
+  },
 
-        linkedProjectsReordered() {
-            return this.linkedProjects.reduce((acc, curr) => {
-                return curr.reason === 'other' || curr.reason === 'autre' || curr.reason === ''
-                    ? [...acc, curr]
-                    : [curr, ...acc]
-            }, [])
-        },
+  methods: {
+    confirmDelete(linkedProject) {
+      this.projectToBeDeleted = linkedProject
+      this.confirmModalVisible = true
     },
 
-    methods: {
-        confirmDelete(linkedProject) {
-            this.projectToBeDeleted = linkedProject
-            this.confirmModalVisible = true
-        },
+    async doDeleteLinkedProject() {
+      this.isDeleting = true
+      try {
+        await deleteLinkedProject({
+          project_id: this.project.id,
+          id: this.projectToBeDeleted.id,
+        })
 
-        async doDeleteLinkedProject() {
-            this.isDeleting = true
-            try {
-                await deleteLinkedProject({
-                    project_id: this.project.id,
-                    id: this.projectToBeDeleted.id,
-                })
+        this.$emit('reload-linked-projects')
 
-                this.$emit('reload-linked-projects')
+        analytics.linkedProject.removeLinkedProject({
+          project: {
+            id: this.project.id,
+          },
+          linkedProject: this.projectToBeDeleted,
+        })
 
-                analytics.linkedProject.removeLinkedProject({
-                    project: {
-                        id: this.project.id,
-                    },
-                    linkedProject: this.projectToBeDeleted,
-                })
-
-                this.toaster.pushSuccess(this.$t('toasts.linked-project-delete.success'))
-            } catch (error) {
-                this.toaster.pushError(
-                    `${this.$t('toasts.linked-project-delete.error')} (${error})`
-                )
-                console.error(error)
-            } finally {
-                this.confirmModalVisible = false
-                this.projectToBeDeleted = null
-                this.isDeleting = false
-            }
-        },
+        this.toaster.pushSuccess(this.$t('toasts.linked-project-delete.success'))
+      } catch (error) {
+        this.toaster.pushError(`${this.$t('toasts.linked-project-delete.error')} (${error})`)
+        console.error(error)
+      } finally {
+        this.confirmModalVisible = false
+        this.projectToBeDeleted = null
+        this.isDeleting = false
+      }
     },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .linked-projects {
-    margin-top: $space-l;
+  margin-top: $space-l;
 
-    .linked-projects-ctn {
-        position: relative;
-        width: 100%;
-        justify-content: space-between;
+  .linked-projects-ctn {
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
 
-        //.linked-project-ctn {
-        //    flex-basis: calc(50% - #{$space-l});
-        //}
+    //.linked-project-ctn {
+    //    flex-basis: calc(50% - #{$space-l});
+    //}
 
-        .linked-project-card {
-            position: relative;
-            width: min-content;
-        }
-
-        .actions-ctn {
-            position: absolute;
-            top: -18px;
-            right: -14px;
-            display: flex;
-
-            button:last-of-type {
-                margin-left: $space-xs;
-            }
-        }
-
-        .reason-label {
-            color: $primary-dark;
-            text-transform: uppercase;
-            font-size: $font-size-xs;
-            font-weight: 700;
-            margin-bottom: $space-s;
-            text-align: center;
-        }
+    .linked-project-card {
+      position: relative;
+      width: min-content;
     }
+
+    .actions-ctn {
+      position: absolute;
+      top: -18px;
+      right: -14px;
+      display: flex;
+
+      button:last-of-type {
+        margin-left: $space-xs;
+      }
+    }
+
+    .reason-label {
+      color: $primary-dark;
+      text-transform: uppercase;
+      font-size: $font-size-xs;
+      font-weight: 700;
+      margin-bottom: $space-s;
+      text-align: center;
+    }
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { LanguageType } from '@/models/types'
-import { ref, watchEffect } from 'vue'
+import { watchEffect } from 'vue'
 import { useRuntimeConfig } from '#imports'
 import { useNuxtApp } from '#imports'
 

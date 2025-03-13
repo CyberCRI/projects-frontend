@@ -1,8 +1,8 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 
 const getFormattedSrc = (newVideoId) => {
-    let resolvedid: String
-    let link: String
+    let resolvedid: string
+    let link: string
 
     if (newVideoId.includes('vimeo.com/')) {
         const spliturl = newVideoId.split('/')
@@ -189,7 +189,7 @@ export default Node.create({
         ]
     },
 
-    addCommands(): Object {
+    addCommands(): object {
         return {
             setExternalVideo:
                 (options) =>

@@ -1,15 +1,15 @@
 <template>
-    <BaseRecommendationList
-        :recommendations="recommendations"
-        :more-label="$t('recommendations.more-profiles')"
-        @goto-more-recommendations="goToMoreRecommendations"
-    >
-        <UserRecommendationItem
-            v-for="(recommendation, index) in recommendations"
-            :key="index"
-            :recommendation="recommendation"
-        />
-    </BaseRecommendationList>
+  <BaseRecommendationList
+    :recommendations="recommendations"
+    :more-label="$t('recommendations.more-profiles')"
+    @goto-more-recommendations="goToMoreRecommendations"
+  >
+    <UserRecommendationItem
+      v-for="(recommendation, index) in recommendations"
+      :key="index"
+      :recommendation="recommendation"
+    />
+  </BaseRecommendationList>
 </template>
 
 <script>
@@ -17,26 +17,26 @@ import BaseRecommendationList from '@/components/search/Recommendations/BaseReco
 import UserRecommendationItem from '@/components/search/Recommendations/UserRecommendationItem.vue'
 
 export default {
-    name: 'UserRecommendationList',
+  name: 'UserRecommendationList',
 
-    components: { BaseRecommendationList, UserRecommendationItem },
+  components: { BaseRecommendationList, UserRecommendationItem },
 
-    props: {
-        recommendations: {
-            type: Array,
-            default: () => [],
-        },
+  props: {
+    recommendations: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    methods: {
-        goToMoreRecommendations() {
-            this.$router.push({ name: 'UserRecommendationPage' })
-        },
+  methods: {
+    goToMoreRecommendations() {
+      this.$router.push({ name: 'UserRecommendationPage' })
     },
+  },
 }
 </script>
 <style lang="scss" scoped>
 .notice {
-    padding: 0 $space-l;
+  padding: 0 $space-l;
 }
 </style>

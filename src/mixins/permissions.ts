@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-unused-properties */
 /* eslint-disable vue/require-name-property */
 
 import utils from '@/functs/functions'
@@ -10,13 +9,6 @@ import useProjectsStore from '@/stores/useProjects'
 import useUsersStore from '@/stores/useUsers'
 import { defineComponent } from 'vue'
 export default defineComponent({
-    methods: {
-        hasPermission(scope, action, pk?) {
-            const permissions = this.getPermissionsForPermissions
-            return utils.hasPermission(permissions, scope, action, pk)
-        },
-    },
-
     computed: {
         ...mapState(usePeopleGroupsStore, {
             // unique name so it doesn(t conflict with a name in the component)
@@ -359,6 +351,12 @@ export default defineComponent({
         },
         canDeleteInstruction() {
             return this.isAdminOrFacilitator
+        },
+    },
+    methods: {
+        hasPermission(scope, action, pk?) {
+            const permissions = this.getPermissionsForPermissions
+            return utils.hasPermission(permissions, scope, action, pk)
         },
     },
 })

@@ -6,8 +6,8 @@ export interface LocationAnalytic {
         id: string
     }
     location: {
-        lat: Number
-        lng: Number
+        lat: number
+        lng: number
         type: LocationType
     }
 }

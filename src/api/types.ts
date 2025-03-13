@@ -2,15 +2,15 @@ import { LanguageType, ProjectMemberRoleType } from '@/models/types'
 import { ProjectModel } from '@/models/project.model'
 
 export interface APIParams {
-    limit?: Number // Number of results to return per page.
-    offset?: Number // The initial index from which to return the results.
+    limit?: number // Number of results to return per page.
+    offset?: number // The initial index from which to return the results.
     organizations?: number[]
 }
 
 export interface APIResponseList<T> {
-    count: Number // Total items
-    next: String // Url to get next result
-    previous: String // Url to get previous result
+    count: number // Total items
+    next: string // Url to get next result
+    previous: string // Url to get previous result
     results: T[] // Items
 }
 

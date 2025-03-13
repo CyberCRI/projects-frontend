@@ -1,104 +1,104 @@
 <template>
-    <div v-if="subgroups.length > 0 && !isLoading" class="subgroups">
-        <div class="subgroups-title">
-            <span class="name">{{ $t('group.subgroups') }} : </span>
-        </div>
-        <NuxtLink
-            :to="{ name: 'Group', params: { groupId: subgroup.slug || subgroup.id } }"
-            class="subgroups-item"
-            v-for="(subgroup, index) in subgroups"
-            :key="index"
-        >
-            <div class="vector"></div>
-            <span class="name">{{ subgroup.name }}</span>
-        </NuxtLink>
+  <div v-if="subgroups.length > 0 && !isLoading" class="subgroups">
+    <div class="subgroups-title">
+      <span class="name">{{ $t('group.subgroups') }} : </span>
     </div>
-    <SubGroupsSkeleton v-else-if="isLoading" />
-    <div v-else class="empty-subgroups"></div>
+    <NuxtLink
+      v-for="(subgroup, index) in subgroups"
+      :key="index"
+      :to="{ name: 'Group', params: { groupId: subgroup.slug || subgroup.id } }"
+      class="subgroups-item"
+    >
+      <div class="vector" />
+      <span class="name">{{ subgroup.name }}</span>
+    </NuxtLink>
+  </div>
+  <SubGroupsSkeleton v-else-if="isLoading" />
+  <div v-else class="empty-subgroups" />
 </template>
 
 <script>
 import SubGroupsSkeleton from '@/components/group/SubGroups/SubGroupsSkeleton.vue'
 export default {
-    name: 'SubGroups',
-    components: { SubGroupsSkeleton },
-    props: {
-        subgroups: {
-            type: Array,
-            required: true,
-        },
-        isLoading: {
-            type: Boolean,
-            default: false,
-            required: false,
-        },
+  name: 'SubGroups',
+  components: { SubGroupsSkeleton },
+  props: {
+    subgroups: {
+      type: Array,
+      required: true,
     },
+    isLoading: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .empty-subgroups {
-    margin-bottom: calc(pxToRem(30px) - 1rem);
+  margin-bottom: calc(pxToRem(30px) - 1rem);
 }
 
 .subgroups {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-s;
+  margin-bottom: pxToRem(30px);
+
+  &-title {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: $space-s;
-    margin-bottom: pxToRem(30px);
+    padding: $space-m;
+    background: $primary-lighter;
+    border: $border-width-s solid $primary;
+    border-radius: $border-radius-30;
 
-    &-title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: $space-m;
-        background: $primary-lighter;
-        border: $border-width-s solid $primary;
-        border-radius: $border-radius-30;
+    .name {
+      font-weight: 400;
+      font-size: $font-size-xs;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      text-transform: uppercase;
+      color: $primary-dark;
+    }
+  }
 
-        .name {
-            font-weight: 400;
-            font-size: $font-size-xs;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            text-transform: uppercase;
-            color: $primary-dark;
-        }
+  &-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $space-xs;
+    padding: $space-2xs calc($space-2xl / 5) $space-2xs $space-2xs;
+    border: $border-width-s solid $primary;
+    border-radius: $border-radius-30;
+    transition: 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      background: $primary-lighter;
     }
 
-    &-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: $space-xs;
-        padding: $space-2xs calc($space-2xl / 5) $space-2xs $space-2xs;
-        border: $border-width-s solid $primary;
-        border-radius: $border-radius-30;
-        transition: 0.3s;
-
-        &:hover {
-            cursor: pointer;
-            background: $primary-lighter;
-        }
-
-        .vector {
-            width: 28px;
-            height: 28px;
-            background: $salmon;
-            border-radius: 50%;
-        }
-
-        .name {
-            font-weight: 400;
-            font-size: $font-size-xs;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            text-transform: uppercase;
-            color: $primary-dark;
-        }
+    .vector {
+      width: 28px;
+      height: 28px;
+      background: $salmon;
+      border-radius: 50%;
     }
+
+    .name {
+      font-weight: 400;
+      font-size: $font-size-xs;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      text-transform: uppercase;
+      color: $primary-dark;
+    }
+  }
 }
 </style>

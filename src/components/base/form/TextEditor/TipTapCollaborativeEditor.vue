@@ -18,9 +18,9 @@ import { HocuspocusProvider } from '@hocuspocus/provider'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 
 import {
-    emitsDefinitions,
-    propsDefinitions,
-    useTipTap,
+  emitsDefinitions,
+  propsDefinitions,
+  useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -36,55 +36,55 @@ import useToasterStore from '@/stores/useToaster.ts'
 const DISCONNECTION_GRACE_DURATION = runtimeConfig.public.appDisconnectionGraceDuration || 6 * 1000
 
 const emit = defineEmits([
-    ...emitsDefinitions,
-    'socket-ready',
-    'unauthorized',
-    'falled-back-to-solo-edit',
+  ...emitsDefinitions,
+  'socket-ready',
+  'unauthorized',
+  'falled-back-to-solo-edit',
 ])
 
 const props = defineProps({
-    ...propsDefinitions,
-    room: {
-        type: String,
-        required: true,
+  ...propsDefinitions,
+  room: {
+    type: String,
+    required: true,
+  },
+  color: {
+    type: String,
+    // choose a random color for every user
+    default: () => {
+      function randomIntInRange(fromInclusive, toInclusive) {
+        return Math.floor(Math.random() * (toInclusive - fromInclusive + 1) + fromInclusive)
+      }
+      const hue = randomIntInRange(0, 360) // any tint
+      const saturation = randomIntInRange(50, 100) // not too grey
+      const lightness = randomIntInRange(20, 60) // neither too dark nor too light
+      return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
-    color: {
-        type: String,
-        // choose a random color for every user
-        default: () => {
-            function randomIntInRange(fromInclusive, toInclusive) {
-                return Math.floor(Math.random() * (toInclusive - fromInclusive + 1) + fromInclusive)
-            }
-            const hue = randomIntInRange(0, 360) // any tint
-            const saturation = randomIntInRange(50, 100) // not too grey
-            const lightness = randomIntInRange(20, 60) // neither too dark nor too light
-            return `hsl(${hue}deg ${saturation}% ${lightness}%)`
-        },
-    },
+  },
 
-    providerParams: {
-        type: Object,
-        default: () => {},
-    },
+  providerParams: {
+    type: Object,
+    default: () => {},
+  },
 })
 
 const toaster = useToasterStore()
 
 const {
-    editor,
-    editorInited,
-    appendTranslationsStyle,
-    destroyEditor,
-    getExtensions,
-    initialContent,
-    resetContent,
-    onBlur,
-    onDrop,
-    onPaste,
+  editor,
+  editorInited,
+  appendTranslationsStyle,
+  destroyEditor,
+  getExtensions,
+  initialContent,
+  resetContent,
+  onBlur,
+  onDrop,
+  onPaste,
 } = useTipTap({
-    props,
-    emit,
-    t,
+  props,
+  emit,
+  t,
 })
 
 // data
@@ -117,196 +117,193 @@ const onlineAndConnected = computed(() => online.value && status.value === 'conn
 const socketReady = computed(() => !cnxTimedout.value && onlineAndConnected.value)
 
 const onUpdate = ({ editor }) => {
-    if (!updateIsBlocked.value) emit('update:modelValue', editor.getHTML())
+  if (!updateIsBlocked.value) emit('update:modelValue', editor.getHTML())
 }
 
 // methods
 function fallbackToSoloMode() {
-    fallbackToSoloEdit.value = true
-    emit('falled-back-to-solo-edit')
+  fallbackToSoloEdit.value = true
+  emit('falled-back-to-solo-edit')
 }
 
 function getCollaborativeExtensions() {
-    const exts = getExtensions({ disableHistory: true })
+  const exts = getExtensions({ disableHistory: true })
 
-    exts.push(
-        Collaboration.configure({
-            document: toRaw(provider.value.document),
-        })
-    )
-    exts.push(
-        CollaborationCursor.configure({
-            provider: toRaw(provider.value),
-            user: {
-                name: user.value.given_name + ' ' + user.value.family_name,
-                color: props.color,
-                pid: user.value.id,
-                profile_picture: user.value.profile_picture,
-            },
-        })
-    )
-    exts.push(ClearHistoryWS.configure({}))
+  exts.push(
+    Collaboration.configure({
+      document: toRaw(provider.value.document),
+    })
+  )
+  exts.push(
+    CollaborationCursor.configure({
+      provider: toRaw(provider.value),
+      user: {
+        name: user.value.given_name + ' ' + user.value.family_name,
+        color: props.color,
+        pid: user.value.id,
+        profile_picture: user.value.profile_picture,
+      },
+    })
+  )
+  exts.push(ClearHistoryWS.configure({}))
 
-    return exts
+  return exts
 }
 
 const getCollaborativeContent = () => {
-    // if it is socket driven
-    // add nothing to the socket initially
-    // either we'll fetch the socket content if we're not alone
-    // or we'll set the content to the original description if we're the first to connect
-    return ''
+  // if it is socket driven
+  // add nothing to the socket initially
+  // either we'll fetch the socket content if we're not alone
+  // or we'll set the content to the original description if we're the first to connect
+  return ''
 }
 
 function initCollaborativeEditor() {
-    updateIsBlocked.value = true
+  updateIsBlocked.value = true
 
-    // this prevents multiple init of editor
-    // (that causes duplicate user/content bugs)
-    if (!props.room) return
+  // this prevents multiple init of editor
+  // (that causes duplicate user/content bugs)
+  if (!props.room) return
 
-    if (editorInited.value) return
-    initialContent.value = props.modelValue
-    editorInited.value = true
+  if (editorInited.value) return
+  initialContent.value = props.modelValue
+  editorInited.value = true
 
-    status.value = 'connecting'
-    // this.ydoc = new Y.Doc()
+  status.value = 'connecting'
+  // this.ydoc = new Y.Doc()
 
-    const providerParams = {
-        ...props.providerParams,
+  const providerParams = {
+    ...props.providerParams,
+  }
+
+  // there's no way in provide to detect failure if server is not reached at least once
+  // so we use a simple timeout that check if the connection was ever open
+  // and if not display a message and kill the editor
+  // if there has been at least one connection, the provider will try to reconnect on a grace delay will be used
+  cnxTimer.value = setTimeout(() => {
+    if (!cnxOpen.value) {
+      cnxTimedout.value = true
+      if (editor.value) destroyCollaborativeEditor()
     }
+  }, cnxTimeout.value)
 
-    // there's no way in provide to detect failure if server is not reached at least once
-    // so we use a simple timeout that check if the connection was ever open
-    // and if not display a message and kill the editor
-    // if there has been at least one connection, the provider will try to reconnect on a grace delay will be used
-    cnxTimer.value = setTimeout(() => {
-        if (!cnxOpen.value) {
-            cnxTimedout.value = true
-            if (editor.value) destroyCollaborativeEditor()
-        }
-    }, cnxTimeout.value)
+  provider.value = new HocuspocusProvider({
+    appId: 'Foo000',
+    url: sockerserver,
+    name: props.room,
+    token: accessToken.value,
+    parameters: providerParams,
+    onOpen: () => {
+      cnxOpen.value = true
+      // clear "unconnectable" timeout
+      if (cnxTimer.value) clearTimeout(cnxTimer.value)
+    },
+    onAuthenticationFailed: () => {
+      emit('unauthorized')
+      toaster.pushError(t('multieditor.unauthorized'))
+    },
+    // it tell us if server is down or not
+    // status is only reliable if we have a working connection
+    onStatus: (event) => {
+      status.value = event.status
+    },
 
-    provider.value = new HocuspocusProvider({
-        appId: 'Foo000',
-        url: sockerserver,
-        name: props.room,
-        token: accessToken.value,
-        parameters: providerParams,
-        onOpen: () => {
-            cnxOpen.value = true
-            // clear "unconnectable" timeout
-            if (cnxTimer.value) clearTimeout(cnxTimer.value)
-        },
-        onAuthenticationFailed: () => {
-            emit('unauthorized')
-            toaster.pushError(t('multieditor.unauthorized'))
-        },
-        // it tell us if server is down or not
-        // status is only reliable if we have a working connection
-        onStatus: (event) => {
-            status.value = event.status
-        },
+    onSynced: (event) => {
+      if (event && !firstSync.value) {
+        firstSync.value = true
+        updateIsBlocked.value = false
 
-        onSynced: (event) => {
-            if (event && !firstSync.value) {
-                firstSync.value = true
-                updateIsBlocked.value = false
+        // TODO may skip this since the history is kept by server now
+        // reset history so we can't undo past the initial content (e.g. to an empty content)
+        editor.value.chain().focus('start').clearHistoryWS().run()
 
-                // TODO may skip this since the history is kept by server now
-                // reset history so we can't undo past the initial content (e.g. to an empty content)
-                editor.value.chain().focus('start').clearHistoryWS().run()
+        // set cursor at start of document
+        setTimeout(
+          () => editor.value && editor.value.commands && editor.value.commands.focus('start'),
+          100 // content is not synchronously updated
+        )
+      }
+      synced.value = event
+    },
+  })
 
-                // set cursor at start of document
-                setTimeout(
-                    () =>
-                        editor.value &&
-                        editor.value.commands &&
-                        editor.value.commands.focus('start'),
-                    100 // content is not synchronously updated
-                )
-            }
-            synced.value = event
-        },
-    })
+  // debug
+  // ;[
+  //     'open',
+  //     'connect',
+  //     'authenticated',
+  //     'authenticationFailed',
+  //     'status',
+  //     'message',
+  //     'outgoingMessage',
+  //     'synced',
+  //     'close',
+  //     'disconnect',
+  //     'destroy',
+  //     'awarenessUpdate',
+  //     'awarenessChange',
+  //     'stateless',
+  // ].forEach((evt) => provider.value.on(evt, () => console.log('provider event ', evt)))
 
-    // debug
-    // ;[
-    //     'open',
-    //     'connect',
-    //     'authenticated',
-    //     'authenticationFailed',
-    //     'status',
-    //     'message',
-    //     'outgoingMessage',
-    //     'synced',
-    //     'close',
-    //     'disconnect',
-    //     'destroy',
-    //     'awarenessUpdate',
-    //     'awarenessChange',
-    //     'stateless',
-    // ].forEach((evt) => provider.value.on(evt, () => console.log('provider event ', evt)))
+  // so also listen to client connection status
+  window.addEventListener('offline', setOffline)
+  window.addEventListener('online', setOnline)
 
-    // so also listen to client connection status
-    window.addEventListener('offline', setOffline)
-    window.addEventListener('online', setOnline)
+  // almost base initEditor
 
-    // almost base initEditor
+  if (editor.value) destroyCollaborativeEditor()
 
-    if (editor.value) destroyCollaborativeEditor()
-
-    editor.value = new Editor({
-        content: getCollaborativeContent(),
-        extensions: getCollaborativeExtensions(),
-        parseOptions: {
-            preserveWhitespace: 'full',
-        },
-        // onDrop, for some reason doent work here, put it on component TipTapEditorContent,
-        onBlur,
-        onPaste,
-        onUpdate,
-    })
-    // editor.value.on('update', onUpdate)
-    // editor.value.on('blur', onBlur)
-    // editor.value.on('onDrop', onDrop) // yes event naming is weird
-    // editor.value.on('onPaste', onPaste) // yes event naming is weird
+  editor.value = new Editor({
+    content: getCollaborativeContent(),
+    extensions: getCollaborativeExtensions(),
+    parseOptions: {
+      preserveWhitespace: 'full',
+    },
+    // onDrop, for some reason doent work here, put it on component TipTapEditorContent,
+    onBlur,
+    onPaste,
+    onUpdate,
+  })
+  // editor.value.on('update', onUpdate)
+  // editor.value.on('blur', onBlur)
+  // editor.value.on('onDrop', onDrop) // yes event naming is weird
+  // editor.value.on('onPaste', onPaste) // yes event naming is weird
 }
 
 function setOnline() {
-    online.value = true
+  online.value = true
 }
 
 function setOffline() {
-    online.value = false
+  online.value = false
 }
 
 function handleDisconnection() {
-    disconnectionGrace.value = true
-    disconnectionGraceTimeout.value = setTimeout(() => {
-        disconnectionGrace.value = false
-        editor.value.setEditable(false)
-    }, DISCONNECTION_GRACE_DURATION)
+  disconnectionGrace.value = true
+  disconnectionGraceTimeout.value = setTimeout(() => {
+    disconnectionGrace.value = false
+    editor.value.setEditable(false)
+  }, DISCONNECTION_GRACE_DURATION)
 }
 
 function handleReconnection() {
-    disconnectionGrace.value = true
-    editor.value.setEditable(true)
-    clearTimeout(disconnectionGraceTimeout.value)
+  disconnectionGrace.value = true
+  editor.value.setEditable(true)
+  clearTimeout(disconnectionGraceTimeout.value)
 }
 
 function destroyCollaborativeEditor() {
-    if (cnxTimer.value) clearTimeout(cnxTimer.value)
-    if (disconnectionGraceTimeout.value) clearTimeout(disconnectionGraceTimeout.value)
-    if (provider.value) {
-        provider.value.destroy()
-        provider.value = null
-    }
-    // editor.value?.off('update', onUpdate)
-    // editor.value?.off('blur', onBlur)
-    // editor.value?.off('drop', onDrop) // yes event naming is weird
-    // editor.value?.off('onPaste', onPaste) // yes event naming is weird
-    destroyEditor()
+  if (cnxTimer.value) clearTimeout(cnxTimer.value)
+  if (disconnectionGraceTimeout.value) clearTimeout(disconnectionGraceTimeout.value)
+  if (provider.value) {
+    provider.value.destroy()
+    provider.value = null
+  }
+  // editor.value?.off('update', onUpdate)
+  // editor.value?.off('blur', onBlur)
+  // editor.value?.off('drop', onDrop) // yes event naming is weird
+  // editor.value?.off('onPaste', onPaste) // yes event naming is weird
+  destroyEditor()
 }
 
 // watch
@@ -320,95 +317,95 @@ function destroyCollaborativeEditor() {
 // )
 
 watchEffect(() => {
-    if (onlineAndConnected.value) {
-        handleReconnection()
-    } else {
-        handleDisconnection()
-    }
+  if (onlineAndConnected.value) {
+    handleReconnection()
+  } else {
+    handleDisconnection()
+  }
 })
 watchEffect(() => emit('socket-ready', socketReady.value), {
-    immediate: true,
+  immediate: true,
 })
 
 // lifecycle
 onMounted(() => {
-    appendTranslationsStyle()
-    initCollaborativeEditor()
+  appendTranslationsStyle()
+  initCollaborativeEditor()
 })
 
 onBeforeUnmount(() => {
-    destroyCollaborativeEditor()
-    window.removeEventListener('offline', setOffline)
-    window.removeEventListener('online', setOnline)
+  destroyCollaborativeEditor()
+  window.removeEventListener('offline', setOffline)
+  window.removeEventListener('online', setOnline)
 })
 
 // expose
 // editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
-    editor,
-    resetContent,
+  editor,
+  resetContent,
 })
 </script>
 <template>
-    <template v-if="fallbackToSoloEdit">
-        <LpiSnackbar
-            v-if="!hideSoloWarning"
-            class="solo-mode-warning"
-            icon="AlertOutline"
-            closable
-            @close="hideSoloWarning = true"
-            type="warning"
-        >
-            <span>{{ t(`multieditor.server-unconnectable.head-up-warning`) }}</span>
-        </LpiSnackbar>
-        <TipTapEditor
-            :model-value="modelValue"
-            @update:model-value="emit('update:modelValue', $event)"
-            :save-image-callback="saveImageCallback"
-            :mode="mode"
-            :save-icon-visible="false"
-        />
+  <template v-if="fallbackToSoloEdit">
+    <LpiSnackbar
+      v-if="!hideSoloWarning"
+      class="solo-mode-warning"
+      icon="AlertOutline"
+      closable
+      type="warning"
+      @close="hideSoloWarning = true"
+    >
+      <span>{{ t(`multieditor.server-unconnectable.head-up-warning`) }}</span>
+    </LpiSnackbar>
+    <TipTapEditor
+      :model-value="modelValue"
+      :save-image-callback="saveImageCallback"
+      :mode="mode"
+      :save-icon-visible="false"
+      @update:model-value="emit('update:modelValue', $event)"
+    />
+  </template>
+  <TipTapEditorContainer v-else :editor="editor" :mode="mode">
+    <template v-if="firstSync">
+      <TipTapCollaborativeConnectedStatus
+        v-if="editor"
+        :online-and-connected="onlineAndConnected"
+        :status="status"
+        :users="editor.storage.collaborationCursor.users"
+      />
+
+      <TipTapModals
+        v-if="editor"
+        :editor="editor"
+        :mode="mode"
+        :show-menu="disconnectionGrace"
+        :save-icon-visible="saveIconVisible"
+        :save-image-callback="saveImageCallback"
+        @image="emit('image', $event)"
+        @saved="emit('saved', $event)"
+      />
+      <TipTapCollaborativeReconnectionStatus
+        v-if="!onlineAndConnected"
+        :disconnection-grace="disconnectionGrace"
+        :status="status"
+      />
+
+      <TipTapEditorContent
+        v-if="editor"
+        :editor="editor"
+        :editor-frozen="!disconnectionGrace"
+        is-connected
+        @drop="onDrop"
+      />
     </template>
-    <TipTapEditorContainer v-else :editor="editor" :mode="mode">
-        <template v-if="firstSync">
-            <TipTapCollaborativeConnectedStatus
-                v-if="editor"
-                :online-and-connected="onlineAndConnected"
-                :status="status"
-                :users="editor.storage.collaborationCursor.users"
-            />
-
-            <TipTapModals
-                v-if="editor"
-                :editor="editor"
-                :mode="mode"
-                :show-menu="disconnectionGrace"
-                :save-icon-visible="saveIconVisible"
-                :save-image-callback="saveImageCallback"
-                @image="emit('image', $event)"
-                @saved="emit('saved', $event)"
-            />
-            <TipTapCollaborativeReconnectionStatus
-                v-if="!onlineAndConnected"
-                :disconnection-grace="disconnectionGrace"
-                :status="status"
-            />
-
-            <TipTapEditorContent
-                v-if="editor"
-                :editor="editor"
-                :editor-frozen="!disconnectionGrace"
-                is-connected
-                @drop="onDrop"
-            />
-        </template>
-        <TipTapCollaborativeConnectingStatus
-            v-else
-            :cnx-timedout="cnxTimedout"
-            :status="status"
-            @do-fallback-edit="fallbackToSoloMode"
-        />
-    </TipTapEditorContainer>
+    <TipTapCollaborativeConnectingStatus
+      v-else
+      :cnx-timedout="cnxTimedout"
+      :status="status"
+      @do-fallback-edit="fallbackToSoloMode"
+    />
+  </TipTapEditorContainer>
 </template>
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
@@ -421,6 +418,6 @@ defineExpose({
 // }
 
 .solo-mode-warning {
-    margin: 0 auto 1rem;
+  margin: 0 auto 1rem;
 }
 </style>

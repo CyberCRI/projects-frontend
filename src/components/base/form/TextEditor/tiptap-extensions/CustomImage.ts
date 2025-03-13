@@ -64,7 +64,7 @@ export default Image.extend({
                 (attributes) =>
                 ({ tr, dispatch }) => {
                     // Check it's a valid size option
-                    // @ts-expect-error
+                    // @ts-expect-error sizes
                     if (!this.options.sizes.includes(attributes.size)) {
                         return false
                     }
@@ -97,26 +97,26 @@ export default Image.extend({
     },
 
     parseHTML() {
-        const that = this
+        const getAttrs = (dom) => {
+            let size = 'original'
+            // @ts-expect-error sizes
+            this.options.sizes.forEach((s) => {
+                const hasSize = (dom as HTMLElement).classList.contains('custom-image-' + s)
+                if (hasSize) {
+                    size = s
+                }
+            })
+            return {
+                src: (dom as HTMLElement).getAttribute('src'),
+                title: (dom as HTMLElement).getAttribute('title'),
+                alt: (dom as HTMLElement).getAttribute('alt'),
+                size: size,
+            }
+        }
         return [
             {
                 tag: 'img[src]',
-                getAttrs: (dom) => {
-                    let size = 'original'
-                    // @ts-expect-error
-                    that.options.sizes.forEach((s) => {
-                        const hasSize = (dom as HTMLElement).classList.contains('custom-image-' + s)
-                        if (hasSize) {
-                            size = s
-                        }
-                    })
-                    return {
-                        src: (dom as HTMLElement).getAttribute('src'),
-                        title: (dom as HTMLElement).getAttribute('title'),
-                        alt: (dom as HTMLElement).getAttribute('alt'),
-                        size: size,
-                    }
-                },
+                getAttrs,
             },
         ]
     },

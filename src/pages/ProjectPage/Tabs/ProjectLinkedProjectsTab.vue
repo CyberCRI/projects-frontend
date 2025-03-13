@@ -1,19 +1,19 @@
 <template>
-    <div class="project-linked-projects">
-        <div class="add-linked-project" v-if="canEditProject">
-            <LpiButton
-                :label="$filters.capitalize($t('project.add-linked-project'))"
-                class="add-linked-project-btn"
-                @click="projectLayoutToggleAddModal('linkedProject')"
-            />
-        </div>
-        <LinkedProjects
-            is-editable
-            :project="project"
-            :linked-projects="linkedProjects"
-            @reload-linked-projects="$emit('reload-linked-projects')"
-        />
+  <div class="project-linked-projects">
+    <div v-if="canEditProject" class="add-linked-project">
+      <LpiButton
+        :label="$filters.capitalize($t('project.add-linked-project'))"
+        class="add-linked-project-btn"
+        @click="projectLayoutToggleAddModal('linkedProject')"
+      />
     </div>
+    <LinkedProjects
+      is-editable
+      :project="project"
+      :linked-projects="linkedProjects"
+      @reload-linked-projects="$emit('reload-linked-projects')"
+    />
+  </div>
 </template>
 
 <script>
@@ -22,46 +22,46 @@ import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
-    name: 'ProjectLinkedProjectsTab',
+  name: 'ProjectLinkedProjectsTab',
 
-    mixins: [permissions],
+  components: {
+    LinkedProjects,
+    LpiButton,
+  },
 
-    emits: ['reload-linked-projects'],
+  mixins: [permissions],
 
-    inject: ['projectLayoutToggleAddModal'],
+  inject: ['projectLayoutToggleAddModal'],
 
-    components: {
-        LinkedProjects,
-        LpiButton,
+  props: {
+    project: {
+      type: Object,
+      default: () => ({}),
     },
 
-    props: {
-        project: {
-            type: Object,
-            default: () => ({}),
-        },
-
-        linkedProjects: {
-            type: Array,
-            default: () => [],
-        },
+    linkedProjects: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    setup() {
-        useScrollToTab()
-        return {}
-    },
+  emits: ['reload-linked-projects'],
+
+  setup() {
+    useScrollToTab()
+    return {}
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .project-linked-projects {
-    padding: $space-xl 0;
+  padding: $space-xl 0;
 }
 
 .add-linked-project {
-    display: flex;
-    justify-content: flex-end;
-    padding: $space-l 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: $space-l 0;
 }
 </style>

@@ -18,11 +18,11 @@ import { TemplateModel } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
 
 interface HeaderImage {
-    id: Number
-    name: String
-    url: String
-    height: Number
-    width: Number
+    id: number
+    name: string
+    url: string
+    height: number
+    width: number
     created_at: Date
     variations: {
         full: string

@@ -1,7 +1,7 @@
 import analytics from '@/analytics'
 import { GoalModel } from '@/models/goal.model'
 import { SdgOutput } from '@/models/sdg.model'
-import { useI18n } from '#imports'
+
 export interface GoalAnalytic {
     project: {
         id: string

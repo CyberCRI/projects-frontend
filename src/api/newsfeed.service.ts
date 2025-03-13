@@ -5,7 +5,7 @@ import useAPI from '@/composables/useAPI'
 
 export interface NewsfeedParams {
     org: string
-    limit: Number
+    limit: number
 }
 
 export async function getNewsfeed(org: string, params: APIParams) {
