@@ -80,6 +80,12 @@ export default {
         deleteQuery() {
             this.updateSelectedQuery('')
         },
+
+        // this method is used by CategoriesPage and GroupsPage via a ref
+        // eslint-disable-next-line vue/no-unused-properties
+        clearSelectedFilters() {
+            this.$refs.searchFilters?.clearSelectedFilters()
+        },
     },
 }
 </script>
