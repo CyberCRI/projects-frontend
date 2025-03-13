@@ -20,7 +20,7 @@ import { defineStore } from 'pinia'
 // fix undefined localStaorage on sever
 let _localStorage = null
 if (import.meta.client) _localStorage = window.localStorage
-let localStorage = _localStorage
+const localStorage = _localStorage
 
 export interface UsersState {
     refreshToken?: string

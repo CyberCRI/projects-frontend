@@ -12,7 +12,7 @@ const useAPI = (url: string, options) => {
     const defaultOptions = () => {
         let _localStorage = null
         if (import.meta.client) _localStorage = window.localStorage
-        let localStorage = _localStorage
+        const localStorage = _localStorage
         const runtimeConfig = useRuntimeConfig()
         return {
             baseURL:

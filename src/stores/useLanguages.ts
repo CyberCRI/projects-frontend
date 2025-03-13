@@ -12,7 +12,7 @@ export interface LanguageState {
 // fix undefined localStaorage on sever
 let _localStorage = null
 if (import.meta.client) _localStorage = window.localStorage
-let localStorage = _localStorage
+const localStorage = _localStorage
 
 const useLanguagesStore = defineStore('languages', () => {
     const runtimeConfig = useRuntimeConfig()

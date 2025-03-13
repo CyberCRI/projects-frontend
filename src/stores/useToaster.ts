@@ -48,7 +48,7 @@ const useToasterStore = defineStore('toaster', {
                 translate?: boolean
             }
         ) {
-            let _options = {
+            const _options = {
                 remaining: false,
                 duration: DEFAULT_TOAST_DURATION,
                 translate: false,
@@ -64,7 +64,7 @@ const useToasterStore = defineStore('toaster', {
                 translate?: boolean
             }
         ) {
-            let _options = {
+            const _options = {
                 remaining: false,
                 duration: DEFAULT_TOAST_DURATION,
                 translate: false,
@@ -80,7 +80,7 @@ const useToasterStore = defineStore('toaster', {
                 translate?: boolean
             }
         ) {
-            let _options = {
+            const _options = {
                 remaining: false,
                 duration: DEFAULT_TOAST_DURATION,
                 translate: false,
@@ -96,7 +96,7 @@ const useToasterStore = defineStore('toaster', {
                 translate?: boolean
             }
         ) {
-            let _options = {
+            const _options = {
                 remaining: false,
                 duration: DEFAULT_TOAST_DURATION,
                 translate: false,
