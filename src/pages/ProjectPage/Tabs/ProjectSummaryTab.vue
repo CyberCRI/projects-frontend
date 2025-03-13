@@ -91,7 +91,6 @@ import ResourcesRecap from '@/components/project/resource/ResourcesRecap.vue'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import SimilarProjects from '@/components/project/SimilarProjects.vue'
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
@@ -100,7 +99,7 @@ import permissions from '@/mixins/permissions.ts'
 export default {
     name: 'ProjectSummaryTab',
 
-    mixins: [ProjectTab, permissions],
+    mixins: [permissions],
 
     emits: ['reload-reviews', 'reload-project'],
 
@@ -166,6 +165,11 @@ export default {
             type: Array,
             default: () => [],
         },
+    },
+
+    setup() {
+        useScrollToTab()
+        return {}
     },
 
     data() {

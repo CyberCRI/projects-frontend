@@ -32,7 +32,6 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import utils from '@/functs/functions.ts'
 import permissions from '@/mixins/permissions.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -40,7 +39,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 export default {
     name: 'ProjectPrivateExchangeTab',
 
-    mixins: [ProjectTab, permissions],
+    mixins: [permissions],
 
     emits: ['reload-project-messages'],
 
@@ -48,6 +47,7 @@ export default {
 
     setup() {
         const usersStore = useUsersStore()
+        useScrollToTab()
         return {
             usersStore,
         }
@@ -95,18 +95,6 @@ export default {
             },
             immediate: true,
         },
-    },
-
-    beforeRouteEnter(to, from, next) {
-        next((vm) => {
-            if (to.hash == '#tab') {
-                vm.$nextTick(function () {
-                    // remove hash from url so it doen't affect shared url
-                    history.replaceState('', '', `${location.pathname}${location.search}`)
-                    utils.scrollTo(document.querySelector('.tabs-wrapper'))
-                })
-            }
-        })
     },
 }
 </script>

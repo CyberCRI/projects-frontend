@@ -19,13 +19,12 @@
 <script>
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import permissions from '@/mixins/permissions.ts'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
     name: 'ProjectLinkedProjectsTab',
 
-    mixins: [permissions, ProjectTab],
+    mixins: [permissions],
 
     emits: ['reload-linked-projects'],
 
@@ -46,6 +45,11 @@ export default {
             type: Array,
             default: () => [],
         },
+    },
+
+    setup() {
+        useScrollToTab()
+        return {}
     },
 }
 </script>

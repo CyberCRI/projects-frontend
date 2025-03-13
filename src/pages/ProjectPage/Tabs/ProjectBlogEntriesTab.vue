@@ -47,7 +47,6 @@ import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import permissions from '@/mixins/permissions.ts'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteBlogEntry } from '@/api/blogentries.service'
@@ -56,7 +55,7 @@ import { useRuntimeConfig } from '#imports'
 export default {
     name: 'ProjectBlogEntriesTab',
 
-    mixins: [permissions, ProjectTab],
+    mixins: [permissions],
 
     inject: ['projectLayoutToggleAddModal'],
 
@@ -71,7 +70,7 @@ export default {
     setup() {
         const toaster = useToasterStore()
         const runtimeConfig = useRuntimeConfig()
-
+        useScrollToTab()
         return {
             toaster,
             runtimeConfig,

@@ -42,7 +42,6 @@ import permissions from '@/mixins/permissions.ts'
 import AnnouncementItem from '@/components/project/announcement/AnnouncementItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
 import { deleteAnnouncement } from '@/api/announcements.service'
@@ -51,7 +50,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectAnnouncementsTab',
 
-    mixins: [permissions, ProjectTab],
+    mixins: [permissions],
 
     emits: ['reload-announcements'],
 
@@ -64,6 +63,7 @@ export default {
     inject: ['projectLayoutToggleAddModal'],
     setup() {
         const toaster = useToasterStore()
+        useScrollToTab()
         return {
             toaster,
         }
@@ -130,24 +130,6 @@ export default {
             this.announcementToBeDeleted = announcement
             this.confirmDeleteModalVisible = true
         },
-    },
-    beforeRouteEnter(to, from, next) {
-        next((vm) => {
-            if (to.hash == '#tab') {
-                // remove hash from url so it doen't affect shared url
-                history.replaceState('', '', `${location.pathname}${location.search}`)
-                vm.$nextTick(() => utils.scrollTo(document.querySelector('.tabs-wrapper')))
-            }
-        })
-    },
-    beforeRouteUpdate(to, from, next) {
-        next((vm) => {
-            if (to.hash == '#tab') {
-                // remove hash from url so it doen't affect shared url
-                history.replaceState('', '', `${location.pathname}${location.search}`)
-                vm.$nextTick(() => utils.scrollTo(document.querySelector('.tabs-wrapper')))
-            }
-        })
     },
 }
 </script>

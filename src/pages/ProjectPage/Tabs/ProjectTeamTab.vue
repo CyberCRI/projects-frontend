@@ -203,8 +203,6 @@
 
 <script>
 import permissions from '@/mixins/permissions.ts'
-import ProjectTab from '@/mixins/ProjectTab.ts'
-
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import UserCard from '@/components/people/UserCard.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
@@ -237,9 +235,10 @@ export default {
 
     inject: ['projectLayoutToggleAddModal'],
 
-    mixins: [permissions, ProjectTab],
+    mixins: [permissions],
     setup() {
         const toaster = useToasterStore()
+        useScrollToTab()
         return {
             toaster,
         }

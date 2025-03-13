@@ -69,7 +69,6 @@ import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/project/resource/ResourceCard.vue'
 import permissions from '@/mixins/permissions.ts'
-import ProjectTab from '@/mixins/ProjectTab.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteAttachmentFile } from '@/api/attachment-files.service'
@@ -78,13 +77,14 @@ import useToasterStore from '@/stores/useToaster.ts'
 export default {
     name: 'ProjectResourcesTab',
 
-    mixins: [permissions, ProjectTab],
+    mixins: [permissions],
 
     emits: ['reload-file-resources', 'reload-link-resources'],
 
     inject: ['projectLayoutToggleAddModal'],
     setup() {
         const toaster = useToasterStore()
+        useScrollToTab()
         return {
             toaster,
         }
