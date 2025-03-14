@@ -5,25 +5,25 @@ import english from '@/locales/en.json'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 const factory = (props?) => {
-    return lpiMount(OnboardingStepCard, {
-        props: {
-            ...props,
-        },
-        i18n,
-    })
+  return lpiMount(OnboardingStepCard, {
+    props: {
+      ...props,
+    },
+    i18n,
+  })
 }
 
 describe('OnboardingStepCard.vue', () => {
-    it('should render component', () => {
-        const wrapper = factory()
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render component', () => {
+    const wrapper = factory()
+    expect(wrapper.exists()).toBe(true)
+  })
 })

@@ -6,45 +6,45 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('GroupTeamSection.vue', () => {
-    let wrapper
-    let defaultParams
-    beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
+  let wrapper
+  let defaultParams
+  beforeEach(() => {
+    const usersStore = useUsersStore(pinia)
 
-        defaultParams = {
-            i18n,
-            props: {
-                modelValue: [
-                    {
-                        id: 1,
-                        profile_picture: { variations: {} },
-                    },
-                    {
-                        id: 2,
-                        profile_picture: { variations: {} },
-                    },
-                ],
-            },
-        }
+    defaultParams = {
+      i18n,
+      props: {
+        modelValue: [
+          {
+            id: 1,
+            profile_picture: { variations: {} },
+          },
+          {
+            id: 2,
+            profile_picture: { variations: {} },
+          },
+        ],
+      },
+    }
+  })
+
+  it('should render GroupTeamSection component', () => {
+    wrapper = lpiMount(GroupTeamSection, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  }),
+    it('should emit the update-team event', () => {
+      wrapper = lpiMount(GroupTeamSection, defaultParams)
+      const vm: any = wrapper.vm
+
+      vm.addUsers([])
+      expect(wrapper.emitted('update:model-value')).toBeTruthy()
     })
-
-    it('should render GroupTeamSection component', () => {
-        wrapper = lpiMount(GroupTeamSection, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    }),
-        it('should emit the update-team event', () => {
-            wrapper = lpiMount(GroupTeamSection, defaultParams)
-            const vm: any = wrapper.vm
-
-            vm.addUsers([])
-            expect(wrapper.emitted('update:model-value')).toBeTruthy()
-        })
 })

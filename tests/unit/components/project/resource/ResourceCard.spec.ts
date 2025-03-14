@@ -5,25 +5,25 @@ import english from '@/locales/en.json'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 const factory = (props?) => {
-    return lpiMount(ResourceCard, {
-        props: {
-            ...props,
-        },
-        i18n,
-    })
+  return lpiMount(ResourceCard, {
+    props: {
+      ...props,
+    },
+    i18n,
+  })
 }
 
 describe('ResourceCard.vue', () => {
-    it('should render component', () => {
-        const wrapper = factory({ title: 'File 1' })
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render component', () => {
+    const wrapper = factory({ title: 'File 1' })
+    expect(wrapper.exists()).toBe(true)
+  })
 })

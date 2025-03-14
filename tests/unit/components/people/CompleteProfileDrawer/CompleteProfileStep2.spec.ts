@@ -6,30 +6,30 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: loadLocaleMessages(),
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: loadLocaleMessages(),
 }
 
 describe('CompleteProfileStep1.vue', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
-        usersStore.$patch({
-            id: 123,
-            userFromApi: {},
-            permissions: {},
-            getUser: vi.fn(),
-        } as any)
-        defaultParams = {
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    const usersStore = useUsersStore(pinia)
+    usersStore.$patch({
+      id: 123,
+      userFromApi: {},
+      permissions: {},
+      getUser: vi.fn(),
+    } as any)
+    defaultParams = {
+      i18n,
+    }
+  })
 
-    it('should render component', () => {
-        wrapper = lpiShallowMount(CompleteProfileStep2, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render component', () => {
+    wrapper = lpiShallowMount(CompleteProfileStep2, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  })
 })

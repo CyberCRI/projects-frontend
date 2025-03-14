@@ -8,35 +8,35 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('TakeTourModal.vue', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
-        defaultParams = {
-            i18n,
-            router: [
-                {
-                    path: '/',
-                    component: MockComponent,
-                    name: 'Home',
-                },
-                { path: '/tutorials', name: 'HelpVideoTab', component: MockComponent },
-            ],
-        }
-    })
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+    defaultParams = {
+      i18n,
+      router: [
+        {
+          path: '/',
+          component: MockComponent,
+          name: 'Home',
+        },
+        { path: '/tutorials', name: 'HelpVideoTab', component: MockComponent },
+      ],
+    }
+  })
 
-    it('should render TakeTourModal component', () => {
-        wrapper = lpiMount(TakeTourModal, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render TakeTourModal component', () => {
+    wrapper = lpiMount(TakeTourModal, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  })
 })

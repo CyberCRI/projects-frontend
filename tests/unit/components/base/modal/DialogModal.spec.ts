@@ -4,34 +4,34 @@ import DialogModal from '@/components/base/modal/DialogModal.vue'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 describe('DialogModal', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {},
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {},
+    }
+  })
 
-    it('should render DialogModal component', () => {
-        wrapper = lpiShallowMount(DialogModal, defaultParams)
+  it('should render DialogModal component', () => {
+    wrapper = lpiShallowMount(DialogModal, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 
-    it('should emit the close event', () => {
-        wrapper = lpiShallowMount(DialogModal, defaultParams)
-        const vm: any = wrapper.vm
+  it('should emit the close event', () => {
+    wrapper = lpiShallowMount(DialogModal, defaultParams)
+    const vm: any = wrapper.vm
 
-        vm.close()
-        expect(wrapper.emitted('close')).toBeTruthy()
-    })
+    vm.close()
+    expect(wrapper.emitted('close')).toBeTruthy()
+  })
 
-    it('should emit the submit event', () => {
-        wrapper = lpiShallowMount(DialogModal, defaultParams)
-        const vm: any = wrapper.vm
+  it('should emit the submit event', () => {
+    wrapper = lpiShallowMount(DialogModal, defaultParams)
+    const vm: any = wrapper.vm
 
-        vm.submit()
-        expect(wrapper.emitted('submit')).toBeTruthy()
-    })
+    vm.submit()
+    expect(wrapper.emitted('submit')).toBeTruthy()
+  })
 })

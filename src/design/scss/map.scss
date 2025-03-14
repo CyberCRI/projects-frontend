@@ -3,294 +3,294 @@
 @import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 .leaflet-popup {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 
-    .leaflet-popup-content-wrapper {
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
+  .leaflet-popup-content-wrapper {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .leaflet-popup-content {
+    margin: 0;
+    overflow: hidden;
+    border: $border-width-l solid $primary-dark;
+    border-radius: $border-radius-m;
+    box-sizing: border-box;
+
+    p {
+      margin: 0;
     }
+  }
 
-    .leaflet-popup-content {
-        margin: 0;
-        overflow: hidden;
-        border: $border-width-l solid $primary-dark;
-        border-radius: $border-radius-m;
-        box-sizing: border-box;
-
-        p {
-            margin: 0;
-        }
-    }
-
-    .leaflet-popup-close-button,
-    .leaflet-popup-tip-container {
-        display: none;
-    }
+  .leaflet-popup-close-button,
+  .leaflet-popup-tip-container {
+    display: none;
+  }
 }
 
 // MAP POINTER
 
 .map-pointer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .badge {
+    background: $white;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: $space-m;
+    height: 34px;
+    box-sizing: border-box;
+    border: $border-width-s solid $primary-dark;
+    border-radius: $border-radius-l;
+    cursor: pointer;
+    transition:
+      height 0.15s ease-in-out,
+      width 0.15s ease-in-out;
 
-    .badge {
-        background: $white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: $space-m;
-        height: 34px;
-        box-sizing: border-box;
-        border: $border-width-s solid $primary-dark;
-        border-radius: $border-radius-l;
-        cursor: pointer;
-        transition:
-            height 0.15s ease-in-out,
-            width 0.15s ease-in-out;
+    &__dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: $space-s;
 
-        &__dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: $space-s;
+      &.impact {
+        background: $violet;
+      }
 
-            &.impact {
-                background: $violet;
-            }
-
-            &.team {
-                background: $primary;
-            }
-        }
-
-        &__label {
-            color: $primary-dark;
-            font-size: $font-size-xs;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+      &.team {
+        background: $primary;
+      }
     }
 
-    .line {
-        width: 3px;
-        height: 35px;
-        background: $primary-dark;
-        position: relative;
-
-        &::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: $primary-dark;
-            border-radius: 50%;
-        }
+    &__label {
+      color: $primary-dark;
+      font-size: $font-size-xs;
+      text-transform: uppercase;
+      font-weight: 700;
     }
+  }
+
+  .line {
+    width: 3px;
+    height: 35px;
+    background: $primary-dark;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: $primary-dark;
+      border-radius: 50%;
+    }
+  }
 }
 
 // PROJECT TOOLTIP
 
 .project-tooltip {
-    overflow: hidden;
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.15s ease-in-out;
+  flex-direction: column;
+
+  &__header {
     display: flex;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.15s ease-in-out;
-    flex-direction: column;
+    justify-content: flex-start;
+    padding: $space-s;
 
-    &__header {
-        display: flex;
-        justify-content: flex-start;
-        padding: $space-s;
-
-        &--title {
-            color: $primary-dark;
-            font-weight: 700;
-            font-size: $font-size-s;
-            line-height: $line-height-tight;
-        }
-
-        &--dot {
-            width: pxToRem(16px);
-            height: pxToRem(16px);
-            border-radius: 50%;
-            margin-right: $space-s;
-
-            &.impact {
-                background: $violet;
-            }
-
-            &.team {
-                background: $primary;
-            }
-        }
+    &--title {
+      color: $primary-dark;
+      font-weight: 700;
+      font-size: $font-size-s;
+      line-height: $line-height-tight;
     }
 
-    &__location {
-        padding: $space-s;
+    &--dot {
+      width: pxToRem(16px);
+      height: pxToRem(16px);
+      border-radius: 50%;
+      margin-right: $space-s;
 
-        &--title {
-            font-weight: 500;
-            font-size: $font-size-xl;
-            line-height: $line-height-tight;
-        }
+      &.impact {
+        background: $violet;
+      }
 
-        &--description {
-            font-weight: 400;
-            font-size: $font-size-m;
-        }
+      &.team {
+        background: $primary;
+      }
+    }
+  }
+
+  &__location {
+    padding: $space-s;
+
+    &--title {
+      font-weight: 500;
+      font-size: $font-size-xl;
+      line-height: $line-height-tight;
     }
 
-    &__button {
-        padding: initial;
-        margin-top: $space-m;
+    &--description {
+      font-weight: 400;
+      font-size: $font-size-m;
+    }
+  }
+
+  &__button {
+    padding: initial;
+    margin-top: $space-m;
+  }
+
+  &__image {
+    width: pxToRem(72px);
+    flex-basis: pxToRem(72px);
+    flex-shrink: 0;
+    height: pxToRem(72px);
+    background-position: center center;
+    background-size: cover;
+    border-radius: $border-radius-xs;
+    object-fit: cover;
+    object-position: 50% 50%;
+    margin-right: $space-m;
+  }
+
+  &__content {
+    flex-basis: 60%;
+    padding: $space-s;
+    background: $primary-lighter;
+    display: flex;
+    justify-content: space-between;
+
+    .project-title {
+      font-size: $font-size-m;
+      font-weight: 700;
+      line-height: $line-height-tight;
     }
 
-    &__image {
-        width: pxToRem(72px);
-        flex-basis: pxToRem(72px);
-        flex-shrink: 0;
-        height: pxToRem(72px);
-        background-position: center center;
-        background-size: cover;
-        border-radius: $border-radius-xs;
-        object-fit: cover;
-        object-position: 50% 50%;
-        margin-right: $space-m;
+    .project-purpose {
+      font-size: $font-size-s;
+      margin: $space-s;
+    }
+  }
+
+  .icon {
+    width: pxToRem(18px);
+    height: pxToRem(18px);
+
+    &--close {
+      background: $primary-dark;
+      fill: $white;
+      border-radius: 50%;
+    }
+  }
+
+  // LpiButton
+  .project-tooltip__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $border-radius-50;
+    font-weight: 700;
+    font-size: $font-size-m;
+    line-height: $line-height-squashed;
+    transition: 0.15s all ease-in-out;
+    cursor: pointer;
+    will-change: transform;
+    overflow: hidden;
+    border: none;
+    background: transparent;
+    color: $primary-dark;
+    padding: 0 0 0 $space-l;
+
+    svg {
+      transition: 0.15s fill ease-in-out;
+      fill: $primary-dark;
     }
 
-    &__content {
-        flex-basis: 60%;
-        padding: $space-s;
-        background: $primary-lighter;
-        display: flex;
-        justify-content: space-between;
-
-        .project-title {
-            font-size: $font-size-m;
-            font-weight: 700;
-            line-height: $line-height-tight;
-        }
-
-        .project-purpose {
-            font-size: $font-size-s;
-            margin: $space-s;
-        }
+    .left-icon {
+      margin-right: $space-s;
+      height: pxToRem(18px);
     }
-
-    .icon {
-        width: pxToRem(18px);
-        height: pxToRem(18px);
-
-        &--close {
-            background: $primary-dark;
-            fill: $white;
-            border-radius: 50%;
-        }
-    }
-
-    // LpiButton
-    .project-tooltip__button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: $border-radius-50;
-        font-weight: 700;
-        font-size: $font-size-m;
-        line-height: $line-height-squashed;
-        transition: 0.15s all ease-in-out;
-        cursor: pointer;
-        will-change: transform;
-        overflow: hidden;
-        border: none;
-        background: transparent;
-        color: $primary-dark;
-        padding: 0 0 0 $space-l;
-
-        svg {
-            transition: 0.15s fill ease-in-out;
-            fill: $primary-dark;
-        }
-
-        .left-icon {
-            margin-right: $space-s;
-            height: pxToRem(18px);
-        }
-    }
+  }
 }
 
 // CLUSTER
 
 .marker-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -69px;
+  width: 100%;
+
+  .cluster-ctn {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: -69px;
-    width: 100%;
+    margin-left: 0;
+    margin-top: -30px;
+    width: unset;
+    height: unset;
 
-    .cluster-ctn {
-        display: flex;
-        margin-left: 0;
-        margin-top: -30px;
-        width: unset;
-        height: unset;
+    .marker-ctn {
+      background: $primary;
+      min-width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border: $border-width-s solid $primary-dark;
+      margin-left: 0;
+      text-align: center;
+      font-size: $font-size-m;
+      font-weight: 900;
+      color: $white;
+      border-radius: 0;
+      padding: 0 $space-s;
 
-        .marker-ctn {
-            background: $primary;
-            min-width: 40px;
-            height: 40px;
-            line-height: 40px;
-            border: $border-width-s solid $primary-dark;
-            margin-left: 0;
-            text-align: center;
-            font-size: $font-size-m;
-            font-weight: 900;
-            color: $white;
-            border-radius: 0;
-            padding: 0 $space-s;
+      &:first-child {
+        border-top-left-radius: $border-radius-l;
+        border-bottom-left-radius: $border-radius-l;
+      }
 
-            &:first-child {
-                border-top-left-radius: $border-radius-l;
-                border-bottom-left-radius: $border-radius-l;
-            }
+      &:last-child {
+        border-top-right-radius: $border-radius-l;
+        border-bottom-right-radius: $border-radius-l;
+      }
 
-            &:last-child {
-                border-top-right-radius: $border-radius-l;
-                border-bottom-right-radius: $border-radius-l;
-            }
+      &.team {
+        background: $primary;
+      }
 
-            &.team {
-                background: $primary;
-            }
-
-            &.impact {
-                background: $violet;
-            }
-        }
+      &.impact {
+        background: $violet;
+      }
     }
+  }
 
-    .line {
-        width: 3px;
-        height: 35px;
-        background: $primary-dark;
-        position: relative;
+  .line {
+    width: 3px;
+    height: 35px;
+    background: $primary-dark;
+    position: relative;
 
-        &::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: $primary-dark;
-            border-radius: 50%;
-        }
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: $primary-dark;
+      border-radius: 50%;
     }
+  }
 }

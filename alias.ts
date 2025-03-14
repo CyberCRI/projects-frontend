@@ -9,12 +9,12 @@ const filename = fileURLToPath(import.meta.url)
 const pathSegments = path.dirname(filename)
 
 export const alias: Record<string, string> = {
-    // nuxt aliases
-    '~~': r('.'),
-    '~~/': r('./'),
-    '@@': r('.'),
-    '@@/': r('./'),
-    // project aliases
-    '@': path.resolve(pathSegments, './src'),
-    '~': path.resolve(pathSegments, './node_modules'),
+  // nuxt aliases
+  '~~': r('.'),
+  '~~/': r('./'),
+  '@@': r('.'),
+  '@@/': r('./'),
+  // project aliases
+  '@': path.resolve(pathSegments, './src'),
+  '~': path.resolve(pathSegments, './node_modules'),
 }

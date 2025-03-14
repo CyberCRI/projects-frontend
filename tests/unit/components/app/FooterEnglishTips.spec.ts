@@ -4,26 +4,26 @@ import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('FooterEnglishTips', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      i18n,
+    }
+  })
 
-    it('should render FooterEnglishTips component', () => {
-        wrapper = lpiShallowMount(FooterEnglishTips, defaultParams)
+  it('should render FooterEnglishTips component', () => {
+    wrapper = lpiShallowMount(FooterEnglishTips, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

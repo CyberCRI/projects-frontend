@@ -1,15 +1,15 @@
 {
-    // https://nuxt.com/docs/guide/concepts/typescript
-    "extends": "./.nuxt/tsconfig.json",
-    "compilerOptions": {
-        // fix no implict any for now
-        "strict": false,
-        "noImplicitAny": false,
-        // disable "type" imports for now
-        "verbatimModuleSyntax": false,
-        "paths": {
-            "@/*": ["./src/*"],
-            "#imports": ["./.nuxt/imports.d.ts"]
-        }
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    // fix no implict any for now
+    "strict": false,
+    "noImplicitAny": false,
+    // disable "type" imports for now
+    "verbatimModuleSyntax": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "#imports": ["./.nuxt/imports.d.ts"]
     }
+  }
 }

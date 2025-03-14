@@ -5,29 +5,29 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('SocialNetworks', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {
-                user: UserFactory.generate(),
-            },
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {
+        user: UserFactory.generate(),
+      },
+      i18n,
+    }
+  })
 
-    it('should render SocialNetworks component', () => {
-        wrapper = lpiShallowMount(SocialNetworks, defaultParams)
+  it('should render SocialNetworks component', () => {
+    wrapper = lpiShallowMount(SocialNetworks, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

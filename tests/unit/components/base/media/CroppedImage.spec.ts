@@ -4,27 +4,27 @@ import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
 import { describe, beforeEach, expect, it } from 'vitest'
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('CroppedImage.vue', () => {
-    let defaultParams
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            i18n,
-            props: {
-                src: 'test',
-            },
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      i18n,
+      props: {
+        src: 'test',
+      },
+    }
+  })
 
-    it('should render CroppedImage component', () => {
-        const wrapper = lpiMount(CroppedImage, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render CroppedImage component', () => {
+    const wrapper = lpiMount(CroppedImage, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  })
 })

@@ -15,28 +15,28 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('Tab.vue', () => {
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+  })
+  it('should render component', () => {
+    const project = ProjectOutputFactory.generate()
+    const wrapper = lpiShallowMount(ProjectSummaryTab, {
+      props: {
+        project,
+        comments: [CommentFactory.generate()],
+        team: project.team,
+      },
+      i18n,
     })
-    it('should render component', () => {
-        const project = ProjectOutputFactory.generate()
-        const wrapper = lpiShallowMount(ProjectSummaryTab, {
-            props: {
-                project,
-                comments: [CommentFactory.generate()],
-                team: project.team,
-            },
-            i18n,
-        })
-        expect(wrapper.exists()).toBe(true)
-    })
+    expect(wrapper.exists()).toBe(true)
+  })
 })

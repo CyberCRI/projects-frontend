@@ -9,42 +9,42 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: loadLocaleMessages(),
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: loadLocaleMessages(),
 }
 
 describe('DescriptionDrawer.vue', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const projectsStore = useProjectsStore(pinia)
+  beforeEach(() => {
+    const projectsStore = useProjectsStore(pinia)
 
-        projectsStore.project = {
-            ...ProjectOutputFactory.generate(),
-            files: [],
-            links: [],
-        }
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
-        defaultParams = {
-            i18n,
-            props: {
-                project: {
-                    ...ProjectFactory.generate(),
-                    organizations: [OrganizationOutputFactory.generate()],
-                },
-                isOpened: true,
-            },
-            provide: {
-                projectLayoutProjectPatched: vi.fn(),
-            },
-        }
-    })
+    projectsStore.project = {
+      ...ProjectOutputFactory.generate(),
+      files: [],
+      links: [],
+    }
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+    defaultParams = {
+      i18n,
+      props: {
+        project: {
+          ...ProjectFactory.generate(),
+          organizations: [OrganizationOutputFactory.generate()],
+        },
+        isOpened: true,
+      },
+      provide: {
+        projectLayoutProjectPatched: vi.fn(),
+      },
+    }
+  })
 
-    it('should render DescriptionDrawer component', () => {
-        wrapper = lpiShallowMount(DescriptionDrawer, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render DescriptionDrawer component', () => {
+    wrapper = lpiShallowMount(DescriptionDrawer, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  })
 })

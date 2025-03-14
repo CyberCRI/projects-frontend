@@ -21,35 +21,35 @@ import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('ProjectDescriptionTab.vue', () => {
-    beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
-        usersStore.$patch({
-            user: UserFactory.generate(),
-        } as any)
-        const projectsStore = useProjectsStore(pinia)
+  beforeEach(() => {
+    const usersStore = useUsersStore(pinia)
+    usersStore.$patch({
+      user: UserFactory.generate(),
+    } as any)
+    const projectsStore = useProjectsStore(pinia)
 
-        projectsStore.project = {
-            ...ProjectOutputFactory.generate(),
-            files: [],
-            links: [],
-        }
-    })
+    projectsStore.project = {
+      ...ProjectOutputFactory.generate(),
+      files: [],
+      links: [],
+    }
+  })
 
-    it('should render component', () => {
-        const wrapper = lpiShallowMount(ProjectDescriptionTab, {
-            props: {
-                project: ProjectFactory.generate(),
-            },
-            i18n,
-        })
-        expect(wrapper.exists()).toBe(true)
+  it('should render component', () => {
+    const wrapper = lpiShallowMount(ProjectDescriptionTab, {
+      props: {
+        project: ProjectFactory.generate(),
+      },
+      i18n,
     })
+    expect(wrapper.exists()).toBe(true)
+  })
 })

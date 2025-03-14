@@ -6,67 +6,67 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('TagsFilterSummary', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: { modelValue: [] },
-            i18n,
-        }
+  beforeEach(() => {
+    defaultParams = {
+      props: { modelValue: [] },
+      i18n,
+    }
+  })
+
+  it('should render TagsFilterSummary component', () => {
+    wrapper = lpiMount(TagsFilterSummary, defaultParams)
+
+    expect(wrapper.exists()).toBeTruthy()
+  })
+
+  it('goes back to add mode', async () => {
+    wrapper = lpiMount(TagsFilterSummary, {
+      ...defaultParams,
+      ...{
+        props: {
+          modelValue: [
+            { title: 'Test', id: 1 },
+            { title: 'Test', id: 2 },
+          ],
+        },
+      },
     })
+    const vm: any = wrapper.vm
 
-    it('should render TagsFilterSummary component', () => {
-        wrapper = lpiMount(TagsFilterSummary, defaultParams)
+    await vm.$nextTick()
+    const filterValues = wrapper.findAll('.filter-value')
+    expect(filterValues.length).toBe(2)
+  })
 
-        expect(wrapper.exists()).toBeTruthy()
+  it('should emit input event when removing a tag', async () => {
+    wrapper = lpiMount(TagsFilterSummary, {
+      ...defaultParams,
+      ...{
+        props: {
+          modelValue: [
+            { title: 'Test', id: 1 },
+            { title: 'Test', id: 2 },
+          ],
+        },
+      },
     })
+    const vm: any = wrapper.vm
 
-    it('goes back to add mode', async () => {
-        wrapper = lpiMount(TagsFilterSummary, {
-            ...defaultParams,
-            ...{
-                props: {
-                    modelValue: [
-                        { title: 'Test', id: 1 },
-                        { title: 'Test', id: 2 },
-                    ],
-                },
-            },
-        })
-        const vm: any = wrapper.vm
-
-        await vm.$nextTick()
-        const filterValues = wrapper.findAll('.filter-value')
-        expect(filterValues.length).toBe(2)
-    })
-
-    it('should emit input event when removing a tag', async () => {
-        wrapper = lpiMount(TagsFilterSummary, {
-            ...defaultParams,
-            ...{
-                props: {
-                    modelValue: [
-                        { title: 'Test', id: 1 },
-                        { title: 'Test', id: 2 },
-                    ],
-                },
-            },
-        })
-        const vm: any = wrapper.vm
-
-        await vm.$nextTick()
-        const filterValue = wrapper.find('.filter-value')
-        filterValue.trigger('click')
-        await vm.$nextTick()
-        expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    })
+    await vm.$nextTick()
+    const filterValue = wrapper.find('.filter-value')
+    filterValue.trigger('click')
+    await vm.$nextTick()
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+  })
 })

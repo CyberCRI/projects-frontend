@@ -13,48 +13,48 @@ import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organi
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/composables/useAPI', () => {
-    return {
-        default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
-    }
+  return {
+    default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+  }
 })
 
 vi.mock('@/api/invitations.service.ts', () => {
-    return {
-        getInvitations: vi.fn(() => ({ results: [] })),
-        postInvitations: vi.fn(),
-        deleteInvitations: vi.fn(),
-    }
+  return {
+    getInvitations: vi.fn(() => ({ results: [] })),
+    postInvitations: vi.fn(),
+    deleteInvitations: vi.fn(),
+  }
 })
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 const factory = (props?) => {
-    return lpiMount(LinkCreateTab, {
-        props,
-        i18n,
-        router: [
-            { name: 'Home', path: '/', component: MockComponent },
-            { name: 'Help', path: '/help', component: MockComponent },
-            { path: '/blank', component: MockComponent, name: 'blank' },
-        ],
-    })
+  return lpiMount(LinkCreateTab, {
+    props,
+    i18n,
+    router: [
+      { name: 'Home', path: '/', component: MockComponent },
+      { name: 'Help', path: '/help', component: MockComponent },
+      { path: '/blank', component: MockComponent, name: 'blank' },
+    ],
+  })
 }
 
 describe('LinkCreateTab.vue', () => {
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
-    })
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+  })
 
-    it('should mount the component', () => {
-        const wrapper = factory({ projects: [] })
-        const vm: any = wrapper.vm
-        expect(wrapper.exists()).toBeTruthy()
-    })
+  it('should mount the component', () => {
+    const wrapper = factory({ projects: [] })
+    const vm: any = wrapper.vm
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

@@ -4,27 +4,27 @@ import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileE
 
 import { beforeEach, describe, expect, it } from 'vitest'
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('CompleteProfileStep1.vue', () => {
-    let defaultParams
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            i18n,
-            props: {
-                blockTitle: 'test',
-            },
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      i18n,
+      props: {
+        blockTitle: 'test',
+      },
+    }
+  })
 
-    it('should render component', () => {
-        const wrapper = lpiMount(ProfileEditBlock, defaultParams)
-        expect(wrapper.exists()).toBe(true)
-    })
+  it('should render component', () => {
+    const wrapper = lpiMount(ProfileEditBlock, defaultParams)
+    expect(wrapper.exists()).toBe(true)
+  })
 })

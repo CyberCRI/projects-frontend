@@ -4,18 +4,18 @@ import ToolTip from '@/components/base/ToolTip.vue'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 describe('ToolTip', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {},
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {},
+    }
+  })
 
-    it('should render Tooltip component', () => {
-        wrapper = lpiShallowMount(ToolTip, defaultParams)
+  it('should render Tooltip component', () => {
+    wrapper = lpiShallowMount(ToolTip, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

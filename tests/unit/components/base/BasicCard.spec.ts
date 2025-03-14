@@ -5,9 +5,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
 describe('BasicCard', () => {
-    it('should render BasicCard component', () => {
-        const wrapper = lpiShallowMount(BasicCard)
+  it('should render BasicCard component', () => {
+    const wrapper = lpiShallowMount(BasicCard)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

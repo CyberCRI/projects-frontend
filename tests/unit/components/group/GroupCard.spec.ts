@@ -8,21 +8,21 @@ import type { Mock } from 'vitest'
 //import { GroupFactory } from '@/../tests/factories/group.factory'
 
 describe('GroupCard', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {
-                //todo: use group factory
-                group: ProjectOutputFactory.generate(),
-            },
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {
+        //todo: use group factory
+        group: ProjectOutputFactory.generate(),
+      },
+    }
+  })
 
-    it('should render GroupCard component', () => {
-        wrapper = lpiShallowMount(GroupCard, defaultParams)
+  it('should render GroupCard component', () => {
+    wrapper = lpiShallowMount(GroupCard, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })
