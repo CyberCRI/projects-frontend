@@ -11,52 +11,52 @@ import debounce from 'lodash.debounce'
 
 Chart.register(...registerables)
 export default {
-    name: 'LpiDoughnutChart',
+  name: 'LpiDoughnutChart',
 
-    components: {
-        DoughnutChart,
+  components: {
+    DoughnutChart,
+  },
+
+  props: {
+    chartData: {
+      type: Object,
+      default: null,
     },
 
-    props: {
-        chartData: {
-            type: Object,
-            default: null,
-        },
-
-        options: {
-            type: Object,
-            default: null,
-        },
+    options: {
+      type: Object,
+      default: null,
     },
+  },
 
-    setup(props) {
-        const dataValue = ref(props.chartData)
-        const dataOptions = ref(props.options)
+  setup(props) {
+    const dataValue = ref(props.chartData)
+    const dataOptions = ref(props.options)
 
-        const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
-            chartData: dataValue,
-            options: dataOptions,
-        })
+    const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
+      chartData: dataValue,
+      options: dataOptions,
+    })
 
-        const rerenderChart = function () {
-            useDoughnutChart({
-                chartData: dataValue,
-                options: dataOptions,
-            })
-        }
+    const rerenderChart = function () {
+      useDoughnutChart({
+        chartData: dataValue,
+        options: dataOptions,
+      })
+    }
 
-        onMounted(() => {
-            window.addEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-        })
+    onMounted(() => {
+      window.addEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
+    })
 
-        onUnmounted(() => {
-            window.removeEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-        })
+    onUnmounted(() => {
+      window.removeEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
+    })
 
-        return {
-            doughnutChartRef,
-            doughnutChartProps,
-        }
-    },
+    return {
+      doughnutChartRef,
+      doughnutChartProps,
+    }
+  },
 }
 </script>

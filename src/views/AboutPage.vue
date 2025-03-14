@@ -59,9 +59,9 @@
           </p>
           <i18n-t keypath="about.GOAL.des2" tag="p">
             <a href="https://welearn.cri-paris.org/" place="weLearnLink">WeLearn</a>
-            <a href="https://projects.cri-paris.org/projects/bsHSydgN" place="skillLink"
-              >CRI Skills</a
-            >
+            <a href="https://projects.cri-paris.org/projects/bsHSydgN" place="skillLink">
+              CRI Skills
+            </a>
           </i18n-t>
         </div>
 

@@ -11,7 +11,8 @@
     </template>
     <template v-if="hasChat" #default>
       <p class="chat-data">
-        <strong>{{ $t('chat.data.wording') }}</strong> <span>{{ chat_button_text }}</span>
+        <strong>{{ $t('chat.data.wording') }}</strong>
+        <span>{{ chat_button_text }}</span>
       </p>
       <p class="chat-data">
         <strong>{{ $t('chat.data.link') }}</strong>

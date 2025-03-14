@@ -5,8 +5,8 @@
     </h1>
 
     <p v-if="showHelp" class="sub-main-title">
-      {{ $t('account.sub-title')
-      }}<NuxtLink :to="{ name: 'Help' }" class="link">
+      {{ $t('account.sub-title') }}
+      <NuxtLink :to="{ name: 'Help' }" class="link">
         {{ $t('account.link') }}
       </NuxtLink>
     </p>

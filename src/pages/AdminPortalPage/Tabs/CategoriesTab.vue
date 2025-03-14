@@ -3,7 +3,8 @@
     <div class="header">
       <div class="notices">
         <p>
-          {{ $t('category.info-organize') }}<br />
+          {{ $t('category.info-organize') }}
+          <br />
           {{ $t('category.info-limit') }}
         </p>
       </div>

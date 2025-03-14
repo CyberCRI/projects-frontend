@@ -27,7 +27,8 @@
       <p class="name">{{ review.reviewer.given_name }} {{ review.reviewer.family_name }}</p>
 
       <div class="date">
-        &nbsp;<span v-html="$t('project.reviewed-on-the')" />
+        &nbsp;
+        <span v-html="$t('project.reviewed-on-the')" />
         {{ $d(new Date(review.created_at)) }}
       </div>
     </div>

@@ -17,8 +17,8 @@ const escoLink = computed(
 </script>
 <template>
   <p class="classification-description">
-    {{ classification.description
-    }}<span v-if="isEscoClassification(classification)">
+    {{ classification.description }}
+    <span v-if="isEscoClassification(classification)">
       <a target="_blank" :href="escoLink">{{ $t('admin.classifications.esco-link') }}</a>
     </span>
   </p>

@@ -20,16 +20,16 @@
           <div class="tooltip-div">
             <ul class="list-ctn">
               <li class="item">
-                <span class="item-bold">{{ $t('role.leader') }}</span
-                >: {{ $t('role.role-leader') }}
+                <span class="item-bold">{{ $t('role.leader') }}</span>
+                : {{ $t('role.role-leader') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ $t('role.editor') }}</span
-                >: {{ $t('role.role-editor') }}
+                <span class="item-bold">{{ $t('role.editor') }}</span>
+                : {{ $t('role.role-editor') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ $t('role.member') }}</span
-                >: {{ $t('role.role-member') }}
+                <span class="item-bold">{{ $t('role.member') }}</span>
+                : {{ $t('role.role-member') }}
               </li>
             </ul>
           </div>
@@ -49,8 +49,9 @@
                   :data-test="roleOption.value"
                   type="radio"
                   @change="selectRole(user, roleOption.value)"
-                />{{ $filters.capitalize(roleOption.label) }}</label
-              >
+                />
+                {{ $filters.capitalize(roleOption.label) }}
+              </label>
             </div>
           </div>
         </div>

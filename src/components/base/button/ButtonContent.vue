@@ -7,8 +7,9 @@
     data-test="button-label"
     class="label"
     :class="{ 'no-text-transform': noTextTransform }"
-    >{{ label }}</span
   >
+    {{ label }}
+  </span>
 </template>
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'

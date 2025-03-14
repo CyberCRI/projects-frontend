@@ -2,7 +2,8 @@
   <div class="groups-tab">
     <div>
       <h4 class="title">
-        {{ $t('me.groups') }} <span>({{ user?.people_groups?.length || 0 }})</span>
+        {{ $t('me.groups') }}
+        <span>({{ user?.people_groups?.length || 0 }})</span>
       </h4>
       <div class="list">
         <ListPaginator :limit="listLimit" :list="user?.people_groups || []">

@@ -71,7 +71,7 @@
         </div>
 
         <BaseModal v-if="showImageResizer" @close="showImageResizer = false">
-          <template #header-title> Reframe image </template>
+          <template #header-title>Reframe image</template>
           <template #content>
             <LazyImageResizer
               ref="imageResizer"

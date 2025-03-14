@@ -70,8 +70,10 @@ try {
     </section>
 
     <h1>
-      Schéma pluriannuel<br />
-      de mise en accessibilité<br />
+      Schéma pluriannuel
+      <br />
+      de mise en accessibilité
+      <br />
       2023 - 2026
     </h1>
     <section>

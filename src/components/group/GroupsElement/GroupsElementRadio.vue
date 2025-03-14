@@ -20,8 +20,9 @@
               'has-children': group.children && group.children.length > 0,
               'searched-group': listGroupsIds.includes(group.id),
             }"
-            >{{ group.name }}</span
           >
+            {{ group.name }}
+          </span>
         </label>
         <div
           v-if="group.children && group.children.length > 0"

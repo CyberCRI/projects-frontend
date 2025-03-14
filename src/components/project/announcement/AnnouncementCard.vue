@@ -5,7 +5,7 @@
         <span class="date-ctn">
           {{ $d(new Date(announcement.updated_at)) }}
         </span>
-        <span v-if="announcement.type && announcement.type !== 'na'" class="dot"> &#9679; </span>
+        <span v-if="announcement.type && announcement.type !== 'na'" class="dot">&#9679;</span>
         <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
           {{ $t(`recruit.${announcement.type}`) }}
         </span>

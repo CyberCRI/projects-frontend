@@ -12,26 +12,26 @@ import '@/design/scss/reset.scss'
 import '@/design/scss/main.scss'
 
 if (import.meta.client) {
-    // quick redirect to keycloak login if url says so
-    quickLogin()
+  // quick redirect to keycloak login if url says so
+  quickLogin()
 
-    // bug fix for leaflet's marker
-    // TODO: check if it is still needed
-    // if (import.meta.client) fixLeaflet()
+  // bug fix for leaflet's marker
+  // TODO: check if it is still needed
+  // if (import.meta.client) fixLeaflet()
 
-    window['socket'] = { connected: false }
+  window['socket'] = { connected: false }
 }
 
 export default async function main(): Promise<void> {
-    const runtimeConfig = useRuntimeConfig()
-    const nuxtApp = useNuxtApp()
-    // add org code to html class for personalized fonts
-    document?.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
+  const runtimeConfig = useRuntimeConfig()
+  const nuxtApp = useNuxtApp()
+  // add org code to html class for personalized fonts
+  document?.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
 
-    await initAnalytics()
-    if (import.meta.client) await initUser()
-    await initOrganization()
-    if (import.meta.client) await initSentry(nuxtApp.vueApp)
+  await initAnalytics()
+  if (import.meta.client) await initUser()
+  await initOrganization()
+  if (import.meta.client) await initSentry(nuxtApp.vueApp)
 }
 
 // let's go

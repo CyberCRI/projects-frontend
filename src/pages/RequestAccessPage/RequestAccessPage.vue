@@ -92,9 +92,9 @@
         </p>
         <p class="extra-link extra-help">
           {{ $t('request-access.need-help') }}
-          <a href="#" class="link" @click.prevent="showContactUsDrawer = true">{{
-            $t('request-access.contact-us')
-          }}</a>
+          <a href="#" class="link" @click.prevent="showContactUsDrawer = true">
+            {{ $t('request-access.contact-us') }}
+          </a>
         </p>
       </div>
     </template>

@@ -105,9 +105,9 @@
 
               <ul class="tabs-title">
                 <li v-for="(item, index) in feature.list" :key="index">
-                  <a :class="currentTab == index ? 'selected' : ''" @click="currentTab = index">{{
-                    $t(`discover.FEATURES[${featindex}].list[${index}].title`)
-                  }}</a>
+                  <a :class="currentTab == index ? 'selected' : ''" @click="currentTab = index">
+                    {{ $t(`discover.FEATURES[${featindex}].list[${index}].title`) }}
+                  </a>
                 </li>
               </ul>
 
@@ -310,8 +310,9 @@
             href="mailto:projects.platform@learningplanetinstitute.org"
             place="link"
             target="_blank"
-            >projects.platform@learningplanetinstitute.org</a
           >
+            projects.platform@learningplanetinstitute.org
+          </a>
         </i18n-t>
       </div>
     </div>

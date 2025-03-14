@@ -1,7 +1,7 @@
 <template>
   <component :is="to ? 'NuxtLink' : 'vue:span'" :to="to" class="summary-action">
     <IconImage class="icon" :name="actionIcon" />
-    <span class="label"> {{ $filters.capitalize(actionLabel) }}</span>
+    <span class="label">{{ $filters.capitalize(actionLabel) }}</span>
   </component>
 </template>
 <script>

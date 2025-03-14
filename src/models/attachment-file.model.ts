@@ -6,15 +6,15 @@ import { AttachmentType } from '@/models/types'
  * @description Files attached to a project
  */
 export interface AttachmentFileModel extends BaseModel {
-    file: File
-    title: string
-    attachment_type: AttachmentType
-    description: string
-    mime: string
+  file: File
+  title: string
+  attachment_type: AttachmentType
+  description: string
+  mime: string
 }
 
 export type AttachmentFileOutput = Required<AttachmentFileModel>
 
 export type AttachmentFileInput = Required<AttachmentFileModel> & {
-    project_id: string
+  project_id: string
 }

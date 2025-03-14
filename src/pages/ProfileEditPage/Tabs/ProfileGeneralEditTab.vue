@@ -152,11 +152,11 @@
     <!-- SDGs -->
     <div class="form-group">
       <div class="label-wrapper">
-        <label
-          >{{ $filters.capitalize($t('profile.edit.general.sdgs.label')) }} ({{
+        <label>
+          {{ $filters.capitalize($t('profile.edit.general.sdgs.label')) }} ({{
             form.sdgs ? form.sdgs.length : '0'
-          }})</label
-        >
+          }})
+        </label>
 
         <LinkButton
           :label="$t('profile.edit.general.sdgs.add')"
@@ -167,8 +167,8 @@
       </div>
       <p class="notice">
         {{ $t('profile.edit.general.sdgs.notice-start') }}
-        <a :href="$t('profile.edit.general.sdgs.link')" target="_blank" class="link"
-          >{{ $t('profile.edit.general.sdgs.notice-link') }}
+        <a :href="$t('profile.edit.general.sdgs.link')" target="_blank" class="link">
+          {{ $t('profile.edit.general.sdgs.notice-link') }}
         </a>
         {{ $t('profile.edit.general.sdgs.notice-end') }}
       </p>

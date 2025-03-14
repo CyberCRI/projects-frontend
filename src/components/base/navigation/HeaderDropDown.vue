@@ -53,9 +53,9 @@
                     :key="indexItem"
                     class="drop-down-menu-item"
                   >
-                    <a :href="subItem.src" target="_blank" class="drop-down-menu-item-content">{{
-                      subItem.label
-                    }}</a>
+                    <a :href="subItem.src" target="_blank" class="drop-down-menu-item-content">
+                      {{ subItem.label }}
+                    </a>
                   </li>
                 </ul>
               </div>

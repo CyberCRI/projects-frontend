@@ -5,34 +5,34 @@ import BaseModel from '@/models/base.model'
  * @description User who follow a project
  */
 export interface FollowModel extends BaseModel {
-    follower: {
-        id: number
-        email: string
-        given_name: string
-        family_name: string
-    }
+  follower: {
+    id: number
+    email: string
+    given_name: string
+    family_name: string
+  }
 }
 
 export type FollowInput = {
-    project_id?: string
-    follower_id: number
+  project_id?: string
+  follower_id: number
 }
 
 export type FollowedProjectRef = {
-    project_id: string
+  project_id: string
 }
 
 export type AddManyFollowedProject = {
-    follows: FollowedProjectRef[]
+  follows: FollowedProjectRef[]
 }
 
 export type FollowOutput = Required<FollowModel>
 
 export type FollowManyOutput = Required<FollowOutput> & {
-    id: number
-    project: {
-        id: string
-    }
+  id: number
+  project: {
+    id: string
+  }
 }
 
 export type FollowOutputList = FollowManyOutput[]

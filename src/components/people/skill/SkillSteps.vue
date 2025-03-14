@@ -1,6 +1,6 @@
 <template>
   <div :class="{ border: hasBorder }" class="container">
-    <span v-if="showLabel" class="level-label"> {{ skillLevels[activeStep - 1]?.label }}</span>
+    <span v-if="showLabel" class="level-label">{{ skillLevels[activeStep - 1]?.label }}</span>
     <span
       v-for="(step, index) in steps"
       :key="index"

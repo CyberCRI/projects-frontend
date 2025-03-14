@@ -126,28 +126,29 @@
     </ProfileEditBlock>
     <ProfileEditBlock :block-title="$t('complete-profile.bio.title')">
       <p class="section-notice">
-        <span>{{ $t('complete-profile.bio.notice') }}</span
-        >&nbsp;<i18n-t
+        <span>{{ $t('complete-profile.bio.notice') }}</span>
+        &nbsp;
+        <i18n-t
           v-if="hasBioExemple"
           tag="span"
           keypath="complete-profile.bio.notice-exemples"
           class="section-notice"
         >
-          <a class="link bio-exemple-link" href="#" @click="exempleToShow = researcherSlugOrId">{{
-            $t('complete-profile.bio.exemples.researcher')
-          }}</a>
-          <a class="link bio-exemple-link" href="#" @click="exempleToShow = professionalSlugOrId">{{
-            $t('complete-profile.bio.exemples.professional')
-          }}</a>
-          <a class="link bio-exemple-link" href="#" @click="exempleToShow = studentSlugOrId">{{
-            $t('complete-profile.bio.exemples.student')
-          }}</a>
+          <a class="link bio-exemple-link" href="#" @click="exempleToShow = researcherSlugOrId">
+            {{ $t('complete-profile.bio.exemples.researcher') }}
+          </a>
+          <a class="link bio-exemple-link" href="#" @click="exempleToShow = professionalSlugOrId">
+            {{ $t('complete-profile.bio.exemples.professional') }}
+          </a>
+          <a class="link bio-exemple-link" href="#" @click="exempleToShow = studentSlugOrId">
+            {{ $t('complete-profile.bio.exemples.student') }}
+          </a>
         </i18n-t>
       </p>
       <div class="two-columns">
         <!-- personal bio -->
         <div class="column">
-          <label class="field-title">{{ $t('complete-profile.bio.personal-bio') }} </label>
+          <label class="field-title">{{ $t('complete-profile.bio.personal-bio') }}</label>
           <p class="field-notice">
             {{ $t('complete-profile.bio.personal-bio-notice') }}
           </p>
@@ -155,7 +156,7 @@
         </div>
         <div class="column flexed-column">
           <!-- long bio -->
-          <label class="field-title">{{ $t('complete-profile.bio.long-bio') }} </label>
+          <label class="field-title">{{ $t('complete-profile.bio.long-bio') }}</label>
           <p class="field-notice">
             {{ $t('complete-profile.bio.long-bio-notice') }}
           </p>

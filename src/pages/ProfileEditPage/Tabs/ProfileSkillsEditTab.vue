@@ -49,9 +49,9 @@
                 </SkillLevelTip>
               </div>
               <div class="mentorship">
-                <span class="column-label">{{
-                  $t(`profile.edit.skills.mentorship.mentorship`)
-                }}</span>
+                <span class="column-label">
+                  {{ $t(`profile.edit.skills.mentorship.mentorship`) }}
+                </span>
               </div>
               <div class="edit-action">&nbsp;</div>
               <div class="delete-action">&nbsp;</div>

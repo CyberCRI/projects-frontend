@@ -16,8 +16,9 @@
       <h3 class="publication-title">
         <span v-if="isBlog">{{ lastPublication.title }}</span>
         <span v-else class="author">
-          <span>{{ lastPublication.author.given_name }}</span
-          >&nbsp;<span>{{ lastPublication.author.family_name }}</span>
+          <span>{{ lastPublication.author.given_name }}</span>
+          &nbsp;
+          <span>{{ lastPublication.author.family_name }}</span>
         </span>
       </h3>
 

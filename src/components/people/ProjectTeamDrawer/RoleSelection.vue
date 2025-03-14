@@ -54,8 +54,9 @@
                   :data-test="roleOption.dataTest"
                   type="radio"
                   @change="selectUserRole(user, roleOption.value)"
-                />{{ $filters.capitalize(roleOption.label) }}</label
-              >
+                />
+                {{ $filters.capitalize(roleOption.label) }}
+              </label>
             </div>
           </div>
         </div>
@@ -79,8 +80,9 @@
                   :data-test="roleOption.dataTest"
                   type="radio"
                   @change="selectGroupRole(group, roleOption.value)"
-                />{{ $filters.capitalize(roleOption.label) }}</label
-              >
+                />
+                {{ $filters.capitalize(roleOption.label) }}
+              </label>
             </div>
           </div>
         </div>

@@ -6,78 +6,78 @@ import { UserFromJWTModel } from '@/models/user.model'
  */
 
 export interface GroupModel {
-    id: number
-    name: string
-    permissions: Array<string>
-    users: Array<UserFromJWTModel>
+  id: number
+  name: string
+  permissions: Array<string>
+  users: Array<UserFromJWTModel>
 }
 
 export interface HierarchyGroupModel {
-    id: number
-    name: string
-    children: Array<HierarchyGroupModel>
+  id: number
+  name: string
+  children: Array<HierarchyGroupModel>
 }
 
 export interface GroupModelInput {
-    user_ids: Array<number>
+  user_ids: Array<number>
 }
 
 export interface RemoveGroupModelInput {
-    users: Array<number>
+  users: Array<number>
 }
 
 export type AddParentGroupModelInput = {
-    name: string
-    description: string
-    email: string
-    type: string
-    parent: number
-    organization: string
+  name: string
+  description: string
+  email: string
+  type: string
+  parent: number
+  organization: string
 }
 
 export type GroupOuput = Required<GroupModel> & {
-    name: string
-    description: string
-    email: string
-    type: string
-    organization: string
-    managers: any[]
-    members: any[]
-    hierarchy: any[]
-    children: any[]
-    projects: any
-    header_image: any
-    logo_image: any
-    publication_status: string // TODO: public | ...
+  name: string
+  description: string
+  email: string
+  type: string
+  organization: string
+  managers: any[]
+  members: any[]
+  hierarchy: any[]
+  children: any[]
+  projects: any
+  header_image: any
+  logo_image: any
+  publication_status: string // TODO: public | ...
 }
 
 export interface PostGroupData {
-    name: string
-    description: string
-    email: string
-    type: string
-    parent: number
-    organization: string
-    publication_status: string
+  name: string
+  description: string
+  email: string
+  type: string
+  parent: number
+  organization: string
+  publication_status: string
 }
 
 export interface AddGroupMembers {
-    leaders: Array<string>
-    managers: Array<string>
-    members: Array<string>
+  leaders: Array<string>
+  managers: Array<string>
+  members: Array<string>
 }
 
 export type GroupRole = 'leaders' | 'managers' | 'members'
 
 export interface RemoveGroupMember {
-    name: GroupRole
-    user: string
+  name: GroupRole
+  user: string
 }
 
 export interface PostGroupProjects {
-    featured_projects: Array<string>
+  featured_projects: Array<string>
 }
 
 export interface RemoveGroupProject {
-    project: string
+  project: string
 }

@@ -9,9 +9,9 @@
     @confirm="confirm"
   >
     <template v-if="focusedFilter || mode !== allFiltersMode" #header_prefix>
-      <span class="icon-back" @click="closeFocusedOrModeFilter"
-        ><IconImage name="ArrowLeft"
-      /></span>
+      <span class="icon-back" @click="closeFocusedOrModeFilter">
+        <IconImage name="ArrowLeft" />
+      </span>
     </template>
 
     <template v-if="mode === allFiltersMode">

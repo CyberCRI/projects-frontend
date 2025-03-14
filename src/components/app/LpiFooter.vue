@@ -3,9 +3,9 @@
     <div v-if="!isRegisterPage && showDirectoryLink" class="directory-ctn">
       <p v-if="showDirectoryLink" class="content">
         {{ $t('footer.directory') }}
-        <a class="link" href="https://projects.directory" target="_blank"
-          >https://projects.directory</a
-        >
+        <a class="link" href="https://projects.directory" target="_blank">
+          https://projects.directory
+        </a>
       </p>
 
       <ProjectLogo v-if="showDirectoryLink" class="logo" />

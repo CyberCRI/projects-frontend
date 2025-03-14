@@ -30,20 +30,20 @@
           <span v-for="(item, index) in data.info1" :key="index" class="info">
             {{ item }}
           </span>
-          <span v-if="data.title2" class="info"> &nbsp; - &nbsp;</span>
-          <span v-if="data.title2"> {{ $t(data.title2) }}</span>
-          <span v-if="data.info2"> :&nbsp;</span>
-          <span v-if="data.info2" class="info"> {{ data.info2 }}</span>
-          <span v-if="data.title3" class="info"> &nbsp; - &nbsp;</span>
+          <span v-if="data.title2" class="info">&nbsp; - &nbsp;</span>
+          <span v-if="data.title2">{{ $t(data.title2) }}</span>
+          <span v-if="data.info2">:&nbsp;</span>
+          <span v-if="data.info2" class="info">{{ data.info2 }}</span>
+          <span v-if="data.title3" class="info">&nbsp; - &nbsp;</span>
         </div>
         <div v-else>
           <span v-if="data.preTitle" class="title">
             {{ $t(data.preTitle) + data.number + $t(data.title) }}
-            <span> : &nbsp;</span>
+            <span>: &nbsp;</span>
           </span>
           <span v-else-if="data.number" class="title">
             {{ data.number + $t(data.title) }}
-            <span> : &nbsp;</span>
+            <span>: &nbsp;</span>
           </span>
           <span v-else-if="data.title" class="title">
             {{ $t(data.title) }}
@@ -61,9 +61,9 @@
           :internal="data.internal"
         />
       </div>
-      <span v-if="data.title3"> {{ $t(data.title3) }}</span>
-      <span v-if="data.info3"> :&nbsp;</span>
-      <span v-if="data.info3" class="info"> {{ data.info3 }}</span>
+      <span v-if="data.title3">{{ $t(data.title3) }}</span>
+      <span v-if="data.info3">:&nbsp;</span>
+      <span v-if="data.info3" class="info">{{ data.info3 }}</span>
     </div>
   </div>
 </template>

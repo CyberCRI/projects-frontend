@@ -6,7 +6,7 @@
         <template
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
-          <label> {{ $t('profile.edit.projects.member.label') }} ({{ totalCount }}) </label>
+          <label>{{ $t('profile.edit.projects.member.label') }} ({{ totalCount }})</label>
           <p class="notice">
             {{ $t('profile.edit.projects.member.notice') }}
           </p>
@@ -33,7 +33,7 @@
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
           <div class="label-wrapper">
-            <label> {{ $t('profile.edit.projects.followed.label') }} ({{ totalCount }}) </label>
+            <label>{{ $t('profile.edit.projects.followed.label') }} ({{ totalCount }})</label>
             <LinkButton
               :label="$t('profile.edit.projects.followed.add')"
               btn-icon="Plus"
@@ -65,7 +65,7 @@
         <template
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
-          <label> {{ $t('profile.edit.projects.reviewed.label') }} ({{ totalCount }}) </label>
+          <label>{{ $t('profile.edit.projects.reviewed.label') }} ({{ totalCount }})</label>
           <p class="notice">
             {{ $t('profile.edit.projects.reviewed.notice') }}
           </p>

@@ -11,11 +11,9 @@
       </h3>
 
       <i18n-t :keypath="tab.text" tag="p">
-        <a place="sdg" :href="$t('homeCarousel.tab4.link')"
-          ><abbr :title="$t('homeCarousel.tab4.sdgAbbr')">{{
-            $t('homeCarousel.tab4.sdg')
-          }}</abbr></a
-        >
+        <a place="sdg" :href="$t('homeCarousel.tab4.link')">
+          <abbr :title="$t('homeCarousel.tab4.sdgAbbr')">{{ $t('homeCarousel.tab4.sdg') }}</abbr>
+        </a>
       </i18n-t>
     </div>
   </div>

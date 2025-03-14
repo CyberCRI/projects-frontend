@@ -58,7 +58,8 @@
       <template #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }">
         <div class="project-list-header">
           <h4 class="title">
-            {{ $t('me.follow') }} <span>({{ totalCount }})</span>
+            {{ $t('me.follow') }}
+            <span>({{ totalCount }})</span>
           </h4>
         </div>
         <UserProjectList

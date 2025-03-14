@@ -3,10 +3,10 @@ import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin((nitroApp) => {
-    const runtimeConfig = useRuntimeConfig()
-    nitroApp.hooks.hook('render:html', (html /*, { event }*/) => {
-        html.head.push(
-            `<style>
+  const runtimeConfig = useRuntimeConfig()
+  nitroApp.hooks.hook('render:html', (html /*, { event }*/) => {
+    html.head.push(
+      `<style>
             body {
                 margin: 0;
                 padding: 0;
@@ -73,13 +73,13 @@ export default defineNitroPlugin((nitroApp) => {
             }
         </style>        
         `
-        )
+    )
 
-        // TODO: remove ?
-        html.htmlAttrs.push("data-theme='light'")
+    // TODO: remove ?
+    html.htmlAttrs.push("data-theme='light'")
 
-        html.body = [
-            `<div class="app-loader">
+    html.body = [
+      `<div class="app-loader">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 42 41" fill="none">
                         <path
                             class="left-leaf"
@@ -108,10 +108,10 @@ export default defineNitroPlugin((nitroApp) => {
                     </svg>
                     <span class="app-version">${runtimeConfig.public.appVersion}</span>
                 </div>`,
-            `<div id="__nuxt"></div>`,
-            // ---
-            '<div id="teleports"></div>',
-        ]
-        html.bodyAttrs.push("data-theme='light'")
-    })
+      `<div id="__nuxt"></div>`,
+      // ---
+      '<div id="teleports"></div>',
+    ]
+    html.bodyAttrs.push("data-theme='light'")
+  })
 })

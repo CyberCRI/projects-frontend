@@ -5,9 +5,9 @@
       :class="{ placeholder: !selected, 'placeholder--open': isOpen }"
       @click="toggleMenu"
     >
-      <span class="selected-label" :style="styles">{{
-        selected ? selected.label : placeholder
-      }}</span>
+      <span class="selected-label" :style="styles">
+        {{ selected ? selected.label : placeholder }}
+      </span>
       <IconImage :name="chevron" class="svg" />
     </div>
     <div class="options-wrapper">

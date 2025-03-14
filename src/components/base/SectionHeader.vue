@@ -1,8 +1,9 @@
 <template>
   <div class="section-header-ctn">
     <div class="section-header">
-      <span>{{ title }}</span
-      >&nbsp;<span v-if="quantity">({{ quantity }})</span>
+      <span>{{ title }}</span>
+      &nbsp;
+      <span v-if="quantity">({{ quantity }})</span>
     </div>
 
     <SeeMoreArrow

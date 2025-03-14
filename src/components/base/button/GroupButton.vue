@@ -29,11 +29,9 @@
           :class="{ 'icon-selected': button.value === modelValue }"
         />
       </transition>
-      <label
-        class="label"
-        :class="[{ 'label-selected': button.value === modelValue }, modelValue]"
-        >{{ button.label }}</label
-      >
+      <label class="label" :class="[{ 'label-selected': button.value === modelValue }, modelValue]">
+        {{ button.label }}
+      </label>
     </div>
 
     <div class="slider" :style="sliderStyle" />

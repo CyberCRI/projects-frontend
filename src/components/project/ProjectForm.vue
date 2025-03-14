@@ -28,9 +28,11 @@
         data-test="title-input"
         @blur="validation.form.title.$touch"
       >
-        <label>{{
-          isAddMode ? `${$t('project.form.title-label')} *` : `${$t('project.form.edit-title')} *`
-        }}</label>
+        <label>
+          {{
+            isAddMode ? `${$t('project.form.title-label')} *` : `${$t('project.form.edit-title')} *`
+          }}
+        </label>
       </TextInput>
       <FieldErrors :errors="validation.form.title.$errors" />
     </FieldDisabler>

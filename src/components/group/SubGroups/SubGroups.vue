@@ -1,7 +1,7 @@
 <template>
   <div v-if="subgroups.length > 0 && !isLoading" class="subgroups">
     <div class="subgroups-title">
-      <span class="name">{{ $t('group.subgroups') }} : </span>
+      <span class="name">{{ $t('group.subgroups') }} :</span>
     </div>
     <NuxtLink
       v-for="(subgroup, index) in subgroups"

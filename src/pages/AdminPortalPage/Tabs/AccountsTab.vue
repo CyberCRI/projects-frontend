@@ -61,7 +61,7 @@
                   </span>
                   <span v-else>{{ user.people_groups[0] }}</span>
                 </template>
-                <template v-else> - </template>
+                <template v-else>-</template>
               </span>
               <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
                 <span v-if="user.people_groups?.length > 1" class="more-items">

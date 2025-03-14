@@ -25,43 +25,64 @@ try {
           Le Learning Planet Institute a développé et exploite une plateforme depuis l’adresse
           internet
           <a href="https://projects.directory">https://projects.directory</a>
-          (ci-après la « <span>Plateforme</span> »).
+          (ci-après la «
+          <span>Plateforme</span>
+          »).
         </p>
         <p>
           La Plateforme permet aux chercheurs, étudiants, entreprises, collectivités publiques,
           associations et autres organisations académiques qui y sont inscrits (ci-après,
-          individuellement, le « <span>Contributeur</span> ») de décrire les projets de recherche
-          qu’ils mènent (ci-après, les « <span>Projets</span> ») et d’interagir avec les autres
-          Contributeurs par échange de commentaires sur les Projets (ci-après les «
-          <span>Commentaires</span> »).
+          individuellement, le «
+          <span>Contributeur</span>
+          ») de décrire les projets de recherche qu’ils mènent (ci-après, les «
+          <span>Projets</span>
+          ») et d’interagir avec les autres Contributeurs par échange de commentaires sur les
+          Projets (ci-après les «
+          <span>Commentaires</span>
+          »).
         </p>
-        <p>Les Contributeurs sont ci-après désignés ensemble la « <span>Communauté</span> »</p>
+        <p>
+          Les Contributeurs sont ci-après désignés ensemble la «
+          <span>Communauté</span>
+          »
+        </p>
         <p>
           La Plateforme permet également à tout visiteur non inscrit (ci-après, le «
-          <span>Visiteur</span> ») de consulter les Projets, de consulter les Commentaires et de
-          répondre à des annonces et offres de collaboration sur les Projets (ci-après, les «
-          <span>Offres de collaboration</span> »).
+          <span>Visiteur</span>
+          ») de consulter les Projets, de consulter les Commentaires et de répondre à des annonces
+          et offres de collaboration sur les Projets (ci-après, les «
+          <span>Offres de collaboration</span>
+          »).
         </p>
         <p>
           L’ensemble des services ainsi proposés sur la Plateforme sont dénommés ci-après ensemble,
-          les « <span>Services</span> ».
+          les «
+          <span>Services</span>
+          ».
         </p>
         <p>
           Les Contributeurs et les Visiteurs sont ci-après désignés ensemble les «
-          <span>Utilisateurs</span> ». Le Learning Planet Institute et les Utilisateurs sont
-          ci-après désignés ensemble ou individuellement les « <span>Partie(s)</span> ».
+          <span>Utilisateurs</span>
+          ». Le Learning Planet Institute et les Utilisateurs sont ci-après désignés ensemble ou
+          individuellement les «
+          <span>Partie(s)</span>
+          ».
         </p>
         <p>
           Les présentes conditions générales d’utilisation (ci-après les «
-          <span>Conditions Générales</span> ») ont pour objet de fixer les modalités et conditions
-          de fourniture des Services aux Utilisateurs par le Learning Planet Institute, ainsi que de
-          définir les droits et obligations des Parties dans ce cadre.
+          <span>Conditions Générales</span>
+          ») ont pour objet de fixer les modalités et conditions de fourniture des Services aux
+          Utilisateurs par le Learning Planet Institute, ainsi que de définir les droits et
+          obligations des Parties dans ce cadre.
         </p>
         <p>
-          Les Services font l’objet de modalités et conditions spécifiques aux Visiteurs (<span
-            >Partie I</span
-          >) et aux Contributeurs (<span>Partie II</span>) ainsi que de modalités et conditions
-          communes( <span>Partie III</span> ).
+          Les Services font l’objet de modalités et conditions spécifiques aux Visiteurs (
+          <span>Partie I</span>
+          ) et aux Contributeurs (
+          <span>Partie II</span>
+          ) ainsi que de modalités et conditions communes(
+          <span>Partie III</span>
+          ).
         </p>
         <p>
           Les Conditions Générales expriment l’intégralité de l’accord des Parties et annulent et
@@ -229,7 +250,9 @@ try {
       <div>
         <p>
           Tout Contributeur est tenu d’ouvrir un compte sur la Plateforme pour bénéficier de
-          l’intégralité des Services (ci-après le « <span>Compte</span> »).
+          l’intégralité des Services (ci-après le «
+          <span>Compte</span>
+          »).
         </p>
         <p>L’inscription du Contributeur est volontaire.</p>
         <p>
@@ -260,14 +283,16 @@ try {
           L’inscription sur la Plateforme entraîne automatiquement l’attribution d’un espace
           personnel sous une forme et selon les moyens techniques que le Learning Planet Institute
           juge les plus appropriés pour rendre les Services (ci-après «
-          <span>l’Espace personnel</span> »).
+          <span>l’Espace personnel</span>
+          »).
         </p>
         <p>
           Le Contributeur se voit attribuer un profil public sur son Espace personnel (ci-après le «
-          <span>Profil</span> ») consultable par tous les Utilisateurs de la Plateforme. Le
-          Contributeur peut mettre une photo sur son Profil. Le Contributeur peut, en outre, rédiger
-          une description de son parcours professionnel et/ou académique, une photo, et saisir ses
-          compétences et ses souhaits d’apprentissage, dont le contenu est libre.
+          <span>Profil</span>
+          ») consultable par tous les Utilisateurs de la Plateforme. Le Contributeur peut mettre une
+          photo sur son Profil. Le Contributeur peut, en outre, rédiger une description de son
+          parcours professionnel et/ou académique, une photo, et saisir ses compétences et ses
+          souhaits d’apprentissage, dont le contenu est libre.
         </p>
         <p>
           Le Contributeur accède à son Compte en renseignant l’identifiant composé de ses noms et
@@ -353,8 +378,9 @@ try {
           chaque Contributeur peut rédiger une description du Projet, les objectifs poursuivis, les
           éventuels liens URL renvoyant vers le blog ou autres ressources relatives au Projet, le
           nom des membres de l'équipe en charge du Projet, (ci-après, la «
-          <span>Fiche du Projet</span> »), dans la limite du nombre de caractère et selon les champs
-          disponibles dans le formulaire de publication.
+          <span>Fiche du Projet</span>
+          »), dans la limite du nombre de caractère et selon les champs disponibles dans le
+          formulaire de publication.
         </p>
         <p>
           Le Contributeur peut, en outre, accorder des droits d’édition, comprenant la rédaction et
@@ -519,9 +545,10 @@ try {
           lui apparait inapproprié ou mensonger.
         </p>
         <p>
-          On entend par « <span>Contenus</span> » les Commentaires, réponses aux Offres de
-          collaboration, Fiches de Projets publiés par les Utilisateurs et/ou la Communauté sur la
-          Plateforme.
+          On entend par «
+          <span>Contenus</span>
+          » les Commentaires, réponses aux Offres de collaboration, Fiches de Projets publiés par
+          les Utilisateurs et/ou la Communauté sur la Plateforme.
         </p>
         <p>
           Le Learning Planet Institute procédera, dans les meilleurs délais, à l’examen de toute
@@ -903,8 +930,8 @@ try {
           fins de fixer, reproduire, d’utiliser et de communiquer au public, sur tout support,
           l’ensemble des textes, images, contenus audio-visuels et autres contenus dont il est
           auteur et mis en ligne sur la Plateforme relative à un Projet (ci-après ensemble les «
-          <span>Publications</span> »), ainsi qu’aux fins de créer des œuvres dérivées de ces
-          Publications.
+          <span>Publications</span>
+          »), ainsi qu’aux fins de créer des œuvres dérivées de ces Publications.
         </p>
         <p>
           En contrepartie, le Learning Planet Institute, la Communauté et les Utilisateurs
@@ -923,9 +950,9 @@ try {
         <p>
           Le Learning Planet Institute pratique une politique de protection des données personnelles
           dont les caractéristiques sont explicitées dans le document intitulé «
-          <span class="underlined"
-            >Charte relative à la protection des données à caractère personnel</span
-          >
+          <span class="underlined">
+            Charte relative à la protection des données à caractère personnel
+          </span>
           », accessible sur la page d’accueil de la plateforme et de l’application et dont
           l’utilisateur est expressément invité à prendre connaissance.
         </p>

@@ -12,9 +12,9 @@
         data-test="group-name-input"
         @blur="validation.form.name.$validate"
       >
-        <label>{{
-          isAddMode ? `${$t('group.form.name-label')} *` : `${$t('group.form.edit-name')} *`
-        }}</label>
+        <label>
+          {{ isAddMode ? `${$t('group.form.name-label')} *` : `${$t('group.form.edit-name')} *` }}
+        </label>
       </TextInput>
       <FieldErrors :errors="validation.form.name.$errors" />
     </div>
@@ -119,7 +119,8 @@
                 type="radio"
                 name="visibility"
                 :data-test="`visibility-${visibility.name.toLowerCase()}`"
-              />{{ visibility.name }}
+              />
+              {{ visibility.name }}
             </span>
           </label>
           <span class="checkbox-description">{{ visibility.description }}</span>

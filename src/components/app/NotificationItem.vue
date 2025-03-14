@@ -53,7 +53,7 @@
             <strong v-if="notification.invitation?.people_group">
               {{ notification.invitation?.people_group?.name }}
             </strong>
-            <strong v-else> ??? </strong>
+            <strong v-else>???</strong>
           </template>
           <template v-if="notification.type === 'invitation_today_reminder'" #today_group>
             <NuxtLink
@@ -69,7 +69,7 @@
             >
               {{ notification.invitation?.people_group?.name }}
             </NuxtLink>
-            <strong v-else> ??? </strong>
+            <strong v-else>???</strong>
           </template>
 
           <template #group>

@@ -17,11 +17,12 @@
           {{ $t('complete-profile.title') }}
         </h1>
         <p class="notice">
-          {{ $t('complete-profile.notice.intro') }}<br />
+          {{ $t('complete-profile.notice.intro') }}
+          <br />
           {{ $t('complete-profile.notice.no-idea') }}
-          <a class="link" href="#" @click="helpOpened = true">{{
-            $t('complete-profile.notice.help')
-          }}</a>
+          <a class="link" href="#" @click="helpOpened = true">
+            {{ $t('complete-profile.notice.help') }}
+          </a>
         </p>
       </header>
       <main>

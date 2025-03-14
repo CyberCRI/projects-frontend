@@ -23,7 +23,8 @@
               @click="selectTab(isMobile ? index : tab.index)"
             >
               <IconImage v-if="currentTab.label === tab.label" class="icon" name="ArrowRight" />
-              <span v-else class="pellet" /> {{ tab.label }}
+              <span v-else class="pellet" />
+              {{ tab.label }}
             </li>
           </ul>
         </div>

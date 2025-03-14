@@ -7,12 +7,12 @@
     @close="close"
   >
     <template #header-title>
-      <slot name="header"> This is the default title! </slot>
+      <slot name="header">This is the default title!</slot>
     </template>
 
     <template #content>
       <div class="modal-body">
-        <slot name="body"> This is the default body! </slot>
+        <slot name="body">This is the default body!</slot>
       </div>
     </template>
 

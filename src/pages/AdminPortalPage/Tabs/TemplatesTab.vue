@@ -109,9 +109,9 @@
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
-          <label class="label">{{
-            $filters.capitalize($t('template.advancement-goal-content'))
-          }}</label>
+          <label class="label">
+            {{ $filters.capitalize($t('template.advancement-goal-content')) }}
+          </label>
           <TipTapEditor
             :key="`advancement-goal-${editorKey}`"
             v-model="form.goal_description"

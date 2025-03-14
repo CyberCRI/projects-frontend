@@ -27,9 +27,9 @@
         <h4 class="title">
           {{ $filters.capitalize($t('form.url')) }}
         </h4>
-        <span class="description">{{
-          type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url')
-        }}</span>
+        <span class="description">
+          {{ type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url') }}
+        </span>
         <TextInput
           v-model="form.url"
           class="text-input"
@@ -43,9 +43,9 @@
         <h4 class="title">
           {{ $t('form.title') }}
         </h4>
-        <span class="description">{{
-          type === 'abuse' ? $t('report.abuse-title') : $t('report.bug-title')
-        }}</span>
+        <span class="description">
+          {{ type === 'abuse' ? $t('report.abuse-title') : $t('report.bug-title') }}
+        </span>
         <TextInput
           v-model="form.title"
           class="text-input"
@@ -59,9 +59,9 @@
         <h4 class="title">
           {{ $t('form.description') }}
         </h4>
-        <span class="description">{{
-          type === 'abuse' ? $t('report.abuse-text') : $t('report.bug-text')
-        }}</span>
+        <span class="description">
+          {{ type === 'abuse' ? $t('report.abuse-text') : $t('report.bug-text') }}
+        </span>
         <TextInput
           v-model="form.message"
           class="text-input-test"

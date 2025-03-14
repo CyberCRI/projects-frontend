@@ -272,9 +272,9 @@ try {
             </p>
             <p class="extra-link extra-help">
               {{ $t('register.need-help') }}
-              <a href="#" class="link" @click.prevent="showContactUsDrawer = true">{{
-                $t('register.contact-us')
-              }}</a>
+              <a href="#" class="link" @click.prevent="showContactUsDrawer = true">
+                {{ $t('register.contact-us') }}
+              </a>
             </p>
           </div>
         </template>

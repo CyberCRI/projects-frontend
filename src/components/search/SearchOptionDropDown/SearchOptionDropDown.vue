@@ -50,9 +50,9 @@ function menuAction(key) {
             class="icon"
           />
 
-          <span v-if="sectionFilters[selectedSection]?.label" class="drop-down-label">{{
-            sectionFilters[selectedSection]?.label
-          }}</span>
+          <span v-if="sectionFilters[selectedSection]?.label" class="drop-down-label">
+            {{ sectionFilters[selectedSection]?.label }}
+          </span>
         </span>
         <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
       </slot>

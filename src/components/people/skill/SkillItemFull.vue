@@ -20,8 +20,8 @@
         <SkillSteps show-label :active-step="level" :steps="steps" class="steps" />
       </div>
       <div class="mentorship">
-        <span v-if="skill.can_mentor"> {{ $t('profile.can-mentor') }}</span>
-        <span v-if="skill.needs_mentor"> {{ $t('profile.needs-mentor') }}</span>
+        <span v-if="skill.can_mentor">{{ $t('profile.can-mentor') }}</span>
+        <span v-if="skill.needs_mentor">{{ $t('profile.needs-mentor') }}</span>
         <ToolTip
           v-if="skill.comment && (skill.can_mentor || skill.needs_mentor)"
           placement="bottom"
@@ -40,9 +40,9 @@
           <span v-if="isSelf" class="mentorship-offering">
             {{ $t('profile.mentorship-offering') }}
           </span>
-          <span v-else-if="hasAskedMentorship" class="mentorship-asked">{{
-            $t('profile.mentorship-asked')
-          }}</span>
+          <span v-else-if="hasAskedMentorship" class="mentorship-asked">
+            {{ $t('profile.mentorship-asked') }}
+          </span>
           <NeedLoginToolTip v-else>
             <template #default="{ needLogin }">
               <LpiButton
@@ -61,9 +61,9 @@
           <span v-if="isSelf" class="mentorship-asking">
             {{ $t('profile.mentorship-asking') }}
           </span>
-          <span v-else-if="hasOfferedMentorship" class="mentorship-offered">{{
-            $t('profile.mentorship-offered')
-          }}</span>
+          <span v-else-if="hasOfferedMentorship" class="mentorship-offered">
+            {{ $t('profile.mentorship-offered') }}
+          </span>
           <NeedLoginToolTip v-else>
             <template #default="{ needLogin }">
               <LpiButton
