@@ -61,7 +61,6 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'NewsListItem',
@@ -73,8 +72,6 @@ export default {
     ContextActionMenu,
   },
 
-  mixins: [permissions],
-
   props: {
     news: {
       type: Object,
@@ -83,6 +80,11 @@ export default {
   },
 
   emits: ['delete-news', 'edit-news'],
+
+  setup() {
+    const { canEditNews, canDeleteNews } = usePermissions()
+    return { canEditNews, canDeleteNews }
+  },
 
   data() {
     return {

@@ -68,7 +68,6 @@
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/project/resource/ResourceCard.vue'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteAttachmentFile } from '@/api/attachment-files.service'
@@ -83,8 +82,6 @@ export default {
     ConfirmModal,
     LpiButton,
   },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal'],
 
@@ -104,11 +101,14 @@ export default {
   },
 
   emits: ['reload-file-resources', 'reload-link-resources'],
+
   setup() {
     const toaster = useToasterStore()
     useScrollToTab()
+    const { canEditProject } = usePermissions()
     return {
       toaster,
+      canEditProject,
     }
   },
 

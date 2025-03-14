@@ -41,7 +41,6 @@
   </div>
 </template>
 <script>
-import permissions from '@/mixins/permissions.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
@@ -53,8 +52,6 @@ export default {
     ContextActionButton,
   },
 
-  mixins: [permissions],
-
   props: {
     review: {
       type: Object,
@@ -63,6 +60,11 @@ export default {
   },
 
   emits: ['delete-review', 'edit-review'],
+
+  setup() {
+    const { canDestroyReview, canAddReview } = usePermissions()
+    return { canDestroyReview, canAddReview }
+  },
 }
 </script>
 

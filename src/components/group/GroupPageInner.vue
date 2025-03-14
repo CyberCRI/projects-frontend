@@ -57,7 +57,6 @@ import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
 import GroupHeader from '@/components/group/GroupHeader/GroupHeader.vue'
 import GroupTabs from '@/pages/GroupPage/Tabs/GroupTabs.vue'
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
-import permissions from '@/mixins/permissions.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -70,7 +69,6 @@ export default {
     GroupTabs,
     LinkButton,
   },
-  mixins: [permissions],
   props: {
     groupId: {
       type: String,
@@ -80,9 +78,11 @@ export default {
   setup() {
     const peopleGroupsStore = usePeopleGroupsStore()
     const organizationsStore = useOrganizationsStore()
+    const { canEditGroup } = usePermissions()
     return {
       peopleGroupsStore,
       organizationsStore,
+      canEditGroup,
     }
   },
 

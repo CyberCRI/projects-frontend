@@ -48,7 +48,6 @@
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'AnnouncementItem',
@@ -57,8 +56,6 @@ export default {
     LpiButton,
     ContextActionButton,
   },
-
-  mixins: [permissions],
 
   props: {
     announcement: {
@@ -72,6 +69,13 @@ export default {
   },
 
   emits: ['update-announcement', 'open-confirm-modal', 'apply'],
+
+  setup() {
+    const { canEditProject } = usePermissions()
+    return {
+      canEditProject,
+    }
+  },
 
   computed: {
     canEditAndDelete() {

@@ -27,7 +27,6 @@
 </template>
 <script>
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import permissions from '@/mixins/permissions.ts'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 
 export default {
@@ -38,8 +37,6 @@ export default {
     ContextActionMenu,
   },
 
-  mixins: [permissions],
-
   props: {
     instruction: {
       type: Object,
@@ -48,6 +45,11 @@ export default {
   },
 
   emits: ['delete-instruction', 'edit-instruction'],
+
+  setup() {
+    const { canEditInstruction, canDeleteInstruction } = usePermissions()
+    return { canEditInstruction, canDeleteInstruction }
+  },
 
   data() {
     return {

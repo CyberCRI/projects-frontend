@@ -36,7 +36,6 @@
 import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
 import GoalItem from '@/components/project/goal/GoalItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 import { deleteGoal } from '@/api/goals.service'
@@ -47,8 +46,6 @@ export default {
   name: 'ProjectGoalsTab',
 
   components: { SdgRecap, GoalItem, ConfirmModal, LpiButton },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal'],
 
@@ -70,11 +67,14 @@ export default {
   },
 
   emits: ['reload-goals'],
+
   setup() {
     const toaster = useToasterStore()
     useScrollToTab()
+    const { canEditProject } = usePermissions()
     return {
       toaster,
+      canEditProject,
     }
   },
 

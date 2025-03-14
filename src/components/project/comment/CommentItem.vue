@@ -145,7 +145,6 @@ import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
-import permissions from '@/mixins/permissions'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 export default {
@@ -159,8 +158,6 @@ export default {
     CroppedApiImage,
     TipTapOutput,
   },
-
-  mixins: [permissions],
 
   props: {
     project: {
@@ -199,9 +196,11 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const usersStore = useUsersStore()
+    const { isAdmin } = usePermissions()
     return {
       toaster,
       usersStore,
+      isAdmin,
     }
   },
 

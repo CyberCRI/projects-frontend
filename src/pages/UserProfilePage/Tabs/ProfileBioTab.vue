@@ -24,7 +24,6 @@
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'ProfileBioTab',
@@ -34,18 +33,19 @@ export default {
     LinkButton,
   },
 
-  mixins: [permissions],
-
   props: {
     user: {
       type: Object,
       required: true,
     },
   },
+
   setup() {
     const usersStore = useUsersStore()
+    const { canEditUser } = usePermissions()
     return {
       usersStore,
+      canEditUser,
     }
   },
 

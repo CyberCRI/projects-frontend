@@ -18,7 +18,6 @@
 
 <script>
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
@@ -28,8 +27,6 @@ export default {
     LinkedProjects,
     LpiButton,
   },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal'],
 
@@ -49,7 +46,8 @@ export default {
 
   setup() {
     useScrollToTab()
-    return {}
+    const { canEditProject } = usePermissions()
+    return { canEditProject }
   },
 }
 </script>

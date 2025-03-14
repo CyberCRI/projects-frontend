@@ -88,7 +88,6 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import DatePicker from '@/components/base/form/DatePicker.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import permissions from '@/mixins/permissions.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
@@ -113,8 +112,6 @@ export default {
     ConfirmModal,
     FieldErrors,
   },
-
-  mixins: [permissions],
 
   inject: {
     notifyPatch: {
@@ -143,6 +140,7 @@ export default {
   },
 
   emits: ['close', 'reload-blog-entries'],
+
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()

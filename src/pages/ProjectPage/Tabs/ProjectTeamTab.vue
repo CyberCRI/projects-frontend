@@ -198,7 +198,6 @@
 </template>
 
 <script>
-import permissions from '@/mixins/permissions.ts'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import UserCard from '@/components/people/UserCard.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
@@ -227,8 +226,6 @@ export default {
     DynamicGrid,
   },
 
-  mixins: [permissions],
-
   inject: ['projectLayoutToggleAddModal'],
 
   props: {
@@ -243,11 +240,14 @@ export default {
   },
 
   emits: ['reload-team'],
+
   setup() {
     const toaster = useToasterStore()
     useScrollToTab()
+    const { canEditProject } = usePermissions()
     return {
       toaster,
+      canEditProject,
     }
   },
 

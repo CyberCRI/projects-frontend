@@ -3,7 +3,6 @@ import english from '@/locales/en.json'
 import ProjectDescriptionTab from '@/pages/ProjectPage/Tabs/ProjectDescriptionTab.vue'
 import { ProjectFactory } from '@/../tests/factories/project.factory'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import permissions from '@/mixins/permissions'
 
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'
@@ -13,9 +12,12 @@ import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-vi.mock('@/mixins/permissions')
-;(permissions.computed.canEditProject as Mock).mockImplementation(() => true)
-
+import usePermissions from '@/composables/usePermissions'
+vi.mock('@/composables/usePermissions', () => ({
+  default: () => ({
+    canEditProject: computed(() => true),
+  }),
+}))
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))

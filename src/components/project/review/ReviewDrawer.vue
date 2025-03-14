@@ -21,7 +21,6 @@
         <label>{{ $t('form.description') }}</label>
         <TipTapEditor
           v-model="newReview.data.description"
-          @update="updateContent"
           @blur="v$.newReview.data.description.$touch"
         />
         <FieldErrors :errors="v$.newReview.data.description.$errors" />
@@ -51,7 +50,6 @@
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import permissions from '@/mixins/permissions.ts'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
 
 import useVuelidate from '@vuelidate/core'
@@ -75,8 +73,6 @@ export default {
     FieldErrors,
   },
 
-  mixins: [permissions],
-
   props: {
     project: {
       type: Object,
@@ -94,6 +90,7 @@ export default {
   },
 
   emits: ['reload-reviews', 'close', 'reload-project'],
+
   setup() {
     const toaster = useToasterStore()
     const projectsStore = useProjectsStore()
@@ -182,7 +179,6 @@ export default {
         if (this.rdata?.id) {
           this.publish = this.project.publication_status === 'public'
           this.lock = this.project.is_locked
-
           this.newReview.id = this.rdata.id
           this.newReview.data = { ...this.rdata }
         } else {

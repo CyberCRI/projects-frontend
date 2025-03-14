@@ -6,11 +6,10 @@
 
 <script>
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import permissions from '@/mixins/permissions.ts'
+
 export default {
   name: 'GroupTabs',
   components: { TabsLayout },
-  mixins: [permissions],
   props: {
     description: {
       type: String,

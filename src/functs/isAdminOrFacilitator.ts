@@ -1,5 +1,4 @@
 import utils from '@/functs/functions'
-// import permissions from '@/mixins/permissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 

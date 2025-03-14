@@ -32,7 +32,6 @@
 <script>
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import permissions from '@/mixins/permissions.ts'
 import useVuelidate from '@vuelidate/core'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 
@@ -44,8 +43,6 @@ export default {
     BaseDrawer,
     ConfirmModal,
   },
-
-  mixins: [permissions],
 
   props: {
     isOpened: {

@@ -36,7 +36,6 @@
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import permissions from '@/mixins/permissions.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
@@ -44,7 +43,6 @@ export default {
 
   components: { CommentItem, NoItem, MakeComment },
 
-  mixins: [permissions],
   props: {
     project: {
       type: Object,
@@ -65,8 +63,10 @@ export default {
   setup() {
     const usersStore = useUsersStore()
     useScrollToTab()
+    const { isAdmin } = usePermissions()
     return {
       usersStore,
+      isAdmin,
     }
   },
 

@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import permissions from '@/mixins/permissions.ts'
 import AnnouncementItem from '@/components/project/announcement/AnnouncementItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'
@@ -56,7 +55,6 @@ export default {
     LpiButton,
   },
 
-  mixins: [permissions],
   inject: ['projectLayoutToggleAddModal'],
 
   props: {
@@ -74,8 +72,10 @@ export default {
   setup() {
     const toaster = useToasterStore()
     useScrollToTab()
+    const { canEditProject } = usePermissions()
     return {
       toaster,
+      canEditProject,
     }
   },
 
@@ -84,6 +84,7 @@ export default {
       confirmDeleteModalVisible: false,
       appliedAnnouncement: null,
       isDeleting: false,
+      announcementToBeDeleted: null,
     }
   },
 

@@ -26,15 +26,12 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import permissions from '@/mixins/permissions.ts'
 import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
   name: 'SdgRecap',
 
   components: { LpiButton },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal'],
   props: {
@@ -47,9 +44,11 @@ export default {
   setup() {
     const languagesStore = useLanguagesStore()
     const runtimeConfig = useRuntimeConfig()
+    const { canEditProject } = usePermissions()
     return {
       languagesStore,
       runtimeConfig,
+      canEditProject,
     }
   },
 

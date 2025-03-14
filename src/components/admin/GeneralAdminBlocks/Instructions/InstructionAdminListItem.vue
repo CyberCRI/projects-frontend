@@ -14,7 +14,6 @@
   </div>
 </template>
 <script>
-import permissions from '@/mixins/permissions.ts'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 
 export default {
@@ -24,8 +23,6 @@ export default {
     ContextActionMenu,
   },
 
-  mixins: [permissions],
-
   props: {
     instruction: {
       type: Object,
@@ -34,6 +31,11 @@ export default {
   },
 
   emits: ['delete-instruction', 'edit-instruction'],
+
+  setup() {
+    const { canEditInstruction, canDeleteInstruction } = usePermissions()
+    return { canEditInstruction, canDeleteInstruction }
+  },
 
   computed: {
     instructionText() {

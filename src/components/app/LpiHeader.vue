@@ -162,8 +162,6 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { patchUser } from '@/api/people.service.ts'
 import { getAnnouncements } from '@/api/announcements.service'
 
-import permissions from '@/mixins/permissions.ts'
-
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
 import HeaderDropDown from '@/components/base/navigation/HeaderDropDown.vue'
@@ -192,18 +190,21 @@ export default {
     IconImage,
   },
 
-  mixins: [permissions],
-
   setup() {
     const languagesStore = useLanguagesStore()
     const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
+    const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
     return {
       languagesStore,
       projectCategoriesStore,
       organizationsStore,
       usersStore,
+      isAdmin,
+      isFacilitator,
+      isSuperAdmin,
+      isOrgAdmin,
     }
   },
 

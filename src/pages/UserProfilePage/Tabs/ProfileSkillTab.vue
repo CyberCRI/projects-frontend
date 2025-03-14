@@ -45,7 +45,6 @@ import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
-import permissions from '@/mixins/permissions.ts'
 import { getUserMentorship } from '@/api/mentorship.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
@@ -57,21 +56,23 @@ export default {
     LinkButton,
   },
 
-  mixins: [permissions],
   props: {
     user: {
       type: Object,
       required: true,
     },
   },
+
   setup() {
     const usersStore = useUsersStore()
     const skillTexts = useSkillTexts()
     const organizationsStore = useOrganizationsStore()
+    const { canEditUser } = usePermissions()
     return {
       usersStore,
       skillTexts,
       organizationsStore,
+      canEditUser,
     }
   },
 

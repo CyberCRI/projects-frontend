@@ -259,7 +259,6 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
-import permissions from '@/mixins/permissions.ts'
 import TagsList from '@/components/project/TagsList.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
@@ -282,8 +281,6 @@ export default {
     LinkButton,
     BreadCrumbs,
   },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
   props: {
@@ -320,10 +317,12 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
+    const { canEditProject } = usePermissions()
     return {
       organizationsStore,
       usersStore,
       runtimeConfig,
+      canEditProject,
     }
   },
 

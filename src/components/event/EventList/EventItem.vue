@@ -39,7 +39,6 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import permissions from '@/mixins/permissions.ts'
 export default {
   name: 'EventItem',
 
@@ -47,8 +46,6 @@ export default {
     IconImage,
     ContextActionMenu,
   },
-
-  mixins: [permissions],
 
   props: {
     event: {
@@ -59,6 +56,10 @@ export default {
 
   emits: ['delete-event', 'edit-event'],
 
+  setup() {
+    const { canEditEvent, canDeleteEvent } = usePermissions()
+    return { canEditEvent, canDeleteEvent }
+  },
   computed: {
     isNew() {
       return Date.now() - new Date(this.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000

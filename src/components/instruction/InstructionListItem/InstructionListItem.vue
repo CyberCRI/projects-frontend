@@ -34,7 +34,6 @@
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'InstructionListItem',
@@ -45,8 +44,6 @@ export default {
     ContextActionMenu,
   },
 
-  mixins: [permissions],
-
   props: {
     instruction: {
       type: Object,
@@ -55,6 +52,11 @@ export default {
   },
 
   emits: ['delete-instruction', 'edit-instruction'],
+
+  setup() {
+    const { canEditInstruction, canDeleteInstruction } = usePermissions()
+    return { canEditInstruction, canDeleteInstruction }
+  },
 
   data() {
     return {

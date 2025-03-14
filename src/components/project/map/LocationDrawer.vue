@@ -71,7 +71,6 @@ import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from '@/components/project/map/LocationForm.vue'
 //import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { LazyBaseMap } from '#components'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'LocationDrawer',
@@ -84,8 +83,6 @@ export default {
     //LocationTooltip,
     LazyBaseMap,
   },
-
-  mixins: [permissions],
 
   props: {
     isOpened: {
@@ -105,6 +102,11 @@ export default {
   },
 
   emits: ['close', 'reload-locations'],
+
+  setup() {
+    const { canEditProject } = usePermissions()
+    return { canEditProject }
+  },
 
   data() {
     return {

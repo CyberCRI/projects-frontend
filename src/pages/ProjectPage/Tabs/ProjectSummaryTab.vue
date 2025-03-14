@@ -83,7 +83,6 @@ import ProjectMemberSection from '@/components/group/ProjectMemberSection/Projec
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserProfile from '@/components/people/UserProfile.vue'
 import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'ProjectSummaryTab',
@@ -102,8 +101,6 @@ export default {
     UserProfile,
     BaseDrawer,
   },
-
-  mixins: [permissions],
 
   props: {
     project: {
@@ -158,7 +155,8 @@ export default {
 
   setup() {
     useScrollToTab()
-    return {}
+    const { canEditProject } = usePermissions()
+    return { canEditProject }
   },
 
   data() {
@@ -209,7 +207,6 @@ export default {
     },
 
     closeProfileDrawer() {
-      this.isEditMode = false
       this.profileDrawer.isOpened = false
       this.profileDrawer.user_id = null
     },

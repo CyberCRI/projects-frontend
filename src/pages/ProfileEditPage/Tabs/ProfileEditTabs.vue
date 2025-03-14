@@ -14,7 +14,6 @@
 
 <script>
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import permissions from '@/mixins/permissions.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 export default {
   name: 'ProfileEditTabs',
@@ -23,8 +22,6 @@ export default {
     TabsLayout,
     LoaderSimple,
   },
-
-  mixins: [permissions],
 
   props: {
     user: {

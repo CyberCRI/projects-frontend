@@ -80,7 +80,6 @@
 <script>
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
@@ -89,17 +88,19 @@ export default {
 
   components: { UserProjectsSearch, UserProjectList, LpiButton },
 
-  mixins: [permissions],
   props: {
     user: {
       type: Object,
       required: true,
     },
   },
+
   setup() {
     const usersStore = useUsersStore()
+    const { canCreateProject } = usePermissions()
     return {
       usersStore,
+      canCreateProject,
     }
   },
 

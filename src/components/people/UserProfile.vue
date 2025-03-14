@@ -40,7 +40,6 @@
 
 <script>
 import ProfileHeader from '@/components/people/FullProfile/ProfileHeader.vue'
-import permissions from '@/mixins/permissions.ts'
 import ProfileTabs from '@/pages/UserProfilePage/Tabs/ProfileTabs.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { getUser } from '@/api/people.service.ts'
@@ -56,8 +55,6 @@ export default {
     ProfileTabs,
     ProfileHeader,
   },
-
-  mixins: [permissions],
 
   props: {
     userId: {
@@ -78,8 +75,10 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
+    const { canEditUser } = usePermissions()
     return {
       usersStore,
+      canEditUser,
     }
   },
 

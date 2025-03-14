@@ -155,6 +155,7 @@
     "vite-plugin-html": "^3.2.2",
     "vitest": "^2.1.8",
     "vitest-fetch-mock": "^0.4.2",
+    "vue-eslint-parser": "^10.1.1",
     "vue-i18n-extract": "^2.0.7",
     "vue-tsc": "^2.2.8",
     "vue-unused-components-checker": "^1",

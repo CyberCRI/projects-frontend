@@ -2,7 +2,6 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import ProjectHeader from '@/components/project/ProjectHeader.vue'
 import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import permissions from '@/mixins/permissions'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import pinia from '@/stores'
@@ -12,8 +11,12 @@ import { OrganizationOutput, OrganizationPatchInput } from '@/models/organizatio
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-vi.mock('@/mixins/permissions')
-;(permissions.computed.canEditProject as Mock).mockImplementation(() => true)
+import usePermissions from '@/composables/usePermissions'
+vi.mock('@/composables/usePermissions', () => ({
+  default: () => ({
+    canEditProject: computed(() => true),
+  }),
+}))
 
 const i18n = {
   locale: 'en',

@@ -56,7 +56,6 @@
 import GroupForm from '@/components/group/GroupForm/GroupForm.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import permissions from '@/mixins/permissions.ts'
 import {
   postGroup,
   postGroupMembers,
@@ -84,8 +83,6 @@ export default {
 
   components: { GroupForm, LpiButton, LpiSnackbar },
 
-  mixins: [permissions],
-
   props: {
     groupId: {
       // watch out : this can be a slug or an id
@@ -100,11 +97,14 @@ export default {
     const peopleGroupsStore = usePeopleGroupsStore()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
+    const { canCreateGroup, canEditGroup } = usePermissions()
     return {
       toaster,
       peopleGroupsStore,
       organizationsStore,
       usersStore,
+      canCreateGroup,
+      canEditGroup,
     }
   },
 

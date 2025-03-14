@@ -29,7 +29,6 @@
 <script>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'NewsAdminListItem',
@@ -39,8 +38,6 @@ export default {
     ContextActionMenu,
   },
 
-  mixins: [permissions],
-
   props: {
     news: {
       type: Object,
@@ -49,6 +46,11 @@ export default {
   },
 
   emits: ['delete-news', 'edit-news'],
+
+  setup() {
+    const { canDeleteNews } = usePermissions()
+    return { canDeleteNews }
+  },
 
   computed: {
     canEditNews() {

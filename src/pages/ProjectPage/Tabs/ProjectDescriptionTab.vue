@@ -43,7 +43,6 @@
 <script>
 import DescriptionSummaryBlock from '@/components/project/description/DescriptionSummaryBlock.vue'
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
-import permissions from '@/mixins/permissions.ts'
 import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
 import utils from '@/functs/functions.ts'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
@@ -62,18 +61,20 @@ export default {
     TipTapOutput,
   },
 
-  mixins: [permissions],
   props: {
     project: {
       type: Object,
       default: () => {},
     },
   },
+
   setup() {
     const projectsStore = useProjectsStore()
     useScrollToTab()
+    const { canEditProject } = usePermissions()
     return {
       projectsStore,
+      canEditProject,
     }
   },
 

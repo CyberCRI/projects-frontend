@@ -227,7 +227,6 @@
 <script>
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
-import permissions from '@/mixins/permissions.ts'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -259,8 +258,6 @@ export default {
     CategoryPicker,
   },
 
-  mixins: [permissions],
-
   props: {
     project: {
       type: Object,
@@ -278,18 +275,35 @@ export default {
   },
 
   emits: ['asyncing', 'reload-team', 'reload-reviews', 'reload-project'],
+
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()
     const projectsStore = useProjectsStore()
     const usersStore = useUsersStore()
     const { isMobile } = useViewportWidth()
+    const {
+      canEditProject,
+      isOrgUser,
+      canDestroyProject,
+      isOwner,
+      isOrgAdmin,
+      isAdmin,
+      canAddReview,
+    } = usePermissions()
     return {
       toaster,
       organizationsStore,
       projectsStore,
       usersStore,
       isMobile,
+      canEditProject,
+      isOrgUser,
+      canDestroyProject,
+      isOwner,
+      isOrgAdmin,
+      isAdmin,
+      canAddReview,
     }
   },
 

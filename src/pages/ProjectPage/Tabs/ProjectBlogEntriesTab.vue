@@ -46,7 +46,6 @@
 import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import permissions from '@/mixins/permissions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteBlogEntry } from '@/api/blogentries.service'
@@ -61,8 +60,6 @@ export default {
     ConfirmModal,
     LpiButton,
   },
-
-  mixins: [permissions],
 
   inject: ['projectLayoutToggleAddModal'],
 
@@ -81,10 +78,12 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const runtimeConfig = useRuntimeConfig()
+    const { canEditProject } = usePermissions()
     useScrollToTab()
     return {
       toaster,
       runtimeConfig,
+      canEditProject,
     }
   },
 

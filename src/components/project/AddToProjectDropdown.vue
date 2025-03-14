@@ -20,7 +20,6 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import permissions from '@/mixins/permissions.ts'
 
 export default {
   name: 'AddToProjectDropdown',
@@ -29,11 +28,14 @@ export default {
     LpiButton,
   },
 
-  mixins: [permissions],
-
   inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
 
   emits: ['close-dropdown'],
+
+  setup() {
+    const { canEditProject, canCreateComments } = usePermissions()
+    return { canEditProject, canCreateComments }
+  },
 
   computed: {
     menuItems() {

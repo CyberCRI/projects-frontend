@@ -13,7 +13,7 @@ import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import permissions from '@/mixins/permissions'
+
 vi.mock('@/api/people.service.ts', () => ({
   getUser: vi.fn(() => Promise.resolve({ id: 12, permissions: [] })),
 }))
