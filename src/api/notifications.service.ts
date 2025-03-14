@@ -1,11 +1,7 @@
-import { axios } from '@/api/api.config'
-import { APIParams, APIResponseList } from '@/api/types'
-import { NotificationModel } from '@/models/notifications.model'
+import type { APIParams /*, APIResponseList*/ } from '@/api/types'
+// import type { NotificationModel } from '@/models/notifications.model'
+import useAPI from '@/composables/useAPI'
 
-export async function getNotifications(
-    params: APIParams
-): Promise<APIResponseList<NotificationModel>> {
-    return (
-        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notification/`, { params })
-    ).data
+export async function getNotifications(params: APIParams) {
+  return await useAPI(`notification/`, { params }) //.data.value
 }

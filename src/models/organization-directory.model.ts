@@ -6,8 +6,8 @@ import { LanguageType } from '@/models/types'
  * @description Organization directory
  */
 export interface OrganizationDirectoryModel extends BaseModel {
-    name: string
-    description: string
-    logo: string
-    language: LanguageType
+  name: string
+  description: string
+  logo: string
+  language: LanguageType
 }

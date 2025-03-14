@@ -1,29 +1,29 @@
 <template>
-    <div class="container">
-        <LpiSingleStatChart :number="stats" />
-    </div>
+  <div class="container">
+    <LpiSingleStatChart :number="stats" />
+  </div>
 </template>
 
 <script>
-import LpiSingleStatChart from './Generic/LpiSingleStatChart.vue';
+import LpiSingleStatChart from './Generic/LpiSingleStatChart.vue'
 
 export default {
-    name: 'TotalChart',
+  name: 'TotalChart',
 
-    components: { LpiSingleStatChart },
+  components: { LpiSingleStatChart },
 
-    props: {
-        stats: {
-            type: Array,
-            default: () => [],
-        },
+  props: {
+    stats: {
+      type: Array,
+      default: () => [],
     },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .container {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 </style>

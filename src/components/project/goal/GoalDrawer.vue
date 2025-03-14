@@ -1,65 +1,65 @@
 <template>
-    <BaseDrawer
-        @close="closeModal"
-        @confirm="submit"
-        :title="$t('goal.add')"
-        :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="v$.$invalid"
-        :is-opened="isOpened"
-        class="medium"
-        :asyncing="asyncing"
-    >
-        <div class="form">
-            <TextInput
-                v-model="form.title"
-                :label="$filters.capitalize(`${$t('goal.title')}:`)"
-                :placeholder="$filters.capitalize($t('goal.title'))"
-                @blur="v$.form.title.$touch"
-            />
-            <FieldErrors :errors="v$.form.title.$errors" />
+  <BaseDrawer
+    :title="$t('goal.add')"
+    :confirm-action-name="$t('common.save')"
+    :confirm-action-disabled="v$.$invalid"
+    :is-opened="isOpened"
+    class="medium"
+    :asyncing="asyncing"
+    @close="closeModal"
+    @confirm="submit"
+  >
+    <div class="form">
+      <TextInput
+        v-model="form.title"
+        :label="$filters.capitalize(`${$t('goal.title')}:`)"
+        :placeholder="$filters.capitalize($t('goal.title'))"
+        @blur="v$.form.title.$touch"
+      />
+      <FieldErrors :errors="v$.form.title.$errors" />
 
-            <div class="goal-description-section">
-                <span class="goal-label">{{ $filters.capitalize($t('goal.description')) }}:</span>
-                <TipTapEditor
-                    class="goal-description"
-                    v-model="form.description"
-                    @blur="v$.form.description.$touch"
-                />
-                <FieldErrors :errors="v$.form.description.$errors" />
-            </div>
+      <div class="goal-description-section">
+        <span class="goal-label">{{ $filters.capitalize($t('goal.description')) }}:</span>
+        <TipTapEditor
+          v-model="form.description"
+          class="goal-description"
+          @blur="v$.form.description.$touch"
+        />
+        <FieldErrors :errors="v$.form.description.$errors" />
+      </div>
 
-            <SwitchInput
-                class="deadline-switch"
-                v-model="deadlineVisible"
-                :label="$filters.capitalize(`${$t('common.set-deadline')}:`)"
-            />
+      <SwitchInput
+        v-model="deadlineVisible"
+        class="deadline-switch"
+        :label="$filters.capitalize(`${$t('common.set-deadline')}:`)"
+      />
 
-            <DatePicker
-                v-if="deadlineVisible"
-                class="goal-deadline"
-                v-model="form.deadline_at"
-                position="top"
-            />
+      <DatePicker
+        v-if="deadlineVisible"
+        v-model="form.deadline_at"
+        class="goal-deadline"
+        position="top"
+      />
 
-            <div class="status-ctn">
-                <span class="goal-label">{{ $filters.capitalize($t('goal.status-title')) }}:</span>
-                <GroupButton
-                    v-model="form.status"
-                    class="group-button-labels"
-                    :options="statusOptions"
-                    :custom-color="statusColor"
-                />
-            </div>
-        </div>
-    </BaseDrawer>
-    <ConfirmModal
-        v-if="showConfirmModal"
-        @cancel="showConfirmModal = false"
-        @confirm="closeModalAndDrawer"
-        confirm-button-label="common.continue"
-        :title="$t('description.quit-without-saving-title')"
-        :content="$t('common.confirm-close')"
-    />
+      <div class="status-ctn">
+        <span class="goal-label">{{ $filters.capitalize($t('goal.status-title')) }}:</span>
+        <GroupButton
+          v-model="form.status"
+          class="group-button-labels"
+          :options="statusOptions"
+          :custom-color="statusColor"
+        />
+      </div>
+    </div>
+  </BaseDrawer>
+  <ConfirmModal
+    v-if="showConfirmModal"
+    confirm-button-label="common.continue"
+    :title="$t('description.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="showConfirmModal = false"
+    @confirm="closeModalAndDrawer"
+  />
 </template>
 
 <script>
@@ -82,290 +82,287 @@ import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 
 export default {
-    name: 'GoalDrawer',
+  name: 'GoalDrawer',
 
-    emits: ['close', 'reload-goals'],
+  components: {
+    ConfirmModal,
+    BaseDrawer,
+    TextInput,
+    TipTapEditor,
+    DatePicker,
+    SwitchInput,
+    GroupButton,
+    FieldErrors,
+  },
 
-    components: {
-        ConfirmModal,
-        BaseDrawer,
-        TextInput,
-        TipTapEditor,
-        DatePicker,
-        SwitchInput,
-        GroupButton,
-        FieldErrors,
+  props: {
+    project: {
+      type: Object,
+      default: () => ({}),
     },
-    setup() {
-        const toaster = useToasterStore()
-        return {
-            toaster,
+    isOpened: {
+      type: Boolean,
+      default: false,
+    },
+
+    editedGoal: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
+  emits: ['close', 'reload-goals'],
+  setup() {
+    const toaster = useToasterStore()
+    return {
+      toaster,
+    }
+  },
+
+  data() {
+    return {
+      v$: useVuelidate(),
+      form: {
+        title: '',
+        description: '<p></p>',
+        deadline_at: new Date(),
+        status: 'na',
+      },
+      deadlineVisible: false,
+      showConfirmModal: false,
+      asyncing: false,
+    }
+  },
+
+  validations() {
+    return {
+      form: {
+        title: {
+          required: helpers.withMessage(this.$t('form.goal.title'), required),
+        },
+        description: {
+          required: helpers.withMessage(this.$t('form.goal.description'), required),
+        },
+      },
+    }
+  },
+
+  computed: {
+    statusColor() {
+      if (this.form.status === 'ongoing') return '#99FFE7'
+      else if (this.form.status === 'complete') return '#00DBA7'
+      else if (this.form.status === 'cancel') return '#D4D4D4'
+      return '#F0FFFB' /* for "na" */
+    },
+
+    statusOptions() {
+      return [
+        {
+          value: 'na',
+          label: this.$filters.capitalize(this.$t('status.na')),
+          selected: this.form.status === 'na',
+        },
+        {
+          value: 'ongoing',
+          label: this.$filters.capitalize(this.$t('status.ongoing')),
+          selected: this.form.status === 'ongoing',
+        },
+        {
+          value: 'complete',
+          label: this.$filters.capitalize(this.$t('status.completed')),
+          selected: this.form.status === 'complete',
+        },
+        {
+          value: 'cancel',
+          label: this.$filters.capitalize(this.$t('status.canceled')),
+          selected: this.form.status === 'cancel',
+        },
+      ]
+    },
+
+    isEdited() {
+      return this.editedGoal
+        ? this.editedGoal.description != this.form.description ||
+            this.editedGoal.title != this.form.title
+        : this.form.description != '<p></p>' || this.form.title != ''
+    },
+  },
+
+  watch: {
+    deadlineVisible: function (val) {
+      if (!val) this.form.deadline_at = null
+    },
+
+    isOpened: {
+      handler: function () {
+        if (this.editedGoal?.id) this.fillForm()
+        else this.resetForm()
+      },
+      immediate: true,
+    },
+  },
+
+  methods: {
+    fillForm() {
+      this.form.id = this.editedGoal.id
+      this.form.title = this.editedGoal.title
+      this.form.description = this.editedGoal.description
+      this.form.deadline_at = this.editedGoal.deadline_at
+      this.form.status = this.editedGoal.status
+      this.deadlineVisible = !!this.editedGoal.deadline_at
+    },
+
+    resetForm() {
+      this.form = {
+        title: this.project && this.project.template ? this.project.template.goal_placeholder : '',
+        description:
+          this.project && this.project.template
+            ? this.project.template.goal_description || '<p></p>'
+            : '<p></p>',
+
+        deadline_at: new Date(),
+        status: 'na',
+      }
+      this.deadlineVisible = false
+    },
+
+    async submit() {
+      const isValid = await this.v$.$validate()
+
+      if (isValid) {
+        this.asyncing = true
+        const payload = {
+          ...this.form,
+          project_id: this.project.id,
+          description: this.form.description,
+          deadline_at: this.form.deadline_at
+            ? utils.fullYearDateFormat(this.form.deadline_at)
+            : null,
         }
-    },
+        if (this.form.id) {
+          // Update goal
+          try {
+            const result = await patchGoal({
+              goal: payload,
+              project_id: this.project.id,
+            })
 
-    props: {
-        project: {
-            type: Object,
-            default: () => ({}),
-        },
-        isOpened: {
-            type: Boolean,
-            default: false,
-        },
+            analytics.goal.updateGoalProject({
+              project: {
+                id: this.project.id,
+              },
+              goal: result,
+            })
 
-        editedGoal: {
-            type: Object,
-            default: () => ({}),
-        },
-    },
+            this.$emit('reload-goals')
 
-    data() {
-        return {
-            v$: useVuelidate(),
-            form: {
-                title: '',
-                description: '<p></p>',
-                deadline_at: new Date(),
-                status: 'na',
-            },
-            deadlineVisible: false,
-            showConfirmModal: false,
-            asyncing: false,
-        }
-    },
-
-    validations() {
-        return {
-            form: {
-                title: {
-                    required: helpers.withMessage(this.$t('form.goal.title'), required),
-                },
-                description: {
-                    required: helpers.withMessage(this.$t('form.goal.description'), required),
-                },
-            },
-        }
-    },
-
-    computed: {
-        statusColor() {
-            if (this.form.status === 'ongoing') return '#99FFE7'
-            else if (this.form.status === 'complete') return '#00DBA7'
-            else if (this.form.status === 'cancel') return '#D4D4D4'
-            return '#F0FFFB' /* for "na" */
-        },
-
-        statusOptions() {
-            return [
-                {
-                    value: 'na',
-                    label: this.$filters.capitalize(this.$t('status.na')),
-                    selected: this.form.status === 'na',
-                },
-                {
-                    value: 'ongoing',
-                    label: this.$filters.capitalize(this.$t('status.ongoing')),
-                    selected: this.form.status === 'ongoing',
-                },
-                {
-                    value: 'complete',
-                    label: this.$filters.capitalize(this.$t('status.completed')),
-                    selected: this.form.status === 'complete',
-                },
-                {
-                    value: 'cancel',
-                    label: this.$filters.capitalize(this.$t('status.canceled')),
-                    selected: this.form.status === 'cancel',
-                },
-            ]
-        },
-
-        isEdited() {
-            return this.editedGoal
-                ? this.editedGoal.description != this.form.description ||
-                      this.editedGoal.title != this.form.title
-                : this.form.description != '<p></p>' || this.form.title != ''
-        },
-    },
-
-    methods: {
-        fillForm() {
-            this.form.id = this.editedGoal.id
-            this.form.title = this.editedGoal.title
-            this.form.description = this.editedGoal.description
-            this.form.deadline_at = this.editedGoal.deadline_at
-            this.form.status = this.editedGoal.status
-            this.deadlineVisible = !!this.editedGoal.deadline_at
-        },
-
-        resetForm() {
-            this.form = {
-                title:
-                    this.project && this.project.template
-                        ? this.project.template.goal_placeholder
-                        : '',
-                description:
-                    this.project && this.project.template
-                        ? this.project.template.goal_description || '<p></p>'
-                        : '<p></p>',
-
-                deadline_at: new Date(),
-                status: 'na',
-            }
-            this.deadlineVisible = false
-        },
-
-        async submit() {
-            const isValid = await this.v$.$validate()
-
-            if (isValid) {
-                this.asyncing = true
-                const payload = {
-                    ...this.form,
-                    project_id: this.project.id,
-                    description: this.form.description,
-                    deadline_at: this.form.deadline_at
-                        ? utils.fullYearDateFormat(this.form.deadline_at)
-                        : null,
-                }
-                if (this.form.id) {
-                    // Update goal
-                    try {
-                        const result = await patchGoal({
-                            goal: payload,
-                            project_id: this.project.id,
-                        })
-
-                        analytics.goal.updateGoalProject({
-                            project: {
-                                id: this.project.id,
-                            },
-                            goal: result,
-                        })
-
-                        this.$emit('reload-goals')
-
-                        this.toaster.pushSuccess(this.$t('toasts.goal-update.success'))
-                    } catch (error) {
-                        this.toaster.pushError(`${this.$t('toasts.goal-update.error')} (${error})`)
-                        console.error(error)
-                    } finally {
-                        this.asyncing = false
-                        this.closeModalNoConfirm()
-                    }
-                } else {
-                    // Create goal
-                    try {
-                        const result = await createGoal({
-                            goal: payload,
-                            project_id: this.project.id,
-                        })
-
-                        analytics.goal.addGoalProject({
-                            project: {
-                                id: this.project.id,
-                            },
-                            goal: result,
-                        })
-
-                        this.$emit('reload-goals')
-
-                        this.toaster.pushSuccess(this.$t('toasts.goal-create.success'))
-
-                        if (this.$route.name !== 'projectGoals') {
-                            this.$router.push({
-                                name: 'projectGoals',
-                                params: { slugOrId: this.project.slug || this.project.id },
-                            })
-                        }
-                    } catch (error) {
-                        this.toaster.pushError(`${this.$t('toasts.goal-create.error')} (${error})`)
-                        console.error(error)
-                    } finally {
-                        this.asyncing = false
-                        this.closeModalNoConfirm()
-                    }
-                }
-            }
-        },
-
-        openConfirmModal() {
-            this.showConfirmModal = !this.showConfirmModal
-        },
-
-        closeModal() {
-            if (this.asyncing) return
-            if (this.isEdited) this.openConfirmModal()
-            else {
-                this.closeModalNoConfirm()
-            }
-        },
-
-        closeModalNoConfirm() {
-            if (this.asyncing) return
-            this.v$.$reset()
-            this.$emit('close')
-        },
-
-        closeModalAndDrawer() {
-            this.openConfirmModal()
+            this.toaster.pushSuccess(this.$t('toasts.goal-update.success'))
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('toasts.goal-update.error')} (${error})`)
+            console.error(error)
+          } finally {
+            this.asyncing = false
             this.closeModalNoConfirm()
-        },
+          }
+        } else {
+          // Create goal
+          try {
+            const result = await createGoal({
+              goal: payload,
+              project_id: this.project.id,
+            })
+
+            analytics.goal.addGoalProject({
+              project: {
+                id: this.project.id,
+              },
+              goal: result,
+            })
+
+            this.$emit('reload-goals')
+
+            this.toaster.pushSuccess(this.$t('toasts.goal-create.success'))
+
+            if (this.$route.name !== 'projectGoals') {
+              this.$router.push({
+                name: 'projectGoals',
+                params: { slugOrId: this.project.slug || this.project.id },
+              })
+            }
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('toasts.goal-create.error')} (${error})`)
+            console.error(error)
+          } finally {
+            this.asyncing = false
+            this.closeModalNoConfirm()
+          }
+        }
+      }
     },
 
-    watch: {
-        deadlineVisible: function (val) {
-            if (!val) this.form.deadline_at = null
-        },
-
-        isOpened: {
-            handler: function () {
-                if (this.editedGoal?.id) this.fillForm()
-                else this.resetForm()
-            },
-            immediate: true,
-        },
+    openConfirmModal() {
+      this.showConfirmModal = !this.showConfirmModal
     },
+
+    closeModal() {
+      if (this.asyncing) return
+      if (this.isEdited) this.openConfirmModal()
+      else {
+        this.closeModalNoConfirm()
+      }
+    },
+
+    closeModalNoConfirm() {
+      if (this.asyncing) return
+      this.v$.$reset()
+      this.$emit('close')
+    },
+
+    closeModalAndDrawer() {
+      this.openConfirmModal()
+      this.closeModalNoConfirm()
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .goal-description-section {
-    display: flex;
-    flex-flow: column nowrap;
-    flex-grow: 1;
-    overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .goal-title,
 .goal-description,
 .deadline-switch,
 .goal-deadline {
-    margin-bottom: $space-m;
+  margin-bottom: $space-m;
 }
 
 .goal-description {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .status-ctn {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    > span {
-        margin-right: $space-m;
-    }
+  > span {
+    margin-right: $space-m;
+  }
 }
 
 .goal-label {
-    font-size: $font-size-s;
-    color: $primary-dark;
-    font-weight: bold;
-    margin-bottom: $space-2xs;
+  font-size: $font-size-s;
+  color: $primary-dark;
+  font-weight: bold;
+  margin-bottom: $space-2xs;
 }
 
 // This is an overwrite on a co-existing style that is only here
 :deep(.label-selected) {
-    color: $black;
+  color: $black;
 }
 </style>

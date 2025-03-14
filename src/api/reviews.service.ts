@@ -1,37 +1,23 @@
-import { axios } from './api.config'
-import { APIResponseList } from '@/api/types'
-import { ReviewModel, ReviewModelInput } from '@/models/review.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /*ReviewModel,*/ ReviewModelInput } from '@/models/review.model'
+import useAPI from '@/composables/useAPI'
 
-export async function getReviews(projectId: string): Promise<APIResponseList<ReviewModel>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${projectId}/review/`
-        )
-    ).data
+export async function getReviews(projectId: string) {
+  return await useAPI(`project/${projectId}/review/`, {}) //.data.value
 }
 
-export async function postReview(review: ReviewModelInput): Promise<ReviewModel> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${review.project_id}/review/`,
-            review
-        )
-    ).data
+export async function postReview(review: ReviewModelInput) {
+  return await useAPI(`project/${review.project_id}/review/`, { body: review, method: 'POST' })
+  //.data.value
 }
 
-export async function patchReview(review: ReviewModelInput): Promise<ReviewModel> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${review.project_id}/review/${
-                review.id
-            }/`,
-            review
-        )
-    ).data
+export async function patchReview(review: ReviewModelInput) {
+  return await useAPI(`project/${review.project_id}/review/${review.id}/`, {
+    body: review,
+    method: 'PATCH',
+  }) //.data.value
 }
 
-export async function deleteReview({ project_id, id }): Promise<void> {
-    return await axios.delete(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/review/${id}/`
-    )
+export async function deleteReview({ project_id, id }) {
+  return await useAPI(`project/${project_id}/review/${id}/`, { method: 'DELETE' })
 }

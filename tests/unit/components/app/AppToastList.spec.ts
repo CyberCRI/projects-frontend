@@ -8,26 +8,26 @@ import { nextTick } from 'vue'
 import useToasterStore from '@/stores/useToaster'
 
 describe('AppToastList', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    it('should render AppToastList component', () => {
-        wrapper = lpiShallowMount(AppToastList, defaultParams)
+  it('should render AppToastList component', () => {
+    wrapper = lpiShallowMount(AppToastList, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
+    expect(wrapper.exists()).toBeTruthy()
+  })
+
+  it('should auto close after a delay', async () => {
+    wrapper = lpiShallowMount(AppToastList, defaultParams)
+    const toaster = useToasterStore()
+    toaster.toastList.push({
+      isOpened: true,
+      type: 'success',
+      message: 'toast-message',
     })
-
-    it('should auto close after a delay', async () => {
-        wrapper = lpiShallowMount(AppToastList, defaultParams)
-        const toaster = useToasterStore()
-        toaster.toastList.push({
-            isOpened: true,
-            type: 'success',
-            message: 'toast-message',
-        })
-        await nextTick()
-        const snackbarComponent = wrapper.findComponent(LpiSnackbar)
-        expect(snackbarComponent.exists()).toBeTruthy()
-        waitForExpect(() => expect(toaster.deleteToast).toHaveBeenLastCalledWith(0))
-    })
+    await nextTick()
+    const snackbarComponent = wrapper.findComponent(LpiSnackbar)
+    expect(snackbarComponent.exists()).toBeTruthy()
+    waitForExpect(() => expect(toaster.deleteToast).toHaveBeenLastCalledWith(0))
+  })
 })

@@ -1,34 +1,15 @@
-import { ReportCreateModel, ContactModel } from '@/models/report.model'
-import { AxiosResponse } from 'axios'
-import { axios } from '@/api/api.config'
+import type { ReportCreateModel, ContactModel } from '@/models/report.model'
+import useAPI from '@/composables/useAPI'
 
-export async function reportBug(
-    orgCode: String,
-    formData: ReportCreateModel
-): Promise<AxiosResponse> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/report/bug/`,
-            formData
-        )
-    ).data
+export async function reportBug(orgCode: string, formData: ReportCreateModel) {
+  return await useAPI(`organization/${orgCode}/report/bug/`, { body: formData, method: 'POST' })
+  //.data.value
 }
 
-export async function reportAbuse(
-    orgCode: String,
-    formData: ReportCreateModel
-): Promise<AxiosResponse> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/report/abuse/`,
-            formData
-        )
-    ).data
+export async function reportAbuse(orgCode: string, formData: ReportCreateModel) {
+  return await useAPI(`organization/${orgCode}/report/abuse/`, { body: formData, method: 'POST' }) //.data.value
 }
 
-export async function contactUs(orgCode: String, formData: ContactModel): Promise<AxiosResponse> {
-    return await axios.post(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/contact/us/`,
-        formData
-    )
+export async function contactUs(orgCode: string, formData: ContactModel) {
+  return await useAPI(`organization/${orgCode}/contact/us/`, { body: formData, method: 'POST' })
 }

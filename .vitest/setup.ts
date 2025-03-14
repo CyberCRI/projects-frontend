@@ -11,19 +11,19 @@ import { flushPromises } from '@vue/test-utils'
 // crypto is not in jsdom
 // window.crypto =
 Object.defineProperty(window, 'crypto', {
-    value: require('@trust/webcrypto'),
+  value: require('@trust/webcrypto'),
 })
 
 // setup-teardown-hook.js
 import { afterAll, beforeAll } from 'vitest'
 beforeAll(() => {
-    global.TextEncoder = TextEncoder
-    global.TextDecoder = TextDecoder as any // "as any" fix weird unmatched types issue
+  global.TextEncoder = TextEncoder
+  global.TextDecoder = TextDecoder as any // "as any" fix weird unmatched types issue
 })
 afterAll(() => {
-    // delete global.TextEncoder
-    // delete global.TextDecoder
+  // delete global.TextEncoder
+  // delete global.TextDecoder
 })
 afterEach(async () => {
-    await flushPromises() // Wait for all pending promises to resolve
+  await flushPromises() // Wait for all pending promises to resolve
 })

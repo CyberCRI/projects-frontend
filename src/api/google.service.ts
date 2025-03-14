@@ -1,7 +1,6 @@
-import { axios } from '@/api/api.config'
-import { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '@/api/types'
+import useAPI from '@/composables/useAPI'
 
-export async function getOrgUnits(): Promise<APIResponseList<string>> {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/google/org-units/`))
-        .data
+export async function getOrgUnits() {
+  return await useAPI(`google/org-units/`, {}) //.data.value
 }

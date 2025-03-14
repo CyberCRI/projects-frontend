@@ -6,15 +6,15 @@ import { StatusType } from '@/models/types'
  * @description Goal of a project
  */
 export interface GoalModel extends BaseModel {
-    title: string
-    description: string
-    deadline_at: Date
-    status: StatusType
+  title: string
+  description: string
+  deadline_at: Date
+  status: StatusType
 }
 
 export type GoalInput = Required<GoalModel> & {
-    project_id: string
-    goal_id: string
+  project_id: string
+  goal_id: string
 }
 
 export type GoalOutput = Required<GoalModel>

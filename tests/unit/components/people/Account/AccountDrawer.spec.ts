@@ -6,31 +6,31 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('AccountDrawer', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {
-                isOpened: true,
-                isAddMode: true,
-                selectedUser: UserFactory.generate(),
-            },
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {
+        isOpened: true,
+        isAddMode: true,
+        selectedUser: UserFactory.generate(),
+      },
+      i18n,
+    }
+  })
 
-    it('should render AccountDrawer component', () => {
-        wrapper = lpiShallowMount(AccountDrawer, defaultParams)
+  it('should render AccountDrawer component', () => {
+    wrapper = lpiShallowMount(AccountDrawer, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

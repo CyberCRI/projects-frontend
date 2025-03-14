@@ -86,7 +86,7 @@ $border-width-l: 3px;
 
 // PX => REM
 @function pxToRem($size) {
-    @return calc($size / 16px * 1rem);
+  @return calc($size / 16px * 1rem);
 }
 
 // BREAKPOINT

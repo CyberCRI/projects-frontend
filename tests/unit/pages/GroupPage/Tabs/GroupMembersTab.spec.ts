@@ -1,6 +1,6 @@
 import GroupMembersTab from '@/pages/GroupPage/Tabs/GroupMembersTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/locales/i18n'
+import { loadLocaleMessages } from '@/../i18n.config'
 import { DOMWrapper, flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
@@ -9,67 +9,68 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import { afterEach, beforeEach, describe, expect, it, vi, Mock } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: loadLocaleMessages(),
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: loadLocaleMessages(),
 }
 
 const protoPropsLoading = () => ({
-    membersInitialRequest: {},
+  membersInitialRequest: {},
 
-    isMembersLoading: true,
+  isMembersLoading: true,
 })
 
 const protoPropsLoaded = (members = []) => ({
-    membersInitialRequest: { count: members.length, results: members },
+  membersInitialRequest: { count: members.length, results: members },
 
-    isMembersLoading: false,
+  isMembersLoading: false,
 })
 
 const buildParams = (props) => ({
-    i18n,
-    router: [
-        { path: '/', name: 'home', component: MockComponent },
-        { path: '/page404', name: 'page404', component: MockComponent },
-    ],
-    props,
+  i18n,
+  router: [
+    { path: '/', name: 'home', component: MockComponent },
+    { path: '/page404', name: 'page404', component: MockComponent },
+  ],
+  props,
 })
 
 describe('GroupMembersTab', () => {
-    beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
-        usersStore.$patch({
-            id: 123,
-            userFromApi: {},
-            permissions: {},
-            getUser: vi.fn(),
-        } as any)
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
-    })
+  beforeEach(() => {
+    const usersStore = useUsersStore(pinia)
+    usersStore.$patch({
+      id: 123,
+      userFromApi: {},
+      permissions: {},
+      getUser: vi.fn(),
+    } as any)
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+  })
 
-    it('should render GroupMembersTab component', () => {
-        let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
+  it('should render GroupMembersTab component', () => {
+    let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 
-    it('should display memeber count when loaded', async () => {
-        let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
+  it('should display memeber count when loaded', async () => {
+    let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
 
-        expect(wrapper.find('.members-header .title span').exists()).toBe(false)
+    expect(wrapper.find('.members-header .title span').exists()).toBe(false)
 
-        wrapper.setProps(protoPropsLoaded([{ id: 1 }, { id: 2 }]))
+    wrapper.setProps(protoPropsLoaded([{ id: 1 }, { id: 2 }]))
 
-        await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
 
-        let counter = wrapper.find('.members-header .title span')
+    let counter = wrapper.find('.members-header .title span')
 
-        expect(counter.exists()).toBe(true)
+    expect(counter.exists()).toBe(true)
 
-        expect(counter.html()).toContain('2')
-    })
+    expect(counter.html()).toContain('2')
+  })
 })

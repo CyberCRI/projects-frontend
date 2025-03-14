@@ -1,15 +1,15 @@
 <template>
-    <BaseRecommendationList
-        :recommendations="recommendations"
-        :more-label="$t('recommendations.more-projects')"
-        @goto-more-recommendations="goToMoreRecommendations"
-    >
-        <ProjectRecommendationItem
-            v-for="(recommendation, index) in recommendations"
-            :key="index"
-            :recommendation="recommendation"
-        />
-    </BaseRecommendationList>
+  <BaseRecommendationList
+    :recommendations="recommendations"
+    :more-label="$t('recommendations.more-projects')"
+    @goto-more-recommendations="goToMoreRecommendations"
+  >
+    <ProjectRecommendationItem
+      v-for="(recommendation, index) in recommendations"
+      :key="index"
+      :recommendation="recommendation"
+    />
+  </BaseRecommendationList>
 </template>
 
 <script>
@@ -17,21 +17,21 @@ import BaseRecommendationList from '@/components/search/Recommendations/BaseReco
 import ProjectRecommendationItem from '@/components/search/Recommendations/ProjectRecommendationItem.vue'
 
 export default {
-    name: 'ProjectRecommendationList',
+  name: 'ProjectRecommendationList',
 
-    components: { BaseRecommendationList, ProjectRecommendationItem },
+  components: { BaseRecommendationList, ProjectRecommendationItem },
 
-    props: {
-        recommendations: {
-            type: Array,
-            default: () => [],
-        },
+  props: {
+    recommendations: {
+      type: Array,
+      default: () => [],
     },
+  },
 
-    methods: {
-        goToMoreRecommendations() {
-            this.$router.push({ name: 'ProjectRecommendationPage' })
-        },
+  methods: {
+    goToMoreRecommendations() {
+      this.$router.push({ name: 'ProjectRecommendationPage' })
     },
+  },
 }
 </script>

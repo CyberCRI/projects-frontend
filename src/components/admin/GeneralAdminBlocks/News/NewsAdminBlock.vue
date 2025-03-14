@@ -1,42 +1,42 @@
 <template>
-    <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
-        <template #default>
-            <NewsAdminListItem
-                v-for="news in allNews"
-                :key="news.id"
-                :news="news"
-                @edit-news="editedNews = news"
-                @delete-news="newsToDelete = news"
-            ></NewsAdminListItem>
-        </template>
+  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+    <template #default>
+      <NewsAdminListItem
+        v-for="news in allNews"
+        :key="news.id"
+        :news="news"
+        @edit-news="editedNews = news"
+        @delete-news="newsToDelete = news"
+      />
+    </template>
 
-        <template #footer>
-            <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addNews" />
-            <SummaryAction
-                btn-icon="ArrowRight"
-                :action-label="$t('common.see-all')"
-                :to="{ name: 'NewsListPage' }"
-            />
-        </template>
-    </AdminBlock>
+    <template #footer>
+      <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addNews" />
+      <SummaryAction
+        btn-icon="ArrowRight"
+        :action-label="$t('common.see-all')"
+        :to="{ name: 'NewsListPage' }"
+      />
+    </template>
+  </AdminBlock>
 
-    <EditNewsDrawer
-        :is-opened="!!editedNews"
-        @close="editedNews = null"
-        @news-edited="loadNews"
-        :news="editedNews"
-    />
+  <EditNewsDrawer
+    :is-opened="!!editedNews"
+    :news="editedNews"
+    @close="editedNews = null"
+    @news-edited="loadNews"
+  />
 
-    <ConfirmModal
-        v-if="newsToDelete"
-        :content="$t('news.delete.message')"
-        :title="$t('news.delete.title')"
-        cancel-button-label="common.cancel"
-        confirm-button-label="common.delete"
-        @cancel="newsToDelete = null"
-        @confirm="deleteNews"
-        :asyncing="isDeletingNews"
-    />
+  <ConfirmModal
+    v-if="newsToDelete"
+    :content="$t('news.delete.message')"
+    :title="$t('news.delete.title')"
+    cancel-button-label="common.cancel"
+    confirm-button-label="common.delete"
+    :asyncing="isDeletingNews"
+    @cancel="newsToDelete = null"
+    @confirm="deleteNews"
+  />
 </template>
 <script>
 import AdminBlock from '../AdminBlock.vue'
@@ -50,77 +50,77 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
-    name: 'NewsAdminBlock',
+  name: 'NewsAdminBlock',
 
-    components: {
-        AdminBlock,
-        EditNewsDrawer,
-        NewsAdminListItem,
-        ConfirmModal,
-        SummaryAction,
+  components: {
+    AdminBlock,
+    EditNewsDrawer,
+    NewsAdminListItem,
+    ConfirmModal,
+    SummaryAction,
+  },
+  setup() {
+    const toaster = useToasterStore()
+    const organizationsStore = useOrganizationsStore()
+    return {
+      toaster,
+      organizationsStore,
+    }
+  },
+
+  data() {
+    return {
+      allNews: [],
+      newsCount: 0,
+      isLoading: true,
+      editedNews: null,
+      newsToDelete: null,
+      isDeletingNews: false,
+    }
+  },
+
+  computed: {
+    blockTitle() {
+      let extra = this.isLoading ? '' : ` (${this.newsCount})`
+      return this.$t('admin.portal.news') + extra
     },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
+  },
+
+  async mounted() {
+    await this.loadNews()
+  },
+
+  methods: {
+    async loadNews() {
+      this.isLoading = true
+      const request = await getAllNews(this.organizationsStore.current?.code, {
+        ordering: '-publication_date',
+        limit: 4,
+      })
+      this.allNews = request.results
+      this.newsCount = request.count
+      this.isLoading = false
     },
 
-    data() {
-        return {
-            allNews: [],
-            newsCount: 0,
-            isLoading: true,
-            editedNews: null,
-            newsToDelete: null,
-            isDeletingNews: false,
-        }
+    addNews() {
+      this.editedNews = defaultForm()
     },
 
-    computed: {
-        blockTitle() {
-            let extra = this.isLoading ? '' : ` (${this.newsCount})`
-            return this.$t('admin.portal.news') + extra
-        },
+    async deleteNews() {
+      this.isDeletingNews = true
+      try {
+        await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
+        this.toaster.pushSuccess(this.$t('news.delete.success'))
+
+        this.loadNews()
+      } catch (err) {
+        this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
+        console.error(err)
+      } finally {
+        this.newsToDelete = null
+        this.isDeletingNews = false
+      }
     },
-
-    async mounted() {
-        await this.loadNews()
-    },
-
-    methods: {
-        async loadNews() {
-            this.isLoading = true
-            const request = await getAllNews(this.organizationsStore.current?.code, {
-                ordering: '-publication_date',
-                limit: 4,
-            })
-            this.allNews = request.results
-            this.newsCount = request.count
-            this.isLoading = false
-        },
-
-        addNews() {
-            this.editedNews = defaultForm()
-        },
-
-        async deleteNews() {
-            this.isDeletingNews = true
-            try {
-                await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-                this.toaster.pushSuccess(this.$t('news.delete.success'))
-
-                this.loadNews()
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.newsToDelete = null
-                this.isDeletingNews = false
-            }
-        },
-    },
+  },
 }
 </script>

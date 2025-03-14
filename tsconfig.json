@@ -1,28 +1,15 @@
 {
-    "compilerOptions": {
-        "allowUmdGlobalAccess": true,
-        "target": "esnext",
-        "module": "esnext",
-        "strict": false,
-        "jsx": "preserve",
-        "importHelpers": true,
-        "noImplicitAny": false,
-        "moduleResolution": "node",
-        "experimentalDecorators": true,
-        "skipLibCheck": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": true,
-        "baseUrl": ".",
-        "types": ["node", "vite/client", "vitest/globals"],
-        "paths": {
-            "@/*": ["src/*"]
-        },
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-        "useDefineForClassFields": false,
-        "ignoreDeprecations": "5.0"
-    },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-    "exclude": ["node_modules"]
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    // fix no implict any for now
+    "strict": false,
+    "noImplicitAny": false,
+    // disable "type" imports for now
+    "verbatimModuleSyntax": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "#imports": ["./.nuxt/imports.d.ts"]
+    }
+  }
 }
