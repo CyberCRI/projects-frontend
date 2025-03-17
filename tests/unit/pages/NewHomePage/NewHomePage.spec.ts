@@ -53,13 +53,6 @@ describe('NewHomePage', () => {
     let wrapper = await lpiShallowMountSuspended(NewHomePage, {
       router,
       i18n,
-      global: {
-        stubs: {
-          HomeHeaderAnonymous: {
-            template: '<home-header-anonymous-stub />',
-          },
-        },
-      },
     })
     // org header should be visible
     expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(true)

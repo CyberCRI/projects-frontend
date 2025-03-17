@@ -21,46 +21,45 @@ export default defineVitestConfig({
       './.vitest/mockUseAPI.ts',
       './.vitest/mockMixpanel.ts',
     ],
-  },
-  resolve: {
-    alias,
-  },
-  environment: 'nuxt',
-  environmentOptions: {
-    nuxt: {
-      // rootDir: fileURLToPath(new URL('./playground', import.meta.url)),
-      domEnvironment: 'happy-dom', // 'happy-dom' (default) or 'jsdom'
-      overrides: {
-        // other Nuxt config you want to pass
-        runtimeConfig: {
-          public: {
-            appVersion: '',
-            appApiOrgCode: '',
-            appCaptchaKey: '',
-            appMixpanelApiHost: '',
-            appMixpanelProjectToken: '',
-            appPublicBinariesPrefix: '',
-            appMaxSizeFile: 5_000_000,
-            appProfileExempleResearcherSlugOrId: '',
-            appProfileExempleProfessionalSlugOrId: '',
-            appProfileExempleStudentSlugOrId: '',
-            appKeycloakUrl: 'http://localhost:8080/auth',
-            appKeycloakClientId: '12346',
-            appKeycloakClientSecret: 'abcd',
-            appKeycloakRealm: 'foobar',
-            appApiUrl: '',
-            appApiDefaultVersion: '',
-            appMetaPortalUrl: '',
-            appWssHost: 'http://localhost:8080/',
-            appEnvironment: '',
-            appDoc: '',
-            appI18nFallbackLocale: '',
-            appI18nLocale: 'en',
-            appShowDebug: 0,
-            appDisconnectionGraceDuration: 0,
+    environmentOptions: {
+      nuxt: {
+        // rootDir: fileURLToPath(new URL('./playground', import.meta.url)),
+        domEnvironment: 'happy-dom', // 'happy-dom' (default) or 'jsdom'
+        overrides: {
+          // other Nuxt config you want to pass
+          runtimeConfig: {
+            public: {
+              appVersion: '',
+              appApiOrgCode: '',
+              appCaptchaKey: '',
+              appMixpanelApiHost: '',
+              appMixpanelProjectToken: '',
+              appPublicBinariesPrefix: '',
+              appMaxSizeFile: 5_000_000,
+              appProfileExempleResearcherSlugOrId: '',
+              appProfileExempleProfessionalSlugOrId: '',
+              appProfileExempleStudentSlugOrId: '',
+              appKeycloakUrl: 'http://localhost:8080/auth',
+              appKeycloakClientId: '12346',
+              appKeycloakClientSecret: 'abcd',
+              appKeycloakRealm: 'foobar',
+              appApiUrl: '',
+              appApiDefaultVersion: '',
+              appMetaPortalUrl: '',
+              appWssHost: 'http://localhost:8080/',
+              appEnvironment: '',
+              appDoc: '',
+              appI18nFallbackLocale: '',
+              appI18nLocale: 'en',
+              appShowDebug: 0,
+              appDisconnectionGraceDuration: 0,
+            },
           },
         },
       },
     },
+  },
+  resolve: {
+    alias,
   },
 })
