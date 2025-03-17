@@ -4,6 +4,7 @@ import { config, mount, shallowMount } from '@vue/test-utils'
 import { capitalize, isNotGroup, isGroup } from '@/filters'
 import { clickOutside, disableFocus } from '@/directives'
 import pinia from './test-pinia'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 config.global.mocks = {
   $filters: {
@@ -67,6 +68,14 @@ export function lpiMount(component, options: any = {}) {
 
 export function lpiShallowMount(component, options: any = {}) {
   return shallowMount(component, buildOptions(options).options)
+}
+
+export function lpiMountSuspended(component, options: any = {}) {
+  return mountSuspended(component, buildOptions(options).options)
+}
+
+export function lpiShallowMountSuspended(component, options: any = {}) {
+  return mountSuspended(component, { ...buildOptions(options).options, shallow: true })
 }
 
 export function lpiMountExtra(component, options: any = {}) {

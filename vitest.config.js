@@ -25,7 +25,7 @@ export default defineVitestConfig({
   resolve: {
     alias,
   },
-
+  environment: 'nuxt',
   environmentOptions: {
     nuxt: {
       // rootDir: fileURLToPath(new URL('./playground', import.meta.url)),
@@ -51,11 +51,11 @@ export default defineVitestConfig({
             appApiUrl: '',
             appApiDefaultVersion: '',
             appMetaPortalUrl: '',
-            appWssHost: '',
+            appWssHost: 'http://localhost:8080/',
             appEnvironment: '',
             appDoc: '',
             appI18nFallbackLocale: '',
-            appI18nLocale: '',
+            appI18nLocale: 'en',
             appShowDebug: 0,
             appDisconnectionGraceDuration: 0,
           },

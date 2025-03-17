@@ -6,10 +6,19 @@ import { describe, expect, it } from 'vitest'
 import waitForExpect from 'wait-for-expect'
 import { nextTick } from 'vue'
 import useToasterStore from '@/stores/useToaster'
+import english from '@/locales/en.json'
+
+const i18n = {
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
+}
 
 describe('AppToastList', () => {
   let wrapper
-  let defaultParams
+  let defaultParams = { i18n }
 
   it('should render AppToastList component', () => {
     wrapper = lpiShallowMount(AppToastList, defaultParams)

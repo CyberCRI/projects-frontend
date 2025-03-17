@@ -1,5 +1,5 @@
 import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../i18n.config'
 import { beforeEach, afterEach, vi, describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
@@ -43,14 +43,24 @@ describe('NewHomePage', () => {
     usersStore.$reset()
   })
 
-  it('should render NewHomePage', () => {
-    let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
+  it('should render NewHomePage', async () => {
+    let wrapper = await lpiShallowMountSuspended(NewHomePage, { router, i18n })
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('should contain site header as non connected user', () => {
-    let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
+  it('should contain site header as non connected user', async () => {
+    let wrapper = await lpiShallowMountSuspended(NewHomePage, {
+      router,
+      i18n,
+      global: {
+        stubs: {
+          HomeHeaderAnonymous: {
+            template: '<home-header-anonymous-stub />',
+          },
+        },
+      },
+    })
     // org header should be visible
     expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(true)
     // user header should NOT be visible
@@ -69,7 +79,7 @@ describe('NewHomePage', () => {
 
   it('should contain user header as a connected user', async () => {
     connectedStore(usersStore)
-    let wrapper = lpiShallowMount(NewHomePage, { router, i18n })
+    let wrapper = await lpiShallowMountSuspended(NewHomePage, { router, i18n })
     // TODO mock loadEvent and loadInstructions
     await flushPromises() // wait for data to be "loaded"
     // org header should not be visible

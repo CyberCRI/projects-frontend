@@ -119,7 +119,7 @@ describe('ProfileSkillTab', () => {
     expect(wrapper.findAll('user-skills-full-stub').length).toBe(2)
   })
 
-  it('should display a tip if list are displayed', () => {
+  it('should display a tip if list are displayed', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
     user.skills = [
@@ -129,7 +129,7 @@ describe('ProfileSkillTab', () => {
     usersStore.id = '456'
 
     let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
-
+    await wrapper.vm.$nextTick()
     expect(wrapper.find('[data-test="skill-levels-help-button"]').exists()).toBe(true)
   })
 })
