@@ -38,8 +38,6 @@ const tagToDelete = ref(null)
 const isDeletingTag = ref(false)
 const showConfirmTagDelete = computed(() => !!tagToDelete.value)
 
-const currentRequestConfig = ref(null)
-
 const deleteTag = async () => {
   isDeletingTag.value = true
   try {
@@ -92,27 +90,27 @@ watch(
 
 const tagCount = ref(0)
 const fetchTagStats = async () => {
-  const data = (
-    await getOrgClassificationTags(organizationsStore.current.code, props.classification.id, {
+  const data = await getOrgClassificationTags(
+    organizationsStore.current.code,
+    props.classification.id,
+    {
       search: '',
       order_by: 'title',
       limit: 1,
-    })
-  ).data
+    }
+  )
   tagCount.value = data.count
 }
 
 const getTags = debounce(async function () {
   isLoading.value = true
   try {
-    //await new Promise((resolve) => setTimeout(resolve, 300 * 1000))
     const apiReq = await getOrgClassificationTags(
       organizationsStore.current.code,
       props.classification.id,
       { search: search.value, ordering: 'title', limit: props.pageLimit }
     )
-    request.value = apiReq.data
-    currentRequestConfig.value = apiReq.config // TODO nuxt check this
+    request.value = apiReq
   } catch (e) {
     request.value = {
       results: [],
@@ -134,20 +132,9 @@ const reloadClassification = async () => {
   isLoading.value = true
   try {
     fetchTagStats()
-    // TODO nuxt check this
-    request.value = (await useAPI(currentRequestConfig.value, {})).data
+    await Promise.all([getTags(), fetchTagStats()])
   } catch (e) {
     console.log(e)
-    // request.value = {
-    //     results: [],
-    //     count: 0,
-    //     current_page: 1,
-    //     total_page: 1,
-    //     previous: null,
-    //     next: null,
-    //     first: null,
-    //     last: null,
-    // }
   }
   isLoading.value = false
 }
@@ -166,9 +153,8 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
   isLoading.value = true
-  const apiReq = await useAPI(requestedPage, {}) // TODO nuxt check this
-  request.value = apiReq.data
-  currentRequestConfig.value = apiReq.config // TODO nuxt check this
+  const tagResults = await useAPI(requestedPage, {})
+  request.value = tagResults
   isLoading.value = false
   // const el = document.querySelector('.group-user-selection .search-section')
   // if (el) el.scrollIntoView({ behavior: 'smooth' })

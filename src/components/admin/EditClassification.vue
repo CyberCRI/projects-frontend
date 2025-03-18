@@ -117,6 +117,7 @@ const saveClassification = async () => {
         ? t('admin.classifications.add-classification.title')
         : t('admin.classifications.edit-classification.title')
     "
+    :asyncing="asyncing"
     :is-opened="isOpen"
     @close="emit('close')"
     @confirm="saveClassification"

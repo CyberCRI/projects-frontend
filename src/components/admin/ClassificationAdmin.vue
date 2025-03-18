@@ -238,15 +238,22 @@ export default {
     },
     async onClassificationEdited() {
       this.closeEditClassification()
-      await this.fetchAllClassifications(true)
+      await this.reloadClassification(true)
     },
     async onClassificationCreated() {
       this.closeEditClassification()
-      await this.fetchAllClassifications(true)
+      await this.reloadClassification(true)
     },
     async onClassificationDeleted() {
-      await this.fetchAllClassifications()
+      await this.reloadClassification()
       this.classificationToDelete = null
+    },
+
+    async reloadClassification() {
+      await Promise.all([
+        this.organizationsStore.getCurrentOrganization(this.organizationsStore.current.code),
+        this.fetchAllClassifications(),
+      ])
     },
 
     async deleteClassification() {

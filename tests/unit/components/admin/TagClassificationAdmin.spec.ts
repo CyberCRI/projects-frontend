@@ -23,17 +23,14 @@ vi.mock('lodash.debounce', () => ({ default: vi.fn((fn) => fn) }))
 
 vi.mock('@/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({
-    data: {
-      count: 3,
-      current_page: 1,
-      total_page: 1,
-      previous: null,
-      next: null,
-      first: null,
-      last: null,
-      results: [{ id: 1 }, { id: 2 }, { id: 3 }],
-    },
-    config: {},
+    count: 3,
+    current_page: 1,
+    total_page: 1,
+    previous: null,
+    next: null,
+    first: null,
+    last: null,
+    results: [{ id: 1 }, { id: 2 }, { id: 3 }],
   }),
   getAllOrgClassifications: vi.fn().mockResolvedValue({
     count: 3,
