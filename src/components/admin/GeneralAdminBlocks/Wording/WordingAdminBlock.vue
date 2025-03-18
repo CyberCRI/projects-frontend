@@ -65,7 +65,7 @@ export default {
     title() {
       return (
         this.organization?.dashboard_title ||
-        $t('admin.portal.general.wording.fields.title-placeholder')
+        this.$t('admin.portal.general.wording.fields.title-placeholder')
       )
     },
     description() {
