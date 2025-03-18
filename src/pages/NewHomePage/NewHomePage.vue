@@ -33,7 +33,6 @@ const search = (options) => {
 
 try {
   const runtimeConfig = useRuntimeConfig()
-  console.log('env', runtimeConfig.public.appKeycloakUrl)
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
   useLpiHead(
     useRequestURL().toString(),

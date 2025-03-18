@@ -922,7 +922,7 @@
       "edit-name": "Modifier le nom du groupe",
       "email-label": "Email",
       "email-placeholder": "Ex. surname.name{'@'}myuniversity.fr",
-      "short-description-label": "Titre du groupe",
+      "short-description-label": "Description courte du groupe",
       "short-description-placeholder": "Décrivez votre groupe en une phrase",
       "name-label": "Nom du groupe",
       "name-placeholder": "Ex. Hitbox: interactive boxing bag",
@@ -943,6 +943,12 @@
       "name-errors": {
         "required": "Le champ nom du groupe est obligatoire",
         "max": "Le champ nom du groupe ne peut pas contenir plus de 120 caractères"
+      },
+      "short-description-errors": {
+        "max": "Le champ description courte doit faire moins de 150 caractères"
+      },
+      "publication-status-errors": {
+        "required": "Ce champ est requis"
       },
       "delete": "Supprimer le groupe"
     },

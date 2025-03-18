@@ -946,6 +946,9 @@
       "short-description-errors": {
         "max": "The headline field may not be greater than 150 characters"
       },
+      "publication-status-errors": {
+        "required": "This field is required"
+      },
       "delete": "Delete group"
     },
     "role": {
