@@ -158,15 +158,12 @@ const updateGroupMembers = async (groupId) => {
     const previous = previousMembersIndex[member.id]
     // if its a new user
     if (!previous) {
-      // add it as manager OR just member
-      if (member.is_manager) {
+      if (member.is_leader) {
+        leadersToAdd.push(member.id)
+      } else if (member.is_manager) {
         managersToAdd.push(member.id)
       } else {
         membersToAdd.push(member.id)
-      }
-      // also add it as leader if it is
-      if (member.is_leader) {
-        leadersToAdd.push(member.id)
       }
     } else {
       // old roles are now removed automacally on backend
@@ -250,40 +247,45 @@ const updateGroupProjects = async (groupId) => {
   }
 }
 
-const createProject = async () => {
+const buildPayload = () => {
+  const team = {
+    leaders: [],
+    managers: [],
+    members: [],
+  }
+
+  form.value.members.forEach((member) => {
+    if (member.is_leader) {
+      team.leaders.push(member.id)
+    } else if (member.is_manager) {
+      team.managers.push(member.id)
+    } else {
+      team.members.push(member.id)
+    }
+  })
+
+  // save base group
+  const payload = {
+    name: form.value.name,
+    description: form.value.description,
+    short_description: form.value.short_description,
+    email: form.value.email,
+    type: 'group', // this.form.type, // TODO ??? club | group
+    parent: form.value.parentGroup?.id || null, // undefined ,
+    organization: orgCode.value,
+    publication_status: form.value.publication_status,
+    team,
+    featured_projects: form.value.featuredProjects.map((project) => project.id),
+  }
+
+  return payload
+}
+
+const createGroup = async () => {
   isSaving.value = true
   try {
-    const team = {
-      leaders: [],
-      managers: [],
-      members: [],
-    }
+    const payload = buildPayload()
 
-    form.value.members.forEach((member) => {
-      if (member.is_manager) {
-        team.managers.push(member.id)
-      } else {
-        team.members.push(member.id)
-      }
-      // also add it as leader if it is
-      if (member.is_leader) {
-        team.leaders.push(member.id)
-      }
-    })
-
-    // save base group
-    const payload = {
-      name: form.value.name,
-      description: form.value.description,
-      short_description: form.value.short_description,
-      email: form.value.email,
-      type: 'group', // this.form.type, // TODO ??? club | group
-      parent: form.value.parentGroup?.id,
-      organization: orgCode.value,
-      publication_status: form.value.publication_status,
-      team,
-      featured_projects: form.value.featuredProjects.map((project) => project.id),
-    }
     const newGroupId = (await postGroup(orgCode.value, payload)).id
 
     // save header
@@ -303,40 +305,13 @@ const createProject = async () => {
   }
 }
 
-const updateProject = async () => {
+const updateGroup = async () => {
   isSaving.value = true
   try {
-    const team = {
-      leaders: [],
-      managers: [],
-      members: [],
-    }
+    const payload = buildPayload()
+    payload.id = props.groupId
+    payload.type = form.value.type
 
-    form.value.members.forEach((member) => {
-      if (member.is_manager) {
-        team.managers.push(member.id)
-      } else {
-        team.members.push(member.id)
-      }
-      // also add it as leader if it is
-      if (member.is_leader) {
-        team.leaders.push(member.id)
-      }
-    })
-    // save base group
-    const payload = {
-      id: props.groupId,
-      name: form.value.name,
-      description: form.value.description,
-      short_description: form.value.short_description,
-      email: form.value.email,
-      type: form.value.type, // this.form.type, // TODO ??? club | group
-      parent: form.value.parentGroup?.id || null, // undefined unset the key, null set it to null
-      organization: orgCode.value,
-      publication_status: form.value.publication_status,
-      team,
-      featured_projects: form.value.featuredProjects.map((project) => project.id),
-    }
     await patchGroup(orgCode.value, props.groupId, payload)
 
     // save header
@@ -368,9 +343,9 @@ const submit = async () => {
   if (isFormCorrect.value) {
     isSaving.value = true
     if (isEdit.value) {
-      await updateProject()
+      await updateGroup()
     } else {
-      await createProject()
+      await createGroup()
     }
   }
 }
