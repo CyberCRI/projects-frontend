@@ -12,6 +12,7 @@ vi.mock('mixpanel-browser', async (importOriginal) => {
       people: {
         set: vi.fn(),
         set_once: vi.fn(),
+        increment: vi.fn(),
       },
     },
   }

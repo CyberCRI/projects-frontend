@@ -11,11 +11,11 @@ import flushPromises from 'flush-promises'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-vi.mock('@/router/index', () => ({
-  default: {
-    push: vi.fn(),
-  },
-}))
+// vi.mock('@/router/index', () => ({
+//   default: {
+//     push: vi.fn(),
+//   },
+// }))
 
 vi.mock('@/api/people.service')
 vi.mock('@/api/auth/auth.service')

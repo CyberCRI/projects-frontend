@@ -1,17 +1,9 @@
 import { goToKeycloakLoginPage, logoutFromKeycloak } from '@/api/auth/auth.service'
-
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
 import useKeycloak from '@/api/auth/keycloak'
-
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-vi.mock('@/router/index', () => ({
-  default: {
-    push: vi.fn(),
-  },
-}))
 
 vi.mock('@/api/auth/keycloak', () => {
   const kc = {

@@ -17,7 +17,14 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
 
-  plugins: ['~/filters/index.ts', '~/directives/index.ts', '~/plugins/errorHandler.ts'],
+  plugins: [
+    '~/filters/index.ts',
+    '~/directives/index.ts',
+    '~/plugins/errorHandler.ts',
+    '~/plugins/init-analytics.client.ts',
+    '~/plugins/router-before-each.client.ts',
+    '~/plugins/router-after-each.client.ts',
+  ],
   imports: {
     autoImport: true, //false,
   },

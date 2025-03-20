@@ -1,3 +1,4 @@
+// @vitest-environment happy-dom
 import funct from '@/functs/functions'
 import FunctionImporter from './FunctionImporter.vue'
 import { lpiMountExtra } from '@/../tests/helpers/LpiMount'
@@ -8,11 +9,11 @@ import type { Mock } from 'vitest'
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
-vi.mock('@/router/index', () => ({
-  default: {
-    push: vi.fn(),
-  },
-}))
+// vi.mock('@/router/index', () => ({
+//   default: {
+//     push: vi.fn(),
+//   },
+// }))
 
 // TODO make those test useful....
 

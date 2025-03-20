@@ -4,7 +4,6 @@ import {
   createRandomString,
   getRefreshTokenInterval,
 } from '@/api/auth/keycloakUtils'
-// import router from '@/router/index'
 import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
 import useToasterStore from '@/stores/useToaster'

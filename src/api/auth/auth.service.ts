@@ -1,7 +1,6 @@
 import useAPI from '@/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
 import useKeycloak from '@/api/auth/keycloak'
-// import router from '@/router'
 import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { useRuntimeConfig } from '#imports'

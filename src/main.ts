@@ -2,7 +2,7 @@
 import quickLogin from '@/app/quickLogin'
 
 //import initApp from '@/app/initApp'
-import initAnalytics from '@/app/initAnalytics'
+//import initAnalytics from '@/app/initAnalytics'
 import initUser from '@/app/initUser'
 import initOrganization from './app/initOrganization'
 import initSentry from '@/app/initSentry'
@@ -28,7 +28,7 @@ export default async function main(): Promise<void> {
   // add org code to html class for personalized fonts
   document?.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
 
-  await initAnalytics()
+  // await initAnalytics()
   if (import.meta.client) await initUser()
   await initOrganization()
   if (import.meta.client) await initSentry(nuxtApp.vueApp)
