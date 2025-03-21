@@ -1,23 +1,27 @@
 <template>
-    <BasicCard @click="userAction($event)" :to-link="!isPrivateUser ? toLink : null">
-        <template #actions-right>
-            <slot name="actions">
-                <IconImage class="icon" name="EmailOutline" @click="mailTo" />
-            </slot>
-        </template>
-        <CroppedApiImage
-            :alt="`${user.given_name} ${user.family_name} image`"
-            class="picture picture-user"
-            :picture-data="user.profile_picture"
-            picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
-        />
-        <div class="text text-limit">
-            <div class="card-type">{{ userGroups }}</div>
-            <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
-            <div class="card-description">{{ user.job }}</div>
-        </div>
-    </BasicCard>
+  <BasicCard :to-link="!isPrivateUser ? toLink : null" @click="userAction($event)">
+    <template #actions-right>
+      <slot name="actions">
+        <IconImage class="icon" name="EmailOutline" @click="mailTo" />
+      </slot>
+    </template>
+    <CroppedApiImage
+      :alt="`${user.given_name} ${user.family_name} image`"
+      class="picture picture-user"
+      :picture-data="user.profile_picture"
+      picture-size="medium"
+      default-picture="/placeholders/user_placeholder.svg"
+    />
+    <div class="text text-limit">
+      <div class="card-type">
+        {{ userGroups }}
+      </div>
+      <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
+      <div class="card-description">
+        {{ user.job }}
+      </div>
+    </div>
+  </BasicCard>
 </template>
 <script>
 import BasicCard from '@/components/base/BasicCard.vue'
@@ -25,64 +29,64 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 export default {
-    name: 'UserCard',
+  name: 'UserCard',
 
-    emits: ['click'],
+  components: {
+    BasicCard,
+    IconImage,
+    CroppedApiImage,
+  },
 
-    components: {
-        BasicCard,
-        IconImage,
-        CroppedApiImage,
+  props: {
+    user: {
+      type: Object,
+      required: true,
     },
-
-    props: {
-        user: {
-            type: Object,
-            required: true,
-        },
-        toLink: {
-            type: [String, Object],
-            default: null,
-        },
+    toLink: {
+      type: [String, Object],
+      default: null,
     },
+  },
 
-    data() {
-        return {
-            isDetailOpen: false,
-        }
+  emits: ['click'],
+
+  data() {
+    return {
+      isDetailOpen: false,
+    }
+  },
+
+  computed: {
+    isPrivateUser() {
+      // Private users do not return an iD from API call
+      return !this.user.id
     },
-
-    computed: {
-        isPrivateUser() {
-            // Private users do not return an iD from API call
-            return !this.user.id
-        },
-        userGroups() {
-            // TODO: use first group name plus groups number (ex: "Staff (+4)")
-            // when data will be available in api
-            return ''
-        },
+    userGroups() {
+      // TODO: use first group name plus groups number (ex: "Staff (+4)")
+      // when data will be available in api
+      return ''
     },
+  },
 
-    methods: {
-        mailTo() {
-            document.location.href = 'mailto:' + this.user.email
-        },
-        userAction(event) {
-            if (this.isPrivateUser) return
-
-            this.$emit('click', event)
-        },
+  methods: {
+    mailTo() {
+      document.location.href = 'mailto:' + this.user.email
     },
+    userAction(event) {
+      if (this.isPrivateUser) return
+
+      this.$emit('click', event)
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .picture {
-    border-radius: 100%;
+  border-radius: 100%;
 }
 
 .card-title {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 </style>

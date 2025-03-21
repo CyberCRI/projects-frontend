@@ -5,23 +5,23 @@ import BaseModel from '@/models/base.model'
  * @description Faq of an organization
  */
 export interface FaqModel extends BaseModel {
-    id: number
-    title: string
-    content: string
-    images: FaqImageModel[]
+  id: number
+  title: string
+  content: string
+  images: FaqImageModel[]
 }
 
 export interface FaqImageModel {
-    file: string
-    name: string
-    gallery: string
+  file: string
+  name: string
+  gallery: string
 }
 
 export type FaqOutput = BaseModel &
-    Required<FaqModel> & {
-        images?: Array<FaqImageModel>
-    }
+  Required<FaqModel> & {
+    images?: Array<FaqImageModel>
+  }
 
 export type FaqInput = Required<FaqModel> & {
-    organization_code: string
+  organization_code: string
 }

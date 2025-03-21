@@ -1,47 +1,21 @@
-import { axios } from '@/api/api.config'
-import { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
-import { APIResponseList } from '@/api/types'
+import type { /* InvitationModel,*/ InvitationModelInput } from '@/models/invitation.model'
+// import type { APIRespons1eList } from '@/api/types'
+import useAPI from '@/composables/useAPI'
 
-export async function getInvitation(organization: String, uuid: String): Promise<InvitationModel> {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${organization}/invitation/${uuid}/`
-        )
-    ).data
+export async function getInvitation(organization: string, uuid: string) {
+  return await useAPI(`organization/${organization}/invitation/${uuid}/`, {}) //.data.value
 }
-export async function getInvitations(
-    organization: String
-): Promise<APIResponseList<InvitationModel>> {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${organization}/invitation/`
-        )
-    ).data
+export async function getInvitations(organization: string) {
+  return await useAPI(`organization/${organization}/invitation/`, {}) //.data.value
 }
-export async function postInvitation(
-    organization: String,
-    formData: InvitationModelInput
-): Promise<any> {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${organization}/invitation/`,
-            formData
-        )
-    ).data
+export async function postInvitation(organization: string, formData: InvitationModelInput) {
+  return await useAPI(`organization/${organization}/invitation/`, {
+    body: formData,
+    method: 'POST',
+  }) //.data.value
 }
 
-export async function deleteInvitation(organization: String, id: Number): Promise<any> {
-    return (
-        await axios.delete(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${organization}/invitation/${id}/`
-        )
-    ).data
+export async function deleteInvitation(organization: string, id: number) {
+  return await useAPI(`organization/${organization}/invitation/${id}/`, { method: 'DELETE' })
+  //.data.value
 }

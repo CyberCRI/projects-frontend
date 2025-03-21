@@ -1,47 +1,45 @@
-targetPort: 8080
+targetPort: 3000
 
 commonLabels:
-    app.kubernetes.io/name: projects-frontend
-    app.kubernetes.io/component: frontend
-    app.kubernetes.io/instance: '{{ .Values.instanceName }}'
-    app.kubernetes.io/part-of: projects
-    app.kubernetes.io/managed-by: helm
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+  app.kubernetes.io/name: projects-frontend
+  app.kubernetes.io/component: frontend
+  app.kubernetes.io/instance: "{{ .Values.instanceName }}"
+  app.kubernetes.io/part-of: projects
+  app.kubernetes.io/managed-by: helm
+  app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
 
 image:
-    repository: criprodprod.azurecr.io
-    path: projects-front
-    tag: '{{ .Values.application.revision }}'
+  repository: criprodprod.azurecr.io
+  path: projects-front
+  tag: "{{ .Values.application.revision }}"
 
 resourceName: frontend
 fullName: '{{ join "-" (list .Values.instanceName .Values.resourceName) }}'
 
-injectedEnv:
+config:
   nonSensitive:
-    VITE_APP_API_URL: '{{ printf "https://api.projects.%s" .Values.domain }}'
-    VITE_APP_DOC: '{{ printf "https://docs.projects.%s" .Values.domain }}'
-    VITE_APP_WSS_HOST: '{{ printf "wss://hocus-pocus.%s" .Values.domain }}'
-    VITE_APP_META_PORTAL_URL: '{{ printf "https://projects.%s" .Values.domain }}'
-    VITE_APP_MIXPANEL_API_URL: '{{ printf "https://mixpanel-proxy.%s" .Values.domain }}'
-    VITE_APP_BASE_URL: '{{ .Values.hostname }}'
-    VITE_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
-    VITE_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID: ''
-    VITE_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID: ''
-    VITE_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ''
-    VITE_APP_KEYCLOAK_REALM: lp
-    VITE_APP_HOME: new
-    VITE_APP_SENTRY_ENABLED: "true"
-    VITE_APP_SENTRY_RELEASE: '{{ .Values.application.revision }}'
+    NUXT_PUBLIC_APP_API_URL: '{{ printf "https://api.projects.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_DOC: '{{ printf "https://docs.projects.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_WSS_HOST: '{{ printf "wss://hocus-pocus.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_META_PORTAL_URL: '{{ printf "https://projects.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_MIXPANEL_API_URL: '{{ printf "https://mixpanel-proxy.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_BASE_URL: "{{ .Values.hostname }}"
+    NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID: ""
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID: ""
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ""
+    NUXT_PUBLIC_APP_KEYCLOAK_REALM: lp
+    NUXT_PUBLIC_APP_SENTRY_ENABLED: "true"
+    NUXT_PUBLIC_APP_SENTRY_RELEASE: "{{ .Values.application.revision }}"
+    NUXT_PUBLIC_APP_API_ORG_CODE: "{{ .Values.orgCode }}"
+    NUXT_PUBLIC_APP_I18N_LOCALE: "{{ .Values.defaultLanguage }}"
+    NUXT_PUBLIC_APP_API_DEFAULT_VERSION: /v1
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
     PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
     FRONTEND_URL: '{{ printf "https://%s/" .Values.hostname }}'
     CI: "true"
-
-nginxProxyEnv:
-  PROXY_API_URL: '{{ printf "%s.%s" .Values.backendServiceName .Values.namespace }}'
-  PROXY_NGINX_RESOLVER: kube-dns.kube-system
 
 resources:
   requests:
@@ -54,16 +52,16 @@ backendServiceName: projects-backend
 
 networkPolicy:
   additionalEgresses:
-  - to:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: '{{ .Values.namespace }}'
-      - podSelector:
-          matchLabels:
-            app.kubernetes.io/name: '{{ .Values.backendServiceName }}'
-    ports:
-      - port: 8000
-        protocol: TCP
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "{{ .Values.namespace }}"
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: "{{ .Values.backendServiceName }}"
+      ports:
+        - port: 8000
+          protocol: TCP
 
 maintenance:
   enabled: false
@@ -84,14 +82,14 @@ e2e:
   image:
     repository: criprodprod.azurecr.io
     path: projects-frontend-e2e
-    tag: '{{ .Values.application.revision }}'
+    tag: "{{ .Values.application.revision }}"
   commonLabels:
     app.kubernetes.io/name: projects-frontend
     app.kubernetes.io/component: e2e-tests
-    app.kubernetes.io/instance: '{{ .Values.instanceName }}'
+    app.kubernetes.io/instance: "{{ .Values.instanceName }}"
     app.kubernetes.io/part-of: projects
     app.kubernetes.io/managed-by: helm
-    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
   blobName: playwright
   storageAccountName: criparisdevlabproje2e
   reportHost: projects-e2e.k8s.lp-i.dev

@@ -10,134 +10,124 @@ $uniqId: unique_id();
 
 /* ubuntu-300 - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src:
-        local('Ubuntu-Thin'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src:
+    local('Ubuntu-Thin'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}') format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}') format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.ttf?v=#{$uniqId}') format('truetype');
 }
 
 /* ubuntu-300italic - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: italic;
-    font-weight: 300;
-    font-display: swap;
-    src:
-        local('Ubuntu-Thin-Italic'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src:
+    local('Ubuntu-Thin-Italic'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-regular - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local('Ubuntu'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Ubuntu'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-italic - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: italic;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local('Ubuntu-Italic'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local('Ubuntu-Italic'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}') format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-500 - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src:
-        local('Ubuntu-Medium'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Ubuntu-Medium'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}') format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}') format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.ttf?v=#{$uniqId}') format('truetype');
 }
 
 /* ubuntu-500italic - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: italic;
-    font-weight: 500;
-    font-display: swap;
-    src:
-        local('Ubuntu-Medium-Italic'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Ubuntu-Medium-Italic'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-700 - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src:
-        local('Ubuntu-Bold'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Ubuntu-Bold'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}') format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}') format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.ttf?v=#{$uniqId}') format('truetype');
 }
 
 /* ubuntu-700italic - latin */
 @font-face {
-    font-family: Ubuntu;
-    font-style: italic;
-    font-weight: 700;
-    font-display: swap;
-    src:
-        local('Ubuntu-Bold-Italic'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
-            format('woff2'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
-            format('woff'),
-        url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
-            format('truetype');
+  font-family: Ubuntu;
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Ubuntu-Bold-Italic'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 html {
-    --font-base-scale: 1;
+  --font-base-scale: 1;
 }
 
 html,
@@ -148,132 +138,132 @@ h4,
 h5,
 h6,
 * {
-    font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
+  font-family: Ubuntu, 'Noto Sans SC', helvetica, arial, sans-serif;
 }
 
 // begin unistra
 
 @font-face {
-    font-family: 'Unistra A';
-    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572');
-    src:
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572&#iefix')
-            format('embedded-opentype'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jea6IDcLJc%2Fua6f%2BWy%2FOmXn6Ajs%3D&Expires=1870941572')
-            format('woff2'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=GssI%2Ba%2FJ%2FOxebj1VUX1jBXuGJgw%3D&Expires=1870941572')
-            format('woff'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=bhAcWT21YGtlrFHCZzul%2BWvPLlw%3D&Expires=1870941571')
-            format('svg');
-    font-weight: 400;
-    font-style: italic;
+  font-family: 'Unistra A';
+  src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572');
+  src:
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=eyK5QLe8Yb94jLPymqhGgFsCsDw%3D&Expires=1870941572&#iefix')
+      format('embedded-opentype'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jea6IDcLJc%2Fua6f%2BWy%2FOmXn6Ajs%3D&Expires=1870941572')
+      format('woff2'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=GssI%2Ba%2FJ%2FOxebj1VUX1jBXuGJgw%3D&Expires=1870941572')
+      format('woff'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Italic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=bhAcWT21YGtlrFHCZzul%2BWvPLlw%3D&Expires=1870941571')
+      format('svg');
+  font-weight: 400;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Unistra A';
-    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572');
-    src:
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572&#iefix')
-            format('embedded-opentype'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jc877H2QWC8nCT9%2BvglLY8jj54Q%3D&Expires=1870941570')
-            format('woff2'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=76jAZD8ftu7ItXYNf2Gnvb91uXI%3D&Expires=1870941571')
-            format('woff'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=DthzEcdekNlkte5hDjh9lwx5u1A%3D&Expires=1870941571')
-            format('svg');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Unistra A';
+  src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572');
+  src:
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=7jfdHGloNOE3QZ0yiqGES4eTCRk%3D&Expires=1870941572&#iefix')
+      format('embedded-opentype'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Jc877H2QWC8nCT9%2BvglLY8jj54Q%3D&Expires=1870941570')
+      format('woff2'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=76jAZD8ftu7ItXYNf2Gnvb91uXI%3D&Expires=1870941571')
+      format('woff'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Regular.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=DthzEcdekNlkte5hDjh9lwx5u1A%3D&Expires=1870941571')
+      format('svg');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unistra A';
-    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
-    src:
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix')
-            format('embedded-opentype'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571')
-            format('woff2'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572')
-            format('woff'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
-            format('svg');
-    font-weight: 500;
-    font-style: normal;
+  font-family: 'Unistra A';
+  src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
+  src:
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix')
+      format('embedded-opentype'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571')
+      format('woff2'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572')
+      format('woff'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
+      format('svg');
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unistra A';
-    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
-    src:
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix')
-            format('embedded-opentype'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571')
-            format('woff2'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572')
-            format('woff'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
-            format('svg');
-    font-weight: 700;
-    font-style: normal;
+  font-family: 'Unistra A';
+  src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570');
+  src:
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=1gOXHxJTf4QJ3AwNQpN1mjyOM0U%3D&Expires=1870941570&#iefix')
+      format('embedded-opentype'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=uONFy1Gtrvo3vrbCQP37Bc2atEY%3D&Expires=1870941571')
+      format('woff2'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=oyyzgxDngRBJjMPsLJg62RBP%2Fvk%3D&Expires=1870941572')
+      format('woff'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-Bold.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=Em9iPpSQSww%2BfpxeOJWKpolAYpk%3D&Expires=1870941573')
+      format('svg');
+  font-weight: 700;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Unistra A';
-    src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572');
-    src:
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572&#iefix')
-            format('embedded-opentype'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=3C0NBMngVe5yjiZNTLk%2Bbph%2Bu7A%3D&Expires=1870941571')
-            format('woff2'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=s7FFr4ay6BjLInzTzkdOwplP0y8%3D&Expires=1870941571')
-            format('woff'),
-        url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=86wby3SaqHho80Mq3ctGyCLKxFU%3D&Expires=1870941571')
-            format('svg');
-    font-weight: 700;
-    font-style: italic;
+  font-family: 'Unistra A';
+  src: url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572');
+  src:
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.eot?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=0hdoRUmK2GWCFwgkBIC%2FzcM0mTU%3D&Expires=1870941572&#iefix')
+      format('embedded-opentype'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff2?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=3C0NBMngVe5yjiZNTLk%2Bbph%2Bu7A%3D&Expires=1870941571')
+      format('woff2'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.woff?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=s7FFr4ay6BjLInzTzkdOwplP0y8%3D&Expires=1870941571')
+      format('woff'),
+    url('https://s3.unistra.fr/master/common/assets/fonts/unistra-font/1.0.0/fonts/UnistraA-BoldItalic.svg?AWSAccessKeyId=M2M78RKXPAP75Y692QZX&Signature=86wby3SaqHho80Mq3ctGyCLKxFU%3D&Expires=1870941571')
+      format('svg');
+  font-weight: 700;
+  font-style: italic;
 }
 
 .org-OPUS {
-    --font-base-scale: 1.4;
+  --font-base-scale: 1.4;
 
-    body {
-        line-height: 1.1;
-        font-size: $font-size-m;
-    }
+  body {
+    line-height: 1.1;
+    font-size: $font-size-m;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    * {
-        font-family: 'Unistra A', 'Noto Sans SC', helvetica, arial, sans-serif;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  * {
+    font-family: 'Unistra A', 'Noto Sans SC', helvetica, arial, sans-serif;
+  }
 
-    .search-input-ctn .search-input {
-        padding: 11px $space-2xl 10px; // 11 + 1 px border
-    }
+  .search-input-ctn .search-input {
+    padding: 11px $space-2xl 10px; // 11 + 1 px border
+  }
 
-    .notification-icon svg {
-        height: $font-size-l;
-    }
+  .notification-icon svg {
+    height: $font-size-l;
+  }
 
-    .card-description,
-    .card-type {
-        line-height: 1.1;
-    }
+  .card-description,
+  .card-type {
+    line-height: 1.1;
+  }
 
-    /*
+  /*
     p {
         font-size: $font-size-m;
     }
 */
-    .subgroups-title .name {
-        font-size: $font-size-s;
-    }
+  .subgroups-title .name {
+    font-size: $font-size-s;
+  }
 
-    /*
+  /*
     .announcement-title {
         line-height:1.21;
     }
@@ -284,87 +274,84 @@ h6,
 
 // begin with all font
 @font-face {
-    font-family: UbuntuAll;
-    font-style: italic;
-    font-weight: 300;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftVyPN4E.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZftVyPN4E.woff2')
+    format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: italic;
-    font-weight: 400;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKej70l0k.woff2') format('woff2');
+  font-family: UbuntuAll;
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCu6KVjbNBYlgoKej70l0k.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: italic;
-    font-weight: 500;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtFyPN4E.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejYHtFyPN4E.woff2')
+    format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: italic;
-    font-weight: 700;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPslyPN4E.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCp6KVjbNBYlgoKejZPslyPN4E.woff2')
+    format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyN.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyN.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfw72.woff2') format('woff2');
+  font-family: UbuntuAll;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfw72.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3jsGyN.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCjC3jsGyN.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: UbuntuAll;
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyN.woff2')
-        format('woff2');
+  font-family: UbuntuAll;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyN.woff2') format('woff2');
 }
 
 .org-PATTERN {
-    --font-base-scale: 1;
+  --font-base-scale: 1;
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    * {
-        font-family: UbuntuAll, 'Noto Sans SC', helvetica, arial, sans-serif;
-    }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  * {
+    font-family: UbuntuAll, 'Noto Sans SC', helvetica, arial, sans-serif;
+  }
 }
 
 // end with all font

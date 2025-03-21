@@ -1,188 +1,112 @@
-import { axios, configFormData } from '@/api/api.config'
-import { APIResponseList } from '@/api/types'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import { ImageOrganizationOutput, ImageOrganizationInput } from '@/models/image.model'
-import { GroupModel, GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /* OrganizationOutput,*/ OrganizationPatchInput } from '@/models/organization.model'
+import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
+import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import useAPI from '@/composables/useAPI'
 
 export async function patchOrganization(
-    code: string,
-    organization: OrganizationPatchInput | FormData
-): Promise<OrganizationOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/`,
-            organization,
-            organization instanceof FormData ? configFormData : null
-        )
-    ).data
+  code: string,
+  organization: OrganizationPatchInput | FormData
+) {
+  return await useAPI(`organization/${code}/`, {
+    body: organization,
+    method: 'PATCH',
+  }) //.data.value
 }
 
-export async function getOrganizationByCode(code: string): Promise<OrganizationOutput> {
-    return (
-        await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/`)
-    ).data
+export async function getOrganizationByCode(code: string) {
+  return await useAPI(`organization/${code}/`, {}) //.data.value
 }
 
-export async function getOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
-    return (await axios.get(`${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/`)).data
+export async function getOrganizations() {
+  return await useAPI(`organization/`, {}) //.data.value
 }
 
 export async function postOrganisationBanner({
-    code,
-    body,
+  code,
+  body,
 }: {
-    code: string
-    body: ImageOrganizationInput
-}): Promise<ImageOrganizationOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/banner/`,
-            body
-        )
-    ).data
+  code: string
+  body: ImageOrganizationInput
+}) {
+  return await useAPI(`organization/${code}/banner/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function patchOrganisationBanner(
-    code: string,
-    banner_id: number,
-    body: ImageOrganizationInput
-): Promise<ImageOrganizationOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/banner/${banner_id}/`,
-            body
-        )
-    ).data
+  code: string,
+  banner_id: number,
+  body: ImageOrganizationInput
+) {
+  return await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' })
+  //.data.value
 }
 
 export async function postOrganisationLogo({
-    code,
-    body,
+  code,
+  body,
 }: {
-    code: string
-    body: ImageOrganizationInput
-}): Promise<ImageOrganizationOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${code}/logo/`,
-            body
-        )
-    ).data
+  code: string
+  body: ImageOrganizationInput
+}) {
+  return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' }) //.data.value
 }
 
-export async function addOrgMember({
-    org_id,
-    body,
-}: {
-    org_id: number
-    body: GroupModelInput[]
-}): Promise<GroupModel> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${org_id}/member/add/`,
-            body
-        )
-    ).data
+export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {
+  return await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function removeOrgMember({
-    org_id,
-    body,
+  org_id,
+  body,
 }: {
-    org_id: number
-    body: RemoveGroupModelInput[]
-}): Promise<GroupModel> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${org_id}/member/remove/`,
-            body
-        )
-    ).data
+  org_id: number
+  body: RemoveGroupModelInput[]
+}) {
+  return await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' }) // .data.value
 }
 
 export async function postAccessRequest(org_code, body) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/access-request/`,
-            body
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function getAccessRequests(org_code, params) {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/access-request/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/access-request/`, {
+    ..._adaptParamsToGetQuery(params),
+  }) //.data.value
 }
 
 export async function declineAccessRequest(org_code, params) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/access-request/decline/`,
-            params
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/access-request/decline/`, {
+    body: params,
+    method: 'POST',
+  }) //.data.value
 }
 
 export async function acceptAccessRequest(org_code, params) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/access-request/accept/`,
-            params
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/access-request/accept/`, {
+    body: params,
+    method: 'POST',
+  }) //.data.value
 }
 
 export async function getFeaturedProjects(org_code, params) {
-    return (
-        await axios.get(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/featured-project/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/featured-project/`, {
+    ..._adaptParamsToGetQuery(params),
+  }) //.data.value
 }
 
 export async function addFeaturedProject(org_code, body) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/featured-project/add/`,
-            body
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function removeFeaturedProject(org_code, body) {
-    return (
-        await axios.post(
-            `${
-                import.meta.env.VITE_APP_API_DEFAULT_VERSION
-            }/organization/${org_code}/featured-project/remove/`,
-            body
-        )
-    ).data
+  return await useAPI(`organization/${org_code}/featured-project/remove/`, {
+    body,
+    method: 'POST',
+  }) //.data.value
 }
 
-export async function postOrganizationImage({ orgCode, body }): Promise<any> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/image/`,
-            body
-        )
-    ).data
+export async function postOrganizationImage({ orgCode, body }) {
+  return await useAPI(`organization/${orgCode}/image/`, { body, method: 'POST' }) //.data.value
 }

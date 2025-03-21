@@ -10,39 +10,39 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('ProfileHeader', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
-        defaultParams = {
-            props: {
-                user: UserFactory.generate(),
-            },
-            i18n,
-            router: [
-                {
-                    path: '/',
-                    component: MockComponent,
-                    name: 'Home',
-                },
-                { path: '/group', name: 'HelpVideoTab', component: MockComponent },
-            ],
-        }
-    })
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+    defaultParams = {
+      props: {
+        user: UserFactory.generate(),
+      },
+      i18n,
+      router: [
+        {
+          path: '/',
+          component: MockComponent,
+          name: 'Home',
+        },
+        { path: '/group', name: 'HelpVideoTab', component: MockComponent },
+      ],
+    }
+  })
 
-    it('should render ProfileHeader component', () => {
-        wrapper = lpiShallowMount(ProfileHeader, defaultParams)
+  it('should render ProfileHeader component', () => {
+    wrapper = lpiShallowMount(ProfileHeader, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

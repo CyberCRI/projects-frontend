@@ -1,17 +1,17 @@
 .custom-scrollbar {
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    &::-webkit-scrollbar-track {
-        border: solid 3px transparent;
-        border-radius: 9px;
-    }
+  &::-webkit-scrollbar-track {
+    border: solid 3px transparent;
+    border-radius: 9px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: $primary-dark;
-        border-radius: 9px;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-dark;
+    border-radius: 9px;
+  }
 }
 
 // shadow effect on hover
@@ -23,32 +23,32 @@ $shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
 $shadow-hover-scale: scale(1.01);
 
 .shadow-box {
-    transition:
-        $shadow-hover-duration transform $shadow-hover-easing,
-        $shadow-hover-duration box-shadow,
-        $shadow-hover-duration -webkit-transform $shadow-hover-easing;
+  transition:
+    $shadow-hover-duration transform $shadow-hover-easing,
+    $shadow-hover-duration box-shadow,
+    $shadow-hover-duration -webkit-transform $shadow-hover-easing;
 
-    &:hover {
-        transform: $shadow-hover-scale;
-        box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
-    }
+  &:hover {
+    transform: $shadow-hover-scale;
+    box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+  }
 }
 
 .shadow-drop {
-    transition:
-        $shadow-hover-duration transform $shadow-hover-easing,
-        filter $shadow-hover-duration $shadow-hover-easing,
-        text-shadow $shadow-hover-duration $shadow-hover-easing;
+  transition:
+    $shadow-hover-duration transform $shadow-hover-easing,
+    filter $shadow-hover-duration $shadow-hover-easing,
+    text-shadow $shadow-hover-duration $shadow-hover-easing;
 
-    &:hover {
-        transform: $shadow-hover-scale;
-        filter: drop-shadow($shadow-hover-def-1) drop-shadow($shadow-hover-def-2);
-        text-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
-    }
+  &:hover {
+    transform: $shadow-hover-scale;
+    filter: drop-shadow($shadow-hover-def-1) drop-shadow($shadow-hover-def-2);
+    text-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+  }
 }
 
 .shadowed-box {
-    box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+  box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
 }
 
 h1,
@@ -81,67 +81,67 @@ h6,
 .bannertitle,
 .dessummary,
 .bannersubtitle {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 input {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .form {
-    padding-bottom: $space-l;
+  padding-bottom: $space-l;
 
-    .title {
-        font-size: $font-size-m;
-        color: $primary-dark;
-        font-weight: bold;
-        margin: 0 0 $space-l;
-    }
+  .title {
+    font-size: $font-size-m;
+    color: $primary-dark;
+    font-weight: bold;
+    margin: 0 0 $space-l;
+  }
 
-    .description {
-        display: block;
-        margin-bottom: $space-m;
-        font-size: $font-size-xs;
-    }
+  .description {
+    display: block;
+    margin-bottom: $space-m;
+    font-size: $font-size-xs;
+  }
 
-    .image-input-ctn {
-        margin: $space-m auto 0;
-    }
+  .image-input-ctn {
+    margin: $space-m auto 0;
+  }
 
-    > *:not(:first-of-type) {
-        margin-top: $space-l;
-    }
+  > *:not(:first-of-type) {
+    margin-top: $space-l;
+  }
 
-    .error-description {
-        color: $red;
-        margin-top: $space-s;
-        font-size: $font-size-s;
-    }
+  .error-description {
+    color: $red;
+    margin-top: $space-s;
+    font-size: $font-size-s;
+  }
 }
 
 // global
 body[class*='has-open-drawer-'],
 body[class*='has-open-modal-'] {
-    // prevent scrolling behind drawers
-    overflow: hidden;
+  // prevent scrolling behind drawers
+  overflow: hidden;
 }
 
 .narrow-body {
-    width: 100%;
-    max-width: pxToRem(1200px);
-    margin: 0 auto;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: pxToRem(1200px);
+  margin: 0 auto;
+  box-sizing: border-box;
 
-    @media screen and (min-width: $max-desktop) {
-        max-width: pxToRem(1280px);
-    }
+  @media screen and (min-width: $max-desktop) {
+    max-width: pxToRem(1280px);
+  }
 }
 
 .narrow-content {
-    width: 100%;
-    max-width: pxToRem(800px);
-    margin: 0 auto;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: pxToRem(800px);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .page-section-full,
@@ -149,47 +149,47 @@ body[class*='has-open-modal-'] {
 .page-section-wide,
 .page-section-medium,
 .page-section-narrow {
-    padding-left: $space-xl;
-    padding-right: $space-xl;
-    box-sizing: border-box;
-    max-width: 100%;
-    margin: 0 auto;
+  padding-left: $space-xl;
+  padding-right: $space-xl;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .page-section-full {
-    width: 100%;
+  width: 100%;
 }
 
 .page-section-extra-wide {
-    width: pxToRem(1400px);
+  width: pxToRem(1400px);
 }
 
 .page-section-wide {
-    width: pxToRem(1200px);
+  width: pxToRem(1200px);
 }
 
 .page-section-medium {
-    width: pxToRem(1024px);
+  width: pxToRem(1024px);
 }
 
 .page-section-narrow {
-    width: pxToRem(800px);
+  width: pxToRem(800px);
 }
 
 .page-title {
-    text-align: center;
-    font-weight: 700;
-    font-size: $font-size-5xl;
-    line-height: $line-height-tight;
-    color: $black;
-    width: 100%;
-    margin-bottom: $space-m;
+  text-align: center;
+  font-weight: 700;
+  font-size: $font-size-5xl;
+  line-height: $line-height-tight;
+  color: $black;
+  width: 100%;
+  margin-bottom: $space-m;
 }
 
 .page-top {
-    margin-top: calc($navbar-height + $space-xl);
+  margin-top: calc($navbar-height + $space-xl);
 
-    @media screen and (min-width: $min-tablet) {
-        margin-top: calc($navbar-height + $space-2xl);
-    }
+  @media screen and (min-width: $min-tablet) {
+    margin-top: calc($navbar-height + $space-2xl);
+  }
 }

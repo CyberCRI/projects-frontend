@@ -1,15 +1,15 @@
 <template>
-    <TheVideoPlayer />
+  <TheVideoPlayer />
 </template>
 
 <script>
 import TheVideoPlayer from '@/components/base/media/TheVideoPlayer.vue'
 
 export default {
-    name: 'VideoTab',
+  name: 'VideoTab',
 
-    components: {
-        TheVideoPlayer,
-    },
+  components: {
+    TheVideoPlayer,
+  },
 }
 </script>

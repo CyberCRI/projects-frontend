@@ -1,36 +1,36 @@
 <template>
-    <BaseDrawer
-        :confirm-action-name="$t('common.save')"
-        :confirm-action-disabled="asyncing"
-        :is-opened="isOpened"
-        :title="$t('admin.portal.general.wording.title')"
-        class="wording-drawer medium"
-        @close="close"
-        @confirm="saveWording"
-    >
-        <div class="field-section title-section">
-            <TextInput
-                v-model="title"
-                :label="$t('admin.portal.general.wording.fields.title')"
-                :placeholder="$t('admin.portal.general.wording.fields.title-placeholder')"
-                class="input-field"
-            />
-        </div>
+  <BaseDrawer
+    :confirm-action-name="$t('common.save')"
+    :confirm-action-disabled="asyncing"
+    :is-opened="isOpened"
+    :title="$t('admin.portal.general.wording.title')"
+    class="wording-drawer medium"
+    @close="close"
+    @confirm="saveWording"
+  >
+    <div class="field-section title-section">
+      <TextInput
+        v-model="title"
+        :label="$t('admin.portal.general.wording.fields.title')"
+        :placeholder="$t('admin.portal.general.wording.fields.title-placeholder')"
+        class="input-field"
+      />
+    </div>
 
-        <div class="field-section editor-section">
-            <h4 class="field-label">
-                {{ $t('admin.portal.general.wording.fields.description') }}
-            </h4>
-            <TipTapEditor
-                ref="tiptapEditor"
-                v-model="description"
-                :save-image-callback="saveOrganizationImage"
-                class="input-field content-editor"
-                mode="full"
-                @image="handleImage"
-            />
-        </div>
-    </BaseDrawer>
+    <div class="field-section editor-section">
+      <h4 class="field-label">
+        {{ $t('admin.portal.general.wording.fields.description') }}
+      </h4>
+      <TipTapEditor
+        ref="tiptapEditor"
+        v-model="description"
+        :save-image-callback="saveOrganizationImage"
+        class="input-field content-editor"
+        mode="full"
+        @image="handleImage"
+      />
+    </div>
+  </BaseDrawer>
 </template>
 
 <script>
@@ -41,116 +41,116 @@ import { patchOrganization, postOrganizationImage } from '@/api/organizations.se
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
-    name: 'OrgWordingDrawer',
+  name: 'OrgWordingDrawer',
 
-    emits: ['close', 'organization-edited'],
+  components: {
+    TipTapEditor,
+    BaseDrawer,
+    TextInput,
+  },
 
-    components: {
-        TipTapEditor,
-        BaseDrawer,
-        TextInput,
+  props: {
+    isOpened: {
+      type: Boolean,
+      default: false,
     },
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
+  },
+
+  emits: ['close', 'organization-edited'],
+  setup() {
+    const toaster = useToasterStore()
+    const organizationsStore = useOrganizationsStore()
+    return {
+      toaster,
+      organizationsStore,
+    }
+  },
+
+  data() {
+    const org = this.organizationsStore.current
+    const title = org?.dashboard_title || ''
+
+    return {
+      title: title,
+      description: org?.description || '<p></p>',
+      addedImages: [],
+      asyncing: false,
+    }
+  },
+
+  computed: {
+    organization() {
+      return this.organizationsStore.current
+    },
+  },
+
+  watch: {
+    isOpened() {
+      const org = this.organization
+      this.description = org?.description || '<p></p>'
+    },
+  },
+
+  methods: {
+    saveOrganizationImage(file) {
+      const formData = new FormData()
+      formData.append('file', file, file.name)
+      return postOrganizationImage({
+        orgCode: this.organization.code,
+        body: formData,
+      })
+    },
+
+    async saveWording() {
+      this.asyncing = true
+
+      try {
+        const payload = {
+          dashboard_title: this.title,
+          description: this.description,
         }
+
+        await patchOrganization(this.organizationsStore.current?.code, payload)
+        this.$emit('organization-edited')
+        this.toaster.pushSuccess(this.$t('admin.portal.general.wording.success'))
+      } catch (err) {
+        this.toaster.pushError(`${this.$t('admin.portal.general.wording.error')} (${err})`)
+        console.error(err)
+      } finally {
+        this.asyncing = false
+        this.$emit('close')
+      }
     },
 
-    props: {
-        isOpened: {
-            type: Boolean,
-            default: false,
-        },
+    close() {
+      this.$emit('close')
     },
 
-    data() {
-        const org = this.organizationsStore.current
-        const title = org?.dashboard_title || ''
-
-        return {
-            title: title,
-            description: org?.description || '<p></p>',
-            addedImages: [],
-            asyncing: false,
-        }
+    handleImage(img) {
+      // TODO see BlogDrawer
+      this.addedImages.push(img.id)
     },
-
-    computed: {
-        organization() {
-            return this.organizationsStore.current
-        },
-    },
-
-    watch: {
-        isOpened() {
-            const org = this.organization
-            this.description = org?.description || '<p></p>'
-        },
-    },
-
-    methods: {
-        saveOrganizationImage(file) {
-            const formData = new FormData()
-            formData.append('file', file, file.name)
-            return postOrganizationImage({
-                orgCode: this.organization.code,
-                body: formData,
-            })
-        },
-
-        async saveWording() {
-            this.asyncing = true
-
-            try {
-                const payload = {
-                    dashboard_title: this.title,
-                    description: this.description,
-                }
-
-                await patchOrganization(this.organizationsStore.current?.code, payload)
-                this.$emit('organization-edited')
-                this.toaster.pushSuccess(this.$t('admin.portal.general.wording.success'))
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('admin.portal.general.wording.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.asyncing = false
-                this.$emit('close')
-            }
-        },
-
-        close() {
-            this.$emit('close')
-        },
-
-        handleImage(img) {
-            // TODO see BlogDrawer
-            this.addedImages.push(img.id)
-        },
-    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 .field-section {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .title-section {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .editor-section {
-    flex-grow: 1;
-    overflow: hidden;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .field-label {
-    font-size: $font-size-s;
-    margin-top: $space-l;
-    margin-bottom: $space-m;
+  font-size: $font-size-s;
+  margin-top: $space-l;
+  margin-bottom: $space-m;
 }
 </style>

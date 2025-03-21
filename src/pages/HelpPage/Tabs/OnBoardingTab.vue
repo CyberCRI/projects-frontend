@@ -1,51 +1,51 @@
 <template>
-    <div class="on-boarding-page">
-        <TipTapOutput :content="onBoardingData.content" class="onboarding-content" />
-    </div>
+  <div class="on-boarding-page">
+    <TipTapOutput :content="onBoardingData.content" class="onboarding-content" />
+  </div>
 </template>
 
 <script>
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 export default {
-    name: 'OnBoardingTab',
+  name: 'OnBoardingTab',
 
-    components: { TipTapOutput },
+  components: { TipTapOutput },
 
-    inject: {
-        hasFaq: { from: 'helpPageHasFaq', default: false },
-        faq: { from: 'helpPageFaq', default: {} },
-    },
+  inject: {
+    hasFaq: { from: 'helpPageHasFaq', default: false },
+    faq: { from: 'helpPageFaq', default: {} },
+  },
 
-    data() {
-        return {
-            onBoardingData: {},
-        }
-    },
+  data() {
+    return {
+      onBoardingData: {},
+    }
+  },
 
-    mounted() {
-        // if (!this.hasFaq) {
-        this.$router.replace({ name: 'HelpHelpTab' })
-        // }
-        // this.getCustomData()
-    },
+  mounted() {
+    // if (!this.hasFaq) {
+    this.$router.replace({ name: 'HelpHelpTab' })
+    // }
+    // this.getCustomData()
+  },
 
-    // methods: {
-    //     async getCustomData() {
-    //         if (
-    //             this.hasFaq &&
-    //             this.faq.title &&
-    //             this.faq.content &&
-    //             this.faq.content !== '<p></p>'
-    //         ) {
-    //             this.onBoardingData = this.faq
-    //         }
-    //     },
-    // },
+  // methods: {
+  //     async getCustomData() {
+  //         if (
+  //             this.hasFaq &&
+  //             this.faq.title &&
+  //             this.faq.content &&
+  //             this.faq.content !== '<p></p>'
+  //         ) {
+  //             this.onBoardingData = this.faq
+  //         }
+  //     },
+  // },
 }
 </script>
 
 <style lang="scss" scoped>
 .on-boarding-page {
-    margin: $layout-size-2xl;
+  margin: $layout-size-2xl;
 }
 </style>

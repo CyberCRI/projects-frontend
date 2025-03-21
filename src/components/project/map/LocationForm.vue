@@ -1,50 +1,50 @@
 <template>
-    <DialogModal
-        @close="$emit('close')"
-        @submit="submit"
-        :confirm-button-label="locationToBeEdited ? $t('common.edit') : $t('common.add')"
-        :cancel-button-label="$t('common.cancel')"
-        :asyncing="asyncing"
-    >
-        <template #header>
-            {{
-                locationToBeEdited
-                    ? $t('project.edit-location-point')
-                    : $t('project.add-location-point')
-            }}
-        </template>
+  <DialogModal
+    :confirm-button-label="locationToBeEdited ? $t('common.edit') : $t('common.add')"
+    :cancel-button-label="$t('common.cancel')"
+    :asyncing="asyncing"
+    @close="$emit('close')"
+    @submit="submit"
+  >
+    <template #header>
+      {{
+        locationToBeEdited ? $t('project.edit-location-point') : $t('project.add-location-point')
+      }}
+    </template>
 
-        <template #body>
-            <h2 v-if="!locationToBeEdited && newCoordinates.length" class="new-coords">
-                {{ $filters.capitalize($t('project.at-coordinates')) }} {{ newCoordinates[0] }} /
-                {{ newCoordinates[1] }}
-            </h2>
+    <template #body>
+      <h2 v-if="!locationToBeEdited && newCoordinates.length" class="new-coords">
+        {{ $filters.capitalize($t('project.at-coordinates')) }} {{ newCoordinates[0] }} /
+        {{ newCoordinates[1] }}
+      </h2>
 
-            <div class="location-type-ctn">
-                <div class="location-type-label">{{ $t('project.location-type-label') }}</div>
-                <GroupButton v-model="form.type" :options="locationTypeOptions" />
-            </div>
+      <div class="location-type-ctn">
+        <div class="location-type-label">
+          {{ $t('project.location-type-label') }}
+        </div>
+        <GroupButton v-model="form.type" :options="locationTypeOptions" />
+      </div>
 
-            <TextInput v-model="form.title" :label="$filters.capitalize($t('common.title'))" />
+      <TextInput v-model="form.title" :label="$filters.capitalize($t('common.title'))" />
 
-            <TextInput
-                input-type="textarea"
-                v-model="form.description"
-                :label="$filters.capitalize($t('common.description'))"
-                class="description-input"
-            />
-        </template>
+      <TextInput
+        v-model="form.description"
+        input-type="textarea"
+        :label="$filters.capitalize($t('common.description'))"
+        class="description-input"
+      />
+    </template>
 
-        <template #extra-buttons v-if="locationToBeEdited">
-            <LpiButton
-                @click="deleteLocation"
-                class="delete-button"
-                :disabled="asyncing"
-                :btn-icon="asyncing ? 'LoaderSimple' : null"
-                :label="$filters.capitalize($t('common.delete'))"
-            />
-        </template>
-    </DialogModal>
+    <template v-if="locationToBeEdited" #extra-buttons>
+      <LpiButton
+        class="delete-button"
+        :disabled="asyncing"
+        :btn-icon="asyncing ? 'LoaderSimple' : null"
+        :label="$filters.capitalize($t('common.delete'))"
+        @click="deleteLocation"
+      />
+    </template>
+  </DialogModal>
 </template>
 
 <script>
@@ -57,175 +57,175 @@ import useToasterStore from '@/stores/useToaster.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
-    name: 'LocationForm',
+  name: 'LocationForm',
 
-    emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
+  components: { DialogModal, TextInput, GroupButton, LpiButton },
 
-    components: { DialogModal, TextInput, GroupButton, LpiButton },
-
-    props: {
-        locationToBeEdited: {
-            type: Object,
-            default: null,
-        },
-
-        newCoordinates: {
-            type: Array,
-            default: () => [],
-        },
-
-        projectId: {
-            type: String,
-            default: null,
-        },
+  props: {
+    locationToBeEdited: {
+      type: Object,
+      default: null,
     },
-    setup() {
-        const toaster = useToasterStore()
-        return {
-            toaster,
+
+    newCoordinates: {
+      type: Array,
+      default: () => [],
+    },
+
+    projectId: {
+      type: String,
+      default: null,
+    },
+  },
+
+  emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
+  setup() {
+    const toaster = useToasterStore()
+    return {
+      toaster,
+    }
+  },
+
+  data() {
+    return {
+      asyncing: false,
+      form: {
+        type: 'team',
+        title: '',
+        description: '',
+      },
+      locationTypeOptions: [
+        {
+          value: 'team',
+          label: this.$t('team.team'),
+        },
+        {
+          value: 'impact',
+          label: this.$t('project.impact'),
+        },
+      ],
+    }
+  },
+
+  created() {
+    if (this.locationToBeEdited) {
+      this.form = { ...this.locationToBeEdited }
+    }
+  },
+
+  methods: {
+    submit() {
+      if (this.locationToBeEdited) this.editLocation()
+      else this.addLocation()
+    },
+
+    async addLocation() {
+      try {
+        this.asyncing = true
+        const location = {
+          ...this.form,
+          lat: this.newCoordinates[0],
+          lng: this.newCoordinates[1],
+          project_id: this.projectId,
         }
+        const result = await postLocations(location)
+
+        analytics.location.addLocationMapPoint({
+          project: {
+            id: this.projectId,
+          },
+          location: result,
+        })
+
+        this.toaster.pushSuccess(this.$t('toasts.location-create.success'))
+
+        this.$emit('location-created')
+        this.$nextTick(() => this.$emit('center-map'))
+      } catch (error) {
+        this.toaster.pushError(`${this.$t('toasts.location-create.error')} (${error})`)
+        console.error(error)
+      } finally {
+        this.$emit('close')
+        this.asyncing = false
+      }
     },
 
-    created() {
-        if (this.locationToBeEdited) {
-            this.form = { ...this.locationToBeEdited }
-        }
+    async editLocation() {
+      try {
+        this.asyncing = true
+        const result = await patchLocation(this.form)
+
+        analytics.location.updateLocationMapPoint({
+          project: {
+            id: this.projectId,
+          },
+          location: result,
+        })
+
+        this.toaster.pushSuccess(this.$t('toasts.location-update.success'))
+
+        this.$emit('location-edited')
+      } catch (error) {
+        this.toaster.pushError(`${this.$t('toasts.location-update.error')} (${error})`)
+        console.error(error)
+      } finally {
+        this.$emit('close')
+        this.asyncing = false
+      }
     },
 
-    data() {
-        return {
-            asyncing: false,
-            form: {
-                type: 'team',
-                title: '',
-                description: '',
-            },
-            locationTypeOptions: [
-                {
-                    value: 'team',
-                    label: this.$t('team.team'),
-                },
-                {
-                    value: 'impact',
-                    label: this.$t('project.impact'),
-                },
-            ],
-        }
+    async deleteLocation() {
+      try {
+        this.asyncing = true
+        await deleteLocation(this.form)
+
+        analytics.location.deleteLocationMapPoint({
+          project: {
+            id: this.projectId,
+          },
+          location: this.form,
+        })
+
+        this.toaster.pushSuccess(this.$t('toasts.location-delete.success'))
+
+        this.$emit('location-deleted')
+        this.$nextTick(() => this.$emit('center-map'))
+      } catch (error) {
+        this.toaster.pushError(`${this.$t('toasts.location-delete.error')} (${error})`)
+        console.error(error)
+      } finally {
+        this.$emit('close')
+        this.asyncing = true
+      }
     },
-
-    methods: {
-        submit() {
-            if (this.locationToBeEdited) this.editLocation()
-            else this.addLocation()
-        },
-
-        async addLocation() {
-            try {
-                this.asyncing = true
-                const location = {
-                    ...this.form,
-                    lat: this.newCoordinates[0],
-                    lng: this.newCoordinates[1],
-                    project_id: this.projectId,
-                }
-                const result = await postLocations(location)
-
-                analytics.location.addLocationMapPoint({
-                    project: {
-                        id: this.projectId,
-                    },
-                    location: result,
-                })
-
-                this.toaster.pushSuccess(this.$t('toasts.location-create.success'))
-
-                this.$emit('location-created')
-                this.$nextTick(() => this.$emit('center-map'))
-            } catch (error) {
-                this.toaster.pushError(`${this.$t('toasts.location-create.error')} (${error})`)
-                console.error(error)
-            } finally {
-                this.$emit('close')
-                this.asyncing = false
-            }
-        },
-
-        async editLocation() {
-            try {
-                this.asyncing = true
-                const result = await patchLocation(this.form)
-
-                analytics.location.updateLocationMapPoint({
-                    project: {
-                        id: this.projectId,
-                    },
-                    location: result,
-                })
-
-                this.toaster.pushSuccess(this.$t('toasts.location-update.success'))
-
-                this.$emit('location-edited')
-            } catch (error) {
-                this.toaster.pushError(`${this.$t('toasts.location-update.error')} (${error})`)
-                console.error(error)
-            } finally {
-                this.$emit('close')
-                this.asyncing = false
-            }
-        },
-
-        async deleteLocation() {
-            try {
-                this.asyncing = true
-                await deleteLocation(this.form)
-
-                analytics.location.deleteLocationMapPoint({
-                    project: {
-                        id: this.projectId,
-                    },
-                    location: this.form,
-                })
-
-                this.toaster.pushSuccess(this.$t('toasts.location-delete.success'))
-
-                this.$emit('location-deleted')
-                this.$nextTick(() => this.$emit('center-map'))
-            } catch (error) {
-                this.toaster.pushError(`${this.$t('toasts.location-delete.error')} (${error})`)
-                console.error(error)
-            } finally {
-                this.$emit('close')
-                this.asyncing = true
-            }
-        },
-    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .new-coords {
-    text-align: center;
-    font-style: italic;
-    font-weight: normal;
+  text-align: center;
+  font-style: italic;
+  font-weight: normal;
 }
 
 .description-input {
-    margin-top: $space-m;
+  margin-top: $space-m;
 }
 
 .location-type-ctn {
-    margin: $space-m 0;
+  margin: $space-m 0;
 
-    .location-type-label {
-        font-size: $font-size-s;
-        color: $primary-dark;
-        font-weight: bold;
-        margin-bottom: $space-2xs;
-    }
+  .location-type-label {
+    font-size: $font-size-s;
+    color: $primary-dark;
+    font-weight: bold;
+    margin-bottom: $space-2xs;
+  }
 }
 
 .delete-button {
-    color: $white;
-    background: $salmon;
+  color: $white;
+  background: $salmon;
 }
 </style>

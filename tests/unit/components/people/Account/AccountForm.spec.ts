@@ -8,32 +8,32 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('AccountForm', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
-        defaultParams = {
-            props: {
-                isAddMode: true,
-                selectedUser: UserFactory.generate(),
-            },
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+    defaultParams = {
+      props: {
+        isAddMode: true,
+        selectedUser: UserFactory.generate(),
+      },
+      i18n,
+    }
+  })
 
-    it('should render AccountForm component', () => {
-        wrapper = lpiShallowMount(AccountForm, defaultParams)
+  it('should render AccountForm component', () => {
+    wrapper = lpiShallowMount(AccountForm, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

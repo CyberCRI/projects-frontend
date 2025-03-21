@@ -4,300 +4,290 @@ import { EditorView } from '@tiptap/pm/view'
 import tippy, { Instance, Props } from 'tippy.js'
 
 export interface LpiBubbleMenuPluginProps {
-    view?: EditorView
-    pluginKey: PluginKey | string
-    editor: Editor
-    element: HTMLElement
-    tippyOptions?: Partial<Props>
-    updateDelay?: number
-    shouldShow?:
-        | ((props: {
-              editor: Editor
-              view: EditorView
-              state: EditorState
-              oldState?: EditorState
-              from: number
-              to: number
-          }) => boolean)
-        | null
-    deepSelector?: string
+  view?: EditorView
+  pluginKey: PluginKey | string
+  editor: Editor
+  element: HTMLElement
+  tippyOptions?: Partial<Props>
+  updateDelay?: number
+  shouldShow?:
+    | ((props: {
+        editor: Editor
+        view: EditorView
+        state: EditorState
+        oldState?: EditorState
+        from: number
+        to: number
+      }) => boolean)
+    | null
+  deepSelector?: string
 }
 
 export type LpiBubbleMenuViewProps = LpiBubbleMenuPluginProps & {
-    view: EditorView
+  view: EditorView
 }
 
 export class LpiBubbleMenuView {
-    public editor: Editor
+  public editor: Editor
 
-    public element: HTMLElement
+  public element: HTMLElement
 
-    public view: EditorView
+  public view: EditorView
 
-    public preventHide = false
+  public preventHide = false
 
-    public tippy: Instance | undefined
+  public tippy: Instance | undefined
 
-    public tippyOptions?: Partial<Props>
+  public tippyOptions?: Partial<Props>
 
-    public updateDelay: number
+  public updateDelay: number
 
-    public deepSelector: string | undefined
+  public deepSelector: string | undefined
 
-    private updateDebounceTimer: number | undefined
+  private updateDebounceTimer: number | undefined
 
-    public shouldShow: Exclude<LpiBubbleMenuPluginProps['shouldShow'], null> = ({
-        view,
-        state,
-        from,
-        to,
-    }) => {
-        const { doc, selection } = state
-        const { empty } = selection
+  public shouldShow: Exclude<LpiBubbleMenuPluginProps['shouldShow'], null> = ({
+    view,
+    state,
+    from,
+    to,
+  }) => {
+    const { doc, selection } = state
+    const { empty } = selection
 
-        // Sometime check for `empty` is not enough.
-        // Doubleclick an empty paragraph returns a node size of 2.
-        // So we check also for an empty text size.
-        const isEmptyTextBlock =
-            !doc.textBetween(from, to).length && isTextSelection(state.selection)
+    // Sometime check for `empty` is not enough.
+    // Doubleclick an empty paragraph returns a node size of 2.
+    // So we check also for an empty text size.
+    const isEmptyTextBlock = !doc.textBetween(from, to).length && isTextSelection(state.selection)
 
-        // When clicking on a element inside the bubble menu the editor "blur" event
-        // is called and the bubble menu item is focussed. In this case we should
-        // consider the menu as part of the editor and keep showing the menu
-        const isChildOfMenu = this.element.contains(document.activeElement)
+    // When clicking on a element inside the bubble menu the editor "blur" event
+    // is called and the bubble menu item is focussed. In this case we should
+    // consider the menu as part of the editor and keep showing the menu
+    const isChildOfMenu = this.element.contains(document.activeElement)
 
-        const hasEditorFocus = view.hasFocus() || isChildOfMenu
+    const hasEditorFocus = view.hasFocus() || isChildOfMenu
 
-        if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable) {
-            return false
-        }
-
-        return true
+    if (!hasEditorFocus || empty || isEmptyTextBlock || !this.editor.isEditable) {
+      return false
     }
 
-    constructor({
-        editor,
-        element,
-        view,
-        tippyOptions = {},
-        updateDelay = 250,
-        shouldShow,
-        deepSelector,
-    }: LpiBubbleMenuViewProps) {
-        this.editor = editor
-        this.element = element
-        this.view = view
-        this.updateDelay = updateDelay
-        this.deepSelector = deepSelector
+    return true
+  }
 
-        if (shouldShow) {
-            this.shouldShow = shouldShow
-        }
+  constructor({
+    editor,
+    element,
+    view,
+    tippyOptions = {},
+    updateDelay = 250,
+    shouldShow,
+    deepSelector,
+  }: LpiBubbleMenuViewProps) {
+    this.editor = editor
+    this.element = element
+    this.view = view
+    this.updateDelay = updateDelay
+    this.deepSelector = deepSelector
 
-        this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true })
-        this.view.dom.addEventListener('dragstart', this.dragstartHandler)
-        // WAS: this.editor.on('focus', this.focusHandler)
-        this.editor.on('selectionUpdate', this.selectionHandler)
-        this.editor.on('blur', this.blurHandler)
-        this.tippyOptions = tippyOptions
-        // Detaches menu content from its current parent
-        this.element.remove()
-        this.element.style.visibility = 'visible'
+    if (shouldShow) {
+      this.shouldShow = shouldShow
     }
 
-    mousedownHandler = () => {
-        this.preventHide = true
+    this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true })
+    this.view.dom.addEventListener('dragstart', this.dragstartHandler)
+    // WAS: this.editor.on('focus', this.focusHandler)
+    this.editor.on('selectionUpdate', this.selectionHandler)
+    this.editor.on('blur', this.blurHandler)
+    this.tippyOptions = tippyOptions
+    // Detaches menu content from its current parent
+    this.element.remove()
+    this.element.style.visibility = 'visible'
+  }
+
+  mousedownHandler = () => {
+    this.preventHide = true
+  }
+
+  dragstartHandler = () => {
+    this.hide()
+  }
+
+  selectionHandler = () => {
+    // WAS: focusHandler = () => {
+    // we use `setTimeout` to make sure `selection` is already updated
+    setTimeout(() => this.update(this.editor.view))
+  }
+
+  blurHandler = ({ event }: { event: FocusEvent }) => {
+    if (this.preventHide) {
+      this.preventHide = false
+
+      return
     }
 
-    dragstartHandler = () => {
-        this.hide()
+    if (event?.relatedTarget && this.element.parentNode?.contains(event.relatedTarget as Node)) {
+      return
     }
 
-    selectionHandler = () => {
-        // WAS: focusHandler = () => {
-        // we use `setTimeout` to make sure `selection` is already updated
-        setTimeout(() => this.update(this.editor.view))
+    this.hide()
+  }
+
+  tippyBlurHandler = (event: FocusEvent) => {
+    this.blurHandler({ event })
+  }
+
+  createTooltip() {
+    const { element: editorElement } = this.editor.options
+    const editorIsAttached = !!editorElement.parentElement
+
+    if (this.tippy || !editorIsAttached) {
+      return
     }
 
-    blurHandler = ({ event }: { event: FocusEvent }) => {
-        if (this.preventHide) {
-            this.preventHide = false
+    this.tippy = tippy(editorElement, {
+      duration: 0,
+      getReferenceClientRect: null,
+      content: this.element,
+      interactive: true,
+      trigger: 'manual',
+      placement: 'top',
+      hideOnClick: 'toggle',
+      ...this.tippyOptions,
+    })
 
-            return
-        }
+    // maybe we have to hide tippy on its own blur event as well
+    if (this.tippy.popper.firstChild) {
+      ;(this.tippy.popper.firstChild as HTMLElement).addEventListener('blur', this.tippyBlurHandler)
+    }
+  }
 
-        if (
-            event?.relatedTarget &&
-            this.element.parentNode?.contains(event.relatedTarget as Node)
-        ) {
-            return
-        }
+  update(view: EditorView, oldState?: EditorState) {
+    const hasValidSelection = true // WAS : state.selection.$from.pos !== state.selection.$to.pos
 
-        this.hide()
+    if (this.updateDelay > 0 && hasValidSelection) {
+      this.handleDebouncedUpdate(view, oldState)
+      return
     }
 
-    tippyBlurHandler = (event: FocusEvent) => {
-        this.blurHandler({ event })
+    const selectionChanged = !oldState?.selection.eq(view.state.selection)
+    const docChanged = !oldState?.doc.eq(view.state.doc)
+
+    this.updateHandler(view, selectionChanged, docChanged, oldState)
+  }
+
+  handleDebouncedUpdate = (view: EditorView, oldState?: EditorState) => {
+    const selectionChanged = !oldState?.selection.eq(view.state.selection)
+    const docChanged = !oldState?.doc.eq(view.state.doc)
+
+    if (!selectionChanged && !docChanged) {
+      return
     }
 
-    createTooltip() {
-        const { element: editorElement } = this.editor.options
-        const editorIsAttached = !!editorElement.parentElement
-
-        if (this.tippy || !editorIsAttached) {
-            return
-        }
-
-        this.tippy = tippy(editorElement, {
-            duration: 0,
-            getReferenceClientRect: null,
-            content: this.element,
-            interactive: true,
-            trigger: 'manual',
-            placement: 'top',
-            hideOnClick: 'toggle',
-            ...this.tippyOptions,
-        })
-
-        // maybe we have to hide tippy on its own blur event as well
-        if (this.tippy.popper.firstChild) {
-            ;(this.tippy.popper.firstChild as HTMLElement).addEventListener(
-                'blur',
-                this.tippyBlurHandler
-            )
-        }
+    if (this.updateDebounceTimer) {
+      clearTimeout(this.updateDebounceTimer)
     }
 
-    update(view: EditorView, oldState?: EditorState) {
-        const hasValidSelection = true // WAS : state.selection.$from.pos !== state.selection.$to.pos
+    this.updateDebounceTimer = window.setTimeout(() => {
+      this.updateHandler(view, selectionChanged, docChanged, oldState)
+    }, this.updateDelay)
+  }
 
-        if (this.updateDelay > 0 && hasValidSelection) {
-            this.handleDebouncedUpdate(view, oldState)
-            return
-        }
+  updateHandler = (
+    view: EditorView,
+    selectionChanged: boolean,
+    docChanged: boolean,
+    oldState?: EditorState
+  ) => {
+    const { state, composing } = view
+    const { selection } = state
 
-        const selectionChanged = !oldState?.selection.eq(view.state.selection)
-        const docChanged = !oldState?.doc.eq(view.state.doc)
+    const isSame = !selectionChanged && !docChanged
 
-        this.updateHandler(view, selectionChanged, docChanged, oldState)
+    if (composing || isSame) {
+      return
     }
 
-    handleDebouncedUpdate = (view: EditorView, oldState?: EditorState) => {
-        const selectionChanged = !oldState?.selection.eq(view.state.selection)
-        const docChanged = !oldState?.doc.eq(view.state.doc)
+    this.createTooltip()
 
-        if (!selectionChanged && !docChanged) {
-            return
-        }
+    // support for CellSelections
+    const { ranges } = selection
+    const from = Math.min(...ranges.map((range) => range.$from.pos))
+    const to = Math.max(...ranges.map((range) => range.$to.pos))
 
-        if (this.updateDebounceTimer) {
-            clearTimeout(this.updateDebounceTimer)
-        }
+    const shouldShow = this.shouldShow?.({
+      editor: this.editor,
+      view,
+      state,
+      oldState,
+      from,
+      to,
+    })
 
-        this.updateDebounceTimer = window.setTimeout(() => {
-            this.updateHandler(view, selectionChanged, docChanged, oldState)
-        }, this.updateDelay)
+    if (!shouldShow) {
+      this.hide()
+
+      return
     }
 
-    updateHandler = (
-        view: EditorView,
-        selectionChanged: boolean,
-        docChanged: boolean,
-        oldState?: EditorState
-    ) => {
-        const { state, composing } = view
-        const { selection } = state
+    this.tippy?.setProps({
+      getReferenceClientRect:
+        this.tippyOptions?.getReferenceClientRect ||
+        (() => {
+          if (isNodeSelection(state.selection)) {
+            let node = view.nodeDOM(from) as HTMLElement
 
-        const isSame = !selectionChanged && !docChanged
+            const nodeViewWrapper = node.dataset.nodeViewWrapper
+              ? node
+              : node.querySelector('[data-node-view-wrapper]')
 
-        if (composing || isSame) {
-            return
-        }
+            if (nodeViewWrapper) {
+              node = nodeViewWrapper.firstChild as HTMLElement
+            }
 
-        this.createTooltip()
+            if (this.deepSelector) {
+              node = node.querySelector(this.deepSelector) as HTMLElement
+            }
 
-        // support for CellSelections
-        const { ranges } = selection
-        const from = Math.min(...ranges.map((range) => range.$from.pos))
-        const to = Math.max(...ranges.map((range) => range.$to.pos))
+            if (node) {
+              return node.getBoundingClientRect()
+            }
+          }
 
-        const shouldShow = this.shouldShow?.({
-            editor: this.editor,
-            view,
-            state,
-            oldState,
-            from,
-            to,
-        })
+          return posToDOMRect(view, from, to)
+        }),
+    })
 
-        if (!shouldShow) {
-            this.hide()
+    this.show()
+  }
 
-            return
-        }
+  show() {
+    this.tippy?.show()
+  }
 
-        this.tippy?.setProps({
-            getReferenceClientRect:
-                this.tippyOptions?.getReferenceClientRect ||
-                (() => {
-                    if (isNodeSelection(state.selection)) {
-                        let node = view.nodeDOM(from) as HTMLElement
+  hide() {
+    this.tippy?.hide()
+  }
 
-                        const nodeViewWrapper = node.dataset.nodeViewWrapper
-                            ? node
-                            : node.querySelector('[data-node-view-wrapper]')
-
-                        if (nodeViewWrapper) {
-                            node = nodeViewWrapper.firstChild as HTMLElement
-                        }
-
-                        if (this.deepSelector) {
-                            node = node.querySelector(this.deepSelector) as HTMLElement
-                        }
-
-                        if (node) {
-                            return node.getBoundingClientRect()
-                        }
-                    }
-
-                    return posToDOMRect(view, from, to)
-                }),
-        })
-
-        this.show()
+  destroy() {
+    if (this.tippy?.popper.firstChild) {
+      ;(this.tippy.popper.firstChild as HTMLElement).removeEventListener(
+        'blur',
+        this.tippyBlurHandler
+      )
     }
-
-    show() {
-        this.tippy?.show()
-    }
-
-    hide() {
-        this.tippy?.hide()
-    }
-
-    destroy() {
-        if (this.tippy?.popper.firstChild) {
-            ;(this.tippy.popper.firstChild as HTMLElement).removeEventListener(
-                'blur',
-                this.tippyBlurHandler
-            )
-        }
-        this.tippy?.destroy()
-        this.element.removeEventListener('mousedown', this.mousedownHandler, { capture: true })
-        this.view.dom.removeEventListener('dragstart', this.dragstartHandler)
-        // WAS : this.editor.off('focus', this.focusHandler)
-        this.editor.off('selectionUpdate', this.selectionHandler)
-        this.editor.off('blur', this.blurHandler)
-    }
+    this.tippy?.destroy()
+    this.element.removeEventListener('mousedown', this.mousedownHandler, { capture: true })
+    this.view.dom.removeEventListener('dragstart', this.dragstartHandler)
+    // WAS : this.editor.off('focus', this.focusHandler)
+    this.editor.off('selectionUpdate', this.selectionHandler)
+    this.editor.off('blur', this.blurHandler)
+  }
 }
 
 export const LpiBubbleMenuPlugin = (options: LpiBubbleMenuPluginProps) => {
-    return new Plugin({
-        key:
-            typeof options.pluginKey === 'string'
-                ? new PluginKey(options.pluginKey)
-                : options.pluginKey,
-        view: (view) =>
-            new LpiBubbleMenuView({ view, ...options } as LpiBubbleMenuViewProps) as any,
-    })
+  return new Plugin({
+    key:
+      typeof options.pluginKey === 'string' ? new PluginKey(options.pluginKey) : options.pluginKey,
+    view: (view) => new LpiBubbleMenuView({ view, ...options } as LpiBubbleMenuViewProps) as any,
+  })
 }

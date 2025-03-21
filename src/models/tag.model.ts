@@ -5,15 +5,15 @@ import BaseModel from '@/models/base.model'
  * @description Tag of an organization or project or project-category
  */
 export interface TagModel extends BaseModel {
-    title: string
-    title_en: string
-    title_fr: string
-    organization?: string
-    type?: string
-    secondary_type?: string
-    description: string
-    description_en: string
-    description_fr: string
+  title: string
+  title_en: string
+  title_fr: string
+  organization?: string
+  type?: string
+  secondary_type?: string
+  description: string
+  description_en: string
+  description_fr: string
 }
 
 export type TagCreateInput = Required<TagModel>

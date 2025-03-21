@@ -13,25 +13,25 @@ var projectRoot = __dirname + '/../'
 
 // TODO: use pure js instead of grep for Windows users
 exec(
-    `grep < ${projectRoot}src/components/base/media/IconImage.vue "name =="`,
-    (err, stdout, stderr) => {
-        if (err) {
-            //some err occurred
-            console.error(err)
-        } else {
-            // the *entire* stdout and stderr (buffered)
-            console.log(`stderr: ${stderr}`)
+  `grep < ${projectRoot}src/components/base/media/IconImage.vue "name =="`,
+  (err, stdout, stderr) => {
+    if (err) {
+      //some err occurred
+      console.error(err)
+    } else {
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stderr: ${stderr}`)
 
-            var iconNames = JSON.stringify(
-                stdout
-                    .split('\n')
-                    .map((l) => l.substring(l.indexOf("== '") + "== '".length))
-                    .map((l) => l.substring(0, l.indexOf("'")))
-                    .filter((l) => l),
-                null,
-                4
-            )
-            console.log(iconNames)
-        }
+      var iconNames = JSON.stringify(
+        stdout
+          .split('\n')
+          .map((l) => l.substring(l.indexOf("== '") + "== '".length))
+          .map((l) => l.substring(0, l.indexOf("'")))
+          .filter((l) => l),
+        null,
+        4
+      )
+      console.log(iconNames)
     }
+  }
 )

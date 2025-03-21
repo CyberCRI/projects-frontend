@@ -5,30 +5,30 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('AccountLayout', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        defaultParams = {
-            props: {
-                isAddMode: true,
-                selectedUser: UserFactory.generate(),
-            },
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    defaultParams = {
+      props: {
+        isAddMode: true,
+        selectedUser: UserFactory.generate(),
+      },
+      i18n,
+    }
+  })
 
-    it('should render AccountLayout component', () => {
-        wrapper = lpiShallowMount(AccountLayout, defaultParams)
+  it('should render AccountLayout component', () => {
+    wrapper = lpiShallowMount(AccountLayout, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

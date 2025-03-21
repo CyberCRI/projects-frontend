@@ -7,9 +7,9 @@ import { ProjectModel } from './project.model'
  */
 
 export interface NewsfeedModel {
-    id: number
-    type: 'project' | 'announcement' | 'news'
-    project?: ProjectModel
-    news?: any // TODO: Define news model
-    announcement?: AnnouncementModel
+  id: number
+  type: 'project' | 'announcement' | 'news'
+  project?: ProjectModel
+  news?: any // TODO: Define news model
+  announcement?: AnnouncementModel
 }

@@ -1,26 +1,26 @@
 <template>
-    <div class="menu-tip" @click.prevent.stop="open" :class="{ 'is-open': isOpen }">
-        <slot class="trigger"></slot>
-        <transition name="scale">
-            <div
-                class="menu-content"
-                v-show="isOpen"
-                :class="{ 'shadowed-box': isOpen, 'is-open': isOpen }"
-                v-click-outside="close"
-            >
-                <ContextActionButton
-                    action-icon="Close"
-                    class="close-icon"
-                    @click.prevent.stop="close"
-                    secondary
-                    no-border
-                />
-                <div class="content-wrapper" @click.capture="closeAfterClick">
-                    <slot name="custom-content"></slot>
-                </div>
-            </div>
-        </transition>
-    </div>
+  <div class="menu-tip" :class="{ 'is-open': isOpen }" @click.prevent.stop="open">
+    <slot class="trigger" />
+    <transition name="scale">
+      <div
+        v-show="isOpen"
+        v-click-outside="close"
+        class="menu-content"
+        :class="{ 'shadowed-box': isOpen, 'is-open': isOpen }"
+      >
+        <ContextActionButton
+          action-icon="Close"
+          class="close-icon"
+          secondary
+          no-border
+          @click.prevent.stop="close"
+        />
+        <div class="content-wrapper" @click.capture="closeAfterClick">
+          <slot name="custom-content" />
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -30,40 +30,40 @@ import { ref } from 'vue'
 let openedMenuTip = ref(null)
 
 export default {
-    name: 'MenuTip',
+  name: 'MenuTip',
 
-    components: {
-        ContextActionButton,
+  components: {
+    ContextActionButton,
+  },
+
+  data() {
+    return {
+      uniqueId: (Math.random() + 1).toString(36).substring(7),
+      openedMenuTip,
+    }
+  },
+
+  computed: {
+    isOpen() {
+      return openedMenuTip.value === this.uniqueId
+    },
+  },
+
+  methods: {
+    open() {
+      openedMenuTip.value = this.uniqueId
     },
 
-    data() {
-        return {
-            uniqueId: (Math.random() + 1).toString(36).substring(7),
-            openedMenuTip,
-        }
+    close() {
+      openedMenuTip.value = null
     },
 
-    methods: {
-        open() {
-            openedMenuTip.value = this.uniqueId
-        },
-
-        close() {
-            openedMenuTip.value = null
-        },
-
-        closeAfterClick() {
-            this.$nextTick(() => {
-                this.close()
-            })
-        },
+    closeAfterClick() {
+      this.$nextTick(() => {
+        this.close()
+      })
     },
-
-    computed: {
-        isOpen() {
-            return openedMenuTip.value === this.uniqueId
-        },
-    },
+  },
 }
 </script>
 
@@ -71,47 +71,47 @@ export default {
 $padding: 1rem;
 
 .menu-tip {
-    width: max-content;
-    height: max-content;
-    position: relative;
-    z-index: 10;
+  width: max-content;
+  height: max-content;
+  position: relative;
+  z-index: 10;
 
-    &.is-open {
-        z-index: 11; // so it appear higher than other triggers
-    }
+  &.is-open {
+    z-index: 11; // so it appear higher than other triggers
+  }
 }
 
 .menu-content {
-    padding: 1rem;
-    padding-right: 3rem;
-    background-color: $white;
-    border: $border-width-s solid $primary-dark;
-    position: absolute;
-    top: -1rem;
-    right: -1rem;
-    width: max-content;
-    height: max-content;
+  padding: 1rem;
+  padding-right: 3rem;
+  background-color: $white;
+  border: $border-width-s solid $primary-dark;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  width: max-content;
+  height: max-content;
 
-    .close-icon {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-    }
+  .close-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
 }
 
 .scale-enter-from,
 .scale-leave-to {
-    transform: scale(0);
+  transform: scale(0);
 }
 
 .scale-enter-to,
 .scale-leave-from {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .scale-enter-active,
 .scale-leave-active {
-    transition: transform 0.2s ease-in-out;
-    transform-origin: calc(100% - 1.5rem) 1.5rem;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: calc(100% - 1.5rem) 1.5rem;
 }
 </style>
