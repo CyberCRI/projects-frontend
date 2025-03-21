@@ -255,12 +255,14 @@ const buildPayload = () => {
   }
 
   form.value.members.forEach((member) => {
-    if (member.is_leader) {
-      team.leaders.push(member.id)
-    } else if (member.is_manager) {
-      team.managers.push(member.id)
-    } else {
-      team.members.push(member.id)
+    if (member?.id) {
+      if (member.is_leader) {
+        team.leaders.push(member.id)
+      } else if (member.is_manager) {
+        team.managers.push(member.id)
+      } else {
+        team.members.push(member.id)
+      }
     }
   })
 

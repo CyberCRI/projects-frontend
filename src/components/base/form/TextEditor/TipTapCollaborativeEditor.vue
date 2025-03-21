@@ -323,9 +323,10 @@ watchEffect(() => {
     handleDisconnection()
   }
 })
-watchEffect(() => emit('socket-ready', socketReady.value), {
-  immediate: true,
-})
+watchEffect(
+  () => emit('socket-ready', socketReady.value)
+  // , {immediate: true,}
+)
 
 // lifecycle
 onMounted(() => {

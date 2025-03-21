@@ -7,92 +7,98 @@ import useProjectsStore from '@/stores/useProjects'
 import useUsersStore from '@/stores/useUsers'
 import { computed } from 'vue'
 export default function usePermissions() {
-  // const { currentPeopleGroupIdForPermissions } = mapState(usePeopleGroupsStore, {
+  // const { currentPeopleGroupIdForPermissions.value } = mapState(usePeopleGroupsStore, {
   //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentPeopleGroupIdForPermissions: 'currentId',
+  //     currentPeopleGroupIdForPermissions.value: 'currentId',
   // })
-  // const { currentOrganizationForPermissions } = mapState(useOrganizationsStore, {
+  // const { currentOrganizationForPermissions.value } = mapState(useOrganizationsStore, {
   //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentOrganizationForPermissions: 'current',
+  //     currentOrganizationForPermissions.value: 'current',
   // })
-  // const { currentProjectIdForPermissions } = mapState(useProjectsStore, {
+  // const { currentProjectIdForPermissions.value } = mapState(useProjectsStore, {
   //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentProjectIdForPermissions: 'currentProjectId',
+  //     currentProjectIdForPermissions.value: 'currentProjectId',
   // })
-  // const { isConnectedForPermissions, getPermissionsForPermissions, getUserRolesForPermissions } =
+  // const { isConnectedForPermissions.value, getPermissionsForPermissions.value, getUserRolesForPermissions.value } =
   //     mapState(useUsersStore, {
   //         // unique name so it doesn(t conflict with a name in the component)
-  //         isConnectedForPermissions: 'isConnected',
-  //         getPermissionsForPermissions: 'permissions',
-  //         getUserRolesForPermissions: 'roles',
+  //         isConnectedForPermissions.value: 'isConnected',
+  //         getPermissionsForPermissions.value: 'permissions',
+  //         getUserRolesForPermissions.value: 'roles',
   //     })
 
   const peopleGroupStore = usePeopleGroupsStore()
-  const currentPeopleGroupIdForPermissions = peopleGroupStore.currentId
+  const currentPeopleGroupIdForPermissions = computed(() => peopleGroupStore.currentId)
 
   const organizationStore = useOrganizationsStore()
-
-  const currentOrganizationForPermissions = organizationStore.current
+  const currentOrganizationForPermissions = computed(() => organizationStore.current)
 
   const projectStore = useProjectsStore()
-
-  const currentProjectIdForPermissions = projectStore.currentProjectId
+  const currentProjectIdForPermissions = computed(() => projectStore.currentProjectId)
 
   const userStore = useUsersStore()
-  // unique name so it doesn(t conflict with a name in the component)
-  const isConnectedForPermissions = userStore.isConnected
-  const getPermissionsForPermissions = userStore.permissions
-  const getUserRolesForPermissions = userStore.roles
+  // unique name so it doesn't conflict with a name in the component)
+  // note this is legacy of when permissions where in a mixin and can be simplified now
+  const isConnectedForPermissions = computed(() => userStore.isConnected)
+  const getPermissionsForPermissions = computed(() => userStore.permissions)
+  const getUserRolesForPermissions = computed(() => userStore.roles)
 
   function hasPermission(scope, action, pk?) {
-    const permissions = getPermissionsForPermissions
+    const permissions = getPermissionsForPermissions.value
     return utils.hasPermission(permissions, scope, action, pk)
   }
 
   const isOwner = computed(() => {
     return (
-      isConnectedForPermissions &&
-      (hasPermission('projects', 'delete_project', currentProjectIdForPermissions || null) ||
-        hasPermission('organizations', 'delete_project', currentOrganizationForPermissions?.id) ||
+      isConnectedForPermissions.value &&
+      (hasPermission('projects', 'delete_project', currentProjectIdForPermissions.value || null) ||
+        hasPermission(
+          'organizations',
+          'delete_project',
+          currentOrganizationForPermissions.value?.id
+        ) ||
         hasPermission('projects', 'delete_project'))
     )
   })
 
   const isSuperAdmin = computed(() => {
     return (
-      isConnectedForPermissions && getUserRolesForPermissions.some((role) => role === 'superadmins')
+      isConnectedForPermissions.value &&
+      getUserRolesForPermissions.value.some((role) => role === 'superadmins')
     )
   })
 
   const isFacilitator = computed(() => {
-    const orgId = currentOrganizationForPermissions?.id
+    const orgId = currentOrganizationForPermissions.value?.id
     return (
-      isConnectedForPermissions &&
-      getUserRolesForPermissions.some((role) => role === `organization:#${orgId}:facilitators`)
+      isConnectedForPermissions.value &&
+      getUserRolesForPermissions.value.some(
+        (role) => role === `organization:#${orgId}:facilitators`
+      )
     )
   })
 
   const isOrgAdmin = computed(() => {
-    const orgId = currentOrganizationForPermissions?.id
+    const orgId = currentOrganizationForPermissions.value?.id
     return (
-      isConnectedForPermissions &&
-      getUserRolesForPermissions.some((role) => role === `organization:#${orgId}:admins`)
+      isConnectedForPermissions.value &&
+      getUserRolesForPermissions.value.some((role) => role === `organization:#${orgId}:admins`)
     )
   })
 
   const isAdmin = computed(() => {
     return (
-      (isConnectedForPermissions && hasPermission('organizations', 'destroy')) ||
+      (isConnectedForPermissions.value && hasPermission('organizations', 'destroy')) ||
       isSuperAdmin.value ||
       isOrgAdmin.value
     )
   })
 
   const isOrgUser = computed(() => {
-    const orgId = currentOrganizationForPermissions?.id
+    const orgId = currentOrganizationForPermissions.value?.id
     return (
-      isConnectedForPermissions &&
-      getUserRolesForPermissions.some((role) => role === `organization:#${orgId}:users`)
+      isConnectedForPermissions.value &&
+      getUserRolesForPermissions.value.some((role) => role === `organization:#${orgId}:users`)
     )
   })
 
@@ -103,13 +109,17 @@ export default function usePermissions() {
   /* PROJECTS */
 
   const canCreateProject = computed(() => {
-    return isConnectedForPermissions
+    return isConnectedForPermissions.value
   })
 
   const canEditProject = computed(() => {
     return (
-      hasPermission('projects', 'change_project', currentProjectIdForPermissions || null) ||
-      hasPermission('organizations', 'change_project', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'change_project', currentProjectIdForPermissions.value || null) ||
+      hasPermission(
+        'organizations',
+        'change_project',
+        currentOrganizationForPermissions.value?.id
+      ) ||
       hasPermission('projects', 'change_project') ||
       isAdmin.value
     )
@@ -117,8 +127,12 @@ export default function usePermissions() {
 
   const canDestroyProject = computed(() => {
     return (
-      hasPermission('projects', 'delete_project', currentProjectIdForPermissions || null) ||
-      hasPermission('organizations', 'delete_project', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'delete_project', currentProjectIdForPermissions.value || null) ||
+      hasPermission(
+        'organizations',
+        'delete_project',
+        currentOrganizationForPermissions.value?.id
+      ) ||
       hasPermission('projects', 'delete_project') ||
       isAdmin.value
     )
@@ -127,8 +141,8 @@ export default function usePermissions() {
   /* REVIEW */
   const canAddReview = computed(() => {
     return (
-      hasPermission('projects', 'add_review', currentProjectIdForPermissions || null) ||
-      hasPermission('organization', 'add_review', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'add_review', currentProjectIdForPermissions.value || null) ||
+      hasPermission('organization', 'add_review', currentOrganizationForPermissions.value?.id) ||
       hasPermission('organization', 'add_review') ||
       hasPermission('projects', 'add_review') ||
       isAdmin.value
@@ -137,8 +151,8 @@ export default function usePermissions() {
 
   const canEditReview = computed(() => {
     return (
-      hasPermission('projects', 'change_review', currentProjectIdForPermissions || null) ||
-      hasPermission('organization', 'change_review', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'change_review', currentProjectIdForPermissions.value || null) ||
+      hasPermission('organization', 'change_review', currentOrganizationForPermissions.value?.id) ||
       hasPermission('organization', 'change_review') ||
       hasPermission('projects', 'change_review') ||
       isAdmin.value
@@ -147,8 +161,8 @@ export default function usePermissions() {
 
   const canDestroyReview = computed(() => {
     return (
-      hasPermission('projects', 'delete_review', currentProjectIdForPermissions || null) ||
-      hasPermission('organization', 'delete_review', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'delete_review', currentProjectIdForPermissions.value || null) ||
+      hasPermission('organization', 'delete_review', currentOrganizationForPermissions.value?.id) ||
       hasPermission('organization', 'delete_review') ||
       hasPermission('projects', 'delete_review') ||
       isAdmin.value
@@ -163,26 +177,26 @@ export default function usePermissions() {
         'organizations',
         'member',
         // null,
-        currentOrganizationForPermissions?.id
+        currentOrganizationForPermissions.value?.id
       ) ||
       hasPermission('organizations', 'member', 'projects') ||
       hasPermission(
         'organizations',
         'member',
         //'projects',
-        currentOrganizationForPermissions?.id
+        currentOrganizationForPermissions.value?.id
       ) ||
       hasPermission(
         'projects',
         'member',
         // null,
-        currentProjectIdForPermissions
+        currentProjectIdForPermissions.value
       ) ||
       hasPermission(
         'organizations',
         // 'update',
         'member',
-        currentOrganizationForPermissions?.id
+        currentOrganizationForPermissions.value?.id
       ) ||
       hasPermission('organizations', 'member') ||
       hasPermission('project-member', 'update') ||
@@ -197,17 +211,17 @@ export default function usePermissions() {
     // so for now assume that if the user is connected and can see the project
     // s.he can comment
     // TODO: rethink this with backend and P.O.
-    return isConnectedForPermissions
+    return isConnectedForPermissions.value
 
     // this.hasPermission(
     //     'projects',
     //     'add_comment',
-    //     this.currentProjectIdForPermissions
+    //     this.currentProjectIdForPermissions.value
     // ) ||
     // this.hasPermission(
     //     'organizations',
     //     'add_comment',
-    //     this.currentOrganizationForPermissions?.id
+    //     this.currentOrganizationForPermissions.value?.id
     // ) ||
     // this.hasPermission('organizations', 'add_comment') ||
     // this.hasPermission('projects', 'add_comment') ||
@@ -216,8 +230,12 @@ export default function usePermissions() {
 
   const canEditComment = computed(() => {
     return (
-      hasPermission('projects', 'change_comment', currentProjectIdForPermissions) ||
-      hasPermission('organizations', 'change_comment', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'change_comment', currentProjectIdForPermissions.value) ||
+      hasPermission(
+        'organizations',
+        'change_comment',
+        currentOrganizationForPermissions.value?.id
+      ) ||
       hasPermission('organizations', 'change_comment') ||
       hasPermission('projects', 'change_comment') ||
       isAdmin.value
@@ -226,8 +244,12 @@ export default function usePermissions() {
 
   const canDeleteComment = computed(() => {
     return (
-      hasPermission('projects', 'delete_comment', currentProjectIdForPermissions) ||
-      hasPermission('organizations', 'delete_comment', currentOrganizationForPermissions?.id) ||
+      hasPermission('projects', 'delete_comment', currentProjectIdForPermissions.value) ||
+      hasPermission(
+        'organizations',
+        'delete_comment',
+        currentOrganizationForPermissions.value?.id
+      ) ||
       hasPermission('organizations', 'delete_comment') ||
       hasPermission('projects', 'delete_comment') ||
       isAdmin.value
@@ -237,7 +259,7 @@ export default function usePermissions() {
   /* PEOPLE-GROUPS */
   const canCreateGroup = computed(() => {
     return (
-      hasPermission('organizations', 'add_peoplegroup', currentPeopleGroupIdForPermissions) ||
+      hasPermission('organizations', 'add_peoplegroup', currentPeopleGroupIdForPermissions.value) ||
       hasPermission('organizations', 'add_peoplegroup') ||
       hasPermission('peoplegroup', 'add_peoplegroup') ||
       isAdmin.value
@@ -247,11 +269,15 @@ export default function usePermissions() {
   const canEditGroup = computed(() => {
     return (
       isAdmin.value ||
-      hasPermission('accounts', 'change_peoplegroup', currentPeopleGroupIdForPermissions || null) ||
+      hasPermission(
+        'accounts',
+        'change_peoplegroup',
+        currentPeopleGroupIdForPermissions.value || null
+      ) ||
       hasPermission(
         'organizations',
         'change_peoplegroup',
-        currentPeopleGroupIdForPermissions || null
+        currentPeopleGroupIdForPermissions.value || null
       ) ||
       hasPermission('organizations', 'change_peoplegroup') ||
       hasPermission('peoplegroup', 'update')

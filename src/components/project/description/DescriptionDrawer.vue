@@ -108,7 +108,7 @@ export default {
   },
 
   computed: {
-    emptyDescription() {
+    descriptionIsNotEmpty() {
       return this.project.description !== '<p></p>' && this.project.description !== ''
     },
 
@@ -229,7 +229,7 @@ export default {
     },
 
     getProjectDescription(project) {
-      if (this.emptyDescription) {
+      if (this.descriptionIsNotEmpty) {
         return project.description
       } else if (project.template && project.template.description_placeholder) {
         return project.template.description_placeholder

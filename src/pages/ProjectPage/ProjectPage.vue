@@ -266,6 +266,68 @@ const getAnnouncements = async () => {
   }
 }
 
+const reloadProject = async () => {
+  return await projectsStore.getProject(project.value.id)
+}
+
+const onProjectUpdate = async () => {
+  const projectUpdates = provider.value.document.getMap('projectUpdates')
+  const data = projectUpdates.get('data')
+
+  // skip if we are the ones who updated the description
+  if (provider.value.document.clientID == data.clientID) return
+
+  // skip if update is before current project / blog data update time
+  if (data.type == 'blog-entry-create' || data.type == 'blog-entry-update') {
+    let old = (project.value.blog_entries || []).find((b) => b.id == data.id)
+    if (old && old.updated_at >= data.updated_at) {
+      return
+    }
+  } else if (data.type === 'description-update') {
+    if (project.value.updated_at >= data.updated_at) {
+      return
+    }
+  }
+
+  // update project (yes, the whole project... TODO: fine grain this)
+  reloadProject()
+  if (data.type == 'blog-entry-create' || data.type == 'blog-entry-update') {
+    getBlogEntries()
+  }
+
+  // real update, notify user
+  let message = data.author_name + ' ' + t(data.scope)
+
+  toaster.pushInfo(message)
+}
+
+const connectToSocket = () => {
+  // listen for description updates
+  // TODO permission
+  if (canEditProject.value) {
+    try {
+      const providerParams = {
+        projectId: projectsStore.currentProjectId,
+        organizationId: organizationsStore.current.id,
+      }
+
+      provider.value = new HocuspocusProvider({
+        url: sockerserver.value,
+        name: 'description_update_' + project.value.id,
+        token: accessToken.value,
+        parameters: providerParams,
+      })
+
+      const projectUpdates = toRaw(provider.value).document.getMap('projectUpdates')
+
+      // Listen for changes
+      projectUpdates.observe(onProjectUpdate)
+    } catch (e) {
+      console.error('socket error', e)
+    }
+  }
+}
+
 const setProject = async (projectSlugOrId = route.params.slugOrId) => {
   loading.value = true
   projectsStore
@@ -319,69 +381,10 @@ const setProject = async (projectSlugOrId = route.params.slugOrId) => {
     })
 }
 
-const reloadProject = async () => {
-  return await projectsStore.getProject(project.value.id)
-}
-
 const projectPatched = (data) => {
   if (provider.value?.document) {
     const projectUpdates = provider.value.document.getMap('projectUpdates')
     projectUpdates.set('data', { ...data, clientID: provider.value.document.clientID })
-  }
-}
-
-const onProjectUpdate = async () => {
-  const projectUpdates = provider.value.document.getMap('projectUpdates')
-  const data = projectUpdates.get('data')
-
-  // skip if we are the ones who updated the description
-  if (provider.value.document.clientID == data.clientID) return
-
-  // skip if update is before current project / blog data update time
-  if (data.type == 'blog-entry-create' || data.type == 'blog-entry-update') {
-    let old = (project.value.blog_entries || []).find((b) => b.id == data.id)
-    if (old && old.updated_at >= data.updated_at) {
-      return
-    }
-  } else if (data.type === 'description-update') {
-    if (project.value.updated_at >= data.updated_at) {
-      return
-    }
-  }
-
-  // update project (yes, the whole project... TODO: fine grain this)
-  reloadProject()
-
-  // real update, notify user
-  let message = data.author_name + ' ' + t(data.scope)
-
-  toaster.pushInfo(message)
-}
-
-const connectToSocket = () => {
-  // listen for description updates
-  // TODO permission
-  if (canEditProject.value) {
-    try {
-      const providerParams = {
-        projectId: projectsStore.currentProjectId,
-        organizationId: organizationsStore.current.id,
-      }
-
-      provider.value = new HocuspocusProvider({
-        url: sockerserver.value,
-        name: 'description_update_' + project.value.id,
-        token: accessToken.value,
-        parameters: providerParams,
-      })
-
-      const projectUpdates = toRaw(provider.value).document.getMap('projectUpdates')
-
-      // Listen for changes
-      projectUpdates.observe(onProjectUpdate)
-    } catch (e) {
-      console.error('socket error', e)
-    }
   }
 }
 
