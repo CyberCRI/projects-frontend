@@ -1,7 +1,7 @@
 <template>
   <div class="map">
     <div class="hidden">
-      <slot :add-pointer="addPointer" :remove-pointer="removePointer" :map="map" v-if="map" />
+      <slot v-if="map" :add-pointer="addPointer" :remove-pointer="removePointer" :map="map" />
     </div>
   </div>
 </template>
