@@ -1,10 +1,17 @@
 import useLanguages from '@/stores/useLanguages'
 
 export default (url, title, description, image) => {
+  const runtimeConfig = useRuntimeConfig()
   const setHead = () =>
     useHeadSafe({
       title: title,
       titleTemplate: (t) => (t && `Projects - ${t}`) || 'Projects',
+      link: [
+        {
+          rel: 'icon',
+          href: `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`,
+        },
+      ],
       meta: [
         {
           name: 'description',
@@ -23,7 +30,8 @@ export default (url, title, description, image) => {
 
         {
           name: 'og:url',
-          content: url,
+          content:
+            url || `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png`,
         },
 
         {
@@ -45,7 +53,9 @@ export default (url, title, description, image) => {
 
         {
           name: 'twitter:image',
-          content: image,
+          content:
+            image ||
+            `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_twt.png`,
         },
       ],
     })
