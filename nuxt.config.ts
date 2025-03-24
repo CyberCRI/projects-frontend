@@ -20,8 +20,8 @@ export default defineNuxtConfig({
   plugins: [
     '~/filters/index.ts',
     '~/directives/index.ts',
+    '~/plugins/appInit.ts',
     '~/plugins/errorHandler.ts',
-    '~/plugins/init-analytics.client.ts',
     '~/plugins/router-before-each.client.ts',
     '~/plugins/router-after-each.client.ts',
   ],

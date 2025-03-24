@@ -7,6 +7,7 @@ import initUser from '@/app/initUser'
 import initOrganization from './app/initOrganization'
 import initSentry from '@/app/initSentry'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
+import analytics from '@/analytics'
 
 import '@/design/scss/reset.scss'
 import '@/design/scss/main.scss'
@@ -29,9 +30,12 @@ export default async function main(): Promise<void> {
   document?.querySelector('html').classList.add('org-' + runtimeConfig.public.appApiOrgCode)
 
   // await initAnalytics()
-  if (import.meta.client) await initUser()
+  await analytics.init()
   await initOrganization()
-  if (import.meta.client) await initSentry(nuxtApp.vueApp)
+  if (import.meta.client) {
+    await initUser()
+    await initSentry(nuxtApp.vueApp)
+  }
 }
 
 // let's go
