@@ -88,9 +88,14 @@
         </div>
 
         <!-- TODO: Use privacy settings -->
-        <div v-if="user.mobile" class="social">
+        <div v-if="user.mobile_phone" class="social">
           <IconImage class="icon" name="Phone" />
-          <span>{{ user.mobile }}</span>
+          <span>{{ user.mobile_phone }}</span>
+        </div>
+
+        <div v-if="user.landline_phone" class="social">
+          <IconImage class="icon" name="Phone" />
+          <span>{{ user.landline_phone }}</span>
         </div>
 
         <div v-if="user && user.location" class="social">
