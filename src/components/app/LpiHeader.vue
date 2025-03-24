@@ -4,8 +4,7 @@
       <div :class="{ 'header__arrows--nav-open': isNavOpen }" class="header__directory">
         <NuxtLink to="/" data-test="lpi-logo">
           <img
-            v-if="organisation && organisation.logo_image.variations"
-            :src="organisation.logo_image.variations.medium"
+            :src="organisation?.logo_image?.variations?.medium || ''"
             alt=""
             class="header__logo"
           />
