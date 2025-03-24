@@ -17,7 +17,7 @@ export async function getLocations(params, next) {
     return await useAPI(next, {}) //.data.value
   }
 
-  return await useAPI(`location/`, { params: utils.adaptParam(params) }) //.data.value
+  return await useAPI(`location/`, { ...utils.adaptParam(params) }) //.data.value
 }
 
 export async function postLocations(location: LocationInput) {

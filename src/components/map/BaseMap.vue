@@ -1,7 +1,7 @@
 <template>
   <div class="map">
     <div class="hidden">
-      <slot :add-pointer="addPointer" :remove-pointer="removePointer" :map="map" />
+      <slot :add-pointer="addPointer" :remove-pointer="removePointer" :map="map" v-if="map" />
     </div>
   </div>
 </template>
@@ -80,7 +80,9 @@ export default {
     this.map = map
   },
   methods: {
-    addPointer({ markerContent, location, tooltip }, eventHandlers) {
+    async addPointer({ markerContent, location, tooltip }, eventHandlers) {
+      if (location.rendered) return
+      location.rendered = true
       const icon = L.divIcon({
         html: markerContent,
         className: location.type,

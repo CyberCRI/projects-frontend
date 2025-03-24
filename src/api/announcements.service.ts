@@ -14,7 +14,7 @@ export async function getAnnouncements(params) {
 
 export async function getProjectAnnouncements(project_id: string, params: object) {
   return await useAPI(`project/${project_id}/announcement/`, {
-    query: utils.adaptParam(params || {}),
+    ...utils.adaptParam(params || {}),
   }) //.data.value
 }
 
