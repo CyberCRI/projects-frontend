@@ -9,12 +9,15 @@ const useAPI = (url: string, options) => {
     if (import.meta.client) _localStorage = window.localStorage
     const localStorage = _localStorage
     const runtimeConfig = useRuntimeConfig()
+    const usersStore = useUsers()
     return {
       baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
       method: 'GET',
       onRequest({ options }) {
-        const accessToken = localStorage?.getItem('ACCESS_TOKEN')
-        if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
+        if (import.meta.client) {
+          const accessToken = usersStore.accessToken
+          if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
+        }
       },
       onRequestError() {
         // Handle the request errors

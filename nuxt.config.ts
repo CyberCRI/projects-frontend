@@ -15,7 +15,13 @@ import { alias } from './alias'
 export default defineNuxtConfig({
   // ssr: false,
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: import.meta.dev },
+  devtools: {
+    enabled: import.meta.dev,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   srcDir: 'src/',
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
 
