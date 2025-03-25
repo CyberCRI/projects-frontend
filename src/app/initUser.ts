@@ -14,25 +14,25 @@ export default async function initUser() {
     await usersStore.doRefreshToken()
   }
 
-  const loginSearchParams = new URLSearchParams(window.location.search)
-  // Log in user after redirection is successful from keycloack
-  await keycloak.loginIfValidState(loginSearchParams)
+  // const loginSearchParams = new URLSearchParams(window.location.search)
+  // // Log in user after redirection is successful from keycloack
+  // await keycloak.loginIfValidState(loginSearchParams)
 
-  if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
+  // if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
 
-  const state = loginSearchParams.get('state')
-    ? JSON.parse(loginSearchParams.get('state') as string)
-    : null
+  // const state = loginSearchParams.get('state')
+  //   ? JSON.parse(loginSearchParams.get('state') as string)
+  //   : null
 
-  if (state) {
-    let nextPage = state.fromURL.replace(window.location.origin, '')
-    if (nextPage.includes('discover')) {
-      nextPage = nextPage.replace('discover', 'dashboard')
-    }
-    // TODO do this the nuxt way
-    const router = useRouter()
-    router.push(nextPage)
-  }
+  // if (state) {
+  //   let nextPage = state.fromURL.replace(window.location.origin, '')
+  //   if (nextPage.includes('discover')) {
+  //     nextPage = nextPage.replace('discover', 'dashboard')
+  //   }
+  //   // TODO do this the nuxt way
+  //   const router = useRouter()
+  //   router.push(nextPage)
+  // }
 
   // to check: was at the end of app.ts main
   keycloak.refreshTokenLoop.start()
