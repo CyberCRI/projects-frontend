@@ -4,11 +4,11 @@ import { OrganizationDirectoryModel } from '@/models/organization-directory.mode
 import BaseFactory from './base.factory'
 
 export const OrganizationDirectoryFactory = createFactory<OrganizationDirectoryModel>((faker) => ({
-    ...BaseFactory.generate(),
-    name: faker.name.title(),
-    description: faker.lorem.sentences(),
-    logo: faker.image.image(),
-    language: 'fr',
+  ...BaseFactory.generate(),
+  name: faker.name.title(),
+  description: faker.lorem.sentences(),
+  logo: faker.image.image(),
+  language: 'fr',
 }))
 
 export default OrganizationDirectoryFactory

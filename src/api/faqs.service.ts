@@ -1,57 +1,29 @@
-import { axios } from '@/api/api.config'
-import { APIResponseList } from '@/api/types'
-import { FaqModel, FaqInput, FaqOutput } from '@/models/faq.model'
+// import type { APIResponseList } from '@/api/types'
+import type { /*FaqModel, */ FaqInput /*, FaqOutput*/ } from '@/models/faq.model'
+import useAPI from '@/composables/useAPI'
 
-export async function getFaq(orgCode: string): Promise<APIResponseList<FaqModel>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/faq/`
-        )
-    ).data
+export async function getFaq(orgCode: string) {
+  return await useAPI(`organization/${orgCode}/faq/`, {}) //.data.value
 }
 
-export async function createFaq(body: FaqInput): Promise<APIResponseList<FaqModel>> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
-                body.organization_code
-            }/faq/`,
-            body
-        )
-    ).data
+export async function createFaq(body: FaqInput) {
+  return await useAPI(`organization/${body.organization_code}/faq/`, { body, method: 'POST' })
+  //.data.value
 }
 
-export async function putFaq(body: FaqInput): Promise<FaqOutput> {
-    return (
-        await axios.put(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${
-                body.organization_code
-            }/faq/`,
-            body
-        )
-    ).data
+export async function putFaq(body: FaqInput) {
+  return await useAPI(`organization/${body.organization_code}/faq/`, { body, method: 'PUT' })
+  //.data.value
 }
 
-export async function patchFaq(orgCode: string, body: FaqInput): Promise<FaqOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/faq/`,
-            body
-        )
-    ).data
+export async function patchFaq(orgCode: string, body: FaqInput) {
+  return await useAPI(`organization/${orgCode}/faq/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export async function deleteFaq({ orgCode }): Promise<FaqOutput> {
-    return await axios.delete(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/faq/`
-    )
+export async function deleteFaq({ orgCode }) {
+  return await useAPI(`organization/${orgCode}/faq/`, { method: 'DELETE' })
 }
 
-export async function postFaqImage({ orgCode, body }): Promise<FaqOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${orgCode}/faq-image/`,
-            body
-        )
-    ).data
+export async function postFaqImage({ orgCode, body }) {
+  return await useAPI(`organization/${orgCode}/faq-image/`, { body, method: 'POST' }) //.data.value
 }

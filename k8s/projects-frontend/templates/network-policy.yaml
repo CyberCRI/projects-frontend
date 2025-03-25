@@ -4,8 +4,7 @@
   "podSelector" (dict "matchLabels" .Values.commonLabels)
   "allowFromReverseProxy" true
   "reverseProxyNamespace" "traefik"
-  "enableEgress" true
+  "enableEgress" false
   "commonLabels" .Values.commonLabels
   "additionalEgresses" .Values.networkPolicy.additionalEgresses
-  "allowDnsResolution" true
 ) }}

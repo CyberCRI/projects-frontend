@@ -1,17 +1,6 @@
-import { ImageTemplateOutput, ImageTemplateInput } from '@/models/image.model'
-import { axios } from '@/api/api.config'
+import type { /*ImageTemplateOutput,*/ ImageTemplateInput } from '@/models/image.model'
+import useAPI from '@/composables/useAPI'
 
-export async function postTemplateImage({
-    id,
-    body,
-}: {
-    id: number
-    body: ImageTemplateInput
-}): Promise<ImageTemplateOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/category/${id}/template-image/`,
-            body
-        )
-    ).data
+export async function postTemplateImage({ id, body }: { id: number; body: ImageTemplateInput }) {
+  return await useAPI(`category/${id}/template-image/`, { body, method: 'POST' }) //.data.value
 }

@@ -1,21 +1,14 @@
-import { axios } from '@/api/api.config'
-import { NewsfeedModel } from '@/models/newsfeed.model'
-import { APIParams, APIResponseList } from '@/api/types'
+// import type { NewsfeedModel } from '@/models/newsfeed.model'
+import type { APIParams /*, APIResponseList*/ } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import useAPI from '@/composables/useAPI'
 
 export interface NewsfeedParams {
-    org: string
-    limit: Number
+  org: string
+  limit: number
 }
 
-export async function getNewsfeed(
-    org: string,
-    params: APIParams
-): Promise<APIResponseList<NewsfeedModel>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/organization/${org}/newsfeed/`,
-            _adaptParamsToGetQuery(params)
-        )
-    ).data
+export async function getNewsfeed(org: string, params: APIParams) {
+  return await useAPI(`organization/${org}/newsfeed/`, { ..._adaptParamsToGetQuery(params) })
+  //.data.value
 }

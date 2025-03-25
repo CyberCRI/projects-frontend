@@ -7,31 +7,31 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('GroupForm', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const organizationsStore = useOrganizationsStore(pinia)
-        organizationsStore.current = OrganizationOutputFactory.generate()
-        defaultParams = {
-            props: {
-                modelValue: {},
-            },
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = OrganizationOutputFactory.generate()
+    defaultParams = {
+      props: {
+        modelValue: {},
+      },
+      i18n,
+    }
+  })
 
-    it('should render GroupForm component', () => {
-        wrapper = lpiShallowMount(AccountGroupsForm, defaultParams)
+  it('should render GroupForm component', () => {
+    wrapper = lpiShallowMount(AccountGroupsForm, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

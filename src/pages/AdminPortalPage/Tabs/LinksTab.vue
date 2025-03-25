@@ -1,15 +1,15 @@
 <template>
-    <div class="links-tab">
-        <router-view />
-    </div>
+  <div class="links-tab">
+    <NuxtPage />
+  </div>
 </template>
 <script>
 export default {
-    name: 'LinksTab',
+  name: 'LinksTab',
 }
 </script>
 <style lang="scss" scoped>
 .links-tab {
-    padding: $space-xl 0;
+  padding: $space-xl 0;
 }
 </style>

@@ -1,152 +1,140 @@
-<template>
-    <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
-        <div>
-            <h1 class="page-title">{{ $filters.capitalize($t('faq.portal')) }}</h1>
-        </div>
+<script setup>
+import { getOrganizationByCode } from '@/api/organizations.service'
 
-        <LpiLoader v-if="isLoading" type="simple" />
-        <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs" router-view></TabsLayout>
-    </div>
-</template>
+const { onboardingTrap } = useOnboardingStatus()
+const { t } = useI18n()
 
-<script>
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-// import { getFaq } from '@/api/faqs.service'
-import onboardingStatusMixin from '@/mixins/onboardingStatusMixin.ts'
-import { computed } from 'vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+provide(
+  'helpPageHasFaq',
+  computed(() => this.hasFaq)
+)
+provide(
+  'helpPageFaq',
+  computed(() => this.faq)
+)
 
-export default {
-    name: 'HelpPage',
+const isLoading = ref(true)
+const customTab = ref(null)
+const faq = ref(null)
 
-    components: {
-        LpiLoader,
-        TabsLayout,
-    },
+const hasFaq = computed(() => {
+  let _faq = faq.value
+  return _faq && _faq.title && _faq.content && _faq.content !== '<p></p>'
+})
+const tabs = computed(() => {
+  const res = []
 
-    mixins: [onboardingStatusMixin],
+  if (customTab.value) res.push(customTab.value)
 
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
+  res.push({
+    key: 'help-help',
+    label: t('faq.portal'),
+    view: { name: 'HelpHelpTab' },
+  })
+  res.push({
+    key: 'help-video',
+    label: t('faq.video'),
+    view: { name: 'HelpVideoTab' },
+  })
+  return res
+})
 
-    provide() {
-        return {
-            helpPageHasFaq: computed(() => this.hasFaq),
-            helpPageFaq: computed(() => this.faq),
-        }
-    },
+const setOnboardData = async () => {
+  try {
+    if (hasFaq.value) {
+      customTab.value = {
+        label: faq.value.title,
+        key: 'help-template',
+        view: { name: 'HelpFaqTab' },
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
 
-    data() {
-        return {
-            isLoading: true,
-            customTab: null,
-            faq: null,
-        }
-    },
+  isLoading.value = false
+}
 
-    async mounted() {
-        // try {
-        //     this.faq = await getFaq(this.organizationsStore.current.code)
-        // } catch (err) {
-        //     console.error(err)
-        //     // ignore 404 error
-        // }
-        this.setOnboardData()
+onMounted(async () => {
+  // try {
+  //     this.faq = await getFaq(this.organizationsStore.current.code)
+  // } catch (err) {
+  //     console.error(err)
+  //     // ignore 404 error
+  // }
+  setOnboardData()
 
-        this.onboardingTrap('take_tour', false)
-    },
+  onboardingTrap('take_tour', false)
+})
 
-    computed: {
-        hasFaq() {
-            let faq = this.faq
-            return faq && faq.title && faq.content && faq.content !== '<p></p>'
-        },
-        tabs() {
-            const res = []
-
-            if (this.customTab) res.push(this.customTab)
-
-            res.push({
-                key: 'help-help',
-                label: this.$t('faq.portal'),
-                view: { name: 'HelpHelpTab' },
-            })
-            res.push({
-                key: 'help-video',
-                label: this.$t('faq.video'),
-                view: { name: 'HelpVideoTab' },
-            })
-            return res
-        },
-    },
-
-    methods: {
-        async setOnboardData() {
-            try {
-                if (this.hasFaq) {
-                    this.customTab = {
-                        label: this.faq.title,
-                        key: 'help-template',
-                        view: { name: 'HelpFaqTab' },
-                    }
-                }
-            } catch (error) {
-                console.error(error)
-            }
-
-            this.isLoading = false
-        },
-    },
+try {
+  const runtimeConfig = useRuntimeConfig()
+  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+  useLpiHead(
+    useRequestURL().toString(),
+    computed(() => t('faq.portal')),
+    organization?.dashboard_subtitle,
+    organization?.banner_image?.variations?.medium
+  )
+} catch (err) {
+  console.log(err)
 }
 </script>
+<template>
+  <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
+    <div>
+      <h1 class="page-title">
+        {{ $filters.capitalize($t('faq.portal')) }}
+      </h1>
+    </div>
+
+    <LpiLoader v-if="isLoading" type="simple" />
+    <TabsLayout v-else :align-left="true" :border="false" :tabs="tabs" router-view />
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .intro-ctn {
-    margin-bottom: $space-xl;
-    background: $primary-lighter;
-    padding: $space-l;
-    border-radius: $border-radius-17;
+  margin-bottom: $space-xl;
+  background: $primary-lighter;
+  padding: $space-l;
+  border-radius: $border-radius-17;
 
-    .action-list {
-        list-style-type: disc;
-        list-style-position: inside;
-        font-size: $font-size-l;
+  .action-list {
+    list-style-type: disc;
+    list-style-position: inside;
+    font-size: $font-size-l;
 
-        li {
-            padding: $space-m 0;
-        }
+    li {
+      padding: $space-m 0;
     }
+  }
 }
 
 .help-layout {
-    display: flex;
-    flex-flow: column nowrap;
-    flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
 
-    &.loading {
-        justify-content: center;
-        align-items: center;
-    }
+  &.loading {
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 :deep(.tabs) {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+
+  .content {
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
 
-    .content {
-        display: flex;
-        flex-flow: column nowrap;
-        flex-grow: 1;
-
-        img {
-            max-width: 100%;
-        }
+    img {
+      max-width: 100%;
     }
+  }
 }
 </style>

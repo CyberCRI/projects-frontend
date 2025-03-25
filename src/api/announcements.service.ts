@@ -1,68 +1,43 @@
-import { axios } from '@/api/api.config'
-import {
-    AnnouncementInput,
-    AnnouncementOutput,
-    AnnouncementApplyInput,
+import type {
+  AnnouncementInput,
+  // AnnouncementOutput,
+  AnnouncementApplyInput,
 } from '@/models/announcement.model'
-import { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '@/api/types'
 import utils from '@/functs/functions'
 
-export async function getAnnouncements(params): Promise<APIResponseList<AnnouncementOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/announcement/`,
-            utils.adaptParam(params)
-        )
-    ).data
+import useAPI from '@/composables/useAPI'
+
+export async function getAnnouncements(params) {
+  return await useAPI(`announcement/`, { ...utils.adaptParam(params) }) //.data.value
 }
 
-export async function getProjectAnnouncements(
-    project_id: string,
-    params: Object
-): Promise<APIResponseList<AnnouncementOutput>> {
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${project_id}/announcement/`,
-            utils.adaptParam(params || {})
-        )
-    ).data
+export async function getProjectAnnouncements(project_id: string, params: object) {
+  return await useAPI(`project/${project_id}/announcement/`, {
+    ...utils.adaptParam(params || {}),
+  }) //.data.value
 }
 
-export async function postAnnouncement(body: AnnouncementInput): Promise<AnnouncementOutput> {
-    return (
-        await axios.post(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                body.project_id
-            }/announcement/`,
-            body
-        )
-    ).data
+export async function postAnnouncement(body: AnnouncementInput) {
+  return await useAPI(`project/${body.project_id}/announcement/`, { body, method: 'POST' }) //.data.value
 }
 
-export async function patchAnnouncement(body: AnnouncementInput): Promise<AnnouncementOutput> {
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${
-                body.project_id
-            }/announcement/${body.id}/`,
-            body
-        )
-    ).data
+export async function patchAnnouncement(body: AnnouncementInput) {
+  return await useAPI(`project/${body.project_id}/announcement/${body.id}/`, {
+    body,
+    method: 'PATCH',
+  }) //.data.value
 }
 
-export async function deleteAnnouncement(body): Promise<void> {
-    return await axios.delete(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${body.project.id}/announcement/${
-            body.id
-        }/`
-    )
+export async function deleteAnnouncement(body) {
+  return await useAPI(`project/${body.project.id}/announcement/${body.id}/`, {
+    method: 'DELETE',
+  })
 }
 
-export async function applyAnnouncement(body: AnnouncementApplyInput): Promise<void> {
-    return await axios.post(
-        `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/project/${body.project_id}/announcement/${
-            body.announcement_id
-        }/apply/`,
-        body
-    )
+export async function applyAnnouncement(body: AnnouncementApplyInput) {
+  return await useAPI(`project/${body.project_id}/announcement/${body.announcement_id}/apply/`, {
+    body,
+    method: 'POST',
+  })
 }

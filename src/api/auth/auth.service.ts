@@ -1,11 +1,12 @@
-import { axios } from '@/api/api.config'
+import useAPI from '@/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
-import keycloak from '@/api/auth/keycloak'
-import router from '@/router'
+import useKeycloak from '@/api/auth/keycloak'
 import useProjectsStore from '@/stores/useProjects'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { useRuntimeConfig } from '#imports'
 
-const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dashboard`
+// TODO fix this in uxt sever side (windows is undefined)
+const DASHBOARD_URL = `${window?.location?.protocol}//${window?.location?.host}/dashboard`
 
 /**
  *  The Authorization Code Flow with Proof Key for Code Exchange is described here :
@@ -26,142 +27,138 @@ const DASHBOARD_URL = `${window.location.protocol}//${window.location.host}/dash
  */
 
 export async function goToKeycloakLoginPage(): Promise<void> {
-    const organizationsStore = useOrganizationsStore()
-    keycloak.codeVerifier.generate()
-    keycloak.appSecret.generate()
-    const currentUrl = new URL(keycloak.getCurrentUrl())
-    const url = new URL(
-        `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-            import.meta.env.VITE_APP_KEYCLOAK_REALM
-        }/protocol/openid-connect/auth`
-    )
+  const keycloak = useKeycloak()
+  const runtimeConfig = useRuntimeConfig()
+  const organizationsStore = useOrganizationsStore()
+  keycloak.codeVerifier.generate()
+  keycloak.appSecret.generate()
+  const currentUrl = new URL(keycloak.getCurrentUrl())
+  const url = new URL(
+    `${runtimeConfig.public.appKeycloakUrl}/realms/${
+      runtimeConfig.public.appKeycloakRealm
+    }/protocol/openid-connect/auth`
+  )
 
-    let fromUrl = window.location.href
-    if (window.location.pathname === '/login' || /^\/register\//.test(window.location.pathname)) {
-        fromUrl = window.location.origin
-    }
+  let fromUrl = window.location.href
+  if (window.location.pathname === '/login' || /^\/register\//.test(window.location.pathname)) {
+    fromUrl = window.location.origin
+  }
 
-    url.searchParams.append('client_id', keycloak.client.get().client_id)
-    url.searchParams.append('client_secret', import.meta.env.VITE_APP_KEYCLOAK_CLIENT_SECRET)
-    // redirect_uri is not useful here but required by Keycloak
-    // redirect_uri must also be the same as the one from getAccessToken()
-    url.searchParams.append('redirect_uri', `${currentUrl.origin}/dashboard`)
-    url.searchParams.append('response_type', 'code')
-    url.searchParams.append('scope', 'openid')
-    url.searchParams.append('code_challenge', await keycloak.codeChallenge.get())
-    url.searchParams.append('code_challenge_method', 'S256')
-    url.searchParams.append(
-        'state',
-        JSON.stringify({
-            // Store current location into keycloak state for redirection
-            fromURL: fromUrl,
-            // Store appSecret into keycloak state to verify keycloak authenticity when getting back the state
-            appSecret: keycloak.appSecret.get(),
-            org: organizationsStore.current?.code,
-        })
-    )
+  url.searchParams.append('client_id', keycloak.client.get().client_id)
+  url.searchParams.append('client_secret', runtimeConfig.public.appKeycloakClientSecret)
+  // redirect_uri is not useful here but required by Keycloak
+  // redirect_uri must also be the same as the one from getAccessToken()
+  url.searchParams.append('redirect_uri', `${currentUrl.origin}/dashboard`)
+  url.searchParams.append('response_type', 'code')
+  url.searchParams.append('scope', 'openid')
+  url.searchParams.append('code_challenge', await keycloak.codeChallenge.get())
+  url.searchParams.append('code_challenge_method', 'S256')
+  url.searchParams.append(
+    'state',
+    JSON.stringify({
+      // Store current location into keycloak state for redirection
+      fromURL: fromUrl,
+      // Store appSecret into keycloak state to verify keycloak authenticity when getting back the state
+      appSecret: keycloak.appSecret.get(),
+      org: organizationsStore.current?.code,
+    })
+  )
 
-    window.location.href = url.href
+  window.location.href = url.href
 }
 
 function cleanUpKeycloak() {
-    keycloak.codeVerifier.remove()
-    keycloak.appSecret.remove()
-    keycloak.refreshTokenLoop.stop()
+  const keycloak = useKeycloak()
+  keycloak.codeVerifier.remove()
+  keycloak.appSecret.remove()
+  keycloak.refreshTokenLoop.stop()
 }
 
 function getLogoutRedirectUri() {
-    const projectsStore = useProjectsStore()
-    // redirect to current page after logout
-    let redirectUri = keycloak.getCurrentUrl()
-    const currentRoute = router.currentRoute
+  const keycloak = useKeycloak()
+  const projectsStore = useProjectsStore()
+  // redirect to current page after logout
+  let redirectUri = keycloak.getCurrentUrl()
+  // TODO do this the nuxt way
+  const currentRoute = null // router.currentRoute
 
-    // redirect to home after logout if we are on 404 page
-    if (currentRoute && currentRoute.value.name == 'page404') {
-        redirectUri = DASHBOARD_URL
-    }
+  // redirect to home after logout if we are on 404 page
+  if (currentRoute && currentRoute.value.name == 'page404') {
+    redirectUri = DASHBOARD_URL
+  }
 
-    // redirect to dashboard if we are on a page requiring auth to avoid a 404
-    if (
-        currentRoute &&
-        currentRoute.value.matched &&
-        currentRoute.value.matched.some(
-            (route) => route.meta && (route.meta.requiresAuth || route.meta.requiresAdmin)
-        )
-    ) {
-        redirectUri = DASHBOARD_URL
-    }
+  // redirect to dashboard if we are on a page requiring auth to avoid a 404
+  if (
+    currentRoute &&
+    currentRoute.value.matched &&
+    currentRoute.value.matched.some(
+      (route) => route.meta && (route.meta.requiresAuth || route.meta.requiresAdmin)
+    )
+  ) {
+    redirectUri = DASHBOARD_URL
+  }
 
-    // redirect to dashboard if we are on a non-public project to avoid a 404
-    if (
-        currentRoute &&
-        currentRoute.value.matched &&
-        currentRoute.value.matched.some((route) => route.name === 'pageProject')
-    ) {
-        const project = projectsStore.project
-        if (!project || project.publication_status !== 'public') {
-            redirectUri = DASHBOARD_URL
-        }
+  // redirect to dashboard if we are on a non-public project to avoid a 404
+  if (
+    currentRoute &&
+    currentRoute.value.matched &&
+    currentRoute.value.matched.some((route) => route.name === 'pageProject')
+  ) {
+    const project = projectsStore.project
+    if (!project || project.publication_status !== 'public') {
+      redirectUri = DASHBOARD_URL
     }
-    return redirectUri
+  }
+  return redirectUri
 }
 
 export function logoutFromKeycloak(): void {
-    const redirectUri = getLogoutRedirectUri()
-    cleanUpKeycloak()
-    window.location.href = `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-        import.meta.env.VITE_APP_KEYCLOAK_REALM
-    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-        'ID_TOKEN'
-    )}`
+  const runtimeConfig = useRuntimeConfig()
+  const redirectUri = getLogoutRedirectUri()
+  cleanUpKeycloak()
+  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
+    runtimeConfig.public.appKeycloakRealm
+  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+    'ID_TOKEN'
+  )}`
 }
 
 export function logoutFromKeycloakWithError(): void {
-    const redirectUri = getLogoutRedirectUri()
-    cleanUpKeycloak()
-    window.location.href = `${import.meta.env.VITE_APP_KEYCLOAK_URL}/realms/${
-        import.meta.env.VITE_APP_KEYCLOAK_REALM
-    }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
-        'ID_TOKEN'
-    )}&login-error=true`
+  const runtimeConfig = useRuntimeConfig()
+  const redirectUri = getLogoutRedirectUri()
+  cleanUpKeycloak()
+  window.location.href = `${runtimeConfig.public.appKeycloakUrl}/realms/${
+    runtimeConfig.public.appKeycloakRealm
+  }/protocol/openid-connect/logout?post_logout_redirect_uri=${redirectUri}&id_token_hint=${localStorage.getItem(
+    'ID_TOKEN'
+  )}&login-error=true`
 }
 
 export async function refreshAccessToken(): Promise<any> {
-    const token = localStorage.getItem('REFRESH_TOKEN')
-    const as = await keycloak.as.get()
-    const client = keycloak.client.get()
-    const response = await oauth.refreshTokenGrantRequest(
-        as,
-        client,
-        token.replace('JWT' + ' ', '')
-    )
-    const result: oauth.TokenEndpointResponse | oauth.OAuth2Error =
-        await oauth.processRefreshTokenResponse(as, client, response)
-    const payload = await keycloak.processKeycloakResponse(result)
-    return {
-        access_token: payload.access_token,
-        refresh_token: payload.refresh_token,
-        refresh_token_exp: payload.refresh_token_exp,
-        parsedToken: { ...payload.parsedToken },
-        id_token: payload.id_token,
-    }
+  const keycloak = useKeycloak()
+  const token = localStorage.getItem('REFRESH_TOKEN')
+  const as = await keycloak.as.get()
+  const client = keycloak.client.get()
+  const response = await oauth.refreshTokenGrantRequest(as, client, token.replace('JWT' + ' ', ''))
+  const result: oauth.TokenEndpointResponse | oauth.OAuth2Error =
+    await oauth.processRefreshTokenResponse(as, client, response)
+  const payload = await keycloak.processKeycloakResponse(result)
+  return {
+    access_token: payload.access_token,
+    refresh_token: payload.refresh_token,
+    refresh_token_exp: payload.refresh_token_exp,
+    parsedToken: { ...payload.parsedToken },
+    id_token: payload.id_token,
+  }
 }
 
 export async function getNotifications(id) {
-    // TODO: should getNotificationsSetting
-    return (
-        await axios.get(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`
-        )
-    ).data
+  // TODO: should getNotificationsSetting
+  return await useAPI(`notifications-setting/${id}/`, {}) //.data.value
 }
 
 export async function patchNotifications({ id, payload }) {
-    // TODO: should patchNotificationsSetting
-    return (
-        await axios.patch(
-            `${import.meta.env.VITE_APP_API_DEFAULT_VERSION}/notifications-setting/${id}/`,
-            payload
-        )
-    ).data
+  // TODO: should patchNotificationsSetting
+  return (await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })).data
+    .value
 }

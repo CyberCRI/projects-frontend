@@ -1,159 +1,148 @@
-<template>
-    <div class="instruction-list-page page-section-medium page-top">
-        <h1 class="page-title">{{ $t('instructions.list.title') }}</h1>
-
-        <div class="create-instruction-button-ctn">
-            <LpiButton
-                v-if="canCreateInstruction"
-                primary
-                :label="$filters.capitalize($t('instructions.list.create'))"
-                @click="createInstruction"
-                data-test="create-instruction-button"
-                btn-icon="Plus"
-                class="create-instruction-button"
-            />
-        </div>
-        <div class="instruction-list" v-if="loading">
-            <InstructionListItemSkeleton />
-            <InstructionListItemSkeleton />
-        </div>
-        <div v-else class="instruction-list">
-            <InstructionListItem
-                :instruction="instruction"
-                v-for="instruction in allInstructions"
-                :key="instruction.id"
-                @edit-instruction="editedInstruction = instruction"
-                @delete-instruction="instructionToDelete = instruction"
-            />
-        </div>
-    </div>
-    <EditInstructionDrawer
-        :is-opened="!!editedInstruction"
-        :instruction="editedInstruction"
-        @close="editedInstruction = null"
-        @instruction-edited="loadInstructions"
-    />
-    <ConfirmModal
-        v-if="instructionToDelete"
-        :content="$t('instructions.delete.message')"
-        :title="$t('instructions.delete.title')"
-        cancel-button-label="common.cancel"
-        confirm-button-label="common.delete"
-        @cancel="instructionToDelete = null"
-        @confirm="deleteInstruction"
-        :asyncing="isDeletingInstruction"
-    />
-</template>
-<script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import InstructionListItemSkeleton from '@//components/instruction/InstructionListItem/InstructionListItemSkeleton.vue'
-import InstructionListItem from '@/components/instruction/InstructionListItem/InstructionListItem.vue'
-import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import permissions from '@/mixins/permissions.ts'
+<script setup>
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
 
-export default {
-    name: 'InstructionListPage',
-    components: {
-        LpiButton,
-        InstructionListItem,
-        EditInstructionDrawer,
-        ConfirmModal,
-        InstructionListItemSkeleton,
-    },
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
+const router = useRouter()
+const { t } = useI18n()
 
-    mixins: [permissions],
-    setup() {
-        const toaster = useToasterStore()
-        const organizationsStore = useOrganizationsStore()
-        return {
-            toaster,
-            organizationsStore,
-        }
-    },
+const allInstructions = useState(() => [])
+const loading = ref(false)
+const editedInstruction = ref(null)
+const instructionToDelete = ref(null)
+const isDeletingInstruction = ref(false)
 
-    data() {
-        return {
-            allInstructions: [],
-            loading: false,
-            editedInstruction: null,
-            instructionToDelete: null,
-            isDeletingInstruction: false,
-        }
-    },
+const createInstruction = () => {
+  router.push({ name: 'CreateInstructionPage' })
+}
 
-    mounted() {
-        this.loadInstructions()
-    },
+const loadInstructions = async () => {
+  const dateLimit =
+    canEditInstruction.value || canDeleteInstruction.value
+      ? {}
+      : { to_date: new Date().toISOString() }
+  loading.value = true
+  allInstructions.value = (
+    await getAllInstructions(organizationsStore.current?.code, {
+      ordering: 'publication_date',
+      ...dateLimit,
+    })
+  ).results
+  loading.value = false
+}
 
-    methods: {
-        createInstruction() {
-            this.$router.push({ name: 'CreateInstructionPage' })
-        },
+const doDeleteInstruction = async () => {
+  isDeletingInstruction.value = true
+  try {
+    await deleteInstruction(organizationsStore.current?.code, instructionToDelete.value.id)
+    toaster.pushSuccess(t('instructions.delete.success'))
 
-        async loadInstructions() {
-            const dateLimit =
-                this.canEditInstruction || this.canDeleteInstruction
-                    ? {}
-                    : { to_date: new Date().toISOString() }
-            this.loading = true
-            this.allInstructions = (
-                await getAllInstructions(this.organizationsStore.current?.code, {
-                    ordering: 'publication_date',
-                    ...dateLimit,
-                })
-            ).results
-            this.loading = false
-        },
+    loadInstructions()
+  } catch (err) {
+    toaster.pushError(`${t('instructions.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    instructionToDelete.value = null
+    isDeletingInstruction.value = false
+  }
+}
 
-        async deleteInstruction() {
-            this.isDeletingInstruction = true
-            try {
-                await deleteInstruction(
-                    this.organizationsStore.current?.code,
-                    this.instructionToDelete.id
-                )
-                this.toaster.pushSuccess(this.$t('instructions.delete.success'))
+onMounted(() => {
+  loadInstructions()
+})
 
-                this.loadInstructions()
-            } catch (err) {
-                this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
-                console.error(err)
-            } finally {
-                this.instructionToDelete = null
-                this.isDeletingInstruction = false
-            }
-        },
-    },
+try {
+  const runtimeConfig = useRuntimeConfig()
+  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+
+  useLpiHead(
+    useRequestURL().toString(),
+    computed(() => t('instructions.list.title')),
+    organization?.dashboard_subtitle,
+    organization?.banner_image?.variations?.medium
+  )
+} catch (err) {
+  // DGAF
+  console.log(err)
 }
 </script>
+
+<template>
+  <div class="instruction-list-page page-section-medium page-top">
+    <h1 class="page-title">
+      {{ $t('instructions.list.title') }}
+    </h1>
+
+    <div class="create-instruction-button-ctn">
+      <LpiButton
+        v-if="canCreateInstruction"
+        primary
+        :label="$filters.capitalize($t('instructions.list.create'))"
+        data-test="create-instruction-button"
+        btn-icon="Plus"
+        class="create-instruction-button"
+        @click="createInstruction"
+      />
+    </div>
+    <div v-if="loading" class="instruction-list">
+      <InstructionListItemSkeleton />
+      <InstructionListItemSkeleton />
+    </div>
+    <div v-else class="instruction-list">
+      <InstructionListItem
+        v-for="instruction in allInstructions"
+        :key="instruction.id"
+        :instruction="instruction"
+        @edit-instruction="editedInstruction = instruction"
+        @delete-instruction="instructionToDelete = instruction"
+      />
+    </div>
+  </div>
+  <EditInstructionDrawer
+    :is-opened="!!editedInstruction"
+    :instruction="editedInstruction"
+    @close="editedInstruction = null"
+    @instruction-edited="loadInstructions"
+  />
+  <ConfirmModal
+    v-if="instructionToDelete"
+    :content="$t('instructions.delete.message')"
+    :title="$t('instructions.delete.title')"
+    cancel-button-label="common.cancel"
+    confirm-button-label="common.delete"
+    :asyncing="isDeletingInstruction"
+    @cancel="instructionToDelete = null"
+    @confirm="doDeleteInstruction"
+  />
+</template>
 <style lang="scss" scoped>
 .page-title {
-    margin-bottom: $space-2xl;
+  margin-bottom: $space-2xl;
 }
 
 .create-instruction-button-ctn {
-    margin: 2rem 0;
+  margin: 2rem 0;
 }
 
 .create-instruction-button {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .loader-ctn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
 }
 
 .instruction-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 </style>

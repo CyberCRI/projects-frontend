@@ -1,124 +1,113 @@
-<template>
-    <div class="newsfeed-page page-section-medium page-top">
-        <h1 class="page-title">
-            {{ $t('feed.title') }}
-        </h1>
-
-        <div class="newsfeed-container">
-            <div class="newsfeed-select-container"></div>
-            <div v-if="isLoading">
-                <NewsListSkeleton :limit="15" />
-            </div>
-            <div v-else class="news-container">
-                <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
-            </div>
-        </div>
-
-        <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
-            <PaginationButtons
-                :current="pagination.currentPage"
-                :pagination="pagination"
-                :total="pagination.total"
-                @update-pagination="onClickPagination"
-            />
-        </div>
-    </div>
-</template>
-
-<script>
+<script setup>
 import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { axios } from '@/api/api.config'
-import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
-import NewsFeed from '@/components/app/NewsFeed.vue'
+import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-    name: 'NewsfeedPage',
+import { getOrganizationByCode } from '@/api/organizations.service'
 
-    components: {
-        NewsFeed,
-        PaginationButtons,
-        NewsListSkeleton,
-    },
-    setup() {
-        const organizationsStore = useOrganizationsStore()
-        return {
-            organizationsStore,
-        }
-    },
-    data() {
-        return {
-            isLoading: false,
-            request: {},
-        }
-    },
+const organizationsStore = useOrganizationsStore()
+const { t } = useI18n()
 
-    async mounted() {
-        await this.loadNewsfeed()
-    },
+const isLoading = useState(() => false)
+const request = useState(() => ({ results: [] }))
 
-    computed: {
-        newsfeed() {
-            return this.request ? this.request.results : []
-        },
+const newsfeed = computed(() => {
+  return request.value ? request.value.results : []
+})
 
-        pagination() {
-            if (!this.request) return { total: 0 }
-            return {
-                currentPage: this.request.current_page,
-                total: this.request.total_page,
-                previous: this.request.previous,
-                next: this.request.next,
-                first: this.request.first,
-                last: this.request.last,
-            }
-        },
-    },
+const pagination = computed(() => {
+  if (!request.value) return { total: 0 }
+  return {
+    currentPage: request.value.current_page,
+    total: request.value.total_page,
+    previous: request.value.previous,
+    next: request.value.next,
+    first: request.value.first,
+    last: request.value.last,
+  }
+})
 
-    methods: {
-        async loadNewsfeed() {
-            this.isLoading = true
-            const req = await getNewsfeed(this.organizationsStore.current.code, {
-                limit: 15,
-            })
-            this.request = req
-            this.newsfeed = req.results
-            this.isLoading = false
-        },
+const loadNewsfeed = async () => {
+  isLoading.value = true
+  const req = await getNewsfeed(organizationsStore.current.code, {
+    limit: 15,
+  })
+  request.value = req
+  isLoading.value = false
+}
 
-        async onClickPagination(requestedPage) {
-            this.isLoading = true
-            this.request = (await axios.get(requestedPage)).data
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-            this.isLoading = false
-        },
-    },
+const onClickPagination = async (requestedPage) => {
+  isLoading.value = true
+  request.value = await useAPI(requestedPage, {})
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  isLoading.value = false
+}
+
+onMounted(loadNewsfeed)
+
+try {
+  const runtimeConfig = useRuntimeConfig()
+  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+  useLpiHead(
+    useRequestURL().toString(),
+    computed(() => t('feed.title')),
+    organization?.dashboard_subtitle,
+    organization?.banner_image?.variations?.medium
+  )
+} catch (err) {
+  console.log(err)
 }
 </script>
 
+<template>
+  <div class="newsfeed-page page-section-medium page-top">
+    <h1 class="page-title">
+      {{ $t('feed.title') }}
+    </h1>
+
+    <div class="newsfeed-container">
+      <div class="newsfeed-select-container" />
+      <div v-if="isLoading">
+        <NewsListSkeleton :limit="15" />
+      </div>
+      <div v-else class="news-container">
+        <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
+      </div>
+    </div>
+
+    <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
+      <PaginationButtons
+        :current="pagination.currentPage"
+        :pagination="pagination"
+        :total="pagination.total"
+        @update-pagination="onClickPagination"
+      />
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .newsfeed-title {
-    margin-bottom: $space-2xl;
+  margin-bottom: $space-2xl;
 }
 
 .newsfeed-container {
-    padding-top: $space-xl;
-    padding-inline: $space-xs;
+  padding-top: $space-xl;
+  padding-inline: $space-xs;
 }
 
 .pagination-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: $space-3xl;
-    padding-top: $space-unit;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: $space-3xl;
+  padding-top: $space-unit;
 }
 
 .news-container {
-    display: flex;
-    flex-direction: column;
-    gap: $space-l;
-    justify-content: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: $space-l;
+  justify-content: stretch;
 }
 </style>

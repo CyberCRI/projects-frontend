@@ -1,16 +1,16 @@
 <template>
-    <div class="information-tab">
-        <section class="admin-section">
-            <EventAdminBlock class="sub-section" />
+  <div class="information-tab">
+    <section class="admin-section">
+      <EventAdminBlock class="sub-section" />
 
-            <NewsAdminBlock />
-        </section>
-        <section class="admin-section">
-            <InstructionAdminBlock />
+      <NewsAdminBlock />
+    </section>
+    <section class="admin-section">
+      <InstructionAdminBlock />
 
-            <FeaturedProjectAdminBlock />
-        </section>
-    </div>
+      <FeaturedProjectAdminBlock />
+    </section>
+  </div>
 </template>
 
 <script>
@@ -20,32 +20,32 @@ import NewsAdminBlock from '@/components/admin/GeneralAdminBlocks/News/NewsAdmin
 import FeaturedProjectAdminBlock from '@/components/admin/GeneralAdminBlocks/FeaturedProject/FeaturedProjectAdminBlock.vue'
 
 export default {
-    name: 'NewInformationTab',
+  name: 'NewInformationTab',
 
-    components: {
-        EventAdminBlock,
-        InstructionAdminBlock,
-        NewsAdminBlock,
-        FeaturedProjectAdminBlock,
-    },
+  components: {
+    EventAdminBlock,
+    InstructionAdminBlock,
+    NewsAdminBlock,
+    FeaturedProjectAdminBlock,
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .information-tab {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: $min-desktop) {
-    .information-tab {
-        align-items: stretch;
-        flex-direction: row;
-        gap: 10rem; // 160px
+  .information-tab {
+    align-items: stretch;
+    flex-direction: row;
+    gap: 10rem; // 160px
 
-        .admin-section {
-            width: 50%;
-        }
+    .admin-section {
+      width: 50%;
     }
+  }
 }
 </style>

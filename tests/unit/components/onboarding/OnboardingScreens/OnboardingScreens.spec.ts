@@ -1,39 +1,39 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/locales/en.json'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-        en: english,
-    },
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+  },
 }
 
 describe('OnboardingScreens', () => {
-    let wrapper
-    let defaultParams
+  let wrapper
+  let defaultParams
 
-    beforeEach(() => {
-        const usersStore = useUsersStore(pinia)
-        usersStore.$patch({
-            id: '123',
-            userFromApi: {},
-            permissions: {},
-            getUser: vi.fn(),
-        } as any)
-        defaultParams = {
-            i18n,
-        }
-    })
+  beforeEach(() => {
+    const usersStore = useUsersStore(pinia)
+    usersStore.$patch({
+      id: '123',
+      userFromApi: {},
+      permissions: {},
+      getUser: vi.fn(),
+    } as any)
+    defaultParams = {
+      i18n,
+    }
+  })
 
-    it('should render OnboardingScreens component', () => {
-        wrapper = lpiShallowMount(OnboardingScreens, defaultParams)
+  it('should render OnboardingScreens component', () => {
+    wrapper = lpiShallowMount(OnboardingScreens, defaultParams)
 
-        expect(wrapper.exists()).toBeTruthy()
-    })
+    expect(wrapper.exists()).toBeTruthy()
+  })
 })

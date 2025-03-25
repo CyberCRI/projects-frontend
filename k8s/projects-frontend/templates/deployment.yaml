@@ -17,12 +17,7 @@ spec:
       labels:
         {{- tpl (.Values.commonLabels  | toYaml | nindent 8) $ }}
       annotations:
-      {{- if .Values.injectedEnv.nonSensitive }}
-        checksum/configmap: {{ include (print $.Template.BasePath "/environment-configmap.yaml") . | sha256sum }}
-      {{- end }}
-      {{- if .Values.injectedEnv.sensitive }}
-        checksum/secret: {{ include (print $.Template.BasePath "/environment-secret.yaml") . | sha256sum }}
-      {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         argocd.argoproj.io/sync-wave: "1"
     spec:
       securityContext:
@@ -38,36 +33,31 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.targetPort }}
-          env:
-          {{- range $key, $value := .Values.nginxProxyEnv }}
-            - name: {{ $key }}
-              value: {{ tpl $value $ | quote }}
-          {{- end }}
           envFrom:
-            {{- if .Values.injectedEnv.nonSensitive }}
+            {{- if .Values.config.nonSensitive }}
             - configMapRef:
                 name: {{ tpl .Values.fullName . }}
             {{- end }}
           resources: {{- .Values.resources |toYaml | nindent 12 }}
-          livenessProbe:
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 10
-            httpGet:
-              scheme: HTTP
-              path: /
-              port: http
-          readinessProbe:
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 2
-            httpGet:
-              scheme: HTTP
-              path: /
-              port: http
+          # livenessProbe:
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          #   timeoutSeconds: 1
+          #   successThreshold: 1
+          #   failureThreshold: 10
+          #   httpGet:
+          #     scheme: HTTP
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   periodSeconds: 10
+          #   timeoutSeconds: 1
+          #   successThreshold: 1
+          #   failureThreshold: 2
+          #   httpGet:
+          #     scheme: HTTP
+          #     path: /
+          #     port: http
           volumeMounts:
           - name: secrets
             mountPath: "/secrets"
