@@ -132,8 +132,6 @@ export default {
     saveCommentImage(file) {
       const formData = new FormData()
       formData.append('file', file, file.name)
-      // TODO still needed ?
-      formData.append('project_id', this.project.id)
       if (this.isPrivate) {
         return postProjectMessageImage(this.project.id, formData)
       } else {

@@ -293,7 +293,6 @@ export default {
     saveTemplateImage(file) {
       const formData = new FormData()
       formData.append('file', file, file.name)
-      // formData.append('project_id', this.projectsStore.currentProjectId)
       return postTemplateImage({ id: this.selectedCategory.id, body: formData })
     },
 
