@@ -5,7 +5,7 @@ import useSearch from '@/composables/useSearch.js'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 const props = defineProps({
-  id: {
+  slugOrId: {
     type: [String, Number],
     required: true,
   },
@@ -22,9 +22,12 @@ if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
 }
 
 const category = computed(() => {
-  if (props.id) {
+  if (props.slugOrId) {
     if (import.meta.client) window.scrollTo(0, 0)
-    return projectCategoriesStore.allByIds[route.params.id]
+    return (
+      projectCategoriesStore.allBySlugs[route.params.slugOrId] ||
+      projectCategoriesStore.allByIds[route.params.slugOrId]
+    )
   }
 
   return null
@@ -55,11 +58,11 @@ const categoryHierarchy = computed(() => {
     },
     ...(category.value?.hierarchy || []).map((cat) => ({
       name: cat.name,
-      route: { name: 'Category', params: { id: cat.id } },
+      route: { name: 'Category', params: { slugOrId: cat.slug || cat.id } },
     })),
     {
       name: category.value?.name,
-      route: { name: 'Category', params: { id: category.value?.id } },
+      route: { name: 'Category', params: { slugOrId: category.value?.slug || category.value?.id } },
     },
   ]
 })
@@ -118,7 +121,7 @@ useLpiHead(
         <NuxtLink
           v-for="child in sortedChildren"
           :key="child.id"
-          :to="{ name: 'Category', params: { id: child.id } }"
+          :to="{ name: 'Category', params: { slugOrId: child.slug || child.id } }"
           class="category-child shadow-box"
         >
           <h3 class="child-title">

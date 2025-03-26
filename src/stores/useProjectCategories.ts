@@ -26,6 +26,13 @@ const useProjectCategoriesStore = defineStore('projectCategories', {
       }, {})
     },
 
+    allBySlugs(): ProjectCategoriesMap {
+      return this.all.reduce((acc, category) => {
+        if (category.slug) acc[category.slug] = category
+        return acc
+      }, {})
+    },
+
     hierarchy(): ProjectCategoryOutput[] {
       const orderCategories = (a, b) => a.order_index - b.order_index
       const hydrateChildren = (cat) => {

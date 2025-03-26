@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     class="drop-down-menu-item-content"
-    :to="{ name: 'Category', params: { id: category.id } }"
+    :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
   >
     <span class="label">{{ $filters.capitalize(category.name) }}</span>
   </NuxtLink>
