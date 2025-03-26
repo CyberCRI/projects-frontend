@@ -174,6 +174,7 @@ export default {
           setTimeout(() => {
             const data = instance.getValue()
             cropCircle(data)
+            this.updateData(instance.getValue())
           }, 1)
         },
         minSize: [1, 1, '%'],
