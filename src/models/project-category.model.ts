@@ -8,6 +8,7 @@ import { TagOutput } from '@/models/tag.model'
  * @description Category of an organization or project
  */
 export interface ProjectCategoryModel extends BaseModel {
+  slug?: string
   background_color: string
   background_image: {
     variations: {

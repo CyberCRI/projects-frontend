@@ -34,6 +34,7 @@
             'projectResources',
             'projectLinkedProjects',
             'projectComments',
+            'projectPrivateExchange',
             'projectAnnouncements',
             'ProjectSettings',
           ]"

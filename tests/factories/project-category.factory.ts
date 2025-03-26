@@ -12,6 +12,7 @@ import TemplateFactory from './template.factory'
 
 const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
+  slug: faker.datatype.string(),
   organization_code: faker.datatype.string(),
   background_color: faker.internet.color(),
   background_image: {

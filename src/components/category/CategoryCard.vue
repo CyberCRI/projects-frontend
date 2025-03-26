@@ -2,7 +2,7 @@
   <NuxtLink
     class="category-card shadow-box"
     :style="{ width: imageWidth }"
-    :to="{ name: 'Category', params: { id: category?.id } }"
+    :to="{ name: 'Category', params: { slugOrId: category?.slug || category?.id } }"
   >
     <CategoryCardImage
       :background-color="category.background_color"

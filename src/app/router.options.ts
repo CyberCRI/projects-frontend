@@ -409,7 +409,7 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
     },
   },
   {
-    path: '/category/:id',
+    path: '/category/:slugOrId',
     name: 'Category',
     component: () => import('../pages/CategoryPage/CategoryPage.vue'),
     props: true,

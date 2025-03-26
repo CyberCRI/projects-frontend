@@ -362,7 +362,7 @@ export default {
         },
         ...(this.categoryForCurrentOrganization?.hierarchy || []).map((cat) => ({
           name: cat.name,
-          route: { name: 'Category', params: { id: cat.id } },
+          route: { name: 'Category', params: { slugOrId: cat.slug || cat.id } },
         })),
         ...(this.categoryForCurrentOrganization
           ? [
@@ -370,7 +370,11 @@ export default {
                 name: this.categoryForCurrentOrganization.name,
                 route: {
                   name: 'Category',
-                  params: { id: this.categoryForCurrentOrganization.id },
+                  params: {
+                    slugOrId:
+                      this.categoryForCurrentOrganization.slug ||
+                      this.categoryForCurrentOrganization.id,
+                  },
                 },
               },
             ]
