@@ -19,7 +19,7 @@
         :label="$filters.capitalize($t('project.view'))"
         class="project-tooltip__button"
         btn-icon="ArrowRight"
-        :to="{ name: 'pageProject', params: { slugOrId: project.id } }"
+        :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
       />
     </div>
 
