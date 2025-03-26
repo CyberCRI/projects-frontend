@@ -33,6 +33,7 @@ export async function deleteBlogEntry({ project_id, id }: { project_id: string; 
   return await useAPI(`project/${project_id}/blog-entry/${id}/`, { method: 'DELETE' })
 }
 
-export async function postBlogEntryImage({ body, project_id }) {
-  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST' }) //.data.value
+export async function postBlogEntryImage({ body, project_id, blog_entry_id = null }) {
+  const query = blog_entry_id ? { blog_entry_id } : {}
+  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query }) //.data.value
 }

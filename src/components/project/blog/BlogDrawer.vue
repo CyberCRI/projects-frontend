@@ -251,6 +251,7 @@ export default {
       return postBlogEntryImage({
         project_id: this.project.id,
         body: formData,
+        blog_entry_id: this.editedBlog?.id || null,
       })
     },
 
