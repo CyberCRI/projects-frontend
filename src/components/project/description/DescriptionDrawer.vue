@@ -155,8 +155,6 @@ export default {
     saveDescriptionImage(file) {
       const formData = new FormData()
       formData.append('file', file, file.name)
-      // TODO still needed ?
-      formData.append('project_id', this.project.id)
       return postProjectImage({
         project_id: this.project.id,
         body: formData,

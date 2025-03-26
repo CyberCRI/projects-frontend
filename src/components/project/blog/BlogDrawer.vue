@@ -247,8 +247,6 @@ export default {
     saveBlogImage(file) {
       const formData = new FormData()
       formData.append('file', file, file.name)
-      // TODO necessary ?
-      formData.append('project_id', this.projectsStore.currentProjectId)
 
       return postBlogEntryImage({
         project_id: this.project.id,

@@ -126,7 +126,6 @@ export default {
     saveFaqImage(file) {
       const formData = new FormData()
       formData.append('file', file, file.name)
-      // formData.append('project_id', this.projectsStore.currentProjectId)
       return postFaqImage({
         orgCode: this.currentOrgCode,
         body: formData,
