@@ -18,33 +18,17 @@ export async function createProject(project) {
     headerFormData.append('file', project['header_image'], project['header_image'].name)
 
     const imageSizes = project['imageSizes']
-    headerFormData.append('scale_x', imageSizes ? imageSizes.scaleX : '')
-    headerFormData.append('scale_y', imageSizes ? imageSizes.scaleY : '')
-    headerFormData.append('left', imageSizes ? imageSizes.left : '')
-    headerFormData.append('top', imageSizes ? imageSizes.top : '')
-    headerFormData.append('natural_ratio', imageSizes ? imageSizes.naturalRatio : '')
+    if (imageSizes) {
+      headerFormData.append('scale_x', imageSizes.scaleX)
+      headerFormData.append('scale_y', imageSizes.scaleY)
+      headerFormData.append('left', imageSizes.left)
+      headerFormData.append('top', imageSizes.top)
+      headerFormData.append('natural_ratio', imageSizes.naturalRatio)
+    }
     project.header_image_id = (
       (await postProjectHeader({ project_id: result.id, body: headerFormData })) as any
     ).id
   }
-  delete project.header_image
-
-  // TODO: make this in POST when backend allows it
-  if (project['imageSizes'] && project.header_image_id) {
-    const headerFormData = new FormData()
-    const imageSizes = project['imageSizes']
-    headerFormData.append('scale_x', imageSizes ? imageSizes.scaleX : null)
-    headerFormData.append('scale_y', imageSizes ? imageSizes.scaleY : null)
-    headerFormData.append('left', imageSizes ? imageSizes.left : null)
-    headerFormData.append('top', imageSizes ? imageSizes.top : null)
-    headerFormData.append('natural_ratio', imageSizes ? imageSizes.naturalRatio : null)
-    await patchProjectHeader({
-      project_id: result.id,
-      image_id: project.header_image_id,
-      body: headerFormData,
-    })
-  }
-  delete project.imageSizes
 
   return result
 }
