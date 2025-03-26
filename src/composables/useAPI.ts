@@ -15,7 +15,7 @@ const useAPI = (url: string, options) => {
       method: 'GET',
       onRequest({ options }) {
         if (import.meta.client) {
-          const accessToken = usersStore.accessToken
+          const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
           if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
         }
       },
