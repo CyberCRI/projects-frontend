@@ -7,6 +7,7 @@ import {
 import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
 import useToasterStore from '@/stores/useToaster'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 export type AuthResult = {
   access_token: string
@@ -143,6 +144,16 @@ export default function useKeycloak() {
           console.error('oauth error', params)
           this.onLoginError()
           return Promise.resolve()
+        }
+
+        // dirty fix for the issue where
+        // some go straight to keycloack login without passing by project first
+        // (then we lack a codeverifier and get errors)
+        // so in that case we just make a second round trip to keycloak
+        // but this time the codeverifier is set...
+        if (!this.codeVerifier.get()) {
+          await goToKeycloakLoginPage()
+          return
         }
 
         const response = await oauth.authorizationCodeGrantRequest(
