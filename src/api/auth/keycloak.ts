@@ -176,17 +176,12 @@ export default function useKeycloak() {
         )
         const tokens = await this.processKeycloakResponse(result)
 
-        await usersStore
-          .logIn({
-            ...tokens,
-            fromURL: state.fromURL,
-          })
-          .then(() => {
-            // due to async op user may not have been set
-            // before this call in main
-            // so restart loop after successful login
-            this.refreshTokenLoop.start()
-          })
+        await usersStore.logIn(tokens).then(() => {
+          // due to async op user may not have been set
+          // before this call in main
+          // so restart loop after successful login
+          this.refreshTokenLoop.start()
+        })
       } catch (e) {
         console.error(e)
         // const { t } = useI18n()

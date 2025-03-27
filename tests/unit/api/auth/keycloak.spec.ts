@@ -65,7 +65,6 @@ describe('Keycloak | loginIfValidState', () => {
     await keycloak.loginIfValidState(searchParams)
     expect(usersStore.logIn).toHaveBeenNthCalledWith(1, {
       access_token: '123',
-      fromURL: 'http://localhost:8080/dashboard',
       parsedToken: { sub: 'keycloak_id_string', pid: 'people_id' }, // see .vitet/mockOauth.ts
       refresh_token: '456',
       refresh_token_exp: 1577836800 + 3600, // see .vitest/mockOauth.ts for 3600 (expires_in)
