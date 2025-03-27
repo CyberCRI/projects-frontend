@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware(async function postLogin(to) {
       : null
 
     if (state) {
-      let nextPage = state.fromURL.replace(window.location.origin, '')
+      let nextPage = state?.fromURL?.replace(window.location.origin, '') || window.location.pathname
       if (nextPage.includes('discover')) {
         nextPage = nextPage.replace('discover', 'dashboard')
       }
