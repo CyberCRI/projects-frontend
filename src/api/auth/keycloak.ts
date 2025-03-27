@@ -131,7 +131,6 @@ export default function useKeycloak() {
         if (!loginSearchParams.get('code') || !loginSearchParams.get('session_state') || !state) {
           return Promise.resolve()
         }
-
         const as = await this.as.get()
         const currentUrl: URL = new URL(this.getCurrentUrl())
         const params = oauth.validateAuthResponse(
