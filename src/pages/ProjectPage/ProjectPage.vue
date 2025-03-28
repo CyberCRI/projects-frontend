@@ -447,8 +447,6 @@ onBeforeRouteUpdate((to, from, next) => {
   if (to.params.slugOrId !== from.params.slugOrId) {
     if (commentLoop.value) clearInterval(commentLoop.value)
     cleanupProvider()
-    setProject(to.params.slugOrId)
-    if (import.meta.client) utils.resetScroll()
   }
   next()
 })
