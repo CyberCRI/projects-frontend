@@ -123,6 +123,8 @@ export default function useKeycloak() {
     async loginIfValidState(loginSearchParams: URLSearchParams): Promise<void> {
       const toaster = useToasterStore()
       const usersStore = useUsersStore()
+      // will connect anyway
+      if (usersStore.isConnected) return
       try {
         const state = loginSearchParams.get('state')
           ? JSON.parse(loginSearchParams.get('state') as string)
@@ -130,6 +132,15 @@ export default function useKeycloak() {
 
         if (!loginSearchParams.get('code') || !loginSearchParams.get('session_state') || !state) {
           return Promise.resolve()
+        }
+        // dirty fix for the issue where
+        // some go straight to keycloack login without passing by project first
+        // (then we lack a codeverifier and get errors)
+        // so in that case we just make a second round trip to keycloak
+        // but this time the codeverifier is set...
+        if (!this.codeVerifier.get()) {
+          await goToKeycloakLoginPage()
+          return
         }
         const as = await this.as.get()
         const currentUrl: URL = new URL(this.getCurrentUrl())
@@ -143,16 +154,6 @@ export default function useKeycloak() {
           console.error('oauth error', params)
           this.onLoginError()
           return Promise.resolve()
-        }
-
-        // dirty fix for the issue where
-        // some go straight to keycloack login without passing by project first
-        // (then we lack a codeverifier and get errors)
-        // so in that case we just make a second round trip to keycloak
-        // but this time the codeverifier is set...
-        if (!this.codeVerifier.get()) {
-          await goToKeycloakLoginPage()
-          return
         }
 
         const response = await oauth.authorizationCodeGrantRequest(
