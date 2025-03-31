@@ -123,6 +123,7 @@ const team = useState(() => ({ owners: [], members: [], reviewers: [] }))
 const reviews = useState(() => [])
 const linkedProjects = useState(() => [])
 const commentLoop = ref(null)
+const linkedProjectsLoading = ref(false)
 
 // computed
 
@@ -177,11 +178,14 @@ const getLinkedProjects = async (_linkedProjects) => {
     linkedProjects.value = _linkedProjects
   } else {
     try {
+      linkedProjectsLoading.value = true
       // TODO beg for a dedicated endpoint
       const response = await getProject(project.value.id)
       linkedProjects.value = response.linked_projects
     } catch (err) {
       console.error(err)
+    } finally {
+      linkedProjectsLoading.value = false
     }
   }
 }
@@ -551,6 +555,7 @@ if (import.meta.client) {
       :already-linked-projects="linkedProjects"
       :edited-linked-project="modals.linkedProject.editedItem"
       :is-opened="modals.linkedProject.visible"
+      :is-loading="linkedProjectsLoading"
       @reload-linked-projects="getLinkedProjects($event)"
       @close="toggleAddModal('linkedProject')"
     />

@@ -11,7 +11,7 @@
     "
     :selected-projects="listProjects"
     :padding="true"
-    :asyncing="asyncing"
+    :asyncing="asyncing || isLoading"
     @unselect="unselectProject"
     @close="closeModal"
     @confirm="addLinkedProject"
@@ -73,6 +73,10 @@ export default {
     alreadyLinkedProjects: {
       type: Array,
       default: () => [],
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
   },
 
