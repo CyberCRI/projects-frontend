@@ -75,7 +75,7 @@ onMounted(() => {
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const inst = await getInstruction(runtimeConfig.public.appApiOrgCode, props.slugOrId)
+  const inst = await getInstruction(runtimeConfig.public.appApiOrgCode, props.slugOrId, true)
 
   useLpiHead(
     useRequestURL().toString(),
