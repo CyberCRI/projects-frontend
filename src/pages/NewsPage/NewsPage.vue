@@ -96,7 +96,7 @@ onMounted(async () => {
 
 try {
   const runtimeConfig = useRuntimeConfig()
-  const news = await getNews(runtimeConfig.public.appApiOrgCode, props.slugOrId)
+  const news = await getNews(runtimeConfig.public.appApiOrgCode, props.slugOrId, true)
 
   useLpiHead(
     useRequestURL().toString(),

@@ -10,8 +10,8 @@ export async function getAllNews(orgCode: string, params: any) {
   return await useAPI(`organization/${orgCode}/news/`, { ...adaptedParams }) //.data.value
 }
 
-export async function getNews(orgCode: string, idOrSlug: number | string) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, {}) //.data.value
+export async function getNews(orgCode: string, idOrSlug: number | string, noError = false) {
+  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { noError }) //.data.value
 }
 
 export async function createNews(orgCode: string, body: NewsInput) {

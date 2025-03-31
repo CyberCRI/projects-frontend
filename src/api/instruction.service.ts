@@ -12,8 +12,8 @@ export async function getAllInstructions(orgCode: string, params: any) {
   return await useAPI(`organization/${orgCode}/instruction/`, { ...adaptedParams }) //.data.value
 }
 
-export async function getInstruction(orgCode: string, idOrSlug: number | string) {
-  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, {}) //.data.value
+export async function getInstruction(orgCode: string, idOrSlug: number | string, noError = false) {
+  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { noError }) //.data.value
 }
 
 export async function createInstruction(orgCode: string, body: InstructionInput) {
