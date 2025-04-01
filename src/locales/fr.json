@@ -862,11 +862,13 @@
     "terms-of-service": "Conditions d'utilisation",
     "cookies": "Cookies",
     "accessibility": "Accessibilité",
-    "personal-data": "Politique de protection des données personnelles",
+    "personal-data": "Données personnelles",
     "help": "Aide",
     "projects": " Plateforme Projects",
     "madeBy": "créée par",
-    "sourceText": "Voir le code source"
+    "sourceText": "Voir le code source",
+    "pca": "Plan de continuité (PCA)",
+    "pssi": "Plan de Sécurité (PSSI)"
   },
   "goal": {
     "add": "ajouter un objectif",
