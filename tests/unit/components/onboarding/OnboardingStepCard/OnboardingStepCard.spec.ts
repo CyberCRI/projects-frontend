@@ -1,6 +1,6 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import OnboardingStepCard from '@/components/onboarding/OnboardingStepCard/OnboardingStepCard.vue'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'

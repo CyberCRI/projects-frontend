@@ -3,7 +3,7 @@ import ProjectSummaryTab from '@/pages/ProjectPage/Tabs/ProjectSummaryTab.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { CommentFactory } from '@/../tests/factories/comment.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'

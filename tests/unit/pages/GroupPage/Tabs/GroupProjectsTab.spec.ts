@@ -1,6 +1,6 @@
 import GroupProjectsTab from '@/pages/GroupPage/Tabs/GroupProjectsTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { DOMWrapper, flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 

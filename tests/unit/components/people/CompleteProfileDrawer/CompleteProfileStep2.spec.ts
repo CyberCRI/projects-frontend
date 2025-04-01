@@ -1,7 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 

@@ -106,13 +106,28 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    vueI18n: './i18n.config.ts', // if you are using custom path, default
-    // temp fix for a ssr warning, see https://github.com/nuxt-modules/i18n/issues/3350
+    // locale: runtimeConfig.public.appI18nLocale || 'en',
+    // fallbackLocale: runtimeConfig.public.appI18nFallbackLocale || 'en',
+    // messages: loadLocaleMessages(),
     locales: [
-      { code: 'en', name: 'English' },
-      { code: 'fr', name: 'Français' },
+      { code: 'en', name: 'English', files: ['en.json'] },
+      { code: 'fr', name: 'Français', files: ['fr.json'] },
     ],
+    lazy: true,
+    defaultLocale: 'en',
+    restructureDir: './src/i18n',
+    // legacy: false,
+    // globalInjection: true,
   },
+
+  // i18n: {
+  //   vueI18n: './i18n.config.ts', // if you are using custom path, default
+  //   // temp fix for a ssr warning, see https://github.com/nuxt-modules/i18n/issues/3350
+  //   locales: [
+  //     { code: 'en', name: 'English' },
+  //     { code: 'fr', name: 'Français' },
+  //   ],
+  // },
   // routeRules: {
   //     '/v1/**': {
   //         proxy: `${process.env.NUXT_PUBLIC_APP_API_URL}/**`,

@@ -3,7 +3,7 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
 
 import pinia from '@/stores'

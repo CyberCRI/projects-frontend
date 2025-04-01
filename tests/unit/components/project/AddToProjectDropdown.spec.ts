@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import AddToProjectDropdown from '@/components/project/AddToProjectDropdown.vue'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import utils from '@/functs/functions'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'

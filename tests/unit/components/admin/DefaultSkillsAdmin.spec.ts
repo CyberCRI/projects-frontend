@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import waitForExpect from 'wait-for-expect'
 import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
 

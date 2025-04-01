@@ -11,7 +11,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev --inspect",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "PORT=8080 nuxt preview",
     "postinstall": "nuxt prepare",
     "build:sourcemaps": "nuxt build --sourcemap",
     "build:report": "trash report && vue-cli-service build",

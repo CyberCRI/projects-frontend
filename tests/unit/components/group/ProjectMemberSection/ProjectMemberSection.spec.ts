@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { GroupMemberFactory } from '@/../tests/factories/group-member.factory'

@@ -1,5 +1,5 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
 

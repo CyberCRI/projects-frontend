@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import LpiHeader from '@/components/app/LpiHeader.vue'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'

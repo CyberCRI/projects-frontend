@@ -1,6 +1,6 @@
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const i18n = {

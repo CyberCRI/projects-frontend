@@ -1,7 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import ProjectTabs from '@/components/project/ProjectTabs.vue'
 import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'

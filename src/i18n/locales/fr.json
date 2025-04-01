@@ -266,7 +266,7 @@
         "background-color": "Choisir une couleur d'arrière plan",
         "background-image": "Choisir une image",
         "upload-picture": "Télécharger une image",
-        "tips-background-image": "Ce n'est pas obligatoire si vous préférez simplement afficher une couleur.<br/>Largeur minimale : 1024px, hauteur minimal : 400px."
+        "tips-background-image": "Ce n'est pas obligatoire si vous préférez simplement afficher une couleur. Largeur minimale : 1024px, hauteur minimal : 400px."
       },
       "chat": "Plateforme de discussion (vue connectée)",
       "events": "Événements",

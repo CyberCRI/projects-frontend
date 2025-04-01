@@ -1,6 +1,6 @@
 import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
 import { lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { beforeEach, afterEach, vi, describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 
