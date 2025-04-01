@@ -82,6 +82,19 @@
               </NuxtLink>
             </FooterEnglishTips>
           </li>
+
+          <li v-if="canOpen" class="list-item">
+            <NuxtLink :to="{ name: 'pca-page' }">
+              {{ $t('footer.pca') }}
+            </NuxtLink>
+          </li>
+          <li v-else>
+            <FooterEnglishTips ref="copy-link-tooltip" item-title="pca">
+              <NuxtLink :to="{ name: 'pca-page' }">
+                {{ $t('footer.pca') }}
+              </NuxtLink>
+            </FooterEnglishTips>
+          </li>
         </ul>
 
         <ul class="footer-links">
@@ -102,6 +115,19 @@
             <NuxtLink to="/help">
               {{ $t('footer.help') }}
             </NuxtLink>
+          </li>
+
+          <li v-if="canOpen" class="list-item">
+            <NuxtLink :to="{ name: 'pssi-page' }">
+              {{ $t('footer.pssi') }}
+            </NuxtLink>
+          </li>
+          <li v-else>
+            <FooterEnglishTips ref="copy-link-tooltip" item-title="pssi">
+              <NuxtLink :to="{ name: 'pssi-page' }">
+                {{ $t('footer.pssi') }}
+              </NuxtLink>
+            </FooterEnglishTips>
           </li>
         </ul>
         <ul class="footer-links">

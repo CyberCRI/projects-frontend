@@ -25,6 +25,8 @@ const router = [
   { path: '/cookies', component: MockComponent },
   { path: '/accessibility', component: MockComponent },
   { path: '/personal-data', component: MockComponent },
+  { path: '/plan-de-continuite', component: MockComponent, name: 'pca-page' },
+  { path: '/plan-de-securite', component: MockComponent, name: 'pssi-page' },
   { path: '/blank', component: MockComponent, name: 'blank' },
   {
     path: '/register',

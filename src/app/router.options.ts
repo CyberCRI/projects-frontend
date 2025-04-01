@@ -679,6 +679,25 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
     },
   },
   {
+    path: '/plan-de-continuite-d-action',
+    name: 'pca-page',
+    component: () => import('../pages/PcaPage/PcaPage.vue'),
+
+    meta: {
+      resetScroll: true,
+    },
+  },
+
+  {
+    path: '/plan-de-securite-des-systemes-d-information',
+    name: 'pssi-page',
+    component: () => import('../pages/PssiPage/PssiPage.vue'),
+
+    meta: {
+      resetScroll: true,
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'page404',
     component: () => import('../pages/ErrorPage/ErrorPage.vue'),
