@@ -2,6 +2,8 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
 import english from '@/i18n/locales/en.json'
 
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
@@ -23,6 +25,10 @@ const factory = (props?) => {
 }
 
 describe('LanguageFilter.vue', () => {
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore.current = { code: 'TEST', languages: ['en', 'fr'] } as any
+  })
   it('should render component', () => {
     const wrapper = factory({ modelValue: [] })
     expect(wrapper.exists()).toBe(true)

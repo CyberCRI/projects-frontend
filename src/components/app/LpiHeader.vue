@@ -105,6 +105,7 @@
           icon="Account"
         />
         <HeaderDropDown
+          v-if="languagesStore?.all?.length > 1"
           :label="languagesStore.current.toUpperCase()"
           :menu-items="langMenu"
           data-test="dropdown-lang"

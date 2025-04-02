@@ -6,6 +6,7 @@ import { useNuxtApp } from '#imports'
 
 export interface LanguageState {
   all: LanguageType[]
+  allAvailable: LanguageType[]
   current: LanguageType
 }
 
@@ -15,16 +16,16 @@ if (import.meta.client) _localStorage = window.localStorage
 const localStorage = _localStorage
 
 const useLanguagesStore = defineStore('languages', () => {
+  const organizationStore = useOrganizations()
   const runtimeConfig = useRuntimeConfig()
-
-  const allLanguages: LanguageType[] = ['en', 'fr']
+  const allLanguages: LanguageType[] = runtimeConfig.public.allLocales
   const userLang: LanguageType = navigator?.language?.split('-')[0] as LanguageType
   const initialLang =
     localStorage?.getItem('lang') ||
     (allLanguages.indexOf(userLang) > -1 ? userLang : null) ||
     runtimeConfig.public.appI18nLocale
 
-  const all = useState(() => allLanguages)
+  const all = useState(() => organizationStore.current?.languages || [])
   const current = useState(() => initialLang)
 
   watchEffect(() => {

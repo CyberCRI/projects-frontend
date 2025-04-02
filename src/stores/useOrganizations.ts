@@ -49,6 +49,8 @@ const useOrganizationsStore = defineStore('organizations', {
     async getCurrentOrganization(code: string): Promise<OrganizationOutput> {
       try {
         const organization = await getOrganizationByCode(code)
+        // TODO: temp fix while API is not setup
+        organization.languages = organization.languages || ['en', 'fr']
 
         this.current = organization
         analytics.setOrganizationProperties()

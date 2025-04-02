@@ -51,4 +51,5 @@ export type OrganizationOutput = BaseModel &
     tags: TagModel[]
     children: string[]
     access_request_enabled?: boolean
+    languages?: string[]
   }
