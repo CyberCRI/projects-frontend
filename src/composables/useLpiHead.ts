@@ -2,6 +2,7 @@ import useLanguages from '@/stores/useLanguages'
 
 export default (url, title, description, image) => {
   const runtimeConfig = useRuntimeConfig()
+  const { locale } = useI18n()
   const setHead = () =>
     useHeadSafe({
       title: title,
@@ -12,6 +13,7 @@ export default (url, title, description, image) => {
           href: `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`,
         },
       ],
+      htmlAttrs: { lang: locale },
       meta: [
         {
           name: 'description',

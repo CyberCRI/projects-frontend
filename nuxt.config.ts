@@ -48,6 +48,7 @@ export default defineNuxtConfig({
     '~/plugins/errorHandler.ts',
     '~/plugins/router-before-each.client.ts',
     '~/plugins/router-after-each.client.ts',
+    '~/plugins/lang-switch.ts',
   ],
   imports: {
     autoImport: true, //false,
@@ -127,6 +128,11 @@ export default defineNuxtConfig({
     lazy: true,
     defaultLocale: 'en',
     restructureDir: './src/i18n',
+    // detectBrowserLanguage: {
+    //   useCookie: true,
+    //   cookieKey: 'i18n_redirected',
+    //   alwaysRedirect: true,
+    // },
   },
 
   nitro: {

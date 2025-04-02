@@ -106,7 +106,7 @@
         />
         <HeaderDropDown
           v-if="languagesStore?.all?.length > 1"
-          :label="languagesStore.current.toUpperCase()"
+          :label="locale.toUpperCase()"
           :menu-items="langMenu"
           data-test="dropdown-lang"
         />
@@ -197,6 +197,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
+    const { locale, setLocale } = useI18n()
     return {
       languagesStore,
       projectCategoriesStore,
@@ -206,6 +207,8 @@ export default {
       isFacilitator,
       isSuperAdmin,
       isOrgAdmin,
+      locale,
+      setLocale,
     }
   },
 
@@ -233,7 +236,7 @@ export default {
           label: lang.toUpperCase(),
           action: () => this.updateLanguage(lang),
         }))
-        .filter((lang) => lang.label !== this.languagesStore.current.toUpperCase())
+        .filter((lang) => lang.label !== this.locale.toUpperCase())
     },
 
     organization() {
@@ -409,7 +412,7 @@ export default {
           dataTest: 'user-dropdown-menu',
         },
         {
-          label: this.languagesStore.current.toUpperCase(),
+          label: this.locale.toUpperCase(),
           childItems: this.langMenu,
           condition: true,
           dataTest: 'lang',
@@ -496,7 +499,7 @@ export default {
         patchUser(this.usersStore.id, body)
       }
 
-      this.languagesStore.current = lang
+      this.setLocale(lang)
     },
 
     async getGlobalAnnouncements() {

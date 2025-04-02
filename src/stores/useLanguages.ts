@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import type { LanguageType } from '@/models/types'
-import { watchEffect } from 'vue'
 import { useRuntimeConfig } from '#imports'
-import { useNuxtApp } from '#imports'
 
 export interface LanguageState {
   all: LanguageType[]
@@ -10,36 +8,14 @@ export interface LanguageState {
   current: LanguageType
 }
 
-// fix undefined localStaorage on sever
-let _localStorage = null
-if (import.meta.client) _localStorage = window.localStorage
-const localStorage = _localStorage
-
 const useLanguagesStore = defineStore('languages', () => {
+  const { locale } = useI18n()
   const organizationStore = useOrganizations()
   const runtimeConfig = useRuntimeConfig()
-  const allLanguages: LanguageType[] = runtimeConfig.public.allLocales
-  const userLang: LanguageType = navigator?.language?.split('-')[0] as LanguageType
-  const initialLang =
-    localStorage?.getItem('lang') ||
-    (allLanguages.indexOf(userLang) > -1 ? userLang : null) ||
-    runtimeConfig.public.appI18nLocale
-
+  const allLocales: LanguageType[] = runtimeConfig.public.allLocales
   const all = useState(() => organizationStore.current?.languages || [])
-  const current = useState(() => initialLang)
-
-  watchEffect(() => {
-    const lang = current.value
-    localStorage?.setItem('lang', lang)
-    useNuxtApp().$i18n.setLocale(lang)
-    // Set lang attribute for non translated langages to be translated by browser extensions
-    if (import.meta.client) {
-      const html = document.documentElement
-      html.setAttribute('lang', lang)
-    }
-  })
-
-  return { all, current }
+  const current = useState(() => locale.value)
+  return { allLocales, all, current }
 })
 
 export default useLanguagesStore
