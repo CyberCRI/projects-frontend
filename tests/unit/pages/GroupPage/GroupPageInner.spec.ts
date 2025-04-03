@@ -70,7 +70,7 @@ describe('GroupPageInner', () => {
     usersStore.getUser = vi.fn()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render GroupPageInner component', () => {
     let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))

@@ -47,7 +47,7 @@ describe('Keycloak | loginIfValidState', () => {
     useToasterStore(pinia)
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('loginIfValidState', async () => {
     globalThis.window = Object.create(window)

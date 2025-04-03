@@ -15,7 +15,7 @@ import { removeApiCookie } from '@/api/auth/cookie.service'
 
 import { defineStore } from 'pinia'
 
-// fix undefined localStaorage on sever
+// fix undefined localStorage on sever
 let _localStorage = null
 if (import.meta.client) _localStorage = window.localStorage
 const localStorage = _localStorage

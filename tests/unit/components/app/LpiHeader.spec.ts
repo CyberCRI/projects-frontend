@@ -67,7 +67,7 @@ describe('LpiHeader.vue', () => {
     }
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render LpiHeader component', () => {

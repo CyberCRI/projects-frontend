@@ -40,7 +40,7 @@ describe('NewHomePage', () => {
   })
 
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render NewHomePage', async () => {

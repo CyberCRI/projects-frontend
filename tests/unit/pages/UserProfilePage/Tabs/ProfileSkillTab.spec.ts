@@ -37,7 +37,7 @@ describe('ProfileSkillTab', () => {
     organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render ProfileSkillTab component', () => {

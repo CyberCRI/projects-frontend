@@ -82,7 +82,7 @@ describe('ReviewRecap.vue', () => {
     usersStore.accessToken = 123
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render component', () => {
     usersStore.permissions = {}

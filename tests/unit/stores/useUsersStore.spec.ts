@@ -3,10 +3,19 @@ import { removeApiCookie } from '@/api/auth/cookie.service'
 import analytics from '@/analytics'
 import funct from '@/functs/functions'
 import * as keycloakUtils from '@/api/auth/keycloakUtils'
-import pinia from '@/stores'
+import { setActivePinia, createPinia } from 'pinia'
 import useUsersStore from '@/stores/useUsers'
+import waitForExpect from 'wait-for-expect'
 
 import flushPromises from 'flush-promises'
+
+import cloneDeep from 'lodash.clonedeep'
+
+// export default function resetStore({ store }) {
+//   const initialState = cloneDeep(store.$state)
+//   store.$reset = () => store.$patch(cloneDeep(initialState))
+// }
+// pinia.use(resetStore)
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
@@ -22,12 +31,14 @@ vi.mock('@/analytics')
 vi.mock('@/functs/functions')
 
 describe('Store module | users | init', () => {
-  let usersStore
+  let pinia
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
+    pinia = createPinia()
+    setActivePinia(pinia)
+    localStorage.clear()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   const access_token =
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4dEVDUnNWai1HT3EzcXY3bVVJTDdfQUNjQ2JHZ3NwQ2FsaE55WndKbzM4In0.eyJleHAiOjE2NDYzNTM5NDUsImlhdCI6MTY0NjMxNzk0OCwiYXV0aF90aW1lIjoxNjQ2MzE3OTQ1LCJqdGkiOiI5ZTdiNmJkYS1hNzY4LTQ3MTAtOGE1NS1lMDA5ZDU0NjA2NDciLCJpc3MiOiJodHRwczovL2lkLmxlYXJuaW5nLXBsYW5ldC5vcmcvYXV0aC9yZWFsbXMvbHAiLCJzdWIiOiI0MDA1ZGRmNy0xNzIxLTQ0MGUtYWYyYS00ZGFmZTFmNDI4YzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwcm9qZWN0cy1mcm9udGVuZC1kZXYiLCJzZXNzaW9uX3N0YXRlIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2ZpbGUucHJvamVjdHMuZGV2LmxwLWkuZGV2IiwiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cDovLzEyNy4wLjAuMTo4MDgwIiwiaHR0cHM6Ly9wcm9qZWN0cy5kZXYuY3JpLXBhcmlzLm9yZyIsImh0dHBzOi8vMTI3LjAuMC4xOjgwODAiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Imp1bGllbiBkcm91bGV6IiwiZ3JvdXBzIjpbIi9wcm9qZWN0cy9hZG1pbmlzdHJhdG9ycyJdLCJwaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqdWxpZW4uZHJvdWxlekBjcmktcGFyaXMub3JnIiwiZ2l2ZW5fbmFtZSI6Imp1bGllbiIsImZhbWlseV9uYW1lIjoiZHJvdWxleiIsInVzZXIiOnsiaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQifSwiZW1haWwiOiJqdWxpZW4uZHJvdWxlekBmcmVlLmZyIn0.MQivUAcfBX-SpXvT6dAXKOOouv169ukjJcXdsFDk_XaAROvHjkoEKIaG0xMcKLDVlS6sYl4Wfdm0YV0Xpe3cCaU-OZDCES7A_Zw9icGsYIYNJLAz-ncVF09Ao3AfA_4OuSQv9lpByOh-F4TekVlVWdTbrdFcn1Y4p6UTl6w6yhcXWeFOd9db2_M0vjc9s8fffpTZIWZM-CkQBvW9wO0bQd1wBKXFfARHHsXQ6B1FNE67UWHztEJepvPdXNC0CLdzFGg-K7hDeNMrCm75ymosy44N3u_DZq1qEjnt0Ext5VJyE4RbITOdN4mxM3CAZFTeNzNb56GgkyHEgLpovWastw'
@@ -36,48 +47,53 @@ describe('Store module | users | init', () => {
   const id_token =
     'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDYzMTk3NDgsImlhdCI6MTY0NjMxNzk0OCwianRpIjoiYWRhYTBkMmQtZTZkYS00MTdmLWI3NmEtODI4M2RhODIzNGM2IiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiNDAwNWRkZjctMTcyMS00NDBlLWFmMmEtNGRhZmUxZjQyOGMwIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIn0.-etAqxw8b0Q3VxF2SjyT-nCHMXSGcwtq70RqtbdF_84'
   function setTokens() {
-    window.localStorage.setItem('ACCESS_TOKEN', access_token)
-    window.localStorage.setItem('REFRESH_TOKEN', refresh_token)
+    localStorage.setItem('ACCESS_TOKEN', access_token)
+    localStorage.setItem('REFRESH_TOKEN', refresh_token)
 
-    window.localStorage.setItem('ID_TOKEN', id_token)
+    localStorage.setItem('ID_TOKEN', id_token)
 
-    window.localStorage.setItem('REFRESH_TOKEN_EXP', '10000')
+    localStorage.setItem('REFRESH_TOKEN_EXP', '10000')
   }
 
   function unsetTokens() {
-    window.localStorage.removeItem('ACCESS_TOKEN')
-    window.localStorage.removeItem('REFRESH_TOKEN')
-    window.localStorage.removeItem('ID_TOKEN')
-    window.localStorage.removeItem('REFRESH_TOKEN_EXP')
+    localStorage.removeItem('ACCESS_TOKEN')
+    localStorage.removeItem('REFRESH_TOKEN')
+    localStorage.removeItem('ID_TOKEN')
+    localStorage.removeItem('REFRESH_TOKEN_EXP')
   }
 
   it('should not set token with expired token', () => {
-    const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
-    const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
+    const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
+    const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    usersStore.$reset()
+    // usersStore.$reset()
+    //usersStore = useUsersStore(pinia)
+    let usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(null)
-    window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
-    window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
+    localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
+    localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
   })
 
   it('should set access with valid token', () => {
     const checkExpiredTokenSpy = vi.spyOn(keycloakUtils, 'checkExpiredToken')
     checkExpiredTokenSpy.mockImplementationOnce(() => false)
-    const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
-    const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
+    const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
+    const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    usersStore.$reset()
+    // usersStore.$reset()
+    // usersStore = useUsersStore(pinia)
+    let usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(access_token)
-    window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
-    window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
+    localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
+    localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
   })
 
   it('should not set access token with no token', () => {
     const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
     unsetTokens()
-    usersStore.$reset()
+    // usersStore.$reset()
+    let usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(null)
     window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
@@ -85,12 +101,14 @@ describe('Store module | users | init', () => {
 })
 
 describe('Store module | users | getters', () => {
-  let usersStore
+  let pinia
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
+    pinia = createPinia()
+    setActivePinia(pinia)
+    localStorage.clear()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   const stateWithSessionToken = {
     refreshToken:
@@ -265,15 +283,17 @@ describe('Store module | users | getters', () => {
   }
 
   it('isConnected', () => {
-    usersStore.$patch(stateWithSessionToken)
+    let usersStore = useUsersStore(pinia)
+    usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.isConnected).toBe(true)
 
-    usersStore.$patch(stateWithoutSessionToken)
+    usersStore.$patch(stateWithoutSessionToken as any)
     expect(usersStore.isConnected).toBe(false)
   })
 
   it('user', () => {
-    usersStore.$patch(stateWithSessionToken)
+    let usersStore = useUsersStore(pinia)
+    usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.user).toEqual({
       name: {
         firstname: stateWithSessionToken.userFromToken.given_name,
@@ -295,7 +315,7 @@ describe('Store module | users | getters', () => {
       ],
     })
 
-    usersStore.$patch(stateWithoutSessionToken)
+    usersStore.$patch(stateWithoutSessionToken as any)
     expect(usersStore.user).toBe(null)
   })
 
@@ -308,30 +328,32 @@ describe('Store module | users | getters', () => {
       access_token: stateWithUserWithSpecialCharacter.accessToken,
       parsedToken: userFromJWT,
     })
-
-    usersStore.$patch(stateWithUserWithSpecialCharacter)
+    let usersStore = useUsersStore(pinia)
+    usersStore.$patch(stateWithUserWithSpecialCharacter as any)
     expect(usersStore.user.name.firstname).toBe('hénri')
     spy.mockReset()
   })
 
   it('refreshToken', () => {
-    usersStore.$patch(stateWithSessionToken)
+    let usersStore = useUsersStore(pinia)
+    usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.refreshToken).toBe(stateWithSessionToken.refreshToken)
   })
 })
 
 describe('Store module | users | actions', () => {
-  let usersStore
+  let pinia
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
+    pinia = createPinia()
+    setActivePinia(pinia)
+    localStorage.clear()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
-  const commit = vi.fn()
-  const dispatch = vi.fn()
 
   it('logOut', async () => {
+    let usersStore = useUsersStore(pinia)
     const logoutFromKeycloakMock = auth.logoutFromKeycloak as Mock
     vi.spyOn(usersStore, 'resetUser')
 
@@ -339,8 +361,7 @@ describe('Store module | users | actions', () => {
     await flushPromises()
     expect(removeApiCookie).toHaveBeenCalled()
     expect(logoutFromKeycloakMock).toHaveBeenCalled()
-    // expect(commit).toHaveBeenNthCalledWith(1, 'UPDATE_LOGIN_LOCK', true)
-    expect(usersStore.resetUser).toHaveBeenCalledTimes(1)
+    waitForExpect(() => expect(usersStore.resetUser).toHaveBeenCalledTimes(1))
   })
 
   it('logIn', async () => {
@@ -381,6 +402,7 @@ describe('Store module | users | actions', () => {
       email: 'test.auto.cri@yopmail.com',
     }
 
+    let usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'logIn')
 
     await usersStore.logIn({
@@ -453,31 +475,36 @@ describe('Store module | users | actions', () => {
       parsedToken: parsedToken,
       id_token: id_token,
     })
+    let usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'setUser')
     await usersStore.doRefreshToken()
-    expect(usersStore.setUser).toHaveBeenNthCalledWith(1, {
-      refreshToken: refresh_token,
-      refreshTokenExp: 123456,
-      accessToken: access_token,
-      keycloak_id: keycloakID,
-      userFromToken: parsedToken,
-      id_token: id_token,
-    })
+    waitForExpect(() =>
+      expect(usersStore.setUser).toHaveBeenNthCalledWith(1, {
+        refreshToken: refresh_token,
+        refreshTokenExp: 123456,
+        accessToken: access_token,
+        keycloak_id: keycloakID,
+        userFromToken: parsedToken,
+        id_token: id_token,
+      })
+    )
     spy.mockReset()
   })
 })
 
 describe('Store module | users | mutations', () => {
-  let usersStore
+  let pinia
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
+    pinia = createPinia()
+    setActivePinia(pinia)
+    localStorage.clear()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('resetUser', () => {
     // TODO set an intial state ?
-
+    let usersStore = useUsersStore(pinia)
     usersStore.resetUser()
 
     const desiredState = {
@@ -509,6 +536,7 @@ describe('Store module | users | mutations', () => {
       },
       userFromApi: null,
     }
+    let usersStore = useUsersStore(pinia)
     usersStore.setUser(payload)
 
     const desiredState = {

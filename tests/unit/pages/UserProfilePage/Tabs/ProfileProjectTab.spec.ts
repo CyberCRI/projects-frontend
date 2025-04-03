@@ -49,7 +49,7 @@ describe('ProfileProjectTab', () => {
     useProjectsStore(pinia)
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render ProfileProjectTab component', () => {

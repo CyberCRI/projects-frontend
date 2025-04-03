@@ -36,7 +36,7 @@ describe('ProfileBioTab', () => {
     organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render ProfileBioTab component', () => {
     let wrapper = lpiShallowMount(ProfileBioTab, buildParams(UserFactory.generate()))

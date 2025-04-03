@@ -81,7 +81,7 @@ describe.skip('Keycloak | refreshTokenLoop', () => {
     usersStore = useUsersStore(pinia)
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   vi.spyOn(globalThis, 'setTimeout').mockImplementation(
     vi.fn(() => {

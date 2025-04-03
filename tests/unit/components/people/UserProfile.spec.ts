@@ -45,7 +45,7 @@ describe('UserProfile', () => {
     })
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render UserProfile component', () => {
     let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))

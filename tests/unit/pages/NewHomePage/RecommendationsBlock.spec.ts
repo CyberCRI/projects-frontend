@@ -48,7 +48,7 @@ describe('RecommendationBlock', () => {
     organizationsStore.current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render RecommendationBlock', async () => {
     usersStore.isConnected = false

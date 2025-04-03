@@ -45,7 +45,7 @@ describe('CommentItem', () => {
     }
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render CommentItem component', () => {

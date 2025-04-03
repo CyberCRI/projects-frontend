@@ -43,7 +43,7 @@ describe('ProfileSummaryTab', () => {
   })
 
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render ProfileSummaryTab component', () => {
     let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(UserFactory.generate()))

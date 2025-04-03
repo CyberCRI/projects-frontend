@@ -112,7 +112,7 @@ describe('On tab focus', () => {
       localStorageRemoveItem.mockClear()
     })
     vi.clearAllMocks()
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   test('logout if token has expired', () => {
