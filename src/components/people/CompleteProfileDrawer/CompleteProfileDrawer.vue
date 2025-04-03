@@ -70,7 +70,6 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import CompleteProfileStep1 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
 import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
 
 export default {
@@ -91,11 +90,11 @@ export default {
   emits: ['close', 'completed'],
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrapAll } = useOnboardingStatus()
     return {
-      languagesStore,
+      locale,
       runtimeConfig,
       onboardingTrapAll,
     }
@@ -126,7 +125,7 @@ export default {
     docUrl() {
       const url = new URL(this.runtimeConfig.public.appDoc)
       // uppercase lang code are mandatory for this service
-      url.searchParams.append('lang', this.languagesStore.current)
+      url.searchParams.append('lang', this.locale)
 
       return url
     },

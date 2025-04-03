@@ -1,6 +1,4 @@
 <script setup>
-import useLanguagesStore from '@/stores/useLanguages'
-
 const props = defineProps({
   mode: { type: String, required: true },
   editor: { type: Object, required: true },
@@ -13,13 +11,13 @@ function focusEditor() {
   }
 }
 
-const languagesStore = useLanguagesStore()
+const { locale } = useI18n()
 </script>
 <template>
   <div
     :class="{
       ['editor editor-' + mode]: true,
-      ['lang-' + languagesStore.current]: true,
+      ['lang-' + locale]: true,
     }"
     @click.self="focusEditor"
   >

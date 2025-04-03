@@ -2,7 +2,6 @@
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -14,13 +13,12 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 defineEmits(['close'])
 
 const toaster = useToasterStore()
-const languagesStore = useLanguagesStore()
 const projectCategoriesStore = useProjectCategories()
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 const { onboardingTrap } = useOnboardingStatus()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const isFormCorrect = ref(true)
 const form = ref({
@@ -29,7 +27,7 @@ const form = ref({
   category: undefined,
   header_image: null,
 
-  language: languagesStore.current,
+  language: locale.value,
 
   tags: [],
 

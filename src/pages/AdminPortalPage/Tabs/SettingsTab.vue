@@ -3,10 +3,8 @@ import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 const toaster = useToasterStore()
-const languagesStore = useLanguagesStore()
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
@@ -25,7 +23,7 @@ const form = ref({
 })
 
 const languageOptions = computed(() => {
-  return languagesStore.all.map((lang) => {
+  return organizationsStore.languages.value.map((lang) => {
     return {
       value: lang,
       label: t(`language.label-${lang}`),

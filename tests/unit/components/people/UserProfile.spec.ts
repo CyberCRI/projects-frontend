@@ -36,7 +36,7 @@ describe('UserProfile', () => {
   let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.$patch({ current: { id: 'TEST' } as unknown as OrganizationOutput })
+    organizationsStore.$patch({ current: { id: 'TEST' } as any })
     usersStore = useUsersStore()
     usersStore.$patch({
       id: 12,

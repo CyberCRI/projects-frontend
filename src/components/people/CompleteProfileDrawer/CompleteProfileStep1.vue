@@ -196,7 +196,6 @@ import { helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
 export default {
@@ -217,13 +216,13 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrap } = useOnboardingStatus()
     return {
       toaster,
-      languagesStore,
+      locale,
       usersStore,
       runtimeConfig,
       onboardingTrap,
@@ -290,7 +289,7 @@ export default {
 
   computed: {
     lang() {
-      return this.languagesStore.current
+      return this.locale
     },
     hasBioExemple() {
       return this.researcherSlugOrId && this.professionalSlugOrId && this.studentSlugOrId

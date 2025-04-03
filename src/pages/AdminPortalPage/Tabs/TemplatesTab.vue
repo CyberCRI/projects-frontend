@@ -164,7 +164,6 @@ import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDr
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 export default {
@@ -187,13 +186,13 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const projectCategoriesStore = useProjectCategories()
     const projectsStore = useProjectsStore()
     return {
       toaster,
       v$: useVuelidate(),
-      languagesStore,
+      locale,
       projectCategoriesStore,
       projectsStore,
     }
@@ -232,17 +231,6 @@ export default {
   },
 
   computed: {
-    // TODO: delete or uncomment when we decide what to do about languages in categories
-    // languages() {
-    //     return this.languagesStore.all
-    // },
-
-    // languagesOptions() {
-    //     return this.languages.map((lang) => {
-    //         return { value: lang, label: label: this.$t(`language.label-${lang}`)  }
-    //     })
-    // },
-
     categories() {
       return this.projectCategoriesStore.allOrderedByOrderId
     },
@@ -284,7 +272,7 @@ export default {
 
   methods: {
     tagTitle(tag) {
-      return tag['title_' + this.languagesStore.current] || tag.title
+      return tag['title_' + this.locale] || tag.title
     },
     setCategory(category) {
       this.selectedCategory = category
@@ -316,7 +304,7 @@ export default {
         this.form.goal_description = this.selectedCategory?.template.goal_description || '<p></p>'
 
         /* Language */
-        this.form.language = this.selectedCategory?.lang || this.languagesStore.current
+        this.form.language = this.selectedCategory?.lang || this.locale
 
         /* Tags */
         this.form.tags = this.selectedCategory?.tags

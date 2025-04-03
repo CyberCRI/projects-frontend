@@ -137,8 +137,8 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'ProjectForm',
@@ -179,10 +179,10 @@ export default {
   emits: ['update:modelValue', 'close'],
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     return {
-      languagesStore,
+      organizationsStore,
       runtimeConfig,
     }
   },
@@ -215,7 +215,7 @@ export default {
     },
 
     languageOptions() {
-      return this.languagesStore.all.map((language) => {
+      return this.organizationsStore.languages.map((language) => {
         return {
           value: language,
           label: this.$t(`language.label-${language}`),

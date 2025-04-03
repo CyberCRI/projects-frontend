@@ -13,7 +13,6 @@ import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.v
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
 import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories'
 
 export const ALL_FILTERS_MODE = 'all-filters'
@@ -33,9 +32,8 @@ export default function useContextualFilters({
   clearSelectedFilters,
   showSectionFilter,
 }) {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
-  const languagesStore = useLanguagesStore()
   const projectCategoriesStore = useProjectCategories()
   const { sectionFilters } = useSectionFilters({ selectedSection })
 
@@ -52,9 +50,8 @@ export default function useContextualFilters({
         label: t('search.tag'),
         names: filterBlackList.value.includes('tags')
           ? []
-          : selectedFilters.value?.tags?.map(
-              (tag) => tag[`title_${languagesStore.current}`] || tag.title
-            ) || [],
+          : selectedFilters.value?.tags?.map((tag) => tag[`title_${locale.value}`] || tag.title) ||
+            [],
         dataTest: 'contextual-filter-tags',
         condition:
           selectedSection.value === PROJECT_SECTION_KEY && !filterBlackList.value.includes('tags'),
@@ -107,7 +104,7 @@ export default function useContextualFilters({
         names: filterBlackList.value.includes('skills')
           ? []
           : selectedFilters.value?.skills?.map(
-              (skill) => skill[`title_${languagesStore.current}`] || skill.title
+              (skill) => skill[`title_${locale.value}`] || skill.title
             ) || [],
         condition:
           selectedSection.value === PEOPLE_SECTION_KEY && !filterBlackList.value.includes('skills'),

@@ -14,7 +14,6 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
   name: 'SdgIcon',
@@ -33,17 +32,17 @@ export default {
   emits: ['toggled'],
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const runtimeConfig = useRuntimeConfig()
     return {
-      languagesStore,
+      locale,
       runtimeConfig,
     }
   },
 
   computed: {
     lang() {
-      return this.languagesStore.current
+      return this.locale
     },
   },
 

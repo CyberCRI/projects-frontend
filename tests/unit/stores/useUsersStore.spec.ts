@@ -4,7 +4,6 @@ import analytics from '@/analytics'
 import funct from '@/functs/functions'
 import * as keycloakUtils from '@/api/auth/keycloakUtils'
 import pinia from '@/stores'
-import useLanguagesStore from '@/stores/useLanguages'
 import useUsersStore from '@/stores/useUsers'
 
 import flushPromises from 'flush-promises'
@@ -25,7 +24,6 @@ vi.mock('@/functs/functions')
 describe('Store module | users | init', () => {
   let usersStore
   beforeEach(() => {
-    useLanguagesStore(pinia)
     usersStore = useUsersStore(pinia)
   })
   afterEach(() => {
@@ -89,7 +87,6 @@ describe('Store module | users | init', () => {
 describe('Store module | users | getters', () => {
   let usersStore
   beforeEach(() => {
-    useLanguagesStore(pinia)
     usersStore = useUsersStore(pinia)
   })
   afterEach(() => {
@@ -326,7 +323,6 @@ describe('Store module | users | getters', () => {
 describe('Store module | users | actions', () => {
   let usersStore
   beforeEach(() => {
-    useLanguagesStore(pinia)
     usersStore = useUsersStore(pinia)
   })
   afterEach(() => {
@@ -474,7 +470,6 @@ describe('Store module | users | actions', () => {
 describe('Store module | users | mutations', () => {
   let usersStore
   beforeEach(() => {
-    useLanguagesStore(pinia)
     usersStore = useUsersStore(pinia)
   })
   afterEach(() => {

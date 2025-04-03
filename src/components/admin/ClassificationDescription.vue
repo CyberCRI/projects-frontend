@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import useLanguagesStore from '@/stores/useLanguages.ts'
 import { isEscoClassification } from '@/functs/ClassificationUtils.ts'
 
 defineProps({
@@ -10,9 +9,10 @@ defineProps({
   },
 })
 
-const languagesStore = useLanguagesStore()
+const { locale } = useI18n()
+
 const escoLink = computed(
-  () => `https://esco.ec.europa.eu/${languagesStore.current}/classification/skill_main`
+  () => `https://esco.ec.europa.eu/${locale.value}/classification/skill_main`
 )
 </script>
 <template>

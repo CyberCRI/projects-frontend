@@ -20,8 +20,8 @@ import Gapcursor from '@tiptap/extension-gapcursor'
 import lowlight from '@/functs/lowlight.ts'
 
 import { ref } from 'vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
@@ -49,8 +49,8 @@ export function useTipTap({ props, emit, t }) {
   const editor = ref(null)
   const editorInited = ref(false)
   const initialContent = ref(props.modelValue)
-  const languagesStore = useLanguagesStore()
   const toaster = useToasterStore()
+  const organizationsStore = useOrganizationsStore()
 
   const onUpdate = ({ editor }) => {
     emit('update:modelValue', editor.getHTML())
@@ -107,7 +107,7 @@ export function useTipTap({ props, emit, t }) {
   function appendTranslationsStyle() {
     if (!document.getElementById('multieditor-translations')) {
       let css = ''
-      languagesStore.all.forEach((langcode) => {
+      organizationsStore.languages.forEach((langcode) => {
         css += `[lang="${langcode}"] .ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper:after { content: '${t(
           'multieditor.click-to-play-video',
           langcode

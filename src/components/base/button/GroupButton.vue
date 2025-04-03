@@ -41,7 +41,6 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import debounce from 'lodash.debounce'
-import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
   name: 'GroupButton',
@@ -92,9 +91,9 @@ export default {
 
   emits: ['update:model-value'],
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     return {
-      languagesStore,
+      locale,
     }
   },
   data() {
@@ -111,7 +110,7 @@ export default {
       return { 'border-color': this.customColor }
     },
     lang() {
-      return this.languagesStore.current
+      return this.locale
     },
   },
 

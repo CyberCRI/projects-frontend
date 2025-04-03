@@ -5,7 +5,6 @@ import {
   patchOrganization,
 } from '@/api/organizations.service'
 
-// import { getPeopleGroups } from '@/api/groups.service'
 import type { APIResponseList } from '@/api/types'
 import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 
@@ -16,134 +15,89 @@ export interface OrganizationsState {
   current: OrganizationOutput | null
 }
 
-const useOrganizationsStore = defineStore('organizations', {
-  state: (): OrganizationsState => ({
-    all: [],
-    current: null,
-  }),
+const useOrganizationsStore = defineStore('organizations', () => {
+  const all = ref([])
+  const current = ref(null)
 
-  getters: {
-    isDefault(): boolean {
-      return this.current?.code === 'DEFAULT'
-    },
+  const isDefault = computed((): boolean => {
+    return current.value?.code === 'DEFAULT'
+  })
 
-    allClassifications(): object[] {
-      const index = {}
-      this.current?.enabled_projects_tag_classifications.forEach((classification: any) => {
-        if (!index[classification.id]) {
-          index[classification.id] = classification
-        }
-        index[classification.id].is_enabled_for_projects = true
-      })
+  const languages = computed((): string[] => {
+    return current.value?.languages || []
+  })
 
-      this.current?.enabled_skills_tag_classifications.forEach((classification: any) => {
-        if (!index[classification.id]) {
-          index[classification.id] = classification
-        }
-        index[classification.id].is_enabled_for_skills = true
-      })
-      return Object.values(index)
-    },
-  },
-  actions: {
-    async getCurrentOrganization(code: string): Promise<OrganizationOutput> {
-      try {
-        const organization = await getOrganizationByCode(code)
-        // TODO: temp fix while API is not setup
-        organization.languages = organization.languages || ['en', 'fr']
-
-        this.current = organization
-        analytics.setOrganizationProperties()
-
-        return organization
-      } catch (err) {
-        throw new Error(err)
+  const allClassifications = computed((): object[] => {
+    const index = {}
+    current.value?.enabled_projects_tag_classifications.forEach((classification: any) => {
+      if (!index[classification.id]) {
+        index[classification.id] = classification
       }
-    },
+      index[classification.id].is_enabled_for_projects = true
+    })
 
-    async getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
-      try {
-        const response = await getOrganizations()
-        this.all = response.results
-
-        return response
-      } catch (err) {
-        throw new Error(err)
+    current.value?.enabled_skills_tag_classifications.forEach((classification: any) => {
+      if (!index[classification.id]) {
+        index[classification.id] = classification
       }
-    },
+      index[classification.id].is_enabled_for_skills = true
+    })
+    return Object.values(index)
+  })
 
-    async updateCurrentOrganization(
-      organization: OrganizationPatchInput | FormData
-    ): Promise<OrganizationOutput> {
-      try {
-        const result = await patchOrganization(this.current.code, organization)
-        const currentOrganization = { ...this.current, ...organization, ...result }
-        this.current = currentOrganization
-        return currentOrganization
-      } catch (err) {
-        throw new Error(err)
-      }
-    },
-  },
+  async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
+    try {
+      // foo
+      const organization = await getOrganizationByCode(code)
+      // TODO: temp fix while API is not setup
+      organization.languages = organization.languages || ['en', 'fr']
+
+      current.value = organization
+      analytics.setOrganizationProperties()
+
+      return organization
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
+    try {
+      const response = await getOrganizations()
+      all.value = response.results
+
+      return response
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  async function updateCurrentOrganization(
+    organization: OrganizationPatchInput | FormData
+  ): Promise<OrganizationOutput> {
+    try {
+      const result = await patchOrganization(current.value.code, organization)
+      const currentOrganization = { ...current.value, ...organization, ...result }
+      current.value = currentOrganization
+      return currentOrganization
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  return {
+    // state
+    all,
+    current,
+    // getters
+    isDefault,
+    languages,
+    allClassifications,
+    // actions
+    getCurrentOrganization,
+    getAllOrganizations,
+    updateCurrentOrganization,
+  }
 })
 
 export default useOrganizationsStore
-// const state = (): OrganizationsState => ({
-//     all: [],
-//     current: null,
-// })
-
-// const getters = {
-//     current: (state: OrganizationsState) => state.current,
-//     all: (state: OrganizationsState) => state.all,
-//     isDefault: (state: OrganizationsState) => state.current.code === 'DEFAULT',
-// }
-
-// const actions = {
-//     async getCurrentOrganization({ commit }, code: string): Promise<OrganizationOutput> {
-//         try {
-//             const organization = await getOrganizationByCode(code)
-
-//             commit('SET_CURRENT_ORGANIZATION', organization)
-//             analytics.setOrganizationProperties()
-
-//             return organization
-//         } catch (err) {
-//             throw new Error(err)
-//         }
-//     },
-
-//     async getAllOrganizations({ commit }): Promise<APIResponseList<OrganizationOutput>> {
-//         try {
-//             const response = await getOrganizations()
-//             commit('SET_ORGANIZATIONS', response.results)
-
-//             return response
-//         } catch (err) {
-//             throw new Error(err)
-//         }
-//     },
-
-//     async updateCurrentOrganization(
-//         { commit, state },
-//         organization: OrganizationPatchInput | FormData
-//     ): Promise<OrganizationOutput> {
-//         try {
-//             const result = await patchOrganization(state.current.code, organization)
-//             const currentOrganization = { ...state.current, ...organization, ...result }
-//             commit('SET_CURRENT_ORGANIZATION', currentOrganization)
-//             return currentOrganization
-//         } catch (err) {
-//             throw new Error(err)
-//         }
-//     },
-// }
-
-// const mutations = {
-//     SET_CURRENT_ORGANIZATION(state: OrganizationsState, organization: OrganizationOutput): void {
-//         state.current = organization
-//     },
-//     SET_ORGANIZATIONS(state: OrganizationsState, organizations: OrganizationOutput[]): void {
-//         state.all = organizations
-//     },
-// }
