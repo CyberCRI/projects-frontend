@@ -1,6 +1,6 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LinkCreateTab from '@/pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'

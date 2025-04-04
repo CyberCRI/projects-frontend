@@ -1,4 +1,4 @@
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 

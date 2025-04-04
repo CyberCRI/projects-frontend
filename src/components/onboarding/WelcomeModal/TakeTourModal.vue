@@ -36,7 +36,6 @@
 <script>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 export default {
   name: 'TakeTourModal',
 
@@ -45,18 +44,18 @@ export default {
   emits: ['close'],
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
 
     const { onboardingTrap } = useOnboardingStatus()
     return {
-      languagesStore,
+      locale,
       onboardingTrap,
     }
   },
 
   computed: {
     videoSrc() {
-      return this.languagesStore.current === 'fr'
+      return this.locale === 'fr'
         ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
         : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
     },

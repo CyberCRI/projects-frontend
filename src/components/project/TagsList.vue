@@ -87,7 +87,6 @@
 <script>
 import debounce from 'lodash.debounce'
 import BadgeItem from '@/components/base/BadgeItem.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
   name: 'TagsList',
@@ -116,9 +115,9 @@ export default {
   },
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     return {
-      languagesStore,
+      locale,
     }
   },
   data() {
@@ -208,7 +207,7 @@ export default {
 
   computed: {
     currentLang() {
-      return this.languagesStore.current
+      return this.locale
     },
     moreTagsCount() {
       return this.moreTags.length + this.moreInfoTags.length

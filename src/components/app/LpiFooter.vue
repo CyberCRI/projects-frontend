@@ -170,7 +170,6 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
@@ -186,15 +185,15 @@ export default {
     FooterEnglishTips,
   },
   setup() {
-    const languagesStore = useLanguagesStore()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
+    const { locale } = useI18n()
     return {
-      languagesStore,
       organizationsStore,
       usersStore,
       runtimeConfig,
+      locale,
     }
   },
   data() {
@@ -205,7 +204,7 @@ export default {
   },
   computed: {
     canOpen() {
-      return this.languagesStore.current === 'fr'
+      return this.locale === 'fr'
     },
     showDirectoryLink() {
       const organization = this.organizationsStore.current

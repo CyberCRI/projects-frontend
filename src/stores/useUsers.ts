@@ -3,21 +3,19 @@ import type { AuthResult } from '@/api/auth/keycloak'
 import {
   logoutFromKeycloak,
   refreshAccessToken,
-  getNotifications,
-  patchNotifications,
+  getNotifications as apiGetNotifications,
+  patchNotifications as apiPatchNotifications,
 } from '@/api/auth/auth.service'
-import { getUser } from '@/api/people.service'
+import { getUser as _getUser } from '@/api/people.service'
 import analytics from '@/analytics'
 import funct from '@/functs/functions'
 import { NotificationsSettings, UserModel } from '@/models/user.model'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { removeApiCookie } from '@/api/auth/cookie.service'
 
-import useLanguagesStore from '@/stores/useLanguages'
-import { LanguageType } from '@/models/types'
 import { defineStore } from 'pinia'
 
-// fix undefined localStaorage on sever
+// fix undefined localStorage on sever
 let _localStorage = null
 if (import.meta.client) _localStorage = window.localStorage
 const localStorage = _localStorage
@@ -38,221 +36,241 @@ export interface UsersState {
   userDataRefreshLoop?: ReturnType<typeof setInterval> | null
 }
 
-const useUsersStore = defineStore('users', {
-  state: (): UsersState => {
-    // store is initialized before app is started, so we must check expiration here too
-    if (import.meta.client) checkExpiredToken()
-    return {
-      refreshToken: localStorage?.getItem('REFRESH_TOKEN'),
-      userFromToken: null,
-      userFromApi: null,
-      accessToken: localStorage?.getItem('ACCESS_TOKEN'),
-      keycloak_id: '',
-      permissions: {},
-      id_token: localStorage?.getItem('ID_TOKEN'),
-      roles: [],
-      notificationsCount: 0,
-      notificationsSettings: null,
-      userDataRefreshLoop: null,
+const useUsersStore = defineStore('users', () => {
+  // store is initialized before app is started, so we must check expiration here too
+  if (import.meta.client) checkExpiredToken()
+
+  const refreshToken = ref(localStorage?.getItem('REFRESH_TOKEN'))
+  const userFromToken = ref(null)
+  const userFromApi = ref(null)
+  const accessToken = ref(localStorage?.getItem('ACCESS_TOKEN'))
+  const keycloak_id = ref('')
+  const permissions = ref({})
+  const id_token = ref(localStorage?.getItem('ID_TOKEN'))
+  const roles = ref([])
+  const notificationsCount = ref(0)
+  const notificationsSettings = ref(null)
+  const userDataRefreshLoop = ref(null)
+
+  const isConnected = computed((): boolean => {
+    return !!userFromToken.value
+  })
+
+  const id = computed((): string | undefined => {
+    return userFromApi.value?.id
+  })
+
+  const user = computed((): UserModel | null => {
+    if (userFromToken.value) {
+      return {
+        id: userFromToken.value.pid,
+        name: {
+          firstname: userFromToken.value.given_name,
+          lastname: userFromToken.value.family_name,
+        },
+        email: userFromToken.value.email,
+        roles: userFromToken.value.roles || [],
+        orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
+        permissions: permissions.value,
+      }
     }
-  },
 
-  getters: {
-    isConnected(): boolean {
-      return !!this.userFromToken
-    },
+    return null
+  })
 
-    id(): string | undefined {
-      return this.userFromApi?.id
-    },
+  function stopUserDataRefreshLoop() {
+    if (userDataRefreshLoop.value) {
+      clearInterval(userDataRefreshLoop.value)
+      userDataRefreshLoop.value = null
+    }
+  }
 
-    user(): UserModel | null {
-      if (this.userFromToken) {
-        return {
-          id: this.userFromToken.pid,
-          name: {
-            firstname: this.userFromToken.given_name,
-            lastname: this.userFromToken.family_name,
-          },
-          email: this.userFromToken.email,
-          roles: this.userFromToken.roles || [],
-          orgs: funct.getOrgsFromRoles(this.userFromToken.roles),
-          permissions: this.permissions,
-        }
+  function resetUser() {
+    localStorage?.removeItem('REFRESH_TOKEN')
+    localStorage?.removeItem('REFRESH_TOKEN_EXP')
+    localStorage?.removeItem('ACCESS_TOKEN')
+    localStorage?.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
+    localStorage?.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
+    localStorage?.removeItem('ID_TOKEN')
+    refreshToken.value = ''
+    accessToken.value = ''
+    keycloak_id.value = ''
+    userFromToken.value = null
+    id_token.value = ''
+    userFromApi.value = null
+    permissions.value = {}
+    roles.value = []
+    notificationsCount.value = 0
+    notificationsSettings.value = null
+    // API proxy cookie
+    document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
+  }
+
+  function logOut(): Promise<any> {
+    return new Promise((resolve) => {
+      stopUserDataRefreshLoop()
+      removeApiCookie()
+        .catch(console.error)
+        .finally(() => {
+          logoutFromKeycloak()
+          resetUser()
+          resolve(true)
+        })
+    })
+  }
+
+  // ex mutations
+  function setUser(payload: UsersState) {
+    localStorage?.setItem('REFRESH_TOKEN', payload.refreshToken)
+    localStorage?.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
+    localStorage?.setItem('ACCESS_TOKEN', payload.accessToken)
+    localStorage?.setItem('ID_TOKEN', payload.id_token)
+    refreshToken.value = payload.refreshToken
+    accessToken.value = payload.accessToken
+    keycloak_id.value = payload.keycloak_id
+    userFromToken.value = payload.userFromToken
+    id_token.value = payload.id_token
+    // API proxy cookie
+    document.cookie = `jwt_access_token=${payload.accessToken}; path=/;`
+  }
+
+  async function logIn({
+    access_token,
+    refresh_token,
+    refresh_token_exp,
+    parsedToken,
+    id_token,
+  }: AuthResult): Promise<string> {
+    const keycloakID = parsedToken.sub
+    setUser({
+      refreshToken: refresh_token,
+      refreshTokenExp: refresh_token_exp,
+      accessToken: access_token,
+      keycloak_id: keycloakID,
+      userFromToken: parsedToken,
+      id_token: id_token,
+    })
+    analytics.identifyUser(keycloakID)
+
+    return access_token
+  }
+
+  // was refreshTock
+  async function doRefreshToken(): Promise<string> {
+    try {
+      const { refresh_token, access_token, parsedToken, refresh_token_exp, id_token } =
+        await refreshAccessToken()
+
+      if (refresh_token && access_token && parsedToken) {
+        const keycloakID = parsedToken.sub
+        setUser({
+          refreshToken: refresh_token,
+          refreshTokenExp: refresh_token_exp,
+          accessToken: access_token,
+          id_token,
+          keycloak_id: keycloakID,
+          userFromToken: parsedToken,
+        })
+      } else {
+        resetUser()
       }
-
-      return null
-    },
-  },
-
-  actions: {
-    logOut(): Promise<any> {
-      return new Promise((resolve) => {
-        this.stopUserDataRefreshLoop()
-        removeApiCookie()
-          .catch(console.error)
-          .finally(() => {
-            logoutFromKeycloak()
-            this.resetUser()
-            resolve(true)
-          })
-      })
-    },
-
-    async logIn({
-      access_token,
-      refresh_token,
-      refresh_token_exp,
-      parsedToken,
-      id_token,
-    }: AuthResult): Promise<string> {
-      const keycloakID = parsedToken.sub
-      this.setUser({
-        refreshToken: refresh_token,
-        refreshTokenExp: refresh_token_exp,
-        accessToken: access_token,
-        keycloak_id: keycloakID,
-        userFromToken: parsedToken,
-        id_token: id_token,
-      })
-      analytics.identifyUser(keycloakID)
-
       return access_token
-    },
+    } catch (err) {
+      console.error('Error refreshing the user token :', err)
+      logOut()
+    }
+  }
 
-    // was refreshTock
-    async doRefreshToken(): Promise<string> {
-      try {
-        const { refresh_token, access_token, parsedToken, refresh_token_exp, id_token } =
-          await refreshAccessToken()
+  function startUserDataRefreshLoop() {
+    if (id.value && !userDataRefreshLoop.value) {
+      userDataRefreshLoop.value = setInterval(
+        () => {
+          getUser(id.value)
+        },
+        1000 * 60 * 5 // 5 minutes
+      )
+    }
+  }
 
-        if (refresh_token && access_token && parsedToken) {
-          const keycloakID = parsedToken.sub
-          this.setUser({
-            refreshToken: refresh_token,
-            refreshTokenExp: refresh_token_exp,
-            accessToken: access_token,
-            id_token,
-            keycloak_id: keycloakID,
-            userFromToken: parsedToken,
-          })
-        } else {
-          this.resetUser()
-        }
-        return access_token
-      } catch (err) {
-        console.error('Error refreshing the user token :', err)
-        this.logOut()
+  async function getUser(id) {
+    // id is keycloak_id OR django user id OR slug
+    try {
+      // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
+      const user = await _getUser(id)
+
+      const _permissions = {}
+      for (const key of user.permissions) {
+        _permissions[key] = true
       }
-    },
+      permissions.value = _permissions
 
-    startUserDataRefreshLoop() {
-      if (this.id && !this.userDataRefreshLoop) {
-        this.userDataRefreshLoop = setInterval(
-          () => {
-            this.getUser(this.id)
-          },
-          1000 * 60 * 5 // 5 minutes
-        )
-      }
-    },
+      roles.value = user.roles
+      notificationsCount.value = user.notifications
+      userFromApi.value = user
 
-    stopUserDataRefreshLoop() {
-      if (this.userDataRefreshLoop) {
-        clearInterval(this.userDataRefreshLoop)
-        this.userDataRefreshLoop = null
-      }
-    },
+      startUserDataRefreshLoop()
 
-    async getUser(id) {
-      const languagesStore = useLanguagesStore()
-      // id is keycloak_id OR django user id OR slug
-      try {
-        // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
-        const user = await getUser(id)
+      return user
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-        const permissions = {}
-        for (const key of user.permissions) {
-          permissions[key] = true
-        }
-        this.permissions = permissions
+  async function getNotifications(id) {
+    // TODO: should be getNotificationsSetting
+    try {
+      const result = await apiGetNotifications(id)
 
-        this.roles = user.roles
-        this.notificationsCount = user.notifications
-        this.userFromApi = user
+      notificationsSettings.value = result
 
-        languagesStore.current = user.language as LanguageType
+      return result
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
 
-        this.startUserDataRefreshLoop()
+  async function patchNotifications({ id, payload }) {
+    // TODO: should be patchNotificationsSetting
+    try {
+      const result = await apiPatchNotifications({ id, payload })
 
-        return user
-      } catch (err) {
-        console.error(err)
-      }
-    },
+      notificationsSettings.value = result
 
-    async getNotifications(id) {
-      // TODO: should be getNotificationsSetting
-      try {
-        const result = await getNotifications(id)
+      return result
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
 
-        this.notificationsSettings = result
-
-        return result
-      } catch (err) {
-        throw new Error(err)
-      }
-    },
-
-    async patchNotifications({ id, payload }) {
-      // TODO: should be patchNotificationsSetting
-      try {
-        const result = await patchNotifications({ id, payload })
-
-        this.notificationsSettings = result
-
-        return result
-      } catch (err) {
-        throw new Error(err)
-      }
-    },
-
-    // ex mutations
-    setUser(payload: UsersState) {
-      localStorage?.setItem('REFRESH_TOKEN', payload.refreshToken)
-      localStorage?.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
-      localStorage?.setItem('ACCESS_TOKEN', payload.accessToken)
-      localStorage?.setItem('ID_TOKEN', payload.id_token)
-      this.refreshToken = payload.refreshToken
-      this.accessToken = payload.accessToken
-      this.keycloak_id = payload.keycloak_id
-      this.userFromToken = payload.userFromToken
-      this.id_token = payload.id_token
-      // API proxy cookie
-      document.cookie = `jwt_access_token=${payload.accessToken}; path=/;`
-    },
-
-    resetUser() {
-      localStorage?.removeItem('REFRESH_TOKEN')
-      localStorage?.removeItem('REFRESH_TOKEN_EXP')
-      localStorage?.removeItem('ACCESS_TOKEN')
-      localStorage?.removeItem('USER_ID') // TODO: keepin a while to allow past user clean up
-      localStorage?.removeItem('KEYCLOAK_ID') // TODO: keepin a while to allow past user clean up
-      localStorage?.removeItem('ID_TOKEN')
-      this.refreshToken = ''
-      this.accessToken = ''
-      this.keycloak_id = ''
-      this.userFromToken = null
-      this.id_token = ''
-      this.userFromApi = null
-      this.permissions = {}
-      this.roles = []
-      this.notificationsCount = 0
-      this.notificationsSettings = null
-      // API proxy cookie
-      document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
-    },
-  },
+  return {
+    // state
+    refreshToken,
+    userFromToken,
+    userFromApi,
+    accessToken,
+    keycloak_id,
+    permissions,
+    id_token,
+    roles,
+    notificationsCount,
+    notificationsSettings,
+    userDataRefreshLoop,
+    // getters
+    isConnected,
+    id,
+    user,
+    // actions
+    stopUserDataRefreshLoop,
+    resetUser,
+    logOut,
+    setUser,
+    logIn,
+    doRefreshToken,
+    startUserDataRefreshLoop,
+    getUser,
+    getNotifications,
+    patchNotifications,
+  }
 })
 
 export default useUsersStore

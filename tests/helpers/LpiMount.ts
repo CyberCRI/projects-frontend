@@ -20,10 +20,10 @@ function buildOptions(options: any = {}) {
   plugins.push(pinia)
 
   let i18n
-  if (options.i18n) {
-    i18n = createI18n({ legacy: false, ...options.i18n })
-    plugins.push(i18n)
-  }
+  // if (options.i18n) {
+  i18n = createI18n({ legacy: false, ...(options?.i18n || {}) })
+  plugins.push(i18n)
+  // }
 
   let router
   if (options.router) {

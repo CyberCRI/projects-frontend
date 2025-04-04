@@ -34,7 +34,6 @@ import { getOrgClassificationTags } from '@/api/tag-classification.service'
 import TagSearchResults from './TagSearchResults.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 
 import useAPI from '@/composables/useAPI.ts'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
@@ -85,9 +84,9 @@ export default {
 
   setup() {
     const organizationsStore = useOrganizationsStore()
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     return {
-      languagesStore,
+      locale,
       organizationsStore,
     }
   },
@@ -143,7 +142,7 @@ export default {
           if (this.type == 'skills') classificationId = 'enabled-for-skills'
         }
 
-        const options = { search: this.search, language: this.languagesStore.current }
+        const options = { search: this.search, language: this.locale }
         if (!this.search) options.ordering = 'title'
 
         this.request = await getOrgClassificationTags(

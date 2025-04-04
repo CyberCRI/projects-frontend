@@ -7,7 +7,6 @@
 
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
 
 export default {
@@ -16,11 +15,11 @@ export default {
   components: { LpiLoader },
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const runtimeConfig = useRuntimeConfig()
     const { isMobile, isTablet } = useViewportWidth()
     return {
-      languagesStore,
+      locale,
       runtimeConfig,
       isMobile,
       isTablet,
@@ -36,7 +35,7 @@ export default {
     docUrl() {
       const url = new URL(this.runtimeConfig.public.appDoc)
       // uppercase lang code are mandatory for this service
-      url.searchParams.append('lang', this.languagesStore.current)
+      url.searchParams.append('lang', this.locale)
 
       return url
     },

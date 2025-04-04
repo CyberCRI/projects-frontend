@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
 import { GoalFactory } from '@/../tests/factories/goal.factory'
 

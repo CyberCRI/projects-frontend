@@ -1,7 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import UserProfile from '@/components/people/UserProfile.vue'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { getUser } from '@/api/people.service'
 import { flushPromises } from '@vue/test-utils'
 
@@ -36,7 +36,7 @@ describe('UserProfile', () => {
   let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.$patch({ current: { id: 'TEST' } as unknown as OrganizationOutput })
+    organizationsStore.$patch({ current: { id: 'TEST' } as any })
     usersStore = useUsersStore()
     usersStore.$patch({
       id: 12,
@@ -45,7 +45,7 @@ describe('UserProfile', () => {
     })
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render UserProfile component', () => {
     let wrapper = lpiShallowMount(UserProfile, buildParams(123, false))

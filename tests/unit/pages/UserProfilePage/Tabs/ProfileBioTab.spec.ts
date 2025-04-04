@@ -1,7 +1,7 @@
 import ProfileBioTab from '@/pages/UserProfilePage/Tabs/ProfileBioTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
@@ -36,7 +36,7 @@ describe('ProfileBioTab', () => {
     organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render ProfileBioTab component', () => {
     let wrapper = lpiShallowMount(ProfileBioTab, buildParams(UserFactory.generate()))

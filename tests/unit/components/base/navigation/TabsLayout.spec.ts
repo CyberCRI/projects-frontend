@@ -3,7 +3,7 @@ import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import VueI18n from 'vue-i18n'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import useAPI from '@/composables/useAPI'

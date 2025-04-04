@@ -52,8 +52,8 @@ describe('Function projectCanBeEdited', () => {
     organizationsStore = useOrganizationsStore(pinia)
   })
   afterEach(() => {
-    usersStore.$reset()
-    organizationsStore.$reset()
+    // usersStore.$reset()
+    // organizationsStore.$reset()
   })
   test('that project cannot be edited if there is no user', () => {
     usersStore.user = null // getters are writable only in tests

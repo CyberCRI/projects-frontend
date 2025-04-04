@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'

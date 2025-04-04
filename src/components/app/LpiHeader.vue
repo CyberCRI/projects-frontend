@@ -105,7 +105,8 @@
           icon="Account"
         />
         <HeaderDropDown
-          :label="languagesStore.current.toUpperCase()"
+          v-if="organizationsStore?.languages?.length > 1"
+          :label="locale.toUpperCase()"
           :menu-items="langMenu"
           data-test="dropdown-lang"
         />
@@ -171,7 +172,6 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -191,13 +191,12 @@ export default {
   },
 
   setup() {
-    const languagesStore = useLanguagesStore()
     const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
+    const { locale, setLocale } = useI18n()
     return {
-      languagesStore,
       projectCategoriesStore,
       organizationsStore,
       usersStore,
@@ -205,6 +204,8 @@ export default {
       isFacilitator,
       isSuperAdmin,
       isOrgAdmin,
+      locale,
+      setLocale,
     }
   },
 
@@ -227,12 +228,12 @@ export default {
     },
 
     langMenu() {
-      return this.languagesStore.all
+      return this.organizationsStore.languages
         .map((lang) => ({
           label: lang.toUpperCase(),
           action: () => this.updateLanguage(lang),
         }))
-        .filter((lang) => lang.label !== this.languagesStore.current.toUpperCase())
+        .filter((lang) => lang.label !== this.locale.toUpperCase())
     },
 
     organization() {
@@ -408,7 +409,7 @@ export default {
           dataTest: 'user-dropdown-menu',
         },
         {
-          label: this.languagesStore.current.toUpperCase(),
+          label: this.locale.toUpperCase(),
           childItems: this.langMenu,
           condition: true,
           dataTest: 'lang',
@@ -433,6 +434,21 @@ export default {
     },
     organisation() {
       return this.organizationsStore.current
+    },
+
+    langFromUser() {
+      return this.usersStore.userFromApi?.language
+    },
+  },
+
+  watch: {
+    langFromUser: {
+      handler: function (neo, old) {
+        if (neo && neo != old && neo != this.locale) {
+          this.setLocale(neo)
+        }
+      },
+      immediate: true,
     },
   },
 
@@ -495,7 +511,7 @@ export default {
         patchUser(this.usersStore.id, body)
       }
 
-      this.languagesStore.current = lang
+      this.setLocale(lang)
     },
 
     async getGlobalAnnouncements() {

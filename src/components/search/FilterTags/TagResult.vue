@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import useLanguagesStore from '@/stores/useLanguages'
 export default {
   name: 'TagResult',
 
@@ -29,13 +28,6 @@ export default {
       type: String,
       default: '',
     },
-  },
-
-  setup() {
-    const languagesStore = useLanguagesStore()
-    return {
-      languagesStore,
-    }
   },
 }
 </script>

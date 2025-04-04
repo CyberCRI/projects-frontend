@@ -1,4 +1,6 @@
 import { alias } from './alias'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // const apiProxy = {
 //     '^/v[0-9]+/': {
@@ -12,6 +14,20 @@ import { alias } from './alias'
 
 // const binPrefix = process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX
 // console.log(binPrefix)
+
+const directoryPath = path.join(__dirname, '/src/i18n/locales')
+let ALL_LOCALES: any = []
+try {
+  const files = fs.readdirSync(directoryPath)
+  ALL_LOCALES = files.reduce((acc, file) => {
+    const code = file.replace(/\.json$/, '')
+    acc.push({ code, /*name: 'English',*/ files: [file] })
+    return acc
+  }, [])
+} catch (err) {
+  console.error('Error listing tranlation files :', err)
+}
+
 export default defineNuxtConfig({
   // ssr: false,
   compatibilityDate: '2024-11-01',
@@ -32,6 +48,7 @@ export default defineNuxtConfig({
     '~/plugins/errorHandler.ts',
     '~/plugins/router-before-each.client.ts',
     '~/plugins/router-after-each.client.ts',
+    '~/plugins/lang-switch.ts',
   ],
   imports: {
     autoImport: true, //false,
@@ -103,27 +120,21 @@ export default defineNuxtConfig({
       appI18nLocale: '',
       appShowDebug: 0,
       appDisconnectionGraceDuration: 0,
+      allLocales: ALL_LOCALES.map((l) => l.code),
     },
   },
   i18n: {
-    vueI18n: './i18n.config.ts', // if you are using custom path, default
-    // temp fix for a ssr warning, see https://github.com/nuxt-modules/i18n/issues/3350
-    locales: [
-      { code: 'en', name: 'English' },
-      { code: 'fr', name: 'Français' },
-    ],
+    locales: ALL_LOCALES,
+    lazy: true,
+    defaultLocale: 'en',
+    restructureDir: './src/i18n',
+    // detectBrowserLanguage: {
+    //   useCookie: true,
+    //   cookieKey: 'i18n_redirected',
+    //   alwaysRedirect: true,
+    // },
   },
-  // routeRules: {
-  //     '/v1/**': {
-  //         proxy: `${process.env.NUXT_PUBLIC_APP_API_URL}/**`,
-  //         //{
-  //         //  to: ,
-  //         // changeOrigin: true,
-  //         // secure: !import.meta.dev, // required because local frontend is served over non secure http
-  //         // withCredentials: true,
-  //         //},
-  //     },
-  // },
+
   nitro: {
     minify: import.meta.dev,
   },

@@ -26,7 +26,6 @@
 
 <script>
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useLanguagesStore from '@/stores/useLanguages'
 
 export default {
   name: 'SdgRecap',
@@ -42,11 +41,11 @@ export default {
   },
 
   setup() {
-    const languagesStore = useLanguagesStore()
+    const { locale } = useI18n()
     const runtimeConfig = useRuntimeConfig()
     const { canEditProject } = usePermissions()
     return {
-      languagesStore,
+      locale,
       runtimeConfig,
       canEditProject,
     }
@@ -54,7 +53,7 @@ export default {
 
   computed: {
     lang() {
-      return this.languagesStore.current
+      return this.locale
     },
   },
 

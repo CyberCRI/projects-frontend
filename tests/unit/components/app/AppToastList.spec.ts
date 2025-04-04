@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest'
 import waitForExpect from 'wait-for-expect'
 import { nextTick } from 'vue'
 import useToasterStore from '@/stores/useToaster'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 
 const i18n = {
   locale: 'en',

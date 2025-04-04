@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'

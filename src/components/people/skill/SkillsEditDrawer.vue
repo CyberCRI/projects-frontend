@@ -94,7 +94,6 @@ import { toRaw } from 'vue'
 import { postUserSkill } from '@/api/people.service.ts'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
@@ -154,7 +153,6 @@ export default {
   emits: ['close', 'switch-mode', 'confirm', 'skill-added'],
   setup() {
     const toaster = useToasterStore()
-    const languagesStore = useLanguagesStore()
     const skillTexts = useSkillTexts()
     const {
       suggestedTagsAreLoading,
@@ -168,7 +166,6 @@ export default {
     } = useTagSearch({ useSkills: true })
     return {
       toaster,
-      languagesStore,
       suggestedTagsAreLoading,
       selectedClassificationId,
       search,

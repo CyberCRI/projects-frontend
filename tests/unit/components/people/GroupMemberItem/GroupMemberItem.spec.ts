@@ -1,5 +1,5 @@
 import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import GroupMemberFactory from '@/../tests/factories/group-member.factory'

@@ -1,7 +1,7 @@
 import ProfileSkillTab from '@/pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
@@ -37,7 +37,7 @@ describe('ProfileSkillTab', () => {
     organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render ProfileSkillTab component', () => {

@@ -1,5 +1,5 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

@@ -1,5 +1,4 @@
 import useAPI from '@/composables/useAPI'
-import useLanguagesStore from '@/stores/useLanguages'
 import { useRuntimeConfig } from '#imports'
 export default {
   copyObject(obj) {
@@ -38,12 +37,11 @@ export default {
   },
 
   getTimePassed(d) {
-    const languagesStore = useLanguagesStore()
     /* https://natclark.com/tutorials/javascript-relative-time/ */
-
+    const { locale } = useI18n()
     const now = new Date().getTime()
     const old = new Date(d).getTime()
-    const formatter = new Intl.RelativeTimeFormat(languagesStore.current || 'en', {
+    const formatter = new Intl.RelativeTimeFormat(locale.value || 'en', {
       style: `long`,
     })
 

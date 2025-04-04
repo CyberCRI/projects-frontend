@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { CommentFactory } from '@/../tests/factories/comment.factory'
 
 import pinia from '@/stores'
@@ -45,7 +45,7 @@ describe('CommentItem', () => {
     }
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render CommentItem component', () => {

@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'

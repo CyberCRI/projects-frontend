@@ -1,6 +1,6 @@
 import GroupPageInner from '@/components/group/GroupPageInner.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
@@ -70,7 +70,7 @@ describe('GroupPageInner', () => {
     usersStore.getUser = vi.fn()
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render GroupPageInner component', () => {
     let wrapper = lpiShallowMount(GroupPageInner, buildParams('123'))

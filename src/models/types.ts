@@ -1,4 +1,4 @@
-export type LanguageType = 'en' | 'fr'
+export type LanguageType = string
 
 export type AttachmentType = 'file' | 'image' | 'video'
 

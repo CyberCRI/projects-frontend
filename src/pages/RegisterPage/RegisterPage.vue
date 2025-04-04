@@ -7,7 +7,6 @@ import utils from '@/functs/functions.ts'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import useToasterStore from '@/stores/useToaster.ts'
-import useLanguagesStore from '@/stores/useLanguages'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
 import { getOrganizationByCode } from '@/api/organizations.service'
@@ -20,10 +19,9 @@ const props = defineProps({
 })
 
 const toaster = useToasterStore()
-const languagesStore = useLanguagesStore()
 const organizationsStore = useOrganizationsStore()
 const runtimeConfig = useRuntimeConfig()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const form = ref({
   email: '',
@@ -113,7 +111,7 @@ const register = async () => {
       formData.append(key, form.value[key])
     })
 
-    formData.append('language', languagesStore.current)
+    formData.append('language', locale.value)
 
     await postUserWithInvitation(props.token, formData)
 

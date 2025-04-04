@@ -266,7 +266,7 @@
         "background-color": "Choose a background color",
         "background-image": "Choose a background image",
         "upload-picture": "Upload a picture",
-        "tips-background-image": "It is not required if you would rather simply display a color.<br/>Minimum width: 1024px, Minimum height: 400px."
+        "tips-background-image": "It is not required if you would rather simply display a color.  Minimum width: 1024px, Minimum height: 400px."
       },
       "chat": "Chat platform (Connected view)",
       "events": "Events",

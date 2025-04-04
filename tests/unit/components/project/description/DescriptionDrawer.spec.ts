@@ -3,7 +3,7 @@ import DescriptionDrawer from '@/components/project/description/DescriptionDrawe
 import { beforeEach, vi, describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'

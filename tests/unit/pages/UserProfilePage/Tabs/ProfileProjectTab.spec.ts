@@ -1,7 +1,7 @@
 import ProfileProjectTab from '@/pages/UserProfilePage/Tabs/ProfileProjectTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../i18n.config'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 
 import { getUserFollows } from '@/api/follows.service'
@@ -49,7 +49,7 @@ describe('ProfileProjectTab', () => {
     useProjectsStore(pinia)
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
 
   it('should render ProfileProjectTab component', () => {

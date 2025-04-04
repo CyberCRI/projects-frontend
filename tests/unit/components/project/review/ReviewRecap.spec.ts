@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/locales/en.json'
+import english from '@/i18n/locales/en.json'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
@@ -82,7 +82,7 @@ describe('ReviewRecap.vue', () => {
     usersStore.accessToken = 123
   })
   afterEach(() => {
-    usersStore.$reset()
+    // usersStore.$reset()
   })
   it('should render component', () => {
     usersStore.permissions = {}
