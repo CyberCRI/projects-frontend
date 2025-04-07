@@ -2,6 +2,16 @@ import { alias } from './alias'
 import fs from 'node:fs'
 import path from 'node:path'
 
+import * as dotenv from 'dotenv'
+
+// Determine the environment file
+const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
+
+if (fs.existsSync(customEnvFile)) {
+  console.log(`Overriding environment variables with: ${customEnvFile}`)
+  dotenv.config({ path: customEnvFile, override: true })
+}
+
 // const apiProxy = {
 //     '^/v[0-9]+/': {
 //         target: `${process.env.NUXT_PUBLIC_APP_API_URL}`,

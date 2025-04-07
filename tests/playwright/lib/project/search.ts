@@ -19,4 +19,5 @@ export async function search(page, projId) {
   logger.info('Id checked')
   logger.info('Click on first project of results')
   await page.locator('.card-description').first().click()
+  await page.waitForSelector('.project-layout') // wait project page to be loaded
 }

@@ -9,6 +9,7 @@ export async function createInvitaionLink(page) {
   await page.locator('[data-test="dropdown-user-account"]').click()
   // await page.locator('[data-test="admin"]').waitFor(20000)
   await page.locator('[data-test="admin"]').click()
+  await page.waitForSelector('.admin-portal-layout') // wait admin page to be loaded
   let adminLinks = await page.locator('[data-test="admin-links"]')
   const adminLinksCount = await adminLinks.count()
   if (!adminLinksCount) {
