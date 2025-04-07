@@ -5,9 +5,9 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function createInvitaionLink(page) {
   logger.info('Wait 20 sec')
-  await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
+  await page.waitForSelector('[data-test="dropdown-user-account"]')
   await page.locator('[data-test="dropdown-user-account"]').click()
-  await page.locator('[data-test="my-projects"]').waitFor(20000)
+  await page.waitForSelector('[data-test="my-projects"]')
   await page.locator('[data-test="my-projects"]').click()
   await page.locator('[data-test="button-label"]').click()
   await page.locator('[data-test="create-link"]').click()

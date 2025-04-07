@@ -4,12 +4,13 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function generalInfo(page, user) {
   logger.info('Edit general info')
-  await page.locator('[data-test="dropdown-user-account"]').waitFor(20000)
+  await page.waitForSelector('[data-test="dropdown-user-account"]')
   await page.locator('[data-test="dropdown-user-account"]').click()
-  await page.locator('[data-test="my-profile"]').waitFor(20000)
+  await page.waitForSelector('[data-test="my-profile"]')
   await page.locator('[data-test="my-profile"]').click()
-  await page.locator('[data-test="edit-profile"]').waitFor(20000)
+  await page.waitForSelector('[data-test="edit-profile"]')
   await page.locator('[data-test="edit-profile"]').click()
+  await page.waitForSelector('.profile-edit-tabs') // wait edit profile to be loaded
   await page.locator('[data-test="first-name-input"]').fill(user.firstName)
   await page.locator('[data-test="last-name-input"]').fill(user.lastName)
   await page.locator('[data-test="pronouns-input"]').fill('It')
