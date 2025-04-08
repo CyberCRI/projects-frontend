@@ -115,13 +115,13 @@ export default {
         }
 
         const formData = new FormData()
-        imageSizesFormData(formData, this.form.imageSizes)
+        if (this.form.imageSizes) imageSizesFormData(formData, this.form.imageSizes)
 
         if (payload.header_image instanceof File) {
           const formData = new FormData()
 
           formData.append('file', this.form['header_image'], this.form['header_image'].name)
-          imageSizesFormData(formData, this.form.imageSizes)
+          if (this.form.imageSizes) imageSizesFormData(formData, this.form.imageSizes)
           payload.header_image_id = (
             await postNewsHeader(this.organizationsStore.current?.code, savedNews.id, formData)
           ).id
