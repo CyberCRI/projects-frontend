@@ -44,7 +44,7 @@ test(`test-${users.admin.email}`, async ({ page }) => {
     }
     try {
       await logIn(page, users.playwright)
-      await delay(5000)
+      //await delay(5000)
       await testRights(page, groupName, right)
       logger.info(`Right "${right}" tested for "${groupName}"`)
     } catch (err) {

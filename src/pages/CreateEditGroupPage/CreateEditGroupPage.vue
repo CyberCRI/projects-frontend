@@ -118,7 +118,7 @@ const updateHeader = async (groupId) => {
     !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupProjectData.value?.header_image))
   ) {
     const payloadHeader = new FormData()
-    imageSizesFormData(payloadHeader, form.value.imageSizes)
+    if (form.value.imageSizes) imageSizesFormData(payloadHeader, form.value.imageSizes)
 
     if (form.value.header_image instanceof File) {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
@@ -127,9 +127,10 @@ const updateHeader = async (groupId) => {
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
+    } else if (form.value.imageSizes) {
+      // TODO else ?
+      await patchGroupHeader(orgCode.value, groupId, payloadHeader)
     }
-    // TODO else ?
-    await patchGroupHeader(orgCode.value, groupId, payloadHeader)
   }
 }
 

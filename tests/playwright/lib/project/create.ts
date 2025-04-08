@@ -13,7 +13,7 @@ export async function createProject(page, projectName, projId) {
   await page.locator('[data-test="lpi-logo"]').click()
   logger.info('Click to create project')
   await page.locator('[data-test="create-project"]').click()
-
+  await page.waitForSelector('.createProject') // wait create project page to be loaded
   // add category if needed
   const categorySelector = await page.locator('[data-test="select-project-category"]')
   try {
