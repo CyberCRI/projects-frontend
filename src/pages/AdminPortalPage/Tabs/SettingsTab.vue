@@ -23,7 +23,7 @@ const form = ref({
 })
 
 const languageOptions = computed(() => {
-  return organizationsStore.languages.value.map((lang) => {
+  return organizationsStore.languages.map((lang) => {
     return {
       value: lang,
       label: t(`language.label-${lang}`),

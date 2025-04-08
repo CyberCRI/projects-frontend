@@ -44,7 +44,7 @@ const saveNews = async () => {
 
       formData.append('file', form.value['header_image'], form.value['header_image'].name)
 
-      imageSizesFormData(formData, form.value.imageSizes)
+      if (form.value.imageSizes) imageSizesFormData(formData, form.value.imageSizes)
 
       await postNewsHeader(organizationsStore.current?.code, savedNews.id, formData)
     }
