@@ -35,4 +35,6 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
   await page.locator(`[data-test="group-create-button"]`).click()
   // Creation group is made in 2 requests wait the the second request to be sent
   //await delay(5000)
+  // wait for post save redirect to group page
+  await page.waitForSelector('.group-layout')
 }
