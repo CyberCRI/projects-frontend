@@ -1,4 +1,4 @@
-export default (url, title, description, image) => {
+export default (url, title, description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useI18n()
 
@@ -11,6 +11,21 @@ export default (url, title, description, image) => {
     if (imgExt == 'webp') imgMimeType = 'image/webp'
   } catch (err) {
     console.error(err)
+  }
+
+  const imgWidth = dimensions?.width
+  const imgHeight = dimensions?.height
+
+  const optMetas = []
+  if (imgHeight && imgWidth) {
+    optMetas.push({
+      property: 'og:image:width',
+      content: imgWidth,
+    })
+    optMetas.push({
+      property: 'og:image:height',
+      content: imgHeight,
+    })
   }
 
   const setHead = () =>
@@ -31,33 +46,34 @@ export default (url, title, description, image) => {
         },
 
         {
-          name: 'og:title',
+          property: 'og:title',
           content: title,
         },
 
         {
-          name: 'og:description',
+          property: 'og:description',
           content: description,
         },
 
         {
-          name: 'og:url',
+          property: 'og:url',
           content:
             url || `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png`,
         },
 
         {
-          name: 'og:image',
+          property: 'og:image',
           content: image,
         },
 
         {
-          name: 'og:image:type',
+          property: 'og:image:type',
           content: imgMimeType,
         },
 
-        // Twitter
+        ...optMetas,
 
+        // Twitter
         {
           name: 'twitter:title',
           content: title,

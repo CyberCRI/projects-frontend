@@ -427,12 +427,14 @@ provide('projectLayoutProjectPatched', projectPatched)
 try {
   // project might need access right
   const projectData = await getProject(route.params.slugOrId, true)
+  const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
   if (projectData)
     useLpiHead(
       useRequestURL().toString(),
       projectData.title,
       projectData.purpose,
-      projectData?.header_image?.variations?.medium
+      image,
+      dimensions
     )
 } catch {
   // DGAF
