@@ -4,7 +4,7 @@ export default function useImageAndDimensions(
 ) {
   const image = imageData?.variations?.[variation]
 
-  let variationWidth = {
+  const variationWidth = {
     full: 1920,
     large: 1024,
     medium: 768,
