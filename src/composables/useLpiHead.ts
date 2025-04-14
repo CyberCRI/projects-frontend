@@ -1,6 +1,18 @@
 export default (url, title, description, image) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useI18n()
+
+  let imgMimeType = 'image/jpeg'
+  try {
+    const imgUrl = new URL(image)
+    const imgPath = imgUrl.pathname
+    const imgExt = imgPath.split('.').pop().toLowerCase()
+    if (imgExt == 'png') imgMimeType = 'image/png'
+    if (imgExt == 'webp') imgMimeType = 'image/webp'
+  } catch (err) {
+    console.error(err)
+  }
+
   const setHead = () =>
     useHeadSafe({
       title: title,
@@ -37,6 +49,11 @@ export default (url, title, description, image) => {
         {
           name: 'og:image',
           content: image,
+        },
+
+        {
+          name: 'og:image:type',
+          content: imgMimeType,
         },
 
         // Twitter
