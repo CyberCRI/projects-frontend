@@ -31,33 +31,32 @@ spec:
           imagePullPolicy: IfNotPresent
           name: projects-frontend
           ports:
-            - name: http
-              containerPort: {{ .Values.targetPort }}
+          - name: http
+            containerPort: {{ .Values.targetPort }}
           envFrom:
             {{- if .Values.config.nonSensitive }}
             - configMapRef:
                 name: {{ tpl .Values.fullName . }}
             {{- end }}
           resources: {{- .Values.resources |toYaml | nindent 12 }}
-          # livenessProbe:
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          #   timeoutSeconds: 1
-          #   successThreshold: 1
-          #   failureThreshold: 10
-          #   httpGet:
-          #     scheme: HTTP
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   periodSeconds: 10
-          #   timeoutSeconds: 1
-          #   successThreshold: 1
-          #   failureThreshold: 2
-          #   httpGet:
-          #     scheme: HTTP
-          #     path: /
-          #     port: http
+          livenessProbe:
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 10
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: http
+          readinessProbe:
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 2
+            httpGet:
+              scheme: HTTP
+              path: /health
+              port: http
           volumeMounts:
           - name: secrets
             mountPath: "/secrets"
