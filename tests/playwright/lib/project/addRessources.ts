@@ -21,7 +21,7 @@ export async function addRessources(page) {
   await page.locator('[data-test="input-link-description"]').fill('testing')
   await page.locator('[data-test="confirm-button"]').click()
 
-  await delay(5000)
+  await delay(2000)
 
   // add ressources file
   logger.info('Click to add file')
@@ -42,5 +42,5 @@ export async function addRessources(page) {
     .setInputFiles('tests/playwright/fixtures/pdf/testing.pdf')
   logger.info('Select and add file from local folder')
   await page.locator('[data-test="confirm-button"]').click()
-  await delay(5000)
+  await delay(2000)
 }

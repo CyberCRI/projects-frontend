@@ -20,7 +20,7 @@ export async function reportBug(page) {
     settings = await page.locator('[data-test="project-settings"]')
   }
   logger.info('Click on report abuse')
-  await delay(5000)
+  // await delay(5000)
   await page.locator('[data-test="report-abuse"]').click()
   logger.info('Add email to report')
   await page.locator('[data-test="report-email"]').click()
