@@ -75,11 +75,13 @@ const fixedSearch = computed(() => {
   }
 })
 
+const { image, dimensions } = useImageAndDimension(category.value?.background_image, 'medium')
 useLpiHead(
   useRequestURL().toString(),
   category.value?.name,
   category.value?.description,
-  category.value?.background_image?.variations?.medium
+  image,
+  dimensions
 )
 </script>
 <template>

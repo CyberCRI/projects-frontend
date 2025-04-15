@@ -97,6 +97,7 @@ onMounted(async () => {
 try {
   const runtimeConfig = useRuntimeConfig()
   const news = await getNews(runtimeConfig.public.appApiOrgCode, props.slugOrId, true)
+  const { image, dimensions } = useImageAndDimension(news?.header_image, 'medium')
 
   useLpiHead(
     useRequestURL().toString(),
@@ -105,7 +106,8 @@ try {
       ?.replace(/<[^>]+>/gi, ' ')
       .replace(/\s+/gi, ' ')
       .substring(0, 300),
-    news?.header_image?.variations?.medium
+    image,
+    dimensions
   )
 } catch (err) {
   // DGAF

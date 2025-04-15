@@ -17,20 +17,24 @@ const { t } = useI18n()
 try {
   if (props.userId) {
     const user = await getUser(props.userId, true)
+    const { image, dimensions } = useImageAndDimension(user.profile_picture, 'medium')
     useLpiHead(
       useRequestURL().toString(),
       `${user.given_name} ${user.family_name}`,
       user.short_description,
-      user.profile_picture?.variations?.medium
+      image,
+      dimensions
     )
   } else {
     const runtimeConfig = useRuntimeConfig()
     const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+    const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
     useLpiHead(
       useRequestURL().toString(),
       computed(() => t('me.page-title')),
       organization?.dashboard_subtitle,
-      organization?.banner_image?.variations?.medium
+      image,
+      dimensions
     )
   }
 } catch (err) {

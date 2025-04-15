@@ -70,11 +70,13 @@ onMounted(async () => {
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
   useLpiHead(
     useRequestURL().toString(),
     computed(() => t('faq.portal')),
     organization?.dashboard_subtitle,
-    organization?.banner_image?.variations?.medium
+    image,
+    dimensions
   )
 } catch (err) {
   console.log(err)

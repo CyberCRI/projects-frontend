@@ -50,6 +50,8 @@ onMounted(async () => {
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
+
   useLpiHead(
     useRequestURL().toString(),
     computed(() =>
@@ -60,7 +62,8 @@ try {
           : t('profile.edit.edit-other-profile', { name: username.value })
     ),
     organization?.dashboard_subtitle,
-    organization?.banner_image?.variations?.medium
+    image,
+    dimensions
   )
 } catch (err) {
   console.log(err)
