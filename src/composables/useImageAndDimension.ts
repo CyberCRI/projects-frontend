@@ -2,20 +2,7 @@ export default function useImageAndDimensions(
   imageData,
   variation: 'full' | 'large' | 'medium' | 'small'
 ) {
-  // const runtimeConfig = useRuntimeConfig()
-
-  const originalImage = imageData?.variations?.[variation]
-
-  const originalImageUrl = new URL(originalImage)
-  const binaryDomain = originalImageUrl.origin
-  const proxyPrefix = useRequestURL().origin + '/image-assets'
-
-  // console.log('originalImage', originalImage)
-  // console.log('binaryDomain', binaryDomain)
-  // console.log('proxyPrefix', proxyPrefix)
-
-  const image = originalImage?.replace(binaryDomain, proxyPrefix)
-  // console.log('image', image)
+  const image = imageData?.variations?.[variation]
 
   const variationWidth = {
     full: 1920,
