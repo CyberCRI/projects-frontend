@@ -51,7 +51,7 @@ async function addSkills(page, _type, query) {
   await page.waitForSelector('[data-test="search-input"]')
   await page.locator('[data-test="search-input"]').fill(query)
   await page.locator('[data-test="search-input"]').press('Enter')
-  await delay(5000)
+  await delay(2000)
   await page.locator('[data-test^="tag-label-"]:not(.disabled)').first().click()
   await page.locator('[data-test="confirm-button"]').click()
 }
@@ -68,5 +68,5 @@ async function removeSkills(page, type) {
     await delay(1000)
   }
   // dont finnish yet because we're adding skills after that and nned all skill to be removed
-  await delay(5000)
+  await delay(2000)
 }

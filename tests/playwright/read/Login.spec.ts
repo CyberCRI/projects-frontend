@@ -8,6 +8,7 @@ const logger = new Logger(LogLevel.Debug)
 for (let i = 0; i < users.length; i++) {
   test(`test-${users[i].email}`, async ({ page }) => {
     await page.goto('/')
+    //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
     logger.info(` LOGIN/LOGOUT TEST : ${users[i].email} `)
     try {
       await logIn(page, users[i])

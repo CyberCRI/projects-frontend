@@ -16,9 +16,10 @@ const logger = new Logger(LogLevel.Debug)
 const projId = makeId(5)
 for (let i = 0; i < users.length; i++) {
   test(`test-${users[i].email}`, async ({ page }) => {
+    await page.goto('/')
     logger.info(` ADD/EDIT DESCRIPTION TEST : ${users[i].email} `)
     try {
-      await page.goto('/')
+      //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
       await logIn(page, users[i])
       logger.info('Login successful')
     } catch (err) {

@@ -7,10 +7,11 @@ const logger = new Logger(LogLevel.Debug)
 
 for (const user of users) {
   test(`test-${user.email}`, async ({ page }) => {
-    logger.info(` User edit ${user.email} `)
     await page.goto('/')
+    logger.info(` User edit ${user.email} `)
+    //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
     try {
-      await page.goto('/')
+      //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
       await logIn(page, user)
       logger.info('Login successful')
     } catch (err) {

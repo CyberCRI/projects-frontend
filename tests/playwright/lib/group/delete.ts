@@ -5,7 +5,7 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function deleteGroup(page: Page, groupName: string) {
   logger.info('Navigate to group Home page')
-  await page.goto('/')
+  //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
   await page.locator('[data-test="lpi-logo"]').click()
   await page.locator('[data-test="search-input"]').fill(groupName)
   await page.locator('[data-test="search-input-button"]').click()

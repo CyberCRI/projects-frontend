@@ -11,6 +11,7 @@ const rights = ['leader', 'manager', 'member']
 
 test(`test-${users.admin.email}`, async ({ page }) => {
   await page.goto('/')
+  //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
   logger.info(` Group Creation and managment : ${users.admin.email} `)
   logger.info(`the created group ${groupName}`)
   try {

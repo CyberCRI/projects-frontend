@@ -9,9 +9,10 @@ const projId = makeId(5)
 const projId2 = makeId(5)
 for (let i = 0; i < users.length; i++) {
   test(`test-${users[i].email}`, async ({ page }) => {
+    await page.goto('/')
     logger.info(` SEARCH TEST : ${users[i].email} `)
     try {
-      await page.goto('/')
+      //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click
       await logIn(page, users[i])
       logger.info('Login successful')
     } catch (err) {
@@ -27,7 +28,7 @@ for (let i = 0; i < users.length; i++) {
       logger.error(err)
       throw err
     }
-    await delay(5000) // gives tiume for algolia to index
+    await delay(1000) // gives tiume for algolia to index
     try {
       await search(page, projId)
       logger.info(`searching for SearchTest_${i}`)
@@ -44,7 +45,7 @@ for (let i = 0; i < users.length; i++) {
       logger.error(err)
       throw err
     }
-    await delay(5000) // gives tiume for algolia to reindex
+    await delay(1000) // gives tiume for algolia to reindex
     try {
       await search(page, projId2)
       logger.info(`searching for SearchTest_${projId2}`)
