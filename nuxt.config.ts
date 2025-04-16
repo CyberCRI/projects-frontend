@@ -169,17 +169,17 @@ export default defineNuxtConfig({
         // Open Graph
 
         {
-          name: 'og:title',
+          property: 'og:title',
           content: 'Share your projects to increase impact',
         },
 
         {
-          name: 'og:type',
+          property: 'og:type',
           content: 'website',
         },
 
         {
-          name: 'og:description',
+          property: 'og:description',
           content: 'Projects is a platform to document and promote projects for common good',
         },
 

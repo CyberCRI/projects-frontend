@@ -1,6 +1,33 @@
-export default (url, title, description, image) => {
+export default (url, title, description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useI18n()
+
+  let imgMimeType = 'image/jpeg'
+  try {
+    const imgUrl = new URL(image)
+    const imgPath = imgUrl.pathname
+    const imgExt = imgPath.split('.').pop().toLowerCase()
+    if (imgExt == 'png') imgMimeType = 'image/png'
+    if (imgExt == 'webp') imgMimeType = 'image/webp'
+  } catch (err) {
+    console.error(err)
+  }
+
+  const imgWidth = dimensions?.width
+  const imgHeight = dimensions?.height
+
+  const optMetas = []
+  if (imgHeight && imgWidth) {
+    optMetas.push({
+      property: 'og:image:width',
+      content: imgWidth,
+    })
+    optMetas.push({
+      property: 'og:image:height',
+      content: imgHeight,
+    })
+  }
+
   const setHead = () =>
     useHeadSafe({
       title: title,
@@ -19,28 +46,34 @@ export default (url, title, description, image) => {
         },
 
         {
-          name: 'og:title',
+          property: 'og:title',
           content: title,
         },
 
         {
-          name: 'og:description',
+          property: 'og:description',
           content: description,
         },
 
         {
-          name: 'og:url',
+          property: 'og:url',
           content:
             url || `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png`,
         },
 
         {
-          name: 'og:image',
+          property: 'og:image',
           content: image,
         },
 
-        // Twitter
+        {
+          property: 'og:image:type',
+          content: imgMimeType,
+        },
 
+        ...optMetas,
+
+        // Twitter
         {
           name: 'twitter:title',
           content: title,

@@ -76,6 +76,7 @@ try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
   const inst = await getInstruction(runtimeConfig.public.appApiOrgCode, props.slugOrId, true)
+  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
 
   useLpiHead(
     useRequestURL().toString(),
@@ -84,7 +85,8 @@ try {
       ?.replace(/<[^>]+>/gi, ' ')
       .replace(/\s+/gi, ' ')
       .substring(0, 300),
-    organization?.banner_image?.variations?.medium
+    image,
+    dimensions
   )
 } catch (err) {
   // DGAF
