@@ -108,6 +108,7 @@ export default defineNuxtConfig({
     public: {
       appVersion: '',
       appApiOrgCode: '',
+      appFavicon: '',
       appCaptchaKey: '',
       appMixpanelApiHost: '',
       appMixpanelProjectToken: '',

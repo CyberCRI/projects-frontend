@@ -28,6 +28,15 @@ export default (url, title, description, image, dimensions = null) => {
     })
   }
 
+  let favicon = `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`
+  const customFavicon = (runtimeConfig.public.appFavicon || '') as string
+  if (customFavicon) {
+    if (customFavicon.match(/^https?:\//)) {
+      favicon = customFavicon
+    } else {
+      favicon = `${runtimeConfig.public.appPublicBinariesPrefix}/${customFavicon}`
+    }
+  }
   const setHead = () =>
     useHeadSafe({
       title: title,
@@ -35,7 +44,7 @@ export default (url, title, description, image, dimensions = null) => {
       link: [
         {
           rel: 'icon',
-          href: `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`,
+          href: favicon,
         },
       ],
       htmlAttrs: { lang: 'locale' },
