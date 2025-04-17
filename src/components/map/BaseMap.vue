@@ -81,8 +81,6 @@ export default {
   },
   methods: {
     async addPointer({ markerContent, location, tooltip }, eventHandlers) {
-      if (location.rendered) return
-      location.rendered = true
       const icon = L.divIcon({
         html: markerContent,
         className: location.type,

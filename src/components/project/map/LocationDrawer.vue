@@ -22,7 +22,6 @@
         <div class="map-inner-ctn">
           <div class="map">
             <LazyBaseMap
-              v-if="isOpened"
               ref="map"
               :key="mapkey"
               :config="config"
@@ -133,6 +132,10 @@ export default {
   watch: {
     locations() {
       this.mapkey++
+    },
+
+    isOpened(neo) {
+      if (neo) this.mapkey++
     },
   },
 

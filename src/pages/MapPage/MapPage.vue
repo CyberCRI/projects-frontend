@@ -7,8 +7,8 @@ const isClient = import.meta.client
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
-const projectLocations = useState(() => [])
-const loading = useState(() => true)
+const projectLocations = ref([])
+const loading = ref(true)
 
 const loadLocations = async (page = null) => {
   loading.value = true
