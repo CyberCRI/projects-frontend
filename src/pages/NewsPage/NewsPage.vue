@@ -22,6 +22,7 @@ const otherNews = useState(() => [])
 const loading = ref(false)
 const editedNews = ref(null)
 const newsToDelete = ref(null)
+const isDeletingNews = ref(false)
 
 const breadcrumbs = computed(() => {
   return [
