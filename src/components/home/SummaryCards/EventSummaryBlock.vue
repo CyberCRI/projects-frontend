@@ -6,6 +6,7 @@
         :key="event.id"
         :event="event"
         :cols="events.length > 2 ? 'three-col' : 'two-col'"
+        is-limited-description
         @edit-event="editedEvent = event"
         @delete-event="eventToDelete = event"
       />
@@ -104,5 +105,6 @@ export default {
 <style lang="scss" scoped>
 .event {
   padding: 0;
+  flex-grow: 1;
 }
 </style>
