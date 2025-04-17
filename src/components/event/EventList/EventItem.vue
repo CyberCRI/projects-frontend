@@ -15,16 +15,16 @@
       <h4 class="event-name">
         {{ event.title }}
       </h4>
-      <div class="event-information" v-html="event.content" />
-      <!-- TODO: put back group list when api send back their names ?-->
-      <!--p class="event-groups" v-if="event.people_groups.length">
-                <span>{{
-                    event.people_groups.length > 1
-                        ? $t('event.groups-label')
-                        : $t('event.group-label')
-                }}</span>
-                {{ event.people_groups.map((group) => group.name).join(', ') }}
-            </p-->
+      <div class="event-information">
+        <HtmlLimiter
+          v-if="isLimitedDescription"
+          :html="event.content"
+          :striped-tags="['table']"
+          @computed="layoutComputed"
+          @computing="computeLayout"
+        />
+        <div v-else class="event-information" v-html="event.content" />
+      </div>
     </div>
     <ContextActionMenu
       v-if="canEditEvent || canDeleteEvent"
@@ -52,6 +52,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    isLimitedDescription: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['delete-event', 'edit-event'],
@@ -60,6 +64,14 @@ export default {
     const { canEditEvent, canDeleteEvent } = usePermissions()
     return { canEditEvent, canDeleteEvent }
   },
+
+  data() {
+    return {
+      style: {},
+      textsStyle: {},
+    }
+  },
+
   computed: {
     isNew() {
       return Date.now() - new Date(this.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
@@ -67,6 +79,14 @@ export default {
   },
 
   methods: {
+    computeLayout() {
+      this.style = {}
+      this.textsStyle = {}
+    },
+    layoutComputed(event) {
+      this.style = { height: event.height + 'px' }
+      this.textsStyle = { height: 'auto' }
+    },
     getMonthFromDate(yearMonth) {
       return yearMonth.split('-')[1]
     },
@@ -89,7 +109,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   gap: $space-l;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: stretch;
   position: relative;
   padding: $space-m;
@@ -106,6 +126,7 @@ export default {
   }
 
   .date {
+    align-self: flex-start;
     flex-shrink: 0;
     display: flex;
     flex-wrap: nowrap;
@@ -140,6 +161,8 @@ export default {
   .texts {
     flex-grow: 1;
     color: $primary-dark;
+    display: flex;
+    flex-flow: column nowrap;
 
     .event-name {
       font-size: $font-size-m;
@@ -150,6 +173,10 @@ export default {
 
     .event-information {
       font-size: $font-size-xs;
+      position: relative;
+      flex-grow: 1;
+      display: flex;
+      flex-flow: column;
     }
 
     .event-groups {
