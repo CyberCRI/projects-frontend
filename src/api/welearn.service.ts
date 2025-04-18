@@ -6,6 +6,7 @@ export async function getSuggestedProjects(id, orgCode) {
     params: {
       organizations: orgCode,
     },
+    noError: true, // silent 404 errors
   }
   try {
     const response = await useAPI(url, payload)
