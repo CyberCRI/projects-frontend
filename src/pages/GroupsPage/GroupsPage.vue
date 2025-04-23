@@ -1,8 +1,6 @@
 <script setup>
 import { getHierarchyGroups } from '@/api/groups.service.ts'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useSearch from '@/composables/useSearch.js'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const props = defineProps({
@@ -141,7 +139,7 @@ try {
     </h1>
 
     <div v-if="!groupId" class="search-input-container">
-      <SearchOptions ref="searchOptions" :limit="30" section="groups" />
+      <SearchBlock ref="searchOptions" :limit="30" section="groups" />
     </div>
     <div v-if="hasSearch" class="page-section-wide">
       <GlobalSearchTab :search="fixedSearch" />
@@ -214,36 +212,6 @@ try {
     padding: 0;
     width: 100%;
     flex-shrink: 1.5;
-  }
-
-  .search-input-container {
-    display: flex;
-    padding: $space-l;
-    background: $primary-lighter;
-    align-items: center;
-    border-radius: $border-radius-17;
-    flex-direction: column;
-    margin: $space-xl 0;
-
-    .search-input {
-      margin-bottom: pxToRem(16px);
-    }
-
-    @media screen and (min-width: $min-tablet) {
-      padding: pxToRem(32px) pxToRem(84px);
-      border-radius: 17px;
-      flex-direction: row;
-
-      .search-input {
-        margin-right: $space-l;
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  :deep(.search-input-ctn),
-  :deep(.search-block) {
-    flex-grow: 1;
   }
 }
 

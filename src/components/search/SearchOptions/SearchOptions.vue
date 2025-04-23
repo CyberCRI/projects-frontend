@@ -90,6 +90,7 @@ export default {
   margin: 0;
   padding: $space-m 0;
   width: 100%;
+  flex-grow: 1;
 }
 
 .search-container {

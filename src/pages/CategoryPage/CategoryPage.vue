@@ -1,7 +1,5 @@
 <script setup>
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useSearch from '@/composables/useSearch.js'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
 const props = defineProps({

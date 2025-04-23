@@ -2,7 +2,6 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
-import debounce from 'lodash/debounce'
 export default function useSearch(forcedSection = null) {
   const MAX_RESULTS = 30
 
@@ -61,7 +60,6 @@ export default function useSearch(forcedSection = null) {
     return adaptedFilters
   }
 
-  // TODO debounce
   const searchFromQuery = computed(() => {
     const res = {}
 
@@ -82,11 +80,11 @@ export default function useSearch(forcedSection = null) {
     return res
   })
 
-  const updateUrl = debounce(function _updateUrl(query) {
-    router.replace({ path: route.path, query: query })
-  }, 300)
+  const updateUrl = function _updateUrl(query) {
+    router.replace({ query: query })
+  }
 
-  function updateSelectedQuery(search) {
+  const updateSelectedQuery = function _updateSelectedQuery(search) {
     const query = { ...route.query } // destructure to break reactivity
     const oldSearch = query.search || ''
     const _search = search || ''

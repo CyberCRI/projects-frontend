@@ -3,28 +3,48 @@ export default (url, title, description, image, dimensions = null) => {
   const { locale } = useI18n()
 
   let imgMimeType = 'image/jpeg'
-  try {
-    const imgUrl = new URL(image)
-    const imgPath = imgUrl.pathname
-    const imgExt = imgPath.split('.').pop().toLowerCase()
-    if (imgExt == 'png') imgMimeType = 'image/png'
-    if (imgExt == 'webp') imgMimeType = 'image/webp'
-  } catch (err) {
-    console.error(err)
+  if (image) {
+    try {
+      const imgUrl = new URL(image)
+      const imgPath = imgUrl.pathname
+      const imgExt = imgPath.split('.').pop().toLowerCase()
+      if (imgExt == 'png') imgMimeType = 'image/png'
+      if (imgExt == 'webp') imgMimeType = 'image/webp'
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const imgWidth = dimensions?.width
   const imgHeight = dimensions?.height
 
-  const optMetas = []
-  if (imgHeight && imgWidth) {
-    optMetas.push({
-      property: 'og:image:width',
-      content: imgWidth,
+  const ogImage = []
+  if (image) {
+    ogImage.push({
+      property: 'og:image',
+      content: image,
     })
-    optMetas.push({
-      property: 'og:image:height',
-      content: imgHeight,
+    ogImage.push({
+      property: 'og:image:type',
+      content: imgMimeType,
+    })
+    if (imgHeight && imgWidth) {
+      ogImage.push({
+        property: 'og:image:width',
+        content: imgWidth,
+      })
+      ogImage.push({
+        property: 'og:image:height',
+        content: imgHeight,
+      })
+    }
+  }
+
+  const twitterImage = []
+  if (image) {
+    twitterImage.push({
+      name: 'twitter:image',
+      content: image,
     })
   }
 
@@ -70,17 +90,7 @@ export default (url, title, description, image, dimensions = null) => {
             url || `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png`,
         },
 
-        {
-          property: 'og:image',
-          content: image,
-        },
-
-        {
-          property: 'og:image:type',
-          content: imgMimeType,
-        },
-
-        ...optMetas,
+        ...ogImage,
 
         // Twitter
         {
@@ -93,12 +103,7 @@ export default (url, title, description, image, dimensions = null) => {
           content: description,
         },
 
-        {
-          name: 'twitter:image',
-          content:
-            image ||
-            `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_twt.png`,
-        },
+        ...twitterImage,
       ],
     })
   setHead()
