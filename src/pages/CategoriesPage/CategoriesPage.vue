@@ -1,7 +1,5 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-import GlobalSearchTab from '@/pages/SearchPage/Tabs/GlobalSearchTab.vue'
-import useSearch from '@/composables/useSearch.js'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { canCreateProject } = usePermissions()
@@ -66,9 +64,7 @@ try {
         {{ $filters.capitalize($t('projects')) }}
       </h1>
 
-      <div class="search-input-container">
-        <SearchOptions ref="searchOptions" :limit="30" section="projects" />
-      </div>
+      <SearchBlock ref="searchOptions" :limit="30" section="projects" />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
@@ -116,36 +112,6 @@ try {
     align-items: center;
     flex-direction: column;
     margin: $space-2xl 0;
-  }
-
-  .search-input-container {
-    display: flex;
-    padding: $space-l;
-    background: $primary-lighter;
-    align-items: center;
-    border-radius: $border-radius-17;
-    flex-direction: column;
-    margin: $space-xl 0;
-
-    .search-input {
-      margin-bottom: pxToRem(16px);
-    }
-
-    @media screen and (min-width: $min-tablet) {
-      padding: pxToRem(32px) pxToRem(84px);
-      border-radius: 17px;
-      flex-direction: row;
-
-      .search-input {
-        margin-right: $space-l;
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  :deep(.search-input-ctn),
-  :deep(.search-block) {
-    flex-grow: 1;
   }
 
   .action-ctn {

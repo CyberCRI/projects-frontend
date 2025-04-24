@@ -21,6 +21,7 @@ import useAPI from '@/composables/useAPI.ts'
 import { searchEquals } from '@/functs/search.ts'
 import { toRaw } from 'vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import debounce from 'lodash/debounce'
 
 export default {
   name: 'SearchResults',
@@ -105,7 +106,7 @@ export default {
       this.$emit('loading', true)
     },
 
-    async loadProjects(specificPageIndex = null) {
+    loadProjects: debounce(async function (specificPageIndex = null) {
       if (!import.meta.client) return
       const filters = {
         ...this.search,
@@ -149,7 +150,7 @@ export default {
       // update with the ltest request result
       // to fix concurrency issue when multiple request fired
       if (response && localRequest === this.lastRequest) this.updateProjectList(response)
-    },
+    }, 500),
 
     updateProjectList(response) {
       this.updatePagination(response)
