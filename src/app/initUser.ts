@@ -18,7 +18,7 @@ export default async function initUser() {
   // // Log in user after redirection is successful from keycloack
   // await keycloak.loginIfValidState(loginSearchParams)
 
-  // if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
+  if (usersStore?.keycloak_id) await usersStore.getUser(usersStore.keycloak_id)
 
   // const state = loginSearchParams.get('state')
   //   ? JSON.parse(loginSearchParams.get('state') as string)
