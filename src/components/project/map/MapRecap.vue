@@ -1,6 +1,6 @@
 <template>
   <div class="map-recap">
-    <div class="actions" v-if="canEditProject">
+    <div v-if="canEditProject" class="actions">
       <ContextActionButton
         action-icon="Pen"
         class="edit-btn"

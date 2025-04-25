@@ -3,7 +3,7 @@
     <div ref="marker" class="map-pointer">
       <div class="badge">
         <div :class="location.type" class="badge__dot" />
-        <div class="actions" v-if="isDeletable || isEditable">
+        <div v-if="isDeletable || isEditable" class="actions">
           <ContextActionButton
             v-if="isDeletable"
             action-icon="Close"

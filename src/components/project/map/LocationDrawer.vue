@@ -22,33 +22,33 @@
         <div v-if="!addMode">
           <p class="notice">{{ $t('geocoding.choose-method') }}</p>
           <div class="buttons-line">
-            <LpiButton @click="addMode = CLICK_MODE" :label="$t('geocoding.click-method')" />
-            <LpiButton @click="addMode = FORM_MODE" :label="$t('geocoding.form-method')" />
+            <LpiButton :label="$t('geocoding.click-method')" @click="addMode = CLICK_MODE" />
+            <LpiButton :label="$t('geocoding.form-method')" @click="addMode = FORM_MODE" />
           </div>
         </div>
         <div v-else-if="addMode === CLICK_MODE">
           <p class="notice">{{ $t('geocoding.click-method-notice') }}</p>
           <div class="buttons-line">
-            <LpiButton @click="addMode = null" :label="$t('common.cancel')" />
+            <LpiButton :label="$t('common.cancel')" @click="addMode = null" />
           </div>
         </div>
         <div v-else-if="addMode === FORM_MODE">
           <p class="notice">{{ $t('geocoding.form-method-notice') }}</p>
           <div class="input-field">
-            <TextInput :label="$t('geocoding.address')" v-model="newLocationAddress" />
+            <TextInput v-model="newLocationAddress" :label="$t('geocoding.address')" />
           </div>
           <div class="buttons-line">
             <LpiButton
-              @click="addMode = null"
               :label="$t('common.cancel')"
               :disabled="geocodingAsyncing"
               :btn-icon="asyncing ? 'LoaderSimple' : null"
+              @click="addMode = null"
             />
             <LpiButton
               :disabled="!newLocationAddress || geocodingAsyncing"
               :label="$t('common.save')"
-              @click="addFromForm"
               :btn-icon="asyncing ? 'LoaderSimple' : null"
+              @click="addFromForm"
             />
           </div>
         </div>
@@ -67,13 +67,13 @@
                 <template v-if="slotProps.map">
                   <MapPointer
                     v-for="location in locations"
-                    is-deletable
-                    @delete-location="locationToDelete = $event"
-                    is-editable
-                    @edit-location="openEditModal"
                     :key="location.id"
+                    is-deletable
+                    is-editable
                     :location="location"
                     :has-location-tip="location.title.length > 0 || location.description.length > 0"
+                    @delete-location="locationToDelete = $event"
+                    @edit-location="openEditModal"
                     @mounted="slotProps.addPointer($event, {})"
                     @unmounted="slotProps.removePointer(location)"
                   />
@@ -110,7 +110,6 @@
 
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from '@/components/project/map/LocationForm.vue'
 //import LocationTooltip from '@/components/map/LocationTooltip.vue'
@@ -124,7 +123,6 @@ export default {
 
   components: {
     BaseDrawer,
-    LpiSnackbar,
     LocationForm,
     MapPointer,
     //LocationTooltip,
@@ -288,6 +286,7 @@ export default {
   align-items: center;
   justify-content: space-around;
   margin-bottom: $space-l;
+
   & > div {
     width: 100%;
     max-width: 38rem;
@@ -326,6 +325,7 @@ export default {
   justify-content: center;
   gap: 1rem;
 }
+
 .input-field,
 .notice {
   margin-bottom: $space-l;
