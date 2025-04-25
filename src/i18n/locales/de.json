@@ -2600,5 +2600,17 @@
   },
   "people-groups": {
     "browse-tree": "Durchsuchen Sie den Stammbaum"
+  },
+  "geocoding": {
+    "error": "Fehler bei der Geokodierung der Adresse",
+    "no-results": "Keine Ergebnisse für diese Adresse gefunden",
+    "choose-method": "Wählen Sie eine Eingabemethode, um einen Standort hinzuzufügen:",
+    "click-method": "Auf die Karte klicken",
+    "click-method-notice": "Klicken Sie auf die Karte, um den Standort auszuwählen",
+    "form-method": "Adresse eingeben",
+    "form-method-notice": "Geben Sie die Adresse in das Feld unten ein",
+    "address": "Adresse",
+    "delete-location": "Standort löschen",
+    "confirm-delete-location": "Möchten Sie diesen Standort wirklich löschen?"
   }
 }

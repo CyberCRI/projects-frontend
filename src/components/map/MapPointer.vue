@@ -3,7 +3,20 @@
     <div ref="marker" class="map-pointer">
       <div class="badge">
         <div :class="location.type" class="badge__dot" />
-
+        <div class="actions" v-if="isDeletable || isEditable">
+          <ContextActionButton
+            v-if="isDeletable"
+            action-icon="Close"
+            class="remove-btn small"
+            @click="$emit('delete-location', location)"
+          />
+          <ContextActionButton
+            v-if="isEditable"
+            action-icon="Pen"
+            class="edit-btn small"
+            @click="$emit('edit-location', location)"
+          />
+        </div>
         <div class="badge__label">
           {{ pointerLabel }}
         </div>
@@ -41,9 +54,17 @@ export default {
       type: Boolean,
       default: false,
     },
+    isDeletable: {
+      type: Boolean,
+      default: false,
+    },
+    isEditable: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  emits: ['mounted', 'unmounted'],
+  emits: ['mounted', 'unmounted', 'delete-location', 'edit-location'],
 
   computed: {
     pointerLabel() {
@@ -131,5 +152,17 @@ export default {
       border-radius: 50%;
     }
   }
+}
+
+.actions {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  justify-content: flex-end;
+  gap: $space-xs;
+  z-index: 10;
+  transform: translate(0, -50%);
 }
 </style>

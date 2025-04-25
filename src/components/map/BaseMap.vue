@@ -28,7 +28,7 @@ export default {
     },
   },
 
-  emits: ['contextmenu'],
+  emits: ['contextmenu', 'click'],
 
   data() {
     return {
@@ -71,6 +71,7 @@ export default {
     }
 
     map.on('contextmenu', (e) => this.$emit('contextmenu', e))
+    map.on('click', (e) => this.$emit('click', e))
     L.tileLayer(this.config.mapUrl, {
       attribution:
         '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',

@@ -1,5 +1,12 @@
 <template>
   <div class="map-recap">
+    <div class="actions" v-if="canEditProject">
+      <ContextActionButton
+        action-icon="Pen"
+        class="edit-btn"
+        @click="projectLayoutToggleAddModal('location')"
+      />
+    </div>
     <div class="map-inner-ctn">
       <div class="map">
         <BaseMap ref="summary-map" :config="config" :use-cluster="true">
@@ -48,6 +55,13 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+
+  setup() {
+    const { canEditProject } = usePermissions()
+    return {
+      canEditProject,
+    }
   },
 
   data() {
@@ -141,6 +155,18 @@ export default {
     right: 12px;
     background: $white;
     border: $border-width-s solid $primary-dark;
+  }
+
+  .actions {
+    display: flex;
+    position: absolute;
+    max-width: min-content;
+    top: 5rem;
+    right: 0.8rem;
+    justify-content: flex-end;
+    gap: $space-xs;
+    z-index: 10;
+    transform: translate(0, -50%);
   }
 }
 </style>
