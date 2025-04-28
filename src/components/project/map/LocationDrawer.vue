@@ -20,10 +20,23 @@
 
       <div class="top">
         <div v-if="!addMode">
-          <p class="notice">{{ $t('geocoding.choose-method') }}</p>
+          <p v-if="isGeocodingEnabled" class="notice">{{ $t('geocoding.choose-method') }}</p>
           <div class="buttons-line">
-            <LpiButton :label="$t('geocoding.click-method')" @click="addMode = CLICK_MODE" />
-            <LpiButton :label="$t('geocoding.form-method')" @click="addMode = FORM_MODE" />
+            <LpiButton
+              :label="
+                $t(
+                  isGeocodingEnabled
+                    ? 'geocoding.click-method'
+                    : 'geocoding.click-method-no-geocoding'
+                )
+              "
+              @click="addMode = CLICK_MODE"
+            />
+            <LpiButton
+              v-if="isGeocodingEnabled"
+              :label="$t('geocoding.form-method')"
+              @click="addMode = FORM_MODE"
+            />
           </div>
         </div>
         <div v-else-if="addMode === CLICK_MODE">
@@ -151,7 +164,8 @@ export default {
   setup() {
     const { canEditProject } = usePermissions()
     const toaster = useToasterStore()
-    return { canEditProject, toaster }
+    const runtimeConfig = useRuntimeConfig()
+    return { canEditProject, toaster, runtimeConfig }
   },
 
   data() {
@@ -182,6 +196,12 @@ export default {
       deleteAsyncing: false,
       geocodingAsyncing: false,
     }
+  },
+
+  computed: {
+    isGeocodingEnabled() {
+      return !!this.runtimeConfig.public.appGeocodingApiUrl
+    },
   },
   watch: {
     locations() {
@@ -220,7 +240,7 @@ export default {
       this.geocodingAsyncing = true
       try {
         // TODO: use an env variable for the geocoding API URL
-        const res = await $fetch('https://photon.komoot.io/api/', {
+        const res = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
           query: {
             q: address,
           },

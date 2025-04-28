@@ -2611,6 +2611,7 @@
     "no-results": "No results found for this address",
     "choose-method": "To add a location, choose an input method:",
     "click-method": "Click on the map",
+    "click-method-no-geocoding": "Add a location",
     "click-method-notice": "Click on the map to choose the location",
     "form-method": "Enter the address",
     "form-method-notice": "Enter the address in the field below",

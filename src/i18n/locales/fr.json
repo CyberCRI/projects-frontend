@@ -2612,6 +2612,7 @@
     "no-results": "Aucun résultat trouvé pour cette adresse",
     "choose-method": "Pour ajouter un emplacement, choisir une méthode de saisie :",
     "click-method": "Cliquer sur la carte",
+    "click-method-no-geocoding": "Ajouter un emplacement",
     "click-method-notice": "Cliquez sur la carte pour choisir l'emplacement",
     "form-method": "Saisir l'adresse",
     "form-method-notice": "Saisissez l'adresse dans le champ ci-dessous",
