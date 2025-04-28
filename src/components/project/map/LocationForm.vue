@@ -139,7 +139,7 @@ export default {
 
         this.toaster.pushSuccess(this.$t('toasts.location-create.success'))
 
-        this.$emit('location-created')
+        this.$emit('location-created', result)
         this.$nextTick(() => this.$emit('center-map'))
       } catch (error) {
         this.toaster.pushError(`${this.$t('toasts.location-create.error')} (${error})`)
@@ -164,7 +164,7 @@ export default {
 
         this.toaster.pushSuccess(this.$t('toasts.location-update.success'))
 
-        this.$emit('location-edited')
+        this.$emit('location-edited', result)
       } catch (error) {
         this.toaster.pushError(`${this.$t('toasts.location-update.error')} (${error})`)
         console.error(error)

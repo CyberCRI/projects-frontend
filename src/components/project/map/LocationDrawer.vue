@@ -48,7 +48,12 @@
         <div v-else-if="addMode === FORM_MODE">
           <p class="notice">{{ $t('geocoding.form-method-notice') }}</p>
           <div class="input-field">
-            <TextInput v-model="newLocationAddress" :label="$t('geocoding.address')" />
+            <TextInput
+              v-model="newLocationAddress"
+              autofocus
+              :label="$t('geocoding.address')"
+              @keyup.enter="!!newLocationAddress && addFromForm()"
+            />
           </div>
           <div class="buttons-line">
             <LpiButton
@@ -106,7 +111,7 @@
       @close="formVisible = false"
       @center-map="centerMap"
       @location-edited="$emit('reload-locations')"
-      @location-created="$emit('reload-locations')"
+      @location-created="onLocationCreated"
       @location-deleted="$emit('reload-locations')"
     />
 
@@ -204,9 +209,9 @@ export default {
     },
   },
   watch: {
-    locations() {
-      this.mapkey++
-    },
+    // locations() {
+    //   this.mapkey++
+    // },
 
     isOpened(neo) {
       if (neo) this.mapkey++
@@ -216,6 +221,11 @@ export default {
   methods: {
     centerMap() {
       if (this.$refs.map) this.$refs.map.centerMap()
+    },
+
+    onLocationCreated(location) {
+      this.$emit('reload-locations')
+      this.$refs.map?.flyTo(location, 8)
     },
 
     openEditModal(location) {
@@ -240,7 +250,7 @@ export default {
       this.geocodingAsyncing = true
       try {
         // TODO: use an env variable for the geocoding API URL
-        const res = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
+        const res = await $fetch(this.runtimeConfig.public.appGeocodingApiUrl, {
           query: {
             q: address,
           },

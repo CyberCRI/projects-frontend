@@ -181,6 +181,12 @@ export default {
         this.loading = false
       })
     },
+
+    // this is called by other components
+    // eslint-disable-next-line vue/no-unused-properties
+    flyTo(coordinates, zoom) {
+      toRaw(this.map)?.flyTo([coordinates.lat, coordinates.lng], zoom)
+    },
   },
 }
 </script>

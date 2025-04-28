@@ -6,6 +6,7 @@
     <textarea
       v-if="inputType === 'textarea'"
       :id="inputId || (label ? randomId : null)"
+      ref="inputField"
       v-model="model"
       v-disable-focus="unfocusable"
       :placeholder="placeholder"
@@ -20,6 +21,7 @@
     <span v-else class="input-wrapper" :class="{ 'is-password': inputType == 'password' }">
       <input
         :id="inputId || (label ? randomId : null)"
+        ref="inputField"
         v-model="model"
         v-disable-focus="unfocusable"
         :placeholder="placeholder"
@@ -51,6 +53,11 @@ export default {
   components: { IconImage },
 
   props: {
+    autofocus: {
+      type: Boolean,
+      default: false,
+    },
+
     modelValue: {
       type: String,
       default: '',
@@ -126,6 +133,14 @@ export default {
         this.$emit('update:modelValue', value)
       },
     },
+  },
+
+  mounted() {
+    if (this.autofocus) {
+      this.$nextTick(() => {
+        this.$refs.inputField?.focus()
+      })
+    }
   },
 }
 </script>
