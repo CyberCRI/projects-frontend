@@ -8,16 +8,6 @@
       @close="$emit('close')"
       @confirm="$emit('close')"
     >
-      <!--div class="top">
-        <LpiSnackbar icon="QuestionMark" type="info">
-          <ol>
-            <li>{{ $t('project.map-hint-1') }}</li>
-            <li>{{ $t('project.map-hint-2') }}</li>
-            <li>{{ $t('project.map-hint-3') }}</li>
-          </ol>
-        </LpiSnackbar>
-      </div-->
-
       <div class="top">
         <div v-if="!addMode">
           <p v-if="isGeocodingEnabled" class="notice">{{ $t('geocoding.choose-method') }}</p>

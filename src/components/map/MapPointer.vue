@@ -81,7 +81,7 @@ export default {
   },
 
   unmounted() {
-    this.$emit('unmounted')
+    this.$emit('unmounted', this.location)
   },
 }
 </script>

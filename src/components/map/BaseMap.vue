@@ -110,7 +110,7 @@ export default {
         }
       }
 
-      this.markers.set(toRaw(location), marker)
+      this.markers.set(location.id, marker)
 
       if (this.markerCluster) toRaw(this.markerCluster).addLayers(marker)
       else marker.addTo(toRaw(this.map))
@@ -119,11 +119,16 @@ export default {
     },
 
     removePointer(location) {
-      toRaw(this.markers.get(toRaw(location)))?.removeFrom(
-        toRaw(this.markerCluster ? this.markerCluster : this.map)
-      )
-      this.markers.delete(toRaw(location))
+      const marker = this.markers.get(location.id)
+
+      if (marker) {
+        if (this.markerCluster) toRaw(marker)?.removeFrom(this.markerCluster)
+        else this.map.removeLayer(marker)
+      }
+      this.markers.delete(location.id)
       if (this.markerCluster) this.markerCluster.refreshClusters()
+      // force readraw
+      this.map.invalidateSize()
     },
 
     createClusterIcons(cluster) {
