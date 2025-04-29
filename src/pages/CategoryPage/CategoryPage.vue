@@ -72,6 +72,11 @@ const fixedSearch = computed(() => {
     section: 'projects',
   }
 })
+const isNavigating = ref(false)
+onBeforeRouteLeave((to, from, next) => {
+  isNavigating.value = true
+  next()
+})
 
 const { image, dimensions } = useImageAndDimension(category.value?.background_image, 'medium')
 useLpiHead(
@@ -110,6 +115,7 @@ useLpiHead(
               class="container inline stretch"
               section="projects"
               :filter-black-list="['categories']"
+              :freeze-search="isNavigating"
             />
           </div>
         </div>
@@ -146,7 +152,7 @@ useLpiHead(
         />
       </div>
       <ClientOnly>
-        <GlobalSearchTab :search="fixedSearch" />
+        <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
       </ClientOnly>
     </div>
   </div>

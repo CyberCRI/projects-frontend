@@ -11,6 +11,12 @@ const fixedSearch = computed(() => {
   }
 })
 
+const isNavigating = ref(false)
+onBeforeRouteLeave((to, from, next) => {
+  isNavigating.value = true
+  next()
+})
+
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
@@ -35,9 +41,9 @@ try {
       {{ $filters.capitalize($t('common.people')) }}
     </h1>
     <div class="main-ctn">
-      <SearchBlock :limit="30" section="people" />
+      <SearchBlock :limit="30" section="people" :freeze-search="isNavigating" />
 
-      <GlobalSearchTab :search="fixedSearch" />
+      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
     </div>
   </div>
 </template>

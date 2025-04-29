@@ -21,9 +21,9 @@ const { t } = useI18n()
 
 const router = useRouter()
 
-const isLoading = useState(() => true)
-const groupsIndex = useState(() => null)
-const rootId = useState(() => null)
+const isLoading = ref(true)
+const groupsIndex = ref(null)
+const rootId = ref(null)
 
 const currentGroup = computed(() => {
   if (!groupsIndex.value) return null
@@ -55,6 +55,12 @@ const fixedSearch = computed(() => {
     ...searchFromQuery.value,
     section: 'groups',
   }
+})
+
+const isNavigating = ref(false)
+onBeforeRouteLeave((to, from, next) => {
+  isNavigating.value = true
+  next()
 })
 
 watchEffect(() => {
@@ -102,14 +108,8 @@ const loadGroups = async () => {
   isLoading.value = false
 }
 
-const searchOptions = useTemplateRef('searchOptions')
-
 const showGroups = () => {
-  searchOptions.value?.deleteQuery()
-  searchOptions.value?.clearSelectedFilters()
-  nextTick(() => {
-    document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-  })
+  navigateTo({ query: {} })
 }
 
 onMounted(async () => {
@@ -139,10 +139,10 @@ try {
     </h1>
 
     <div v-if="!groupId" class="search-input-container">
-      <SearchBlock ref="searchOptions" :limit="30" section="groups" />
+      <SearchBlock :limit="30" section="groups" :freeze-search="isNavigating" />
     </div>
     <div v-if="hasSearch" class="page-section-wide">
-      <GlobalSearchTab :search="fixedSearch" />
+      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
       <div class="btn-ctn">
         <LpiButton :label="$t('people-groups.browse-tree')" @click="showGroups" />
       </div>

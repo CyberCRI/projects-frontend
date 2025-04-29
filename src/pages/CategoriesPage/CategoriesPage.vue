@@ -7,7 +7,7 @@ const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 const { t } = useI18n()
 
-const forceSearch = useState(() => false)
+const forceSearch = ref(false)
 
 const categories = computed(() => {
   return projectCategoriesStore.hierarchy
@@ -22,6 +22,7 @@ const hasSearch = computed(() => {
     )
   )
 })
+
 const fixedSearch = computed(() => {
   return {
     ...searchFromQuery.value,
@@ -29,15 +30,19 @@ const fixedSearch = computed(() => {
   }
 })
 
-const searchOptions = useTemplateRef('searchOptions')
+const isNavigating = ref(false)
+onBeforeRouteLeave((to, from, next) => {
+  console.log('beh')
+  isNavigating.value = true
+  if (hasSearch.value) {
+    forceSearch.value = true
+  }
+  next()
+})
 
 const showCategories = () => {
-  searchOptions.value?.deleteQuery()
-  searchOptions.value?.clearSelectedFilters()
   forceSearch.value = false
-  nextTick(() => {
-    document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-  })
+  navigateTo({ query: {} })
 }
 
 try {
@@ -64,7 +69,7 @@ try {
         {{ $filters.capitalize($t('projects')) }}
       </h1>
 
-      <SearchBlock ref="searchOptions" :limit="30" section="projects" />
+      <SearchBlock :limit="30" section="projects" :freeze-search="isNavigating" />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
@@ -78,7 +83,7 @@ try {
     </div>
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
-      <GlobalSearchTab :search="fixedSearch" />
+      <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
       <div class="btn-ctn">
         <LpiButton :label="$t('category.all-categories')" @click="showCategories" />
       </div>

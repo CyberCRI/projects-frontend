@@ -4,7 +4,7 @@
       <div class="search-group">
         <SearchInput
           class="search-input"
-          :model-value="searchFromQuery.search"
+          :model-value="managedSearch.search"
           :full="true"
           :placeholder="$t('browse.placeholder')"
           @update:model-value="updateSelectedQuery"
@@ -15,8 +15,8 @@
 
     <SearchFilters
       ref="searchFilters"
-      :selected-section="section || searchFromQuery.section"
-      :search="searchFromQuery"
+      :selected-section="section || managedSearch.section"
+      :search="managedSearch"
       :show-section-filter="showSectionFilter"
       :filter-black-list="filterBlackList"
       @update:selected-filters="updatdeSelectedFilters"
@@ -55,21 +55,46 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    freezeSearch: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['search-options-updated', 'filter-section-update'],
+  expose: ['clearSelectedFilters', 'deleteQuery'],
   setup(props) {
     const organizationsStore = useOrganizationsStore()
 
     const { searchFromQuery, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } =
       useSearch(props.section)
+
+    const managedSearch = ref({})
     return {
       organizationsStore,
       searchFromQuery,
       updateSelectedQuery,
       updatdeSelectedFilters,
       updatdeSelectedSection,
+      managedSearch,
     }
+  },
+
+  watch: {
+    searchFromQuery: {
+      handler(neo) {
+        if (!this.freezeSearch) this.managedSearch = neo
+      },
+      deep: true,
+      immediate: true,
+    },
+
+    section: {
+      handler(newValue) {
+        this.$emit('filter-section-update', newValue)
+      },
+    },
   },
 
   methods: {
@@ -77,7 +102,7 @@ export default {
       this.updateSelectedQuery('')
     },
     // this method is used by CategoriesPage and GroupsPage via a ref
-    // eslint-disable-next-line vue/no-unused-properties
+
     clearSelectedFilters() {
       this.$refs.searchFilters?.clearSelectedFilters()
     },

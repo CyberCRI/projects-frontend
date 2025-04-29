@@ -2,6 +2,7 @@
   <SearchResults
     :search="search"
     :mode="search.section || 'global'"
+    :freeze-search="freezeSearch"
     @pagination-changed="onPaginationChange"
   >
     <template #default="SearchResultsSlotProps">
@@ -59,6 +60,10 @@ export default {
     search: {
       type: Object,
       default: () => {},
+    },
+    freezeSearch: {
+      type: Boolean,
+      default: false,
     },
   },
 
