@@ -307,4 +307,7 @@ export default {
     justify-content: space-between;
   }
 }
+.comment-description :deep(.editor-content) {
+  max-height: 60vh;
+}
 </style>
