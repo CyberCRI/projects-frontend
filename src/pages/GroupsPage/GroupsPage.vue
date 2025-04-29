@@ -102,14 +102,8 @@ const loadGroups = async () => {
   isLoading.value = false
 }
 
-const searchOptions = useTemplateRef('searchOptions')
-
 const showGroups = () => {
-  searchOptions.value?.deleteQuery()
-  searchOptions.value?.clearSelectedFilters()
-  nextTick(() => {
-    document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-  })
+  navigateTo({ query: {} })
 }
 
 onMounted(async () => {
@@ -139,7 +133,7 @@ try {
     </h1>
 
     <div v-if="!groupId" class="search-input-container">
-      <SearchBlock ref="searchOptions" :limit="30" section="groups" />
+      <SearchBlock :limit="30" section="groups" />
     </div>
     <div v-if="hasSearch" class="page-section-wide">
       <GlobalSearchTab :search="fixedSearch" />

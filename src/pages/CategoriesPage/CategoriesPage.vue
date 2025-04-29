@@ -29,15 +29,9 @@ const fixedSearch = computed(() => {
   }
 })
 
-const searchOptions = useTemplateRef('searchOptions')
-
 const showCategories = () => {
-  searchOptions.value?.deleteQuery()
-  searchOptions.value?.clearSelectedFilters()
+  navigateTo({ query: {} })
   forceSearch.value = false
-  nextTick(() => {
-    document.querySelector('.page-title')?.scrollIntoView({ behavior: 'smooth' })
-  })
 }
 
 try {
@@ -64,7 +58,7 @@ try {
         {{ $filters.capitalize($t('projects')) }}
       </h1>
 
-      <SearchBlock ref="searchOptions" :limit="30" section="projects" />
+      <SearchBlock :limit="30" section="projects" />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
