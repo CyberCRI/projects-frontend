@@ -27,6 +27,11 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    freezeSearch: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['search-options-updated', 'filter-section-update'],

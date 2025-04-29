@@ -9,6 +9,13 @@ const { t } = useI18n()
 onMounted(async () => {
   onboardingTrap('explore_projects', false)
 })
+
+const isNavigating = ref(false)
+onBeforeRouteLeave((to, from, next) => {
+  isNavigating.value = true
+  next()
+})
+
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
@@ -28,9 +35,9 @@ try {
 
 <template>
   <div :key="$route.name" class="page-section-extra-wide browse-layout">
-    <SearchBlock :limit="30" show-section-filter />
+    <SearchBlock :limit="30" show-section-filter :freeze-search="isNavigating" />
 
-    <GlobalSearchTab :search="searchFromQuery" />
+    <GlobalSearchTab :search="searchFromQuery" :freeze-search="isNavigating" />
   </div>
 </template>
 

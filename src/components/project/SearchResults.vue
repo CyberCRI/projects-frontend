@@ -40,6 +40,10 @@ export default {
       type: String,
       default: 'global',
     },
+    freezeSearch: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['loading'],
@@ -80,6 +84,7 @@ export default {
   watch: {
     search: {
       handler(neo, old) {
+        if (this.freezeSearch) return
         // avoid call to api if search has not changed
         let proceed = false
         if (neo && old) {
