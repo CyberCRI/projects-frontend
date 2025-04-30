@@ -2619,6 +2619,7 @@
     "form-placeholder": "Street, City, Country",
     "pick-location": "Pick one of the suggested location by clicking on it",
     "found-number": "Found {number} locations(s)",
+    "search": "Search",
     "feature-type": {
       "house": "House",
       "street": "Street",

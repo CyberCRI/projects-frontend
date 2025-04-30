@@ -58,7 +58,7 @@
               />
               <LpiButton
                 :disabled="!newLocationAddress || geocodingAsyncing"
-                :label="$t('common.save')"
+                :label="$t('geocoding.search')"
                 :btn-icon="geocodingAsyncing ? 'LoaderSimple' : null"
                 @click="suggestLocations"
               />
@@ -244,10 +244,12 @@ export default {
     },
   },
   watch: {
-    // locations() {
-    //   this.mapkey++
-    // },
-
+    addMode(neo, old) {
+      if (neo === old) return
+      this.suggestedLocations = null
+      this.newLocationAddress = ''
+      this.suggestedLocationsFilters = {}
+    },
     isOpened(neo) {
       if (neo) this.mapkey++
     },

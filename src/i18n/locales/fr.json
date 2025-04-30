@@ -2620,6 +2620,7 @@
     "form-placeholder": "Rue, Ville, Pays",
     "pick-location": "Choisissez l'un des lieux suggérés en cliquant dessus",
     "found-number": "{number} lieu(x) trouvé(s)",
+    "search": "Rechercher",
     "feature-type": {
       "house": "Maison",
       "street": "Rue",

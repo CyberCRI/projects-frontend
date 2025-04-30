@@ -2614,6 +2614,7 @@
     "form-placeholder": "Straße, Stadt, Land",
     "pick-location": "Wählen Sie einen der vorgeschlagenen Orte durch Klicken aus",
     "found-number": "{number} Ort(e) gefunden",
+    "search": "Suche",
     "feature-type": {
       "house": "Haus",
       "street": "Straße",
