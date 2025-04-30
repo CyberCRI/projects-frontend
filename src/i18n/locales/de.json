@@ -2599,16 +2599,31 @@
     "browse-tree": "Durchsuchen Sie den Stammbaum"
   },
   "geocoding": {
-    "error": "Fehler bei der Geokodierung der Adresse",
+    "error": "Fehler bei der Adress-Geokodierung",
     "no-results": "Keine Ergebnisse für diese Adresse gefunden",
-    "choose-method": "Wählen Sie eine Eingabemethode, um einen Standort hinzuzufügen:",
+    "choose-method": "Wählen Sie eine Eingabemethode, um einen Ort hinzuzufügen:",
     "click-method": "Auf die Karte klicken",
-    "click-method-no-geocoding": "Standort hinzuzufügen",
-    "click-method-notice": "Klicken Sie auf die Karte, um den Standort auszuwählen",
+    "click-method-no-geocoding": "Ort hinzufügen",
+    "click-method-notice": "Klicken Sie auf die Karte, um den Ort auszuwählen",
     "form-method": "Adresse eingeben",
     "form-method-notice": "Geben Sie die Adresse in das Feld unten ein",
     "address": "Adresse",
-    "delete-location": "Standort löschen",
-    "confirm-delete-location": "Möchten Sie diesen Standort wirklich löschen?"
+    "delete-location": "Ort löschen",
+    "confirm-delete-location": "Sind Sie sicher, dass Sie diesen Ort löschen möchten?",
+    "filter-by-type": "Nach Typ filtern",
+    "form-placeholder": "Straße, Stadt, Land",
+    "pick-location": "Wählen Sie einen der vorgeschlagenen Orte durch Klicken aus",
+    "found-number": "{number} Ort(e) gefunden",
+    "feature-type": {
+      "house": "Haus",
+      "street": "Straße",
+      "locality": "Ortschaft",
+      "district": "Bezirk",
+      "city": "Stadt",
+      "county": "Landkreis",
+      "state": "Bundesland",
+      "country": "Land",
+      "other": "Andere"
+    }
   }
 }

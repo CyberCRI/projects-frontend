@@ -2614,6 +2614,21 @@
     "form-method-notice": "Enter the address in the field below",
     "address": "Address",
     "delete-location": "Delete location",
-    "confirm-delete-location": "Are you sure you want to delete this location?"
+    "confirm-delete-location": "Are you sure you want to delete this location?",
+    "filter-by-type": "Filter by type",
+    "form-placeholder": "Street, City, Country",
+    "pick-location": "Pick one of the suggested location by clicking on it",
+    "found-number": "Found {number} locations(s)",
+    "feature-type": {
+      "house": "House",
+      "street": "Street",
+      "locality": "Locality",
+      "district": "District",
+      "city": "City",
+      "county": "Country",
+      "state": "State",
+      "country": "Country",
+      "other": "Other"
+    }
   }
 }

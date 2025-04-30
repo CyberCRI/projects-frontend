@@ -2607,14 +2607,29 @@
   "geocoding": {
     "error": "Erreur lors du géocodage de l'adresse",
     "no-results": "Aucun résultat trouvé pour cette adresse",
-    "choose-method": "Pour ajouter un emplacement, choisir une méthode de saisie :",
-    "click-method": "Cliquer sur la carte",
-    "click-method-no-geocoding": "Ajouter un emplacement",
-    "click-method-notice": "Cliquez sur la carte pour choisir l'emplacement",
+    "choose-method": "Pour ajouter un lieu, choisissez une méthode de saisie :",
+    "click-method": "Cliquez sur la carte",
+    "click-method-no-geocoding": "Ajouter un lieu",
+    "click-method-notice": "Cliquez sur la carte pour choisir le lieu",
     "form-method": "Saisir l'adresse",
     "form-method-notice": "Saisissez l'adresse dans le champ ci-dessous",
     "address": "Adresse",
-    "delete-location": "Supprimer l'emplacement",
-    "confirm-delete-location": "Êtes-vous sûr de vouloir supprimer cet emplacement ?"
+    "delete-location": "Supprimer le lieu",
+    "confirm-delete-location": "Êtes-vous sûr de vouloir supprimer ce lieu ?",
+    "filter-by-type": "Filtrer par type",
+    "form-placeholder": "Rue, Ville, Pays",
+    "pick-location": "Choisissez l'un des lieux suggérés en cliquant dessus",
+    "found-number": "{number} lieu(x) trouvé(s)",
+    "feature-type": {
+      "house": "Maison",
+      "street": "Rue",
+      "locality": "Localité",
+      "district": "District",
+      "city": "Ville",
+      "county": "Comté",
+      "state": "État",
+      "country": "Pays",
+      "other": "Autre"
+    }
   }
 }

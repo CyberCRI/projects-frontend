@@ -41,7 +41,7 @@
               <TextInput
                 v-model="newLocationAddress"
                 autofocus
-                placeholder="street, city, country"
+                :placeholder="$t('geocoding.form-placeholder')"
                 :label="$t('geocoding.form-method-notice')"
                 @keyup.enter="!!newLocationAddress && suggestLocations()"
               />
@@ -65,17 +65,19 @@
             </div>
           </div>
           <div v-else>
-            <p class="notice">Found {{ suggestedLocations.length }} locations(s)</p>
+            <p class="notice">
+              {{ $t('geocoding.found-number', { number: suggestedLocations.length }) }}
+            </p>
             <div class="suggested-locations-filter">
-              <p>Filter by type</p>
+              <p>{{ $t('geocoding.filter-by-type') }}</p>
               <LpiCheckbox
                 v-for="(value, key) in suggestedLocationsFilters"
                 :key="key"
                 v-model="suggestedLocationsFilters[key]"
-                :label="key"
+                :label="$t(`geocoding.feature-type.${key}`)"
               />
             </div>
-            <p class="notice">Pick one of the suggested location by clicking on it</p>
+            <p class="notice">{{ $t('geocoding.pick-location') }}</p>
 
             <div class="buttons-line">
               <LpiButton :label="$t('common.cancel')" @click="suggestedLocations = null" />
@@ -192,7 +194,8 @@ export default {
     const { canEditProject } = usePermissions()
     const toaster = useToasterStore()
     const runtimeConfig = useRuntimeConfig()
-    return { canEditProject, toaster, runtimeConfig }
+    const { locale } = useI18n()
+    return { canEditProject, toaster, runtimeConfig, locale }
   },
 
   data() {
@@ -286,6 +289,7 @@ export default {
         const res = await $fetch(this.runtimeConfig.public.appGeocodingApiUrl, {
           query: {
             q: address,
+            lang: this.locale,
           },
         })
 
