@@ -307,7 +307,7 @@ export default {
 
             return {
               id: Math.random().toString(36).substring(2, 15),
-              label: `${feature.properties.name} ${feature.properties.country}`,
+              label: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
               lat,
               lng,
               latlng,
