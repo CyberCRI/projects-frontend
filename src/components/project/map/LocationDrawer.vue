@@ -36,28 +36,50 @@
           </div>
         </div>
         <div v-else-if="addMode === FORM_MODE">
-          <p class="notice">{{ $t('geocoding.form-method-notice') }}</p>
-          <div class="input-field">
-            <TextInput
-              v-model="newLocationAddress"
-              autofocus
-              :label="$t('geocoding.address')"
-              @keyup.enter="!!newLocationAddress && addFromForm()"
-            />
+          <div v-if="!suggestedLocations || !suggestedLocations.length">
+            <div class="input-field">
+              <TextInput
+                v-model="newLocationAddress"
+                autofocus
+                placeholder="street, city, country"
+                :label="$t('geocoding.form-method-notice')"
+                @keyup.enter="!!newLocationAddress && suggestLocations()"
+              />
+            </div>
+            <p v-if="suggestedLocations && !suggestedLocations.length" class="notice">
+              {{ $t('geocoding.no-results') }}
+            </p>
+            <div class="buttons-line">
+              <LpiButton
+                :label="$t('common.cancel')"
+                :disabled="geocodingAsyncing"
+                :btn-icon="geocodingAsyncing ? 'LoaderSimple' : null"
+                @click="addMode = null"
+              />
+              <LpiButton
+                :disabled="!newLocationAddress || geocodingAsyncing"
+                :label="$t('common.save')"
+                :btn-icon="geocodingAsyncing ? 'LoaderSimple' : null"
+                @click="suggestLocations"
+              />
+            </div>
           </div>
-          <div class="buttons-line">
-            <LpiButton
-              :label="$t('common.cancel')"
-              :disabled="geocodingAsyncing"
-              :btn-icon="asyncing ? 'LoaderSimple' : null"
-              @click="addMode = null"
-            />
-            <LpiButton
-              :disabled="!newLocationAddress || geocodingAsyncing"
-              :label="$t('common.save')"
-              :btn-icon="asyncing ? 'LoaderSimple' : null"
-              @click="addFromForm"
-            />
+          <div v-else>
+            <p class="notice">Found {{ suggestedLocations.length }} locations(s)</p>
+            <div class="suggested-locations-filter">
+              <p>Filter by type</p>
+              <LpiCheckbox
+                v-for="(value, key) in suggestedLocationsFilters"
+                :key="key"
+                v-model="suggestedLocationsFilters[key]"
+                :label="key"
+              />
+            </div>
+            <p class="notice">Pick one of the suggested location by clicking on it</p>
+
+            <div class="buttons-line">
+              <LpiButton :label="$t('common.cancel')" @click="suggestedLocations = null" />
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +94,7 @@
               @click="addMode === CLICK_MODE ? openAddModal($event) : null"
             >
               <template #default="slotProps">
-                <template v-if="slotProps.map">
+                <template v-if="slotProps.map && !suggestedLocations">
                   <MapPointer
                     v-for="location in locations"
                     :key="location.id"
@@ -82,6 +104,16 @@
                     :has-location-tip="location.title.length > 0 || location.description.length > 0"
                     @delete-location="locationToDelete = $event"
                     @edit-location="openEditModal"
+                    @mounted="slotProps.addPointer($event, {})"
+                    @unmounted="slotProps.removePointer(location)"
+                  />
+                </template>
+                <template v-if="slotProps.map && filteredSuggestedLocations">
+                  <MapSuggestion
+                    v-for="location in filteredSuggestedLocations"
+                    :key="location.id"
+                    :location="location"
+                    @pick-location="openAddModal"
                     @mounted="slotProps.addPointer($event, {})"
                     @unmounted="slotProps.removePointer(location)"
                   />
@@ -190,12 +222,22 @@ export default {
       locationToDelete: null,
       deleteAsyncing: false,
       geocodingAsyncing: false,
+      suggestedLocations: null, // null be no search done, empty array mean no result
+      suggestedLocationsFilters: {},
     }
   },
 
   computed: {
     isGeocodingEnabled() {
       return !!this.runtimeConfig.public.appGeocodingApiUrl
+    },
+
+    filteredSuggestedLocations() {
+      return (
+        this.suggestedLocations?.filter(
+          (location) => this.suggestedLocationsFilters[location.type]
+        ) || null
+      )
     },
   },
   watch: {
@@ -214,6 +256,7 @@ export default {
     },
 
     onLocationCreated(location) {
+      this.suggestedLocations = null
       this.$emit('reload-locations')
       this.$refs.map?.flyTo(location, 8)
     },
@@ -235,7 +278,7 @@ export default {
       }
     },
 
-    async addFromForm() {
+    async suggestLocations() {
       const address = this.newLocationAddress
       this.geocodingAsyncing = true
       try {
@@ -246,24 +289,33 @@ export default {
           },
         })
 
-        const firstPointFeature = (res?.features || []).filter(
-          (feature) => feature.geometry.type === 'Point'
-        )[0]
+        console.log('Geocoding response:', res)
 
-        if (!firstPointFeature?.geometry?.coordinates) {
-          this.toaster.pushError(this.$t('geocoding.no-results'))
-          console.log(`No result for address: ${address}`)
-          return
-        }
-        const lng = firstPointFeature.geometry.coordinates[0]
-        const lat = firstPointFeature.geometry.coordinates[1]
-        this.newLocationAddress = ''
-        this.openAddModal({
-          latlng: {
-            lat,
-            lng,
-          },
-        })
+        const _suggestedLocations = (res?.features || [])
+          .filter((feature) => feature.geometry.type === 'Point')
+          .map((feature) => {
+            const lng = feature.geometry.coordinates[0]
+            const lat = feature.geometry.coordinates[1]
+            const latlng = {
+              lat,
+              lng,
+            }
+
+            return {
+              id: Math.random().toString(36).substring(2, 15),
+              label: `${feature.properties.name} ${feature.properties.country}`,
+              lat,
+              lng,
+              latlng,
+              type: feature.properties.type,
+            }
+          })
+
+        this.suggestedLocations = _suggestedLocations
+        this.suggestedLocationsFilters = _suggestedLocations.reduce((acc, location) => {
+          acc[location.type] = true
+          return acc
+        }, {})
       } catch (error) {
         this.toaster.pushError(this.$t('geocoding.error'))
         console.error(`Error fetching address: ${address}`, error)
@@ -353,5 +405,13 @@ export default {
 
 .notice {
   text-align: center;
+}
+
+.suggested-locations-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 </style>
