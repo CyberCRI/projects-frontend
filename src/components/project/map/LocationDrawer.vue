@@ -283,45 +283,96 @@ export default {
       }
     },
 
+    async fetchFromPhoton(address) {
+      // TODO: use an env variable for the geocoding API URL
+      const res = await $fetch(this.runtimeConfig.public.appGeocodingApiUrl, {
+        query: {
+          q: address,
+          lang: this.locale,
+        },
+      })
+
+      console.log('Geocoding response:', res)
+
+      const _suggestedLocations = (res?.features || [])
+        .filter((feature) => feature.geometry.type === 'Point')
+        .map((feature) => {
+          const lng = feature.geometry.coordinates[0]
+          const lat = feature.geometry.coordinates[1]
+          const latlng = {
+            lat,
+            lng,
+          }
+
+          return {
+            id: Math.random().toString(36).substring(2, 15),
+            label: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
+            lat,
+            lng,
+            latlng,
+            type: feature.properties.type,
+          }
+        })
+
+      this.suggestedLocations = _suggestedLocations
+      this.suggestedLocationsFilters = _suggestedLocations.reduce((acc, location) => {
+        acc[location.type] = true
+        return acc
+      }, {})
+    },
+
+    async fetchFromGoogle(address) {
+      // TODO: use an env variable for the geocoding API URL
+      const res = await $fetch(this.runtimeConfig.public.appGeocodingApiUrl, {
+        query: {
+          key: this.runtimeConfig.public.appGoogleGeocodingApiKey,
+          address,
+          language: this.locale,
+        },
+      })
+
+      console.log('Geocoding response:', res)
+
+      const _suggestedLocations = (res?.results || [])
+        .filter((feature) => !!feature.geometry.location)
+        .map((feature) => {
+          const lng = feature.geometry.location.lng
+          const lat = feature.geometry.location.lat
+          const latlng = {
+            lat,
+            lng,
+          }
+
+          return {
+            id: Math.random().toString(36).substring(2, 15),
+            label: feature.formatted_address || '',
+            lat,
+            lng,
+            latlng,
+            type: feature.types.length ? feature.types[0] : '',
+          }
+        })
+
+      this.suggestedLocations = _suggestedLocations
+      this.suggestedLocationsFilters = _suggestedLocations.reduce((acc, location) => {
+        acc[location.type] = true
+        return acc
+      }, {})
+    },
+
     async suggestLocations() {
       const address = this.newLocationAddress
       this.geocodingAsyncing = true
       try {
-        // TODO: use an env variable for the geocoding API URL
-        const res = await $fetch(this.runtimeConfig.public.appGeocodingApiUrl, {
-          query: {
-            q: address,
-            lang: this.locale,
-          },
-        })
-
-        console.log('Geocoding response:', res)
-
-        const _suggestedLocations = (res?.features || [])
-          .filter((feature) => feature.geometry.type === 'Point')
-          .map((feature) => {
-            const lng = feature.geometry.coordinates[0]
-            const lat = feature.geometry.coordinates[1]
-            const latlng = {
-              lat,
-              lng,
-            }
-
-            return {
-              id: Math.random().toString(36).substring(2, 15),
-              label: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
-              lat,
-              lng,
-              latlng,
-              type: feature.properties.type,
-            }
-          })
-
-        this.suggestedLocations = _suggestedLocations
-        this.suggestedLocationsFilters = _suggestedLocations.reduce((acc, location) => {
-          acc[location.type] = true
-          return acc
-        }, {})
+        const apiUrl = this.runtimeConfig.public.appGeocodingApiUrl
+        if (apiUrl.match(/photon/)) {
+          return await this.fetchFromPhoton(address)
+        } else if (apiUrl.match(/google/)) {
+          return await this.fetchFromGoogle(address)
+        } else {
+          console.error('No geocoding API URL found in runtime config')
+          throw new Error('No geocoding API URL found in runtime config')
+        }
       } catch (error) {
         this.toaster.pushError(this.$t('geocoding.error'))
         console.error(`Error fetching address: ${address}`, error)
