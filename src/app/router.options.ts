@@ -1,19 +1,6 @@
 import type { RouterConfig } from '@nuxt/schema'
 import type { RouteRecordRaw } from 'vue-router'
-import useOrganizationsStore from '@/stores/useOrganizations'
 import { useRuntimeConfig } from '#imports'
-
-const checkAccessRequestEnabled = (to: any, _from: any, next: any) => {
-  const organizationsStore = useOrganizationsStore()
-  // check if access request is enabled and redirects to 404 if not
-  if (!organizationsStore.current?.access_request_enabled) {
-    next({
-      name: 'page404',
-      params: { pathMatch: to.path.substring(1).split('/') },
-    })
-  }
-  next()
-}
 
 const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> => [
   {
@@ -348,7 +335,7 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
         path: 'requests',
         name: 'RequestsAdminTab',
         component: () => import('../pages/AdminPortalPage/Tabs/RequestsAdminTab.vue'),
-        beforeEnter: checkAccessRequestEnabled,
+        meta: { checkAccessRequestEnabled: true },
       },
       {
         path: 'groups',
@@ -432,9 +419,9 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
     component: () => import('../pages/RequestAccessPage/RequestAccessPage.vue'),
     meta: {
       resetScroll: true,
+      // redirct to 404 if request access is not enabled
+      checkAccessRequestEnabled: true,
     },
-    // redirct to 404 if request access is not enabled
-    beforeEnter: checkAccessRequestEnabled,
   },
 
   {
@@ -703,6 +690,7 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
     component: () => import('../pages/ErrorPage/ErrorPage.vue'),
     meta: {
       resetScroll: true,
+      checkAccessRequestEnabled: false,
     },
   },
   {
