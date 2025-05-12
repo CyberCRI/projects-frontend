@@ -1,3 +1,104 @@
+<script setup>
+import useValidate from '@vuelidate/core'
+import { helpers, required, email } from '@vuelidate/validators'
+import { postAccessRequest } from '@/api/organizations.service.ts'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getOrganizationByCode } from '@/api/organizations.service'
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const router = useRouter()
+const { t } = useI18n()
+const form = ref({
+  email: '',
+  given_name: '',
+  family_name: '',
+  job: '',
+  message: '',
+})
+const rules = computed(() => ({
+  form: {
+    email: {
+      required: helpers.withMessage(t('request-access.email.is-required'), required),
+      email: helpers.withMessage(t('request-access.email.is-invalid'), email),
+    },
+    given_name: {
+      required: helpers.withMessage(t('request-access.given_name.is-required'), required),
+    },
+    family_name: {
+      required: helpers.withMessage(t('request-access.family_name.is-required'), required),
+    },
+    job: {
+      required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
+    },
+  },
+}))
+const v$ = useValidate(rules, { form })
+const formIsInvalid = computed(() => {
+  return v$.value.form.$invalid
+})
+const asyncing = ref(false)
+const confirm = ref(false)
+const showContactUsDrawer = ref(false)
+const contactEmail = ref('')
+onMounted(async () => {
+  contactEmail.value = organizationsStore.current?.contact_email
+})
+async function requestAccess() {
+  await v$.value.form.$validate()
+  if (v$.value.form.$error) {
+    return
+  }
+  asyncing.value = true
+  try {
+    const org_code = organizationsStore.current?.code
+    const payload = {
+      ...form.value,
+      organization: org_code,
+    }
+    await postAccessRequest(org_code, payload)
+    confirm.value = true
+  } catch (error) {
+    if (error?.response?.status === 409) {
+      toaster.pushError(t('register.email-already-exists') /* TODO*/)
+    } else {
+      toaster.pushError(
+        `${t('register.save-error')} ${
+          // TODO
+          error?.response?.data?.error || ''
+        }`
+      )
+    }
+    console.error(error)
+  } finally {
+    asyncing.value = false
+  }
+}
+function cancel() {
+  router.push({ name: 'HomeRoot' })
+}
+function login() {
+  goToKeycloakLoginPage()
+}
+function closeDrawer() {
+  showContactUsDrawer.value = false
+}
+try {
+  const runtimeConfig = useRuntimeConfig()
+  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
+  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
+  useLpiHead(
+    useRequestURL().toString(),
+    computed(() => t('request-access.title')),
+    organization?.dashboard_subtitle,
+    image,
+    dimensions
+  )
+} catch (err) {
+  console.log(err)
+}
+</script>
 <template>
   <SignUpWrapper
     :sign-up-title="confirm ? $t('request-access.title-confirm') : $t('request-access.title')"
@@ -74,7 +175,7 @@
             @click="cancel"
           />
           <LpiButton
-            :disabled="v$.form.$invalid || asyncing"
+            :disabled="formIsInvalid || asyncing"
             :label="$t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="register-btn"
@@ -102,129 +203,6 @@
 
   <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
 </template>
-<script>
-import useVuelidate from '@vuelidate/core'
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ContactDrawer from '@/components/app/ContactDrawer.vue'
-import SignUpWrapper from '@/components/app/SignUpWrapper.vue'
-import { helpers, required, email } from '@vuelidate/validators'
-import { postAccessRequest } from '@/api/organizations.service.ts'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'RequestAccessPage',
-
-  components: {
-    TextInput,
-    LpiButton,
-    ContactDrawer,
-    SignUpWrapper,
-    FieldErrors,
-  },
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      form: {
-        email: '',
-        given_name: '',
-        family_name: '',
-        job: '',
-        message: '',
-      },
-      asyncing: false,
-      confirm: false,
-      v$: useVuelidate(),
-      showContactUsDrawer: false,
-    }
-  },
-
-  validations() {
-    return {
-      form: {
-        email: {
-          required: helpers.withMessage(this.$t('request-access.email.is-required'), required),
-          email: helpers.withMessage(this.$t('request-access.email.is-invalid'), email),
-        },
-        given_name: {
-          required: helpers.withMessage(this.$t('request-access.given_name.is-required'), required),
-        },
-        family_name: {
-          required: helpers.withMessage(
-            this.$t('request-access.family_name.is-required'),
-            required
-          ),
-        },
-        job: {
-          required: helpers.withMessage(
-            this.$t('request-access.profile-title.is-required'),
-            required
-          ),
-        },
-      },
-    }
-  },
-  async mounted() {
-    this.contactEmail = this.organizationsStore.current?.contact_email
-  },
-
-  methods: {
-    async requestAccess() {
-      this.v$.form.$validate()
-      if (this.v$.form.$error) {
-        return
-      }
-      this.asyncing = true
-      try {
-        const org_code = this.organizationsStore.current?.code
-        const payload = {
-          ...this.form,
-          organization: org_code,
-        }
-        await postAccessRequest(org_code, payload)
-        this.confirm = true
-      } catch (error) {
-        if (error?.response?.status === 409) {
-          this.toaster.pushError(this.$t('register.email-already-exists') /* TODO*/)
-        } else {
-          this.toaster.pushError(
-            `${this.$t('register.save-error')} ${
-              // TODO
-              error?.response?.data?.error || ''
-            }`
-          )
-        }
-
-        console.error(error)
-      } finally {
-        this.asyncing = false
-      }
-    },
-
-    cancel() {
-      this.$router.push({ name: 'HomeRoot' })
-    },
-
-    login() {
-      goToKeycloakLoginPage()
-    },
-
-    closeDrawer() {
-      this.showContactUsDrawer = false
-    },
-  },
-}
-</script>
 <style lang="scss" scoped>
 .confirm {
   border-radius: $border-radius-m;
