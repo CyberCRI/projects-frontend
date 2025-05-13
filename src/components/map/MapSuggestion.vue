@@ -44,10 +44,18 @@ export default {
   display: none;
 }
 
+.leaflet-marker-icon {
+  position: relative;
+}
+
 .map-pointer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   .badge {
     background: $white;

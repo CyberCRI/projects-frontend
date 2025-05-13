@@ -68,7 +68,7 @@
             <p class="notice">
               {{ $t('geocoding.found-number', { number: suggestedLocations.length }) }}
             </p>
-            <div class="suggested-locations-filter">
+            <!--div class="suggested-locations-filter">
               <p>{{ $t('geocoding.filter-by-type') }}</p>
               <LpiCheckbox
                 v-for="(value, key) in suggestedLocationsFilters"
@@ -76,7 +76,7 @@
                 v-model="suggestedLocationsFilters[key]"
                 :label="$t(`geocoding.feature-type.${key}`)"
               />
-            </div>
+            </div-->
             <p class="notice">{{ $t('geocoding.pick-location') }}</p>
 
             <div class="buttons-line">
@@ -298,6 +298,8 @@ export default {
           acc[location.type] = true
           return acc
         }, {})
+
+        this.$nextTick(() => this.centerMap())
       } catch (error) {
         this.toaster.pushError(this.$t('geocoding.error'))
         console.error(`Error fetching address: ${address}`, error)
