@@ -1589,9 +1589,6 @@
     "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt l\u00f6schen m\u00f6chten?",
     "location-type-label": "Standort",
     "lock": "Schlossprojekt",
-    "map-hint-1": "1 - Zoomen und bewegen auf der Karte zum gew\u00fcnschten Ort",
-    "map-hint-2": "2 - Rechtsklicken Sie auf die Karte, um Ihren Standort(en) Punkt(en) zu platzieren",
-    "map-hint-3": "3 - Sie k\u00f6nnen sie dann bearbeiten, indem Sie auf sie klicken",
     "private": "Private Projekte",
     "publish": "Projekt ver\u00f6ffentlichen",
     "public": "\u00d6ffentliche Projekte",
@@ -2600,5 +2597,34 @@
   },
   "people-groups": {
     "browse-tree": "Durchsuchen Sie den Stammbaum"
+  },
+  "geocoding": {
+    "error": "Fehler bei der Adress-Geokodierung",
+    "no-results": "Keine Ergebnisse für diese Adresse gefunden",
+    "choose-method": "Wählen Sie eine Eingabemethode, um einen Ort hinzuzufügen:",
+    "click-method": "Auf die Karte klicken",
+    "click-method-no-geocoding": "Ort hinzufügen",
+    "click-method-notice": "Klicken Sie auf die Karte, um den Ort auszuwählen",
+    "form-method": "Adresse eingeben",
+    "form-method-notice": "Geben Sie die Adresse in das Feld unten ein",
+    "address": "Adresse",
+    "delete-location": "Ort löschen",
+    "confirm-delete-location": "Sind Sie sicher, dass Sie diesen Ort löschen möchten?",
+    "filter-by-type": "Nach Typ filtern",
+    "form-placeholder": "Straße, Stadt, Land",
+    "pick-location": "Wählen Sie einen der vorgeschlagenen Orte durch Klicken aus",
+    "found-number": "{number} Ort(e) gefunden",
+    "search": "Suche",
+    "feature-type": {
+      "house": "Haus",
+      "street": "Straße",
+      "locality": "Ortschaft",
+      "district": "Bezirk",
+      "city": "Stadt",
+      "county": "Landkreis",
+      "state": "Bundesland",
+      "country": "Land",
+      "other": "Andere"
+    }
   }
 }

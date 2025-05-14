@@ -1545,7 +1545,7 @@
     "edit-linked-project": "Modifier le projet lié",
     "edit-location-point": "Modifier ce point de localisation",
     "edit-review": "modifier la révision",
-    "edit-map": "modifier la géolocalisation",
+    "edit-map": "modifier les emplacements",
     "files": "fichier du projet | fichier du projet | fichiers du projet",
     "follow": "Suivre",
     "followed": "Suivi",
@@ -1590,9 +1590,6 @@
     "blog-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette entrée de blog de votre projet ?",
     "location-type-label": "Type de localisation",
     "lock": "vérouiller le projet",
-    "map-hint-1": "1 - Zoomez et déplacez-vous sur la carte vers la position souhaitée",
-    "map-hint-2": "2 - Faites un clic droit sur la carte pour positionner vos points",
-    "map-hint-3": "3 - Vous pouvez modifier vos points en faisant un clic droit",
     "private": "Projets Privés",
     "publish": "publier le projet",
     "public": "Projets publics",
@@ -2606,5 +2603,34 @@
   },
   "people-groups": {
     "browse-tree": "Parcourir l'arbre des groupes"
+  },
+  "geocoding": {
+    "error": "Erreur lors du géocodage de l'adresse",
+    "no-results": "Aucun résultat trouvé pour cette adresse",
+    "choose-method": "Pour ajouter un lieu, choisissez une méthode de saisie :",
+    "click-method": "Cliquez sur la carte",
+    "click-method-no-geocoding": "Ajouter un lieu",
+    "click-method-notice": "Cliquez sur la carte pour choisir le lieu",
+    "form-method": "Saisir l'adresse",
+    "form-method-notice": "Saisissez l'adresse dans le champ ci-dessous",
+    "address": "Adresse",
+    "delete-location": "Supprimer le lieu",
+    "confirm-delete-location": "Êtes-vous sûr de vouloir supprimer ce lieu ?",
+    "filter-by-type": "Filtrer par type",
+    "form-placeholder": "Rue, Ville, Pays",
+    "pick-location": "Choisissez l'un des lieux suggérés en cliquant dessus",
+    "found-number": "{number} lieu(x) trouvé(s)",
+    "search": "Rechercher",
+    "feature-type": {
+      "house": "Maison",
+      "street": "Rue",
+      "locality": "Localité",
+      "district": "District",
+      "city": "Ville",
+      "county": "Comté",
+      "state": "État",
+      "country": "Pays",
+      "other": "Autre"
+    }
   }
 }

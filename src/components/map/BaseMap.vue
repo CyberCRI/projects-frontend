@@ -28,7 +28,7 @@ export default {
     },
   },
 
-  emits: ['contextmenu'],
+  emits: ['contextmenu', 'click'],
 
   data() {
     return {
@@ -71,6 +71,7 @@ export default {
     }
 
     map.on('contextmenu', (e) => this.$emit('contextmenu', e))
+    map.on('click', (e) => this.$emit('click', e))
     L.tileLayer(this.config.mapUrl, {
       attribution:
         '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
@@ -109,7 +110,7 @@ export default {
         }
       }
 
-      this.markers.set(toRaw(location), marker)
+      this.markers.set(location.id, marker)
 
       if (this.markerCluster) toRaw(this.markerCluster).addLayers(marker)
       else marker.addTo(toRaw(this.map))
@@ -118,11 +119,16 @@ export default {
     },
 
     removePointer(location) {
-      toRaw(this.markers.get(toRaw(location)))?.removeFrom(
-        toRaw(this.markerCluster ? this.markerCluster : this.map)
-      )
-      this.markers.delete(toRaw(location))
+      const marker = this.markers.get(location.id)
+
+      if (marker) {
+        if (this.markerCluster) toRaw(marker)?.removeFrom(this.markerCluster)
+        else this.map.removeLayer(marker)
+      }
+      this.markers.delete(location.id)
       if (this.markerCluster) this.markerCluster.refreshClusters()
+      // force readraw
+      this.map.invalidateSize()
     },
 
     createClusterIcons(cluster) {
@@ -179,6 +185,12 @@ export default {
         if (bounds.length) toRaw(this.map).fitBounds(bounds, { maxZoom: 5 })
         this.loading = false
       })
+    },
+
+    // this is called by other components
+    // eslint-disable-next-line vue/no-unused-properties
+    flyTo(coordinates, zoom) {
+      toRaw(this.map)?.flyTo([coordinates.lat, coordinates.lng], zoom)
     },
   },
 }
