@@ -13,11 +13,6 @@
     </template>
 
     <template #body>
-      <h2 v-if="!locationToBeEdited && newCoordinates.length" class="new-coords">
-        {{ $filters.capitalize($t('project.at-coordinates')) }} {{ newCoordinates[0] }} /
-        {{ newCoordinates[1] }}
-      </h2>
-
       <div class="location-type-ctn">
         <div class="location-type-label">
           {{ $t('project.location-type-label') }}
@@ -76,6 +71,10 @@ export default {
       type: String,
       default: null,
     },
+    address: {
+      type: [String, null],
+      default: null,
+    },
   },
 
   emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
@@ -110,6 +109,9 @@ export default {
   created() {
     if (this.locationToBeEdited) {
       this.form = { ...this.locationToBeEdited }
+    }
+    if (this.address && !this.form.description) {
+      this.form.description = this.address
     }
   },
 

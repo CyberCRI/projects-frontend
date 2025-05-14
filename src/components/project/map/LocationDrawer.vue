@@ -130,9 +130,10 @@
     <LocationForm
       v-if="formVisible"
       :project-id="projectId"
+      :address="newLocationAddress"
       :location-to-be-edited="locationToBeEdited"
       :new-coordinates="newCoordinates"
-      @close="formVisible = false"
+      @close="closeLocationForm"
       @center-map="centerMap"
       @location-edited="$emit('reload-locations')"
       @location-created="onLocationCreated"
@@ -250,8 +251,8 @@ export default {
       this.newLocationAddress = ''
       this.suggestedLocationsFilters = {}
     },
-    isOpened(neo) {
-      if (neo) this.mapkey++
+    isOpened(neo, old) {
+      if (neo && neo != old) this.mapkey++
     },
   },
 
@@ -262,6 +263,7 @@ export default {
 
     onLocationCreated(location) {
       this.suggestedLocations = null
+      this.addMode = null
       this.$emit('reload-locations')
       this.$refs.map?.flyTo(location, 8)
     },
@@ -274,9 +276,13 @@ export default {
       }
     },
 
+    closeLocationForm() {
+      this.addMode = null
+      this.formVisible = false
+    },
+
     openAddModal(event) {
       if (this.canEditProject) {
-        this.addMode = null
         this.locationToBeEdited = null
         this.newCoordinates = [event.latlng.lat, event.latlng.lng]
         this.formVisible = true

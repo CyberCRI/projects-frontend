@@ -16,6 +16,7 @@
                 v-for="location in locations"
                 :key="location.id"
                 :location="location"
+                :has-location-tip="location.title.length > 0 || location.description.length > 0"
                 @mounted="slotProps.addPointer"
                 @unmounted="slotProps.removePointer(location)"
               />
