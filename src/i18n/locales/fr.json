@@ -2632,5 +2632,9 @@
       "country": "Pays",
       "other": "Autre"
     }
+  },
+  "card-list": {
+    "list": "Liste",
+    "grid": "Grille"
   }
 }

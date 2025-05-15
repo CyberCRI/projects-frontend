@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-card shadow-box" tabindex="1">
+  <div class="basic-card shadow-box" tabindex="1" :class="mode">
     <div class="action-left-wrapper">
       <slot name="actions-left" />
     </div>
@@ -36,6 +36,10 @@ export default {
       type: [String, Object],
       default: null,
     },
+    mode: {
+      type: String,
+      default: 'card', // 'card' or 'list'
+    },
   },
 
   emits: ['click'],
@@ -46,20 +50,35 @@ export default {
 .basic-card {
   display: flex;
   position: relative;
-  flex-direction: column;
-  justify-content: space-between;
-  height: $card_height;
-  width: $card_width;
-  border: $border-width-s solid $primary;
-  border-radius: $border-radius-m;
-  text-align: center;
   background: $white;
   overflow: hidden;
 
   .card-inner {
     display: flex;
-    flex-flow: column;
     flex-grow: 1;
+  }
+
+  &.card {
+    flex-direction: column;
+    justify-content: space-between;
+    height: $card_height;
+    width: $card_width;
+    border: $border-width-s solid $primary;
+    border-radius: $border-radius-m;
+    text-align: center;
+
+    .card-inner {
+      flex-flow: column;
+    }
+  }
+
+  &.list {
+    flex-direction: row;
+    border-bottom: $border-width-s solid #00dba7;
+
+    .card-inner {
+      flex-flow: row;
+    }
   }
 }
 
@@ -71,26 +90,44 @@ export default {
   height: pxToRem($picture-width);
   border-radius: $border-radius-xs;
   box-shadow: 0 0 2px rgb(0 0 0 / 15%);
+  flex-shrink: 0;
 }
 
-:deep(.picture-user) {
-  $picture-width: 110px;
+.card {
+  :deep(.picture-user) {
+    $picture-width: 110px;
 
-  width: pxToRem($picture-width);
-  height: pxToRem($picture-width);
+    width: pxToRem($picture-width);
+    height: pxToRem($picture-width);
+  }
+
+  :deep(.picture-project) {
+    $picture-width: 86px;
+
+    width: pxToRem($picture-width);
+    height: pxToRem($picture-width);
+  }
+
+  :deep(.picture-group) {
+    border-radius: 50%;
+    width: pxToRem(90px);
+    height: pxToRem(90px);
+  }
 }
 
-:deep(.picture-project) {
-  $picture-width: 86px;
+.list {
+  :deep(.picture-user),
+  :deep(.picture-project),
+  :deep(.picture-group) {
+    $picture-width: 110px;
 
-  width: pxToRem($picture-width);
-  height: pxToRem($picture-width);
-}
+    width: pxToRem($picture-width);
+    height: pxToRem($picture-width);
+  }
 
-:deep(.picture-group) {
-  border-radius: 50%;
-  width: pxToRem(90px);
-  height: pxToRem(90px);
+  :deep(.picture-group) {
+    border-radius: 50%;
+  }
 }
 
 :deep(.card-title) {
@@ -115,11 +152,23 @@ export default {
 
 :deep(.content) {
   display: flex;
+  cursor: pointer;
+}
+
+.card :deep(.content) {
   flex-direction: column;
   align-items: center;
   padding: $space-m $space-m 0 $space-m;
   height: 100%;
-  cursor: pointer;
+}
+
+.list :deep(.content) {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0.75rem;
+  gap: 1rem;
+  flex-basis: 100%;
+  flex-grow: 1;
 }
 
 :deep(.content--open) {
@@ -130,13 +179,18 @@ export default {
   overflow: hidden auto;
 }
 
-:deep(.text-limit) {
+.card :deep(.text-limit) {
   display: -webkit-box;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
+}
+
+.list :deep(.text-limit) {
+  display: block;
+  text-align: left;
 }
 
 :deep(.description) {
@@ -167,8 +221,12 @@ export default {
   right: 12px;
 }
 
-:deep(.action-left-wrapper) {
+.card :deep(.action-left-wrapper) {
   left: 12px;
+}
+
+.list :deep(.action-left-wrapper) {
+  right: 44px;
 }
 
 :deep(.icon) {

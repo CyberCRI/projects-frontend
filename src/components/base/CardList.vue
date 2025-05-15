@@ -1,5 +1,15 @@
 <template>
-  <ProjectListSkeleton v-if="isLoading" class="card-list" :min-gap="gridGap" :limit="limit" />
+  <div v-if="switchableDisplay" class="diplay-switcher">
+    <GroupButton v-model="mode" :options="displayModes" :has-icon="false" size="s-small" />
+  </div>
+
+  <ProjectListSkeleton
+    v-if="isLoading"
+    class="card-list"
+    :min-gap="gridGap"
+    :limit="limit"
+    :mode="mode"
+  />
 
   <div v-else>
     <template v-if="isEmpty">
@@ -16,9 +26,9 @@
       </slot>
     </template>
     <div v-else class="card-container">
-      <DynamicGrid :min-gap="gridGap" class="card-list">
+      <DynamicGrid :min-gap="gridGap" class="card-list" :mode="mode">
         <div v-for="item in items" :key="item.id" class="card-list__content">
-          <slot name="default" :item="item" />
+          <slot name="default" :item="item" :mode="mode" />
         </div>
       </DynamicGrid>
     </div>
@@ -52,6 +62,11 @@ export default {
       type: Number,
       default: 12,
     },
+
+    switchableDisplay: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup() {
@@ -64,12 +79,29 @@ export default {
   data() {
     return {
       gridGap: 24,
+
+      mode: 'card', // 'list' or 'grid'
     }
   },
 
   computed: {
     isEmpty() {
       return !this.isLoading && !this.items.length
+    },
+
+    displayModes() {
+      return [
+        {
+          label: this.$t('card-list.grid'),
+          iconName: 'Card',
+          value: 'card',
+        },
+        {
+          label: this.$t('card-list.list'),
+          iconName: 'List',
+          value: 'list',
+        },
+      ]
     },
   },
 }
@@ -98,7 +130,7 @@ export default {
   width: 200px;
 }
 
-.card-list__content {
+.card-list__content.card {
   width: min-content;
 }
 
