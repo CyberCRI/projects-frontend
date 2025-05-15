@@ -83,7 +83,6 @@ export default {
       mode: 'card', // 'list' or 'grid'
     }
   },
-
   computed: {
     isEmpty() {
       return !this.isLoading && !this.items.length
@@ -103,6 +102,19 @@ export default {
         },
       ]
     },
+  },
+  watch: {
+    mode(newMode, oldMode) {
+      if (this.switchableDisplay && newMode !== oldMode) {
+        localStorage?.setItem('card-list-mode', newMode)
+      }
+    },
+  },
+
+  mounted() {
+    if (this.switchableDisplay) {
+      this.mode = localStorage?.getItem('card-list-mode') || 'card'
+    }
   },
 }
 </script>
