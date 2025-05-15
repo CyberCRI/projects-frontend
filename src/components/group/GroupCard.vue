@@ -7,7 +7,7 @@
     @click="toGroupPage"
   >
     <template #actions-right>
-      <IconImage class="icon" name="EmailOutline" @click="mailTo" v-if="group.email" />
+      <IconImage v-if="group.email" class="icon" name="EmailOutline" @click="mailTo" />
       <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
       <IconImage
         v-if="showCloseButton"

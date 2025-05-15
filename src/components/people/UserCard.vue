@@ -2,7 +2,7 @@
   <BasicCard :to-link="!isPrivateUser ? toLink : null" :mode="mode" @click="userAction($event)">
     <template #actions-right>
       <slot name="actions">
-        <IconImage class="icon" name="EmailOutline" @click="mailTo" v-if="user.email" />
+        <IconImage v-if="user.email" class="icon" name="EmailOutline" @click="mailTo" />
       </slot>
     </template>
     <CroppedApiImage
