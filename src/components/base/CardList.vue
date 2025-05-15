@@ -27,9 +27,7 @@
     </template>
     <div v-else class="card-container">
       <DynamicGrid :min-gap="gridGap" class="card-list" :mode="mode">
-        <div v-for="item in items" :key="item.id" class="card-list__content">
-          <slot name="default" :item="item" :mode="mode" />
-        </div>
+        <slot v-for="item in items" :key="item.id" :item="item" :mode="mode" />
       </DynamicGrid>
     </div>
   </div>
@@ -140,10 +138,6 @@ export default {
 
 .card-list__empty--image {
   width: 200px;
-}
-
-.card-list__content.card {
-  width: min-content;
 }
 
 .card-container {

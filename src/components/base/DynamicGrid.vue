@@ -49,6 +49,14 @@ export default {
     },
   },
 
+  watch: {
+    mode: function (newMode, oldMode) {
+      if (newMode !== oldMode) {
+        this.$nextTick(this.computeColumnCount)
+      }
+    },
+  },
+
   mounted() {
     this.computeColumnCount()
     window.addEventListener('resize', this.computeColumnCount)
