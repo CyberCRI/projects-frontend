@@ -1,8 +1,8 @@
 <template>
-  <BasicCard :to-link="!isPrivateUser ? toLink : null" @click="userAction($event)">
+  <BasicCard :to-link="!isPrivateUser ? toLink : null" :mode="mode" @click="userAction($event)">
     <template #actions-right>
       <slot name="actions">
-        <IconImage class="icon" name="EmailOutline" @click="mailTo" />
+        <IconImage v-if="user.email" class="icon" name="EmailOutline" @click="mailTo" />
       </slot>
     </template>
     <CroppedApiImage
@@ -45,6 +45,10 @@ export default {
     toLink: {
       type: [String, Object],
       default: null,
+    },
+    mode: {
+      type: String,
+      default: 'card', // 'card' or 'list'
     },
   },
 

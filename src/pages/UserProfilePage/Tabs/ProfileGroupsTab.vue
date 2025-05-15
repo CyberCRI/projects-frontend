@@ -5,43 +5,41 @@
         {{ $t('me.groups') }}
         <span>({{ user?.people_groups?.length || 0 }})</span>
       </h4>
-      <div class="list">
-        <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
-          <template #default="groupListSlotProps">
-            <CardList
-              :desktop-columns-number="6"
-              :limit="listLimit"
-              :items="groupListSlotProps.items || []"
-              :is-loading="groupListSlotProps.isLoading"
-            >
-              <template #default="cardListSlotProps">
-                <GroupCard
-                  v-if="cardListSlotProps.item"
-                  :group="cardListSlotProps.item"
-                  @navigated-away="$emit('close')"
-                />
-              </template>
-              <template #empty>
-                <div class="empty-ctn">
-                  <EmptyCard class="empty-card" :label="noGroupLabel" />
-                </div>
-              </template>
-            </CardList>
-
-            <div
-              v-if="!groupListSlotProps.isLoading && groupListSlotProps.pagination?.total > 1"
-              class="pagination-container"
-            >
-              <PaginationButtons
-                :current="groupListSlotProps.pagination.currentPage"
-                :pagination="groupListSlotProps.pagination"
-                :total="groupListSlotProps.pagination.total"
-                @update-pagination="groupListSlotProps.paginationAction"
+      <ListPaginator class="paginator" :limit="listLimit" :list="user?.people_groups || []">
+        <template #default="groupListSlotProps">
+          <CardList
+            :desktop-columns-number="6"
+            :limit="listLimit"
+            :items="groupListSlotProps.items || []"
+            :is-loading="groupListSlotProps.isLoading"
+          >
+            <template #default="cardListSlotProps">
+              <GroupCard
+                v-if="cardListSlotProps.item"
+                :group="cardListSlotProps.item"
+                @navigated-away="$emit('close')"
               />
-            </div>
-          </template>
-        </ListPaginator>
-      </div>
+            </template>
+            <template #empty>
+              <div class="empty-ctn">
+                <EmptyCard class="empty-card" :label="noGroupLabel" />
+              </div>
+            </template>
+          </CardList>
+
+          <div
+            v-if="!groupListSlotProps.isLoading && groupListSlotProps.pagination?.total > 1"
+            class="pagination-container"
+          >
+            <PaginationButtons
+              :current="groupListSlotProps.pagination.currentPage"
+              :pagination="groupListSlotProps.pagination"
+              :total="groupListSlotProps.pagination.total"
+              @update-pagination="groupListSlotProps.paginationAction"
+            />
+          </div>
+        </template>
+      </ListPaginator>
     </div>
   </div>
 </template>
@@ -115,16 +113,6 @@ export default {
     font-weight: 700;
     color: $primary-dark;
     margin: $space-l 0;
-  }
-
-  .list {
-    display: flex;
-    gap: $space-l;
-    flex-wrap: wrap;
-
-    & > div {
-      width: 100%;
-    }
   }
 
   .pagination-container {

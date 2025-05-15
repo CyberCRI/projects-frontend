@@ -1,16 +1,20 @@
 <template>
-  <DynamicGrid :min-gap="minGap" class="project-list">
-    <div v-for="(item, index) in limit" :key="index" class="card">
-      <div class="content">
+  <DynamicGrid :min-gap="minGap" class="card-list" :mode="mode">
+    <BasicCard v-for="(item, index) in limit" :key="index" class="skeleton-card" :mode="mode">
+      <div class="picture project-picture">
         <div class="image-placeholder" />
+      </div>
+
+      <div class="skeleton-text">
         <div class="text-placeholder" />
 
-        <div class="text-placeholder subtext" />
+        <div v-if="mode == 'card'" class="text-placeholder subtext" />
+
         <div class="text-placeholder" />
 
         <div class="text-placeholder" />
       </div>
-    </div>
+    </BasicCard>
   </DynamicGrid>
 </template>
 
@@ -32,27 +36,29 @@ export default {
       type: Number,
       default: 0,
     },
+    mode: {
+      type: String,
+      default: 'card', // 'card' or 'list'
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.project-list {
+.card-list {
   margin-top: $space-xl;
 
-  .card {
-    height: pxToRem(256px);
-    width: pxToRem(185px);
-    border: $border-width-s solid $almost-white;
-    border-radius: $border-radius-m;
-    overflow: hidden;
+  .skeleton-card {
+    border-color: $almost-white !important;
   }
 
-  .content {
-    padding: $space-m;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  &.card .skeleton-text {
+    padding-top: $space-m;
+    width: 100%;
+  }
+
+  &.list .skeleton-text {
+    width: 100%;
   }
 
   .image-placeholder {

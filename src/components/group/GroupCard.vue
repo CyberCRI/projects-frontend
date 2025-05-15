@@ -3,10 +3,11 @@
     :group="group"
     :to-link="toLink"
     :data-test="`group-card-${group.name}`"
+    :mode="mode"
     @click="toGroupPage"
   >
     <template #actions-right>
-      <IconImage class="icon" name="EmailOutline" @click="mailTo" />
+      <IconImage v-if="group.email" class="icon" name="EmailOutline" @click="mailTo" />
       <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
       <IconImage
         v-if="showCloseButton"
@@ -77,6 +78,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    mode: {
+      type: String,
+      default: 'card', // 'card' or 'list'
+    },
   },
 
   emits: ['add', 'unselect', 'click', 'navigated-away'],
@@ -120,18 +125,21 @@ export default {
 <style lang="scss" scoped>
 .group-count {
   display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 700;
   font-size: $font-size-xs;
   color: $primary-dark;
-  margin-top: $space-s;
+  align-items: center;
 
   .icon {
     fill: $primary-dark;
     margin-right: $space-s;
     width: 16px;
   }
+}
+
+.card .group-count {
+  margin-top: $space-s;
+  justify-content: center;
 }
 
 .card-type {

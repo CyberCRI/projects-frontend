@@ -2626,5 +2626,9 @@
       "country": "Land",
       "other": "Andere"
     }
+  },
+  "card-list": {
+    "list": "Liste",
+    "grid": "Raster"
   }
 }

@@ -12,19 +12,23 @@
         :limit="SearchResultsSlotProps.limit"
         :items="SearchResultsSlotProps.items"
         class="list-container"
+        switchable-display
       >
         <template #default="projectListSlotProps">
           <ProjectCard
             v-if="projectListSlotProps.item.type == 'project'"
             :project="projectListSlotProps.item.project"
+            :mode="projectListSlotProps.mode"
           />
           <GroupCard
             v-if="projectListSlotProps.item.type == 'people_group'"
             :group="projectListSlotProps.item.people_group"
+            :mode="projectListSlotProps.mode"
           />
           <UserCard
             v-if="projectListSlotProps.item.type == 'user'"
             :user="projectListSlotProps.item.user"
+            :mode="projectListSlotProps.mode"
             :to-link="{
               name: 'ProfileOtherUser',
               params: {

@@ -174,11 +174,13 @@ try {
             :limit="12"
             :items="childGroup"
             class="list-container"
+            switchable-display
           >
             <template #default="cardListSlotProps">
               <GroupCard
                 :group="cardListSlotProps.item"
                 :has-sub-groups-link="!!cardListSlotProps.item?.children?.length"
+                :mode="cardListSlotProps.mode"
               />
             </template>
           </CardList>

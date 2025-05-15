@@ -34,12 +34,12 @@ describe('CardList.vue', () => {
   it('should show an empty box image and not show projects if there are no projects', () => {
     const wrapper = factory({ items: [] })
     expect(wrapper.find('.card-list__empty').exists()).toBe(true)
-    expect(wrapper.find('.card-list__content').exists()).toBe(false)
+    expect(wrapper.find('.card-container').exists()).toBe(false)
   })
 
   it('should not show an empty box image and show projects if there are projects', () => {
     const wrapper = factory({ items: projects })
     expect(wrapper.find('.card-list__empty').exists()).toBe(false)
-    expect(wrapper.find('.card-list__content').exists()).toBe(true)
+    expect(wrapper.find('.card-container').exists()).toBe(true)
   })
 })
