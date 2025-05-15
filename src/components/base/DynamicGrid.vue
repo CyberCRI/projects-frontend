@@ -76,5 +76,7 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+  max-width: 60rem;
+  margin: 0 auto;
 }
 </style>

@@ -7,7 +7,7 @@
     @click="toGroupPage"
   >
     <template #actions-right>
-      <IconImage class="icon" name="EmailOutline" @click="mailTo" />
+      <IconImage class="icon" name="EmailOutline" @click="mailTo" v-if="group.email" />
       <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
       <IconImage
         v-if="showCloseButton"
@@ -128,7 +128,6 @@ export default {
   font-weight: 700;
   font-size: $font-size-xs;
   color: $primary-dark;
-  margin-top: $space-s;
   align-items: center;
 
   .icon {
@@ -139,6 +138,7 @@ export default {
 }
 
 .card .group-count {
+  margin-top: $space-s;
   justify-content: center;
 }
 

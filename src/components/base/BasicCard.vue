@@ -119,7 +119,7 @@ export default {
   :deep(.picture-user),
   :deep(.picture-project),
   :deep(.picture-group) {
-    $picture-width: 110px;
+    $picture-width: 80px;
 
     width: pxToRem($picture-width);
     height: pxToRem($picture-width);
