@@ -42,7 +42,9 @@ export async function getProjectCategory(id: number) {
 }
 
 export async function getAllProjectCategories(params: ProjectCategoryParams) {
-  return await useAPI(`organization/${params.organization}/category/`, { params }) //.data.value
+  return await useAPI(`category/`, { params }) //.data.value
+  // TODO: fix for new categories endpoint - to use later
+  // return await useAPI(`organization/${params.organization}/category/`, { params }) //.data.value
 }
 
 export async function getProjectCategoriesHierarchy(rootId: number, params: ProjectCategoryParams) {
