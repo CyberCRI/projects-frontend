@@ -229,6 +229,14 @@ export default {
   right: 44px;
 }
 
+.project-card.list :deep(.action-left-wrapper) {
+  right: 12px;
+}
+
+.project-card.list :deep(.action-right-wrapper) {
+  right: 44px;
+}
+
 :deep(.icon) {
   width: 24px;
   height: 24px;

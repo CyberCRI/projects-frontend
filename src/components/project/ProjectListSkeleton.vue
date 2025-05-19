@@ -50,6 +50,7 @@ export default {
 
   .skeleton-card {
     border-color: $almost-white !important;
+    pointer-events: none;
   }
 
   &.card .skeleton-text {
