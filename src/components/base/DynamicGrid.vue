@@ -1,5 +1,5 @@
 <template>
-  <div ref="grid" class="dynamic-grid" :style="gridStyle">
+  <div ref="grid" class="dynamic-grid" :class="[mode]" :style="gridStyle">
     <slot />
   </div>
 </template>
@@ -12,6 +12,11 @@ export default {
     minGap: {
       type: Number,
       default: 0,
+    },
+
+    mode: {
+      type: String,
+      default: 'card', // list or card
     },
   },
 
@@ -35,9 +40,19 @@ export default {
 
   computed: {
     gridStyle() {
-      return {
-        'grid-template-columns': `repeat(auto-fill, ${this.childWidth}px)`,
-        gap: `${this.minGap}px`,
+      return this.mode === 'card'
+        ? {
+            'grid-template-columns': `repeat(auto-fill, ${this.childWidth}px)`,
+            gap: `${this.minGap}px`,
+          }
+        : {}
+    },
+  },
+
+  watch: {
+    mode: function (newMode, oldMode) {
+      if (newMode !== oldMode) {
+        this.$nextTick(this.computeColumnCount)
       }
     },
   },
@@ -53,7 +68,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.dynamic-grid {
+.dynamic-grid.card {
   display: grid;
+}
+
+.dynamic-grid.list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  max-width: 60rem;
+  margin: 0 auto;
 }
 </style>

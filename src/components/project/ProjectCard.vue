@@ -3,6 +3,7 @@
     :to-link="toLink"
     class="project-card"
     :data-test="`project-card-${project.id}`"
+    :mode="mode"
     @click="toProject"
   >
     <template #actions-left>
@@ -43,7 +44,7 @@
       picture-size="medium"
       default-picture="/placeholders/header_placeholder.png"
       :alt="`${project.title} image`"
-      class="picture"
+      class="picture picture-project"
     />
     <div
       :class="{ 'has-description': project.purpose && project.purpose.length }"
@@ -108,6 +109,10 @@ export default {
       type: [Number, String, null],
       required: false,
       default: null,
+    },
+    mode: {
+      type: String,
+      default: 'card', // 'card' or 'list'
     },
   },
 

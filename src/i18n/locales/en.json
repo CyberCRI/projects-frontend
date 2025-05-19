@@ -2631,5 +2631,9 @@
       "country": "Country",
       "other": "Other"
     }
+  },
+  "card-list": {
+    "list": "List",
+    "grid": "Grid"
   }
 }
