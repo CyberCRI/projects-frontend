@@ -58,6 +58,8 @@ spec:
               parameters:
               - name: group_name
                 value: {{ .Values.sablier.commonGroupName }}
+              - name: timeout
+                value: 5m
           - name: wake-up-projects
             templateRef:
               name: service-waker
@@ -67,6 +69,8 @@ spec:
               parameters:
               - name: group_name
                 value: {{ .Values.sablier.groupName }}
+              - name: timeout
+                value: 3m
         - - name: run
             template: run
             continueOn:
