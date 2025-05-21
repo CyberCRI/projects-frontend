@@ -134,6 +134,7 @@ export default defineNuxtConfig({
       appDisconnectionGraceDuration: 0,
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
+      appUseProjectPageV2: '',
     },
   },
   i18n: {

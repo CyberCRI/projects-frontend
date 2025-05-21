@@ -51,7 +51,7 @@ export default {
   }
 
   p {
-    color: $white;
+    color: var(--similar-project-text-color, $white);
     font-size: $font-size-s;
     font-weight: 400;
   }
