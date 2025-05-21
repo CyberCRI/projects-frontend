@@ -4,13 +4,8 @@
       <LazyProjectHeaderV2
         :project="project"
         :sdgs="sdgs"
-        :similar-projects="similarProjects"
         :loading="!project"
         class="project-header v2"
-        :announcements="announcements"
-        :follow="follow"
-        @show-project-announcements="goToTab('announcements')"
-        @update-follow="follow = $event"
       />
 
       <DescriptionPlaceholder
@@ -79,10 +74,6 @@ export default {
       default: () => {},
     },
 
-    similarProjects: {
-      type: Array,
-      default: () => [],
-    },
     comments: {
       type: Array,
       default: () => [],

@@ -29,6 +29,7 @@
           </NuxtLink>
         </li>
       </menu>
+
       <div
         v-if="project && canEditProject"
         v-click-outside="() => (addToProjectMenuVisible = false)"
@@ -54,6 +55,52 @@
           />
         </transition>
       </div>
+
+      <div class="share-buttons">
+        <ExternalLabelButton
+          v-if="usersStore.isConnected"
+          class="space-button bg-on-hover"
+          :label="followed ? $t('project.followed') : $t('project.follow')"
+          :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+          vertical-layout
+          @click="toggleFollow"
+        />
+        <ExternalLabelButton
+          v-if="announcements?.length"
+          class="space-button article-button bg-on-hover"
+          :label="$t('group.news')"
+          btn-icon="Article"
+          vertical-layout
+          :nb-button="announcements.length.toString()"
+          @click="goToAnnouncements"
+        />
+        <ExternalLabelButton
+          class="space-button bg-on-hover"
+          :label="$filters.capitalize($t('comment.comment-verb'))"
+          btn-icon="ChatBubble"
+          vertical-layout
+          @click="goToCommentView"
+        />
+        <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
+          <template #custom-content>
+            <div class="share-ctn">
+              <button @click="facebookShare">
+                <IconImage name="Facebook" />
+              </button>
+              <button @click="linkedinShare">
+                <IconImage name="Linkedin" />
+              </button>
+            </div>
+          </template>
+          <ExternalLabelButton
+            class="space-button bg-on-hover"
+            :label="$t('group.share')"
+            btn-icon="Share"
+            vertical-layout
+          />
+        </ToolTip>
+      </div>
+
       <SimilarProjectsV2
         v-if="similarProjects && similarProjects.length"
         id="similar-projects"
@@ -71,6 +118,7 @@
 <script>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import followUtils from '@/functs/followUtils.ts'
 
 export default {
   name: 'ProjectNavPanel',
@@ -150,6 +198,7 @@ export default {
     'reload-reviews',
     'reload-linked-projects',
     'reload-project',
+    'update-follow',
   ],
 
   setup() {
@@ -177,6 +226,10 @@ export default {
           ? this.$route.matched.some((r) => r.name === tab.view?.name)
           : this.$route.path.indexOf(tab.view) === 0
       )
+    },
+
+    followed() {
+      return this.follow && this.follow.is_followed
     },
 
     categories() {
@@ -370,6 +423,50 @@ export default {
     editProject() {
       this.projectLayoutToggleAddModal('project')
     },
+
+    async toggleFollow() {
+      try {
+        if (this.follow && this.follow.is_followed) {
+          await followUtils.unfollow({
+            follower_id: this.follow.follow_id,
+            project_id: this.project.id,
+          })
+          this.$emit('update-follow', { is_followed: false })
+        } else {
+          await followUtils.follow({
+            follower_id: this.usersStore.id,
+            project_id: this.project.id,
+          })
+          this.$emit('update-follow', {
+            follower_id: this.usersStore.id,
+            is_followed: true,
+          })
+        }
+      } catch (error) {
+        console.error('Error updating follow', error)
+      }
+    },
+
+    goToCommentView() {
+      this.projectLayoutGoToTab('comments')
+    },
+    goToAnnouncements() {
+      this.projectLayoutGoToTab('announcements')
+    },
+    facebookShare() {
+      window?.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
+    },
+    // twitterShare() {
+    //     window?.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
+    // },
+    linkedinShare() {
+      window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
+    },
+
+    /* TODO: Put this back once we figured out to who are we supposed to write to */
+    // mailTo() {
+    //     window?.open('mailto:projects.platform@learningplanetinstitute.org')
+    // },
   },
 }
 </script>
@@ -467,5 +564,32 @@ menu {
 
 .content-title {
   font-size: $font-size-4xl;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: $light-gray;
+
+  .share-ctn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-m;
+    z-index: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    svg {
+      width: 24px;
+      fill: $primary-dark;
+      cursor: pointer;
+    }
+  }
 }
 </style>
