@@ -527,6 +527,7 @@ if (import.meta.client) {
         :team="team"
         :reviews="reviews"
         :linked-projects="linkedProjects"
+        :follow="follow"
         @reload-comments="getComments(project.id)"
         @reload-project-messages="getProjectMessages(project.id)"
         @reload-project="reloadProject"
@@ -539,6 +540,7 @@ if (import.meta.client) {
         @reload-team="reloadTeam"
         @reload-reviews="getReviews"
         @reload-linked-projects="getLinkedProjects"
+        @update-follow="follow = $event"
       />
     </div>
 
