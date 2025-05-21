@@ -153,95 +153,13 @@
               </div>
             </div>
           </div>
-
-          <div v-if="!loading" class="project-actions-ctn">
-            <div class="end-buttons">
-              <ExternalLabelButton
-                v-if="usersStore.isConnected"
-                class="space-button bg-on-hover"
-                :label="followed ? $t('project.followed') : $t('project.follow')"
-                :btn-icon="followed ? 'Heart' : 'HeartOutline'"
-                vertical-layout
-                @click="toggleFollow"
-              />
-              <ExternalLabelButton
-                v-if="announcements?.length"
-                class="space-button article-button bg-on-hover"
-                :label="$t('group.news')"
-                btn-icon="Article"
-                vertical-layout
-                :nb-button="announcements.length.toString()"
-                @click="$emit('show-project-announcements')"
-              />
-              <ExternalLabelButton
-                class="space-button bg-on-hover"
-                :label="$filters.capitalize($t('comment.comment-verb'))"
-                btn-icon="ChatBubble"
-                vertical-layout
-                @click="goToCommentView"
-              />
-              <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-                <template #custom-content>
-                  <div class="share-ctn">
-                    <button @click="facebookShare">
-                      <IconImage name="Facebook" />
-                    </button>
-                    <button @click="linkedinShare">
-                      <IconImage name="Linkedin" />
-                    </button>
-                  </div>
-                </template>
-                <ExternalLabelButton
-                  class="space-button bg-on-hover"
-                  :label="$t('group.share')"
-                  btn-icon="Share"
-                  vertical-layout
-                />
-              </ToolTip>
-              <ExternalLabelButton
-                v-if="moreInfo"
-                class="space-button bg-on-hover"
-                :label="$t('group.less')"
-                btn-icon="ChevronUp"
-                @click="displayLessInfo"
-              />
-              <ExternalLabelButton
-                v-else
-                id="more-info-btn"
-                class="space-button bg-on-hover"
-                :label="$t('group.more')"
-                btn-icon="ChevronDown"
-                @click="displayMoreInfo"
-              />
-            </div>
-          </div>
         </div>
-      </div>
-      <div v-if="moreInfo" class="more-info-block">
-        <div class="vertical-line">
-          <InfoSentence
-            v-for="(info, index) in infoArray"
-            :key="index"
-            :data="info"
-            size="medium"
-            button-size="mbutton"
-            @similar="info.link"
-          />
-        </div>
-        <ExternalLabelButton
-          class="close-button"
-          :label="$t('header.close')"
-          btn-icon="Close"
-          reverse
-          @click="displayLessInfo"
-        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import followUtils from '@/functs/followUtils.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
@@ -260,21 +178,9 @@ export default {
       default: () => [],
     },
 
-    similarProjects: {
-      type: Array,
-      default: () => [],
-    },
     loading: {
       type: Boolean,
       default: true,
-    },
-    announcements: {
-      type: Array,
-      default: () => [],
-    },
-    follow: {
-      type: Object,
-      default: () => ({}),
     },
   },
 
@@ -308,81 +214,6 @@ export default {
       return this.project && this.project.purpose !== '   ' && this.project.purpose.length !== 0
     },
 
-    similarProjectStr() {
-      let nb = this.similarProjects ? this.similarProjects.length : 0
-      let similarProjectsStr = ''
-      if (nb > 1) {
-        similarProjectsStr = 'header.similar-projects'
-      } else {
-        similarProjectsStr = 'header.similar-project'
-      }
-      let infos = ''
-      if (nb) {
-        infos = this.constructString(this.similarProjects, 'title', '/projects/', 'slug')
-      }
-
-      return {
-        icon: 'projects.svg',
-        number: nb + ' ',
-        title: similarProjectsStr,
-        info: infos,
-        cloud: true,
-        internal: true,
-        badge: true,
-      }
-    },
-
-    portals() {
-      let nb = this.project.organizations ? this.project.organizations.length : 0
-      let portalStrStart = 'header.portals-start'
-      let portalStrEnd = ''
-      if (nb > 1) {
-        portalStrEnd = 'header.portals-end-plural'
-      } else {
-        portalStrEnd = 'header.portals-end-singular'
-      }
-      let infos = null
-      if (this.project.organizations.length) {
-        infos = this.constructString(this.project.organizations, 'name', '', 'website_url')
-      }
-
-      return {
-        icon: 'Earth',
-        title: portalStrEnd,
-        number: ' ' + nb + ' ',
-        preTitle: portalStrStart,
-        info: infos,
-        internal: false,
-        badge: true,
-      }
-    },
-
-    views() {
-      let viewField = 'header.views'
-      let nbViews = this.project.views
-      let creationDate = 'header.creation'
-      let info2 = this.$d(new Date(this.project.created_at))
-      let updatedDate = 'header.update'
-      let info3 = this.$d(new Date(this.project.updated_at))
-      return {
-        icon: 'Poll',
-        title: viewField,
-        info1: [nbViews],
-        title2: creationDate,
-        info2: info2,
-        title3: updatedDate,
-        info3: info3,
-        type: 'views',
-        badge: false,
-      }
-    },
-    infoArray() {
-      let array = []
-      array.push(this.similarProjectStr)
-      array.push(this.portals)
-      array.push(this.views)
-      return array
-    },
     visibility() {
       let ret = ''
       if (this.project.publication_status) {
@@ -409,9 +240,6 @@ export default {
         return this.project.purpose[0].toUpperCase() + this.project.purpose.slice(1)
       }
       return null
-    },
-    followed() {
-      return this.follow && this.follow.is_followed
     },
   },
   watch: {
@@ -476,74 +304,6 @@ export default {
       }
     },
 
-    async toggleFollow() {
-      try {
-        if (this.follow && this.follow.is_followed) {
-          await followUtils.unfollow({
-            follower_id: this.follow.follow_id,
-            project_id: this.project.id,
-          })
-          this.$emit('update-follow', { is_followed: false })
-        } else {
-          await followUtils.follow({
-            follower_id: this.usersStore.id,
-            project_id: this.project.id,
-          })
-          this.$emit('update-follow', {
-            follower_id: this.usersStore.id,
-            is_followed: true,
-          })
-        }
-      } catch (error) {
-        console.error('Error updating follow', error)
-      }
-    },
-
-    goToCommentView() {
-      this.projectLayoutGoToTab('comments')
-    },
-
-    displayMoreInfo() {
-      this.moreInfo = true
-      this.plusButton = 1
-    },
-
-    displayLessInfo() {
-      this.moreInfo = false
-      this.plusButton = 0
-    },
-
-    facebookShare() {
-      window?.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
-    },
-    // twitterShare() {
-    //     window?.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
-    // },
-    linkedinShare() {
-      window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
-    },
-
-    /* TODO: Put this back once we figured out to who are we supposed to write to */
-    // mailTo() {
-    //     window?.open('mailto:projects.platform@learningplanetinstitute.org')
-    // },
-
-    constructString(infos, field, prefix = '', link = null) {
-      let ret = []
-      for (let i = 0; i < infos.length; i++) {
-        let name = infos[i][field]
-        if (link) {
-          let direction = prefix.concat(infos[i][link])
-          ret.push({
-            name: name,
-            direction: direction,
-          })
-        } else {
-          ret.push(name)
-        }
-      }
-      return ret
-    },
     visibilityIcon() {
       const map = {
         public: 'Eye',
@@ -931,107 +691,6 @@ export default {
 
       .sdg-ctn a:not(:first-of-type) {
         margin-left: $space-m;
-      }
-    }
-
-    .project-actions-ctn {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: $primary-lighter;
-      border-radius: 0 $border-radius-l $border-radius-l 0;
-
-      @media screen and (max-width: $min-tablet) {
-        margin: 0 pxToRem(5px);
-      }
-
-      @media screen and (min-width: $min-tablet) {
-        align-items: center;
-      }
-
-      .end-buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-
-        .space-button {
-          margin-top: 15px;
-          margin-bottom: 15px;
-          width: 100%;
-        }
-
-        @media screen and (max-width: $min-tablet) {
-          margin-block: 0;
-        }
-
-        .article-button {
-          height: 50px;
-        }
-      }
-
-      button {
-        border: none;
-        background: none;
-      }
-
-      .share-ctn {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: $space-m;
-        z-index: 1;
-
-        svg {
-          width: 24px;
-          fill: $primary-dark;
-          cursor: pointer;
-        }
-      }
-    }
-
-    @media screen and (max-width: $min-tablet) {
-      .project-actions-ctn {
-        position: static;
-        flex-direction: row;
-        top: 0;
-        transform: translateY(0);
-        margin-top: 40px;
-        height: auto;
-        align-items: center;
-        border-radius: $border-radius-l;
-        border: $border-width-s solid $primary;
-        padding-inline: $space-l;
-        margin-bottom: $space-m;
-
-        .end-buttons {
-          flex-direction: row;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-
-          @media screen and (max-width: $max-mobile) {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          width: 100%;
-
-          .space-button {
-            margin-right: 15px;
-            margin-left: 15px;
-          }
-
-          @media screen and (max-width: $min-tablet) {
-            .space-button {
-              margin-right: 5px;
-              margin-left: 5px;
-            }
-          }
-        }
-      }
-    }
-
-    @media screen and (min-width: $min-tablet) {
-      .project-actions-ctn {
-        padding-inline: 15px;
       }
     }
 
