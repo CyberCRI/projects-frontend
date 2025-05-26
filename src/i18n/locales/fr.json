@@ -452,7 +452,8 @@
   },
   "browse": {
     "page-title": "Rechercher",
-    "placeholder": "Que cherchez-vous ?"
+    "placeholder": "Que cherchez-vous ?",
+    "result-per-page": "Résultats par page :"
   },
   "category": {
     "add-sub-category": "Ajouter une sous-catégorie",

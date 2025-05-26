@@ -13,6 +13,11 @@
         <LpiButton :label="$t('browse.page-title')" :secondary="false" @click="searchUser" />
       </div>
 
+      <div class="num-results-label">
+        <label>{{ $t('browse.result-per-page') }}</label>
+        <LpiSelect v-model="numResults" class="small" :options="numResultOptions" />
+      </div>
+
       <LinkButton
         :label="$t('account.title-create-add')"
         btn-icon="Plus"
@@ -205,6 +210,12 @@ export default {
           unsortable: false,
         },
       ],
+      numResults: '25',
+      numResultOptions: [
+        { value: '25', label: '25' },
+        { value: '50', label: '50' },
+        { value: '100', label: '100' },
+      ],
     }
   },
 
@@ -238,7 +249,18 @@ export default {
     },
   },
 
+  watch: {
+    numResults(neo, old) {
+      if (neo && neo !== old) {
+        localStorage?.setItem('admin-accounts-num-results', neo)
+        this.searchUser()
+      }
+    },
+  },
+
   mounted() {
+    const numResults = localStorage?.getItem('admin-accounts-num-results') || '25'
+    if (numResults) this.numResults = numResults
     this.searchUser()
   },
 
@@ -257,7 +279,7 @@ export default {
       const activeFilter = this.filters.find((filter) => filter.isActive)
       const params = activeFilter ? { ordering: activeFilter.order + activeFilter.filter } : {}
       params.current_org_role = 'admins,facilitators,users'
-      params.limit = 25
+      params.limit = this.numResults
       this.request = await searchPeopleAdmin({
         search: this.searchFilter,
         org_id: this.organization.id,
@@ -325,7 +347,7 @@ export default {
     @media screen and (max-width: $max-tablet) {
       flex-direction: column;
       gap: 1rem;
-      align-items: flex-end;
+      align-items: stretch;
     }
   }
 
@@ -333,17 +355,11 @@ export default {
     display: flex;
     align-items: center;
     flex-basis: 40rem;
+    gap: $space-l;
 
     @media screen and (max-width: $max-tablet) {
-      flex-basis: auto;
-    }
-
-    .search-input {
-      margin-right: $space-l;
-    }
-
-    .create-account {
-      margin-left: $space-m;
+      flex-basis: 100%;
+      flex-grow: 1;
     }
   }
 
@@ -448,5 +464,17 @@ table {
   padding: $space-m;
   text-align: center;
   color: $black;
+}
+
+.num-results-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+
+  label {
+    flex-shrink: 0;
+    font-weight: 500;
+  }
 }
 </style>

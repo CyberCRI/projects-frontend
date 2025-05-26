@@ -450,7 +450,8 @@
   },
   "browse": {
     "page-title": "Search",
-    "placeholder": "What are you looking for?"
+    "placeholder": "What are you looking for?",
+    "result-per-page": "Results per page:"
   },
   "category": {
     "add-sub-category": "Add a sub-category",

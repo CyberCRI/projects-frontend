@@ -450,7 +450,8 @@
   },
   "browse": {
     "page-title": "Suche",
-    "placeholder": "Was suchen Sie?"
+    "placeholder": "Was suchen Sie?",
+    "result-per-page": "Ergebnisse pro Seite:"
   },
   "category": {
     "add-sub-category": "Eine Unterkategorie hinzuf\u00fcgen",
