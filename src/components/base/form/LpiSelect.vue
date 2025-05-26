@@ -231,6 +231,26 @@ export default {
   transform: translateY(-100%);
 }
 
+.lpi-select.small {
+  .menu-header {
+    padding: pxToRem(8px) $space-m;
+    font-size: $font-size-m;
+
+    &.placeholder--open {
+      padding-top: pxToRem(9px);
+    }
+  }
+
+  .menu-dropdown {
+    padding: pxToRem(6px) $space-m;
+    padding-right: $space-l;
+  }
+
+  .selected-label {
+    font-size: $font-size-m;
+  }
+}
+
 // old style, add 'primary' class to use it
 // TODO check if still needed
 .lpi-select.primary {
