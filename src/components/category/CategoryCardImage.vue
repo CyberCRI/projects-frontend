@@ -11,6 +11,7 @@
       from-center
       :image-sizes="imageSizes"
       class="image"
+      :style="imageStyle"
     />
     <CategoryCardDefaultBackground
       v-else
@@ -64,6 +65,26 @@ export default {
       required: false,
       default: null,
     },
+    forcedRatio: {
+      type: [Number, null],
+      default: null,
+    },
+  },
+  computed: {
+    imageStyle() {
+      if (this.forcedRatio) {
+        return {
+          display: 'flex', // ??? but this only work
+          position: 'static',
+          width: '100%',
+          height: 'auto',
+          transform: 'none',
+          aspectRatio: this.forcedRatio,
+          paddingBottom: 0,
+        }
+      }
+      return {}
+    },
   },
 }
 </script>
@@ -83,5 +104,10 @@ export default {
   height: 0;
   padding-bottom: calc((9 / 16) * 100%);
   transform: translate(-50%, -50%);
+}
+
+:deep(.cropped-image img) {
+  width: auto;
+  min-width: 100%;
 }
 </style>
