@@ -78,6 +78,24 @@ onBeforeRouteLeave((to, from, next) => {
   next()
 })
 
+const bannerRatio = ref(16 / 9)
+function onResize() {
+  console.log('reise')
+  const rect = document.querySelector('.banner-ctn .banner')?.getBoundingClientRect()
+  if (rect?.width && rect?.height) {
+    console.log(rect.width / rect.height)
+    bannerRatio.value = rect.width / rect.height
+  }
+}
+onMounted(() => {
+  onResize()
+  window.addEventListener('resize', onResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize)
+})
+
 const { image, dimensions } = useImageAndDimension(category.value?.background_image, 'medium')
 useLpiHead(
   useRequestURL().toString(),
@@ -100,6 +118,7 @@ useLpiHead(
           image-height="433px"
           image-width="100%"
           :image-sizes="imageSizes"
+          :forced-ratio="bannerRatio"
         />
       </div>
 
