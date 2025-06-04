@@ -236,7 +236,7 @@ footer {
 
   .footer-content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin: pxToRem(42px) auto;
   }
@@ -247,6 +247,7 @@ footer {
     align-items: center;
     grid-template-columns: 1fr;
     gap: 1rem;
+    flex-grow: 1;
 
     @media screen and (min-width: $min-tablet) {
       grid-template-columns: 1fr 1fr;
