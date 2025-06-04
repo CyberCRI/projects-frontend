@@ -24,7 +24,7 @@
             />
           </template>
         </ProjectCategoriesDropdown>
-        <FieldErrors :errors="v$.selectedCategory.id.$errors" />
+        <FieldErrors :errors="v$.selectedCategory?.id.$errors" />
       </div>
       <div v-if="fetchingTemplate" class="loader">
         <LoaderSimple />
@@ -287,7 +287,7 @@ export default {
     async fillForm() {
       this.fetchingTemplate = true
       this.selectedCategory = await getProjectCategory(
-        this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0].id
+        this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0]?.id
       )
 
       if (this.selectedCategory?.template) {
