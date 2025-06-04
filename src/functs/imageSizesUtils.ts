@@ -53,27 +53,24 @@ export function imageSizesToPictureApi(imagesSizes: ImageSizes): ImageSizesFromA
       }
 }
 
+function _imageSizesFormData(formData: FormData, imageSizes: ImageSizes, keyMap: object): void {
+  if (!imageSizes) return
+  for (const [source, target] of Object.entries(keyMap)) {
+    const value = imageSizes[source]
+    if (typeof value == 'number') formData.append(target, String(value))
+    else formData.append(target, '0') // null scale or ratio mean a null image size
+  }
+}
+
 export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): void {
-  formData.append(
-    'scale_x',
-    imageSizes && typeof imageSizes.scaleX == 'number' ? String(imageSizes.scaleX) : ''
-  )
-  formData.append(
-    'scale_y',
-    imageSizes && typeof imageSizes.scaleY == 'number' ? String(imageSizes.scaleY) : ''
-  )
-  formData.append(
-    'left',
-    imageSizes && typeof imageSizes.left == 'number' ? String(imageSizes.left) : ''
-  )
-  formData.append(
-    'top',
-    imageSizes && typeof imageSizes.top == 'number' ? String(imageSizes.top) : ''
-  )
-  formData.append(
-    'natural_ratio',
-    imageSizes && typeof imageSizes.naturalRatio == 'number' ? String(imageSizes.naturalRatio) : ''
-  )
+  const keyMap = {
+    scaleX: 'scale_x',
+    scaleY: 'scale_y',
+    left: 'left',
+    top: 'top',
+    naturalRatio: 'natural_ratio',
+  }
+  _imageSizesFormData(formData, imageSizes, keyMap)
 }
 
 // TODO:
@@ -81,25 +78,12 @@ export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): 
 // to accomodate API change for post user
 // while patch keep old behavior
 export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes): void {
-  // null scale or ratio mean a null image size
-  formData.append(
-    'profile_picture_scale_x',
-    imageSizes && typeof imageSizes.scaleX == 'number' ? String(imageSizes.scaleX) : '0'
-  )
-  formData.append(
-    'profile_picture_scale_y',
-    imageSizes && typeof imageSizes.scaleY == 'number' ? String(imageSizes.scaleY) : '0'
-  )
-  formData.append(
-    'profile_picture_left',
-    imageSizes && typeof imageSizes.left == 'number' ? String(imageSizes.left) : '0'
-  )
-  formData.append(
-    'profile_picture_top',
-    imageSizes && typeof imageSizes.top == 'number' ? String(imageSizes.top) : '0'
-  )
-  formData.append(
-    'profile_picture_natural_ratio',
-    imageSizes && typeof imageSizes.naturalRatio == 'number' ? String(imageSizes.naturalRatio) : '0'
-  )
+  const keyMap = {
+    scaleX: 'profile_picture_scale_x',
+    scaleY: 'profile_picture_scale_y',
+    left: 'profile_picture_left',
+    top: 'profile_picture_top',
+    naturalRatio: 'profile_picture_natural_ratio',
+  }
+  _imageSizesFormData(formData, imageSizes, keyMap)
 }

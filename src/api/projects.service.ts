@@ -10,6 +10,8 @@ import type { APIParams /*, APIResponseList*/, SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 
+import { imageSizesFormData } from '@/functs/imageSizesUtils'
+
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
 
@@ -18,13 +20,7 @@ export async function createProject(project) {
     headerFormData.append('file', project['header_image'], project['header_image'].name)
 
     const imageSizes = project['imageSizes']
-    if (imageSizes) {
-      headerFormData.append('scale_x', imageSizes.scaleX)
-      headerFormData.append('scale_y', imageSizes.scaleY)
-      headerFormData.append('left', imageSizes.left)
-      headerFormData.append('top', imageSizes.top)
-      headerFormData.append('natural_ratio', imageSizes.naturalRatio)
-    }
+    imageSizesFormData(headerFormData, imageSizes)
     project.header_image_id = (
       (await postProjectHeader({ project_id: result.id, body: headerFormData })) as any
     ).id

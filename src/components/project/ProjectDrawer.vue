@@ -33,6 +33,7 @@ import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 export default {
   name: 'ProjectDrawer',
 
@@ -187,11 +188,7 @@ export default {
 
       const formData = new FormData()
       const imageSizes = payload['imageSizes']
-      formData.append('scale_x', imageSizes ? imageSizes.scaleX : '')
-      formData.append('scale_y', imageSizes ? imageSizes.scaleY : '')
-      formData.append('left', imageSizes ? imageSizes.left : '')
-      formData.append('top', imageSizes ? imageSizes.top : '')
-      formData.append('natural_ratio', imageSizes ? imageSizes.naturalRatio : '')
+      imageSizesFormData(formData, imageSizes)
 
       if (payload.header_image instanceof File) {
         formData.append('file', payload['header_image'], payload['header_image'].name)
