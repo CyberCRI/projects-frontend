@@ -26,7 +26,7 @@
       />
     </div>
 
-    <div v-show="allSearchMode || showTagSearch" class="section">
+    <div v-show="allSearchMode || selectedClassification || showTagSearch" class="section">
       <p class="notice">
         {{ $t('search.current-tag-description') }}
       </p>
