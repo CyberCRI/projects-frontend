@@ -2018,7 +2018,7 @@
     },
     "bug-report": {
       "success": "S' ha informat amb \u00e8xit de l' errorName",
-      "error": "Error durant l' informe d' error@ info/ rich"
+      "error": "Error durant l' informe d' error"
     },
     "category-template-update": {
       "success": "La plantilla de categoria s' ha actualitzat correctament",
@@ -2422,7 +2422,7 @@
     },
     "drawer": {
       "create": "Afegeix un esdeveniment de calendari",
-      "edit": "Edita un esdeveniment de calendari@ info: whatsthis"
+      "edit": "Edita un esdeveniment de calendari"
     },
     "form": {
       "title": {
