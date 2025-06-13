@@ -11,6 +11,10 @@ const router = useRouter()
 const { modals, toggleAddModal } = useProjectModals()
 
 const loading = ref(true)
+const isNavCollapsed = ref(false)
+const toggleNavPanel = () => {
+  isNavCollapsed.value = !isNavCollapsed.value
+}
 
 const {
   // data
@@ -26,6 +30,7 @@ const {
   //computed
   mergedTeam,
   projectTabs,
+  currentTab,
   categoryHierarchy,
   // methods
   getGoals,
@@ -116,19 +121,31 @@ if (import.meta.client) {
 <template>
   <div class="page-section-extra-wide project-layout">
     <div class="breadcrumbs-ctn">
+      <LpiButton
+        :btn-icon="isNavCollapsed ? 'MenuUnfoldLine' : 'MenuFoldLine'"
+        class="toggle-button"
+        @click="toggleNavPanel"
+      />
       <BreadCrumbs :breadcrumbs="categoryHierarchy || []" />
     </div>
-
     <div class="tabs-wrapper">
-      <LazyProjectNavPanel
-        v-if="!loading"
-        :project-tabs="projectTabs"
-        :project="project"
-        :announcements="announcements"
-        :similar-projects="similarProjects"
-        :follow="follow"
-        @update-follow="follow = $event"
-      />
+      <div class="project-nav-panel">
+        <LazyProjectNavPanel
+          v-if="!loading && !isNavCollapsed"
+          :class="{ collapsed: isNavCollapsed }"
+          :project-tabs="projectTabs"
+          :current-tab="currentTab"
+          :project="project"
+          :announcements="announcements"
+          :similar-projects="similarProjects"
+          :follow="follow"
+          @update-follow="follow = $event"
+        />
+        <div class="content-panel">
+          <h2 v-if="!currentTab.noTitle" class="content-title">{{ currentTab.label }}</h2>
+          <NuxtPage v-bind="currentTab.props" />
+        </div>
+      </div>
     </div>
 
     <!-- add/edit modals -->
@@ -232,6 +249,12 @@ if (import.meta.client) {
   }
 }
 
+.breadcrumbs-ctn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .breadcrumb {
   font-weight: 700;
   font-size: 14px;
@@ -247,5 +270,19 @@ if (import.meta.client) {
   .visibility {
     color: $primary-dark;
   }
+}
+
+.project-nav-panel {
+  display: flex;
+  gap: 3rem;
+  position: relative;
+}
+
+.content-panel {
+  flex-basis: 100%;
+}
+
+.content-title {
+  font-size: $font-size-4xl;
 }
 </style>
