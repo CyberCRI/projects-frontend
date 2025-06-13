@@ -120,6 +120,8 @@ export default {
         'DotsGrid',
         'TimerLine',
         'Progress5',
+        'MenuFoldLine',
+        'MenuUnfoldLine',
       ],
     }
   },
