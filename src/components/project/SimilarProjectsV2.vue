@@ -35,12 +35,12 @@ export default {
 
   computed: {
     similarProjectsDisplayed() {
-      if (this.allProjectsVisible) return this.similarProjects
-      else {
-        if (this.isMobile) return this.similarProjects.slice(0, 1)
-        else if (this.isTablet) return this.similarProjects.slice(0, 2)
-        return this.similarProjects.slice(0, 4)
-      }
+      // if (this.allProjectsVisible) return this.similarProjects
+      // else {
+      //   if (this.isMobile) return this.similarProjects.slice(0, 1)
+      //   else if (this.isTablet) return this.similarProjects.slice(0, 2)
+      return this.similarProjects.slice(0, 4)
+      // }
     },
   },
 }

@@ -779,8 +779,12 @@ const routes = ({
 export default {
   routes: () => {
     const runtimeConfig = useRuntimeConfig()
+    console.log(
+      'runtimeConfig.public.appUseProjectPageV2',
+      runtimeConfig.public.appUseProjectPageV2
+    )
     const projectPageRoutes =
-      runtimeConfig.public.appUseProjectPageV2 == 'true'
+      runtimeConfig.public.appUseProjectPageV2 == true
         ? [
             // PROJECT PAGE V2
             {

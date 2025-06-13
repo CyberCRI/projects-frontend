@@ -111,6 +111,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    sdgs: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   emits: ['reload-reviews', 'reload-project'],
