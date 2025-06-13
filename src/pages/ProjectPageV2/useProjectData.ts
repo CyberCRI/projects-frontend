@@ -460,6 +460,10 @@ export default function useProjectData() {
     ].filter((tab) => tab.condition)
   )
 
+  const currentTab = computed(() => {
+    return projectTabs.value.find((tab) => route.path.indexOf(tab.view) === 0)
+  })
+
   return {
     // data
     isMemberOrAdmin,
@@ -483,6 +487,7 @@ export default function useProjectData() {
     //computed
     mergedTeam,
     projectTabs,
+    currentTab,
     categoryHierarchy,
     // methods
     getReviews,

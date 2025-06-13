@@ -3,15 +3,15 @@ targetPort: 3000
 commonLabels:
   app.kubernetes.io/name: projects-frontend
   app.kubernetes.io/component: frontend
-  app.kubernetes.io/instance: "{{ .Values.instanceName }}"
+  app.kubernetes.io/instance: '{{ .Values.instanceName }}'
   app.kubernetes.io/part-of: projects
   app.kubernetes.io/managed-by: helm
-  app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+  app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
 
 image:
   repository: criprodprod.azurecr.io
   path: projects-front
-  tag: "{{ .Values.application.revision }}"
+  tag: '{{ .Values.application.revision }}'
 
 resourceName: frontend
 fullName: '{{ join "-" (list .Values.instanceName .Values.resourceName) }}'
@@ -23,25 +23,25 @@ config:
     NUXT_PUBLIC_APP_WSS_HOST: '{{ printf "wss://hocus-pocus.%s" .Values.domain }}'
     NUXT_PUBLIC_APP_META_PORTAL_URL: '{{ printf "https://projects.%s" .Values.domain }}'
     NUXT_PUBLIC_APP_MIXPANEL_API_URL: '{{ printf "https://mixpanel-proxy.%s" .Values.domain }}'
-    NUXT_PUBLIC_APP_BASE_URL: "{{ .Values.hostname }}"
+    NUXT_PUBLIC_APP_BASE_URL: '{{ .Values.hostname }}'
     NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX: https://criparisprodprodassets.blob.core.windows.net/assets/public
-    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID: ""
-    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID: ""
-    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ""
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_RESEARCHER_SLUG_OR_ID: ''
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_PROFESSIONAL_SLUG_OR_ID: ''
+    NUXT_PUBLIC_APP_PROFILE_EXEMPLE_STUDENT_SLUG_OR_ID: ''
     NUXT_PUBLIC_APP_KEYCLOAK_REALM: lp
-    NUXT_PUBLIC_APP_SENTRY_ENABLED: "true"
-    NUXT_PUBLIC_APP_SENTRY_RELEASE: "{{ .Values.application.revision }}"
-    NUXT_PUBLIC_APP_API_ORG_CODE: "{{ .Values.orgCode }}"
-    NUXT_PUBLIC_APP_I18N_LOCALE: "{{ .Values.defaultLanguage }}"
+    NUXT_PUBLIC_APP_SENTRY_ENABLED: 'true'
+    NUXT_PUBLIC_APP_SENTRY_RELEASE: '{{ .Values.application.revision }}'
+    NUXT_PUBLIC_APP_API_ORG_CODE: '{{ .Values.orgCode }}'
+    NUXT_PUBLIC_APP_I18N_LOCALE: '{{ .Values.defaultLanguage }}'
     NUXT_PUBLIC_APP_API_DEFAULT_VERSION: /v1
     NUXT_PUBLIC_APP_GEOCODING_API_URL: https://maps.googleapis.com/maps/api/geocode/json
-    NUXT_PUBLIC_APP_USE_PROJECT_PAGE_V2: 'false'
+    NUXT_PUBLIC_APP_USE_PROJECT_PAGE_V2: 'true'
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
     PLAYWRIGHT_TEST_EMAIL: playwright-test@outlook.com
     FRONTEND_URL: '{{ printf "https://%s/" .Values.hostname }}'
-    CI: "true"
+    CI: 'true'
 
 resources:
   requests:
@@ -57,10 +57,10 @@ networkPolicy:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: "{{ .Values.namespace }}"
+              kubernetes.io/metadata.name: '{{ .Values.namespace }}'
         - podSelector:
             matchLabels:
-              app.kubernetes.io/name: "{{ .Values.backendServiceName }}"
+              app.kubernetes.io/name: '{{ .Values.backendServiceName }}'
       ports:
         - port: 8000
           protocol: TCP
@@ -84,14 +84,14 @@ e2e:
   image:
     repository: criprodprod.azurecr.io
     path: projects-frontend-e2e
-    tag: "{{ .Values.application.revision }}"
+    tag: '{{ .Values.application.revision }}'
   commonLabels:
     app.kubernetes.io/name: projects-frontend
     app.kubernetes.io/component: e2e-tests
-    app.kubernetes.io/instance: "{{ .Values.instanceName }}"
+    app.kubernetes.io/instance: '{{ .Values.instanceName }}'
     app.kubernetes.io/part-of: projects
     app.kubernetes.io/managed-by: helm
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/version: '{{ .Chart.AppVersion }}'
   blobName: playwright
   storageAccountName: criparisdevlabproje2e
   reportHost: projects-e2e.k8s.lp-i.dev
@@ -114,6 +114,6 @@ sablier:
   enabled: false
   groupName: projects
   commonGroupName: projects-common
-  traefikMiddleware: "{{.Values.namespace}}-{{.Values.sablier.groupName}}-sablier@kubernetescrd"
+  traefikMiddleware: '{{.Values.namespace}}-{{.Values.sablier.groupName}}-sablier@kubernetescrd'
 
 ingressMiddlewares: []
