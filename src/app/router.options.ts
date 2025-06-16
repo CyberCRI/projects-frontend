@@ -5,9 +5,13 @@ import { useRuntimeConfig } from '#imports'
 const routes = ({
   showDebug,
   projectPageRoutes,
+  profilePagesRoutes,
+  otherUserProfileRoutes,
 }: {
   showDebug: boolean
   projectPageRoutes: any[]
+  profilePagesRoutes: any[]
+  otherUserProfileRoutes: any[]
 }): Array<RouteRecordRaw> => [
   {
     path: '/',
@@ -94,48 +98,7 @@ const routes = ({
   //         requiresAuth: true,
   //     },
   // },
-  {
-    path: '/profile',
-    name: 'Profile',
-    redirect: { name: 'ProfileSummary' },
-    component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
-    props: {
-      userId: null,
-    },
-    meta: {
-      resetScroll: true,
-      requiresAuth: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-    children: [
-      {
-        path: 'summary',
-        name: 'ProfileSummary',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileBio',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileProjects',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileGroups',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileSkills',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
-      },
-    ],
-  },
+  ...profilePagesRoutes,
   {
     path: '/mentorship/respond/:token',
     name: 'MentorhipRespondPage',
@@ -186,46 +149,7 @@ const routes = ({
       loginFromNotificationNewQueryParam: 'editNotifications',
     },
   },
-  {
-    path: '/profile/:userId',
-    name: 'ProfileOtherUser',
-    redirect: { name: 'ProfileSummaryOther' },
-    component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
-    props: true,
-    meta: {
-      resetScroll: true,
-      // props: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-    children: [
-      {
-        path: 'summary',
-        name: 'ProfileSummaryOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileBioOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileProjectsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileGroupsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileSkillsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
-      },
-    ],
-  },
+  ...otherUserProfileRoutes,
   {
     path: '/profile/edit/:userId',
     name: 'ProfileEditOtherUser',
@@ -952,6 +876,193 @@ export default {
             // END PROJECT PAGE V1
           ]
 
-    return routes({ showDebug: !!runtimeConfig.public.appShowDebug, projectPageRoutes })
+    const profilePagesRoutes =
+      runtimeConfig.public.appUseProjectPageV2 == true
+        ? [
+            // PROFILE PAGE V2
+            {
+              path: '/profile',
+              name: 'Profile',
+              redirect: { name: 'ProfileSummary' },
+              component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
+              props: {
+                userId: null,
+              },
+              meta: {
+                resetScroll: true,
+                requiresAuth: true,
+                loginFromNotification: true,
+                loginFromNotificationNewQueryParam: 'editNotifications',
+              },
+              children: [
+                {
+                  path: 'summary',
+                  name: 'ProfileSummary',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'),
+                },
+                {
+                  path: 'bio',
+                  name: 'ProfileBio',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'),
+                },
+                {
+                  path: 'projects',
+                  name: 'ProfileProjects',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'),
+                },
+                {
+                  path: 'groups',
+                  name: 'ProfileGroups',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'),
+                },
+                {
+                  path: 'skills',
+                  name: 'ProfileSkills',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
+                },
+              ],
+            },
+          ] // END PROFILE PAGE V2
+        : [
+            // PROFILE PAGE V1
+            {
+              path: '/profile',
+              name: 'Profile',
+              redirect: { name: 'ProfileSummary' },
+              component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
+              props: {
+                userId: null,
+              },
+              meta: {
+                resetScroll: true,
+                requiresAuth: true,
+                loginFromNotification: true,
+                loginFromNotificationNewQueryParam: 'editNotifications',
+              },
+              children: [
+                {
+                  path: 'summary',
+                  name: 'ProfileSummary',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
+                },
+                {
+                  path: 'bio',
+                  name: 'ProfileBio',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
+                },
+                {
+                  path: 'projects',
+                  name: 'ProfileProjects',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
+                },
+                {
+                  path: 'groups',
+                  name: 'ProfileGroups',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
+                },
+                {
+                  path: 'skills',
+                  name: 'ProfileSkills',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
+                },
+              ],
+            },
+          ] // END PROFILE PAGE V1
+
+    const otherUserProfileRoutes =
+      runtimeConfig.public.appUseProjectPageV2 == true
+        ? [
+            // OTHER PROFILE PAGE V2
+            {
+              path: '/profile/:userId',
+              name: 'ProfileOtherUser',
+              redirect: { name: 'ProfileSummaryOther' },
+              component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
+              props: true,
+              meta: {
+                resetScroll: true,
+                // props: true,
+                loginFromNotification: true,
+                loginFromNotificationNewQueryParam: 'editNotifications',
+              },
+              children: [
+                {
+                  path: 'summary',
+                  name: 'ProfileSummaryOther',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'),
+                },
+                {
+                  path: 'bio',
+                  name: 'ProfileBioOther',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'),
+                },
+                {
+                  path: 'projects',
+                  name: 'ProfileProjectsOther',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'),
+                },
+                {
+                  path: 'groups',
+                  name: 'ProfileGroupsOther',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'),
+                },
+                {
+                  path: 'skills',
+                  name: 'ProfileSkillsOther',
+                  component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
+                },
+              ],
+            },
+          ] // END OTHER PROFILE PAGE V2
+        : [
+            // OTHER PROFILE PAGE V1
+            {
+              path: '/profile/:userId',
+              name: 'ProfileOtherUser',
+              redirect: { name: 'ProfileSummaryOther' },
+              component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
+              props: true,
+              meta: {
+                resetScroll: true,
+                // props: true,
+                loginFromNotification: true,
+                loginFromNotificationNewQueryParam: 'editNotifications',
+              },
+              children: [
+                {
+                  path: 'summary',
+                  name: 'ProfileSummaryOther',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
+                },
+                {
+                  path: 'bio',
+                  name: 'ProfileBioOther',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
+                },
+                {
+                  path: 'projects',
+                  name: 'ProfileProjectsOther',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
+                },
+                {
+                  path: 'groups',
+                  name: 'ProfileGroupsOther',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
+                },
+                {
+                  path: 'skills',
+                  name: 'ProfileSkillsOther',
+                  component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
+                },
+              ],
+            },
+          ] // END OTHER PROFILE PAGE V1
+
+    return routes({
+      showDebug: !!runtimeConfig.public.appShowDebug,
+      projectPageRoutes,
+      profilePagesRoutes,
+      otherUserProfileRoutes,
+    })
   },
 } satisfies RouterConfig
