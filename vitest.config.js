@@ -32,7 +32,7 @@ export default defineVitestConfig({
               appVersion: '',
               appApiOrgCode: '',
               appCaptchaKey: '',
-              appMixpanelApiHost: '',
+              appMixpanelApiUrl: '',
               appMixpanelProjectToken: '',
               appPublicBinariesPrefix: '',
               appMaxSizeFile: 5_000_000,

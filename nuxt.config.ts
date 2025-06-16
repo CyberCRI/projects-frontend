@@ -111,7 +111,7 @@ export default defineNuxtConfig({
       appApiOrgCode: '',
       appFavicon: '',
       appCaptchaKey: '',
-      appMixpanelApiHost: '',
+      appMixpanelApiUrl: '',
       appMixpanelProjectToken: '',
       appPublicBinariesPrefix: '',
       appMaxSizeFile: 5_000_000,

@@ -20,7 +20,7 @@ export const init = () => {
   // Init Mixpanel
   Mixpanel.init(runtimeConfig.public.appMixpanelProjectToken, {
     // Force route data to EU servers: https://developer.mixpanel.com/docs/javascript#eu-data-residency
-    api_host: runtimeConfig.public.appMixpanelApiHost,
+    api_host: runtimeConfig.public.appMixpanelApiUrl,
     debug: process.env.NODE_ENV === 'development',
   })
   // Useful for testing in dev
