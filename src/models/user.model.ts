@@ -13,8 +13,7 @@ export interface UserModel {
   roles: string[]
   orgs: string[]
   permissions: object
-  personal_description?: string
-  professional_description?: string
+  description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
 }
@@ -44,9 +43,8 @@ export interface NotificationsSettings {
 export interface UserPatchModel {
   birthdate?: string
   pronouns?: string
-  personal_description?: string
   short_description?: string
-  professional_description?: string
+  description?: string
   location?: string
   job?: string
   sdgs?: number[]

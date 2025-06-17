@@ -1306,8 +1306,8 @@
           "label": "Kurzes Bio",
           "placeholder": "1 bis 2 Zeilen, um Sie kurz zu beschreiben"
         },
-        "professional-bio": {
-          "label": "Professionelle bio",
+        "long-bio": {
+          "label": "Lange bio",
           "placeholder": "Pr\u00e4sentieren Sie sich professionell. Pr\u00e4sentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung."
         },
         "personal-bio": {

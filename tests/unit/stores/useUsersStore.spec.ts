@@ -121,9 +121,8 @@ describe('Store module | users | getters', () => {
     userFromApi: {
       birthdate: null,
       pronouns: '',
-      personal_description: '',
       short_description: '',
-      professional_description: '',
+      description: '',
       location: '',
       job: 'frontend developer freelance',
       sdgs: [1, 2],
@@ -221,9 +220,8 @@ describe('Store module | users | getters', () => {
       profile: {
         birthdate: null,
         pronouns: '',
-        personal_description: '',
         short_description: '',
-        professional_description: '',
+        description: '',
         location: '',
         job: 'frontend developer freelance',
         sdgs: [1, 2],

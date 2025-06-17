@@ -13,10 +13,6 @@ export async function editBio(page) {
   await page.waitForSelector('.profile-edit-tabs') // wait edit profile to be loaded
   await page.locator('[data-test="bio"]').click()
   await page.locator('[data-test="short-bio-input"]').fill('e2e testing bio')
-  await page
-    .locator('[data-test="professional-bio-editor"] p')
-    .first()
-    .fill('professional bio test')
-  await page.locator('[data-test="personal-bio-editor"] p').first().fill('personal bio test')
+  await page.locator('[data-test="long-bio-editor"] p').first().fill('long bio test')
   await page.locator('[data-test="confirm-button"]').click()
 }

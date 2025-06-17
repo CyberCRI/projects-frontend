@@ -18,9 +18,8 @@ export interface PeopleModel {
   family_name: string
   birthday?: any
   pronouns?: string
-  personal_description?: string
   short_description?: string
-  professional_description?: string
+  description?: string
   location?: string
   job: string // Job title
   mobile_phone?: string
