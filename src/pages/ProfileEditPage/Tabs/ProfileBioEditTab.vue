@@ -21,25 +21,12 @@
     </div>
     <!-- professional bio -->
     <div class="form-group">
-      <label>{{ $t('profile.edit.bio.professional-bio.label') }}</label>
-      <p class="notice">
+      <label>{{ $t('profile.edit.bio.long-bio.label') }}</label>
+      <!--p class="notice">
         {{ $t('profile.edit.bio.professional-bio.placeholder') }}
-      </p>
-      <TipTapEditor
-        ref="faq-editor"
-        v-model="form.professionalBio"
-        data-test="professional-bio-editor"
-      />
+      </p-->
+      <TipTapEditor ref="faq-editor" v-model="form.bio" data-test="long-bio-editor" />
     </div>
-    <!-- personal bio -->
-    <div class="form-group">
-      <label>{{ $t('profile.edit.bio.personal-bio.label') }}</label>
-      <p class="notice">
-        {{ $t('profile.edit.bio.personal-bio.placeholder') }}
-      </p>
-      <TipTapEditor ref="faq-editor" v-model="form.personalBio" data-test="personal-bio-editor" />
-    </div>
-    <hr class="form-separator" />
     <!-- actions -->
     <div class="form-actions">
       <LpiButton
@@ -75,8 +62,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 function defaultForm() {
   return {
     shortBio: '',
-    professionalBio: '<p></p>',
-    personalBio: '<p></p>',
+    bio: '<p></p>',
   }
 }
 
@@ -144,8 +130,7 @@ export default {
       try {
         const data = {
           short_description: this.form.shortBio,
-          professional_description: this.form.professionalBio,
-          personal_description: this.form.personalBio,
+          description: this.form.bio,
         }
 
         await patchUser(this.user.id, data)
@@ -165,8 +150,7 @@ export default {
       if (this.user) {
         this.form = {
           shortBio: this.user.short_description || '',
-          personalBio: this.user.personal_description || '<p></p>',
-          professionalBio: this.user.professional_description || '<p></p>',
+          bio: this.user.description || '<p></p>',
         }
       } else {
         this.form = defaultForm()

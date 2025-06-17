@@ -9,8 +9,7 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     lastname: faker.name.lastName(),
   },
   email: faker.internet.email(),
-  personal_description: faker.lorem.paragraph(),
-  professional_description: faker.lorem.paragraph(),
+  description: faker.lorem.paragraph(),
   roles: [
     '/ClientsAdmin',
     '/projects/ClientsAdmin',

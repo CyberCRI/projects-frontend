@@ -68,8 +68,7 @@ describe('ProfileBioTab', () => {
 
   it('should display a message if user has no bio set', async () => {
     const user = UserFactory.generate()
-    user.personal_description = null
-    user.professional_description = null
+    user.description = null
     let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
 
     await flushPromises()

@@ -1306,8 +1306,8 @@
           "label": "Korte bio",
           "placeholder": "1 tot 2 regels om je kort te beschrijven"
         },
-        "professional-bio": {
-          "label": "Professionele bio",
+        "long-bio": {
+          "label": "Lange bio",
           "placeholder": "Jezelf professioneel presenteren. Presenteer je carri\u00e8repad en je huidige beroep."
         },
         "personal-bio": {

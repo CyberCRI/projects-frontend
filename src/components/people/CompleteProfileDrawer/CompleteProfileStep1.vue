@@ -145,22 +145,13 @@
           </a>
         </i18n-t>
       </p>
-      <div class="two-columns">
-        <!-- personal bio -->
-        <div class="column">
-          <label class="field-title">{{ $t('complete-profile.bio.personal-bio') }}</label>
-          <p class="field-notice">
-            {{ $t('complete-profile.bio.personal-bio-notice') }}
-          </p>
-          <TipTapEditor v-model="personalBio" class="html-input flex-grow" mode="none" />
-        </div>
-        <div class="column flexed-column">
-          <!-- long bio -->
-          <label class="field-title">{{ $t('complete-profile.bio.long-bio') }}</label>
-          <p class="field-notice">
+      <div>
+        <div>
+          <!--label class="field-title">{{ $t('complete-profile.bio.long-bio') }}</label-->
+          <!--p class="field-notice">
             {{ $t('complete-profile.bio.long-bio-notice') }}
-          </p>
-          <TipTapEditor v-model="longBio" class="html-input flex-grow" mode="none" />
+          </p-->
+          <TipTapEditor v-model="bio" class="html-input flex-grow" mode="none" />
         </div>
       </div>
     </ProfileEditBlock>
@@ -246,11 +237,9 @@ export default {
         given_name: '',
         family_name: '',
         job: '',
-        personal_description: '',
-        professional_description: '',
+        description: '',
       },
-      longBio: '<p></p>',
-      personalBio: '<p></p>',
+      bio: '<p></p>',
       exempleToShow: null,
       loading: false,
       defaultPictures,
@@ -339,8 +328,7 @@ export default {
           this.form[field] = this.user[field]
         })
 
-        this.personalBio = this.user.personal_description || '<p></p>'
-        this.longBio = this.user.professional_description || '<p></p>'
+        this.bio = this.user.description || '<p></p>'
 
         this.sdgs.forEach((sdg) => {
           sdg.selected = (this.user.sdgs || []).includes(sdg.id)
@@ -364,8 +352,7 @@ export default {
             email: this.form.email,
             job: this.form.job,
             sdgs: this.sdgs.filter((sdg) => sdg.selected).map((sdg) => sdg.id),
-            professional_description: this.longBio,
-            personal_description: this.personalBio,
+            description: this.bio,
           }
 
           await patchUser(this.user.id, data)

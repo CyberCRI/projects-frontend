@@ -1307,8 +1307,8 @@
           "label": "Short bio",
           "placeholder": "1 to 2 lines to briefly describe you"
         },
-        "professional-bio": {
-          "label": "Professional bio",
+        "long-bio": {
+          "label": "Long bio",
           "placeholder": "Present yourself professionally. Present your career path and your current occupation."
         },
         "personal-bio": {

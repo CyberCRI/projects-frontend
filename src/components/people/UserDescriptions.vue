@@ -54,39 +54,10 @@ export default {
   },
 
   computed: {
-    professionalDescription() {
-      return this.user.professional_description
-        ? `
-                    <h4 v-if="descriptions.professional_description" class="title">
-                        ${this.$t('profile.bio_pro')}
-                    </h4>
-                    <div class="professional-description">
-                        ${this.user.professional_description}
-                    </div>
-            `
-        : ''
-    },
-
-    personalDescription() {
-      return this.user.personal_description
-        ? `
-                    <h4 class="title">
-                        ${this.$t('profile.bio_personal')}
-                    </h4>
-                    <div class="personal-description">
-                        ${this.user.personal_description}
-                    </div>
-            `
-        : ''
-    },
-
     fullDescription() {
       return `
                 <div class="description-content">
-                    ${this.professionalDescription}
-                </div>
-                <div>
-                    ${this.personalDescription}
+                    ${this.user.description}
                 </div>
             `
     },

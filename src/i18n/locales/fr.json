@@ -1306,8 +1306,8 @@
           "label": "Bio courte",
           "placeholder": "1 à 2 lignes pour vous décrire brièvement"
         },
-        "professional-bio": {
-          "label": "Bio professionnelle",
+        "long-bio": {
+          "label": "Bio longue",
           "placeholder": "Présentez-vous professionnellement. Présentez votre parcours professionnel et votre occupation actuelle."
         },
         "personal-bio": {
