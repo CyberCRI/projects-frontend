@@ -1,8 +1,8 @@
 <template>
   <div class="description-recap">
-    <h4 class="description-label">
+    <!--h4 class="description-label">
       {{ $t('form.description') }}
-    </h4>
+    </h4-->
 
     <div :style="style" class="description-content-ctn">
       <HtmlLimiter
