@@ -27,7 +27,7 @@
       </p-->
       <TipTapEditor
         ref="faq-editor"
-        :key="user.id"
+        :key="user?.id || 'curren-user'"
         v-model="form.bio"
         data-test="long-bio-editor"
       />
@@ -106,13 +106,14 @@ export default {
 
   computed: {
     isSelf() {
+      if (!this.user) return true
       const connectedUser = this.usersStore.userFromApi
-      return connectedUser && this.user.id === connectedUser.id
+      return connectedUser && this.user?.id === connectedUser?.id
     },
     profileBioLink() {
       return {
         name: 'ProfileBio' + (this.isSelf ? '' : 'Other'),
-        params: this.isSelf ? {} : { userId: this.user.slug || this.user.id },
+        params: this.isSelf ? {} : { userId: this.user?.slug || this.user?.id },
       }
     },
   },
