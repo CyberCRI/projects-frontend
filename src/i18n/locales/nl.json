@@ -1,0 +1,2635 @@
+{
+  "about": {
+    "page-title": "Info",
+    "HEADER": {
+      "title": "Projectteam"
+    },
+    "WHY": {
+      "title": "Waarom Projects.directory aanmaken?",
+      "des": "In elke organisatie met meer dan twintig leden, is het moeilijk te weten wie wat doet en waar iedereen nu aan werkt. We zijn begonnen met projecten om {link} gebruikers hun projecten en initiatieven te laten delen tussen studenten, onderzoekers, medewerkers en docenten.",
+      "des1": "In een interdisciplinaire omgeving kun je niet alleen vertrouwen op top-down communicatie: mensen moeten praten, om andere projecten te ontdekken die relevant zijn voor hun werk, om te worden ge\u00efnspireerd door coole projecten die zinvol zijn voor zichzelf en de planeet. Dus bouwden we een platform om iedereen zijn eigen projecten en passies te laten zien aan hun gemeenschap en aan de wereld.",
+      "des2": "Het was al snel duidelijk dat elke organisatie dezelfde behoeften heeft. Dus laten we andere groepen hun eigen projecten delen (NGO's, universiteiten...) op hun eigen portalen, terwijl alle projecten werden gedeeld op een {link}. We kregen de steun van het Franse Ministerie van Onderwijs, de stad Parijs, de regio \u00cele-de-France, de Universit\u00e9 de Paris en vele anderen.",
+      "platform": "wereldwijd platform",
+      "button_blog": {
+        "text": "Platform blog"
+      }
+    },
+    "GOAL": {
+      "title": "Hoe gaan we verder?",
+      "des": "CRI en UNESCO cre\u00eberden samen {lpiLink}, een initiatief om onderwijs wereldwijd te transformeren. #LearningPlanet is een wereldwijde open alliantie van educatieve stakeholders en leergemeenschappen met een doel, met de missie om lerenden van alle leeftijden te inspireren en kracht te geven om bij te dragen aan het vormgeven van betere toekomsten. Ons doel is de samenwerking tussen duizenden actoren in het onderwijs te bevorderen en een digitaal ecosysteem te cre\u00ebren dat hen helpt samen beter te leren.",
+      "des1": "Projecten. directory is het meest volwassen hulpmiddel van dit digitale ecosysteem. We hopen dat elke organisatie die zich richt op het oplossen van doelstellingen voor duurzame ontwikkeling deze zal gebruiken om hun projecten en initiatieven te delen.",
+      "des2": "Projecten. directory maakt gebruik van collectieve en kunstmatige intelligentie van het {weLearnLink} initiatief en het {skillLink} project.",
+      "button_community": {
+        "text": "Aan boord van uw community"
+      }
+    },
+    "TEAM_CORE": {
+      "title": "Kernteam",
+      "des": "Zij cre\u00ebren en verbeteren het projectplatform",
+      "list": [
+        {
+          "title": "Tech Leader",
+          "des": "Maker van CRI-projecten, full-stack expert"
+        },
+        {
+          "title": "Projectbeheer",
+          "des": "Stelt de strategie, organiseert het project, en is zinvol van onze gebruikers eisen"
+        },
+        {
+          "title": "Front-end-ontwikkelaar",
+          "des": "Maakt mooie ontwerpen en implementeert ze in de app"
+        },
+        {
+          "title": "Hoofd van de voorlichtingsdienst",
+          "des": "Leidt technologieprojecten bij CRI"
+        },
+        {
+          "title": "Gegevenswetenschapper",
+          "des": "Verantwoordelijk voor aanbeveling motor en zoekalgoritmen"
+        },
+        {
+          "title": "Back-end ontwikkelaar",
+          "des": "Ontwikkelt API's en complexe back-end taken"
+        },
+        {
+          "title": "Pedagogisch co\u00f6rdinator",
+          "des": "Co\u00f6rdinaten inzet binnen de Universiteit van Parijs bij Challenge Institute"
+        },
+        {
+          "title": "Technische specialist",
+          "des": "Documenteert het projectplatform en co\u00f6rdineert #LearningPlanet digitale behoeften"
+        }
+      ]
+    },
+    "TEAM_CONTRIB": {
+      "title": "Bijdragen",
+      "des": "Ze helpen ons het platform te ontwerpen.",
+      "list": [
+        {
+          "title": "Stage",
+          "des": "Ondersteunt gebruikers en maakt help documentatie"
+        },
+        {
+          "title": "Wetenschappelijk adviseur",
+          "des": "Maker van ProfChercheurs initiatief en CRI onderzoeker"
+        },
+        {
+          "title": "Beheerder van de Gemeenschap",
+          "des": "PHD student en \u00c9PhiScience oprichter, super tester van nieuwe functies"
+        },
+        {
+          "title": "Pedagogisch co\u00f6rdinator",
+          "des": "Ontwerpen en testen pedagogische scenarii met behulp van projecten met Licentiestudenten"
+        },
+        {
+          "title": "Volledige-stapel ontwikkelaar",
+          "des": "Cre\u00eberde en integreerde de WeLearn concept map in Projecten zoeken"
+        },
+        {
+          "title": "Beheerder en belangrijkste gebruiker van de Gemeenschap",
+          "des": "Deputed France EduNum Projects portal voor het Franse Ministerie van Onderwijs"
+        },
+        {
+          "title": "Projectadviseur en CRI-bestuurslid",
+          "des": "Leads Learning Planeetinitiatief"
+        },
+        {
+          "title": "CRI medeoprichter",
+          "des": "Helpt bij het cre\u00ebren van de visie voor de toekomst van onderwijs en ons digitale ecosysteem"
+        }
+      ]
+    },
+    "JOBS": {
+      "title": "Wil je met ons samenwerken?",
+      "des": "Wij huren specialisten in om ons te helpen nieuwe functies te ontwikkelen en te groeien.",
+      "des1": "Wilt u het onderwijs verbeteren en alle wisselaars helpen hun projecten overal ter wereld te delen? Doe mee.",
+      "button_jobboard": {
+        "text": "Open posities weergeven"
+      },
+      "button_contact": {
+        "text": "Contacteer ons"
+      }
+    }
+  },
+  "admin": {
+    "accounts": {
+      "table": {
+        "last-name": "Achternaam",
+        "first-name": "Voornaam",
+        "title": "Titel",
+        "roles": "Rol(s)",
+        "groups": "Groep(s)",
+        "inscription": "Omschrijving",
+        "activation": "Activering",
+        "activation-yes": "Ja.",
+        "activation-no": "Nee"
+      }
+    },
+    "featured-tags": {
+      "title": "Projecttags voorgesteld",
+      "notice": "Selecteer tags die standaard worden voorgesteld bij het zoeken of maken van projecten"
+    },
+    "featured-skills": {
+      "title": "Voorgestelde vaardigheden",
+      "notice": "Selecteer vaardigheden die standaard worden voorgesteld bij het zoeken naar of het maken van profielen"
+    },
+    "classifications": {
+      "esco-link": "Wat is ESCO?",
+      "title": "Aangepaste kaders",
+      "subtitle": "Projecten gebruiken Wikipedia voor tags en ESCO standaard voor vaardigheden. U kunt ook uw eigen repositories toevoegen.",
+      "enter-title": "Geef een titel",
+      "enter-description": "Geef een beschrijving",
+      "title-field": "Titel van het kader",
+      "description-field": "Omschrijving",
+      "add-classification": {
+        "title": "Een kader toevoegen",
+        "error": "Fout bij opslaan van het kader",
+        "success": "Het kader is met succes gecre\u00eberd"
+      },
+      "edit-classification": {
+        "title": "Een kader bewerken",
+        "error": "Fout bij het wijzigen van het kader",
+        "success": "Het kader is met succes gewijzigd"
+      },
+      "delete-classification": {
+        "title": "Het kader verwijderen",
+        "content": "Weet u zeker dat u het kader '{title}' wilt verwijderen?",
+        "error": "Fout bij het verwijderen van het kader",
+        "success": "Het kader is succesvol verwijderd"
+      },
+      "create-classification": "Een kader cre\u00ebren",
+      "create-tag": "Een tag aanmaken",
+      "tags": "labels",
+      "enabled-for-projects": "Ingeschakeld voor projecten",
+      "enabled-for-skills": "Ingeschakeld voor vaardigheden",
+      "enabled-for-projects-success": "Kader voor projecten",
+      "enabled-for-skills-success": "Kader ingeschakeld voor vaardigheden",
+      "disabled-for-projects-success": "Gehandicaptenkader voor projecten",
+      "disabled-for-skills-success": "Kader uitgeschakeld voor vaardigheden",
+      "disabled": "Uitgeschakeld",
+      "no-custom": "Nog geen aangepast kader",
+      "table": {
+        "filter": "Filtertags",
+        "tag": "Tag",
+        "description": "Omschrijving",
+        "actions": "Acties"
+      },
+      "add-tag": {
+        "title": "Tag toevoegen",
+        "success": "De tag is succesvol aangemaakt",
+        "error": "Fout bij het aanmaken van de tag"
+      },
+      "edit-tag": {
+        "title": "Tag bewerken",
+        "success": "De tag is succesvol gewijzigd",
+        "error": "Fout bij het aanpassen van de tag"
+      },
+      "tag-form": {
+        "title-en": "Titel (EN)",
+        "title-fr": "Titel (FR)",
+        "description-en": "Omschrijving (EN)",
+        "description-fr": "Omschrijving (FR)",
+        "required-error": "Dit veld is vereist",
+        "too-long-error": "Dit veld is te lang."
+      },
+      "tag-delete": {
+        "confirm": {
+          "title": "Tag verwijderen?",
+          "description": "Wat? Weet u zeker dat u de tag '{tagName}' wilt verwijderen?"
+        },
+        "success": "Tag '{tagName}' geschrapt",
+        "error": "Fout bij het verwijderen van tag '{tagName} '"
+      }
+    },
+    "tabs": {
+      "information": "Algemeen",
+      "categories": "Categorie\u00ebn",
+      "tags": "Tags",
+      "skills": "Vaardigheden",
+      "help": "Hulp",
+      "links": "Links",
+      "templates": "Sjablonen",
+      "users": "Gebruikers",
+      "requests": "Verzoeken",
+      "groups": "Groepen",
+      "settings": "Instellingen"
+    },
+    "page-title": "Beheerder",
+    "portal": {
+      "management": "Mijn portaal beheren",
+      "general": {
+        "invisible": "Onzichtbaar",
+        "logo": "Logo",
+        "size-min-logo": "Minimale afmeting van het logo: {minWidth}px * {minHeight}px",
+        "portal-referencing": "Verwijzing naar het moederportaal",
+        "visible": "Zichtbaar",
+        "public-image": "Afbeelding (publieke weergave)",
+        "wording": {
+          "title": "Homepage formulering",
+          "notice": "Bewerk hier de teksten die verschijnen op uw Homepage (titel en beschrijving op de publieke weergave en titel alleen op uw verbonden weergave, dat wil zeggen zodra uw gebruikers zijn ingelogd).",
+          "fields": {
+            "title": "Titel",
+            "title-placeholder": "(nog geen titel)",
+            "description": "Omschrijving",
+            "description-placeholder": "(nog geen beschrijving)"
+          },
+          "success": "Thuistekst opgeslagen",
+          "error": "Fout bij opslaan van thuistekst"
+        },
+        "banner-edit": {
+          "success": "Afbeelding opgeslagen",
+          "error": "Fout bij opslaan van afbeelding"
+        },
+        "logo-edit": {
+          "success": "Logo opgeslagen",
+          "error": "Fout bij opslaan van logo"
+        }
+      },
+      "categories": {
+        "add": "Een categorie toevoegen",
+        "authorizations": "Vergunningen",
+        "children": "Kindercategorie\u00ebn",
+        "no-child": "Geen kindcategorie",
+        "description-limit": "Maximaal 300 tekens.",
+        "edit": "Categorie bewerken",
+        "is-reviewable": "Controles toestaan",
+        "limit-publication-to-reviewers": "Publicatie beperken tot beoordelaars",
+        "preview-categories": "Voorbeeld",
+        "display-projects": "Projecten weergeven",
+        "hide-projects": "Projecten verbergen",
+        "delete-category": "Categorie verwijderen",
+        "delete-category-description": "Weet u zeker dat u de categorie '{categoryName}' wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+        "delete-category-has-children": "Deze categorie heeft subcategorie\u00ebn en/of projecten. Haal ze eerst weg.",
+        "delete-category-error": "Fout bij verwijderen categorie",
+        "delete-category-success": "Categorie geschrapt",
+        "background-notice": "Voor de header van deze categorie kan je een achtergrondkleur kiezen of je eigen achtergrondafbeelding uploaden",
+        "background-color": "Kies een achtergrondkleur",
+        "background-image": "Kies een achtergrondafbeelding",
+        "upload-picture": "Een foto uploaden",
+        "tips-background-image": "Het is niet vereist als u liever gewoon een kleur weergeven. Minimale breedte: 1024px, Minimale hoogte: 400px."
+      },
+      "chat": "Chatplatform (Verbonden weergave)",
+      "events": "Gebeurtenissen",
+      "instructions": "Instructies",
+      "news": "Nieuws",
+      "featured-projects": "Aanbevolen projecten"
+    },
+    "form": {
+      "admin-info": {
+        "name": {
+          "required": "De naam van de gemeenschap is vereist",
+          "max-length": "De naam van de gemeenschap moet minder zijn dan 32 tekens"
+        },
+        "dashboard-title": {
+          "required": "De titel is vereist",
+          "max-length": "De titel moet minder dan 128 karakters tellen"
+        },
+        "contact-email": {
+          "required": "De e-mail is vereist",
+          "email": "Dit moet een geldige e-mail zijn"
+        },
+        "language": {
+          "required": "De taal is vereist"
+        },
+        "background-color": {
+          "required-if": "De achtergrondkleur is vereist als een koppeling op het hoofdportaal van Projecten"
+        }
+      },
+      "template": {
+        "category": {
+          "required": "De categorie is vereist"
+        }
+      }
+    },
+    "groups": {
+      "intro": "Gebruik groepen om uw gebruikers effici\u00ebnter te beheren. U kunt groepen aanmaken en gebruikers toevoegen. U kunt ook subgroepen aanmaken.",
+      "create-group": "Groep aanmaken",
+      "add-modal-title-1": "dochtergroep toevoegen aan \"",
+      "add-modal-title-2": "\" groep",
+      "subtitle-add-child": "Selecteer in de lijst de dochtergroep. Je kunt er maar \u00e9\u00e9n kiezen.",
+      "edit-modal-title": "Oudergroep toevoegen",
+      "subtitle-edit-child": "Selecteer in de lijst de oudergroep. Je kunt er maar \u00e9\u00e9n kiezen."
+    },
+    "requests": {
+      "intro": "Hier is de lijst van mensen die om toegang tot uw portaal hebben gevraagd. U kunt hun verzoek aanvaarden of afwijzen.",
+      "table": {
+        "last-name": "Achternaam",
+        "first-name": "Voornaam",
+        "title": "Titel",
+        "email": "E-mail",
+        "message": "Bericht",
+        "action": "Alleen in behandeling tonen",
+        "decline": "Afwijzen",
+        "declined": "Afgewezen",
+        "accept": "Accepteren",
+        "accepted": "Goedgekeurd",
+        "no-result": "Geen resultaat"
+      }
+    }
+  },
+  "account": {
+    "another-organization": "andere organisatie",
+    "role-in-organization": "in",
+    "title-create-add": "Aanmaken / toevoegen van een account",
+    "title-create": "Een account aanmaken",
+    "title-edit": "Account bewerken",
+    "title-invite": "Een account toevoegen",
+    "switch-to-edit": "Account bestaat al in uw organisatie, overschakelen naar bewerken",
+    "switch-to-invite": "Account bestaat al in een andere organisatie, schakelen om toe te voegen",
+    "sub-title": "Velden met * zijn verplicht.",
+    "link": "Hulp nodig? We zijn hier.",
+    "form": {
+      "first-name": "Voornaam",
+      "last-name": "Achternaam",
+      "title": "Titel *",
+      "email": "E-mail *",
+      "google": "Google-account",
+      "create-google": "Account aanmaken in Google",
+      "rights": "Rechten",
+      "rights-description": "Rechten verleend op het projectplatform",
+      "groups": "Groepen",
+      "groups-description": "Deze gebruiker zal deel uitmaken van de volgende groepen",
+      "groups-roles": "Groepsleider & editor",
+      "groups-roles-description": "Deze gebruiker is de groepsbeheerder van de volgende groep(s):",
+      "no-group-selected": "Nog geen groepen"
+    },
+    "password-reset": {
+      "success": "Wachtwoord reset link verzenden",
+      "error": "Fout bij het versturen van wachtwoord reset koppeling"
+    },
+    "create-success": "Account aangemaakt",
+    "update-success": "Account bijgewerkt",
+    "delete-success": "Account verwijderd",
+    "delete-account": "Account verwijderen",
+    "reset-password": "Wachtwoord resetten",
+    "reset-delete": "Wachtwoord opnieuw instellen en account verwijderen",
+    "error": "Er is een fout opgetreden.",
+    "role": {
+      "none": "Geen",
+      "user": "Gebruiker",
+      "facilitator": "Vergemakkelijking",
+      "admin": "org admin"
+    },
+    "user-exists-in-other-org": "Een gebruiker met dezelfde e-mail bestaat in onze database. We kunnen hem toevoegen aan uw portaal hier."
+  },
+  "userItem": {
+    "teamLeader": "Groepsleider"
+  },
+  "groups": {
+    "title": "Gebruikersrol",
+    "edit": "Gebruikersrol bewerken",
+    "users": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een priv\u00e9 project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten.",
+    "facilitators": "Facilitator: Deze rol is weggelegd voor leraren of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
+    "admins": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers te beheren in uw portal. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
+    "none": "Geen: Deze persoon heeft een Projectaccount maar maakt geen deel uit van uw portaal. Ze kunnen alleen de openbare projecten zien.",
+    "roles": {
+      "none": "Geen",
+      "users": "Gebruiker",
+      "facilitators": "Vergemakkelijking",
+      "admins": "org admin"
+    },
+    "empty": "Geen groepen",
+    "main-groups": "Belangrijkste groepen"
+  },
+  "invitation": {
+    "copy-link": "Verwijzing kopi\u00ebren",
+    "create": {
+      "create-success": "Uitnodiging aangemaakt",
+      "create-error": "Fout tijdens aanmaken van uitnodiging",
+      "field": {
+        "description": {
+          "label": "Een beschrijving toevoegen",
+          "notice": "Dit is alleen aan jullie om te onthouden voor wie jullie deze link hebben gemaakt en waarom.",
+          "placeholder": "Voor wie maak je deze link?"
+        },
+        "group": {
+          "add": "Voeg toe",
+          "error": "Groep is vereist",
+          "label": "Groep kiezen *",
+          "notice": "Gebruikers die deze link gebruiken om zich te registreren zullen aan deze groep worden toegevoegd.",
+          "selected": "Groep geselecteerd:"
+        },
+        "validity": {
+          "error": "Geldigheid is vereist",
+          "label": "Kies uw geldigheidsduur *",
+          "notice": "Zodra u het aanmaakt, zal de link alleen geldig zijn tijdens deze periode.",
+          "one-year": "1 jaar",
+          "pick-date": "Kies een datum",
+          "valid-until": "Geldig tot:"
+        }
+      },
+      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via \u00e9\u00e9n link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
+      "link": "Hulp nodig? We zijn hier.",
+      "notice": "Velden gemarkeerd met * zijn verplicht.",
+      "title": "Een registerlink aanmaken"
+    },
+    "delete": {
+      "deleted-failed": "Fout bij het verwijderen van uitnodiging"
+    },
+    "delete-confirm-title": "Deze link verwijderen?",
+    "expired-link-image": "Sorry, de uitnodigingslink die u gebruikt is verlopen of ongeldig.",
+    "expired-link": "Het lijkt erop dat de link die u heeft ontvangen is verlopen of gewoon ongeldig is. Neem contact op met de beheerder om een nieuwe link te verkrijgen:",
+    "generate-link": "Verwijzing genereren",
+    "list": {
+      "created-by-column": "Aangemaakt door",
+      "description-column": "Omschrijving",
+      "expire-column": "Verloopt op",
+      "group-column": "Groep",
+      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via \u00e9\u00e9n link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
+      "link-column": "Verband",
+      "title": "Registreer links"
+    }
+  },
+  "blog": {
+    "add-entry": "blog-item toevoegen",
+    "entry": "bloginvoer",
+    "last-publication": "laatste blogitem",
+    "no-entry": "Nog geen ingang ...",
+    "posts": "blog items",
+    "title": "blog"
+  },
+  "browse": {
+    "page-title": "Zoeken",
+    "placeholder": "Wat zoek je?",
+    "result-per-page": "Resultaten per pagina:"
+  },
+  "category": {
+    "add-sub-category": "Subcategorie toevoegen",
+    "edit-order-success": "Categorie\u00ebn-volgorde succesvol bewerkt",
+    "info-organize": "U kunt projecten in verschillende categorie\u00ebn (bijvoorbeeld studentenprojecten, teacher projecten, enz.) opsommen.",
+    "info-limit": "Elk project moet worden geassocieerd met een van deze categorie\u00ebn.",
+    "page-title": "Categorie",
+    "title": "Categorie\u00ebn",
+    "all-categories": "Zie alle categorie\u00ebn",
+    "all-projects": "Alle projecten bekijken",
+    "edit": "Bewerken"
+  },
+  "comment": {
+    "add-comment": "Voeg je commentaar toe!",
+    "comment-verb": "commentaar",
+    "comments": "opmerkingen",
+    "deleted": "Commentaar geschrapt op de",
+    "discard-comment": "Commentaar negeren?",
+    "discard-changes": "Veranderingen weggooien?",
+    "need-account": "U heeft een account nodig om opmerkingen te publiceren",
+    "no-comments": "Er is nog geen commentaar gegeven ...",
+    "private-exchange": {
+      "tab": "Interne berichten",
+      "no-message": "Nog geen intern bericht...",
+      "notice": "Interne berichten zijn alleen zichtbaar voor projectteamleden.",
+      "send": "Verzenden",
+      "title": "Uw interne bericht toevoegen",
+      "delete-title": "Zeker verwijderen?",
+      "delete-description": "Weet u zeker dat u uw interne bericht permanent wilt verwijderen? Deze actie zal onomkeerbaar zijn.",
+      "deleted": "Intern bericht verwijderd op de"
+    },
+    "publish": "Publiceer je commentaar",
+    "delete-title": "Zeker verwijderen?",
+    "delete-description": "Weet u zeker dat u uw opmerkingen definitief wilt verwijderen? Deze actie zal onomkeerbaar zijn."
+  },
+  "common": {
+    "activate": "Activeer",
+    "activated": "Geactiveerd",
+    "add": "Voeg toe",
+    "added-on-the": "toegevoegd aan",
+    "back": "terug",
+    "cancel": "Annuleren",
+    "chose-date": "Verkozen datum",
+    "confirm": "bevestigen",
+    "continue": "doorgaan",
+    "confirm-delete": "Weet u zeker dat u dit wilt verwijderen?",
+    "deadline": "termijn",
+    "delete": "Verwijderen",
+    "delete-selection": "Selectie verwijderen",
+    "delete-user": "Verwijderen",
+    "description": "beschrijving",
+    "destroy-confirm": "Weet u zeker dat u dit project wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste \u00e9\u00e9n editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
+    "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste \u00e9\u00e9n editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
+    "edit": "bewerken",
+    "file-required": "Een bestand is vereist",
+    "for": "voor",
+    "groups": "Groepen",
+    "index": "Index",
+    "less": "minder",
+    "link-copied-success": "Koppeling gekopieerd",
+    "link-copied-failed": "Kopi\u00ebren van verwijzing is mislukt",
+    "loading": "Laden",
+    "login": "login",
+    "modify": "Wijzigen",
+    "more": "meer",
+    "need-login": "Je moet ingelogd zijn",
+    "no": "nee",
+    "no-result": "Geen resultaat",
+    "none": "geen",
+    "of": "van",
+    "org": "portaalleden",
+    "quit-project": "Weet u zeker dat u dit project wilt afsluiten?",
+    "people": "Mensen",
+    "read": "lezen",
+    "reply": "antwoord",
+    "remove-group": "Weet u zeker dat u deze groep wilt verwijderen?",
+    "remove-user": "Weet u zeker dat u deze gebruiker wilt verwijderen?",
+    "save": "opslaan",
+    "send": "Verzenden",
+    "see-less": "minder zien",
+    "see-more": "zie meer",
+    "see": "Zie",
+    "see-all": "Alles zien",
+    "set-deadline": "deadline vaststellen",
+    "shrink": "krimpen",
+    "submit": "indienen",
+    "the-project": "Het project",
+    "title": "titel",
+    "yes": "ja",
+    "disconnect": "Verbinding verbreken",
+    "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
+    "ok": "Ok",
+    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)"
+  },
+  "complete-profile": {
+    "bio": {
+      "title": "Bio",
+      "notice": "Bio laat mensen begrijpen wie je bent, waar je voor staat.",
+      "notice-exemples": "Heb je inspiratie nodig? Hier zijn voorbeelden voor {0}, {1} of {2}.",
+      "exemples": {
+        "researcher": "onderzoeker",
+        "professional": "een professionele",
+        "student": "een student"
+      },
+      "long-bio": "Lange bio",
+      "long-bio-notice": "Presenteer hier uw professionele inspanningen",
+      "personal-bio": "Persoonlijke bio",
+      "personal-bio-notice": "Presenteer hier uw persoonlijke belangen."
+    },
+    "cancel": "Annuleren",
+    "notice": {
+      "help": "We zijn hier om te helpen.",
+      "intro": "Velden gemarkeerd met * zijn verplicht. U kunt dit altijd later wijzigen in uw profiel.",
+      "no-idea": "Geen idee wat je moet doen?"
+    },
+    "onboarding": "Aan boord",
+    "personal": {
+      "email": "E-mail",
+      "email-placeholder": "u{'@'}example.com",
+      "firstname": "Voornaam",
+      "firstname-placeholder": "Voornaam",
+      "headline": "Titel",
+      "headline-placeholder": "Student M1 Duurzaamheid, Directeur Onderzoek...",
+      "lastname": "Achternaam",
+      "lastname-placeholder": "Achternaam",
+      "picture": "Profielafbeelding",
+      "picture-notice": "(120px x 120px mini; formaten jpg of png)",
+      "title": "Persoonlijke gegevens"
+    },
+    "required": "Dit veld is vereist",
+    "save-and-finish": "Opslaan en afmaken",
+    "save-and-next": "Opslaan en naar de volgende gaan",
+    "skills": {
+      "title": "Belangen en vaardigheden"
+    },
+    "sdgs": {
+      "sdg-notice": "De doelstellingen voor duurzame ontwikkeling (SDG's) zijn een oproep tot actie om een reeks mondiale uitdagingen aan te pakken. Met vermelding van de doelen die u wilt bijdragen aan zal helpen mensen in uw gemeenschap vinden u voor mentoring of bijstand.",
+      "title": "Doelstellingen voor duurzame ontwikkeling"
+    },
+    "title": "Voltooi uw profiel"
+  },
+  "crikit": {
+    "errors": {
+      "too-big-file-size": "De grootte van het bestand is te groot, {sizeMax}MB max."
+    }
+  },
+  "description": {
+    "default-placeholder": "Beschrijf nu je project.",
+    "placeholder": "Je hebt nog geen beschrijving, denk erover om er een toe te voegen!",
+    "delete": "Weet u zeker dat u de editor wilt sluiten?",
+    "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
+    "edit": "bewerk beschrijving (ontwerp)",
+    "add": "Beschrijving toevoegen",
+    "quit-without-saving-title": "Stoppen zonder te redden?"
+  },
+  "discover": {
+    "page-title": "Ontdekken",
+    "HEADER": {
+      "title": "Deel uw projecten",
+      "impact": "het effect te vergroten",
+      "des": "Gebruik het projectplatform om uw projecten te presenteren,",
+      "facilitate": "synergie\u00ebn bevorderen en samenwerking bevorderen",
+      "common": "voor algemeen belang.",
+      "button_discover": "Projecten onderzoeken",
+      "button_access": "Toegang krijgen"
+    },
+    "INTRO": {
+      "title": "Word lid van ons snelgroeiende Platform",
+      "list": [
+        {
+          "title": "Projecten gehost"
+        },
+        {
+          "title": "Actieve gebruikers"
+        },
+        {
+          "title": "Gemeenschappen"
+        }
+      ]
+    },
+    "FEATURES": [
+      {
+        "title": "Get inspired",
+        "des": "Ontdek veel interessante projecten niet alleen{0}door onze krachtige zoekopdracht, maar ook gebaseerd op{0} AI aanbevelingen, locatie, of thematische kaart.",
+        "list": [
+          {
+            "title": "Aanbevelingen",
+            "des": "Hop van een project naar een soortgelijk project dankzij projecten gekoppeld door teamleden, of door middel van automatische projectaanbevelingen."
+          },
+          {
+            "title": "Tagmap",
+            "des": "Gebruik onze kaart om projecten op een totaal nieuwe manier te ontdekken! Het groepeert projecten volgens hoe vergelijkbaar hun tags zijn. De tags zijn Wikipedia artikelen."
+          },
+          {
+            "title": "Geografische kaart",
+            "des": "Verken projecten op de wereldkaart per teamlocatie en per plaats waar het project een impact had."
+          }
+        ]
+      },
+      {
+        "title": "Delen en samenwerken",
+        "des": "Maak effici\u00ebnt een rijke presentatie van uw project,{0}en vergroot uw impact door krachten te bundelen.",
+        "list": [
+          {
+            "des": "Bewerk uw projectbeschrijving tegelijk met uw teamleden om geformatteerde tekst, afbeeldingen, video's en links toe te voegen via een gebruiksvriendelijke teksteditor."
+          },
+          {
+            "des": "Rekruteer gemakkelijk deelnemers of medewerkers door de informatie aan de hele gemeenschap door middel van openbare aankondigingen."
+          },
+          {
+            "des": "Duurzame ontwikkeling toevoegen Doelen waaraan u bijdraagt zodat gebruikers uw project kunnen vinden op basis van deze informatie."
+          },
+          {
+            "des": "Uitwisseling met leden van de gemeenschap via de commentaar sectie."
+          },
+          {
+            "des": "Voltooi uw project met elk type externe ressources, of het nu inspiratie, creaties, documentatie, andere gerelateerde projecten zijn..."
+          },
+          {
+            "des": "Laat anderen uw project volgen, of deel het door een eenvoudige link"
+          }
+        ]
+      },
+      {
+        "title": "OPLEIDING",
+        "des": "Gebruik functies die specifiek zijn ontworpen voor het onderwijzen van projectgerichte cursussen.",
+        "list": [
+          {
+            "title": "CUSTOMPROJECTEN",
+            "des": "Begeleid een projectmaker zodat de inhoud van hun project voldoet aan uw verwachtingen."
+          },
+          {
+            "title": "Eenvoudige herziening van de studierichtingen",
+            "des": "Maak beoordelingen en keur de publicatie van de projecten van uw studenten goed."
+          }
+        ]
+      },
+      {
+        "title": "UW GEMEENSCHAP BEHEER",
+        "des": "Maak een voorbeeld van Projecten voor uw community.{0} En genieten van de flexibiliteit die we bieden om het te beheren, moeiteloos.",
+        "list": [
+          {
+            "title": "PERSOONSGEGEVENS",
+            "des": "Personnaliseer alles: Plaats uw afbeeldingen, logo's, titels, maak uw eigen categorie\u00ebn, tags."
+          },
+          {
+            "title": "Eenvoudig beheer en MODERATIE",
+            "des": "Beheer altijd opties voor uw community via de community admin-ruimte en gematigde projecten op uw portal met admin-rechten."
+          },
+          {
+            "title": "Klikbare projecten op uw website",
+            "des": "Als uw community een website heeft, kunt u eenvoudig projecten insluiten die u daar wilt gebruiken. Wanneer gebruikers erop klikken, worden ze doorgestuurd naar Projecten."
+          }
+        ]
+      }
+    ],
+    "PROJECT": {
+      "title": "Volg het PROJECTEN-platform",
+      "des": "Ontdek alles over het projectplatform in zijn eigen project.",
+      "project": {
+        "title": "CRI-projecten",
+        "des": "Cr\u00e9er un annuaire des projets d'une organization avec les ressources et comp\u00e9tences mobilis\u00e9es"
+      }
+    },
+    "TESTIMONIALS": {
+      "list": [
+        {
+          "project": {
+            "title": "INTERNSCHAP L3 - CEEBIOS _ Elise Buard",
+            "des": "Bachelor stage semester FdV. Verantwoordelijk voor de formaties van Biomimicry in Frankrijk."
+          },
+          "title": "Voor onderwijs",
+          "des": "Projectgerichte cursussen, stages, studentenverenigingen, zelfstudie, enz.",
+          "quote": "Met het projectplatform kon ik communiceren over de resultaten van alles wat ik deed voor mijn stage.{0} De commentaren sectie stond lezers toe om meer informatie te vragen en mij hun mening te geven over wat ze willen lezen.{0} Ik was in staat om mijn eigen ge\u00efllustreerde logboek te maken en dit stelde mijn lezers in staat om precies de implementatie en uitbreiding van biomimicry te ontdekken",
+          "author": "- Elise Buard, bachelor student, stage CEEBIOS"
+        },
+        {
+          "project": {
+            "title": "PROFS-CHERCHEURS - COVID19",
+            "des": "R\u00e9pondre collectief gezicht au COVID19"
+          },
+          "title": "Voor onderzoek",
+          "des": "Onderzoekslabs, burgerwetenschapsinitiatieven, open-source uitdagingen.",
+          "quote": "Onderzoek met hoge impact is meestal interdisciplinair, waarbij meerdere belanghebbenden betrokken zijn bij de co-constructie. Maar veel te vaak worden kennis en gemeenschappen in disciplines gesjoemeld en is communicatie met andere stakeholders moeilijk. Het projectplatform helpt om eenvoudig impactief onderzoek te presenteren, om gemakkelijk medewerkers te vinden in verschillende disciplines en om gemakkelijk samen te werken met de stakeholders die jouw onderzoek nodig hebben.",
+          "author": "- Ignacio Atal, Profs Chercheurs"
+        },
+        {
+          "project": {
+            "title": "Ecolo Vie",
+            "des": "R\u00e9duire l'impact \u00e9cologique de notre famille"
+          },
+          "title": "Voor persoonlijke SDG-projecten",
+          "des": "Onafhankelijke collectieven en activisten die kritische maatschappelijke uitdagingen aanpakken.",
+          "quote": "Ons project: een eco-verantwoordelijke familie worden. Met het projectplatform kunnen we gemakkelijk onze acties over voedsel, transport, huisvesting, recycling en kooppraktijken delen, en hopelijk inspireren anderen om te veranderen, \u00e9\u00e9n huishouden tegelijk!",
+          "author": "- Anne Mistral, familielid"
+        }
+      ]
+    },
+    "ACCESS": {
+      "title": "TOETREDEN",
+      "des": "Verzoek om toegang tot het experiment alle functies{0}of kom in contact om een speciale portal te cre\u00ebren",
+      "button_personal": {
+        "text": "Een persoonlijk account aanvragen"
+      },
+      "button_community": {
+        "text": "Projecten aanvragen voor uw community"
+      }
+    },
+    "CONTACT": {
+      "title": "CONTACTEER ONS",
+      "des": "Neem voor elke vraag contact met ons op op {link}"
+    }
+  },
+  "drawer": {
+    "clear": "Alles wissen",
+    "select-all": "Alles selecteren"
+  },
+  "faq": {
+    "delete-confirm-content": "Weet u zeker dat u de Help Tab wilt verwijderen die voor uw portal is gepersonaliseerd. Alle inhoud wordt verwijderd.",
+    "delete-confirm-title": "Aangepaste hulp tabblad verwijderen",
+    "info": "Er is een algemene hulp toegankelijk door te klikken op de knop \"Help\" op de rechterbovenhoek. Als u een tabblad wilt toevoegen met een hulppagina die specifiek is voor uw portal, kunt u het hieronder doen.",
+    "portal": "Hulp",
+    "tab": "Naam van het tabblad",
+    "video": "Video tutorial"
+  },
+  "feed": {
+    "see-all": "Alles zien",
+    "title": "Nieuwsfeed"
+  },
+  "file": {
+    "add-image": "een afbeelding toevoegen",
+    "add-video": "een video toevoegen",
+    "add-video-hint": "Voeg een video toe door zijn youtube of vimeo URL in te voeren.",
+    "attachment": "Bijgevoegde documenten",
+    "upload": "Uploaden"
+  },
+  "form": {
+    "background-color": "Achtergrondkleur",
+    "category-name": "Naam van de categorie",
+    "organization-name": "Naam van uw community",
+    "description": "Omschrijving",
+    "email": "E-mail",
+    "email-contact": "e-mail",
+    "language": "Taal",
+    "title": "Titel",
+    "url": "url",
+    "contact": {
+      "subtitle": "Vul dit snelle formulier in en we nemen spoedig contact met u op",
+      "subject": "Onderwerp",
+      "subject-placeholder": "Wat wil je met ons delen?",
+      "email": "E-mail",
+      "email-placeholder": "E-mail",
+      "content": "Bericht",
+      "content-placeholder": "Stel ons vragen met een maximum aan details."
+    },
+    "report": {
+      "title": "Het titelveld is vereist",
+      "message": "Het beschrijvingsveld is vereist",
+      "content": "Het inhoudsveld is vereist",
+      "url": {
+        "required": "Het url-veld is vereist",
+        "format": "Voer een geldige url in"
+      },
+      "email": {
+        "required": "Het e-mailveld is vereist",
+        "format": "Voer een geldig e-mailadres in"
+      }
+    },
+    "review": {
+      "title": "Het titelveld is vereist",
+      "message": "Het beschrijvingsveld is vereist"
+    },
+    "goal": {
+      "title": "Het titelveld is vereist",
+      "description": "Het beschrijvingsveld is vereist"
+    },
+    "blog": {
+      "title": "Het titelveld is vereist",
+      "description": "Het beschrijvingsveld is vereist"
+    },
+    "resources": {
+      "title": "Het titelveld is vereist",
+      "description": "Het beschrijvingsveld is vereist",
+      "link": {
+        "required": "Het url-veld is vereist",
+        "format": "Voer een geldige url in"
+      }
+    },
+    "announcement": {
+      "title": "Het titelveld is vereist",
+      "description": "Het beschrijvingsveld is vereist"
+    },
+    "reply-announcement": {
+      "first-name": "Het veld voornaam is vereist",
+      "last-name": "Het veld achternaam is verplicht",
+      "email": {
+        "required": "Het e-mailveld is vereist",
+        "format": "Voer een geldig e-mailadres in"
+      },
+      "description": "Het beschrijvingsveld is vereist"
+    }
+  },
+  "footer": {
+    "contact": "Contacteer ons",
+    "legal-notices": "Juridische mededelingen",
+    "terms-of-service": "Servicevoorwaarden",
+    "cookies": "Cookies",
+    "accessibility": "Toegankelijkheid",
+    "personal-data": "Persoonsgegevens",
+    "directory": "Ontdek nog veel meer projecten van andere organisaties op ons meta-portaal:",
+    "help": "Hulp",
+    "projects": "Projectenplatform",
+    "madeBy": "is gemaakt door",
+    "sourceText": "Zie de broncode",
+    "pca": "Continu\u00efteitsplan (PCA)",
+    "pssi": "Beveiligingsplan (PSSI)"
+  },
+  "goal": {
+    "add": "een doel toevoegen",
+    "completed-on-the": "ingevulde",
+    "description": "doelomschrijving",
+    "goals": "doelstellingen",
+    "planned-for-the": "Voorgesteld voor de",
+    "status-title": "status",
+    "title": "titel van het doel",
+    "delete": "Wilt u dit doel verwijderen?"
+  },
+  "group": {
+    "contact": "Contactpersoon",
+    "edit-group": "Groep bewerken",
+    "see-more-people-button": "Zie {users} meer",
+    "see-subgroups": "Zie {count} subgroep ",
+    "share": "Delen",
+    "the-team": "Het team ({users})",
+    "news": "Mededelingen",
+    "more": "Meer",
+    "less": "Minder",
+    "see-more": "Zie meer",
+    "see-less": "Minder zien",
+    "subgroups": "SUBGROUPS",
+    "snapshot": "Snapshot",
+    "members": "Leden",
+    "projects": "Projecten",
+    "visibility-private": "Zichtbaarheid: particulier",
+    "visibility-public": "Zichtbaarheid: publiek",
+    "visibility-org": "Zichtbaarheid: portaal",
+    "group-members": "Groepsleden",
+    "group-projects": "Groepsprojecten",
+    "select-group": "Een groep selecteren",
+    "image-header": "Afbeelding",
+    "root": "(Root)",
+    "create": {
+      "help-link": "We zijn hier om te helpen.",
+      "notice": "Velden gemarkeerd met * zijn verplicht. Je kunt dit altijd later aanpassen. Geen idee wat je moet doen?",
+      "title": "Een nieuwe groep aanmaken"
+    },
+    "edit": {
+      "title": "Groep bewerken"
+    },
+    "form": {
+      "add": "Voeg toe",
+      "add-projects": "Bewezen projecten toevoegen",
+      "edit": "Bewerken",
+      "edit-members": "Leden bewerken",
+      "edit-roles": "Rollen bewerken",
+      "form-incomplete": "Velden ontbreken of zijn ongeldig, volledig om op te slaan.",
+      "create-group": "Groep aanmaken",
+      "edit-group": "Groep bewerken",
+      "edit-name": "Naam van de groep bewerken",
+      "email-label": "E-mail",
+      "email-placeholder": "Ex. achternaam{'@'}myuniversity.fr",
+      "short-description-label": "Hoofdlijn",
+      "short-description-placeholder": "Beschrijf uw groep in \u00e9\u00e9n zin",
+      "name-label": "Groep",
+      "name-placeholder": "Ex. Hitbox: interactieve bokszak",
+      "description-label": "Omschrijving",
+      "add-description": "Beschrijving toevoegen",
+      "add-parent-group": "Oudergroep toevoegen",
+      "project-label": "Aanbevolen projecten",
+      "parent-group-label": "Oudergroep",
+      "visibility": {
+        "title": "Zichtbaarheid groep",
+        "public": "Openbaar",
+        "private": "Priv\u00e9",
+        "members": "Leden",
+        "public_description": "Publiek: iedereen kan deze groep vinden op Internet",
+        "private_description": "Priv\u00e9: alleen zichtbaar door de beheerders en de groepsleden",
+        "members_description": "Leden: alleen zichtbaar door de leden van dit portaal"
+      },
+      "name-errors": {
+        "required": "Het groepsnaamveld is vereist",
+        "max": "Het groepsnaamveld mag niet groter zijn dan 180 tekens"
+      },
+      "short-description-errors": {
+        "max": "Het hoofdveld mag niet groter zijn dan 150 tekens"
+      },
+      "publication-status-errors": {
+        "required": "Dit veld is vereist"
+      },
+      "delete": "Groep verwijderen"
+    },
+    "role": {
+      "members": {
+        "label": "Lid",
+        "help": "Lid"
+      },
+      "leaders": {
+        "label": "Groepsleider",
+        "help": "Groepsleider"
+      },
+      "leaders-managers": {
+        "label": "Leider en beheerder"
+      },
+      "managers": {
+        "label": "Editor",
+        "help": "Editor"
+      }
+    }
+  },
+  "header": {
+    "private": "Priv\u00e9: alleen zichtbaar voor teamleden",
+    "org": "Alleen zichtbaar voor de leden van uw portaal",
+    "public": "Openbaar: zichtbaar voor elke bezoeker van de website",
+    "similar-project": "vergelijkbaar project",
+    "similar-projects": "soortgelijke projecten",
+    "portals-start": "van",
+    "portals-end-plural": "portalen",
+    "portals-end-singular": "portal",
+    "views": "Weergaven",
+    "creation": "Aangemaakt",
+    "update": "Uitgegeven",
+    "close": "Sluiten",
+    "mobile-menu-title": "Menu"
+  },
+  "home": {
+    "all-projects": "Alle projecten",
+    "announcements": "aankondigingen",
+    "news": "Nieuws",
+    "calendar": "Agenda",
+    "instructions": "Instructies",
+    "communities": "Portalen",
+    "home": "Begin",
+    "categories": {
+      "title": "Projecten Categorie\u00ebn"
+    },
+    "login": "Aanmelden",
+    "account-request": "Een account aanvragen",
+    "new-project": "Nieuw project",
+    "short-title": {
+      "events": "Agenda",
+      "projects": "Uw projecten",
+      "instructions": "Instructies"
+    },
+    "create-project": "Een project aanmaken",
+    "check-locations": "Controleer onze locaties",
+    "our-locations": "Onze locaties"
+  },
+  "language": {
+    "label-en": "Engels",
+    "label-fr": "Fran\u00e7ais"
+  },
+  "location": {
+    "loading": "Locatie laden"
+  },
+  "map": {
+    "empty": "Nog niets hier... Medewerkers hebben nog geen projecten gelokaliseerd.",
+    "page-title": "Kaart",
+    "projects": "projectkaart"
+  },
+  "me": {
+    "follow": "Projecten die ik volg",
+    "no-follow": "U volgt nog geen project",
+    "groups": "Groepen Ik ben lid van",
+    "no-group": "U bent nog geen lid van een groep",
+    "my-projects": "mijn projecten",
+    "no-bio": "Je hebt je biografie nog niet geschreven.",
+    "no-skill": "Je hebt nog geen vaardigheden toegevoegd.",
+    "page-title": "Mijn profiel",
+    "projects-participate": "Projecten Ik ben lid van",
+    "no-project-participate": "U bent nog geen lid van een project",
+    "projects-reviewing": "Projecten die ik bekijk",
+    "no-project-reviewing": "U bent nog geen beoordelaar van een project",
+    "skills": "Vaardigheden",
+    "hobbies": "Hobby's",
+    "levels-help-link": "Vaardigheden"
+  },
+  "you": {
+    "no-follow": "Nog geen projecten gevolgd",
+    "no-group": "Nog geen lid van een groep",
+    "no-bio": "Nog geen biografie",
+    "no-skill": "Nog geen vaardigheden aangegeven",
+    "no-project-participate": "Nog geen lid van een project",
+    "no-project-reviewing": "Nog geen recensent van een project"
+  },
+  "multieditor": {
+    "blockquote": "Blockquote",
+    "bold": "vet",
+    "bullet_list": "Kogellijst",
+    "click-to-play-video": "Klik opnieuw om de video te starten/stoppen",
+    "code": {
+      "label": "Rubriek",
+      "language": {
+        "label": "Taal:"
+      },
+      "theme": {
+        "label": "Thema:",
+        "light": "Licht",
+        "dark": "Donker"
+      },
+      "tabs": {
+        "label": "Tabbladen:"
+      }
+    },
+    "color": {
+      "change-color": "Kleur wijzigen",
+      "choose": "Of kies een aangepaste",
+      "color": "Kleur",
+      "current": "Lopend",
+      "pick": "Kies een kleur",
+      "set-color": "Kleur instellen"
+    },
+    "delete_column": "Deze kolom verwijderen",
+    "delete_row": "Deze rij verwijderen",
+    "delete_table": "Tabel verwijderen",
+    "delete_video": "Video verwijderen",
+    "external_link": "Verwijzing openen",
+    "heading_1": "Rubriek 1",
+    "heading_2": "Rubriek 2",
+    "heading_3": "Rubriek 3",
+    "image": {
+      "25_width": "25% breedte",
+      "50_width": "50% breedte",
+      "75_width": "75% breedte",
+      "100_width": "100% breedte",
+      "full": "Vol",
+      "image": "Afbeelding",
+      "large": "Groot",
+      "medium": "Middel",
+      "original": "Oorspronkelijk",
+      "original_size": "Oorspronkelijke breedte",
+      "small": "Klein"
+    },
+    "insert_column_left": "Kolom toevoegen voor",
+    "insert_column_right": "Kolom toevoegen na",
+    "insert_row_top": "Rij toevoegen voor",
+    "insert_row_bottom": "Rij toevoegen na",
+    "italic": "cursief",
+    "link": "verwijzing",
+    "edit-link": "koppeling bewerken",
+    "frozen": "Editor is vergrendeld",
+    "merge_cells": "cellen samenvoegen",
+    "not-synced": "Laden...",
+    "offline": "Offline",
+    "redo": "Opnieuw",
+    "remove_link": "Verwijzing verwijderen",
+    "server-connected": "Server is verbonden.",
+    "server-connecting": "Server verbindt...",
+    "server-disconnected": "Server is afgesloten.",
+    "server-unconnectable": {
+      "status": "Kon geen verbinding maken met de collaboratieve server.",
+      "notice": "Controleer of uw browser en/of antivirus WebSockets toelaat.",
+      "ack-notice": "U kunt een eenvoudige editor gebruiken (zonder collaboratieve bewerking). Merk op dat andere gebruikers de gegevens kunnen worden overschreven als u op hetzelfde moment..",
+      "do-ack": "Ik begrijp de risico's en wil doorgaan met een eenvoudige editor (zonder collaboratieve bewerking).",
+      "do-solo-edit": "Bewerken in mijn eentje",
+      "head-up-warning": "Waarschuwing: bewerken in solomodus kan leiden tot verlies van gegevens",
+      "confirm-save-title": "U bewerkt in solomodus.",
+      "confirm-save-text": "Als iemand anders de inhoud heeft bewerkt tijdens het bewerken, overschrijf je de wijzigingen ervan. Weet je zeker dat je wilt redden?"
+    },
+    "split_cell": "Cel splitsen",
+    "table": "Tabel",
+    "text_align_left": "Tekst uitlijnen naar links",
+    "text_align_right": "Rechts uitlijnen",
+    "text_align_center": "Tekst uitlijnen",
+    "toggle_header_row": "Header-rij aan/uit",
+    "unauthorized": "Ongeautoriseerde bewerking",
+    "underline": "benadrukken",
+    "undo": "Ongedaan maken",
+    "video": "Video",
+    "save": "Opslaan zonder afsluiten"
+  },
+  "homeCarousel": {
+    "tab1": {
+      "title": "Get inspired",
+      "text": "Ontdek interessante en inspirerende projecten. Blader door projecten op de geografische kaart en de tagkaart. Zoeken op titel, teamlid of projecttag."
+    },
+    "tab2": {
+      "title": "Delen",
+      "text": "Gemakkelijk documenteren en delen van uw projecten met alle bezoekers en binnen uw gemeenschap. Voeg aan uw project een beschrijving, externe bronnen, doelen, tags en blog-items toe."
+    },
+    "tab3": {
+      "title": "Samenwerken",
+      "text": "Werk samen met uw teamleden aan uw project. Opzetten van aankondigingen om deelnemers aan te werven (deelnemers, nieuwe teamleden, stagiaires, werknemers, enz.), uitwisselen opmerkingen met de gemeenschap leden."
+    },
+    "tab4": {
+      "title": "Uw impact tonen",
+      "text": "Meer impact wereldwijd en inspirerende inspanningen voor algemeen belang. Identificeer aan welke {sdg} u bijdraagt. Geolocaliseer alle plaatsen waar uw projecten een impact genereren.",
+      "sdg": "SDG",
+      "sdgAbbr": "Duurzame ontwikkelingsdoelstellingen",
+      "link": "https://en.unesco.org/duurzameontwikkelingsdoelstellingen"
+    }
+  },
+  "mentorship": {
+    "respond": {
+      "options": {
+        "accept": "Accepteren",
+        "decline": "Afwijzen",
+        "need-infos": "Vraag meer informatie"
+      },
+      "your-response": "Uw antwoord",
+      "add-comment": "Commentaar toevoegen",
+      "comment-notice-mentor": "Dit commentaar zal per e-mail aan de mentee worden verzonden.",
+      "comment-notice-mentoree": "Dit commentaar zal per e-mail naar de mentor worden verzonden.",
+      "comment-placeholder": "Schrijf hier.",
+      "title-mentor": "Word mentor",
+      "title-mentoree": "Mentor worden",
+      "response-was-sent": "Je reactie werd verstuurd.",
+      "asked-you": "vroeg je om zijn mentor te zijn voor",
+      "offered-you": "bood je aan om zijn mentor te zijn voor"
+    }
+  },
+  "onboarding": {
+    "step": "stap",
+    "title": "Wat zijn Projecten?"
+  },
+  "onboarding-modal": {
+    "next": "Volgende",
+    "previous": "Vorige"
+  },
+  "onboarding-todo": {
+    "platform-tour": "Beginnen",
+    "welcome": "Welkom {0}, start op het platform met deze stappen.",
+    "complete-profile": "Voltooi uw profiel",
+    "explore-projects": "Projecten onderzoeken",
+    "create-project": "Uw eerste project aanmaken",
+    "take-tour": "Neem de platform tour",
+    "dont-show-again": "Laat dit niet meer zien."
+  },
+  "page404": {
+    "contact": "Beetje verloren? U kunt contact met ons opnemen op {0}",
+    "contact-mail": "projects.platform{'@'}learningplanetinstitute.org",
+    "illustration-text": "Ja, dit is een fout 404 en nu ben je verloren in deze jump...",
+    "page-title": "Pagina niet gevonden",
+    "search": "Dit is toch niet wat je zocht? Dezelfde speler wil {0}?",
+    "search-again": "opnieuw zoeken",
+    "title": "Oeps...",
+    "not-connected": {
+      "title": "Aanmelden",
+      "illustration-text": "Om binnen te komen moet je LOGIN",
+      "connect": "We kunnen de pagina die u zoekt niet vinden. Om het te bereiken, kunt u {0}.",
+      "login": "moet inloggen"
+    }
+  },
+  "picture": {
+    "add-picture": "Een foto toevoegen",
+    "change-picture": "Afbeelding wijzigen"
+  },
+  "plateform-tour-modal": {
+    "intro": "Hier is een snelle rondleiding van de projecten belangrijkste kenmerken. U kunt altijd terugkomen op het (samen met vele tutorials) in het menu ",
+    "notice-tutorial": "U kunt ook de ins en outs van Projecten leren met onze {0}",
+    "title": "Platform tour: wat is Projecten",
+    "tutorial": "tutorials"
+  },
+  "profile": {
+    "edit": {
+      "back-to-profile": "Terug naar profiel",
+      "edit-my-profile": "Mijn profiel bewerken",
+      "edit-other-profile": "Bewerken {name} profiel",
+      "edit-your-profile": "Uw profiel bewerken",
+      "notice": "Velden met * zijn verplicht.",
+      "help": "Hulp nodig? We zijn er.",
+      "edit": "Bewerken",
+      "general": {
+        "no-special-characters": "Geen speciale tekens toegestaan",
+        "tab": "Algemene informatie",
+        "form-has-error": "Er ontbreekt of is een ongeldig veld in het formulier.",
+        "save-error": "Fout bij opslaan van profiel.",
+        "save-success": "Profiel opgeslagen.",
+        "pronouns": {
+          "label": "Voornaamwoorden",
+          "notice": "Laat anderen weten hoe ze naar jou verwijzen.",
+          "placeholder": "Voorbeelden: Zij/Haar, Hij/Hem, Zij/Hen, enz."
+        },
+        "first-name": {
+          "label": "Voornaam",
+          "placeholder": "Ex. Jane",
+          "is-required": "Het voornaamveld is vereist."
+        },
+        "last-name": {
+          "label": "Achternaam",
+          "placeholder": "Ex. Doe",
+          "is-required": "Het veld achternaam is vereist."
+        },
+        "professional-email": {
+          "label": "E-mail *",
+          "placeholder": "Ex. Jane.doe{'@'}yourcompany.com",
+          "is-required": "Het e-mailveld is vereist.",
+          "is-email": "De e-mail moet een geldige e-mail."
+        },
+        "professional-number": {
+          "label": "Beroepsnummer",
+          "placeholder": "Ex. +33 600000000"
+        },
+        "personal-number": {
+          "label": "Persoonlijk nummer",
+          "placeholder": "Ex. +33 600000000"
+        },
+        "personal-webpage": {
+          "label": "Persoonlijke webpagina",
+          "placeholder": "Plaats hier uw persoonlijke pagina URL",
+          "is-url": "De persoonlijke webpagina moet een geldige URL zijn."
+        },
+        "linkedin": {
+          "label": "Linkedin-account",
+          "placeholder": "Plaats hier uw linkedin-account-URL",
+          "is-url": "Het Linkedin-account moet een geldige URL zijn."
+        },
+        "twitter": {
+          "label": "Twitter-account",
+          "placeholder": "Plaats hier uw twitter-account-URL",
+          "is-url": "Het Twitter-account moet een geldige URL zijn."
+        },
+        "picture": {
+          "label": "Profielafbeelding"
+        },
+        "title": {
+          "label": "Titel *",
+          "placeholder": "Ex. Projectmanager, Student in M2 Biologie, Onderzoeker in Onderwijs etc.",
+          "is-required": "Het titelveld is vereist."
+        },
+        "organization-address": {
+          "label": "Naam en adres van de organisatie",
+          "placeholder": "Ex. Learning Planet Institute,\nCharles Vstraat 8\n75004 Parijs"
+        },
+        "tags": {
+          "label": "Tags"
+        },
+        "sdgs": {
+          "label": "SDG's",
+          "add": "Voeg toe",
+          "notice-start": "Voeg toe",
+          "notice-link": "Duurzame ontwikkelingsdoelstellingen (SDG's)",
+          "notice-end": "Daar wil je aan bijdragen. Voorbeeld: Kwaliteitsonderwijs, Nulhonger, Klimaatactie, enz.",
+          "link": "https://sdgs.un.org/goals"
+        }
+      },
+      "bio": {
+        "tab": "Bio",
+        "save-error": "Fout bij opslaan van profiel.",
+        "save-success": "Profiel opgeslagen.",
+        "short-bio": {
+          "label": "Korte bio",
+          "placeholder": "1 tot 2 regels om je kort te beschrijven"
+        },
+        "professional-bio": {
+          "label": "Professionele bio",
+          "placeholder": "Jezelf professioneel presenteren. Presenteer je carri\u00e8repad en je huidige beroep."
+        },
+        "personal-bio": {
+          "label": "Persoonlijke bio",
+          "placeholder": "Presenteer jezelf persoonlijk. Vertel ons over jou en je passies!"
+        }
+      },
+      "projects": {
+        "tab": "Projecten",
+        "member": {
+          "label": "Projecten Ik ben lid van",
+          "notice": "Als u lid wilt worden van een bestaand project, moet u het projectteam vragen u toe te voegen. Of u kunt uw project maken."
+        },
+        "followed": {
+          "label": "Projecten die ik volg",
+          "notice": "Wanneer u een project volgt, ontvangt u meldingen over nieuwe activiteiten. Als u een project wilt volgen, bezoek het en klik op de \"Volgende\" knop naast de titel.",
+          "add": "Voeg toe",
+          "drawer-title": "De projecten kiezen Ik volg je."
+        },
+        "reviewed": {
+          "label": "Projecten I beoordeling",
+          "notice": "Als u een recensent van een bestaand project wilt worden, moet u het projectteam vragen u toe te voegen."
+        }
+      },
+      "groups": {
+        "tab": "Groepen",
+        "groups": {
+          "label": "Groepen Ik ben lid van"
+        }
+      },
+      "skills": {
+        "tab": "Vaardigheden",
+        "intro": "Je hebt nog geen vaardigheden geselecteerd. Professionele vaardigheden en hobby's kunt uw collega's en uw gemeenschap om u te vinden op basis van waar je goed in bent, waar je ge\u00efnteresseerd in bent en waar je om geeft.",
+        "save-error": "Fout bij opslaan van profiel.",
+        "save-success": "Profiel opgeslagen.",
+        "search": "zoeken",
+        "suggested-skills": "Of kies een aanbevolen vaardigheid",
+        "already-added": "(reeds toegevoegd)",
+        "skills": {
+          "add-success": "Skill '{name}' toegevoegd.",
+          "edit-success": "Skill '{name}' bewerkt.",
+          "delete-success": "Skill '{name}' verwijderd.",
+          "add": "Beroepsvaardigheden toevoegen",
+          "add-item": "Een vaardigheid toevoegen",
+          "edit-levels": "Niveaus bewerken",
+          "already-added": "Vaardigheid is al toegevoegd",
+          "levels-help": "Niveau",
+          "drawer": {
+            "title": "Beroepsvaardigheden toevoegen",
+            "notice": "Typ het label van uw vaardigheid, en selecteer de juiste voor u onder suggesties.",
+            "placeholder": "Type een vaardigheid",
+            "notice-levels": "Geef je niveau van meesterschap aan.",
+            "help-levels": "Meer over vaardigheden"
+          },
+          "selection": "Geselecteerde vaardigheden"
+        },
+        "hobbies": {
+          "add-success": "Hobby '{name}' toegevoegd.",
+          "edit-success": "Hobby '{name}' bewerkt.",
+          "delete-success": "Hobby '{name}' verwijderd.",
+          "add": "Hobby's toevoegen",
+          "add-item": "Een hobby toevoegen",
+          "already-added": "Hobby is al toegevoegd",
+          "edit-levels": "Niveaus bewerken",
+          "levels-help": "Niveau",
+          "drawer": {
+            "title": "Een persoonlijke hobby toevoegen",
+            "notice": "Typ het label van uw hobby, en selecteer de juiste voor u onder suggesties.",
+            "placeholder": "Typ een hobby",
+            "notice-levels": "Geef je niveau van meesterschap aan.",
+            "help-levels": "Meer over de hobby's"
+          },
+          "selection": "Geselecteerde hobby's"
+        },
+        "mentorship": {
+          "contact": {
+            "title-ask": "Vraag om mentorschap",
+            "title-offer": "Aanbod mentorschap",
+            "notice-ask": "Gelieve de vaardigheid te specificeren waarvoor u mentorschap vraagt.",
+            "notice-offer": "Geef alstublieft de vaardigheid aan waarvoor u mentorschap aanbiedt.",
+            "error": "Fout tijdens het versturen van het verzoek.",
+            "success": "Je verzoek is verzonden.",
+            "fields": {
+              "title": {
+                "label": "Titel",
+                "placeholder-ask": "\"Kun je mijn mentor in Datascience zijn?\"",
+                "placeholder-offer": "Eg. \"Wil je mijn mentee in Datascience zijn?\"",
+                "required": "Het titelveld is vereist."
+              },
+              "text": {
+                "label": "Tekst",
+                "notice-ask": "Voeg details toe over u en het soort hulp dat u nodig heeft (bijv. aantal uren, aard van de hulp - van eenvoudige feedback tot les...).",
+                "notice-offer": "Voeg details toe over u en het soort hulp dat u biedt (bijv. aantal uren, aard van de hulp - van eenvoudige feedback tot les...).",
+                "placeholder": "Begin hier",
+                "required": "Het tekstveld is vereist."
+              },
+              "email": {
+                "label": "E-mail antwoord",
+                "notice": "Dit bericht wordt verzonden als e-mail. Om een antwoord te krijgen, voeg je je e-mail toe.",
+                "placeholder": "Eg. Jane.doe{'@'}gmail.com",
+                "invalid": "Het e-mailveld is ongeldig.",
+                "required": "Het e-mailveld is vereist."
+              }
+            }
+          },
+          "mentorship": "Mentorschap",
+          "choose": "Kies",
+          "edit": "Mentorschap voor \"{skill}\"",
+          "error": "Fout bij het opslaan van mentorschap.",
+          "success": "Mentuur opgeslagen",
+          "notice": "Wil je mentor worden of mentor worden voor deze vaardigheid? U bepaalt de frequentie van uitwisseling die bij u past met de mentor of uw mentor. Wees gerust, onze gids is hier om u te helpen.",
+          "can-mentor": "Ik kan mentor worden.",
+          "needs-mentor": "Ik zoek een mentor.",
+          "comment": "Opmerking",
+          "comment-placeholder": "Geef aan welke hulp u kunt bieden of welke hulp u nodig heeft (uurlijk volume, frequentie, enz.)"
+        },
+        "levels": {
+          "curious": "Nieuwsgierig",
+          "basic": "Basis",
+          "competent": "Bevoegd",
+          "expert": "Deskundige"
+        },
+        "tip": {
+          "intro-edit": "De verschillende niveaus kunt u kiezen uit:",
+          "curious": {
+            "title": "Niveau 1: Nieuwsgierig",
+            "description": ""
+          },
+          "basic": {
+            "title": "Niveau 2: Basis",
+            "description": "High-school niveau, of deed wat tutorial, of een klein project"
+          },
+          "competent": {
+            "title": "Niveau 3: Bevoegd",
+            "description": "Master-niveau of deed een tussenproject, of kan leren om licentieniveau"
+          },
+          "expert": {
+            "title": "Niveau 4: Expert",
+            "description": "PhD-niveau of deed een groot project, of kan leren om masterniveau"
+          }
+        }
+      },
+      "privacy": {
+        "tab": "Privacy",
+        "save-error": "Fout bij opslaan van profiel.",
+        "save-success": "Profiel opgeslagen.",
+        "publication-status": {
+          "label": "Algemene zichtbaarheid",
+          "notice": "Standaard: openbaar voor iedereen"
+        },
+        "picture": {
+          "label": "Zichtbaarheid van afbeeldingen",
+          "notice": "Standaard: Mijn portaal"
+        },
+        "email": {
+          "label": "Zichtbaarheid van post",
+          "notice": "Standaard: verborgen voor iedereen"
+        },
+        "personal-phone": {
+          "label": "Zichtbaarheid van de persoonlijke telefoon",
+          "notice": "Standaard: verborgen voor iedereen"
+        },
+        "skills-hobbies": {
+          "label": "Zichtbaarheid vaardigheden en hobby's",
+          "notice": "Standaard: verborgen voor iedereen"
+        },
+        "socials": {
+          "label": "Zichtbaarheid van sociale media",
+          "notice": "(Ex. gekoppeld In, Twitter, persoonlijke website...) Standaard: Mijn portaal"
+        },
+        "options": {
+          "hide": "Verborgen",
+          "org": "Mijn portaal",
+          "pub": "Openbaar"
+        }
+      }
+    },
+    "go-to-page": "De pagina van het profiel weergeven",
+    "drawer_title": "Profiel",
+    "projects": "Projecten",
+    "skills": "Vaardigheden",
+    "groups": "Groepen",
+    "snapshot": "Snapshot",
+    "bio": "Bio",
+    "bio_pro": "Professional Bio",
+    "bio_personal": "Persoonlijke bio",
+    "cancel-title": "Profielbewerking annuleren",
+    "cancel-content": "Weet u zeker dat u uw profiel editie wilt annuleren? Elke verandering zal verloren gaan.",
+    "can-mentor": "Kan mentor zijn",
+    "needs-mentor": "Heb een mentor nodig.",
+    "ask-mentorship": "Vraag om mentorschap",
+    "offer-mentorship": "Aanbod mentorschap",
+    "mentorship-asked": "U vroeg om mentorschap.",
+    "mentorship-offered": "Je bood mentorschap aan.",
+    "mentorship-asking": "U vraagt om mentorschap.",
+    "mentorship-offering": "Je biedt mentorschap aan."
+  },
+  "profile-completed-modal": {
+    "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",
+    "notice-tour": "Om uw onboarding te vergemakkelijken, raden wij u aan een snelle rondleiding te maken door de belangrijkste kenmerken van Projecten. Dit zijn 2 minuten van uw tijd waarschijnlijk goed besteed;)",
+    "title": "Gefeliciteerd, je bent helemaal klaar! Wat dacht je van een snelle rondleiding?",
+    "skip": "Sla dit over",
+    "take-tour": "Neem de rondleiding nu."
+  },
+  "project": {
+    "add-linked-project": "Een gekoppeld project toevoegen",
+    "add-location-point": "Plaatspunt toevoegen",
+    "add-review": "Review toevoegen",
+    "add-to-project": {
+      "title": "Toevoegen aan project",
+      "blog-entry": "Bloginvoer",
+      "goal": "Doel",
+      "sdg": "SDG",
+      "link-and-attached-document": "Middelen",
+      "team-member": "Teamlid / groep",
+      "announcement": "Mededeling",
+      "comment": "commentaar",
+      "location": "Locatie"
+    },
+    "apply-succes": "Aanvraag verzonden",
+    "announcement-create": "Aanmaken",
+    "announcements": "aankondigingen",
+    "at-coordinates": "op co\u00f6rdinaten",
+    "categories": "Projectencategorie\u00ebn",
+    "community": "Communautaire projecten",
+    "create-project": "Een project aanmaken",
+    "create": {
+      "choose-category-first": "Kies eerst een categorie",
+      "help-link": "We zijn hier om te helpen.",
+      "notice": "Velden gemarkeerd met * zijn verplicht. Je kunt dit altijd later aanpassen. Geen idee wat je moet doen?",
+      "title": "Een nieuw project aanmaken"
+    },
+    "destroy": "Project verwijderen",
+    "duplicate": "dit project dupliceren",
+    "edit": "project bewerken",
+    "edit-linked-project": "Gekoppeld project bewerken",
+    "edit-location-point": "Locatiepunt bewerken",
+    "edit-map": "geolocatie bewerken",
+    "edit-review": "herziening bewerken",
+    "files": "projectbestand projectbestand projectbestand projectbestanden",
+    "follow": "Volgen",
+    "followed": "Gevolgd",
+    "form": {
+      "add-tags": "Tags toevoegen",
+      "create-project": "Project aanmaken",
+      "edit-project": "Project bewerken",
+      "edit-title": "Titel bewerken",
+      "project-category": "Projectcategorie",
+      "select-category": "Kies een categorie",
+      "purpose-label": "Doel van het project",
+      "purpose-placeholder": "Wat is het doel van uw project?",
+      "resize-image": "Herframe",
+      "title-label": "Titel toevoegen",
+      "title-placeholder": "Wat is de naam van dit project?",
+      "upload-image": "Een afbeelding uploaden",
+      "title-errors": {
+        "required": "Het titelveld is vereist",
+        "max": "Het titelveld mag niet groter zijn dan 180 tekens"
+      },
+      "purpose-errors": {
+        "required": "Het doelveld is vereist",
+        "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
+        "min": "Het doelveld moet ten minste 3 karakters tellen"
+      }
+    },
+    "image-header": "Afbeelding",
+    "image-alert": {
+      "upload": "Uploaden",
+      "notice": "Upload een nieuw beeld om de impact te maximaliseren! Je zult een vierkante vorm nodig hebben!"
+    },
+    "impact": "effect",
+    "language": "projecttaal",
+    "life-status": "Levensstatus van het project",
+    "linked": "Gekoppeld project ",
+    "linked-project": "Gekoppeld project",
+    "linked-project-confirm-delete": "Weet u zeker dat u dit gekoppelde project wilt verwijderen?",
+    "linked-projects": "Gekoppelde projecten",
+    "link-confirm-delete": "Weet u zeker dat u deze link uit het project wilt verwijderen?",
+    "file-confirm-delete": "Weet u zeker dat u dit bestand uit het project wilt verwijderen?",
+    "blog-confirm-delete": "Weet u zeker dat u deze blogitem wilt verwijderen uit het project?",
+    "location-type-label": "Locatietype",
+    "lock": "project vergrendelen",
+    "private": "Particuliere projecten",
+    "publish": "project publiceren",
+    "public": "Openbare projecten",
+    "quit": "Project afsluiten",
+    "random-image": "Willekeurige afbeelding",
+    "resource": "Middelen",
+    "review": "herziening",
+    "reviews": "Evaluaties",
+    "review-confirm-delete": "Weet u zeker dat u deze beoordeling wilt verwijderen?",
+    "reviewable": "Klaar voor beoordeling",
+    "reviewed-on-the": "over het",
+    "remove-group": "Groep verwijderen",
+    "remove-user-title": "Gebruiker verwijderen",
+    "remove-user": "Verwijderen",
+    "show-n-projects": "De {count} projecten tonen",
+    "suggested": "soortgelijke projecten",
+    "suggested-hint": "Projecten die u wellicht interesseren",
+    "summary": "samenvatting",
+    "settings": "instellingen",
+    "org-settings": {
+      "title": "Portal(s) van het portaal",
+      "description": "Het project behoort tot de geselecteerde portals. Pas op wanneer u de portals waartoe uw project behoort toevoegt of wijzigt. Zo krijgen beheerders van een nieuwe organisatie automatisch toegang tot uw project. Of organisaties kunnen specifieke redactionele regels hebben die je moet volgen.",
+      "warning": "Uw project behoort tot onderstaande organisaties. U kunt de categorie van uw project daar bewerken:"
+    },
+    "updated": {
+      "blog-entry": "een blog-item van dit project bijgewerkt",
+      "blog-entry-create": "een nieuwe blog-item van dit project toevoegen",
+      "description": "de beschrijving van dit project opslaan"
+    },
+    "view": "project bekijken",
+    "visibility": "Zichtbaarheid van het project",
+    "actions": "Snelle acties",
+    "copy": "(kopie)",
+    "nothing": "Niets hier...",
+    "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven."
+  },
+  "project_list": {
+    "updated_at": "Laatste activiteit",
+    "random": "Willekeurig",
+    "recommended": "Aanbevolen",
+    "sort_by": "Sorteer op:"
+  },
+  "projects": "projecten",
+  "recruit": {
+    "about-you": "Vertel ons over jezelf en wat je motiveert.",
+    "add-announcement": "een aankondiging toevoegen",
+    "announcement": "aankondiging",
+    "announcements": "geen aankondiging ",
+    "apply": "toepassing",
+    "creation-date": "gemaakt op",
+    "delete-announcement-message": "Wilt u deze aankondiging verwijderen?",
+    "edit-announcement": "Aanmelding bewerken",
+    "email": "Waarschuwing, we hebben een geldig e-mailadres nodig om contact met u op te nemen. (We zullen deze informatie niet opslaan op het platform).",
+    "firstname": "voornaam",
+    "is-remunerated": "wordt vergoed",
+    "job": "job",
+    "lastname": "achternaam",
+    "motivation-hint": "Het moet ten minste 20 tekens bevatten",
+    "new-announcement": "nieuwe aankondiging",
+    "participant": "deelnemer",
+    "remunerated": "Beloning",
+    "send": "Programma versturen",
+    "title": "Titel",
+    "traineeship": "Stages",
+    "type": "type aankondiging",
+    "updated": "bijgewerkt",
+    "valid-until-the": "geldig tot",
+    "view": "weergave"
+  },
+  "report": {
+    "abuse": "Misbruik melden",
+    "abuse-title": "Leg het verslag in een paar woorden uit.",
+    "abuse-text": "Beschrijf zo nauwkeurig mogelijk waarom u dit project rapporteert.",
+    "abuse-url": "Kopieer plak de URL van de pagina die u wilt rapporteren.",
+    "bug": "Rapporteer een fout",
+    "bug-title": "Leg het bug in een paar woorden uit.",
+    "bug-text": "Beschrijf zo nauwkeurig mogelijk het probleem dat je hebt ervaren en hoe je het kunt reproduceren.",
+    "bug-url": "Kopi\u00ebren plak de URL van de pagina waar u dit probleem toevoegt."
+  },
+  "resource": {
+    "add": "Hulpbron toevoegen",
+    "add-file": "een bestand toevoegen",
+    "add-link": "een verwijzing toevoegen",
+    "add-link-url": "koppelings-URL toevoegen",
+    "add-link-url-label": "URL",
+    "add-link-text": "linktekst toevoegen",
+    "add-link-text-label": "Tekst",
+    "edit-link": "een koppeling bewerken",
+    "edit-file": "een bestand bewerken",
+    "max-size": "Max. 10MB",
+    "invalid-image": "Niet ondersteund bestand ... is dit een afbeelding ?",
+    "error-uploading-image": "Fout bij uploaden van afbeelding",
+    "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
+    "link-address": "linkadres",
+    "resources": "Middelen",
+    "web": "koppeling naar web resources",
+    "web-link": "weblink "
+  },
+  "result_box": {
+    "people": "mensen",
+    "person": "mensen",
+    "groups": "groepen",
+    "group": "groep"
+  },
+  "visibility": {
+    "private-title": "Priv\u00e9:",
+    "public-title": "Openbaar:",
+    "community-title": "Portaalleden:",
+    "private": "alleen zichtbaar voor teamleden.",
+    "public": "zichtbaar voor elke bezoeker, zelfs zonder rekening.",
+    "community": "alleen zichtbaar voor gebruikers die een account op dit portaal hebben."
+  },
+  "register": {
+    "title": "Een account aanmaken",
+    "title-confirm": "E-mailbevestiging nodig",
+    "email": {
+      "label": "E-mail *",
+      "placeholder": "Voer uw e-mail in",
+      "is-required": "E-mail is vereist",
+      "is-invalid": "Dit is geen geldige e-mail"
+    },
+    "given_name": {
+      "label": "Voornaam",
+      "placeholder": "Voer uw voornaam in",
+      "is-required": "Voornaam is vereist"
+    },
+    "family_name": {
+      "label": "Achternaam",
+      "placeholder": "Voer uw achternaam in",
+      "is-required": "Achternaam is vereist"
+    },
+    "password": {
+      "label": "Wachtwoord",
+      "placeholder": "*****",
+      "is-required": "Wachtwoord is vereist"
+    },
+    "confirmation": "We hebben je een bevestigingsmail gestuurd in je inbox. Zodra u hebt bevestigd dat {0} is uw e-mail, helpen wij u aan de slag op het platform.",
+    "save-error": "Er is een technisch probleem. Probeer het later nog eens.",
+    "email-already-exists": "Deze e-mail is al geregistreerd.",
+    "tos": "Ik ga akkoord met de {term} en {privacy} *",
+    "tos-is-required": "De overeenkomst is vereist om door te gaan",
+    "term": "Servicevoorwaarden",
+    "privacy": "Privacybeleid",
+    "have-account": "Al een rekening?",
+    "login": "Aanmelden",
+    "need-help": "Hulp nodig?",
+    "contact-us": "Contacteer ons"
+  },
+  "request-access": {
+    "title": "Toegangsverzoek",
+    "title-confirm": "Verzoek verzonden",
+    "notice": "Uw account moet worden goedgekeurd door de admin voordat u uw eigen account kunt maken. Vul dit formulier in:",
+    "email": {
+      "label": "E-mail *",
+      "placeholder": "Voer uw e-mail in",
+      "is-required": "E-mail is vereist",
+      "is-invalid": "Dit is geen geldige e-mail"
+    },
+    "given_name": {
+      "label": "Voornaam",
+      "placeholder": "Voer uw voornaam in",
+      "is-required": "Voornaam is vereist"
+    },
+    "family_name": {
+      "label": "Achternaam",
+      "placeholder": "Voer uw achternaam in",
+      "is-required": "Achternaam is vereist"
+    },
+    "profile-title": {
+      "label": "Hoofdlijn",
+      "placeholder": "Ie. Student informatica",
+      "is-required": "Hoofdlijn is vereist"
+    },
+    "message": {
+      "label": "Bericht",
+      "placeholder": "Kun je ons vertellen waarom je toegang nodig hebt?"
+    },
+    "confirmation": "Wij hebben uw verzoek naar de beheerders van het platform gestuurd. Controleer uw mailbox ({0}) voor het antwoord.",
+    "have-account": "Al een rekening?",
+    "login": "Aanmelden",
+    "need-help": "Hulp nodig?",
+    "contact-us": "Contacteer ons"
+  },
+  "role": {
+    "role-editor": "Heeft alle bewerken rechten voor deze groep.",
+    "role-reviewer": "Wanneer het project is gemarkeerd als 'ready for review', kan de recensent feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten.",
+    "role-teammate": "Hij heeft geen redactierechten, maar verschijnt als lid van het team.",
+    "editor": "Editor",
+    "editors": "Editors",
+    "editor-groups": "Editor groepen",
+    "editor-group": "Editor groep",
+    "reviewer": "Reviewer",
+    "reviewers": "Reviewers",
+    "reviewer-groups": "Groepen recensies",
+    "reviewer-group": "Recensiesgroep",
+    "teammate": "Deelnemer",
+    "teammates": "Deelnemers",
+    "teammate-groups": "Deelnemersgroepen",
+    "teammate-group": "Deelnemersgroep",
+    "select": "De rechten selecteren",
+    "group": "Groepen",
+    "leader": "Groepsleider",
+    "role-leader": "Is een Editor die zal verschijnen met een groep Leader tag.",
+    "member": "Lid",
+    "role-member": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
+  },
+  "search": {
+    "all-filters": "Alle filters",
+    "banner-portal": "U kunt ook zoeken naar projecten van alle gemeenschappen op",
+    "browse-map": "Bladeren op kaart",
+    "by-language": "per taal",
+    "by-people": "door mensen",
+    "by-tag": "op tag",
+    "by-sdg": "door SDG",
+    "filter-by-language": "Een taal toevoegen",
+    "filter-by-people": "Een persoon toevoegen",
+    "filter-by-tag": "Een tag toevoegen",
+    "filter-by-sdg": "Een SDD toevoegen",
+    "filter-by-category": "Een categorie toevoegen",
+    "language": "taal",
+    "people": "mensen",
+    "tag": "label",
+    "or": "of",
+    "ambiguousTag": "Ambigu Tag",
+    "subtitle-ambiguous-tag": "Deze tag heeft verschillende betekenissen. Selecteer degene waarin u ge\u00efnteresseerd bent:",
+    "sdg": "SDG",
+    "skills": "Vaardigheden",
+    "category": "categorie",
+    "choose": "kiezen tussen hoofdtags of zoeken naar tags",
+    "filter": "filter",
+    "filters": "Filters",
+    "add-filter": "Filter toevoegen",
+    "geographic-map": "Geografische kaart",
+    "nothing-found": "niets gevonden",
+    "people-directory": "zoeken in mensenmap",
+    "projects": "zoeken in projecten",
+    "projects-tab": "Projecten ({count})",
+    "projects-tab-label": "Projecten",
+    "group-tab": "Groepen ({count})",
+    "people-tab": "Personen ({count})",
+    "search-tab": "Alle ({count})",
+    "peoples": "Mensen",
+    "groups": "Groepen",
+    "all": "Alles",
+    "projects-section": "Projecten",
+    "all-section": "Alle entiteiten",
+    "groups-section": "Groepen",
+    "people-section": "Mensen",
+    "result": "zoekresultaten",
+    "search-title": "Zoeken",
+    "search": "Zoekgroep",
+    "search-for-a-tag": "Zoeken naar een tag",
+    "search-all": "Zoeken in alle gemeenschappen",
+    "search-group": "Eerste letters van groep typen",
+    "search-tag": "Type labels eerste letters",
+    "search-skill": "Label typevaardigheden",
+    "search-user": "Naam type persoon eerste letters",
+    "search-in": "Projecten zoeken in",
+    "specific-tags": "kies uit {organizationName} tags",
+    "wiki-tags": "thematische labels kiezen",
+    "term-is-ambigous": "Term is dubbelzinnig.{0} Zie onze suggesties",
+    "info": "U kunt ook projecten zoeken van elke gemeenschap op",
+    "geo-map": "Geografische kaart",
+    "tag-map": "Labelkaart",
+    "geo-map-description": "Ontdek projecten op een wereldkaart",
+    "tag-map-description": "Ontdek projets op een Wikip\u00e9dia tag map",
+    "open-map": "Kaart openen",
+    "pick-tag-classification": "Kies een tagkader",
+    "pick-skill-classification": "Kies een vaardigheidskader",
+    "pick-tag-preset": "Of kies een voorgestelde tag",
+    "pick-skill-preset": "Of kies een aanbevolen vaardigheid",
+    "current-tag-description": "Typ tags eerste letters en selecteer de juiste tag",
+    "current-skill-description": "Type skills label en selecteer de juiste vaardigheid",
+    "disambiguate": "(DISAMBIGUATIE)",
+    "suggestions": "Voorstellen",
+    "choose-skill": "Klik op de gekozen vaardigheid:"
+  },
+  "sdg": {
+    "1": {
+      "title": "Geen armoede"
+    },
+    "2": {
+      "title": "Nul Honger"
+    },
+    "3": {
+      "title": "Goede gezondheid en welzijn"
+    },
+    "4": {
+      "title": "Kwaliteitsonderwijs"
+    },
+    "5": {
+      "title": "Gelijkheid van mannen en vrouwen"
+    },
+    "6": {
+      "title": "Schoon water en reiniging"
+    },
+    "7": {
+      "title": "Betaalbare en schone energie"
+    },
+    "8": {
+      "title": "Fatsoenlijk werk en economische groei"
+    },
+    "9": {
+      "title": "Industrie, innovatie en infrastructuur"
+    },
+    "10": {
+      "title": "Verminderde ongelijkheid"
+    },
+    "11": {
+      "title": "Duurzame steden en gemeenschappen"
+    },
+    "12": {
+      "title": "Verantwoorde consumptie en productie"
+    },
+    "13": {
+      "title": "Klimaatactie"
+    },
+    "14": {
+      "title": "Leven onder water"
+    },
+    "15": {
+      "title": "Leven op het land"
+    },
+    "16": {
+      "title": "Vrede, gerechtigheid en sterke instellingen"
+    },
+    "17": {
+      "title": "Partnerschappen voor de doelstellingen"
+    },
+    "add-short": "een SDG toevoegen",
+    "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen"
+  },
+  "stats": {
+    "cumulated-projects": "Cumulatieve nieuwe projecten",
+    "new-projects": "Nieuwe projecten",
+    "number-projects-org": "Projecten per organisatie",
+    "number-projects-sdg": "Projecten per SDG",
+    "number-projects-total": "Totaal aantal projecten",
+    "number-tags": "Meest gebruikte tags in projecten",
+    "page-title": "Statistieken",
+    "projects": "Projecten",
+    "time-evolution": "Ontwikkeling van projecten in tijd",
+    "updated-projects": "Maandelijkse projectupdates",
+    "created": "Aangemaakt",
+    "updated": "Bijgewerkt"
+  },
+  "status": {
+    "complete": "voltooid",
+    "completed": "voltooid",
+    "cancel": "annuleren",
+    "canceled": "geannuleerd",
+    "ended": "be\u00ebindigd",
+    "ongoing": "lopende",
+    "private": "particulier",
+    "public": "publiek",
+    "running": "draait",
+    "title": "Wat is de status van het project?",
+    "toreview": "herziening",
+    "updated": "projectstatus bijgewerkt",
+    "na": "geen"
+  },
+  "tag": {
+    "add-specific": "Tags maken om projecten te organiseren",
+    "add-specific-info": "Deze tags maken het mogelijk om projecten te organiseren in aanvulling op categorie\u00ebn (voorbeelden: Master 2 LiSc Ze zijn specifiek voor uw organisatie. Ze zijn nuttig voor het filteren van uw projecten in de zoekopdracht.",
+    "add-project-tag": "Tags naar voren brengen om projecten per thema te koppelen",
+    "add-profile-tag": "Vaardigheden naar voren voor uw gebruikersprofielen",
+    "add-project-tag-info": "Wanneer een gebruiker een project aanmaakt, kunnen ze een thematische tag uit Wikipedia toevoegen (bijv. biochemie, natuurkunde, enz.). Dit maakt het gemakkelijker om het project te vinden en de projectaanbevelingen te verbeteren door thematische overeenkomsten. U kunt belangrijke thematische tags voor uw organisatie markeren.",
+    "edit": "tags bewerken",
+    "title": "Tags"
+  },
+  "team": {
+    "add": "leden/groepen toevoegen",
+    "edit": "teamlid bewerken",
+    "group-members": "groepsleden",
+    "project-members": "projectleden",
+    "no-user-message": "Geen gebruiker komt overeen met uw zoekopdracht",
+    "remove-user-confirm": "Weet u zeker dat u deze gebruiker uit het project wilt verwijderen?",
+    "remove-group-confirm": "Weet u zeker dat u deze groep wilt verwijderen uit het project?",
+    "team": "Team"
+  },
+  "template": {
+    "edit-tags": "Tags bewerken",
+    "blog-content": "Sjabloon voor bloginhoud",
+    "blog-title": "Sjabloon voor blogtitel",
+    "advancement-goal-title": "template voor de titel van het doel van de vooruitgang",
+    "advancement-goal-content": "sjabloon voor doelinhoud voor vooruitgang",
+    "category": "Sjablooncategorie",
+    "description": "Sjabloon voor beschrijving",
+    "language": "Taalsjabloon",
+    "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project ge\u00efnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
+    "no-tag-set": "Er is voorlopig geen tag ingesteld.",
+    "placeholder-purpose": "Projectdoelstelling",
+    "placeholder-title": "Titel Plaatshouder",
+    "tags": "Sjabloontags",
+    "title": "Sjablonen",
+    "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is."
+  },
+  "tips": {
+    "background-color": "Deze kleur wordt achter de tekst weergegeven.",
+    "category-delete": "U kunt een categorie alleen verwijderen als de categorie geen projecten bevat. Breng alle projecten in de categorie over naar andere categorie\u00ebn.",
+    "category-image": "Afbeelding gebruikt om een categorie te illustreren. Het is niet vereist als u liever gewoon een kleur weergeven. Minimale breedte: 1024px, Minimale hoogte: 400px",
+    "limit-publication-to-reviewers": "Wilt u de publicatie van projecten beperken tot beoordelaars?",
+    "organization-name": "Deze naam zal worden gebruikt om uw community te identificeren in community-specifieke pagina's (bijv.: statistieken pagina).",
+    "organization-title": "De titel van uw portal verschijnt op de banner van uw welkomstpagina. Voorbeeld hierboven.",
+    "organization-email": "Contacteer e-mail van uw portal.",
+    "organization-language": "De taal standaard van uw portal.",
+    "organization-visibility": "Wilt u een link naar uw portal van het hoofdportaal van Projecten?",
+    "organization-logo": "Uw logo verschijnt op de ouderportal op een witte achtergrond. Als het eerder ge\u00fcploade logo niet compatibel is met een witte achtergrond, kies dan een achtergrondkleur hieronder."
+  },
+  "toasts": {
+    "abuse-report": {
+      "success": "De inhoud is succesvol gerapporteerd",
+      "error": "Fout tijdens het inhoudsrapport"
+    },
+    "announcement-create": {
+      "success": "De aankondiging is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van de aankondiging"
+    },
+    "announcement-delete": {
+      "success": "De aankondiging is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van de aankondiging"
+    },
+    "announcement-update": {
+      "success": "De aankondiging is succesvol bijgewerkt",
+      "error": "Fout tijdens de aankondigingsupdate"
+    },
+    "bug-report": {
+      "success": "De fout is succesvol gemeld",
+      "error": "Fout tijdens het foutrapport"
+    },
+    "category-template-update": {
+      "success": "Het categoriesjabloon is succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van categoriesjabloon"
+    },
+    "category-update": {
+      "success": "De categorie is succesvol bijgewerkt",
+      "error": "Fout tijdens de categorie-update"
+    },
+    "categories-reorder": {
+      "success": "De categorievolgorde is succesvol bijgewerkt",
+      "error": "Fout tijdens de update van de categorie\u00ebn bestelling"
+    },
+    "comment-create": {
+      "success": "Het commentaar is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van commentaar"
+    },
+    "comment-delete": {
+      "success": "Het commentaar is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van commentaar"
+    },
+    "comment-update": {
+      "success": "Het commentaar is succesvol bijgewerkt",
+      "error": "Fout tijdens de opmerking-update"
+    },
+    "contact": {
+      "success": "Uw contactaanvraag is in aanmerking genomen",
+      "error": "Fout bij het indienen van het formulier"
+    },
+    "description-update": {
+      "success": "De beschrijving is succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van de beschrijving"
+    },
+    "faq-create": {
+      "success": "De aangepaste hulp is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van aangepaste hulp"
+    },
+    "faq-delete": {
+      "success": "De aangepaste hulp is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van aangepaste hulp"
+    },
+    "faq-update": {
+      "success": "De aangepaste hulp is succesvol bijgewerkt",
+      "error": "Fout tijdens de aangepaste help-update"
+    },
+    "file-create": {
+      "success": "Het bestand is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van bestanden"
+    },
+    "file-delete": {
+      "success": "Het bestand is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van het bestand"
+    },
+    "file-update": {
+      "success": "Het bestand is succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van het bestand"
+    },
+    "goal-create": {
+      "success": "Het doel is succesvol gemaakt",
+      "error": "Fout tijdens het aanmaken van het doel"
+    },
+    "goal-delete": {
+      "success": "Het doel is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van het doel"
+    },
+    "goal-update": {
+      "success": "Het doel is succesvol bijgewerkt",
+      "error": "Fout tijdens de doelupdate"
+    },
+    "blog-delete": {
+      "success": "Het blog-item is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van blog-item"
+    },
+    "blog-create": {
+      "success": "Het blog-item is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van de blog"
+    },
+    "blog-update": {
+      "success": "Het blog-item is succesvol bijgewerkt",
+      "error": "Fout tijdens de update van bloginvoer"
+    },
+    "group-added": {
+      "success": "De groep is succesvol toegevoegd",
+      "error": "Fout tijdens de groepsoptelling"
+    },
+    "link-already-exists": "Deze koppeling bestaat al",
+    "link-create": {
+      "success": "De koppeling is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van koppeling"
+    },
+    "link-delete": {
+      "success": "De verwijzing is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van de verwijzing"
+    },
+    "link-update": {
+      "success": "De koppeling is succesvol bijgewerkt",
+      "error": "Fout tijdens de link-update"
+    },
+    "linked-project-create": {
+      "success": "De gekoppelde projecten zijn succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van gekoppelde projecten"
+    },
+    "linked-project-delete": {
+      "success": "Het gekoppelde project is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van het gekoppelde project"
+    },
+    "linked-project-update": {
+      "success": "Het gekoppelde project is succesvol bijgewerkt",
+      "error": "Fout tijdens de gekoppelde projectupdate"
+    },
+    "location-create": {
+      "success": "De locatie is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van locatie"
+    },
+    "location-delete": {
+      "success": "De locatie is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van locatie"
+    },
+    "location-update": {
+      "success": "De locatie is succesvol bijgewerkt",
+      "error": "Fout tijdens de locatie-update"
+    },
+    "organization-general-update": {
+      "success": "De algemene informatie van het portaal is succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van algemene informatie over het portaal"
+    },
+    "organization-tag-create": {
+      "success": "De tag is succesvol toegevoegd aan de organisatie",
+      "error": "Fout tijdens het aanmaken van tags"
+    },
+    "organization-tag-delete": {
+      "success": "De tag is succesvol verwijderd van de organisatie",
+      "error": "Fout tijdens het verwijderen van tags"
+    },
+    "group-create": {
+      "success": "De groep is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van de groep"
+    },
+    "group-edit": {
+      "success": "De groep is succesvol bijgewerkt",
+      "error": "Fout tijdens de groepsupdate"
+    },
+    "project-categories-update": {
+      "success": "De projectcategorie\u00ebn zijn succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van projectcategorie\u00ebn"
+    },
+    "project-create": {
+      "success": "Het project is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van het project"
+    },
+    "project-destroy": {
+      "success": "Het project is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van het project"
+    },
+    "project-edit": {
+      "success": "Het project is succesvol bijgewerkt",
+      "error": "Fout tijdens projectupdate"
+    },
+    "project-duplication": {
+      "success": "Het project is succesvol gedupliceerd",
+      "error": "Fout tijdens het dupliceren van het project"
+    },
+    "project-quit": {
+      "success": "Het project is succesvol afgesloten",
+      "error": "Fout tijdens de bewerking"
+    },
+    "project-life-status-update": {
+      "success": "De levensduur van het project is succesvol bijgewerkt"
+    },
+    "project-message-create": {
+      "success": "Het interne bericht is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van interne berichten"
+    },
+    "project-message-delete": {
+      "success": "Het interne bericht is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van het interne bericht"
+    },
+    "project-message-update": {
+      "success": "Het interne bericht is succesvol bijgewerkt",
+      "error": "Fout tijdens de interne berichtupdate"
+    },
+    "project-organizations-update": {
+      "success": "De projectorganisaties zijn succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van projectorganisaties"
+    },
+    "project-visibility-update": {
+      "success": "De zichtbaarheid van het project is succesvol bijgewerkt"
+    },
+    "review-create": {
+      "success": "De beoordeling is succesvol toegevoegd",
+      "error": "Fout tijdens het aanmaken van de beoordeling"
+    },
+    "review-delete": {
+      "success": "De herziening is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van de beoordeling"
+    },
+    "review-update": {
+      "success": "De evaluatie is succesvol bijgewerkt",
+      "error": "Fout tijdens de herzieningsupdate"
+    },
+    "sdgs-update": {
+      "success": "De SDG's zijn succesvol bijgewerkt",
+      "error": "Fout tijdens de SDG-update"
+    },
+    "team-member-create": {
+      "success": "De gebruiker is succesvol toegevoegd",
+      "error": "Fout tijdens de gebruikerstoevoeging"
+    },
+    "team-member-delete": {
+      "success": "De gebruiker is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van de gebruiker"
+    },
+    "team-group-delete": {
+      "success": "De groep is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van groep"
+    }
+  },
+  "success": {
+    "created": "Succesvol gecre\u00eberd.",
+    "updated": "Succesvol bijgewerkt.",
+    "deleted": "Met succes verwijderd."
+  },
+  "portal": {
+    "sub-title": "Ontdek portalen van andere organisaties. Blader, raak ge\u00efnspireerd en neem contact op!"
+  },
+  "welcome-modal": {
+    "title": "Welkom op het projectportaal van {0}",
+    "success": "Wat? Uw account is succesvol aangemaakt!",
+    "instruction": "Voordat u kunt beginnen te genieten van het platform, moet u uw profiel te voltooien.",
+    "guidance": "Dit duurt maar een paar minuten en wij begeleiden u langs de weg.",
+    "complete-later": "Ik doe dit later wel.",
+    "complete-now": "Laten we gaan!"
+  },
+  "notifications": {
+    "header": "Kennisgevingen",
+    "title": "Notificatieinstellingen",
+    "tabs": {
+      "email": "E-mailberichten",
+      "options": {
+        "yes": "Ja.",
+        "no": "Nee"
+      }
+    },
+    "project": {
+      "title": "Projectnotificatie",
+      "changes": "Meldingen wijzigen",
+      "reviews": "Evaluatie van kennisgevingen",
+      "members": "Kennisgevingen van leden",
+      "applications": "Meldingen van aanvragen",
+      "blogEntries": "Blogmeldingen"
+    },
+    "projects": {
+      "title": "Meldingen die u per e-mail ontvangt:",
+      "follow": "Projecten die je volgt",
+      "follow-sub": "Op de hoogte wanneer projecten die u hebt gevolgd worden gewijzigd",
+      "member": "Toegevoegd als teamlid",
+      "member-sub": "Wordt op de hoogte gesteld als iemand je als teamlid aan een project toevoegt",
+      "comment": "Opmerkingen",
+      "comment-sub": "Op de hoogte wanneer iemand commentaar geeft op uw project",
+      "internal-message": "Interne berichten",
+      "internal-message-sub": "Waarschuwen wanneer iemand een intern bericht aan uw project toevoegt",
+      "project": "Uw projecten",
+      "project-sub": "Op de hoogte wanneer andere teamleden uw projecten wijzigen",
+      "announcement": "Mededelingen",
+      "announcement-sub": "Op de hoogte worden gesteld wanneer nieuwe aankondigingen worden gepubliceerd op de website",
+      "review": "Klaar voor beoordeling",
+      "review-sub": "Wanneer u een beoordelaar van een project bent, moet u op de hoogte worden gesteld wanneer een project door u kan worden beoordeeld.",
+      "reviewed": "Is herzien",
+      "reviewed-sub": "Wanneer uw project klaar is voor beoordeling, moet u op de hoogte worden gesteld wanneer de beoordelaar van uw project zijn beoordeling heeft ingediend",
+      "reply": "Antwoord op uw commentaar",
+      "reply-sub": "Op de hoogte wanneer iemand antwoordt op uw reactie"
+    },
+    "follow": {
+      "title": "Aanmelding volgen",
+      "changes": "Meldingen wijzigen",
+      "reviews": "Evaluatie van kennisgevingen",
+      "blogEntries": "Blogmeldingen"
+    },
+    "organization": {
+      "added": "Nieuwe gebruiker aan organisatie notificatie",
+      "access": "Kennisgeving van toegangsverzoeken",
+      "access-sub": "Waarschuwen wanneer een gebruiker toegang tot uw organisatie vraagt",
+      "invitation": "Kennisgeving van uitnodiging",
+      "invitation-sub": "Op de hoogte worden gesteld wanneer een uitnodigingslink vervalt",
+      "instruction": "Kennisgeving van instructie",
+      "instruction-sub": "Op de hoogte worden gesteld wanneer een nieuwe instructie wordt gepubliceerd"
+    },
+    "read-all": "Alle meldingen lezen",
+    "type": {
+      "comment": "{sender} commentaar {project}",
+      "project_message": "{sender} liet een intern bericht achter {project}",
+      "reply": "{sender} beantwoordde uw opmerking in {project}",
+      "review": "{sender} herzien project {project}",
+      "ready_for_review": "{sender} markeerde zijn project als klaar voor herziening. U kunt nu project {project} beoordelen",
+      "project_updated": "{sender} bijgewerkt het project {project}",
+      "group_member_added": "{sender} voegde groep {group} als lid toe aan project {project}",
+      "group_member_added_self": "{sender} toegevoegd groep {group} u maakt deel uit van project {project}",
+      "group_member_removed_other": "{sender} verwijderde een groep uit leden van project {project}",
+      "group_member_removed": "{sender} verwijderde een groep uit leden van project {project}",
+      "member_added_self": "{sender} u toegevoegd aan project {project}",
+      "member_updated_self": "Uw rol in het project {project} is bijgewerkt door {sender}",
+      "member_added": "{sender} toegevoegd aan het project {project}",
+      "member_updated": "{sender} heeft de rol van {user} in het project aangepast {project}",
+      "member_removed": "{sender} geschrapt {user} van het team van het project {project}",
+      "announcement": "{sender} publiceerde een nieuwe aankondiging in het project {project}",
+      "application": "{applicant} toegepast op uw aankondiging {announcement} in het project {project}",
+      "blog_entry": "{sender} publiceerde een nieuwe blog in het project {project}",
+      "invitation_reminder": "Een uitnodiging die u hebt gemaakt zal binnenkort verlopen",
+      "invitation_today_reminder": "Een {link} die u hebt gemaakt voor de groep {today_group} zal vandaag aflopen",
+      "invitation_week_reminder": "A {link} die u hebt gecre\u00eberd voor de groep {week_group} zal over een week aflopen",
+      "register-link": "registerlink",
+      "access_request": "Reageer op {access_request_nb} in afwachting van toegangsverzoek(s)!",
+      "pending_access_requests": "Reageer op {requests_count} in afwachting van toegangsverzoek(s)!"
+    },
+    "empty": "U heeft geen meldingen"
+  },
+  "recommendations": {
+    "empty": "U heeft geen aanbevelingen",
+    "connect-to": "Je zou je kunnen verbinden met",
+    "title": "Aanbevolen voor u",
+    "is-featured": "(Uitgelicht)",
+    "more-projects": "Ontdek meer projecten",
+    "more-profiles": "Ontdek meer profielen",
+    "projects": {
+      "title": "Aanbevolen projecten"
+    },
+    "people": {
+      "title": "Aanbevolen personen"
+    }
+  },
+  "event": {
+    "no-event": "Nog geen evenement.",
+    "calendar": {
+      "title": "Agenda",
+      "future": "Toekomst",
+      "past": "Verleden",
+      "month": {
+        "01": {
+          "short": "Jan",
+          "long": "Januari"
+        },
+        "02": {
+          "short": "Feb",
+          "long": "Februari"
+        },
+        "03": {
+          "short": "Mar",
+          "long": "Maart"
+        },
+        "04": {
+          "short": "apr",
+          "long": "april"
+        },
+        "05": {
+          "short": "Mei",
+          "long": "Mei"
+        },
+        "06": {
+          "short": "Juni",
+          "long": "Juni"
+        },
+        "07": {
+          "short": "jul",
+          "long": "Juli"
+        },
+        "08": {
+          "short": "Aug",
+          "long": "Augustus"
+        },
+        "09": {
+          "short": "sep",
+          "long": "September"
+        },
+        "10": {
+          "short": "okt",
+          "long": "oktober"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "November"
+        },
+        "12": {
+          "short": "Dec",
+          "long": "December"
+        }
+      }
+    },
+    "create": {
+      "title": "Agendanotitie toevoegen",
+      "button": "Voeg toe"
+    },
+    "delete": {
+      "title": "Event verwijderen?",
+      "message": "Wilt u deze agendanotitie verwijderen?",
+      "success": "Gebeurtenis verwijderd",
+      "error": "Fout bij het verwijderen van de gebeurtenis"
+    },
+    "save": {
+      "success": "Gebeurtenis opgeslagen",
+      "error": "Fout bij het opslaan van de gebeurtenis"
+    },
+    "drawer": {
+      "create": "Agendanotitie toevoegen",
+      "edit": "Agendanotitie bewerken"
+    },
+    "form": {
+      "title": {
+        "label": "Naam van de gebeurtenis *",
+        "placeholder": "Eerste sem. examen",
+        "required": "De naam is verplicht"
+      },
+      "content": {
+        "label": "informatie",
+        "placeholder": "Informatie over deze gebeurtenis toevoegen"
+      },
+      "event_date": {
+        "label": "Datum van de gebeurtenis",
+        "placeholder": "Datum selecteren",
+        "required": "De datum is vereist"
+      },
+      "people_groups": {
+        "label": "Gerichte groep(s)",
+        "notice": "Selecteer de groep(s) die deze gebeurtenis zal zien",
+        "select-all": "Alles selecteren",
+        "filter": "Filtergroepen",
+        "all": "Alle groepen",
+        "public": "Openbaar"
+      }
+    },
+    "group-label": "Groep:",
+    "groups-label": "Groepen:"
+  },
+  "news": {
+    "create": {
+      "title": "Nieuws aanmaken"
+    },
+    "delete": {
+      "title": "Nieuws verwijderen?",
+      "message": "Wilt u dit nieuws verwijderen?",
+      "success": "Nieuws verwijderd",
+      "error": "Fout bij het verwijderen van het nieuws"
+    },
+    "save": {
+      "success": "Opgeslagen nieuws",
+      "error": "Fout bij het opslaan van het nieuws"
+    },
+    "form": {
+      "image": {
+        "label": "Afbeelding"
+      },
+      "title": {
+        "label": "Titel *",
+        "required": "De titel is vereist",
+        "placeholder": "de titel van het nieuws"
+      },
+      "content": {
+        "label": "Inhoud",
+        "required": "De inhoud is vereist"
+      },
+      "publication_date": {
+        "label": "Publicatiedatum",
+        "required": "De publicatiedatum is vereist"
+      },
+      "groups": {
+        "label": "Gerichte groep(s)",
+        "notice": "Selecteer de groep(s) die dit nieuws zal zien",
+        "select-all": "Alles selecteren",
+        "filter": "Filtergroepen"
+      }
+    },
+    "list": {
+      "title": "Nieuws",
+      "create": "Aanmaken",
+      "read-more": "Gelezen"
+    },
+    "page": {
+      "others": "Ander nieuws"
+    },
+    "drawer": {
+      "title": "Nieuws bewerken"
+    }
+  },
+  "instructions": {
+    "create": {
+      "title": "Een instructie toevoegen"
+    },
+    "delete": {
+      "title": "Gebruiksaanwijzing verwijderen?",
+      "message": "Wilt u deze instructie verwijderen?",
+      "success": "Instructie verwijderd",
+      "error": "Fout bij het verwijderen van de instructie"
+    },
+    "save": {
+      "success": "Instructie opgeslagen",
+      "error": "Fout tijdens het opslaan van de instructie"
+    },
+    "form": {
+      "title": {
+        "label": "Titel *",
+        "required": "De titel is vereist",
+        "placeholder": "de titel van de instructie"
+      },
+      "content": {
+        "label": "Inhoud",
+        "required": "De inhoud is vereist"
+      },
+      "publication_date": {
+        "label": "Publicatiedatum",
+        "required": "De publicatiedatum is vereist"
+      },
+      "groups": {
+        "label": "Gerichte groep(s)",
+        "notice": "Selecteer de groep(s) die deze instructie zal zien",
+        "select-all": "Alles selecteren",
+        "filter": "Filtergroepen"
+      },
+      "notify": {
+        "label": "Kennisgeving",
+        "notice": "Indien geselecteerd wordt iedereen op de hoogte gebracht van de nieuwe instructie",
+        "button": "Een melding versturen"
+      }
+    },
+    "list": {
+      "title": "Instructies",
+      "create": "Voeg toe",
+      "read-more": "Gelezen"
+    },
+    "drawer": {
+      "title": "Gebruiksaanwijzing bewerken"
+    }
+  },
+  "chat": {
+    "drawer": {
+      "title": "Chatplatform toevoegen",
+      "notice": "U kunt een link toevoegen aan uw chatplatform. Het zal alleen zichtbaar zijn voor uw verbonden gebruikers.",
+      "url": {
+        "label": "Link naar uw chatplatform",
+        "notice": "Plakken hier de link naar uw platform",
+        "placeholder": "URL-adres plakken (https://...)"
+      },
+      "wording": {
+        "label": "Koppeling",
+        "notice": "Wat de knop moet weergeven (ex: Word lid van de chat, Word lid van Whatsapp...) - Maximaal 12 auto's.",
+        "placeholder": "ex: Meedoen aan chat"
+      },
+      "success": "Gespreksinstellingen opgeslagen",
+      "error": "Fout bij opslaan van chat-instellingen"
+    },
+    "data": {
+      "link": "Verband:",
+      "wording": "Knoptekst:",
+      "no-link": "(niets ingesteld)",
+      "no-wording": "(niets ingesteld)"
+    }
+  },
+  "featured-projects": {
+    "drawer": {
+      "title": "Bewezen projecten toevoegen",
+      "max-pick-reached": "U heeft het maximale aantal aanbevolen projecten bereikt"
+    },
+    "save": {
+      "success": "Aanbevolen projecten opgeslagen",
+      "error": "Fout bij het opslaan van de aanbevolen projecten"
+    }
+  },
+  "message": {
+    "error-login": "Er is een fout opgetreden tijdens het aanmelden. Probeer het nog eens.",
+    "failed": "Fout tijdens het versturen van bericht. Probeer het nog eens.",
+    "leave-confirmation": "Je gaat de pagina verlaten met niet opgeslagen gegevens.",
+    "sent": "Bericht verzonden",
+    "redirect": "Redirect in uitvoering",
+    "error": {
+      "unauthorized": "Ongeautoriseerd: Toegang wordt geweigerd wegens ongeldige referenties.",
+      "unprocessable-entity": "Onverwerkbare entiteit: Kan de inhoud niet verwerken.",
+      "bad-gateway": "Onjuiste gateway: De server kwam een tijdelijke fout tegen en kon uw verzoek niet voltooien."
+    }
+  },
+  "people-groups": {
+    "browse-tree": "Groepsboom doorbladeren"
+  },
+  "geocoding": {
+    "error": "Fout tijdens adresgeocodering",
+    "no-results": "Geen resultaten gevonden voor dit adres",
+    "choose-method": "Om een locatie toe te voegen, kiest u een invoermethode:",
+    "click-method": "Klik op de kaart",
+    "click-method-no-geocoding": "Plaats toevoegen",
+    "click-method-notice": "Klik op de kaart om de locatie te kiezen",
+    "form-method": "Voer het adres in",
+    "form-method-notice": "Voer het adres in het veld hieronder",
+    "address": "Adres",
+    "delete-location": "Locatie verwijderen",
+    "confirm-delete-location": "Weet u zeker dat u deze locatie wilt verwijderen?",
+    "filter-by-type": "Filteren op type",
+    "form-placeholder": "Street, City, Land",
+    "pick-location": "Kies een van de voorgestelde locatie door erop te klikken",
+    "found-number": "Gevonden {number} locaties(s)",
+    "search": "Zoeken",
+    "feature-type": {
+      "house": "Huis",
+      "street": "Straat",
+      "locality": "Plaats",
+      "district": "District",
+      "city": "Stad",
+      "county": "Land",
+      "state": "Staat",
+      "country": "Land",
+      "other": "Andere"
+    }
+  },
+  "card-list": {
+    "list": "Lijst",
+    "grid": "Raster"
+  }
+}
