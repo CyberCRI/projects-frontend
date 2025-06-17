@@ -1306,8 +1306,8 @@
           "label": "bio- curt",
           "placeholder": "1 a 2 l\u00ednies per descriure breument"
         },
-        "professional-bio": {
-          "label": "bio professional",
+        "long-bio": {
+          "label": "biografia llarga",
           "placeholder": "Presenta't professionalment. Presenta la teva ruta professional i la teva ocupaci\u00f3 actual."
         },
         "personal-bio": {

@@ -1306,8 +1306,8 @@
           "label": "L\u00fchibi",
           "placeholder": "1 kuni 2 rida l\u00fchidalt kirjeldada teid"
         },
-        "professional-bio": {
-          "label": "Professionaalne biobioloogia",
+        "long-bio": {
+          "label": "Pikk biobioloogia",
           "placeholder": "Esitle ennast professionaalselt. Esitage oma karj\u00e4\u00e4ri ja oma praegust ametit."
         },
         "personal-bio": {
