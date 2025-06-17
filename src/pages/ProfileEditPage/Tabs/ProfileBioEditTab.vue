@@ -25,7 +25,12 @@
       <!--p class="notice">
         {{ $t('profile.edit.bio.professional-bio.placeholder') }}
       </p-->
-      <TipTapEditor ref="faq-editor" v-model="form.bio" data-test="long-bio-editor" />
+      <TipTapEditor
+        ref="faq-editor"
+        :key="user.id"
+        v-model="form.bio"
+        data-test="long-bio-editor"
+      />
     </div>
     <!-- actions -->
     <div class="form-actions">
