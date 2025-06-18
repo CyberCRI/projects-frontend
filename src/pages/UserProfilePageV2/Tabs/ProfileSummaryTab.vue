@@ -4,7 +4,7 @@
       <div class="left">
         <!-- User descriptions -->
         <UserDescriptions
-          v-if="user.personal_description || user.professional_description"
+          v-if="user.description"
           :is-limited="true"
           :user="user"
           class="user-description"

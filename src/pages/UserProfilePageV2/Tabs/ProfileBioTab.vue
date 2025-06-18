@@ -10,10 +10,7 @@
       />
     </div>
     <!-- User descriptions -->
-    <UserDescriptions
-      v-if="user.personal_description || user.professional_description"
-      :user="user"
-    />
+    <UserDescriptions v-if="user.description" :user="user" />
     <p v-else class="empty-field">
       {{ noDescription }}
     </p>
