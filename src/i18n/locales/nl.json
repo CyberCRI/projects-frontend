@@ -7,8 +7,8 @@
     "WHY": {
       "title": "Waarom Projects.directory aanmaken?",
       "des": "In elke organisatie met meer dan twintig leden, is het moeilijk te weten wie wat doet en waar iedereen nu aan werkt. We zijn begonnen met projecten om {link} gebruikers hun projecten en initiatieven te laten delen tussen studenten, onderzoekers, medewerkers en docenten.",
-      "des1": "In een interdisciplinaire omgeving kun je niet alleen vertrouwen op top-down communicatie: mensen moeten praten, om andere projecten te ontdekken die relevant zijn voor hun werk, om te worden ge\u00efnspireerd door coole projecten die zinvol zijn voor zichzelf en de planeet. Dus bouwden we een platform om iedereen zijn eigen projecten en passies te laten zien aan hun gemeenschap en aan de wereld.",
-      "des2": "Het was al snel duidelijk dat elke organisatie dezelfde behoeften heeft. Dus laten we andere groepen hun eigen projecten delen (NGO's, universiteiten...) op hun eigen portalen, terwijl alle projecten werden gedeeld op een {link}. We kregen de steun van het Franse Ministerie van Onderwijs, de stad Parijs, de regio \u00cele-de-France, de Universit\u00e9 de Paris en vele anderen.",
+      "des1": "In een interdisciplinaire omgeving kun je niet alleen vertrouwen op top-down communicatie: mensen moeten praten, om andere projecten te ontdekken die relevant zijn voor hun werk, om te worden geïnspireerd door coole projecten die zinvol zijn voor zichzelf en de planeet. Dus bouwden we een platform om iedereen zijn eigen projecten en passies te laten zien aan hun gemeenschap en aan de wereld.",
+      "des2": "Het was al snel duidelijk dat elke organisatie dezelfde behoeften heeft. Dus laten we andere groepen hun eigen projecten delen (NGO's, universiteiten...) op hun eigen portalen, terwijl alle projecten werden gedeeld op een {link}. We kregen de steun van het Franse Ministerie van Onderwijs, de stad Parijs, de regio Île-de-France, de Université de Paris en vele anderen.",
       "platform": "wereldwijd platform",
       "button_blog": {
         "text": "Platform blog"
@@ -16,7 +16,7 @@
     },
     "GOAL": {
       "title": "Hoe gaan we verder?",
-      "des": "CRI en UNESCO cre\u00eberden samen {lpiLink}, een initiatief om onderwijs wereldwijd te transformeren. #LearningPlanet is een wereldwijde open alliantie van educatieve stakeholders en leergemeenschappen met een doel, met de missie om lerenden van alle leeftijden te inspireren en kracht te geven om bij te dragen aan het vormgeven van betere toekomsten. Ons doel is de samenwerking tussen duizenden actoren in het onderwijs te bevorderen en een digitaal ecosysteem te cre\u00ebren dat hen helpt samen beter te leren.",
+      "des": "CRI en UNESCO creëerden samen {lpiLink}, een initiatief om onderwijs wereldwijd te transformeren. #LearningPlanet is een wereldwijde open alliantie van educatieve stakeholders en leergemeenschappen met een doel, met de missie om lerenden van alle leeftijden te inspireren en kracht te geven om bij te dragen aan het vormgeven van betere toekomsten. Ons doel is de samenwerking tussen duizenden actoren in het onderwijs te bevorderen en een digitaal ecosysteem te creëren dat hen helpt samen beter te leren.",
       "des1": "Projecten. directory is het meest volwassen hulpmiddel van dit digitale ecosysteem. We hopen dat elke organisatie die zich richt op het oplossen van doelstellingen voor duurzame ontwikkeling deze zal gebruiken om hun projecten en initiatieven te delen.",
       "des2": "Projecten. directory maakt gebruik van collectieve en kunstmatige intelligentie van het {weLearnLink} initiatief en het {skillLink} project.",
       "button_community": {
@@ -25,7 +25,7 @@
     },
     "TEAM_CORE": {
       "title": "Kernteam",
-      "des": "Zij cre\u00ebren en verbeteren het projectplatform",
+      "des": "Zij creëren en verbeteren het projectplatform",
       "list": [
         {
           "title": "Tech Leader",
@@ -52,12 +52,12 @@
           "des": "Ontwikkelt API's en complexe back-end taken"
         },
         {
-          "title": "Pedagogisch co\u00f6rdinator",
-          "des": "Co\u00f6rdinaten inzet binnen de Universiteit van Parijs bij Challenge Institute"
+          "title": "Pedagogisch coördinator",
+          "des": "Coördinaten inzet binnen de Universiteit van Parijs bij Challenge Institute"
         },
         {
           "title": "Technische specialist",
-          "des": "Documenteert het projectplatform en co\u00f6rdineert #LearningPlanet digitale behoeften"
+          "des": "Documenteert het projectplatform en coördineert #LearningPlanet digitale behoeften"
         }
       ]
     },
@@ -75,15 +75,15 @@
         },
         {
           "title": "Beheerder van de Gemeenschap",
-          "des": "PHD student en \u00c9PhiScience oprichter, super tester van nieuwe functies"
+          "des": "PHD student en ÉPhiScience oprichter, super tester van nieuwe functies"
         },
         {
-          "title": "Pedagogisch co\u00f6rdinator",
+          "title": "Pedagogisch coördinator",
           "des": "Ontwerpen en testen pedagogische scenarii met behulp van projecten met Licentiestudenten"
         },
         {
           "title": "Volledige-stapel ontwikkelaar",
-          "des": "Cre\u00eberde en integreerde de WeLearn concept map in Projecten zoeken"
+          "des": "Creëerde en integreerde de WeLearn concept map in Projecten zoeken"
         },
         {
           "title": "Beheerder en belangrijkste gebruiker van de Gemeenschap",
@@ -95,7 +95,7 @@
         },
         {
           "title": "CRI medeoprichter",
-          "des": "Helpt bij het cre\u00ebren van de visie voor de toekomst van onderwijs en ons digitale ecosysteem"
+          "des": "Helpt bij het creëren van de visie voor de toekomst van onderwijs en ons digitale ecosysteem"
         }
       ]
     },
@@ -144,7 +144,7 @@
       "add-classification": {
         "title": "Een kader toevoegen",
         "error": "Fout bij opslaan van het kader",
-        "success": "Het kader is met succes gecre\u00eberd"
+        "success": "Het kader is met succes gecreëerd"
       },
       "edit-classification": {
         "title": "Een kader bewerken",
@@ -157,7 +157,7 @@
         "error": "Fout bij het verwijderen van het kader",
         "success": "Het kader is succesvol verwijderd"
       },
-      "create-classification": "Een kader cre\u00ebren",
+      "create-classification": "Een kader creëren",
       "create-tag": "Een tag aanmaken",
       "tags": "labels",
       "enabled-for-projects": "Ingeschakeld voor projecten",
@@ -203,7 +203,7 @@
     },
     "tabs": {
       "information": "Algemeen",
-      "categories": "Categorie\u00ebn",
+      "categories": "Categorieën",
       "tags": "Tags",
       "skills": "Vaardigheden",
       "help": "Hulp",
@@ -248,7 +248,7 @@
       "categories": {
         "add": "Een categorie toevoegen",
         "authorizations": "Vergunningen",
-        "children": "Kindercategorie\u00ebn",
+        "children": "Kindercategorieën",
         "no-child": "Geen kindcategorie",
         "description-limit": "Maximaal 300 tekens.",
         "edit": "Categorie bewerken",
@@ -259,7 +259,7 @@
         "hide-projects": "Projecten verbergen",
         "delete-category": "Categorie verwijderen",
         "delete-category-description": "Weet u zeker dat u de categorie '{categoryName}' wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
-        "delete-category-has-children": "Deze categorie heeft subcategorie\u00ebn en/of projecten. Haal ze eerst weg.",
+        "delete-category-has-children": "Deze categorie heeft subcategorieën en/of projecten. Haal ze eerst weg.",
         "delete-category-error": "Fout bij verwijderen categorie",
         "delete-category-success": "Categorie geschrapt",
         "background-notice": "Voor de header van deze categorie kan je een achtergrondkleur kiezen of je eigen achtergrondafbeelding uploaden",
@@ -302,13 +302,13 @@
       }
     },
     "groups": {
-      "intro": "Gebruik groepen om uw gebruikers effici\u00ebnter te beheren. U kunt groepen aanmaken en gebruikers toevoegen. U kunt ook subgroepen aanmaken.",
+      "intro": "Gebruik groepen om uw gebruikers efficiënter te beheren. U kunt groepen aanmaken en gebruikers toevoegen. U kunt ook subgroepen aanmaken.",
       "create-group": "Groep aanmaken",
       "add-modal-title-1": "dochtergroep toevoegen aan \"",
       "add-modal-title-2": "\" groep",
-      "subtitle-add-child": "Selecteer in de lijst de dochtergroep. Je kunt er maar \u00e9\u00e9n kiezen.",
+      "subtitle-add-child": "Selecteer in de lijst de dochtergroep. Je kunt er maar één kiezen.",
       "edit-modal-title": "Oudergroep toevoegen",
-      "subtitle-edit-child": "Selecteer in de lijst de oudergroep. Je kunt er maar \u00e9\u00e9n kiezen."
+      "subtitle-edit-child": "Selecteer in de lijst de oudergroep. Je kunt er maar één kiezen."
     },
     "requests": {
       "intro": "Hier is de lijst van mensen die om toegang tot uw portaal hebben gevraagd. U kunt hun verzoek aanvaarden of afwijzen.",
@@ -378,7 +378,7 @@
   "groups": {
     "title": "Gebruikersrol",
     "edit": "Gebruikersrol bewerken",
-    "users": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een priv\u00e9 project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten.",
+    "users": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten.",
     "facilitators": "Facilitator: Deze rol is weggelegd voor leraren of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
     "admins": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers te beheren in uw portal. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
     "none": "Geen: Deze persoon heeft een Projectaccount maar maakt geen deel uit van uw portaal. Ze kunnen alleen de openbare projecten zien.",
@@ -392,7 +392,7 @@
     "main-groups": "Belangrijkste groepen"
   },
   "invitation": {
-    "copy-link": "Verwijzing kopi\u00ebren",
+    "copy-link": "Verwijzing kopiëren",
     "create": {
       "create-success": "Uitnodiging aangemaakt",
       "create-error": "Fout tijdens aanmaken van uitnodiging",
@@ -418,7 +418,7 @@
           "valid-until": "Geldig tot:"
         }
       },
-      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via \u00e9\u00e9n link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
+      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via één link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
       "link": "Hulp nodig? We zijn hier.",
       "notice": "Velden gemarkeerd met * zijn verplicht.",
       "title": "Een registerlink aanmaken"
@@ -435,7 +435,7 @@
       "description-column": "Omschrijving",
       "expire-column": "Verloopt op",
       "group-column": "Groep",
-      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via \u00e9\u00e9n link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
+      "intro": "Registreer links kunnen gebruikers die een Project account willen maken op uw portal om dit te doen. Alles wat je hoeft te doen is delen met hen de link. Veel mensen kunnen zich abonneren via één link. U kunt bepalen welke groep ze zullen deel uitmaken van wanneer het maken van de link.",
       "link-column": "Verband",
       "title": "Registreer links"
     }
@@ -446,7 +446,7 @@
     "last-publication": "laatste blogitem",
     "no-entry": "Nog geen ingang ...",
     "posts": "blog items",
-    "title": "blog"
+    "title": "Blog"
   },
   "browse": {
     "page-title": "Zoeken",
@@ -455,19 +455,19 @@
   },
   "category": {
     "add-sub-category": "Subcategorie toevoegen",
-    "edit-order-success": "Categorie\u00ebn-volgorde succesvol bewerkt",
-    "info-organize": "U kunt projecten in verschillende categorie\u00ebn (bijvoorbeeld studentenprojecten, teacher projecten, enz.) opsommen.",
-    "info-limit": "Elk project moet worden geassocieerd met een van deze categorie\u00ebn.",
+    "edit-order-success": "Categorieën-volgorde succesvol bewerkt",
+    "info-organize": "U kunt projecten in verschillende categorieën (bijvoorbeeld studentenprojecten, teacher projecten, enz.) opsommen.",
+    "info-limit": "Elk project moet worden geassocieerd met een van deze categorieën.",
     "page-title": "Categorie",
-    "title": "Categorie\u00ebn",
-    "all-categories": "Zie alle categorie\u00ebn",
+    "title": "Categorieën",
+    "all-categories": "Zie alle categorieën",
     "all-projects": "Alle projecten bekijken",
     "edit": "Bewerken"
   },
   "comment": {
     "add-comment": "Voeg je commentaar toe!",
     "comment-verb": "commentaar",
-    "comments": "opmerkingen",
+    "comments": "Opmerkingen",
     "deleted": "Commentaar geschrapt op de",
     "discard-comment": "Commentaar negeren?",
     "discard-changes": "Veranderingen weggooien?",
@@ -504,8 +504,8 @@
     "delete-user": "Verwijderen",
     "description": "beschrijving",
     "destroy-confirm": "Weet u zeker dat u dit project wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
-    "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste \u00e9\u00e9n editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
-    "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste \u00e9\u00e9n editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
+    "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
+    "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
     "edit": "bewerken",
     "file-required": "Een bestand is vereist",
     "for": "voor",
@@ -513,7 +513,7 @@
     "index": "Index",
     "less": "minder",
     "link-copied-success": "Koppeling gekopieerd",
-    "link-copied-failed": "Kopi\u00ebren van verwijzing is mislukt",
+    "link-copied-failed": "Kopiëren van verwijzing is mislukt",
     "loading": "Laden",
     "login": "login",
     "modify": "Wijzigen",
@@ -614,7 +614,7 @@
       "title": "Deel uw projecten",
       "impact": "het effect te vergroten",
       "des": "Gebruik het projectplatform om uw projecten te presenteren,",
-      "facilitate": "synergie\u00ebn bevorderen en samenwerking bevorderen",
+      "facilitate": "synergieën bevorderen en samenwerking bevorderen",
       "common": "voor algemeen belang.",
       "button_discover": "Projecten onderzoeken",
       "button_access": "Toegang krijgen"
@@ -654,7 +654,7 @@
       },
       {
         "title": "Delen en samenwerken",
-        "des": "Maak effici\u00ebnt een rijke presentatie van uw project,{0}en vergroot uw impact door krachten te bundelen.",
+        "des": "Maak efficiënt een rijke presentatie van uw project,{0}en vergroot uw impact door krachten te bundelen.",
         "list": [
           {
             "des": "Bewerk uw projectbeschrijving tegelijk met uw teamleden om geformatteerde tekst, afbeeldingen, video's en links toe te voegen via een gebruiksvriendelijke teksteditor."
@@ -696,7 +696,7 @@
         "list": [
           {
             "title": "PERSOONSGEGEVENS",
-            "des": "Personnaliseer alles: Plaats uw afbeeldingen, logo's, titels, maak uw eigen categorie\u00ebn, tags."
+            "des": "Personnaliseer alles: Plaats uw afbeeldingen, logo's, titels, maak uw eigen categorieën, tags."
           },
           {
             "title": "Eenvoudig beheer en MODERATIE",
@@ -714,7 +714,7 @@
       "des": "Ontdek alles over het projectplatform in zijn eigen project.",
       "project": {
         "title": "CRI-projecten",
-        "des": "Cr\u00e9er un annuaire des projets d'une organization avec les ressources et comp\u00e9tences mobilis\u00e9es"
+        "des": "Créer un annuaire des projets d'une organization avec les ressources et compétences mobilisées"
       }
     },
     "TESTIMONIALS": {
@@ -726,13 +726,13 @@
           },
           "title": "Voor onderwijs",
           "des": "Projectgerichte cursussen, stages, studentenverenigingen, zelfstudie, enz.",
-          "quote": "Met het projectplatform kon ik communiceren over de resultaten van alles wat ik deed voor mijn stage.{0} De commentaren sectie stond lezers toe om meer informatie te vragen en mij hun mening te geven over wat ze willen lezen.{0} Ik was in staat om mijn eigen ge\u00efllustreerde logboek te maken en dit stelde mijn lezers in staat om precies de implementatie en uitbreiding van biomimicry te ontdekken",
+          "quote": "Met het projectplatform kon ik communiceren over de resultaten van alles wat ik deed voor mijn stage.{0} De commentaren sectie stond lezers toe om meer informatie te vragen en mij hun mening te geven over wat ze willen lezen.{0} Ik was in staat om mijn eigen geïllustreerde logboek te maken en dit stelde mijn lezers in staat om precies de implementatie en uitbreiding van biomimicry te ontdekken",
           "author": "- Elise Buard, bachelor student, stage CEEBIOS"
         },
         {
           "project": {
             "title": "PROFS-CHERCHEURS - COVID19",
-            "des": "R\u00e9pondre collectief gezicht au COVID19"
+            "des": "Répondre collectief gezicht au COVID19"
           },
           "title": "Voor onderzoek",
           "des": "Onderzoekslabs, burgerwetenschapsinitiatieven, open-source uitdagingen.",
@@ -742,18 +742,18 @@
         {
           "project": {
             "title": "Ecolo Vie",
-            "des": "R\u00e9duire l'impact \u00e9cologique de notre famille"
+            "des": "Réduire l'impact écologique de notre famille"
           },
           "title": "Voor persoonlijke SDG-projecten",
           "des": "Onafhankelijke collectieven en activisten die kritische maatschappelijke uitdagingen aanpakken.",
-          "quote": "Ons project: een eco-verantwoordelijke familie worden. Met het projectplatform kunnen we gemakkelijk onze acties over voedsel, transport, huisvesting, recycling en kooppraktijken delen, en hopelijk inspireren anderen om te veranderen, \u00e9\u00e9n huishouden tegelijk!",
+          "quote": "Ons project: een eco-verantwoordelijke familie worden. Met het projectplatform kunnen we gemakkelijk onze acties over voedsel, transport, huisvesting, recycling en kooppraktijken delen, en hopelijk inspireren anderen om te veranderen, één huishouden tegelijk!",
           "author": "- Anne Mistral, familielid"
         }
       ]
     },
     "ACCESS": {
       "title": "TOETREDEN",
-      "des": "Verzoek om toegang tot het experiment alle functies{0}of kom in contact om een speciale portal te cre\u00ebren",
+      "des": "Verzoek om toegang tot het experiment alle functies{0}of kom in contact om een speciale portal te creëren",
       "button_personal": {
         "text": "Een persoonlijk account aanvragen"
       },
@@ -867,14 +867,14 @@
     "projects": "Projectenplatform",
     "madeBy": "is gemaakt door",
     "sourceText": "Zie de broncode",
-    "pca": "Continu\u00efteitsplan (PCA)",
+    "pca": "Continuïteitsplan (PCA)",
     "pssi": "Beveiligingsplan (PSSI)"
   },
   "goal": {
     "add": "een doel toevoegen",
     "completed-on-the": "ingevulde",
     "description": "doelomschrijving",
-    "goals": "doelstellingen",
+    "goals": "Doelstellingen",
     "planned-for-the": "Voorgesteld voor de",
     "status-title": "status",
     "title": "titel van het doel",
@@ -925,7 +925,7 @@
       "email-label": "E-mail",
       "email-placeholder": "Ex. achternaam{'@'}myuniversity.fr",
       "short-description-label": "Hoofdlijn",
-      "short-description-placeholder": "Beschrijf uw groep in \u00e9\u00e9n zin",
+      "short-description-placeholder": "Beschrijf uw groep in één zin",
       "name-label": "Groep",
       "name-placeholder": "Ex. Hitbox: interactieve bokszak",
       "description-label": "Omschrijving",
@@ -936,10 +936,10 @@
       "visibility": {
         "title": "Zichtbaarheid groep",
         "public": "Openbaar",
-        "private": "Priv\u00e9",
+        "private": "Privé",
         "members": "Leden",
         "public_description": "Publiek: iedereen kan deze groep vinden op Internet",
-        "private_description": "Priv\u00e9: alleen zichtbaar door de beheerders en de groepsleden",
+        "private_description": "Privé: alleen zichtbaar door de beheerders en de groepsleden",
         "members_description": "Leden: alleen zichtbaar door de leden van dit portaal"
       },
       "name-errors": {
@@ -973,7 +973,7 @@
     }
   },
   "header": {
-    "private": "Priv\u00e9: alleen zichtbaar voor teamleden",
+    "private": "Privé: alleen zichtbaar voor teamleden",
     "org": "Alleen zichtbaar voor de leden van uw portaal",
     "public": "Openbaar: zichtbaar voor elke bezoeker van de website",
     "similar-project": "vergelijkbaar project",
@@ -989,14 +989,14 @@
   },
   "home": {
     "all-projects": "Alle projecten",
-    "announcements": "aankondigingen",
+    "announcements": "Aankondigingen",
     "news": "Nieuws",
     "calendar": "Agenda",
     "instructions": "Instructies",
     "communities": "Portalen",
     "home": "Begin",
     "categories": {
-      "title": "Projecten Categorie\u00ebn"
+      "title": "Projecten Categorieën"
     },
     "login": "Aanmelden",
     "account-request": "Een account aanvragen",
@@ -1312,7 +1312,7 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Jezelf professioneel presenteren. Presenteer je carri\u00e8repad en je huidige beroep."
+          "placeholder": "Jezelf professioneel presenteren. Presenteer je carrièrepad en je huidige beroep."
         },
         "personal-bio": {
           "label": "Persoonlijke bio",
@@ -1344,7 +1344,7 @@
       },
       "skills": {
         "tab": "Vaardigheden",
-        "intro": "Je hebt nog geen vaardigheden geselecteerd. Professionele vaardigheden en hobby's kunt uw collega's en uw gemeenschap om u te vinden op basis van waar je goed in bent, waar je ge\u00efnteresseerd in bent en waar je om geeft.",
+        "intro": "Je hebt nog geen vaardigheden geselecteerd. Professionele vaardigheden en hobby's kunt uw collega's en uw gemeenschap om u te vinden op basis van waar je goed in bent, waar je geïnteresseerd in bent en waar je om geeft.",
         "save-error": "Fout bij opslaan van profiel.",
         "save-success": "Profiel opgeslagen.",
         "search": "zoeken",
@@ -1534,8 +1534,8 @@
     "apply-succes": "Aanvraag verzonden",
     "announcement-create": "Aanmaken",
     "announcements": "aankondigingen",
-    "at-coordinates": "op co\u00f6rdinaten",
-    "categories": "Projectencategorie\u00ebn",
+    "at-coordinates": "op coördinaten",
+    "categories": "Projectencategorieën",
     "community": "Communautaire projecten",
     "create-project": "Een project aanmaken",
     "create": {
@@ -1611,8 +1611,8 @@
     "show-n-projects": "De {count} projecten tonen",
     "suggested": "soortgelijke projecten",
     "suggested-hint": "Projecten die u wellicht interesseren",
-    "summary": "samenvatting",
-    "settings": "instellingen",
+    "summary": "Samenvatting",
+    "settings": "Instellingen",
     "org-settings": {
       "title": "Portal(s) van het portaal",
       "description": "Het project behoort tot de geselecteerde portals. Pas op wanneer u de portals waartoe uw project behoort toevoegt of wijzigt. Zo krijgen beheerders van een nieuwe organisatie automatisch toegang tot uw project. Of organisaties kunnen specifieke redactionele regels hebben die je moet volgen.",
@@ -1671,7 +1671,7 @@
     "bug": "Rapporteer een fout",
     "bug-title": "Leg het bug in een paar woorden uit.",
     "bug-text": "Beschrijf zo nauwkeurig mogelijk het probleem dat je hebt ervaren en hoe je het kunt reproduceren.",
-    "bug-url": "Kopi\u00ebren plak de URL van de pagina waar u dit probleem toevoegt."
+    "bug-url": "Kopiëren plak de URL van de pagina waar u dit probleem toevoegt."
   },
   "resource": {
     "add": "Hulpbron toevoegen",
@@ -1699,7 +1699,7 @@
     "group": "groep"
   },
   "visibility": {
-    "private-title": "Priv\u00e9:",
+    "private-title": "Privé:",
     "public-title": "Openbaar:",
     "community-title": "Portaalleden:",
     "private": "alleen zichtbaar voor teamleden.",
@@ -1818,7 +1818,7 @@
     "tag": "label",
     "or": "of",
     "ambiguousTag": "Ambigu Tag",
-    "subtitle-ambiguous-tag": "Deze tag heeft verschillende betekenissen. Selecteer degene waarin u ge\u00efnteresseerd bent:",
+    "subtitle-ambiguous-tag": "Deze tag heeft verschillende betekenissen. Selecteer degene waarin u geïnteresseerd bent:",
     "sdg": "SDG",
     "skills": "Vaardigheden",
     "category": "categorie",
@@ -1859,7 +1859,7 @@
     "geo-map": "Geografische kaart",
     "tag-map": "Labelkaart",
     "geo-map-description": "Ontdek projecten op een wereldkaart",
-    "tag-map-description": "Ontdek projets op een Wikip\u00e9dia tag map",
+    "tag-map-description": "Ontdek projets op een Wikipédia tag map",
     "open-map": "Kaart openen",
     "pick-tag-classification": "Kies een tagkader",
     "pick-skill-classification": "Kies een vaardigheidskader",
@@ -1945,7 +1945,7 @@
     "completed": "voltooid",
     "cancel": "annuleren",
     "canceled": "geannuleerd",
-    "ended": "be\u00ebindigd",
+    "ended": "beëindigd",
     "ongoing": "lopende",
     "private": "particulier",
     "public": "publiek",
@@ -1957,7 +1957,7 @@
   },
   "tag": {
     "add-specific": "Tags maken om projecten te organiseren",
-    "add-specific-info": "Deze tags maken het mogelijk om projecten te organiseren in aanvulling op categorie\u00ebn (voorbeelden: Master 2 LiSc Ze zijn specifiek voor uw organisatie. Ze zijn nuttig voor het filteren van uw projecten in de zoekopdracht.",
+    "add-specific-info": "Deze tags maken het mogelijk om projecten te organiseren in aanvulling op categorieën (voorbeelden: Master 2 LiSc Ze zijn specifiek voor uw organisatie. Ze zijn nuttig voor het filteren van uw projecten in de zoekopdracht.",
     "add-project-tag": "Tags naar voren brengen om projecten per thema te koppelen",
     "add-profile-tag": "Vaardigheden naar voren voor uw gebruikersprofielen",
     "add-project-tag-info": "Wanneer een gebruiker een project aanmaakt, kunnen ze een thematische tag uit Wikipedia toevoegen (bijv. biochemie, natuurkunde, enz.). Dit maakt het gemakkelijker om het project te vinden en de projectaanbevelingen te verbeteren door thematische overeenkomsten. U kunt belangrijke thematische tags voor uw organisatie markeren.",
@@ -1983,7 +1983,7 @@
     "category": "Sjablooncategorie",
     "description": "Sjabloon voor beschrijving",
     "language": "Taalsjabloon",
-    "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project ge\u00efnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
+    "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project geïnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
     "no-tag-set": "Er is voorlopig geen tag ingesteld.",
     "placeholder-purpose": "Projectdoelstelling",
     "placeholder-title": "Titel Plaatshouder",
@@ -1993,7 +1993,7 @@
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
-    "category-delete": "U kunt een categorie alleen verwijderen als de categorie geen projecten bevat. Breng alle projecten in de categorie over naar andere categorie\u00ebn.",
+    "category-delete": "U kunt een categorie alleen verwijderen als de categorie geen projecten bevat. Breng alle projecten in de categorie over naar andere categorieën.",
     "category-image": "Afbeelding gebruikt om een categorie te illustreren. Het is niet vereist als u liever gewoon een kleur weergeven. Minimale breedte: 1024px, Minimale hoogte: 400px",
     "limit-publication-to-reviewers": "Wilt u de publicatie van projecten beperken tot beoordelaars?",
     "organization-name": "Deze naam zal worden gebruikt om uw community te identificeren in community-specifieke pagina's (bijv.: statistieken pagina).",
@@ -2001,7 +2001,7 @@
     "organization-email": "Contacteer e-mail van uw portal.",
     "organization-language": "De taal standaard van uw portal.",
     "organization-visibility": "Wilt u een link naar uw portal van het hoofdportaal van Projecten?",
-    "organization-logo": "Uw logo verschijnt op de ouderportal op een witte achtergrond. Als het eerder ge\u00fcploade logo niet compatibel is met een witte achtergrond, kies dan een achtergrondkleur hieronder."
+    "organization-logo": "Uw logo verschijnt op de ouderportal op een witte achtergrond. Als het eerder geüploade logo niet compatibel is met een witte achtergrond, kies dan een achtergrondkleur hieronder."
   },
   "toasts": {
     "abuse-report": {
@@ -2034,7 +2034,7 @@
     },
     "categories-reorder": {
       "success": "De categorievolgorde is succesvol bijgewerkt",
-      "error": "Fout tijdens de update van de categorie\u00ebn bestelling"
+      "error": "Fout tijdens de update van de categorieën bestelling"
     },
     "comment-create": {
       "success": "Het commentaar is succesvol toegevoegd",
@@ -2166,8 +2166,8 @@
       "error": "Fout tijdens de groepsupdate"
     },
     "project-categories-update": {
-      "success": "De projectcategorie\u00ebn zijn succesvol bijgewerkt",
-      "error": "Fout tijdens het bijwerken van projectcategorie\u00ebn"
+      "success": "De projectcategorieën zijn succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van projectcategorieën"
     },
     "project-create": {
       "success": "Het project is succesvol aangemaakt",
@@ -2241,12 +2241,12 @@
     }
   },
   "success": {
-    "created": "Succesvol gecre\u00eberd.",
+    "created": "Succesvol gecreëerd.",
     "updated": "Succesvol bijgewerkt.",
     "deleted": "Met succes verwijderd."
   },
   "portal": {
-    "sub-title": "Ontdek portalen van andere organisaties. Blader, raak ge\u00efnspireerd en neem contact op!"
+    "sub-title": "Ontdek portalen van andere organisaties. Blader, raak geïnspireerd en neem contact op!"
   },
   "welcome-modal": {
     "title": "Welkom op het projectportaal van {0}",
@@ -2333,7 +2333,7 @@
       "blog_entry": "{sender} publiceerde een nieuwe blog in het project {project}",
       "invitation_reminder": "Een uitnodiging die u hebt gemaakt zal binnenkort verlopen",
       "invitation_today_reminder": "Een {link} die u hebt gemaakt voor de groep {today_group} zal vandaag aflopen",
-      "invitation_week_reminder": "A {link} die u hebt gecre\u00eberd voor de groep {week_group} zal over een week aflopen",
+      "invitation_week_reminder": "A {link} die u hebt gecreëerd voor de groep {week_group} zal over een week aflopen",
       "register-link": "registerlink",
       "access_request": "Reageer op {access_request_nb} in afwachting van toegangsverzoek(s)!",
       "pending_access_requests": "Reageer op {requests_count} in afwachting van toegangsverzoek(s)!"
@@ -2361,6 +2361,18 @@
       "future": "Toekomst",
       "past": "Verleden",
       "month": {
+        "10": {
+          "short": "okt",
+          "long": "oktober"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "November"
+        },
+        "12": {
+          "short": "Dec",
+          "long": "December"
+        },
         "01": {
           "short": "Jan",
           "long": "Januari"
@@ -2396,18 +2408,6 @@
         "09": {
           "short": "sep",
           "long": "September"
-        },
-        "10": {
-          "short": "okt",
-          "long": "oktober"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "November"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "December"
         }
       }
     },

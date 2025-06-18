@@ -448,7 +448,7 @@
     "last-publication": "dernière publication",
     "no-entry": "Pas encore d'entrée ...",
     "posts": "entrées de blog",
-    "title": "blog"
+    "title": "Blog"
   },
   "browse": {
     "page-title": "Rechercher",
@@ -469,7 +469,7 @@
   "comment": {
     "add-comment": "Ajoutez votre commentaire !",
     "comment-verb": "commenter",
-    "comments": "commentaires",
+    "comments": "Commentaires",
     "deleted": "commentaire effacé le",
     "discard-comment": "Annuler le commentaire ?",
     "discard-changes": "Annuler les modifications ?",
@@ -875,7 +875,7 @@
     "add": "ajouter un objectif",
     "completed-on-the": "terminé le",
     "description": "description",
-    "goals": "objectifs",
+    "goals": "Objectifs",
     "planned-for-the": "planifié pour le",
     "status-title": "statut",
     "title": "titre de l'objectif",
@@ -990,7 +990,7 @@
   },
   "home": {
     "all-projects": "Tous les projets",
-    "announcements": "annonces",
+    "announcements": "Annonces",
     "news": "Actualités",
     "calendar": "Calendrier",
     "instructions": "Instructions",
@@ -1422,7 +1422,6 @@
               }
             }
           },
-
           "mentorship": "Mentorat",
           "choose": "Choisir",
           "edit": "Mentorat pour \"{skill}\"",
@@ -1612,8 +1611,8 @@
     "show-n-projects": "Afficher les {count} projets",
     "suggested": "projet similaire | projets similaires",
     "suggested-hint": "Des projets qui pourraient vous intéresser",
-    "summary": "résumé",
-    "settings": "configuration",
+    "summary": "Résumé",
+    "settings": "Configuration",
     "org-settings": {
       "title": "Portail(s) du projet",
       "description": "Le projet appartient aux portails sélectionnés. Méfiez-vous lorsque vous ajoutez ou modifiez les organisations auxquelles appartient votre projet. Par exemple, les administrateurs d’un nouveau portail ont automatiquement accès à votre projet. Ou les portails peuvent avoir des règles éditoriales spécifiques que vous devez suivre.",
@@ -2194,7 +2193,6 @@
     "project-life-status-update": {
       "success": "L'état d'avancement du projet a bien été mis à jour"
     },
-
     "project-message-create": {
       "success": "Le message interne a bien été ajouté",
       "error": "Erreur lors de la création du message interne"
@@ -2364,6 +2362,18 @@
       "future": "A venir",
       "past": "Passés",
       "month": {
+        "10": {
+          "short": "Oct",
+          "long": "Octobre"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "Novembre"
+        },
+        "12": {
+          "short": "Déc",
+          "long": "Décembre"
+        },
         "01": {
           "short": "Jan",
           "long": "Janvier"
@@ -2399,18 +2409,6 @@
         "09": {
           "short": "Sep",
           "long": "Septembre"
-        },
-        "10": {
-          "short": "Oct",
-          "long": "Octobre"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "Novembre"
-        },
-        "12": {
-          "short": "Déc",
-          "long": "Décembre"
         }
       }
     },

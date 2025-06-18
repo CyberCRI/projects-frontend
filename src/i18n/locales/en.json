@@ -446,7 +446,7 @@
     "last-publication": "last blog entry",
     "no-entry": "No entry yet ...",
     "posts": "blog entries",
-    "title": "blog"
+    "title": "Blog"
   },
   "browse": {
     "page-title": "Search",
@@ -467,7 +467,7 @@
   "comment": {
     "add-comment": "Add your comment!",
     "comment-verb": "comment",
-    "comments": "comments",
+    "comments": "Comments",
     "deleted": "Comment deleted on the",
     "discard-comment": "Discard comment?",
     "discard-changes": "Discard changes?",
@@ -874,7 +874,7 @@
     "add": "add a goal",
     "completed-on-the": "completed on the",
     "description": "goal description",
-    "goals": "goals",
+    "goals": "Goals",
     "planned-for-the": "planned for the",
     "status-title": "status",
     "title": "goal's title",
@@ -989,7 +989,7 @@
   },
   "home": {
     "all-projects": "All projects",
-    "announcements": "announcements",
+    "announcements": "Announcements",
     "news": "News",
     "calendar": "Calendar",
     "instructions": "Instructions",
@@ -1119,7 +1119,6 @@
       "status": "Unable to connect to the collaborative server.",
       "notice": "Please check that your browser and/or antivirus allows WebSockets.",
       "ack-notice": "You can use a simple editor (without collaborative editing). Note that other users’ data may be overwritten if you save at the same time..",
-
       "do-ack": "I understand the risks and wish to continue with a simple editor (without collaborative editing).",
       "do-solo-edit": "Edit on my own",
       "head-up-warning": "Warning: editing in solo mode might result in data loss",
@@ -1387,7 +1386,6 @@
           },
           "selection": "Selected hobbies"
         },
-
         "mentorship": {
           "contact": {
             "title-ask": "Ask for mentorship",
@@ -1613,8 +1611,8 @@
     "show-n-projects": "Show the {count} projects",
     "suggested": "similar project | similar projects",
     "suggested-hint": "Projects that might interest you",
-    "summary": "summary",
-    "settings": "settings",
+    "summary": "Summary",
+    "settings": "Settings",
     "org-settings": {
       "title": "Portal(s) of the portal",
       "description": "The project belongs to the selected portals. Beware when you add or modify the portals your project belongs to. For instance, admins of a new organisation are automatically granted access to your project. Or organisations may have specific editorial rules that you should follow.",
@@ -1690,7 +1688,7 @@
     "error-uploading-image": "Error while uploading image ",
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "link address",
-    "resources": "resources",
+    "resources": "Resources",
     "web": "link to web resources | links to web resources",
     "web-link": "web link | web link | web links"
   },
@@ -2098,7 +2096,6 @@
       "success": "The blog entry has been deleted successfully",
       "error": "Error during the blog entry deletion"
     },
-
     "blog-create": {
       "success": "The blog entry has been created successfully",
       "error": "Error during the blog entry creation"
@@ -2364,6 +2361,18 @@
       "future": "Future",
       "past": "Past",
       "month": {
+        "10": {
+          "short": "Oct",
+          "long": "October"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "November"
+        },
+        "12": {
+          "short": "Dec",
+          "long": "December"
+        },
         "01": {
           "short": "Jan",
           "long": "January"
@@ -2399,18 +2408,6 @@
         "09": {
           "short": "Sep",
           "long": "September"
-        },
-        "10": {
-          "short": "Oct",
-          "long": "October"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "November"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "December"
         }
       }
     },
@@ -2418,7 +2415,6 @@
       "title": "Add a calendar event",
       "button": "Add"
     },
-
     "delete": {
       "title": "Delete event? ",
       "message": "Do you want to delete this event?",
@@ -2559,7 +2555,6 @@
       "title": "Edit instruction"
     }
   },
-
   "chat": {
     "drawer": {
       "title": "Add chat platform",
