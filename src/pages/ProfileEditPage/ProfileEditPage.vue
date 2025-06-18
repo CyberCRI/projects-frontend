@@ -17,7 +17,7 @@ const props = defineProps({
   },
 })
 
-const user = useState(() => null)
+const user = ref(null)
 
 const isSelf = computed(() => {
   // safe check for isSelf beacuse this.userId might be a slug in fact
@@ -86,7 +86,12 @@ try {
         </NuxtLink>
       </p>
       <div class="body">
-        <ProfileEditTabs :user="user" :is-self="isSelf" @profile-edited="onProfileEdited" />
+        <ProfileEditTabs
+          v-if="user"
+          :user="user"
+          :is-self="isSelf"
+          @profile-edited="onProfileEdited"
+        />
       </div>
     </div>
   </div>
