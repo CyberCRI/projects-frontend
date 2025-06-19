@@ -205,7 +205,7 @@
       "information": "General",
       "categories": "Categories",
       "tags": "Etiquetes",
-      "skills": "SkilsCity name (optional, probably does not need a translation)",
+      "skills": "Habilitats",
       "help": "Ajuda",
       "links": "Enlla\u00e7os",
       "templates": "Plantilles",
@@ -741,7 +741,7 @@
         },
         {
           "project": {
-            "title": "EcoloCity name (optional, probably does not need a translation) Vie",
+            "title": "EcoloVie",
             "des": "R\u00e9duire l'impat \u00e9cologique de notre famille"
           },
           "title": "Per projectes personals SDG",
@@ -993,7 +993,7 @@
     "news": "Not\u00edcies",
     "calendar": "Calendari",
     "instructions": "Instruccions",
-    "communities": "PortalsCity name (optional, probably does not need a translation)",
+    "communities": "Portals",
     "home": "Inici",
     "categories": {
       "title": "Categories del projecte"
@@ -1011,8 +1011,12 @@
     "our-locations": "Les nostres ubicacions"
   },
   "language": {
-    "label-en": "Angl\u00e8s",
-    "label-fr": "Fran\u00e7aismexico_ states. kgm"
+    "label-en": "Anglès",
+    "label-fr": "Francès",
+    "label-de": "Alemany",
+    "label-ca": "Català",
+    "label-nl": "Neerlandès",
+    "label-et": "Estonià"
   },
   "location": {
     "loading": "S' estan carregant les localitzacions"
@@ -1035,7 +1039,7 @@
     "no-project-participate": "Encara no sou membre d' un projecte",
     "projects-reviewing": "Estic revisant projectes",
     "no-project-reviewing": "Encara no esteu revisant un projecte",
-    "skills": "SkilsCity name (optional, probably does not need a translation)",
+    "skills": "Habilitats",
     "hobbies": "Hobbiesusa. kgm",
     "levels-help-link": "Nivells d'kill"
   },
@@ -1339,7 +1343,7 @@
         }
       },
       "skills": {
-        "tab": "SkilsCity name (optional, probably does not need a translation)",
+        "tab": "Habilitats",
         "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col\u00b7legues i a la teva comunitat trobar-te basant-te en all\u00f2 que t'importa.",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
@@ -1488,7 +1492,7 @@
     "go-to-page": "Visualitza la p\u00e0gina del perfil",
     "drawer_title": "Perfil",
     "projects": "Projectes",
-    "skills": "SkilsCity name (optional, probably does not need a translation)",
+    "skills": "Habilitats",
     "groups": "Grups",
     "snapshot": "instant\u00e0nia",
     "bio": "Biotec",
@@ -1816,7 +1820,7 @@
     "ambiguousTag": "Etiqueta ambigua",
     "subtitle-ambiguous-tag": "Aquesta etiqueta t\u00e9 diferents significats. Seleccioneu la que estigueu interessat:",
     "sdg": "SDG",
-    "skills": "SkilsCity name (optional, probably does not need a translation)",
+    "skills": "Habilitats",
     "category": "categoria",
     "choose": "Seleccioneu entre etiquetes principals o cerca d' etiquetes",
     "filter": "filtre",
@@ -1875,7 +1879,7 @@
       "title": "Fam"
     },
     "3": {
-      "title": "salut bona i ben-BeingCity name (optional, probably does not need a translation)"
+      "title": "Bona salut i benestar"
     },
     "4": {
       "title": "Educaci\u00f3 de qualitat"

@@ -1012,7 +1012,11 @@
   },
   "language": {
     "label-en": "Engels",
-    "label-fr": "Fran\u00e7ais"
+    "label-fr": "Frans",
+    "label-de": "Duits",
+    "label-ca": "Catalaans",
+    "label-nl": "Nederlands",
+    "label-et": "Ests"
   },
   "location": {
     "loading": "Locatie laden"

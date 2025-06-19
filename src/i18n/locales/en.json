@@ -1012,7 +1012,11 @@
   },
   "language": {
     "label-en": "English",
-    "label-fr": "Français"
+    "label-fr": "French",
+    "label-de": "German",
+    "label-ca": "Catalan",
+    "label-nl": "Dutch",
+    "label-et": "Estonian"
   },
   "location": {
     "loading": "Loading locations"
