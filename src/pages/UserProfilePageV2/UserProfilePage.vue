@@ -1,5 +1,4 @@
 <script setup>
-import UserProfile from '@/components/people/UserProfile.vue'
 import { getUser } from '@/api/people.service.ts'
 
 import { getOrganizationByCode } from '@/api/organizations.service'

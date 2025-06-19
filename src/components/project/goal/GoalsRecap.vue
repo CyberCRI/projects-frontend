@@ -39,17 +39,19 @@ export default {
   emits: ['access-goals-view'],
   computed: {
     sortedGoals() {
-      return [...this.goals].sort((a, b) => {
-        if (!a.deadline_at && !b.deadline_at) {
-          return a.title < b.title ? -1 : 1
-        } else if (!a.deadline_at) {
-          return -1
-        } else if (!b.deadline_at) {
-          return 1
-        } else {
-          return a.deadline_at < b.deadline_at ? -1 : 1
-        }
-      })
+      return [...this.goals]
+        .sort((a, b) => {
+          if (!a.deadline_at && !b.deadline_at) {
+            return a.title < b.title ? -1 : 1
+          } else if (!a.deadline_at) {
+            return -1
+          } else if (!b.deadline_at) {
+            return 1
+          } else {
+            return a.deadline_at < b.deadline_at ? -1 : 1
+          }
+        })
+        .slice(0, 5) // Limit to 5 goals for display
     },
   },
   methods: {

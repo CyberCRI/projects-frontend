@@ -162,12 +162,6 @@ export default {
 
 <style lang="scss" scoped>
 .project-description {
-  padding: $space-l 0;
-
-  @media screen and (min-width: $min-tablet) {
-    padding: $space-xl 0;
-  }
-
   .description-content {
     background: $white;
     padding: $space-l 0;
@@ -184,7 +178,7 @@ export default {
   }
 
   aside {
-    padding-top: $space-l;
+    padding: $space-m 0;
     position: static;
     display: flex;
     flex-flow: column;
@@ -213,22 +207,22 @@ export default {
   }
 }
 
-:deep(.description-content > p),
-:deep(.description-content > h1),
-:deep(.description-content > h2),
-:deep(.description-content > h3),
-:deep(.description-content > h4),
-:deep(.description-content > h5),
-:deep(.description-content > h6),
-:deep(.description-content > ul),
-:deep(.description-content > ol),
-:deep(.description-content > blockquote),
-:deep(.description-content > pre),
-:deep(.description-content > .custom-video-ctn) {
-  max-width: pxToRem(800px);
-  margin-left: auto;
-  margin-right: auto;
-}
+// :deep(.description-content > p),
+// :deep(.description-content > h1),
+// :deep(.description-content > h2),
+// :deep(.description-content > h3),
+// :deep(.description-content > h4),
+// :deep(.description-content > h5),
+// :deep(.description-content > h6),
+// :deep(.description-content > ul),
+// :deep(.description-content > ol),
+// :deep(.description-content > blockquote),
+// :deep(.description-content > pre),
+// :deep(.description-content > .custom-video-ctn) {
+//   max-width: pxToRem(800px);
+//   margin-left: auto;
+//   margin-right: auto;
+// }
 
 :deep(.anchor-element) {
   display: inline-block;

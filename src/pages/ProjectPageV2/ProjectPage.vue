@@ -4,6 +4,7 @@ import useProjectData from './useProjectData.ts'
 import useProjectSocket from './useProjectSocket.ts'
 import useProjectModals from './useProjectModals.ts'
 import useProjectNav from './useProjectNav.ts'
+import { getProject } from '@/api/projects.service'
 
 const route = useRoute()
 const router = useRouter()
@@ -78,9 +79,9 @@ try {
       image,
       dimensions
     )
-} catch {
+} catch (err) {
   // DGAF
-  // console.log(err)
+  console.log(err)
 }
 
 //onCreated(() => {
@@ -142,7 +143,9 @@ if (import.meta.client) {
           @update-follow="follow = $event"
         />
         <div class="content-panel">
-          <h2 v-if="!currentTab.noTitle" class="content-title">{{ currentTab.label }}</h2>
+          <h2 v-if="!currentTab.noTitle" class="content-title">
+            {{ project?.title }} - {{ currentTab.label }}
+          </h2>
           <NuxtPage v-bind="currentTab.props" />
         </div>
       </div>
@@ -283,6 +286,7 @@ if (import.meta.client) {
 }
 
 .content-title {
+  color: $primary-dark;
   font-size: $font-size-4xl;
 }
 </style>

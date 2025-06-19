@@ -10,42 +10,61 @@
 
       <DescriptionPlaceholder
         v-if="canEditProject && showDescriptionPlaceHolder"
+        class="unboxed"
         :project="project"
       />
 
       <DescriptionRecap
         v-else-if="project && project.description"
+        class="unboxed"
         :description="project.description"
       />
 
-      <GoalsRecap v-if="filteredGoals.length" :goals="filteredGoals" />
+      <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
 
-      <PublicationRecap v-if="blogEntries.length" :is-blog="true" :publications="blogEntries" />
+      <PublicationRecap
+        v-if="blogEntries.length"
+        class="unboxed is-v2"
+        :is-blog="true"
+        :publications="blogEntries"
+      />
 
-      <LinkedProjectsRecap v-if="linkedProjects?.length" :linked-projects="linkedProjects" />
+      <LinkedProjectsRecap
+        v-if="linkedProjects?.length"
+        class="unboxed"
+        :linked-projects="linkedProjects"
+      />
 
       <ReviewRecap
         v-if="project && project.publication_status"
+        class="unboxed"
         :project="project"
         :reviews="reviews"
         @reload-reviews="$emit('reload-reviews')"
         @reload-project="$emit('reload-project')"
       />
-      <LazyMapRecap v-if="locations.length" :locations="locations" />
+      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
 
       <ProjectMemberSection
         v-if="mergedTeam?.length"
+        class="unboxed is-v2"
         :members="mergedTeam"
         @user-click="openProfileDrawer"
       />
 
       <ResourcesRecap
         v-if="linkResources?.length || fileResources?.length"
+        class="unboxed is-v2"
         :files="fileResources"
         :links="linkResources"
       />
 
-      <PublicationRecap v-if="comments.length" :is-blog="false" :publications="comments" />
+      <PublicationRecap
+        v-if="comments.length"
+        class="unboxed"
+        :is-blog="false"
+        :publications="comments"
+      />
     </div>
     <BaseDrawer
       no-footer
@@ -191,6 +210,17 @@ export default {
   .similar-projects {
     margin-top: 80px;
   }
+}
+
+.unboxed {
+  border: 0 none !important;
+  border-radius: 0 !important;
+  padding: $space-l 0 !important;
+  background: transparent !important;
+}
+
+:deep(.unboxed .section-header) {
+  justify-content: space-between !important;
 }
 
 @media screen and (max-width: $max-tablet) {
