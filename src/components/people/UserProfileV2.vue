@@ -47,7 +47,7 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
-  name: 'UserProfile',
+  name: 'UserProfileV2',
 
   components: {
     LinkButton,

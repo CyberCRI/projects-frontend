@@ -6,7 +6,7 @@
           :label="$t('project.edit')"
           btn-icon="Pen"
           data-test="header-project-button"
-          class="edit-btn"
+          class="edit-btn small"
           @click="editProject"
         />
       </div>
@@ -40,7 +40,7 @@
           :animation="false"
           :class="{ active: addToProjectMenuVisible }"
           :label="$t('common.add')"
-          class="add-to-project-button"
+          class="add-to-project-button small"
           btn-icon="Plus"
           data-test="add-to-project"
           @click="toggleAddToProject"
@@ -49,7 +49,7 @@
         <transition name="fade">
           <AddToProjectDropdown
             v-if="addToProjectMenuVisible && canEditProject"
-            :project="project"
+            is-v2
             class="add-to-project"
             @close-dropdown="toggleAddToProject"
           />
@@ -290,6 +290,7 @@ menu {
   display: flex;
   justify-content: center;
   position: relative;
+  padding: 0.5rem 0;
 
   .add-to-project-button:hover,
   .project-config-button:hover {
@@ -332,6 +333,9 @@ menu {
   border-width: 1px 0;
   border-style: solid;
   border-color: $light-gray;
+
+  --external-button-outer-size: 1.2rem;
+  --external-button-inner-size: 1.2rem;
 
   .share-ctn {
     display: flex;

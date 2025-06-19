@@ -80,4 +80,21 @@ export default {
     justify-content: space-evenly;
   }
 }
+
+.resources-recap.is-v2 .resources-ctn {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+
+  .section-header {
+    justify-content: space-between;
+  }
+
+  .resources-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: $space-l;
+    justify-content: space-between;
+  }
+}
 </style>
