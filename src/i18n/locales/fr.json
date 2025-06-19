@@ -1012,8 +1012,12 @@
     "our-locations": "Nos emplacements"
   },
   "language": {
-    "label-en": "English",
-    "label-fr": "Français"
+    "label-en": "Anglais",
+    "label-fr": "Français",
+    "label-de": "Allemand",
+    "label-ca": "Catalan",
+    "label-nl": "Néerlandais",
+    "label-et": "Estonien"
   },
   "location": {
     "loading": "Chargement des lieux en cours"

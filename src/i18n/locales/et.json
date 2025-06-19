@@ -1011,8 +1011,12 @@
     "our-locations": "Meie asukohad"
   },
   "language": {
-    "label-en": "inglise",
-    "label-fr": "Fran\u00e7ais"
+    "label-en": "Inglise",
+    "label-fr": "Prantsuse",
+    "label-de": "Saksa",
+    "label-ca": "Katalaani",
+    "label-nl": "Hollandi",
+    "label-et": "Eesti"
   },
   "location": {
     "loading": "Laadimiskohad"

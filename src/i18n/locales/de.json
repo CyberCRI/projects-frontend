@@ -1012,7 +1012,11 @@
   },
   "language": {
     "label-en": "Englisch",
-    "label-fr": "Fran\u00e7ais"
+    "label-fr": "Französisch",
+    "label-de": "Deutsch",
+    "label-ca": "Katalanisch",
+    "label-nl": "Niederländisch",
+    "label-et": "Estnisch"
   },
   "location": {
     "loading": "Ladestellen"
