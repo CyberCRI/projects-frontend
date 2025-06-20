@@ -12,47 +12,12 @@ const router = useRouter()
 const { modals, toggleAddModal } = useProjectModals()
 
 const loading = ref(true)
-const isNavCollapsed = ref(window?.innerWidth < 768)
-const toggleNavPanel = () => {
-  isNavCollapsed.value = !isNavCollapsed.value
-}
-
-const onNavigated = () => {
-  if (window.innerWidth < 768) {
-    isNavCollapsed.value = true
-  }
-}
 
 const uniqueId = 'project-nav-panel'
-watchEffect(() => {
-  if (!import.meta.client) return
-  if (!isNavCollapsed.value) {
-    if (window.innerWidth < 768) {
-      document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
-    }
-  } else {
-    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
-  }
-})
+const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
+  useToggleableNavPanel(uniqueId)
 
-function onWindowResize() {
-  if (window.innerWidth >= 768) {
-    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
-  } else if (!isNavCollapsed.value) {
-    document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('resize', onWindowResize)
-})
-
-onBeforeUnmount(() => {
-  if (!import.meta.client) return
-  // if destroyed before closing, need to cleanup un-scrollable body
-  document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
-  window.removeEventListener('resize', onWindowResize)
-})
+const onNavigated = collapseIfUnderBreakpoint
 
 const {
   // data
