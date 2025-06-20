@@ -12,10 +12,47 @@ const router = useRouter()
 const { modals, toggleAddModal } = useProjectModals()
 
 const loading = ref(true)
-const isNavCollapsed = ref(false)
+const isNavCollapsed = ref(window?.innerWidth < 768)
 const toggleNavPanel = () => {
   isNavCollapsed.value = !isNavCollapsed.value
 }
+
+const onNavigated = () => {
+  if (window.innerWidth < 768) {
+    isNavCollapsed.value = true
+  }
+}
+
+const uniqueId = 'project-nav-panel'
+watchEffect(() => {
+  if (!import.meta.client) return
+  if (!isNavCollapsed.value) {
+    if (window.innerWidth < 768) {
+      document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
+    }
+  } else {
+    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+  }
+})
+
+function onWindowResize() {
+  if (window.innerWidth >= 768) {
+    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+  } else if (!isNavCollapsed.value) {
+    document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', onWindowResize)
+})
+
+onBeforeUnmount(() => {
+  if (!import.meta.client) return
+  // if destroyed before closing, need to cleanup un-scrollable body
+  document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+  window.removeEventListener('resize', onWindowResize)
+})
 
 const {
   // data
@@ -111,13 +148,13 @@ onBeforeRouteUpdate((to, from, next) => {
   next()
 })
 
-if (import.meta.client) {
-  watchEffect(() => {
-    if (route.hash == '#tab') {
-      nextTick(() => utils.scrollTo(document.querySelector('.tabs-wrapper')))
-    }
-  })
-}
+// if (import.meta.client) {
+//   watchEffect(() => {
+//     if (route.hash == '#tab') {
+//       nextTick(() => utils.scrollTo(document.querySelector('.tabs-wrapper')))
+//     }
+//   })
+// }
 </script>
 <template>
   <div class="page-section-extra-wide project-layout">
@@ -131,17 +168,28 @@ if (import.meta.client) {
     </div>
     <div class="tabs-wrapper">
       <div class="project-nav-panel">
-        <LazyProjectNavPanel
-          v-if="!loading && !isNavCollapsed"
-          :class="{ collapsed: isNavCollapsed }"
-          :project-tabs="projectTabs"
-          :current-tab="currentTab"
-          :project="project"
-          :announcements="announcements"
-          :similar-projects="similarProjects"
-          :follow="follow"
-          @update-follow="follow = $event"
-        />
+        <transition name="backdrop-fade">
+          <div
+            v-if="!loading && !isNavCollapsed"
+            class="nav-panel-backdrop"
+            @click="isNavCollapsed = true"
+          ></div>
+        </transition>
+        <transition name="slide-panel">
+          <LazyProjectNavPanel
+            v-if="!loading && !isNavCollapsed"
+            :class="{ collapsed: isNavCollapsed }"
+            :project-tabs="projectTabs"
+            :current-tab="currentTab"
+            :project="project"
+            :announcements="announcements"
+            :similar-projects="similarProjects"
+            :follow="follow"
+            class="slide-panel"
+            @update-follow="follow = $event"
+            @navigated="onNavigated"
+          />
+        </transition>
         <div class="content-panel">
           <h2 v-if="!currentTab.noTitle" class="content-title">
             {{ project?.title }} - {{ currentTab.label }}
@@ -246,6 +294,21 @@ if (import.meta.client) {
   }
 }
 
+.nav-panel-backdrop {
+  display: none;
+
+  @media (max-width: $min-tablet) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 70%);
+    z-index: 99;
+  }
+}
+
 @media (max-width: $min-tablet) {
   .tabs-wrapper {
     padding: 0 $space-xs;
@@ -256,6 +319,17 @@ if (import.meta.client) {
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media screen and (max-width: $min-tablet) {
+    .breadcrumbs {
+      padding-left: 2.6rem;
+    }
+
+    .toggle-button {
+      position: fixed;
+      z-index: 110;
+    }
+  }
 }
 
 .breadcrumb {
@@ -288,5 +362,37 @@ if (import.meta.client) {
 .content-title {
   color: $primary-dark;
   font-size: $font-size-4xl;
+}
+
+@media screen and (max-width: $min-tablet) {
+  .slide-panel-enter-from,
+  .slide-panel-leave-to {
+    transform: translateX(-100%);
+  }
+
+  .slide-panel-enter-active,
+  .slide-panel-leave-active {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .slide-panel-enter-to,
+  .slide-panel-leave-from {
+    transform: translateX(0);
+  }
+
+  .backdrop-fade-enter-active,
+  .backdrop-fade-leave-active {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .backfrop-fade-enter-to,
+  .backdrop-fade-leave-from {
+    opacity: 1;
+  }
+
+  .backdrop-fade-enter-from,
+  .backdrop-fade-leave-to {
+    opacity: 0;
+  }
 }
 </style>
