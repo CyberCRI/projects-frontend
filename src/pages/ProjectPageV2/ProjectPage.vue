@@ -113,13 +113,13 @@ onBeforeRouteUpdate((to, from, next) => {
   next()
 })
 
-// if (import.meta.client) {
-//   watchEffect(() => {
-//     if (route.hash == '#tab') {
-//       nextTick(() => utils.scrollTo(document.querySelector('.tabs-wrapper')))
-//     }
-//   })
-// }
+if (import.meta.client) {
+  watchEffect(() => {
+    if (route.hash == '#tab') {
+      nextTick(() => window?.scrollTo({ top: 0, behavior: 'smooth' }))
+    }
+  })
+}
 </script>
 <template>
   <div class="page-section-extra-wide project-layout">
