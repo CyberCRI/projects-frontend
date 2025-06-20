@@ -23,6 +23,7 @@
             class="link"
             :data-test="entry.dataTest"
             :to="entry.view"
+            @click="navigated"
           >
             <IconImage class="icon" :name="entry.icon || 'Article'" />
             {{ entry.label }}
@@ -146,7 +147,7 @@ export default {
     },
   },
 
-  emits: ['update-follow'],
+  emits: ['update-follow', 'navigated'],
 
   setup() {
     const usersStore = useUsersStore()
@@ -171,11 +172,16 @@ export default {
   },
 
   methods: {
+    navigated() {
+      this.$emit('navigated')
+    },
+
     toggleAddToProject() {
       this.addToProjectMenuVisible = !this.addToProjectMenuVisible
     },
 
     editProject() {
+      this.navigated()
       this.projectLayoutToggleAddModal('project')
     },
 
@@ -203,9 +209,11 @@ export default {
     },
 
     goToCommentView() {
+      this.navigated()
       this.projectLayoutGoToTab('comments')
     },
     goToAnnouncements() {
+      this.navigated()
       this.projectLayoutGoToTab('announcements')
     },
     facebookShare() {
@@ -234,17 +242,25 @@ export default {
 
 @media screen and (max-width: $min-tablet) {
   .nav-panel {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 10%);
     background-color: $white;
-    z-index: 1000;
+    z-index: 100;
+    width: calc(18rem + 2.125rem);
+    top: 3rem;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    padding: 2.125rem;
+    box-sizing: border-box;
+    padding-top: 4rem;
   }
 }
 
-.nav-panel-inner {
-  width: 16rem;
+@media screen and (min-width: $min-tablet) {
+  .nav-panel-inner {
+    width: 16rem;
+  }
 }
 
 .edit-btn-ctn {
