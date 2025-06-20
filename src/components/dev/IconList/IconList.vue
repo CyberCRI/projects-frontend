@@ -118,6 +118,10 @@ export default {
         'DotsVertical',
         'DotsHorizontal',
         'DotsGrid',
+        'TimerLine',
+        'Progress5',
+        'MenuFoldLine',
+        'MenuUnfoldLine',
       ],
     }
   },
