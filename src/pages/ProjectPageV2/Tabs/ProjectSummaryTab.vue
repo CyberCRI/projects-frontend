@@ -222,26 +222,4 @@ export default {
 :deep(.unboxed .section-header) {
   justify-content: space-between !important;
 }
-
-@media screen and (max-width: $max-tablet) {
-  .project-summary .top {
-    flex-direction: column;
-
-    .left,
-    .right {
-      width: 100%;
-    }
-
-    .left {
-      margin-right: 0;
-      margin-bottom: $space-l;
-    }
-  }
-}
-
-@media screen and (max-width: $min-tablet) {
-  .project-summary {
-    padding: $space-2xl $space-s;
-  }
-}
 </style>

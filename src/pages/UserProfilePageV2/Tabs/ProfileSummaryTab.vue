@@ -1,22 +1,23 @@
 <template>
   <div v-if="user" class="profile-summary">
-    <div class="top">
-      <div class="left">
-        <!-- User descriptions -->
-        <UserDescriptions
-          v-if="user.description"
-          :is-limited="true"
-          :user="user"
-          class="user-description"
-        />
-        <p v-else class="empty-field">
-          {{ noDescription }}
-        </p>
-      </div>
+    <!-- Profile Header -->
+    <ProfileHeader v-if="user && !isLoading" class="profile-header" :user="user" />
 
-      <div class="right">
-        <SkillSummary :user="user" />
-      </div>
+    <div>
+      <!-- User descriptions -->
+      <UserDescriptions
+        v-if="user.description"
+        :is-limited="true"
+        :user="user"
+        class="user-description unboxed"
+      />
+      <p v-else class="empty-field">
+        {{ noDescription }}
+      </p>
+    </div>
+
+    <div>
+      <SkillSummary :user="user" class="unboxed" />
     </div>
     <div class="lists">
       <!-- user projects (Owners, Members) -->
@@ -178,24 +179,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.unboxed {
+  border: 0 none !important;
+  border-radius: 0 !important;
+  padding: $space-l 0 !important;
+  background: transparent !important;
+}
+
+:deep(.unboxed .section-header) {
+  justify-content: space-between !important;
+}
+
 .profile-summary {
-  padding: $space-l 0;
-
-  .top {
-    display: flex;
-    gap: $space-xl;
-
-    .left {
-      flex-basis: 66.66%;
-      flex-grow: 1;
-    }
-
-    .right {
-      flex-basis: 33.34%;
-      flex-grow: 1;
-      margin-top: $space-42;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   .project-list {
     width: 100%;
