@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user && !isLoading" class="user-profile">
+  <div v-if="user && !isLoading" :key="user.id" class="user-profile">
     <NavPanelLayout
       :is-loading="loading"
       :is-nav-collapsed="isNavCollapsed"
@@ -123,12 +123,12 @@ export default {
   },
 
   computed: {
-    connectedUser() {
-      return this.usersStore.userFromApi
-    },
+    // connectedUser() {
+    //   return this.usersStore.userFromApi
+    // },
 
     isSelf() {
-      return this.connectedUser && this.user.id === this.connectedUser.id
+      return !this.userId // this.connectedUser && this.user.id === this.connectedUser.id
     },
 
     editButtonLabel() {
