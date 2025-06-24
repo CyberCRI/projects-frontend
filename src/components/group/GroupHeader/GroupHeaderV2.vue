@@ -24,59 +24,13 @@
         </p>
       </div>
     </div>
-    <div class="header-group-options">
-      <ToolTip v-if="email" class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-        <template #custom-content>
-          <a :href="'mailto:' + email">
-            {{ email }}
-          </a>
-        </template>
-        <ExternalLabelButton
-          :label="$t('group.contact')"
-          btn-icon="EmailOutline"
-          vertical-layout
-          class="bg-on-hover"
-        />
-      </ToolTip>
-      <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-        <template #custom-content>
-          <div class="share-ctn">
-            <button @click="facebookShare">
-              <IconImage name="Facebook" />
-            </button>
-            <button @click="linkedinShare">
-              <IconImage name="Linkedin" />
-            </button>
-          </div>
-        </template>
-        <ExternalLabelButton
-          :label="$t('group.share')"
-          btn-icon="Share"
-          vertical-layout
-          class="bg-on-hover"
-        />
-      </ToolTip>
-    </div>
   </div>
   <GroupHeaderSkeleton v-else />
 </template>
 
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
-import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
-import GroupHeaderSkeleton from '@/components/group/GroupHeader/GroupHeaderSkeleton.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-
 export default {
-  name: 'GroupHeader',
-  components: {
-    IconImage,
-    ToolTip,
-    ExternalLabelButton,
-    GroupHeaderSkeleton,
-    CroppedApiImage,
-  },
+  name: 'GroupHeaderV2',
   props: {
     title: {
       type: String,
@@ -87,10 +41,6 @@ export default {
       required: true,
     },
     visibility: {
-      type: String,
-      required: true,
-    },
-    email: {
       type: String,
       required: true,
     },
@@ -105,11 +55,7 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      sharedUrl: useRequestURL().toString(),
-    }
-  },
+
   computed: {
     groupVisibilityLabel() {
       if (this.visibility === 'public') return this.$t('group.visibility-public')

@@ -28,6 +28,10 @@ const props = defineProps({
     type: [String, null],
     default: null,
   },
+  isV2: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineEmits(['close'])
@@ -428,8 +432,8 @@ try {
 }
 </script>
 <template>
-  <div class="create-group">
-    <div class="header">
+  <div class="create-group" :class="{ 'is-v2': isV2 }">
+    <div v-if="!isV2" class="header">
       <h1>{{ isEdit ? $t('group.edit.title') : $t('group.create.title') }}</h1>
       <p>
         {{ $t('group.create.notice') }}
@@ -487,6 +491,12 @@ try {
   margin: $navbar-height auto 0 auto;
   padding: 0 $space-l;
   box-sizing: border-box;
+
+  &.is-v2 {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+  }
 }
 
 .header {

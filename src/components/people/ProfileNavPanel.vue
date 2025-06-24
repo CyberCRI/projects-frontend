@@ -12,7 +12,6 @@
           btn-icon="Pen"
           data-test="edit-profile"
           class="edit-btn small"
-          :to="editProfileLink"
           @update:model-value="switchView"
         />
       </div>
