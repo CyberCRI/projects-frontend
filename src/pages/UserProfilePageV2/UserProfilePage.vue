@@ -7,6 +7,10 @@ const props = defineProps({
     type: [String, Number],
     default: null,
   },
+  isEditing: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const router = useRouter()
@@ -54,6 +58,7 @@ function display404() {
       :key="userId"
       :user-id="userId"
       :show-page-link="false"
+      :is-editing="isEditing"
       routable-tabs
       @user-not-found="display404"
     />

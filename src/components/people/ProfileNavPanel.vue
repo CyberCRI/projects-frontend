@@ -1,6 +1,21 @@
 <template>
   <div class="nav-panel">
     <div class="nav-panel-inner">
+      <div v-if="isSelf || canEditUser" class="edit-btn-ctn">
+        <GroupButton
+          :model-value="isEditing"
+          :options="[
+            { value: false, label: 'Show' },
+            { value: true, label: 'Edit' },
+          ]"
+          :label="editButtonLabel"
+          btn-icon="Pen"
+          data-test="edit-profile"
+          class="edit-btn small"
+          :to="editProfileLink"
+          @update:model-value="switchView"
+        />
+      </div>
       <menu>
         <li
           v-for="entry in profileTabs"
@@ -17,100 +32,42 @@
           >
             <IconImage class="icon" :name="entry.icon || 'Article'" />
             {{ entry.label }}
+
+            <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
           </NuxtLink>
         </li>
       </menu>
 
-      <div v-if="isSelf || canEditUser" class="edit-btn-ctn">
-        <LpiButton
-          :label="editButtonLabel"
-          btn-icon="Pen"
-          data-test="edit-profile"
-          class="edit-btn small"
-          :to="editProfileLink"
-          @click="editProfile"
-        />
-      </div>
-
-      <!--
       <div
-        v-if="project && canEditProject"
-        v-click-outside="() => (addToProjectMenuVisible = false)"
-        class="add-to-project-ctn"
+        v-if="!hasNoContact"
+        class="user-contacts-ctn"
+        :class="{
+          'mail-only': hasOnlyMail,
+        }"
       >
-        <LpiButton
-          v-if="canEditProject"
-          :animation="false"
-          :class="{ active: addToProjectMenuVisible }"
-          :label="$t('common.add')"
-          class="add-to-project-button small"
-          btn-icon="Plus"
-          data-test="add-to-project"
-          @click="toggleAddToProject"
-        />
+        <div v-if="user && user.email" class="social">
+          <IconImage class="icon" name="Email" />
+          <span>{{ user.email }}</span>
+        </div>
 
-        <transition name="fade">
-          <AddToProjectDropdown
-            v-if="addToProjectMenuVisible && canEditProject"
-            is-v2
-            class="add-to-project"
-            @close-dropdown="toggleAddToProject"
-          />
-        </transition>
+        <!-- TODO: Use privacy settings -->
+        <div v-if="user.mobile_phone" class="social">
+          <IconImage class="icon" name="Phone" />
+          <span>{{ user.mobile_phone }}</span>
+        </div>
+
+        <div v-if="user.landline_phone" class="social">
+          <IconImage class="icon" name="Phone" />
+          <span>{{ user.landline_phone }}</span>
+        </div>
+
+        <div v-if="user && user.location" class="social">
+          <IconImage class="icon" name="MapMarker" />
+          <span v-html="fixLocation(user.location)" />
+        </div>
+
+        <SocialNetworks :user="user" />
       </div>
-
-      <div class="share-buttons">
-        <ExternalLabelButton
-          v-if="usersStore.isConnected"
-          class="space-button bg-on-hover"
-          :label="followed ? $t('project.followed') : $t('project.follow')"
-          :btn-icon="followed ? 'Heart' : 'HeartOutline'"
-          vertical-layout
-          @click="toggleFollow"
-        />
-        <ExternalLabelButton
-          v-if="announcements?.length"
-          class="space-button article-button bg-on-hover"
-          :label="$t('group.news')"
-          btn-icon="Article"
-          vertical-layout
-          :nb-button="announcements.length.toString()"
-          @click="goToAnnouncements"
-        />
-        <ExternalLabelButton
-          class="space-button bg-on-hover"
-          :label="$filters.capitalize($t('comment.comment-verb'))"
-          btn-icon="ChatBubble"
-          vertical-layout
-          @click="goToCommentView"
-        />
-        <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-          <template #custom-content>
-            <div class="share-ctn">
-              <button @click="facebookShare">
-                <IconImage name="Facebook" />
-              </button>
-              <button @click="linkedinShare">
-                <IconImage name="Linkedin" />
-              </button>
-            </div>
-          </template>
-          <ExternalLabelButton
-            class="space-button bg-on-hover"
-            :label="$t('group.share')"
-            btn-icon="Share"
-            vertical-layout
-          />
-        </ToolTip>
-      </div>
-
-      <SimilarProjectsV2
-        v-if="similarProjects && similarProjects.length"
-        id="similar-projects"
-        :similar-projects="similarProjects"
-        class="similar-projects v2"
-      />
-      -->
     </div>
   </div>
 </template>
@@ -120,10 +77,10 @@ export default {
   name: 'ProfileNavPanel',
 
   props: {
-    // user: {
-    //   type: Object,
-    //   default: () => {},
-    // },
+    user: {
+      type: Object,
+      default: () => {},
+    },
 
     isSelf: {
       type: Boolean,
@@ -135,7 +92,7 @@ export default {
       required: true,
     },
     editProfileLink: {
-      type: String,
+      type: Object,
       required: true,
     },
 
@@ -148,6 +105,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    isEditing: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['navigated'],
@@ -157,7 +118,27 @@ export default {
   //   }
   // },
 
+  computed: {
+    hasOnlyMail() {
+      return (
+        !this.user?.mobile &&
+        !this.user?.location &&
+        !this.user?.facebook &&
+        !this.user?.twitter &&
+        !this.user?.linkedin &&
+        !this.user?.skype
+      )
+    },
+    hasNoContact() {
+      return !this.user?.email && this.hasOnlyMail
+    },
+  },
+
   methods: {
+    fixLocation(l) {
+      return l.split('\n').join('<br />')
+    },
+
     navigated() {
       this.$emit('navigated')
     },
@@ -166,10 +147,8 @@ export default {
     //   this.addToProjectMenuVisible = !this.addToProjectMenuVisible
     // },
 
-    editProfile() {
-      this.navigated()
-      // TODO
-      // this.projectLayoutToggleAddModal('project')
+    switchView() {
+      this.$router.push(this.editProfileLink)
     },
   },
 }
@@ -235,6 +214,10 @@ menu {
         height: 1em;
         fill: $primary-dark;
       }
+
+      .action-icon {
+        margin-left: auto;
+      }
     }
   }
 }
@@ -281,33 +264,45 @@ menu {
   }
 }
 
-.share-buttons {
+.user-contacts-ctn {
+  border: 1px solid $lighter-gray;
+  border-radius: 1rem;
+  padding: 1rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: $light-gray;
+  flex-flow: column;
+  gap: 1rem;
+  margin-top: 3rem;
 
-  --external-button-outer-size: 1.2rem;
-  --external-button-inner-size: 1.2rem;
+  &.mail-only {
+    justify-content: center;
+  }
 
-  .share-ctn {
+  .social {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $space-m;
-    z-index: 1;
-    flex-grow: 1;
-    flex-shrink: 1;
+    align-items: flex-start;
+    word-break: break-word;
 
-    svg {
-      width: 24px;
-      fill: $primary-dark;
-      cursor: pointer;
+    span {
+      padding-top: pxToRem(4px);
     }
+
+    & ~ .social {
+      margin-top: $space-m;
+    }
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+    fill: $primary-dark;
+    margin-right: $space-xs;
+    margin-top: 4px;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: $font-size-m;
+    color: $primary-dark;
   }
 }
 </style>

@@ -16,13 +16,14 @@
           :user="user"
           :edit-button-label="editButtonLabel"
           :edit-profile-link="editProfileLink"
+          :is-editing="isEditing"
           :can-edit-user="canEditUser"
           :is-current-user="userId === null"
           class="slide-panel"
           @navigated="onNavigated"
         />
       </template>
-      <template #content>
+      <template v-if="currentTab" #content>
         <h2 v-if="!currentTab.noTitle" class="content-title">
           {{ user?.given_name }} {{ user?.family_name }} - {{ currentTab.label }}
         </h2>
@@ -50,6 +51,11 @@ export default {
       type: [Number, String, null],
       default: null,
     },
+
+    isEditing: {
+      type: Boolean,
+      default: false,
+    },
     // showPageLink: {
     //   type: Boolean,
     //   default: true,
@@ -60,7 +66,7 @@ export default {
     // },
   },
 
-  emits: ['user-not-found', 'close'],
+  emits: ['user-not-found', 'close', 'profile-edited'],
 
   setup() {
     const usersStore = useUsersStore()
@@ -129,32 +135,43 @@ export default {
       return this.isSelf ? this.$t('profile.edit.edit-your-profile') : this.$t('profile.edit.edit')
     },
     editProfileLink() {
-      return this.isSelf
-        ? { name: 'ProfileEdit' }
-        : {
-            name: 'ProfileEditOtherUser',
-            params: { userId: this.user?.slug || this.userId },
-          }
-    },
-
-    pathInfix() {
-      return this.isSelf ? '' : `${this.user.slug || this.user.id}/`
+      // return this.isSelf
+      //   ? { name: 'ProfileEdit' }
+      //   : {
+      //       name: 'ProfileEditOtherUser',
+      //       params: { userId: this.user?.slug || this.userId },
+      //     }
+      return this.currentTab.altView
     },
 
     profileTabs() {
+      return this.isEditing ? this.profileEditTabs : this.profileDisplayTabs
+    },
+
+    profileDisplayTabs() {
       // watch out for the order of the tabs
       // the indices are used in calls to provided method tabsLayoutSelectTab()
       // some index are used for navigation (see below)
+
+      const roadSuffix = this.isSelf ? '' : 'Other'
+      const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
       return [
         {
           label: this.$t('profile.snapshot'),
           key: 'snapshot',
           id: 'profile-summary',
-          view: `/profile/${this.pathInfix}summary`,
+          // view: `/profile/${this.pathInfix}summary`,
+          view: {
+            name: 'ProfileSummary' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditGeneral' + roadSuffix,
+            params,
+          },
           // component: ProfileSummaryTab,
           props: {
             user: this.user,
-            isLoading: this.isLoading,
           },
           icon: 'Article',
           condition: true,
@@ -166,7 +183,15 @@ export default {
           label: this.$t('profile.bio'),
           key: 'bio',
           id: 'profile-bio',
-          view: `/profile/${this.pathInfix}bio`,
+          // view: `/profile/${this.pathInfix}bio`,
+          view: {
+            name: 'ProfileBio' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditBio' + roadSuffix,
+            params,
+          },
           // component: ProfileBioTab,
           props: {
             user: this.user,
@@ -180,7 +205,15 @@ export default {
           label: this.$t('profile.projects'),
           key: 'projects',
           id: 'profile-projects',
-          view: `/profile/${this.pathInfix}projects`,
+          //view: `/profile/${this.pathInfix}projects`,
+          view: {
+            name: 'ProfileProjects' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditProjects' + roadSuffix,
+            params,
+          },
           // component: ProfileProjectTab,
           props: {
             user: this.user,
@@ -192,7 +225,15 @@ export default {
           label: this.$t('profile.groups'),
           key: 'groups',
           id: 'profile-groups',
-          view: `/profile/${this.pathInfix}groups`,
+          //view: `/profile/${this.pathInfix}groups`,
+          view: {
+            name: 'ProfileGroups' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditGroups' + roadSuffix,
+            params,
+          },
           // component: ProfileGroupsTab,
           props: {
             user: this.user,
@@ -206,7 +247,15 @@ export default {
           label: this.$t('profile.skills'),
           key: 'skills',
           id: 'profile-skills',
-          view: `/profile/${this.pathInfix}skills`,
+          // view: `/profile/${this.pathInfix}skills`,
+          view: {
+            name: 'ProfileSkills' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditSkills' + roadSuffix,
+            params,
+          },
           // component: ProfileSkillTab,
           props: {
             user: this.user,
@@ -218,8 +267,126 @@ export default {
       ]
     },
 
+    profileEditTabs() {
+      // watch out for the order of the tabs
+      // the indices are used in calls to provided method tabsLayoutSelectTab()
+      // some index are used for navigation (see below)
+      const roadSuffix = this.isSelf ? '' : 'Other'
+      const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
+      const props = {
+        user: this.user,
+        onProfileEdited: () => {
+          this.$emit('profile-edited')
+        },
+      }
+      return [
+        {
+          label: this.$t('profile.edit.general.tab'),
+          key: 'general',
+          id: 'profile-edit-general',
+          view: {
+            name: 'ProfileEditGeneral' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileSummary' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.bio.tab'),
+          key: 'bio',
+          id: 'profile-edit-bio',
+          view: {
+            name: 'ProfileEditBio' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileBio' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.projects.tab'),
+          key: 'projects',
+          id: 'profile-edit-projects',
+          view: {
+            name: 'ProfileEditProjects' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileProjects' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.groups.tab'),
+          key: 'groups',
+          id: 'profile-edit-groups',
+          view: {
+            name: 'ProfileEditGroups' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileGroups' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.skills.tab'),
+          key: 'skills',
+          id: 'profile-edit-skills',
+          view: {
+            name: 'ProfileEditSkills' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileSkills' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.privacy.tab'),
+          key: 'privacy',
+          id: 'profile-edit-privacy',
+          view: {
+            name: 'ProfileEditPrivacy' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileSummary' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'Article',
+          actionIcon: 'Pen',
+        },
+      ]
+    },
+
     currentTab() {
-      return this.profileTabs.find((tab) => this.$route.path.indexOf(tab.view) === 0)
+      return this.profileTabs.find((tab) => this.$route.name === tab.view.name)
     },
   },
 
