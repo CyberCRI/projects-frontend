@@ -1,7 +1,7 @@
 <template>
   <div v-if="user" class="profile-summary">
     <!-- Profile Header -->
-    <ProfileHeader v-if="user && !isLoading" class="profile-header" :user="user" />
+    <ProfileHeaderV2 v-if="user && !isLoading" class="profile-header" :user="user" />
 
     <div>
       <!-- User descriptions -->
