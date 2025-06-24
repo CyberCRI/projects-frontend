@@ -3,15 +3,18 @@ import type { RouteRecordRaw } from 'vue-router'
 import { useRuntimeConfig } from '#imports'
 import useProfilePagesRoutes from './useProfilePagesRoutes'
 import useProjectPagesRoutes from './useProjectPagesRoutes'
+import useGroupPagesRoutes from './useGroupPagesRoutes'
 
 const routes = ({
   showDebug,
   projectPageRoutes,
   profilePagesRoutes,
+  groupPageRoutes,
 }: {
   showDebug: boolean
   projectPageRoutes: any[]
   profilePagesRoutes: any[]
+  groupPageRoutes?: any[]
 }): Array<RouteRecordRaw> => [
   {
     path: '/',
@@ -274,36 +277,8 @@ const routes = ({
     },
   },
 
-  {
-    path: '/group/:groupId',
-    name: 'Group',
-    redirect: { name: 'groupSnapshot' },
-    component: () => import('../pages/GroupPage/GroupPage.vue'),
-    children: [
-      {
-        path: 'snapshot',
-        name: 'groupSnapshot',
-        component: () => import('../pages/GroupPage/Tabs/GroupSnapshotTab.vue'),
-      },
-      {
-        path: 'members',
-        name: 'groupMembers',
-        component: () => import('../pages/GroupPage/Tabs/GroupMembersTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'groupProjects',
-        component: () => import('../pages/GroupPage/Tabs/GroupProjectsTab.vue'),
-      },
-    ],
-    props: true,
-  },
-  {
-    path: '/group/:groupId/Edit',
-    name: 'frontEditGroup',
-    props: true,
-    component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
-  },
+  ...groupPageRoutes,
+
   {
     path: '/search',
     name: 'Search',
@@ -621,10 +596,13 @@ export default {
 
     const profilePagesRoutes = useProfilePagesRoutes()
 
+    const groupPageRoutes = useGroupPagesRoutes()
+
     return routes({
       showDebug: !!runtimeConfig.public.appShowDebug,
       projectPageRoutes,
       profilePagesRoutes,
+      groupPageRoutes,
     })
   },
 } satisfies RouterConfig
