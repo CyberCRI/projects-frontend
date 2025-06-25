@@ -32,6 +32,20 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  postCancelRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
+
+  postUpdateRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
+
+  postCreateRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
 })
 
 defineEmits(['close'])
@@ -109,9 +123,15 @@ const redirectTo404 = () => {
 }
 const cancel = () => {
   if (props.groupId) {
-    router.push({ name: 'Group', params: { groupId: props.groupId } })
+    router.push(
+      props.postCancelRouteFactory
+        ? props.postCancelRouteFactory(props.groupId)
+        : { name: 'Group', params: { groupId: props.groupId } }
+    )
   } else {
-    router.push({ name: 'groups' })
+    router.push(
+      props.postCancelRouteFactory ? props.postCancelRouteFactory(null) : { name: 'groups' }
+    )
   }
 }
 
@@ -300,10 +320,13 @@ const createGroup = async () => {
 
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
-
-    router.push({ name: 'Group', params: { groupId: newGroupId } })
-
     toaster.pushSuccess(t('toasts.group-create.success'))
+
+    router.push(
+      props.postCreateRouteFactory
+        ? props.postCreateRouteFactory(newGroupId)
+        : { name: 'Group', params: { groupId: newGroupId } }
+    )
   } catch (error) {
     this.toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
     console.error(error)
@@ -332,10 +355,13 @@ const updateGroup = async () => {
 
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
-
-    router.push({ name: 'Group', params: { groupId: props.groupId } })
-
     toaster.pushSuccess(t('toasts.group-edit.success'))
+
+    router.push(
+      props.postUpdateRouteFactory
+        ? props.postUpdateRouteFactory(props.groupId)
+        : { name: 'Group', params: { groupId: props.groupId } }
+    )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-edit.error')} (${error})`)
     console.error(error)
