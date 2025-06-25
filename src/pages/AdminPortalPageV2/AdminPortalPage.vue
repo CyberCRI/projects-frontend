@@ -156,18 +156,10 @@ try {
           />
         </template>
         <template v-if="currentTab" #content>
-          <h2 v-if="!currentTab.noTitle" class="content-title">
-            {{ $t('admin.portal.management') }} - {{ currentTab.label }}
-          </h2>
+          <SubPageTitle :title-prefix="$t('admin.portal.management')" :current-tab="currentTab" />
           <NuxtPage v-bind="currentTab.props" />
         </template>
       </NavPanelLayout>
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.content-title {
-  color: $primary-dark;
-  font-size: $font-size-4xl;
-}
-</style>

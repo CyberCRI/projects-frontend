@@ -24,9 +24,7 @@
         />
       </template>
       <template v-if="currentTab" #content>
-        <h2 v-if="!currentTab.noTitle" class="content-title">
-          {{ user?.given_name }} {{ user?.family_name }} - {{ currentTab.label }}
-        </h2>
+        <SubPageTitle :title-prefix="userFullName" :current-tab="currentTab" />
         <NuxtPage v-bind="currentTab.props" />
       </template>
     </NavPanelLayout>
@@ -126,6 +124,17 @@ export default {
     // connectedUser() {
     //   return this.usersStore.userFromApi
     // },
+
+    userFullName() {
+      const parts = []
+      if (this.user?.given_name) {
+        parts.push(this.user.given_name)
+      }
+      if (this.user?.family_name) {
+        parts.push(this.user.family_name)
+      }
+      return parts.join(' ')
+    },
 
     isSelf() {
       return !this.userId // this.connectedUser && this.user.id === this.connectedUser.id
@@ -445,10 +454,5 @@ export default {
 <style lang="scss" scoped>
 .project-layout {
   margin-top: pxToRem(48px);
-}
-
-.content-title {
-  color: $primary-dark;
-  font-size: $font-size-4xl;
 }
 </style>

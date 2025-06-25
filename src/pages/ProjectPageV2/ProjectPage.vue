@@ -146,10 +146,8 @@ if (import.meta.client) {
         />
       </template>
       <template #content>
-        <h2 v-if="!currentTab.noTitle" class="content-title">
-          {{ project?.title }} - {{ currentTab.label }}
-        </h2>
-        <NuxtPage v-bind="currentTab.props" />
+        <SubPageTitle :title-prefix="project?.title" :current-tab="currentTab" />
+        <NuxtPage v-bind="currentTab?.props || {}" />
       </template>
     </NavPanelLayout>
     <!-- add/edit modals -->
@@ -231,10 +229,5 @@ if (import.meta.client) {
 <style lang="scss" scoped>
 .project-layout {
   margin-top: pxToRem(48px);
-}
-
-.content-title {
-  color: $primary-dark;
-  font-size: $font-size-4xl;
 }
 </style>
