@@ -2327,6 +2327,7 @@
       "member_added": "{sender} f\u00fcgte ein Mitglied in das Projekt {project}",
       "member_updated": "{sender} aktualisiert die Rolle von {user} im Projekt {project}",
       "member_removed": "{sender} entfernt {user} vom Projektteam {project}",
+      "new_instruction": "Eine neue Anweisung wurde veröffentlicht",
       "announcement": "{sender} ver\u00f6ffentlichte eine neue Ank\u00fcndigung im Projekt {project}",
       "application": "{applicant} beantragte Ihre Ank\u00fcndigung {announcement} im Projekt {project}",
       "blog_entry": "{sender} ver\u00f6ffentlichte einen neuen Blogeintrag im Projekt {project}",

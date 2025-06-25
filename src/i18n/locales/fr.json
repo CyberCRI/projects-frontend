@@ -2330,6 +2330,7 @@
       "member_added": "{sender} a ajouté un nouveau membre sur {project}",
       "member_updated": "{sender} a mis à jour le rôle de {user} sur {project}",
       "member_removed": "{sender} a supprimé {user} de l'équipe sur {project}",
+      "new_instruction": "Une nouvelle instruction a été publiée",
       "announcement": "{sender} a publié une nouvelle annonce sur {project}",
       "application": "{applicant} a postulé sur votre annonce {announcement} sur {project}",
       "blog_entry": "{sender} a publié une nouvelle publication sur {project}",

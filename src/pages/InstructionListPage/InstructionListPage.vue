@@ -28,7 +28,7 @@ const loadInstructions = async () => {
   loading.value = true
   allInstructions.value = (
     await getAllInstructions(organizationsStore.current?.code, {
-      ordering: 'publication_date',
+      ordering: '-publication_date',
       ...dateLimit,
     })
   ).results
