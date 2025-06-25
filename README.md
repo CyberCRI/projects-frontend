@@ -54,7 +54,7 @@ yarn install --pure-lockfile
 Serve the app on [https://localhost:8080](https://localhost:8080) for development:
 
 ```bash
-yarn serve
+yarn dev
 ```
 
 If you need a production build :

@@ -121,15 +121,6 @@ export default {
       return this.visibility === 'public' ? 'Eye' : 'EyeSlash'
     },
   },
-  methods: {
-    facebookShare() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
-    },
-
-    linkedinShare() {
-      window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
-    },
-  },
 }
 </script>
 
