@@ -188,6 +188,11 @@ export default {
           name: 'projectPrivateExchange',
           params: { slugOrId: this.notification.project.slug },
         }
+      } else if (this.notification.type === 'new_instruction') {
+        return {
+          name: 'InstructionListPage',
+          params: {},
+        }
       } else if (this.notification.project) {
         return {
           name: 'projectSummary',

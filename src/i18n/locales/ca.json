@@ -2327,6 +2327,7 @@
       "member_added": "{sender} va afegir un membre al projecte 1321545",
       "member_updated": "{sender} actualitzat el paper de {user} en el projecte {project}",
       "member_removed": "{sender} eliminat {user} de l'equip del projecte {project}",
+      "new_instruction": "S'ha publicat una nova instrucció",
       "announcement": "{sender} va publicar una nova declaraci\u00f3 al projecte {project}",
       "application": "{applicant} aplicat a la vostra declaraci\u00f3 {announcement} en el projecte {project}",
       "blog_entry": "{sender} va publicar una nova entrada al projecte {project}",

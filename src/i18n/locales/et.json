@@ -2327,6 +2327,7 @@
       "member_added": "{sender} lisas projektile liikme {project}",
       "member_updated": "{sender} uuendas {user} rolli projektis {project}",
       "member_removed": "{sender} eemaldatud {user} projekti meeskonnalt {project}",
+      "new_instruction": "Avaldati uus juhend",
       "announcement": "{sender} avaldas projektis uue teadaande {project}",
       "application": "{applicant} rakendas teie teatele {announcement} projektis {project}",
       "blog_entry": "{sender} avaldas uue blogi sissekande projektis {project}",

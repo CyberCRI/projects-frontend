@@ -2327,6 +2327,7 @@
       "member_added": "{sender} toegevoegd aan het project {project}",
       "member_updated": "{sender} heeft de rol van {user} in het project aangepast {project}",
       "member_removed": "{sender} geschrapt {user} van het team van het project {project}",
+      "new_instruction": "Er is een nieuwe instructie gepubliceerd",
       "announcement": "{sender} publiceerde een nieuwe aankondiging in het project {project}",
       "application": "{applicant} toegepast op uw aankondiging {announcement} in het project {project}",
       "blog_entry": "{sender} publiceerde een nieuwe blog in het project {project}",
