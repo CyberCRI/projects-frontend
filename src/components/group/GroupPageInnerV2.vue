@@ -23,9 +23,7 @@
           />
         </template>
         <template v-if="currentTab" #content>
-          <h2 v-if="!currentTab.noTitle" class="content-title">
-            {{ groupName }} - {{ currentTab.label }}
-          </h2>
+          <SubPageTitle :title-prefix="groupName" :current-tab="currentTab" />
           <NuxtPage v-bind="currentTab.props" />
         </template>
       </NavPanelLayout>
@@ -288,10 +286,5 @@ export default {
 
 .recommandations {
   margin-top: $space-2xl;
-}
-
-.content-title {
-  color: $primary-dark;
-  font-size: $font-size-4xl;
 }
 </style>
