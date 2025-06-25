@@ -61,7 +61,7 @@ export default {
     const peopleGroupsStore = usePeopleGroupsStore()
     const organizationsStore = useOrganizationsStore()
     const { canEditGroup } = usePermissions()
-    const uniqueId = 'project-nav-panel'
+    const uniqueId = 'group-nav-panel'
     const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
       useToggleableNavPanel(uniqueId)
 
@@ -117,7 +117,7 @@ export default {
           },
           condition: true,
           noTitle: true,
-          icon: 'Article',
+          icon: 'Home',
         },
         {
           key: 'members',
@@ -128,7 +128,7 @@ export default {
             isMembersLoading: this.isMembersLoading,
           },
           condition: true,
-          icon: 'Article',
+          icon: 'Users',
         },
         {
           key: 'projects',
@@ -139,7 +139,7 @@ export default {
             isProjectsLoading: this.isProjectsLoading,
           },
           condition: true,
-          icon: 'Article',
+          icon: 'Archive',
         },
         {
           key: 'projects',
@@ -151,7 +151,7 @@ export default {
             isV2: true,
           },
           condition: this.canEditGroup,
-          icon: 'Article',
+          icon: 'Cog',
           actionIcon: 'Pen',
         },
       ].filter((tab) => tab.condition)

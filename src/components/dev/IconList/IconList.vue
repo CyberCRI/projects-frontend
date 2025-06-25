@@ -122,6 +122,8 @@ export default {
         'Progress5',
         'MenuFoldLine',
         'MenuUnfoldLine',
+        'Archive',
+        'VipCrownLine',
       ],
     }
   },

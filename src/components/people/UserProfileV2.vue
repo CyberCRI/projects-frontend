@@ -173,7 +173,7 @@ export default {
           props: {
             user: this.user,
           },
-          icon: 'Article',
+          icon: 'Home',
           condition: true,
           noTitle: true, // no title for this tab
         },
@@ -197,7 +197,7 @@ export default {
             user: this.user,
           },
           condition: true,
-          icon: 'Article',
+          icon: 'Account',
         },
         {
           // watch out for the order of this tab
@@ -219,7 +219,7 @@ export default {
             user: this.user,
           },
           condition: true,
-          icon: 'Article',
+          icon: 'Archive',
         },
         {
           label: this.$t('profile.groups'),
@@ -239,7 +239,7 @@ export default {
             user: this.user,
           },
           condition: true,
-          icon: 'Article',
+          icon: 'Users',
         },
         {
           // watch out for the order of this tab
@@ -262,7 +262,7 @@ export default {
           },
 
           condition: true,
-          icon: 'Article',
+          icon: 'VipCrownLine',
         },
       ]
     },
@@ -294,7 +294,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'Home',
           actionIcon: 'Pen',
         },
         {
@@ -311,7 +311,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'Account',
           actionIcon: 'Pen',
         },
         {
@@ -328,7 +328,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'Archive',
           actionIcon: 'Pen',
         },
         {
@@ -345,7 +345,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'Users',
           actionIcon: 'Pen',
         },
         {
@@ -362,7 +362,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'VipCrownLine',
           actionIcon: 'Pen',
         },
         {
@@ -379,7 +379,7 @@ export default {
           },
           props,
           condition: true,
-          icon: 'Article',
+          icon: 'Cog',
           actionIcon: 'Pen',
         },
       ]

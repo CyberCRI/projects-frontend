@@ -426,7 +426,7 @@ export default function useProjectData() {
         },
         condition: isMemberOrAdmin.value,
         dataTest: 'project-private-exchange',
-        icon: 'ChatBubble',
+        icon: 'EmailOutline',
       },
       {
         key: 'project-announcements',
