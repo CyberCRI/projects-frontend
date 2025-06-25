@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   titlePrefix: {
     type: String,
     default: '',
@@ -27,6 +27,7 @@ const props = defineProps({
   display: flex;
   flex-flow: row wrap;
   gap: 0.6em;
+
   .icon svg {
     width: 1.2em;
     height: 1.2em;
