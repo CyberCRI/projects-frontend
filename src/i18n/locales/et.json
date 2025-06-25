@@ -206,7 +206,7 @@
       "categories": "Kategooriad",
       "tags": "Sildid",
       "skills": "Oskused",
-      "help": "Aita",
+      "help": "Abi",
       "links": "Links",
       "templates": "Mallid",
       "users": "Kasutajad",
@@ -774,7 +774,7 @@
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikup\u00e4rastatud abikaardi. Kogu selle sisu kustutatakse.",
     "delete-confirm-title": "Kohandatud abi kaardi kustutamine",
     "info": "On olemas \u00fcldine abi, millele p\u00e4\u00e4seb juurde, kl\u00f5psates \u00fclemises paremas nurgas nuppu \"Abi\". Kui soovite lisada oma portaalile omase abilehega vahekaardi, saate seda teha allpool.",
-    "portal": "Aita",
+    "portal": "Abi",
     "tab": "Kaardi nimi",
     "video": "Video\u00f5pe"
   },
@@ -863,7 +863,7 @@
     "accessibility": "Ligip\u00e4\u00e4setavus",
     "personal-data": "Isikuandmed",
     "directory": "Avasta meie metaportaalist veel palju teiste organisatsioonide projekte:",
-    "help": "Aita",
+    "help": "Abi",
     "projects": "Projektiplatvorm",
     "madeBy": "tehtud",
     "sourceText": "Vaata l\u00e4htekoodi",
@@ -1636,7 +1636,7 @@
     "recommended": "Soovitatav",
     "sort_by": "Sorteeri:"
   },
-  "projects": "projekte",
+  "projects": "projektid",
   "recruit": {
     "about-you": "R\u00e4\u00e4gi endast ja sellest, mis sind motiveerib",
     "add-announcement": "teate lisamine",
