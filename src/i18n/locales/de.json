@@ -82,7 +82,7 @@
           "des": "Designs und Tests p\u00e4dagogische Szenarien mit Projekten mit Lizenzstudenten"
         },
         {
-          "title": "Entwickler von Full-Stack",
+          "title": "Full-Stack Entwickler",
           "des": "Erstellt und integriert die WeLearn-Konzeptkarte in Projektsuche"
         },
         {
@@ -140,7 +140,7 @@
       "enter-title": "Geben Sie einen Titel ein",
       "enter-description": "Beschreibung eingeben",
       "title-field": "Titel des Rahmens",
-      "description-field": "Warenbezeichnung",
+      "description-field": "Beschreibung",
       "add-classification": {
         "title": "Einen Rahmen hinzuf\u00fcgen",
         "error": "Fehler beim Speichern des Rahmens",
@@ -171,7 +171,7 @@
       "table": {
         "filter": "Filter-Tags",
         "tag": "Tag",
-        "description": "Warenbezeichnung",
+        "description": "Beschreibung",
         "actions": "Ma\u00dfnahmen"
       },
       "add-tag": {
@@ -230,7 +230,7 @@
           "fields": {
             "title": "Titel",
             "title-placeholder": "(kein Titel noch)",
-            "description": "Warenbezeichnung",
+            "description": "Beschreibung",
             "description-placeholder": "(keine Beschreibung noch)"
           },
           "success": "Home Wording gespeichert",
@@ -432,7 +432,7 @@
     "generate-link": "Link generieren",
     "list": {
       "created-by-column": "Erstellt von",
-      "description-column": "Warenbezeichnung",
+      "description-column": "Beschreibung",
       "expire-column": "Abz\u00fcge",
       "group-column": "Gruppe",
       "intro": "Registrieren Sie Links erm\u00f6glichen es Benutzern, die ein Projektkonto auf Ihrem Portal erstellen m\u00f6chten, dies zu tun. Alles, was Sie tun m\u00fcssen, ist mit ihnen den Link zu teilen. Viele Menschen k\u00f6nnen einen Link abonnieren. Sie k\u00f6nnen kontrollieren, welche Gruppe sie bei der Erstellung des Links sein werden.",
@@ -449,7 +449,7 @@
     "title": "Blog"
   },
   "browse": {
-    "page-title": "Suche",
+    "page-title": "Suchen",
     "placeholder": "Was suchen Sie?",
     "result-per-page": "Ergebnisse pro Seite:"
   },
@@ -467,12 +467,12 @@
   "comment": {
     "add-comment": "F\u00fcgen Sie Ihren Kommentar hinzu!",
     "comment-verb": "Kommentare",
-    "comments": "Bemerkungen",
+    "comments": "Kommentare",
     "deleted": "Kommentar gel\u00f6scht",
     "discard-comment": "Kommentieren?",
     "discard-changes": "\u00c4nderungen deaktivieren?",
     "need-account": "Sie ben\u00f6tigen ein Konto, um Kommentare zu ver\u00f6ffentlichen",
-    "no-comments": "noch kein Kommentar abgegeben wurde...",
+    "no-comments": "Sei der Erste, der einen Kommentar abgibt!",
     "private-exchange": {
       "tab": "Interne Nachrichten",
       "no-message": "Noch keine interne Nachricht...",
@@ -793,12 +793,12 @@
     "background-color": "Hintergrundfarbe",
     "category-name": "Name der Kategorie",
     "organization-name": "Name Ihrer Gemeinde",
-    "description": "Warenbezeichnung",
+    "description": "Beschreibung",
     "email": "E-Mail senden",
     "email-contact": "E-Mail senden",
     "language": "Sprache",
     "title": "Titel",
-    "url": "Urin",
+    "url": "URLs",
     "contact": {
       "subtitle": "F\u00fcllen Sie dieses schnelle Formular aus und wir kommen in K\u00fcrze zur\u00fcck zu Ihnen",
       "subject": "Gegenstand",
@@ -885,7 +885,7 @@
     "edit-group": "Gruppe bearbeiten",
     "see-more-people-button": "Siehe {users} mehr",
     "see-subgroups": "Siehe {count} Untergruppe | Siehe {count} Untergruppen",
-    "share": "Anteil",
+    "share": "Teilen",
     "the-team": "Das Team ({users})",
     "news": "Ank\u00fcndigungen",
     "more": "Mehr",
@@ -928,7 +928,7 @@
       "short-description-placeholder": "Beschreiben Sie Ihre Gruppe in einem Satz",
       "name-label": "Bezeichnung",
       "name-placeholder": "Ex. Hitbox: interaktive Boxsack",
-      "description-label": "Warenbezeichnung",
+      "description-label": "Beschreibung",
       "add-description": "Beschreibung hinzuf\u00fcgen",
       "add-parent-group": "Stammgruppe hinzuf\u00fcgen",
       "project-label": "Empfohlene Projekte",
@@ -967,8 +967,8 @@
         "label": "Leiter und Manager"
       },
       "managers": {
-        "label": "Herausgeber",
-        "help": "Herausgeber"
+        "label": "Teammitglieder",
+        "help": "Teammitglieder"
       }
     }
   },
@@ -978,12 +978,12 @@
     "public": "\u00d6ffentlichkeit: f\u00fcr jeden Besucher der Website sichtbar",
     "similar-project": "\u00e4hnliches Projekt",
     "similar-projects": "\u00e4hnliche Projekte",
-    "portals-start": "Es reicht",
+    "portals-start": "Es erreicht",
     "portals-end-plural": "Portale",
     "portals-end-singular": "Portal",
-    "views": "Ansichten",
+    "views": "Aufrufe",
     "creation": "Erstellt",
-    "update": "Bearbeitet",
+    "update": "Zuletzt bearbeitet",
     "close": "Schlie\u00dfen",
     "mobile-menu-title": "Men\u00fc schlie\u00dfen"
   },
@@ -1007,7 +1007,7 @@
       "instructions": "Anweisungen"
     },
     "create-project": "Projekt erstellen",
-    "check-locations": "\u00dcberpr\u00fcfen Sie unsere Standorte",
+    "check-locations": "Standorte ansehen",
     "our-locations": "Unsere Standorte"
   },
   "language": {
@@ -1688,7 +1688,7 @@
     "error-uploading-image": "Fehler beim Hochladen von Bild",
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
-    "resources": "Mittel",
+    "resources": "Ressourcen",
     "web": "Link zu Web-Ressourcen",
     "web-link": "web link | web link | web links"
   },
@@ -1781,8 +1781,8 @@
     "role-editor": "Hat alle Bearbeitungsrechte f\u00fcr diese Gruppe.",
     "role-reviewer": "Wenn das Projekt als \"ready for review\" markiert wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
     "role-teammate": "Er hat keine Bearbeitungsrechte, erscheint aber als Teammitglied.",
-    "editor": "Herausgeber",
-    "editors": "Herausgeber",
+    "editor": "Teammitglied",
+    "editors": "Teammitglieder",
     "editor-groups": "Gruppen",
     "editor-group": "Gruppe",
     "reviewer": "Rezension",
@@ -1866,7 +1866,7 @@
     "pick-tag-preset": "Oder w\u00e4hlen Sie einen Vorschlag",
     "pick-skill-preset": "Oder w\u00e4hlen Sie eine vorgeschlagene F\u00e4higkeit",
     "current-tag-description": "Geben Sie die ersten Buchstaben des Tags ein und w\u00e4hlen Sie den richtigen Tag",
-    "current-skill-description": "Geben Sie das Label des K\u00f6nnens ein und w\u00e4hlen Sie die richtige Geschicklichkeit",
+    "current-skill-description": "F\u00fcge deine F\u00e4higkeit hinzu und w\u00e4hle die passende Kompetenz aus",
     "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Vorschl\u00e4ge",
     "choose-skill": "Klicken Sie auf die gew\u00e4hlte F\u00e4higkeit:"
@@ -2280,7 +2280,7 @@
       "follow-sub": "Benachrichtigt werden, wenn Projekte, die Sie folgen, ge\u00e4ndert werden",
       "member": "Als Teammitglied hinzugef\u00fcgt",
       "member-sub": "Werden Sie benachrichtigt, wenn Sie als Teammitglied in einem Projekt hinzugef\u00fcgt werden",
-      "comment": "Bemerkungen",
+      "comment": "Kommentare",
       "comment-sub": "Benachrichtigt, wenn jemand Ihr Projekt kommentiert",
       "internal-message": "Interne Meldungen",
       "internal-message-sub": "Benachrichtigen, wenn jemand eine interne Nachricht zu Ihrem Projekt hinzuf\u00fcgt",

@@ -1643,7 +1643,7 @@
     "add-announcement": "ajouter une annonce",
     "announcement": "annonce",
     "announcements": "aucune annonce | {count} annonce | {count} annonces",
-    "apply": "postuler",
+    "apply": "Répondre",
     "creation-date": "créée le",
     "delete-announcement-message": "Voulez-vous effacer cette annonce ?",
     "edit-announcement": "modifier l'annonce",
