@@ -1,9 +1,5 @@
 <template>
   <div class="project-settings">
-    <h2 class="title">
-      {{ $filters.capitalize($t('project.settings')) }}
-    </h2>
-
     <div class="section section--green">
       <h3 class="label">
         {{ $t('project.actions') }}

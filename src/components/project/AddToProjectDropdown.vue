@@ -112,15 +112,19 @@ export default {
           },
           condition: this.canEditProject,
         },
-        {
-          label: 'project.add-to-project.comment',
-          dataTest: 'button-add-comment-to-project',
-          onClick: () => {
-            this.$emit('close-dropdown')
-            this.projectLayoutGoToTab('comments')
-          },
-          condition: this.canCreateComments,
-        },
+        ...(this.isV2
+          ? []
+          : [
+              {
+                label: 'project.add-to-project.comment',
+                dataTest: 'button-add-comment-to-project',
+                onClick: () => {
+                  this.$emit('close-dropdown')
+                  this.projectLayoutGoToTab('comments')
+                },
+                condition: this.canCreateComments,
+              },
+            ]),
         {
           label: 'project.add-to-project.location',
           dataTest: 'button-add-location-to-project',

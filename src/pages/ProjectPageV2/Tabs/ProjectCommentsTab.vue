@@ -1,10 +1,10 @@
 <template>
   <div class="project-comments narrow-content">
-    <div class="header">
+    <!-- <div class="header">
       <h2 class="title">
         {{ $t('comment.add-comment') }}
       </h2>
-    </div>
+    </div> -->
 
     <MakeComment :project="project" @comment-posted="$emit('reload-comments')" />
 

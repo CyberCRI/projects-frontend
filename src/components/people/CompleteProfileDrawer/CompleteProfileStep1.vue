@@ -161,11 +161,12 @@
       :title="$t('profile.drawer_title')"
       @close="exempleToShow = null"
     >
-      <UserProfile
+      <UserProfileV2
         v-if="exempleToShow"
         ref="profile-user"
         :can-edit="false"
         :user-id="exempleToShow"
+        is-preview
       />
     </BaseDrawer>
   </template>
