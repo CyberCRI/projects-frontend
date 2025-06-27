@@ -40,32 +40,17 @@
       ref="profile-user"
       :can-edit="false"
       :user-id="profileDrawer.user_id"
-      @close="closeProfileDrawer"
       is-preview
+      @close="closeProfileDrawer"
     />
   </BaseDrawer>
 </template>
 
 <script>
-import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfile from '@/components/people/UserProfile.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import useAPI from '@/composables/useAPI.ts'
-import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
 export default {
   name: 'GroupMembersTab',
-
-  components: {
-    GroupMemberItem,
-    BaseDrawer,
-    UserProfile,
-    PaginationButtons,
-    MemberListSkeleton,
-    DynamicGrid,
-  },
 
   props: {
     membersInitialRequest: {

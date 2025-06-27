@@ -90,40 +90,16 @@
         ref="profile-user"
         :can-edit="false"
         :user-id="profileDrawer.user_id"
-        @close="closeProfileDrawer"
         is-preview
+        @close="closeProfileDrawer"
       />
     </BaseDrawer>
   </div>
 </template>
 
 <script>
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
-import GroupMemberItem from '@/components/people/GroupMemberItem/GroupMemberItem.vue'
-import CardList from '@/components/base/CardList.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfile from '@/components/people/UserProfile.vue'
-import MemberListSkeleton from '@/components/people/MemberListSkeleton.vue'
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
-
 export default {
   name: 'GroupSnapshotTab',
-
-  components: {
-    SkeletonComponent,
-    MemberListSkeleton,
-    SeeMoreArrow,
-    DescriptionExpandable,
-    GroupMemberItem,
-    CardList,
-    ProjectCard,
-    BaseDrawer,
-    UserProfile,
-    DynamicGrid,
-  },
 
   props: {
     description: {
