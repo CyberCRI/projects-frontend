@@ -73,11 +73,12 @@
       @close="closeProfileDrawer"
       @confirm="closeProfileDrawer"
     >
-      <UserProfile
+      <UserProfileV2
         v-if="profileDrawer.isOpened"
         ref="profile-user"
         :can-edit="false"
         :user-id="profileDrawer.user_id"
+        is-preview
       />
     </BaseDrawer>
   </div>

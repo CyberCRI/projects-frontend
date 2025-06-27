@@ -1,6 +1,8 @@
 <template>
   <div v-if="user && !isLoading" :key="user.id" class="user-profile">
+    <ProfileSummaryTab v-if="isPreview" :user="user" />
     <NavPanelLayout
+      v-else
       :is-loading="loading"
       :is-nav-collapsed="isNavCollapsed"
       :breadcrumbs="breadCrumbs || []"
@@ -34,10 +36,14 @@
 <script>
 import { getUser } from '@/api/people.service.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 
 export default {
   name: 'UserProfileV2',
 
+  components: {
+    ProfileSummaryTab,
+  },
   provide() {
     return {
       tabsLayoutSelectTab: this.selectTab,
@@ -62,6 +68,11 @@ export default {
     //   type: Boolean,
     //   default: false,
     // },
+
+    isPreview: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['user-not-found', 'close', 'profile-edited'],
