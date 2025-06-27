@@ -128,8 +128,18 @@ export default {
   },
 
   methods: {
+    redirectToProfile() {
+      if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
+      else
+        this.$router.push({
+          name: 'ProfileBioOther',
+          params: { userId: this.user.id },
+        })
+    },
+
     cancel() {
       this.resetForm()
+      this.redirectToProfile()
     },
     async save() {
       this.asyncing = true
@@ -145,6 +155,7 @@ export default {
         // update store if self
         if (this.isSelf) this.usersStore.getUser(this.user.id)
         this.toaster.pushSuccess(this.$t('profile.edit.bio.save-success'))
+        this.redirectToProfile()
       } catch (error) {
         this.toaster.pushError(`${this.$t('profile.edit.bio.save-error')} (${error})`)
         console.error(error)

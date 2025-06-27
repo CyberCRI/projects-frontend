@@ -9,9 +9,19 @@
         data-test="edit-bio"
       />
     </div>
+    <!-- Short bio -->
+    <div v-if="user.short_description" class="short-bio user-descriptions description-content">
+      <p>
+        <strong>{{ $t('profile.edit.bio.short-bio.label') }}</strong>
+      </p>
+      <p class="short-description" v-html="user.short_description" />
+    </div>
+
     <!-- User descriptions -->
     <UserDescriptions v-if="user.description" :user="user" />
-    <p v-else class="empty-field">
+
+    <!-- No description -->
+    <p v-if="!user.description && !user.short_description" class="empty-field">
       {{ noDescription }}
     </p>
   </div>
@@ -78,5 +88,27 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.user-descriptions {
+  padding: $space-l;
+
+  &.limited {
+    @media all and (min-width: $max-tablet) {
+      border: $border-width-s solid $primary;
+      border-radius: $border-radius-l;
+    }
+  }
+
+  .description-content {
+    margin-bottom: $space-l;
+  }
+
+  :deep(.title) {
+    font-size: $font-size-m;
+    font-weight: 700;
+    color: $primary-dark;
+    margin-bottom: $space-l;
+  }
 }
 </style>
