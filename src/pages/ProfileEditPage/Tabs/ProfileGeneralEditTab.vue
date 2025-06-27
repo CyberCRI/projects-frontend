@@ -358,9 +358,9 @@ export default {
         linkedin: {
           url: helpers.withMessage(this.$t('profile.edit.general.linkedin.is-url'), url),
         },
-        twitter: {
-          url: helpers.withMessage(this.$t('profile.edit.general.twitter.is-url'), url),
-        },
+        // twitter: {
+        //   url: helpers.withMessage(this.$t('profile.edit.general.twitter.is-url'), url),
+        // },
       },
     }
   },
