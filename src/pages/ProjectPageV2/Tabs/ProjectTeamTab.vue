@@ -199,33 +199,11 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import UserCard from '@/components/people/UserCard.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfile from '@/components/people/UserProfile.vue'
-import ProjectTeamEditor from '@/components/project/ProjectTeamEditor.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
-
 import { deleteProjectMembers } from '@/api/project-members.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 export default {
   name: 'ProjectTeamTab',
-
-  components: {
-    UserProfile,
-    SectionHeader,
-    UserCard,
-    GroupCard,
-    ConfirmModal,
-    BaseDrawer,
-    ProjectTeamEditor,
-    LpiButton,
-    DynamicGrid,
-  },
 
   inject: ['projectLayoutToggleAddModal'],
 
