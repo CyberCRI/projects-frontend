@@ -214,7 +214,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.group-layout {
+.group-layout,
+.group-edit-layout {
   margin-top: pxToRem(48px);
 }
 

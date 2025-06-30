@@ -13,11 +13,11 @@ export async function createGroup(page: Page, GroupName: string) {
   // button might be hidden in extra tabs dropdown
   const groupsTabCount = await groupsTab.count()
   console.log('groupsTab count', groupsTabCount)
-  if (!groupsTabCount) {
-    console.log('will click extra tabs button')
-    await page.locator('[data-test="extra-tabs-button"]').click()
-    groupsTab = await page.locator('[data-test="admin-groups"]')
-  }
+  // if (!groupsTabCount) {
+  //   console.log('will click extra tabs button')
+  //   await page.locator('[data-test="extra-tabs-button"]').click()
+  //   groupsTab = await page.locator('[data-test="admin-groups"]')
+  // }
   await groupsTab.click()
 
   // try {

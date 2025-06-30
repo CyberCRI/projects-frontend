@@ -1,8 +1,8 @@
 <template>
-  <div :key="groupId" class="group-layout">
+  <div :key="groupId" :class="isEditing ? 'group-edit-layout' : 'group-layout'">
     <div class="page-section-extra-wide">
       <NavPanelLayout
-        :is-loading="loading"
+        :is-loading="isLoading"
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="groupHierarchy || []"
         @toggle-nav-panel="toggleNavPanel"
@@ -10,7 +10,7 @@
       >
         <template #nav-panel>
           <LazyGroupNavPanel
-            v-if="!loading && !isNavCollapsed"
+            v-if="!isLoading && !isNavCollapsed"
             :class="{ collapsed: isNavCollapsed }"
             :group-tabs="groupTabs"
             :current-tab="currentTab"

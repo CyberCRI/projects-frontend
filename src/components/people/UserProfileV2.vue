@@ -3,7 +3,7 @@
     <ProfileSummaryTab v-if="isPreview" :user="user" />
     <NavPanelLayout
       v-else
-      :is-loading="loading"
+      :is-loading="isLoading"
       :is-nav-collapsed="isNavCollapsed"
       :breadcrumbs="breadCrumbs || []"
       @toggle-nav-panel="toggleNavPanel"
@@ -11,7 +11,7 @@
     >
       <template #nav-panel>
         <LazyProfileNavPanel
-          v-if="!loading && !isNavCollapsed"
+          v-if="!isLoading && !isNavCollapsed"
           :class="{ collapsed: isNavCollapsed }"
           :profile-tabs="profileTabs"
           :current-tab="currentTab"
