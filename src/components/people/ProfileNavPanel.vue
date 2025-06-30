@@ -1,6 +1,6 @@
 <template>
   <div class="nav-panel">
-    <div class="nav-panel-inner">
+    <div class="nav-panel-inner" :class="{ 'profile-edit-tabs': isEditing }">
       <div v-if="isSelf || canEditUser" class="edit-btn-ctn">
         <GroupButton
           :model-value="isEditing"
@@ -25,7 +25,7 @@
           <NuxtLink
             v-if="entry.condition"
             class="link"
-            :data-test="entry.dataTest"
+            :data-test="entry.key"
             :to="entry.view"
             @click="navigated"
           >

@@ -13,11 +13,11 @@ export async function reportAbuse(page) {
   // button might be hidden in extra tabs dropdown
   const settingsCount = await settings.count()
   console.log('settings count', settingsCount)
-  if (!settingsCount) {
-    console.log('will click extra tabs button')
-    await page.locator('[data-test="extra-tabs-button"]').click()
-    settings = await page.locator('[data-test="project-settings"]')
-  }
+  // if (!settingsCount) {
+  //   console.log('will click extra tabs button')
+  //   await page.locator('[data-test="extra-tabs-button"]').click()
+  //   settings = await page.locator('[data-test="project-settings"]')
+  // }
   await settings.click()
   await page.locator('[data-test="report-bug"]').click()
   logger.info('Click on report bug')

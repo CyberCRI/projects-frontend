@@ -10,7 +10,7 @@
           ]"
           :label="editButtonLabel"
           btn-icon="Pen"
-          data-test="edit-profile"
+          :data-test="isEditing ? 'show-group' : 'edit-group'"
           class="edit-btn small"
           @update:model-value="switchView"
         />
@@ -25,7 +25,7 @@
           <NuxtLink
             v-if="entry.condition"
             class="link"
-            :data-test="entry.dataTest"
+            :data-test="entry.key"
             :to="entry.view"
             @click="navigated"
           >

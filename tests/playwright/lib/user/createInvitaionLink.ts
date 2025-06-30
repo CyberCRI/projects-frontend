@@ -12,11 +12,11 @@ export async function createInvitaionLink(page) {
   await page.waitForSelector('.admin-portal-layout') // wait admin page to be loaded
   let adminLinks = await page.locator('[data-test="admin-links"]')
   const adminLinksCount = await adminLinks.count()
-  if (!adminLinksCount) {
-    console.log('will click extra tabs button')
-    await page.locator('[data-test="extra-tabs-button"]').click()
-    adminLinks = await page.locator('[data-test="admin-links"]')
-  }
+  // if (!adminLinksCount) {
+  //   console.log('will click extra tabs button')
+  //   await page.locator('[data-test="extra-tabs-button"]').click()
+  //   adminLinks = await page.locator('[data-test="admin-links"]')
+  // }
   await adminLinks.click()
   await page.locator('[data-test="create-link"]').click()
   await page.locator('[data-test="one-year"]').click()
