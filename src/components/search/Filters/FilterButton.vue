@@ -28,7 +28,7 @@
     <template #custom-content>
       <div class="tooltip-div">
         <ul class="list-ctn">
-          <li v-for="name in names" :key="name" class="item">
+          <li v-for="name in filteredNames" :key="name" class="item">
             {{ name }}
           </li>
         </ul>
@@ -72,6 +72,14 @@ export default {
   },
 
   emits: ['clear-action', 'main-action'],
+
+  computed: {
+    filteredNames() {
+      if (!this.names?.length) return []
+      if (this.names.length < 10) return this.names
+      return [...this.names.slice(0, 9), '...']
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
