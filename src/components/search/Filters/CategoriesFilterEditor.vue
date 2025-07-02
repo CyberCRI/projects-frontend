@@ -81,9 +81,16 @@ export default {
       if (this.isSelected(category.id)) {
         this.selection = this.selection.filter((cat) => cat.id !== category.id)
       } else {
-        this.selection.push(category)
+        this.recursivelySelect(category)
       }
       this.$emit('update:modelValue', this.selection)
+    },
+
+    recursivelySelect(category) {
+      this.selection.push(category)
+      category.children?.forEach((child) => {
+        this.recursivelySelect(child)
+      })
     },
   },
 }
