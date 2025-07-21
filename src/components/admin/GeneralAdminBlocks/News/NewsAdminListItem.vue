@@ -98,7 +98,9 @@ export default {
 }
 
 .news-title {
-  font-size: $font-size-xl;
+  font-size: $font-size-l;
+  font-weight: 500;
+  color: $primary-dark;
 }
 
 .cropped-image {
