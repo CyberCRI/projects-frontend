@@ -37,7 +37,12 @@
       </ToolTip>
     </div>
     <div class="role-option-list">
-      <div v-for="user in userList" :key="user.id" class="role-options-item">
+      <div
+        v-for="user in userList"
+        :key="user.id"
+        class="role-options-item"
+        :data-group-user-email="user.email"
+      >
         <div>{{ user.given_name }} {{ user.family_name }}</div>
         <div class="role-block">
           <div v-for="roleOption in roleOptions" :key="roleOption.value" class="role-item">

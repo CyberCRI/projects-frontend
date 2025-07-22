@@ -7,7 +7,10 @@ import { logIn, logOut, createGroup, deleteGroup, setRights, testRights, makeId 
 const logger = new Logger(LogLevel.Debug)
 const groupName = makeId(5)
 
-const rights = ['leader', 'manager', 'member']
+const rights = []
+rights.push('leader')
+rights.push('manager')
+rights.push('member')
 
 test(`test-${users.admin.email}`, async ({ page }) => {
   await page.goto('/')
@@ -30,6 +33,18 @@ test(`test-${users.admin.email}`, async ({ page }) => {
     logger.error(err)
     throw err
   }
+
+  await page.locator('[data-test="lpi-logo"]').waitFor({ state: 'attached' })
+  await page.locator('[data-test="lpi-logo"]').click()
+
+  await page.locator('[data-test="search-input"]').waitFor({ state: 'attached' })
+  await page.locator('[data-test="search-input"]').fill(groupName)
+  logger.info(`wait for algolia to index ${groupName}`)
+  await delay(2000)
+  await page.locator('[data-test="search-input-button"]').click()
+  //await delay(3000) // wait for the different search page redirections (query string building)
+
+  await page.locator(`[data-test="group-card-${groupName}"]`).click()
 
   for (const right of rights) {
     try {
@@ -56,6 +71,8 @@ test(`test-${users.admin.email}`, async ({ page }) => {
   }
 
   try {
+    await logOut(page)
+    await logIn(page, users.admin)
     await deleteGroup(page, groupName)
     logger.info(`Group Deleted: "${groupName}"`)
   } catch (err) {

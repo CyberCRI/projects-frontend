@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="groups-list-tab">
     <div class="intro">
       <div>
         <p>{{ $t('admin.groups.intro') }}</p>

@@ -29,7 +29,8 @@ const collapseNavPanel = () => {
     <div class="breadcrumbs-ctn">
       <LpiButton
         :btn-icon="isNavCollapsed ? 'MenuUnfoldLine' : 'MenuFoldLine'"
-        class="toggle-button"
+        class="toggle-button nav-panel-toggle-button"
+        :class="{ 'nav-panel-toggle-button-collapsed': isNavCollapsed }"
         @click="toggleNavPanel"
       />
       <BreadCrumbs :breadcrumbs="breadcrumbs" />
