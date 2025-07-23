@@ -5,15 +5,15 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function handleSkills(page) {
   logger.info('Edit Skill info')
-  await page.waitForSelector('[data-test="dropdown-user-account"]')
-  await page.locator('[data-test="dropdown-user-account"]').click()
-  await page.waitForSelector('[data-test="my-profile"]')
-  await page.locator('[data-test="my-profile"]').click()
+  // await page.waitForSelector('[data-test="dropdown-user-account"]')
+  // await page.locator('[data-test="dropdown-user-account"]').click()
+  // await page.waitForSelector('[data-test="my-profile"]')
+  // await page.locator('[data-test="my-profile"]').click()
   await page.waitForSelector('[data-test="edit-profile"]')
   await page.locator('[data-test="edit-profile"]').click()
   await page.waitForSelector('.profile-edit-tabs') // wait edit profile to be loaded
   await page.locator('[data-test="skills"]').click()
-  await page.waitForSelector('.ProfileEditSkills')
+  await page.waitForSelector('.profile-edit-skills', { state: 'attached' })
   logger.info('Add Skills')
   await removeSkills(page, 'skills')
   await page.waitForSelector('[data-test="initial-add-skills-button"]')
@@ -65,7 +65,7 @@ async function removeSkills(page, type) {
     logger.info('delete a tag')
     tagDelete.click()
     await page.locator(`.modal [data-test="confirm-destroy"]`).click()
-    await delay(1000)
+    await page.waitForSelector('.modal', { state: 'detached' })
   }
   // dont finnish yet because we're adding skills after that and nned all skill to be removed
   await delay(2000)

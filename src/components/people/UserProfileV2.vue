@@ -19,7 +19,7 @@
           :edit-button-label="editButtonLabel"
           :edit-profile-link="editProfileLink"
           :is-editing="isEditing"
-          :can-edit-user="canEditUser"
+          :can-edit-user="canEditUserOrIsSelf"
           :is-current-user="userId === null"
           class="slide-panel"
           @navigated="onNavigated"
@@ -149,6 +149,10 @@ export default {
 
     isSelf() {
       return !this.userId // this.connectedUser && this.user.id === this.connectedUser.id
+    },
+
+    canEditUserOrIsSelf() {
+      return this.canEditUser || this.isSelf
     },
 
     editButtonLabel() {
@@ -296,7 +300,7 @@ export default {
       const props = {
         user: this.user,
         onProfileEdited: () => {
-          this.$emit('profile-edited')
+          this.loadUser()
         },
       }
       return [
@@ -412,13 +416,7 @@ export default {
 
   async mounted() {
     try {
-      if (!this.userId) {
-        // get the connected user
-        this.user = await this.usersStore.getUser(this.usersStore.id, true)
-      } else {
-        // get another user
-        this.user = await getUser(this.userId, true)
-      }
+      this.loadUser()
     } catch (err) {
       // TODO distinguish 404 from real error
       this.$emit('user-not-found', err)
@@ -457,6 +455,16 @@ export default {
 
       // this.closeTabList()
       this.$router.push(this.profileTabs[index].view)
+    },
+
+    async loadUser() {
+      if (!this.userId || this.userId === this.usersStore.id) {
+        // get the connected user
+        this.user = await this.usersStore.getUser(this.usersStore.id, true)
+      } else {
+        // get another user
+        this.user = await getUser(this.userId, true)
+      }
     },
   },
 }

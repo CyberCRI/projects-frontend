@@ -19,6 +19,12 @@ for (const user of users) {
       logger.error(err)
       throw err
     }
+
+    await page.waitForSelector('[data-test="dropdown-user-account"]')
+    await page.locator('[data-test="dropdown-user-account"]').click()
+    await page.waitForSelector('[data-test="my-profile"]')
+    await page.locator('[data-test="my-profile"]').click()
+
     try {
       await generalInfo(page, user)
       logger.info('User general info successful')
