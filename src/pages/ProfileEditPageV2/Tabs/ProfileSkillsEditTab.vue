@@ -118,13 +118,6 @@ export default {
     LinkButton,
     SkillEditor,
   },
-
-  inject: {
-    reloadUser: {
-      from: 'profileEditReloadUser',
-      default: () => () => {},
-    },
-  },
   props: {
     user: {
       type: Object,
@@ -182,9 +175,12 @@ export default {
   },
 
   methods: {
+    reloadUser() {
+      this.$emit('profile-edited')
+    },
     onSkillAdded(newSkill) {
       this.lastAddedTalent = newSkill.id
-      this.$emit('profile-edited')
+      this.reloadUser()
     },
     async setTalentLevel(type, talent, newLevel) {
       if (this.clampLevel(talent.level) !== newLevel) {
@@ -200,7 +196,6 @@ export default {
             })
           )
           this.reloadUser()
-          this.$emit('profile-edited')
         } catch (error) {
           console.error(error)
           this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
@@ -219,7 +214,6 @@ export default {
           })
         )
         this.reloadUser()
-        this.$emit('profile-edited')
       } catch (error) {
         console.error(error)
         this.toaster.pushError(this.$t('profile.edit.skills.save-error'))
@@ -234,7 +228,6 @@ export default {
           })
         )
         this.reloadUser()
-        this.$emit('profile-edited')
       } catch (error) {
         console.error(error)
         this.toaster.pushError(this.$t('profile.edit.skills.save-error'))

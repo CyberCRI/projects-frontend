@@ -28,6 +28,7 @@ const username = computed(() => {
 })
 
 const loadUser = async () => {
+  console.log('Loading user with ID:', props.userId || usersStore.id)
   try {
     user.value = await getUser(props.userId || usersStore.id)
   } catch (error) {

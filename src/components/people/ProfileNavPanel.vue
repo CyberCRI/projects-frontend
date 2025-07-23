@@ -10,7 +10,7 @@
           ]"
           :label="editButtonLabel"
           btn-icon="Pen"
-          data-test="edit-profile"
+          :data-test="isEditing ? 'display-profile' : 'edit-profile'"
           class="edit-btn small"
           @update:model-value="switchView"
         />
