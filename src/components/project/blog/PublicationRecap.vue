@@ -244,5 +244,13 @@ export default {
       margin-top: $space-s;
     }
   }
+
+  &.is-v2 {
+    .publication-header,
+    .publication-body {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 </style>

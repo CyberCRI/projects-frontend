@@ -1,0 +1,114 @@
+<template>
+  <div class="profile-bio">
+    <div v-if="isCurrentUser || canEditUser" class="header">
+      <LinkButton
+        class="edit-btn"
+        btn-icon="Pen"
+        :label="$t('common.edit')"
+        :to="editBioLink"
+        data-test="edit-bio"
+      />
+    </div>
+    <!-- Short bio -->
+    <div v-if="user.short_description" class="short-bio user-descriptions description-content">
+      <p>
+        <strong>{{ $t('profile.edit.bio.short-bio.label') }}</strong>
+      </p>
+      <p class="short-description" v-html="user.short_description" />
+    </div>
+
+    <!-- User descriptions -->
+    <UserDescriptions v-if="user.description" :user="user" />
+
+    <!-- No description -->
+    <p v-if="!user.description && !user.short_description" class="empty-field">
+      {{ noDescription }}
+    </p>
+  </div>
+</template>
+
+<script>
+import UserDescriptions from '@/components/people/UserDescriptions.vue'
+import useUsersStore from '@/stores/useUsers.ts'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+
+export default {
+  name: 'ProfileBioTab',
+
+  components: {
+    UserDescriptions,
+    LinkButton,
+  },
+
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  setup() {
+    const usersStore = useUsersStore()
+    const { canEditUser } = usePermissions()
+    return {
+      usersStore,
+      canEditUser,
+    }
+  },
+
+  computed: {
+    isCurrentUser() {
+      return this.usersStore.id === this.user.id
+    },
+
+    noDescription() {
+      return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
+    },
+    editBioLink() {
+      return {
+        name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
+        params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.profile-bio {
+  padding: $space-l 0;
+}
+
+.empty-field {
+  color: $mid-gray;
+  font-weight: 700;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.user-descriptions {
+  padding: $space-l;
+
+  &.limited {
+    @media all and (min-width: $max-tablet) {
+      border: $border-width-s solid $primary;
+      border-radius: $border-radius-l;
+    }
+  }
+
+  .description-content {
+    margin-bottom: $space-l;
+  }
+
+  :deep(.title) {
+    font-size: $font-size-m;
+    font-weight: 700;
+    color: $primary-dark;
+    margin-bottom: $space-l;
+  }
+}
+</style>

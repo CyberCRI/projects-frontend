@@ -13,11 +13,11 @@ export async function createGroup(page: Page, GroupName: string) {
   // button might be hidden in extra tabs dropdown
   const groupsTabCount = await groupsTab.count()
   console.log('groupsTab count', groupsTabCount)
-  if (!groupsTabCount) {
-    console.log('will click extra tabs button')
-    await page.locator('[data-test="extra-tabs-button"]').click()
-    groupsTab = await page.locator('[data-test="admin-groups"]')
-  }
+  // if (!groupsTabCount) {
+  //   console.log('will click extra tabs button')
+  //   await page.locator('[data-test="extra-tabs-button"]').click()
+  //   groupsTab = await page.locator('[data-test="admin-groups"]')
+  // }
   await groupsTab.click()
 
   // try {
@@ -55,6 +55,7 @@ export async function createGroup(page: Page, GroupName: string) {
 
   logger.info("let's create the group")
   await page.locator('[data-test="group-create-button"]').click()
-  // Creation group is made in 2 requests wait the the second request to be sent
-  // await delay(5000)
+  // wait for post save redirect to groups list
+  await page.locator('.groups-list-tab').waitFor({ state: 'attached' })
+  logger.info(`Group "${GroupName}" created successfully`)
 }

@@ -121,8 +121,8 @@ export default {
   }
 
   .btn {
-    width: pxToRem(32px);
-    height: pxToRem(32px);
+    width: var(--external-button-outer-size, 2rem);
+    height: var(--external-button-outer-size, 2rem);
     color: $primary-dark;
     fill: $primary-dark;
   }
@@ -131,13 +131,13 @@ export default {
     .over-button {
       border: $border-width-m solid $primary-dark;
       border-radius: $border-radius-50;
-      width: pxToRem(32px);
-      height: pxToRem(32px);
+      width: var(--external-button-outer-size, 2rem);
+      height: var(--external-button-outer-size, 2rem);
     }
 
     .btn {
-      width: pxToRem(24px);
-      height: pxToRem(24px);
+      width: var(--external-button-inner-size, 1.5rem);
+      height: var(--external-button-inner-size, 1.5rem);
     }
   }
 

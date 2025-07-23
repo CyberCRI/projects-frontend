@@ -119,6 +119,19 @@ export default {
   &.squarish {
     border-radius: $border-radius-s;
   }
+
+  &.unpad {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.no-height {
+    height: auto;
+  }
+
+  &.not-centered {
+    text-align: left;
+  }
 }
 
 .lpi-button :deep(svg) {
@@ -128,5 +141,11 @@ export default {
 
 .lpi-button.secondary :deep(svg) {
   fill: $primary-dark;
+}
+
+.lpi-button.small {
+  font-size: 0.8rem;
+  height: auto;
+  padding: 0.3rem 0.9rem;
 }
 </style>

@@ -5,10 +5,10 @@
       "title": "Equip de projectes"
     },
     "WHY": {
-      "title": "Per qu\u00e8 crear projectes. directory?",
-      "des": "En qualsevol organitzaci\u00f3 amb m\u00e9s de vint membres, \u00e9s dif\u00edcil saber qui fa qu\u00e8 i en qu\u00e8 tothom est\u00e0 treballant ara mateix. Vam comen\u00e7ar a fer projectes per permetre que els usuaris de {link} comparteixen projectes i iniciatives entre estudiants, investigadors, membres del personal i professors.",
-      "des1": "En un entorn interdisciplinari, no es pot confiar nom\u00e9s en la comunicaci\u00f3 de dalt a baix: la gent nom\u00e9s necessita parlar, per descobrir altres projectes rellevants per al seu treball, per inspirar-se en projectes fant\u00e0stics que tenen sentit per s\u00ed mateixos i pel planeta. Aix\u00ed que vam construir una plataforma per a permetre que tothom mostri els seus propis projectes i passions a la seva comunitat i al m\u00f3n.",
-      "des2": "Aviat era obvi que qualsevol organitzaci\u00f3 t\u00e9 necessitats similars. Aix\u00ed que deixem que altres grups comparteixin els seus propis projectes (NGOs, universitats...) als seus propis portals, mentre que tots els projectes en els quals comparteixen els {link}. Tenim el suport del ministre franc\u00e8s d'Educaci\u00f3, la ciutat de Par\u00eds, la regi\u00f3 de Radiole-de-Fran\u00e7a, l'Universit\u00e9 de Par\u00eds i molts altres.",
+      "title": "Per què crear projectes. directory?",
+      "des": "En qualsevol organització amb més de vint membres, és difícil saber qui fa què i en què tothom està treballant ara mateix. Vam començar a fer projectes per permetre que els usuaris de {link} comparteixen projectes i iniciatives entre estudiants, investigadors, membres del personal i professors.",
+      "des1": "En un entorn interdisciplinari, no es pot confiar només en la comunicació de dalt a baix: la gent només necessita parlar, per descobrir altres projectes rellevants per al seu treball, per inspirar-se en projectes fantàstics que tenen sentit per sí mateixos i pel planeta. Així que vam construir una plataforma per a permetre que tothom mostri els seus propis projectes i passions a la seva comunitat i al món.",
+      "des2": "Aviat era obvi que qualsevol organització té necessitats similars. Així que deixem que altres grups comparteixin els seus propis projectes (NGOs, universitats...) als seus propis portals, mentre que tots els projectes en els quals comparteixen els {link}. Tenim el suport del ministre francès d'Educació, la ciutat de París, la regió de Radiole-de-França, l'Université de París i molts altres.",
       "platform": "Plataforma global",
       "button_blog": {
         "text": "Bloc de plataforma"
@@ -16,9 +16,9 @@
     },
     "GOAL": {
       "title": "On anem?",
-      "des": "CRI i UNESCO van crear {lpiLink}, una iniciativa per transformar l'educaci\u00f3 a escala mundial. #LearningPlanet \u00e9s una alian\u00e7a global dels implicats educatius i comunitats d'aprenentatge amb una causa, amb la missi\u00f3 d'inspirar i donar plaer a totes les edats que contribueixen a formar futurs millors. El nostre objectiu \u00e9s fomentar la col\u00b7laboraci\u00f3 entre milers d'actors d'educaci\u00f3 i crear un ecosistema digital per ajudar-los a aprendre'ls millor.",
-      "des1": "Projectes. directori \u00e9s l' eina m\u00e9s madur d' aquest ecosistema digital. Esperem que qualsevol organitzaci\u00f3 es centra en la resoluci\u00f3 d'objectius sostenibles l'utilitzaran per compartir els seus projectes i iniciatives.",
-      "des2": "Projectes. El directori incrementa la intel\u00b7lig\u00e8ncia col\u00b7lectiva i artificial des de la iniciativa {weLearnLink} i del projecte {skillLink}.",
+      "des": "CRI i UNESCO van crear {lpiLink}, una iniciativa per transformar l'educació a escala mundial. #LearningPlanet és una aliança global dels implicats educatius i comunitats d'aprenentatge amb una causa, amb la missió d'inspirar i donar plaer a totes les edats que contribueixen a formar futurs millors. El nostre objectiu és fomentar la col·laboració entre milers d'actors d'educació i crear un ecosistema digital per ajudar-los a aprendre'ls millor.",
+      "des1": "Projectes. directori és l' eina més madur d' aquest ecosistema digital. Esperem que qualsevol organització es centra en la resolució d'objectius sostenibles l'utilitzaran per compartir els seus projectes i iniciatives.",
+      "des2": "Projectes. El directori incrementa la intel·ligència col·lectiva i artificial des de la iniciativa {weLearnLink} i del projecte {skillLink}.",
       "button_community": {
         "text": "A bord de la vostra comunitat"
       }
@@ -28,24 +28,24 @@
       "des": "Creen i milloren la plataforma de projectes",
       "list": [
         {
-          "title": "L\u00edder t\u00e8cnic",
+          "title": "Líder tècnic",
           "des": "Creador de projectes CRI, expert en profunditat"
         },
         {
           "title": "Gestor del projecte",
-          "des": "Estableix l' estrat\u00e8gia, organitza el projecte i t\u00e9 sentit dels requeriments dels nostres usuaris"
+          "des": "Estableix l' estratègia, organitza el projecte i té sentit dels requeriments dels nostres usuaris"
         },
         {
           "title": "Desenvolupador frontal",
-          "des": "Crea dissenys bonics i les implementa a l' aplicaci\u00f3"
+          "des": "Crea dissenys bonics i les implementa a l' aplicació"
         },
         {
-          "title": "Oficial d' informaci\u00f3 del cap",
-          "des": "Mostra projectes tecnol\u00f2gics a la CRI"
+          "title": "Oficial d' informació del cap",
+          "des": "Mostra projectes tecnològics a la CRI"
         },
         {
-          "title": "cient\u00edfic de dades",
-          "des": "A c\u00e0rrec del motor de recomanaci\u00f3 i dels algoritmes de cerca"
+          "title": "científic de dades",
+          "des": "A càrrec del motor de recomanació i dels algoritmes de cerca"
         },
         {
           "title": "Desenvolupador posterior",
@@ -53,7 +53,7 @@
         },
         {
           "title": "CoICador Pedagogical",
-          "des": "Coordenades desplegaments a la Universitat de Par\u00eds a l'Institut de desafiaments"
+          "des": "Coordenades desplegaments a la Universitat de París a l'Institut de desafiaments"
         },
         {
           "title": "especialista en Tech",
@@ -62,24 +62,24 @@
       ]
     },
     "TEAM_CONTRIB": {
-      "title": "Col\u00b7 laboradors",
+      "title": "Col· laboradors",
       "des": "Ens ajuden a dissenyar la plataforma",
       "list": [
         {
           "title": "Intern",
-          "des": "Permet als usuaris i crea documentaci\u00f3 d' ajuda"
+          "des": "Permet als usuaris i crea documentació d' ajuda"
         },
         {
-          "title": "Advisor cient\u00edficName",
+          "title": "Advisor científicName",
           "des": "Creador d'iniciativa ProfChercheurs i company de recerca del CRI"
         },
         {
           "title": "Gestor comunitari",
-          "des": "Un estudiant PHD i fundador de l' \u00c9Phi Scivention, s\u00faper provador de noves funcionalitats"
+          "des": "Un estudiant PHD i fundador de l' ÉPhi Scivention, súper provador de noves funcionalitats"
         },
         {
           "title": "coordinador de Pedagogical",
-          "des": "Dissenys i ex\u00e0mens d'escanari pedagogical utilitzant projectes amb estudiants de Licence"
+          "des": "Dissenys i exàmens d'escanari pedagogical utilitzant projectes amb estudiants de Licence"
         },
         {
           "title": "Desenvolupador complet",
@@ -87,7 +87,7 @@
         },
         {
           "title": "Gestor comunitari i usuari clau",
-          "des": "Un portal de projectes per al Ministeri franc\u00e8s d'Educaci\u00f3"
+          "des": "Un portal de projectes per al Ministeri francès d'Educació"
         },
         {
           "title": "Assessora del projecte i membre de la junta CRI",
@@ -95,14 +95,14 @@
         },
         {
           "title": "cofundador del CRI",
-          "des": "Ajuda a crear la visi\u00f3 del futur de l'educaci\u00f3 i el nostre ecosistema digital"
+          "des": "Ajuda a crear la visió del futur de l'educació i el nostre ecosistema digital"
         }
       ]
     },
     "JOBS": {
       "title": "Vols treballar amb nosaltres?",
-      "des": "Estem contractant especialistes per ajudar-nos a desenvolupar noves funcionalitats i a cr\u00e9ixer.",
-      "des1": "Voleu millorar l'educaci\u00f3 i ajudar tots els legisladors a compartir els seus projectes arreu del m\u00f3n? Uneix-te a nosaltres!",
+      "des": "Estem contractant especialistes per ajudar-nos a desenvolupar noves funcionalitats i a créixer.",
+      "des1": "Voleu millorar l'educació i ajudar tots els legisladors a compartir els seus projectes arreu del món? Uneix-te a nosaltres!",
       "button_jobboard": {
         "text": "Visualitza les posicions obertes"
       },
@@ -116,31 +116,31 @@
       "table": {
         "last-name": "Cognoms",
         "first-name": "Nom",
-        "title": "T\u00edtol",
+        "title": "Títol",
         "roles": "Rol(s)",
         "groups": "Grup(s)",
-        "inscription": "Inscripci\u00f3",
-        "activation": "Activaci\u00f3",
-        "activation-yes": "S\u00ed",
+        "inscription": "Inscripció",
+        "activation": "Activació",
+        "activation-yes": "Sí",
         "activation-no": "No"
       }
     },
     "featured-tags": {
       "title": "Etiquetes del projecte suggerides",
-      "notice": "Seleccioneu les etiquetes que se suggeriran per omissi\u00f3 en cercar o crear projectes"
+      "notice": "Seleccioneu les etiquetes que se suggeriran per omissió en cercar o crear projectes"
     },
     "featured-skills": {
       "title": "Paraules suggerides",
-      "notice": "Seleccioneu les habilitats que se suggeriran per omissi\u00f3 en cercar o crear perfils"
+      "notice": "Seleccioneu les habilitats que se suggeriran per omissió en cercar o crear perfils"
     },
     "classifications": {
-      "esco-link": "Qu\u00e8 \u00e9s ESCO?",
+      "esco-link": "Què és ESCO?",
       "title": "Entorns de treball personalitzats",
-      "subtitle": "Els projectes fan servir la Viquip\u00e8dia per etiquetes i ESCO per omissi\u00f3. Tamb\u00e9 podeu afegir els vostres propis repositoris.",
-      "enter-title": "Introdu\u00efu un t\u00edtol",
-      "enter-description": "Introdu\u00efu una descripci\u00f3",
-      "title-field": "T\u00edtol de l' entorn de treball",
-      "description-field": "Descripci\u00f3",
+      "subtitle": "Els projectes fan servir la Viquipèdia per etiquetes i ESCO per omissió. També podeu afegir els vostres propis repositoris.",
+      "enter-title": "Introduïu un títol",
+      "enter-description": "Introduïu una descripció",
+      "title-field": "Títol de l' entorn de treball",
+      "description-field": "Descripció",
       "add-classification": {
         "title": "Afegeix un marc de treball",
         "error": "Error en desar el marc de treball",
@@ -148,7 +148,7 @@
       },
       "edit-classification": {
         "title": "Edita un marc de treball",
-        "error": "S' ha produ\u00eft un error en modificar el marc de treball",
+        "error": "S' ha produït un error en modificar el marc de treball",
         "success": "El marc de treball s' ha modificat correctament"
       },
       "delete-classification": {
@@ -171,7 +171,7 @@
       "table": {
         "filter": "Etiquetes de filtre",
         "tag": "Etiqueta",
-        "description": "Descripci\u00f3",
+        "description": "Descripció",
         "actions": "Accions"
       },
       "add-tag": {
@@ -185,12 +185,12 @@
         "error": "Error en modificar l' etiqueta"
       },
       "tag-form": {
-        "title-en": "T\u00edtol (EN)",
-        "title-fr": "T\u00edtol (FR)",
-        "description-en": "Descripci\u00f3 (EN)",
-        "description-fr": "Descripci\u00f3 (FR)",
+        "title-en": "Títol (EN)",
+        "title-fr": "Títol (FR)",
+        "description-en": "Descripció (EN)",
+        "description-fr": "Descripció (FR)",
         "required-error": "Aquest camp es requereix",
-        "too-long-error": "Aquest camp \u00e9s massa llarg."
+        "too-long-error": "Aquest camp és massa llarg."
       },
       "tag-delete": {
         "confirm": {
@@ -207,7 +207,7 @@
       "tags": "Etiquetes",
       "skills": "Habilitats",
       "help": "Ajuda",
-      "links": "Enlla\u00e7os",
+      "links": "Enllaços",
       "templates": "Plantilles",
       "users": "Usuaris",
       "requests": "Peticions",
@@ -220,18 +220,18 @@
       "general": {
         "invisible": "Invisible",
         "logo": "Logotip",
-        "size-min-logo": "Mida m\u00ednima del logotip: {minWidth}px * {minHeight}px",
-        "portal-referencing": "El portal pare fa refer\u00e8ncia",
+        "size-min-logo": "Mida mínima del logotip: {minWidth}px * {minHeight}px",
+        "portal-referencing": "El portal pare fa referència",
         "visible": "Visible",
-        "public-image": "Imatge (el visor p\u00fablic)",
+        "public-image": "Imatge (el visor públic)",
         "wording": {
-          "title": "P\u00e0gina personal de missatges",
-          "notice": "Editeu aqu\u00ed els textos que apareixen a la vostra p\u00e0gina web (el t\u00edtol i la descripci\u00f3 sobre la vista p\u00fablica i el t\u00edtol nom\u00e9s en la vostra vista connectada, p. ex. un cop els vostres usuaris estiguin connectats).",
+          "title": "Pàgina personal de missatges",
+          "notice": "Editeu aquí els textos que apareixen a la vostra pàgina web (el títol i la descripció sobre la vista pública i el títol només en la vostra vista connectada, p. ex. un cop els vostres usuaris estiguin connectats).",
           "fields": {
-            "title": "T\u00edtol",
-            "title-placeholder": "(encara no hi ha t\u00edtol)",
-            "description": "Descripci\u00f3",
-            "description-placeholder": "(encara no hi ha descripci\u00f3)"
+            "title": "Títol",
+            "title-placeholder": "(encara no hi ha títol)",
+            "description": "Descripció",
+            "description-placeholder": "(encara no hi ha descripció)"
           },
           "success": "S' ha desat la paraula inicial",
           "error": "Error en desar la paraula inici"
@@ -250,49 +250,49 @@
         "authorizations": "Autoritzacions",
         "children": "Categories de fills",
         "no-child": "Sense categoria filla",
-        "description-limit": "300 car\u00e0cters m\u00e0xims.",
+        "description-limit": "300 caràcters màxims.",
         "edit": "Edita una categoria",
-        "is-reviewable": "Autoritza les cr\u00edtiques",
-        "limit-publication-to-reviewers": "Limita la publicaci\u00f3 als revisors",
-        "preview-categories": "Vista pr\u00e8via",
+        "is-reviewable": "Autoritza les crítiques",
+        "limit-publication-to-reviewers": "Limita la publicació als revisors",
+        "preview-categories": "Vista prèvia",
         "display-projects": "Mostra projectes",
         "hide-projects": "Oculta els projectes",
         "delete-category": "Esborra la categoria",
-        "delete-category-description": "Esteu segur que voleu esborrar la categoria '{categoryName}'? Aquesta acci\u00f3 no es pot desfer.",
-        "delete-category-has-children": "Aquesta categoria t\u00e9 sub categories i/o projectes. Treu-los primer.",
+        "delete-category-description": "Esteu segur que voleu esborrar la categoria '{categoryName}'? Aquesta acció no es pot desfer.",
+        "delete-category-has-children": "Aquesta categoria té sub categories i/o projectes. Treu-los primer.",
         "delete-category-error": "Error en esborrar la categoria",
         "delete-category-success": "S' ha esborrat la categoria",
-        "background-notice": "Per a la cap\u00e7alera d' aquesta p\u00e0gina de categories, podeu escollir un color de fons o pujar la vostra pr\u00f2pia imatge de fons",
+        "background-notice": "Per a la capçalera d' aquesta pàgina de categories, podeu escollir un color de fons o pujar la vostra pròpia imatge de fons",
         "background-color": "Escolliu un color de fons",
         "background-image": "Seleccioneu una imatge de fons",
         "upload-picture": "Puja una imatge",
-        "tips-background-image": "No \u00e9s necessari si voleu simplement mostrar un color. Amplada m\u00ednima: 1024px, al\u00e7ada m\u00ednima: 400px."
+        "tips-background-image": "No és necessari si voleu simplement mostrar un color. Amplada mínima: 1024px, alçada mínima: 400px."
       },
       "chat": "Plataforma de xat (veure la vista connectada)",
       "events": "Esdeveniments",
       "instructions": "Instruccions",
-      "news": "Not\u00edcies",
-      "featured-projects": "Projectes de caracter\u00edstiques"
+      "news": "Notícies",
+      "featured-projects": "Projectes de característiques"
     },
     "form": {
       "admin-info": {
         "name": {
           "required": "Es requereix el nom de la comunitat",
-          "max-length": "El nom de la comunitat ha de ser inferior a 32 car\u00e0cters"
+          "max-length": "El nom de la comunitat ha de ser inferior a 32 caràcters"
         },
         "dashboard-title": {
-          "required": "Es requereix el t\u00edtol",
-          "max-length": "El t\u00edtol ha de ser inferior a 128 car\u00e0cters"
+          "required": "Es requereix el títol",
+          "max-length": "El títol ha de ser inferior a 128 caràcters"
         },
         "contact-email": {
-          "required": "Es requereix el correu electr\u00f2nic",
-          "email": "Aquest ha de ser un correu electr\u00f2nic v\u00e0lid"
+          "required": "Es requereix el correu electrònic",
+          "email": "Aquest ha de ser un correu electrònic vàlid"
         },
         "language": {
           "required": "Es requereix l' idioma"
         },
         "background-color": {
-          "required-if": "El color de fons es requereix si s' est\u00e0 enlla\u00e7ant al portal principal dels projectes"
+          "required-if": "El color de fons es requereix si s' està enllaçant al portal principal dels projectes"
         }
       },
       "template": {
@@ -302,23 +302,23 @@
       }
     },
     "groups": {
-      "intro": "Usa grups per gestionar els vostres usuaris de forma m\u00e9s eficient. Podeu crear grups i afegir usuaris a ells. Tamb\u00e9 podeu crear subgrups.",
+      "intro": "Usa grups per gestionar els vostres usuaris de forma més eficient. Podeu crear grups i afegir usuaris a ells. També podeu crear subgrups.",
       "create-group": "Crea un grup",
       "add-modal-title-1": "Afegeix grup fill a \"",
       "add-modal-title-2": "\" grup",
-      "subtitle-add-child": "Seleccioneu a la llista el grup fill. Nom\u00e9s en pots seleccionar una.",
+      "subtitle-add-child": "Seleccioneu a la llista el grup fill. Només en pots seleccionar una.",
       "edit-modal-title": "Afegeix grup pare",
-      "subtitle-edit-child": "Selecciona en la llista el grup pare. Nom\u00e9s en pots seleccionar una."
+      "subtitle-edit-child": "Selecciona en la llista el grup pare. Només en pots seleccionar una."
     },
     "requests": {
-      "intro": "Aquesta \u00e9s la llista de persones que van demanar acc\u00e9s al portal. Pots acceptar o rebutjar la seva petici\u00f3.",
+      "intro": "Aquesta és la llista de persones que van demanar accés al portal. Pots acceptar o rebutjar la seva petició.",
       "table": {
         "last-name": "Cognoms",
         "first-name": "Nom",
-        "title": "T\u00edtol",
-        "email": "Correu electr\u00f2nic",
+        "title": "Títol",
+        "email": "Correu electrònic",
         "message": "Missatge",
-        "action": "Mostra nom\u00e9s les pendents",
+        "action": "Mostra només les pendents",
         "decline": "Declina",
         "declined": "Declinat",
         "accept": "Accepta",
@@ -328,34 +328,34 @@
     }
   },
   "account": {
-    "another-organization": "Una altra organitzaci\u00f3",
+    "another-organization": "Una altra organització",
     "role-in-organization": "in",
     "title-create-add": "Crea / afegeix un compte",
     "title-create": "Crea un compte",
     "title-edit": "Edita un compte",
     "title-invite": "Afegeix un compte",
-    "switch-to-edit": "El compte ja existeix a la vostra organitzaci\u00f3, canviar a editar",
-    "switch-to-invite": "El compte ja existeix en una altra organitzaci\u00f3, canviant a afegir",
-    "sub-title": "Els camps amb * s\u00f3n obligatoris.",
-    "link": "Necessites ajuda? Aqu\u00ed us hem fet c\u00e0rrec.",
+    "switch-to-edit": "El compte ja existeix a la vostra organització, canviar a editar",
+    "switch-to-invite": "El compte ja existeix en una altra organització, canviant a afegir",
+    "sub-title": "Els camps amb * són obligatoris.",
+    "link": "Necessites ajuda? Aquí us hem fet càrrec.",
     "form": {
       "first-name": "Nom principal *",
       "last-name": "Darrer nom *",
-      "title": "T\u00edtol *",
+      "title": "Títol *",
       "email": "Correu- e *",
       "google": "Compte de Google",
       "create-google": "Crea un compte a Google",
       "rights": "Drets",
       "rights-description": "Drets concedits a la plataforma de projectes",
       "groups": "Grups",
-      "groups-description": "Aquest usuari formar\u00e0 part dels seg\u00fcents grups",
-      "groups-roles": "& Editor del l\u00edder del grup",
-      "groups-roles-description": "Aquest usuari ser\u00e0 l' administrador del grup seg\u00fcent(s):",
+      "groups-description": "Aquest usuari formarà part dels següents grups",
+      "groups-roles": "& Editor del líder del grup",
+      "groups-roles-description": "Aquest usuari serà l' administrador del grup següent(s):",
       "no-group-selected": "Encara no hi ha grups"
     },
     "password-reset": {
-      "success": "S' est\u00e0 reiniciant l' enlla\u00e7",
-      "error": "Error en enviar l' enlla\u00e7 de reinici de la contrasenya"
+      "success": "S' està reiniciant l' enllaç",
+      "error": "Error en enviar l' enllaç de reinici de la contrasenya"
     },
     "create-success": "Compte creat",
     "update-success": "Compte actualitzat",
@@ -370,18 +370,18 @@
       "facilitator": "Facilitor",
       "admin": "Org administrador"
     },
-    "user-exists-in-other-org": "Existeix un usuari amb el mateix correu electr\u00f2nic a la nostra base de dades. Podem afegir-lo al seu portal aqu\u00ed."
+    "user-exists-in-other-org": "Existeix un usuari amb el mateix correu electrònic a la nostra base de dades. Podem afegir-lo al seu portal aquí."
   },
   "userItem": {
-    "teamLeader": "L\u00edder del grup"
+    "teamLeader": "Líder del grup"
   },
   "groups": {
-    "title": "Funci\u00f3 de l' usuari",
+    "title": "Funció de l' usuari",
     "edit": "Edita el rol d' usuari",
-    "users": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes p\u00fablics.",
-    "facilitators": "Facilitor: Aquest paper \u00e9s per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. Tamb\u00e9 tenen tots els drets d'usuaris.",
-    "admins": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar usuaris al portal. Els administradors d' Org tenen acc\u00e9s al men\u00fa administrador del portal per establir el portal i gestionar els seus usuaris. Tamb\u00e9 tenen tots els drets dels faculitadors.",
-    "none": "Cap: Aquesta persona t\u00e9 un compte de projectes per\u00f2 no forma part del seu portal. Nom\u00e9s poden veure els projectes p\u00fablics.",
+    "users": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes públics.",
+    "facilitators": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris.",
+    "admins": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar usuaris al portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors.",
+    "none": "Cap: Aquesta persona té un compte de projectes però no forma part del seu portal. Només poden veure els projectes públics.",
     "roles": {
       "none": "Cap",
       "users": "Usuari",
@@ -392,66 +392,66 @@
     "main-groups": "Grups principals"
   },
   "invitation": {
-    "copy-link": "Copia l' enlla\u00e7",
+    "copy-link": "Copia l' enllaç",
     "create": {
-      "create-success": "S' ha creat la invitaci\u00f3",
-      "create-error": "Error en crear la invitaci\u00f3",
+      "create-success": "S' ha creat la invitació",
+      "create-error": "Error en crear la invitació",
       "field": {
         "description": {
-          "label": "Afegeix una descripci\u00f3",
-          "notice": "Aix\u00f2 \u00e9s nom\u00e9s perqu\u00e8 recordis qui vas crear aquest enlla\u00e7 i per qu\u00e8.",
-          "placeholder": "Per qui crees aquest enlla\u00e7?"
+          "label": "Afegeix una descripció",
+          "notice": "Això és només perquè recordis qui vas crear aquest enllaç i per què.",
+          "placeholder": "Per qui crees aquest enllaç?"
         },
         "group": {
           "add": "Afegeix",
           "error": "Es requereix grup",
           "label": "Escolliu el grup *",
-          "notice": "Els usuaris usant aquest enlla\u00e7 al registre s' afegiran a aquest grup.",
+          "notice": "Els usuaris usant aquest enllaç al registre s' afegiran a aquest grup.",
           "selected": "Grup seleccionat:"
         },
         "validity": {
           "error": "Es requereix la validesa",
           "label": "Seleccioneu la durada de la validesa *",
-          "notice": "Una vegada que la cre\u00efs, l'enlla\u00e7 nom\u00e9s ser\u00e0 v\u00e0lid durant aquest per\u00edode.",
+          "notice": "Una vegada que la creïs, l'enllaç només serà vàlid durant aquest període.",
           "one-year": "1 any",
           "pick-date": "Trieu una data",
-          "valid-until": "V\u00e0lid fins a:"
+          "valid-until": "Vàlid fins a:"
         }
       },
-      "intro": "Registra els enlla\u00e7os permeten als usuaris que vulguin crear un compte de projectes al vostre portal. Tot el que heu de fer \u00e9s compartir amb ells l'enlla\u00e7. Molta gent pot subscriure's utilitzant un enlla\u00e7. Podeu controlar quin grup formaran part de quan es crea l'enlla\u00e7.",
-      "link": "Necessites ajuda? Aqu\u00ed us hem fet c\u00e0rrec.",
-      "notice": "Els camps marcats amb * s\u00f3n obligatoris.",
-      "title": "Crea un enlla\u00e7 de registre"
+      "intro": "Registra els enllaços permeten als usuaris que vulguin crear un compte de projectes al vostre portal. Tot el que heu de fer és compartir amb ells l'enllaç. Molta gent pot subscriure's utilitzant un enllaç. Podeu controlar quin grup formaran part de quan es crea l'enllaç.",
+      "link": "Necessites ajuda? Aquí us hem fet càrrec.",
+      "notice": "Els camps marcats amb * són obligatoris.",
+      "title": "Crea un enllaç de registre"
     },
     "delete": {
-      "deleted-failed": "Error en esborrar la invitaci\u00f3"
+      "deleted-failed": "Error en esborrar la invitació"
     },
-    "delete-confirm-title": "Esborro aquest enlla\u00e7?",
-    "expired-link-image": "L' enlla\u00e7 d' invitaci\u00f3 que heu usat \u00e9s ven\u00e7ut o no.",
-    "expired-link": "Sembla que l'enlla\u00e7 que heu rebut ha caducat o simplement no \u00e9s v\u00e0lid. Per obtenir un nou enlla\u00e7, contacteu amb l' administrador:",
-    "generate-link": "Genera enlla\u00e7",
+    "delete-confirm-title": "Esborro aquest enllaç?",
+    "expired-link-image": "L' enllaç d' invitació que heu usat és vençut o no.",
+    "expired-link": "Sembla que l'enllaç que heu rebut ha caducat o simplement no és vàlid. Per obtenir un nou enllaç, contacteu amb l' administrador:",
+    "generate-link": "Genera enllaç",
     "list": {
       "created-by-column": "Creat per",
-      "description-column": "Descripci\u00f3",
+      "description-column": "Descripció",
       "expire-column": "Fes que caduqui",
       "group-column": "Grup",
-      "intro": "Registra els enlla\u00e7os permeten als usuaris que vulguin crear un compte de projectes al vostre portal. Tot el que heu de fer \u00e9s compartir amb ells l'enlla\u00e7. Molta gent pot subscriure's utilitzant un enlla\u00e7. Podeu controlar quin grup formaran part de quan es crea l'enlla\u00e7.",
-      "link-column": "Enlla\u00e7",
-      "title": "Registra els enlla\u00e7os"
+      "intro": "Registra els enllaços permeten als usuaris que vulguin crear un compte de projectes al vostre portal. Tot el que heu de fer és compartir amb ells l'enllaç. Molta gent pot subscriure's utilitzant un enllaç. Podeu controlar quin grup formaran part de quan es crea l'enllaç.",
+      "link-column": "Enllaç",
+      "title": "Registra els enllaços"
     }
   },
   "blog": {
     "add-entry": "afegeix entrada de bloc",
     "entry": "entrada de bloc",
-    "last-publication": "\u00daltima entrada de bloc",
+    "last-publication": "Última entrada de bloc",
     "no-entry": "Encara no hi ha entrada...",
     "posts": "Entrades de bloc",
-    "title": "blog"
+    "title": "Blog"
   },
   "browse": {
     "page-title": "Cerca",
-    "placeholder": "Qu\u00e8 busques?",
-    "result-per-page": "Resultats per p\u00e0gina:"
+    "placeholder": "Què busques?",
+    "result-per-page": "Resultats per pàgina:"
   },
   "category": {
     "add-sub-category": "Afegeix una subcategoria",
@@ -467,7 +467,7 @@
   "comment": {
     "add-comment": "Afegeix el teu comentari!",
     "comment-verb": "comentari",
-    "comments": "comentaris",
+    "comments": "Comentaris",
     "deleted": "El comentari s' ha esborrat en el",
     "discard-comment": "Voleu descartar el comentari?",
     "discard-changes": "Voleu descartar els canvis?",
@@ -476,16 +476,16 @@
     "private-exchange": {
       "tab": "Missatges interns",
       "no-message": "Encara no hi ha cap missatge intern...",
-      "notice": "Els missatges interns nom\u00e9s s\u00f3n visibles per als membres de l' equip de projectes.",
+      "notice": "Els missatges interns només són visibles per als membres de l' equip de projectes.",
       "send": "Envia",
       "title": "Afegeix el vostre missatge intern",
       "delete-title": "Esborro definitivament?",
-      "delete-description": "Esteu segur que voleu esborrar permanentment el vostre missatge intern? Aquesta acci\u00f3 ser\u00e0 irreversible.",
+      "delete-description": "Esteu segur que voleu esborrar permanentment el vostre missatge intern? Aquesta acció serà irreversible.",
       "deleted": "S' ha esborrat el missatge intern"
     },
     "publish": "Publica el comentari",
     "delete-title": "Esborro definitivament?",
-    "delete-description": "Esteu segur que voleu esborrar permanentment els comentaris? Aquesta acci\u00f3 ser\u00e0 irreversible."
+    "delete-description": "Esteu segur que voleu esborrar permanentment els comentaris? Aquesta acció serà irreversible."
   },
   "common": {
     "activate": "Activa",
@@ -493,31 +493,31 @@
     "add": "Afegeix",
     "added-on-the": "afegit a",
     "back": "darrere",
-    "cancel": "Cancel\u00b7 la",
+    "cancel": "Cancel· la",
     "chose-date": "Data seleccionada",
     "confirm": "Confirma",
     "continue": "Continua",
-    "confirm-delete": "Esteu segur que voleu esborrar aix\u00f2?",
-    "deadline": "Temps l\u00edmit",
+    "confirm-delete": "Esteu segur que voleu esborrar això?",
+    "deadline": "Temps límit",
     "delete": "Esborra",
-    "delete-selection": "Elimina la selecci\u00f3",
+    "delete-selection": "Elimina la selecció",
     "delete-user": "Esborra",
-    "description": "descripci\u00f3",
-    "destroy-confirm": "Esteu segur que voleu esborrar aquest projecte? Aquesta acci\u00f3 no es pot desfer.",
-    "cant-quit-self": "Ets l'\u00faltim editor de l'equip. Cada projecte ha de tenir com a m\u00ednim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuraci\u00f3.",
-    "cant-quit-other": "Aquest \u00e9s l'\u00faltim editor de l'equip. Cada projecte ha de tenir com a m\u00ednim un editor.\nPodeu afegir un altre editor supressi\u00f3 aquest, o eliminar el projecte de la pestanya Configuraci\u00f3.",
+    "description": "descripció",
+    "destroy-confirm": "Esteu segur que voleu esborrar aquest projecte? Aquesta acció no es pot desfer.",
+    "cant-quit-self": "Ets l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuració.",
+    "cant-quit-other": "Aquest és l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor supressió aquest, o eliminar el projecte de la pestanya Configuració.",
     "edit": "edit",
     "file-required": "Es requereix un fitxerName",
     "for": "per",
     "groups": "Grups",
-    "index": "\u00cdndex",
+    "index": "Índex",
     "less": "menys",
-    "link-copied-success": "Enlla\u00e7 copiat",
-    "link-copied-failed": "Ha fallat en copiar l' enlla\u00e7",
-    "loading": "S' est\u00e0 carregant",
-    "login": "acc\u00e9s",
+    "link-copied-success": "Enllaç copiat",
+    "link-copied-failed": "Ha fallat en copiar l' enllaç",
+    "loading": "S' està carregant",
+    "login": "accés",
     "modify": "Modifica",
-    "more": "m\u00e9s",
+    "more": "més",
     "need-login": "S' ha d' accedir a",
     "no": "no",
     "no-result": "Sense resultats",
@@ -533,79 +533,79 @@
     "save": "Desa",
     "send": "Envia",
     "see-less": "veure menys",
-    "see-more": "Veure m\u00e9s",
+    "see-more": "Veure més",
     "see": "Veure",
     "see-all": "Veure- ho tot",
     "set-deadline": "Estableix el termini",
     "shrink": "psiquiatre",
     "submit": "Envia",
     "the-project": "El projecte",
-    "title": "t\u00edtol",
-    "yes": "s\u00ed",
+    "title": "títol",
+    "yes": "sí",
     "disconnect": "Desconnecta",
-    "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no ser\u00e0 desat.",
-    "ok": "B\u00e9",
-    "file-too-big": "El fitxer \u00e9s massa gran (m\u00e0x: {maxSize}Mb)"
+    "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
+    "ok": "Bé",
+    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)"
   },
   "complete-profile": {
     "bio": {
       "title": "Biotec",
-      "notice": "Bio Bioto permet a la gent entendre qui ets, qu\u00e8 fas i defensar-te.",
-      "notice-exemples": "Necessites inspiraci\u00f3? Aqu\u00ed teniu exemples de {0}, {1} o {2}.",
+      "notice": "Bio Bioto permet a la gent entendre qui ets, què fas i defensar-te.",
+      "notice-exemples": "Necessites inspiració? Aquí teniu exemples de {0}, {1} o {2}.",
       "exemples": {
         "researcher": "un investigador",
         "professional": "un professional",
         "student": "un estudiant"
       },
       "long-bio": "Long bio",
-      "long-bio-notice": "Presenti aqu\u00ed els seus esfor\u00e7os professionals",
+      "long-bio-notice": "Presenti aquí els seus esforços professionals",
       "personal-bio": "bio Personal",
-      "personal-bio-notice": "Presenta aqu\u00ed els teus interessos personals."
+      "personal-bio-notice": "Presenta aquí els teus interessos personals."
     },
-    "cancel": "Cancel\u00b7 la",
+    "cancel": "Cancel· la",
     "notice": {
-      "help": "Hem estat aqu\u00ed per ajudar.",
-      "intro": "Els camps marcats amb * s\u00f3n obligatoris. Sempre ho pots modificar en el teu perfil m\u00e9s tard.",
-      "no-idea": "No saps qu\u00e8 hauries de fer?"
+      "help": "Hem estat aquí per ajudar.",
+      "intro": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar en el teu perfil més tard.",
+      "no-idea": "No saps què hauries de fer?"
     },
     "onboarding": "En curs",
     "personal": {
-      "email": "Correu electr\u00f2nic",
-      "email-placeholder": "Vost\u00e8{'@'}u.com",
+      "email": "Correu electrònic",
+      "email-placeholder": "Vostè{'@'}u.com",
       "firstname": "Nom principal",
       "firstname-placeholder": "Nom principal",
-      "headline": "T\u00edtol",
+      "headline": "Títol",
       "headline-placeholder": "M1 Stainty, director de recerca...",
-      "lastname": "\u00daltim nom",
-      "lastname-placeholder": "\u00daltim nom",
+      "lastname": "Últim nom",
+      "lastname-placeholder": "Últim nom",
       "picture": "Imatge de perfil",
       "picture-notice": "(120px x 120px mini; formats jpg o png)",
-      "title": "Informaci\u00f3 personal"
+      "title": "Informació personal"
     },
     "required": "Aquest camp es requereix",
     "save-and-finish": "Desa i acaba",
-    "save-and-next": "Desa i v\u00e9s a seg\u00fcent",
+    "save-and-next": "Desa i vés a següent",
     "skills": {
       "title": "& habilitat dels interessos"
     },
     "sdgs": {
-      "sdg-notice": "Els Objectius de desenvolupament sostenibles (SDGs) s\u00f3n una crida a l'acci\u00f3 per abordar un ventall de reptes globals. Indicint els objectius que voleu contribuir a ajudar la gent a la vostra comunitat a trobar-vos mentors o assist\u00e8ncia.",
+      "sdg-notice": "Els Objectius de desenvolupament sostenibles (SDGs) són una crida a l'acció per abordar un ventall de reptes globals. Indicint els objectius que voleu contribuir a ajudar la gent a la vostra comunitat a trobar-vos mentors o assistència.",
       "title": "Objectius de desenvolupament sostenibles"
     },
     "title": "Acaba el perfil"
   },
   "crikit": {
     "errors": {
-      "too-big-file-size": "La mida del fitxer \u00e9s massa gran, 13215465MB m\u00e0x."
+      "too-big-file-size": "La mida del fitxer és massa gran, 13215465MB màx."
     }
   },
   "description": {
     "default-placeholder": "Ara, descriu el teu projecte.",
-    "placeholder": "Encara no teniu cap descripci\u00f3, penseu en afegir-ne un!",
+    "placeholder": "Encara no teniu cap descripció, penseu en afegir-ne un!",
     "delete": "Esteu segur que voleu tancar l' editor?",
-    "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no ser\u00e0 desat.",
-    "edit": "Descripci\u00f3 d' edici\u00f3 (projecte)",
-    "add": "Afegeix descripci\u00f3",
+    "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
+    "edit": "Descripció d' edició (projecte)",
+    "add": "Afegeix descripció",
     "quit-without-saving-title": "Surto sense desar?"
   },
   "discover": {
@@ -614,13 +614,13 @@
       "title": "Compartiu els vostres projectes",
       "impact": "per incrementar l' impacte",
       "des": "Usa la plataforma de projectes per a mostrar els vostres projectes,",
-      "facilitate": "Conclou la col\u00b7laboraci\u00f3 i fomenta",
-      "common": "Pel b\u00e9 com\u00fa.",
+      "facilitate": "Conclou la col·laboració i fomenta",
+      "common": "Pel bé comú.",
       "button_discover": "Exploreu projectes",
-      "button_access": "Obt\u00e9n acc\u00e9s"
+      "button_access": "Obtén accés"
     },
     "INTRO": {
-      "title": "Uneix-te a la nostra plataforma de creixement r\u00e0pida",
+      "title": "Uneix-te a la nostra plataforma de creixement ràpida",
       "list": [
         {
           "title": "Projectes trobats"
@@ -635,76 +635,76 @@
     },
     "FEATURES": [
       {
-        "title": "Obt\u00e9n Inspirat",
-        "des": "Descobriment de projectes interessants no sols{0}through nostra potent recerca sin\u00f3 tamb\u00e9 basada en1321544 recomanacions de la IA, empla\u00e7ament o mapa tem\u00e0tic.",
+        "title": "Obtén Inspirat",
+        "des": "Descobriment de projectes interessants no sols{0}through nostra potent recerca sinó també basada en1321544 recomanacions de la IA, emplaçament o mapa temàtic.",
         "list": [
           {
             "title": "Reordenacions",
-            "des": "Hop d'un projecte similar a aquells que s'han enlla\u00e7at els membres de l'equip, o en recomanacions autom\u00e0tiques del projecte."
+            "des": "Hop d'un projecte similar a aquells que s'han enllaçat els membres de l'equip, o en recomanacions automàtiques del projecte."
           },
           {
             "title": "Mapa d' etiquetes",
-            "des": "Utilitza el mapa d'etiqueta per descobrir projectes d'una manera totalment nova! Agrupa projectes segons les seves etiquetes similars. Les etiquetes s\u00f3n articles de la Viquip\u00e8dia."
+            "des": "Utilitza el mapa d'etiqueta per descobrir projectes d'una manera totalment nova! Agrupa projectes segons les seves etiquetes similars. Les etiquetes són articles de la Viquipèdia."
           },
           {
-            "title": "Mapa geogr\u00e0fic",
-            "des": "Exploreu projectes en el mapa del m\u00f3n per la localitzaci\u00f3 de l'equip i en lloc on el projecte va tenir un impacte."
+            "title": "Mapa geogràfic",
+            "des": "Exploreu projectes en el mapa del món per la localització de l'equip i en lloc on el projecte va tenir un impacte."
           }
         ]
       },
       {
-        "title": "Comparteix i col\u00b7 laboraci\u00f3",
-        "des": "Creeu eficientment una presentaci\u00f3 rica del vostre projecte,{0} i augmenteu el vostre impacte per unir forces.",
+        "title": "Comparteix i col· laboració",
+        "des": "Creeu eficientment una presentació rica del vostre projecte,{0} i augmenteu el vostre impacte per unir forces.",
         "list": [
           {
-            "des": "Editeu la vostra descripci\u00f3 de projecte simult\u00e0niament amb els membres del vostre equip per afegir text formatat, imatges, v\u00eddeos i enlla\u00e7os a trav\u00e9s d' un editor de text amigable per l' usuari."
+            "des": "Editeu la vostra descripció de projecte simultàniament amb els membres del vostre equip per afegir text formatat, imatges, vídeos i enllaços a través d' un editor de text amigable per l' usuari."
           },
           {
-            "des": "reclutant f\u00e0cilment participants o col\u00b7laboradors emetent la informaci\u00f3 a tota la comunitat mitjan\u00e7ant anuncis p\u00fablics."
+            "des": "reclutant fàcilment participants o col·laboradors emetent la informació a tota la comunitat mitjançant anuncis públics."
           },
           {
-            "des": "Afegeix desenvolupament sostenible Els Objectius als quals contribueixen per tal que els usuaris puguin trobar el projecte basat en aquesta informaci\u00f3."
+            "des": "Afegeix desenvolupament sostenible Els Objectius als quals contribueixen per tal que els usuaris puguin trobar el projecte basat en aquesta informació."
           },
           {
-            "des": "Canvia amb membres de la comunitat a trav\u00e9s de la secci\u00f3 de comentaris."
+            "des": "Canvia amb membres de la comunitat a través de la secció de comentaris."
           },
           {
-            "des": "Completa el projecte amb qualsevol tipus de recursos externs, si s\u00f3n inspiraci\u00f3s, creaci\u00f3, documentaci\u00f3, altres projectes relacionats..."
+            "des": "Completa el projecte amb qualsevol tipus de recursos externs, si són inspiraciós, creació, documentació, altres projectes relacionats..."
           },
           {
-            "des": "Que altres segueixin el vostre projecte o compartiu- lo per un enlla\u00e7 simple"
+            "des": "Que altres segueixin el vostre projecte o compartiu- lo per un enllaç simple"
           }
         ]
       },
       {
         "title": "TEACH",
-        "des": "Usa les funcions espec\u00edficament dissenyades per als cursos d'ensenyament basats en projectes.",
+        "des": "Usa les funcions específicament dissenyades per als cursos d'ensenyament basats en projectes.",
         "list": [
           {
             "title": "CUSTOM PREMLESConstellation name (optional)",
             "des": "Guieu un creador de projectes per tal que el contingut del seu projecte correspon a les vostres expectatives."
           },
           {
-            "title": "REVENT\u00cd DEL PROPERJEConstellation name (optional)",
-            "des": "Creeu revisions i aproven la publicaci\u00f3 dels projectes dels estudiants."
+            "title": "REVENTÍ DEL PROPERJEConstellation name (optional)",
+            "des": "Creeu revisions i aproven la publicació dels projectes dels estudiants."
           }
         ]
       },
       {
         "title": "HOMEA LA COMUNITAT",
-        "des": "Creeu una inst\u00e0ncia de projectes nom\u00e9s per a la vostra comunitat.{0} I gaudir de la flexibilitat que oferim per gestionar-la, per prendre-la sense problemes.",
+        "des": "Creeu una instància de projectes només per a la vostra comunitat.{0} I gaudir de la flexibilitat que oferim per gestionar-la, per prendre-la sense problemes.",
         "list": [
           {
             "title": "PERSONIZORALConstellation name (optional)",
-            "des": "Persona-ho tot: Poseu les imatges, logos, t\u00edtols, creeu les vostres pr\u00f2pies categories, etiquetes."
+            "des": "Persona-ho tot: Poseu les imatges, logos, títols, creeu les vostres pròpies categories, etiquetes."
           },
           {
-            "title": "ADUNT I MODACI\u00d3",
-            "des": "Quan vulguis, gestiona les opcions per a la vostra comunitat a trav\u00e9s de l'espai administrador de la comunitat i de projectes moderats al portal amb drets d'administraci\u00f3."
+            "title": "ADUNT I MODACIÓ",
+            "des": "Quan vulguis, gestiona les opcions per a la vostra comunitat a través de l'espai administrador de la comunitat i de projectes moderats al portal amb drets d'administració."
           },
           {
             "title": "Projectes clicables al vostre lloc web",
-            "des": "Si la vostra comunitat t\u00e9 un lloc web, podeu encastar f\u00e0cilment projectes que voleu caracter\u00edstiques all\u00e0. Quan els usuaris hi feu clic, seran redireccionats als projectes."
+            "des": "Si la vostra comunitat té un lloc web, podeu encastar fàcilment projectes que voleu característiques allà. Quan els usuaris hi feu clic, seran redireccionats als projectes."
           }
         ]
       }
@@ -714,7 +714,7 @@
       "des": "Descobreix tot sobre la plataforma de projectes en el seu propi projecte.",
       "project": {
         "title": "Projectes CRI",
-        "des": "Cr\u00e9er un aureare de projets d'una organitzaci\u00f3 avec la recursions et componen la m\u00e0fia"
+        "des": "Créer un aureare de projets d'una organització avec la recursions et componen la màfia"
       }
     },
     "TESTIMONIALS": {
@@ -722,43 +722,43 @@
         {
           "project": {
             "title": "INTNERSHPESConstellation name (optional) L3 - CEEBIOS _ Elise Buard",
-            "des": "El semestre intern de Bachelor FDV. A l'encarregat de la formaci\u00f3 de Biomimina a Fran\u00e7a."
+            "des": "El semestre intern de Bachelor FDV. A l'encarregat de la formació de Biomimina a França."
           },
-          "title": "Per a educaci\u00f3",
-          "des": "Per descomptats basats en projectes, empleats, associacions d'estudiants, autosufam\u00e8ncies, etc.",
-          "quote": "La plataforma de projectes em va permetre comunicar-me amb els resultats de tot el que vaig fer per a la meva interna.{0} La secci\u00f3 de comentaris permet als lectors demanar m\u00e9s informaci\u00f3 i donar-me els seus pensaments sobre el que els agradaria llegir.{0} Vaig poder crear el meu propi registre il\u00b7lustrat i aix\u00f2 va permetre que els meus lectors descobrirsin precisament la implementaci\u00f3 i l'expansi\u00f3 de la bimiminaci\u00f3",
+          "title": "Per a educació",
+          "des": "Per descomptats basats en projectes, empleats, associacions d'estudiants, autosufamències, etc.",
+          "quote": "La plataforma de projectes em va permetre comunicar-me amb els resultats de tot el que vaig fer per a la meva interna.{0} La secció de comentaris permet als lectors demanar més informació i donar-me els seus pensaments sobre el que els agradaria llegir.{0} Vaig poder crear el meu propi registre il·lustrat i això va permetre que els meus lectors descobrirsin precisament la implementació i l'expansió de la bimiminació",
           "author": "- Elise Buard, estudiant de Bachelor, Intern CEEBIOS"
         },
         {
           "project": {
             "title": "PREGISS - COVID19",
-            "des": "R\u00e9pondre Car col\u00b7lectiu au COVID19"
+            "des": "Répondre Car col·lectiu au COVID19"
           },
-          "title": "Per a la investigaci\u00f3",
-          "des": "Investigadors, iniciatives de ci\u00e8ncia ciutadana, reptes de codi obert.",
-          "quote": "La investigaci\u00f3 d'un alt impacte tendeix a ser interdisciplinari, amb m\u00faltiples interessats implicats en la seva co-grafia. Per\u00f2 sovint, el coneixement i les comunitats estan invides a disciplines, i la comunicaci\u00f3 amb altres implicats \u00e9s dif\u00edcil. La plataforma de projectes ajuda f\u00e0cilment a la recerca impacteal, a trobar col\u00b7laboradors f\u00e0cilment a trav\u00e9s de disciplines, i a col\u00b7laborar f\u00e0cilment amb els implicats que necessiten la vostra investigaci\u00f3.",
+          "title": "Per a la investigació",
+          "des": "Investigadors, iniciatives de ciència ciutadana, reptes de codi obert.",
+          "quote": "La investigació d'un alt impacte tendeix a ser interdisciplinari, amb múltiples interessats implicats en la seva co-grafia. Però sovint, el coneixement i les comunitats estan invides a disciplines, i la comunicació amb altres implicats és difícil. La plataforma de projectes ajuda fàcilment a la recerca impacteal, a trobar col·laboradors fàcilment a través de disciplines, i a col·laborar fàcilment amb els implicats que necessiten la vostra investigació.",
           "author": "- Ignacio Atal, Profs Chercheurs"
         },
         {
           "project": {
-            "title": "EcoloVie",
-            "des": "R\u00e9duire l'impat \u00e9cologique de notre famille"
+            "title": "EcoloCity name (optional, probably does not need a translation) Vie",
+            "des": "Réduire l'impat écologique de notre famille"
           },
           "title": "Per projectes personals SDG",
-          "des": "Col\u00b7lectius independents i activistes que lluiten contra reptes socials cr\u00edtics.",
-          "quote": "El nostre projecte: esdevenir una fam\u00edlia eco-pressible. Amb la plataforma de projectes, podem compartir f\u00e0cilment les nostres accions sobre menjar, transport, allotjament, reciclatge i pr\u00e0ctiques de compra, i amb sort inspirar altres per canviar, una llar alhora!",
-          "author": "- Anne Mistal, membre de la fam\u00edlia"
+          "des": "Col·lectius independents i activistes que lluiten contra reptes socials crítics.",
+          "quote": "El nostre projecte: esdevenir una família eco-pressible. Amb la plataforma de projectes, podem compartir fàcilment les nostres accions sobre menjar, transport, allotjament, reciclatge i pràctiques de compra, i amb sort inspirar altres per canviar, una llar alhora!",
+          "author": "- Anne Mistal, membre de la família"
         }
       ]
     },
     "ACCESS": {
-      "title": "Exaltaci\u00f3",
-      "des": "Demana acc\u00e9s a l' experiment de totes les caracter\u00edstiques{0}or en contacte per crear un portal dedicat",
+      "title": "Exaltació",
+      "des": "Demana accés a l' experiment de totes les característiques{0}or en contacte per crear un portal dedicat",
       "button_personal": {
         "text": "Demana un compte personal"
       },
       "button_community": {
-        "text": "Sol\u00b7licito projectes per a la vostra comunitat"
+        "text": "Sol·licito projectes per a la vostra comunitat"
       }
     },
     "CONTACT": {
@@ -771,88 +771,88 @@
     "select-all": "Selecciona- ho tot"
   },
   "faq": {
-    "delete-confirm-content": "Esteu segur que voleu esborrar la pestanya d' ajuda personalitzada pel vostre portal. S' esborrar\u00e0 tot el seu contingut.",
+    "delete-confirm-content": "Esteu segur que voleu esborrar la pestanya d' ajuda personalitzada pel vostre portal. S' esborrarà tot el seu contingut.",
     "delete-confirm-title": "Esborrat de pestanyes d' ajuda personalitzada",
-    "info": "Hi ha una ajuda gen\u00e8rica accessible clicant el bot\u00f3 \"Ajuda\" a la cantonada superior dreta. Si voleu afegir una pestanya amb una p\u00e0gina d' ajuda espec\u00edfica al portal, podeu fer- ho a sota.",
+    "info": "Hi ha una ajuda genèrica accessible clicant el botó \"Ajuda\" a la cantonada superior dreta. Si voleu afegir una pestanya amb una pàgina d' ajuda específica al portal, podeu fer- ho a sota.",
     "portal": "Ajuda",
     "tab": "Nom de la pestanya",
-    "video": "tutorial de v\u00eddeo"
+    "video": "tutorial de vídeo"
   },
   "feed": {
     "see-all": "Veure- ho tot",
-    "title": "Reducci\u00f3 de not\u00edcies"
+    "title": "Reducció de notícies"
   },
   "file": {
     "add-image": "afegeix una imatge",
-    "add-video": "afegeix un v\u00eddeo",
-    "add-video-hint": "Afegeix un v\u00eddeo introduint el seu URL de Youtube o vimeo.",
-    "attachment": "document adjuntat \u0160un document",
+    "add-video": "afegeix un vídeo",
+    "add-video-hint": "Afegeix un vídeo introduint el seu URL de Youtube o vimeo.",
+    "attachment": "document adjuntat Šun document",
     "upload": "Puja"
   },
   "form": {
     "background-color": "Color de fons",
     "category-name": "Nom de la categoria",
     "organization-name": "Nom de la vostra comunitat",
-    "description": "Descripci\u00f3",
-    "email": "Correu electr\u00f2nic",
-    "email-contact": "correu electr\u00f2nic",
+    "description": "Descripció",
+    "email": "Correu electrònic",
+    "email-contact": "correu electrònic",
     "language": "Idioma",
-    "title": "T\u00edtol",
+    "title": "Títol",
     "url": "URL",
     "contact": {
-      "subtitle": "Ompliu aquesta forma r\u00e0pida i us hi tornarem aviat",
+      "subtitle": "Ompliu aquesta forma ràpida i us hi tornarem aviat",
       "subject": "Assumpte",
-      "subject-placeholder": "Qu\u00e8 t'agradaria compartir amb nosaltres?",
-      "email": "Correu electr\u00f2nic",
-      "email-placeholder": "Correu electr\u00f2nic",
+      "subject-placeholder": "Què t'agradaria compartir amb nosaltres?",
+      "email": "Correu electrònic",
+      "email-placeholder": "Correu electrònic",
       "content": "Missatge",
-      "content-placeholder": "Pregunta'ns amb un m\u00e0xim de detalls."
+      "content-placeholder": "Pregunta'ns amb un màxim de detalls."
     },
     "report": {
-      "title": "Cal el camp de t\u00edtol",
-      "message": "Cal el camp de descripci\u00f3",
+      "title": "Cal el camp de títol",
+      "message": "Cal el camp de descripció",
       "content": "Cal el camp de contingut",
       "url": {
-        "required": "El camp URL \u00e9s necessari",
-        "format": "Si us plau, introdu\u00efu una URL v\u00e0lida"
+        "required": "El camp URL és necessari",
+        "format": "Si us plau, introduïu una URL vàlida"
       },
       "email": {
-        "required": "Cal el camp de correu electr\u00f2nic",
-        "format": "Si us plau, introdu\u00efu una adre\u00e7a de correu electr\u00f2nic v\u00e0lida"
+        "required": "Cal el camp de correu electrònic",
+        "format": "Si us plau, introduïu una adreça de correu electrònic vàlida"
       }
     },
     "review": {
-      "title": "Cal el camp de t\u00edtol",
-      "message": "Cal el camp de descripci\u00f3"
+      "title": "Cal el camp de títol",
+      "message": "Cal el camp de descripció"
     },
     "goal": {
-      "title": "Cal el camp de t\u00edtol",
-      "description": "Cal el camp de descripci\u00f3"
+      "title": "Cal el camp de títol",
+      "description": "Cal el camp de descripció"
     },
     "blog": {
-      "title": "Cal el camp de t\u00edtol",
-      "description": "Cal el camp de descripci\u00f3"
+      "title": "Cal el camp de títol",
+      "description": "Cal el camp de descripció"
     },
     "resources": {
-      "title": "Cal el camp de t\u00edtol",
-      "description": "Cal el camp de descripci\u00f3",
+      "title": "Cal el camp de títol",
+      "description": "Cal el camp de descripció",
       "link": {
-        "required": "El camp URL \u00e9s necessari",
-        "format": "Si us plau, introdu\u00efu una URL v\u00e0lida"
+        "required": "El camp URL és necessari",
+        "format": "Si us plau, introduïu una URL vàlida"
       }
     },
     "announcement": {
-      "title": "Cal el camp de t\u00edtol",
-      "description": "Cal el camp de descripci\u00f3"
+      "title": "Cal el camp de títol",
+      "description": "Cal el camp de descripció"
     },
     "reply-announcement": {
       "first-name": "Es requereix el primer camp de nom",
-      "last-name": "Es requereix l' \u00faltim camp de nom",
+      "last-name": "Es requereix l' últim camp de nom",
       "email": {
-        "required": "Cal el camp de correu electr\u00f2nic",
-        "format": "Si us plau, introdu\u00efu una adre\u00e7a de correu electr\u00f2nic v\u00e0lida"
+        "required": "Cal el camp de correu electrònic",
+        "format": "Si us plau, introduïu una adreça de correu electrònic vàlida"
       },
-      "description": "Cal el camp de descripci\u00f3"
+      "description": "Cal el camp de descripció"
     }
   },
   "footer": {
@@ -862,42 +862,42 @@
     "cookies": "Galetes",
     "accessibility": "Accessibilitat",
     "personal-data": "Dades personals",
-    "directory": "Descobreix molts m\u00e9s projectes d'altres organitzacions a la meta-portal:",
+    "directory": "Descobreix molts més projectes d'altres organitzacions a la meta-portal:",
     "help": "Ajuda",
     "projects": "Plataforma de projectes",
-    "madeBy": "est\u00e0 fet per",
+    "madeBy": "està fet per",
     "sourceText": "Mireu el codi font",
-    "pca": "Planificaci\u00f3 de continuitat (PCPA)",
-    "pssi": "Planificaci\u00f3 de seguretat (PSSI)"
+    "pca": "Planificació de continuitat (PCPA)",
+    "pssi": "Planificació de seguretat (PSSI)"
   },
   "goal": {
     "add": "Afegir un objectiu",
     "completed-on-the": "finalitzada la",
-    "description": "descripci\u00f3 de l' objectiu",
+    "description": "descripció de l' objectiu",
     "goals": "Atribucions",
-    "planned-for-the": "Planificaci\u00f3 per a la",
+    "planned-for-the": "Planificació per a la",
     "status-title": "Estat",
-    "title": "T\u00edtol de l' objectiu",
+    "title": "Títol de l' objectiu",
     "delete": "Voleu esborrar aquest objectiu?"
   },
   "group": {
     "contact": "Contacte",
     "edit-group": "Edita grup",
-    "see-more-people-button": "Vegeu {users} m\u00e9s",
+    "see-more-people-button": "Vegeu {users} més",
     "see-subgroups": "Mireu el subagrupador {count} mireu {count} subagrupacions",
     "share": "Comparteix",
     "the-team": "L' equip ({users})",
     "news": "Anuncis",
-    "more": "M\u00e9s",
+    "more": "Més",
     "less": "Menys",
-    "see-more": "Veure m\u00e9s",
+    "see-more": "Veure més",
     "see-less": "Veure menys",
     "subgroups": "SUBGROUPSConstellation name (optional)",
-    "snapshot": "instant\u00e0nia",
+    "snapshot": "instantània",
     "members": "Membres",
     "projects": "Projectes",
     "visibility-private": "Visibilitat: privat",
-    "visibility-public": "Visibilitat: p\u00fablic",
+    "visibility-public": "Visibilitat: públic",
     "visibility-org": "Visibilitat: portal",
     "group-members": "Membres de grup",
     "group-projects": "Grup de projectes",
@@ -905,8 +905,8 @@
     "image-header": "Imatge",
     "root": "(Root)",
     "create": {
-      "help-link": "Som aqu\u00ed per ajudar.",
-      "notice": "Els camps marcats amb * s\u00f3n obligatoris. Sempre ho pots modificar m\u00e9s tard. No saps qu\u00e8 hauries de fer?",
+      "help-link": "Som aquí per ajudar.",
+      "notice": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar més tard. No saps què hauries de fer?",
       "title": "Crea un nou grup"
     },
     "edit": {
@@ -914,40 +914,40 @@
     },
     "form": {
       "add": "Afegeix",
-      "add-projects": "Afegeix projectes de representaci\u00f3",
+      "add-projects": "Afegeix projectes de representació",
       "edit": "Edita",
       "edit-members": "Edita els membres",
       "edit-roles": "Edita els rols",
-      "form-incomplete": "Els camps no s' han trobat o no s\u00f3n v\u00e0lids, complets per a poder desar.",
+      "form-incomplete": "Els camps no s' han trobat o no són vàlids, complets per a poder desar.",
       "create-group": "Crea un grup",
       "edit-group": "Edita grup",
       "edit-name": "Edita el nom del grup",
-      "email-label": "Correu electr\u00f2nic",
+      "email-label": "Correu electrònic",
       "email-placeholder": "Cognom. name{'@'}myunitat.fr",
       "short-description-label": "Titular",
       "short-description-placeholder": "Descriu el vostre grup en una frase",
       "name-label": "Nom de grup",
       "name-placeholder": "Ex. Bitkbox: bossa interactiva de caixa",
-      "description-label": "Descripci\u00f3",
-      "add-description": "Afegeix descripci\u00f3",
+      "description-label": "Descripció",
+      "add-description": "Afegeix descripció",
       "add-parent-group": "Afegeix grup pare",
-      "project-label": "Projectes de caracter\u00edstiques",
+      "project-label": "Projectes de característiques",
       "parent-group-label": "Grup pare",
       "visibility": {
         "title": "visibilitat de grup",
-        "public": "P\u00fablic",
+        "public": "Públic",
         "private": "Privat",
         "members": "Membres",
-        "public_description": "P\u00fablic: Qualsevol pot trobar aquest grup a Internet",
+        "public_description": "Públic: Qualsevol pot trobar aquest grup a Internet",
         "private_description": "Privat: tan sols visible pels administradors i membres del grup",
-        "members_description": "Membres: nom\u00e9s visibles pels membres d' aquest portal"
+        "members_description": "Membres: només visibles pels membres d' aquest portal"
       },
       "name-errors": {
         "required": "Es requereix el camp de nom de grup",
-        "max": "El camp Nom de grup no pot ser m\u00e9s gran que 180 car\u00e0cters"
+        "max": "El camp Nom de grup no pot ser més gran que 180 caràcters"
       },
       "short-description-errors": {
-        "max": "El camp de titular pot no ser m\u00e9s gran que 150 car\u00e0cters"
+        "max": "El camp de titular pot no ser més gran que 150 caràcters"
       },
       "publication-status-errors": {
         "required": "Aquest camp es requereix"
@@ -960,11 +960,11 @@
         "help": "Estats membres"
       },
       "leaders": {
-        "label": "L\u00edder del grup",
-        "help": "L\u00edder del grup"
+        "label": "Líder del grup",
+        "help": "Líder del grup"
       },
       "leaders-managers": {
-        "label": "L\u00edder i gestor"
+        "label": "Líder i gestor"
       },
       "managers": {
         "label": "Editor",
@@ -973,9 +973,9 @@
     }
   },
   "header": {
-    "private": "Privat: nom\u00e9s visible per als membres de l' equip",
-    "org": "Nom\u00e9s visible als membres del portal",
-    "public": "P\u00fablic: visible per a qualsevol visitant del lloc web",
+    "private": "Privat: només visible per als membres de l' equip",
+    "org": "Només visible als membres del portal",
+    "public": "Públic: visible per a qualsevol visitant del lloc web",
     "similar-project": "projecte similar",
     "similar-projects": "projectes similars",
     "portals-start": "Pertany a",
@@ -985,12 +985,12 @@
     "creation": "Creat",
     "update": "Editat",
     "close": "Tanca",
-    "mobile-menu-title": "Men\u00fa"
+    "mobile-menu-title": "Menú"
   },
   "home": {
     "all-projects": "Tots els projectes",
-    "announcements": "anunciacions",
-    "news": "Not\u00edcies",
+    "announcements": "Anunciacions",
+    "news": "Notícies",
     "calendar": "Calendari",
     "instructions": "Instruccions",
     "communities": "Portals",
@@ -1012,30 +1012,26 @@
   },
   "language": {
     "label-en": "Anglès",
-    "label-fr": "Francès",
-    "label-de": "Alemany",
-    "label-ca": "Català",
-    "label-nl": "Neerlandès",
-    "label-et": "Estonià"
+    "label-fr": "Françaismexico_ states. kgm"
   },
   "location": {
     "loading": "S' estan carregant les localitzacions"
   },
   "map": {
-    "empty": "No hi ha res aqu\u00ed encara... Els Col\u00b7laboradors encara no van localitzar cap projecte.",
+    "empty": "No hi ha res aquí encara... Els Col·laboradors encara no van localitzar cap projecte.",
     "page-title": "Mapa",
     "projects": "Mapa de projectes"
   },
   "me": {
     "follow": "Projectes que segueixo",
     "no-follow": "Encara no esteu seguint un projecte",
-    "groups": "Grups, s\u00f3c membre de",
+    "groups": "Grups, sóc membre de",
     "no-group": "Encara no sou membre d' un grup",
     "my-projects": "Els meus projectes",
     "no-bio": "Encara no has escrit la teva biografia",
     "no-skill": "Encara no heu afegit habilitat",
     "page-title": "El meu perfil",
-    "projects-participate": "Projectes s\u00f3c membre de",
+    "projects-participate": "Projectes sóc membre de",
     "no-project-participate": "Encara no sou membre d' un projecte",
     "projects-reviewing": "Estic revisant projectes",
     "no-project-reviewing": "Encara no esteu revisant un projecte",
@@ -1045,17 +1041,17 @@
   },
   "you": {
     "no-follow": "Encara no hi ha cap projecte seguit",
-    "no-group": "Encara no \u00e9s membre d' un grup",
+    "no-group": "Encara no és membre d' un grup",
     "no-bio": "Encara no hi ha biografia",
     "no-skill": "Encara no s' han indicat habilitats",
-    "no-project-participate": "Encara no \u00e9s membre d' un projecte",
-    "no-project-reviewing": "Encara no \u00e9s un revisador d'un projecte"
+    "no-project-participate": "Encara no és membre d' un projecte",
+    "no-project-reviewing": "Encara no és un revisador d'un projecte"
   },
   "multieditor": {
     "blockquote": "Bloqueja la cita",
     "bold": "negreta",
     "bullet_list": "Llista de pics",
-    "click-to-play-video": "Cliqueu un altre cop per iniciar/ aturar el v\u00eddeo",
+    "click-to-play-video": "Cliqueu un altre cop per iniciar/ aturar el vídeo",
     "code": {
       "label": "Codi",
       "language": {
@@ -1081,11 +1077,11 @@
     "delete_column": "Elimina aquesta columna",
     "delete_row": "Elimina aquesta fila",
     "delete_table": "Esborra taula",
-    "delete_video": "Esborra el v\u00eddeo",
-    "external_link": "Obre l' enlla\u00e7",
-    "heading_1": "Cap\u00e7alera 1Style name",
-    "heading_2": "Cap\u00e7alera 2Style name",
-    "heading_3": "Cap\u00e7alera 3Style name",
+    "delete_video": "Esborra el vídeo",
+    "external_link": "Obre l' enllaç",
+    "heading_1": "Capçalera 1Style name",
+    "heading_2": "Capçalera 2Style name",
+    "heading_3": "Capçalera 3Style name",
     "image": {
       "25_width": "Amplada del 25%",
       "50_width": "Amplada del 50%",
@@ -1094,65 +1090,65 @@
       "full": "Complet",
       "image": "Imatge",
       "large": "Gran",
-      "medium": "Mitj\u00e0",
+      "medium": "Mitjà",
       "original": "Original",
       "original_size": "Amplada original",
       "small": "Petita"
     },
     "insert_column_left": "Afegeix columna abans",
-    "insert_column_right": "Afegeix columna despr\u00e9s",
+    "insert_column_right": "Afegeix columna després",
     "insert_row_top": "Afegeix fila abans",
-    "insert_row_bottom": "Afegeix fila despr\u00e9s",
-    "italic": "it\u00e0lica",
-    "link": "enlla\u00e7",
-    "edit-link": "edita l' enlla\u00e7",
-    "frozen": "L' editor est\u00e0 bloquejat",
-    "merge_cells": "Fusiona les cel\u00b7 les",
-    "not-synced": "S' est\u00e0 carregant...",
+    "insert_row_bottom": "Afegeix fila després",
+    "italic": "itàlica",
+    "link": "enllaç",
+    "edit-link": "edita l' enllaç",
+    "frozen": "L' editor està bloquejat",
+    "merge_cells": "Fusiona les cel· les",
+    "not-synced": "S' està carregant...",
     "offline": "Desconnectat",
-    "redo": "Ref\u00e9s",
-    "remove_link": "Elimina enlla\u00e7",
-    "server-connected": "El servidor est\u00e0 connectat.",
-    "server-connecting": "El servidor est\u00e0 connectat...",
-    "server-disconnected": "El servidor est\u00e0 desconnectat.",
+    "redo": "Refés",
+    "remove_link": "Elimina enllaç",
+    "server-connected": "El servidor està connectat.",
+    "server-connecting": "El servidor està connectat...",
+    "server-disconnected": "El servidor està desconnectat.",
     "server-unconnectable": {
-      "status": "No s' ha pogut connectar al servidor col\u00b7laboratiu.",
+      "status": "No s' ha pogut connectar al servidor col·laboratiu.",
       "notice": "Comproveu que el vostre navegador i/o antivirus permet als WebSockets.",
-      "ack-notice": "Podeu usar un editor simple (sense edici\u00f3 col\u00b7 laboraci\u00f3). Tingueu present que altres dades d' usuaris d' escriptori es poden sobreescriure si deseu alhora.",
-      "do-ack": "Entenc els riscos i desitjo continuar amb un simple editor (sense edici\u00f3 col\u00b7laborativa).",
+      "ack-notice": "Podeu usar un editor simple (sense edició col· laboració). Tingueu present que altres dades d' usuaris d' escriptori es poden sobreescriure si deseu alhora.",
+      "do-ack": "Entenc els riscos i desitjo continuar amb un simple editor (sense edició col·laborativa).",
       "do-solo-edit": "Edita pel meu compte",
-      "head-up-warning": "Av\u00eds: l' edici\u00f3 en mode solitari pot resultar en p\u00e8rdua de dades",
-      "confirm-save-title": "Est\u00e0s editant en mode sol.",
-      "confirm-save-text": "Si alg\u00fa altre va editar el contingut mentre est\u00e0veu editant, sobreescriureu els canvis. Esteu segur que voleu desar?"
+      "head-up-warning": "Avís: l' edició en mode solitari pot resultar en pèrdua de dades",
+      "confirm-save-title": "Estàs editant en mode sol.",
+      "confirm-save-text": "Si algú altre va editar el contingut mentre estàveu editant, sobreescriureu els canvis. Esteu segur que voleu desar?"
     },
-    "split_cell": "Divideix la cel\u00b7 la",
+    "split_cell": "Divideix la cel· la",
     "table": "Taula",
     "text_align_left": "Text Alinea a l' esquerra",
     "text_align_right": "Text Alinea a la dreta",
     "text_align_center": "Text Alinea al centre",
-    "toggle_header_row": "Commuta la fila de la cap\u00e7alera",
-    "unauthorized": "Edici\u00f3 no autoritzat",
+    "toggle_header_row": "Commuta la fila de la capçalera",
+    "unauthorized": "Edició no autoritzat",
     "underline": "subratllada",
-    "undo": "Desf\u00e9s",
-    "video": "V\u00eddeo",
+    "undo": "Desfés",
+    "video": "Vídeo",
     "save": "Desa sense sortir"
   },
   "homeCarousel": {
     "tab1": {
-      "title": "Obt\u00e9n Inspirat",
-      "text": "Descobreix projectes interessants i inspiradors. Navegueu projectes en el mapa geogr\u00e0fic i el mapa d' etiquetes. Cerca per t\u00edtol, membre de l' equip o etiqueta de projecte."
+      "title": "Obtén Inspirat",
+      "text": "Descobreix projectes interessants i inspiradors. Navegueu projectes en el mapa geogràfic i el mapa d' etiquetes. Cerca per títol, membre de l' equip o etiqueta de projecte."
     },
     "tab2": {
       "title": "Comparteix",
-      "text": "Document f\u00e0cil i comparteix els vostres projectes amb tots els visitants i dins de la vostra comunitat. Afegiu al vostre projecte una descripci\u00f3, recursos externs, objectius, etiquetes i entrades de bloc."
+      "text": "Document fàcil i comparteix els vostres projectes amb tots els visitants i dins de la vostra comunitat. Afegiu al vostre projecte una descripció, recursos externs, objectius, etiquetes i entrades de bloc."
     },
     "tab3": {
-      "title": "Col\u00b7 laboraci\u00f3",
-      "text": "Editeu col\u00b7laborativament el vostre projecte amb els membres del vostre equip. Es van anunciar als participants reclutes (contribuadors, membres de nous equips, centres, treballadors, etc.), intercanviant comentaris amb membres de la comunitat."
+      "title": "Col· laboració",
+      "text": "Editeu col·laborativament el vostre projecte amb els membres del vostre equip. Es van anunciar als participants reclutes (contribuadors, membres de nous equips, centres, treballadors, etc.), intercanviant comentaris amb membres de la comunitat."
     },
     "tab4": {
       "title": "Mostra el vostre impacte",
-      "text": "Augmenta l'impacte mundial i mostra els esfor\u00e7os d'inspiraci\u00f3 per a un b\u00e9 com\u00fa. Identifica amb la qual contribueixen {sdg}. Geolocalitza tots els llocs on els teus projectes generen un impacte.",
+      "text": "Augmenta l'impacte mundial i mostra els esforços d'inspiració per a un bé comú. Identifica amb la qual contribueixen {sdg}. Geolocalitza tots els llocs on els teus projectes generen un impacte.",
       "sdg": "SDG",
       "sdgAbbr": "Objectius de desenvolupament sostenibles",
       "link": "https://en.nesco.org/s sostenibles del desenvolupament"
@@ -1163,13 +1159,13 @@
       "options": {
         "accept": "Accepta",
         "decline": "Declina",
-        "need-infos": "Sol\u00b7 licita m\u00e9s informaci\u00f3"
+        "need-infos": "Sol· licita més informació"
       },
       "your-response": "La vostra resposta",
       "add-comment": "Afegeix un comentari",
-      "comment-notice-mentor": "Aquest comentari s' enviar\u00e0 per correu electr\u00f2nic al homestee.",
-      "comment-notice-mentoree": "Aquest comentari s' enviar\u00e0 per correu electr\u00f2nic al mentor.",
-      "comment-placeholder": "Escriu aqu\u00ed.",
+      "comment-notice-mentor": "Aquest comentari s' enviarà per correu electrònic al homestee.",
+      "comment-notice-mentoree": "Aquest comentari s' enviarà per correu electrònic al mentor.",
+      "comment-placeholder": "Escriu aquí.",
       "title-mentor": "Fer-se mentor",
       "title-mentoree": "Convertiu- vos en un mentor",
       "response-was-sent": "Han enviat la vostra resposta.",
@@ -1179,33 +1175,33 @@
   },
   "onboarding": {
     "step": "step",
-    "title": "Qu\u00e8 s\u00f3n els projectes?"
+    "title": "Què són els projectes?"
   },
   "onboarding-modal": {
-    "next": "Seg\u00fcent",
+    "next": "Següent",
     "previous": "Anterior"
   },
   "onboarding-todo": {
-    "platform-tour": "Comen\u00e7ant",
+    "platform-tour": "Començant",
     "welcome": "Benvinguda {0}, comencem a la plataforma amb aquests passos.",
     "complete-profile": "Acaba el perfil",
     "explore-projects": "Exploreu projectes",
     "create-project": "Crea el vostre primer projecte",
     "take-tour": "Feu una volta per a la plataforma",
-    "dont-show-again": "No tornis a mostrar aix\u00f2"
+    "dont-show-again": "No tornis a mostrar això"
   },
   "page404": {
-    "contact": "Com si hagu\u00e9s perdut? Podeu contactar amb nosaltres a {0}",
+    "contact": "Com si hagués perdut? Podeu contactar amb nosaltres a {0}",
     "contact-mail": "Projectes. COMIC2154654learningplanetintitu.org",
-    "illustration-text": "S\u00ed, aix\u00f2 \u00e9s un ERROR 404 i ara que est\u00e0 perdut en aquesta situaci\u00f3 ...",
-    "page-title": "No s' ha trobat la p\u00e0gina",
-    "search": "Aix\u00f2 no \u00e9s el que estaves buscant b\u00e9? El mateix jugador vol {0}?",
+    "illustration-text": "Sí, això és un ERROR 404 i ara que està perdut en aquesta situació ...",
+    "page-title": "No s' ha trobat la pàgina",
+    "search": "Això no és el que estaves buscant bé? El mateix jugador vol {0}?",
     "search-again": "Torna a cercar",
     "title": "Ui...",
     "not-connected": {
       "title": "Intenta entrar",
       "illustration-text": "Cal introduir-hi alguna cosa a la LOGIN",
-      "connect": "No podem trobar la p\u00e0gina que vost\u00e8 busca en Boot. Per arribar-hi, potser {0}.",
+      "connect": "No podem trobar la pàgina que vostè busca en Boot. Per arribar-hi, potser {0}.",
       "login": "Cal entrar"
     }
   },
@@ -1214,9 +1210,9 @@
     "change-picture": "Canvia la imatge"
   },
   "plateform-tour-modal": {
-    "intro": "Aquesta \u00e9s una visita r\u00e0pida de les caracter\u00edstiques principals del projecte. Sempre podeu tornar- hi (A trav\u00e9s de molts tutorials) en el men\u00fa More / Ajuda Accessibilitat.",
-    "notice-tutorial": "Tamb\u00e9 podeu aprendre els interiors i els projectes amb el nostre {0}",
-    "title": "gira de plataforma: qu\u00e8 s\u00f3n els projectes",
+    "intro": "Aquesta és una visita ràpida de les característiques principals del projecte. Sempre podeu tornar- hi (A través de molts tutorials) en el menú More / Ajuda Accessibilitat.",
+    "notice-tutorial": "També podeu aprendre els interiors i els projectes amb el nostre {0}",
+    "title": "gira de plataforma: què són els projectes",
     "tutorial": "tutorials"
   },
   "profile": {
@@ -1225,19 +1221,19 @@
       "edit-my-profile": "Edita el meu perfil",
       "edit-other-profile": "Editeu el perfil {name}",
       "edit-your-profile": "Edita el perfil",
-      "notice": "Els camps amb * s\u00f3n obligatoris.",
-      "help": "Necessites ajuda? Som aqu\u00ed.",
+      "notice": "Els camps amb * són obligatoris.",
+      "help": "Necessites ajuda? Som aquí.",
       "edit": "Edita",
       "general": {
-        "no-special-characters": "No es permeten car\u00e0cters especials",
-        "tab": "Informaci\u00f3 general",
+        "no-special-characters": "No es permeten caràcters especials",
+        "tab": "Informació general",
         "form-has-error": "Falta o no hi ha un camp incorrecte en el formulari.",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
         "pronouns": {
           "label": "Pronomsfrance. kgm",
-          "notice": "Fes que altres s\u00e0piguen com fer-te refer\u00e8ncia.",
-          "placeholder": "Exemples: s\u00ed, He/Him, ells/Them, etc."
+          "notice": "Fes que altres sàpiguen com fer-te referència.",
+          "placeholder": "Exemples: sí, He/Him, ells/Them, etc."
         },
         "first-name": {
           "label": "Nom principal *",
@@ -1247,48 +1243,48 @@
         "last-name": {
           "label": "Darrer nom *",
           "placeholder": "Ex. Petit",
-          "is-required": "Es requereix l' \u00faltim camp de nom."
+          "is-required": "Es requereix l' últim camp de nom."
         },
         "professional-email": {
           "label": "Correu- e *",
           "placeholder": "Ex. jane. doe{'@'} locution.com",
-          "is-required": "Cal el camp de correu electr\u00f2nic.",
-          "is-email": "El correu electr\u00f2nic ha de ser un correu electr\u00f2nic v\u00e0lid."
+          "is-required": "Cal el camp de correu electrònic.",
+          "is-email": "El correu electrònic ha de ser un correu electrònic vàlid."
         },
         "professional-number": {
-          "label": "N\u00famero professional",
+          "label": "Número professional",
           "placeholder": "Ex. +33 600000"
         },
         "personal-number": {
-          "label": "N\u00famero personal",
+          "label": "Número personal",
           "placeholder": "Ex. +33 600000"
         },
         "personal-webpage": {
-          "label": "P\u00e0gina web personal",
-          "placeholder": "Posa aqu\u00ed el vostre URL de p\u00e0gina personal",
-          "is-url": "La p\u00e0gina web personal ha de ser un URL v\u00e0lid."
+          "label": "Pàgina web personal",
+          "placeholder": "Posa aquí el vostre URL de pàgina personal",
+          "is-url": "La pàgina web personal ha de ser un URL vàlid."
         },
         "linkedin": {
-          "label": "Compte enlla\u00e7at",
-          "placeholder": "Introdu\u00efu aqu\u00ed el vostre URL de comptes enlla\u00e7at",
-          "is-url": "El compte enlla\u00e7at ha de ser un URL v\u00e0lid."
+          "label": "Compte enllaçat",
+          "placeholder": "Introduïu aquí el vostre URL de comptes enllaçat",
+          "is-url": "El compte enllaçat ha de ser un URL vàlid."
         },
         "twitter": {
           "label": "compte de Twitter",
-          "placeholder": "Posa aqu\u00ed l' URL del vostre compte de Twitter",
-          "is-url": "El compte de Twitter ha de ser un URL v\u00e0lid."
+          "placeholder": "Posa aquí l' URL del vostre compte de Twitter",
+          "is-url": "El compte de Twitter ha de ser un URL vàlid."
         },
         "picture": {
           "label": "Imatge de perfil"
         },
         "title": {
-          "label": "T\u00edtol *",
+          "label": "Títol *",
           "placeholder": "Gestor de projectes, estudiant estudiant de M2 Biology, investigadora, etc.",
-          "is-required": "Es requereix el camp de t\u00edtol."
+          "is-required": "Es requereix el camp de títol."
         },
         "organization-address": {
-          "label": "Nom i adre\u00e7a de l' organitzaci\u00f3",
-          "placeholder": "Ex. Aprenent a l'Institut del planeta.\n8 rue Charles V,\n75004 Par\u00edsusa. kgm"
+          "label": "Nom i adreça de l' organització",
+          "placeholder": "Ex. Aprenent a l'Institut del planeta.\n8 rue Charles V,\n75004 Parísusa. kgm"
         },
         "tags": {
           "label": "Etiquetes *"
@@ -1298,7 +1294,7 @@
           "add": "Afegeix",
           "notice-start": "Afegeix",
           "notice-link": "Objectiu de desenvolupament sostenible (SDGs)",
-          "notice-end": "Vols contribuir. Exemple: educaci\u00f3 de qualitat, fam zero, acci\u00f3 del clima, etc.",
+          "notice-end": "Vols contribuir. Exemple: educació de qualitat, fam zero, acció del clima, etc.",
           "link": "https://sdgs.un.org/goals"
         }
       },
@@ -1308,11 +1304,11 @@
         "save-success": "El perfil s' ha desat.",
         "short-bio": {
           "label": "bio- curt",
-          "placeholder": "1 a 2 l\u00ednies per descriure breument"
+          "placeholder": "1 a 2 línies per descriure breument"
         },
         "long-bio": {
           "label": "biografia llarga",
-          "placeholder": "Presenta't professionalment. Presenta la teva ruta professional i la teva ocupaci\u00f3 actual."
+          "placeholder": "Presenta't professionalment. Presenta la teva ruta professional i la teva ocupació actual."
         },
         "personal-bio": {
           "label": "bio Personal",
@@ -1322,24 +1318,24 @@
       "projects": {
         "tab": "Projectes",
         "member": {
-          "label": "Projectes s\u00f3c membre de",
-          "notice": "Si voleu ser membre d' un projecte existent, haur\u00edeu de demanar-li a l'equip del projecte que us afegeixi. O pots crear el teu projecte."
+          "label": "Projectes sóc membre de",
+          "notice": "Si voleu ser membre d' un projecte existent, hauríeu de demanar-li a l'equip del projecte que us afegeixi. O pots crear el teu projecte."
         },
         "followed": {
           "label": "Projectes que segueixo",
-          "notice": "Quan seguiu un projecte rebeu notificacions sobre qualsevol nova activitat. Si voleu seguir un projecte, visiteu- lo i cliqueu el bot\u00f3 \"Respondre\" al costat del t\u00edtol.",
+          "notice": "Quan seguiu un projecte rebeu notificacions sobre qualsevol nova activitat. Si voleu seguir un projecte, visiteu- lo i cliqueu el botó \"Respondre\" al costat del títol.",
           "add": "Afegeix",
           "drawer-title": "Escolliu els projectes Segueixo"
         },
         "reviewed": {
           "label": "Projectes que reviso",
-          "notice": "Si voleu ser revisadors d'un projecte existent, haur\u00edeu de preguntar a l'equip del projecte que us afegeixi."
+          "notice": "Si voleu ser revisadors d'un projecte existent, hauríeu de preguntar a l'equip del projecte que us afegeixi."
         }
       },
       "groups": {
         "tab": "Grups",
         "groups": {
-          "label": "Grups, s\u00f3c membre de"
+          "label": "Grups, sóc membre de"
         }
       },
       "skills": {
@@ -1349,7 +1345,7 @@
         "save-success": "El perfil s' ha desat.",
         "search": "cerca",
         "suggested-skills": "O triar una habilitat suggerida",
-        "already-added": "(Ja est\u00e0 afegit)",
+        "already-added": "(Ja està afegit)",
         "skills": {
           "add-success": "Skill '{name}' afegia.",
           "edit-success": "Skill '{name}' editat.",
@@ -1364,7 +1360,7 @@
             "notice": "Escriviu l' etiqueta de la vostra habilitat i seleccioneu la correcta per a vos entre suggeriments.",
             "placeholder": "Tipus una habilitat",
             "notice-levels": "Indica el teu nivell de mestre.",
-            "help-levels": "M\u00e9s sobre nivells d'habilitat"
+            "help-levels": "Més sobre nivells d'habilitat"
           },
           "selection": "habilitats seleccionades"
         },
@@ -1382,7 +1378,7 @@
             "notice": "Escriviu l' etiqueta del vostre hobby i seleccioneu el correcte per a vos entre suggeriments.",
             "placeholder": "Escriviu un hobby",
             "notice-levels": "Indica el teu nivell de mestre.",
-            "help-levels": "M\u00e9s sobre els nivells de bbies"
+            "help-levels": "Més sobre els nivells de bbies"
           },
           "selection": "Hobbies seleccionades"
         },
@@ -1392,28 +1388,28 @@
             "title-offer": "Adorador de mentors",
             "notice-ask": "Si us plau, especifiqueu l'habilitat pel que esteu demanant mentor.",
             "notice-offer": "Si us plau, especifiqueu l'habilitat de la qual esteu oferint mentors.",
-            "error": "Error en enviar la petici\u00f3.",
-            "success": "Han enviat la vostra petici\u00f3.",
+            "error": "Error en enviar la petició.",
+            "success": "Han enviat la vostra petició.",
             "fields": {
               "title": {
-                "label": "T\u00edtol",
+                "label": "Títol",
                 "placeholder-ask": "Eg. \" Pots ser el meu mentor en Datascience?\"",
                 "placeholder-offer": "Eg. \"Vols ser el meu amic en Datascience?\"",
-                "required": "Es requereix el camp de t\u00edtol."
+                "required": "Es requereix el camp de títol."
               },
               "text": {
                 "label": "Text",
                 "notice-ask": "Afegeix detalls quant a tu i el tipus d'ajuda que necessiteu (pex;, nombre d' hores, la naturalesa d'ajuda - de comentaris simples a classe...).",
                 "notice-offer": "Afegeix detalls sobre tu i el tipus d'ajuda que proporcionen (pex;, nombre d' hores, la naturalesa de l'ajuda - de comentaris simples a classe...).",
-                "placeholder": "Comen\u00e7a aqu\u00ed",
+                "placeholder": "Comença aquí",
                 "required": "Es requereix el camp de text."
               },
               "email": {
-                "label": "Resposta de correu electr\u00f2nic",
-                "notice": "Aquest missatge s' enviar\u00e0 com a correu electr\u00f2nic. Per a rebre una resposta, afegiu el vostre correu electr\u00f2nic.",
+                "label": "Resposta de correu electrònic",
+                "notice": "Aquest missatge s' enviarà com a correu electrònic. Per a rebre una resposta, afegiu el vostre correu electrònic.",
                 "placeholder": "Eg. jane. doe{'@'} gmail.com",
-                "invalid": "El camp de correu electr\u00f2nic no \u00e9s v\u00e0lid.",
-                "required": "Cal el camp de correu electr\u00f2nic."
+                "invalid": "El camp de correu electrònic no és vàlid.",
+                "required": "Cal el camp de correu electrònic."
               }
             }
           },
@@ -1422,31 +1418,31 @@
           "edit": "Mentoring for \"{skill}\"",
           "error": "Error en desar el mentor.",
           "success": "S' ha desat l' enviament",
-          "notice": "T'agradaria convertir-te en mentor o ser mal educat per aquesta habilitat? determinar\u00e0s la freq\u00fc\u00e8ncia d'intercanvi que t'escau amb el mentor o el teu mentor. Cuida't, la nostra guia \u00e9s aqu\u00ed per ajudar-te.",
+          "notice": "T'agradaria convertir-te en mentor o ser mal educat per aquesta habilitat? determinaràs la freqüència d'intercanvi que t'escau amb el mentor o el teu mentor. Cuida't, la nostra guia és aquí per ajudar-te.",
           "can-mentor": "Puc fer-ho.",
           "needs-mentor": "Busco un mentor.",
           "comment": "Comentari",
-          "comment-placeholder": "Indica quina ajuda podeu oferir o ajudar- vos (cal temps, volum, freq\u00fc\u00e8ncia, etc.)"
+          "comment-placeholder": "Indica quina ajuda podeu oferir o ajudar- vos (cal temps, volum, freqüència, etc.)"
         },
         "levels": {
-          "curious": "Curi\u00f3s",
-          "basic": "B\u00e0sic",
+          "curious": "Curiós",
+          "basic": "Bàsic",
           "competent": "Competent",
           "expert": "Expert"
         },
         "tip": {
           "intro-edit": "Els diferents nivells que podeu escollir des de:",
           "curious": {
-            "title": "Nivell 1: Curi\u00f3s",
+            "title": "Nivell 1: Curiós",
             "description": ""
           },
           "basic": {
-            "title": "Nivell 2: B\u00e0sic",
+            "title": "Nivell 2: Bàsic",
             "description": "Nivell d'alta escola, o va fer algun tutorial, o un petit projecte"
           },
           "competent": {
             "title": "Nivell 3: Competent",
-            "description": "Nivell mestre o va fer un projecte intermedi, o pot ensenyar al nivell de llic\u00e8ncia"
+            "description": "Nivell mestre o va fer un projecte intermedi, o pot ensenyar al nivell de llicència"
           },
           "expert": {
             "title": "Nivell 4: Expert",
@@ -1460,46 +1456,46 @@
         "save-success": "El perfil s' ha desat.",
         "publication-status": {
           "label": "visibilitat general del perfil",
-          "notice": "Per omissi\u00f3: p\u00fablic per a tothom"
+          "notice": "Per omissió: públic per a tothom"
         },
         "picture": {
           "label": "visibilitat de la imatge",
-          "notice": "Per omissi\u00f3: el meu portal"
+          "notice": "Per omissió: el meu portal"
         },
         "email": {
           "label": "visibilitat de correu",
-          "notice": "Omissi\u00f3: ocult per a tothom"
+          "notice": "Omissió: ocult per a tothom"
         },
         "personal-phone": {
-          "label": "Visibilitat personal del tel\u00e8fon",
-          "notice": "Omissi\u00f3: ocult per a tothom"
+          "label": "Visibilitat personal del telèfon",
+          "notice": "Omissió: ocult per a tothom"
         },
         "skills-hobbies": {
           "label": "Nivells de visibilitat",
-          "notice": "Omissi\u00f3: ocult per a tothom"
+          "notice": "Omissió: ocult per a tothom"
         },
         "socials": {
-          "label": "visibilitat dels mitjans de comunicaci\u00f3 socials",
-          "notice": "(Ex. Enlla\u00e7at A Twitter, p\u00e0gina web personal... Per omissi\u00f3: el meu portal"
+          "label": "visibilitat dels mitjans de comunicació socials",
+          "notice": "(Ex. Enllaçat A Twitter, pàgina web personal... Per omissió: el meu portal"
         },
         "options": {
           "hide": "Oculta",
           "org": "El meu portal",
-          "pub": "P\u00fablic"
+          "pub": "Públic"
         }
       }
     },
-    "go-to-page": "Visualitza la p\u00e0gina del perfil",
+    "go-to-page": "Visualitza la pàgina del perfil",
     "drawer_title": "Perfil",
     "projects": "Projectes",
     "skills": "Habilitats",
     "groups": "Grups",
-    "snapshot": "instant\u00e0nia",
+    "snapshot": "instantània",
     "bio": "Biotec",
     "bio_pro": "Biotec professional",
     "bio_personal": "Biotec personal",
-    "cancel-title": "Cancel\u00b7 la l' edici\u00f3 del perfil",
-    "cancel-content": "Esteu segur que voleu cancel\u00b7 lar la vostra edici\u00f3 de perfils? Qualsevol canvi fet es perdr\u00e0.",
+    "cancel-title": "Cancel· la l' edició del perfil",
+    "cancel-content": "Esteu segur que voleu cancel· lar la vostra edició de perfils? Qualsevol canvi fet es perdrà.",
     "can-mentor": "Pot ser mentor",
     "needs-mentor": "Necessito un mentor.",
     "ask-mentorship": "Demana a mentor",
@@ -1507,18 +1503,18 @@
     "mentorship-asked": "Vas demanar un mentor.",
     "mentorship-offered": "Heu ofert un mentor",
     "mentorship-asking": "Demana a mentor",
-    "mentorship-offering": "Est\u00e0s oferint mentors"
+    "mentorship-offering": "Estàs oferint mentors"
   },
   "profile-completed-modal": {
-    "notice-congratulation": "Ara est\u00e0s preparat per utilitzar la plataforma de projectes.",
-    "notice-tour": "Per facilitar el vostre a bord, us recomanem que feu una volta r\u00e0pida de les caracter\u00edstiques principals dels projectes. Aquests s\u00f3n 2 minuts del vostre temps probablement gastareu b\u00e9;)",
-    "title": "Felicitats, tots a punt! I una gira r\u00e0pida?",
-    "skip": "Salta aix\u00f2",
+    "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",
+    "notice-tour": "Per facilitar el vostre a bord, us recomanem que feu una volta ràpida de les característiques principals dels projectes. Aquests són 2 minuts del vostre temps probablement gastareu bé;)",
+    "title": "Felicitats, tots a punt! I una gira ràpida?",
+    "skip": "Salta això",
     "take-tour": "Fes la volta ara."
   },
   "project": {
-    "add-linked-project": "Afegeix un projecte enlla\u00e7at",
-    "add-location-point": "Afegeix un punt d' empla\u00e7ament",
+    "add-linked-project": "Afegeix un projecte enllaçat",
+    "add-location-point": "Afegeix un punt d' emplaçament",
     "add-review": "afegeix revisar",
     "add-to-project": {
       "title": "Afegeix al projecte",
@@ -1529,10 +1525,10 @@
       "team-member": "Grup del membre / grup",
       "announcement": "Anunci",
       "comment": "comentari",
-      "location": "Localitzaci\u00f3"
+      "location": "Localització"
     },
-    "apply-succes": "Aplicaci\u00f3 enviadaComment",
-    "announcement-create": "Crea una declaraci\u00f3",
+    "apply-succes": "Aplicació enviadaComment",
+    "announcement-create": "Crea una declaració",
     "announcements": "Anuncis d' anunci",
     "at-coordinates": "en coordenades",
     "categories": "Categories dels projectes",
@@ -1540,17 +1536,17 @@
     "create-project": "Crea un projecte",
     "create": {
       "choose-category-first": "Primer seleccioneu una categoria",
-      "help-link": "Som aqu\u00ed per ajudar.",
-      "notice": "Els camps marcats amb * s\u00f3n obligatoris. Sempre ho pots modificar m\u00e9s tard. No saps qu\u00e8 hauries de fer?",
+      "help-link": "Som aquí per ajudar.",
+      "notice": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar més tard. No saps què hauries de fer?",
       "title": "Crea un nou projecte"
     },
     "destroy": "Elimina projecte",
     "duplicate": "duplicat aquest projecte",
     "edit": "edita el projecte",
-    "edit-linked-project": "Edita el projecte enlla\u00e7at",
-    "edit-location-point": "Edita el punt de localitzaci\u00f3",
-    "edit-map": "edita geolocalitzaci\u00f3",
-    "edit-review": "Edici\u00f3 de revisi\u00f3",
+    "edit-linked-project": "Edita el projecte enllaçat",
+    "edit-location-point": "Edita el punt de localització",
+    "edit-map": "edita geolocalització",
+    "edit-review": "Edició de revisió",
     "files": "Fitxers de projecte del projecte del projecte ubuntu",
     "follow": "Segueix",
     "followed": "Seguit",
@@ -1558,23 +1554,23 @@
       "add-tags": "Afegeix etiquetes",
       "create-project": "Crea un projecte",
       "edit-project": "Edita projecte",
-      "edit-title": "Edita el t\u00edtol",
+      "edit-title": "Edita el títol",
       "project-category": "Categoria del projecte",
       "select-category": "Escull una categoria",
       "purpose-label": "objectiu del projecte",
-      "purpose-placeholder": "Quin \u00e9s l'objectiu del teu projecte?",
-      "resize-image": "Rel\u00b7 la",
-      "title-label": "Afegeix un t\u00edtol",
+      "purpose-placeholder": "Quin és l'objectiu del teu projecte?",
+      "resize-image": "Rel· la",
+      "title-label": "Afegeix un títol",
       "title-placeholder": "Com es diu aquest projecte?",
       "upload-image": "Puja una imatge",
       "title-errors": {
-        "required": "Cal el camp de t\u00edtol",
-        "max": "El camp t\u00edtol no pot ser m\u00e9s gran que 180 car\u00e0cters"
+        "required": "Cal el camp de títol",
+        "max": "El camp títol no pot ser més gran que 180 caràcters"
       },
       "purpose-errors": {
-        "required": "Es requereix el camp de prop\u00f2sit",
-        "max": "El camp de prop\u00f2sit no pot ser m\u00e9s gran que 180 car\u00e0cters",
-        "min": "El camp de prop\u00f2sit ha de ser almenys 3 car\u00e0cters"
+        "required": "Es requereix el camp de propòsit",
+        "max": "El camp de propòsit no pot ser més gran que 180 caràcters",
+        "min": "El camp de propòsit ha de ser almenys 3 caràcters"
       }
     },
     "image-header": "Imatge",
@@ -1585,24 +1581,24 @@
     "impact": "impacte",
     "language": "idioma del projecte",
     "life-status": "Estat de la vida del projecte",
-    "linked": "Projectes enlla\u00e7ats per al projecte  LinkedName",
-    "linked-project": "Projecte enlla\u00e7at",
-    "linked-project-confirm-delete": "Esteu segur d' eliminar aquest projecte enlla\u00e7at?",
-    "linked-projects": "Projectes enlla\u00e7ats",
-    "link-confirm-delete": "Esteu segur que voleu eliminar aquest enlla\u00e7 del projecte?",
+    "linked": "Projectes enllaçats per al projecte  LinkedName",
+    "linked-project": "Projecte enllaçat",
+    "linked-project-confirm-delete": "Esteu segur d' eliminar aquest projecte enllaçat?",
+    "linked-projects": "Projectes enllaçats",
+    "link-confirm-delete": "Esteu segur que voleu eliminar aquest enllaç del projecte?",
     "file-confirm-delete": "Esteu segur que voleu esborrar aquest fitxer del projecte?",
     "blog-confirm-delete": "Esteu segur que voleu eliminar aquesta entrada del bloc del projecte?",
-    "location-type-label": "Tipus d' empla\u00e7ament",
+    "location-type-label": "Tipus d' emplaçament",
     "lock": "Projecte de bloqueig",
     "private": "Projectes privats",
     "publish": "Publica el projecte",
-    "public": "projectes p\u00fablics",
+    "public": "projectes públics",
     "quit": "Surt del projecte",
-    "random-image": "Imatge aleat\u00f2ria",
+    "random-image": "Imatge aleatòria",
     "resource": "Recurs de recursos de resource",
     "review": "review",
-    "reviews": "Revisi\u00f3",
-    "review-confirm-delete": "Esteu segur d' esborrar aquesta revisi\u00f3?",
+    "reviews": "Revisió",
+    "review-confirm-delete": "Esteu segur d' esborrar aquesta revisió?",
     "reviewable": "Preparat per revisar",
     "reviewed-on-the": "Repassat sobre la",
     "remove-group": "Esborra el grup",
@@ -1612,26 +1608,26 @@
     "suggested": "projectes similars del projecte Hongria",
     "suggested-hint": "Projectes que poden interessar-vos",
     "summary": "Resum",
-    "settings": "arranjament",
+    "settings": "Arranjament",
     "org-settings": {
       "title": "Portal(s) del portal",
-      "description": "El projecte pertany als portals seleccionats. Vigileu quan afegiu o modifiqueu els portals al que pertany el vostre projecte. Per exemple, els administradors d'una nova organitzaci\u00f3 es donen autom\u00e0ticament acc\u00e9s al projecte. O les organitzacions poden tenir normes editorials espec\u00edfiques que haur\u00edeu de seguir.",
-      "warning": "El vostre projecte pertany a les organitzacions de sota. Aqu\u00ed podeu editar la categoria del vostre projecte:"
+      "description": "El projecte pertany als portals seleccionats. Vigileu quan afegiu o modifiqueu els portals al que pertany el vostre projecte. Per exemple, els administradors d'una nova organització es donen automàticament accés al projecte. O les organitzacions poden tenir normes editorials específiques que hauríeu de seguir.",
+      "warning": "El vostre projecte pertany a les organitzacions de sota. Aquí podeu editar la categoria del vostre projecte:"
     },
     "updated": {
       "blog-entry": "S' ha actualitzat una entrada de bloc d' aquest projecte",
       "blog-entry-create": "Afegeix una nova entrada de bloc d' aquest projecte",
-      "description": "Desa la descripci\u00f3 d' aquest projecte"
+      "description": "Desa la descripció d' aquest projecte"
     },
     "view": "projecte de vista",
     "visibility": "Visibilitat del projecte",
-    "actions": "Accions r\u00e0pides",
+    "actions": "Accions ràpides",
     "copy": "(copia)",
-    "nothing": "No hi ha res aqu\u00ed...",
-    "tag-warning": "NB: Si un usuari desactiva les lleng\u00fces al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en angl\u00e8s."
+    "nothing": "No hi ha res aquí...",
+    "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès."
   },
   "project_list": {
-    "updated_at": "L' \u00faltim actiu",
+    "updated_at": "L' últim actiu",
     "random": "Aleatori",
     "recommended": "Recomanat",
     "sort_by": "Ordena per:"
@@ -1644,53 +1640,53 @@
     "announcements": "Sense anunci de 12154654 anunciacions 354",
     "apply": "aplica",
     "creation-date": "creat en",
-    "delete-announcement-message": "Voleu eliminar aquesta declaraci\u00f3?",
-    "edit-announcement": "Edici\u00f3 d'anuncis",
-    "email": "Av\u00eds, necessitem una adre\u00e7a de correu v\u00e0lida per contactar amb tu. (No salvarem aquesta informaci\u00f3 a la plataforma).",
+    "delete-announcement-message": "Voleu eliminar aquesta declaració?",
+    "edit-announcement": "Edició d'anuncis",
+    "email": "Avís, necessitem una adreça de correu vàlida per contactar amb tu. (No salvarem aquesta informació a la plataforma).",
     "firstname": "firstname",
-    "is-remunerated": "est\u00e0 remenegat",
+    "is-remunerated": "està remenegat",
     "job": "treball",
     "lastname": "cognomname",
-    "motivation-hint": "Hauria de contenir 20 car\u00e0cters com a m\u00ednim",
-    "new-announcement": "Nova declaraci\u00f3",
+    "motivation-hint": "Hauria de contenir 20 caràcters com a mínim",
+    "new-announcement": "Nova declaració",
     "participant": "participant",
     "remunerated": "Desmenerat",
-    "send": "Envia aplicaci\u00f3",
-    "title": "T\u00edtol",
+    "send": "Envia aplicació",
+    "title": "Títol",
     "traineeship": "Entrenador de trensName",
     "type": "Tipus d' anunci",
     "updated": "s' ha actualitzat",
-    "valid-until-the": "v\u00e0lid fins",
+    "valid-until-the": "vàlid fins",
     "view": "Visualitza"
   },
   "report": {
     "abuse": "abusos d' informe",
     "abuse-title": "Explica l'informe d'unes paraules.",
-    "abuse-text": "Descriu- ho tan precisament com sigui possible per qu\u00e8 informis d'aquest projecte.",
-    "abuse-url": "Copia enganxar l' URL de la p\u00e0gina que voleu informar.",
+    "abuse-text": "Descriu- ho tan precisament com sigui possible per què informis d'aquest projecte.",
+    "abuse-url": "Copia enganxar l' URL de la pàgina que voleu informar.",
     "bug": "Informa d' un error",
     "bug-title": "Explica l'error en unes paraules.",
     "bug-text": "Descriviu exactament el possible tema que heu experimentat i com reproduir-lo per reproduir-lo.",
-    "bug-url": "Copia enganxar l' URL de la p\u00e0gina on afegiu aquest problema."
+    "bug-url": "Copia enganxar l' URL de la pàgina on afegiu aquest problema."
   },
   "resource": {
     "add": "afegeix recurs",
     "add-file": "afegeix un fitxer",
-    "add-link": "afegeix un enlla\u00e7",
-    "add-link-url": "afegeix URL d' enlla\u00e7",
+    "add-link": "afegeix un enllaç",
+    "add-link-url": "afegeix URL d' enllaç",
     "add-link-url-label": "URL",
-    "add-link-text": "afegeix text d' enlla\u00e7",
+    "add-link-text": "afegeix text d' enllaç",
     "add-link-text-label": "Text",
-    "edit-link": "edita un enlla\u00e7",
+    "edit-link": "edita un enllaç",
     "edit-file": "edit un fitxer",
-    "max-size": "Mida m\u00e0x. 10MB",
-    "invalid-image": "Fitxer no acceptat... \u00e9s aquesta una imatge?",
-    "error-uploading-image": "S' ha produ\u00eft un error en pujar la imatge",
+    "max-size": "Mida màx. 10MB",
+    "invalid-image": "Fitxer no acceptat... és aquesta una imatge?",
+    "error-uploading-image": "S' ha produït un error en pujar la imatge",
     "cannot-upload-image": "No es pot pujar la imatge per ara",
-    "link-address": "adre\u00e7a d' enlla\u00e7",
-    "resources": "recursos",
-    "web": "enlla\u00e7a als recursos web que s' apliquen als recursos web",
-    "web-link": "Enlla\u00e7os web de l'enlla\u00e7 web del web del web web web RT"
+    "link-address": "adreça d' enllaç",
+    "resources": "Recursos",
+    "web": "enllaça als recursos web que s' apliquen als recursos web",
+    "web-link": "Enllaços web de l'enllaç web del web del web web web RT"
   },
   "result_box": {
     "people": "gent",
@@ -1700,90 +1696,90 @@
   },
   "visibility": {
     "private-title": "Privat:",
-    "public-title": "P\u00fablic:",
+    "public-title": "Públic:",
     "community-title": "Membres del port:",
-    "private": "Nom\u00e9s visible per als membres de l'equip.",
+    "private": "Només visible per als membres de l'equip.",
     "public": "visible per a qualsevol visitant, fins i tot sense cap compte.",
-    "community": "Nom\u00e9s visible per als usuaris que tenen un compte en aquest portal."
+    "community": "Només visible per als usuaris que tenen un compte en aquest portal."
   },
   "register": {
     "title": "Crea un compte",
-    "title-confirm": "Cal confirmaci\u00f3 de correu electr\u00f2nic",
+    "title-confirm": "Cal confirmació de correu electrònic",
     "email": {
       "label": "Correu- e *",
-      "placeholder": "Introdu\u00efu el vostre correu electr\u00f2nic",
-      "is-required": "Es requereix correu electr\u00f2nic",
-      "is-invalid": "Aquest no \u00e9s un correu electr\u00f2nic v\u00e0lid"
+      "placeholder": "Introduïu el vostre correu electrònic",
+      "is-required": "Es requereix correu electrònic",
+      "is-invalid": "Aquest no és un correu electrònic vàlid"
     },
     "given_name": {
       "label": "Nom principal *",
-      "placeholder": "Introdu\u00efu el nom del vostre nom",
+      "placeholder": "Introduïu el nom del vostre nom",
       "is-required": "Cal el nom del nom"
     },
     "family_name": {
       "label": "Darrer nom *",
-      "placeholder": "Introdu\u00efu el vostre \u00faltim nom",
+      "placeholder": "Introduïu el vostre últim nom",
       "is-required": "Es requereix el cognom"
     },
     "password": {
       "label": "Contrasenya *",
-      "placeholder": "\u00c9s la nostra hist\u00f2ria.",
+      "placeholder": "És la nostra història.",
       "is-required": "Cal contrasenya"
     },
-    "confirmation": "T'hem enviat un missatge de confirmaci\u00f3 a la teva b\u00fastia. Un cop confirmeu que {0} \u00e9s el vostre correu electr\u00f2nic, us ajudarem a comen\u00e7ar a la plataforma.",
-    "save-error": "S'ha produ\u00eft un problema t\u00e8cnic. Si us plau, torneu- ho a intentar m\u00e9s tard.",
-    "email-already-exists": "Aquest correu ja est\u00e0 registat.",
+    "confirmation": "T'hem enviat un missatge de confirmació a la teva bústia. Un cop confirmeu que {0} és el vostre correu electrònic, us ajudarem a començar a la plataforma.",
+    "save-error": "S'ha produït un problema tècnic. Si us plau, torneu- ho a intentar més tard.",
+    "email-already-exists": "Aquest correu ja està registat.",
     "tos": "Estic d'acord amb el {term} i {privacy} *",
     "tos-is-required": "Es requereix l' acord per tal de continuar",
     "term": "Termes del servei",
-    "privacy": "Pol\u00edtica de privadesa",
+    "privacy": "Política de privadesa",
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
     "contact-us": "Contacte amb nosaltres"
   },
   "request-access": {
-    "title": "Petici\u00f3 d' acc\u00e9s",
-    "title-confirm": "Petici\u00f3 enviada",
+    "title": "Petició d' accés",
+    "title-confirm": "Petició enviada",
     "notice": "El teu compte ha de ser aprovat per l'administrador abans que puguis crear el teu propi compte. Si us plau, completeu aquesta forma:",
     "email": {
       "label": "Correu- e *",
-      "placeholder": "Introdu\u00efu el vostre correu electr\u00f2nic",
-      "is-required": "Es requereix correu electr\u00f2nic",
-      "is-invalid": "Aquest no \u00e9s un correu electr\u00f2nic v\u00e0lid"
+      "placeholder": "Introduïu el vostre correu electrònic",
+      "is-required": "Es requereix correu electrònic",
+      "is-invalid": "Aquest no és un correu electrònic vàlid"
     },
     "given_name": {
       "label": "Nom principal *",
-      "placeholder": "Introdu\u00efu el vostre nom",
+      "placeholder": "Introduïu el vostre nom",
       "is-required": "Es requereix el nom principal"
     },
     "family_name": {
       "label": "Darrer nom *",
-      "placeholder": "Introdu\u00efu el vostre cognom",
+      "placeholder": "Introduïu el vostre cognom",
       "is-required": "Es requereix cognom"
     },
     "profile-title": {
       "label": "Titular *",
-      "placeholder": "Ie. estudiant de ci\u00e8ncies inform\u00e0tica",
+      "placeholder": "Ie. estudiant de ciències informàtica",
       "is-required": "Cal el titular"
     },
     "message": {
       "label": "Missatge",
-      "placeholder": "Pots dir-nos per qu\u00e8 necessites acc\u00e9s?"
+      "placeholder": "Pots dir-nos per què necessites accés?"
     },
-    "confirmation": "Hem enviat la seva petici\u00f3 als administradors de la plataforma. Si us plau, reviseu la vostra caixa de correu ({0}) per resposta.",
+    "confirmation": "Hem enviat la seva petició als administradors de la plataforma. Si us plau, reviseu la vostra caixa de correu ({0}) per resposta.",
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
     "contact-us": "Contacte amb nosaltres"
   },
   "role": {
-    "role-editor": "T\u00e9 tots els drets d' edici\u00f3 per aquest grup.",
-    "role-reviewer": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per evitar m\u00e9s edici\u00f3 al projecte. Un revisor tamb\u00e9 t\u00e9 drets d' edici\u00f3.",
-    "role-teammate": "No t\u00e9 drets d' edici\u00f3, per\u00f2 apareix com a membre de l'equip.",
+    "role-editor": "Té tots els drets d' edició per aquest grup.",
+    "role-reviewer": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per evitar més edició al projecte. Un revisor també té drets d' edició.",
+    "role-teammate": "No té drets d' edició, però apareix com a membre de l'equip.",
     "editor": "Editor",
     "editors": "Editors",
-    "editor-groups": "Grups d' edici\u00f3",
+    "editor-groups": "Grups d' edició",
     "editor-group": "Grup de l' editor",
     "reviewer": "Revisor",
     "reviewers": "Revisor",
@@ -1795,14 +1791,14 @@
     "teammate-group": "Grup Participant",
     "select": "Seleccioneu els drets",
     "group": "Grups",
-    "leader": "L\u00edder del grup",
-    "role-leader": "\u00c9s un editor que apareixer\u00e0 amb una etiqueta del L\u00edder UserkinkGroup.",
+    "leader": "Líder del grup",
+    "role-leader": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup.",
     "member": "Estats membres",
     "role-member": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
   },
   "search": {
     "all-filters": "Tots els filtres",
-    "banner-portal": "Tamb\u00e9 podeu cercar projectes de totes les comunitats en",
+    "banner-portal": "També podeu cercar projectes de totes les comunitats en",
     "browse-map": "Navega per mapa",
     "by-language": "per idioma",
     "by-people": "per gent",
@@ -1818,7 +1814,7 @@
     "tag": "etiqueta",
     "or": "o",
     "ambiguousTag": "Etiqueta ambigua",
-    "subtitle-ambiguous-tag": "Aquesta etiqueta t\u00e9 diferents significats. Seleccioneu la que estigueu interessat:",
+    "subtitle-ambiguous-tag": "Aquesta etiqueta té diferents significats. Seleccioneu la que estigueu interessat:",
     "sdg": "SDG",
     "skills": "Habilitats",
     "category": "categoria",
@@ -1826,7 +1822,7 @@
     "filter": "filtre",
     "filters": "Filtres",
     "add-filter": "Afegeix un filtre",
-    "geographic-map": "Mapa geogr\u00e0fic",
+    "geographic-map": "Mapa geogràfic",
     "nothing-found": "no s' ha trobat res",
     "people-directory": "Cerca en el directori de la gent",
     "projects": "Cerca en projectes",
@@ -1847,27 +1843,27 @@
     "search": "Cerca grup",
     "search-for-a-tag": "Cerca una etiqueta",
     "search-all": "Cerca en totes les comunitats",
-    "search-group": "Introdu\u00efu les primeres lletres del grup",
+    "search-group": "Introduïu les primeres lletres del grup",
     "search-tag": "Escriu les primeres lletres de l' etiqueta",
     "search-skill": "Etiqueta de tipus d' habilitat",
-    "search-user": "Introdu\u00efu el nom de les primeres lletres de la persona",
+    "search-user": "Introduïu el nom de les primeres lletres de la persona",
     "search-in": "Cerca projectes dins",
     "specific-tags": "Trieu des de {organizationName} etiquetes",
-    "wiki-tags": "Escolliu les etiquetesomam\u00e0tiques",
-    "term-is-ambigous": "Term \u00e9s ambigua. {0} Mireu els nostres suggeriments",
-    "info": "Tamb\u00e9 podeu cercar projectes de totes les comunitats en",
-    "geo-map": "Mapa geogr\u00e0fic",
+    "wiki-tags": "Escolliu les etiquetesomamàtiques",
+    "term-is-ambigous": "Term és ambigua. {0} Mireu els nostres suggeriments",
+    "info": "També podeu cercar projectes de totes les comunitats en",
+    "geo-map": "Mapa geogràfic",
     "tag-map": "Mapa d' etiquetes",
-    "geo-map-description": "Descobreix projectes en un mapa del m\u00f3n",
-    "tag-map-description": "Descobreix projetcs en un mapa d'etiqueta Wikip\u00e9dia",
+    "geo-map-description": "Descobreix projectes en un mapa del món",
+    "tag-map-description": "Descobreix projetcs en un mapa d'etiqueta Wikipédia",
     "open-map": "Obre el mapa",
     "pick-tag-classification": "Escolliu un marc d' etiquetes",
     "pick-skill-classification": "Escolliu un marc de treball d' habilitat",
     "pick-tag-preset": "O escolliu una etiqueta suggerida",
     "pick-skill-preset": "O triar una habilitat suggerida",
-    "current-tag-description": "Introdu\u00efu tag tag tag tag tags primera lletra i seleccioneu l' etiqueta correcta",
+    "current-tag-description": "Introduïu tag tag tag tag tags primera lletra i seleccioneu l' etiqueta correcta",
     "current-skill-description": "Tipus d' etiqueta i selecciona l' habilitat correcta",
-    "disambiguate": "(DISAMBIGUACI\u00d3)",
+    "disambiguate": "(DISAMBIGUACIÓ)",
     "suggestions": "Suggeriments",
     "choose-skill": "Feu clic sobre l' habilitat seleccionada:"
   },
@@ -1882,34 +1878,34 @@
       "title": "Bona salut i benestar"
     },
     "4": {
-      "title": "Educaci\u00f3 de qualitat"
+      "title": "Educació de qualitat"
     },
     "5": {
-      "title": "igualtat de g\u00e8nere"
+      "title": "igualtat de gènere"
     },
     "6": {
-      "title": "Neteja l' aigua i la Sanici\u00f3"
+      "title": "Neteja l' aigua i la Sanició"
     },
     "7": {
       "title": "Energia alternativa i clara"
     },
     "8": {
-      "title": "Creaci\u00f3 de treball i creixement econ\u00f2mic"
+      "title": "Creació de treball i creixement econòmic"
     },
     "9": {
-      "title": "Ind\u00e0ncia, i estructura d'innovaci\u00f3"
+      "title": "Indància, i estructura d'innovació"
     },
     "10": {
-      "title": "Reducci\u00f3 d'inigualitats"
+      "title": "Reducció d'inigualitats"
     },
     "11": {
       "title": "Ciutats sostenibles i comunitats"
     },
     "12": {
-      "title": "Responsable i producci\u00f3"
+      "title": "Responsable i producció"
     },
     "13": {
-      "title": "Acci\u00f3 del clima"
+      "title": "Acció del clima"
     },
     "14": {
       "title": "Vida sota l'aigua"
@@ -1918,7 +1914,7 @@
       "title": "Vida a Terra"
     },
     "16": {
-      "title": "Pau, Just\u00edcia i institucions fortes"
+      "title": "Pau, Justícia i institucions fortes"
     },
     "17": {
       "title": "Associacions pels Objectius"
@@ -1929,11 +1925,11 @@
   "stats": {
     "cumulated-projects": "Projectes curatius",
     "new-projects": "Nou projecte",
-    "number-projects-org": "Projectes per organitzaci\u00f3",
+    "number-projects-org": "Projectes per organització",
     "number-projects-sdg": "Projectes per SDGName",
     "number-projects-total": "Nombre total de projectes",
-    "number-tags": "Etiquetes m\u00e9s usades en projectes",
-    "page-title": "Estad\u00edstiques",
+    "number-tags": "Etiquetes més usades en projectes",
+    "page-title": "Estadístiques",
     "projects": "Projectes",
     "time-evolution": "Evolution temporal del projecte",
     "updated-projects": "Actualitzacions del projecte mensual",
@@ -1943,24 +1939,24 @@
   "status": {
     "complete": "finalitzada",
     "completed": "finalitzada",
-    "cancel": "cancel\u00b7 la",
-    "canceled": "cancel\u00b7 lat",
+    "cancel": "cancel· la",
+    "canceled": "cancel· lat",
     "ended": "Fi",
     "ongoing": "En curs",
     "private": "privat",
     "public": "public",
     "running": "executant- se",
-    "title": "Quin \u00e9s l'estat de la vida del projecte?",
+    "title": "Quin és l'estat de la vida del projecte?",
     "toreview": "a revisar",
     "updated": "Estat del projecte actualitzat",
     "na": "cap"
   },
   "tag": {
     "add-specific": "Crea etiquetes per organitzar projectes",
-    "add-specific-info": "Aquestes etiquetes ho fan possible per organitzar projectes a m\u00e9s de categories (exemples: Mranster 2 LiSc 1], AlexandrMAT 1.001, l'any 202223 192). S\u00f3n espec\u00edfics de la seva organitzaci\u00f3. S\u00f3n \u00fatils per filtrar els vostres projectes a la cerca.",
-    "add-project-tag": "Poseu etiquetes cap endavant per enlla\u00e7ar projectes pel tema",
+    "add-specific-info": "Aquestes etiquetes ho fan possible per organitzar projectes a més de categories (exemples: Mranster 2 LiSc 1], AlexandrMAT 1.001, l'any 202223 192). Són específics de la seva organització. Són útils per filtrar els vostres projectes a la cerca.",
+    "add-project-tag": "Poseu etiquetes cap endavant per enllaçar projectes pel tema",
     "add-profile-tag": "Poseu habilitats cap endavant pels perfils dels vostres usuaris",
-    "add-project-tag-info": "Quan un usuari crea un projecte, poden afegir una etiqueta tem\u00e0tica de la Viquip\u00e8dia (p. ex. bioqu\u00edmica, f\u00edsica, etc.). Aix\u00f2 fa m\u00e9s f\u00e0cil trobar el projecte i millorar les recomanacions del projecte per la similitud tem\u00e0tica. Podeu ressaltar les etiquetes orgm\u00e0tiques importants per la vostra organitzaci\u00f3.",
+    "add-project-tag-info": "Quan un usuari crea un projecte, poden afegir una etiqueta temàtica de la Viquipèdia (p. ex. bioquímica, física, etc.). Això fa més fàcil trobar el projecte i millorar les recomanacions del projecte per la similitud temàtica. Podeu ressaltar les etiquetes orgmàtiques importants per la vostra organització.",
     "edit": "Edita etiquetes",
     "title": "Etiquetes"
   },
@@ -1977,68 +1973,68 @@
   "template": {
     "edit-tags": "Edita etiquetes",
     "blog-content": "Plantilla pel contingut del bloc",
-    "blog-title": "Plantilla per al t\u00edtol del bloc",
-    "advancement-goal-title": "plantilla per al t\u00edtol de l' objectiu",
+    "blog-title": "Plantilla per al títol del bloc",
+    "advancement-goal-title": "plantilla per al títol de l' objectiu",
     "advancement-goal-content": "plantilla per al contingut de l' objectiu",
     "category": "Categoria de plantilla",
-    "description": "Plantilla per a la descripci\u00f3",
+    "description": "Plantilla per a la descripció",
     "language": "Plantilla d' idioma",
-    "info": "Si voleu suggerir als usuaris com organitzar el seu projecte en una categoria espec\u00edfica, podeu crear una plantilla per aquesta categoria. Llavors, quan un usuari crear\u00e0 un projecte en aquesta categoria, el projecte ser\u00e0 inicials amb el text que heu definit a la plantilla. Aquest text est\u00e0 dissenyat com a guia per als usuaris.",
+    "info": "Si voleu suggerir als usuaris com organitzar el seu projecte en una categoria específica, podeu crear una plantilla per aquesta categoria. Llavors, quan un usuari crearà un projecte en aquesta categoria, el projecte serà inicials amb el text que heu definit a la plantilla. Aquest text està dissenyat com a guia per als usuaris.",
     "no-tag-set": "No s' ha establert cap etiqueta per ara.",
     "placeholder-purpose": "objectiu del projecte",
-    "placeholder-title": "Lloc de substituci\u00f3 del t\u00edtol",
+    "placeholder-title": "Lloc de substitució del títol",
     "tags": "Etiquetes de plantilla",
     "title": "Plantilles",
-    "tips-category": "Seleccioneu una categoria a la que s' aplicar\u00e0 la vostra plantilla."
+    "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla."
   },
   "tips": {
-    "background-color": "Aquest color es mostrar\u00e0 darrera del text.",
-    "category-delete": "Nom\u00e9s podeu esborrar una categoria si la categoria no cont\u00e9 cap projecte. Si us plau, transferir tots els projectes de la categoria a altres categories.",
-    "category-image": "Imatge usada per il\u00b7 lustrar una categoria. No \u00e9s necessari si voleu simplement mostrar un color. Amplada m\u00ednima: 1024px, al\u00e7ada m\u00ednima: 400px",
-    "limit-publication-to-reviewers": "Voleu limitar la publicaci\u00f3 dels projectes als revisors ?",
-    "organization-name": "Aquest nom s' usar\u00e0 per identificar la vostra comunitat en p\u00e0gines espec\u00edfiques de la comunitat (p. ex: p\u00e0gina d' estad\u00edstiques).",
-    "organization-title": "El t\u00edtol del portal apareixer\u00e0 en el cartell de la vostra p\u00e0gina de benvinguda. Vista pr\u00e8via a sobre.",
+    "background-color": "Aquest color es mostrarà darrera del text.",
+    "category-delete": "Només podeu esborrar una categoria si la categoria no conté cap projecte. Si us plau, transferir tots els projectes de la categoria a altres categories.",
+    "category-image": "Imatge usada per il· lustrar una categoria. No és necessari si voleu simplement mostrar un color. Amplada mínima: 1024px, alçada mínima: 400px",
+    "limit-publication-to-reviewers": "Voleu limitar la publicació dels projectes als revisors ?",
+    "organization-name": "Aquest nom s' usarà per identificar la vostra comunitat en pàgines específiques de la comunitat (p. ex: pàgina d' estadístiques).",
+    "organization-title": "El títol del portal apareixerà en el cartell de la vostra pàgina de benvinguda. Vista prèvia a sobre.",
     "organization-email": "Contacta amb el teu portal.",
-    "organization-language": "L' idioma per omissi\u00f3 del seu portal.",
-    "organization-visibility": "Voleu un enlla\u00e7 al portal des del portal principal dels projectes?",
-    "organization-logo": "El logotip apareixer\u00e0 al portal pare en un fons blanc. Si el logotip que heu pujat pr\u00e8viament no \u00e9s compatible amb un fons blanc, seleccioneu un color de fons a sota."
+    "organization-language": "L' idioma per omissió del seu portal.",
+    "organization-visibility": "Voleu un enllaç al portal des del portal principal dels projectes?",
+    "organization-logo": "El logotip apareixerà al portal pare en un fons blanc. Si el logotip que heu pujat prèviament no és compatible amb un fons blanc, seleccioneu un color de fons a sota."
   },
   "toasts": {
     "abuse-report": {
-      "success": "S' ha informat amb \u00e8xit del contingutName",
+      "success": "S' ha informat amb èxit del contingutName",
       "error": "Error durant l' informe del contingut"
     },
     "announcement-create": {
       "success": "L' anunci s' ha creat correctament",
-      "error": "Error durant la creaci\u00f3 de l' extracte"
+      "error": "Error durant la creació de l' extracte"
     },
     "announcement-delete": {
       "success": "L' anunci s' ha esborrat correctamentName",
-      "error": "Error durant l' eliminaci\u00f3 de l' extracte"
+      "error": "Error durant l' eliminació de l' extracte"
     },
     "announcement-update": {
       "success": "L' anunci s' ha actualitzat correctamentName",
-      "error": "Error durant l' actualitzaci\u00f3 de l' anunci"
+      "error": "Error durant l' actualització de l' anunci"
     },
     "bug-report": {
-      "success": "S' ha informat amb \u00e8xit de l' errorName",
+      "success": "S' ha informat amb èxit de l' errorName",
       "error": "Error durant l' informe d' error"
     },
     "category-template-update": {
       "success": "La plantilla de categoria s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de la plantilla de categoria"
+      "error": "Error durant l' actualització de la plantilla de categoria"
     },
     "category-update": {
       "success": "La categoria s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de la categoria"
+      "error": "Error durant l' actualització de la categoria"
     },
     "categories-reorder": {
       "success": "L' ordre de categories s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de l' ordre de categories"
+      "error": "Error durant l' actualització de l' ordre de categories"
     },
     "comment-create": {
       "success": "El comentari s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 de comentaris"
+      "error": "Error durant la creació de comentaris"
     },
     "comment-delete": {
       "success": "El comentari s' ha esborrat correctament",
@@ -2046,19 +2042,19 @@
     },
     "comment-update": {
       "success": "El comentari s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 del comentari"
+      "error": "Error durant l' actualització del comentari"
     },
     "contact": {
-      "success": "La vostra petici\u00f3 de contactes s' ha posat al compte",
+      "success": "La vostra petició de contactes s' ha posat al compte",
       "error": "Error en enviar el formulari"
     },
     "description-update": {
-      "success": "La descripci\u00f3 s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de la descripci\u00f3"
+      "success": "La descripció s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la descripció"
     },
     "faq-create": {
       "success": "L' ajuda personalitzada s' ha creat correctament",
-      "error": "Error durant la creaci\u00f3 d' ajuda personalitzada"
+      "error": "Error durant la creació d' ajuda personalitzada"
     },
     "faq-delete": {
       "success": "L' ajuda personalitzada s' ha esborrat correctament",
@@ -2066,11 +2062,11 @@
     },
     "faq-update": {
       "success": "L' ajuda personalitzada s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 d' ajuda personalitzada"
+      "error": "Error durant l' actualització d' ajuda personalitzada"
     },
     "file-create": {
       "success": "El fitxer s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 de fitxer"
+      "error": "Error durant la creació de fitxer"
     },
     "file-delete": {
       "success": "El fitxer s' ha esborrat correctament",
@@ -2078,11 +2074,11 @@
     },
     "file-update": {
       "success": "El fitxer s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 del fitxer"
+      "error": "Error durant l' actualització del fitxer"
     },
     "goal-create": {
       "success": "L' objectiu s' ha creat correctament",
-      "error": "Error durant la creaci\u00f3 de l' objectiu"
+      "error": "Error durant la creació de l' objectiu"
     },
     "goal-delete": {
       "success": "L' objectiu s' ha esborrat correctament",
@@ -2090,142 +2086,142 @@
     },
     "goal-update": {
       "success": "L' objectiu s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de l' objectiu"
+      "error": "Error durant l' actualització de l' objectiu"
     },
     "blog-delete": {
       "success": "L' entrada del bloc s' ha esborrat correctament",
-      "error": "Error durant l' eliminaci\u00f3 de l' entrada del bloc"
+      "error": "Error durant l' eliminació de l' entrada del bloc"
     },
     "blog-create": {
       "success": "L' entrada del bloc s' ha creat correctament",
-      "error": "Error durant la creaci\u00f3 de l' entrada del bloc"
+      "error": "Error durant la creació de l' entrada del bloc"
     },
     "blog-update": {
       "success": "L' entrada del bloc s' ha actualitzat correctamentName",
-      "error": "Error durant l' actualitzaci\u00f3 de bloc"
+      "error": "Error durant l' actualització de bloc"
     },
     "group-added": {
       "success": "El grup s' ha afegit correctament",
       "error": "Error durant l' afegit del grup"
     },
-    "link-already-exists": "Aquest enlla\u00e7 ja existeix",
+    "link-already-exists": "Aquest enllaç ja existeix",
     "link-create": {
-      "success": "L' enlla\u00e7 s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 de l' enlla\u00e7"
+      "success": "L' enllaç s' ha afegit correctament",
+      "error": "Error durant la creació de l' enllaç"
     },
     "link-delete": {
-      "success": "L' enlla\u00e7 s' ha esborrat correctamentName",
-      "error": "Error durant l' esborrat de l' enlla\u00e7"
+      "success": "L' enllaç s' ha esborrat correctamentName",
+      "error": "Error durant l' esborrat de l' enllaç"
     },
     "link-update": {
-      "success": "L' enlla\u00e7 s' ha actualitzat correctamentName",
-      "error": "Error durant l' actualitzaci\u00f3 de l' enlla\u00e7"
+      "success": "L' enllaç s' ha actualitzat correctamentName",
+      "error": "Error durant l' actualització de l' enllaç"
     },
     "linked-project-create": {
-      "success": "Els projectes enlla\u00e7ats s'han afegit correctament",
-      "error": "Error durant la creaci\u00f3 de projectes enlla\u00e7ats"
+      "success": "Els projectes enllaçats s'han afegit correctament",
+      "error": "Error durant la creació de projectes enllaçats"
     },
     "linked-project-delete": {
-      "success": "El projecte enlla\u00e7at s' ha esborrat correctament",
-      "error": "Error durant l' esborrat del projecte enlla\u00e7at"
+      "success": "El projecte enllaçat s' ha esborrat correctament",
+      "error": "Error durant l' esborrat del projecte enllaçat"
     },
     "linked-project-update": {
-      "success": "El projecte enlla\u00e7at s' ha actualitzat amb \u00e8xitName",
-      "error": "Error durant l' actualitzaci\u00f3 del projecte enlla\u00e7at"
+      "success": "El projecte enllaçat s' ha actualitzat amb èxitName",
+      "error": "Error durant l' actualització del projecte enllaçat"
     },
     "location-create": {
-      "success": "La ubicaci\u00f3 s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 de l' empla\u00e7ament"
+      "success": "La ubicació s' ha afegit correctament",
+      "error": "Error durant la creació de l' emplaçament"
     },
     "location-delete": {
-      "success": "La ubicaci\u00f3 s' ha esborrat correctament",
-      "error": "Error durant l' esborrat de la localitzaci\u00f3"
+      "success": "La ubicació s' ha esborrat correctament",
+      "error": "Error durant l' esborrat de la localització"
     },
     "location-update": {
-      "success": "La localitzaci\u00f3 s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de la localitzaci\u00f3"
+      "success": "La localització s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la localització"
     },
     "organization-general-update": {
       "success": "S' han actualitzat correctament les informacions generals del portalName",
-      "error": "Error durant l' actualitzaci\u00f3 de les informacions generals del portal"
+      "error": "Error durant l' actualització de les informacions generals del portal"
     },
     "organization-tag-create": {
-      "success": "L' etiqueta s' ha afegit amb \u00e8xit a l' organitzaci\u00f3",
-      "error": "Error durant la creaci\u00f3 de l' etiqueta"
+      "success": "L' etiqueta s' ha afegit amb èxit a l' organització",
+      "error": "Error durant la creació de l' etiqueta"
     },
     "organization-tag-delete": {
-      "success": "L' etiqueta s' ha esborrat amb \u00e8xit de l' organitzaci\u00f3Name",
+      "success": "L' etiqueta s' ha esborrat amb èxit de l' organitzacióName",
       "error": "Error durant l' esborrat de l' etiqueta"
     },
     "group-create": {
-      "success": "S' ha creat amb \u00e8xit el grupName",
-      "error": "Error durant la creaci\u00f3 de grup"
+      "success": "S' ha creat amb èxit el grupName",
+      "error": "Error durant la creació de grup"
     },
     "group-edit": {
-      "success": "El grup s' ha actualitzat amb \u00e8xitName",
-      "error": "Error durant l' actualitzaci\u00f3 del grup"
+      "success": "El grup s' ha actualitzat amb èxitName",
+      "error": "Error durant l' actualització del grup"
     },
     "project-categories-update": {
       "success": "Les categories del projecte s' han actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de les categories del projecte"
+      "error": "Error durant l' actualització de les categories del projecte"
     },
     "project-create": {
       "success": "El projecte s' ha creat correctament",
-      "error": "Error durant la creaci\u00f3 del projecte"
+      "error": "Error durant la creació del projecte"
     },
     "project-destroy": {
       "success": "El projecte s' ha esborrat correctament",
       "error": "Error durant l' esborrat del projecte"
     },
     "project-edit": {
-      "success": "El projecte s' ha actualitzat amb \u00e8xitName",
-      "error": "Error durant l' actualitzaci\u00f3 del projecte"
+      "success": "El projecte s' ha actualitzat amb èxitName",
+      "error": "Error durant l' actualització del projecte"
     },
     "project-duplication": {
       "success": "El projecte s' ha duplicat correctament",
-      "error": "Error durant la duplicaci\u00f3 del projecte"
+      "error": "Error durant la duplicació del projecte"
     },
     "project-quit": {
-      "success": "Heu deixat el projecte amb \u00e8xit",
-      "error": "Error durant l' operaci\u00f3"
+      "success": "Heu deixat el projecte amb èxit",
+      "error": "Error durant l' operació"
     },
     "project-life-status-update": {
       "success": "L' estat de la vida del projecte s' ha actualitzat correctament"
     },
     "project-message-create": {
       "success": "El missatge intern s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 del missatge intern"
+      "error": "Error durant la creació del missatge intern"
     },
     "project-message-delete": {
       "success": "El missatge intern s' ha esborrat correctamentName",
-      "error": "Error durant l' eliminaci\u00f3 del missatge intern"
+      "error": "Error durant l' eliminació del missatge intern"
     },
     "project-message-update": {
       "success": "El missatge intern s' ha actualitzat correctamentName",
-      "error": "Error durant l' actualitzaci\u00f3 del missatge intern"
+      "error": "Error durant l' actualització del missatge intern"
     },
     "project-organizations-update": {
-      "success": "Les organitzacions del projecte s' han actualitzat amb \u00e8xit",
-      "error": "Error durant l' actualitzaci\u00f3 de les organitzacions del projecte"
+      "success": "Les organitzacions del projecte s' han actualitzat amb èxit",
+      "error": "Error durant l' actualització de les organitzacions del projecte"
     },
     "project-visibility-update": {
       "success": "La visibilitat del projecte s' ha actualitzat correctament"
     },
     "review-create": {
-      "success": "La revisi\u00f3 s' ha afegit correctament",
-      "error": "Error durant la creaci\u00f3 de revisi\u00f3"
+      "success": "La revisió s' ha afegit correctament",
+      "error": "Error durant la creació de revisió"
     },
     "review-delete": {
-      "success": "La revisi\u00f3 s' ha esborrat correctament",
-      "error": "Error durant l' esborrat de revisi\u00f3"
+      "success": "La revisió s' ha esborrat correctament",
+      "error": "Error durant l' esborrat de revisió"
     },
     "review-update": {
-      "success": "La revisi\u00f3 s' ha actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de revisi\u00f3"
+      "success": "La revisió s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de revisió"
     },
     "sdgs-update": {
       "success": "Els SDG s' han actualitzat correctament",
-      "error": "Error durant l' actualitzaci\u00f3 de SDGs"
+      "error": "Error durant l' actualització de SDGs"
     },
     "team-member-create": {
       "success": "L' usuari s' ha afegit correctament",
@@ -2251,64 +2247,64 @@
   "welcome-modal": {
     "title": "Benvingut als projectes portals de {0}",
     "success": " 1] El vostre compte s' ha creat correctament!",
-    "instruction": "Abans de comen\u00e7ar a gaudir de la plataforma, has de completar el teu perfil.",
-    "guidance": "Aix\u00f2 nom\u00e9s portar\u00e0 un parell de minuts i us guiarem pel cam\u00ed.",
-    "complete-later": "I Guadalll fer aix\u00f2 m\u00e9s tard",
+    "instruction": "Abans de començar a gaudir de la plataforma, has de completar el teu perfil.",
+    "guidance": "Això només portarà un parell de minuts i us guiarem pel camí.",
+    "complete-later": "I Guadalll fer això més tard",
     "complete-now": "Deixa'ls anar!"
   },
   "notifications": {
     "header": "Notificacions",
     "title": "Arranjaments de les notificacions",
     "tabs": {
-      "email": "Notificacions de correu electr\u00f2nicComment",
+      "email": "Notificacions de correu electrònicComment",
       "options": {
-        "yes": "S\u00ed",
+        "yes": "Sí",
         "no": "No"
       }
     },
     "project": {
-      "title": "Notificaci\u00f3 del projecte",
+      "title": "Notificació del projecte",
       "changes": "Canvia les notificacions",
-      "reviews": "Revisi\u00f3 de les notificacions",
+      "reviews": "Revisió de les notificacions",
       "members": "Notificacions dels membres",
       "applications": "Notificacions de les aplicacions",
       "blogEntries": "Notificacions d' entrades del blocComment"
     },
     "projects": {
-      "title": "Notificacions que rebeu per correu electr\u00f2nic:",
+      "title": "Notificacions que rebeu per correu electrònic:",
       "follow": "Projectes que seguiu",
       "follow-sub": "Tingueu en compte quan s' han modificat els projectes que heu obtingut",
       "member": "S' ha afegit com a membre de l' equip",
-      "member-sub": "Se us notificar\u00e0 quan alg\u00fa us afegeix com a membre d' un equip en un projecte",
+      "member-sub": "Se us notificarà quan algú us afegeix com a membre d' un equip en un projecte",
       "comment": "Comentaris",
-      "comment-sub": "Se't va notificar quan alg\u00fa comenta el teu projecte",
+      "comment-sub": "Se't va notificar quan algú comenta el teu projecte",
       "internal-message": "Missatges interns",
-      "internal-message-sub": "Tingueu en compte quan alg\u00fa afegeix un missatge intern al vostre projecte",
+      "internal-message-sub": "Tingueu en compte quan algú afegeix un missatge intern al vostre projecte",
       "project": "Els vostres projectes",
       "project-sub": "Tingueu en compte quan altres membres de l' equip modifiquen els vostres projectes",
       "announcement": "Anuncis",
       "announcement-sub": "Tingueu en compte quan es publiquen noves declaracions al lloc web",
       "review": "Preparat per revisar",
-      "review-sub": "Quan sou revisista d'un projecte, sigueu notificats quan un projecte est\u00e0 preparat per a ser revisat per tu",
+      "review-sub": "Quan sou revisista d'un projecte, sigueu notificats quan un projecte està preparat per a ser revisat per tu",
       "reviewed": "Ha estat revisada",
-      "reviewed-sub": "Quan el vostre projecte est\u00e0 preparat per revisar, se us notificar\u00e0 quan el revisador del projecte ha enviat la seva revisi\u00f3",
+      "reviewed-sub": "Quan el vostre projecte està preparat per revisar, se us notificarà quan el revisador del projecte ha enviat la seva revisió",
       "reply": "Respon al vostre comentari",
-      "reply-sub": "Ser notificat quan alg\u00fa respon al teu comentari"
+      "reply-sub": "Ser notificat quan algú respon al teu comentari"
     },
     "follow": {
-      "title": "Notificaci\u00f3 seg\u00fcent",
+      "title": "Notificació següent",
       "changes": "Canvia les notificacions",
-      "reviews": "Revisi\u00f3 de les notificacions",
+      "reviews": "Revisió de les notificacions",
       "blogEntries": "Notificacions d' entrades del blocComment"
     },
     "organization": {
-      "added": "Nou usuari a notificaci\u00f3 d' organitzaci\u00f3",
-      "access": "Notificaci\u00f3 de peticions d' acc\u00e9s",
-      "access-sub": "Tingueu en compte quan un usuari sol\u00b7 licita acc\u00e9s a la vostra organitzaci\u00f3",
-      "invitation": "Notificaci\u00f3 d' invitaci\u00f3",
-      "invitation-sub": "Se us notificar\u00e0 quan expirar\u00e0 un enlla\u00e7 d' invitaci\u00f3",
-      "instruction": "Notificaci\u00f3 d' instrucci\u00f3",
-      "instruction-sub": "Tingueu en compte quan es publica una nova instrucci\u00f3"
+      "added": "Nou usuari a notificació d' organització",
+      "access": "Notificació de peticions d' accés",
+      "access-sub": "Tingueu en compte quan un usuari sol· licita accés a la vostra organització",
+      "invitation": "Notificació d' invitació",
+      "invitation-sub": "Se us notificarà quan expirarà un enllaç d' invitació",
+      "instruction": "Notificació d' instrucció",
+      "instruction-sub": "Tingueu en compte quan es publica una nova instrucció"
     },
     "read-all": "Llegeix totes les notificacions",
     "type": {
@@ -2328,25 +2324,25 @@
       "member_updated": "{sender} actualitzat el paper de {user} en el projecte {project}",
       "member_removed": "{sender} eliminat {user} de l'equip del projecte {project}",
       "new_instruction": "S'ha publicat una nova instrucció",
-      "announcement": "{sender} va publicar una nova declaraci\u00f3 al projecte {project}",
-      "application": "{applicant} aplicat a la vostra declaraci\u00f3 {announcement} en el projecte {project}",
+      "announcement": "{sender} va publicar una nova declaració al projecte {project}",
+      "application": "{applicant} aplicat a la vostra declaració {announcement} en el projecte {project}",
       "blog_entry": "{sender} va publicar una nova entrada al projecte {project}",
-      "invitation_reminder": "Una invitaci\u00f3 que heu creat expirar\u00e0 aviat",
-      "invitation_today_reminder": "Un {link} que heu creat pel grup {today_group} expirar\u00e0 avui",
-      "invitation_week_reminder": "Un {link} que heu creat pel grup {week_group} expirar\u00e0 en una setmanaName",
-      "register-link": "Registra l' enlla\u00e7",
-      "access_request": "Respon a {access_request_nb} sota demanda d'acc\u00e9s ((s)!",
-      "pending_access_requests": "Respon a {requests_count} sota demanda d'acc\u00e9s ((s)!"
+      "invitation_reminder": "Una invitació que heu creat expirarà aviat",
+      "invitation_today_reminder": "Un {link} que heu creat pel grup {today_group} expirarà avui",
+      "invitation_week_reminder": "Un {link} que heu creat pel grup {week_group} expirarà en una setmanaName",
+      "register-link": "Registra l' enllaç",
+      "access_request": "Respon a {access_request_nb} sota demanda d'accés ((s)!",
+      "pending_access_requests": "Respon a {requests_count} sota demanda d'accés ((s)!"
     },
     "empty": "No teniu notificacions"
   },
   "recommendations": {
     "empty": "No tens recomanacions",
     "connect-to": "Potser voldreu connectar amb",
-    "title": "Recomanat per a v\u00f3s",
+    "title": "Recomanat per a vós",
     "is-featured": "(Fatuta)",
-    "more-projects": "Descobreix m\u00e9s projectes",
-    "more-profiles": "Descobriu m\u00e9s perfils",
+    "more-projects": "Descobreix més projectes",
+    "more-profiles": "Descobriu més perfils",
     "projects": {
       "title": "Projectes recomanats"
     },
@@ -2361,6 +2357,18 @@
       "future": "Futur",
       "past": "Passat",
       "month": {
+        "10": {
+          "short": "Oct",
+          "long": "Octubre"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "novembre"
+        },
+        "12": {
+          "short": "Des",
+          "long": "desembre"
+        },
         "01": {
           "short": "Mare?",
           "long": "gener"
@@ -2371,7 +2379,7 @@
         },
         "03": {
           "short": "mar",
-          "long": "Mar\u00e7"
+          "long": "Març"
         },
         "04": {
           "short": "AbrMay short",
@@ -2396,18 +2404,6 @@
         "09": {
           "short": "set",
           "long": "setembre"
-        },
-        "10": {
-          "short": "Oct",
-          "long": "Octubre"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "novembre"
-        },
-        "12": {
-          "short": "Des",
-          "long": "desembre"
         }
       }
     },
@@ -2436,8 +2432,8 @@
         "required": "Es requereix el nom"
       },
       "content": {
-        "label": "Informaci\u00f3",
-        "placeholder": "Afegeix informaci\u00f3 quant a aquest esdeveniment"
+        "label": "Informació",
+        "placeholder": "Afegeix informació quant a aquest esdeveniment"
       },
       "event_date": {
         "label": "Data de l' esdeveniment *",
@@ -2446,11 +2442,11 @@
       },
       "people_groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veur\u00e0 aquest esdeveniment",
+        "notice": "Seleccioneu el grup(s) que veurà aquest esdeveniment",
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre",
         "all": "Tots els grups",
-        "public": "P\u00fablic"
+        "public": "Públic"
       }
     },
     "group-label": "Grup:",
@@ -2458,92 +2454,92 @@
   },
   "news": {
     "create": {
-      "title": "Crea una not\u00edcia"
+      "title": "Crea una notícia"
     },
     "delete": {
-      "title": "Esborro not\u00edcies?",
-      "message": "Voleu esborrar aquestes not\u00edcies?",
-      "success": "S' han esborrat not\u00edcies",
-      "error": "Error en intentar esborrar les not\u00edcies"
+      "title": "Esborro notícies?",
+      "message": "Voleu esborrar aquestes notícies?",
+      "success": "S' han esborrat notícies",
+      "error": "Error en intentar esborrar les notícies"
     },
     "save": {
-      "success": "Not\u00edcies desades",
-      "error": "Error en intentar desar les not\u00edcies"
+      "success": "Notícies desades",
+      "error": "Error en intentar desar les notícies"
     },
     "form": {
       "image": {
         "label": "Imatge"
       },
       "title": {
-        "label": "T\u00edtol *",
-        "required": "Es requereix el t\u00edtol",
-        "placeholder": "el t\u00edtol de les not\u00edcies"
+        "label": "Títol *",
+        "required": "Es requereix el títol",
+        "placeholder": "el títol de les notícies"
       },
       "content": {
         "label": "Contingut *",
         "required": "Es requereix el contingut"
       },
       "publication_date": {
-        "label": "Data de publicaci\u00f3 *",
-        "required": "Es requereix la data de publicaci\u00f3"
+        "label": "Data de publicació *",
+        "required": "Es requereix la data de publicació"
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veur\u00e0 aquesta not\u00edcia",
+        "notice": "Seleccioneu el grup(s) que veurà aquesta notícia",
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre"
       }
     },
     "list": {
-      "title": "Not\u00edcies",
+      "title": "Notícies",
       "create": "Crea",
       "read-more": "Lectura"
     },
     "page": {
-      "others": "Altres not\u00edcies"
+      "others": "Altres notícies"
     },
     "drawer": {
-      "title": "Edita not\u00edcies"
+      "title": "Edita notícies"
     }
   },
   "instructions": {
     "create": {
-      "title": "Afegeix una instrucci\u00f3"
+      "title": "Afegeix una instrucció"
     },
     "delete": {
       "title": "Esborro les instruccions?",
-      "message": "Voleu eliminar aquesta instrucci\u00f3?",
-      "success": "S' ha esborrat l' instrucci\u00f3",
-      "error": "S' ha produ\u00eft un error en intentar esborrar la instrucci\u00f3"
+      "message": "Voleu eliminar aquesta instrucció?",
+      "success": "S' ha esborrat l' instrucció",
+      "error": "S' ha produït un error en intentar esborrar la instrucció"
     },
     "save": {
-      "success": "S' ha desat una instrucci\u00f3",
+      "success": "S' ha desat una instrucció",
       "error": "Error en intentar desar les instruccions"
     },
     "form": {
       "title": {
-        "label": "T\u00edtol *",
-        "required": "Es requereix el t\u00edtol",
-        "placeholder": "el t\u00edtol de l' instrucci\u00f3"
+        "label": "Títol *",
+        "required": "Es requereix el títol",
+        "placeholder": "el títol de l' instrucció"
       },
       "content": {
         "label": "Contingut *",
         "required": "Es requereix el contingut"
       },
       "publication_date": {
-        "label": "Data de publicaci\u00f3 *",
-        "required": "Es requereix la data de publicaci\u00f3"
+        "label": "Data de publicació *",
+        "required": "Es requereix la data de publicació"
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veur\u00e0 aquesta instrucci\u00f3",
+        "notice": "Seleccioneu el grup(s) que veurà aquesta instrucció",
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre"
       },
       "notify": {
-        "label": "Notificaci\u00f3",
-        "notice": "Si se selecciona, tothom no ser\u00e0 notificat de la nova instrucci\u00f3",
-        "button": "Envia una notificaci\u00f3"
+        "label": "Notificació",
+        "notice": "Si se selecciona, tothom no serà notificat de la nova instrucció",
+        "button": "Envia una notificació"
       }
     },
     "list": {
@@ -2552,72 +2548,72 @@
       "read-more": "Lectura"
     },
     "drawer": {
-      "title": "Edita instrucci\u00f3"
+      "title": "Edita instrucció"
     }
   },
   "chat": {
     "drawer": {
       "title": "Afegeix una plataforma de xat",
-      "notice": "Podeu afegir un enlla\u00e7 a la plataforma de xat. Nom\u00e9s ser\u00e0 visible pels vostres usuaris connectats.",
+      "notice": "Podeu afegir un enllaç a la plataforma de xat. Només serà visible pels vostres usuaris connectats.",
       "url": {
-        "label": "Enlla\u00e7 a la plataforma de xat",
-        "notice": "Enganxa aqu\u00ed l' enlla\u00e7 a la plataforma",
+        "label": "Enllaç a la plataforma de xat",
+        "notice": "Enganxa aquí l' enllaç a la plataforma",
         "placeholder": "Enganxa l' URL (https://...)"
       },
       "wording": {
-        "label": "Paraula d' enlla\u00e7",
-        "notice": "Quin bot\u00f3 s' ha de mostrar (ex: uniu xat, uniu- vos al qu\u00e8...) - 12 cotxe m\u00e0xim.",
+        "label": "Paraula d' enllaç",
+        "notice": "Quin botó s' ha de mostrar (ex: uniu xat, uniu- vos al què...) - 12 cotxe màxim.",
         "placeholder": "ex: un xat"
       },
       "success": "S' ha desat l' arranjament de xat",
-      "error": "Error en desar els par\u00e0metres de xat"
+      "error": "Error en desar els paràmetres de xat"
     },
     "data": {
-      "link": "Enlla\u00e7:",
-      "wording": "Paraula de bot\u00f3:",
+      "link": "Enllaç:",
+      "wording": "Paraula de botó:",
       "no-link": "(res establert)",
       "no-wording": "(res establert)"
     }
   },
   "featured-projects": {
     "drawer": {
-      "title": "Afegeix projectes de representaci\u00f3",
-      "max-pick-reached": "Heu arribat al nombre m\u00e0xim de projectes que mostren"
+      "title": "Afegeix projectes de representació",
+      "max-pick-reached": "Heu arribat al nombre màxim de projectes que mostren"
     },
     "save": {
-      "success": "S' han desat projectes de caracter\u00edstiques",
-      "error": "Error en intentar desar els projectes de caracter\u00edstiques"
+      "success": "S' han desat projectes de característiques",
+      "error": "Error en intentar desar els projectes de característiques"
     }
   },
   "message": {
-    "error-login": "Hi ha hagut un error durant la sessi\u00f3. Torneu-ho a provar.",
+    "error-login": "Hi ha hagut un error durant la sessió. Torneu-ho a provar.",
     "failed": "Error en enviar el missatge. Torneu-ho a provar.",
-    "leave-confirmation": "Esteu a punt de deixar la p\u00e0gina amb dades sense desar.",
+    "leave-confirmation": "Esteu a punt de deixar la pàgina amb dades sense desar.",
     "sent": "Missatge enviat",
-    "redirect": "Redirigeix en progr\u00e9s",
+    "redirect": "Redirigeix en progrés",
     "error": {
-      "unauthorized": "Sense autoritzar: S' ha denegat l' acc\u00e9s degut a les credencials no v\u00e0lides.",
+      "unauthorized": "Sense autoritzar: S' ha denegat l' accés degut a les credencials no vàlides.",
       "unprocessable-entity": "Entitat no es pot processar: no es pot processar les instruccions contingudes.",
-      "bad-gateway": "Portal incorrecte: El servidor ha trobat un error temporal i no ha pogut completar la vostra petici\u00f3."
+      "bad-gateway": "Portal incorrecte: El servidor ha trobat un error temporal i no ha pogut completar la vostra petició."
     }
   },
   "people-groups": {
     "browse-tree": "Navega per l' arbre de grups"
   },
   "geocoding": {
-    "error": "Error durant la geocosi\u00f3 d' adre\u00e7a",
-    "no-results": "No s' ha trobat cap resultat per aquesta adre\u00e7a",
-    "choose-method": "Per afegir una localitzaci\u00f3, escolliu un m\u00e8tode d' entrada:",
+    "error": "Error durant la geocosió d' adreça",
+    "no-results": "No s' ha trobat cap resultat per aquesta adreça",
+    "choose-method": "Per afegir una localització, escolliu un mètode d' entrada:",
     "click-method": "Cliqueu al mapa",
-    "click-method-no-geocoding": "Afegeix una ubicaci\u00f3",
-    "click-method-notice": "Cliqueu al mapa per escollir la localitzaci\u00f3",
-    "form-method": "Introdu\u00efu l' adre\u00e7a",
-    "form-method-notice": "Introdu\u00efu l' adre\u00e7a al camp de sota",
-    "address": "Adre\u00e7a",
-    "delete-location": "Esborra la localitzaci\u00f3",
-    "confirm-delete-location": "Esteu segur que voleu esborrar aquesta ubicaci\u00f3?",
+    "click-method-no-geocoding": "Afegeix una ubicació",
+    "click-method-notice": "Cliqueu al mapa per escollir la localització",
+    "form-method": "Introduïu l' adreça",
+    "form-method-notice": "Introduïu l' adreça al camp de sota",
+    "address": "Adreça",
+    "delete-location": "Esborra la localització",
+    "confirm-delete-location": "Esteu segur que voleu esborrar aquesta ubicació?",
     "filter-by-type": "Filtre per tipus",
-    "form-placeholder": "Carrer, ciutat, Pa\u00eds",
+    "form-placeholder": "Carrer, ciutat, País",
     "pick-location": "Escull una de les posicions suggerides clicant- hi",
     "found-number": "S' han trobat {number} localitzacions(s)",
     "search": "Cerca",
@@ -2627,9 +2623,9 @@
       "locality": "Localitat",
       "district": "Districtebelize. kgm",
       "city": "Ciutat",
-      "county": "Pa\u00eds",
+      "county": "País",
       "state": "Estat",
-      "country": "Pa\u00eds",
+      "country": "País",
       "other": "Altres"
     }
   },

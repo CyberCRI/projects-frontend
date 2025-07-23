@@ -161,47 +161,29 @@
       :title="$t('profile.drawer_title')"
       @close="exempleToShow = null"
     >
-      <UserProfile
+      <UserProfileV2
         v-if="exempleToShow"
         ref="profile-user"
         :can-edit="false"
         :user-id="exempleToShow"
+        is-preview
       />
     </BaseDrawer>
   </template>
 </template>
 <script>
-import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 import allSdgs from '@/data/sdgs.json'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import isEqual from 'lodash.isequal'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfile from '@/components/people/UserProfile.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
 export default {
   name: 'CompleteProfileStep1',
-
-  components: {
-    ProfileEditBlock,
-    IconImage,
-    ImageEditor,
-    TipTapEditor,
-    UserProfile,
-    BaseDrawer,
-    LoaderSimple,
-    FieldErrors,
-  },
 
   emits: ['saving', 'loading', 'invalid'],
 

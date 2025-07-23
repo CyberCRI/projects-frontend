@@ -1,5 +1,5 @@
 <template>
-  <div class="add-to-project">
+  <div class="add-to-project" :class="{ 'add-to-project-v2': isV2 }">
     <h3 class="add-to-project__label">
       {{ $t('project.add-to-project.title') }}
     </h3>
@@ -11,6 +11,13 @@
         :label="$filters.capitalize($t(item.label))"
         :secondary="true"
         class="add-to-project__button"
+        :class="{
+          borderless: isV2,
+          squarish: isV2,
+          unpad: isV2,
+          'no-height': isV2,
+          'not-centered': isV2,
+        }"
         btn-icon="Plus"
         @click="item.onClick()"
       />
@@ -29,6 +36,8 @@ export default {
   },
 
   inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
+
+  props: { isV2: { type: Boolean, default: false } },
 
   emits: ['close-dropdown'],
 
@@ -103,15 +112,19 @@ export default {
           },
           condition: this.canEditProject,
         },
-        {
-          label: 'project.add-to-project.comment',
-          dataTest: 'button-add-comment-to-project',
-          onClick: () => {
-            this.$emit('close-dropdown')
-            this.projectLayoutGoToTab('comments')
-          },
-          condition: this.canCreateComments,
-        },
+        ...(this.isV2
+          ? []
+          : [
+              {
+                label: 'project.add-to-project.comment',
+                dataTest: 'button-add-comment-to-project',
+                onClick: () => {
+                  this.$emit('close-dropdown')
+                  this.projectLayoutGoToTab('comments')
+                },
+                condition: this.canCreateComments,
+              },
+            ]),
         {
           label: 'project.add-to-project.location',
           dataTest: 'button-add-location-to-project',
@@ -143,20 +156,26 @@ export default {
     flex-direction: column;
   }
 
-  &__label {
+  .add-to-project__label {
     text-align: center;
     font-weight: 700;
     margin-bottom: $space-s;
   }
 
-  &__button {
+  .add-to-project__button {
     margin-bottom: $space-s;
     justify-content: flex-start;
   }
 
-  &__icon {
+  .add-to-project__icon {
     padding-right: $space-s;
     fill: $primary-dark;
   }
+}
+
+.add-to-project.add-to-project-v2 {
+  border-radius: $border-radius-m;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>

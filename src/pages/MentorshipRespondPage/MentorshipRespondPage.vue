@@ -69,29 +69,23 @@
       :title="$t('profile.drawer_title')"
       @close="profileIsOpened = false"
     >
-      <UserProfile
+      <UserProfileV2
         v-if="profileIsOpened"
         ref="profile-user"
         :can-edit="false"
         :user-id="mentorship?.mentoree?.id"
+        is-preview
       />
     </BaseDrawer>
   </div>
 </template>
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import RadioButton from '@/components/base/form/RadioButton.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import { getMentorshipDetails, respondMentorship } from '@/api/mentorship.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfile from '@/components/people/UserProfile.vue'
 export default {
   name: 'MentorshipRespondPage',
-
-  components: { TextInput, RadioButton, LpiButton, BaseDrawer, UserProfile },
 
   props: {
     token: {

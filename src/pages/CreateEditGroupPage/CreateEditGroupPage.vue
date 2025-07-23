@@ -28,6 +28,24 @@ const props = defineProps({
     type: [String, null],
     default: null,
   },
+  isV2: {
+    type: Boolean,
+    default: false,
+  },
+  postCancelRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
+
+  postUpdateRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
+
+  postCreateRouteFactory: {
+    type: [Function, null],
+    default: null,
+  },
 })
 
 defineEmits(['close'])
@@ -105,9 +123,15 @@ const redirectTo404 = () => {
 }
 const cancel = () => {
   if (props.groupId) {
-    router.push({ name: 'Group', params: { groupId: props.groupId } })
+    router.push(
+      props.postCancelRouteFactory
+        ? props.postCancelRouteFactory(props.groupId)
+        : { name: 'Group', params: { groupId: props.groupId } }
+    )
   } else {
-    router.push({ name: 'groups' })
+    router.push(
+      props.postCancelRouteFactory ? props.postCancelRouteFactory(null) : { name: 'groups' }
+    )
   }
 }
 
@@ -296,10 +320,13 @@ const createGroup = async () => {
 
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
-
-    router.push({ name: 'Group', params: { groupId: newGroupId } })
-
     toaster.pushSuccess(t('toasts.group-create.success'))
+
+    router.push(
+      props.postCreateRouteFactory
+        ? props.postCreateRouteFactory(newGroupId)
+        : { name: 'Group', params: { groupId: newGroupId } }
+    )
   } catch (error) {
     this.toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
     console.error(error)
@@ -328,10 +355,13 @@ const updateGroup = async () => {
 
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
-
-    router.push({ name: 'Group', params: { groupId: props.groupId } })
-
     toaster.pushSuccess(t('toasts.group-edit.success'))
+
+    router.push(
+      props.postUpdateRouteFactory
+        ? props.postUpdateRouteFactory(props.groupId)
+        : { name: 'Group', params: { groupId: props.groupId } }
+    )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-edit.error')} (${error})`)
     console.error(error)
@@ -428,8 +458,8 @@ try {
 }
 </script>
 <template>
-  <div class="create-group">
-    <div class="header">
+  <div class="create-group" :class="{ 'is-v2': isV2 }">
+    <div v-if="!isV2" class="header">
       <h1>{{ isEdit ? $t('group.edit.title') : $t('group.create.title') }}</h1>
       <p>
         {{ $t('group.create.notice') }}
@@ -487,6 +517,12 @@ try {
   margin: $navbar-height auto 0 auto;
   padding: 0 $space-l;
   box-sizing: border-box;
+
+  &.is-v2 {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+  }
 }
 
 .header {

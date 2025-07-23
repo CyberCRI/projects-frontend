@@ -1,8 +1,24 @@
 import type { RouterConfig } from '@nuxt/schema'
 import type { RouteRecordRaw } from 'vue-router'
 import { useRuntimeConfig } from '#imports'
+import useProfilePagesRoutes from './useProfilePagesRoutes'
+import useProjectPagesRoutes from './useProjectPagesRoutes'
+import useGroupPagesRoutes from './useGroupPagesRoutes'
+import useAdminPageRoutes from './useAdminPagesRoutes'
 
-const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> => [
+const routes = ({
+  showDebug,
+  projectPageRoutes,
+  profilePagesRoutes,
+  groupPageRoutes,
+  adminPageRoutes,
+}: {
+  showDebug: boolean
+  projectPageRoutes: any[]
+  profilePagesRoutes: any[]
+  groupPageRoutes: any[]
+  adminPageRoutes: any[]
+}): Array<RouteRecordRaw> => [
   {
     path: '/',
     name: 'HomeRoot',
@@ -88,292 +104,15 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
   //         requiresAuth: true,
   //     },
   // },
-  {
-    path: '/profile',
-    name: 'Profile',
-    redirect: { name: 'ProfileSummary' },
-    component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
-    props: {
-      userId: null,
-    },
-    meta: {
-      resetScroll: true,
-      requiresAuth: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-    children: [
-      {
-        path: 'summary',
-        name: 'ProfileSummary',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileBio',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileProjects',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileGroups',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileSkills',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
-      },
-    ],
-  },
+  ...profilePagesRoutes,
   {
     path: '/mentorship/respond/:token',
     name: 'MentorhipRespondPage',
     props: true,
     component: () => import('../pages/MentorshipRespondPage/MentorshipRespondPage.vue'),
   },
-  {
-    path: '/profile/edit',
-    name: 'ProfileEdit',
-    redirect: { name: 'ProfileEditGeneral' },
-    component: () => import('../pages/ProfileEditPage/ProfileEditPage.vue'),
-    children: [
-      {
-        path: 'general',
-        name: 'ProfileEditGeneral',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileEditBio',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileEditProjects',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileEditGroups',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileGroupsEditTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileEditSkills',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'),
-      },
-      {
-        path: 'privacy',
-        name: 'ProfileEditPrivacy',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'),
-      },
-    ],
-    meta: {
-      resetScroll: true,
-      requiresAuth: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-  },
-  {
-    path: '/profile/:userId',
-    name: 'ProfileOtherUser',
-    redirect: { name: 'ProfileSummaryOther' },
-    component: () => import('../pages/UserProfilePage/UserProfilePage.vue'),
-    props: true,
-    meta: {
-      resetScroll: true,
-      // props: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-    children: [
-      {
-        path: 'summary',
-        name: 'ProfileSummaryOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSummaryTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileBioOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileBioTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileProjectsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileProjectTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileGroupsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileSkillsOther',
-        component: () => import('../pages/UserProfilePage/Tabs/ProfileSkillTab.vue'),
-      },
-    ],
-  },
-  {
-    path: '/profile/edit/:userId',
-    name: 'ProfileEditOtherUser',
-    redirect: { name: 'ProfileEditGeneralOther' },
-    component: () => import('../pages/ProfileEditPage/ProfileEditPage.vue'),
-    children: [
-      {
-        path: 'general',
-        name: 'ProfileEditGeneralOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileGeneralEditTab.vue'),
-      },
-      {
-        path: 'bio',
-        name: 'ProfileEditBioOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileBioEditTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'ProfileEditProjectsOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileProjectsEditTab.vue'),
-      },
-      {
-        path: 'groups',
-        name: 'ProfileEditGroupsOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileGroupsEditTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'ProfileEditSkillsOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'),
-      },
-      {
-        path: 'privacy',
-        name: 'ProfileEditPrivacyOther',
-        component: () => import('../pages/ProfileEditPage/Tabs/ProfilePrivacyEditTab.vue'),
-      },
-    ],
-    props: true,
-    meta: {
-      resetScroll: true,
-      requiresAdmin: true,
-      props: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-  },
-  {
-    path: '/admin',
-    name: 'Admin',
-    redirect: { name: 'general' },
-    component: () => import('../pages/AdminPortalPage/AdminPortalPage.vue'),
-    children: [
-      {
-        path: 'general',
-        name: 'general',
-        component: () => import('../pages/AdminPortalPage/Tabs/NewInformationTab.vue'),
-      },
-      {
-        path: 'settings',
-        name: 'AdminSettings',
-        component: () => import('../pages/AdminPortalPage/Tabs/SettingsTab.vue'),
-      },
-      {
-        path: 'tags',
-        name: 'tags',
-        component: () => import('../pages/AdminPortalPage/Tabs/TagsTab.vue'),
-      },
-      {
-        path: 'skills',
-        name: 'skills',
-        component: () => import('../pages/AdminPortalPage/Tabs/SkillsTab.vue'),
-      },
-      {
-        path: 'categories',
-        name: 'categories',
-        component: () => import('../pages/AdminPortalPage/Tabs/CategoriesTab.vue'),
-      },
-      {
-        path: 'faq',
-        name: 'faq',
-        // component: () => import('../pages/AdminPortalPage/Tabs/HelpAdminTab.vue'),
-        redirect: { name: 'general' },
-      },
-      {
-        path: 'templates',
-        name: 'templates',
-        component: () => import('../pages/AdminPortalPage/Tabs/TemplatesTab.vue'),
-      },
-      {
-        path: 'accounts',
-        name: 'Accounts',
-        component: () => import('../pages/AdminPortalPage/Tabs/AccountsTab.vue'),
-      },
-      {
-        path: 'links',
-        name: 'links',
-        redirect: { name: 'linksList' },
-        component: () => import('../pages/AdminPortalPage/Tabs/LinksTab.vue'),
-        children: [
-          {
-            path: 'list',
-            name: 'linksList',
-            component: () => import('../pages/AdminPortalPage/Tabs/LinksListTab.vue'),
-          },
-          {
-            path: 'create',
-            name: 'linksCreate',
-            component: () => import('../pages/AdminPortalPage/Tabs/LinkCreateTab.vue'),
-          },
-        ],
-      },
-      {
-        path: 'requests',
-        name: 'RequestsAdminTab',
-        component: () => import('../pages/AdminPortalPage/Tabs/RequestsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
-      },
-      {
-        path: 'groups',
-        name: 'groups',
-        redirect: { name: 'groupsList' },
-        component: () => import('../pages/AdminPortalPage/Tabs/GroupsTab.vue'),
-        children: [
-          {
-            path: 'list',
-            name: 'groupsList',
-            component: () => import('../pages/AdminPortalPage/Tabs/GroupsListTab.vue'),
-          },
-          {
-            path: 'create',
-            name: 'adminCreateGroup',
-            component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
-          },
-          // maybe we'll need this later
-          // {
-          //     path: 'edit/:groupId',
-          //     name: 'adminEditGroup',
-          //     props: true,
-          //     component: () =>
-          //         import(
-          //              '../pages/CreateEditGroupPage/CreateEditGroupPage.vue'
-          //         ),
-          // },
-        ],
-      },
-    ],
-    meta: {
-      resetScroll: true,
-      requiresAuth: true,
-      requiresAdmin: true,
-      loginFromNotification: true,
-      loginFromNotificationNewQueryParam: 'editNotifications',
-    },
-  },
+
+  ...adminPageRoutes,
   {
     path: '/portal',
     name: 'Portal',
@@ -434,36 +173,8 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
     },
   },
 
-  {
-    path: '/group/:groupId',
-    name: 'Group',
-    redirect: { name: 'groupSnapshot' },
-    component: () => import('../pages/GroupPage/GroupPage.vue'),
-    children: [
-      {
-        path: 'snapshot',
-        name: 'groupSnapshot',
-        component: () => import('../pages/GroupPage/Tabs/GroupSnapshotTab.vue'),
-      },
-      {
-        path: 'members',
-        name: 'groupMembers',
-        component: () => import('../pages/GroupPage/Tabs/GroupMembersTab.vue'),
-      },
-      {
-        path: 'projects',
-        name: 'groupProjects',
-        component: () => import('../pages/GroupPage/Tabs/GroupProjectsTab.vue'),
-      },
-    ],
-    props: true,
-  },
-  {
-    path: '/group/:groupId/Edit',
-    name: 'frontEditGroup',
-    props: true,
-    component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
-  },
+  ...groupPageRoutes,
+
   {
     path: '/search',
     name: 'Search',
@@ -524,83 +235,8 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
       requiresAuth: true,
     },
   },
-  {
-    // For retro compatibility with old URLS, both slugs and ids can be used
-    path: '/projects/:slugOrId',
-    name: 'pageProject',
-    redirect: { name: 'projectSummary' },
-    component: () => import('../pages/ProjectPage/ProjectPage.vue'),
-    // dont reset scroll here it is done in the component as it handle complex scroll behavior for tabs
-    children: [
-      {
-        path: 'summary',
-        name: 'projectSummary',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectSummaryTab.vue'),
-      },
-      {
-        path: 'des', // back compatibility with old routes
-        redirect: 'description',
-      },
-      {
-        path: 'description',
-        name: 'projectDescription',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectDescriptionTab.vue'),
-      },
-      {
-        path: 'blogentries', // back compatibility with old routes
-        redirect: 'blog-entries',
-      },
-      {
-        path: 'blog-entries',
-        name: 'projectBlog',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectBlogEntriesTab.vue'),
-      },
-      {
-        path: 'goals',
-        name: 'projectGoals',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectGoalsTab.vue'),
-      },
-      {
-        path: 'team',
-        name: 'projectTeam',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectTeamTab.vue'),
-      },
-      {
-        path: 'ressources', // back compatibility with old routes
-        redirect: 'resources',
-      },
-      {
-        path: 'resources',
-        name: 'projectResources',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectResourcesTab.vue'),
-      },
-      {
-        path: 'linked-projects',
-        name: 'projectLinkedProjects',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectLinkedProjectsTab.vue'),
-      },
-      {
-        path: 'comments',
-        name: 'projectComments',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectCommentsTab.vue'),
-      },
-      {
-        path: 'private-exchange',
-        name: 'projectPrivateExchange',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectPrivateExchangeTab.vue'),
-      },
-      {
-        path: 'announcements',
-        name: 'projectAnnouncements',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectAnnouncementsTab.vue'),
-      },
-      {
-        path: 'project-settings',
-        name: 'ProjectSettings',
-        component: () => import('../pages/ProjectPage/Tabs/ProjectSettingsTab.vue'),
-      },
-    ],
-  },
+  // PROJECT PAGE V1 OR V2
+  ...projectPageRoutes,
   {
     path: '/stats',
     name: 'stats',
@@ -848,6 +484,24 @@ const routes = ({ showDebug }: { showDebug: boolean }): Array<RouteRecordRaw> =>
 export default {
   routes: () => {
     const runtimeConfig = useRuntimeConfig()
-    return routes({ showDebug: !!runtimeConfig.public.appShowDebug })
+    console.log(
+      'runtimeConfig.public.appUseProjectPageV2',
+      runtimeConfig.public.appUseProjectPageV2
+    )
+    const projectPageRoutes = useProjectPagesRoutes()
+
+    const profilePagesRoutes = useProfilePagesRoutes()
+
+    const groupPageRoutes = useGroupPagesRoutes()
+
+    const adminPageRoutes = useAdminPageRoutes()
+
+    return routes({
+      showDebug: !!runtimeConfig.public.appShowDebug,
+      projectPageRoutes,
+      profilePagesRoutes,
+      groupPageRoutes,
+      adminPageRoutes,
+    })
   },
 } satisfies RouterConfig
