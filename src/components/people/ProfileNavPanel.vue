@@ -65,7 +65,25 @@
           <span v-html="fixLocation(user.location)" />
         </div>
 
-        <SocialNetworks :user="user" />
+        <a v-if="user.facebook" class="social" :href="user.facebook" target="_blank">
+          <IconImage class="icon" name="Facebook" />
+          <span>{{ socialName(user.facebook) }}</span>
+        </a>
+
+        <a v-if="user.linkedin" class="social" :href="user.linkedin" target="_blank">
+          <IconImage class="icon" name="Linkedin" />
+          <span>{{ socialName(user.linkedin) }}</span>
+        </a>
+
+        <a v-if="user.skype" class="social" :href="user.skype" target="_blank">
+          <IconImage class="icon" name="Skype" />
+          <span>{{ user.skype }}</span>
+        </a>
+
+        <a v-if="user.website" class="social" :href="user.website" target="_blank">
+          <IconImage class="icon" name="Globe" />
+          <span>{{ user.website }}</span>
+        </a>
       </div>
     </div>
   </div>
@@ -134,6 +152,18 @@ export default {
   },
 
   methods: {
+    socialName(url) {
+      let socialArr = url.split('/')
+      // if url end with a "/" last item is empty
+      if (socialArr.length > 0 && socialArr[socialArr.length - 1])
+        return socialArr[socialArr.length - 1]
+      // so fallback to the second last item
+      if (socialArr.length > 1 && socialArr[socialArr.length - 2])
+        return socialArr[socialArr.length - 2]
+      // or fallback to the url itself
+      return url
+    },
+
     fixLocation(l) {
       return l.split('\n').join('<br />')
     },
@@ -281,6 +311,11 @@ menu {
     align-items: flex-start;
     word-break: break-word;
 
+    svg {
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
     span {
       padding-top: pxToRem(4px);
     }
@@ -288,6 +323,10 @@ menu {
     & ~ .social {
       margin-top: $space-m;
     }
+  }
+
+  a.social:hover {
+    text-decoration: underline;
   }
 
   .icon {
