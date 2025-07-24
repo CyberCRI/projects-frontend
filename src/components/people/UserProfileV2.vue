@@ -1,6 +1,19 @@
 <template>
   <div v-if="user && !isLoading" :key="user.id" class="user-profile">
-    <ProfileSummaryTab v-if="isPreview" :user="user" />
+    <div v-if="isPreview">
+      <div class="profile-links">
+        <LinkButton
+          class="page-btn"
+          btn-icon="Eye"
+          :label="$t('profile.go-to-page')"
+          :to="{
+            name: 'ProfileOtherUser',
+            params: { userId: user?.slug || userId },
+          }"
+        />
+      </div>
+      <ProfileSummaryTab :user="user" />
+    </div>
     <NavPanelLayout
       v-else
       :is-loading="isLoading"
@@ -473,5 +486,14 @@ export default {
 <style lang="scss" scoped>
 .project-layout {
   margin-top: pxToRem(48px);
+}
+
+.profile-links {
+  display: inline-flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding-bottom: 24px;
+  text-transform: none;
+  gap: $space-unit;
 }
 </style>
