@@ -1,5 +1,13 @@
 <template>
   <div class="role-tab">
+    <div class="create-wrapper">
+      <LinkButton
+        :label="$t('account.title-create-add')"
+        btn-icon="Plus"
+        class="create-account"
+        @click="createAccountDrawer(null)"
+      />
+    </div>
     <div class="controls-wrapper">
       <div class="search-input-container">
         <SearchInput
@@ -17,13 +25,6 @@
         <label>{{ $t('browse.result-per-page') }}</label>
         <LpiSelect v-model="numResults" class="small" :options="numResultOptions" />
       </div>
-
-      <LinkButton
-        :label="$t('account.title-create-add')"
-        btn-icon="Plus"
-        class="create-account"
-        @click="createAccountDrawer(null)"
-      />
     </div>
 
     <LpiLoader v-if="isLoading" class="loader" type="simple" />
@@ -384,6 +385,12 @@ export default {
       gap: 1rem;
       align-items: stretch;
     }
+  }
+
+  .create-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: $space-l;
   }
 
   .search-input-container {
