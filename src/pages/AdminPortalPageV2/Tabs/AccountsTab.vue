@@ -1,5 +1,13 @@
 <template>
   <div class="role-tab">
+    <div class="create-wrapper">
+      <LinkButton
+        :label="$t('account.title-create-add')"
+        btn-icon="Plus"
+        class="create-account"
+        @click="createAccountDrawer(null)"
+      />
+    </div>
     <div class="controls-wrapper">
       <div class="search-input-container">
         <SearchInput
@@ -17,13 +25,6 @@
         <label>{{ $t('browse.result-per-page') }}</label>
         <LpiSelect v-model="numResults" class="small" :options="numResultOptions" />
       </div>
-
-      <LinkButton
-        :label="$t('account.title-create-add')"
-        btn-icon="Plus"
-        class="create-account"
-        @click="createAccountDrawer(null)"
-      />
     </div>
 
     <LpiLoader v-if="isLoading" class="loader" type="simple" />
@@ -32,6 +33,7 @@
       <table>
         <tbody>
           <tr>
+            <th />
             <th v-for="(filter, index) in filters" :key="index">
               <button
                 class="button"
@@ -49,16 +51,36 @@
             </th>
             <th />
           </tr>
-          <tr v-for="(user, index) in filteredUsers" :key="index">
-            <td>
-              {{ $filters.capitalize(user.family_name) }}
-            </td>
-            <td>{{ $filters.capitalize(user.given_name) }}</td>
-            <td>{{ $filters.capitalize(user.job) }}</td>
-            <td class="has-more">
+          <template v-for="(user, index) in filteredUsers" :key="index">
+            <tr class="user-row" :class="{ 'is-opened': openedLine.has(user.id) }">
+              <td>
+                <a
+                  href="#"
+                  @click="
+                    openedLine.has(user.id) ? openedLine.delete(user.id) : openedLine.add(user.id)
+                  "
+                >
+                  <IconImage
+                    :name="openedLine.has(user.id) ? 'MenuUp' : 'MenuDown'"
+                    class="toggle-user-icon"
+                  />
+                </a>
+              </td>
+              <td>
+                <div class="user-mail">
+                  {{ user.email }}
+                </div>
+              </td>
+              <td>
+                {{ $filters.capitalize(user.family_name) }}
+                {{ $filters.capitalize(user.given_name) }}
+              </td>
+              <!-- <td>{{ $filters.capitalize(user.given_name) }}</td> -->
+              <!-- <td>{{ $filters.capitalize(user.job) }}</td> -->
+              <!-- <td class="has-more">
               {{ user.current_org_role ? $t(`groups.roles.${user.current_org_role}`) : '-' }}
-            </td>
-            <td class="has-more">
+            </td> -->
+              <!-- <td class="has-more">
               <span class="first-item">
                 <template v-if="user.people_groups?.length">
                   <span v-if="user.people_groups[0].length > 28" :title="user.people_groups[0]">
@@ -79,21 +101,49 @@
                   </div>
                 </template>
               </ToolTip>
-            </td>
-            <td>
-              {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
-            </td>
-            <td>
-              {{
-                user.email_verified
-                  ? $t('admin.accounts.table.activation-yes')
-                  : $t('admin.accounts.table.activation-no')
-              }}
-            </td>
-            <td>
-              <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
-            </td>
-          </tr>
+            </td> -->
+              <td>
+                {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
+              </td>
+              <td>
+                {{
+                  user.email_verified
+                    ? $t('admin.accounts.table.activation-yes')
+                    : $t('admin.accounts.table.activation-no')
+                }}
+              </td>
+              <td>
+                <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
+              </td>
+            </tr>
+            <tr v-if="openedLine.has(user.id)" class="user-details-row">
+              <td />
+              <td :colspan="filters.length">
+                <div class="user-details-wrapper">
+                  <dl class="user-details">
+                    <dt>{{ $t('admin.accounts.table.title') }}</dt>
+                    <dd>{{ user.job }}</dd>
+                  </dl>
+                  <dl class="user-details">
+                    <dt>{{ $t('admin.accounts.table.roles') }}</dt>
+                    <dd v-if="user.current_org_role">
+                      {{ $t(`groups.roles.${user.current_org_role}`) }}
+                    </dd>
+                    <dd v-else>-</dd>
+                  </dl>
+                  <dl class="user-details">
+                    <dt>{{ $t('admin.accounts.table.groups') }}</dt>
+                    <dd>
+                      <ul>
+                        <li v-for="(g, i) in user.people_groups" :key="i">{{ g }}</li>
+                      </ul>
+                    </dd>
+                  </dl>
+                </div>
+              </td>
+              <td />
+            </tr>
+          </template>
         </tbody>
       </table>
       <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
@@ -116,34 +166,12 @@
 </template>
 
 <script>
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
-
 import debounce from 'lodash.debounce'
-import IconImage from '@/components/base/media/IconImage.vue'
-
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-
 import { searchPeopleAdmin } from '@/api/people.service'
-import ToolTip from '@/components/base/ToolTip.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'AccountsTab',
 
-  components: {
-    IconImage,
-    LpiLoader,
-    SearchInput,
-    LpiButton,
-    AccountDrawer,
-    PaginationButtons,
-    LinkButton,
-    ToolTip,
-  },
   setup() {
     const organizationsStore = useOrganizationsStore()
     return {
@@ -152,6 +180,7 @@ export default {
   },
   data() {
     return {
+      openedLine: new Set(),
       isOpenEditRoleDrawer: false,
       isOpenAccountDrawer: false,
       isLoading: false,
@@ -161,40 +190,47 @@ export default {
       request: {},
       filters: [
         {
+          label: 'form.email',
+          isActive: false,
+          filter: 'email',
+          order: '',
+          unsortable: false,
+        },
+        {
           label: 'admin.accounts.table.last-name',
           isActive: false,
           filter: 'family_name',
           order: '',
           unsortable: false,
         },
-        {
-          label: 'admin.accounts.table.first-name',
-          isActive: false,
-          filter: 'given_name',
-          order: '',
-          unsortable: false,
-        },
-        {
-          label: 'admin.accounts.table.title',
-          isActive: false,
-          filter: 'job',
-          order: '',
-          unsortable: false,
-        },
-        {
-          label: 'admin.accounts.table.roles',
-          isActive: false,
-          filter: 'current_org_role',
-          order: '',
-          unsortable: false,
-        },
-        {
-          label: 'admin.accounts.table.groups',
-          isActive: false,
-          filter: 'people_groups',
-          order: '',
-          unsortable: true,
-        },
+        // {
+        //   label: 'admin.accounts.table.first-name',
+        //   isActive: false,
+        //   filter: 'given_name',
+        //   order: '',
+        //   unsortable: false,
+        // },
+        // {
+        //   label: 'admin.accounts.table.title',
+        //   isActive: false,
+        //   filter: 'job',
+        //   order: '',
+        //   unsortable: false,
+        // },
+        // {
+        //   label: 'admin.accounts.table.roles',
+        //   isActive: false,
+        //   filter: 'current_org_role',
+        //   order: '',
+        //   unsortable: false,
+        // },
+        // {
+        //   label: 'admin.accounts.table.groups',
+        //   isActive: false,
+        //   filter: 'people_groups',
+        //   order: '',
+        //   unsortable: true,
+        // },
         {
           label: 'admin.accounts.table.inscription',
           isActive: false,
@@ -351,6 +387,12 @@ export default {
     }
   }
 
+  .create-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: $space-l;
+  }
+
   .search-input-container {
     display: flex;
     align-items: center;
@@ -398,6 +440,18 @@ export default {
   }
 }
 
+.user-mail {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toggle-user-icon {
+  width: 28px;
+  height: 28px;
+  fill: $almost-black;
+}
+
 table {
   border-collapse: unset;
   border: 1px solid #00dba7;
@@ -411,12 +465,19 @@ table {
 
   th,
   td {
-    padding: 16px 24px;
+    padding: 12px;
     text-align: start;
   }
 
-  tr td {
-    border-top: 1px solid #99ffe7;
+  tr:not(.user-details-row) {
+    td {
+      border-top: 1px solid #99ffe7;
+    }
+
+    td:last-child,
+    td:first-child {
+      padding: 12px 8px;
+    }
   }
 }
 
@@ -475,6 +536,25 @@ table {
   label {
     flex-shrink: 0;
     font-weight: 500;
+  }
+}
+
+.user-details-wrapper {
+  display: flex;
+  gap: $space-m;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-details {
+  dt {
+    color: $primary-dark;
+  }
+
+  ul {
+    list-style-type: square;
+    list-style-position: inside;
   }
 }
 </style>
