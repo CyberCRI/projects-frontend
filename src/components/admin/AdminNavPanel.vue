@@ -71,7 +71,7 @@ export default {
     overflow-y: auto;
     padding: 2.125rem;
     box-sizing: border-box;
-    padding-top: 4rem;
+    padding-top: 8rem;
   }
 }
 
