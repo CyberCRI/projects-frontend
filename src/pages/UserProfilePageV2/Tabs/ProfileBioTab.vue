@@ -10,15 +10,20 @@
       />
     </div>
     <!-- Short bio -->
-    <div v-if="user.short_description" class="short-bio user-descriptions description-content">
-      <p>
-        <strong>{{ $t('profile.edit.bio.short-bio.label') }}</strong>
-      </p>
-      <p class="short-description" v-html="user.short_description" />
+    <div v-if="user.short_description" class="short-bio">
+      <h3 class="subtitle">{{ $t('profile.edit.bio.short-bio.label') }}</h3>
+
+      <div class="user-descriptions description-content">
+        <p class="short-description" v-html="user.short_description" />
+      </div>
     </div>
 
     <!-- User descriptions -->
-    <UserDescriptions v-if="user.description" :user="user" />
+    <div v-if="user.short_description" class="long-bio">
+      <h3 class="subtitle">{{ $t('profile.edit.bio.long-bio.label') }}</h3>
+
+      <UserDescriptions v-if="user.description" :user="user" />
+    </div>
 
     <!-- No description -->
     <p v-if="!user.description && !user.short_description" class="empty-field">
@@ -90,8 +95,15 @@ export default {
   align-items: center;
 }
 
+.subtitle {
+  font-size: $font-size-l;
+  font-weight: 700;
+  color: $primary-dark;
+}
+
 .user-descriptions {
   padding: $space-l;
+  padding-left: 0;
 
   &.limited {
     @media all and (min-width: $max-tablet) {
