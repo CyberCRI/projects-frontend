@@ -82,24 +82,7 @@
           vertical-layout
           @click="goToCommentView"
         />
-        <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-          <template #custom-content>
-            <div class="share-ctn">
-              <button @click="facebookShare">
-                <IconImage name="Facebook" />
-              </button>
-              <button @click="linkedinShare">
-                <IconImage name="Linkedin" />
-              </button>
-            </div>
-          </template>
-          <ExternalLabelButton
-            class="space-button bg-on-hover"
-            :label="$t('group.share')"
-            btn-icon="Share"
-            vertical-layout
-          />
-        </ToolTip>
+        <SocialShareButton :shared-url="sharedUrl" />
       </div>
 
       <SimilarProjectsV2
@@ -162,6 +145,7 @@ export default {
   data() {
     return {
       addToProjectMenuVisible: false,
+      sharedUrl: useRequestURL().toString(),
     }
   },
 
@@ -215,15 +199,6 @@ export default {
     goToAnnouncements() {
       this.navigated()
       this.projectLayoutGoToTab('announcements')
-    },
-    facebookShare() {
-      window?.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
-    },
-    // twitterShare() {
-    //     window?.open(`https://twitter.com/intent/tweet?url=${this.sharedUrl}&text=`)
-    // },
-    linkedinShare() {
-      window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
     },
 
     /* TODO: Put this back once we figured out to who are we supposed to write to */
@@ -352,21 +327,5 @@ menu {
 
   --external-button-outer-size: 1.2rem;
   --external-button-inner-size: 1.2rem;
-
-  .share-ctn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $space-m;
-    z-index: 1;
-    flex-grow: 1;
-    flex-shrink: 1;
-
-    svg {
-      width: 24px;
-      fill: $primary-dark;
-      cursor: pointer;
-    }
-  }
 }
 </style>

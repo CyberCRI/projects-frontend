@@ -101,7 +101,7 @@ export default {
           label: this.$t('group.snapshot'),
           view: `/group/${this.$route.params.groupId}/snapshot`,
           props: {
-            description: this.description,
+            description: this.groupDescription,
             projectsInitialRequest: this.projectsInitialRequest,
             isProjectsLoading: this.isProjectsLoading,
             membersInitialRequest: this.membersInitialRequest,
@@ -273,7 +273,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.group-layout {
+.group-layout,
+.group-edit-layout {
   margin-top: pxToRem(48px);
 }
 
