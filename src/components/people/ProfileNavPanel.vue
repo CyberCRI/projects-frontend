@@ -310,37 +310,25 @@ menu {
     display: flex;
     align-items: flex-start;
     word-break: break-word;
+    gap: $space-xs;
 
-    svg {
+    .icon {
       flex-shrink: 0;
-      vertical-align: middle;
+      vertical-align: baseline;
+      width: 22px;
+      height: 22px;
+      fill: $primary-dark;
     }
 
     span {
-      padding-top: pxToRem(4px);
-    }
-
-    & ~ .social {
-      margin-top: $space-m;
+      font-weight: 700;
+      font-size: $font-size-m;
+      color: $primary-dark;
     }
   }
 
   a.social:hover {
     text-decoration: underline;
-  }
-
-  .icon {
-    width: 22px;
-    height: 22px;
-    fill: $primary-dark;
-    margin-right: $space-xs;
-    margin-top: 4px;
-  }
-
-  span {
-    font-weight: 700;
-    font-size: $font-size-m;
-    color: $primary-dark;
   }
 }
 </style>
