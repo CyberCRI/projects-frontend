@@ -208,12 +208,12 @@
       />
     </div>
   </div>
-  <!-- sdgss selector -->
+  <!-- sdgs selector -->
   <BaseDrawer
     :confirm-action-name="$t('common.confirm')"
     :is-opened="showSdgsDrawer"
     :title="$t('profile.edit.general.sdgs.label')"
-    class="small"
+    class="medium"
     data-test="sdgs-drawer"
     @close="showSdgsDrawer = false"
     @confirm="selectSdgs"
