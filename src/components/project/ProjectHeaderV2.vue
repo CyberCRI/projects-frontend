@@ -198,7 +198,6 @@ export default {
 
   data() {
     return {
-      sharedUrl: window?.location?.origin,
       imageAlertDismissed: false,
       showFullTitle: false,
       showFullPurpose: false,

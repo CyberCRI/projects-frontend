@@ -8,7 +8,6 @@
             { value: false, label: 'Show' },
             { value: true, label: 'Edit' },
           ]"
-          :label="editButtonLabel"
           btn-icon="Pen"
           :data-test="isEditing ? 'show-group' : 'edit-group'"
           class="edit-btn small"
@@ -51,24 +50,7 @@
             class="bg-on-hover"
           />
         </ToolTip>
-        <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-          <template #custom-content>
-            <div class="share-ctn">
-              <button @click="facebookShare">
-                <IconImage name="Facebook" />
-              </button>
-              <button @click="linkedinShare">
-                <IconImage name="Linkedin" />
-              </button>
-            </div>
-          </template>
-          <ExternalLabelButton
-            :label="$t('group.share')"
-            btn-icon="Share"
-            vertical-layout
-            class="bg-on-hover"
-          />
-        </ToolTip>
+        <SocialShareButton :shared-url="sharedUrl" />
       </div>
     </div>
   </div>
@@ -115,14 +97,6 @@ export default {
   },
 
   methods: {
-    facebookShare() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.sharedUrl}`)
-    },
-
-    linkedinShare() {
-      window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.sharedUrl}`)
-    },
-
     navigated() {
       this.$emit('navigated')
     },

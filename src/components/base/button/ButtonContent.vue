@@ -59,7 +59,7 @@ export default {
 }
 
 .btn-icon {
-  height: pxToRem(18px);
+  height: var(--btn-icon-size, pxToRem(18px));
 }
 
 .loader-simple {
