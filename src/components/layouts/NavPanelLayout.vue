@@ -23,18 +23,11 @@ const toggleNavPanel = () => {
 const collapseNavPanel = () => {
   emit('collapse-nav-panel')
 }
+
+const { isMobile } = useViewportWidth()
 </script>
 <template>
-  <div class="nav-panel-layout">
-    <div class="breadcrumbs-ctn">
-      <LpiButton
-        :btn-icon="isNavCollapsed ? 'MenuUnfoldLine' : 'MenuFoldLine'"
-        class="toggle-button nav-panel-toggle-button"
-        :class="{ 'nav-panel-toggle-button-collapsed': isNavCollapsed }"
-        @click="toggleNavPanel"
-      />
-      <BreadCrumbs :breadcrumbs="breadcrumbs" />
-    </div>
+  <div class="nav-panel-layout" :class="{ 'no-nav': isNavCollapsed }">
     <div class="panels-ctn">
       <transition name="backdrop-fade">
         <div
@@ -44,9 +37,30 @@ const collapseNavPanel = () => {
         ></div>
       </transition>
       <transition name="slide-panel">
-        <slot name="nav-panel" />
+        <div v-if="!isNavCollapsed" class="nav-panel">
+          <div class="breadcrumbs-ctn">
+            <LpiButton
+              v-if="!isMobile && !isNavCollapsed"
+              btn-icon="MenuFoldLine"
+              class="toggle-button nav-panel-toggle-button"
+              secondary
+              @click="toggleNavPanel"
+            />
+          </div>
+          <slot name="nav-panel" />
+        </div>
       </transition>
       <div class="content-panel">
+        <div class="breadcrumbs-ctn">
+          <LpiButton
+            v-if="isMobile || isNavCollapsed"
+            btn-icon="MenuUnfoldLine"
+            class="toggle-button nav-panel-toggle-button nav-panel-toggle-button-collapsed"
+            secondary
+            @click="toggleNavPanel"
+          />
+          <BreadCrumbs :breadcrumbs="breadcrumbs" />
+        </div>
         <slot name="content" />
       </div>
     </div>
@@ -72,6 +86,9 @@ const collapseNavPanel = () => {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-top: 0.7rem;
+  height: 2rem;
+  padding-bottom: 1rem;
 
   @media screen and (max-width: $min-tablet) {
     .breadcrumbs {
@@ -81,8 +98,13 @@ const collapseNavPanel = () => {
     .toggle-button {
       position: fixed;
       z-index: 110;
+      left: 1rem;
     }
   }
+}
+
+.nav-panel .breadcrumbs-ctn {
+  justify-content: flex-end;
 }
 
 .panels-ctn {
@@ -92,42 +114,47 @@ const collapseNavPanel = () => {
 
   @media (max-width: $min-tablet) {
     padding: 0 $space-xs;
+    gap: 0;
   }
+}
+
+.no-nav .panels-ctn {
+  gap: 0;
 }
 
 .content-panel {
   flex-basis: 100%;
 }
 
-@media screen and (max-width: $min-tablet) {
-  .slide-panel-enter-from,
-  .slide-panel-leave-to {
-    transform: translateX(-100%);
-  }
+// @media screen and (max-width: $min-tablet) {
+//   .slide-panel-enter-from,
+//   .slide-panel-leave-to {
+//     transform: translateX(-100%);
+//   }
 
-  .slide-panel-enter-active,
-  .slide-panel-leave-active {
-    transition: transform 0.2s ease-in-out;
-  }
+//   .slide-panel-enter-active,
+//   .slide-panel-leave-active {
+//     transition: transform 0.2s ease-in-out;
+//   }
 
-  .slide-panel-enter-to,
-  .slide-panel-leave-from {
-    transform: translateX(0);
-  }
+//   .slide-panel-enter-to,
+//   .slide-panel-leave-from {
+//     transform: translateX(0);
+//   }
 
-  .backdrop-fade-enter-active,
-  .backdrop-fade-leave-active {
-    transition: opacity 0.2s ease-in-out;
-  }
+//   .backdrop-fade-enter-active,
+//   .backdrop-fade-leave-active {
+//     transition: opacity 0.2s ease-in-out;
+//   }
 
-  .backdrop-fade-enter-to,
-  .backdrop-fade-leave-from {
-    opacity: 1;
-  }
+//   .backdrop-fade-enter-to,
+//   .backdrop-fade-leave-from {
+//     opacity: 1;
+//   }
 
-  .backdrop-fade-enter-from,
-  .backdrop-fade-leave-to {
-    opacity: 0;
-  }
-}
+//   .backdrop-fade-enter-from,
+//   .backdrop-fade-leave-to {
+//     opacity: 0;
+//   }
+// }
 </style>
