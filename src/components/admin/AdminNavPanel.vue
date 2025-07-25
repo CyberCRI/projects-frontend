@@ -63,7 +63,7 @@ export default {
     position: fixed;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 10%);
     background-color: $white;
-    z-index: 100;
+    z-index: 105;
     width: calc(18rem + 2.125rem);
     top: 3rem;
     left: 0;
