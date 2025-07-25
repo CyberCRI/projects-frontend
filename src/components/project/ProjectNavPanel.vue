@@ -1,98 +1,78 @@
 <template>
-  <div class="nav-panel">
-    <div class="nav-panel-inner">
-      <div v-if="project && canEditProject" class="edit-btn-ctn">
-        <LpiButton
-          :label="$t('project.edit')"
-          btn-icon="Pen"
-          data-test="header-project-button"
-          class="edit-btn small"
-          @click="editProject"
-        />
-      </div>
-
-      <menu>
-        <li
-          v-for="entry in projectTabs"
-          :key="entry.view"
-          class="menu-entry"
-          :class="{ active: entry == currentTab }"
-        >
-          <NuxtLink
-            v-if="entry.condition"
-            class="link"
-            :data-test="entry.key"
-            :to="entry.view"
-            @click="navigated"
-          >
-            <IconImage class="icon" :name="entry.icon || 'Article'" />
-            {{ entry.label }}
-          </NuxtLink>
-        </li>
-      </menu>
-
-      <div
-        v-if="project && canEditProject"
-        v-click-outside="() => (addToProjectMenuVisible = false)"
-        class="add-to-project-ctn"
-      >
-        <LpiButton
-          v-if="canEditProject"
-          :animation="false"
-          :class="{ active: addToProjectMenuVisible }"
-          :label="$t('common.add')"
-          class="add-to-project-button small"
-          btn-icon="Plus"
-          data-test="add-to-project"
-          @click="toggleAddToProject"
-        />
-
-        <transition name="fade">
-          <AddToProjectDropdown
-            v-if="addToProjectMenuVisible && canEditProject"
-            is-v2
-            class="add-to-project"
-            @close-dropdown="toggleAddToProject"
-          />
-        </transition>
-      </div>
-
-      <div class="share-buttons">
-        <ExternalLabelButton
-          v-if="usersStore.isConnected"
-          class="space-button bg-on-hover"
-          :label="followed ? $t('project.followed') : $t('project.follow')"
-          :btn-icon="followed ? 'Heart' : 'HeartOutline'"
-          vertical-layout
-          @click="toggleFollow"
-        />
-        <ExternalLabelButton
-          v-if="announcements?.length"
-          class="space-button article-button bg-on-hover"
-          :label="$t('group.news')"
-          btn-icon="Article"
-          vertical-layout
-          :nb-button="announcements.length.toString()"
-          @click="goToAnnouncements"
-        />
-        <ExternalLabelButton
-          class="space-button bg-on-hover"
-          :label="$filters.capitalize($t('comment.comment-verb'))"
-          btn-icon="ChatBubble"
-          vertical-layout
-          @click="goToCommentView"
-        />
-        <SocialShareButton :shared-url="sharedUrl" />
-      </div>
-
-      <SimilarProjectsV2
-        v-if="similarProjects && similarProjects.length"
-        id="similar-projects"
-        :similar-projects="similarProjects"
-        class="similar-projects v2"
+  <NavPanelAside>
+    <div v-if="project && canEditProject" class="edit-btn-ctn">
+      <LpiButton
+        :label="$t('project.edit')"
+        btn-icon="Pen"
+        data-test="header-project-button"
+        class="edit-btn small"
+        @click="editProject"
       />
     </div>
-  </div>
+
+    <NavPanelMenu :menu-entries="projectTabs" :current-tab="currentTab" @navigated="navigated" />
+
+    <div
+      v-if="project && canEditProject"
+      v-click-outside="() => (addToProjectMenuVisible = false)"
+      class="add-to-project-ctn"
+    >
+      <LpiButton
+        v-if="canEditProject"
+        :animation="false"
+        :class="{ active: addToProjectMenuVisible }"
+        :label="$t('common.add')"
+        class="add-to-project-button small"
+        btn-icon="Plus"
+        data-test="add-to-project"
+        @click="toggleAddToProject"
+      />
+
+      <transition name="fade">
+        <AddToProjectDropdown
+          v-if="addToProjectMenuVisible && canEditProject"
+          is-v2
+          class="add-to-project"
+          @close-dropdown="toggleAddToProject"
+        />
+      </transition>
+    </div>
+
+    <div class="share-buttons">
+      <ExternalLabelButton
+        v-if="usersStore.isConnected"
+        class="space-button bg-on-hover"
+        :label="followed ? $t('project.followed') : $t('project.follow')"
+        :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+        vertical-layout
+        @click="toggleFollow"
+      />
+      <ExternalLabelButton
+        v-if="announcements?.length"
+        class="space-button article-button bg-on-hover"
+        :label="$t('group.news')"
+        btn-icon="Article"
+        vertical-layout
+        :nb-button="announcements.length.toString()"
+        @click="goToAnnouncements"
+      />
+      <ExternalLabelButton
+        class="space-button bg-on-hover"
+        :label="$filters.capitalize($t('comment.comment-verb'))"
+        btn-icon="ChatBubble"
+        vertical-layout
+        @click="goToCommentView"
+      />
+      <SocialShareButton :shared-url="sharedUrl" />
+    </div>
+
+    <SimilarProjectsV2
+      v-if="similarProjects && similarProjects.length"
+      id="similar-projects"
+      :similar-projects="similarProjects"
+      class="similar-projects v2"
+    />
+  </NavPanelAside>
 </template>
 
 <script>
@@ -210,67 +190,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav-panel {
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-@media screen and (max-width: $min-tablet) {
-  .nav-panel {
-    position: fixed;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 10%);
-    background-color: $white;
-    z-index: 105;
-    width: calc(18rem + 2.125rem);
-    top: 3rem;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
-    padding: 2.125rem;
-    box-sizing: border-box;
-    padding-top: 4rem;
-  }
-}
-
-@media screen and (min-width: $min-tablet) {
-  .nav-panel-inner {
-    width: 16rem;
-  }
-}
-
 .edit-btn-ctn {
   padding-bottom: 1rem;
   display: flex;
   justify-content: center;
-}
-
-menu {
-  display: flex;
-  flex-flow: column;
-  gap: 0.5rem;
-  list-style-type: none;
-
-  .menu-entry {
-    &:hover,
-    &.active {
-      background-color: $primary-light;
-    }
-
-    .link {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      padding: 0.4rem;
-      color: $primary-dark;
-
-      .icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        fill: $primary-dark;
-      }
-    }
-  }
 }
 
 .similar-projects {
