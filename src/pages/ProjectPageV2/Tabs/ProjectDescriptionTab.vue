@@ -1,28 +1,34 @@
 <template>
   <div>
     <div v-if="project" class="project-description">
-      <aside>
-        <h1 v-if="isSummarySticked" class="project-title-recall">
-          {{ project.title }}
-        </h1>
-        <div v-if="showEditButton" class="description-edit">
-          <span
-            class="edit-description-button white-bg"
-            data-test="edit-description"
-            @click="editDescriptionModalActive = !editDescriptionModalActive"
-          >
-            <IconImage class="icon" name="Pen" />
-          </span>
-        </div>
-        <DescriptionSummaryBlock
-          :description="true"
-          class="summary"
-          summary-text-container=".description-content"
-          :anchor-offset="anchorOffset"
-          @item-clicked="scrollToSection"
-          @decription-summary-rendered="onSummaryRendered"
-        />
-      </aside>
+      <PageStickyHead :page-title="project.title">
+        <template #default="{ anchorOffset }">
+          <div v-if="showEditButton" class="description-edit">
+            <span
+              class="edit-description-button white-bg"
+              data-test="edit-description"
+              @click="editDescriptionModalActive = !editDescriptionModalActive"
+            >
+              <IconImage class="icon" name="Pen" />
+            </span>
+          </div>
+          <PageIndex v-show="hasSummary">
+            <template #default="{ closeSummary }">
+              <DescriptionSummaryBlock
+                summary-text-container=".description-content"
+                :anchor-offset="anchorOffset"
+                @item-clicked="
+                  (evt) => {
+                    scrollToSection(evt)
+                    closeSummary()
+                  }
+                "
+                @summary-length-changed="hasSummary = !!$event"
+              />
+            </template>
+          </PageIndex>
+        </template>
+      </PageStickyHead>
 
       <DescriptionPlaceholder
         v-if="canEditProject && showDescriptionPlaceHolder"
@@ -44,9 +50,7 @@
 import DescriptionSummaryBlock from '@/components/project/description/DescriptionSummaryBlock.vue'
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
-import utils from '@/functs/functions.ts'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import throttle from 'lodash.throttle'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useProjectsStore from '@/stores/useProjects.ts'
 
@@ -81,8 +85,7 @@ export default {
   data() {
     return {
       editDescriptionModalActive: false,
-      anchorOffset: 0,
-      isSummarySticked: false,
+      hasSummary: false,
     }
   },
 
@@ -103,59 +106,46 @@ export default {
     },
   },
 
-  watch: {
-    showEditButton: {
-      handler: function (neo, old) {
-        if (neo != old) {
-          // give time to render content
-          this.$nextTick(() => {
-            this.computeAnchorOffset()
-          })
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  mounted() {
-    this.computeAnchorOffset()
-    // in unit tests, window might be undefined
-    window?.addEventListener('resize', this.computeAnchorOffset)
-    window?.addEventListener('resize', this.checkIfSummaryIsSticked)
-    window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
-  },
-
-  beforeUnmount() {
-    // in unit tests, window might be undefined
-    window?.removeEventListener('resize', this.computeAnchorOffset)
-    window?.addEventListener('resize', this.checkIfSummaryIsSticked)
-    window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
-  },
+  // watch: {
+  //   showEditButton: {
+  //     handler: function (neo, old) {
+  //       if (neo != old) {
+  //         // give time to render content
+  //         this.$nextTick(() => {
+  //           this.computeAnchorOffset()
+  //         })
+  //       }
+  //     },
+  //     immediate: true,
+  //   },
+  // },
 
   methods: {
     close() {
       this.editDescriptionModalActive = !this.editDescriptionModalActive
     },
-    scrollToSection(target) {
-      utils.scrollTo(document.getElementById(`anchor-${target}`))
-    },
-    computeAnchorOffset: throttle(function () {
-      if (!this) return // safeguard for debounced behavior when the component is unmounted
-      const aside = this?.$el?.querySelector('aside')
-      const asideHeight = aside ? aside.offsetHeight : 0
-      const anchorOffset = asideHeight + 20
-      this.anchorOffset = anchorOffset
-    }, 100),
-    onSummaryRendered() {
-      this.computeAnchorOffset()
-    },
+    scrollToSection(targetId) {
+      const target = document.getElementById(`anchor-${targetId}`)
+      let offset = 20
+      const header = document.querySelector('.header__container')
+      if (header) {
+        offset += header.getBoundingClientRect().height
+      }
 
-    checkIfSummaryIsSticked: throttle(function () {
-      const summary = this.$el.querySelector('aside')
-      this.isSummarySticked =
-        summary?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
-        window?.innerWidth > 768 /* $min-tablet */
-    }, 16),
+      const stickyHead = document.querySelector('.page-sticky-head')
+      if (stickyHead) {
+        offset += stickyHead.getBoundingClientRect().height
+      }
+      if (target) {
+        const bbox = target.getBoundingClientRect()
+        const top = bbox.top
+        window.scroll({
+          left: 0,
+          top: window.scrollY + top - offset,
+          behavior: 'smooth',
+        })
+      }
+    },
   },
 }
 </script>
@@ -175,35 +165,6 @@ export default {
   .summary {
     max-width: 100%;
     min-width: 300px;
-  }
-
-  aside {
-    padding: $space-m 0;
-    position: static;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1rem;
-    background-color: rgb(255 255 255 / 70%);
-
-    @media screen and (min-width: $min-tablet) {
-      flex-flow: row;
-      justify-content: flex-end;
-      align-items: center;
-      position: sticky;
-      z-index: 100;
-      top: $navbar-height;
-    }
-  }
-
-  .project-title-recall {
-    flex-grow: 1;
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: $font-size-2xl;
   }
 }
 

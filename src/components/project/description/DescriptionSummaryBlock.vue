@@ -1,51 +1,35 @@
 <template>
-  <div v-if="summary.length" class="summary">
-    <div class="summary-header" @click="toggle">
-      {{ $t('common.index') }}
-      <IconImage class="chevron" :name="open ? 'ChevronUp' : 'ChevronDown'" />
-    </div>
-
-    <div
-      v-show="open"
-      :class="{ 'body--description-block': description }"
-      class="body custom-scrollbar"
+  <ul>
+    <li
+      v-for="(item, index) in summary"
+      :id="`quick-link-${item.id}`"
+      :key="index"
+      :class="summaryTextContainer ? item.type : null"
     >
-      <ul>
-        <li
-          v-for="(item, index) in summary"
-          :id="`quick-link-${item.id}`"
-          :key="index"
-          :class="summaryTextContainer ? item.type : null"
-        >
-          <div
-            v-if="(item.separator || !summaryTextContainer) && index !== 0"
-            :class="{ 'separator--margin': !summaryTextContainer }"
-            class="separator"
-          />
-          <a v-if="summaryTextContainer" :href="item.link" @click.prevent="onItemClicked(item.id)">
-            {{ item.text }}
-          </a>
+      <div
+        v-if="(item.separator || !summaryTextContainer) && index !== 0"
+        :class="{ 'separator--margin': !summaryTextContainer }"
+        class="separator"
+      />
+      <a v-if="summaryTextContainer" :href="item.link" @click.prevent="onItemClicked(item.id)">
+        {{ item.text }}
+      </a>
 
-          <p
-            v-else-if="items"
-            :class="{ current: current === item.id }"
-            @click="onItemClicked(item.id)"
-          >
-            <span>{{ item.label }}</span>
-            <span v-if="item.date" class="item-date">{{ $d(new Date(item.date)) }}</span>
-          </p>
-        </li>
-      </ul>
-    </div>
-  </div>
+      <p
+        v-else-if="items"
+        :class="{ current: current === item.id }"
+        @click="onItemClicked(item.id)"
+      >
+        <span>{{ item.label }}</span>
+        <span v-if="item.date" class="item-date">{{ $d(new Date(item.date)) }}</span>
+      </p>
+    </li>
+  </ul>
 </template>
 
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
 export default {
   name: 'DescriptionSummaryBlock',
-
-  components: { IconImage },
 
   props: {
     summaryTextContainer: {
@@ -67,19 +51,13 @@ export default {
       type: Number,
       default: null,
     },
-
-    description: {
-      type: Boolean,
-      default: false,
-    },
   },
 
-  emits: ['item-clicked', 'decription-summary-rendered'],
+  emits: ['item-clicked', 'summary-length-changed'],
 
   data() {
     return {
       summary: [],
-      open: false,
     }
   },
 
@@ -110,7 +88,7 @@ export default {
 
     summary: {
       handler() {
-        this.$emit('decription-summary-rendered', !!this.summary.length)
+        this.$emit('summary-length-changed', this.summary.length)
       },
       deep: true,
       immediate: true,
@@ -122,9 +100,6 @@ export default {
   },
 
   methods: {
-    toggle() {
-      this.open = !this.open
-    },
     onItemClicked(id) {
       if (id !== this.current) this.$emit('item-clicked', id)
     },
@@ -161,115 +136,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: $min-tablet) {
-  .summary {
-    width: 378px;
+.separator {
+  border: 1px solid $primary-dark;
+  width: pxToRem(50px);
+  margin-bottom: 16px;
+
+  &--margin {
+    margin-left: $space-m;
   }
 }
 
-.chevron {
-  width: 2rem;
-  fill: $black;
-  display: inline-block;
+.H1 {
+  font-weight: 700;
+  font-size: $font-size-m;
 }
 
-.summary {
-  background: $primary-lighter;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
-  position: relative;
-  overflow: visible;
+.H2 {
+  margin-left: $space-m;
+  font-weight: 500;
+  font-size: $font-size-s;
+}
 
-  .summary-header {
-    padding: $space-s $space-l;
-    font-size: 18px;
+li:not(:last-of-type) {
+  margin-bottom: pxToRem(16px);
+}
+
+li {
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  line-height: $line-height-tight;
+
+  &:hover {
+    color: $primary-dark;
+  }
+
+  a {
+    color: $primary-dark;
+  }
+
+  p {
+    color: $primary-dark;
+  }
+}
+
+li > p {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 $space-m;
+
+  .item-date {
+    margin-left: $space-s;
+  }
+
+  &.current {
     font-weight: 700;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: $primary;
-  }
-
-  .body {
-    background: $primary-lighter;
-    border-radius: 0 0 $border-radius-l $border-radius-l;
-    border-top: 0 solid $primary;
-    border-left: $border-width-s solid $primary;
-    border-right: $border-width-s solid $primary;
-    border-bottom: $border-width-s solid $primary;
-    position: absolute;
-    transform: translateY(-1rem);
-    top: 100%;
-    left: -$border-width-s;
-    right: -$border-width-s;
-    overflow-y: scroll;
-    max-height: 302px;
-
-    &--description-block {
-      padding: $space-m $space-l;
-      color: $primary-dark;
-    }
-
-    .separator {
-      border: 1px solid $primary-dark;
-      width: pxToRem(50px);
-      margin-bottom: 16px;
-
-      &--margin {
-        margin-left: $space-m;
-      }
-    }
-
-    .H1 {
-      font-weight: 700;
-      font-size: $font-size-m;
-    }
-
-    .H2 {
-      margin-left: $space-m;
-      font-weight: 500;
-      font-size: $font-size-s;
-    }
-
-    li:not(:last-of-type) {
-      margin-bottom: pxToRem(16px);
-    }
-
-    li {
-      cursor: pointer;
-      transition: color 0.2s ease-in-out;
-      line-height: $line-height-tight;
-
-      &:hover {
-        color: $primary-dark;
-      }
-
-      a {
-        color: $primary-dark;
-      }
-
-      p {
-        color: $primary-dark;
-      }
-    }
-
-    li > p {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 $space-m;
-
-      .item-date {
-        margin-left: $space-s;
-      }
-
-      &.current {
-        font-weight: 700;
-      }
-    }
   }
 }
 </style>

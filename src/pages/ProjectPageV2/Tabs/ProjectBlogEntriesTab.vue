@@ -1,5 +1,30 @@
 <template>
   <div class="project-blog-entries">
+    <PageStickyHead v-if="project" :page-title="project.title">
+      <template #default>
+        <div v-if="canEditProject" class="add-blog">
+          <LpiButton
+            :label="$filters.capitalize($t('blog.add-entry'))"
+            class="add-blog-btn"
+            @click="projectLayoutToggleAddModal('blogEntry')"
+          />
+        </div>
+        <PageIndex v-show="summaryItems.length">
+          <template #default="{ closeSummary }">
+            <BlogSummaryBlock
+              :current="expandedEntry"
+              :items="summaryItems"
+              @item-clicked="
+                (evt) => {
+                  updateExpanded(evt)
+                  closeSummary()
+                }
+              "
+            />
+          </template>
+        </PageIndex>
+      </template>
+    </PageStickyHead>
     <div class="blog-entries-ctn">
       <BlogEntry
         v-for="(blogEntry, i) in blogEntries"
@@ -15,21 +40,6 @@
         @delete-clicked="openConfirmModal(blogEntry)"
       />
     </div>
-
-    <aside v-if="summaryItems.length || canEditProject">
-      <div v-if="canEditProject" class="add-blog">
-        <LpiButton
-          :label="$filters.capitalize($t('blog.add-entry'))"
-          class="add-blog-btn"
-          @click="projectLayoutToggleAddModal('blogEntry')"
-        />
-      </div>
-      <BlogSummaryBlock
-        :current="expandedEntry"
-        :items="summaryItems"
-        @item-clicked="updateExpanded"
-      />
-    </aside>
 
     <ConfirmModal
       v-if="confirmModalVisible"
@@ -117,6 +127,7 @@ export default {
   watch: {
     blogEntriesLength: {
       handler: function () {
+        if (!this.project) return
         // Router needs to be tested, if it's not set right away it might create an error
         if (this.$router && this.blogEntriesLength === 0)
           this.$router.push({
@@ -139,6 +150,11 @@ export default {
           const header = document.querySelector('.header__container')
           if (header) {
             offset += header.getBoundingClientRect().height
+          }
+
+          const stickyHead = document.querySelector('.page-sticky-head')
+          if (stickyHead) {
+            offset += stickyHead.getBoundingClientRect().height
           }
 
           if (target) {
@@ -164,6 +180,7 @@ export default {
         document.getElementById(`entry-${id}`).scrollIntoView({
           behavior: 'smooth',
           block: 'center',
+          offset: 20,
         })
       }
     },
@@ -205,48 +222,14 @@ export default {
 
 <style lang="scss" scoped>
 .project-blog-entries {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   padding: $space-2xl 0;
   position: relative;
 
   .blog-entries-ctn {
-    width: calc(100% - 400px);
-
-    > div:not(:first-of-type) {
-      margin-top: $space-l;
-    }
-  }
-
-  aside {
-    position: sticky;
-    top: $navbar-height;
-    min-width: 320px;
-    max-width: 100%;
-  }
-}
-
-.add-blog {
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: $space-l;
-}
-
-@media screen and (max-width: $max-tablet) {
-  .project-blog-entries {
-    flex-direction: column-reverse;
-    padding: $space-2xl $space-s;
-
-    aside {
-      position: static;
-      margin-bottom: $space-l;
-      margin-left: auto;
-    }
-
-    .blog-entries-ctn {
-      width: 100%;
-    }
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: $space-l;
   }
 }
 </style>

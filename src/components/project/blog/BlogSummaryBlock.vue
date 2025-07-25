@@ -1,38 +1,30 @@
 <template>
-  <div v-if="summary.length" class="summary">
-    <div class="summary-header">
-      {{ $t('common.index') }}
-    </div>
+  <ul>
+    <li
+      v-for="(item, index) in summary"
+      :id="`quick-link-${item.id}`"
+      :key="index"
+      :class="summaryTextContainer ? item.type : null"
+    >
+      <div
+        v-if="(item.separator || !summaryTextContainer) && index !== 0"
+        :class="{ 'separator--margin': !summaryTextContainer }"
+        class="separator"
+      />
+      <a v-if="summaryTextContainer" :href="item.link" @click.prevent="onItemClicked(item.id)">
+        {{ item.text }}
+      </a>
 
-    <div :class="{ 'body--description-block': description }" class="body custom-scrollbar">
-      <ul>
-        <li
-          v-for="(item, index) in summary"
-          :id="`quick-link-${item.id}`"
-          :key="index"
-          :class="summaryTextContainer ? item.type : null"
-        >
-          <div
-            v-if="(item.separator || !summaryTextContainer) && index !== 0"
-            :class="{ 'separator--margin': !summaryTextContainer }"
-            class="separator"
-          />
-          <a v-if="summaryTextContainer" :href="item.link" @click.prevent="onItemClicked(item.id)">
-            {{ item.text }}
-          </a>
-
-          <p
-            v-else-if="items"
-            :class="{ current: current === item.id }"
-            @click="onItemClicked(item.id)"
-          >
-            <span>{{ item.label }}</span>
-            <span v-if="item.date" class="item-date">{{ $d(new Date(item.date)) }}</span>
-          </p>
-        </li>
-      </ul>
-    </div>
-  </div>
+      <p
+        v-else-if="items"
+        :class="{ current: current === item.id }"
+        @click="onItemClicked(item.id)"
+      >
+        <span>{{ item.label }}</span>
+        <span v-if="item.date" class="item-date">{{ $d(new Date(item.date)) }}</span>
+      </p>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -59,11 +51,6 @@ export default {
       type: Number,
       default: null,
     },
-
-    description: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   emits: ['item-clicked'],
@@ -75,16 +62,6 @@ export default {
   },
 
   watch: {
-    current: {
-      immediate: true,
-      handler: function (neo, old) {
-        if (neo && neo !== old) {
-          const target = document.getElementById(`quick-link-${neo}`)
-          if (target) target.scrollIntoView({ behavior: 'smooth' })
-        }
-      },
-    },
-
     items: {
       handler() {
         this.loadSummary()
@@ -131,96 +108,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: $min-tablet) {
-  .summary {
-    width: 378px;
+.separator {
+  border: 1px solid $primary-dark;
+  width: pxToRem(50px);
+  margin-bottom: 16px;
+
+  &--margin {
+    margin-left: $space-m;
   }
 }
 
-.summary {
-  background: $primary-lighter;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
-  position: relative;
-  overflow: hidden;
+.H1 {
+  font-weight: 700;
+  font-size: $font-size-m;
+}
 
-  .summary-header {
-    padding: $space-l;
-    font-size: 24px;
+.H2 {
+  margin-left: $space-m;
+  font-weight: 500;
+  font-size: $font-size-s;
+}
+
+li:not(:last-of-type) {
+  margin-bottom: pxToRem(16px);
+}
+
+li {
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  line-height: $line-height-tight;
+
+  &:hover {
+    color: $primary-dark;
+  }
+
+  a {
+    color: $primary-dark;
+  }
+
+  p {
+    color: $primary-dark;
+  }
+}
+
+li > p {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 $space-m;
+
+  .item-date {
+    margin-left: $space-s;
+  }
+
+  &.current {
     font-weight: 700;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: $primary;
-  }
-
-  .body {
-    overflow-y: scroll;
-    max-height: 302px;
-    margin: 0 $space-2xs 16px 0;
-    padding-left: 16px;
-
-    &--description-block {
-      padding: $space-m $space-l;
-      color: $primary-dark;
-    }
-
-    .separator {
-      border: 1px solid $primary-dark;
-      width: pxToRem(50px);
-      margin-bottom: 16px;
-
-      &--margin {
-        margin-left: $space-m;
-      }
-    }
-
-    .H1 {
-      font-weight: 700;
-      font-size: $font-size-m;
-    }
-
-    .H2 {
-      margin-left: $space-m;
-      font-weight: 500;
-      font-size: $font-size-s;
-    }
-
-    li:not(:last-of-type) {
-      margin-bottom: pxToRem(16px);
-    }
-
-    li {
-      cursor: pointer;
-      transition: color 0.2s ease-in-out;
-      line-height: $line-height-tight;
-
-      &:hover {
-        color: $primary-dark;
-      }
-
-      a {
-        color: $primary-dark;
-      }
-
-      p {
-        color: $primary-dark;
-      }
-    }
-
-    li > p {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 $space-m;
-
-      .item-date {
-        margin-left: $space-s;
-      }
-
-      &.current {
-        font-weight: 700;
-      }
-    }
   }
 }
 </style>
