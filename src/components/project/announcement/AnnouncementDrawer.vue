@@ -303,10 +303,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.announcement-form {
-  overflow: hidden;
-}
-
 .announcement-form,
 .description-section {
   display: flex;
@@ -316,10 +312,6 @@ export default {
 
 .description-field {
   flex-grow: 1;
-}
-
-.description-section {
-  overflow: auto;
 }
 
 .form-section:not(:first-child) {
