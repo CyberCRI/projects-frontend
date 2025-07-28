@@ -15,6 +15,7 @@
           <PageIndex v-show="hasSummary">
             <template #default="{ closeSummary }">
               <DescriptionSummaryBlock
+                ref="summaryBlock"
                 summary-text-container=".description-content"
                 :anchor-offset="anchorOffset"
                 @item-clicked="
@@ -106,19 +107,28 @@ export default {
     },
   },
 
-  // watch: {
-  //   showEditButton: {
-  //     handler: function (neo, old) {
-  //       if (neo != old) {
-  //         // give time to render content
-  //         this.$nextTick(() => {
-  //           this.computeAnchorOffset()
-  //         })
-  //       }
-  //     },
-  //     immediate: true,
-  //   },
-  // },
+  watch: {
+    description: {
+      handler(neo, old) {
+        if (neo !== old) {
+          this.$nextTick(() => {
+            this.$refs.summaryBlock?.loadSummary()
+          })
+        }
+      },
+    },
+    //   showEditButton: {
+    //     handler: function (neo, old) {
+    //       if (neo != old) {
+    //         // give time to render content
+    //         this.$nextTick(() => {
+    //           this.computeAnchorOffset()
+    //         })
+    //       }
+    //     },
+    //     immediate: true,
+    //   },
+  },
 
   methods: {
     close() {
