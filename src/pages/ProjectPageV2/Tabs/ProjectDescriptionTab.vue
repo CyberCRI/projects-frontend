@@ -54,7 +54,6 @@ import DescriptionPlaceholder from '@/components/project/description/Description
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useProjectsStore from '@/stores/useProjects.ts'
-
 export default {
   name: 'ProjectDescriptionTab',
 
