@@ -91,7 +91,11 @@ export default {
     },
 
     outdated() {
-      return this.announcement.deadline && new Date(this.announcement.deadline) < new Date()
+      if (!this.announcement.deadline) return false
+      const endDate = new Date(this.announcement.deadline)
+      // deadline is inclusive, so we set the time to the end of the day
+      endDate.setHours(23, 59, 59, 999)
+      return endDate < new Date()
     },
   },
 }
