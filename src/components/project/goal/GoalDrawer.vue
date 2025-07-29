@@ -214,12 +214,8 @@ export default {
 
     resetForm() {
       this.form = {
-        title: this.project && this.project.template ? this.project.template.goal_placeholder : '',
-        description:
-          this.project && this.project.template
-            ? this.project.template.goal_description || '<p></p>'
-            : '<p></p>',
-
+        title: this.project?.template?.goal_title || '',
+        description: this.project?.template?.goal_description || '<p></p>',
         deadline_at: new Date(),
         status: 'na',
       }
