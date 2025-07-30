@@ -37,20 +37,20 @@ export default function useProjectData() {
 
   const project = computed(() => projectsStore.project)
 
-  const similarProjects = useState(() => [])
-  const comments = useState(() => [])
-  const projectMessages = useState(() => [])
-  const locations = useState(() => [])
-  const announcements = useState(() => [])
-  const fileResources = useState(() => [])
-  const linkResources = useState(() => [])
-  const blogEntries = useState(() => [])
-  const follow = useState(() => ({ is_followed: false }))
-  const goals = useState(() => [])
-  const sdgs = useState(() => [])
-  const team = useState(() => ({ owners: [], members: [], reviewers: [] }))
-  const reviews = useState(() => [])
-  const linkedProjects = useState(() => [])
+  const similarProjects = ref([])
+  const comments = ref([])
+  const projectMessages = ref([])
+  const locations = ref([])
+  const announcements = ref([])
+  const fileResources = ref([])
+  const linkResources = ref([])
+  const blogEntries = ref([])
+  const follow = ref({ is_followed: false })
+  const goals = ref([])
+  const sdgs = ref([])
+  const team = ref({ owners: [], members: [], reviewers: [] })
+  const reviews = ref([])
+  const linkedProjects = ref([])
   const commentLoop = ref(null)
   const linkedProjectsLoading = ref(false)
 
@@ -212,17 +212,19 @@ export default function useProjectData() {
         )
       }
       await Promise.all(extraData)
-      if (!commentLoop.value) {
-        commentLoop.value = setInterval(
-          () => {
-            getComments(project.id)
-            if (isMemberOrAdmin.value) {
-              getProjectMessages(project.id)
-            }
-          },
-          5 * 60 * 1000
-        )
+      if (commentLoop.value) {
+        clearInterval(commentLoop.value)
+        commentLoop.value = null
       }
+      commentLoop.value = setInterval(
+        () => {
+          getComments(project.id)
+          if (isMemberOrAdmin.value) {
+            getProjectMessages(project.id)
+          }
+        },
+        5 * 60 * 1000
+      )
     })
   }
 
