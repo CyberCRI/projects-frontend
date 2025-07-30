@@ -182,7 +182,8 @@ const useUsersStore = defineStore('users', () => {
   }
 
   function startUserDataRefreshLoop() {
-    if (id.value && !userDataRefreshLoop.value) {
+    if (id.value) {
+      stopUserDataRefreshLoop()
       userDataRefreshLoop.value = setInterval(
         () => {
           getUser(id.value)
