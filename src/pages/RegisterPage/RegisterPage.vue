@@ -42,22 +42,22 @@ const rules = {
   form: {
     acceptedTOS: {
       checked: helpers.withMessage(
-        () => this.$t('register.tos-is-required'),
+        () => t('register.tos-is-required'),
         (value) => value === true
       ),
     },
     email: {
-      required: helpers.withMessage(() => this.$t('register.email.is-required'), required),
-      email: helpers.withMessage(() => this.$t('register.email.is-invalid'), email),
+      required: helpers.withMessage(() => t('register.email.is-required'), required),
+      email: helpers.withMessage(() => t('register.email.is-invalid'), email),
     },
     given_name: {
-      required: helpers.withMessage(() => this.$t('register.given_name.is-required'), required),
+      required: helpers.withMessage(() => t('register.given_name.is-required'), required),
     },
     family_name: {
-      required: helpers.withMessage(() => this.$t('register.family_name.is-required'), required),
+      required: helpers.withMessage(() => t('register.family_name.is-required'), required),
     },
     password: {
-      required: helpers.withMessage(() => this.$t('register.password.is-required'), required),
+      required: helpers.withMessage(() => t('register.password.is-required'), required),
     },
   },
 }
