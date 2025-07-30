@@ -4,16 +4,14 @@
       <span class="section-title">
         {{ $filters.capitalize($t('group.form.parent-group-label')) }}
       </span>
-      <span
+
+      <LpiButton
         class="add-parent-group-card"
+        :btn-icon="modelValue ? 'Pen' : 'Plus'"
+        :label="$filters.capitalize($t(modelValue ? 'group.form.edit' : 'group.form.add'))"
         data-test="add-parent-group-card"
         @click="drawerIsOpen = true"
-      >
-        <IconImage v-if="!modelValue" name="Plus" />
-        <IconImage v-else name="Pen" />
-        <span v-if="!modelValue">{{ $filters.capitalize($t('group.form.add')) }}</span>
-        <span v-else>{{ $filters.capitalize($t('group.form.edit')) }}</span>
-      </span>
+      />
     </label>
 
     <div v-if="modelValue" class="group-grid">
@@ -35,18 +33,8 @@
 </template>
 
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
-
 export default {
   name: 'ParentGroupSection',
-
-  components: {
-    GroupCard,
-    IconImage,
-    PickGroupDrawer,
-  },
 
   props: {
     modelValue: {
@@ -103,22 +91,6 @@ export default {
     grid-template-columns: 1fr 1fr;
     justify-items: stretch;
     gap: $space-l;
-  }
-
-  .add-parent-group-card {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: $white;
-    color: $primary-dark;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: $font-size-m;
-
-    svg {
-      width: 18px;
-      fill: $primary-dark;
-    }
   }
 
   .disabled {

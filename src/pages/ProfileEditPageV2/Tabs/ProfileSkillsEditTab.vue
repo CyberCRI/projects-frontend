@@ -29,7 +29,12 @@
       </div>
     </div>
     <div v-else class="following-screen">
-      <div v-for="key in ['skills', 'hobbies']" :key="key" :class="key">
+      <div
+        v-for="key in ['skills', 'hobbies']"
+        :key="key"
+        :class="key"
+        class="following-screen-inner"
+      >
         <template v-if="getSkillOfType(key).length">
           <TransitionGroup tag="div" name="skill" class="level-editor-list">
             <div :key="`${key}-header`" class="skill-columns-header">
@@ -69,7 +74,7 @@
             />
           </TransitionGroup>
           <div class="actions">
-            <LinkButton
+            <LpiButton
               :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
               btn-icon="Plus"
               :data-test="`add-${key}-button`"
@@ -78,10 +83,10 @@
           </div>
         </template>
         <div v-else class="add-action">
+          <p class="intro">{{ $t(`profile.edit.skills.${key}.nothing-yet`) }}</p>
           <LpiButton
             :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
             btn-icon="Plus"
-            :secondary="false"
             :data-test="`initial-add-${key}-button`"
             @click="openDrawer(key, 'add')"
           />
@@ -270,6 +275,12 @@ export default {
 }
 
 .following-screen {
+  .following-screen-inner + .following-screen-inner {
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: $border-width-s solid $primary;
+  }
+
   .actions {
     margin-top: $space-xl;
     display: flex;
@@ -278,10 +289,11 @@ export default {
   }
 
   .add-action {
+    .intro {
+      margin-bottom: 1.4rem;
+    }
+
     margin-top: $space-xl;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .skill-list {

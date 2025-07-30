@@ -1351,6 +1351,7 @@
         "suggested-skills": "Or pick a suggested skill",
         "already-added": "(already added)",
         "skills": {
+          "nothing-yet": "You have not added any skills yet.",
           "add-success": "Skill '{name}' added.",
           "edit-success": "Skill '{name}' edited.",
           "delete-success": "Skill '{name}' removed.",
@@ -1369,6 +1370,7 @@
           "selection": "Selected skills"
         },
         "hobbies": {
+          "nothing-yet": "You have not added any hobbies yet.",
           "add-success": "Hobby '{name}' added.",
           "edit-success": "Hobby '{name}' edited.",
           "delete-success": "Hobby '{name}' removed.",

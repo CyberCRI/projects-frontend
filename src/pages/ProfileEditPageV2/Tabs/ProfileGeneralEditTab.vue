@@ -158,7 +158,7 @@
           }})
         </label>
 
-        <LinkButton
+        <LpiButton
           :label="$t('profile.edit.general.sdgs.add')"
           btn-icon="Plus"
           data-test="sdg-add"
@@ -232,19 +232,11 @@
   />
 </template>
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import isEqual from 'lodash.isequal'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -271,16 +263,6 @@ function defaultForm() {
 
 export default {
   name: 'ProfileGeneralEditTab',
-  components: {
-    ConfirmModal,
-    TextInput,
-    LpiButton,
-    BaseDrawer,
-    SdgsFilter,
-    LinkButton,
-    ImageEditor,
-    FieldErrors,
-  },
 
   props: {
     user: {

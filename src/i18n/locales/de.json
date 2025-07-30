@@ -1351,6 +1351,7 @@
         "suggested-skills": "Oder w\u00e4hlen Sie eine vorgeschlagene F\u00e4higkeit",
         "already-added": "(bereits hinzugef\u00fcgt)",
         "skills": {
+          "nothing-yet": "Sie haben noch keine F\u00e4higkeiten hinzugef\u00fcgt.",
           "add-success": "Skill '{name}' hinzugef\u00fcgt.",
           "edit-success": "Skill '{name}' bearbeitet.",
           "delete-success": "Die Skill '{name}' entfernt.",
@@ -1369,6 +1370,7 @@
           "selection": "Ausgew\u00e4hlte F\u00e4higkeiten"
         },
         "hobbies": {
+          "nothing-yet": "Sie haben noch keine Hobbys hinzugef\u00fcgt.",
           "add-success": "Hobby '{name}' hinzugef\u00fcgt.",
           "edit-success": "Hobby '{name}' bearbeitet.",
           "delete-success": "Hobby '{name}' entfernt.",

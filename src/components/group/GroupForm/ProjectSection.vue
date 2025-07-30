@@ -5,12 +5,13 @@
         {{ $filters.capitalize($t('group.form.project-label')) }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
-      <span class="add-project-card" data-test="add-project" @click="drawerIsOpen = true">
-        <IconImage v-if="!modelValue.length" name="Plus" />
-        <IconImage v-else name="Pen" />
-        <span v-if="!modelValue.length">{{ $filters.capitalize($t('group.form.add')) }}</span>
-        <span v-else>{{ $filters.capitalize($t('group.form.edit')) }}</span>
-      </span>
+      <LpiButton
+        class="add-project-card"
+        :btn-icon="modelValue.length ? 'Pen' : 'Plus'"
+        :label="$filters.capitalize($t(modelValue.length ? 'group.form.edit' : 'group.form.add'))"
+        data-test="add-projects"
+        @click="drawerIsOpen = true"
+      />
     </label>
 
     <div v-if="modelValue.length" class="team-grid">
@@ -44,20 +45,8 @@
 </template>
 
 <script>
-import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-
 export default {
   name: 'ProjectSection',
-
-  components: {
-    ProjectCard,
-    PickProjectsDrawer,
-    IconImage,
-    LinkButton,
-  },
 
   props: {
     modelValue: {
@@ -121,22 +110,6 @@ export default {
     grid-template-columns: 1fr 1fr;
     justify-items: stretch;
     gap: $space-l;
-  }
-
-  .add-project-card {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: $white;
-    color: $primary-dark;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: $font-size-m;
-
-    svg {
-      width: 18px;
-      fill: $primary-dark;
-    }
   }
 
   .disabled {

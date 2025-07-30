@@ -4,6 +4,7 @@
       <LpiButton
         :label="$filters.capitalize($t('team.add'))"
         class="add-user-btn"
+        btn-icon="Plus"
         @click="projectLayoutToggleAddModal('teamMember')"
       />
     </div>

@@ -13,7 +13,6 @@
         v-else
         v-disable-focus="unfocusable"
         btn-icon="Upload"
-        secondary
         :label="displayedLabel"
         @click.prevent="$refs?.label?.click()"
       />

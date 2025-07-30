@@ -1350,6 +1350,7 @@
         "suggested-skills": "Ou choisissez parmi les compétences suggérées",
         "already-added": "(déjà ajouté)",
         "skills": {
+          "nothing-yet": "Vous n'avez pas encore ajouté de compétences.",
           "add-success": "Compétence '{name}' ajoutée.",
           "edit-success": "Compétence '{name}' éditée.",
           "delete-success": "Compétence '{name}' supprimée.",
@@ -1368,6 +1369,7 @@
           "selection": "Compétences"
         },
         "hobbies": {
+          "nothing-yet": "Vous n'avez pas encore ajouté de loisirs.",
           "add-success": "Loisir '{name}' ajouté.",
           "edit-success": "Loisir '{name}' édité.",
           "delete-success": "Loisir '{name}' supprimé.",

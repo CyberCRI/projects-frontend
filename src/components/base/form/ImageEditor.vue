@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="img-actions">
-      <LinkButton
+      <LpiButton
         v-if="defaultPictureFiles?.length > 1"
         v-disable-focus="disabled"
         :label="$t('project.random-image')"
@@ -31,12 +31,11 @@
         id="header_image"
         ref="imageInput"
         :unfocusable="disabled"
-        is-link
         :label="$t('common.modify')"
         @upload-image="uploadImage"
       />
 
-      <LinkButton
+      <LpiButton
         v-if="!noResize"
         v-disable-focus="disabled"
         :label="$t('project.form.resize-image')"
@@ -71,12 +70,11 @@
 import { LazyImageResizer } from '#components'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 export default {
   name: 'ImageEditor',
 
-  components: { CroppedImage, LazyImageResizer, ImageInput, LinkButton, BaseDrawer },
+  components: { CroppedImage, LazyImageResizer, ImageInput, BaseDrawer },
 
   props: {
     imageSizes: {
