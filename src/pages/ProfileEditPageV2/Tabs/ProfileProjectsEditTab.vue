@@ -34,7 +34,7 @@
         >
           <div class="label-wrapper">
             <label>{{ $t('profile.edit.projects.followed.label') }} ({{ totalCount }})</label>
-            <LinkButton
+            <LpiButton
               :label="$t('profile.edit.projects.followed.add')"
               btn-icon="Plus"
               @click="showFollowProjectDrawer = true"
@@ -92,14 +92,8 @@
   />
 </template>
 <script>
-import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
-import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import ChooseFollowedProjectsDrawer from '@/components/project/ChooseFollowedProjectsDrawer.vue'
-
 export default {
   name: 'ProfileProjectsEditTab',
-  components: { UserProjectsSearch, UserProjectList, LinkButton, ChooseFollowedProjectsDrawer },
   props: {
     user: {
       type: Object,

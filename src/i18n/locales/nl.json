@@ -1343,6 +1343,7 @@
         }
       },
       "skills": {
+        "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd.",
         "tab": "Vaardigheden",
         "intro": "Je hebt nog geen vaardigheden geselecteerd. Professionele vaardigheden en hobby's kunt uw collega's en uw gemeenschap om u te vinden op basis van waar je goed in bent, waar je geïnteresseerd in bent en waar je om geeft.",
         "save-error": "Fout bij opslaan van profiel.",
@@ -1369,6 +1370,7 @@
           "selection": "Geselecteerde vaardigheden"
         },
         "hobbies": {
+          "nothing-yet": "Je hebt nog geen hobby's toegevoegd.",
           "add-success": "Hobby '{name}' toegevoegd.",
           "edit-success": "Hobby '{name}' bewerkt.",
           "delete-success": "Hobby '{name}' verwijderd.",

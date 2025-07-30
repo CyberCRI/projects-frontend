@@ -4,13 +4,13 @@
       <PageStickyHead :page-title="project.title">
         <template #default="{ anchorOffset }">
           <div v-if="showEditButton" class="description-edit">
-            <span
-              class="edit-description-button white-bg"
+            <LpiButton
+              class="edit-description-button"
+              btn-icon="Pen"
+              :label="$t('common.edit')"
               data-test="edit-description"
               @click="editDescriptionModalActive = !editDescriptionModalActive"
-            >
-              <IconImage class="icon" name="Pen" />
-            </span>
+            />
           </div>
           <PageIndex v-show="hasSummary">
             <template #default="{ closeSummary }">
@@ -48,22 +48,9 @@
 </template>
 
 <script>
-import DescriptionSummaryBlock from '@/components/project/description/DescriptionSummaryBlock.vue'
-import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
-import DescriptionPlaceholder from '@/components/project/description/DescriptionPlaceholder.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 import useProjectsStore from '@/stores/useProjects.ts'
 export default {
   name: 'ProjectDescriptionTab',
-
-  components: {
-    DescriptionDrawer,
-    DescriptionSummaryBlock,
-    DescriptionPlaceholder,
-    IconImage,
-    TipTapOutput,
-  },
 
   props: {
     project: {
@@ -196,26 +183,6 @@ export default {
 
 :deep(.anchor-element) {
   display: inline-block;
-}
-
-.edit-description-button {
-  display: inline-block;
-  padding: $space-s;
-  border-radius: 100%;
-  background-color: $primary-dark;
-  cursor: pointer;
-
-  .icon {
-    width: $layout-size-xl;
-    fill: $white;
-  }
-
-  &:hover {
-    .icon {
-      animation: rotate-pen 0.5s ease-in-out infinite;
-      transform-origin: bottom left;
-    }
-  }
 }
 
 @keyframes rotate-pen {

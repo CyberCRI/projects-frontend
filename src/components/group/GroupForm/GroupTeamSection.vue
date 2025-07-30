@@ -5,24 +5,30 @@
         {{ $filters.capitalize($t('team.group-members')) }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
-      <span
+      <LpiButton
         v-if="!modelValue.length"
         class="add-user-card"
+        btn-icon="Plus"
+        :label="$filters.capitalize($t('group.form.add'))"
         data-test="add-members"
         @click="openDrawer('select')"
-      >
-        <IconImage name="Plus" />
-        <span>{{ $filters.capitalize($t('group.form.add')) }}</span>
-      </span>
+      />
+
       <template v-else>
-        <span class="add-user-card" data-test="add-members" @click="openDrawer('select')">
-          <IconImage name="Pen" />
-          <span>{{ $filters.capitalize($t('group.form.edit-members')) }}</span>
-        </span>
-        <span class="add-user-card" data-test="edit-roles" @click="openDrawer('roles')">
-          <IconImage name="Pen" />
-          <span>{{ $filters.capitalize($t('group.form.edit-roles')) }}</span>
-        </span>
+        <LpiButton
+          class="add-user-card"
+          btn-icon="Pen"
+          :label="$filters.capitalize($t('group.form.edit-members'))"
+          data-test="add-members"
+          @click="openDrawer('select')"
+        />
+        <LpiButton
+          class="add-user-card"
+          btn-icon="Pen"
+          :label="$filters.capitalize($t('group.form.edit-roles'))"
+          data-test="edit-roles"
+          @click="openDrawer('roles')"
+        />
       </template>
     </label>
 
@@ -58,21 +64,10 @@
 </template>
 
 <script>
-import GroupTeamDrawer from '@/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers'
 
 export default {
   name: 'GroupTeamSection',
-
-  components: {
-    TeamCardInline,
-    GroupTeamDrawer,
-    IconImage,
-    LinkButton,
-  },
 
   props: {
     modelValue: {
@@ -188,22 +183,6 @@ export default {
     grid-template-columns: 1fr 1fr;
     justify-items: stretch;
     gap: $space-l;
-  }
-
-  .add-user-card {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: $white;
-    color: $primary-dark;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: $font-size-m;
-
-    svg {
-      width: 18px;
-      fill: $primary-dark;
-    }
   }
 
   .disabled {

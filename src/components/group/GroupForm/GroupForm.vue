@@ -66,12 +66,15 @@
     <div class="description">
       <label>
         {{ $filters.capitalize($t('group.form.description-label')) }}
-        <span class="add-btn" data-test="add-description" @click="descriptionIsOpened = true">
-          <IconImage v-if="!form.description" name="Plus" />
-          <IconImage v-else name="Pen" />
-          <span v-if="!form.description">{{ $filters.capitalize($t('group.form.add')) }}</span>
-          <span v-else>{{ $filters.capitalize($t('group.form.edit')) }}</span>
-        </span>
+
+        <LpiButton
+          v-if="!form.description || isAddMode"
+          class="add-btn"
+          :btn-icon="form.description ? 'Pen' : 'Plus'"
+          data-test="add-description"
+          :label="$filters.capitalize($t(form.description ? 'group.form.edit' : 'group.form.add'))"
+          @click="descriptionIsOpened = true"
+        />
       </label>
       <div v-if="form.description">
         <TipTapOutput class="description-content" :content="form.description" />
@@ -130,14 +133,16 @@
     </div>
 
     <div v-if="$route.params.groupId" class="delete-group">
-      <label>{{ $t('group.form.delete') }}</label>
-      <LpiButton
-        :label="$t('group.form.delete')"
-        btn-icon="TrashCanOutline"
-        :secondary="true"
-        data-test="delete-group-button"
-        @click="openRemoveOrQuit"
-      />
+      <label>
+        <span class="section-title">{{ $t('group.form.delete') }}</span>
+        <LpiButton
+          :label="$t('group.form.delete')"
+          btn-icon="TrashCanOutline"
+          secondary
+          data-test="delete-group-button"
+          @click="openRemoveOrQuit"
+        />
+      </label>
     </div>
   </form>
   <GroupDescriptionDrawer
@@ -160,38 +165,12 @@
 </template>
 
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import GroupTeamSection from './GroupTeamSection.vue'
-import ProjectSection from './ProjectSection.vue'
-import ParentGroupSection from './ParentGroupSection.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import GroupDescriptionDrawer from './GroupDescriptionDrawer.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { useRuntimeConfig } from '#imports'
 export default {
   name: 'GroupForm',
 
-  components: {
-    TextInput,
-    GroupTeamSection,
-    ProjectSection,
-    ParentGroupSection,
-    LpiButton,
-    IconImage,
-    GroupDescriptionDrawer,
-    LoaderSimple,
-    ConfirmModal,
-    ImageEditor,
-    FieldErrors,
-    TipTapOutput,
-  },
   props: {
     isAddMode: {
       type: Boolean,
@@ -346,6 +325,8 @@ export default {
 }
 
 .group-form {
+  margin-top: 2rem;
+
   .input {
     margin: $space-xl 0;
   }
@@ -493,18 +474,31 @@ export default {
   }
 
   .delete-group {
-    border-top: $border-width-s solid $lighter-gray;
-    padding: 24px 0;
-  }
-
-  .img-ctn {
-    margin-bottom: $space-xl;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
     label {
-      align-self: flex-start;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      width: 100%;
+      font-size: $font-size-m;
+      margin-bottom: $space-l;
+
+      .section-title {
+        color: $black;
+        font-weight: bold;
+        display: block;
+      }
+    }
+
+    .img-ctn {
+      margin-bottom: $space-xl;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      label {
+        align-self: flex-start;
+      }
     }
   }
 
@@ -521,21 +515,6 @@ export default {
       color: $black;
       font-weight: bold;
       display: block;
-    }
-
-    .add-btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      background: $white;
-      color: $primary-dark;
-      cursor: pointer;
-      font-weight: 700;
-
-      svg {
-        width: 18px;
-        fill: $primary-dark;
-      }
     }
   }
 

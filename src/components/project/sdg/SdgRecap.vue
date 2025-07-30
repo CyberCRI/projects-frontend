@@ -19,6 +19,7 @@
       v-if="canEditProject"
       :label="$filters.capitalize($t('sdg.add-short'))"
       class="add-sdg-btn"
+      btn-icon="Plus"
       @click="showSdgModal"
     />
   </div>

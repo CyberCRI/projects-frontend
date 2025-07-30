@@ -7,6 +7,7 @@
         v-if="canEditProject"
         :label="$filters.capitalize($t('goal.add'))"
         class="add-goal-btn"
+        btn-icon="Plus"
         @click="projectLayoutToggleAddModal('goal')"
       />
     </div>

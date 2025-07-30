@@ -1,13 +1,13 @@
 <template>
   <div class="skill-tab">
     <div class="header">
-      <LinkButton
+      <LpiButton
         v-if="isCurrentUser || canEditUser"
         class="edit-btn"
         btn-icon="Pen"
         :label="$t('common.edit')"
-        :to="editProfileSkillLink"
         data-test="edit-skills"
+        @click="$router.push(editProfileSkillLink)"
       />
     </div>
     <template v-if="allSkills.length">
@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 import { getUserMentorship } from '@/api/mentorship.service.ts'
@@ -50,11 +48,6 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'ProfileSkillTab',
-
-  components: {
-    UserSkillsFull,
-    LinkButton,
-  },
 
   props: {
     user: {

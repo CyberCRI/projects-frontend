@@ -1347,6 +1347,7 @@
         "suggested-skills": "O triar una habilitat suggerida",
         "already-added": "(Ja està afegit)",
         "skills": {
+          "nothing-yet": "Encara no heu afegit cap habilitat.",
           "add-success": "Skill '{name}' afegia.",
           "edit-success": "Skill '{name}' editat.",
           "delete-success": "Skill '{name}' eliminat.",
@@ -1365,9 +1366,10 @@
           "selection": "habilitats seleccionades"
         },
         "hobbies": {
-          "add-success": "S'ha afegit en Hobby{name}.",
-          "edit-success": "S'ha editat en Hobby1354654.",
-          "delete-success": "S'ha eliminat en Hobby1354654.",
+          "nothing-yet": "Encara no heu afegit cap hobby.",
+          "add-success": "S'ha afegit en '{name}'.",
+          "edit-success": "S'ha editat en '{name}'.",
+          "delete-success": "S'ha eliminat en '{name}'.",
           "add": "Afegeix bbies",
           "add-item": "Afegeix un hobby",
           "already-added": "Hobby ja ha afegit",

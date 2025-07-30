@@ -1351,6 +1351,7 @@
         "suggested-skills": "Või vali soovitatud oskus",
         "already-added": "(juba lisatud)",
         "skills": {
+          "nothing-yet": "Teie profiilil pole veel oskusi.",
           "add-success": "Oskus '{name}' lisatud.",
           "edit-success": "Oskus '{name}' redigeeritud.",
           "delete-success": "Oskus \"{name}\" eemaldatud.",
@@ -1369,6 +1370,7 @@
           "selection": "Valitud oskused"
         },
         "hobbies": {
+          "nothing-yet": "Teie profiilil pole veel oskusi.",
           "add-success": "Lisatud on hobi \"{name}\".",
           "edit-success": "Hobby '{name}' toimetatud.",
           "delete-success": "Hobby \"{name}\" eemaldatud.",
