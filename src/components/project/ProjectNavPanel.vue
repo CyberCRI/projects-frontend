@@ -1,18 +1,34 @@
 <template>
   <NavPanelAside>
     <div v-if="project && canEditProject" class="edit-btn-ctn">
-      <LpiButton
+      <!--LpiButton
         :label="$t('project.edit')"
         btn-icon="Pen"
         data-test="header-project-button"
         class="edit-btn small"
         @click="editProject"
+      /-->
+
+      <GroupButton
+        :model-value="isEditing"
+        :options="[
+          { value: false, label: 'Show' },
+          { value: true, label: 'Edit' },
+        ]"
+        :data-test="isEditing ? 'display-project' : 'edit-project'"
+        class="edit-btn small"
+        @update:model-value="switchView"
       />
     </div>
 
-    <NavPanelMenu :menu-entries="projectTabs" :current-tab="currentTab" @navigated="navigated" />
+    <NavPanelMenu
+      :menu-entries="projectTabs"
+      :current-tab="currentTab"
+      @navigated="navigated"
+      @action-triggered="onActionTriggered"
+    />
 
-    <div
+    <!--div
       v-if="project && canEditProject"
       v-click-outside="() => (addToProjectMenuVisible = false)"
       class="add-to-project-ctn"
@@ -36,7 +52,7 @@
           @close-dropdown="toggleAddToProject"
         />
       </transition>
-    </div>
+    </div-->
 
     <div class="share-buttons">
       <ExternalLabelButton
@@ -108,9 +124,13 @@ export default {
       type: Object,
       default: () => {},
     },
+    isEditing: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  emits: ['update-follow', 'navigated'],
+  emits: ['update-follow', 'navigated', 'toggle-editing'],
 
   setup() {
     const usersStore = useUsersStore()
@@ -136,18 +156,26 @@ export default {
   },
 
   methods: {
+    onActionTriggered(menuEntry) {
+      this.projectLayoutToggleAddModal(menuEntry.addModal)
+    },
+
     navigated() {
       this.$emit('navigated')
     },
 
-    toggleAddToProject() {
-      this.addToProjectMenuVisible = !this.addToProjectMenuVisible
+    switchView() {
+      this.$emit('toggle-editing', !this.isEditing)
     },
 
-    editProject() {
-      this.navigated()
-      this.projectLayoutToggleAddModal('project')
-    },
+    // toggleAddToProject() {
+    //   this.addToProjectMenuVisible = !this.addToProjectMenuVisible
+    // },
+
+    // editProject() {
+    //   this.navigated()
+    //   this.projectLayoutToggleAddModal('project')
+    // },
 
     async toggleFollow() {
       try {
@@ -200,43 +228,43 @@ export default {
   margin-top: 3rem;
 }
 
-.add-to-project-ctn {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  padding: 0.5rem 0;
+// .add-to-project-ctn {
+//   display: flex;
+//   justify-content: center;
+//   position: relative;
+//   padding: 0.5rem 0;
 
-  .add-to-project-button:hover,
-  .project-config-button:hover {
-    opacity: 1 !important;
-  }
+//   .add-to-project-button:hover,
+//   .project-config-button:hover {
+//     opacity: 1 !important;
+//   }
 
-  .add-to-project-button.active,
-  .project-config-button.active {
-    background-color: $white !important;
-    color: $primary-dark !important;
+//   .add-to-project-button.active,
+//   .project-config-button.active {
+//     background-color: $white !important;
+//     color: $primary-dark !important;
 
-    svg {
-      fill: $primary-dark;
-    }
-  }
+//     svg {
+//       fill: $primary-dark;
+//     }
+//   }
 
-  .add-to-project,
-  .project-config {
-    position: absolute;
-    z-index: $zindex-toast;
-  }
+//   .add-to-project,
+//   .project-config {
+//     position: absolute;
+//     z-index: $zindex-toast;
+//   }
 
-  .add-to-project {
-    bottom: 0;
-    left: 1px;
-  }
+//   .add-to-project {
+//     bottom: 0;
+//     left: 1px;
+//   }
 
-  .project-config {
-    top: 42px;
-    right: 0;
-  }
-}
+//   .project-config {
+//     top: 42px;
+//     right: 0;
+//   }
+// }
 
 .share-buttons {
   display: flex;

@@ -26,6 +26,7 @@ export default function useProjectData() {
   const projectCategoriesStore = useProjectCategories()
 
   const route = useRoute()
+  const router = useRouter()
   const { t } = useI18n()
 
   const { isAdmin /*, canEditProject*/ } = usePermissions()
@@ -291,12 +292,13 @@ export default function useProjectData() {
     ]
   })
 
-  const projectTabs = computed(() =>
+  const projectDisplayTabs = computed(() =>
     [
       {
         key: 'project-summary',
         label: t('project.summary'),
         view: `/projects/${route.params.slugOrId}/summary`,
+        altView: `/projects/${route.params.slugOrId}/summary/edit`,
         props: {
           project: project.value,
           comments: comments.value,
@@ -322,6 +324,7 @@ export default function useProjectData() {
         key: 'project-description',
         label: t('form.description'),
         view: `/projects/${route.params.slugOrId}/description`,
+        altView: `/projects/${route.params.slugOrId}/description/edit`,
         props: {
           project: project.value,
         },
@@ -330,9 +333,41 @@ export default function useProjectData() {
         icon: 'Article',
       },
       {
+        key: 'project-team',
+        label: t('team.team'),
+        view: `/projects/${route.params.slugOrId}/team`,
+        altView: `/projects/${route.params.slugOrId}/team/edit`,
+        props: {
+          project: project.value,
+          team: team.value,
+          onReloadTeam: () => {
+            console.log('reload tabs')
+            reloadTeam()
+          },
+        },
+        condition: true,
+        dataTest: 'project-team',
+        icon: 'PeopleGroup',
+      },
+
+      {
+        key: 'project-locations',
+        label: t('project.add-to-project.location'),
+        view: `/projects/${route.params.slugOrId}/locations`,
+        altView: `/projects/${route.params.slugOrId}/locations/edit`,
+        props: {
+          project: project.value,
+          locations: locations.value,
+        },
+        condition: locations.value.length || isRoute('projectLocations'),
+        dataTest: 'project-locations',
+        icon: 'MapMarker',
+      },
+      {
         key: 'project-goals',
         label: t('goal.goals'),
         view: `/projects/${route.params.slugOrId}/goals`,
+        altView: `/projects/${route.params.slugOrId}/goals/edit`,
         props: {
           project: project.value,
           goals: goals.value,
@@ -348,6 +383,7 @@ export default function useProjectData() {
         key: 'project-blog',
         label: t('blog.title'),
         view: `/projects/${route.params.slugOrId}/blog-entries`,
+        altView: `/projects/${route.params.slugOrId}/blog-entries/edit`,
         props: {
           project: project.value,
           blogEntries: blogEntries.value,
@@ -361,6 +397,7 @@ export default function useProjectData() {
         key: 'project-resources',
         label: t('resource.resources'),
         view: `/projects/${route.params.slugOrId}/resources`,
+        altView: `/projects/${route.params.slugOrId}/resources/edit`,
         props: {
           project: project.value,
           fileResources: fileResources.value,
@@ -378,6 +415,7 @@ export default function useProjectData() {
         key: 'project-linked-projects',
         label: t('project.linked-projects'),
         view: `/projects/${route.params.slugOrId}/linked-projects`,
+        altView: `/projects/${route.params.slugOrId}/linked-projects/edit`,
         props: {
           project: project.value,
           linkedProjects: linkedProjects.value,
@@ -388,25 +426,24 @@ export default function useProjectData() {
         icon: 'LinkRotated',
       },
       {
-        key: 'project-team',
-        label: t('team.team'),
-        view: `/projects/${route.params.slugOrId}/team`,
+        key: 'project-announcements',
+        label: t('home.announcements'),
+        view: `/projects/${route.params.slugOrId}/announcements`,
+        altView: `/projects/${route.params.slugOrId}/announcements/edit`,
         props: {
           project: project.value,
-          team: team.value,
-          onReloadTeam: () => {
-            console.log('reload tabs')
-            reloadTeam()
-          },
+          announcements: announcements.value,
+          onReloadAnnouncements: () => getAnnouncements(),
         },
-        condition: true,
-        dataTest: 'project-team',
-        icon: 'PeopleGroup',
+        condition: announcements.value?.length > 0 || isRoute('projectAnnouncements'), // prevent error when emptying the current tab
+        dataTest: 'project-announcements',
+        icon: 'BullhornOutline',
       },
       {
         key: 'project-comments',
         label: t('comment.comments'),
         view: `/projects/${route.params.slugOrId}/comments`,
+        altView: `/projects/${route.params.slugOrId}/comments/edit`,
         props: {
           project: project.value,
           comments: comments.value,
@@ -420,6 +457,7 @@ export default function useProjectData() {
         key: 'project-private-exchange',
         label: t('comment.private-exchange.tab'),
         view: `/projects/${route.params.slugOrId}/private-exchange`,
+        altView: `/projects/${route.params.slugOrId}/private-exchange/edit`,
         props: {
           project: project.value,
           team: team.value,
@@ -431,22 +469,10 @@ export default function useProjectData() {
         icon: 'EmailOutline',
       },
       {
-        key: 'project-announcements',
-        label: t('home.announcements'),
-        view: `/projects/${route.params.slugOrId}/announcements`,
-        props: {
-          project: project.value,
-          announcements: announcements.value,
-          onReloadAnnouncements: () => getAnnouncements(),
-        },
-        condition: announcements.value?.length > 0 || isRoute('projectAnnouncements'), // prevent error when emptying the current tab
-        dataTest: 'project-announcements',
-        icon: 'BullhornOutline',
-      },
-      {
         key: 'project-settings',
         label: t('project.settings'),
         view: `/projects/${route.params.slugOrId}/project-settings`,
+        altView: `/projects/${route.params.slugOrId}/project-settings/edit`,
         condition: true,
         props: {
           project: project.value,
@@ -459,12 +485,242 @@ export default function useProjectData() {
         dataTest: 'project-settings',
         icon: 'Cog',
       },
-    ].filter((tab) => tab.condition)
+    ].map((t) => ({ ...t, isEditing: false }))
   )
 
+  const projectDisplayTabsFiltered = computed(() =>
+    projectDisplayTabs.value.filter((tab) => tab.condition)
+  )
+
+  const projectEditTabs = computed(() =>
+    [
+      {
+        key: 'project-summary',
+        label: t('project.summary'),
+        view: `/projects/${route.params.slugOrId}/summary/edit`,
+        altView: `/projects/${route.params.slugOrId}/summary`,
+        props: {
+          project: project.value,
+          comments: comments.value,
+          goals: goals.value,
+          sdgs: sdgs.value,
+          similarProjects: similarProjects.value,
+          locations: locations.value,
+          fileResources: fileResources.value,
+          linkResources: linkResources.value,
+          blogEntries: blogEntries.value,
+          team: team.value,
+          reviews: reviews.value,
+          linkedProjects: linkedProjects.value,
+          onReloadReviews: () => getReviews(),
+          onReloadProject: () => reloadProject(),
+        },
+        condition: true,
+        dataTest: 'project-summary',
+        icon: 'Home',
+        noTitle: true,
+      },
+      {
+        key: 'project-description',
+        label: t('form.description'),
+        view: `/projects/${route.params.slugOrId}/description/edit`,
+        altView: `/projects/${route.params.slugOrId}/description`,
+        props: {
+          project: project.value,
+        },
+        condition: true,
+        dataTest: 'project-description',
+        icon: 'Article',
+      },
+      {
+        key: 'project-team',
+        label: t('team.team'),
+        view: `/projects/${route.params.slugOrId}/team/edit`,
+        altView: `/projects/${route.params.slugOrId}/team`,
+        props: {
+          project: project.value,
+          team: team.value,
+          onReloadTeam: () => {
+            console.log('reload tabs')
+            reloadTeam()
+          },
+        },
+        condition: true,
+        dataTest: 'project-team',
+        icon: 'PeopleGroup',
+        addModal: 'teamMember',
+      },
+
+      {
+        key: 'project-locations',
+        label: t('project.add-to-project.location'),
+        view: `/projects/${route.params.slugOrId}/locations/edit`,
+        altView: `/projects/${route.params.slugOrId}/locations`,
+        props: {
+          project: project.value,
+          locations: locations.value,
+        },
+        condition: locations.value.length || isRoute('projectLocationsEdit'),
+        dataTest: 'project-locations',
+        icon: 'MapMarker',
+        addModal: 'location',
+      },
+      {
+        key: 'project-goals',
+        label: t('goal.goals'),
+        view: `/projects/${route.params.slugOrId}/goals/edit`,
+        altView: `/projects/${route.params.slugOrId}/goals`,
+        props: {
+          project: project.value,
+          goals: goals.value,
+          sdgs: sdgs.value,
+          onReloadGoals: () => getGoals(),
+          onReloadSdgs: () => getSdgs(),
+        },
+        condition: goals.value?.length || sdgs.value?.length || isRoute('projectGoals'), // prevent error when emptying the current tab
+        dataTest: 'project-goals',
+        icon: 'TimerLine',
+        addModal: 'goalOrSdg',
+      },
+      {
+        key: 'project-blog',
+        label: t('blog.title'),
+        view: `/projects/${route.params.slugOrId}/blog-entries/edit`,
+        altView: `/projects/${route.params.slugOrId}/blog-entries`,
+        props: {
+          project: project.value,
+          blogEntries: blogEntries.value,
+          onReloadBlogEntries: () => getBlogEntries(),
+        },
+        condition: !!blogEntries.value.length || isRoute('projectBlog'), // prevent error when emptying the current tab
+        dataTest: 'project-blog',
+        icon: 'Progress5',
+        addModal: 'blogEntry',
+      },
+      {
+        key: 'project-resources',
+        label: t('resource.resources'),
+        view: `/projects/${route.params.slugOrId}/resources/edit`,
+        altView: `/projects/${route.params.slugOrId}/resources`,
+        props: {
+          project: project.value,
+          fileResources: fileResources.value,
+          linkResources: linkResources.value,
+          onReloadFileResources: () => getFileResources(),
+          onReloadLinkResources: () => getLinkResources(),
+        },
+        condition:
+          (project.value && !!(project.value.files.length || project.value.links.length)) ||
+          isRoute('projectResources'), // prevent error when emptying the current tab
+        dataTest: 'project-resources',
+        icon: 'Globe',
+        addModal: 'resource',
+      },
+      {
+        key: 'project-linked-projects',
+        label: t('project.linked-projects'),
+        view: `/projects/${route.params.slugOrId}/linked-projects/edit`,
+        altView: `/projects/${route.params.slugOrId}/linked-projects`,
+        props: {
+          project: project.value,
+          linkedProjects: linkedProjects.value,
+          onReloadLinkedProjects: () => getLinkedProjects(),
+        },
+        condition: !!linkedProjects.value?.length || isRoute('projectLinkedProjects'), // prevent error when emptying the current tab
+        dataTest: 'project-linked-projects',
+        icon: 'LinkRotated',
+        addModal: 'linkedProject',
+      },
+      {
+        key: 'project-announcements',
+        label: t('home.announcements'),
+        view: `/projects/${route.params.slugOrId}/announcements/edit`,
+        altView: `/projects/${route.params.slugOrId}/announcements`,
+        props: {
+          project: project.value,
+          announcements: announcements.value,
+          onReloadAnnouncements: () => getAnnouncements(),
+        },
+        condition: announcements.value?.length > 0 || isRoute('projectAnnouncements'), // prevent error when emptying the current tab
+        dataTest: 'project-announcements',
+        icon: 'BullhornOutline',
+        addModal: 'announcement',
+      },
+      {
+        key: 'project-comments',
+        label: t('comment.comments'),
+        view: `/projects/${route.params.slugOrId}/comments/edit`,
+        altView: `/projects/${route.params.slugOrId}/comments`,
+        props: {
+          project: project.value,
+          comments: comments.value,
+          onReloadComments: () => getComments(project.value.id),
+        },
+        condition: true,
+        dataTest: 'project-comments',
+        icon: 'ChatBubble',
+      },
+      {
+        key: 'project-private-exchange',
+        label: t('comment.private-exchange.tab'),
+        view: `/projects/${route.params.slugOrId}/private-exchange/edit`,
+        altView: `/projects/${route.params.slugOrId}/private-exchange`,
+        props: {
+          project: project.value,
+          team: team.value,
+          projectMessages: projectMessages.value,
+          onReloadProjectMessages: () => getProjectMessages(project.value.id),
+        },
+        condition: isMemberOrAdmin.value,
+        dataTest: 'project-private-exchange',
+        icon: 'EmailOutline',
+      },
+      {
+        key: 'project-settings',
+        label: t('project.settings'),
+        view: `/projects/${route.params.slugOrId}/project-settings/edit`,
+        altView: `/projects/${route.params.slugOrId}/project-settings`,
+        condition: true,
+        props: {
+          project: project.value,
+          team: team.value,
+          categories: categories.value,
+          onReloadTeam: () => reloadTeam(),
+          onReloadReviews: () => getReviews(),
+          onReloadProject: () => reloadProject(),
+        },
+        dataTest: 'project-settings',
+        icon: 'Cog',
+      },
+    ].map((t) => ({
+      ...t,
+      isEditing: true,
+      isAddAction: !t.condition,
+      actionIcon: t.condition ? 'Pen' : 'Plus',
+      condition: true,
+    }))
+  )
+
+  const projectEditTabsFiltered = computed(() =>
+    projectEditTabs.value.filter((tab) => tab.condition)
+  )
+
+  const allProjectTabs = computed(() => [...projectEditTabs.value, ...projectDisplayTabs.value])
+
   const currentTab = computed(() => {
-    return projectTabs.value.find((tab) => route.path.indexOf(tab.view) === 0)
+    return allProjectTabs.value.find((tab) => route.path.indexOf(tab.view) === 0)
   })
+
+  const isEditing = computed(() => currentTab.value.isEditing)
+
+  const projectTabs = computed(() =>
+    isEditing.value ? projectEditTabsFiltered.value : projectDisplayTabsFiltered.value
+  )
+
+  const toggleEditing = () => {
+    //isEditing.value = state
+    router.push(currentTab.value.altView)
+  }
 
   return {
     // data
@@ -486,6 +742,7 @@ export default function useProjectData() {
     linkedProjects,
     commentLoop,
     linkedProjectsLoading,
+    isEditing,
     //computed
     mergedTeam,
     projectTabs,
@@ -508,5 +765,6 @@ export default function useProjectData() {
     setProject,
     getProjectLocations,
     getSimilarProjects,
+    toggleEditing,
   }
 }

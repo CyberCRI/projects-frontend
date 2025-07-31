@@ -35,6 +35,7 @@ const {
   projectTabs,
   currentTab,
   categoryHierarchy,
+  isEditing,
   // methods
   getGoals,
   getLinkedProjects,
@@ -47,7 +48,8 @@ const {
   reloadProject,
   setProject,
   getProjectLocations,
-} = useProjectData()
+  toggleEditing,
+} = useProjectData({ toggleAddModal })
 
 const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   project,
@@ -120,6 +122,11 @@ if (import.meta.client) {
     }
   })
 }
+
+const chooseGoalOrSdg = (choice) => {
+  toggleAddModal(choice)
+  toggleAddModal('goalOrSdg')
+}
 </script>
 <template>
   <div class="page-section-extra-wide project-layout">
@@ -133,6 +140,7 @@ if (import.meta.client) {
       <template #nav-panel>
         <LazyProjectNavPanel
           v-if="!loading && !isNavCollapsed"
+          class="slide-panel"
           :class="{ collapsed: isNavCollapsed }"
           :project-tabs="projectTabs"
           :current-tab="currentTab"
@@ -140,7 +148,8 @@ if (import.meta.client) {
           :announcements="announcements"
           :similar-projects="similarProjects"
           :follow="follow"
-          class="slide-panel"
+          :is-editing="isEditing"
+          @toggle-editing="toggleEditing"
           @update-follow="follow = $event"
           @navigated="onNavigated"
         />
@@ -222,6 +231,11 @@ if (import.meta.client) {
       :sdgs="sdgs || []"
       @reload-sdgs="getSdgs"
       @close="toggleAddModal('sdg')"
+    />
+    <LazyGoalOrSdgsDrawer
+      :is-opened="modals.goalOrSdg.visible"
+      @close="toggleAddModal('goalOrSdg')"
+      @choice-made="chooseGoalOrSdg"
     />
   </div>
 </template>
