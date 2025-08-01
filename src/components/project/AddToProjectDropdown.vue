@@ -58,6 +58,7 @@ export default {
           },
           condition: this.canEditProject,
         },
+        // TODO merge sdg and goal
         {
           label: 'project.add-to-project.goal',
           dataTest: 'button-add-goal-to-project',
@@ -67,6 +68,7 @@ export default {
           },
           condition: this.canEditProject,
         },
+        // TODO merge sdg and goal
         {
           label: 'project.add-to-project.sdg',
           dataTest: 'button-add-sdg-to-project',

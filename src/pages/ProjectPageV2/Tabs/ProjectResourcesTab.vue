@@ -1,6 +1,6 @@
 <template>
   <div class="project-resources">
-    <div v-if="canEditProject" class="add-resource">
+    <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
         :label="$filters.capitalize($t('resource.add'))"
         class="add-blog-btn"
@@ -19,8 +19,8 @@
       <ResourceCard
         v-for="file in fileResources"
         :key="file.id"
-        :can-delete="canEditProject"
-        :can-edit="canEditProject"
+        :can-delete="isEditionEnabled"
+        :can-edit="isEditionEnabled"
         :resource="file"
         :subtitle="file.description"
         :title="file.title"
@@ -42,8 +42,8 @@
       <ResourceCard
         v-for="link in linkResources"
         :key="link.id"
-        :can-delete="canEditProject"
-        :can-edit="canEditProject"
+        :can-delete="isEditionEnabled"
+        :can-edit="isEditionEnabled"
         :resource="link"
         :subtitle="link.description"
         :title="link.title"
@@ -98,6 +98,11 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['reload-file-resources', 'reload-link-resources'],
@@ -120,6 +125,12 @@ export default {
       confirmModalContent: null,
       asyncing: false,
     }
+  },
+
+  computed: {
+    isEditionEnabled() {
+      return this.canEditProject && this.isInEditingMode
+    },
   },
 
   methods: {

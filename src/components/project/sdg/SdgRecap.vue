@@ -16,7 +16,7 @@
     </div>
 
     <LpiButton
-      v-if="canEditProject"
+      v-if="isInEditingMode && canEditProject"
       :label="$filters.capitalize($t('sdg.add-short'))"
       class="add-sdg-btn"
       btn-icon="Plus"
@@ -38,6 +38,11 @@ export default {
     sdgs: {
       type: Array,
       default: () => [],
+    },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
     },
   },
 

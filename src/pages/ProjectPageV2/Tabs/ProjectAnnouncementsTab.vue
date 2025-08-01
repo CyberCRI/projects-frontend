@@ -1,6 +1,6 @@
 <template>
   <div class="project-announcement narrow-content">
-    <div v-if="canEditProject" class="add-announcement">
+    <div v-if="canEditProject && isInEditingMode" class="add-announcement">
       <LpiButton
         :label="$filters.capitalize($t('project.announcement-create'))"
         class="add-announcement-btn"
@@ -12,6 +12,7 @@
       v-for="announcement in sortedAnnouncements"
       :key="announcement.id"
       :announcement="announcement"
+      :is-in-editing-mode="isInEditingMode"
       class="announcement"
       :show-apply-action="true"
       @update-announcement="updateAnnouncement(announcement)"
@@ -65,6 +66,11 @@ export default {
     announcements: {
       type: Array,
       default: () => [],
+    },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
     },
   },
 

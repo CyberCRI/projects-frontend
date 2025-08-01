@@ -160,7 +160,7 @@ export default {
   props: {
     isAddMode: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     modelValue: {
       type: Object,

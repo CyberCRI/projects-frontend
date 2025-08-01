@@ -175,6 +175,7 @@ try {
           v-model="form"
           :categories="categories"
           :validation="v$"
+          is-add-mode
           @close="$emit('close')"
         />
 
