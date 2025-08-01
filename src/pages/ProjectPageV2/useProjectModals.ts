@@ -17,6 +17,12 @@ export default function useProjectModals() {
     teamMember: {
       visible: false,
     },
+    bug: {
+      visible: false,
+    },
+    abuse: {
+      visible: false,
+    },
     announcement: {
       visible: false,
       editedItem: null,

@@ -13,8 +13,10 @@ import { getAttachmentFiles } from '@/api/attachment-files.service'
 import { getProjectAnnouncements } from '@/api/announcements.service'
 import { getBlogEntries as getBlogEntriesApi } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
-import { getProject } from '@/api/projects.service'
+import { getProject, duplicateProject as duplicateProjectAPI } from '@/api/projects.service'
 import { getReviews as getReviewsApi } from '@/api/reviews.service'
+
+import analytics from '@/analytics'
 
 export default function useProjectData() {
   // const toaster = useToasterStore()
@@ -29,7 +31,7 @@ export default function useProjectData() {
   const router = useRouter()
   const { t } = useI18n()
 
-  const { isAdmin /*, canEditProject*/ } = usePermissions()
+  const { isAdmin, canEditProject, isOrgUser } = usePermissions()
 
   const isMemberOrAdmin = computed(() => {
     const members = [...team.value.members, ...team.value.owners, ...team.value.reviewers]
@@ -291,6 +293,26 @@ export default function useProjectData() {
         : []),
     ]
   })
+
+  const duplicateProject = async () => {
+    const originalProject = project.value
+
+    const projectCopy = await duplicateProjectAPI(originalProject.id)
+
+    // fetch updated project list from user so permissions as set correctly
+    await usersStore.getUser(usersStore.id)
+
+    analytics.project.duplicate(originalProject.id, projectCopy.id)
+
+    await projectsStore.updateProject({
+      id: projectCopy.id,
+      project: {
+        title: `${originalProject.title} ${t('project.copy')}`,
+      },
+    })
+
+    return projectCopy
+  }
 
   const projectDisplayTabs = computed(() =>
     [
@@ -730,6 +752,32 @@ export default function useProjectData() {
     router.push(currentTab.value.altView)
   }
 
+  const actionMenu = computed(() =>
+    [
+      {
+        icon: 'Copy',
+        condition: canEditProject.value || isOrgUser.value,
+        label: t('project.duplicate'),
+        isAddAction: true,
+        addModal: 'duplicate',
+      },
+      {
+        icon: 'Bug',
+        condition: true,
+        label: t('report.bug'),
+        isAddAction: true,
+        addModal: 'bug',
+      },
+      {
+        icon: 'Flag',
+        condition: true,
+        label: t('report.abuse'),
+        isAddAction: true,
+        addModal: 'abuse',
+      },
+    ].filter((a) => a.condition)
+  )
+
   return {
     // data
     isMemberOrAdmin,
@@ -756,6 +804,7 @@ export default function useProjectData() {
     projectTabs,
     currentTab,
     categoryHierarchy,
+    actionMenu,
     // methods
     getReviews,
     getGoals,
@@ -774,5 +823,6 @@ export default function useProjectData() {
     getProjectLocations,
     getSimilarProjects,
     toggleEditing,
+    duplicateProject,
   }
 }

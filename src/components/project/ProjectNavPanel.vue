@@ -82,6 +82,14 @@
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
+    <div v-if="actionMenu.length" class="side-actions">
+      <NavPanelMenu
+        :menu-entries="actionMenu"
+        @navigated="navigated"
+        @action-triggered="onActionTriggered"
+      />
+    </div>
+
     <SimilarProjectsV2
       v-if="similarProjects && similarProjects.length"
       id="similar-projects"
@@ -128,17 +136,22 @@ export default {
       type: Boolean,
       default: false,
     },
+    actionMenu: {
+      type: Array,
+      default: () => [],
+    },
   },
 
-  emits: ['update-follow', 'navigated', 'toggle-editing'],
+  emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project'],
 
   setup() {
     const usersStore = useUsersStore()
-    const { canEditProject, isAdmin } = usePermissions()
+    const { canEditProject, isAdmin, isOrgAdmin } = usePermissions()
     return {
       usersStore,
       canEditProject,
       isAdmin,
+      isOrgAdmin,
     }
   },
 
@@ -157,7 +170,11 @@ export default {
 
   methods: {
     onActionTriggered(menuEntry) {
-      this.projectLayoutToggleAddModal(menuEntry.addModal)
+      if (menuEntry.addModal === 'duplicate') {
+        this.$emit('duplicate-project')
+      } else {
+        this.projectLayoutToggleAddModal(menuEntry.addModal)
+      }
     },
 
     navigated() {

@@ -27,7 +27,7 @@ export default {
   name: 'NavPanelMenu',
   props: {
     menuEntries: {
-      type: Array,
+      type: Array, // {condition, label, icon, actionIcon?, key, view, isAddAction?}
       required: true,
     },
     currentTab: {
@@ -57,6 +57,8 @@ menu {
   list-style-type: none;
 
   .menu-entry {
+    cursor: pointer;
+
     &:hover,
     &.active {
       background-color: $primary-light;
