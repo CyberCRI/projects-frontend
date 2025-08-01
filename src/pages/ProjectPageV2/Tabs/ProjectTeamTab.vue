@@ -1,6 +1,6 @@
 <template>
   <div class="project-team">
-    <div v-if="canEditProject" class="add-user">
+    <div v-if="isEditionEnabled" class="add-user">
       <LpiButton
         :label="$filters.capitalize($t('team.add'))"
         class="add-user-btn"
@@ -20,8 +20,8 @@
       <ProjectTeamEditor
         v-for="owner in owners"
         :key="owner.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(owner, 'owners')"
         @edit-user="projectLayoutToggleAddModal('teamMember', { user: owner, role: 'owners' })"
       >
@@ -39,8 +39,8 @@
       <ProjectTeamEditor
         v-for="member in members"
         :key="member.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(member, 'members')"
         @edit-user="projectLayoutToggleAddModal('teamMember', { user: member, role: 'members' })"
       >
@@ -59,8 +59,8 @@
       <ProjectTeamEditor
         v-for="reviewer in reviewers"
         :key="reviewer.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(reviewer, 'reviewers')"
         @edit-user="
           projectLayoutToggleAddModal('teamMember', { user: reviewer, role: 'reviewers' })
@@ -85,8 +85,8 @@
       <ProjectTeamEditor
         v-for="group in owner_groups"
         :key="group.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(group, 'groups')"
         @edit-user="
           projectLayoutToggleAddModal('teamMember', { user: group, role: 'owner_groups' })
@@ -111,8 +111,8 @@
       <ProjectTeamEditor
         v-for="group in reviewer_groups"
         :key="group.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(group, 'groups')"
         @edit-user="
           projectLayoutToggleAddModal('teamMember', {
@@ -140,8 +140,8 @@
       <ProjectTeamEditor
         v-for="group in member_groups"
         :key="group.id"
-        :can-be-edited="canEditProject"
-        :can-be-removed="canEditProject"
+        :can-be-edited="isEditionEnabled"
+        :can-be-removed="isEditionEnabled"
         @remove-user="launchConfirmModal(group, 'groups')"
         @edit-user="
           projectLayoutToggleAddModal('teamMember', {
@@ -217,6 +217,11 @@ export default {
       type: Object,
       default: () => ({ owners: [], members: [], reviewers: [] }),
     },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['reload-team'],
@@ -248,6 +253,9 @@ export default {
   },
 
   computed: {
+    isEditionEnabled() {
+      return this.canEditProject && this.isInEditingMode
+    },
     owners() {
       return this.team.owners
     },

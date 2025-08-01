@@ -91,7 +91,7 @@ export default function useProjectPagesRoutes() {
             {
               path: 'summary/edit',
               name: 'projectSummaryEdit',
-              component: () => import('../pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'),
+              component: () => import('../pages/ProjectPageV2/Tabs/ProjectEditGeneralInfos.vue'),
               meta: {
                 requiresAuth: true,
               },
@@ -106,7 +106,7 @@ export default function useProjectPagesRoutes() {
             {
               path: 'description/edit',
               name: 'projectDescriptionEdit',
-              component: () => import('../pages/ProjectPageV2/Tabs/ProjectDescriptionTab.vue'),
+              component: () => import('../pages/ProjectPageV2/Tabs/ProjectEditDescriptionTab.vue'),
               meta: {
                 requiresAuth: true,
               },

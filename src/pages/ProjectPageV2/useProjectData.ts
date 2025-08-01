@@ -406,8 +406,8 @@ export default function useProjectData() {
           onReloadLinkResources: () => getLinkResources(),
         },
         condition:
-          (project.value && !!(project.value.files.length || project.value.links.length)) ||
-          isRoute('projectResources'), // prevent error when emptying the current tab
+          project.value &&
+          (project.value.files.length || project.value.links.length || isRoute('projectResources')), // prevent error when emptying the current tab
         dataTest: 'project-resources',
         icon: 'Globe',
       },
@@ -518,7 +518,6 @@ export default function useProjectData() {
         condition: true,
         dataTest: 'project-summary',
         icon: 'Home',
-        noTitle: true,
       },
       {
         key: 'project-description',
@@ -540,6 +539,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           team: team.value,
+          isInEditingMode: true,
           onReloadTeam: () => {
             console.log('reload tabs')
             reloadTeam()
@@ -559,6 +559,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           locations: locations.value,
+          isInEditingMode: true,
         },
         condition: locations.value.length || isRoute('projectLocationsEdit'),
         dataTest: 'project-locations',
@@ -574,6 +575,7 @@ export default function useProjectData() {
           project: project.value,
           goals: goals.value,
           sdgs: sdgs.value,
+          isInEditingMode: true,
           onReloadGoals: () => getGoals(),
           onReloadSdgs: () => getSdgs(),
         },
@@ -590,6 +592,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           blogEntries: blogEntries.value,
+          isInEditingMode: true,
           onReloadBlogEntries: () => getBlogEntries(),
         },
         condition: !!blogEntries.value.length || isRoute('projectBlog'), // prevent error when emptying the current tab
@@ -606,12 +609,13 @@ export default function useProjectData() {
           project: project.value,
           fileResources: fileResources.value,
           linkResources: linkResources.value,
+          isInEditingMode: true,
           onReloadFileResources: () => getFileResources(),
           onReloadLinkResources: () => getLinkResources(),
         },
         condition:
-          (project.value && !!(project.value.files.length || project.value.links.length)) ||
-          isRoute('projectResources'), // prevent error when emptying the current tab
+          project.value &&
+          (fileResources.value.length || linkResources.value.length || isRoute('projectResources')), // prevent error when emptying the current tab
         dataTest: 'project-resources',
         icon: 'Globe',
         addModal: 'resource',
@@ -624,6 +628,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           linkedProjects: linkedProjects.value,
+          isInEditingMode: true,
           onReloadLinkedProjects: () => getLinkedProjects(),
         },
         condition: !!linkedProjects.value?.length || isRoute('projectLinkedProjects'), // prevent error when emptying the current tab
@@ -639,6 +644,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           announcements: announcements.value,
+          isInEditingMode: true,
           onReloadAnnouncements: () => getAnnouncements(),
         },
         condition: announcements.value?.length > 0 || isRoute('projectAnnouncements'), // prevent error when emptying the current tab
@@ -654,6 +660,7 @@ export default function useProjectData() {
         props: {
           project: project.value,
           comments: comments.value,
+          isInEditingMode: true,
           onReloadComments: () => getComments(project.value.id),
         },
         condition: true,
@@ -669,6 +676,7 @@ export default function useProjectData() {
           project: project.value,
           team: team.value,
           projectMessages: projectMessages.value,
+          isInEditingMode: true,
           onReloadProjectMessages: () => getProjectMessages(project.value.id),
         },
         condition: isMemberOrAdmin.value,
