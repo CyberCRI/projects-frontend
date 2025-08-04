@@ -6,8 +6,14 @@ import { usersDict as users } from '../../variables'
 const logger = new Logger(LogLevel.Debug)
 
 export async function setRights(page: Page, groupName: string, rightToSet: string): Promise<void> {
-  logger.info(`Set right to ${groupName} to ${rightToSet}`)
+  logger.info(`Finfd group ${groupName}`)
+  await page.locator('[data-test="lpi-logo"]').click()
+  await page.locator('[data-test="search-input"]').fill(groupName)
+  await page.locator('[data-test="search-input-button"]').click()
+  //await delay(3000) // wait for the different search page redirections (query string building)
+  await page.locator(`[data-test="group-card-${groupName}"]`).click()
 
+  logger.info(`Set right to ${groupName} to ${rightToSet}`)
   await page.waitForSelector('.group-layout')
   const toggleButton = await page.locator('.nav-panel-toggle-button')
   // open side panel if it is collapsed
