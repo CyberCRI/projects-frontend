@@ -188,13 +188,15 @@ export default {
     },
 
     saveImageSizes() {
-      this.$emit('update:imageSizes', {
-        scaleX: this.$refs.imageResizer.scaleX,
-        scaleY: this.$refs.imageResizer.scaleY,
-        left: this.$refs.imageResizer.left,
-        top: this.$refs.imageResizer.top,
-        naturalRatio: this.$refs.imageResizer.naturalRatio,
-      })
+      if (this.$refs.imageResizer) {
+        this.$emit('update:imageSizes', {
+          scaleX: this.$refs.imageResizer.scaleX,
+          scaleY: this.$refs.imageResizer.scaleY,
+          left: this.$refs.imageResizer.left,
+          top: this.$refs.imageResizer.top,
+          naturalRatio: this.$refs.imageResizer.naturalRatio,
+        })
+      }
       this.showImageResizer = false
     },
 

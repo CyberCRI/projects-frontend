@@ -419,7 +419,7 @@ export default {
           icon: 'Cog',
           actionIcon: 'Pen',
         },
-      ]
+      ].map((entry) => ({ ...entry, dataTest: entry.key }))
     },
 
     currentTab() {
