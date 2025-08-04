@@ -1,32 +1,29 @@
 <template>
   <div class="project-form">
-    <BaseDrawer
-      :title="$t('project.edit')"
-      :is-opened="isOpened"
-      class="full"
-      :confirm-action-name="$t('common.save')"
-      :confirm-action-disabled="v$.$error"
-      :asyncing="isSaving"
-      @close="$emit('close')"
-      @confirm="submit"
-    >
-      <!-- TODO: add this validation instead of the invalid variable -->
-      <!-- TODO: :confirm-action-disabled="invalid" -->
-      <ProjectForm
-        v-if="isOpened"
-        v-model="form"
-        class="edit-project"
-        :value="form"
-        :validation="v$"
+    <ClientOnly>
+      <FormPanel
+        :confirm-action-name="$t('common.save')"
+        :confirm-action-disabled="v$.$error"
+        :asyncing="isSaving"
         @close="$emit('close')"
-      />
-    </BaseDrawer>
+        @confirm="submit"
+      >
+        <!-- TODO: add this validation instead of the invalid variable -->
+        <!-- TODO: :confirm-action-disabled="invalid" -->
+        <LazyProjectForm
+          v-if="form"
+          v-model="form"
+          class="edit-project"
+          :value="form"
+          :validation="v$"
+          @close="$emit('close')"
+        />
+      </FormPanel>
+    </ClientOnly>
   </div>
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import ProjectForm from '@/components/project/ProjectForm.vue'
 import { postProjectHeader, patchProjectHeader } from '@/api/projects.service'
 import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
@@ -34,16 +31,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 export default {
-  name: 'ProjectDrawer',
-
-  components: { BaseDrawer, ProjectForm },
-
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  name: 'ProjectEditGeneralInfos',
 
   emits: ['close', 'project-edited'],
   setup() {
@@ -123,15 +111,6 @@ export default {
   computed: {
     currentProject() {
       return this.projectsStore.project
-    },
-  },
-
-  watch: {
-    isOpened: {
-      handler: function () {
-        this.fillForm()
-      },
-      immediate: true,
     },
   },
 

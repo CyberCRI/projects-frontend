@@ -11,7 +11,16 @@ export default function useProjectModals() {
     sdg: {
       visible: false,
     },
+    goalOrSdg: {
+      visible: false,
+    },
     teamMember: {
+      visible: false,
+    },
+    bug: {
+      visible: false,
+    },
+    abuse: {
       visible: false,
     },
     announcement: {

@@ -1,6 +1,6 @@
 <template>
   <div class="project-linked-projects">
-    <div v-if="canEditProject" class="add-linked-project">
+    <div v-if="canEditProject && isInEditingMode" class="add-linked-project">
       <LpiButton
         :label="$filters.capitalize($t('project.add-linked-project'))"
         class="add-linked-project-btn"
@@ -8,7 +8,7 @@
       />
     </div>
     <LinkedProjects
-      is-editable
+      :is-editable="isInEditingMode"
       :project="project"
       :linked-projects="linkedProjects"
       @reload-linked-projects="$emit('reload-linked-projects')"
@@ -39,6 +39,11 @@ export default {
     linkedProjects: {
       type: Array,
       default: () => [],
+    },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
     },
   },
 

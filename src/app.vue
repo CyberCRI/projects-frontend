@@ -1,5 +1,10 @@
 <template>
   <div id="APP" :class="[/*themeclass,*/ currentRouteName, { 'has-open-drawer': isLoading }]">
+    <Transition appear name="background-appear">
+      <div v-if="globalsStore.uiIsLocked" class="loader-backdrop">
+        <LoaderSimple />
+      </div>
+    </Transition>
     <LpiHeader />
     <div id="scrollview" ref="scrollview" data-test="scrollview">
       <div class="main-view">
@@ -20,6 +25,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 import useKeycloak from '@/api/auth/keycloak.ts'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import useGlobalsStore from '@/stores/useGlobals.ts'
 
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
@@ -32,6 +38,8 @@ const keycloak = useKeycloak()
 
 const reportBugModalActive = ref(false)
 const isLoading = false
+
+const globalsStore = useGlobalsStore()
 
 const usersStoreToken = computed(() => {
   return usersStore.accessToken
@@ -99,6 +107,17 @@ onBeforeUnmount(() => {
   flex-flow: column nowrap;
   min-height: 100vh;
   justify-content: stretch;
+
+  .loader-backdrop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    inset: 0;
+    z-index: 99999999;
+    cursor: wait;
+    background-color: rgb(0 0 0 / 60%);
+  }
 
   #scrollview {
     flex-grow: 1;

@@ -2,7 +2,7 @@
   <div class="project-blog-entries">
     <PageStickyHead v-if="project" :page-title="project.title">
       <template #default>
-        <div v-if="canEditProject" class="add-blog">
+        <div v-if="isEditionEnabled" class="add-blog">
           <LpiButton
             :label="$filters.capitalize($t('blog.add-entry'))"
             class="add-blog-btn"
@@ -31,8 +31,8 @@
         :id="`entry-${blogEntry.id}`"
         :key="blogEntry.id"
         :blog-entry="blogEntry"
-        :can-delete="canEditProject"
-        :can-edit="canEditProject"
+        :can-delete="isEditionEnabled"
+        :can-edit="isEditionEnabled"
         :is-expanded="expandedEntry === blogEntry.id"
         :is-last-blog-entry="i === 0"
         @toggle-expand="updateExpanded(blogEntry.id)"
@@ -82,6 +82,11 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['reload-blog-entries'],
@@ -109,6 +114,9 @@ export default {
   },
 
   computed: {
+    isEditionEnabled() {
+      return this.canEditProject && this.isInEditingMode
+    },
     blogEntriesLength() {
       return this.blogEntries.length
     },

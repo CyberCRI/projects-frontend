@@ -301,7 +301,7 @@ export default {
           condition: true,
           icon: 'VipCrownLine',
         },
-      ]
+      ].map((entry) => ({ ...entry, dataTest: entry.key }))
     },
 
     profileEditTabs() {

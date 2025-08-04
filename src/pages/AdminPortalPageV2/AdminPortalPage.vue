@@ -97,7 +97,7 @@ const tabs = computed(() => {
       icon: 'Users',
       condition: true,
     },
-  ]
+  ].map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 
 const uniqueId = 'admin-nav-panel'

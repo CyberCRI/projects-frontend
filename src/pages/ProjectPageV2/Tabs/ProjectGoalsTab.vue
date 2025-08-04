@@ -1,10 +1,10 @@
 <template>
   <div class="project-goals">
-    <SdgRecap :sdgs="sdgs" />
+    <SdgRecap :sdgs="sdgs" :is-in-editing-mode="isInEditingMode" />
 
-    <div v-if="canEditProject" class="add-goal">
+    <div v-if="isEditionEnabled" class="add-goal">
       <LpiButton
-        v-if="canEditProject"
+        v-if="isEditionEnabled"
         :label="$filters.capitalize($t('goal.add'))"
         class="add-goal-btn"
         btn-icon="Plus"
@@ -16,8 +16,8 @@
       v-for="goal in sortedGoals"
       :key="goal.id"
       :goal="goal"
-      :can-edit-goal="canEditProject"
-      :can-delete-goal="canEditProject"
+      :can-edit-goal="isEditionEnabled"
+      :can-delete-goal="isEditionEnabled"
       @edit-goal="editGoal"
       @delete-goal="toggleDeleteConfirmModal"
     />
@@ -65,6 +65,11 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['reload-goals'],
@@ -88,6 +93,9 @@ export default {
   },
 
   computed: {
+    isEditionEnabled() {
+      return this.canEditProject && this.isInEditingMode
+    },
     sortedGoals() {
       return [...this.goals].sort((a, b) => {
         if (!a.deadline_at && !b.deadline_at) {

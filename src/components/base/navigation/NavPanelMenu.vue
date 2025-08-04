@@ -2,16 +2,16 @@
   <menu>
     <li
       v-for="entry in menuEntries"
-      :key="entry.view"
+      :key="entry.key"
       class="menu-entry"
       :class="{ active: entry == currentTab }"
     >
       <NuxtLink
         v-if="entry.condition"
         class="link"
-        :data-test="entry.key"
+        :data-test="entry.dataTest"
         :to="entry.view"
-        @click="navigated"
+        @click="onMenuEntryClicked($event, entry)"
       >
         <IconImage class="icon" :name="entry.icon || 'Article'" />
 
@@ -27,7 +27,7 @@ export default {
   name: 'NavPanelMenu',
   props: {
     menuEntries: {
-      type: Array,
+      type: Array, // {condition, label, icon, actionIcon?, key, view, isAddAction?}
       required: true,
     },
     currentTab: {
@@ -35,10 +35,16 @@ export default {
       default: () => {},
     },
   },
-  emits: ['navigated'],
+  emits: ['navigated', 'action-triggered'],
   methods: {
-    navigated() {
-      this.$emit('navigated')
+    onMenuEntryClicked(evt, entry) {
+      console.log(entry)
+      if (entry.isAddAction) {
+        this.$emit('action-triggered', entry)
+        evt.preventDefault()
+      } else {
+        this.$emit('navigated')
+      }
     },
   },
 }
@@ -51,6 +57,8 @@ menu {
   list-style-type: none;
 
   .menu-entry {
+    cursor: pointer;
+
     &:hover,
     &.active {
       background-color: $primary-light;

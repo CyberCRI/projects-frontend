@@ -66,6 +66,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    isInEditingMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['update-announcement', 'open-confirm-modal', 'apply'],
@@ -79,7 +84,7 @@ export default {
 
   computed: {
     canEditAndDelete() {
-      return this.canEditProject
+      return this.canEditProject && this.isInEditingMode
     },
 
     createdDateLabel() {

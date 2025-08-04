@@ -1,12 +1,5 @@
 <template>
   <div class="map-recap">
-    <div v-if="canEditProject" class="actions">
-      <ContextActionButton
-        action-icon="Pen"
-        class="edit-btn"
-        @click="projectLayoutToggleAddModal('location')"
-      />
-    </div>
     <div class="map-inner-ctn">
       <div class="map">
         <BaseMap ref="summary-map" :config="config" :use-cluster="true">
@@ -26,12 +19,7 @@
       </div>
     </div>
 
-    <ContextActionButton
-      :secondary="true"
-      class="map-button"
-      action-icon="Expand"
-      @click="projectLayoutToggleAddModal('location')"
-    />
+    <ContextActionButton :secondary="true" class="map-button" action-icon="Expand" />
   </div>
 </template>
 
@@ -48,8 +36,6 @@ export default {
     MapPointer,
     BaseMap,
   },
-
-  inject: ['projectLayoutToggleAddModal'],
 
   props: {
     locations: {

@@ -5,9 +5,17 @@ import useProjectSocket from './useProjectSocket.ts'
 import useProjectModals from './useProjectModals.ts'
 import useProjectNav from './useProjectNav.ts'
 import { getProject } from '@/api/projects.service'
+import useToasterStore from '@/stores/useToaster.ts'
+import useGlobalsStore from '@/stores/useGlobals.ts'
 
 const route = useRoute()
 const router = useRouter()
+
+const globalsStore = useGlobalsStore()
+
+const toaster = useToasterStore()
+
+const { t } = useI18n()
 
 const { modals, toggleAddModal } = useProjectModals()
 
@@ -35,6 +43,8 @@ const {
   projectTabs,
   currentTab,
   categoryHierarchy,
+  isEditing,
+  actionMenu,
   // methods
   getGoals,
   getLinkedProjects,
@@ -47,7 +57,9 @@ const {
   reloadProject,
   setProject,
   getProjectLocations,
-} = useProjectData()
+  toggleEditing,
+  duplicateProject,
+} = useProjectData({ toggleAddModal })
 
 const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   project,
@@ -56,6 +68,27 @@ const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
 })
 
 const { goToProjectTab } = useProjectNav(route.params.slugOrId)
+
+const onDuplicateProject = async () => {
+  try {
+    // emit('asyncing', true)
+    globalsStore.uiIsLocked = true
+
+    const projectCopy = await duplicateProject()
+    router.push({
+      name: 'projectSummary',
+      params: { slugOrId: projectCopy.slug },
+    })
+
+    toaster.pushSuccess(t('toasts.project-duplication.success'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.project-duplication.error')} (${error})`)
+    console.error(error)
+  } finally {
+    // emit('asyncing', false)
+    globalsStore.uiIsLocked = false
+  }
+}
 
 // provide
 provide('projectLayoutToggleAddModal', toggleAddModal)
@@ -120,6 +153,11 @@ if (import.meta.client) {
     }
   })
 }
+
+const chooseGoalOrSdg = (choice) => {
+  toggleAddModal(choice)
+  toggleAddModal('goalOrSdg')
+}
 </script>
 <template>
   <div class="page-section-extra-wide project-layout">
@@ -133,6 +171,7 @@ if (import.meta.client) {
       <template #nav-panel>
         <LazyProjectNavPanel
           v-if="!loading && !isNavCollapsed"
+          class="slide-panel"
           :class="{ collapsed: isNavCollapsed }"
           :project-tabs="projectTabs"
           :current-tab="currentTab"
@@ -140,9 +179,12 @@ if (import.meta.client) {
           :announcements="announcements"
           :similar-projects="similarProjects"
           :follow="follow"
-          class="slide-panel"
+          :is-editing="isEditing"
+          :action-menu="actionMenu"
+          @toggle-editing="toggleEditing"
           @update-follow="follow = $event"
           @navigated="onNavigated"
+          @duplicate-project="onDuplicateProject"
         />
       </template>
       <template #content>
@@ -222,6 +264,19 @@ if (import.meta.client) {
       :sdgs="sdgs || []"
       @reload-sdgs="getSdgs"
       @close="toggleAddModal('sdg')"
+    />
+    <LazyGoalOrSdgsDrawer
+      :is-opened="modals.goalOrSdg.visible"
+      @close="toggleAddModal('goalOrSdg')"
+      @choice-made="chooseGoalOrSdg"
+    />
+
+    <LazyReportDrawer :is-opened="modals.bug.visible" type="bug" @close="toggleAddModal('bug')" />
+
+    <LazyReportDrawer
+      :is-opened="modals.abuse.visible"
+      type="abuse"
+      @close="toggleAddModal('abuse')"
     />
   </div>
 </template>
