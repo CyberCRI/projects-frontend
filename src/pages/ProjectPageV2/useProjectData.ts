@@ -728,6 +728,7 @@ export default function useProjectData() {
       isAddAction: !t.condition,
       actionIcon: t.condition ? 'Pen' : 'Plus',
       condition: true,
+      dataTest: t.dataTest + (t.condition ? '-edit' : '-add'),
     }))
   )
 

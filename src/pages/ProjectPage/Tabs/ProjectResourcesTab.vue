@@ -3,7 +3,9 @@
     <div v-if="canEditProject" class="add-resource">
       <LpiButton
         :label="$filters.capitalize($t('resource.add'))"
+        btn-icon="Plus"
         class="add-blog-btn"
+        data-test="in-page-add-resources"
         @click="projectLayoutToggleAddModal('resource')"
       />
     </div>

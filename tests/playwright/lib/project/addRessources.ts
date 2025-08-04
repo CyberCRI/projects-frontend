@@ -5,9 +5,15 @@ const logger = new Logger(LogLevel.Debug)
 
 export async function addRessources(page) {
   // add ressources link
-  logger.info('Click to add ressources to project')
-  await page.locator('[data-test="add-to-project"]').click()
-  await page.locator('[data-test="button-add-resource-to-project"]').click()
+  // logger.info('Click to add ressources to project')
+  // await page.locator('[data-test="add-to-project"]').click()
+  // await page.locator('[data-test="button-add-resource-to-project"]').click()
+
+  logger.info('Switch to edit mode')
+  await page.locator('[data-test="edit-project"]').click()
+  logger.info('Open drawer to add resource')
+  await page.locator('[data-test="project-resources-add"]').click()
+
   logger.info('Click on add link')
   await page.locator('[data-test="add-link"]').click()
   await page
@@ -24,11 +30,17 @@ export async function addRessources(page) {
   await delay(2000)
 
   // add ressources file
+  // await page.locator('[data-test="add-to-project"]').click()
+  logger.info('Switch to edit mode')
+  await page.locator('[data-test="edit-project"]').click()
+  logger.info('Open resource edit tab')
+  await page.locator('[data-test="project-resources-edit"]').click()
+  logger.info('Click button to add file and resources')
+  await page.locator('[data-test="in-page-add-resources"]').click()
+  // await page.locator('[data-test="button-add-resource-to-project"]').click()
   logger.info('Click to add file')
-  await page.locator('[data-test="add-to-project"]').click()
-  await page.locator('[data-test="button-add-resource-to-project"]').click()
   await page.locator('[data-test="add-file"]').click()
-  logger.info('Fill added')
+  // logger.info('Fill added')
   logger.info('Fill title file')
   await page.locator('[data-test="input-link-title"]').fill('test file ressources')
   logger.info('Title added title file')

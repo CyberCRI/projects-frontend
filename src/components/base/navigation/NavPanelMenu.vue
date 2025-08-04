@@ -2,14 +2,14 @@
   <menu>
     <li
       v-for="entry in menuEntries"
-      :key="entry.view"
+      :key="entry.key"
       class="menu-entry"
       :class="{ active: entry == currentTab }"
     >
       <NuxtLink
         v-if="entry.condition"
         class="link"
-        :data-test="entry.key"
+        :data-test="entry.dataTest"
         :to="entry.view"
         @click="onMenuEntryClicked($event, entry)"
       >
