@@ -419,6 +419,7 @@ export default {
     },
 
     isMember() {
+      if (!this.team) return false
       const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
       return members.find((user) => this.usersStore.id === user.id)
     },

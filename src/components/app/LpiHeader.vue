@@ -28,6 +28,7 @@
             'pageProject',
             'projectSummary',
             'projectDescription',
+            'ProjectLocations',
             'projectBlog',
             'projectGoals',
             'projectTeam',
@@ -37,6 +38,18 @@
             'projectPrivateExchange',
             'projectAnnouncements',
             'ProjectSettings',
+            'projectSummaryEdit',
+            'projectDescriptionEdit',
+            'ProjectLocationsEdit',
+            'projectBlogEdit',
+            'projectGoalsEdit',
+            'projectTeamEdit',
+            'projectResourcesEdit',
+            'projectLinkedProjectsEdit',
+            'projectCommentsEdit',
+            'projectPrivateExchangeEdit',
+            'projectAnnouncementsEdit',
+            'ProjectSettingsEdit',
           ]"
           :to="{ name: 'Categories' }"
         />
