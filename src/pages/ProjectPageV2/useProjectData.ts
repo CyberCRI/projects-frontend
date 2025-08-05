@@ -490,23 +490,23 @@ export default function useProjectData() {
         dataTest: 'project-private-exchange',
         icon: 'EmailOutline',
       },
-      {
-        key: 'project-settings',
-        label: t('project.settings'),
-        view: `/projects/${route.params.slugOrId}/project-settings`,
-        altView: `/projects/${route.params.slugOrId}/project-settings/edit`,
-        condition: true,
-        props: {
-          project: project.value,
-          team: team.value,
-          categories: categories.value,
-          onReloadTeam: () => reloadTeam(),
-          onReloadReviews: () => getReviews(),
-          onReloadProject: () => reloadProject(),
-        },
-        dataTest: 'project-settings',
-        icon: 'Cog',
-      },
+      // {
+      //   key: 'project-settings',
+      //   label: t('project.settings'),
+      //   view: `/projects/${route.params.slugOrId}/project-settings`,
+      //   altView: `/projects/${route.params.slugOrId}/project-settings/edit`,
+      //   condition: true,
+      //   props: {
+      //     project: project.value,
+      //     team: team.value,
+      //     categories: categories.value,
+      //     onReloadTeam: () => reloadTeam(),
+      //     onReloadReviews: () => getReviews(),
+      //     onReloadProject: () => reloadProject(),
+      //   },
+      //   dataTest: 'project-settings',
+      //   icon: 'Cog',
+      // },
     ].map((t) => ({ ...t, isEditing: false }))
   )
 
@@ -709,7 +709,7 @@ export default function useProjectData() {
         key: 'project-settings',
         label: t('project.settings'),
         view: `/projects/${route.params.slugOrId}/project-settings/edit`,
-        altView: `/projects/${route.params.slugOrId}/project-settings`,
+        altView: `/projects/${route.params.slugOrId}/summary`,
         condition: true,
         props: {
           project: project.value,
@@ -742,7 +742,7 @@ export default function useProjectData() {
     return allProjectTabs.value.find((tab) => route.path.indexOf(tab.view) === 0)
   })
 
-  const isEditing = computed(() => currentTab.value.isEditing)
+  const isEditing = computed(() => currentTab.value?.isEditing || false)
 
   const projectTabs = computed(() =>
     isEditing.value ? projectEditTabsFiltered.value : projectDisplayTabsFiltered.value

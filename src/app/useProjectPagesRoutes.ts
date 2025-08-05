@@ -77,7 +77,8 @@ export default function useProjectPagesRoutes() {
             {
               path: 'project-settings',
               name: 'ProjectSettings',
-              component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
+              // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
+              redirect: { name: 'projectSummary' },
             },
 
             {
