@@ -57,13 +57,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    editGroupLink: {
-      type: String,
-      default: '',
-    },
   },
 
-  emits: ['navigated'],
+  emits: ['navigated', 'toggle-editing'],
   // data() {
   //   return {
   //     addToProjectMenuVisible: false,
@@ -85,7 +81,7 @@ export default {
     // },
 
     switchView() {
-      this.$router.push(this.editGroupLink)
+      this.$emit('toggle-editing', !this.isEditing)
     },
   },
 }

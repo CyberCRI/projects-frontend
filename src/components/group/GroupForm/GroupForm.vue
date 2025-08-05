@@ -84,20 +84,21 @@
 
     <div class="spacer" />
 
-    <!-- Team -->
-    <div class="team">
-      <GroupTeamSection v-model="form.members" />
-    </div>
+    <template v-if="!isReducedMode">
+      <!-- Team -->
+      <div class="team">
+        <GroupTeamSection v-model="form.members" />
+      </div>
 
-    <div class="spacer" />
+      <div class="spacer" />
 
-    <!-- Featured projects -->
-    <div class="project">
-      <ProjectSection v-model="form.featuredProjects" />
-    </div>
+      <!-- Featured projects -->
+      <div class="project">
+        <ProjectSection v-model="form.featuredProjects" />
+      </div>
 
-    <div class="spacer" />
-
+      <div class="spacer" />
+    </template>
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
@@ -184,6 +185,10 @@ export default {
     validation: {
       type: Object,
       default: () => {},
+    },
+    isReducedMode: {
+      type: Boolean,
+      default: false,
     },
   },
 

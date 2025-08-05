@@ -17,9 +17,9 @@
             :email="groupEmail"
             :can-edit-group="canEditGroup"
             :is-editing="isEditing"
-            :edit-group-link="editGroupLink"
             class="slide-panel"
             @navigated="onNavigated"
+            @toggle-editing="toggleEditing"
           />
         </template>
         <template v-if="currentTab" #content>
@@ -76,30 +76,65 @@ export default {
 
   data() {
     return {
-      groupSlug: '',
-      groupName: '',
-      groupImage: null,
-      groupEmail: '',
-      groupVisibility: '',
-      groupDescription: '',
-      groupShortDescription: '',
+      groupData: null,
       membersInitialRequest: {},
       projectsInitialRequest: {},
       isLoading: true,
       isProjectsLoading: true,
       isMembersLoading: true,
-      groupHierarchy: [],
-      groupChildren: [],
     }
   },
 
   computed: {
-    groupTabs() {
+    groupName() {
+      return this.groupData?.name
+    },
+    groupImage() {
+      return this.groupData?.header_image
+    },
+    groupEmail() {
+      return this.groupData?.email
+    },
+    groupVisibility() {
+      return this.groupData?.publication_status
+    },
+    // groupSlug() {
+    //   return this.groupData?.slug
+    // },
+
+    groupDescription() {
+      return this.groupData?.description
+    },
+    groupShortDescription() {
+      return this.groupData?.short_description
+    },
+
+    groupHierarchy() {
+      const root = {
+        name: this.$filters.capitalize(this.$t('common.groups')),
+        route: { name: 'Groups' },
+      }
+      if (!this.groupData) return [root]
+      return [
+        root,
+        ...this.groupData.hierarchy.map((group) => ({
+          name: group.name,
+          route: { name: 'Group', params: { groupId: group.slug || group.id } },
+        })),
+      ]
+    },
+    groupChildren() {
+      return this.groupData?.children
+    },
+
+    groupTabsDisplay() {
       return [
         {
-          key: 'snapshot',
+          key: 'group-snapshot',
+          dataTest: 'group-snapshot',
           label: this.$t('group.snapshot'),
           view: `/group/${this.$route.params.groupId}/snapshot`,
+          altView: `/group/${this.$route.params.groupId}/snapshot/edit`,
           props: {
             description: this.groupDescription,
             projectsInitialRequest: this.projectsInitialRequest,
@@ -118,9 +153,11 @@ export default {
           icon: 'Home',
         },
         {
-          key: 'members',
+          key: 'group-members',
+          dataTest: 'group-members',
           label: this.$t('group.members'),
           view: `/group/${this.$route.params.groupId}/members`,
+          altView: `/group/${this.$route.params.groupId}/members/edit`,
           props: {
             membersInitialRequest: this.membersInitialRequest,
             isMembersLoading: this.isMembersLoading,
@@ -129,9 +166,11 @@ export default {
           icon: 'Users',
         },
         {
-          key: 'projects',
+          key: 'group-projects',
+          dataTest: 'group-projects',
           label: this.$t('group.projects'),
           view: `/group/${this.$route.params.groupId}/projects`,
+          altView: `/group/${this.$route.params.groupId}/projects/edit`,
           props: {
             projectsInitialRequest: this.projectsInitialRequest,
             isProjectsLoading: this.isProjectsLoading,
@@ -139,37 +178,94 @@ export default {
           condition: true,
           icon: 'Archive',
         },
+      ]
+    },
+
+    groupTabsDisplayFiltered() {
+      return this.groupTabsDisplay.filter((tab) => tab.condition)
+    },
+
+    groupTabsEdit() {
+      return [
         {
-          key: 'projects',
-          label: this.$t('group.edit.title'),
-          view: `/group/${this.$route.params.groupId}/Edit`,
+          key: 'group-snapshot-edit',
+          dataTest: 'group-snapshot-edit',
+          label: this.$t('group.snapshot'),
+          view: `/group/${this.$route.params.groupId}/snapshot/edit`,
+          altView: `/group/${this.$route.params.groupId}/snapshot`,
           props: {
+            isInEditingMode: true,
+            description: this.groupDescription,
             projectsInitialRequest: this.projectsInitialRequest,
             isProjectsLoading: this.isProjectsLoading,
-            isV2: true,
+            membersInitialRequest: this.membersInitialRequest,
+            isMembersLoading: this.isMembersLoading,
+            isLoading: this.isLoading,
+            groupName: this.groupName,
+            groupImage: this.groupImage,
+            groupVisibility: this.groupVisibility,
+            groupShortDescription: this.groupShortDescription,
+            groupChildren: this.groupChildren,
           },
-          condition: this.canEditGroup,
-          icon: 'Cog',
-          actionIcon: 'Pen',
+          condition: true,
+          noTitle: true,
+          icon: 'Home',
         },
-      ].filter((tab) => tab.condition)
+        {
+          key: 'groups-members-edit',
+          dataTest: 'groups-members-edit',
+          label: this.$t('group.members'),
+          view: `/group/${this.$route.params.groupId}/members/edit`,
+          altView: `/group/${this.$route.params.groupId}/members`,
+          props: {
+            isInEditingMode: true,
+            groupData: this.groupData,
+          },
+          condition: this.groupData,
+          icon: 'Users',
+        },
+        {
+          key: 'group-projects-edit',
+          dataTest: 'group-projects-edit',
+          label: this.$t('group.projects'),
+          view: `/group/${this.$route.params.groupId}/projects/edit`,
+          altView: `/group/${this.$route.params.groupId}/projects`,
+          props: {
+            isInEditingMode: true,
+            groupData: this.groupData,
+          },
+          condition: this.groupData,
+          icon: 'Archive',
+        },
+      ].map((entry) => ({
+        ...entry,
+        isEditing: true,
+        actionIcon: 'Pen',
+      }))
+    },
+
+    groupTabsEditFiltered() {
+      return this.groupTabsEdit.filter((tab) => tab.condition)
+    },
+
+    groupTabs() {
+      return this.isEditing ? this.groupTabsEditFiltered : this.groupTabsDisplayFiltered
+    },
+
+    allGroupsTabs() {
+      return [...this.groupTabsDisplay, ...this.groupTabsEdit]
     },
 
     currentTab() {
-      return this.groupTabs.find((tab) => this.$route.fullPath === tab.view)
+      return this.allGroupsTabs.find((tab) => this.$route.fullPath === tab.view)
     },
 
     currentOrganizationCode() {
       return this.organizationsStore.current.code
     },
-    editGroupLink() {
-      return this.isEditing
-        ? `/group/${this.groupSlug || this.groupId}`
-        : `/group/${this.groupSlug || this.groupId}/Edit`
-    },
 
     isEditing() {
-      return this.$route.fullPath === `/group/${this.groupSlug || this.groupId}/Edit`
+      return this.currentTab?.isEditing || false
     },
   },
   watch: {
@@ -184,6 +280,9 @@ export default {
   },
 
   methods: {
+    toggleEditing() {
+      this.$router.push(this.currentTab.altView)
+    },
     async load() {
       if (!import.meta.client) return
       this.isLoading = true
@@ -203,34 +302,14 @@ export default {
     async loadGroup() {
       try {
         this.isLoading = true
-        const groupData = await getGroup(
+        this.groupData = await getGroup(
           this.currentOrganizationCode,
           this.groupId,
           /*no error*/ true
         )
-        this.groupName = groupData.name
-        this.groupImage = groupData.header_image
-        this.groupEmail = groupData.email
-        this.groupVisibility = groupData.publication_status
-        this.groupSlug = groupData.slug
-
-        this.groupDescription = groupData.description
-        this.groupShortDescription = groupData.short_description
-
-        this.groupHierarchy = [
-          {
-            name: this.$filters.capitalize(this.$t('common.groups')),
-            route: { name: 'Groups' },
-          },
-          ...groupData.hierarchy.map((group) => ({
-            name: group.name,
-            route: { name: 'Group', params: { groupId: group.slug || group.id } },
-          })),
-        ]
-        this.groupChildren = groupData.children
 
         // we can't use "this.groupId" because it might be a slug and not an id....
-        this.peopleGroupsStore.currentId = groupData.id
+        this.peopleGroupsStore.currentId = this.groupData.id
       } catch {
         this.$router.replace({
           name: 'page404',
