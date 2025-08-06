@@ -3,6 +3,8 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 const props = defineProps({ groupData: { type: Object, required: true } })
 
+const emit = defineEmits('reload-group-projects')
+
 const organizationsStore = useOrganizationsStore()
 const orgCode = computed(() => {
   // use group's org code if availabe
@@ -20,6 +22,15 @@ const { setProjectsData, updateGroupProjects, isSaving } = useGroupProjectsUpdat
   form
 )
 
+const save = async () => {
+  try {
+    await updateGroupProjects()
+    emit('reload-group-projects')
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 onMounted(setProjectsData)
 </script>
 
@@ -35,7 +46,7 @@ onMounted(setProjectsData)
             params: { groupId: groupData.slug || groupData.id },
           })
         "
-        @confirm="updateGroupProjects"
+        @confirm="save"
       >
         <ProjectSection v-model="form.featuredProjects" />
       </FormPanel>

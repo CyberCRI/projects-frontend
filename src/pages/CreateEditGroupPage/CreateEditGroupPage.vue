@@ -47,7 +47,7 @@ const props = defineProps({
   },
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
 const organizationsStore = useOrganizationsStore()
@@ -246,6 +246,8 @@ const updateGroup = async () => {
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-edit.success'))
+
+    emit('reload-group')
 
     router.push(
       props.postUpdateRouteFactory

@@ -1,6 +1,6 @@
 <template>
   <div :key="groupId" :class="isEditing ? 'group-edit-layout' : 'group-layout'">
-    <div class="page-section-extra-wide">
+    <div v-if="groupData" class="page-section-extra-wide">
       <NavPanelLayout
         :is-loading="isLoading"
         :is-nav-collapsed="isNavCollapsed"
@@ -206,6 +206,7 @@ export default {
             groupVisibility: this.groupVisibility,
             groupShortDescription: this.groupShortDescription,
             groupChildren: this.groupChildren,
+            onReloadGroup: this.loadGroup,
           },
           condition: true,
           noTitle: true,
@@ -220,6 +221,7 @@ export default {
           props: {
             isInEditingMode: true,
             groupData: this.groupData,
+            onReloadGroupMembers: this.loadGroupMembers,
           },
           condition: this.groupData,
           icon: 'Users',
@@ -233,6 +235,7 @@ export default {
           props: {
             isInEditingMode: true,
             groupData: this.groupData,
+            onReloadGroupProjects: this.loadGroupProjects,
           },
           condition: this.groupData,
           icon: 'Archive',

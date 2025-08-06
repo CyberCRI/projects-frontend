@@ -3,6 +3,8 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 const props = defineProps({ groupData: { type: Object, required: true } })
 
+const emit = defineEmits('reload-group-members')
+
 const organizationsStore = useOrganizationsStore()
 const orgCode = computed(() => {
   // use group's org code if availabe
@@ -20,6 +22,15 @@ const { setMembersData, updateGroupMembers, isSaving } = useGroupMembersUpdate(
   form
 )
 
+const save = async () => {
+  try {
+    await updateGroupMembers()
+    emit('reload-group-members')
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 onMounted(setMembersData)
 </script>
 
@@ -35,7 +46,7 @@ onMounted(setMembersData)
             params: { groupId: groupData.slug || groupData.id },
           })
         "
-        @confirm="updateGroupMembers"
+        @confirm="save"
       >
         <GroupTeamSection v-model="form.members" />
       </FormPanel>
