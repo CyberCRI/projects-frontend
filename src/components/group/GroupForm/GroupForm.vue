@@ -242,6 +242,7 @@ export default {
         imageSizes: null,
         publication_status: 'public',
       },
+      formIsSetup: false,
 
       descriptionIsOpened: false,
       showRemoveQuit: false,
@@ -268,7 +269,10 @@ export default {
     form: {
       deep: true,
       handler: function () {
-        this.$emit('update:modelValue', this.form)
+        if (this.formIsSetup) {
+          // console.log('from handler')
+          this.$emit('update:modelValue', this.form)
+        }
       },
     },
   },
@@ -280,6 +284,7 @@ export default {
       ...this.form,
       ...this.modelValue,
     }
+    this.formIsSetup = true
   },
 
   methods: {

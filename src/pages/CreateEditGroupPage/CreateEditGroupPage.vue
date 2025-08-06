@@ -74,6 +74,8 @@ const form = ref({
   publication_status: 'public',
 })
 
+const { hasChange, isSetup } = useEditWatcher(form)
+
 const isSaving = ref(false)
 const groupData = ref(null)
 
@@ -208,6 +210,8 @@ const createGroup = async () => {
     // save header
     await updateHeader(newGroupId)
 
+    hasChange.value = false
+
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-create.success'))
@@ -246,6 +250,8 @@ const updateGroup = async () => {
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-edit.success'))
+
+    hasChange.value = false
 
     emit('reload-group')
 
@@ -317,6 +323,8 @@ onMounted(async () => {
 
       await setMembersData()
       await setProjectsData()
+
+      isSetup.value = true
     } catch (error) {
       console.log(error)
       redirectTo404()

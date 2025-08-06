@@ -22,16 +22,22 @@ const { setMembersData, updateGroupMembers, isSaving } = useGroupMembersUpdate(
   form
 )
 
+const { hasChange, isSetup } = useEditWatcher(form)
+
 const save = async () => {
   try {
     await updateGroupMembers()
+    hasChange.value = false
     emit('reload-group-members')
   } catch (e) {
     console.log(e)
   }
 }
 
-onMounted(setMembersData)
+onMounted(async () => {
+  await setMembersData()
+  isSetup.value = true
+})
 </script>
 
 <template>
