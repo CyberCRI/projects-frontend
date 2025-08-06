@@ -26,6 +26,9 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
   }
 
   await page.locator(`[data-test="edit-group"]`).click()
+
+  await page.locator(`[data-test="groups-members-edit"]`).click()
+
   await page.locator(`[data-test="edit-roles"]`).click()
 
   if (rightToSet === 'member') {
@@ -50,12 +53,14 @@ export async function setRights(page: Page, groupName: string, rightToSet: strin
       .last()
       .click()
   }
+  // close role drawer
+  await page.locator(`.drawer__footer [data-test="confirm-button"]`).click()
+
+  // save edits
+  await page.locator(`.form-panel-footer [data-test="confirm-button"]`).click()
   //await delay(1000)
-  await page.locator(`[data-test="confirm-button"]`).click()
-  //await delay(1000)
-  await page.locator(`[data-test="group-create-button"]`).click()
-  // Creation group is made in 2 requests wait the the second request to be sent
-  //await delay(5000)
-  // wait for post save redirect to group page
-  await page.waitForSelector('.group-layout')
+  // await page.locator(`[data-test="group-create-button"]`).click()
+  // wait for post save to proceed
+  await page.waitForSelector(`.form-panel-footer [data-test="confirm-button"].disabled`)
+  await page.waitForSelector(`.form-panel-footer [data-test="confirm-button"]:not(.disabled)`)
 }

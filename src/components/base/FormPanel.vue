@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="drawer" data-test="drawer-layout-container">
+    <div class="form-panel" data-test="form-panel-layout-container">
       <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">
         <slot />
       </main>
 
-      <footer v-if="!noFooter" class="drawer__footer">
+      <footer v-if="!noFooter" class="form-panel-footer">
         <slot name="footer">
           <LpiButton
             :disabled="asyncing"
@@ -81,11 +81,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.drawer {
+.form-panel {
   display: flex;
   flex-direction: column;
 
-  .drawer__footer {
+  .form-panel-footer {
     width: 100%;
     display: flex;
     justify-content: center;

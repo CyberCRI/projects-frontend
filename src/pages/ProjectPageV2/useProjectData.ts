@@ -761,6 +761,7 @@ export default function useProjectData() {
         label: t('project.duplicate'),
         isAddAction: true,
         addModal: 'duplicate',
+        dataTest: 'duplicate-project',
       },
       {
         icon: 'Bug',
@@ -768,6 +769,7 @@ export default function useProjectData() {
         label: t('report.bug'),
         isAddAction: true,
         addModal: 'bug',
+        dataTest: 'report-bug',
       },
       {
         icon: 'Flag',
@@ -775,6 +777,7 @@ export default function useProjectData() {
         label: t('report.abuse'),
         isAddAction: true,
         addModal: 'abuse',
+        dataTest: 'report-abuse',
       },
     ].filter((a) => a.condition)
   )

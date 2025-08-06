@@ -1,5 +1,9 @@
 <template>
-  <div :key="groupId" :class="isEditing ? 'group-edit-layout' : 'group-layout'">
+  <div
+    :key="groupId"
+    class="group-layout"
+    :class="isEditing ? 'group-edit-layout' : 'group-display-layout'"
+  >
     <div v-if="groupData" class="page-section-extra-wide">
       <NavPanelLayout
         :is-loading="isLoading"
