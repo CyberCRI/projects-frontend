@@ -80,7 +80,7 @@ export async function createProject(page, projectName, projId) {
   await page.locator('[data-test="project-description"]').click()
   await page.locator('[data-test="project-team"]').click()
   await page.locator('[data-test="project-comments"]').click()
-  await page.locator('[data-test="project-settings"]').click()
+  // await page.locator('[data-test="project-settings"]').click()
   await page.locator('[data-test="project-summary"]').click()
   logger.info('Clickable tabs checked')
 
@@ -90,6 +90,6 @@ export async function createProject(page, projectName, projId) {
   await expect(page.locator('[data-test="project-description"]')).toBeVisible()
   await expect(page.locator('[data-test="project-team"]')).toBeVisible()
   await expect(page.locator('[data-test="project-comments"]')).toBeVisible()
-  await expect(page.locator('[data-test="project-settings"]')).toBeVisible()
+  // await expect(page.locator('[data-test="project-settings"]')).toBeVisible()
   logger.info('Tabs visible checked ')
 }

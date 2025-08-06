@@ -10,6 +10,7 @@ export default defineNuxtPlugin(async () => {
     if (to.matched.some((route) => route.meta.resetScroll)) {
       utils.resetScroll()
     }
+
     const usersStore = useUsersStore()
     if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isConnected) {
       let proceed = true

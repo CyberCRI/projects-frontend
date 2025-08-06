@@ -84,20 +84,21 @@
 
     <div class="spacer" />
 
-    <!-- Team -->
-    <div class="team">
-      <GroupTeamSection v-model="form.members" />
-    </div>
+    <template v-if="!isReducedMode">
+      <!-- Team -->
+      <div class="team">
+        <GroupTeamSection v-model="form.members" />
+      </div>
 
-    <div class="spacer" />
+      <div class="spacer" />
 
-    <!-- Featured projects -->
-    <div class="project">
-      <ProjectSection v-model="form.featuredProjects" />
-    </div>
+      <!-- Featured projects -->
+      <div class="project">
+        <ProjectSection v-model="form.featuredProjects" />
+      </div>
 
-    <div class="spacer" />
-
+      <div class="spacer" />
+    </template>
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
@@ -185,6 +186,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    isReducedMode: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   emits: ['update:modelValue', 'close'],
@@ -237,6 +242,7 @@ export default {
         imageSizes: null,
         publication_status: 'public',
       },
+      formIsSetup: false,
 
       descriptionIsOpened: false,
       showRemoveQuit: false,
@@ -263,7 +269,10 @@ export default {
     form: {
       deep: true,
       handler: function () {
-        this.$emit('update:modelValue', this.form)
+        if (this.formIsSetup) {
+          // console.log('from handler')
+          this.$emit('update:modelValue', this.form)
+        }
       },
     },
   },
@@ -275,6 +284,7 @@ export default {
       ...this.form,
       ...this.modelValue,
     }
+    this.formIsSetup = true
   },
 
   methods: {

@@ -9,6 +9,7 @@ export default function useGroupPagesRoutes() {
           redirect: { name: 'groupSnapshot' },
           component: () => import('../pages/GroupPageV2/GroupPage.vue'),
           children: [
+            // display
             {
               path: 'snapshot',
               name: 'groupSnapshot',
@@ -24,11 +25,32 @@ export default function useGroupPagesRoutes() {
               name: 'groupProjects',
               component: () => import('../pages/GroupPageV2/Tabs/GroupProjectsTab.vue'),
             },
+            // retro compat
             {
               path: 'Edit',
               name: 'frontEditGroup',
-              props: (route) => ({ isV2: true, groupId: route.params.groupId }),
+              redirect: { name: 'groupSnapshotEdit' },
+            },
+            // edit
+            {
+              path: 'snapshot/edit',
+              name: 'groupSnapshotEdit',
+              props: (route) => ({
+                isV2: true,
+                isReducedMode: true,
+                groupId: route.params.groupId,
+              }),
               component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
+            },
+            {
+              path: 'members/edit',
+              name: 'groupMembersEdit',
+              component: () => import('../pages/GroupPageV2/Tabs/GroupMembersEditTab.vue'),
+            },
+            {
+              path: 'projects/edit',
+              name: 'groupProjectsEdit',
+              component: () => import('../pages/GroupPageV2/Tabs/GroupProjectsEditTab.vue'),
             },
           ],
           props: true,

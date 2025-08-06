@@ -1,16 +1,10 @@
 <script setup>
 import {
   postGroup,
-  postGroupMembers,
-  postGroupProjects,
   postGroupHeader,
   patchGroupHeader,
   getGroup,
-  getGroupMember,
-  getGroupProject,
   patchGroup,
-  removeGroupMember,
-  removeGroupProject,
 } from '@/api/groups.service'
 import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
@@ -46,9 +40,14 @@ const props = defineProps({
     type: [Function, null],
     default: null,
   },
+
+  isReducedMode: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
 const organizationsStore = useOrganizationsStore()
@@ -75,10 +74,10 @@ const form = ref({
   publication_status: 'public',
 })
 
+const { hasChange, isSetup } = useEditWatcher(form)
+
 const isSaving = ref(false)
 const groupData = ref(null)
-const groupMemberData = ref(null)
-const groupProjectData = useState(() => null)
 
 const rules = computed(() => ({
   form: {
@@ -135,11 +134,18 @@ const cancel = () => {
   }
 }
 
+const { setProjectsData, updateGroupProjects } = useGroupProjectsUpdate(
+  orgCode,
+  props.groupId,
+  form
+)
+const { setMembersData, updateGroupMembers } = useGroupMembersUpdate(orgCode, props.groupId, form)
+
 const updateHeader = async (groupId) => {
   // check if header has changed
   if (
-    form.value.header_image != groupProjectData.value?.header_image?.url ||
-    !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupProjectData.value?.header_image))
+    form.value.header_image != groupData.value?.header_image?.url ||
+    !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupData.value?.header_image))
   ) {
     const payloadHeader = new FormData()
     if (form.value.imageSizes) imageSizesFormData(payloadHeader, form.value.imageSizes)
@@ -155,120 +161,6 @@ const updateHeader = async (groupId) => {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
     }
-  }
-}
-
-const updateGroupMembers = async (groupId) => {
-  const previousMembersIndex = (groupMemberData.value || []).reduce((acc, curr) => {
-    acc[curr.id] = curr
-    return acc
-  }, {})
-
-  const currentMembersIndex = (form.value.members || []).reduce((acc, curr) => {
-    acc[curr.id] = curr
-    return acc
-  }, {})
-
-  const membersToAdd = []
-  const membersToRemove = []
-  const leadersToAdd = []
-  const leadersToRemove = []
-  const managersToAdd = []
-  const managersToRemove = []
-
-  // a user is a manager OR a member
-  // in both case it can ALSO be leader
-
-  ;(form.value.members || []).forEach((member) => {
-    const previous = previousMembersIndex[member.id]
-    // if its a new user
-    if (!previous) {
-      if (member.is_leader) {
-        leadersToAdd.push(member.id)
-      } else if (member.is_manager) {
-        managersToAdd.push(member.id)
-      } else {
-        membersToAdd.push(member.id)
-      }
-    } else {
-      // old roles are now removed automacally on backend
-      // when adding a new one
-
-      if (member.is_leader && !previous.is_leader) {
-        leadersToAdd.push(member.id)
-      }
-
-      if (member.is_manager && !previous.is_manager) {
-        managersToAdd.push(member.id)
-      }
-
-      if (!member.is_leader && !member.is_manager && (previous.is_leader || previous.is_manager)) {
-        membersToAdd.push(member.id)
-      }
-    }
-  })
-  ;(groupMemberData.value || []).forEach((member) => {
-    // if user is to be removed
-    if (!currentMembersIndex[member.id]) {
-      // if was leader remove from leaders independently of other roles
-      if (member.is_leader) leadersToRemove.push(member.id)
-      // if was manager remove from managers else remove from members
-      if (member.is_manager) managersToRemove.push(member.id)
-      else membersToRemove.push(member.id)
-    }
-  })
-
-  // remove before adding to accomodate for role changes
-  if (membersToRemove.length > 0 || leadersToRemove.length > 0 || managersToRemove.length > 0) {
-    const toRemove = [...membersToRemove, ...leadersToRemove, ...managersToRemove]
-    const body = {
-      users: toRemove,
-    }
-    await removeGroupMember(orgCode.value, groupId, body)
-  }
-
-  if (membersToAdd.length > 0 || leadersToAdd.length > 0 || managersToAdd.length > 0) {
-    const payloadMembers = {
-      members: membersToAdd,
-      leaders: leadersToAdd,
-      managers: managersToAdd,
-    }
-    await postGroupMembers(orgCode.value, groupId, payloadMembers)
-  }
-}
-
-const updateGroupProjects = async (groupId) => {
-  // TODO: check if featured projects are changed and triage add/remove
-
-  const previousProjectsIndex = (groupProjectData.value || []).reduce((acc, curr) => {
-    acc[curr.id] = curr
-    return acc
-  }, {})
-
-  const currentProjectsIndex = (form.value.featuredProjects || []).reduce((acc, curr) => {
-    acc[curr.id] = curr
-    return acc
-  }, {})
-
-  const projectsToAdd = (form.value.featuredProjects || []).filter(
-    (project) => !previousProjectsIndex[project.id]
-  )
-
-  const projectsToRemove = (groupProjectData.value || []).filter(
-    (project) => !currentProjectsIndex[project.id]
-  )
-
-  if (projectsToAdd.length > 0) {
-    const payloadProjects = {
-      featured_projects: projectsToAdd.map((project) => project.id),
-    }
-    await postGroupProjects(orgCode.value, groupId, payloadProjects)
-  }
-  if (projectsToRemove.length > 0) {
-    const payloadProjects = {
-      featured_projects: projectsToRemove.map((project) => project.id),
-    }
-    await removeGroupProject(orgCode.value, groupId, payloadProjects)
   }
 }
 
@@ -318,6 +210,8 @@ const createGroup = async () => {
     // save header
     await updateHeader(newGroupId)
 
+    hasChange.value = false
+
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-create.success'))
@@ -356,6 +250,10 @@ const updateGroup = async () => {
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-edit.success'))
+
+    hasChange.value = false
+
+    emit('reload-group')
 
     router.push(
       props.postUpdateRouteFactory
@@ -423,17 +321,10 @@ onMounted(async () => {
       form.value.header_image = _groupData.header_image
       form.value.imageSizes = pictureApiToImageSizes(_groupData.header_image)
 
-      // fetch members
-      const _groupMemberData = (await getGroupMember(orgCode.value, props.groupId)).results
-      groupMemberData.value = _groupMemberData.map((member) => ({ ...member })) // mapping and destructiring to avoid updating both arrays/object at the same time
-      form.value.members = _groupMemberData.map((member) => ({ ...member })) // this.groupMemberData will serve as reference for add/delete ops
+      await setMembersData()
+      await setProjectsData()
 
-      // fetch featured projects
-      // TODO this is paginated
-      // so if there's more than 100 featured projects we're screwed
-      const _groupProjectData = (await getGroupProject(orgCode.value, props.groupId)).results
-      groupProjectData.value = _groupProjectData.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
-      form.value.featuredProjects = _groupProjectData.map((project) => ({ ...project })) // this.groupProjectData  will serve as reference for add/delete ops
+      isSetup.value = true
     } catch (error) {
       console.log(error)
       redirectTo404()
@@ -477,6 +368,7 @@ try {
         v-model="form"
         :validation="v$"
         :is-add-mode="!groupId"
+        :is-reduced-mode="isReducedMode"
         @close="$emit('close')"
       />
 
