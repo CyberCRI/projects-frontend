@@ -74,7 +74,7 @@ const form = ref({
   publication_status: 'public',
 })
 
-const { hasChange, isSetup } = useEditWatcher(form)
+const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
 
 const isSaving = ref(false)
 const groupData = ref(null)
@@ -210,7 +210,7 @@ const createGroup = async () => {
     // save header
     await updateHeader(newGroupId)
 
-    hasChange.value = false
+    startEditWatcher()
 
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
@@ -247,11 +247,11 @@ const updateGroup = async () => {
     //save featured projects
     await updateGroupProjects(props.groupId)
 
+    startEditWatcher()
+
     // reload current user rights in case they changed
     await usersStore.getUser(usersStore.userFromApi.id)
     toaster.pushSuccess(t('toasts.group-edit.success'))
-
-    hasChange.value = false
 
     emit('reload-group')
 
@@ -282,6 +282,7 @@ const submit = async () => {
 }
 
 onMounted(async () => {
+  stopEditWatcher()
   if (!props.groupId) {
     peopleGroupsStore.currentId = null
     // check right to create (if no grouip id passed) or edit (if group id passed)
@@ -323,13 +324,12 @@ onMounted(async () => {
 
       await setMembersData()
       await setProjectsData()
-
-      isSetup.value = true
     } catch (error) {
       console.log(error)
       redirectTo404()
       return
     }
+    startEditWatcher()
   }
 })
 

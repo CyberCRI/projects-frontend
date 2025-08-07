@@ -17,6 +17,10 @@ const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 
+// onBeforeRouteUpdate(useGuardFromPendingEdit)
+// onBeforeRouteLeave(useGuardFromPendingEdit)
+// useGuardFromPendingEdit()
+
 try {
   if (props.userId) {
     const user = await getUser(props.userId, true)

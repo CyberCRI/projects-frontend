@@ -44,7 +44,7 @@
       />
 
       <LpiButton
-        :disabled="confirmActionDisabled || asyncing"
+        :disabled="asyncing"
         :label="$filters.capitalize($t('common.confirm'))"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         :secondary="false"
@@ -81,16 +81,20 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const usersStore = useUsersStore()
+    const form = ref(defaultForm())
+
+    const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
     return {
+      form,
       toaster,
       usersStore,
+      startEditWatcher,
+      stopEditWatcher,
     }
   },
   data() {
     return {
-      form: defaultForm(),
       asyncing: false,
-      confirmActionDisabled: false,
     }
   },
 
@@ -140,6 +144,9 @@ export default {
         }
 
         await patchUser(this.user.id, data)
+
+        this.startEditWatcher()
+
         this.$emit('profile-edited')
 
         // update store if self
@@ -154,6 +161,7 @@ export default {
       }
     },
     resetForm() {
+      this.stopEditWatcher()
       if (this.user) {
         this.form = {
           shortBio: this.user.short_description || '',
@@ -162,6 +170,7 @@ export default {
       } else {
         this.form = defaultForm()
       }
+      this.startEditWatcher()
     },
   },
 }

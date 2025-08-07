@@ -277,15 +277,19 @@ export default {
     const toaster = useToasterStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
+    const form = ref(defaultForm())
+    const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
     return {
       toaster,
       usersStore,
       runtimeConfig,
+      startEditWatcher,
+      stopEditWatcher,
+      form,
     }
   },
   data() {
     return {
-      form: defaultForm(),
       asyncing: false,
       tagsSelection: [],
       showSdgsDrawer: false,
@@ -426,7 +430,11 @@ export default {
               await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
             }
           }
+
           this.$emit('profile-edited')
+
+          this.startEditWatcher()
+
           // give extra time for profile-edited event to be consumed
           await new Promise((resolve) => setTimeout(resolve, 50))
           // reload user if self to update store info
@@ -455,6 +463,7 @@ export default {
     },
 
     async resetForm() {
+      this.stopEditWatcher()
       if (this.user) {
         this.form = {
           pronouns: this.user.pronouns || '',
@@ -477,6 +486,7 @@ export default {
       } else {
         this.form = defaultForm()
       }
+      this.startEditWatcher()
     },
 
     openSdgsDrawer() {
