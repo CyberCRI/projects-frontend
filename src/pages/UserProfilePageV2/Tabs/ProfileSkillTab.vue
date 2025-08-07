@@ -1,6 +1,6 @@
 <template>
   <div class="skill-tab">
-    <div class="header">
+    <!--div class="header">
       <LpiButton
         v-if="isCurrentUser || canEditUser"
         class="edit-btn"
@@ -9,7 +9,7 @@
         data-test="edit-skills"
         @click="$router.push(editProfileSkillLink)"
       />
-    </div>
+    </div-->
     <template v-if="allSkills.length">
       <section v-if="skills?.length" class="section">
         <UserSkillsFull
@@ -78,12 +78,12 @@ export default {
   },
 
   computed: {
-    editProfileSkillLink() {
-      return {
-        name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
-        params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
-      }
-    },
+    // editProfileSkillLink() {
+    //   return {
+    //     name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
+    //     params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
+    //   }
+    // },
 
     allSkills() {
       return this.user.skills || []
@@ -159,11 +159,11 @@ export default {
   margin-top: $space-xl;
 }
 
-.header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
+// .header {
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: center;
+// }
 
 @media screen and (max-width: $min-tablet) {
   .skill-tab {
