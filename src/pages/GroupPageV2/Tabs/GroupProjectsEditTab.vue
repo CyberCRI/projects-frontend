@@ -22,12 +22,12 @@ const { setProjectsData, updateGroupProjects, isSaving } = useGroupProjectsUpdat
   form
 )
 
-const { hasChange, isSetup } = useEditWatcher(form)
+const { startEditWatcher } = useEditWatcher(form)
 
 const save = async () => {
   try {
     await updateGroupProjects()
-    hasChange.value = false
+    startEditWatcher()
     emit('reload-group-projects')
   } catch (e) {
     console.log(e)
@@ -36,7 +36,7 @@ const save = async () => {
 
 onMounted(async () => {
   await setProjectsData()
-  isSetup.value = true
+  startEditWatcher()
 })
 </script>
 

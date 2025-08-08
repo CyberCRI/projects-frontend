@@ -9,7 +9,7 @@
         ]"
         btn-icon="Pen"
         :data-test="isEditing ? 'show-group' : 'edit-group'"
-        class="edit-btn small"
+        class="panel-mode-switcher edit-btn small"
         @update:model-value="switchView"
       />
     </div>

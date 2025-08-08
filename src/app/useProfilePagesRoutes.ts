@@ -1,6 +1,66 @@
 export default function useProfilePagesRoutes() {
   const runtimeConfig = useRuntimeConfig()
 
+  const profileDisplayTabs = [
+    {
+      path: 'summary',
+      name: 'ProfileSummary',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'),
+    },
+    {
+      path: 'bio',
+      name: 'ProfileBio',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'),
+    },
+    {
+      path: 'projects',
+      name: 'ProfileProjects',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'),
+    },
+    {
+      path: 'groups',
+      name: 'ProfileGroups',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'),
+    },
+    {
+      path: 'skills',
+      name: 'ProfileSkills',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
+    },
+  ]
+
+  const profileEditTabs = [
+    {
+      path: 'general',
+      name: 'ProfileEditGeneral',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGeneralEditTab.vue'),
+    },
+    {
+      path: 'bio',
+      name: 'ProfileEditBio',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioEditTab.vue'),
+    },
+    {
+      path: 'projects',
+      name: 'ProfileEditProjects',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectsEditTab.vue'),
+    },
+    {
+      path: 'groups',
+      name: 'ProfileEditGroups',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsEditTab.vue'),
+    },
+    {
+      path: 'skills',
+      name: 'ProfileEditSkills',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'),
+    },
+    {
+      path: 'privacy',
+      name: 'ProfileEditPrivacy',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfilePrivacyEditTab.vue'),
+    },
+  ]
   return runtimeConfig.public.appUseProjectPageV2
     ? [
         // PROFILE PAGE V2
@@ -20,80 +80,31 @@ export default function useProfilePagesRoutes() {
             loginFromNotificationNewQueryParam: 'editNotifications',
           },
           children: [
-            {
-              path: 'summary',
-              name: 'ProfileSummary',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'),
-            },
-            {
-              path: 'bio',
-              name: 'ProfileBio',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'),
-            },
-            {
-              path: 'projects',
-              name: 'ProfileProjects',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'),
-            },
-            {
-              path: 'groups',
-              name: 'ProfileGroups',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'),
-            },
-            {
-              path: 'skills',
-              name: 'ProfileSkills',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
-            },
+            ...profileDisplayTabs,
+            ...profileEditTabs.map((route) => ({ ...route, path: route.path + '/edit' })),
           ],
         },
+        // legacy (path rediretcs)
         {
           path: '/profile/edit',
           name: 'ProfileEdit',
           redirect: { name: 'ProfileEditGeneral' },
           component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
-          props: {
-            userId: null,
-            isEditing: true,
-          },
-          children: [
-            {
-              path: 'general',
-              name: 'ProfileEditGeneral',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileGeneralEditTab.vue'),
-            },
-            {
-              path: 'bio',
-              name: 'ProfileEditBio',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileBioEditTab.vue'),
-            },
-            {
-              path: 'projects',
-              name: 'ProfileEditProjects',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileProjectsEditTab.vue'),
-            },
-            {
-              path: 'groups',
-              name: 'ProfileEditGroups',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileGroupsEditTab.vue'),
-            },
-            {
-              path: 'skills',
-              name: 'ProfileEditSkills',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileSkillsEditTab.vue'),
-            },
-            {
-              path: 'privacy',
-              name: 'ProfileEditPrivacy',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfilePrivacyEditTab.vue'),
-            },
-          ],
-          meta: {
-            resetScroll: true,
-            requiresAuth: true,
-            loginFromNotification: true,
-            loginFromNotificationNewQueryParam: 'editNotifications',
-          },
+          // props: {
+          //   userId: null,
+          //   isEditing: true,
+          // },
+          children: profileEditTabs.map((route) => ({
+            ...route,
+            name: route.name + 'Legacy',
+            redirect: { name: route.name },
+          })),
+          // meta: {
+          //   resetScroll: true,
+          //   requiresAuth: true,
+          //   loginFromNotification: true,
+          //   loginFromNotificationNewQueryParam: 'editNotifications',
+          // },
         },
         // END PROFILE PAGE V2
         // OTHER PROFILE PAGE V2
@@ -112,79 +123,34 @@ export default function useProfilePagesRoutes() {
             loginFromNotification: true,
             loginFromNotificationNewQueryParam: 'editNotifications',
           },
+
           children: [
-            {
-              path: 'summary',
-              name: 'ProfileSummaryOther',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'),
-            },
-            {
-              path: 'bio',
-              name: 'ProfileBioOther',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'),
-            },
-            {
-              path: 'projects',
-              name: 'ProfileProjectsOther',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'),
-            },
-            {
-              path: 'groups',
-              name: 'ProfileGroupsOther',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'),
-            },
-            {
-              path: 'skills',
-              name: 'ProfileSkillsOther',
-              component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
-            },
+            ...profileDisplayTabs.map((r) => ({ ...r, name: r.name + 'Other' })),
+            ...profileEditTabs.map((route) => ({
+              ...route,
+              name: route.name + 'Other',
+              path: route.path + '/edit',
+            })),
           ],
         },
         {
           path: '/profile/edit/:userId',
           name: 'ProfileEditOtherUser',
           redirect: { name: 'ProfileEditGeneralOther' },
-          component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
-          props: (route) => ({ isEditing: true, userId: route.params.userId }),
-          children: [
-            {
-              path: 'general',
-              name: 'ProfileEditGeneralOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileGeneralEditTab.vue'),
-            },
-            {
-              path: 'bio',
-              name: 'ProfileEditBioOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileBioEditTab.vue'),
-            },
-            {
-              path: 'projects',
-              name: 'ProfileEditProjectsOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileProjectsEditTab.vue'),
-            },
-            {
-              path: 'groups',
-              name: 'ProfileEditGroupsOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileGroupsEditTab.vue'),
-            },
-            {
-              path: 'skills',
-              name: 'ProfileEditSkillsOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfileSkillsEditTab.vue'),
-            },
-            {
-              path: 'privacy',
-              name: 'ProfileEditPrivacyOther',
-              component: () => import('../pages/ProfileEditPageV2/Tabs/ProfilePrivacyEditTab.vue'),
-            },
-          ],
-          meta: {
-            resetScroll: true,
-            requiresAdmin: true,
-            props: true,
-            loginFromNotification: true,
-            loginFromNotificationNewQueryParam: 'editNotifications',
-          },
+          // component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
+          // props: (route) => ({ isEditing: true, userId: route.params.userId }),
+          children: profileEditTabs.map((route) => ({
+            ...route,
+            name: route.name + 'OtherLegacy',
+            redirect: { name: route.name + 'Other' },
+          })),
+          // meta: {
+          //   resetScroll: true,
+          //   requiresAdmin: true,
+          //   props: true,
+          //   loginFromNotification: true,
+          //   loginFromNotificationNewQueryParam: 'editNotifications',
+          // },
         },
       ] // END OTHER PROFILE PAGE V2
     : [

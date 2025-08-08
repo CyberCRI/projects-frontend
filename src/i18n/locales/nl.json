@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "In afwachting van bewerkingen",
+      "content": "U heeft bewerkingen in afwachting. Deze negeren en doorgaan?"
+    }
+  },
   "about": {
     "page-title": "Info",
     "HEADER": {

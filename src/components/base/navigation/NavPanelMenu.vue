@@ -4,7 +4,7 @@
       v-for="entry in menuEntries"
       :key="entry.key"
       class="menu-entry"
-      :class="{ active: entry == currentTab }"
+      :class="{ active: isCurrentTab(entry, currentTab) }"
     >
       <NuxtLink
         v-if="entry.condition"
@@ -45,6 +45,11 @@ export default {
       } else {
         this.$emit('navigated')
       }
+    },
+    isCurrentTab(entry, currentTab) {
+      if (entry?.view?.name) return entry?.view?.name == currentTab?.view?.name
+      if (entry?.view) return entry.view == currentTab?.view
+      return false
     },
   },
 }

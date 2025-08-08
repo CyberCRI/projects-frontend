@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "Pending Edits",
+      "content": "You have pending edits. Discard them and continue?"
+    }
+  },
   "about": {
     "page-title": "About",
     "HEADER": {

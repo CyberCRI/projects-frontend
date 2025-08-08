@@ -284,6 +284,24 @@ export default {
       },
       immediate: true,
     },
+
+    canEditGroup: {
+      handler: function (neo, old) {
+        if (!neo && /*neo !== old && */ this.isEditing) {
+          if (import.meta.client) this.$router.push(this.currentTab.altView)
+        }
+      },
+      immediate: true,
+    },
+
+    isEditing: {
+      handler: function (neo, old) {
+        if (neo && /* neo !== old && */ !this.canEditGroup) {
+          if (import.meta.client) this.$router.push(this.currentTab.altView)
+        }
+      },
+      immediate: true,
+    },
   },
 
   methods: {

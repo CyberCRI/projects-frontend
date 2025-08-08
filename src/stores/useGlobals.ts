@@ -3,6 +3,7 @@ import { watch, ref } from 'vue'
 const useGlobals = defineStore('useGlobals', () => {
   const uiIsLocked = ref(false)
   const hasUnsavedEdit = ref(false)
+  const confirmDiscardPendingEditsPromise = ref(null)
 
   watch(
     () => uiIsLocked.value,
@@ -22,6 +23,7 @@ const useGlobals = defineStore('useGlobals', () => {
   return {
     uiIsLocked,
     hasUnsavedEdit,
+    confirmDiscardPendingEditsPromise,
   }
 })
 

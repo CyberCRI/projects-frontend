@@ -122,9 +122,9 @@ export default {
     },
     editProfileLink() {
       return this.isSelf
-        ? { name: 'ProfileEdit' }
+        ? { name: 'ProfileEditGeneral' }
         : {
-            name: 'ProfileEditOtherUser',
+            name: 'ProfileEditGeneralOther',
             params: { userId: this.user?.slug || this.userId },
           }
     },
