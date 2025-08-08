@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "Canvis pendents",
+      "content": "Teniu canvis pendents. Deseu-los i continueu?"
+    }
+  },
   "about": {
     "page-title": "Quant a",
     "HEADER": {

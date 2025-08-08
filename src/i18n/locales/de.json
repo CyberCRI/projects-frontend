@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "Ausstehende Änderungen",
+      "content": "Sie haben ausstehende Änderungen. Diese verwerfen und fortfahren?"
+    }
+  },
   "about": {
     "page-title": "\u00dcber uns",
     "HEADER": {

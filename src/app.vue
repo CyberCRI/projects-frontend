@@ -15,8 +15,8 @@
     <AppToastList />
     <ConfirmModal
       v-if="globalsStore.confirmDiscardPendingEditsPromise"
-      :content="$t('profile.cancel-content')"
-      :title="$t('profile.cancel-title')"
+      :title="$t('globals.pending-edits.title')"
+      :content="$t('globals.pending-edits.content')"
       :cancel-button-label="$t('common.no')"
       :confirm-button-label="$t('common.yes')"
       @cancel="globalsStore.confirmDiscardPendingEditsPromise(false)"
