@@ -132,7 +132,7 @@ export default {
     },
 
     cancel() {
-      this.resetForm()
+      // this.resetForm()
       this.redirectToProfile()
     },
     async save() {

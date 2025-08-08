@@ -13,6 +13,15 @@
       <LpiFooter @on-click="toggleReportBugModal" />
     </div>
     <AppToastList />
+    <ConfirmModal
+      v-if="globalsStore.confirmDiscardPendingEditsPromise"
+      :content="$t('profile.cancel-content')"
+      :title="$t('profile.cancel-title')"
+      :cancel-button-label="$t('common.no')"
+      :confirm-button-label="$t('common.yes')"
+      @cancel="globalsStore.confirmDiscardPendingEditsPromise(false)"
+      @confirm="globalsStore.confirmDiscardPendingEditsPromise(true)"
+    />
   </div>
 </template>
 

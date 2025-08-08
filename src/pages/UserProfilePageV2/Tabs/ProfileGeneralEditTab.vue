@@ -195,7 +195,7 @@
         :secondary="true"
         class="footer__left-button"
         data-test="close-button"
-        @click="cancel"
+        @click="redirectToProfile"
       />
 
       <LpiButton
@@ -221,7 +221,7 @@
     <SdgsFilter v-if="showSdgsDrawer" v-model="sdgsSelection" />
   </BaseDrawer>
 
-  <ConfirmModal
+  <!--ConfirmModal
     v-if="showCancelConfirmModal"
     :content="$t('profile.cancel-content')"
     :title="$t('profile.cancel-title')"
@@ -229,7 +229,7 @@
     :confirm-button-label="$t('common.yes')"
     @cancel="showCancelConfirmModal = false"
     @confirm="resetAndLeaveEditPage"
-  />
+  /-->
 </template>
 <script>
 import useVuelidate from '@vuelidate/core'
@@ -295,7 +295,7 @@ export default {
       showSdgsDrawer: false,
       sdgsSelection: [],
       v$: useVuelidate(),
-      showCancelConfirmModal: false,
+      // showCancelConfirmModal: false,
     }
   },
 
@@ -352,9 +352,9 @@ export default {
   },
 
   computed: {
-    hasFormChanged() {
-      return this.v$.$anyDirty
-    },
+    // hasFormChanged() {
+    //   return this.v$.$anyDirty
+    // },
     isSelf() {
       const connectedUser = this.usersStore.userFromApi
       return connectedUser && this.user.id === connectedUser.id
@@ -371,18 +371,18 @@ export default {
   },
 
   methods: {
-    cancel() {
-      if (this.hasFormChanged) {
-        this.showCancelConfirmModal = true
-      } else {
-        this.resetAndLeaveEditPage()
-      }
-    },
+    // cancel() {
+    //   if (this.hasFormChanged) {
+    //     this.showCancelConfirmModal = true
+    //   } else {
+    //     this.resetAndLeaveEditPage()
+    //   }
+    // },
 
-    resetAndLeaveEditPage() {
-      this.resetForm()
-      this.redirectToProfile()
-    },
+    // resetAndLeaveEditPage() {
+    //   this.resetForm()
+    //   this.redirectToProfile()
+    // },
 
     async save() {
       this.asyncing = true
