@@ -300,7 +300,10 @@ onMounted(async () => {
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id
       if (!canEditGroup.value) {
-        redirectTo404()
+        router.push({
+          name: 'Group',
+          params: { groupId: props.groupId },
+        })
         return
       }
 
