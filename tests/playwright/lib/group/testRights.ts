@@ -20,7 +20,7 @@ export async function testRights(
   // // await page.locator('[data-test="lpi-logo"]').click() // go to home page to have search bar
   // // await page.locator('[data-test="search-input"]').fill(groupName)
   // await page.locator('[data-test="search-input-button"]').click()
-
+  await page.locator('.group-layout')
   const displayMode = await page.locator('.group-display-layout') // wait group page to be loaded
   const displayModeCount = await displayMode.count()
   console.log('is in display mode ?', displayModeCount)
