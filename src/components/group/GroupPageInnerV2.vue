@@ -286,7 +286,7 @@ export default {
     },
 
     canEditGroup: {
-      handler: function (neo, old) {
+      handler: function (neo /*, old*/) {
         if (!neo && /*neo !== old && */ this.isEditing) {
           if (import.meta.client) this.$router.push(this.currentTab.altView)
         }
@@ -295,7 +295,7 @@ export default {
     },
 
     isEditing: {
-      handler: function (neo, old) {
+      handler: function (neo /*, old*/) {
         if (neo && /* neo !== old && */ !this.canEditGroup) {
           if (import.meta.client) this.$router.push(this.currentTab.altView)
         }
