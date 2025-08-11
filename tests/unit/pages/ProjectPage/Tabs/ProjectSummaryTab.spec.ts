@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import ProjectSummaryTab from '@/pages/ProjectPage/Tabs/ProjectSummaryTab.vue'
+import ProjectSummaryTab from '@/pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { CommentFactory } from '@/../tests/factories/comment.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'

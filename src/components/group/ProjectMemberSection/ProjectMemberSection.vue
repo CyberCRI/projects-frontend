@@ -89,17 +89,18 @@ export default {
 
   .team-outer-ctn {
     border-radius: $border-radius-l;
-    background: $primary-lighter;
+    background: transparent;
     padding: $space-l $space-m;
 
     .team-ctn {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: $space-xl;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 200px);
+      gap: $space-m;
+      justify-content: space-between;
 
-      .user {
-        width: calc(50% - $space-xl);
+      .project-member {
+        width: 100%;
+        max-width: 200px;
       }
     }
 
@@ -108,29 +109,7 @@ export default {
     }
 
     .section-header {
-      justify-content: space-around;
-    }
-  }
-
-  &.is-v2 {
-    .section-header {
       justify-content: space-between;
-    }
-
-    .team-outer-ctn {
-      background: transparent;
-
-      .team-ctn {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 200px);
-        gap: $space-m;
-        justify-content: space-between;
-
-        .project-member {
-          width: 100%;
-          max-width: 200px;
-        }
-      }
     }
   }
 }

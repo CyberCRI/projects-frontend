@@ -1,4 +1,4 @@
-import ProfileGroupsTab from '@/pages/UserProfilePage/Tabs/ProfileGroupsTab.vue'
+import ProfileGroupsTab from '@/pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'

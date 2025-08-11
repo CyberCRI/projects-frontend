@@ -1,4 +1,4 @@
-import ProfileSkillTab from '@/pages/UserProfilePage/Tabs/ProfileSkillTab.vue'
+import ProfileSkillTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'

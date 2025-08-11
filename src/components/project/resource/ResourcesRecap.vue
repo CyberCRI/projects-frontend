@@ -67,24 +67,9 @@ export default {
   align-items: stretch;
   justify-content: space-evenly;
   flex-direction: column;
-  padding: $space-l;
-  background: $primary-lighter;
+  padding: $space-l 0;
   border-radius: $border-radius-l;
-
-  .section-header {
-    justify-content: space-around;
-  }
-
-  .resources-block {
-    display: flex;
-    justify-content: space-evenly;
-  }
-}
-
-.resources-recap.is-v2 .resources-ctn {
   background: transparent;
-  padding-left: 0;
-  padding-right: 0;
 
   .section-header {
     justify-content: space-between;

@@ -449,7 +449,7 @@ export default {
 
   async mounted() {
     try {
-      this.loadUser()
+      await this.loadUser()
     } catch (err) {
       // TODO distinguish 404 from real error
       this.$emit('user-not-found', err)

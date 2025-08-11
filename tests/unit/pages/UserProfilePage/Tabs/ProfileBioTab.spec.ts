@@ -1,4 +1,4 @@
-import ProfileBioTab from '@/pages/UserProfilePage/Tabs/ProfileBioTab.vue'
+import ProfileBioTab from '@/pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'

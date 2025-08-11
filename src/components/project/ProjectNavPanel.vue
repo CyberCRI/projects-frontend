@@ -1,14 +1,6 @@
 <template>
   <NavPanelAside>
     <div v-if="project && canEditProject" class="edit-btn-ctn">
-      <!--LpiButton
-        :label="$t('project.edit')"
-        btn-icon="Pen"
-        data-test="header-project-button"
-        class="edit-btn small"
-        @click="editProject"
-      /-->
-
       <GroupButton
         :model-value="isEditing"
         :options="[
@@ -27,32 +19,6 @@
       @navigated="navigated"
       @action-triggered="onActionTriggered"
     />
-
-    <!--div
-      v-if="project && canEditProject"
-      v-click-outside="() => (addToProjectMenuVisible = false)"
-      class="add-to-project-ctn"
-    >
-      <LpiButton
-        v-if="canEditProject"
-        :animation="false"
-        :class="{ active: addToProjectMenuVisible }"
-        :label="$t('common.add')"
-        class="add-to-project-button small"
-        btn-icon="Plus"
-        data-test="add-to-project"
-        @click="toggleAddToProject"
-      />
-
-      <transition name="fade">
-        <AddToProjectDropdown
-          v-if="addToProjectMenuVisible && canEditProject"
-          is-v2
-          class="add-to-project"
-          @close-dropdown="toggleAddToProject"
-        />
-      </transition>
-    </div-->
 
     <div class="share-buttons">
       <ExternalLabelButton

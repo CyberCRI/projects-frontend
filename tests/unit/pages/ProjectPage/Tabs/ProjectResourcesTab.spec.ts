@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/i18n/locales/en.json'
-import ProjectResourcesTab from '@/pages/ProjectPage/Tabs/ProjectResourcesTab.vue'
+import ProjectResourcesTab from '@/pages/ProjectPageV2/Tabs/ProjectResourcesTab.vue'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import utils from '@/functs/functions'
 import pinia from '@/stores'
