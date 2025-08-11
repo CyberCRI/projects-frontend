@@ -1,4 +1,4 @@
-import GroupProjectsTab from '@/pages/GroupPage/Tabs/GroupProjectsTab.vue'
+import GroupProjectsTab from '@/pages/GroupPageV2/Tabs/GroupProjectsTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { DOMWrapper, flushPromises } from '@vue/test-utils'

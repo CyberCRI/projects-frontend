@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import ProjectCommentsTab from '@/pages/ProjectPage/Tabs/ProjectCommentsTab.vue'
+import ProjectCommentsTab from '@/pages/ProjectPageV2/Tabs/ProjectCommentsTab.vue'
 import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

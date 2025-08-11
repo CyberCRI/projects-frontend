@@ -22,10 +22,6 @@ const props = defineProps({
     type: [String, null],
     default: null,
   },
-  isV2: {
-    type: Boolean,
-    default: false,
-  },
   postCancelRouteFactory: {
     type: [Function, null],
     default: null,
@@ -352,17 +348,7 @@ try {
 }
 </script>
 <template>
-  <div class="create-group" :class="{ 'is-v2': isV2 }">
-    <div v-if="!isV2" class="header">
-      <h1>{{ isEdit ? $t('group.edit.title') : $t('group.create.title') }}</h1>
-      <p>
-        {{ $t('group.create.notice') }}
-        <NuxtLink :to="{ name: 'Help' }" class="help-link">
-          {{ $t('group.create.help-link') }}
-        </NuxtLink>
-      </p>
-    </div>
-
+  <div class="create-group">
     <div class="group-form">
       <!-- do not remove key or group hierarchy will be uncorrectly loaded on meta portal (PROJ-1032) -->
       <GroupForm
@@ -408,16 +394,10 @@ try {
 <style lang="scss" scoped>
 .create-group {
   width: 100%;
-  max-width: pxToRem(532px);
-  margin: $navbar-height auto 0 auto;
-  padding: 0 $space-l;
   box-sizing: border-box;
-
-  &.is-v2 {
-    margin: 0;
-    max-width: none;
-    padding: 0;
-  }
+  margin: 0;
+  max-width: none;
+  padding: 0;
 }
 
 .header {

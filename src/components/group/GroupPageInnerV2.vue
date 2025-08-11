@@ -2,7 +2,11 @@
   <div
     :key="groupId"
     class="group-layout"
-    :class="isEditing ? 'group-edit-layout' : 'group-display-layout'"
+    :class="{
+      'can-edit-group': canEditGroup,
+      'group-edit-layout': isEditing,
+      'group-display-layout': !isEditing,
+    }"
   >
     <div v-if="groupData" class="page-section-extra-wide">
       <NavPanelLayout
@@ -68,6 +72,7 @@ export default {
       useToggleableNavPanel(uniqueId)
 
     const onNavigated = collapseIfUnderBreakpoint
+
     return {
       peopleGroupsStore,
       organizationsStore,

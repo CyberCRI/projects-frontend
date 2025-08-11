@@ -10,7 +10,7 @@
 </template>
 <script>
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import ProfileSkillsEditTab from '@/pages/ProfileEditPage/Tabs/ProfileSkillsEditTab.vue'
+import ProfileSkillsEditTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '@/api/people.service.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useUsersStore from '@/stores/useUsers.ts'

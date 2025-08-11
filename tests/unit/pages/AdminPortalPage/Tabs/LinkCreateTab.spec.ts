@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import LinkCreateTab from '@/pages/AdminPortalPage/Tabs/LinkCreateTab.vue'
+import LinkCreateTab from '@/pages/AdminPortalPageV2/Tabs/LinkCreateTab.vue'
 import english from '@/i18n/locales/en.json'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

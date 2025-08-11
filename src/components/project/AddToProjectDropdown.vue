@@ -1,5 +1,5 @@
 <template>
-  <div class="add-to-project" :class="{ 'add-to-project-v2': isV2 }">
+  <div class="add-to-project">
     <h3 class="add-to-project__label">
       {{ $t('project.add-to-project.title') }}
     </h3>
@@ -10,14 +10,7 @@
         :data-test="item.dataTest"
         :label="$filters.capitalize($t(item.label))"
         :secondary="true"
-        class="add-to-project__button"
-        :class="{
-          borderless: isV2,
-          squarish: isV2,
-          unpad: isV2,
-          'no-height': isV2,
-          'not-centered': isV2,
-        }"
+        class="add-to-project__button borderless squarish unpad no-height not-centered"
         btn-icon="Plus"
         @click="item.onClick()"
       />
@@ -36,8 +29,6 @@ export default {
   },
 
   inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
-
-  props: { isV2: { type: Boolean, default: false } },
 
   emits: ['close-dropdown'],
 
@@ -114,19 +105,7 @@ export default {
           },
           condition: this.canEditProject,
         },
-        ...(this.isV2
-          ? []
-          : [
-              {
-                label: 'project.add-to-project.comment',
-                dataTest: 'button-add-comment-to-project',
-                onClick: () => {
-                  this.$emit('close-dropdown')
-                  this.projectLayoutGoToTab('comments')
-                },
-                condition: this.canCreateComments,
-              },
-            ]),
+
         {
           label: 'project.add-to-project.location',
           dataTest: 'button-add-location-to-project',
@@ -146,12 +125,12 @@ export default {
 .add-to-project {
   display: flex;
   flex-direction: column;
-  width: max-content;
   padding: $space-m;
   box-shadow: 0 0 0 1px $primary;
-  border-radius: $border-radius-l;
-  border-top-right-radius: unset;
   background: $white;
+  border-radius: $border-radius-m;
+  width: 100%;
+  box-sizing: border-box;
 
   .btn-wrapper {
     display: flex;
@@ -173,11 +152,5 @@ export default {
     padding-right: $space-s;
     fill: $primary-dark;
   }
-}
-
-.add-to-project.add-to-project-v2 {
-  border-radius: $border-radius-m;
-  width: 100%;
-  box-sizing: border-box;
 }
 </style>

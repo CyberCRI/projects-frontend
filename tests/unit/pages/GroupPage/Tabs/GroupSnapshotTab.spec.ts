@@ -1,4 +1,4 @@
-import GroupSnapshotTab from '@/pages/GroupPage/Tabs/GroupSnapshotTab.vue'
+import GroupSnapshotTab from '@/pages/GroupPageV2/Tabs/GroupSnapshotTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'

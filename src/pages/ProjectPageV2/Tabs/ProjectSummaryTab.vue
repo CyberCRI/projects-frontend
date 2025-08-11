@@ -24,7 +24,7 @@
 
       <PublicationRecap
         v-if="blogEntries.length"
-        class="unboxed is-v2"
+        class="unboxed"
         :is-blog="true"
         :publications="blogEntries"
       />
@@ -47,14 +47,14 @@
 
       <ProjectMemberSection
         v-if="mergedTeam?.length"
-        class="unboxed is-v2"
+        class="unboxed"
         :members="mergedTeam"
         @user-click="openProfileDrawer"
       />
 
       <ResourcesRecap
         v-if="linkResources?.length || fileResources?.length"
-        class="unboxed is-v2"
+        class="unboxed"
         :files="fileResources"
         :links="linkResources"
       />

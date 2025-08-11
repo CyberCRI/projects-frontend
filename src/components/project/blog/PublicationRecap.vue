@@ -89,7 +89,7 @@ export default {
     display: flex;
     color: $primary-dark;
     flex-shrink: 0;
-    padding: $space-l $space-l $space-m $space-l;
+    padding: $space-l 0;
 
     .header-main {
       padding: $space-m $space-l;
@@ -170,7 +170,7 @@ export default {
   }
 
   .publication-body {
-    padding: $space-m $space-l;
+    padding: $space-m 0;
     flex-grow: 1;
     overflow: hidden auto;
     margin-right: $space-2xs;
@@ -242,14 +242,6 @@ export default {
   &.is-blog {
     .publication-title {
       margin-top: $space-s;
-    }
-  }
-
-  &.is-v2 {
-    .publication-header,
-    .publication-body {
-      padding-left: 0;
-      padding-right: 0;
     }
   }
 }

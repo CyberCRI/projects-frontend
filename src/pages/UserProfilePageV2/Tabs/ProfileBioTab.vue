@@ -19,7 +19,7 @@
     </div>
 
     <!-- User descriptions -->
-    <div v-if="user.short_description" class="long-bio">
+    <div v-if="user.description" class="long-bio">
       <h3 class="subtitle">{{ $t('profile.edit.bio.long-bio.label') }}</h3>
 
       <UserDescriptions v-if="user.description" :user="user" />

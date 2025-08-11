@@ -235,7 +235,6 @@ const routes = ({
       requiresAuth: true,
     },
   },
-  // PROJECT PAGE V1 OR V2
   ...projectPageRoutes,
   {
     path: '/stats',
@@ -484,10 +483,7 @@ const routes = ({
 export default {
   routes: () => {
     const runtimeConfig = useRuntimeConfig()
-    console.log(
-      'runtimeConfig.public.appUseProjectPageV2',
-      runtimeConfig.public.appUseProjectPageV2
-    )
+
     const projectPageRoutes = useProjectPagesRoutes()
 
     const profilePagesRoutes = useProfilePagesRoutes()
