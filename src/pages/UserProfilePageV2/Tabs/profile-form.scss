@@ -1,0 +1,51 @@
+.form-group,
+.form-actions {
+  padding-top: $space-l;
+}
+
+.form-separator {
+  margin-top: $space-l;
+  padding: 0;
+  border: $border-width-s solid $lighter-gray;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: $space-l;
+  gap: $space-m;
+}
+
+.form-group {
+  .label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  label {
+    display: inline-block;
+    font-size: $font-size-s;
+    font-weight: bold;
+    margin-bottom: $space-m;
+    color: $black;
+
+    &.large-space {
+      margin-bottom: $space-l;
+    }
+  }
+
+  .editor {
+    margin-top: $space-m;
+  }
+
+  .notice {
+    margin-bottom: $space-m;
+  }
+}
+
+.error-message {
+  color: $red;
+  margin-top: $space-xs;
+  font-size: $font-size-s;
+}

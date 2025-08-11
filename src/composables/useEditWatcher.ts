@@ -25,32 +25,48 @@ export function deepToRaw<T extends Record<string, any>>(sourceObj: T): T {
 
 export default function useEditWatcher(target: any) {
   const globalsStore = useGlobalsStore()
-  const hasChange = ref(false)
   const isSetup = ref(false)
+
+  const toPOJO = (v) => JSON.parse(JSON.stringify(v))
 
   // fix issues with nested reference in target
   // that fail comparing old and new value
   // (eg reference points to the same object in them, so old resolve to new)
-  const _target = computed(() => JSON.parse(JSON.stringify(target.value)))
 
-  watch(
-    () => _target.value,
-    (neo, old) => {
-      //   console.log('watched', isSetup.value, !isEqual(neo, old), neo, old)
-      if (isSetup.value && !isEqual(neo, old)) hasChange.value = true
-    },
-    { deep: true }
-  )
+  const targetMemo = ref(toPOJO(target.value))
+
+  const _target = computed(() => toPOJO(target.value))
+  const _targetMemo = computed(() => toPOJO(targetMemo.value))
+
+  const hasChange = computed(() => !isEqual(_target.value, _targetMemo.value))
 
   watch(
     () => hasChange.value,
     (neo) => {
-      globalsStore.hasUnsavedEdit = neo
+      console.log('watched', isSetup.value, neo, _target.value, _targetMemo.value)
+      if (isSetup.value) globalsStore.hasUnsavedEdit = neo
     }
   )
+
+  const stopEditWatcher = () => {
+    isSetup.value = false
+    globalsStore.hasUnsavedEdit = false
+  }
+
+  const startEditWatcher = () => {
+    targetMemo.value = toPOJO(target.value)
+    // important this must come after !
+    isSetup.value = true
+  }
+
+  // onBeforeUnmount(() => {
+  //   globalsStore.hasUnsavedEdit = false
+  // })
 
   return {
     hasChange,
     isSetup,
+    startEditWatcher,
+    stopEditWatcher,
   }
 }

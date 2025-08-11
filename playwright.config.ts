@@ -42,7 +42,7 @@ export default defineConfig({
     permissions: ['clipboard-read', 'clipboard-write'],
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: process.env.CI ? 'on' : 'on-first-retry',
-    video: process.env.CI ? 'on' : 'off',
+    video: process.env.CI ? 'on' : 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */

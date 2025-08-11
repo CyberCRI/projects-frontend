@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "Ootel redigeerimised",
+      "content": "Teil on ootel redigeerimised. Kas soovite need tagasi lükata ja jätkata?"
+    }
+  },
   "about": {
     "page-title": "Umbes",
     "HEADER": {

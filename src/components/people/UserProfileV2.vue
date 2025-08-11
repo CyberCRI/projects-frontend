@@ -69,10 +69,10 @@ export default {
       default: null,
     },
 
-    isEditing: {
-      type: Boolean,
-      default: false,
-    },
+    // isEditing: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     // showPageLink: {
     //   type: Boolean,
     //   default: true,
@@ -173,7 +173,7 @@ export default {
     },
     editProfileLink() {
       // return this.isSelf
-      //   ? { name: 'ProfileEdit' }
+      //   ? { name: 'ProfileEditGeneral' }
       //   : {
       //       name: 'ProfileEditOtherUser',
       //       params: { userId: this.user?.slug || this.userId },
@@ -182,7 +182,7 @@ export default {
     },
 
     profileTabs() {
-      return this.isEditing ? this.profileEditTabs : this.profileDisplayTabs
+      return this.isEditing ? this.profileEditTabsFiltered : this.profileDisplayTabsFiltered
     },
 
     profileDisplayTabs() {
@@ -301,7 +301,11 @@ export default {
           condition: true,
           icon: 'VipCrownLine',
         },
-      ].map((entry) => ({ ...entry, dataTest: entry.key }))
+      ]
+    },
+
+    profileDisplayTabsFiltered() {
+      return this.profileDisplayTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
     },
 
     profileEditTabs() {
@@ -419,11 +423,27 @@ export default {
           icon: 'Cog',
           actionIcon: 'Pen',
         },
-      ].map((entry) => ({ ...entry, dataTest: entry.key }))
+      ].map((entry) => ({
+        ...entry,
+        isEditing: true,
+        actionIcon: 'Pen',
+      }))
+    },
+
+    profileEditTabsFiltered() {
+      return this.profileEditTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
+    },
+
+    allProfileTabs() {
+      return [...this.profileDisplayTabs, ...this.profileEditTabs]
     },
 
     currentTab() {
-      return this.profileTabs.find((tab) => this.$route.name === tab.view.name)
+      return this.allProfileTabs.find((tab) => this.$route.name === tab.view.name)
+    },
+
+    isEditing() {
+      return this.currentTab?.isEditing || false
     },
   },
 

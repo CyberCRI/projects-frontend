@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "pending-edits": {
+      "title": "Modifications en attente",
+      "content": "Vous avez des modifications en attente. Les abandonner et continuer ?"
+    }
+  },
   "about": {
     "page-title": "À propos",
     "HEADER": {

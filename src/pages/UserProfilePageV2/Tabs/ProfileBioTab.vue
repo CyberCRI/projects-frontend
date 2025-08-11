@@ -1,6 +1,6 @@
 <template>
   <div class="profile-bio">
-    <div v-if="isCurrentUser || canEditUser" class="header">
+    <!--div v-if="isCurrentUser || canEditUser" class="header">
       <LpiButton
         class="edit-btn"
         btn-icon="Pen"
@@ -8,7 +8,7 @@
         :to="editBioLink"
         data-test="edit-bio"
       />
-    </div>
+    </div-->
     <!-- Short bio -->
     <div v-if="user.short_description" class="short-bio">
       <h3 class="subtitle">{{ $t('profile.edit.bio.short-bio.label') }}</h3>
@@ -62,12 +62,12 @@ export default {
     noDescription() {
       return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
     },
-    editBioLink() {
-      return {
-        name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
-        params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
-      }
-    },
+    // editBioLink() {
+    //   return {
+    //     name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
+    //     params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
+    //   }
+    // },
   },
 }
 </script>
