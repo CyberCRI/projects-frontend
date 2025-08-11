@@ -22,6 +22,8 @@ const form = ref({
   background_color: '',
 })
 
+const { startEditWatcher } = useEditWatcher(form)
+
 const languageOptions = computed(() => {
   return organizationsStore.languages.map((lang) => {
     return {
@@ -57,6 +59,7 @@ onMounted(() => {
     form.value[key] = organizationData[key]
   }
   if (!form.value.background_color) form.value.background_color = '#FFFFFF'
+  startEditWatcher()
 })
 const rules = {
   form: {
@@ -90,6 +93,7 @@ const saveData = async () => {
   try {
     await organizationsStore.updateCurrentOrganization(data)
     toaster.pushSuccess(t('toasts.organization-general-update.success'))
+    startEditWatcher()
   } catch (error) {
     toaster.pushError(`${t('toasts.organization-general-update.error')} (${error})`)
     console.error(error)
