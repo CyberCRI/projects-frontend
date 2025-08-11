@@ -38,10 +38,27 @@ export default {
     const toaster = useToasterStore()
     const { locale } = useI18n()
     const projectsStore = useProjectsStore()
+    const form = ref({
+      title: '',
+      purpose: '',
+      category: undefined,
+      categories: [''],
+      header_image: {
+        variations: {
+          small: undefined,
+        },
+      },
+      language: locale,
+      tags: [],
+    })
+    const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
     return {
       toaster,
       locale,
       projectsStore,
+      form,
+      startEditWatcher,
+      stopEditWatcher,
     }
   },
 
@@ -49,19 +66,6 @@ export default {
     return {
       v$: useValidate(),
 
-      form: {
-        title: '',
-        purpose: '',
-        category: undefined,
-        categories: [''],
-        header_image: {
-          variations: {
-            small: undefined,
-          },
-        },
-        language: this.locale,
-        tags: [],
-      },
       isSaving: false,
     }
   },
@@ -125,11 +129,14 @@ export default {
       if (this.isFormCorrect) {
         this.isSaving = true
         await this.editProject()
+        this.startEditWatcher()
         this.$emit('close')
       }
     },
 
     async fillForm() {
+      this.stopEditWatcher()
+
       if (this.currentProject) {
         this.form.title = this.currentProject.title
         this.form.purpose = this.currentProject.purpose
@@ -155,6 +162,7 @@ export default {
         }
         if (this.v$ && this.v$.$validate) this.isFormCorrect = await this.v$.$validate()
       }
+      this.startEditWatcher()
     },
 
     async editProject() {

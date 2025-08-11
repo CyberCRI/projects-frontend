@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
     <FormPanel
+      class="description-editor-panel"
       :class="{ fs: isFullScreen }"
       :confirm-action-name="$t('common.save')"
       :confirm-action-disabled="!inSoloMode && !socketReady"
@@ -76,18 +77,22 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const projectsStore = useProjectsStore()
     const usersStore = useUsersStore()
+    const editorDescription = ref('')
+    const { startEditWatcher, stopEditWatcher } = useEditWatcher(editorDescription)
     return {
       toaster,
       organizationsStore,
       projectsStore,
       usersStore,
+      startEditWatcher,
+      stopEditWatcher,
+      editorDescription,
     }
   },
 
   data() {
     return {
       isFullScreen: false,
-      editorDescription: '',
       room: '',
       socketReady: false,
       confirmDestroyModalIsOpen: false,
@@ -117,7 +122,9 @@ export default {
   watch: {
     'project.description': function (neo, old) {
       if (neo != old) {
+        this.stopEditWatcher()
         this.editorDescription = neo
+        this.startEditWatcher()
       }
     },
   },
@@ -178,6 +185,7 @@ export default {
                 updated_at: res.updated_at,
                 scope: 'project.updated.description',
               })
+              this.startEditWatcher()
 
               return res
             } catch (e) {
@@ -218,7 +226,9 @@ export default {
     },
 
     loadProject(project) {
+      this.stopEditWatcher()
       this.editorDescription = this.getProjectDescription(project)
+      this.startEditWatcher()
       this.room = 'description_' + project.id
     },
 
@@ -244,6 +254,10 @@ export default {
 
 <!-- Do not scope -->
 <style lang="scss">
+.description-editor-panel {
+  margin-top: 3rem;
+}
+
 .editor {
   flex-grow: 1;
   min-height: pxToRem(300px);
