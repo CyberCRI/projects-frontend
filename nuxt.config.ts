@@ -31,7 +31,7 @@ try {
   const files = fs.readdirSync(directoryPath)
   ALL_LOCALES = files.reduce((acc, file) => {
     const code = file.replace(/\.json$/, '')
-    acc.push({ code, /*name: 'English',*/ files: [file] })
+    acc.push({ code, /*name: 'English',*/ file: file })
     return acc
   }, [])
 } catch (err) {

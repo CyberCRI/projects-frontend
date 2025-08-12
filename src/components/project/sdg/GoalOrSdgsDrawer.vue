@@ -29,6 +29,10 @@
 export default {
   name: 'GoalOrSdgsDrawer',
 
+  props: {
+    isOpened: { type: Boolean, default: false },
+  },
+
   emits: ['choice-made', 'close'],
 
   methods: {
