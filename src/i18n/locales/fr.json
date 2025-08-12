@@ -551,6 +551,7 @@
     "title": "titre",
     "yes": "oui",
     "disconnect": "Déconnexion",
+    "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
     "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)"
   },
