@@ -38,6 +38,8 @@ try {
   console.error('Error listing tranlation files :', err)
 }
 
+// console.log(ALL_LOCALES)
+
 export default defineNuxtConfig({
   // ssr: false,
   compatibilityDate: '2024-11-01',
