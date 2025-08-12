@@ -2,6 +2,7 @@
   <div class="project-form">
     <ClientOnly>
       <FormPanel
+        class="project-general-edit-form"
         :confirm-action-name="$t('common.save')"
         :confirm-action-disabled="v$.$error"
         :asyncing="isSaving"
