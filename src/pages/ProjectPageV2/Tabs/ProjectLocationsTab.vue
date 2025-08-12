@@ -4,7 +4,7 @@
       <LpiButton
         btn-icon="Plus"
         class="edit-btn"
-        label="Ajouter une localisation"
+        :label="$t('project.add-location')"
         @click="projectLayoutToggleAddModal('location')"
       />
     </div>

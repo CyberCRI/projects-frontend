@@ -1525,11 +1525,12 @@
     "take-tour": "Machen Sie die Tour jetzt"
   },
   "project": {
-    "add-linked-project": "Ein verkn\u00fcpftes Projekt hinzuf\u00fcgen",
-    "add-location-point": "Einen Ortspunkt hinzuf\u00fcgen",
-    "add-review": "Zur\u00fcck zur \u00dcbersicht",
+    "add-location": "Standort hinzufügen",
+    "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
+    "add-location-point": "Einen Ortspunkt hinzufügen",
+    "add-review": "Zurück zur Übersicht",
     "add-to-project": {
-      "title": "Projekt hinzuf\u00fcgen",
+      "title": "Projekt hinzufügen",
       "blog-entry": "Blog-Eintrag",
       "goal": "Ziel",
       "sdg": "SDG",

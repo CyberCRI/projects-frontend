@@ -1525,9 +1525,10 @@
     "take-tour": "Tee nüüd ringkäik."
   },
   "project": {
+    "add-location": "Lisa asukoht",
     "add-linked-project": "Lisa seotud projekt",
     "add-location-point": "Asukohapunkti lisamine",
-    "add-review": "lisada",
+    "add-review": "Lisa ülevaade",
     "add-to-project": {
       "title": "Lisa projektile",
       "blog-entry": "Blogikirje",

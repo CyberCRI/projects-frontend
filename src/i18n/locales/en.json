@@ -1525,9 +1525,10 @@
     "take-tour": "Take the tour now"
   },
   "project": {
+    "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
     "add-location-point": "Add a location point",
-    "add-review": "add review",
+    "add-review": "Add a review",
     "add-to-project": {
       "title": "Add to project",
       "blog-entry": "Blog entry",

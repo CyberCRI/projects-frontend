@@ -1525,9 +1525,10 @@
     "take-tour": "Faire le tour maintenant"
   },
   "project": {
+    "add-location": "Ajouter une localisation",
     "add-linked-project": "Ajouter un projet lié",
     "add-location-point": "Ajouter un point de localisation",
-    "add-review": "ajouter une révision",
+    "add-review": "Ajouter une révision",
     "add-to-project": {
       "title": "Ajouter au projet",
       "blog-entry": "Article de blog",
