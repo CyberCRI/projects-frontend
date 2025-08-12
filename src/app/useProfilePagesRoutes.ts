@@ -97,6 +97,7 @@ export default function useProfilePagesRoutes() {
       path: '/profile/:userId',
       name: 'ProfileOtherUser',
       redirect: { name: 'ProfileSummaryOther' },
+      component: () => import('../pages/UserProfilePageV2/UserProfilePage.vue'),
       props: (route) => ({
         isEditing: false,
         userId: route.params.userId,

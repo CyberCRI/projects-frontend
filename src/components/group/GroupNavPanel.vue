@@ -27,7 +27,7 @@
           :label="$t('group.contact')"
           btn-icon="EmailOutline"
           vertical-layout
-          class="bg-on-hover"
+          label-on-hover
         />
       </ToolTip>
       <SocialShareButton :shared-url="sharedUrl" />

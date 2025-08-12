@@ -5,6 +5,7 @@
       'reversed-order': reversedOrder,
       'vertical-layout': verticalLayout,
       'has-border': hasBorder,
+      'label-on-hover': labelOnHover,
     }"
   >
     <div v-if="btnIcon" class="over-button">
@@ -57,6 +58,10 @@ export default {
     nbButton: {
       type: String,
       default: null,
+    },
+    labelOnHover: {
+      type: Boolean,
+      default: false,
     },
   },
 }
@@ -164,6 +169,27 @@ export default {
 
       svg {
         transform: scale(1.1);
+      }
+    }
+  }
+
+  &.label-on-hover {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    position: relative;
+
+    .label {
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 0%);
+    }
+
+    &:hover {
+      .label {
+        opacity: 1;
       }
     }
   }

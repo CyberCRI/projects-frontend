@@ -27,22 +27,25 @@
         :label="followed ? $t('project.followed') : $t('project.follow')"
         :btn-icon="followed ? 'Heart' : 'HeartOutline'"
         vertical-layout
+        label-on-hover
         @click="toggleFollow"
       />
       <ExternalLabelButton
         v-if="announcements?.length"
-        class="space-button article-button bg-on-hover"
+        class="space-button article-button"
         :label="$t('group.news')"
         btn-icon="Article"
         vertical-layout
         :nb-button="announcements.length.toString()"
+        label-on-hover
         @click="goToAnnouncements"
       />
       <ExternalLabelButton
-        class="space-button bg-on-hover"
+        class="space-button"
         :label="$filters.capitalize($t('comment.comment-verb'))"
         btn-icon="ChatBubble"
         vertical-layout
+        label-on-hover
         @click="goToCommentView"
       />
       <SocialShareButton :shared-url="sharedUrl" />

@@ -7,10 +7,11 @@
       </div>
     </template>
     <ExternalLabelButton
-      class="space-button bg-on-hover"
+      class="space-button"
       :label="$t('group.share')"
       btn-icon="Share"
       vertical-layout
+      label-on-hover
     />
   </ToolTip>
 </template>
