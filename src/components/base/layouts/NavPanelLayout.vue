@@ -137,7 +137,7 @@ onBeforeRouteUpdate(fixLayoutWidth)
 }
 
 .nav-panel .breadcrumbs-ctn {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .panels-ctn {

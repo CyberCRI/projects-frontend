@@ -58,11 +58,12 @@ export default {
 menu {
   display: flex;
   flex-flow: column;
-  gap: 0.5rem;
+  gap: 2px;
   list-style-type: none;
 
   .menu-entry {
     cursor: pointer;
+    border-radius: $border-radius-s;
 
     &:hover,
     &.active {
@@ -85,6 +86,11 @@ menu {
 
       .action-icon {
         margin-left: auto;
+        opacity: 0;
+      }
+
+      &:hover .action-icon {
+        opacity: 1;
       }
     }
   }

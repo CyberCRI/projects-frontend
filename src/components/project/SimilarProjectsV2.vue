@@ -50,18 +50,19 @@ export default {
 .similar-projects {
   border: 1px solid $lighter-gray;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.8rem;
   display: flex;
   flex-flow: column;
-  gap: 1rem;
+  gap: 0.5rem;
 
   .group-section-title {
-    font-size: $font-size-l;
+    font-size: $font-size-m;
     font-weight: 700;
+    margin-bottom: 0;
   }
 
   .hint {
-    font-size: $font-size-m;
+    font-size: $font-size-s;
     font-weight: 400;
   }
 
