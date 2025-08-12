@@ -135,6 +135,7 @@ export default {
     },
 
     async fillForm() {
+      console.log('fill')
       this.stopEditWatcher()
 
       if (this.currentProject) {

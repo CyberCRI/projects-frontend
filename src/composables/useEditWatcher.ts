@@ -43,7 +43,7 @@ export default function useEditWatcher(target: any) {
   watch(
     () => hasChange.value,
     (neo) => {
-      console.log('watched', isSetup.value, neo, _target.value, _targetMemo.value)
+      // console.log('watched', isSetup.value, neo, _target.value, _targetMemo.value)
       if (isSetup.value) globalsStore.hasUnsavedEdit = neo
     }
   )
@@ -59,9 +59,9 @@ export default function useEditWatcher(target: any) {
     isSetup.value = true
   }
 
-  // onBeforeUnmount(() => {
-  //   globalsStore.hasUnsavedEdit = false
-  // })
+  onBeforeUnmount(() => {
+    stopEditWatcher()
+  })
 
   return {
     hasChange,
