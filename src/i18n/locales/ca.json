@@ -1521,6 +1521,7 @@
     "take-tour": "Fes la volta ara."
   },
   "project": {
+    "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
     "add-location-point": "Afegeix un punt d' emplaçament",
     "add-review": "afegeix revisar",
