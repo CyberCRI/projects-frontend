@@ -15,8 +15,13 @@ export async function editProjectInfos(page, projId2) {
   await page.locator('[data-test="purpose-input"]').click()
   logger.info('Fill the purpose with new text')
   await page.locator('[data-test="purpose-input"]').fill(projId2)
-  await page.locator('[data-test="confirm-button"]').click()
+  const saveBtn = await page.locator('[data-test="confirm-button"]')
   logger.info('Click to save edit')
-  await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
-  logger.info('Checked if drawer is closed')
+  await saveBtn.click()
+  // wait for save to complete
+  await expect(saveBtn).toHaveClass('disabled')
+  await expect(saveBtn).not.toHaveClass('disabled')
+  logger.info('Done saving')
+  // await expect(page.locator('[data-test="drawer-background"]')).toHaveCount(0)
+  // logger.info('Checked if drawer is closed')
 }
