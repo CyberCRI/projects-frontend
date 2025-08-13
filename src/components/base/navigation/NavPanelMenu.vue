@@ -50,11 +50,11 @@ export default {
       default: () => {},
     },
   },
+  emits: ['navigated', 'action-triggered'],
   setup() {
     const globalsStore = useGlobals()
     return { globalsStore }
   },
-  emits: ['navigated', 'action-triggered'],
   methods: {
     async onMenuEntryClicked(evt, entry) {
       if (entry.isAddAction) {
