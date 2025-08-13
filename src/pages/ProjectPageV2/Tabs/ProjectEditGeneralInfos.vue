@@ -221,10 +221,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.edit-project {
-  width: 100%;
-  max-width: pxToRem(532px);
-  margin: $navbar-height auto 0 auto;
-}
-</style>

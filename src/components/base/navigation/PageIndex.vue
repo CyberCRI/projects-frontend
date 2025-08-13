@@ -56,12 +56,13 @@ export default {
 
   .summary-header {
     padding: $space-xs $space-l;
-    font-size: 24px;
+    font-size: $font-size-l;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    color: $almost-black;
   }
 
   &.is-open .summary-header {

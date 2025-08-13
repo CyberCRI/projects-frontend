@@ -364,8 +364,6 @@ export default {
     display: flex;
     align-items: flex-start;
     gap: $space-2xl;
-    margin-top: $space-xl;
-    margin-bottom: $space-2xl;
 
     .notices {
       flex-basis: 75%;

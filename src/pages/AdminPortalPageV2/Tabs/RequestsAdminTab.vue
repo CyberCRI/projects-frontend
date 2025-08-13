@@ -280,7 +280,6 @@ export default {
 .requests-admin-tab {
   display: flex;
   flex-direction: column;
-  padding: $space-xl 0;
 
   .intro {
     font-size: $font-size-m;

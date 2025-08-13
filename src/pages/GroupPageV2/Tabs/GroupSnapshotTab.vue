@@ -199,10 +199,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.description {
-  padding-top: $space-2xl;
-}
-
 .members {
   margin-top: $space-xl;
   display: flex;

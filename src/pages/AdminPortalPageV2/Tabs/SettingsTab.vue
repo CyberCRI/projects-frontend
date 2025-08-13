@@ -182,19 +182,22 @@ const saveData = async () => {
 .information-tab {
   display: flex;
   flex-direction: column;
-  padding: $space-xl 0;
 
   section:last-of-type {
     margin-top: $space-l;
   }
 
   .block-container {
-    padding: $space-l 0;
+    padding-bottom: $space-l;
     background: $white;
     border-radius: $border-radius-l;
 
     &:not(:first-of-type) {
       margin-top: $space-l;
+    }
+
+    &:first-child .admin-block {
+      padding-top: 0;
     }
 
     .description {

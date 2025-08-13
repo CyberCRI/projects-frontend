@@ -11,10 +11,10 @@
     </template>
 
     <template #footer>
-      <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addInstruction" />
-      <SummaryAction
+      <LpiButton btn-icon="Plus" :label="$t('common.add')" @click="addInstruction" />
+      <LinkButton
         btn-icon="ArrowRight"
-        :action-label="$t('common.see-all')"
+        :label="$t('common.see-all')"
         :to="{ name: 'InstructionListPage' }"
       />
     </template>
@@ -38,26 +38,14 @@
   />
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import InstructionAdminListItem from './InstructionAdminListItem.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'InstructionAdminBlock',
 
-  components: {
-    AdminBlock,
-    EditInstructionDrawer,
-    InstructionAdminListItem,
-    ConfirmModal,
-    SummaryAction,
-  },
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()

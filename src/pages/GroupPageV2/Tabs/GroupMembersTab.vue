@@ -145,7 +145,6 @@ export default {
 <style lang="scss" scoped>
 .group-members {
   .members {
-    margin-top: $space-2xl;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

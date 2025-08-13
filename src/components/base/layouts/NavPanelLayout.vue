@@ -115,6 +115,10 @@ onBeforeRouteUpdate(fixLayoutWidth)
   }
 }
 
+.nav-panel-layout {
+  margin-bottom: $space-l;
+}
+
 .breadcrumbs-ctn {
   display: flex;
   align-items: center;

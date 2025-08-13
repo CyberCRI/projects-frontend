@@ -23,7 +23,7 @@
     <div class="share-buttons">
       <ExternalLabelButton
         v-if="usersStore.isConnected"
-        class="space-button bg-on-hover"
+        class="space-button"
         :label="followed ? $t('project.followed') : $t('project.follow')"
         :btn-icon="followed ? 'Heart' : 'HeartOutline'"
         vertical-layout

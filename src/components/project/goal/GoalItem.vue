@@ -29,9 +29,14 @@
       </div>
 
       <div class="actions-btns">
-        <ContextActionButton v-if="canEditGoal" action-icon="Pen" @click="editGoal" />
+        <ContextActionButton v-if="canEditGoal" class="small" action-icon="Pen" @click="editGoal" />
 
-        <ContextActionButton v-if="canDeleteGoal" action-icon="Close" @click="deleteGoal" />
+        <ContextActionButton
+          v-if="canDeleteGoal"
+          class="small"
+          action-icon="Close"
+          @click="deleteGoal"
+        />
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <div v-if="project" class="project-description">
       <PageStickyHead :page-title="project.title">
         <template #default="{ anchorOffset }">
-          <div v-if="showEditButton" class="description-edit">
+          <!--div v-if="showEditButton" class="description-edit">
             <LpiButton
               class="edit-description-button"
               btn-icon="Pen"
@@ -11,7 +11,7 @@
               data-test="edit-description"
               @click="editDescriptionModalActive = !editDescriptionModalActive"
             />
-          </div>
+          </div-->
           <PageIndex v-show="hasSummary">
             <template #default="{ closeSummary }">
               <DescriptionSummaryBlock
@@ -88,9 +88,9 @@ export default {
     showDescriptionPlaceHolder() {
       return this.project.description.length === 0 || this.project.description === '<p></p>'
     },
-    showEditButton() {
-      return this.canEditProject && !this.showDescriptionPlaceHolder
-    },
+    // showEditButton() {
+    //   return this.canEditProject && !this.showDescriptionPlaceHolder
+    // },
   },
 
   watch: {

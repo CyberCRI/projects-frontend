@@ -5,14 +5,12 @@
         <p>{{ $t('admin.groups.intro') }}</p>
       </div>
       <div class="action">
-        <LinkButton
+        <LpiButton
           :label="$t('admin.groups.create-group')"
           class="btn btn-create-link"
           btn-icon="Plus"
           data-test="create-group"
-          :to="{
-            name: 'adminCreateGroup',
-          }"
+          @click="$router.push({ name: 'adminCreateGroup' })"
         />
       </div>
     </div>
@@ -45,20 +43,10 @@
 
 <script>
 import { getHierarchyGroups, addParentGroup } from '@/api/groups.service.ts'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import GroupsElement from '@/components/group/GroupsElement/GroupsElement.vue'
-import PickGroupDrawer from '@/components/group/PickGroupDrawer/PickGroupDrawer.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'GroupsListTab',
-  components: {
-    LinkButton,
-    GroupsElement,
-    PickGroupDrawer,
-    LoaderSimple,
-  },
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()
@@ -184,8 +172,6 @@ export default {
 .loader {
   display: flex;
   justify-content: center;
-  margin-top: $space-2xl;
-  margin-bottom: $space-2xl;
 }
 
 .intro {

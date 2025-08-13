@@ -98,8 +98,6 @@ export default {
 
 <style lang="scss" scoped>
 .groups-tab {
-  padding: $space-l 0;
-
   .loader {
     padding: $space-3xl 0;
     display: flex;

@@ -21,12 +21,12 @@
     <div v-if="canEditAndDelete" class="action-buttons">
       <ContextActionButton
         action-icon="Pen"
-        class="udpate-btn"
+        class="udpate-btn small"
         @click="$emit('update-announcement')"
       />
       <ContextActionButton
         action-icon="Close"
-        class="udpate-btn"
+        class="udpate-btn small"
         @click="$emit('open-confirm-modal')"
       />
     </div>
@@ -153,8 +153,9 @@ export default {
 
   .action-buttons {
     position: absolute;
-    top: -20px;
+    top: 0;
     right: 20px;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     z-index: 1;
