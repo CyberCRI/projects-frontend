@@ -6,23 +6,38 @@
       class="menu-entry"
       :class="{ active: isCurrentTab(entry, currentTab) }"
     >
-      <NuxtLink
-        v-if="entry.condition"
-        class="link"
-        :data-test="entry.dataTest"
-        :to="entry.view"
-        @click="onMenuEntryClicked($event, entry)"
-      >
-        <IconImage class="icon" :name="entry.icon || 'Article'" />
+      <template v-if="entry.condition">
+        <NuxtLink
+          v-if="!entry.isAddAction"
+          class="link"
+          :data-test="entry.dataTest"
+          :to="entry.view"
+          @click="onMenuEntryClicked($event, entry)"
+        >
+          <IconImage class="icon" :name="entry.icon || 'Article'" />
 
-        {{ entry.label }}
+          {{ entry.label }}
 
-        <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
-      </NuxtLink>
+          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
+        </NuxtLink>
+        <span
+          v-else
+          class="link"
+          :data-test="entry.dataTest"
+          @click="onMenuEntryClicked($event, entry)"
+        >
+          <IconImage class="icon" :name="entry.icon || 'Article'" />
+
+          {{ entry.label }}
+
+          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
+        </span>
+      </template>
     </li>
   </menu>
 </template>
 <script>
+import useGlobals from '@/stores/useGlobals.ts'
 export default {
   name: 'NavPanelMenu',
   props: {
@@ -36,14 +51,33 @@ export default {
     },
   },
   emits: ['navigated', 'action-triggered'],
+  setup() {
+    const globalsStore = useGlobals()
+    return { globalsStore }
+  },
   methods: {
-    onMenuEntryClicked(evt, entry) {
-      console.log(entry)
+    async onMenuEntryClicked(evt, entry) {
       if (entry.isAddAction) {
-        this.$emit('action-triggered', entry)
-        evt.preventDefault()
-      } else {
-        this.$emit('navigated')
+        if (this.globalsStore.hasUnsavedEdit) {
+          let answer = true
+          try {
+            answer = await new Promise((accept) => {
+              this.globalsStore.confirmDiscardPendingEditsPromise = accept
+            })
+          } catch (e) {
+            console.error(e)
+          } finally {
+            this.globalsStore.confirmDiscardPendingEditsPromise = null
+          }
+          if (answer) {
+            this.globalsStore.hasUnsavedEdit = false
+            this.$emit('action-triggered', entry)
+          }
+          evt.preventDefault()
+        } else {
+          // naviguation guard is in middleware
+          this.$emit('navigated')
+        }
       }
     },
     isCurrentTab(entry, currentTab) {
@@ -76,6 +110,7 @@ menu {
       align-items: center;
       padding: 0.4rem;
       color: $primary-dark;
+      cursor: pointer;
 
       .icon {
         display: inline-block;
