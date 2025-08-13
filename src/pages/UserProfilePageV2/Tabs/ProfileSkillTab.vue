@@ -139,10 +139,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.skill-tab {
-  padding: 24px 0;
-}
-
 .title {
   font-size: $font-size-m;
   font-weight: 700;
@@ -164,10 +160,4 @@ export default {
 //   justify-content: flex-end;
 //   align-items: center;
 // }
-
-@media screen and (max-width: $min-tablet) {
-  .skill-tab {
-    padding: $space-l $space-s;
-  }
-}
 </style>

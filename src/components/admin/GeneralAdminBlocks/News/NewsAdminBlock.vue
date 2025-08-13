@@ -11,10 +11,10 @@
     </template>
 
     <template #footer>
-      <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addNews" />
-      <SummaryAction
+      <LpiButton btn-icon="Plus" :label="$t('common.add')" @click="addNews" />
+      <LinkButton
         btn-icon="ArrowRight"
-        :action-label="$t('common.see-all')"
+        :label="$t('common.see-all')"
         :to="{ name: 'NewsListPage' }"
       />
     </template>
@@ -39,26 +39,14 @@
   />
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import NewsAdminListItem from './NewsAdminListItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'NewsAdminBlock',
 
-  components: {
-    AdminBlock,
-    EditNewsDrawer,
-    NewsAdminListItem,
-    ConfirmModal,
-    SummaryAction,
-  },
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()

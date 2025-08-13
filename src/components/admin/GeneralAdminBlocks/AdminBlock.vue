@@ -86,6 +86,7 @@ export default {
 .admin-block-footer {
   display: flex;
   gap: 1rem;
+  justify-content: flex-end;
 }
 
 .loader {

@@ -58,10 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.project-linked-projects {
-  padding: $space-xl 0;
-}
-
 .add-linked-project {
   display: flex;
   justify-content: flex-end;

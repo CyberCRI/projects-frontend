@@ -1,6 +1,9 @@
 .form-group,
 .form-actions {
-  padding-top: $space-l;
+  & ~ .form-group,
+  & ~ .form-actions {
+    padding-top: $space-l;
+  }
 }
 
 .form-separator {

@@ -152,7 +152,7 @@ export default {
     font-size: $font-size-l;
     font-weight: 700;
     color: $primary-dark;
-    margin: $space-l 0;
+    margin-bottom: $space-l;
   }
 }
 

@@ -254,10 +254,6 @@ export default {
 
 <!-- Do not scope -->
 <style lang="scss">
-.description-editor-panel {
-  margin-top: 3rem;
-}
-
 .editor {
   flex-grow: 1;
   min-height: pxToRem(300px);

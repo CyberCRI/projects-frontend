@@ -504,10 +504,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.project-layout {
-  margin-top: pxToRem(48px);
-}
-
 .profile-links {
   display: inline-flex;
   width: 100%;

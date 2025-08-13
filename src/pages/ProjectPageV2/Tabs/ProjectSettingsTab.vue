@@ -4,32 +4,6 @@
       <h3 class="label">
         {{ $t('project.actions') }}
       </h3>
-
-      <template v-if="canEditProject || isOrgUser">
-        <LinkButton
-          :label="$filters.capitalize($t('project.duplicate'))"
-          class="button"
-          btn-icon="Copy"
-          @click="duplicateProject"
-        />
-        <div class="separator" />
-      </template>
-      <LinkButton
-        :label="$t('report.bug')"
-        class="button"
-        btn-icon="Bug"
-        data-test="report-bug"
-        @click="toggleReportForm('bug')"
-      />
-      <LinkButton
-        :label="$t('report.abuse')"
-        class="button"
-        btn-icon="Flag"
-        data-test="report-abuse"
-        @click="toggleReportForm('abuse')"
-      />
-
-      <div v-if="canDestroyProject" class="separator" />
       <LinkButton
         v-if="canDestroyProject"
         :label="$t('project.destroy')"
@@ -223,7 +197,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
-import { deleteProject, duplicateProject } from '@/api/projects.service'
+import { deleteProject /*, duplicateProject*/ } from '@/api/projects.service'
 export default {
   name: 'ProjectSettingsTab',
 
@@ -484,39 +458,39 @@ export default {
       }
     },
 
-    async duplicateProject() {
-      try {
-        this.$emit('asyncing', true)
+    // async duplicateProject() {
+    //   try {
+    //     this.$emit('asyncing', true)
 
-        const originalProject = this.project
+    //     const originalProject = this.project
 
-        const projectCopy = await duplicateProject(originalProject.id)
+    //     const projectCopy = await duplicateProject(originalProject.id)
 
-        // fetch updated project list from user so permissions as set correctly
-        await this.usersStore.getUser(this.usersStore.id)
+    //     // fetch updated project list from user so permissions as set correctly
+    //     await this.usersStore.getUser(this.usersStore.id)
 
-        analytics.project.duplicate(originalProject.id, projectCopy.id)
+    //     analytics.project.duplicate(originalProject.id, projectCopy.id)
 
-        await this.projectsStore.updateProject({
-          id: projectCopy.id,
-          project: {
-            title: `${originalProject.title} ${this.$t('project.copy')}`,
-          },
-        })
+    //     await this.projectsStore.updateProject({
+    //       id: projectCopy.id,
+    //       project: {
+    //         title: `${originalProject.title} ${this.$t('project.copy')}`,
+    //       },
+    //     })
 
-        this.$router.push({
-          name: 'projectSummary',
-          params: { slugOrId: projectCopy.slug },
-        })
+    //     this.$router.push({
+    //       name: 'projectSummary',
+    //       params: { slugOrId: projectCopy.slug },
+    //     })
 
-        this.toaster.pushSuccess(this.$t('toasts.project-duplication.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.project-duplication.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.$emit('asyncing', false)
-      }
-    },
+    //     this.toaster.pushSuccess(this.$t('toasts.project-duplication.success'))
+    //   } catch (error) {
+    //     this.toaster.pushError(`${this.$t('toasts.project-duplication.error')} (${error})`)
+    //     console.error(error)
+    //   } finally {
+    //     this.$emit('asyncing', false)
+    //   }
+    // },
 
     toggleConfirmDestroyVisible() {
       this.confirmDestroyVisible = !this.confirmDestroyVisible

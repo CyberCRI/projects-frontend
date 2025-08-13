@@ -29,35 +29,22 @@
     </template>
 
     <template #footer>
-      <SummaryAction action-icon="Plus" :action-label="$t('common.add')" @click="addEvent" />
-      <SummaryAction
-        action-icon="ArrowRight"
-        :action-label="$t('common.see-all')"
+      <LpiButton btn-icon="Plus" :label="$t('common.add')" @click="addEvent" />
+      <LinkButton
+        btn-icon="ArrowRight"
+        :label="$t('common.see-all')"
         :to="{ name: 'CalendarPage' }"
       />
     </template>
   </AdminBlock>
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
-import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
-import EventAdminListItem from './EventAdminListItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { getAllEvents, deleteEvent } from '@/api/event.service'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 export default {
   name: 'EventAdminBlock',
-
-  components: {
-    AdminBlock,
-    EditEventDrawer,
-    EventAdminListItem,
-    ConfirmModal,
-    SummaryAction,
-  },
 
   setup() {
     const toaster = useToasterStore()

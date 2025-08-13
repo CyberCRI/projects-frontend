@@ -381,9 +381,12 @@ export default {
 
   .block-container {
     padding: $space-l 0;
-    margin: $space-l 0;
     background: $white;
     border-radius: $border-radius-l;
+
+    & ~ .block-container {
+      margin-top: $space-l;
+    }
 
     .title-button-ctn {
       display: flex;

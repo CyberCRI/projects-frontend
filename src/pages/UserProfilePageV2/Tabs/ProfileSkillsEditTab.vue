@@ -313,7 +313,7 @@ export default {
   justify-content: stretch;
   gap: $space-unit;
   align-items: center;
-  padding: $space-l 0;
+  padding-bottom: $space-l;
   border-bottom: $border-width-s solid $primary;
 
   .column-label {

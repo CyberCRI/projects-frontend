@@ -372,7 +372,6 @@ export default {
 .role-tab {
   display: flex;
   flex-direction: column;
-  padding: $space-xl 0;
 
   .controls-wrapper {
     display: flex;

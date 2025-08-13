@@ -26,9 +26,12 @@ export default {
 <style lang="scss" scoped>
 .block-container {
   padding: $space-l;
-  margin: $space-l 0;
   background: $white;
   border-radius: $border-radius-l;
   border: $border-width-s solid $primary;
+}
+
+.block-container ~ .block-container {
+  margin-top: $space-l;
 }
 </style>

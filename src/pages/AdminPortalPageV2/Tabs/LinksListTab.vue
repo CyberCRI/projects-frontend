@@ -8,12 +8,12 @@
         <p>{{ $t('invitation.list.intro') }}</p>
       </div>
       <div class="action">
-        <LinkButton
+        <LpiButton
           :label="$t('invitation.generate-link')"
           class="btn btn-create-link"
           btn-icon="Plus"
           data-test="create-link"
-          :to="{ name: 'linksCreate' }"
+          @click="$router.push({ name: 'linksCreate' })"
         />
       </div>
     </div>
@@ -105,23 +105,12 @@
 </template>
 <script>
 import { getInvitations, deleteInvitation } from '@/api/invitations.service.ts'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import BadgeItem from '@/components/base/BadgeItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'LinksListTab',
-  components: {
-    LinkButton,
-    BadgeItem,
-    ConfirmModal,
-    IconImage,
-    LoaderSimple,
-  },
+
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()

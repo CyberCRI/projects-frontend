@@ -104,7 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  margin-block: 2rem;
+  margin-bottom: 2rem;
 
   .title {
     font-size: $font-size-2xl;

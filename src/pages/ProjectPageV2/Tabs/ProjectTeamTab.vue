@@ -390,8 +390,6 @@ export default {
 
 <style lang="scss" scoped>
 .project-team {
-  padding: $space-xl 0;
-
   .user-card-ctn {
     justify-content: space-between;
   }

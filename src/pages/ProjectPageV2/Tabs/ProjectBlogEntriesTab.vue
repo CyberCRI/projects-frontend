@@ -230,7 +230,6 @@ export default {
 
 <style lang="scss" scoped>
 .project-blog-entries {
-  padding: $space-2xl 0;
   position: relative;
 
   .blog-entries-ctn {

@@ -73,10 +73,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.profile-bio {
-  padding: $space-l 0;
-}
-
 .empty-field {
   color: $mid-gray;
   font-weight: 700;

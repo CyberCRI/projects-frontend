@@ -9,7 +9,11 @@
         <ProjectCard :project="aLinkedProject.project" />
 
         <div v-if="canEditAndDelete" class="actions-ctn">
-          <ContextActionButton action-icon="Close" @click="confirmDelete(aLinkedProject)" />
+          <ContextActionButton
+            class="small"
+            action-icon="Close"
+            @click="confirmDelete(aLinkedProject)"
+          />
         </div>
       </div>
     </DynamicGrid>
@@ -150,8 +154,9 @@ export default {
 
     .actions-ctn {
       position: absolute;
-      top: -18px;
-      right: -14px;
+      top: 0;
+      right: 0;
+      transform: translateY(-50%);
       display: flex;
 
       button:last-of-type {

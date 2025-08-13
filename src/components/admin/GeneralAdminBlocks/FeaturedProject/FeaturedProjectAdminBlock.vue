@@ -8,16 +8,16 @@
       />
     </template>
     <template #footer>
-      <SummaryAction
+      <LpiButton
         v-if="featuredProjects.length"
-        action-icon="Pen"
-        :action-label="$t('common.edit')"
+        btn-icon="Pen"
+        :label="$t('common.edit')"
         @click="editFeaturedProjects = true"
       />
-      <SummaryAction
+      <LpiButton
         v-else
-        action-icon="Plus"
-        :action-label="$t('common.add')"
+        btn-icon="Plus"
+        :label="$t('common.add')"
         @click="editFeaturedProjects = true"
       />
     </template>
@@ -32,10 +32,6 @@
   />
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import PickProjectsDrawer from '@/components/project/PickProjectsDrawer.vue'
-import FeaturedProjectAdminListItem from './FeaturedProjectAdminListItem.vue'
 import {
   getFeaturedProjects,
   addFeaturedProject,
@@ -47,12 +43,6 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'FeaturedProjectAdminBlock',
 
-  components: {
-    AdminBlock,
-    SummaryAction,
-    PickProjectsDrawer,
-    FeaturedProjectAdminListItem,
-  },
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()

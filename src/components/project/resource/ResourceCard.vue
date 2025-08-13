@@ -15,8 +15,18 @@
       </div>
     </div>
     <div v-if="canEdit || canDelete" class="actions-ctn">
-      <ContextActionButton v-if="canEdit" action-icon="Pen" @click="$emit('edit-clicked')" />
-      <ContextActionButton v-if="canDelete" action-icon="Close" @click="$emit('delete-clicked')" />
+      <ContextActionButton
+        v-if="canEdit"
+        class="small"
+        action-icon="Pen"
+        @click="$emit('edit-clicked')"
+      />
+      <ContextActionButton
+        v-if="canDelete"
+        class="small"
+        action-icon="Close"
+        @click="$emit('delete-clicked')"
+      />
     </div>
   </div>
 </template>
@@ -89,8 +99,9 @@ export default {
 
   .actions-ctn {
     position: absolute;
-    top: -18px;
+    top: 0;
     right: 0;
+    transform: translateY(-50%);
     display: flex;
 
     button:last-of-type {

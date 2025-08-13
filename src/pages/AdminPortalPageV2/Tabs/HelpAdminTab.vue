@@ -224,7 +224,6 @@ export default {
 .help-tab {
   display: flex;
   flex-direction: column-reverse;
-  padding: $space-xl 0;
 
   .block-container {
     background: $white;

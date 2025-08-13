@@ -67,10 +67,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.project-locations {
-  margin-top: 2rem;
-}
-
 .actions {
   margin-bottom: 1rem;
   display: flex;

@@ -140,8 +140,6 @@ export default {
 
 <style lang="scss" scoped>
 .project-announcement {
-  margin-top: 24px;
-
   .announcement {
     &:not(.first-of-type) {
       margin-top: $space-l;
