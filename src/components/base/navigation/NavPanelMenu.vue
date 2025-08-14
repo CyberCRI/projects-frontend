@@ -73,11 +73,13 @@ export default {
             this.globalsStore.hasUnsavedEdit = false
             this.$emit('action-triggered', entry)
           }
-          evt.preventDefault()
         } else {
-          // naviguation guard is in middleware
-          this.$emit('navigated')
+          this.$emit('action-triggered', entry)
         }
+        evt.preventDefault()
+      } else {
+        // naviguation guard is in middleware
+        this.$emit('navigated')
       }
     },
     isCurrentTab(entry, currentTab) {
