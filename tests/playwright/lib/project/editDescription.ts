@@ -4,9 +4,21 @@ import { LogLevel, Logger } from '../../logger'
 const logger = new Logger(LogLevel.Debug)
 
 export async function editDescription(page) {
+  const displayMode = await page.locator('.group-display-layout') // wait group page to be loaded
+  const displayModeCount = await displayMode.count()
+  console.log('is in display mode ?', displayModeCount)
+  //switch to edit mode if necessary
+  if (displayModeCount) {
+    console.log('switch to edit mode')
+    page.locator('[data-test="edit-group"]').click()
+    await page.locator('.group-edit-layout')
+  }
+
   logger.info('Click to edit description')
   await page.locator('[data-test="project-description"]').click()
-  await page.locator('[data-test="edit-description"]').click()
+
+  // await page.locator('[data-test="edit-description"]').click()
+
   logger.info('Click on input editor')
   await page.locator('[data-test="input-editor-content-connected"]').click()
   await page.locator('[data-test="input-editor-content-connected"]').press('Enter')
