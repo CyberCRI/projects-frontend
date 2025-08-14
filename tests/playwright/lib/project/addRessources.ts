@@ -25,7 +25,7 @@ export async function addRessources(page) {
   logger.info('Title added')
   logger.info('Add link description')
   await page.locator('[data-test="input-link-description"]').fill('testing')
-  await page.locator('[data-test="confirm-button"]').click()
+  await page.locator('.resource-modal [data-test="confirm-button"]').click()
 
   await delay(2000)
 
@@ -53,6 +53,6 @@ export async function addRessources(page) {
     .locator('[data-test="upload-image-button"]')
     .setInputFiles('tests/playwright/fixtures/pdf/testing.pdf')
   logger.info('Select and add file from local folder')
-  await page.locator('[data-test="confirm-button"]').click()
+  await page.locator('.resource-modal [data-test="confirm-button"]').click()
   await delay(2000)
 }

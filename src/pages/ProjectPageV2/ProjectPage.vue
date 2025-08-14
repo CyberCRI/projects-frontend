@@ -160,7 +160,13 @@ const chooseGoalOrSdg = (choice) => {
 }
 </script>
 <template>
-  <div class="page-section-extra-wide project-layout">
+  <div
+    class="page-section-extra-wide project-layout"
+    :class="{
+      'project-edit-layout': isEditing,
+      'project-display-layout': !isEditing,
+    }"
+  >
     <NavPanelLayout
       :is-loading="loading"
       :is-nav-collapsed="isNavCollapsed"
