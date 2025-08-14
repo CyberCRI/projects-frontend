@@ -14,8 +14,20 @@ export async function editDescription(page) {
     await page.locator('.project-edit-layout')
   }
 
-  logger.info('Click to edit description')
-  await page.locator('[data-test="project-description"]').click()
+  const editDescriptionButton = await page.locator('[data-test="project-description-edit"]')
+
+  await expect(editDescriptionButton).toHaveCount(1)
+
+  const isActive = await editDescriptionButton.evaluate((el) =>
+    el.parentElement?.classList.contains('active')
+  )
+
+  if (!isActive) {
+    logger.info('Click to edit description')
+    await editDescriptionButton.click()
+  } else {
+    logger.info('Already in edit description mode, skipping click')
+  }
 
   // await page.locator('[data-test="edit-description"]').click()
 
