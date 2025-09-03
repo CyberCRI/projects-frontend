@@ -70,7 +70,7 @@ spec:
               - name: group_name
                 value: {{ .Values.sablier.groupName }}
               - name: timeout
-                value: 3m
+                value: 10m
         - - name: run
             template: run
             continueOn:
