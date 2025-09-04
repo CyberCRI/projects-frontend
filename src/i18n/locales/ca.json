@@ -512,7 +512,7 @@
     "destroy-confirm": "Esteu segur que voleu esborrar aquest projecte? Aquesta acció no es pot desfer.",
     "cant-quit-self": "Ets l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuració.",
     "cant-quit-other": "Aquest és l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor supressió aquest, o eliminar el projecte de la pestanya Configuració.",
-    "edit": "edit",
+    "edit": "Editar",
     "file-required": "Es requereix un fitxerName",
     "for": "per",
     "groups": "Grups",
