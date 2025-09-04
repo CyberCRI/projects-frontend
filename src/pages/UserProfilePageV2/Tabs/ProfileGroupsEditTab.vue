@@ -14,7 +14,13 @@
               :is-loading="groupListSlotProps.isLoading"
             >
               <template #default="cardListSlotProps">
-                <GroupCard v-if="cardListSlotProps.item" :group="cardListSlotProps.item" />
+                <GroupCard
+                  v-if="cardListSlotProps.item"
+                  :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
+                  :group="cardListSlotProps.item"
+                  :title="groupIsOtherOrg(cardListSlotProps.item) ? $t('group.is-other-org') : ''"
+                  @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
+                />
               </template>
               <template #empty>
                 <div class="empty-ctn" :class="gridLayout">
@@ -62,10 +68,29 @@ export default {
       required: true,
     },
   },
+
+  setup() {
+    const orgStore = useOrganizations()
+    return { orgStore }
+  },
+
   data() {
     return {
       listLimit: 12,
     }
+  },
+
+  methods: {
+    groupIsOtherOrg(group) {
+      return group.organization != this.orgStore?.current?.code
+    },
+
+    cancelIfOtherOrg(evt, group) {
+      if (this.groupIsOtherOrg(group)) {
+        evt.stopImmediatePropagation()
+        evt.preventDefault()
+      }
+    },
   },
 }
 </script>
@@ -77,5 +102,19 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.is-other-org {
+  opacity: 0.6;
+  filter: saturate(0);
+
+  * {
+    cursor: not-allowed !important;
+  }
+
+  &:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
 </style>

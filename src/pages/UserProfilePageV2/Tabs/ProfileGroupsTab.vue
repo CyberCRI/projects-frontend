@@ -16,8 +16,11 @@
             <template #default="cardListSlotProps">
               <GroupCard
                 v-if="cardListSlotProps.item"
+                :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
                 :group="cardListSlotProps.item"
+                :title="groupIsOtherOrg(cardListSlotProps.item) ? $t('group.is-other-org') : ''"
                 @navigated-away="$emit('close')"
+                @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
               />
             </template>
             <template #empty>
@@ -73,8 +76,10 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
+    const orgStore = useOrganizations()
     return {
       usersStore,
+      orgStore,
     }
   },
 
@@ -91,6 +96,19 @@ export default {
 
     noGroupLabel() {
       return this.isCurrentUser ? this.$t('me.no-group') : this.$t('you.no-group')
+    },
+  },
+
+  methods: {
+    groupIsOtherOrg(group) {
+      return group.organization != this.orgStore?.current?.code
+    },
+
+    cancelIfOtherOrg(evt, group) {
+      if (this.groupIsOtherOrg(group)) {
+        evt.stopImmediatePropagation()
+        evt.preventDefault()
+      }
     },
   },
 }
@@ -118,6 +136,20 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.is-other-org {
+  opacity: 0.6;
+  filter: saturate(0);
+
+  * {
+    cursor: not-allowed !important;
+  }
+
+  &:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 }
 </style>

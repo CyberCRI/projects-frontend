@@ -501,8 +501,8 @@
     "back": "terug",
     "cancel": "Annuleren",
     "chose-date": "Verkozen datum",
-    "confirm": "bevestigen",
-    "continue": "doorgaan",
+    "confirm": "Bevestigen",
+    "continue": "Doorgaan",
     "confirm-delete": "Weet u zeker dat u dit wilt verwijderen?",
     "deadline": "termijn",
     "delete": "Verwijderen",
@@ -512,7 +512,7 @@
     "destroy-confirm": "Weet u zeker dat u dit project wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
     "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
     "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
-    "edit": "bewerken",
+    "edit": "Bewerken",
     "file-required": "Een bestand is vereist",
     "for": "voor",
     "groups": "Groepen",
@@ -887,6 +887,7 @@
     "delete": "Wilt u dit doel verwijderen?"
   },
   "group": {
+    "is-other-org": "Deze groep behoort tot een ander platform",
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} meer",
