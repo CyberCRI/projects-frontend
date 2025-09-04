@@ -18,8 +18,8 @@
                   v-if="cardListSlotProps.item"
                   :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
                   :group="cardListSlotProps.item"
-                  @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
                   :title="groupIsOtherOrg(cardListSlotProps.item) ? $t('group.is-other-org') : ''"
+                  @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
                 />
               </template>
               <template #empty>
@@ -107,9 +107,11 @@ export default {
 .is-other-org {
   opacity: 0.6;
   filter: saturate(0);
+
   * {
     cursor: not-allowed !important;
   }
+
   &:hover {
     transform: none !important;
     box-shadow: none !important;
