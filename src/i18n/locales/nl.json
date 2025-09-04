@@ -887,6 +887,7 @@
     "delete": "Wilt u dit doel verwijderen?"
   },
   "group": {
+    "is-other-org": "Deze groep behoort tot een ander platform",
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} meer",

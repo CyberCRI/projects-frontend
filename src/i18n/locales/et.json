@@ -887,6 +887,7 @@
     "delete": "Kas soovite selle eesmärgi kustutada?"
   },
   "group": {
+    "is-other-org": "See grupp kuulub teisele platvormile",
     "contact": "Kontakt",
     "edit-group": "Redigeerimisgrupp",
     "see-more-people-button": "Vt {users} rohkem",

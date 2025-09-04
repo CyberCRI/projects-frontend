@@ -889,6 +889,7 @@
     "delete": "Voulez vous effacer cet objectif ?"
   },
   "group": {
+    "is-other-org": "Ce groupe appartient à une autre plateforme",
     "contact": "Contacter",
     "edit-group": "Modifier le groupe",
     "see-more-people-button": "Voir {users} personnes supplémentaires",

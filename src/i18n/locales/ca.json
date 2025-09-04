@@ -887,6 +887,7 @@
     "delete": "Voleu esborrar aquest objectiu?"
   },
   "group": {
+    "is-other-org": "Aquest grup pertany a una altra plataforma",
     "contact": "Contacte",
     "edit-group": "Edita grup",
     "see-more-people-button": "Vegeu {users} més",
