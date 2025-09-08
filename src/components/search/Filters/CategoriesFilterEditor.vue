@@ -79,7 +79,7 @@ export default {
 
     toggleCategory(category) {
       if (this.isSelected(category.id)) {
-        this.selection = this.selection.filter((cat) => cat.id !== category.id)
+        this.recursivelyUnselect(category)
       } else {
         this.recursivelySelect(category)
       }
@@ -87,10 +87,38 @@ export default {
     },
 
     recursivelySelect(category) {
-      this.selection.push(category)
-      category.children?.forEach((child) => {
-        this.recursivelySelect(child)
+      const selectionMap = this.getSelectionMap()
+      const descendantMap = this.getDescendantMap(category)
+      descendantMap.forEach((v, k) => {
+        selectionMap.set(k, v)
       })
+      this.selection = [...selectionMap.values()]
+    },
+
+    recursivelyUnselect(category) {
+      const selectionMap = this.getSelectionMap()
+      const descendantMap = this.getDescendantMap(category)
+      descendantMap.forEach((v, k) => {
+        selectionMap.delete(k)
+      })
+      this.selection = [...selectionMap.values()]
+    },
+
+    getSelectionMap() {
+      return this.selection.reduce((map, item) => {
+        map.set(item.id, item)
+        return map
+      }, new Map())
+    },
+
+    getDescendantMap(category) {
+      const res = new Map()
+      const iterate = (c) => {
+        res.set(c.id, c)
+        c.children?.forEach(iterate)
+      }
+      iterate(category)
+      return res
     },
   },
 }
