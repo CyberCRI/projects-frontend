@@ -23,13 +23,11 @@ const props = defineProps({
   },
 })
 
-const isSelected = ref(false)
-
-watchEffect(() => {
-  isSelected.value =
+const isSelected = computed(
+  () =>
     props.selectedCategory?.id === props.category.id ||
     props.selectedCategories?.some(({ id }) => id == props.category.id)
-})
+)
 
 const hasChildren = computed(() => {
   return props.category.children?.length
