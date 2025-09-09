@@ -36,6 +36,10 @@
         </template>
       </NavPanelLayout>
     </div>
+
+    <div v-else class="loader">
+      <LoaderSimple />
+    </div>
     <!--div class="page-section-extra-wide tabs-wrapper">
       <GroupTabs
         :description="groupDescription"
@@ -391,7 +395,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: $space-2xl 0;
+  padding: 5rem 0;
 }
 
 .recommandations {

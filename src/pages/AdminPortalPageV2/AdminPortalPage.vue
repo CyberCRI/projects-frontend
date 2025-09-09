@@ -139,7 +139,6 @@ try {
   <div class="admin-portal-layout page-section-extra-wide page-top">
     <div class="page-section-extra-wide">
       <NavPanelLayout
-        :is-loading="loading"
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="breadcrumbs || []"
         @toggle-nav-panel="toggleNavPanel"

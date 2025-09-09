@@ -3,14 +3,14 @@ import { onMounted, onUnmounted } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 import throttle from 'lodash/throttle'
 
-defineProps({
+const props = defineProps({
   breadcrumbs: {
     type: Array,
     default: () => [],
   },
   isNavCollapsed: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   isLoading: {
     type: Boolean,
@@ -34,24 +34,35 @@ const { isMobile } = useViewportWidth()
 // (see src/functs/editorUtils.ts)
 // workaround is to manually set width of the content panel
 const fixLayoutWidth = throttle(() => {
+  // console.log('fixLayout')
   const outer = document?.querySelector('.content-panel-outer')
   const inner = document?.querySelector('.content-panel-inner')
   if (outer && inner) {
     inner.style.display = 'none'
+    delete inner.style.width
 
     const w = outer.offsetWidth
     if (w) inner.style.width = `${w}px`
     inner.style.display = ''
+  } else if (inner) {
+    delete inner.style.display
+    delete inner.style.width
   }
 }, 100)
 
 onMounted(() => {
   window?.addEventListener('resize', fixLayoutWidth)
   fixLayoutWidth()
+  setTimeout(fixLayoutWidth, 200)
 })
 onUnmounted(() => {
   window?.removeEventListener('resize', fixLayoutWidth)
 })
+
+watch(
+  () => [props.isNavCollapsed],
+  () => nextTick(fixLayoutWidth)
+)
 // fix layout on vue route change (eg, switching tabs)
 onBeforeRouteUpdate(fixLayoutWidth)
 </script>
@@ -65,7 +76,13 @@ onBeforeRouteUpdate(fixLayoutWidth)
           @click="collapseNavPanel"
         ></div>
       </transition>
-      <transition name="slide-panel">
+      <transition
+        name="slide-panel"
+        @after-enter="fixLayoutWidth"
+        @after-leave="fixLayoutWidth"
+        @before-enter="fixLayoutWidth"
+        @before-leave="fixLayoutWidth"
+      >
         <div v-if="!isNavCollapsed" class="nav-panel">
           <div class="breadcrumbs-ctn">
             <LpiButton
@@ -92,7 +109,7 @@ onBeforeRouteUpdate(fixLayoutWidth)
         </div>
         <div class="content-panel-outer">
           <div class="content-panel-inner">
-            <slot name="content" />
+            <slot v-if="!isLoading" name="content" />
           </div>
         </div>
       </div>
@@ -161,6 +178,21 @@ onBeforeRouteUpdate(fixLayoutWidth)
 
 .content-panel {
   flex-basis: 100%;
+}
+
+.slide-panel-enter-from,
+.slide-panel-leave-to {
+  transform: translateX(-100%);
+}
+
+.slide-panel-enter-active,
+.slide-panel-leave-active {
+  transition: transform 0.2s ease-in-out;
+}
+
+.slide-panel-enter-to,
+.slide-panel-leave-from {
+  transform: translateX(0);
 }
 
 // @media screen and (max-width: $min-tablet) {

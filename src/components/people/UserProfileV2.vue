@@ -1,48 +1,53 @@
 <template>
-  <div v-if="user && !isLoading" :key="user.id" class="user-profile">
-    <div v-if="isPreview">
-      <div class="profile-links">
-        <LinkButton
-          class="page-btn"
-          btn-icon="Eye"
-          :label="$t('profile.go-to-page')"
-          :to="{
-            name: 'ProfileOtherUser',
-            params: { userId: user?.slug || userId },
-          }"
-        />
+  <div>
+    <div v-if="user && !isLoading" :key="user.id" class="user-profile">
+      <div v-if="isPreview">
+        <div class="profile-links">
+          <LinkButton
+            class="page-btn"
+            btn-icon="Eye"
+            :label="$t('profile.go-to-page')"
+            :to="{
+              name: 'ProfileOtherUser',
+              params: { userId: user?.slug || userId },
+            }"
+          />
+        </div>
+        <ProfileSummaryTab :user="user" />
       </div>
-      <ProfileSummaryTab :user="user" />
+      <NavPanelLayout
+        v-else
+        :is-loading="isLoading"
+        :is-nav-collapsed="isNavCollapsed"
+        :breadcrumbs="breadCrumbs || []"
+        @toggle-nav-panel="toggleNavPanel"
+        @collapse-nav-panel="isNavCollapsed = true"
+      >
+        <template #nav-panel>
+          <LazyProfileNavPanel
+            v-if="!isLoading && !isNavCollapsed"
+            :class="{ collapsed: isNavCollapsed }"
+            :profile-tabs="profileTabs"
+            :current-tab="currentTab"
+            :user="user"
+            :edit-button-label="editButtonLabel"
+            :edit-profile-link="editProfileLink"
+            :is-editing="isEditing"
+            :can-edit-user="canEditUserOrIsSelf"
+            :is-current-user="userId === null"
+            class="slide-panel"
+            @navigated="onNavigated"
+          />
+        </template>
+        <template v-if="currentTab" #content>
+          <SubPageTitle :title-prefix="userFullName" :current-tab="currentTab" />
+          <NuxtPage v-bind="currentTab.props" />
+        </template>
+      </NavPanelLayout>
     </div>
-    <NavPanelLayout
-      v-else
-      :is-loading="isLoading"
-      :is-nav-collapsed="isNavCollapsed"
-      :breadcrumbs="breadCrumbs || []"
-      @toggle-nav-panel="toggleNavPanel"
-      @collapse-nav-panel="isNavCollapsed = true"
-    >
-      <template #nav-panel>
-        <LazyProfileNavPanel
-          v-if="!isLoading && !isNavCollapsed"
-          :class="{ collapsed: isNavCollapsed }"
-          :profile-tabs="profileTabs"
-          :current-tab="currentTab"
-          :user="user"
-          :edit-button-label="editButtonLabel"
-          :edit-profile-link="editProfileLink"
-          :is-editing="isEditing"
-          :can-edit-user="canEditUserOrIsSelf"
-          :is-current-user="userId === null"
-          class="slide-panel"
-          @navigated="onNavigated"
-        />
-      </template>
-      <template v-if="currentTab" #content>
-        <SubPageTitle :title-prefix="userFullName" :current-tab="currentTab" />
-        <NuxtPage v-bind="currentTab.props" />
-      </template>
-    </NavPanelLayout>
+    <div v-else class="loader">
+      <LoaderSimple />
+    </div>
   </div>
 </template>
 
@@ -511,5 +516,12 @@ export default {
   padding-bottom: 24px;
   text-transform: none;
   gap: $space-unit;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 5rem 0;
+  align-items: center;
 }
 </style>
