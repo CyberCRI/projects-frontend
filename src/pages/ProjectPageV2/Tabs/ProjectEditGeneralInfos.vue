@@ -37,8 +37,8 @@ export default {
   emits: ['close', 'project-edited'],
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
     const projectsStore = useProjectsStore()
+    const orgStore = useOrganizations()
     const form = ref({
       title: '',
       purpose: '',
@@ -49,13 +49,12 @@ export default {
           small: undefined,
         },
       },
-      language: locale,
+      language: orgStore.current?.language || 'en',
       tags: [],
     })
     const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
     return {
       toaster,
-      locale,
       projectsStore,
       form,
       startEditWatcher,
@@ -136,7 +135,6 @@ export default {
     },
 
     async fillForm() {
-      console.log('fill')
       this.stopEditWatcher()
 
       if (this.currentProject) {
