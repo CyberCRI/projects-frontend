@@ -297,7 +297,7 @@
   }
 
   .tiptap-table-wrapper {
-    max-width: 100%;
+    max-width: calc(100%);
     overflow-x: auto;
     position: relative;
     word-break: break-word;

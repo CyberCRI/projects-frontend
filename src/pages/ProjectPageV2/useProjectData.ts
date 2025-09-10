@@ -189,46 +189,45 @@ export default function useProjectData() {
   }
 
   const setProject = async (projectSlugOrId) => {
-    return projectsStore.getProject(projectSlugOrId).then(async (project) => {
-      // TODO watch here it was the computed project value instead
-      follow.value = project.is_followed
-      goals.value = project.goals
-      sdgs.value = project.sdgs
-      team.value = project.team
-      reviews.value = project.reviews
-      linkedProjects.value = project.linked_projects
+    const project = await projectsStore.getProject(projectSlugOrId)
+    // TODO watch here it was the computed project value instead
+    follow.value = project.is_followed
+    goals.value = project.goals
+    sdgs.value = project.sdgs
+    team.value = project.team
+    reviews.value = project.reviews
+    linkedProjects.value = project.linked_projects
 
-      const extraData = [
-        getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
-        getProjectLocations(),
-        getSimilarProjects(),
-        getAnnouncements(),
-        getFileResources(),
-        getLinkResources(),
-        getBlogEntries(),
-      ]
+    const extraData = [
+      getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
+      getProjectLocations(),
+      getSimilarProjects(),
+      getAnnouncements(),
+      getFileResources(),
+      getLinkResources(),
+      getBlogEntries(),
+    ]
 
-      if (isMemberOrAdmin.value) {
-        extraData.push(
-          // TODO remove param and use this.proejct.id in method, also chnage handler
-          getProjectMessages(project.id)
-        )
-      }
-      await Promise.all(extraData)
-      if (commentLoop.value) {
-        clearInterval(commentLoop.value)
-        commentLoop.value = null
-      }
-      commentLoop.value = setInterval(
-        () => {
-          getComments(project.id)
-          if (isMemberOrAdmin.value) {
-            getProjectMessages(project.id)
-          }
-        },
-        5 * 60 * 1000
+    if (isMemberOrAdmin.value) {
+      extraData.push(
+        // TODO remove param and use this.proejct.id in method, also chnage handler
+        getProjectMessages(project.id)
       )
-    })
+    }
+    await Promise.all(extraData)
+    if (commentLoop.value) {
+      clearInterval(commentLoop.value)
+      commentLoop.value = null
+    }
+    commentLoop.value = setInterval(
+      () => {
+        getComments(project.id)
+        if (isMemberOrAdmin.value) {
+          getProjectMessages(project.id)
+        }
+      },
+      5 * 60 * 1000
+    )
   }
 
   const getProjectLocations = async () => {

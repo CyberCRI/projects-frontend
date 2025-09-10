@@ -109,7 +109,6 @@ export default {
 
 <style lang="scss" scoped>
 .profile-header {
-  box-sizing: border-box;
   position: relative;
 
   .img-block {
@@ -117,9 +116,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-basis: pxToRem(240px);
+    flex: 0 0 pxToRem(240px);
     width: pxToRem(240px);
-    flex-shrink: 0;
     margin: 0 auto $space-xl;
 
     .img-ctn {
@@ -143,7 +141,9 @@ export default {
 
     .main {
       flex-grow: 1;
-      width: 100%;
+      flex-basis: 100%;
+      display: flex;
+      flex-flow: column;
       margin-bottom: $layout-size-5xl;
 
       > *:last-child {
@@ -152,7 +152,7 @@ export default {
 
       .name-ctn {
         display: flex;
-        width: 100%;
+        flex-basis: 100%;
         align-items: center;
       }
 
@@ -232,7 +232,6 @@ export default {
   .profile-header {
     border: $border-width-s solid $primary;
     border-radius: $border-radius-l;
-    width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -250,7 +249,6 @@ export default {
 
     .user-info-ctn {
       flex-grow: 1;
-      align-items: flex-end;
       padding: $space-xl 0;
 
       .main {

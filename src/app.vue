@@ -35,6 +35,7 @@ import useKeycloak from '@/api/auth/keycloak.ts'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useGlobalsStore from '@/stores/useGlobals.ts'
+import { fixTiptapTableHeight } from '@/functs/editorUtils.ts'
 
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
@@ -94,6 +95,8 @@ onMounted(() => {
     socket.disconnect()
   }
 
+  window.addEventListener('resize', fixTiptapTableHeight)
+
   // handle multiple tabs browsing for auth
   window.addEventListener('focus', onFocus)
 
@@ -106,6 +109,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
   window.removeEventListener('focus', onFocus)
+  window.removeEventListener('resize', fixTiptapTableHeight)
 })
 </script>
 <style lang="scss">

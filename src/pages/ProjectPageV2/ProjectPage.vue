@@ -168,6 +168,7 @@ const chooseGoalOrSdg = (choice) => {
     }"
   >
     <NavPanelLayout
+      v-if="!loading"
       :is-loading="loading"
       :is-nav-collapsed="isNavCollapsed"
       :breadcrumbs="categoryHierarchy || []"
@@ -198,6 +199,9 @@ const chooseGoalOrSdg = (choice) => {
         <NuxtPage v-bind="currentTab?.props" />
       </template>
     </NavPanelLayout>
+
+    <NavPanelLoader v-if="loading" />
+
     <!-- add/edit modals -->
     <LazyProjectDrawer
       v-if="modals.project.visible"

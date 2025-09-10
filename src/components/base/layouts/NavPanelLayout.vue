@@ -1,8 +1,4 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
-import { onBeforeRouteUpdate } from 'vue-router'
-import throttle from 'lodash/throttle'
-
 defineProps({
   breadcrumbs: {
     type: Array,
@@ -29,31 +25,6 @@ const collapseNavPanel = () => {
 }
 
 const { isMobile } = useViewportWidth()
-
-// layout with flex based width breaks large table fix
-// (see src/functs/editorUtils.ts)
-// workaround is to manually set width of the content panel
-const fixLayoutWidth = throttle(() => {
-  const outer = document?.querySelector('.content-panel-outer')
-  const inner = document?.querySelector('.content-panel-inner')
-  if (outer && inner) {
-    inner.style.display = 'none'
-
-    const w = outer.offsetWidth
-    if (w) inner.style.width = `${w}px`
-    inner.style.display = ''
-  }
-}, 100)
-
-onMounted(() => {
-  window?.addEventListener('resize', fixLayoutWidth)
-  fixLayoutWidth()
-})
-onUnmounted(() => {
-  window?.removeEventListener('resize', fixLayoutWidth)
-})
-// fix layout on vue route change (eg, switching tabs)
-onBeforeRouteUpdate(fixLayoutWidth)
 </script>
 <template>
   <div class="nav-panel-layout" :class="{ 'no-nav': isNavCollapsed }">
