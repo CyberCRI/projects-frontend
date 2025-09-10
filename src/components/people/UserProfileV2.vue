@@ -45,9 +45,7 @@
         </template>
       </NavPanelLayout>
     </div>
-    <div v-else class="loader">
-      <LoaderSimple />
-    </div>
+    <NavPanelLoader v-else />
   </div>
 </template>
 
@@ -516,12 +514,5 @@ export default {
   padding-bottom: 24px;
   text-transform: none;
   gap: $space-unit;
-}
-
-.loader {
-  display: flex;
-  justify-content: center;
-  padding: 5rem 0;
-  align-items: center;
 }
 </style>

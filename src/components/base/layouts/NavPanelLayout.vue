@@ -6,7 +6,7 @@ defineProps({
   },
   isNavCollapsed: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   isLoading: {
     type: Boolean,
@@ -63,7 +63,7 @@ const { isMobile } = useViewportWidth()
         </div>
         <div class="content-panel-outer">
           <div class="content-panel-inner">
-            <slot v-if="!isLoading" name="content" />
+            <slot name="content" />
           </div>
         </div>
       </div>
@@ -132,21 +132,6 @@ const { isMobile } = useViewportWidth()
 
 .content-panel {
   flex-basis: 100%;
-}
-
-.slide-panel-enter-from,
-.slide-panel-leave-to {
-  transform: translateX(-100%);
-}
-
-.slide-panel-enter-active,
-.slide-panel-leave-active {
-  transition: transform 0.2s ease-in-out;
-}
-
-.slide-panel-enter-to,
-.slide-panel-leave-from {
-  transform: translateX(0);
 }
 
 // @media screen and (max-width: $min-tablet) {

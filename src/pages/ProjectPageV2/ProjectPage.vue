@@ -200,9 +200,7 @@ const chooseGoalOrSdg = (choice) => {
       </template>
     </NavPanelLayout>
 
-    <div v-else class="loader">
-      <LoaderSimple />
-    </div>
+    <NavPanelLoader v-if="loading" />
 
     <!-- add/edit modals -->
     <LazyProjectDrawer

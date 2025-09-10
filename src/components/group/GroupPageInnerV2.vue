@@ -37,9 +37,7 @@
       </NavPanelLayout>
     </div>
 
-    <div v-else class="loader">
-      <LoaderSimple />
-    </div>
+    <NavPanelLoader v-else />
     <!--div class="page-section-extra-wide tabs-wrapper">
       <GroupTabs
         :description="groupDescription"
@@ -389,13 +387,6 @@ export default {
 .group-layout,
 .group-edit-layout {
   margin-top: pxToRem(48px);
-}
-
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 0;
 }
 
 .recommandations {
