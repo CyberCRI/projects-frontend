@@ -1,4 +1,5 @@
 import hljs from 'highlight.js'
+import throttle from 'lodash.throttle'
 
 export function fixTables(contentNode) {
   const tables = contentNode?.querySelectorAll('table')
@@ -17,13 +18,28 @@ export function fixTables(contentNode) {
   // wrap table in a container for scrolling
   ;[...tables].forEach((table) => {
     table.classList.remove('auto-width')
-    if (!table.parentNode?.classList.contains('tiptap-table-wrapper')) {
+    if (!table.parentNode?.classList.contains('tiptap-table-absolutizer')) {
       // avoir re-entrance
+
       const wrapper = document.createElement('div')
       wrapper.classList.add('tiptap-table-wrapper')
 
+      //
+      wrapper.style = `height:${table.clientHeight}px;`
+
+      const absolutizer = document.createElement('div')
+      absolutizer.classList.add('tiptap-table-absolutizer')
+
+      absolutizer.style = `
+      position:absolute;
+      inset:0;
+      overflow: auto;
+      `
+
+      wrapper.appendChild(absolutizer)
+
       table.parentNode.insertBefore(wrapper, table)
-      wrapper.appendChild(table)
+      absolutizer.appendChild(table)
     }
     if (table.offsetWidth <= table.parentNode?.offsetWidth) {
       table.classList.add('auto-width')
@@ -60,6 +76,14 @@ export function patchVideos(contentNode) {
 export function fixCodeBlock() {
   hljs.highlightAll()
 }
+
+export const fixTiptapTableHeight = throttle(() => {
+  const wrappers = document.querySelectorAll('.tiptap-table-wrapper')
+  for (const wrapper of wrappers) {
+    const table = wrapper.querySelector('table')
+    wrapper.setAttribute('style', `height:${table.clientHeight + 2}px;`)
+  }
+}, 100)
 
 export default function fixEditorContent(contentNode) {
   fixTables(contentNode)

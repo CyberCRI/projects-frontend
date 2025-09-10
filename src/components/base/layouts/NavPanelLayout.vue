@@ -1,9 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
-import { onBeforeRouteUpdate } from 'vue-router'
-import throttle from 'lodash/throttle'
-
-const props = defineProps({
+defineProps({
   breadcrumbs: {
     type: Array,
     default: () => [],
@@ -29,42 +25,6 @@ const collapseNavPanel = () => {
 }
 
 const { isMobile } = useViewportWidth()
-
-// layout with flex based width breaks large table fix
-// (see src/functs/editorUtils.ts)
-// workaround is to manually set width of the content panel
-const fixLayoutWidth = throttle(() => {
-  // console.log('fixLayout')
-  const outer = document?.querySelector('.content-panel-outer')
-  const inner = document?.querySelector('.content-panel-inner')
-  if (outer && inner) {
-    inner.style.display = 'none'
-    delete inner.style.width
-
-    const w = outer.offsetWidth
-    if (w) inner.style.width = `${w}px`
-    inner.style.display = ''
-  } else if (inner) {
-    delete inner.style.display
-    delete inner.style.width
-  }
-}, 100)
-
-onMounted(() => {
-  window?.addEventListener('resize', fixLayoutWidth)
-  fixLayoutWidth()
-  setTimeout(fixLayoutWidth, 200)
-})
-onUnmounted(() => {
-  window?.removeEventListener('resize', fixLayoutWidth)
-})
-
-watch(
-  () => [props.isNavCollapsed],
-  () => nextTick(fixLayoutWidth)
-)
-// fix layout on vue route change (eg, switching tabs)
-onBeforeRouteUpdate(fixLayoutWidth)
 </script>
 <template>
   <div class="nav-panel-layout" :class="{ 'no-nav': isNavCollapsed }">
@@ -76,13 +36,7 @@ onBeforeRouteUpdate(fixLayoutWidth)
           @click="collapseNavPanel"
         ></div>
       </transition>
-      <transition
-        name="slide-panel"
-        @after-enter="fixLayoutWidth"
-        @after-leave="fixLayoutWidth"
-        @before-enter="fixLayoutWidth"
-        @before-leave="fixLayoutWidth"
-      >
+      <transition name="slide-panel">
         <div v-if="!isNavCollapsed" class="nav-panel">
           <div class="breadcrumbs-ctn">
             <LpiButton
