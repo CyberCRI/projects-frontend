@@ -79,6 +79,7 @@ aside {
   font-size: $font-size-2xl;
   position: relative;
   height: 1.2em;
+
   .text-limiter {
     position: absolute;
     inset: 0;

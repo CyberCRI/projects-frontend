@@ -25,16 +25,19 @@ export function fixTables(contentNode) {
       wrapper.classList.add('tiptap-table-wrapper')
 
       //
-      wrapper.style = `height:${table.clientHeight}px;`
+      wrapper.setAttribute('style', `height:${table.clientHeight}px;`)
 
       const absolutizer = document.createElement('div')
       absolutizer.classList.add('tiptap-table-absolutizer')
 
-      absolutizer.style = `
+      absolutizer.setAttribute(
+        'style',
+        `
       position:absolute;
       inset:0;
       overflow: auto;
       `
+      )
 
       wrapper.appendChild(absolutizer)
 
