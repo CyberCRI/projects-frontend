@@ -475,6 +475,14 @@ export default {
     }
   }
 
+  @media screen and (min-width: $min-tablet) and (max-width: $max-tablet) {
+    .content-ctn .main-info-ctn {
+      display: flex;
+      flex-flow: column;
+      padding: 1.2rem;
+    }
+  }
+
   @media screen and (min-width: $min-tablet) {
     &:not(.loading) {
       .content-ctn .main-info-ctn {
