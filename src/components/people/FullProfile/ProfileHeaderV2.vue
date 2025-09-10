@@ -232,8 +232,6 @@ export default {
   .profile-header {
     border: $border-width-s solid $primary;
     border-radius: $border-radius-l;
-
-    // width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
