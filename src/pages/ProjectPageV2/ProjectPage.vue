@@ -295,11 +295,4 @@ const chooseGoalOrSdg = (choice) => {
 .project-layout {
   margin-top: pxToRem(48px);
 }
-
-.loader {
-  display: flex;
-  justify-content: center;
-  padding: 5rem 0;
-  align-items: center;
-}
 </style>
