@@ -1,7 +1,7 @@
 <template>
   <aside class="page-sticky-head">
     <h1 v-if="isHeaderSticked" class="page-title-recall">
-      {{ pageTitle }}
+      <div class="text-limiter">{{ pageTitle }}</div>
     </h1>
     <slot
       :anchor-offset="anchorOffset"
@@ -76,9 +76,17 @@ aside {
 .page-title-recall {
   flex-grow: 1;
   text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   font-size: $font-size-2xl;
+  position: relative;
+  height: 1.2em;
+
+  .text-limiter {
+    position: absolute;
+    inset: 0;
+    width: calc(100%);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
 </style>
