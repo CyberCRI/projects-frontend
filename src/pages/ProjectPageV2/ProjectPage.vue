@@ -119,24 +119,23 @@ try {
   console.log(err)
 }
 
-//onCreated(() => {
-//onMounted(() => {
-if (import.meta.client) {
-  try {
-    loading.value = true
-    await setProject(route.params.slugOrId)
-    connectToSocket(project.id)
-    loading.value = false
-    utils.resetScroll()
-  } catch (err) {
-    console.log(err)
-    router.replace({
-      name: 'page404',
-      params: { pathMatch: route.path.substring(1).split('/') },
-    })
+onMounted(async () => {
+  if (import.meta.client) {
+    try {
+      loading.value = true
+      await setProject(route.params.slugOrId)
+      connectToSocket(project.id)
+      loading.value = false
+      utils.resetScroll()
+    } catch (err) {
+      console.log(err)
+      router.replace({
+        name: 'page404',
+        params: { pathMatch: route.path.substring(1).split('/') },
+      })
+    }
   }
-}
-//})
+})
 
 onBeforeRouteUpdate((to, from, next) => {
   if (to.params.slugOrId !== from.params.slugOrId) {
