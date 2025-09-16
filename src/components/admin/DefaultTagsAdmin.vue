@@ -60,7 +60,7 @@ const deleteOrganizationTag = async () => {
     })
     toaster.pushSuccess(t('toasts.organization-tag-delete.success'))
   } catch (error) {
-    toaster.pushError(`{t('toasts.organization-tag-delete.error')} (${error})`)
+    toaster.pushError(`${t('toasts.organization-tag-delete.error')} (${error})`)
     console.error(error)
   } finally {
     asyncing.value = false
