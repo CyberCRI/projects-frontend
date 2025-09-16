@@ -1,37 +1,42 @@
-#!/bin/env node
+import fs from 'node:fs/promises'
+import path from 'node:path'
 
-/* 
-    Use this script to list all icon names from src/components/base/media/IconImage.vue
-    then paste the output to  src/components/dev/IconList/IconList.vue
-    (in data's names array)
+/*
+    script to find duplicates icons in IconImage components
+    we grep v-if/v-else-if and get the name of icons
 */
 
-const { exec } = require('child_process')
+const iconPath = `${path.dirname(import.meta.dirname)}/src/components/base/media/IconImage.vue`
 
-// TODO: use safe path separator for Windows users
-var projectRoot = __dirname + '/../'
+const REGEX = /(v-(?:else-)?if="\s*name\s*===?\s*'.*?'\s*")/gi
+const REGEX_ICON_NAME = /'.*?'/gi
+const REGEX_QUOTES = /['"]/gi
 
-// TODO: use pure js instead of grep for Windows users
-exec(
-  `grep < ${projectRoot}src/components/base/media/IconImage.vue "name =="`,
-  (err, stdout, stderr) => {
-    if (err) {
-      //some err occurred
-      console.error(err)
-    } else {
-      // the *entire* stdout and stderr (buffered)
-      console.log(`stderr: ${stderr}`)
-
-      var iconNames = JSON.stringify(
-        stdout
-          .split('\n')
-          .map((l) => l.substring(l.indexOf("== '") + "== '".length))
-          .map((l) => l.substring(0, l.indexOf("'")))
-          .filter((l) => l),
-        null,
-        4
-      )
-      console.log(iconNames)
+fs.readFile(iconPath).then((buff) => {
+  const value = buff.toString()
+  const allIcons = []
+  value.split(REGEX).forEach((el) => {
+    // no a v-if value
+    if (!el.startsWith('v-')) {
+      return
     }
+    const name = el.match(REGEX_ICON_NAME).toString().trim().replaceAll(REGEX_QUOTES, '')
+    allIcons.push(name)
+  })
+
+  const exists = new Set()
+  const duplicates = []
+  allIcons.forEach((icon) => {
+    if (exists.has(icon)) {
+      duplicates.push(icon)
+    } else {
+      exists.add(icon)
+    }
+  })
+  if (duplicates.length !== 0) {
+    console.error(`❌ duplicate icons: ${duplicates}`)
+  } else {
+    console.info(`✅ no duplicate icons`)
   }
-)
+  console.log(`total icons: ${exists.size - duplicates.length}`)
+})
