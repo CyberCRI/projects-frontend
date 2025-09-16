@@ -1019,7 +1019,12 @@
   },
   "language": {
     "label-en": "Anglès",
-    "label-fr": "Françaismexico_ states. kgm"
+    "label-fr": "Francès",
+    "label-de": "Alemany",
+    "label-ca": "Català",
+    "label-nl": "Neerlandès",
+    "label-es": "Espanyol",
+    "label-et": "Estonià"
   },
   "location": {
     "loading": "S' estan carregant les localitzacions"

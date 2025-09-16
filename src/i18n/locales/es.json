@@ -1,0 +1,2651 @@
+{
+  "globals": {
+    "pending-edits": {
+      "title": "Edici\u00f3n Coleccionista",
+      "content": "Tienes ediciones pendientes. \u00bfDesvelarlos y continuar?"
+    }
+  },
+  "about": {
+    "page-title": "Acerca de",
+    "HEADER": {
+      "title": "Equipo de Proyectos"
+    },
+    "WHY": {
+      "title": "\u00bfPor qu\u00e9 crear Proyectos.directorio?",
+      "des": "En cualquier organizaci\u00f3n con m\u00e1s de veinte miembros, es dif\u00edcil saber qui\u00e9n hace qu\u00e9 y en qu\u00e9 est\u00e1 trabajando ahora mismo. Comenzamos Proyectos para permitir que {link} usuarios compartan sus proyectos e iniciativas entre estudiantes, investigadores, funcionarios y profesores.",
+      "des1": "En un entorno interdisciplinario, no se puede confiar en la comunicaci\u00f3n de arriba abajo solamente: la gente necesita hablar, descubrir otros proyectos relevantes para su trabajo, para inspirarse en proyectos frescos que tengan sentido para s\u00ed mismos y el planeta. As\u00ed que construimos una plataforma para permitir que cualquiera muestre sus propios proyectos y pasiones a su comunidad y al mundo.",
+      "des2": "Pronto fue obvio que ninguna organizaci\u00f3n tiene necesidades similares. As\u00ed que dejamos que otros grupos compartan sus propios proyectos (ONG, universidades...) en sus propios portales, mientras que todos los proyectos donde se comparten en un {link}. Conseguimos el apoyo del Ministerio de Educaci\u00f3n franc\u00e9s, la Ciudad de Par\u00eds, la Regi\u00f3n \u00cele-de-France, la Universidad de Par\u00eds y muchos otros.",
+      "platform": "plataforma mundial",
+      "button_blog": {
+        "text": "Plataforma de blog"
+      }
+    },
+    "GOAL": {
+      "title": "\u00bfD\u00f3nde vamos desde all\u00ed?",
+      "des": "El CRI y la UNESCO co-crearon {lpiLink}, una iniciativa para transformar la educaci\u00f3n a escala mundial. #LearningPlanet es una alianza global abierta de actores educativos y comunidades de aprendizaje con una causa, con la misi\u00f3n de inspirar &quot; empoderar a los estudiantes de todas las edades para contribuir a configurar mejores futuros. Nuestro objetivo es fomentar la colaboraci\u00f3n entre miles de actores de la educaci\u00f3n y crear un ecosistema digital para ayudarles a aprender mejor juntos",
+      "des1": "Proyectos. directorio es la herramienta m\u00e1s madura de este ecosistema digital. Esperamos que cualquier organizaci\u00f3n centrada en la soluci\u00f3n de los objetivos de desarrollo sostenible lo utilice para compartir sus proyectos e iniciativas.",
+      "des2": "Proyectos. directorio aprovecha la inteligencia colectiva y artificial de la iniciativa {weLearnLink} y el proyecto {skillLink}.",
+      "button_community": {
+        "text": "A bordo de su comunidad"
+      }
+    },
+    "TEAM_CORE": {
+      "title": "Equipo b\u00e1sico",
+      "des": "Crean y mejoran la plataforma Proyectos",
+      "list": [
+        {
+          "title": "Tech Leader",
+          "des": "Creator of CRI Projects, full-stack expert"
+        },
+        {
+          "title": "Project Manager",
+          "des": "Establece la estrategia, organiza el proyecto, y tiene sentido de los requisitos de nuestros usuarios"
+        },
+        {
+          "title": "Front-end Developer",
+          "des": "Crea hermosos dise\u00f1os y los implementa en la aplicaci\u00f3n"
+        },
+        {
+          "title": "Oficial Jefe de Informaci\u00f3n",
+          "des": "Principales proyectos tecnol\u00f3gicos en CRI"
+        },
+        {
+          "title": "Cient\u00edfico de datos",
+          "des": "A cargo del motor de recomendaci\u00f3n y algoritmos de b\u00fasqueda"
+        },
+        {
+          "title": "Back-end Developer",
+          "des": "Desarrolla API y tareas complejas de back-end"
+        },
+        {
+          "title": "Pedagog\u00eda",
+          "des": "Coordina el despliegue en la Universidad de Par\u00eds en el Instituto Challenge"
+        },
+        {
+          "title": "T\u00e9cnico especialista",
+          "des": "Documenta la plataforma Proyectos y coordina #LearningPlanet necesidades digitales"
+        }
+      ]
+    },
+    "TEAM_CONTRIB": {
+      "title": "Distribuidores",
+      "des": "Nos ayudan a dise\u00f1ar la plataforma",
+      "list": [
+        {
+          "title": "Intern",
+          "des": "Apoya a los usuarios y crea documentaci\u00f3n de ayuda"
+        },
+        {
+          "title": "Scientific Advisor",
+          "des": "Creador de la iniciativa ProfChercheurs y compa\u00f1eros de investigaci\u00f3n CRI"
+        },
+        {
+          "title": "Community manager",
+          "des": "PHD estudiante y fundador de \u00c9PhiScience, supertester de nuevas caracter\u00edsticas"
+        },
+        {
+          "title": "Coordinador pedag\u00f3gico",
+          "des": "Dise\u00f1os y pruebas escenarii pedag\u00f3gico usando Proyectos con estudiantes de licencia"
+        },
+        {
+          "title": "Full-stack developer",
+          "des": "Creado e integrado el mapa de concepto WeLearn en la b\u00fasqueda de Proyectos"
+        },
+        {
+          "title": "Gerente comunitario y usuario clave",
+          "des": "Deployed France EduNum Projects portal for the French Ministry of Education"
+        },
+        {
+          "title": "Project advisor and CRI board member",
+          "des": "Leads Learning Iniciativa planetaria"
+        },
+        {
+          "title": "CRI cofundador",
+          "des": "Ayuda a crear la visi\u00f3n para el futuro de la educaci\u00f3n y nuestro ecosistema digital"
+        }
+      ]
+    },
+    "JOBS": {
+      "title": "\u00bfQuieres trabajar con nosotros?",
+      "des": "Estamos contratando especialistas para ayudarnos a desarrollar nuevas caracter\u00edsticas y crecer.",
+      "des1": "\u00bfQuieres mejorar la educaci\u00f3n y ayudar a todos los cambiadores a compartir sus proyectos en todo el mundo? \u00a1\u00danete a nosotros!",
+      "button_jobboard": {
+        "text": "Ver posiciones abiertas"
+      },
+      "button_contact": {
+        "text": "Contacta con nosotros"
+      }
+    }
+  },
+  "admin": {
+    "accounts": {
+      "table": {
+        "last-name": "Apellido",
+        "first-name": "Nombre",
+        "title": "T\u00edtulo",
+        "roles": "Papel(s)",
+        "groups": "Grupos",
+        "inscription": "Inscripci\u00f3n",
+        "activation": "Activaci\u00f3n",
+        "activation-yes": "S\u00ed.",
+        "activation-no": "No"
+      }
+    },
+    "featured-tags": {
+      "title": "Etiquetas del proyecto sugerido",
+      "notice": "Seleccione etiquetas que se sugieren por defecto al buscar o crear proyectos"
+    },
+    "featured-skills": {
+      "title": "Destrezas sugeridas",
+      "notice": "Seleccione habilidades que se sugieren por defecto al buscar o crear perfiles"
+    },
+    "classifications": {
+      "esco-link": "\u00bfQu\u00e9 es ESCO?",
+      "title": "Marcos aduaneros",
+      "subtitle": "Proyectos utiliza Wikipedia para etiquetas y ESCO para habilidades por defecto. Tambi\u00e9n puede a\u00f1adir sus propios repositorios.",
+      "enter-title": "Introduzca un t\u00edtulo",
+      "enter-description": "Introduzca una descripci\u00f3n",
+      "title-field": "T\u00edtulo del marco",
+      "description-field": "Descripci\u00f3n",
+      "add-classification": {
+        "title": "Agregar un marco",
+        "error": "Error al guardar el marco",
+        "success": "El marco se cre\u00f3 con \u00e9xito"
+      },
+      "edit-classification": {
+        "title": "Editar un marco",
+        "error": "Error al modificar el marco",
+        "success": "El marco se modific\u00f3 con \u00e9xito"
+      },
+      "delete-classification": {
+        "title": "Suprimir el marco",
+        "content": "\u00bfEst\u00e1s seguro de que quieres eliminar el marco '{title}'?",
+        "error": "Error al eliminar el marco",
+        "success": "El marco se suprimi\u00f3 con \u00e9xito"
+      },
+      "create-classification": "Crear un marco",
+      "create-tag": "Crear una etiqueta",
+      "tags": "tags",
+      "enabled-for-projects": "Enabled for projects",
+      "enabled-for-skills": "Habilitado para Habilidades",
+      "enabled-for-projects-success": "Marco habilitado para proyectos",
+      "enabled-for-skills-success": "Marco habilitado para las habilidades",
+      "disabled-for-projects-success": "Marco discapacitados para proyectos",
+      "disabled-for-skills-success": "Marco de discapacidad para las habilidades",
+      "disabled": "Discapacitados",
+      "no-custom": "No hay marco personalizado todav\u00eda",
+      "table": {
+        "filter": "Etiquetas de filtro",
+        "tag": "Tag",
+        "description": "Descripci\u00f3n",
+        "actions": "Acciones"
+      },
+      "add-tag": {
+        "title": "A\u00f1adir etiqueta",
+        "success": "La etiqueta fue creada con \u00e9xito",
+        "error": "Error al crear la etiqueta"
+      },
+      "edit-tag": {
+        "title": "Editar etiqueta",
+        "success": "La etiqueta fue modificada con \u00e9xito",
+        "error": "Error al modificar la etiqueta"
+      },
+      "tag-form": {
+        "title-en": "T\u00edtulo (EN)",
+        "title-fr": "T\u00edtulo (FR)",
+        "description-en": "Descripci\u00f3n (EN)",
+        "description-fr": "Descripci\u00f3n (FR)",
+        "required-error": "Este campo es necesario",
+        "too-long-error": "Este campo es demasiado largo."
+      },
+      "tag-delete": {
+        "confirm": {
+          "title": "\u00bfSupir la etiqueta?",
+          "description": "` \u00bfEst\u00e1s seguro de que quieres eliminar la etiqueta '{tagName}'?"
+        },
+        "success": "Tag '{tagName}' eliminado",
+        "error": "Error al eliminar la etiqueta '{tagName} '"
+      }
+    },
+    "tabs": {
+      "information": "General",
+      "categories": "Categor\u00edas",
+      "tags": "Etiquetas",
+      "skills": "Habilidades",
+      "help": "Ayuda",
+      "links": "Enlaces",
+      "templates": "Plantillas",
+      "users": "Usuarios",
+      "requests": "Solicitudes",
+      "groups": "Grupos",
+      "settings": "Ajustes"
+    },
+    "page-title": "Admin",
+    "portal": {
+      "management": "Administrar mi portal",
+      "general": {
+        "invisible": "Invisible",
+        "logo": "Logotipos",
+        "size-min-logo": "Tama\u00f1o m\u00ednimo para el logotipo: {minWidth}px * {minHeight}px",
+        "portal-referencing": "Referencias del portal de parientes",
+        "visible": "Visible",
+        "public-image": "Imagen (vista p\u00fablica)",
+        "wording": {
+          "title": "P\u00e1gina de inicio",
+          "notice": "Edita aqu\u00ed los textos que aparecen en tu P\u00e1gina de inicio (t\u00edtulo y descripci\u00f3n de la vista p\u00fablica y t\u00edtulo s\u00f3lo en tu vista conectada, es decir, una vez que tus usuarios est\u00e9n conectados).",
+          "fields": {
+            "title": "T\u00edtulo",
+            "title-placeholder": "(sin t\u00edtulo todav\u00eda)",
+            "description": "Descripci\u00f3n",
+            "description-placeholder": "(sin descripci\u00f3n todav\u00eda)"
+          },
+          "success": "Palabra de casa salvado",
+          "error": "Error al guardar la palabra casera"
+        },
+        "banner-edit": {
+          "success": "Imagen guardada",
+          "error": "Error al guardar la imagen"
+        },
+        "logo-edit": {
+          "success": "Logo guardado",
+          "error": "Error al guardar el logotipo"
+        }
+      },
+      "categories": {
+        "add": "Agregar una categor\u00eda",
+        "authorizations": "Autorizaciones",
+        "children": "Categor\u00edas de la infancia",
+        "no-child": "No hay categor\u00eda infantil",
+        "description-limit": "300 caracteres m\u00e1ximo.",
+        "edit": "Editar una categor\u00eda",
+        "is-reviewable": "Autorizar las rese\u00f1as",
+        "limit-publication-to-reviewers": "Limitaci\u00f3n de la publicaci\u00f3n a los revisores",
+        "preview-categories": "Avance",
+        "display-projects": "Proyectos de visualizaci\u00f3n",
+        "hide-projects": "Ocultar proyectos",
+        "delete-category": "Suprimir categor\u00eda",
+        "delete-category-description": "\u00bfEst\u00e1s seguro de que quieres eliminar la categor\u00eda '{categoryName}'? Esta acci\u00f3n no se puede deshacer.",
+        "delete-category-has-children": "Esta categor\u00eda tiene sub categor\u00edas y/o proyectos. Quita primero.",
+        "delete-category-error": "Error al eliminar la categor\u00eda",
+        "delete-category-success": "Categor\u00eda eliminada",
+        "background-notice": "Para el encabezado de la p\u00e1gina de esta categor\u00eda, puede elegir un color de fondo o subir su propia imagen de fondo",
+        "background-color": "Elija un color de fondo",
+        "background-image": "Elige una imagen de fondo",
+        "upload-picture": "Sube una foto",
+        "tips-background-image": "No es necesario si prefiere simplemente mostrar un color. Ancho m\u00ednimo: 1024px, Altura m\u00ednima: 400px."
+      },
+      "chat": "Plataforma de chat (Vista deseada)",
+      "events": "Eventos",
+      "instructions": "Instrucciones",
+      "news": "Noticias",
+      "featured-projects": "Proyectos destacados"
+    },
+    "form": {
+      "admin-info": {
+        "name": {
+          "required": "Se requiere el nombre de la comunidad",
+          "max-length": "El nombre de la comunidad debe ser inferior a 32 caracteres"
+        },
+        "dashboard-title": {
+          "required": "Se requiere el t\u00edtulo",
+          "max-length": "El t\u00edtulo debe ser inferior a 128 caracteres"
+        },
+        "contact-email": {
+          "required": "El correo electr\u00f3nico es necesario",
+          "email": "Este debe ser un email v\u00e1lido"
+        },
+        "language": {
+          "required": "El idioma es necesario"
+        },
+        "background-color": {
+          "required-if": "El color de fondo es necesario si se conecta en el portal principal de Proyectos"
+        }
+      },
+      "template": {
+        "category": {
+          "required": "Se requiere la categor\u00eda"
+        }
+      }
+    },
+    "groups": {
+      "intro": "Utilice grupos para administrar sus usuarios de manera m\u00e1s eficiente. Puede crear grupos y agregar usuarios a ellos. Tambi\u00e9n puede crear subgrupos.",
+      "create-group": "Crear grupo",
+      "add-modal-title-1": "A\u00f1adir grupo infantil a \"",
+      "add-modal-title-2": "Grupo",
+      "subtitle-add-child": "Seleccione en la lista el grupo infantil. S\u00f3lo se puede seleccionar uno.",
+      "edit-modal-title": "Agregar grupo padre",
+      "subtitle-edit-child": "Seleccione en la lista el grupo padre. S\u00f3lo se puede seleccionar uno."
+    },
+    "requests": {
+      "intro": "Aqu\u00ed est\u00e1 la lista de personas que solicitaron acceso a su portal. Puede aceptar o rechazar su solicitud.",
+      "table": {
+        "last-name": "Apellido",
+        "first-name": "Nombre",
+        "title": "T\u00edtulo",
+        "email": "Email",
+        "message": "Mensaje",
+        "action": "Show pending only",
+        "decline": "Declin",
+        "declined": "Declind",
+        "accept": "Aceptar",
+        "accepted": "Aceptado",
+        "no-result": "Sin resultado"
+      }
+    }
+  },
+  "account": {
+    "another-organization": "otra organizaci\u00f3n",
+    "role-in-organization": "dentro",
+    "title-create-add": "Crear / a\u00f1adir una cuenta",
+    "title-create": "Crear una cuenta",
+    "title-edit": "Editar una cuenta",
+    "title-invite": "A\u00f1adir una cuenta",
+    "switch-to-edit": "Cuenta ya existe en su organizaci\u00f3n, cambiando a editar",
+    "switch-to-invite": "La cuenta ya existe en otra organizaci\u00f3n, cambiando a a\u00f1adir",
+    "sub-title": "Los campos con * son obligatorios.",
+    "link": "\u00bfNecesitas ayuda? Estamos aqu\u00ed.",
+    "form": {
+      "first-name": "Nombre *",
+      "last-name": "Apellido *",
+      "title": "T\u00edtulo *",
+      "email": "Correo electr\u00f3nico *",
+      "google": "Cuenta de Google",
+      "create-google": "Crear cuenta en Google",
+      "rights": "Derechos",
+      "rights-description": "Derechos otorgados en la plataforma de proyectos",
+      "groups": "Grupos",
+      "groups-description": "Este usuario formar\u00e1 parte de los siguientes grupos",
+      "groups-roles": "Group leader &amp; editor",
+      "groups-roles-description": "Este usuario ser\u00e1 el administrador del grupo de los siguientes grupos:",
+      "no-group-selected": "Todav\u00eda no hay grupos"
+    },
+    "password-reset": {
+      "success": "Enlace de restablecimiento de contrase\u00f1a",
+      "error": "Error al enviar el enlace de reset de contrase\u00f1a"
+    },
+    "create-success": "Cuenta creada",
+    "update-success": "Cuenta actualizada",
+    "delete-success": "Cuenta eliminada",
+    "delete-account": "Suprimir la cuenta",
+    "reset-password": "Reiniciar contrase\u00f1a",
+    "reset-delete": "Reiniciar contrase\u00f1a &gt; eliminar cuenta",
+    "error": "Un error ocurrido.",
+    "role": {
+      "none": "Ninguno",
+      "user": "Usuario",
+      "facilitator": "Facilitador",
+      "admin": "Org admin"
+    },
+    "user-exists-in-other-org": "Un usuario con el mismo email existe en nuestra base de datos. Podemos a\u00f1adirlo a su portal aqu\u00ed."
+  },
+  "userItem": {
+    "teamLeader": "Group Leader"
+  },
+  "groups": {
+    "title": "Funci\u00f3n de usuario",
+    "edit": "Editar el papel de usuario",
+    "users": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos p\u00fablicos.",
+    "facilitators": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. Tambi\u00e9n tienen todos los derechos de los Usuarios.",
+    "admins": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al men\u00fa de administraci\u00f3n del portal para configurar el portal y administrar sus usuarios. Tambi\u00e9n tienen todos los derechos de los facilitadores.",
+    "none": "Ninguno. Esta persona tiene una cuenta de Proyectos pero no es parte de su portal. S\u00f3lo pueden ver los proyectos p\u00fablicos.",
+    "roles": {
+      "none": "Ninguno",
+      "users": "Usuario",
+      "facilitators": "Facilitador",
+      "admins": "Org admin"
+    },
+    "empty": "No grupos",
+    "main-groups": "Grupos principales"
+  },
+  "invitation": {
+    "copy-link": "Copiar el enlace",
+    "create": {
+      "create-success": "Invitaci\u00f3n creada",
+      "create-error": "Error durante la creaci\u00f3n de invitaci\u00f3n",
+      "field": {
+        "description": {
+          "label": "A\u00f1adir una descripci\u00f3n",
+          "notice": "Esto es s\u00f3lo para que recuerdes a qui\u00e9n cre\u00f3 este enlace para y por qu\u00e9.",
+          "placeholder": "\u00bfPara qui\u00e9n creas este enlace?"
+        },
+        "group": {
+          "add": "A\u00f1adir",
+          "error": "Se requiere un grupo",
+          "label": "Elija el grupo *",
+          "notice": "Los usuarios que utilicen este enlace para registrarse ser\u00e1n a\u00f1adidos a este grupo.",
+          "selected": "Grupo seleccionado:"
+        },
+        "validity": {
+          "error": "Se requiere la validez",
+          "label": "Elija su duraci\u00f3n de validez *",
+          "notice": "Una vez que lo cree, el enlace ser\u00e1 v\u00e1lido s\u00f3lo durante este per\u00edodo.",
+          "one-year": "1 a\u00f1o",
+          "pick-date": "Elige una cita",
+          "valid-until": "V\u00e1lido hasta:"
+        }
+      },
+      "intro": "Los enlaces de registro permiten que los usuarios que quieran crear una cuenta de Proyectos en su portal lo hagan. Todo lo que necesitas hacer es compartir con ellos el enlace. Muchas personas pueden suscribirse usando un enlace. Puedes controlar el grupo del que ser\u00e1n parte al crear el enlace.",
+      "link": "\u00bfNecesitas ayuda? Estamos aqu\u00ed.",
+      "notice": "Los campos marcados con * son obligatorios.",
+      "title": "Crear un enlace de registro"
+    },
+    "delete": {
+      "deleted-failed": "Error al eliminar la invitaci\u00f3n"
+    },
+    "delete-confirm-title": "Eliminar este enlace?",
+    "expired-link-image": "Lo siento, el enlace de invitaci\u00f3n que usaste est\u00e1 caducado o inv\u00e1lido.",
+    "expired-link": "Parece que el enlace que recibi\u00f3 ha expirado o es simplemente inv\u00e1lido. Para obtener un nuevo enlace, p\u00f3ngase en contacto con el administrador:",
+    "generate-link": "Generar enlace",
+    "list": {
+      "created-by-column": "Creado por",
+      "description-column": "Descripci\u00f3n",
+      "expire-column": "Gastos en",
+      "group-column": "Grupo",
+      "intro": "Los enlaces de registro permiten que los usuarios que quieran crear una cuenta de Proyectos en su portal lo hagan. Todo lo que necesitas hacer es compartir con ellos el enlace. Muchas personas pueden suscribirse usando un enlace. Puedes controlar el grupo del que ser\u00e1n parte al crear el enlace.",
+      "link-column": "Enlace",
+      "title": "Enlaces de registro"
+    }
+  },
+  "blog": {
+    "add-entry": "a\u00f1adir entrada de blog",
+    "entry": "Entrada del blog",
+    "last-publication": "\u00faltima entrada del blog",
+    "no-entry": "A\u00fan no hay entrada...",
+    "posts": "Entradas de blog",
+    "title": "Blog"
+  },
+  "browse": {
+    "page-title": "B\u00fasqueda",
+    "placeholder": "\u00bfQu\u00e9 est\u00e1s buscando?",
+    "result-per-page": "Resultados por p\u00e1gina:"
+  },
+  "category": {
+    "add-sub-category": "A\u00f1adir una subcategor\u00eda",
+    "edit-order-success": "Categor\u00edas comprar editado con \u00e9xito",
+    "info-organize": "Usted puede enumerar proyectos en diferentes categor\u00edas (por ejemplo, proyectos estudiantiles, proyectos docentes, etc.).",
+    "info-limit": "Cada proyecto debe estar asociado con una de estas categor\u00edas.",
+    "page-title": "Categor\u00eda",
+    "title": "Categor\u00edas",
+    "all-categories": "Ver todas las categor\u00edas",
+    "all-projects": "Ver todos los proyectos",
+    "edit": "Editar"
+  },
+  "comment": {
+    "add-comment": "\u00a1A\u00f1ada su comentario!",
+    "comment-verb": "comentario",
+    "comments": "Comentarios",
+    "deleted": "Comentario eliminado sobre",
+    "discard-comment": "\u00bfDiscutir comentario?",
+    "discard-changes": "\u00bfCambios discretos?",
+    "need-account": "Necesitas una cuenta para publicar comentarios",
+    "no-comments": "no comment has been made yet ...",
+    "private-exchange": {
+      "tab": "Mensajes internos",
+      "no-message": "A\u00fan no hay mensaje interno...",
+      "notice": "Los mensajes internos son visibles s\u00f3lo para los miembros del equipo de proyecto.",
+      "send": "Enviar",
+      "title": "A\u00f1ade tu mensaje interno",
+      "delete-title": "Eliminar definitivamente?",
+      "delete-description": "\u00bfEst\u00e1s seguro de que quieres eliminar permanentemente tu mensaje interno? Esta acci\u00f3n ser\u00e1 irreversible.",
+      "deleted": "Mensaje interno eliminado en"
+    },
+    "publish": "Publicar su comentario",
+    "delete-title": "Eliminar definitivamente?",
+    "delete-description": "\u00bfEst\u00e1s seguro de que quieres eliminar permanentemente tus comentarios? Esta acci\u00f3n ser\u00e1 irreversible."
+  },
+  "common": {
+    "activate": "Activar",
+    "activated": "Activado",
+    "add": "A\u00f1adir",
+    "added-on-the": "agregado",
+    "back": "atr\u00e1s",
+    "cancel": "Cancelar",
+    "chose-date": "Fecha de selecci\u00f3n",
+    "confirm": "Confirmaci\u00f3n",
+    "continue": "Continuar",
+    "confirm-delete": "\u00bfSeguro que quieres borrar esto?",
+    "deadline": "Fecha l\u00edmite",
+    "delete": "Suprimir",
+    "delete-selection": "Eliminar la selecci\u00f3n",
+    "delete-user": "Suprimir",
+    "description": "descripci\u00f3n",
+    "destroy-confirm": "\u00bfEst\u00e1s seguro de que quieres borrar este proyecto? Esta acci\u00f3n no se puede deshacer.",
+    "cant-quit-self": "Eres el \u00faltimo editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor antes de salir del proyecto, o eliminar el proyecto de la pesta\u00f1a Configuraci\u00f3n.",
+    "cant-quit-other": "Este es el \u00faltimo editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor supressing este, o eliminar el proyecto de la pesta\u00f1a Configuraci\u00f3n.",
+    "edit": "Editar",
+    "file-required": "Se requiere un archivo",
+    "for": "para",
+    "groups": "Grupos",
+    "index": "\u00cdndice",
+    "less": "menos",
+    "link-copied-success": "Enlace copiado",
+    "link-copied-failed": "Failed to copy link",
+    "loading": "Cargando",
+    "login": "login",
+    "modify": "Modificar",
+    "more": "m\u00e1s",
+    "need-login": "Necesitas estar conectado",
+    "no": "no",
+    "no-result": "Sin resultado",
+    "none": "ninguno",
+    "of": "de",
+    "org": "portal members",
+    "quit-project": "\u00bfSeguro que quieres dejar este proyecto?",
+    "people": "Personas",
+    "read": "le\u00eddo",
+    "reply": "respuesta",
+    "remove-group": "\u00bfSeguro que quieres eliminar este grupo?",
+    "remove-user": "\u00bfEst\u00e1s seguro de querer borrar este usuario?",
+    "save": "Guardar",
+    "send": "Enviar",
+    "see-less": "ver menos",
+    "see-more": "ver m\u00e1s",
+    "see": "See",
+    "see-all": "Ver todos",
+    "set-deadline": "plazo establecido",
+    "shrink": "Reducir",
+    "submit": "presentar",
+    "the-project": "El proyecto",
+    "title": "T\u00edtulo",
+    "yes": "S\u00ed.",
+    "disconnect": "Desconexi\u00f3n",
+    "confirm-close": "\u00bfSeguro que quieres cerrar el editor? Cualquier cambio que hayas hecho no ser\u00e1 salvado.",
+    "ok": "Ok",
+    "file-too-big": "El archivo es demasiado grande (max: {maxSize}Mb)"
+  },
+  "complete-profile": {
+    "bio": {
+      "title": "Bio",
+      "notice": "Bio permite que la gente entienda qui\u00e9n eres, qu\u00e9 haces y defiendes.",
+      "notice-exemples": "\u00bfNecesitas inspiraci\u00f3n? Estos son ejemplos de {0}, {1} o {2}.",
+      "exemples": {
+        "researcher": "un investigador",
+        "professional": "un profesional",
+        "student": "un estudiante"
+      },
+      "long-bio": "Bio larga",
+      "long-bio-notice": "Presente aqu\u00ed sus esfuerzos profesionales",
+      "personal-bio": "Bio personal",
+      "personal-bio-notice": "Presente aqu\u00ed sus intereses personales."
+    },
+    "cancel": "Cancelar",
+    "notice": {
+      "help": "Estamos aqu\u00ed para ayudar.",
+      "intro": "Los campos marcados con * son obligatorios. Siempre puedes modificar esto en tu perfil m\u00e1s adelante.",
+      "no-idea": "\u00bfNo tienes idea de lo que deber\u00edas hacer?"
+    },
+    "onboarding": "A bordo",
+    "personal": {
+      "email": "Email",
+      "email-placeholder": "you{'@'}example.com",
+      "firstname": "Nombre",
+      "firstname-placeholder": "Nombre",
+      "headline": "T\u00edtulo",
+      "headline-placeholder": "Estudiante M1 Sostenibilidad, Director de Investigaci\u00f3n...",
+      "lastname": "Apellido",
+      "lastname-placeholder": "Apellido",
+      "picture": "Imagen del perfil",
+      "picture-notice": "(120px x 120px mini; formatos jpg o png)",
+      "title": "Informaci\u00f3n personal"
+    },
+    "required": "Este campo es necesario",
+    "save-and-finish": "Guardar y terminar",
+    "save-and-next": "Guardar e ir al siguiente",
+    "skills": {
+      "title": "Intereses &quot; habilidades"
+    },
+    "sdgs": {
+      "sdg-notice": "Los Objetivos de Desarrollo Sostenible (ODS) son un llamamiento a la acci\u00f3n para abordar una serie de desaf\u00edos mundiales. Indicar los objetivos que deseas contribuir te ayudar\u00e1 a que la gente de tu comunidad te encuentre para mentores o asistencia.",
+      "title": "Objetivos de desarrollo sostenible"
+    },
+    "title": "Completa tu perfil"
+  },
+  "crikit": {
+    "errors": {
+      "too-big-file-size": "El tama\u00f1o del archivo es demasiado grande, {sizeMax}MB max."
+    }
+  },
+  "description": {
+    "default-placeholder": "Ahora, describir su proyecto.",
+    "placeholder": "A\u00fan no tienes una descripci\u00f3n, piensa en a\u00f1adir una!",
+    "delete": "\u00bfSeguro que quieres cerrar el editor?",
+    "edit-saved": "Cualquier cambio que usted (y cualquier co-autor) haga no ser\u00e1 salvado.",
+    "edit": "descripci\u00f3n de la edici\u00f3n (proyecto)",
+    "add": "A\u00f1adir descripci\u00f3n",
+    "quit-without-saving-title": "\u00bfDejar de salvar?"
+  },
+  "discover": {
+    "page-title": "Descubre",
+    "HEADER": {
+      "title": "Comparte tus proyectos",
+      "impact": "para aumentar el impacto",
+      "des": "Utilice la plataforma Proyectos para mostrar sus proyectos,",
+      "facilitate": "facilitar sinergias y fomentar la colaboraci\u00f3n",
+      "common": "para el bien com\u00fan.",
+      "button_discover": "Explore Proyectos",
+      "button_access": "Obtener acceso"
+    },
+    "INTRO": {
+      "title": "\u00danase a nuestra plataforma de crecimiento r\u00e1pido",
+      "list": [
+        {
+          "title": "Proyectos acogidos"
+        },
+        {
+          "title": "Usuarios activos"
+        },
+        {
+          "title": "Comunidades"
+        }
+      ]
+    },
+    "FEATURES": [
+      {
+        "title": "Inspir\u00e1ndose",
+        "des": "Descubra muchos proyectos interesantes no s\u00f3lo{0} a trav\u00e9s de nuestra b\u00fasqueda poderosa, sino tambi\u00e9n basado en{0} Recomendaciones de inteligencia artificial, ubicaci\u00f3n o mapa tem\u00e1tico.",
+        "list": [
+          {
+            "title": "Recommandations",
+            "des": "Pase de un proyecto a otros similares gracias a proyectos vinculados por miembros del equipo, o mediante recomendaciones autom\u00e1ticas de proyectos."
+          },
+          {
+            "title": "Tag Map",
+            "des": "Utilice nuestro mapa de etiquetas para descubrir proyectos de una manera totalmente nueva! Se agrupan proyectos seg\u00fan lo similar que son sus etiquetas. Las etiquetas son art\u00edculos de Wikipedia."
+          },
+          {
+            "title": "Mapa geogr\u00e1fico",
+            "des": "Explore proyectos en el mapa mundial por ubicaci\u00f3n de equipo y por lugar donde el proyecto tuvo un impacto."
+          }
+        ]
+      },
+      {
+        "title": "Compartir y colaborar",
+        "des": "Cree eficientemente una rica presentaci\u00f3n de su proyecto,{0} y aumente su impacto al unir fuerzas.",
+        "list": [
+          {
+            "des": "Edite su descripci\u00f3n de proyecto simult\u00e1neamente con los miembros de su equipo para a\u00f1adir texto formateado, im\u00e1genes, videos y enlaces a trav\u00e9s de un editor de texto f\u00e1cil de usar."
+          },
+          {
+            "des": "Contratar f\u00e1cilmente a los participantes o a los contribuyentes transmitiendo la informaci\u00f3n a toda la comunidad mediante anuncios p\u00fablicos."
+          },
+          {
+            "des": "Add Sustainable Development Objetivos que usted contribuye para que los usuarios puedan encontrar su proyecto basado en esta informaci\u00f3n."
+          },
+          {
+            "des": "Intercambio con miembros de la comunidad a trav\u00e9s de la secci\u00f3n de comentarios."
+          },
+          {
+            "des": "Complete su proyecto con cualquier tipo de recursos externos, ya sean inspiraciones, creaciones, documentaci\u00f3n, otros proyectos relacionados..."
+          },
+          {
+            "des": "Deje que otros sigan su proyecto, o compartanlo por un simple enlace"
+          }
+        ]
+      },
+      {
+        "title": "TEACH",
+        "des": "Use funcionalidades dise\u00f1adas espec\u00edficamente para la ense\u00f1anza de cursos basados en proyectos.",
+        "list": [
+          {
+            "title": "TEMPLATOS DE PROYECTO DE PERSONAS",
+            "des": "Gu\u00eda a un creador de proyectos para que el contenido de su proyecto corresponda a tus expectativas."
+          },
+          {
+            "title": "EXAMEN DE LOS PROYECTOS DE ESTUDIO",
+            "des": "Cree opiniones y apruebe la publicaci\u00f3n de los proyectos de sus estudiantes."
+          }
+        ]
+      },
+      {
+        "title": "Administrar su comunidad",
+        "des": "Crear una instancia de Proyectos s\u00f3lo para su comunidad.{0} Y disfrute de la flexibilidad que ofrecemos para manejarlo, sin problemas.",
+        "list": [
+          {
+            "title": "PERSONALIZADO PORTAL",
+            "des": "Personnalizar todo: Pon tus im\u00e1genes, logos, t\u00edtulos, crea tus propias categor\u00edas, etiquetas."
+          },
+          {
+            "title": "EASY ADMINISTRATION AND MODERATION",
+            "des": "En cualquier momento, administrar opciones para su comunidad a trav\u00e9s del espacio comunitario de administraci\u00f3n, y proyectos moderados en su portal con derechos de administraci\u00f3n."
+          },
+          {
+            "title": "Proyectos Clickable en su sitio web",
+            "des": "Si su comunidad tiene un sitio web, puede incrustar f\u00e1cilmente proyectos que desee incluir all\u00ed. Cuando los usuarios hagan clic en \u00e9l, ser\u00e1n redireccionados a Proyectos."
+          }
+        ]
+      }
+    ],
+    "PROJECT": {
+      "title": "Siga la plataforma PROYECTOS",
+      "des": "Descubre todo sobre la plataforma Proyectos en su propio proyecto.",
+      "project": {
+        "title": "CRI Proyectos",
+        "des": "Cr\u00e9er un annuaire des projets d'une organisation avec les ressources et comp\u00e9tences mobilis\u00e9es"
+      }
+    },
+    "TESTIMONIALS": {
+      "list": [
+        {
+          "project": {
+            "title": "INTERNSHIP L3 - CEEBIOS _ Elise Buard",
+            "des": "Semestre de pr\u00e1cticas de grado FdV. A cargo de las formaciones de Biomimicry en Francia."
+          },
+          "title": "Educaci\u00f3n",
+          "des": "Cursos basados en proyectos, pasant\u00edas, asociaciones estudiantiles, autoestudios, etc.",
+          "quote": "La plataforma de Proyectos me permiti\u00f3 comunicarme sobre los resultados de todo lo que hice por mi pasant\u00eda.{0} La secci\u00f3n de comentarios permiti\u00f3 a los lectores pedir m\u00e1s informaci\u00f3n y darme sus pensamientos sobre lo que les gustar\u00eda leer.{0} Pude crear mi propio libro de registro ilustrado y esto permiti\u00f3 a mis lectores descubrir precisamente la implementaci\u00f3n y expansi\u00f3n de la biomimicry",
+          "author": "- Elise Buard, estudiante de licenciatura, Pr\u00e1ctica CEEBIOS"
+        },
+        {
+          "project": {
+            "title": "PROFS-CHERCHEURs - COVID19",
+            "des": "R\u00e9pondre collectivement face au COVID19"
+          },
+          "title": "Para investigaci\u00f3n",
+          "des": "Laboratorios de investigaci\u00f3n, iniciativas de ciencia ciudadana, retos de c\u00f3digo abierto.",
+          "quote": "La investigaci\u00f3n de alto impacto tiende a ser interdisciplinaria, con m\u00faltiples interesados involucrados en su co-construcci\u00f3n. Pero con demasiada frecuencia los conocimientos y las comunidades se encuentran en las disciplinas, y la comunicaci\u00f3n con otros interesados es dif\u00edcil. La plataforma Proyectos ayuda a mostrar f\u00e1cilmente la investigaci\u00f3n impactante, a encontrar f\u00e1cilmente colaboradores a trav\u00e9s de las disciplinas, y a colaborar f\u00e1cilmente con los interesados que necesitan su investigaci\u00f3n.",
+          "author": "- Ignacio Atal, Prof. Chercheurs"
+        },
+        {
+          "project": {
+            "title": "Ecolo Vie",
+            "des": "R\u00e9duire l'impact \u00e9cologique de notre famille"
+          },
+          "title": "Para proyectos de ODS personales",
+          "des": "Los colectivos y activistas independientes enfrentan desaf\u00edos sociales cr\u00edticos.",
+          "quote": "Nuestro proyecto: convertirse en una familia ecoresponsable. Con la plataforma Proyectos, podemos compartir f\u00e1cilmente nuestras acciones sobre alimentos, transporte, vivienda, reciclaje y pr\u00e1cticas de compra, y esperamos inspirar a otros a cambiar, un hogar a la vez!",
+          "author": "- Anne Mistral, familiar"
+        }
+      ]
+    },
+    "ACCESS": {
+      "title": "ACCESO",
+      "des": "Solicitar acceso para experimentar todas las caracter\u00edsticas{0}or ponerse en contacto para crear un portal dedicado",
+      "button_personal": {
+        "text": "Solicitar una cuenta personal"
+      },
+      "button_community": {
+        "text": "Solicitar proyectos para su comunidad"
+      }
+    },
+    "CONTACT": {
+      "title": "CONTACTO",
+      "des": "Para cualquier pregunta, p\u00f3ngase en contacto con nosotros en {link}"
+    }
+  },
+  "drawer": {
+    "clear": "Limpiar todo seleccionado",
+    "select-all": "Seleccione todo"
+  },
+  "faq": {
+    "delete-confirm-content": "\u00bfEst\u00e1s seguro de que quieres eliminar la pesta\u00f1a Ayuda personalizada para tu portal. Todo su contenido ser\u00e1 eliminado.",
+    "delete-confirm-title": "Eliminaci\u00f3n de pesta\u00f1as de ayuda personalizada",
+    "info": "Hay una ayuda gen\u00e9rica accesible haciendo clic en el bot\u00f3n \"Ayuda\" en la esquina superior derecha. Si desea agregar una pesta\u00f1a con una p\u00e1gina de ayuda espec\u00edfica a su portal, puede hacerlo a continuaci\u00f3n.",
+    "portal": "Ayuda",
+    "tab": "Nombre de la ficha",
+    "video": "Tutorial de v\u00eddeo"
+  },
+  "feed": {
+    "see-all": "Ver todos",
+    "title": "Newsfeed"
+  },
+  "file": {
+    "add-image": "a\u00f1adir una imagen",
+    "add-video": "a\u00f1adir un v\u00eddeo",
+    "add-video-hint": "A\u00f1adir un v\u00eddeo entrando en su URL de youtube o vimeo.",
+    "attachment": "documento adjunto",
+    "upload": "Subir"
+  },
+  "form": {
+    "background-color": "Color de fondo",
+    "category-name": "Nombre de la categor\u00eda",
+    "organization-name": "Nombre de tu comunidad",
+    "description": "Descripci\u00f3n",
+    "email": "Email",
+    "email-contact": "email",
+    "language": "Idioma",
+    "title": "T\u00edtulo",
+    "url": "url",
+    "contact": {
+      "subtitle": "Rellene esta forma r\u00e1pida y volveremos a usted en breve",
+      "subject": "Asunto",
+      "subject-placeholder": "\u00bfQu\u00e9 quieres compartir con nosotros?",
+      "email": "Email",
+      "email-placeholder": "Email",
+      "content": "Mensaje",
+      "content-placeholder": "Haganos preguntas con un m\u00e1ximo de detalles."
+    },
+    "report": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "message": "El campo de descripci\u00f3n es necesario",
+      "content": "El campo de contenido es necesario",
+      "url": {
+        "required": "El campo url es necesario",
+        "format": "Por favor, introduzca un url v\u00e1lido"
+      },
+      "email": {
+        "required": "El campo de correo electr\u00f3nico es necesario",
+        "format": "Por favor, introduzca una direcci\u00f3n de correo electr\u00f3nico v\u00e1lida"
+      }
+    },
+    "review": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "message": "El campo de descripci\u00f3n es necesario"
+    },
+    "goal": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "description": "El campo de descripci\u00f3n es necesario"
+    },
+    "blog": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "description": "El campo de descripci\u00f3n es necesario"
+    },
+    "resources": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "description": "El campo de descripci\u00f3n es necesario",
+      "link": {
+        "required": "El campo url es necesario",
+        "format": "Por favor, introduzca un url v\u00e1lido"
+      }
+    },
+    "announcement": {
+      "title": "Se requiere el campo de t\u00edtulo",
+      "description": "El campo de descripci\u00f3n es necesario"
+    },
+    "reply-announcement": {
+      "first-name": "El campo de nombres se requiere",
+      "last-name": "El campo de apellido es requerido",
+      "email": {
+        "required": "El campo de correo electr\u00f3nico es necesario",
+        "format": "Por favor, introduzca una direcci\u00f3n de correo electr\u00f3nico v\u00e1lida"
+      },
+      "description": "El campo de descripci\u00f3n es necesario"
+    }
+  },
+  "footer": {
+    "contact": "Contacta con nosotros",
+    "legal-notices": "Avisos jur\u00eddicos",
+    "terms-of-service": "T\u00e9rminos de servicio",
+    "cookies": "Cookies",
+    "accessibility": "Accesibilidad",
+    "personal-data": "Datos personales",
+    "directory": "Descubre muchos m\u00e1s proyectos de otras organizaciones en nuestro metaportal:",
+    "help": "Ayuda",
+    "projects": "Projects Platform",
+    "madeBy": "es hecho por",
+    "sourceText": "Ver el c\u00f3digo fuente",
+    "pca": "Plan de continuidad (PCA)",
+    "pssi": "Plan de seguridad (PSSI)"
+  },
+  "goal": {
+    "add": "a\u00f1adir un objetivo",
+    "completed-on-the": "terminado en",
+    "description": "descripci\u00f3n de la meta",
+    "goals": "Objetivos",
+    "planned-for-the": "programado para el",
+    "status-title": "Situaci\u00f3n",
+    "title": "t\u00edtulo de gol",
+    "delete": "\u00bfTe gustar\u00eda eliminar este objetivo?"
+  },
+  "group": {
+    "is-other-org": "Este grupo pertenece a otra plataforma",
+    "contact": "Contacto",
+    "edit-group": "Editar grupo",
+    "see-more-people-button": "V\u00e9ase {users} m\u00e1s",
+    "see-subgroups": "See {count} subgroup tenci\u00f3n See {count} subgroups",
+    "share": "Compartir",
+    "the-team": "El equipo ({users})",
+    "news": "Anuncios",
+    "more": "M\u00e1s",
+    "less": "Menos",
+    "see-more": "Ver m\u00e1s",
+    "see-less": "Ver menos",
+    "subgroups": "SUBGROUPS",
+    "snapshot": "Captura",
+    "members": "Miembros",
+    "projects": "Proyectos",
+    "visibility-private": "Visibilidad : privado",
+    "visibility-public": "Visibilidad : p\u00fablico",
+    "visibility-org": "Visibilidad : portal",
+    "group-members": "Miembros de grupos",
+    "group-projects": "Proyectos de grupo",
+    "select-group": "Seleccione un grupo",
+    "image-header": "Imagen",
+    "root": "(Root)",
+    "create": {
+      "help-link": "Estamos aqu\u00ed para ayudar.",
+      "notice": "Los campos marcados con * son obligatorios. Siempre puedes modificar esto m\u00e1s tarde. \u00bfNo tienes idea de lo que deber\u00edas hacer?",
+      "title": "Crear un nuevo grupo"
+    },
+    "edit": {
+      "title": "Editar un grupo"
+    },
+    "form": {
+      "add": "A\u00f1adir",
+      "add-projects": "Agregar proyectos destacados",
+      "edit": "Editar",
+      "edit-members": "Editar miembros",
+      "edit-roles": "Edici\u00f3n de funciones",
+      "form-incomplete": "Los campos est\u00e1n desaparecidos o inv\u00e1lidos, completos para poder salvar.",
+      "create-group": "Crear grupo",
+      "edit-group": "Editar grupo",
+      "edit-name": "Editar nombre del grupo",
+      "email-label": "Email",
+      "email-placeholder": "Apellido.name{'@'}myuniversity.fr",
+      "short-description-label": "T\u00edtulo",
+      "short-description-placeholder": "Describa su grupo en una oraci\u00f3n",
+      "name-label": "Nombre del grupo",
+      "name-placeholder": "Ex. Hitbox: bolsa de boxeo interactiva",
+      "description-label": "Descripci\u00f3n",
+      "add-description": "A\u00f1adir descripci\u00f3n",
+      "add-parent-group": "Agregar grupo padre",
+      "project-label": "Proyectos destacados",
+      "parent-group-label": "Grupo de expertos",
+      "visibility": {
+        "title": "Visi\u00f3n del grupo",
+        "public": "P\u00fablico",
+        "private": "Privado",
+        "members": "Miembros",
+        "public_description": "P\u00fablico: cualquiera puede encontrar este grupo en Internet",
+        "private_description": "Privada: visible s\u00f3lo por los administradores y miembros del grupo",
+        "members_description": "Miembros: visibles s\u00f3lo por los miembros de este portal"
+      },
+      "name-errors": {
+        "required": "El campo de nombres de grupo es necesario",
+        "max": "El campo de nombres de grupo puede no ser mayor que 180 caracteres"
+      },
+      "short-description-errors": {
+        "max": "El campo de titulares puede no ser mayor que 150 caracteres"
+      },
+      "publication-status-errors": {
+        "required": "Este campo es necesario"
+      },
+      "delete": "Grupo Supr\u00edmase"
+    },
+    "role": {
+      "members": {
+        "label": "Miembro",
+        "help": "Miembro"
+      },
+      "leaders": {
+        "label": "Group Leader",
+        "help": "Group Leader"
+      },
+      "leaders-managers": {
+        "label": "Leader and Manager"
+      },
+      "managers": {
+        "label": "Editor",
+        "help": "Editor"
+      }
+    }
+  },
+  "header": {
+    "private": "Privada: visible s\u00f3lo a los miembros del equipo",
+    "org": "S\u00f3lo visible para los miembros de su portal",
+    "public": "P\u00fablico: visible para cualquier visitante del sitio web",
+    "similar-project": "proyecto similar",
+    "similar-projects": "proyectos similares",
+    "portals-start": "Pertenece a",
+    "portals-end-plural": "portales",
+    "portals-end-singular": "portal",
+    "views": "Vistas",
+    "creation": "Creado",
+    "update": "Editado",
+    "close": "Cerca",
+    "mobile-menu-title": "Men\u00fa"
+  },
+  "home": {
+    "all-projects": "Todos los proyectos",
+    "announcements": "Anuncios",
+    "news": "Noticias",
+    "calendar": "Calendario",
+    "instructions": "Instrucciones",
+    "communities": "Portals",
+    "home": "Home",
+    "categories": {
+      "title": "Proyectos Categor\u00edas"
+    },
+    "login": "Iniciar sesi\u00f3n",
+    "account-request": "Solicitar una cuenta",
+    "new-project": "Nuevo proyecto",
+    "short-title": {
+      "events": "Calendario",
+      "projects": "Sus proyectos",
+      "instructions": "Instrucciones"
+    },
+    "create-project": "Crear un proyecto",
+    "check-locations": "Revisa nuestras ubicaciones",
+    "our-locations": "Nuestras ubicaciones"
+  },
+  "language": {
+    "label-en": "Ingl\u00e9s",
+    "label-fr": "Franc\u00e9s",
+    "label-de": "Alem\u00e1n",
+    "label-ca": "Catalan",
+    "label-nl": "Dutch",
+    "label-es": "Español",
+    "label-et": "Estonia"
+  },
+  "location": {
+    "loading": "Lugares de carga"
+  },
+  "map": {
+    "empty": "Nada aqu\u00ed todav\u00eda... Los colaboradores a\u00fan no han localizado ning\u00fan proyecto.",
+    "page-title": "Mapa",
+    "projects": "mapa de proyectos"
+  },
+  "me": {
+    "follow": "Proyectos que sigo",
+    "no-follow": "A\u00fan no est\u00e1s siguiendo un proyecto.",
+    "groups": "Grupos Soy miembro de",
+    "no-group": "A\u00fan no eres miembro de un grupo",
+    "my-projects": "mis proyectos",
+    "no-bio": "A\u00fan no escribiste tu biograf\u00eda.",
+    "no-skill": "A\u00fan no has a\u00f1adido habilidad.",
+    "page-title": "Mi perfil",
+    "projects-participate": "Proyectos Soy miembro de",
+    "no-project-participate": "A\u00fan no eres miembro de un proyecto",
+    "projects-reviewing": "Proyectos que estoy revisando",
+    "no-project-reviewing": "A\u00fan no eres revisor de un proyecto",
+    "skills": "Habilidades",
+    "hobbies": "Hobbies",
+    "levels-help-link": "Niveles de habilidad"
+  },
+  "you": {
+    "no-follow": "Todav\u00eda no se han seguido proyectos",
+    "no-group": "A\u00fan no es miembro de un grupo",
+    "no-bio": "No biograf\u00eda todav\u00eda",
+    "no-skill": "No se han indicado todav\u00eda",
+    "no-project-participate": "A\u00fan no es miembro de un proyecto",
+    "no-project-reviewing": "A\u00fan no es un revisor de un proyecto"
+  },
+  "multieditor": {
+    "blockquote": "Bloqueo",
+    "bold": "negrita",
+    "bullet_list": "Lista de Balas",
+    "click-to-play-video": "Haga clic de nuevo para iniciar / detener v\u00eddeo",
+    "code": {
+      "label": "C\u00f3digo",
+      "language": {
+        "label": "Idioma:"
+      },
+      "theme": {
+        "label": "Tema:",
+        "light": "Luz",
+        "dark": "Oscuro"
+      },
+      "tabs": {
+        "label": "Tabs:"
+      }
+    },
+    "color": {
+      "change-color": "Cambiar color",
+      "choose": "O elegir uno personalizado",
+      "color": "Color",
+      "current": "Corriente",
+      "pick": "Elija un color",
+      "set-color": "Color"
+    },
+    "delete_column": "Suprimir esta columna",
+    "delete_row": "Eliminar esta fila",
+    "delete_table": "Supr\u00edmase",
+    "delete_video": "Eliminar el v\u00eddeo",
+    "external_link": "Enlace abierto",
+    "heading_1": "Direcci\u00f3n 1",
+    "heading_2": "Direcci\u00f3n 2",
+    "heading_3": "Heading 3",
+    "image": {
+      "25_width": "25% de ancho",
+      "50_width": "50% de ancho",
+      "75_width": "75% de ancho",
+      "100_width": "Ancho 100%",
+      "full": "Total",
+      "image": "Imagen",
+      "large": "Grande",
+      "medium": "Mediana",
+      "original": "Original",
+      "original_size": "Ancho original",
+      "small": "Peque\u00f1as"
+    },
+    "insert_column_left": "A\u00f1adir Columna Antes",
+    "insert_column_right": "Agregar columna despu\u00e9s",
+    "insert_row_top": "Agregar fila antes",
+    "insert_row_bottom": "Agregar fila despu\u00e9s",
+    "italic": "italic",
+    "link": "enlace",
+    "edit-link": "Enlace de edici\u00f3n",
+    "frozen": "El editor est\u00e1 bloqueado",
+    "merge_cells": "C\u00e9lulas de fusi\u00f3n",
+    "not-synced": "Cargando...",
+    "offline": "Sin conexi\u00f3n",
+    "redo": "Redo",
+    "remove_link": "Remove Link",
+    "server-connected": "El servidor est\u00e1 conectado.",
+    "server-connecting": "El servidor est\u00e1 conectando...",
+    "server-disconnected": "El servidor est\u00e1 desconectado.",
+    "server-unconnectable": {
+      "status": "Incapaz de conectarse al servidor colaborativo.",
+      "notice": "Por favor, compruebe que su navegador y/o antivirus permite WebSockets.",
+      "ack-notice": "Puede utilizar un editor simple (sin edici\u00f3n colaborativa). Tenga en cuenta que los datos de otros usuarios pueden ser sobrescritos si ahorra al mismo tiempo..",
+      "do-ack": "Entiendo los riesgos y deseo continuar con un editor simple (sin edici\u00f3n colaborativa).",
+      "do-solo-edit": "Edita por mi cuenta",
+      "head-up-warning": "Advertencia: la edici\u00f3n en modo solo puede resultar en p\u00e9rdida de datos",
+      "confirm-save-title": "Est\u00e1s editando en modo solo.",
+      "confirm-save-text": "Si alguien m\u00e1s edit\u00f3 el contenido mientras estaba editando, sobreescribir\u00e1s sus cambios. \u00bfSeguro que quieres salvar?"
+    },
+    "split_cell": "Celda dividida",
+    "table": "Cuadro",
+    "text_align_left": "Texto Alineado izquierda",
+    "text_align_right": "Text Align Right",
+    "text_align_center": "Text Align Center",
+    "toggle_header_row": "Toggle Header Row",
+    "unauthorized": "Edici\u00f3n no autorizada",
+    "underline": "Subsidio",
+    "undo": "Undo",
+    "video": "Video",
+    "save": "Guardar sin salir"
+  },
+  "homeCarousel": {
+    "tab1": {
+      "title": "Inspir\u00e1ndose",
+      "text": "Descubra proyectos interesantes e inspiradores. Examine proyectos en el mapa geogr\u00e1fico y el mapa de etiquetas. Buscar por t\u00edtulo, miembro del equipo o etiqueta del proyecto."
+    },
+    "tab2": {
+      "title": "Compartir",
+      "text": "documentar y compartir f\u00e1cilmente sus proyectos con todos los visitantes y dentro de su comunidad. A\u00f1adir a tu proyecto una descripci\u00f3n, recursos externos, metas, etiquetas y entradas de blog."
+    },
+    "tab3": {
+      "title": "Colaboraci\u00f3n",
+      "text": "Colaborativamente edita tu proyecto con los miembros de tu equipo. Establecer anuncios para contratar a participantes (contribudores, nuevos miembros del equipo, pasantes, trabajadores, etc.), intercambiar comentarios con miembros de la comunidad."
+    },
+    "tab4": {
+      "title": "Mostrar su impacto",
+      "text": "Aumentar el impacto en todo el mundo y mostrar esfuerzos inspiradores para el bien com\u00fan. Identifique a qu\u00e9 {sdg} usted contribuye. Geolocalizar todos los lugares donde sus proyectos generan un impacto.",
+      "sdg": "ODS",
+      "sdgAbbr": "Objetivos de Desarrollo Sostenible",
+      "link": "https://en.unesco.org/sustainabledevelopmentgoals"
+    }
+  },
+  "mentorship": {
+    "respond": {
+      "options": {
+        "accept": "Aceptar",
+        "decline": "Declin",
+        "need-infos": "Solicitar m\u00e1s informaci\u00f3n"
+      },
+      "your-response": "Su respuesta",
+      "add-comment": "Agregar un comentario",
+      "comment-notice-mentor": "Este comentario ser\u00e1 enviado por correo electr\u00f3nico al aprendiz.",
+      "comment-notice-mentoree": "Este comentario ser\u00e1 enviado por correo electr\u00f3nico al mentor.",
+      "comment-placeholder": "Escribe aqu\u00ed.",
+      "title-mentor": "Hazte mentor",
+      "title-mentoree": "Convi\u00e9rtete en mentora",
+      "response-was-sent": "Tu respuesta fue enviada.",
+      "asked-you": "te pidi\u00f3 que fueras su mentor",
+      "offered-you": "te ofreci\u00f3 ser su mentor para"
+    }
+  },
+  "onboarding": {
+    "step": "paso",
+    "title": "\u00bfQu\u00e9 es Proyectos?"
+  },
+  "onboarding-modal": {
+    "next": "Siguiente",
+    "previous": "Anterior"
+  },
+  "onboarding-todo": {
+    "platform-tour": "Empieza",
+    "welcome": "Bienvenido {0}, empezar en la plataforma con estos pasos.",
+    "complete-profile": "Completa tu perfil",
+    "explore-projects": "Explore Proyectos",
+    "create-project": "Crea tu primer proyecto",
+    "take-tour": "Tome el tour de la plataforma",
+    "dont-show-again": "No vuelvas a mostrar esto."
+  },
+  "page404": {
+    "contact": "\u00bfUn poco perdido? Puede contactar con nosotros en {0}",
+    "contact-mail": "proyectos.platform{'@'}learningplanetinstitute.org",
+    "illustration-text": "S\u00ed, este es un p\u00e1rrafo 404 y ahora est\u00e1s perdido en este l\u00edo...",
+    "page-title": "P\u00e1gina no encontrada",
+    "search": "\u00bfEsto no es lo que buscabas bien? \u00bfEl mismo jugador quiere {0}?",
+    "search-again": "b\u00fasqueda de nuevo",
+    "title": "Oops...",
+    "not-connected": {
+      "title": "Intenta iniciar sesi\u00f3n",
+      "illustration-text": "PARA ENTER QUE NECESITA A LA acci\u00f3n",
+      "connect": "No podemos encontrar la p\u00e1gina que est\u00e1s buscando. Para alcanzarlo, usted podr\u00eda {0}.",
+      "login": "necesidad de iniciar sesi\u00f3n"
+    }
+  },
+  "picture": {
+    "add-picture": "A\u00f1adir una foto",
+    "change-picture": "Cambiar imagen"
+  },
+  "plateform-tour-modal": {
+    "intro": "Aqu\u00ed hay un recorrido r\u00e1pido por las principales caracter\u00edsticas de Proyectos. Siempre puedes volver a ello (junto con muchos tutoriales) en el men\u00fa \u201cM\u00e1s / Ayuda\u201d.",
+    "notice-tutorial": "Usted tambi\u00e9n puede aprender los ingresos y salidas de Proyectos con nuestro {0}",
+    "title": "Tour de plataforma: qu\u00e9 es Proyectos",
+    "tutorial": "tutoriales"
+  },
+  "profile": {
+    "edit": {
+      "back-to-profile": "Volver al perfil",
+      "edit-my-profile": "Editar mi perfil",
+      "edit-other-profile": "Editar perfil {name}",
+      "edit-your-profile": "Edita tu perfil",
+      "notice": "Los campos con * son obligatorios.",
+      "help": "\u00bfNecesitas ayuda? Estamos aqu\u00ed.",
+      "edit": "Editar",
+      "general": {
+        "no-special-characters": "No se admiten caracteres especiales",
+        "tab": "Informaci\u00f3n general",
+        "form-has-error": "Hay campo perdido o inv\u00e1lido en la forma.",
+        "save-error": "Error al guardar el perfil.",
+        "save-success": "Perfil guardado.",
+        "pronouns": {
+          "label": "Pronombres",
+          "notice": "Que otros sepan c\u00f3mo referirse a usted.",
+          "placeholder": "Ejemplos: She/Her, He/Him, They/Them, etc."
+        },
+        "first-name": {
+          "label": "Nombre *",
+          "placeholder": "Ex. Jane",
+          "is-required": "Se requiere el primer nombre."
+        },
+        "last-name": {
+          "label": "Apellido *",
+          "placeholder": "Ex. Doe",
+          "is-required": "Se requiere el campo de apellidos."
+        },
+        "professional-email": {
+          "label": "Correo electr\u00f3nico *",
+          "placeholder": "Ex. jane.doe{'@'}suempresa.com",
+          "is-required": "El campo de correo electr\u00f3nico es necesario.",
+          "is-email": "El email debe ser un email v\u00e1lido."
+        },
+        "professional-number": {
+          "label": "N\u00famero de funcionarios",
+          "placeholder": "Ex. +33 600000000"
+        },
+        "personal-number": {
+          "label": "N\u00famero personal",
+          "placeholder": "Ex. +33 600000000"
+        },
+        "personal-webpage": {
+          "label": "P\u00e1gina web personal",
+          "placeholder": "Coloque aqu\u00ed su p\u00e1gina personal URL",
+          "is-url": "La p\u00e1gina web personal debe ser una URL v\u00e1lida."
+        },
+        "linkedin": {
+          "label": "Cuenta de Linkedin",
+          "placeholder": "Coloque aqu\u00ed su cuenta de enlace URL",
+          "is-url": "La cuenta Linkedin debe ser una URL v\u00e1lida."
+        },
+        "twitter": {
+          "label": "Cuenta de Twitter",
+          "placeholder": "Coloque aqu\u00ed su cuenta de twitter URL",
+          "is-url": "La cuenta de Twitter debe ser una URL v\u00e1lida."
+        },
+        "picture": {
+          "label": "Imagen del perfil"
+        },
+        "title": {
+          "label": "T\u00edtulo *",
+          "placeholder": "Ex. Director de proyectos, Estudiante en M2 Biolog\u00eda, Investigador en Educaci\u00f3n, etc.",
+          "is-required": "El campo de t\u00edtulo es necesario."
+        },
+        "organization-address": {
+          "label": "Nombre y direcci\u00f3n de la organizaci\u00f3n",
+          "placeholder": "Ex. Learning Planet Institute,\n8 rue Charles V,\n75004 Par\u00eds"
+        },
+        "tags": {
+          "label": "Etiquetas *"
+        },
+        "sdgs": {
+          "label": "ODS",
+          "add": "A\u00f1adir",
+          "notice-start": "A\u00f1adir",
+          "notice-link": "Objetivos de Desarrollo Sostenible (ODS)",
+          "notice-end": "quieres contribuir. Ejemplo: Educaci\u00f3n de calidad, hambre cero, acci\u00f3n clim\u00e1tica, etc.",
+          "link": "https://sdgs.un.org/goals"
+        }
+      },
+      "bio": {
+        "tab": "Bio",
+        "save-error": "Error al guardar el perfil.",
+        "save-success": "Perfil guardado.",
+        "short-bio": {
+          "label": "Bio corta",
+          "placeholder": "1 a 2 l\u00edneas para describir brevemente"
+        },
+        "long-bio": {
+          "label": "Bio larga",
+          "placeholder": "Prep\u00e1rate profesionalmente. Presenta tu trayectoria profesional y tu ocupaci\u00f3n actual."
+        },
+        "personal-bio": {
+          "label": "Bio personal",
+          "placeholder": "Presente personalmente. \u00a1Cu\u00e9ntanos sobre ti y tus pasiones!"
+        }
+      },
+      "projects": {
+        "tab": "Proyectos",
+        "member": {
+          "label": "Proyectos Soy miembro de",
+          "notice": "Si desea convertirse en miembro de un proyecto existente, debe pedir al equipo del proyecto que le agregue. O puedes crear tu proyecto."
+        },
+        "followed": {
+          "label": "Proyectos que sigo",
+          "notice": "Cuando sigues un proyecto recibes notificaciones sobre cualquier actividad nueva en \u00e9l. Si desea seguir un proyecto, visite y haga clic en el bot\u00f3n \"Seguir\" junto a su t\u00edtulo.",
+          "add": "A\u00f1adir",
+          "drawer-title": "Elija los proyectos Sigo"
+        },
+        "reviewed": {
+          "label": "Proyectos I revisi\u00f3n",
+          "notice": "Si desea convertirse en un revisor de un proyecto existente, debe pedir al equipo del proyecto que le agregue."
+        }
+      },
+      "groups": {
+        "tab": "Grupos",
+        "groups": {
+          "label": "Grupos Soy miembro de"
+        }
+      },
+      "skills": {
+        "tab": "Habilidades",
+        "intro": "A\u00fan no has seleccionado habilidades. Las habilidades profesionales y los pasatiempos permiten a tus colegas y a tu comunidad encontrarte basado en lo que eres bueno, en lo que te interesa y en lo que te importa.",
+        "save-error": "Error al guardar el perfil.",
+        "save-success": "Perfil guardado.",
+        "search": "b\u00fasqueda",
+        "suggested-skills": "O elegir una habilidad sugerida",
+        "already-added": "(ya a\u00f1adido)",
+        "skills": {
+          "nothing-yet": "A\u00fan no has a\u00f1adido ninguna habilidad.",
+          "add-success": "Habilidad '{name}' a\u00f1adido.",
+          "edit-success": "Habilidad '{name}' editada.",
+          "delete-success": "Skill '{name}' eliminado.",
+          "add": "Agregar habilidades profesionales",
+          "add-item": "A\u00f1adir una habilidad",
+          "edit-levels": "Modificar los niveles",
+          "already-added": "Habilidad ya a\u00f1adida",
+          "levels-help": "Nivel",
+          "drawer": {
+            "title": "Agregar habilidades profesionales",
+            "notice": "Escriba la etiqueta de su habilidad, y seleccione la correcta para usted entre sugerencias.",
+            "placeholder": "Escriba una habilidad",
+            "notice-levels": "Indica tu nivel de dominio.",
+            "help-levels": "M\u00e1s sobre los niveles de habilidad"
+          },
+          "selection": "habilidades seleccionadas"
+        },
+        "hobbies": {
+          "nothing-yet": "A\u00fan no has a\u00f1adido hobbies.",
+          "add-success": "Hobby '{name}' a\u00f1adido.",
+          "edit-success": "Hobby '{name}' editado.",
+          "delete-success": "Hobby '{name}' eliminado.",
+          "add": "A\u00f1adir pasatiempos",
+          "add-item": "A\u00f1adir un pasatiempo",
+          "already-added": "Hobby ya ha a\u00f1adido",
+          "edit-levels": "Modificar los niveles",
+          "levels-help": "Nivel",
+          "drawer": {
+            "title": "A\u00f1adir un pasatiempo personal",
+            "notice": "Escriba la etiqueta de su hobby, y seleccione la correcta para usted entre sugerencias.",
+            "placeholder": "Escribe un pasatiempo",
+            "notice-levels": "Indica tu nivel de dominio.",
+            "help-levels": "M\u00e1s sobre los niveles de hobbies"
+          },
+          "selection": "Hobbies seleccionados"
+        },
+        "mentorship": {
+          "contact": {
+            "title-ask": "Solicitar mentor\u00eda",
+            "title-offer": "Oferta mentor\u00eda",
+            "notice-ask": "Por favor, especifique la habilidad para la que est\u00e1 pidiendo mentor\u00eda.",
+            "notice-offer": "Por favor, especifique la habilidad para la que est\u00e1 ofreciendo mentor\u00eda.",
+            "error": "Error al enviar la solicitud.",
+            "success": "Tu solicitud fue enviada.",
+            "fields": {
+              "title": {
+                "label": "T\u00edtulo",
+                "placeholder-ask": "Eg. \"\u00bfPuedes ser mi mentor en Datascience?\"",
+                "placeholder-offer": "Eg. \"\u00bfPodr\u00edas ser mi alumno en Datascience?\"",
+                "required": "El campo de t\u00edtulo es necesario."
+              },
+              "text": {
+                "label": "Texto",
+                "notice-ask": "Agregue detalles sobre usted y el tipo de ayuda que necesita (por ejemplo, n\u00famero de horas, la naturaleza de la ayuda - de la simple retroalimentaci\u00f3n a la lecci\u00f3n...).",
+                "notice-offer": "Agregue detalles sobre usted y el tipo de ayuda que usted proporciona (por ejemplo, n\u00famero de horas, la naturaleza de la ayuda - de simple retroalimentaci\u00f3n a la lecci\u00f3n...).",
+                "placeholder": "Empieza aqu\u00ed.",
+                "required": "Se requiere el campo de texto."
+              },
+              "email": {
+                "label": "Respuesta del correo electr\u00f3nico",
+                "notice": "Este mensaje ser\u00e1 enviado como un correo electr\u00f3nico. Para recibir una respuesta, agregue su correo electr\u00f3nico.",
+                "placeholder": "Eg. jane.doe{'@'}gmail.com",
+                "invalid": "El campo de correo electr\u00f3nico es nulo.",
+                "required": "El campo de correo electr\u00f3nico es necesario."
+              }
+            }
+          },
+          "mentorship": "Mentorship",
+          "choose": "Elija",
+          "edit": "Mentorship for \"{skill}\"",
+          "error": "Error al guardar mentor\u00eda.",
+          "success": "Mentor\u00eda salvada",
+          "notice": "\u00bfTe gustar\u00eda ser mentor o ser aprendiz por esta habilidad? Usted determinar\u00e1 la frecuencia de intercambio que le convenga con el aprendiz o su mentor. Tenga la seguridad, nuestro gu\u00eda est\u00e1 aqu\u00ed para ayudarle.",
+          "can-mentor": "Puedo mentor",
+          "needs-mentor": "Estoy buscando un mentor",
+          "comment": "Comentario",
+          "comment-placeholder": "Indicar qu\u00e9 ayuda puede ofrecer o la ayuda que necesita (volumen de horas, frecuencia, etc.)"
+        },
+        "levels": {
+          "curious": "Curioso",
+          "basic": "B\u00e1sica",
+          "competent": "Competente",
+          "expert": "Expert"
+        },
+        "tip": {
+          "intro-edit": "Los diferentes niveles que puede elegir entre:",
+          "curious": {
+            "title": "Nivel 1: Curioso",
+            "description": ""
+          },
+          "basic": {
+            "title": "Nivel 2: b\u00e1sico",
+            "description": "Nivel de secundaria, o hizo alg\u00fan tutorial, o un peque\u00f1o proyecto"
+          },
+          "competent": {
+            "title": "Nivel 3: Competente",
+            "description": "Master-level or did an intermediate project, or can teaching to licence level"
+          },
+          "expert": {
+            "title": "Nivel 4: Experto",
+            "description": "Nivel de doctorado o hizo un gran proyecto, o puede ense\u00f1ar a nivel maestro"
+          }
+        }
+      },
+      "privacy": {
+        "tab": "Privacidad",
+        "save-error": "Error al guardar el perfil.",
+        "save-success": "Perfil guardado.",
+        "publication-status": {
+          "label": "Visi\u00f3n del perfil general",
+          "notice": "Default : p\u00fablico para todos"
+        },
+        "picture": {
+          "label": "visibilidad de la imagen",
+          "notice": "Default : Mi portal"
+        },
+        "email": {
+          "label": "Visi\u00f3n del correo",
+          "notice": "Default : escondido para todos"
+        },
+        "personal-phone": {
+          "label": "Personal phone visibilidad",
+          "notice": "Default : escondido para todos"
+        },
+        "skills-hobbies": {
+          "label": "Habilidades &amp; visibilidad de pasatiempos",
+          "notice": "Default : escondido para todos"
+        },
+        "socials": {
+          "label": "visibilidad de los medios sociales",
+          "notice": "(Ex. Linked En Twitter, sitio web personal...) Default : Mi portal"
+        },
+        "options": {
+          "hide": "Oculto",
+          "org": "Mi portal",
+          "pub": "P\u00fablico"
+        }
+      }
+    },
+    "go-to-page": "Ver p\u00e1gina del perfil",
+    "drawer_title": "Perfil",
+    "projects": "Proyectos",
+    "skills": "Habilidades",
+    "groups": "Grupos",
+    "snapshot": "Captura",
+    "bio": "Bio",
+    "bio_pro": "Professional Bio",
+    "bio_personal": "Personal Bio",
+    "cancel-title": "Edici\u00f3n de perfil Cancelar",
+    "cancel-content": "\u00bfEst\u00e1s seguro de que quieres cancelar tu edici\u00f3n de perfil? Cualquier cambio hecho se perder\u00e1.",
+    "can-mentor": "Puede ser mentor",
+    "needs-mentor": "Necesito un mentor",
+    "ask-mentorship": "Solicitar mentor\u00eda",
+    "offer-mentorship": "Oferta mentor\u00eda",
+    "mentorship-asked": "Usted pidi\u00f3 mentor\u00eda",
+    "mentorship-offered": "Te ofreciste mentor\u00eda.",
+    "mentorship-asking": "Est\u00e1s pidiendo mentor\u00eda",
+    "mentorship-offering": "Est\u00e1s ofreciendo mentor\u00eda"
+  },
+  "profile-completed-modal": {
+    "notice-congratulation": "Ahora est\u00e1 listo para usar la plataforma de proyectos.",
+    "notice-tour": "Para facilitar su a bordo, le recomendamos realizar un recorrido r\u00e1pido por las principales caracter\u00edsticas de los Proyectos. Estos son 2 minutos de su tiempo probablemente bien gastado ;)",
+    "title": "\u00a1Enhorabuena, est\u00e1s listo! \u00bfQu\u00e9 hay de un viaje r\u00e1pido?",
+    "skip": "Skip this",
+    "take-tour": "Tome el tour ahora"
+  },
+  "project": {
+    "add-location": "Agregar un lugar",
+    "add-linked-project": "Agregar un proyecto vinculado",
+    "add-location-point": "Agregar un punto de ubicaci\u00f3n",
+    "add-review": "A\u00f1\u00e1dase una revisi\u00f3n",
+    "add-to-project": {
+      "title": "A\u00f1adir al proyecto",
+      "blog-entry": "Entrada del blog",
+      "goal": "Objetivo",
+      "sdg": "ODS",
+      "link-and-attached-document": "Recursos",
+      "team-member": "Team member / group",
+      "announcement": "Anuncio",
+      "comment": "comentario",
+      "location": "Ubicaci\u00f3n"
+    },
+    "apply-succes": "Solicitud enviada",
+    "announcement-create": "Crear anuncio",
+    "announcements": "anuncio Silencioso",
+    "at-coordinates": "en las coordenadas",
+    "categories": "Categor\u00edas de proyectos",
+    "community": "Proyectos comunitarios",
+    "create-project": "Crear un proyecto",
+    "create": {
+      "choose-category-first": "Por favor seleccione una categor\u00eda primero",
+      "help-link": "Estamos aqu\u00ed para ayudar.",
+      "notice": "Los campos marcados con * son obligatorios. Siempre puedes modificar esto m\u00e1s tarde. \u00bfNo tienes idea de lo que deber\u00edas hacer?",
+      "title": "Crear un nuevo proyecto"
+    },
+    "destroy": "Eliminar el proyecto",
+    "duplicate": "Duplicar este proyecto",
+    "edit": "Editar proyecto",
+    "edit-linked-project": "Editar proyecto enlazado",
+    "edit-location-point": "Editar punto de ubicaci\u00f3n",
+    "edit-map": "Editar geolocalizaci\u00f3n",
+    "edit-review": "Revisi\u00f3n",
+    "files": "archivo del proyecto Silencio archivo del proyecto",
+    "follow": "Seguir",
+    "followed": "Seguido",
+    "form": {
+      "add-tags": "A\u00f1adir etiquetas",
+      "create-project": "Crear proyecto",
+      "edit-project": "Editar proyecto",
+      "edit-title": "Edici\u00f3n del t\u00edtulo",
+      "project-category": "Categor\u00eda del proyecto",
+      "select-category": "Elija una categor\u00eda",
+      "purpose-label": "Objetivo del proyecto",
+      "purpose-placeholder": "\u00bfCu\u00e1l es el objetivo de su proyecto?",
+      "resize-image": "Reframe",
+      "title-label": "A\u00f1adir un t\u00edtulo",
+      "title-placeholder": "\u00bfCu\u00e1l es el nombre de este proyecto?",
+      "upload-image": "Subir una imagen",
+      "title-errors": {
+        "required": "Se requiere el campo de t\u00edtulo",
+        "max": "El campo del t\u00edtulo puede no ser mayor que 180 caracteres"
+      },
+      "purpose-errors": {
+        "required": "El campo de prop\u00f3sito es necesario",
+        "max": "El campo de prop\u00f3sito puede no ser mayor que 180 caracteres",
+        "min": "El campo de prop\u00f3sito debe ser por lo menos 3 caracteres"
+      }
+    },
+    "image-header": "Imagen",
+    "image-alert": {
+      "upload": "Subir",
+      "notice": "\u00a1Sube una nueva imagen para maximizar el impacto! \u00a1Necesitar\u00e1s una forma cuadrada!"
+    },
+    "impact": "impacto",
+    "language": "idioma del proyecto",
+    "life-status": "Situaci\u00f3n de vida del proyecto",
+    "linked": "Proyectos vinculados al proyecto",
+    "linked-project": "Proyecto vinculado",
+    "linked-project-confirm-delete": "\u00bfEst\u00e1 seguro de borrar este proyecto vinculado?",
+    "linked-projects": "Proyectos vinculados",
+    "link-confirm-delete": "\u00bfEst\u00e1s seguro de que quieres borrar este enlace del proyecto?",
+    "file-confirm-delete": "\u00bfEst\u00e1s seguro de que quieres borrar este archivo del proyecto?",
+    "blog-confirm-delete": "\u00bfEst\u00e1s seguro de que quieres borrar esta entrada de blog del proyecto?",
+    "location-type-label": "Tipo de ubicaci\u00f3n",
+    "lock": "proyecto de cierre",
+    "private": "Proyectos privados",
+    "publish": "Publicar proyecto",
+    "public": "Proyectos p\u00fablicos",
+    "quit": "El proyecto",
+    "random-image": "Imagen aleatoria",
+    "resource": "Recursos necesarios",
+    "review": "examen",
+    "reviews": "Rese\u00f1as",
+    "review-confirm-delete": "\u00bfEst\u00e1s seguro de borrar esta rese\u00f1a?",
+    "reviewable": "Listo para revisi\u00f3n",
+    "reviewed-on-the": "examinado sobre el",
+    "remove-group": "Grupo Supr\u00edmase",
+    "remove-user-title": "Eliminar el usuario",
+    "remove-user": "Suprimir",
+    "show-n-projects": "Mostrar los {count} proyectos",
+    "suggested": "proyectos similares tenci\u00f3n proyectos similares",
+    "suggested-hint": "Proyectos que podr\u00edan interesarte",
+    "summary": "Resumen",
+    "settings": "Ajustes",
+    "org-settings": {
+      "title": "Portal(s) del portal",
+      "description": "El proyecto pertenece a los portales seleccionados. Tenga cuidado cuando agregue o modifique los portales a los que pertenece su proyecto. Por ejemplo, los administradores de una nueva organizaci\u00f3n reciben autom\u00e1ticamente acceso a su proyecto. O las organizaciones pueden tener reglas editoriales espec\u00edficas que debe seguir.",
+      "warning": "Su proyecto pertenece a las organizaciones de abajo. Puede editar la categor\u00eda de su proyecto all\u00ed:"
+    },
+    "updated": {
+      "blog-entry": "actualizado un blog entrada de este proyecto",
+      "blog-entry-create": "agreg\u00f3 una nueva entrada de blog de este proyecto",
+      "description": "guard\u00f3 la descripci\u00f3n de este proyecto"
+    },
+    "view": "vista del proyecto",
+    "visibility": "Visibilidad del proyecto",
+    "actions": "Medidas r\u00e1pidas",
+    "copy": "(copia)",
+    "nothing": "Nada aqu\u00ed...",
+    "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducir\u00e1n para ellos. De lo contrario, las etiquetas se mostrar\u00e1n en ingl\u00e9s."
+  },
+  "project_list": {
+    "updated_at": "\u00daltimo activo",
+    "random": "Aleatorio",
+    "recommended": "Recomendado",
+    "sort_by": "Ordenar por:"
+  },
+  "projects": "proyectos",
+  "recruit": {
+    "about-you": "Cu\u00e9ntanos sobre ti mismo y lo que te motiva",
+    "add-announcement": "a\u00f1adir un anuncio",
+    "announcement": "anuncio",
+    "announcements": "no anuncio Silencio {count} anuncio Silencio {count} anuncios",
+    "apply": "aplicaci\u00f3n",
+    "creation-date": "creado",
+    "delete-announcement-message": "\u00bfQuieres borrar este anuncio?",
+    "edit-announcement": "Anuncio de edici\u00f3n",
+    "email": "Advertencia, necesitamos una direcci\u00f3n de correo electr\u00f3nico v\u00e1lida para contactar con usted. (No guardaremos esta informaci\u00f3n en la plataforma).",
+    "firstname": "Nombre",
+    "is-remunerated": "se remunera",
+    "job": "trabajo",
+    "lastname": "apellido",
+    "motivation-hint": "Debe contener al menos 20 caracteres",
+    "new-announcement": "nuevo anuncio",
+    "participant": "participante",
+    "remunerated": "remunerados",
+    "send": "Enviar solicitud",
+    "title": "T\u00edtulo",
+    "traineeship": "Formaci\u00f3n profesional",
+    "type": "Tipo de anuncio",
+    "updated": "actualizada",
+    "valid-until-the": "v\u00e1lido hasta",
+    "view": "vista"
+  },
+  "report": {
+    "abuse": "Uso indebido de informes",
+    "abuse-title": "Explique el informe en pocas palabras.",
+    "abuse-text": "Describir lo m\u00e1s exactamente posible por qu\u00e9 reporta este proyecto.",
+    "abuse-url": "Copiar pega la URL de la p\u00e1gina que desea informar.",
+    "bug": "Reportar un error",
+    "bug-title": "Explique el error en unas palabras.",
+    "bug-text": "Describir lo m\u00e1s exactamente posible el problema que ha experimentado y c\u00f3mo reproducirlo.",
+    "bug-url": "Copiar pegar la URL de la p\u00e1gina donde agrega este problema."
+  },
+  "resource": {
+    "add": "a\u00f1adir recursos",
+    "add-file": "a\u00f1adir un archivo",
+    "add-link": "a\u00f1adir un enlace",
+    "add-link-url": "Agregar enlace URL",
+    "add-link-url-label": "URL",
+    "add-link-text": "a\u00f1adir texto de enlace",
+    "add-link-text-label": "Texto",
+    "edit-link": "editar un enlace",
+    "edit-file": "editar un archivo",
+    "max-size": "Tama\u00f1o m\u00e1ximo 10MB",
+    "invalid-image": "Archivo sin soporte ... es esta una imagen ?",
+    "error-uploading-image": "Error al subir la imagen",
+    "cannot-upload-image": "No puedo subir la imagen por ahora",
+    "link-address": "Direcci\u00f3n de enlace",
+    "resources": "Recursos",
+    "web": "enlace con los recursos web",
+    "web-link": "web link \u00a6 Enlaces web"
+  },
+  "result_box": {
+    "people": "gente",
+    "person": "gente",
+    "groups": "grupos",
+    "group": "grupo"
+  },
+  "visibility": {
+    "private-title": "Privada:",
+    "public-title": "P\u00fablico:",
+    "community-title": "Miembros del portal:",
+    "private": "visible s\u00f3lo para los miembros del equipo.",
+    "public": "visible para cualquier visitante, incluso sin cuenta.",
+    "community": "visible s\u00f3lo para usuarios que tienen una cuenta en este portal."
+  },
+  "register": {
+    "title": "Crear una cuenta",
+    "title-confirm": "Confirmaci\u00f3n por correo electr\u00f3nico necesaria",
+    "email": {
+      "label": "Correo electr\u00f3nico *",
+      "placeholder": "Introduzca su correo electr\u00f3nico",
+      "is-required": "El correo electr\u00f3nico es necesario",
+      "is-invalid": "Este no es un email v\u00e1lido"
+    },
+    "given_name": {
+      "label": "Nombre *",
+      "placeholder": "Introduzca su nombre de pila",
+      "is-required": "Se requiere el primer nombre"
+    },
+    "family_name": {
+      "label": "Apellido *",
+      "placeholder": "Introduzca su apellido",
+      "is-required": "El apellido es necesario"
+    },
+    "password": {
+      "label": "Contrase\u00f1a *",
+      "placeholder": "\u00bfQu\u00e9?",
+      "is-required": "Se requiere contrase\u00f1a"
+    },
+    "confirmation": "Le enviamos un correo electr\u00f3nico de confirmaci\u00f3n en su buz\u00f3n de entrada. Una vez que haya confirmado que {0} es su correo electr\u00f3nico, le ayudaremos a comenzar en la plataforma.",
+    "save-error": "Se produjo un problema t\u00e9cnico. Por favor vuelva a entrar m\u00e1s tarde.",
+    "email-already-exists": "Este correo electr\u00f3nico ya est\u00e1 registrado.",
+    "tos": "Estoy de acuerdo con los {term} y {privacy} *",
+    "tos-is-required": "Se requiere un acuerdo para proceder",
+    "term": "T\u00e9rminos de servicio",
+    "privacy": "Pol\u00edtica de privacidad",
+    "have-account": "\u00bfYa es una cuenta?",
+    "login": "Iniciar sesi\u00f3n",
+    "need-help": "\u00bfNecesitas ayuda?",
+    "contact-us": "Contacta con nosotros"
+  },
+  "request-access": {
+    "title": "Solicitud de acceso",
+    "title-confirm": "Solicitud enviada",
+    "notice": "Su cuenta necesita ser aprobada por el administrador antes de que pueda crear su propia cuenta. Por favor complete este formulario:",
+    "email": {
+      "label": "Correo electr\u00f3nico *",
+      "placeholder": "Introduzca su correo electr\u00f3nico",
+      "is-required": "El correo electr\u00f3nico es necesario",
+      "is-invalid": "Este no es un email v\u00e1lido"
+    },
+    "given_name": {
+      "label": "Nombre *",
+      "placeholder": "Introduzca su nombre de pila",
+      "is-required": "Se requiere el nombre."
+    },
+    "family_name": {
+      "label": "Apellido *",
+      "placeholder": "Introduzca su apellido",
+      "is-required": "Se requiere el apellido."
+    },
+    "profile-title": {
+      "label": "T\u00edtulo *",
+      "placeholder": "Ie. Student in computer science",
+      "is-required": "Se requiere un titular"
+    },
+    "message": {
+      "label": "Mensaje",
+      "placeholder": "\u00bfPuede decirnos por favor por qu\u00e9 necesita acceso?"
+    },
+    "confirmation": "Enviamos su solicitud a los administradores de la plataforma. Por favor, compruebe su casilla de correo ({0}) para la respuesta.",
+    "have-account": "\u00bfYa es una cuenta?",
+    "login": "Iniciar sesi\u00f3n",
+    "need-help": "\u00bfNecesitas ayuda?",
+    "contact-us": "Contacta con nosotros"
+  },
+  "role": {
+    "role-editor": "Tiene todos los derechos de edici\u00f3n para este grupo.",
+    "role-reviewer": "Cuando el proyecto ha sido marcado como 'listo para revisi\u00f3n', el revisor puede dar retroalimentaci\u00f3n, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor tambi\u00e9n tiene derechos de edici\u00f3n.",
+    "role-teammate": "No tiene derechos de edici\u00f3n, pero aparece como miembro del equipo.",
+    "editor": "Editor",
+    "editors": "Editores",
+    "editor-groups": "Grupos de redacci\u00f3n",
+    "editor-group": "Grupo de redacci\u00f3n",
+    "reviewer": "Reviewer",
+    "reviewers": "Revisores",
+    "reviewer-groups": "Grupos de examen",
+    "reviewer-group": "Grupo de examen",
+    "teammate": "Participante",
+    "teammates": "Participantes",
+    "teammate-groups": "Grupos participantes",
+    "teammate-group": "Grupo participante",
+    "select": "Seleccione los derechos",
+    "group": "Grupos",
+    "leader": "Group Leader",
+    "role-leader": "Es un editor que aparecer\u00e1 con una etiqueta \u201cL\u00edder de crecimiento\u201d.",
+    "member": "Miembro",
+    "role-member": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
+  },
+  "search": {
+    "all-filters": "Todos los filtros",
+    "banner-portal": "Tambi\u00e9n puede buscar proyectos de todas las comunidades en",
+    "browse-map": "Examine por mapa",
+    "by-language": "por idioma",
+    "by-people": "por personas",
+    "by-tag": "por etiqueta",
+    "by-sdg": "SDG",
+    "filter-by-language": "Agregar un idioma",
+    "filter-by-people": "Agregar a una persona",
+    "filter-by-tag": "A\u00f1adir una etiqueta",
+    "filter-by-sdg": "Agregar un SDD",
+    "filter-by-category": "Agregar una categor\u00eda",
+    "language": "idioma",
+    "people": "gente",
+    "tag": "etiqueta",
+    "or": "o",
+    "ambiguousTag": "Tag Ambiguous",
+    "subtitle-ambiguous-tag": "Esta etiqueta tiene significados diferentes. Seleccione el que le interesa:",
+    "sdg": "ODS",
+    "skills": "Habilidades",
+    "category": "categor\u00eda",
+    "choose": "elegir entre las etiquetas principales o buscar etiquetas",
+    "filter": "filtro",
+    "filters": "Filtros",
+    "add-filter": "A\u00f1adir un filtro",
+    "geographic-map": "Mapa geogr\u00e1fico",
+    "nothing-found": "nada encontr\u00f3",
+    "people-directory": "b\u00fasqueda en el directorio de personas",
+    "projects": "b\u00fasqueda en proyectos",
+    "projects-tab": "Proyectos ({count})",
+    "projects-tab-label": "Proyectos",
+    "group-tab": "Grupos ({count})",
+    "people-tab": "Personas ({count})",
+    "search-tab": "Todos ({count})",
+    "peoples": "Personas",
+    "groups": "Grupos",
+    "all": "Todos",
+    "projects-section": "Proyectos",
+    "all-section": "Todas las entidades",
+    "groups-section": "Grupos",
+    "people-section": "Personas",
+    "result": "resultados de b\u00fasqueda",
+    "search-title": "B\u00fasqueda",
+    "search": "Grupo de b\u00fasqueda",
+    "search-for-a-tag": "Buscar una etiqueta",
+    "search-all": "B\u00fasqueda en todas las comunidades",
+    "search-group": "Primeras cartas del grupo de tipos",
+    "search-tag": "Tipo de las primeras letras",
+    "search-skill": "Etiquetas de la habilidad de escribir",
+    "search-user": "Nombre de la persona tipo letras",
+    "search-in": "Buscar proyectos en",
+    "specific-tags": "elegir de {organizationName} etiquetas",
+    "wiki-tags": "elegir etiquetas tem\u00e1ticas",
+    "term-is-ambigous": "El mandato es ambiguo.{0} Vea nuestras sugerencias",
+    "info": "Tambi\u00e9n puede buscar proyectos de cada comunidad en",
+    "geo-map": "Mapa geogr\u00e1fico",
+    "tag-map": "Tag map",
+    "geo-map-description": "Descubre proyectos en un mapa mundial",
+    "tag-map-description": "Descubre projetcs en un mapa de la etiqueta Wikip\u00e9dia",
+    "open-map": "Abrir el mapa",
+    "pick-tag-classification": "Elija un marco de etiqueta",
+    "pick-skill-classification": "Elija un marco de habilidad",
+    "pick-tag-preset": "O elegir una etiqueta sugerida",
+    "pick-skill-preset": "O elegir una habilidad sugerida",
+    "current-tag-description": "Escriba las primeras letras de la etiqueta y seleccione la etiqueta correcta",
+    "current-skill-description": "Escriba la etiqueta de habilidad y seleccione la habilidad correcta",
+    "disambiguate": "(DISAMBIGUATION)",
+    "suggestions": "Propuestas",
+    "choose-skill": "Haga clic en la habilidad elegida:"
+  },
+  "sdg": {
+    "1": {
+      "title": "No hay pobreza"
+    },
+    "2": {
+      "title": "Hambre cero"
+    },
+    "3": {
+      "title": "Buena salud y bienestar"
+    },
+    "4": {
+      "title": "Educaci\u00f3n de calidad"
+    },
+    "5": {
+      "title": "Igualdad de g\u00e9nero"
+    },
+    "6": {
+      "title": "Agua limpia y saneamiento"
+    },
+    "7": {
+      "title": "Energ\u00eda asequible y limpia"
+    },
+    "8": {
+      "title": "Trabajo decente y crecimiento econ\u00f3mico"
+    },
+    "9": {
+      "title": "Industria, Innovaci\u00f3n e Infraestructura"
+    },
+    "10": {
+      "title": "Reducir las desigualdades"
+    },
+    "11": {
+      "title": "Ciudades y Comunidades Sostenibles"
+    },
+    "12": {
+      "title": "Consumo y Producci\u00f3n Responsables"
+    },
+    "13": {
+      "title": "Climate Action"
+    },
+    "14": {
+      "title": "Vida debajo del agua"
+    },
+    "15": {
+      "title": "Life on Land"
+    },
+    "16": {
+      "title": "Peace, Justice and Strong Institutions"
+    },
+    "17": {
+      "title": "Asociaciones para los Objetivos"
+    },
+    "add-short": "a\u00f1adir un ODS",
+    "sdg-fulltext": "Objetivos de desarrollo sostenible"
+  },
+  "stats": {
+    "cumulated-projects": "Proyectos nuevos acumulativos",
+    "new-projects": "Nuevos proyectos",
+    "number-projects-org": "Proyectos por organizaci\u00f3n",
+    "number-projects-sdg": "Proyectos por ODS",
+    "number-projects-total": "Total de proyectos",
+    "number-tags": "Etiquetas m\u00e1s utilizadas en proyectos",
+    "page-title": "Estad\u00edsticas",
+    "projects": "Proyectos",
+    "time-evolution": "Proyectos de evoluci\u00f3n temporal",
+    "updated-projects": "Actualizaciones mensuales del proyecto",
+    "created": "Creado",
+    "updated": "Actualizado"
+  },
+  "status": {
+    "complete": "terminado",
+    "completed": "terminado",
+    "cancel": "cancelaci\u00f3n",
+    "canceled": "cancelada",
+    "ended": "terminado",
+    "ongoing": "en curso",
+    "private": "privado",
+    "public": "p\u00fablico",
+    "running": "corriendo",
+    "title": "\u00bfCu\u00e1l es el estado de vida del proyecto?",
+    "toreview": "examen",
+    "updated": "estado actualizado del proyecto",
+    "na": "ninguno"
+  },
+  "tag": {
+    "add-specific": "Crear etiquetas para organizar proyectos",
+    "add-specific-info": "Estas etiquetas permiten organizar proyectos adem\u00e1s de categor\u00edas (ejemplos: \u201cMaster 2 LiSc\u201d, \u201cMAT001\u201d, \u201ca\u00f1o escolar 2022-2023\u201d, etc.). Son espec\u00edficos para su organizaci\u00f3n. Son \u00fatiles para filtrar sus proyectos en la b\u00fasqueda.",
+    "add-project-tag": "Poner etiquetas en adelante para vincular proyectos por tema",
+    "add-profile-tag": "Avanzar habilidades para sus perfiles de usuarios",
+    "add-project-tag-info": "Cuando un usuario crea un proyecto, puede agregar una etiqueta tem\u00e1tica de Wikipedia (por ejemplo, bioqu\u00edmica, f\u00edsica, etc.). Esto hace m\u00e1s f\u00e1cil encontrar el proyecto y mejorar las recomendaciones de proyectos por similitud tem\u00e1tica. Puede destacar importantes etiquetas tem\u00e1ticas para su organizaci\u00f3n.",
+    "edit": "Etiquetas de edici\u00f3n",
+    "title": "Etiquetas"
+  },
+  "team": {
+    "add": "a\u00f1adir miembros / grupos",
+    "edit": "miembro del equipo de edici\u00f3n",
+    "group-members": "miembros del grupo",
+    "project-members": "miembros del proyecto",
+    "no-user-message": "Ning\u00fan usuario corresponde a su b\u00fasqueda",
+    "remove-user-confirm": "\u00bfEst\u00e1s seguro de querer borrar este usuario del proyecto?",
+    "remove-group-confirm": "\u00bfEst\u00e1s seguro de que quieres eliminar este grupo del proyecto?",
+    "team": "Equipo"
+  },
+  "template": {
+    "edit-tags": "Editar etiquetas",
+    "blog-content": "Plantilla para el contenido del blog",
+    "blog-title": "Plantilla para el t\u00edtulo del blog",
+    "advancement-goal-title": "Plantilla para el t\u00edtulo del objetivo de promoci\u00f3n",
+    "advancement-goal-content": "plantilla para el contenido de metas de avance",
+    "category": "Plantilla Categor\u00eda",
+    "description": "Plantilla para Descripci\u00f3n",
+    "language": "Plantilla de idiomas",
+    "info": "Si desea sugerir a los usuarios c\u00f3mo organizar su proyecto en una categor\u00eda espec\u00edfica, puede crear una plantilla para esa categor\u00eda. Luego, cuando un usuario crear\u00e1 un proyecto en esa categor\u00eda, el proyecto ser\u00e1 inicializado con el texto que usted defini\u00f3 en la plantilla. Este texto se entiende como gu\u00eda para los usuarios.",
+    "no-tag-set": "No se ha fijado ninguna etiqueta por ahora.",
+    "placeholder-purpose": "Objetivo del proyecto",
+    "placeholder-title": "T\u00edtulo Titular",
+    "tags": "Etiquetas de plantilla",
+    "title": "Plantillas",
+    "tips-category": "Seleccione una categor\u00eda a la que se aplicar\u00e1 su plantilla."
+  },
+  "tips": {
+    "background-color": "Este color se mostrar\u00e1 detr\u00e1s del texto.",
+    "category-delete": "S\u00f3lo puede eliminar una categor\u00eda si la categor\u00eda no contiene ning\u00fan proyecto. Por favor, transfiera todos los proyectos de la categor\u00eda a otras categor\u00edas.",
+    "category-image": "Imagen utilizada para ilustrar una categor\u00eda. No es necesario si prefiere simplemente mostrar un color. Ancho m\u00ednimo: 1024px, Altura m\u00ednima: 400px",
+    "limit-publication-to-reviewers": "\u00bfQuieres limitar la publicaci\u00f3n de proyectos a los revisores?",
+    "organization-name": "Este nombre se utilizar\u00e1 para identificar a su comunidad en p\u00e1ginas espec\u00edficas de la comunidad (por ejemplo: p\u00e1gina de estad\u00edsticas).",
+    "organization-title": "El t\u00edtulo de su portal aparecer\u00e1 en el banner de su p\u00e1gina de bienvenida. Vista previa.",
+    "organization-email": "E-mail de contacto de su portal.",
+    "organization-language": "El idioma por defecto de su portal.",
+    "organization-visibility": "\u00bfQuieres un enlace a tu portal desde el portal principal de Proyectos?",
+    "organization-logo": "Su logotipo aparecer\u00e1 en el portal padre en un fondo blanco. Si el logotipo que usted subi\u00f3 anteriormente no es compatible con un fondo blanco, por favor elija un color de fondo abajo."
+  },
+  "toasts": {
+    "abuse-report": {
+      "success": "El contenido ha sido reportado con \u00e9xito",
+      "error": "Error durante el informe de contenido"
+    },
+    "announcement-create": {
+      "success": "El anuncio ha sido creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n del anuncio"
+    },
+    "announcement-delete": {
+      "success": "El anuncio se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del anuncio"
+    },
+    "announcement-update": {
+      "success": "El anuncio ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del anuncio"
+    },
+    "bug-report": {
+      "success": "El fallo ha sido reportado con \u00e9xito",
+      "error": "Error durante el informe del fallo"
+    },
+    "category-template-update": {
+      "success": "La plantilla de categor\u00eda se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de plantilla de la categor\u00eda"
+    },
+    "category-update": {
+      "success": "La categor\u00eda se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de la categor\u00eda"
+    },
+    "categories-reorder": {
+      "success": "El orden de categor\u00edas se ha actualizado con \u00e9xito",
+      "error": "Error durante las categor\u00edas orden actualizaci\u00f3n"
+    },
+    "comment-create": {
+      "success": "El comentario se ha a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de comentarios"
+    },
+    "comment-delete": {
+      "success": "El comentario se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de comentarios"
+    },
+    "comment-update": {
+      "success": "El comentario ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de comentarios"
+    },
+    "contact": {
+      "success": "Su solicitud de contacto se ha tenido en cuenta",
+      "error": "Error al presentar el formulario"
+    },
+    "description-update": {
+      "success": "La descripci\u00f3n ha sido actualizada con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de la descripci\u00f3n"
+    },
+    "faq-create": {
+      "success": "La ayuda personalizada ha sido creada con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de ayuda personalizada"
+    },
+    "faq-delete": {
+      "success": "La ayuda personalizada se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de la ayuda personalizada"
+    },
+    "faq-update": {
+      "success": "La ayuda personalizada ha sido actualizada con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de ayuda personalizada"
+    },
+    "file-create": {
+      "success": "El archivo ha sido a\u00f1adido correctamente",
+      "error": "Error durante la creaci\u00f3n del archivo"
+    },
+    "file-delete": {
+      "success": "El archivo ha sido borrado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del archivo"
+    },
+    "file-update": {
+      "success": "El archivo ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del archivo"
+    },
+    "goal-create": {
+      "success": "El objetivo ha sido creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de la meta"
+    },
+    "goal-delete": {
+      "success": "El objetivo se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del objetivo"
+    },
+    "goal-update": {
+      "success": "El objetivo ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del objetivo"
+    },
+    "blog-delete": {
+      "success": "La entrada del blog se ha borrado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de entrada del blog"
+    },
+    "blog-create": {
+      "success": "La entrada del blog se ha creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de entrada del blog"
+    },
+    "blog-update": {
+      "success": "La entrada del blog se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de entrada del blog"
+    },
+    "group-added": {
+      "success": "El grupo ha sido a\u00f1adido con \u00e9xito",
+      "error": "Error durante la adici\u00f3n del grupo"
+    },
+    "link-already-exists": "Este enlace ya existe",
+    "link-create": {
+      "success": "El enlace se ha a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n del enlace"
+    },
+    "link-delete": {
+      "success": "El enlace se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del enlace"
+    },
+    "link-update": {
+      "success": "El enlace ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del enlace"
+    },
+    "linked-project-create": {
+      "success": "Los proyectos vinculados se han a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de proyectos vinculados"
+    },
+    "linked-project-delete": {
+      "success": "El proyecto vinculado se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del proyecto vinculado"
+    },
+    "linked-project-update": {
+      "success": "El proyecto vinculado se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del proyecto vinculado"
+    },
+    "location-create": {
+      "success": "La ubicaci\u00f3n se ha a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de ubicaci\u00f3n"
+    },
+    "location-delete": {
+      "success": "La ubicaci\u00f3n se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de la ubicaci\u00f3n"
+    },
+    "location-update": {
+      "success": "La ubicaci\u00f3n ha sido actualizada con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de ubicaci\u00f3n"
+    },
+    "organization-general-update": {
+      "success": "Las informaciones generales del portal se han actualizado con \u00e9xito",
+      "error": "Error durante el portal actualizaci\u00f3n de informaci\u00f3n general"
+    },
+    "organization-tag-create": {
+      "success": "La etiqueta se ha a\u00f1adido a la organizaci\u00f3n con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de la etiqueta"
+    },
+    "organization-tag-delete": {
+      "success": "La etiqueta ha sido borrada de la organizaci\u00f3n con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de la etiqueta"
+    },
+    "group-create": {
+      "success": "El grupo ha sido creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n del grupo"
+    },
+    "group-edit": {
+      "success": "El grupo ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del grupo"
+    },
+    "project-categories-update": {
+      "success": "Las categor\u00edas de proyectos se han actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de las categor\u00edas del proyecto"
+    },
+    "project-create": {
+      "success": "El proyecto ha sido creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n del proyecto"
+    },
+    "project-destroy": {
+      "success": "El proyecto se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del proyecto"
+    },
+    "project-edit": {
+      "success": "El proyecto ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del proyecto"
+    },
+    "project-duplication": {
+      "success": "El proyecto se ha duplicado con \u00e9xito",
+      "error": "Error durante la duplicaci\u00f3n del proyecto"
+    },
+    "project-quit": {
+      "success": "Dejaste el proyecto con \u00e9xito",
+      "error": "Error durante la operaci\u00f3n"
+    },
+    "project-life-status-update": {
+      "success": "El estado de vida del proyecto se ha actualizado con \u00e9xito"
+    },
+    "project-message-create": {
+      "success": "El mensaje interno se ha a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n del mensaje interno"
+    },
+    "project-message-delete": {
+      "success": "El mensaje interno se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del mensaje interno"
+    },
+    "project-message-update": {
+      "success": "El mensaje interno ha sido actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n del mensaje interno"
+    },
+    "project-organizations-update": {
+      "success": "Las organizaciones del proyecto se han actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de las organizaciones del proyecto"
+    },
+    "project-visibility-update": {
+      "success": "La visibilidad del proyecto se ha actualizado con \u00e9xito"
+    },
+    "review-create": {
+      "success": "El examen se ha a\u00f1adido con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de la revisi\u00f3n"
+    },
+    "review-delete": {
+      "success": "El examen se ha eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n de la revisi\u00f3n"
+    },
+    "review-update": {
+      "success": "El examen se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de la revisi\u00f3n"
+    },
+    "sdgs-update": {
+      "success": "Los ODS se han actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de los ODS"
+    },
+    "team-member-create": {
+      "success": "El usuario ha sido a\u00f1adido con \u00e9xito",
+      "error": "Error durante la adici\u00f3n del usuario"
+    },
+    "team-member-delete": {
+      "success": "El usuario ha sido eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del usuario"
+    },
+    "team-group-delete": {
+      "success": "El grupo ha sido eliminado con \u00e9xito",
+      "error": "Error durante la eliminaci\u00f3n del grupo"
+    }
+  },
+  "success": {
+    "created": "Con \u00e9xito creado.",
+    "updated": "Actualizado exitosamente.",
+    "deleted": "Sucesivamente eliminado."
+  },
+  "portal": {
+    "sub-title": "Descubre portales que pertenecen a otras organizaciones. \u00a1Examinar, inspirarse y ponerse en contacto!"
+  },
+  "welcome-modal": {
+    "title": "Bienvenido al portal Proyectos de {0}",
+    "success": "\u25aa \u00a1Tu cuenta ha sido creada con \u00e9xito!",
+    "instruction": "Antes de empezar a disfrutar de la plataforma, necesita completar su perfil.",
+    "guidance": "Esto solo tomar\u00e1 un par de minutos y te guiaremos por el camino.",
+    "complete-later": "Lo har\u00e9 m\u00e1s tarde.",
+    "complete-now": "\u00a1Vamos!"
+  },
+  "notifications": {
+    "header": "Notificaciones",
+    "title": "Ajustes de notificaci\u00f3n",
+    "tabs": {
+      "email": "Notificaciones por correo electr\u00f3nico",
+      "options": {
+        "yes": "S\u00ed.",
+        "no": "No"
+      }
+    },
+    "project": {
+      "title": "Notificaci\u00f3n del proyecto",
+      "changes": "Modificaciones",
+      "reviews": "Rese\u00f1a notificaciones",
+      "members": "Notificaciones de los miembros",
+      "applications": "Notificaciones de solicitud",
+      "blogEntries": "Notificaciones de entradas de blog"
+    },
+    "projects": {
+      "title": "Notificaciones que recibe por correo electr\u00f3nico:",
+      "follow": "Proyectos que sigues",
+      "follow-sub": "Ser notificado cuando los proyectos que usted ha seguido son modificados",
+      "member": "A\u00f1adido como miembro del equipo",
+      "member-sub": "Ser notificado cuando alguien le agrega como miembro del equipo en un proyecto",
+      "comment": "Comentarios",
+      "comment-sub": "Ser notificado cuando alguien comenta su proyecto",
+      "internal-message": "Mensajes internos",
+      "internal-message-sub": "Ser notificado cuando alguien agrega un mensaje interno a su proyecto",
+      "project": "Sus proyectos",
+      "project-sub": "Se notificar\u00e1 cuando otros miembros del equipo modifiquen sus proyectos",
+      "announcement": "Anuncios",
+      "announcement-sub": "Se notificar\u00e1 cuando se publiquen nuevos anuncios en el sitio web",
+      "review": "Listo para revisi\u00f3n",
+      "review-sub": "Cuando usted es un revisor de un proyecto, ser notificado cuando un proyecto est\u00e1 listo para ser revisado por usted",
+      "reviewed": "Has been reviewed",
+      "reviewed-sub": "Cuando su proyecto est\u00e9 listo para su revisi\u00f3n, sea notificado cuando el revisor de su proyecto haya presentado su revisi\u00f3n",
+      "reply": "Responder a su comentario",
+      "reply-sub": "Ser notificado cuando alguien responde a su comentario"
+    },
+    "follow": {
+      "title": "Notificaci\u00f3n de seguimiento",
+      "changes": "Modificaciones",
+      "reviews": "Rese\u00f1a notificaciones",
+      "blogEntries": "Notificaciones de entradas de blog"
+    },
+    "organization": {
+      "added": "Nuevo usuario a notificaci\u00f3n de organizaci\u00f3n",
+      "access": "Notificaci\u00f3n de solicitud de acceso",
+      "access-sub": "Ser notificado cuando un usuario solicita acceso a su organizaci\u00f3n",
+      "invitation": "Notificaci\u00f3n de invitaci\u00f3n",
+      "invitation-sub": "Ser notificado cuando un enlace de invitaci\u00f3n expirar\u00e1",
+      "instruction": "Notificaci\u00f3n de instrucciones",
+      "instruction-sub": "Ser notificado cuando se publica una nueva instrucci\u00f3n"
+    },
+    "read-all": "Leer todas las notificaciones",
+    "type": {
+      "comment": "{sender} commented {project}",
+      "project_message": "{sender} dej\u00f3 un mensaje interno {project}",
+      "reply": "{sender} respondi\u00f3 a su comentario en {project}",
+      "review": "{sender} proyecto revisado {project}",
+      "ready_for_review": "{sender} marc\u00f3 su proyecto como listo para su revisi\u00f3n. Ahora puede revisar el proyecto {project}",
+      "project_updated": "{sender} actualizado el proyecto {project}",
+      "group_member_added": "{sender} a\u00f1adi\u00f3 el grupo {group} como miembro del proyecto {project}",
+      "group_member_added_self": "{sender} a\u00f1adido el grupo {group} que es parte del proyecto {project}",
+      "group_member_removed_other": "{sender} retirar un grupo de miembros del proyecto {project}",
+      "group_member_removed": "{sender} retirar un grupo de miembros del proyecto {project}",
+      "member_added_self": "{sender} le agreg\u00f3 al proyecto {project}",
+      "member_updated_self": "Su papel en el proyecto {project} ha sido actualizado por {sender}",
+      "member_added": "{sender} a\u00f1adido un miembro al proyecto {project}",
+      "member_updated": "{sender} actualiz\u00f3 el papel de {user} en el proyecto {project}",
+      "member_removed": "{sender} eliminado {user} del equipo del proyecto {project}",
+      "new_instruction": "Se public\u00f3 una nueva instrucci\u00f3n",
+      "announcement": "{sender} public\u00f3 un nuevo anuncio en el proyecto {project}",
+      "application": "{applicant} aplicado a su anuncio {announcement} en el proyecto {project}",
+      "blog_entry": "{sender} public\u00f3 un nuevo blog en el proyecto {project}",
+      "invitation_reminder": "Una invitaci\u00f3n que cre\u00f3 expirar\u00e1 pronto",
+      "invitation_today_reminder": "Un {link} que cre\u00f3 para el grupo {today_group} expirar\u00e1 hoy",
+      "invitation_week_reminder": "Un {link} que cre\u00f3 para el grupo {week_group} expirar\u00e1 en una semana",
+      "register-link": "v\u00ednculo",
+      "access_request": "Responder a {access_request_nb} solicitudes de acceso pendientes!",
+      "pending_access_requests": "Responder a {requests_count} solicitudes de acceso pendientes!"
+    },
+    "empty": "Usted no tiene notificaciones"
+  },
+  "recommendations": {
+    "empty": "No tiene recomendaciones.",
+    "connect-to": "Quiz\u00e1s quieras conectarte con",
+    "title": "Recomendado para usted",
+    "is-featured": "( Destacados)",
+    "more-projects": "Descubre m\u00e1s proyectos",
+    "more-profiles": "Descubre m\u00e1s perfiles",
+    "projects": {
+      "title": "Proyectos recomendados"
+    },
+    "people": {
+      "title": "Personas recomendadas"
+    }
+  },
+  "event": {
+    "no-event": "Todav\u00eda no hay evento.",
+    "calendar": {
+      "title": "Calendario",
+      "future": "Futuro",
+      "past": "Pasado",
+      "month": {
+        "10": {
+          "short": "Oct",
+          "long": "Octubre"
+        },
+        "11": {
+          "short": "Nov",
+          "long": "Noviembre"
+        },
+        "12": {
+          "short": "Dec",
+          "long": "Diciembre"
+        },
+        "01": {
+          "short": "Jan",
+          "long": "Enero"
+        },
+        "02": {
+          "short": "Feb",
+          "long": "Febrero"
+        },
+        "03": {
+          "short": "Mar",
+          "long": "Marzo"
+        },
+        "04": {
+          "short": "Apr",
+          "long": "Abril"
+        },
+        "05": {
+          "short": "Mayo",
+          "long": "Mayo"
+        },
+        "06": {
+          "short": "Jun",
+          "long": "Junio"
+        },
+        "07": {
+          "short": "Jul",
+          "long": "Julio"
+        },
+        "08": {
+          "short": "Aug",
+          "long": "Agosto"
+        },
+        "09": {
+          "short": "Sep",
+          "long": "Septiembre"
+        }
+      }
+    },
+    "create": {
+      "title": "Agregar un evento de calendario",
+      "button": "A\u00f1adir"
+    },
+    "delete": {
+      "title": "Eliminar el evento?",
+      "message": "\u00bfQuieres eliminar este evento?",
+      "success": "Evento eliminado",
+      "error": "Error al intentar eliminar el evento"
+    },
+    "save": {
+      "success": "Evento salvado",
+      "error": "Error al intentar salvar el evento"
+    },
+    "drawer": {
+      "create": "Agregar un evento de calendario",
+      "edit": "Editar un evento de calendario"
+    },
+    "form": {
+      "title": {
+        "label": "Nombre del evento *",
+        "placeholder": "Ex. 1er sem. examen",
+        "required": "El nombre es requerido"
+      },
+      "content": {
+        "label": "informaci\u00f3n",
+        "placeholder": "A\u00f1ada informaci\u00f3n sobre este evento"
+      },
+      "event_date": {
+        "label": "Fecha del evento *",
+        "placeholder": "Fecha de selecci\u00f3n",
+        "required": "Se requiere la fecha"
+      },
+      "people_groups": {
+        "label": "Grupos destinatarios",
+        "notice": "Seleccione el grupo(s) que ver\u00e1 este evento",
+        "select-all": "Seleccione todo",
+        "filter": "Grupos de filtro",
+        "all": "Todos los grupos",
+        "public": "P\u00fablico"
+      }
+    },
+    "group-label": "Grupo:",
+    "groups-label": "Grupos:"
+  },
+  "news": {
+    "create": {
+      "title": "Crear una noticia"
+    },
+    "delete": {
+      "title": "\u00bfSupir noticias?",
+      "message": "\u00bfQuieres borrar estas noticias?",
+      "success": "Noticias eliminadas",
+      "error": "Error al intentar eliminar las noticias"
+    },
+    "save": {
+      "success": "Noticias salvadas",
+      "error": "Error al intentar salvar las noticias"
+    },
+    "form": {
+      "image": {
+        "label": "Imagen"
+      },
+      "title": {
+        "label": "T\u00edtulo *",
+        "required": "Se requiere el t\u00edtulo",
+        "placeholder": "el t\u00edtulo de las noticias"
+      },
+      "content": {
+        "label": "\u00cdndice *",
+        "required": "El contenido es necesario"
+      },
+      "publication_date": {
+        "label": "Fecha de publicaci\u00f3n *",
+        "required": "Se requiere la fecha de publicaci\u00f3n"
+      },
+      "groups": {
+        "label": "Grupos destinatarios",
+        "notice": "Seleccione el grupo(s) que ver\u00e1 esta noticia",
+        "select-all": "Seleccione todo",
+        "filter": "Grupos de filtro"
+      }
+    },
+    "list": {
+      "title": "Noticias",
+      "create": "Crear",
+      "read-more": "Leer"
+    },
+    "page": {
+      "others": "Otras noticias"
+    },
+    "drawer": {
+      "title": "Edici\u00f3n de noticias"
+    }
+  },
+  "instructions": {
+    "create": {
+      "title": "A\u00f1adir una instrucci\u00f3n"
+    },
+    "delete": {
+      "title": "Eliminar la instrucci\u00f3n?",
+      "message": "\u00bfQuieres borrar esta instrucci\u00f3n?",
+      "success": "Instrucciones eliminadas",
+      "error": "Error al intentar eliminar la instrucci\u00f3n"
+    },
+    "save": {
+      "success": "Instrucci\u00f3n salvada",
+      "error": "Error al intentar guardar la instrucci\u00f3n"
+    },
+    "form": {
+      "title": {
+        "label": "T\u00edtulo *",
+        "required": "Se requiere el t\u00edtulo",
+        "placeholder": "el t\u00edtulo de la instrucci\u00f3n"
+      },
+      "content": {
+        "label": "\u00cdndice *",
+        "required": "El contenido es necesario"
+      },
+      "publication_date": {
+        "label": "Fecha de publicaci\u00f3n *",
+        "required": "Se requiere la fecha de publicaci\u00f3n"
+      },
+      "groups": {
+        "label": "Grupos destinatarios",
+        "notice": "Seleccione el grupo(s) que ver\u00e1 esta instrucci\u00f3n",
+        "select-all": "Seleccione todo",
+        "filter": "Grupos de filtro"
+      },
+      "notify": {
+        "label": "Notificaci\u00f3n",
+        "notice": "Si se selecciona, todos ser\u00e1n notificados de la nueva instrucci\u00f3n",
+        "button": "Enviar una notificaci\u00f3n"
+      }
+    },
+    "list": {
+      "title": "Instrucciones",
+      "create": "A\u00f1adir",
+      "read-more": "Leer"
+    },
+    "drawer": {
+      "title": "Edici\u00f3n de la instrucci\u00f3n"
+    }
+  },
+  "chat": {
+    "drawer": {
+      "title": "A\u00f1adir plataforma de chat",
+      "notice": "Puedes agregar un enlace a tu plataforma de chat. S\u00f3lo ser\u00e1 visible para tus usuarios conectados.",
+      "url": {
+        "label": "Enlace a su plataforma de chat",
+        "notice": "Pruebe aqu\u00ed el enlace a su plataforma",
+        "placeholder": "Paste URL (https://...)"
+      },
+      "wording": {
+        "label": "Enlace de redacci\u00f3n",
+        "notice": "Qu\u00e9 debe mostrar el bot\u00f3n (ex: Unirse a chat, Unirse a Whatsapp...) - 12 auto max.",
+        "placeholder": "ex: \u00danete a chat"
+      },
+      "success": "Ajustes de chat guardados",
+      "error": "Error al guardar la configuraci\u00f3n de chat"
+    },
+    "data": {
+      "link": "Enlace:",
+      "wording": "Button wording:",
+      "no-link": "(Nada listo)",
+      "no-wording": "(Nada listo)"
+    }
+  },
+  "featured-projects": {
+    "drawer": {
+      "title": "Agregar proyectos destacados",
+      "max-pick-reached": "Usted ha alcanzado el n\u00famero m\u00e1ximo de proyectos destacados"
+    },
+    "save": {
+      "success": "Proyectos destacados salvados",
+      "error": "Error al intentar salvar los proyectos destacados"
+    }
+  },
+  "message": {
+    "error-login": "Se produce un error durante el inicio de sesi\u00f3n. Por favor, int\u00e9ntalo de nuevo.",
+    "failed": "Error al enviar el mensaje. Por favor, int\u00e9ntalo de nuevo.",
+    "leave-confirmation": "Est\u00e1s a punto de salir de la p\u00e1gina con datos no guardados.",
+    "sent": "Mensaje enviado",
+    "redirect": "Redirigir en progreso",
+    "error": {
+      "unauthorized": "No autorizado: Se niega el acceso debido a credenciales inv\u00e1lidas.",
+      "unprocessable-entity": "Entidad no procesable: Incapaz de procesar las instrucciones contenidas.",
+      "bad-gateway": "Mala puerta de entrada: El servidor encontr\u00f3 un error temporal y no pudo completar su solicitud."
+    }
+  },
+  "people-groups": {
+    "browse-tree": "Examine el \u00e1rbol de grupo"
+  },
+  "geocoding": {
+    "error": "Error durante la geocodificaci\u00f3n de direcciones",
+    "no-results": "No se han encontrado resultados para esta direcci\u00f3n",
+    "choose-method": "Para agregar una ubicaci\u00f3n, elija un m\u00e9todo de entrada:",
+    "click-method": "Haga clic en el mapa",
+    "click-method-no-geocoding": "Agregar un lugar",
+    "click-method-notice": "Haga clic en el mapa para elegir la ubicaci\u00f3n",
+    "form-method": "Introduzca la direcci\u00f3n",
+    "form-method-notice": "Introduzca la direcci\u00f3n en el campo de abajo",
+    "address": "Direcci\u00f3n",
+    "delete-location": "Eliminar la ubicaci\u00f3n",
+    "confirm-delete-location": "\u00bfEst\u00e1s seguro de que quieres borrar esta ubicaci\u00f3n?",
+    "filter-by-type": "Filtro por tipo",
+    "form-placeholder": "Street, City, Pa\u00eds",
+    "pick-location": "Escoge una de la ubicaci\u00f3n sugerida haciendo clic en ella",
+    "found-number": "encontrados {number} lugares(s)",
+    "search": "B\u00fasqueda",
+    "feature-type": {
+      "house": "House",
+      "street": "Street",
+      "locality": "Localidad",
+      "district": "Distrito",
+      "city": "Ciudad",
+      "county": "Pa\u00eds",
+      "state": "Estado",
+      "country": "Pa\u00eds",
+      "other": "Otros"
+    }
+  },
+  "card-list": {
+    "list": "Lista",
+    "grid": "Cuadrícula"
+  }
+}
