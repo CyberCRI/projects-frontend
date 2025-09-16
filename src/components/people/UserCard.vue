@@ -18,7 +18,7 @@
       </div>
       <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
       <div class="card-description">
-        {{ user.job }}
+        {{ user?.$t?.job }}
       </div>
     </div>
   </BasicCard>

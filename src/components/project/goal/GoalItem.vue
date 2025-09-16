@@ -9,7 +9,7 @@
         <div class="right">
           <div class="main-content">
             <p class="goal-title">
-              {{ goal.title }}
+              {{ goal?.$t?.title }}
             </p>
 
             <p v-if="deadlineVisible" class="goal-deadline" :class="goal.status">
@@ -23,7 +23,7 @@
           </div>
 
           <div v-show="descriptionVisible" class="goal-description-wrapper">
-            <TipTapOutput class="goal-description-content" :content="goal.description" />
+            <TipTapOutput class="goal-description-content" :content="goal?.$t?.description" />
           </div>
         </div>
       </div>

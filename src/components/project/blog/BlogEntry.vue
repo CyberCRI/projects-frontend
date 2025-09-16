@@ -3,7 +3,7 @@
     <div class="blog-entry-header">
       <div class="header-main">
         <div class="entry-title">
-          {{ blogEntry.title }}
+          {{ blogEntry.$t.title }}
         </div>
 
         <div class="date">
@@ -23,7 +23,7 @@
       {{ $t('blog.last-publication') }}
     </div>
 
-    <TipTapOutput v-if="isExpanded" class="entry-body" :content="blogEntry.content" />
+    <TipTapOutput v-if="isExpanded" class="entry-body" :content="blogEntry.$t.content" />
 
     <div
       v-if="canEdit || canDelete"
