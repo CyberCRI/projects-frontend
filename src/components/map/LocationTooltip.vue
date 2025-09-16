@@ -22,11 +22,11 @@ export default {
 
   computed: {
     title() {
-      return this.cropIfTooLong(this.location.title, 45)
+      return this.cropIfTooLong(this.location?.$t?.title, 45)
     },
 
     description() {
-      return this.cropIfTooLong(this.location.description, 85)
+      return this.cropIfTooLong(this.location?.$t?.description, 85)
     },
   },
 

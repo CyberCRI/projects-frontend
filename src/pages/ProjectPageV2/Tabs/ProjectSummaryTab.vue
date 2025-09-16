@@ -15,9 +15,9 @@
         :project="project"
       />
       <DescriptionRecap
-        v-else-if="project && project.description"
+        v-else-if="project?.$t?.description"
         class="unboxed"
-        :description="project.description"
+        :description="project.$t.description"
       />
 
       <!-- team -->
@@ -151,7 +151,8 @@ export default {
   setup() {
     useScrollToTab()
     const { canEditProject } = usePermissions()
-    return { canEditProject }
+    const { translateUser, translateGroup } = useAutoTranslate()
+    return { canEditProject, translateUser, translateGroup }
   },
 
   data() {
@@ -175,15 +176,30 @@ export default {
 
     mergedTeam() {
       return [
-        ...(this.team.owners || []).map((o) => ({ ...o, role: 'owners' })),
-        ...(this.team.reviewers || []).map((o) => ({ ...o, role: 'reviewers' })),
-        ...(this.team.members || []).map((o) => ({ ...o, role: 'members' })),
-        ...(this.team.owner_groups || []).map((o) => ({ ...o, role: 'owner_groups' })),
+        ...(this.team.owners || []).map((o) => ({
+          ...unref(this.translateUser(o)),
+          role: 'owners',
+        })),
+        ...(this.team.reviewers || []).map((o) => ({
+          ...unref(this.translateUser(o)),
+          role: 'reviewers',
+        })),
+        ...(this.team.members || []).map((o) => ({
+          ...unref(this.translateUser(o)),
+          role: 'members',
+        })),
+        ...(this.team.owner_groups || []).map((o) => ({
+          ...unref(this.translateGroup(o)),
+          role: 'owner_groups',
+        })),
         ...(this.team.reviewer_groups || []).map((o) => ({
-          ...o,
+          ...unref(this.translateGroup(o)),
           role: 'reviewer_groups',
         })),
-        ...(this.team.member_groups || []).map((o) => ({ ...o, role: 'member_groups' })),
+        ...(this.team.member_groups || []).map((o) => ({
+          ...unref(this.translateGroup(o)),
+          role: 'member_groups',
+        })),
       ]
     },
 

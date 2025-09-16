@@ -209,6 +209,7 @@ export default {
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
     const { locale, setLocale } = useI18n()
+    const { isAutoTranslateActivated } = useAutoTranslate()
     return {
       projectCategoriesStore,
       organizationsStore,
@@ -218,6 +219,7 @@ export default {
       isSuperAdmin,
       isOrgAdmin,
       locale,
+      isAutoTranslateActivated,
       setLocale,
     }
   },
@@ -241,12 +243,21 @@ export default {
     },
 
     langMenu() {
-      return this.organizationsStore.languages
+      const menu = this.organizationsStore.languages
         .map((lang) => ({
           label: lang.toUpperCase(),
           action: () => this.updateLanguage(lang),
         }))
         .filter((lang) => lang.label !== this.locale.toUpperCase())
+      menu.push({
+        label: this.isAutoTranslateActivated ? 'Auto translate on' : 'Auto translate off',
+        action: () => {
+          this.isAutoTranslateActivated = !this.isAutoTranslateActivated
+        },
+        leftIcon: this.isAutoTranslateActivated ? 'SquareRounded' : 'SquareRoundedOutline',
+      })
+
+      return menu
     },
 
     organization() {
