@@ -228,17 +228,15 @@ export default {
     mobileScreen() {
       return this.screenWidth <= 768
     },
+
     capitalizedTitle() {
-      if (this.project && this.project.title) {
-        return this.project.title[0].toUpperCase() + this.project.title.slice(1)
-      }
-      return null
+      const title = this.project?.$t?.title
+      return this.capitalize(title)
     },
+
     capitalizedPurpose() {
-      if (this.project && this.project.purpose) {
-        return this.project.purpose[0].toUpperCase() + this.project.purpose.slice(1)
-      }
-      return null
+      const purpose = this.project?.$t?.purpose
+      return this.capitalize(purpose)
     },
   },
   watch: {
@@ -310,6 +308,10 @@ export default {
         org: 'PeopleGroup',
       }
       return map[this.project.publication_status] || ''
+    },
+
+    capitalize(s) {
+      return s && s.length > 1 ? s[0].toUpperCase() + s.slice(1) : s
     },
   },
 }

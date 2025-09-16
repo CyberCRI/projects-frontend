@@ -13,10 +13,10 @@
     </div>
 
     <div class="title">
-      {{ announcement.title }}
+      {{ announcement?.$t?.title }}
     </div>
 
-    <div class="description" v-html="announcement.description" />
+    <div class="description" v-html="announcement?.$t?.description" />
 
     <div v-if="canEditAndDelete" class="action-buttons">
       <ContextActionButton

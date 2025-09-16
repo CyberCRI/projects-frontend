@@ -14,7 +14,7 @@
         <span class="date">{{ $d(new Date(lastPublication.updated_at)) }}</span>
       </div>
       <h3 class="publication-title">
-        <span v-if="isBlog">{{ lastPublication.title }}</span>
+        <span v-if="isBlog">{{ lastPublication?.$t?.title }}</span>
         <span v-else class="author">
           <span>{{ lastPublication.author.given_name }}</span>
           &nbsp;
@@ -22,7 +22,7 @@
         </span>
       </h3>
 
-      <TipTapOutput class="publication-content" :content="lastPublication.content" />
+      <TipTapOutput class="publication-content" :content="lastPublication?.$t?.content" />
     </div>
   </div>
 </template>
