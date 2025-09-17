@@ -1026,7 +1026,9 @@
     "label-ca": "Katalanisch",
     "label-nl": "Niederländisch",
     "label-es": "Spanisch",
-    "label-et": "Estnisch"
+    "label-et": "Estnisch",
+    "auto-translate-on": "Automatische Übersetzung ein",
+    "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
     "loading": "Ladestellen"

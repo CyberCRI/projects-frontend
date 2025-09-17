@@ -108,6 +108,7 @@ export default {
         'Tune',
         'Upload',
         'Users',
+        'CheckBoxChecked',
         'CheckBoxOutline',
         'CheckBoxBlankOutline',
         'CropFree',
