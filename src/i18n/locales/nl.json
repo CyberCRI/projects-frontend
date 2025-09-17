@@ -1027,7 +1027,9 @@
     "label-ca": "Catalaans",
     "label-nl": "Nederlands",
     "label-es": "Spaans",
-    "label-et": "Ests"
+    "label-et": "Ests",
+    "auto-translate-on": "Automatisch vertalen aan",
+    "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
     "loading": "Locatie laden"
