@@ -245,16 +245,18 @@ export default {
     langMenu() {
       const menu = this.organizationsStore.languages
         .map((lang) => ({
-          label: lang.toUpperCase(),
+          label: `${lang.toUpperCase()} - ${this.$t('language.label-' + lang)}`,
           action: () => this.updateLanguage(lang),
         }))
         .filter((lang) => lang.label !== this.locale.toUpperCase())
       menu.push({
-        label: this.isAutoTranslateActivated ? 'Auto translate on' : 'Auto translate off',
+        label: this.isAutoTranslateActivated
+          ? this.$t('language.auto-translate-on')
+          : this.$t('language.auto-translate-on'),
         action: () => {
           this.isAutoTranslateActivated = !this.isAutoTranslateActivated
         },
-        leftIcon: this.isAutoTranslateActivated ? 'SquareRounded' : 'SquareRoundedOutline',
+        leftIcon: this.isAutoTranslateActivated ? 'CheckBoxChecked' : 'SquareRoundedOutline',
       })
 
       return menu
