@@ -1,4 +1,3 @@
-version: '3'
 services:
   projects-front:
     platform: linux/amd64
@@ -6,5 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     env_file: ./.env
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NUXT_PUBLIC_APP_API_URL:${NUXT_PUBLIC_APP_API_URL}
+      - NUXT_PUBLIC_APP_KEYCLOAK_URL:${NUXT_PUBLIC_APP_KEYCLOAK_URL}
     ports:
       - 8080:8080
