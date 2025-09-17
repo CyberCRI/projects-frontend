@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user.job) }}
+            {{ $filters.capitalize(user?.$t?.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -40,7 +40,7 @@
               >
                 <BadgeItem
                   v-if="group && group.name"
-                  :label="group.name"
+                  :label="group.$t.name"
                   class="group"
                   size="small"
                 />
