@@ -21,7 +21,7 @@
 
     <div class="location-lists">
       <div v-if="teamLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">Team</h3>
+        <h3 class="list-title">{{ $t('team.team') }}</h3>
         <ul class="location-list">
           <li v-for="location in teamLocations" :key="location.id" class="location">
             <LocationListItem
@@ -35,7 +35,7 @@
         </ul>
       </div>
       <div v-if="impactLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">Impact</h3>
+        <h3 class="list-title">{{ $t('project.impact') }}</h3>
         <ul class="location-list">
           <li v-for="location in impactLocations" :key="location.id" class="location">
             <LocationListItem
