@@ -14,7 +14,7 @@
       <h3 class="subtitle">{{ $t('profile.edit.bio.short-bio.label') }}</h3>
 
       <div class="user-descriptions description-content">
-        <p class="short-description" v-html="user.short_description" />
+        <p class="short-description" v-html="user?.$t?.short_description" />
       </div>
     </div>
 
