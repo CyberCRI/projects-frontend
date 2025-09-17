@@ -581,6 +581,7 @@ export default function useProjectData() {
           project: project.value,
           locations: locations.value,
           isInEditingMode: true,
+          onReloadLocations: () => getProjectLocations(),
         },
         condition: locations.value.length || isRoute('projectLocationsEdit'),
         dataTest: 'project-locations',

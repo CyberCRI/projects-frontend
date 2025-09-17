@@ -2,7 +2,12 @@
   <div class="map-recap">
     <div class="map-inner-ctn">
       <div class="map">
-        <BaseMap ref="summary-map" :config="config" :use-cluster="true">
+        <BaseMap
+          ref="summary-map"
+          :config="config"
+          :use-cluster="true"
+          @map-moved="$emit('map-moved')"
+        >
           <template #default="slotProps">
             <template v-if="slotProps.map">
               <MapPointer
@@ -36,13 +41,18 @@ export default {
     MapPointer,
     BaseMap,
   },
-
   props: {
     locations: {
       type: Array,
       default: () => [],
     },
+    focusedLocation: {
+      type: [Object, null],
+      default: null,
+    },
   },
+
+  emits: ['map-moved'],
 
   setup() {
     const { canEditProject } = usePermissions()
@@ -76,6 +86,11 @@ export default {
         if (this.$refs['summary-map']) this.$refs['summary-map'].centerMap()
       },
       deep: true,
+    },
+    focusedLocation(neo, old) {
+      if (this.$refs['summary-map'] && neo && (!old || neo.lat != old.lat || neo.lng != old.lng)) {
+        this.$refs['summary-map'].flyTo(neo)
+      }
     },
   },
 }
