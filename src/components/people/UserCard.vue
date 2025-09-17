@@ -18,7 +18,7 @@
       </div>
       <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
       <div class="card-description">
-        {{ user?.$t?.job }}
+        {{ translatedJob }}
       </div>
     </div>
   </BasicCard>
@@ -53,6 +53,14 @@ export default {
   },
 
   emits: ['click'],
+
+  setup(props) {
+    const { getTranslatableField } = useAutoTranslate()
+    const translatedJob = getTranslatableField(props.user, 'job')
+    return {
+      translatedJob,
+    }
+  },
 
   data() {
     return {

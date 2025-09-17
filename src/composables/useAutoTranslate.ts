@@ -93,9 +93,27 @@ export default function useAutoTranslate() {
       }
     })
 
+  const translateTag = (tag) => translateEntity(tag, ['description', 'title'])
+  const translateTags = (tags) => translateEntities(tags, translateTag)
+
+  // -----------------
+  // groups
   const translateGroup = (group) =>
     translateEntity(group, ['name', 'description', 'short_description'])
   const translateGroups = (groups) => translateEntities(groups, translateGroup)
+
+  // -------
+  // full
+
+  const translateUserFull = (user) =>
+    computed(() => {
+      const res = unref(translateUser(user))
+      if (res) {
+        res.people_groups = unref(translateGroups(res.people_groups))
+        res.skills = unref(translateTags(res.skills))
+      }
+      return res
+    })
 
   return {
     isAutoTranslateActivated,
@@ -128,6 +146,9 @@ export default function useAutoTranslate() {
     translateUser,
     translateUsers,
     translateTeam,
+    translateUserFull,
+    translateTag,
+    translateTags,
 
     // groups
     translateGroup,

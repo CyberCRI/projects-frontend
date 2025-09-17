@@ -110,7 +110,10 @@ export default {
         route: { name: 'People' },
       },
     ])
-
+    const _user = ref(null)
+    const { translateUserFull } = useAutoTranslate()
+    const user = translateUserFull(_user)
+    const isLoading = ref(true)
     return {
       usersStore,
       canEditUser,
@@ -118,34 +121,34 @@ export default {
       toggleNavPanel,
       onNavigated,
       breadCrumbs,
+      _user,
+      user,
+      isLoading,
     }
   },
 
-  data() {
-    return {
-      user: null,
-
-      // TODO: add back once we can edit user
-      // projectUser: null,
-      // isEditMode: false,
-      // canEdit: false,
-      // payload: {
-      //     editorShortDescription: {
-      //         savedContent: '',
-      //         originalContent: '',
-      //     },
-      //     editorProfessionalDescription: {
-      //         savedContent: '',
-      //         originalContent: '',
-      //     },
-      //     editorPersonalDescription: {
-      //         savedContent: '',
-      //         originalContent: '',
-      //     },
-      // },
-      isLoading: true,
-    }
-  },
+  // data() {
+  //   return {
+  // TODO: add back once we can edit user
+  // projectUser: null,
+  // isEditMode: false,
+  // canEdit: false,
+  // payload: {
+  //     editorShortDescription: {
+  //         savedContent: '',
+  //         originalContent: '',
+  //     },
+  //     editorProfessionalDescription: {
+  //         savedContent: '',
+  //         originalContent: '',
+  //     },
+  //     editorPersonalDescription: {
+  //         savedContent: '',
+  //         originalContent: '',
+  //     },
+  // },
+  //   }
+  // },
 
   computed: {
     // connectedUser() {
@@ -496,10 +499,10 @@ export default {
     async loadUser() {
       if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
-        this.user = await this.usersStore.getUser(this.usersStore.id, true)
+        this._user = await this.usersStore.getUser(this.usersStore.id, true)
       } else {
         // get another user
-        this.user = await getUser(this.userId, true)
+        this._user = await getUser(this.userId, true)
       }
     },
   },
