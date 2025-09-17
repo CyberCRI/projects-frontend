@@ -28,7 +28,7 @@ export default {
     },
   },
 
-  emits: ['contextmenu', 'click'],
+  emits: ['contextmenu', 'click', 'map-moved'],
 
   data() {
     return {
@@ -76,6 +76,10 @@ export default {
       attribution:
         '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     }).addTo(map)
+
+    map.on('move', () => {
+      this.$emit('map-moved')
+    })
 
     this.$nextTick(this.centerMap)
     this.map = map

@@ -10,7 +10,13 @@
     </div>
 
     <div class="main-ctn">
-      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
+      <LazyMapRecap
+        v-if="locations.length"
+        class="unboxed"
+        :locations="locations"
+        :focused-location="focusedLocation"
+        @map-moved="focusedLocation = null"
+      />
     </div>
 
     <div class="location-lists">
@@ -18,17 +24,12 @@
         <h3 class="list-title">Team</h3>
         <ul class="location-list">
           <li v-for="location in teamLocations" :key="location.id" class="location">
-            <div class="location-title">
-              <h4>{{ location.title }}</h4>
-              <p>{{ location.description }}</p>
-            </div>
-            <ContextActionMenu
-              v-if="isInEditingMode"
-              class="locatiopn-actions"
-              can-edit
-              can-delete
-              @edit="openEditModal(location)"
-              @delete="locationToDelete = location"
+            <LocationListItem
+              :location="location"
+              :is-editable="isInEditingMode"
+              @focus-location="focusedLocation = $event"
+              @delete-location="locationToDelete = $event"
+              @edit-location="openEditModal"
             />
           </li>
         </ul>
@@ -37,17 +38,12 @@
         <h3 class="list-title">Impact</h3>
         <ul class="location-list">
           <li v-for="location in impactLocations" :key="location.id" class="location">
-            <div class="location-title">
-              <h4>{{ location.title }}</h4>
-              <p>{{ location.description }}</p>
-            </div>
-            <ContextActionMenu
-              v-if="isInEditingMode"
-              class="location-actions"
-              can-edit
-              can-delete
-              @edit="openEditModal(location)"
-              @delete="locationToDelete = location"
+            <LocationListItem
+              :location="location"
+              :is-editable="isInEditingMode"
+              @focus-location="focusedLocation = $event"
+              @delete-location="locationToDelete = $event"
+              @edit-location="openEditModal"
             />
           </li>
         </ul>
@@ -114,6 +110,7 @@ export default {
       locationToBeEdited: null,
       locationToDelete: null,
       deleteAsyncing: false,
+      focusedLocation: null,
     }
   },
 
@@ -200,28 +197,6 @@ export default {
 
   @media screen and (max-width: $min-tablet) {
     grid-template-columns: 1fr;
-  }
-
-  li {
-    display: flex;
-    background-color: $primary-lighter;
-    border-radius: 0.8rem;
-    padding: 0.5em;
-    align-items: flex-start;
-    gap: 1rem;
-
-    .location-title {
-      flex-grow: 1;
-
-      h4 {
-        font-weight: 600;
-      }
-
-      p {
-        font-size: 0.8rem;
-        font-weight: 300;
-      }
-    }
   }
 }
 </style>
