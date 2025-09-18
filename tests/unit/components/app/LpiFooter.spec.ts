@@ -42,7 +42,7 @@ describe('LpiFooter', () => {
   beforeEach(() => {
     const usersStore = useUsersStore(pinia)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
     defaultParams = {
       i18n,
       router,

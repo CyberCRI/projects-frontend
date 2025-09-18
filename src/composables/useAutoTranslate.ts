@@ -2,7 +2,10 @@ export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
 
-  const { locale } = useI18n()
+  // const { locale } = useI18n()
+  // but we use auto translate in organization pinia store so
+  // https://stackoverflow.com/questions/77594888/how-to-use-i18n-messages-in-a-nuxt3-pinia-store
+  const locale = (useNuxtApp().$i18n as any).locale
 
   // base functions
   const getDetectedLanguage = (entity, field) => {
@@ -40,7 +43,10 @@ export default function useAutoTranslate() {
     }))
 
   const translateEntities = (entities, translateFn) =>
-    computed(() => entities?.map((entity) => unref(translateFn(entity)) || []))
+    computed(() => {
+      const _entities = unref(entities)
+      return _entities?.map((entity) => unref(translateFn(entity)) || [])
+    })
 
   // --------------------
   // Projects
@@ -102,6 +108,17 @@ export default function useAutoTranslate() {
     translateEntity(group, ['name', 'description', 'short_description'])
   const translateGroups = (groups) => translateEntities(groups, translateGroup)
 
+  // orgs
+  const translateOrganization = (org) =>
+    translateEntity(org, [
+      'name',
+      'dashboard_title',
+      'dashboard_subtitle',
+      'description',
+      'chat_button_text',
+    ])
+  const translateOrganizations = (orgs) => translateEntities(orgs, translateOrganization)
+
   // -------
   // full
 
@@ -153,5 +170,9 @@ export default function useAutoTranslate() {
     // groups
     translateGroup,
     translateGroups,
+
+    // org
+    translateOrganization,
+    translateOrganizations,
   }
 }

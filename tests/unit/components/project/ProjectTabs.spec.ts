@@ -43,7 +43,7 @@ describe('ProjectTabs.vue', () => {
     const projectCategories = useProjectCategoriesStore(pinia)
     projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { id: 123 } as unknown as OrganizationOutput
+    organizationsStore._current = { id: 123 } as unknown as OrganizationOutput
   })
   it('should render component', () => {
     const wrapper = factory()

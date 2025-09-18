@@ -87,7 +87,7 @@ describe('DefaultSkillsAdmin', () => {
   beforeEach(() => {
     organizationsStore = useOrganizationsStore(pinia)
     organizationsStore.updateCurrentOrganization = vi.fn()
-    organizationsStore.current = {
+    organizationsStore._current = {
       code: 'test',
       tags: [],
       enabled_projects_tag_classifications: [
