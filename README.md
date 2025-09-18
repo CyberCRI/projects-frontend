@@ -38,10 +38,10 @@ this project depends on a few others (backend, websocket server), we provide a f
 
 Ask the team for an administrator or user account.
 
-Create a .env file from [.env.example](.env.example):
+Create a .env file from [.env.sample](.env.sample):
 
 ```bash
-cp .env.example .env
+cp .env.sample .env
 ```
 And make sure to set the properly the variables.
 
