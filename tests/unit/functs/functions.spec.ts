@@ -79,7 +79,7 @@ describe('Function projectCanBeEdited', () => {
     const project = ProjectOutputFactory.generate()
     project.categories[0].organization.code = 'CRI' // Add same org code from project factory generated
 
-    organizationsStore.current = { code: 'CRI' } // getters are writable only in tests
+    organizationsStore._current = { code: 'CRI' } // getters are writable only in tests
     usersStore.user = user // getters are writable only in tests
 
     const { wrapper } = lpiMountExtra(FunctionImporter)

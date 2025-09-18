@@ -27,7 +27,7 @@ describe('BrowseLayout', () => {
 
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'TEST' } as unknown as OrganizationOutput
     defaultParams = {
       props: {
         isAddMode: true,

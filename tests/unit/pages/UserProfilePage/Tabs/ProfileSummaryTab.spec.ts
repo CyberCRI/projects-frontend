@@ -39,7 +39,7 @@ describe('ProfileSummaryTab', () => {
     usersStore.permissions = {}
     usersStore.getUser = vi.fn()
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
   })
 
   afterEach(() => {

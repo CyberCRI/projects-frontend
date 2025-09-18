@@ -266,7 +266,7 @@ describe('StatsByTab.vue', () => {
 
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
     defaultParams = {
       props: {
         filter: '',

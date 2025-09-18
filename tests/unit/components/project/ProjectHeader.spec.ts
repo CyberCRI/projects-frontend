@@ -36,7 +36,7 @@ describe('ProjectHeader.vue', () => {
       getUser: vi.fn(),
     } as any)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'foo' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'foo' } as unknown as OrganizationOutput
   })
 
   it('should render component', () => {

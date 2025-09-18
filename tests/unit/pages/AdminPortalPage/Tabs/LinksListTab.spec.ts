@@ -36,7 +36,7 @@ const factory = (props?) => {
 describe('LinkListTab.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
   })
   it('should mount the component', () => {
     const wrapper = factory({ projects: [] })

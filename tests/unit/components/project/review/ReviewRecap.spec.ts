@@ -75,8 +75,8 @@ describe('ReviewRecap.vue', () => {
       links: [],
     }
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
-    organizationsStore.all = OrganizationOutputFactory.generateMany(2)
+    organizationsStore._current = OrganizationOutputFactory.generate()
+    organizationsStore._all = OrganizationOutputFactory.generateMany(2)
 
     usersStore = useUsersStore(pinia)
     usersStore.accessToken = 123
