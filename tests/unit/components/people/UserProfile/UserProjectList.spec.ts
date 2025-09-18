@@ -24,7 +24,7 @@ describe('UserProjectList.vue', () => {
 
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
     defaultParams = {
       i18n,
       props: {

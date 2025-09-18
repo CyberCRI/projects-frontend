@@ -27,7 +27,7 @@ const factory = (props?) => {
 describe('LanguageFilter.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'TEST', languages: ['en', 'fr'] } as any
+    organizationsStore._current = { code: 'TEST', languages: ['en', 'fr'] } as any
   })
   it('should render component', () => {
     const wrapper = factory({ modelValue: [] })

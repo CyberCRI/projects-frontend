@@ -58,7 +58,7 @@ describe('SkillsFilterEditor', () => {
 
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = {
+    organizationsStore._current = {
       code: 'test',
       tags: [],
       enabled_projects_tag_classifications: [
