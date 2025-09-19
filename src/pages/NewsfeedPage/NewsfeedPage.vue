@@ -4,15 +4,19 @@ import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { translateNewsfeed } = useAutoTranslate()
+
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
 const isLoading = useState(() => false)
 const request = useState(() => ({ results: [] }))
 
-const newsfeed = computed(() => {
-  return request.value?.results || []
+const _newsfeed = computed(() => {
+  return request.value ? request.value.results : []
 })
+
+const newsfeed = translateNewsfeed(_newsfeed)
 
 const pagination = computed(() => {
   if (!request.value) return { total: 0 }

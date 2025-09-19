@@ -73,20 +73,34 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
+    const { translateProjects, translateEvents, translateInstructions } = useAutoTranslate()
+
+    const _events = ref([])
+    const _projects = ref([])
+    const _instructions = ref([])
+
+    const events = translateEvents(_events)
+    const projects = translateProjects(_projects)
+    const instructions = translateInstructions(_instructions)
+
+    const summaryMaxEvents = ref(3)
+    const summaryMaxProjects = ref(3)
+    const summaryMaxInstructions = ref(1)
+    const isLoading = ref(true)
+
     return {
       organizationsStore,
       usersStore,
-    }
-  },
-  data() {
-    return {
-      events: [],
-      projects: [],
-      instructions: [],
-      summaryMaxEvents: 3,
-      summaryMaxProjects: 3,
-      summaryMaxInstructions: 1,
-      isLoading: true,
+      _projects,
+      _events,
+      _instructions,
+      projects,
+      events,
+      instructions,
+      summaryMaxEvents,
+      summaryMaxProjects,
+      summaryMaxInstructions,
+      isLoading,
     }
   },
 
@@ -145,13 +159,13 @@ export default {
         organizations: this.organizationsStore.current.code,
       }
       const response = await searchProjects('', filters)
-      this.projects = response.results.map((result) => result.project)
+      this._projects = response.results.map((result) => result.project)
     },
 
     async loadEvents() {
       const todayAtZero = new Date()
       todayAtZero.setHours(0, 0, 0, 0)
-      this.events = (
+      this._events = (
         await getAllEvents(this.organizationsStore.current?.code, {
           ordering: 'event_date',
           from_date: todayAtZero.toISOString(),
@@ -161,7 +175,7 @@ export default {
     },
 
     async loadInstructions() {
-      this.instructions = (
+      this._instructions = (
         await getAllInstructions(this.organizationsStore.current?.code, {
           ordering: '-publication_date',
           to_date: new Date().toISOString(),

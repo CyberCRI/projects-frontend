@@ -13,7 +13,7 @@
     </div>
     <div class="texts">
       <h4 class="event-name">
-        {{ event.title }}
+        {{ event?.$t?.title }}
       </h4>
       <div class="event-information">
         <HtmlLimiter
@@ -23,7 +23,7 @@
           @computed="layoutComputed"
           @computing="computeLayout"
         />
-        <div v-else class="event-information" v-html="event.content" />
+        <div v-else class="event-information" v-html="event?.$t?.content" />
       </div>
     </div>
     <ContextActionMenu
