@@ -58,7 +58,13 @@ export default function useAutoTranslate() {
   const translateComments = (comments) => translateEntities(comments, translateComment)
 
   const translateAnnouncement = (announcement) =>
-    translateEntity(announcement, ['title', 'description'])
+    computed(() => {
+      if (!announcement) return announcement
+      return {
+        ...unref(translateEntity(announcement, ['title', 'description'])),
+        project: unref(translateProject(announcement.project)),
+      }
+    })
   const translateAnnouncements = (announcements) =>
     translateEntities(announcements, translateAnnouncement)
 
@@ -120,7 +126,7 @@ export default function useAutoTranslate() {
   const translateOrganizations = (orgs) => translateEntities(orgs, translateOrganization)
 
   // -------
-  // full
+  // use full
 
   const translateUserFull = (user) =>
     computed(() => {
@@ -130,6 +136,35 @@ export default function useAutoTranslate() {
         res.skills = unref(translateTags(res.skills))
       }
       return res
+    })
+
+  // -----------
+  // news
+  const translateOneNews = (news) => translateEntity(news, ['title', 'content'])
+  const translateNews = (news) => translateEntities(news, translateOneNews)
+
+  // -----------
+  // instructions
+  const translateInstruction = (instruction) => translateEntity(instruction, ['title', 'content'])
+  const translateInstructions = (instructions) =>
+    translateEntities(instructions, translateInstruction)
+
+  // -----------
+  // events
+  const translateEvent = (event) => translateEntity(event, ['title', 'content'])
+  const translateEvents = (events) => translateEntities(events, translateEvent)
+
+  // -----------
+  // Newsfeed
+  const translateNewsfeed = (items) =>
+    computed(() => {
+      const _items = unref(items)
+      return _items?.map((item) => ({
+        ...item,
+        project: unref(translateProject(item.project)),
+        news: unref(translateOneNews(item.news)),
+        announcement: unref(translateAnnouncement(item.announcement)),
+      }))
     })
 
   return {
@@ -174,5 +209,20 @@ export default function useAutoTranslate() {
     // org
     translateOrganization,
     translateOrganizations,
+
+    // news
+    translateOneNews,
+    translateNews,
+
+    // evnts
+    translateEvent,
+    translateEvents,
+
+    // instructions
+    translateInstruction,
+    translateInstructions,
+
+    // newsfeed
+    translateNewsfeed,
   }
 }

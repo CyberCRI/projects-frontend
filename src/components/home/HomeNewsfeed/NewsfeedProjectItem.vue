@@ -14,7 +14,7 @@
       />
     </div>
     <h3 class="project-title">
-      {{ $filters.capitalize(project.title) }}
+      {{ $filters.capitalize(project?.$t?.title) }}
     </h3>
     <div class="project-description">
       <p class="clamped">
@@ -43,7 +43,7 @@ export default {
 
   computed: {
     purpose() {
-      const sanitized = this.project?.purpose.replace(/<[^>]+>/g, ' ') || ''
+      const sanitized = this.project?.$t?.purpose.replace(/<[^>]+>/g, ' ') || ''
       return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
     },
   },
