@@ -1,4 +1,4 @@
-// @vitest-environment happy-dom
+// @vitest-environment nuxt
 import funct from '@/functs/functions'
 import FunctionImporter from './FunctionImporter.vue'
 import { lpiMountExtra } from '@/../tests/helpers/LpiMount'

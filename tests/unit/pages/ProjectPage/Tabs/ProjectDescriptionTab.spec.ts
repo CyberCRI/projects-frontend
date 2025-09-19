@@ -10,6 +10,8 @@ import useUsersStore from '@/stores/useUsers'
 
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 
+import { useAutoTranslate } from '#imports'
+
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 import usePermissions from '@/composables/usePermissions'
@@ -38,17 +40,20 @@ describe('ProjectDescriptionTab.vue', () => {
     } as any)
     const projectsStore = useProjectsStore(pinia)
 
+    const { translateProject } = useAutoTranslate()
+
     projectsStore.project = {
-      ...ProjectOutputFactory.generate(),
+      ...translateProject(ProjectOutputFactory.generate()).value,
       files: [],
       links: [],
     }
   })
 
   it('should render component', () => {
+    const { translateProject } = useAutoTranslate()
     const wrapper = lpiShallowMount(ProjectDescriptionTab, {
       props: {
-        project: ProjectFactory.generate(),
+        project: translateProject(ProjectFactory.generate()).value,
       },
       i18n,
     })
