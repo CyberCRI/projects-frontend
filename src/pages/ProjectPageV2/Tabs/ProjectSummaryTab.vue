@@ -8,20 +8,33 @@
         class="project-header v2"
       />
 
+      <!-- description -->
       <DescriptionPlaceholder
         v-if="canEditProject && showDescriptionPlaceHolder"
         class="unboxed"
         :project="project"
       />
-
       <DescriptionRecap
         v-else-if="project && project.description"
         class="unboxed"
         :description="project.description"
       />
 
+      <!-- team -->
+      <ProjectMemberSection
+        v-if="mergedTeam?.length"
+        class="unboxed"
+        :members="mergedTeam"
+        @user-click="openProfileDrawer"
+      />
+
+      <!-- locations -->
+      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
+
+      <!-- goals -->
       <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
 
+      <!-- blog -->
       <PublicationRecap
         v-if="blogEntries.length"
         class="unboxed"
@@ -29,12 +42,22 @@
         :publications="blogEntries"
       />
 
+      <!-- resources -->
+      <ResourcesRecap
+        v-if="linkResources?.length || fileResources?.length"
+        class="unboxed"
+        :files="fileResources"
+        :links="linkResources"
+      />
+
+      <!-- linked projects -->
       <LinkedProjectsRecap
         v-if="linkedProjects?.length"
         class="unboxed"
         :linked-projects="linkedProjects"
       />
 
+      <!-- reviews -->
       <ReviewRecap
         v-if="project && project.publication_status"
         class="unboxed"
@@ -43,22 +66,8 @@
         @reload-reviews="$emit('reload-reviews')"
         @reload-project="$emit('reload-project')"
       />
-      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
 
-      <ProjectMemberSection
-        v-if="mergedTeam?.length"
-        class="unboxed"
-        :members="mergedTeam"
-        @user-click="openProfileDrawer"
-      />
-
-      <ResourcesRecap
-        v-if="linkResources?.length || fileResources?.length"
-        class="unboxed"
-        :files="fileResources"
-        :links="linkResources"
-      />
-
+      <!-- comments -->
       <PublicationRecap
         v-if="comments.length"
         class="unboxed"

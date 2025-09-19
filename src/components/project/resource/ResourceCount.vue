@@ -50,7 +50,6 @@ export default {
   border-radius: $border-radius-m;
   overflow: hidden;
   width: 150px;
-  height: 140px;
   transition: 0.3s background-color ease-in-out;
   display: flex;
   flex-direction: column;
