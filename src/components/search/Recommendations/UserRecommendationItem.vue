@@ -18,7 +18,7 @@
           {{ $filters.capitalize(recommendation.family_name) }}
         </span>
         <span v-if="recommendation.job" class="job">
-          {{ $filters.capitalize(recommendation.job) }}
+          {{ $filters.capitalize(recommendation?.$t?.job) }}
         </span>
         <div class="skills">
           <BadgeItem

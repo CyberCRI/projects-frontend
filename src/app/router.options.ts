@@ -396,7 +396,10 @@ const routes = ({
       {
         path: 'future',
         name: 'FutureEvents',
-        component: () => import('../pages/CalendarPage/Tabs/FutureEvents.vue'),
+        component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
+        props: {
+          isFuture: true,
+        },
         meta: {
           resetScroll: true,
         },
@@ -404,7 +407,10 @@ const routes = ({
       {
         path: 'past',
         name: 'PastEvents',
-        component: () => import('../pages/CalendarPage/Tabs/PastEvents.vue'),
+        component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
+        props: {
+          isFuture: false,
+        },
         meta: {
           resetScroll: true,
         },

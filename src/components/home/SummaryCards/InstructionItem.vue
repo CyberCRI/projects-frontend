@@ -2,7 +2,7 @@
   <div class="instruction-item">
     <div class="instruction-title-ctn">
       <h3 class="instruction-title">
-        {{ instruction.title }}
+        {{ instruction?.$t?.title }}
       </h3>
 
       <ContextActionMenu
@@ -16,7 +16,7 @@
     </div>
     <div class="instruction-excerpt" :style="style">
       <HtmlLimiter
-        :html="instruction.content"
+        :html="instruction?.$t?.content"
         :striped-tags="['table']"
         class="description-content"
         @computed="layoutComputed"

@@ -28,15 +28,16 @@ export default {
   },
   setup() {
     const organizationsStore = useOrganizationsStore()
+    const { translateNewsfeed } = useAutoTranslate()
+    const isLoading = ref(true)
+    const _newsfeed = ref([])
+    const newsfeed = translateNewsfeed(_newsfeed)
+
     return {
       organizationsStore,
-    }
-  },
-
-  data() {
-    return {
-      isLoading: true,
-      newsfeed: [],
+      isLoading,
+      _newsfeed,
+      newsfeed,
     }
   },
 
@@ -53,7 +54,7 @@ export default {
   methods: {
     async loadNewsfeed() {
       this.isLoading = true
-      this.newsfeed = (
+      this._newsfeed = (
         await getNewsfeed(this.organization.code, {
           limit: this.limit,
         })

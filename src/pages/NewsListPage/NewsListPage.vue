@@ -5,6 +5,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { translateNews } = useAutoTranslate()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
@@ -26,9 +27,11 @@ const pagination = useState(() => ({
 const newsRequest = ref(() => null)
 const maxNewsPerPage = ref(() => 12)
 
-const allNews = computed(() => {
+const _allNews = computed(() => {
   return newsRequest.value?.results || []
 })
+
+const allNews = translateNews(_allNews)
 
 watchEffect(
   () => [newsRequest],

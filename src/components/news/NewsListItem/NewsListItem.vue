@@ -18,7 +18,7 @@
     </div>
     <div class="news-img-ctn">
       <CroppedApiImage
-        :alt="`${news.title} image`"
+        :alt="`${news?.$t?.title} image`"
         class="picture"
         :ratio="4 / 3"
         :picture-data="news?.header_image"
@@ -29,7 +29,7 @@
     <div class="news-texts" :style="textsStyle">
       <div class="news-title-ctn desktop">
         <h3 class="news-title">
-          {{ news.title }}
+          {{ news?.$t?.title }}
         </h3>
 
         <ContextActionMenu
@@ -43,7 +43,7 @@
       </div>
       <div class="news-excerpt" :style="style">
         <HtmlLimiter
-          :html="news.content"
+          :html="news?.$t?.content"
           :striped-tags="['table']"
           class="description-content"
           @computed="layoutComputed"
