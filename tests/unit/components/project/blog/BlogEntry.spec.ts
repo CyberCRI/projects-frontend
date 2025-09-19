@@ -6,6 +6,9 @@ import { BlogEntryFactory } from '@/../tests/factories/blog-entry.factory'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
+
+import useAutoTranslate from '@/composables/useAutoTranslate'
+
 const i18n = {
   locale: 'en',
   fallbackLocale: 'en',
@@ -16,9 +19,11 @@ const i18n = {
 
 describe('BlogEntry.vue', () => {
   it('should render component', () => {
+    const { translateBlogEntry } = useAutoTranslate()
+    const blog = translateBlogEntry(BlogEntryFactory.generate())
     const wrapper = lpiMount(BlogEntry, {
       props: {
-        blogEntry: BlogEntryFactory.generate(),
+        blogEntry: blog.value,
       },
       i18n,
     })
@@ -26,9 +31,11 @@ describe('BlogEntry.vue', () => {
   })
 
   it('should toggle expand', () => {
+    const { translateBlogEntry } = useAutoTranslate()
+    const blog = translateBlogEntry(BlogEntryFactory.generate())
     const wrapper = lpiMount(BlogEntry, {
       props: {
-        blogEntry: BlogEntryFactory.generate(),
+        blogEntry: blog.value,
       },
       i18n,
     })

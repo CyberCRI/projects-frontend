@@ -10,6 +10,7 @@ const props = defineProps({
   },
 })
 
+const { translateOneNews, translateNews } = useAutoTranslate()
 const { d, t } = useI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -17,8 +18,10 @@ const router = useRouter()
 const route = useRoute()
 const { canEditNews, canDeleteNews } = usePermissions()
 
-const news = useState(() => null)
-const otherNews = useState(() => [])
+const _news = useState(() => null)
+const news = translateOneNews(_news)
+const _otherNews = useState(() => [])
+const otherNews = translateNews(_otherNews)
 const loading = ref(false)
 const editedNews = ref(null)
 const newsToDelete = ref(null)
@@ -39,7 +42,7 @@ const publicationDate = computed(() => {
 
 const loadNews = async () => {
   try {
-    news.value = await getNews(organizationsStore.current?.code, props.slugOrId)
+    _news.value = await getNews(organizationsStore.current?.code, props.slugOrId)
   } catch (err) {
     console.error(err)
     router.replace({
@@ -51,7 +54,7 @@ const loadNews = async () => {
 
 const loadOtherNews = async () => {
   // fetch 3 news because we want to show 2 other news and one might be the current one
-  otherNews.value = (await getAllNews(organizationsStore.current?.code, { limit: 3 })).results
+  _otherNews.value = (await getAllNews(organizationsStore.current?.code, { limit: 3 })).results
     ?.filter((oNews) => !news.value || oNews.id !== news.value.id)
     .slice(0, 2)
 }
@@ -134,7 +137,7 @@ try {
         <BreadCrumbs :breadcrumbs="breadcrumbs" />
         <SkeletonComponent v-if="loading" class="skeleton-block" height="42px" tag="h1" />
         <h1 v-else-if="news" class="page-title">
-          {{ news.title }}
+          {{ news?.$t?.title }}
         </h1>
         <SkeletonComponent v-if="loading" class="skeleton-block" height="16px" tag="p" />
         <p v-else-if="news">
@@ -164,7 +167,7 @@ try {
       <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
       <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
     </div>
-    <TipTapOutput v-else-if="news" class="news-content" :content="news.content" />
+    <TipTapOutput v-else-if="news" class="news-content" :content="news?.$t?.content" />
   </div>
 
   <div class="other-news page-section-narrow">

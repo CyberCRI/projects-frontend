@@ -34,9 +34,9 @@
     </div>
 
     <div class="review-content">
-      <div class="title" v-html="review.title" />
+      <div class="title" v-html="review?.$t?.title" />
 
-      <div class="des" v-html="review.description" />
+      <div class="des" v-html="review?.$t?.description" />
     </div>
   </div>
 </template>

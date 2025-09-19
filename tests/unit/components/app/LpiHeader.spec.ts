@@ -45,8 +45,8 @@ describe('LpiHeader.vue', () => {
   let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = organization
-    organizationsStore.all = organizations
+    organizationsStore._current = organization
+    organizationsStore._all = organizations
     const projectCategories = useProjectCategoriesStore(pinia)
     projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
     usersStore = useUsersStore(pinia)

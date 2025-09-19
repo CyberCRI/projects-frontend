@@ -36,6 +36,10 @@ onMounted(async () => {
   isLoading.value = false
 })
 
+const { translateProjects } = useAutoTranslate()
+const _results = computed(() => projectRecommendationsRequest.value?.results)
+const results = translateProjects(_results)
+
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
@@ -61,7 +65,7 @@ try {
       :desktop-columns-number="6"
       :is-loading="isLoading"
       :limit="limit"
-      :items="projectRecommendationsRequest?.results"
+      :items="results"
       class="list-container"
     >
       <template #default="projectListSlotProps">

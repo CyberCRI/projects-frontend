@@ -57,7 +57,7 @@ export default {
     fullDescription() {
       return `
                 <div class="description-content">
-                    ${this.user.description}
+                    ${this.user?.$t?.description}
                 </div>
             `
     },
