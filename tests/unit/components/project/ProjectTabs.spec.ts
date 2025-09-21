@@ -41,7 +41,7 @@ const factory = (props?) => {
 describe('ProjectTabs.vue', () => {
   beforeEach(() => {
     const projectCategories = useProjectCategoriesStore(pinia)
-    projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    projectCategories.all.value = ProjectCategoryOutputFactory.generateMany(2)
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 123 } as unknown as OrganizationOutput
   })

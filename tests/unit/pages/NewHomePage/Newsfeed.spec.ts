@@ -27,7 +27,7 @@ describe('Newsfeed', () => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
     const projectCategories = useProjectCategoriesStore(pinia)
-    projectCategories.all = ProjectCategoryOutputFactory.generateMany(2)
+    projectCategories.all.value = ProjectCategoryOutputFactory.generateMany(2)
   })
   it('should render NewsFeed', async () => {
     let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, router, i18n })

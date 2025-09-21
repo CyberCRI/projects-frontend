@@ -18,7 +18,7 @@ const factory = (props?) => {
 describe('CategoriesFilterEditor.vue', () => {
   beforeEach(() => {
     const projectCategories = useProjectCategoriesStore(pinia)
-    projectCategories.all = ProjectCategoryOutputFactory.generateMany(8)
+    projectCategories.all.value = ProjectCategoryOutputFactory.generateMany(8)
   })
   it('should render component', () => {
     const wrapper = factory({ modelValue: [] })
