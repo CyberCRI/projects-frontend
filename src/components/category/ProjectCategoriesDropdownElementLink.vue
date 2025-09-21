@@ -3,7 +3,7 @@
     class="drop-down-menu-item-content"
     :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
   >
-    <span class="label">{{ $filters.capitalize(category.name) }}</span>
+    <span class="label">{{ $filters.capitalize(category?.$t?.name) }}</span>
   </NuxtLink>
 </template>
 

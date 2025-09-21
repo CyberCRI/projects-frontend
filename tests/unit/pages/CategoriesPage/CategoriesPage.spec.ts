@@ -29,7 +29,7 @@ describe('CategoriesPage', () => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { ID: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
     const projectCategories = useProjectCategoriesStore(pinia)
-    projectCategories.all = ProjectCategoryOutputFactory.generateMany(8)
+    projectCategories.all.value = ProjectCategoryOutputFactory.generateMany(8)
   })
   it('should render CategoriesPage', () => {
     let wrapper = lpiShallowMount(CategoriesPage, { router, i18n })

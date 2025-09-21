@@ -55,11 +55,11 @@ const categoryHierarchy = computed(() => {
       route: { name: 'Categories' },
     },
     ...(category.value?.hierarchy || []).map((cat) => ({
-      name: cat.name,
+      name: cat?.$t?.name,
       route: { name: 'Category', params: { slugOrId: cat.slug || cat.id } },
     })),
     {
-      name: category.value?.name,
+      name: category.value?.$t?.name,
       route: { name: 'Category', params: { slugOrId: category.value?.slug || category.value?.id } },
     },
   ]
@@ -80,10 +80,8 @@ onBeforeRouteLeave((to, from, next) => {
 
 const bannerRatio = ref(16 / 9)
 function onResize() {
-  console.log('reise')
   const rect = document.querySelector('.banner-ctn .banner')?.getBoundingClientRect()
   if (rect?.width && rect?.height) {
-    console.log(rect.width / rect.height)
     bannerRatio.value = rect.width / rect.height
   }
 }
@@ -125,9 +123,9 @@ useLpiHead(
       <div class="banner-title-ctn">
         <div class="banner-title">
           <h1 class="category-name">
-            {{ category.name }}
+            {{ category?.$t?.name }}
           </h1>
-          <p class="category-description" v-html="category.description" />
+          <p class="category-description" v-html="category?.$t?.description" />
           <div class="category-search">
             <SearchOptions
               ref="searchOptions"
@@ -150,7 +148,7 @@ useLpiHead(
           class="category-child shadow-box"
         >
           <h3 class="child-title">
-            {{ child.name }}
+            {{ child?.$t?.name }}
           </h3>
         </NuxtLink>
       </div>
