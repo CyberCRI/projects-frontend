@@ -167,6 +167,11 @@ export default function useAutoTranslate() {
       }))
     })
 
+  // -----------
+  // categoris
+  const translateCategory = (event) => translateEntity(event, ['name', 'description'])
+  const translateCategories = (events) => translateEntities(events, translateCategory)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -224,5 +229,9 @@ export default function useAutoTranslate() {
 
     // newsfeed
     translateNewsfeed,
+
+    // categories
+    translateCategory,
+    translateCategories,
   }
 }
