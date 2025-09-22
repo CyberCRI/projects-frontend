@@ -103,23 +103,23 @@ provide('projectLayoutProjectPatched', projectPatched)
 // })
 
 if (import.meta.server) {
-    try {
-        // project might need access right
-        const projectData = await getProject(route.params.slugOrId, true)
-        if (projectData) {
-            const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
-            useLpiHead(
-            useRequestURL().toString(),
-            projectData.title,
-            projectData.purpose,
-            image,
-            dimensions
-            )
-        }
-    } catch (err) {
+  try {
+    // project might need access right
+    const projectData = await getProject(route.params.slugOrId, true)
+    if (projectData) {
+      const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
+      useLpiHead(
+        useRequestURL().toString(),
+        projectData.title,
+        projectData.purpose,
+        image,
+        dimensions
+      )
+    }
+  } catch (err) {
     // DGAF
     console.log(err)
-    }
+  }
 }
 
 onMounted(async () => {
