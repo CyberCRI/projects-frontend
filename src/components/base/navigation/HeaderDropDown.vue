@@ -239,7 +239,7 @@ export default {
 
   .drop-down-menu-wrapper {
     position: absolute;
-    left: 0;
+    right: 1px;
     min-width: 100%;
     transform: scale3d(1, 1, 1); // fix rounding pixel width issue
     margin-top: -1px; // fix pixel rounding issue on zoomed scrren
@@ -259,7 +259,7 @@ export default {
     max-height: pxToRem(450px);
 
     &.round-corner {
-      border-top-right-radius: $border-radius-s;
+      border-top-left-radius: $border-radius-s;
     }
 
     .drop-down-menu-item {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="project" class="project-description">
-      <PageStickyHead :page-title="project.title">
+      <PageStickyHead :page-title="project.$t.title">
         <template #default="{ anchorOffset }">
           <!--div v-if="showEditButton" class="description-edit">
             <LpiButton
@@ -70,17 +70,22 @@ export default {
   },
 
   data() {
+    const { getTranslatableField } = useAutoTranslate()
     return {
       editDescriptionModalActive: false,
       hasSummary: false,
+      // TODO: temp fix for encoding bug, to be removed soon
+      description: computed(() =>
+        unref(getTranslatableField(this.projectsStore.project, 'description'))?.replaceAll(
+          /\xa0»/g,
+          '"'
+        )
+      ),
+      // description: getTranslatableField(this.projectsStore.project, 'description')
     }
   },
 
   computed: {
-    description() {
-      return this.projectsStore.project.description
-    },
-
     updatedProject() {
       return this.projectsStore.project
     },

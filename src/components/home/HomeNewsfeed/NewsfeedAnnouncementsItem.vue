@@ -9,7 +9,7 @@
   >
     <div class="announcement-img-container">
       <CroppedApiImage
-        :alt="`${announcement?.project?.title} image`"
+        :alt="`${announcement?.project?.$t?.title} image`"
         class="project-img"
         :ratio="1 / 1"
         :picture-data="announcement.project?.header_image"
@@ -19,7 +19,7 @@
       <div :style="announcementStyle" class="announcement-overlay" />
     </div>
     <h3 class="announcement-title">
-      {{ $filters.capitalize(announcement.title) }}
+      {{ $filters.capitalize(announcement?.$t?.title) }}
     </h3>
     <div class="announcement-infos">
       <span class="date-ctn">
@@ -72,7 +72,7 @@ export default {
     },
 
     description() {
-      return this.announcement?.description || ''
+      return this.announcement?.$t?.description || ''
     },
   },
 }
