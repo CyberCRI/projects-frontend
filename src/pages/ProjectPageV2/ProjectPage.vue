@@ -101,13 +101,10 @@ provide('projectLayoutProjectPatched', projectPatched)
 //     if (commentLoop.value) clearInterval(commentLoop.value)
 //     cleanupProvider()
 // })
-
-if (import.meta.server) {
-  try {
-    // project might need access right
-    const projectData = await getProject(route.params.slugOrId, true)
-    if (projectData) {
-      const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
+const setLpiHead = (projectData) => {
+  if (projectData) {
+    const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
+    try {
       useLpiHead(
         useRequestURL().toString(),
         projectData.title,
@@ -115,12 +112,24 @@ if (import.meta.server) {
         image,
         dimensions
       )
+    } catch (e) {
+      console.error(e)
     }
+  }
+}
+
+if (import.meta.server) {
+  try {
+    // project might need access right
+    const projectData = await getProject(route.params.slugOrId, true)
+    setLpiHead(projectData)
   } catch (err) {
     // DGAF
     console.log(err)
   }
 }
+// when project change, update header
+watch(project, setLpiHead)
 
 onMounted(async () => {
   if (import.meta.client) {
