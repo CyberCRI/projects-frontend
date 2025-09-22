@@ -105,6 +105,8 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
     hierarchy,
     allOrderedByOrderId,
     getAllProjectCategories,
+    // for unit tests only
+    _all,
   }
 })
 
