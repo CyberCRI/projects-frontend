@@ -42,7 +42,7 @@ describe('RecommendationBlock', () => {
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
     const projectCategories = useProjectCategoriesStore(pinia)
-    projectCategories.all.value = ProjectCategoryOutputFactory.generateMany(2)
+    projectCategories._all = ProjectCategoryOutputFactory.generateMany(2)
 
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput

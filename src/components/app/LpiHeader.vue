@@ -558,11 +558,12 @@ export default {
           organizations: [this.organization.code],
           ordering: '-updated_at',
         })
-        this.announcements = announcements.results.filter(
-          (announcement) =>
-            (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
-            new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
-        )
+        this.announcements =
+          announcements.results?.filter(
+            (announcement) =>
+              (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
+              new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
+          ) || []
       } catch (err) {
         console.error(err)
       }
