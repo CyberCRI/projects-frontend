@@ -18,7 +18,7 @@
     "test:unit": "vitest",
     "test:unit:ci": "node  ./node_modules/.bin/vitest ",
     "test:play": "npx playwright test --project=chromium",
-    "test:play:dev": "npx playwright test --project=chromium --trace retain-on-first-failure --retries 0",
+    "test:play:dev": "NODE_OPTIONS='--no-experimental-strip-types' yarn test:play npx playwright test --project=chromium --trace retain-on-first-failure --retries 0",
     "test:play:gen": "npx playwright codegen --ignore-https-errors http://localhost:8080",
     "test:play:chromium": "npx playwright test --project=chromium",
     "lint:ci": "yarn run lint:ci:js && yarn run lint:ci:scss && yarn run check-types",
