@@ -9,9 +9,9 @@ export async function logIn(page: Page, user: User) {
   //  await page.goto('/') // if needed replace with  await page.locator('[data-test="lpi-logo"]').click()
   await page.locator('[data-test="test-login-button"]').click()
   logger.info(`Fill username or email (${user.email})`)
-  let loginForm = await page.locator('#kc-form-login')
+  const loginForm = await page.locator('#kc-form-login')
   if (await loginForm.isHidden()) {
-    await page.locator('.mail-pw-form-details summary').click
+    await page.locator('.mail-pw-form-details summary').click()
   }
   await page.locator('[data-test="username"]').fill(user.email)
   logger.info('Fill password')
