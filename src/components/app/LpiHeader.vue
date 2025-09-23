@@ -308,7 +308,7 @@ export default {
           label: this.$t('home.documents').toUpperCase(),
           to: { name: 'DocumentsPage' },
           leftIcon: 'File',
-          condition: true, // TODO ?
+          condition: this.isConnected, // TODO: check also if there's any document or if we are admin
           dataTest: 'more-documents',
         },
         {
