@@ -2649,5 +2649,9 @@
   "card-list": {
     "list": "Nimekiri",
     "grid": "Võrk"
+  },
+  "documents-page": {
+    "title": "{platformName} platvormi dokumendid",
+    "description": "Siit leiad kõik {platformName} platvormiga seotud dokumendid, sealhulgas teenusetingimused, privaatsuspoliitika ja muud juriidilised dokumendid."
   }
 }

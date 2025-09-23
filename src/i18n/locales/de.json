@@ -2649,5 +2649,9 @@
   "card-list": {
     "list": "Liste",
     "grid": "Raster"
+  },
+  "documents-page": {
+    "title": "Dokumente der {platformName} Plattform",
+    "description": "Finden Sie hier alle Dokumente zur {platformName} Plattform, einschließlich der Nutzungsbedingungen, der Datenschutzrichtlinie und anderer rechtlicher Dokumente."
   }
 }

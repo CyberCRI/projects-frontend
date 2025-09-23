@@ -2654,5 +2654,9 @@
   "card-list": {
     "list": "Liste",
     "grid": "Grille"
+  },
+  "documents-page": {
+    "title": "Documents de la plateforme {platformName}",
+    "description": "Retrouvez ici tous les documents relatifs à la plateforme {platformName}, y compris les conditions d'utilisation, la politique de confidentialité et d'autres documents juridiques."
   }
 }

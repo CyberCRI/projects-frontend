@@ -2649,5 +2649,9 @@
   "card-list": {
     "list": "List",
     "grid": "Grid"
+  },
+  "documents-page": {
+    "title": "Documents of the {platformName} platform",
+    "description": "Find here all the documents related to the {platformName} platform, including the terms of service, privacy policy, and other legal documents."
   }
 }

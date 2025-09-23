@@ -13,7 +13,9 @@ const toaster = useToasterStore()
 const { isAdmin } = usePermissions()
 
 const organizationsStore = useOrganizationsStore()
-const orgCode = computed(() => organizationsStore?.current?.code)
+
+const organization = computed(() => organizationsStore?.current)
+const orgCode = computed(() => organization.value?.code)
 
 const confirmModalVisible = ref(false)
 const currentResource = ref(null)
@@ -91,8 +93,11 @@ try {
 <template>
   <div class="page-section-narrow organization-resources-page pssi page-top">
     <h1 class="page-title">
-      {{ $t('home.documents') }}
+      {{ $t('documents-page.title', { platformName: organization?.name }) }}
     </h1>
+    <p class="notice">
+      {{ $t('documents-page.description', { platformName: organization?.name }) }}
+    </p>
     <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
         :label="$filters.capitalize($t('resource.add-file'))"

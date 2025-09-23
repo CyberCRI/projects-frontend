@@ -2649,5 +2649,9 @@
   "card-list": {
     "list": "Lista",
     "grid": "Cuadrícula"
+  },
+  "documents-page": {
+    "title": "Documentos de la plataforma {platformName}",
+    "description": "Encuentra aquí todos los documentos relacionados con la plataforma {platformName}, incluidos los términos de servicio, la política de privacidad y otros documentos legales."
   }
 }

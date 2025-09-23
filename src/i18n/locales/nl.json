@@ -2649,5 +2649,9 @@
   "card-list": {
     "list": "Lijst",
     "grid": "Raster"
+  },
+  "documents-page": {
+    "title": "Documenten van het {platformName} platform",
+    "description": "Vind hier alle documenten met betrekking tot het {platformName} platform, waaronder de servicevoorwaarden, het privacybeleid en andere juridische documenten."
   }
 }
