@@ -207,6 +207,7 @@
         "error": "Viga sildi '{tagName} kustutamisel '"
       }
     },
+    "org-file-confirm-delete": "Kas olete kindel, et soovite selle faili platvormilt kustutada?",
     "tabs": {
       "information": "Kindral",
       "categories": "Kategooriad",
@@ -995,6 +996,7 @@
     "mobile-menu-title": "Menüü"
   },
   "home": {
+    "documents": "Dokumendid",
     "all-projects": "Kõik projektid",
     "announcements": "Teadaandeid",
     "news": "Uudised",

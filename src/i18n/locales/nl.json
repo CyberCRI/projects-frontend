@@ -207,6 +207,7 @@
         "error": "Fout bij het verwijderen van tag '{tagName} '"
       }
     },
+    "org-file-confirm-delete": "Weet u zeker dat u dit bestand van het platform wilt verwijderen?",
     "tabs": {
       "information": "Algemeen",
       "categories": "Categorieën",
@@ -995,6 +996,7 @@
     "mobile-menu-title": "Menu"
   },
   "home": {
+    "documents": "Documenten",
     "all-projects": "Alle projecten",
     "announcements": "Aankondigingen",
     "news": "Nieuws",

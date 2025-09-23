@@ -207,6 +207,7 @@
         "error": "Error mentre s' esborrava l' etiqueta '{tagName}' '"
       }
     },
+    "org-file-confirm-delete": "Esteu segur que voleu eliminar aquest fitxer de la plataforma?",
     "tabs": {
       "information": "General",
       "categories": "Categories",
@@ -995,6 +996,7 @@
     "mobile-menu-title": "Menú"
   },
   "home": {
+    "documents": "Documents",
     "all-projects": "Tots els projectes",
     "announcements": "Anunciacions",
     "news": "Notícies",

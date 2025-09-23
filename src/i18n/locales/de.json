@@ -207,6 +207,7 @@
         "error": "Fehler beim L\u00f6schen des Tags '{tagName} '"
       }
     },
+    "org-file-confirm-delete": "Möchten Sie diese Datei wirklich von der Plattform löschen?",
     "tabs": {
       "information": "Allgemeines",
       "categories": "Kategorien",
@@ -995,6 +996,7 @@
     "mobile-menu-title": "Men\u00fc schlie\u00dfen"
   },
   "home": {
+    "documents": "Unterlagen",
     "all-projects": "Alle Projekte",
     "announcements": "Ank\u00fcndigungen",
     "news": "Nachrichten",

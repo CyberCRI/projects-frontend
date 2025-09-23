@@ -207,6 +207,7 @@
         "error": "Error al eliminar la etiqueta '{tagName} '"
       }
     },
+    "org-file-confirm-delete": "¿Estás seguro de que deseas eliminar este archivo de la plataforma?",
     "tabs": {
       "information": "General",
       "categories": "Categor\u00edas",
@@ -995,6 +996,7 @@
     "mobile-menu-title": "Men\u00fa"
   },
   "home": {
+    "documents": "Documentos",
     "all-projects": "Todos los proyectos",
     "announcements": "Anuncios",
     "news": "Noticias",
