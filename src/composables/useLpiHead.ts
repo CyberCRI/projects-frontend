@@ -1,6 +1,8 @@
+import useNuxtI18n from '@/composables/useNuxtI18n'
+
 export default (url, title, description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
-  const { locale } = useI18n()
+  const { locale } = useNuxtI18n()
 
   let imgMimeType = 'image/jpeg'
   if (image) {

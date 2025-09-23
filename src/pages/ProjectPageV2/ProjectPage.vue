@@ -101,23 +101,35 @@ provide('projectLayoutProjectPatched', projectPatched)
 //     if (commentLoop.value) clearInterval(commentLoop.value)
 //     cleanupProvider()
 // })
-
-try {
-  // project might need access right
-  const projectData = await getProject(route.params.slugOrId, true)
-  const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
-  if (projectData)
-    useLpiHead(
-      useRequestURL().toString(),
-      projectData.title,
-      projectData.purpose,
-      image,
-      dimensions
-    )
-} catch (err) {
-  // DGAF
-  console.log(err)
+const setLpiHead = (projectData) => {
+  if (projectData) {
+    const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
+    try {
+      useLpiHead(
+        useRequestURL().toString(),
+        projectData.title,
+        projectData.purpose,
+        image,
+        dimensions
+      )
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }
+
+if (import.meta.server) {
+  try {
+    // project might need access right
+    const projectData = await getProject(route.params.slugOrId, true)
+    setLpiHead(projectData)
+  } catch (err) {
+    // DGAF
+    console.log(err)
+  }
+}
+// when project change, update header
+watch(project, setLpiHead)
 
 onMounted(async () => {
   if (import.meta.client) {
