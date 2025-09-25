@@ -124,6 +124,7 @@ export default {
         'MenuUnfoldLine',
         'Archive',
         'VipCrownLine',
+        'SparklingFill',
       ],
     }
   },
