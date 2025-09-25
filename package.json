@@ -38,14 +38,9 @@
     "autotranslate": "node ./utilities/autotranslate.js"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.34",
-    "@ai-sdk/vue": "^2.0.51",
     "@ckpack/vue-color": "^1.5.0",
     "@hocuspocus/provider": "^2.15.0",
     "@intlify/vue-i18n-loader": "^4.2.0",
-    "@langchain/community": "^0.3.56",
-    "@langchain/core": "^0.3.77",
-    "@langchain/openai": "^0.6.13",
     "@mdi/font": "^6",
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/i18n": "^10.1.0",
@@ -83,7 +78,6 @@
     "croppr": "^2.3.1",
     "deep-chat": "^2.2.2",
     "highlight.js": "^11",
-    "langchain": "^0.3.34",
     "leaflet": "^1",
     "leaflet.markercluster": "^1.5.3",
     "lodash.clonedeep": "^4.5.0",
@@ -114,8 +108,7 @@
     "vue3-popper": "^1.5.0",
     "y-prosemirror": "^1.2.11",
     "y-protocols": "^1.0.6",
-    "yjs": "^13.6.23",
-    "zod": "^4.1.11"
+    "yjs": "^13.6.23"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
