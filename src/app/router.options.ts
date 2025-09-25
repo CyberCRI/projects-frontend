@@ -36,7 +36,12 @@ const routes = ({
   //         resetScroll: true,
   //     },
   // },
-
+  {
+    path: '/documents',
+    name: 'DocumentsPage',
+    component: () => import('../pages/OrganizationResourcesPage/OrganizationResourcesPage.vue'),
+    meta: { requiresAuth: true, resetScroll: true },
+  },
   {
     path: '/help',
     name: 'Help',

@@ -207,6 +207,7 @@
         "error": "Erreur lors de la suppression du tag '{tagName}'"
       }
     },
+    "org-file-confirm-delete": "Etes-vous sûr de vouloir supprimer ce fichier de la plateforme ?",
     "tabs": {
       "information": "Général",
       "categories": "Catégories",
@@ -997,6 +998,7 @@
     "mobile-menu-title": "Menu"
   },
   "home": {
+    "documents": "Documents",
     "all-projects": "Tous les projets",
     "announcements": "Annonces",
     "news": "Actualités",
@@ -2652,5 +2654,9 @@
   "card-list": {
     "list": "Liste",
     "grid": "Grille"
+  },
+  "documents-page": {
+    "title": "Documents de la plateforme {platformName}",
+    "description": "Retrouvez ici tous les documents relatifs à la plateforme {platformName}, y compris les conditions d'utilisation, la politique de confidentialité et d'autres documents juridiques."
   }
 }

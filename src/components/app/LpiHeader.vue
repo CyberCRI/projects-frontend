@@ -305,6 +305,13 @@ export default {
     moreMenu() {
       return [
         {
+          label: this.$t('home.documents').toUpperCase(),
+          to: { name: 'DocumentsPage' },
+          leftIcon: 'File',
+          condition: this.isConnected, // TODO: check also if there's any document or if we are admin
+          dataTest: 'more-documents',
+        },
+        {
           label: this.$t('home.calendar').toUpperCase(),
           to: { name: 'CalendarPage' },
           leftIcon: 'Calendar',
