@@ -108,6 +108,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     appGeocodingApiKey: '',
+    appOpenaiApiKey: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
