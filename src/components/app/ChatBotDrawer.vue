@@ -1,5 +1,4 @@
 <script setup>
-import { use } from 'chai'
 import 'deep-chat'
 // import { Chat } from "@ai-sdk/vue";
 
@@ -33,18 +32,23 @@ const history = ref([])
 
 const chatBox = useTemplateRef('deep-chat')
 
-const requestInterceptor = (requestDetails) => {
-  console.log(requestDetails) // printed above
-  console.log('history', history.value)
+const CONVERSATION_LIMIT = 50
+const addToConversation = (...args) => {
+  conversation.value.push(...args)
+  // clamp to last x messages
+  if (conversation.value.length > CONVERSATION_LIMIT) {
+    conversation.value.splice(0, conversation.value.length - CONVERSATION_LIMIT)
+  }
+}
 
-  conversation.value.push(...requestDetails.body.messages)
+const requestInterceptor = (requestDetails) => {
+  addToConversation(...requestDetails.body.messages)
   requestDetails.body.messages = conversation.value
   return requestDetails
 }
 
 const responseInterceptor = (response) => {
-  console.log(response) // printed above
-  conversation.value.push({ role: 'assistant', text: response.text })
+  addToConversation({ role: 'assistant', text: response.text })
   return response
 }
 
@@ -52,24 +56,12 @@ watch(
   () => chatBox.value,
   (neo, old) => {
     if (neo && !old) {
-      // console.log('chatBox', neo)
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
-    } /*else {
-      console.error('chatBox is null')
-    }*/
+    }
     history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
-
-// onMounted(() => {
-//   if (chatBox.value) {
-//     console.log('chatBox', chatBox.value)
-//     chatBox.value.requestInterceptor = requestInterceptor
-//   } else {
-//     console.error('chatBox is null')
-//   }
-// })
 </script>
 
 <template>
