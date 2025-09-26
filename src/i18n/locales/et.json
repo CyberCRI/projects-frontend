@@ -2653,5 +2653,10 @@
   "documents-page": {
     "title": "{platformName} platvormi dokumendid",
     "description": "Siit leiad kõik {platformName} platvormiga seotud dokumendid, sealhulgas teenusetingimused, privaatsuspoliitika ja muud juriidilised dokumendid."
+  },
+  "chatbot": {
+    "title": "Vestelda AI-ga",
+    "input-placeholder": "Sisesta oma sõnum siia...",
+    "intro-message": "Tere! Kuidas ma saan teid täna aidata?"
   }
 }

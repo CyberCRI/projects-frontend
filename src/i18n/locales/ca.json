@@ -2653,5 +2653,10 @@
   "documents-page": {
     "title": "Documents de la plataforma {platformName}",
     "description": "Troba aquí tots els documents relacionats amb la plataforma {platformName}, inclosos els termes del servei, la política de privacitat i altres documents legals."
+  },
+  "chatbot": {
+    "title": "Xateja amb IA",
+    "input-placeholder": "Escriu el teu missatge aquí...",
+    "intro-message": "Hola, com et puc ajudar avui?"
   }
 }
