@@ -9,13 +9,11 @@ defineProps({
 
 defineEmits(['close'])
 
-// const chat = new Chat({});
+const IS_STREAMED = ref(true)
 
 const connectOptions = {
-  url: '/api/chat',
-  //   method: 'websocket',
-  //   headers: { customName: 'customHeaderValue' },
-  //   additionalBodyProps: { customBodyField: 'customBodyValue' },
+  url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
+  stream: IS_STREAMED.value,
 }
 
 const chatStyle = ref({
@@ -49,7 +47,14 @@ const requestInterceptor = (requestDetails) => {
 }
 
 const responseInterceptor = (response) => {
-  addToConversation({ role: 'assistant', text: response.text })
+  console.log('response', response)
+  if (!IS_STREAMED.value || response.is_done) {
+    // only add complete response, not individual chunks
+    addToConversation({
+      role: 'assistant',
+      text: IS_STREAMED.value ? response.done_text : response.text,
+    })
+  }
   return response
 }
 
@@ -137,6 +142,7 @@ const messageStyles = computed(() => ({
       :avatars="true"
       :submitButtonStyles="submitButtonStyles"
       :messageStyles="messageStyles"
+      :stream="IS_STREAMED"
     />
   </BaseDrawer>
 </template>

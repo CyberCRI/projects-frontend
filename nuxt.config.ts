@@ -75,7 +75,7 @@ export default defineNuxtConfig({
     compilerOptions: {
       // treat all tags with a dash as custom elements
       // isCustomElement: (tag) => tag.includes('-')
-      isCustomElement: (tag) => ['deep'].includes(tag),
+      isCustomElement: (tag) => ['deep-chat'].includes(tag),
     },
   },
   vite: {
