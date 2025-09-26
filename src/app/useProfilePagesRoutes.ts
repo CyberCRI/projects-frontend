@@ -25,6 +25,57 @@ export default function useProfilePagesRoutes() {
       name: 'ProfileSkills',
       component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
     },
+
+    {
+      path: 'publications',
+      name: 'ProfilePublications',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfilePublicationsTab.vue'),
+    },
+    {
+      path: 'conference',
+      name: 'ProfileConference',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileConferenceTab.vue'),
+    },
+    {
+      path: 'reward',
+      name: 'ProfileReward',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileRewardTab.vue'),
+    },
+    {
+      path: 'funding',
+      name: 'ProfileFunding',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileFundingTab.vue'),
+    },
+    {
+      path: 'teaching',
+      name: 'ProfileTeaching',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileTeachingTab.vue'),
+    },
+    {
+      path: 'team',
+      name: 'ProfileTeam',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileTeamTab.vue'),
+    },
+    {
+      path: 'resources',
+      name: 'ProfileResources',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileResourcesTab.vue'),
+    },
+    {
+      path: 'search-associate',
+      name: 'ProfileSearchAssociate',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSearchAssociateTab.vue'),
+    },
+    {
+      path: 'research-area',
+      name: 'ProfileResearchArea',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileResearchAreaTab.vue'),
+    },
+    {
+      path: 'researcher-summary',
+      name: 'ProfileSummaryResearcher',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSummaryResearcherTab.vue'),
+    },
   ]
 
   const profileEditTabs = [

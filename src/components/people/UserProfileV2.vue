@@ -188,11 +188,7 @@ export default {
       return this.isEditing ? this.profileEditTabsFiltered : this.profileDisplayTabsFiltered
     },
 
-    profileDisplayTabs() {
-      // watch out for the order of the tabs
-      // the indices are used in calls to provided method tabsLayoutSelectTab()
-      // some index are used for navigation (see below)
-
+    profileDisplayTabNormale() {
       const roadSuffix = this.isSelf ? '' : 'Other'
       const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
       return [
@@ -305,6 +301,244 @@ export default {
           icon: 'VipCrownLine',
         },
       ]
+    },
+
+    profileDisplayTabResearcher() {
+      const roadSuffix = this.isSelf ? '' : 'Other'
+      const params = this.isSelf ? {} : { userId: this.user.slug || this.user.id }
+      return [
+        {
+          label: this.$t('profile.snapshot'),
+          key: 'snapshot-researcher',
+          id: 'profile-summary',
+          view: {
+            name: 'ProfileSummaryResearcher' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditGeneralResearcher' + roadSuffix,
+            params,
+          },
+          // component: ProfileSummaryTab,
+          props: {
+            user: this.user,
+          },
+          icon: 'Home',
+          condition: true,
+          noTitle: true, // no title for this tab
+        },
+        {
+          label: this.$t('profile.bio'),
+          key: 'bio',
+          id: 'profile-bio',
+          view: {
+            name: 'ProfileBio' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditBio' + roadSuffix,
+            params,
+          },
+          // component: ProfileBioTab,
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Account',
+        },
+        {
+          label: this.$t('profile.publications'),
+          key: 'publications',
+          id: 'profile-publications',
+          view: {
+            name: 'ProfilePublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Pen',
+        },
+        {
+          label: this.$t('profile.conference'),
+          key: 'conference',
+          id: 'profile-conference',
+          view: {
+            name: 'ProfileConference' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditConference' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Megaphone',
+        },
+        {
+          label: this.$t('profile.reward'),
+          key: 'reward',
+          id: 'profile-reward',
+          view: {
+            name: 'ProfileReward' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditReward' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Award',
+        },
+        {
+          label: this.$t('profile.funding'),
+          key: 'funding',
+          id: 'profile-funding',
+          view: {
+            name: 'ProfileFunding' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditFunding' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Bank',
+        },
+        {
+          label: this.$t('profile.teaching'),
+          key: 'teaching',
+          id: 'profile-teaching',
+          view: {
+            name: 'ProfileTeaching' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditTeaching' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Graduation',
+        },
+        {
+          label: this.$t('profile.team'),
+          key: 'team',
+          id: 'profile-team',
+          view: {
+            name: 'ProfileTeam' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditTeam' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Team',
+        },
+        {
+          label: this.$t('profile.resources'),
+          key: 'resources',
+          id: 'profile-resources',
+          view: {
+            name: 'ProfileResources' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditResources' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Resources',
+        },
+        {
+          label: this.$t('profile.search-associate'),
+          key: 'search-associate',
+          id: 'profile-search-associate',
+          view: {
+            name: 'ProfileSearchAssociate' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditSearchAssociate' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'SearchAssociate',
+        },
+        {
+          label: this.$t('profile.projects'),
+          key: 'projects',
+          id: 'profile-projects',
+          view: {
+            name: 'ProfileProjects' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditProjects' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Archive',
+        },
+        {
+          label: this.$t('profile.research-area'),
+          key: 'research-area',
+          id: 'profile-research-area',
+          view: {
+            name: 'ProfileResearchArea' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditResearchArea' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+
+          condition: true,
+          icon: 'ResearchArea',
+        },
+      ]
+    },
+
+    profileDisplayTabs() {
+      // watch out for the order of the tabs
+      // the indices are used in calls to provided method tabsLayoutSelectTab()
+      // some index are used for navigation (see below)
+      const isResearcher = this.user.isResearcher
+      if (isResearcher) {
+        return this.profileDisplayTabResearcher
+      }
+      return this.profileDisplayTabNormale
     },
 
     profileDisplayTabsFiltered() {
@@ -442,6 +676,7 @@ export default {
     },
 
     currentTab() {
+      console.log(this.$route.name)
       return this.allProfileTabs.find((tab) => this.$route.name === tab.view.name)
     },
 
@@ -501,6 +736,9 @@ export default {
         // get another user
         this.user = await getUser(this.userId, true)
       }
+
+      // TODO(remi): remove
+      this.user.isResearcher = true
     },
   },
 }

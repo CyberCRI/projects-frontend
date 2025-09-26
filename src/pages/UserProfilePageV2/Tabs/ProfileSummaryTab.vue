@@ -145,6 +145,9 @@ export default {
   },
 
   computed: {
+    isResearcher() {
+      return this.user.isResearcher
+    },
     isCurrentUser() {
       return this.usersStore.id === this.user.id
     },

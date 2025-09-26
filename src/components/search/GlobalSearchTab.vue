@@ -30,7 +30,10 @@
             :user="projectListSlotProps.item.user"
             :mode="projectListSlotProps.mode"
             :to-link="{
-              name: 'ProfileOtherUser',
+              name:
+                projectListSlotProps.item.user.isResearcher || true
+                  ? 'ProfileSummaryResearcher'
+                  : 'ProfileOtherUser',
               params: {
                 userId: projectListSlotProps.item.user.slug || projectListSlotProps.item.user.id,
               },
