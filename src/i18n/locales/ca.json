@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "Llista",
     "grid": "Graella"
+  },
+  "chatbot": {
+    "title": "Xateja amb IA",
+    "input-placeholder": "Escriu el teu missatge aquí...",
+    "intro-message": "Hola, com et puc ajudar avui?"
   }
 }

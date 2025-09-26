@@ -2652,5 +2652,10 @@
   "card-list": {
     "list": "Liste",
     "grid": "Grille"
+  },
+  "chatbot": {
+    "title": "Discuter avec l'IA",
+    "input-placeholder": "Tapez votre message ici...",
+    "intro-message": "Bonjour, comment puis-je vous aider aujourd'hui ?"
   }
 }

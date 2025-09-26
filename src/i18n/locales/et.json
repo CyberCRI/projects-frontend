@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "Nimekiri",
     "grid": "Võrk"
+  },
+  "chatbot": {
+    "title": "Vestelda AI-ga",
+    "input-placeholder": "Sisesta oma sõnum siia...",
+    "intro-message": "Tere! Kuidas ma saan teid täna aidata?"
   }
 }

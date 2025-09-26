@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "List",
     "grid": "Grid"
+  },
+  "chatbot": {
+    "title": "Chat with AI",
+    "input-placeholder": "Type your message here...",
+    "intro-message": "Hello How can I assist you today?"
   }
 }

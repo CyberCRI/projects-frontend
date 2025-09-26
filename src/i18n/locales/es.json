@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "Lista",
     "grid": "Cuadrícula"
+  },
+  "chatbot": {
+    "title": "Chatear con IA",
+    "input-placeholder": "Escribe tu mensaje aquí...",
+    "intro-message": "Hola, ¿cómo puedo ayudarte hoy?"
   }
 }

@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "Liste",
     "grid": "Raster"
+  },
+  "chatbot": {
+    "title": "Chat mit KI",
+    "input-placeholder": "Geben Sie hier Ihre Nachricht ein...",
+    "intro-message": "Hallo, wie kann ich Ihnen heute helfen?"
   }
 }

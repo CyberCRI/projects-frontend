@@ -2647,5 +2647,10 @@
   "card-list": {
     "list": "Lijst",
     "grid": "Raster"
+  },
+  "chatbot": {
+    "title": "Chat met AI",
+    "input-placeholder": "Typ hier je bericht...",
+    "intro-message": "Hallo, hoe kan ik je vandaag helpen?"
   }
 }
