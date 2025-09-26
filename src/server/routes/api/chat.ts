@@ -14,16 +14,12 @@ export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
     const { messages } = await readBody<{ messages }>(event)
 
-    // console.log('messages', messages)
-
     const adaptedMessages = messages.map((message) => {
       return {
         role: message.role,
         content: message.text,
       }
     })
-
-    // console.log('adaptedMessages', adaptedMessages)
 
     const prompt = {
       id: appOpenaiApiPromptId,
@@ -37,13 +33,10 @@ export default defineLazyEventHandler(() => {
       store: false, // do not store in OpenAI's servers, we do this on client side
       input: adaptedMessages, // [{ role: 'user', content: messages[0].content }]
     })
-    // console.log('response', response)
 
     const adaptedResponse = {
       text: response.output_text,
     }
-
-    // console.log('adaptedResponse', adaptedResponse)
 
     return adaptedResponse
   })
