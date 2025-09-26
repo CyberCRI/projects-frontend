@@ -1,6 +1,7 @@
 <script setup>
 import 'deep-chat'
-// import { Chat } from "@ai-sdk/vue";
+
+const { t } = useI18n()
 
 defineProps({
   isOpened: { type: Boolean, default: false },
@@ -52,6 +53,8 @@ const responseInterceptor = (response) => {
   return response
 }
 
+const placeholderText = computed(() => t('chatbot.input-placeholder'))
+
 watch(
   () => chatBox.value,
   (neo, old) => {
@@ -62,23 +65,78 @@ watch(
     history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
+
+const introMessage = computed(() => ({
+  text: t('chatbot.intro-message'),
+  html: false,
+}))
+
+watchEffect(() => {
+  if (chatBox.value) {
+    chatBox.value.setPlaceholderText(placeholderText.value)
+  }
+})
+
+const textInputOptions = computed(() => ({
+  placeholder: { text: placeholderText.value },
+  styles: {
+    container: {
+      padding: '10px',
+      'font-size': '1em',
+      'box-sizing': 'border-box',
+      width: '100%',
+      'border-radius': '6px', // '$border-radius-s',
+      background: '#FFF', //'$white',
+      border: '1px solid #bdbdbd', // '$border-width-s solid $light-gray',
+      color: '#000', // $black
+    },
+  },
+}))
+
+const submitButtonStyles = computed(() => ({
+  submit: {
+    container: {
+      default: {
+        padding: '10px',
+        'aspect-ratio': '1',
+      },
+    },
+  },
+}))
+
+const messageStyles = computed(() => ({
+  default: {
+    user: {
+      background: '#00dba7', // '$primary'
+      color: '#000',
+    },
+    assistant: {
+      background: '#bdbdbd', // '$light-gray'
+      color: '#000',
+    },
+  },
+}))
 </script>
 
 <template>
   <BaseDrawer
     class="medium"
     :is-opened="isOpened"
-    title="Chat with AI"
+    :title="$t('chatbot.title')"
     no-footer
     @close="$emit('close')"
   >
     <deep-chat
       ref="deep-chat"
       :demo="true"
-      :text-input="{ placeholder: { text: 'Welcome to the demo!' } }"
+      :textInput="textInputOptions"
       :history="history"
       :style="chatStyle"
       :connect="connectOptions"
+      :introMessage="introMessage"
+      :avatars="true"
+      :submitButtonStyles="submitButtonStyles"
+      :messageStyles="messageStyles"
     />
   </BaseDrawer>
 </template>

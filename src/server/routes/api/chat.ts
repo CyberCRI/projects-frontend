@@ -34,6 +34,7 @@ export default defineLazyEventHandler(() => {
 
     const response = await openai.responses.create({
       prompt,
+      store: false, // do not store in OpenAI's servers, we do this on client side
       input: adaptedMessages, // [{ role: 'user', content: messages[0].content }]
     })
     // console.log('response', response)
