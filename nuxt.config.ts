@@ -1,7 +1,6 @@
 import { alias } from './alias'
 import fs from 'node:fs'
 import path from 'node:path'
-import vue from '@vitejs/plugin-vue'
 import * as dotenv from 'dotenv'
 
 // Determine the environment file
