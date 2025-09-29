@@ -495,6 +495,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "and": "and",
     "activate": "Activate",
     "activated": "Activated",
     "add": "Add",
@@ -1051,7 +1052,8 @@
     "no-project-reviewing": "You are not reviewer of a project yet",
     "skills": "Skills",
     "hobbies": "Hobbies",
-    "levels-help-link": "Skill levels"
+    "levels-help-link": "Skill levels",
+    "publications": "My publications"
   },
   "you": {
     "no-follow": "No projects followed yet",
@@ -1059,7 +1061,9 @@
     "no-bio": "No biography yet",
     "no-skill": "No skills indicated yet",
     "no-project-participate": "Not a member of a project yet",
-    "no-project-reviewing": "Not a reviewer of a project yet"
+    "no-project-reviewing": "Not a reviewer of a project yet",
+    "publications": "His publications",
+    "no-publications": "No publications yet"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1519,7 +1523,8 @@
     "mentorship-asked": "You asked for mentorship",
     "mentorship-offered": "You offered mentorship",
     "mentorship-asking": "You are asking for mentorship",
-    "mentorship-offering": "You are offering mentorship"
+    "mentorship-offering": "You are offering mentorship",
+    "publications": "Publications"
   },
   "profile-completed-modal": {
     "notice-congratulation": "You are now ready to use the projects platform.",

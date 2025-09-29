@@ -1,50 +1,50 @@
 <template>
-  <div class="profile-publications">
+  <div class="publications-tab">
     <div>
       <h4 class="title">
         {{ title }}
         <span>({{ publications.length }})</span>
       </h4>
+      <UserPublicationsList v-if="publications.length" :limit="null" :publications="publications" />
+      <span v-else class="publications-tab-empty">
+        {{ t('you.no-publications') }}
+      </span>
     </div>
   </div>
 </template>
 
-<script>
-import useUsersStore from '@/stores/useUsers.ts'
+<script setup>
+import UserPublicationsList from '@/components/people/UserProfile/UserPublicationsList.vue'
 
-export default {
+defineOptions({
   name: 'ProfilePublicationsTab',
+})
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+const { t } = useNuxtI18n()
+
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
+})
 
-  setup() {
-    const usersStore = useUsersStore()
-    const { canEditUser } = usePermissions()
-    return {
-      usersStore,
-      canEditUser,
-    }
-  },
-
-  computed: {
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
-
-    publications() {
-      return []
-    },
-
-    title() {
-      return this.isCurrentUser ? this.$t('me.publications') : this.$t('you.publications')
-    },
-  },
-}
+const title = t('me.publications')
+const publications = props.user.publications
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.publications-tab {
+  .title {
+    font-size: $font-size-l;
+    font-weight: 700;
+    color: $primary-dark;
+    margin: $space-l 0;
+  }
+}
+
+.publications-tab-empty {
+  font-style: italic;
+  opacity: 0.7;
+}
+</style>

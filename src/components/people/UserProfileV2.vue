@@ -276,7 +276,8 @@ export default {
           props: {
             user: this.user,
           },
-          condition: true,
+          // dispay publications only if user have publications
+          condition: this.user?.publications?.length > 0,
           icon: 'Pen',
         },
         {

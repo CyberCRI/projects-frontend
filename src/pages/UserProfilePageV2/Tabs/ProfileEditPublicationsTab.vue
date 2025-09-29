@@ -3,48 +3,25 @@
     <div>
       <h4 class="title">
         {{ title }}
-        <span>({{ publications.length }})</span>
+        <span>({{ user.publications.length }})</span>
       </h4>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import useUsersStore from '@/stores/useUsers.ts'
 
-export default {
+defineOptions({
   name: 'ProfileEditPublicationsTab',
+})
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+const { t } = useNuxtI18n()
+
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
-
-  setup() {
-    const usersStore = useUsersStore()
-    const { canEditUser } = usePermissions()
-    return {
-      usersStore,
-      canEditUser,
-    }
-  },
-
-  computed: {
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
-
-    publications() {
-      return []
-    },
-
-    title() {
-      return this.isCurrentUser ? this.$t('me.publications') : this.$t('you.publications')
-    },
-  },
-}
+})
 </script>
-
-<style lang="scss" scoped></style>
