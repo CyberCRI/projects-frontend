@@ -262,6 +262,24 @@ export default {
           icon: 'Archive',
         },
         {
+          label: this.$t('profile.publications'),
+          key: 'publications',
+          id: 'profile-publications',
+          view: {
+            name: 'ProfilePublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: true,
+          icon: 'Pen',
+        },
+        {
           label: this.$t('profile.groups'),
           key: 'groups',
           id: 'profile-groups',
