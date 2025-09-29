@@ -146,5 +146,3 @@ const messageStyles = computed(() => ({
     />
   </BaseDrawer>
 </template>
-
-<style></style>
