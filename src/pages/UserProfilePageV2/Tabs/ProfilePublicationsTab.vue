@@ -3,9 +3,13 @@
     <div>
       <h4 class="title">
         {{ title }}
-        <span>({{ publications.length }})</span>
+        <span>({{ publications.publications.length }})</span>
       </h4>
-      <UserPublicationsList v-if="publications.length" :limit="null" :publications="publications" />
+      <UserPublicationsList
+        v-if="publications.publications.length"
+        :limit="null"
+        :publications="publications"
+      />
       <span v-else class="publications-tab-empty">
         {{ t('you.no-publications') }}
       </span>
