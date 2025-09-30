@@ -145,6 +145,9 @@ export default defineNuxtConfig({
       appDisconnectionGraceDuration: 0,
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
+      appChatbotEnabled:
+        (process.env.NUXT_APP_OPENAI_API_KEY && process.env.NUXT_APP_OPENAI_API_PROMPT_ID && 1) ||
+        0,
     },
   },
   i18n: {
