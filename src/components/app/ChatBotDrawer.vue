@@ -26,7 +26,7 @@ const chatStyle = ref({
   width: '100%',
 })
 
-const previousResponseId = ref(null)
+const conversationId = ref(null)
 const conversation = useState('chat-box', () => [])
 const history = ref([])
 
@@ -44,7 +44,7 @@ const addToConversation = (...args) => {
 const requestInterceptor = (requestDetails) => {
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
-  requestDetails.body.previousResponseId = previousResponseId.value
+  requestDetails.body.conversationId = conversationId.value
   return requestDetails
 }
 
@@ -56,7 +56,7 @@ const responseInterceptor = (response) => {
       role: 'assistant',
       text: IS_STREAMED.value ? response.done_text : response.text,
     })
-    previousResponseId.value = response.id
+    conversationId.value = response.conversationId
   }
   return response
 }
@@ -124,6 +124,8 @@ const messageStyles = computed(() => ({
     },
   },
 }))
+
+const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 </script>
 
 <template>
@@ -146,6 +148,7 @@ const messageStyles = computed(() => ({
       :submitButtonStyles="submitButtonStyles"
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
-    />
+      :remarkable="remarkableOptions"
+    ></deep-chat>
   </BaseDrawer>
 </template>
