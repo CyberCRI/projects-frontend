@@ -26,6 +26,7 @@ const chatStyle = ref({
   width: '100%',
 })
 
+const previousResponseId = ref(null)
 const conversation = useState('chat-box', () => [])
 const history = ref([])
 
@@ -42,7 +43,8 @@ const addToConversation = (...args) => {
 
 const requestInterceptor = (requestDetails) => {
   addToConversation(...requestDetails.body.messages)
-  requestDetails.body.messages = conversation.value
+  // requestDetails.body.messages = conversation.value
+  requestDetails.body.previousResponseId = previousResponseId.value
   return requestDetails
 }
 
@@ -54,6 +56,7 @@ const responseInterceptor = (response) => {
       role: 'assistant',
       text: IS_STREAMED.value ? response.done_text : response.text,
     })
+    previousResponseId.value = response.id
   }
   return response
 }
