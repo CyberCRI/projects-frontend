@@ -23,7 +23,7 @@
       @confirm="globalsStore.confirmDiscardPendingEditsPromise(true)"
     />
 
-    <ClientOnly>
+    <ClientOnly v-if="hasChatBot">
       <ChatBotDrawer :is-opened="isChatBotOpen" @close="isChatBotOpen = false" />
       <div class="floating-chat-icon">
         <LpiButton btn-icon="SparklingFill" @click="isChatBotOpen = true" />
@@ -70,6 +70,8 @@ const currentRouteName = computed(() => {
 })
 
 const isChatBotOpen = ref(false)
+
+const hasChatBot = ref(!!useRuntimeConfig().public.appChatbotEnabled)
 
 const toggleReportBugModal = () => {
   reportBugModalActive.value = !reportBugModalActive.value
