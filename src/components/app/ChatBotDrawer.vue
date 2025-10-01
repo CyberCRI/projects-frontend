@@ -9,7 +9,7 @@ defineProps({
 
 defineEmits(['close'])
 
-const IS_STREAMED = ref(false)
+const IS_STREAMED = ref(true)
 
 const connectOptions = {
   url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
