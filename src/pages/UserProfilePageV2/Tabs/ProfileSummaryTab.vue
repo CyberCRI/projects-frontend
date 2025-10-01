@@ -22,7 +22,7 @@
     <div class="lists">
       <!-- publications -->
       <UserProjectsSearch
-        v-if="user.publications && user.publications.publications.length"
+        v-if="user.researcher.documents_count > 0"
         :limit="LIMIT_PUBLICATIONS"
         :user="user"
       >
@@ -30,15 +30,15 @@
           <div class="project-list-header">
             <h4 class="title">
               {{ $t('me.publications') }}
-              <span>({{ user.publications.total }})</span>
+              <span>({{ user.researcher.documents_count }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="user.publications.total > LIMIT_PUBLICATIONS"
+              v-if="user.researcher.documents_count > LIMIT_PUBLICATIONS"
               data-test="see-more"
               :to="{ name: 'ProfilePublicationsOther' }"
             />
           </div>
-          <UserPublicationsList :limit="LIMIT_PUBLICATIONS" :publications="user.publications" />
+          <UserPublicationsList preview :limit="LIMIT_PUBLICATIONS" :user="user" />
         </template>
       </UserProjectsSearch>
 

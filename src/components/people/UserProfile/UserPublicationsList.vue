@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-publications-container">
+  <div v-if="!load" class="profile-publications-container">
     <div class="profile-info-container">
       <div class="public-year-container">
         <h5>{{ t('profile.research-output-year') }}</h5>
@@ -7,9 +7,9 @@
           <span>{{ yearsInfo.minYear }}</span>
           <div class="publi-year">
             <span
-              :title="`${obj.year} (${obj.count})`"
               v-for="obj in yearsInfo.bar"
               :key="obj.year"
+              :title="`${obj.year} (${obj.count})`"
               class="publi-year-bar"
               :style="{ '--bar-count': obj.height }"
             />
@@ -18,75 +18,148 @@
         </div>
       </div>
       <div class="public-numbers-container">
-        <div
-          class="publi-numbers"
-          v-for="[name, value] in Object.entries(publications.global)"
-          :key="name"
-        >
-          <span>{{ value }}</span>
-          <span>{{ name }}</span>
+        <div v-for="obj in documentsAnalytics.document_type" :key="obj.name" class="publi-numbers">
+          <span>{{ obj.count }}</span>
+          <span>{{ obj.name ?? t('common.other') }}</span>
         </div>
       </div>
     </div>
-    <NuxtLink
-      :to="{ name: 'ProfilePublicationsOther', params: { publicationId: publi.id } }"
-      v-for="publi in publicationsSliced"
-      :key="publi.id"
-    >
-      <article class="profile-publications">
-        <h2>{{ publi.title }}</h2>
-        <div>
-          <span
-            v-for="(contributor, idx) in publi.contributors"
-            :key="contributor.slug || contributor.name"
+    <article v-for="publi in documents.results" :key="publi.id" class="profile-publications">
+      <h2>{{ publi.title }}</h2>
+      <div>
+        <span v-for="(author, idx) in publi.authors" :key="author.id">
+          <NuxtLink
+            v-if="author.user?.slug"
+            class="profile-publication-contributor"
+            :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
           >
-            <NuxtLink
-              class="profile-publication-contributor"
-              v-if="contributor.slug"
-              :to="{ name: 'ProfileOtherUser', params: { userId: contributor.slug } }"
-            >
-              <strong>{{ contributor.name }}</strong>
-            </NuxtLink>
-            <strong class="profile-publication-contributor" v-else>{{ contributor.name }}</strong>
-            <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
-            <span v-if="idx + 2 < publi.contributors.length">,</span>
-            <span v-else-if="idx + 2 == publi.contributors.length">
-              {{ ` ${$t('common.and')} ` }}
-            </span>
+            <strong>{{ author.display_name }}</strong>
+          </NuxtLink>
+          <strong v-else class="profile-publication-contributor">{{ author.display_name }}</strong>
+          <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
+          <span v-if="idx + 2 < publi.authors.length">,</span>
+          <span v-else-if="idx + 2 === publi.authors.length">
+            {{ ` ${$t('common.and')} ` }}
           </span>
-        </div>
-        <p class="profile-publication-description">{{ publi.description }}</p>
-        <div class="public-tags">
+        </span>
+      </div>
+      <p class="profile-publication-description">
+        {{
+          publi.publication_date?.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })
+        }}
+      </p>
+      <div class="public-tags">
+        <BadgeItem
+          v-for="tag in publi.tags || []"
+          :key="tag.name"
+          :label="tag.name"
+          :icon-name="iconName(tag.perc)"
+        />
+      </div>
+      <div class="public-tags">
+        <a
+          v-for="source in publi.sources"
+          :key="source.identifier.id"
+          :href="harvesterToUrl(source.identifier)"
+          target="_blank"
+          rel="referer,noopener"
+        >
           <BadgeItem
-            v-for="tag in publi.tags"
-            :key="tag.name"
-            :label="tag.name"
-            :iconName="iconName(tag.perc)"
+            :label="source.identifier.harvester"
+            :icon-name="iconNameIdentifier(source.identifier.harvester)"
           />
-        </div>
-      </article>
-    </NuxtLink>
+        </a>
+      </div>
+    </article>
+    <PaginationButtons
+      v-if="props.preview === false"
+      class="m-auto"
+      :current="pagination.currentPage"
+      :pagination="pagination"
+      :total="pagination.total"
+      @update-pagination="refresh"
+    />
   </div>
+  <div v-else>loading...</div>
 </template>
 
 <script setup>
 import BadgeItem from '@/components/base/BadgeItem.vue'
+import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import {
+  sanitizeResearcherDocument,
+  sanitizeResearcherDocumentAnalytics,
+} from '@/api/sanitizes/researcher'
 
 defineOptions({
   name: 'UserPublicationsList',
 })
 
-const { t } = useNuxtI18n()
-
 const props = defineProps({
-  publications: {
-    type: Object,
-    required: true,
+  preview: {
+    type: Boolean,
+    default: false,
   },
   limit: {
     type: Number,
     default: null,
   },
+  user: {
+    type: Object,
+    required: true,
+  },
+})
+
+const { t } = useNuxtI18n()
+const documents = ref(null)
+const pagination = computed(() => {
+  if (documents.value === null) {
+    return { total: 0 }
+  }
+  return {
+    currentPage: documents.value.current_page,
+    total: documents.value.total_page,
+    previous: documents.value.previous,
+    next: documents.value.next,
+    first: documents.value.first,
+    last: documents.value.last,
+  }
+})
+const loading = ref(false)
+const documentsAnalytics = ref({
+  document_type: [],
+  years: [],
+})
+// ensure docuements is loaded
+const load = computed(() => loading.value === true || documents.value === null)
+
+const refresh = (url) => {
+  loading.value = true
+  useAPI(url)
+    .then(sanitizeResearcherDocument)
+    .then((data) => {
+      documents.value = data
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
+
+const getDocumentsInfo = () => {
+  useAPI(
+    `crisalid/researcher/${props.user.researcher.id}/documents?analytics=info&limit=${props.preview ? 5 : 15}`
+  )
+    .then(sanitizeResearcherDocumentAnalytics)
+    .then((data) => {
+      documentsAnalytics.value = data
+    })
+}
+
+onMounted(() => {
+  refresh(
+    `crisalid/researcher/${props.user.researcher.id}/documents?offset=0&limit=${props.limit || 10}`
+  )
+  getDocumentsInfo()
 })
 
 // this create graph
@@ -96,8 +169,7 @@ const yearsInfo = computed(() => {
     maxYear: null,
     bar: [],
   }
-  const years = props.publications.years.sort((a, b) => a.year >= b.year)
-  years.forEach((o) => {
+  documentsAnalytics.value.years.forEach((o) => {
     if (info.minYear == null || info.minYear > o.year) {
       info.minYear = o.year
     }
@@ -105,10 +177,12 @@ const yearsInfo = computed(() => {
       info.maxYear = o.year
     }
     info.bar.push({
-      count: o.count,
+      count: o.total,
       year: o.year,
     })
   })
+
+  console.log(info)
 
   const maxCount = Math.max(...info.bar.map((el) => el.count))
   info.bar.forEach((obj) => {
@@ -127,13 +201,11 @@ const iconName = (perc) => {
   return `progress-${progressValue}`
 }
 
-const publicationsSliced = computed(() => {
-  // if no limit, display all publications
-  if (props.limit === null) {
-    return props.publications.publications
-  }
-  return props.publications.publications.slice(0, props.limit)
-})
+const iconNameIdentifier = (harvester) => {}
+
+const harvesterToUrl = (identifier) => {
+  return `https://hal.science/${identifier.value.replace('hal-', '')}v1`
+}
 </script>
 
 <style lang="scss" scoped>
@@ -159,9 +231,6 @@ $profile-publications: 1rem;
   border-radius: 5px;
   padding: 0.2rem;
   transition: background-color 0.25s ease;
-  &:hover {
-    background-color: #f5f5f5;
-  }
 }
 
 .profile-publication-contributor {
@@ -254,5 +323,9 @@ a.profile-publication-contributor {
   flex-wrap: wrap;
   gap: 0.2rem;
   margin-top: 0.5rem;
+}
+
+.m-auto {
+  margin: auto;
 }
 </style>

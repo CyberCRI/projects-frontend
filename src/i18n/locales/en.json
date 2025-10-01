@@ -495,6 +495,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "other": "other",
     "and": "and",
     "activate": "Activate",
     "activated": "Activated",
@@ -1524,7 +1525,8 @@
     "mentorship-offered": "You offered mentorship",
     "mentorship-asking": "You are asking for mentorship",
     "mentorship-offering": "You are offering mentorship",
-    "publications": "Publications"
+    "publications": "Publications",
+    "research-output-year": "Research output year"
   },
   "profile-completed-modal": {
     "notice-congratulation": "You are now ready to use the projects platform.",
