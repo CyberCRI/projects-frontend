@@ -2,16 +2,21 @@ import OpenAI from 'openai'
 
 const { appOpenaiApiPromptId, appOpenaiApiPromptVersion, appOpenaiApiKey } = useRuntimeConfig()
 
+const { appChatbotEnabled } = useRuntimeConfig().public
+
 export default defineLazyEventHandler(() => {
-  // TODO respond with 404 if not configured
-  if (!appOpenaiApiKey) {
-    throw createError('Missing OpenAI API key')
-  }
-  const openai = new OpenAI({
-    apiKey: appOpenaiApiKey,
-  })
+  const openai = appOpenaiApiKey
+    ? new OpenAI({
+        apiKey: appOpenaiApiKey,
+      })
+    : null
 
   return defineEventHandler(async (event) => {
+    // return 404 if not configured
+    if (!openai || !appChatbotEnabled) {
+      setResponseStatus(event, 404)
+      return
+    }
     const body = await readBody<{
       messages: Array<{ role: string; text: string }>
       conversationId?: string
