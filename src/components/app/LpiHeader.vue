@@ -253,6 +253,11 @@ export default {
       return this.organizationsStore.current
     },
 
+    showDocumentsLink() {
+      // admin should always access to documents, so they can add the first one...
+      return this.isAdmin || (this.isConnected && this.organization?.attachment_files_count > 0)
+    },
+
     userMenu() {
       return [
         {
@@ -308,7 +313,7 @@ export default {
           label: this.$t('home.documents').toUpperCase(),
           to: { name: 'DocumentsPage' },
           leftIcon: 'File',
-          condition: this.isConnected, // TODO: check also if there's any document or if we are admin
+          condition: this.showDocumentsLink, // TODO: check also if there's any document or if we are admin
           dataTest: 'more-documents',
         },
         {
