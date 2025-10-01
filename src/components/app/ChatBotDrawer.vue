@@ -1,10 +1,30 @@
 <script setup>
 import 'deep-chat'
+import analytics from '@/analytics'
 
 const { t } = useI18n()
 
-defineProps({
+const props = defineProps({
   isOpened: { type: Boolean, default: false },
+})
+
+watch(
+  () => props.isOpened,
+  (neo, old) => {
+    if (neo != old) {
+      if (neo) {
+        analytics.chatbot.open()
+      } else {
+        analytics.chatbot.close()
+      }
+    }
+  }
+)
+
+onErrorCaptured((err) => {
+  console.error('ChatBotDrawer error', err)
+  analytics.chatbot.error(err.message || err)
+  return false
 })
 
 defineEmits(['close'])
@@ -45,6 +65,7 @@ const requestInterceptor = (requestDetails) => {
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
   requestDetails.body.conversationId = conversationId.value
+  analytics.chatbot.send(requestDetails.body)
   return requestDetails
 }
 
@@ -57,6 +78,7 @@ const responseInterceptor = (response) => {
       text: IS_STREAMED.value ? response.done_text : response.text,
     })
     conversationId.value = response.conversationId
+    analytics.chatbot.receive(response)
   }
   return response
 }
