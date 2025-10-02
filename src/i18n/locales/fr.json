@@ -2004,7 +2004,8 @@
     "placeholder-title": "Titre",
     "tags": "Tags du template",
     "title": "Templates",
-    "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template."
+    "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template.",
+    "comment": "Template pour les commentaires"
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",

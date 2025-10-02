@@ -2002,7 +2002,8 @@
     "placeholder-title": "Tiitel Kohapealne",
     "tags": "Malli sildid",
     "title": "Mallid",
-    "tips-category": "Vali kategooria, millele mall rakendub."
+    "tips-category": "Vali kategooria, millele mall rakendub.",
+    "comment": "Kommentaari mall"
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",

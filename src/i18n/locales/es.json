@@ -2002,7 +2002,8 @@
     "placeholder-title": "T\u00edtulo Titular",
     "tags": "Etiquetas de plantilla",
     "title": "Plantillas",
-    "tips-category": "Seleccione una categor\u00eda a la que se aplicar\u00e1 su plantilla."
+    "tips-category": "Seleccione una categor\u00eda a la que se aplicar\u00e1 su plantilla.",
+    "comment": "Plantilla para el comentario"
   },
   "tips": {
     "background-color": "Este color se mostrar\u00e1 detr\u00e1s del texto.",

@@ -2002,7 +2002,8 @@
     "placeholder-title": "Lloc de substitució del títol",
     "tags": "Etiquetes de plantilla",
     "title": "Plantilles",
-    "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla."
+    "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla.",
+    "comment": "Plantilla per al comentari"
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
