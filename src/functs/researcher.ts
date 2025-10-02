@@ -65,7 +65,7 @@ export const researcherHarvesterToUrl = (author: Researcher): string => {
         return `https://hal.science/${value}`
       case 'scanr':
         return `https://scanr.enseignementsup-recherche.gouv.fr/author/${value}`
-      case 'hal':
+      case 'orcid':
         return `https://orcid.org/${value}`
       case 'idref': {
         // TODO(remi): check with crisalid why we need to add "0"
