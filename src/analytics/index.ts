@@ -12,6 +12,7 @@ import blog from './blog'
 import attachmentFile from './attachment-file.analytic'
 import attachmentLink from './attachment-link.analytic'
 import linkedProject from './linked-project.analytic'
+import chatbot from './chatbot.analytic'
 
 export default {
   ...analytics,
@@ -28,4 +29,5 @@ export default {
   attachmentFile,
   attachmentLink,
   linkedProject,
+  chatbot,
 }

@@ -22,6 +22,13 @@
       @cancel="globalsStore.confirmDiscardPendingEditsPromise(false)"
       @confirm="globalsStore.confirmDiscardPendingEditsPromise(true)"
     />
+
+    <ClientOnly v-if="hasChatBot">
+      <ChatBotDrawer :is-opened="isChatBotOpen" @close="isChatBotOpen = false" />
+      <div class="floating-chat-icon">
+        <LpiButton btn-icon="SparklingFill" @click="isChatBotOpen = true" />
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
@@ -61,6 +68,10 @@ const currentRouteName = computed(() => {
 
   return route.name
 })
+
+const isChatBotOpen = ref(false)
+
+const hasChatBot = ref(!!useRuntimeConfig().public.appChatbotEnabled)
 
 const toggleReportBugModal = () => {
   reportBugModalActive.value = !reportBugModalActive.value
@@ -150,5 +161,13 @@ onBeforeUnmount(() => {
 
 #APP.notification {
   padding: 0; // overwrite buefy ".notification" style
+}
+
+.floating-chat-icon {
+  display: inline-block;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
 }
 </style>
