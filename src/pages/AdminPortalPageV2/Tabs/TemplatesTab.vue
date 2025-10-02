@@ -428,7 +428,6 @@ export default {
 
     .label {
       font-size: $font-size-s;
-      color: $primary-dark;
       font-weight: bold;
       display: block;
       margin-bottom: $space-m;

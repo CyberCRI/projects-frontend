@@ -2002,7 +2002,8 @@
     "placeholder-title": "Title Placeholder",
     "tags": "Template tags",
     "title": "Templates",
-    "tips-category": "Select a category to which your template will apply."
+    "tips-category": "Select a category to which your template will apply.",
+    "comment": "Template for comment"
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",

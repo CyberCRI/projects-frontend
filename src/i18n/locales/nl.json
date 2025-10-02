@@ -2002,7 +2002,8 @@
     "placeholder-title": "Titel Plaatshouder",
     "tags": "Sjabloontags",
     "title": "Sjablonen",
-    "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is."
+    "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is.",
+    "comment": "Sjabloon voor commentaar"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",

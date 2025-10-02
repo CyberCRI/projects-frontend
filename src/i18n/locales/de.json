@@ -2002,7 +2002,8 @@
     "placeholder-title": "Titel Platzhalter",
     "tags": "Vorlage-Tags",
     "title": "Vorlagen",
-    "tips-category": "W\u00e4hlen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet."
+    "tips-category": "W\u00e4hlen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
+    "comment": "Vorlage f\u00fcr Kommentare"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
