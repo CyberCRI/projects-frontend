@@ -4,7 +4,6 @@
       v-if="confirmModalIsOpen"
       content=""
       :title="originalComment ? $t('comment.discard-changes') : $t('comment.discard-comment')"
-      confirm-button-label="common.continue"
       @cancel="confirmModalIsOpen = false"
       @confirm="cancel"
     />

@@ -38,7 +38,6 @@
 
   <ConfirmModal
     v-if="showConfirmModal"
-    confirm-button-label="common.continue"
     :title="$t('description.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
     @cancel="showConfirmModal = false"

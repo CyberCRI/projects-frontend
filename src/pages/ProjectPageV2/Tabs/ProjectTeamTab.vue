@@ -159,6 +159,7 @@
       :content="$t('team.remove-user-confirm')"
       :title="$t('common.delete-user')"
       :confirm-button-label="$t('common.delete-user')"
+      :cancel-button-label="$t('common.cancel')"
       :asyncing="asyncingRemoveUser"
       @cancel="confirmModalVisible = false"
       @confirm="removeUser('user')"

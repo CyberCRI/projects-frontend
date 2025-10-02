@@ -2433,7 +2433,7 @@
     },
     "delete": {
       "title": "Supprimer un événement ? ",
-      "message": "Voulez-vous supprimmer cet événement ?",
+      "message": "Voulez-vous supprimer cet événement ?",
       "success": "Événement supprimé",
       "error": "Erreur lors de la suppression de l'événement"
     },
@@ -2478,7 +2478,7 @@
     },
     "delete": {
       "title": "Supprimer une actualité ? ",
-      "message": "Voulez-vous supprimmer cette actualité ?",
+      "message": "Voulez-vous supprimer cette actualité ?",
       "success": "Actualité supprimée",
       "error": "Erreur lors de la suppression de l'actualité"
     },
@@ -2528,7 +2528,7 @@
     },
     "delete": {
       "title": "Supprimer une instruction ? ",
-      "message": "Voulez-vous supprimmer cette instruction ?",
+      "message": "Voulez-vous supprimer cette instruction ?",
       "success": "Instruction supprimée",
       "error": "Erreur lors de la suppression de l'instruction"
     },
