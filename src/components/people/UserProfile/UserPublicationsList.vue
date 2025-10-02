@@ -1,17 +1,26 @@
 <template>
-  <div v-if="!load" class="profile-publications-container">
+  <div v-if="documents" class="profile-publications-container">
     <div class="profile-info-container">
       <div class="public-year-container">
-        <h5>{{ t('profile.research-output-year') }}</h5>
+        <h5>
+          {{ t('profile.research-output-year') }}
+          {{ yearSelected ? `${yearSelected} (${documents.count})` : '' }}
+        </h5>
         <div class="public-year-info">
           <span>{{ yearsInfo.minYear }}</span>
           <div class="publi-year">
-            <span
+            <component
+              :is="preview ? 'button' : 'div'"
               v-for="obj in yearsInfo.bar"
               :key="obj.year"
-              :title="`${obj.year} (${obj.count})`"
               class="publi-year-bar"
+              :class="{
+                disabled: yearSelected !== null && yearSelected !== obj.year,
+                preview: preview,
+              }"
+              :title="`${t('common.select')} ${obj.year} ${t('common.year')}`"
               :style="{ '--bar-count': obj.height }"
+              @click="onSelectedYear(obj.year)"
             />
           </div>
           <span>{{ yearsInfo.maxYear }}</span>
@@ -44,9 +53,7 @@
         </span>
       </div>
       <p class="profile-publication-description">
-        {{
-          publi.publication_date?.toLocaleDateString(undefined, { year: 'numeric', month: 'long' })
-        }}
+        {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
       </p>
       <div class="public-tags">
         <BadgeItem
@@ -56,18 +63,17 @@
           :icon-name="iconName(tag.perc)"
         />
       </div>
-      <div class="public-tags">
+      <div class="public-sources-container">
         <a
           v-for="source in publi.sources"
           :key="source.identifier.id"
           :href="harvesterToUrl(source.identifier)"
+          :title="`${t('common.link-to')} ${source.identifier.harvester}`"
           target="_blank"
           rel="referer,noopener"
+          class="public-sources"
         >
-          <BadgeItem
-            :label="source.identifier.harvester"
-            :icon-name="iconNameIdentifier(source.identifier.harvester)"
-          />
+          <IconHarvester :harvester="source.identifier.harvester" height="1.3rem" />
         </a>
       </div>
     </article>
@@ -80,16 +86,21 @@
       @update-pagination="refresh"
     />
   </div>
-  <div v-else>loading...</div>
+  <div v-else-if="loading">loading...</div>
+  <div v-else>
+    {{ t('you.no-publications') }}
+  </div>
 </template>
 
 <script setup>
+import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import {
   sanitizeResearcherDocument,
   sanitizeResearcherDocumentAnalytics,
 } from '@/api/sanitizes/researcher'
+import { harvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
   name: 'UserPublicationsList',
@@ -109,8 +120,8 @@ const props = defineProps({
     required: true,
   },
 })
+const { t, locale } = useNuxtI18n()
 
-const { t } = useNuxtI18n()
 const documents = ref(null)
 const pagination = computed(() => {
   if (documents.value === null) {
@@ -130,8 +141,19 @@ const documentsAnalytics = ref({
   document_type: [],
   years: [],
 })
-// ensure docuements is loaded
-const load = computed(() => loading.value === true || documents.value === null)
+
+// for filters year
+const yearSelected = ref(null)
+const onSelectedYear = (year) => {
+  // block select date in preview (from snapshot page)
+  if (props.preview) {
+    return
+  }
+  // if the selected year is the same, reset filters
+  yearSelected.value = yearSelected.value === year ? null : year
+}
+
+const defaultURL = `crisalid/researcher/${props.user.researcher.id}/documents?offset=0&limit=${props.limit || 10}`
 
 const refresh = (url) => {
   loading.value = true
@@ -145,10 +167,14 @@ const refresh = (url) => {
     })
 }
 
+watch(yearSelected, () => {
+  const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
+  refresh(`${defaultURL}${publicationDate}`)
+})
+
 const getDocumentsInfo = () => {
-  useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/documents?analytics=info&limit=${props.preview ? 5 : 15}`
-  )
+  const limit = props.preview ? `&limit=5` : ''
+  useAPI(`crisalid/researcher/${props.user.researcher.id}/documents?analytics=info${limit}`)
     .then(sanitizeResearcherDocumentAnalytics)
     .then((data) => {
       documentsAnalytics.value = data
@@ -156,9 +182,7 @@ const getDocumentsInfo = () => {
 }
 
 onMounted(() => {
-  refresh(
-    `crisalid/researcher/${props.user.researcher.id}/documents?offset=0&limit=${props.limit || 10}`
-  )
+  refresh(defaultURL)
   getDocumentsInfo()
 })
 
@@ -182,8 +206,6 @@ const yearsInfo = computed(() => {
     })
   })
 
-  console.log(info)
-
   const maxCount = Math.max(...info.bar.map((el) => el.count))
   info.bar.forEach((obj) => {
     obj.height = (obj.count / maxCount) * 100
@@ -199,12 +221,6 @@ const iconName = (perc) => {
   const progressValue = Math.max(Math.min(calc, 8), 1)
 
   return `progress-${progressValue}`
-}
-
-const iconNameIdentifier = (harvester) => {}
-
-const harvesterToUrl = (identifier) => {
-  return `https://hal.science/${identifier.value.replace('hal-', '')}v1`
 }
 </script>
 
@@ -260,6 +276,10 @@ a.profile-publication-contributor {
     align-items: center;
     gap: 1rem;
   }
+
+  .public-year-container > h5 {
+    text-align: center;
+  }
 }
 
 .public-year-container {
@@ -271,6 +291,7 @@ a.profile-publication-contributor {
   & > h5 {
     opacity: 0.7;
     font-size: 0.8rem;
+    width: 100%;
   }
 }
 .public-year {
@@ -279,16 +300,25 @@ a.profile-publication-contributor {
   gap: 2rem;
 }
 .publi-year-bar {
+  border: none;
   margin: 0 1px;
-  --max-bar-height: 40;
+  --max-bar-height: 60;
+  --min-bar-height: 5;
   width: 10px;
   display: inline-block;
   background-color: #501087;
-  height: calc(var(--max-bar-height) * (var(--bar-count) / 100) * 1px);
-  transition: transform 0.4s;
+  height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
+  transition: all 0.4s;
   transform-origin: bottom;
-  &:hover {
-    transform: scale(120%);
+  border-radius: 20px;
+  &:not(.preview) {
+    cursor: pointer;
+    &:hover {
+      transform: scale(120%);
+    }
+    &.disabled {
+      opacity: 0.5;
+    }
   }
 }
 .public-year-info {
@@ -323,6 +353,23 @@ a.profile-publication-contributor {
   flex-wrap: wrap;
   gap: 0.2rem;
   margin-top: 0.5rem;
+}
+
+.public-sources-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+.public-sources {
+  border: 1px gray;
+  border-radius: 30px;
+  padding: 0.2rem 0.4rem;
+  transition: all 0.2s;
+  background-color: $primary-light;
+  &:hover {
+    transform: scale(102%);
+  }
 }
 
 .m-auto {
