@@ -22,7 +22,7 @@
     <div class="lists">
       <!-- publications -->
       <UserProjectsSearch
-        v-if="user.researcher.documents_count > 0"
+        v-if="user.researcher?.documents_count"
         :limit="LIMIT_PUBLICATIONS"
         :user="user"
       >

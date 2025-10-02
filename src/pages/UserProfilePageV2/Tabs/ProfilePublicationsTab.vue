@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const title = t('me.publications')
-const documents_count = props.user.researcher.documents_count
+const documents_count = props.user.researcher?.documents_count ?? 0
 </script>
 
 <style lang="scss" scoped>
