@@ -16,12 +16,15 @@
               class="publi-year-bar"
               :class="{
                 disabled: yearSelected !== null && yearSelected !== obj.year,
+                selected: yearSelected === obj.year,
                 preview: preview,
               }"
               :title="`${t('common.select')} ${obj.year} ${t('common.year')}`"
               :style="{ '--bar-count': obj.height }"
               @click="onSelectedYear(obj.year)"
-            />
+            >
+              <span>{{ obj.year }}</span>
+            </component>
           </div>
           <span>{{ yearsInfo.maxYear }}</span>
         </div>
@@ -170,11 +173,16 @@ const refresh = (url) => {
 watch(yearSelected, () => {
   const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
   refresh(`${defaultURL}${publicationDate}`)
+  getDocumentsInfo()
 })
 
 const getDocumentsInfo = () => {
   const limit = props.preview ? `&limit=5` : ''
-  useAPI(`crisalid/researcher/${props.user.researcher.id}/documents?analytics=info${limit}`)
+  const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
+
+  useAPI(
+    `crisalid/researcher/${props.user.researcher.id}/documents?analytics=info${limit}${publicationDate}`
+  )
     .then(sanitizeResearcherDocumentAnalytics)
     .then((data) => {
       documentsAnalytics.value = data
@@ -311,6 +319,9 @@ a.profile-publication-contributor {
   transition: all 0.4s;
   transform-origin: bottom;
   border-radius: 20px;
+  & > span {
+    display: none;
+  }
   &:not(.preview) {
     cursor: pointer;
     &:hover {
@@ -318,6 +329,18 @@ a.profile-publication-contributor {
     }
     &.disabled {
       opacity: 0.5;
+    }
+    &.selected {
+      width: 4rem;
+      min-height: 1.5rem;
+      display: inline-flex;
+      & > span {
+        display: table;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        margin: auto;
+      }
     }
   }
 }
