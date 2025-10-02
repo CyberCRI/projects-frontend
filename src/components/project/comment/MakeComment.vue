@@ -103,7 +103,7 @@ export default {
 
   data() {
     return {
-      comment: this.originalComment ? this.originalComment.content : '<p></p>',
+      comment: this.originalComment?.content || '<p></p>',
       addedImages: [],
       asyncing: false,
       confirmModalIsOpen: false,
@@ -112,6 +112,15 @@ export default {
   },
 
   computed: {
+    commentTemplate() {
+      // return this.projectCategoryForCurrentOrganization?.template?.comment || '<p></p>'
+      return this.project.template?.comment || '<p></p>'
+    },
+
+    initialComment() {
+      return this.originalComment?.content || this.commentTemplate || '<p></p>'
+    },
+
     isLoggedIn() {
       return this.usersStore.isConnected
     },
@@ -120,12 +129,15 @@ export default {
       return this.isEdited && this.canCreateComments
     },
     isEdited() {
-      return this.originalComment
-        ? this.originalComment.content != this.comment
-        : this.comment !== '<p></p>'
+      return this.comment !== this.initialComment
       // TODO WTF was this here for?
       // utils.editorCanEdit(this.comment, 'add')
     },
+  },
+
+  mounted() {
+    this.comment = this.initialComment
+    this.editorKey++
   },
 
   methods: {
@@ -142,7 +154,9 @@ export default {
     reset() {
       this.confirmModalIsOpen = false
       // reset comment
-      this.comment = '<p></p>'
+      this.comment = this.initialComment
+      this.addedImages = []
+      this.editorKey++
     },
 
     async submit() {

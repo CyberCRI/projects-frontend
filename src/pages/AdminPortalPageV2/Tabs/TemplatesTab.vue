@@ -121,6 +121,21 @@
           />
         </FieldDisabler>
 
+        <FieldDisabler :disabled="otherFieldDisabled">
+          <label class="label">
+            {{ $filters.capitalize($t('template.comment')) }}
+          </label>
+
+          <TipTapEditor
+            :key="`comment-${editorKey}`"
+            v-model="form.comment"
+            :save-image-callback="saveTemplateImage"
+            class="comment-description"
+            mode="full"
+            data-test="template-comment-editor"
+          />
+        </FieldDisabler>
+
         <div class="form-actions">
           <LpiButton
             :disabled="otherFieldDisabled"
@@ -210,6 +225,7 @@ export default {
         goalTitle: '',
         goal_description: '<p></p>',
         tags: [],
+        comment: '',
       },
       isLoading: false,
       selectedCategory: null,
@@ -308,6 +324,9 @@ export default {
 
         /* Tags */
         this.form.tags = this.selectedCategory?.tags
+
+        /* Comment */
+        this.form.comment = this.selectedCategory?.template.comment || '<p></p>'
       }
       this.editorKey += 1
       this.fetchingTemplate = false
@@ -324,6 +343,7 @@ export default {
         blogentry_placeholder: this.form.blogContent,
         goal_description: this.form.goal_description,
         goal_title: this.form.goalTitle,
+        comment: this.form.comment,
         // language: this.form.language, TODO: delete or uncomment when we decide what to do about languages in categories
       }
 
