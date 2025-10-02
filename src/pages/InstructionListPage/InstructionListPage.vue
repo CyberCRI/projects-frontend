@@ -113,8 +113,6 @@ try {
     v-if="instructionToDelete"
     :content="$t('instructions.delete.message')"
     :title="$t('instructions.delete.title')"
-    cancel-button-label="common.cancel"
-    confirm-button-label="common.delete"
     :asyncing="isDeletingInstruction"
     @cancel="instructionToDelete = null"
     @confirm="doDeleteInstruction"

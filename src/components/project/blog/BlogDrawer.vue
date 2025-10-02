@@ -13,7 +13,6 @@
       v-if="confirmModalIsOpen"
       content=""
       :title="$t('description.quit-without-saving-title')"
-      confirm-button-label="common.continue"
       @cancel="confirmModalIsOpen = false"
       @confirm="closeDrawer"
     />
@@ -31,6 +30,7 @@
       :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
       :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
       :confirm-button-label="$t('common.save')"
+      :cancel-button-label="$t('common.cancel')"
       :asyncing="asyncing"
       @cancel="showConfirmSaveInSoloMode = false"
       @confirm="submitBlogEntry(true)"

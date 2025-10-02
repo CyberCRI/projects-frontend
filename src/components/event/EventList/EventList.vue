@@ -30,8 +30,6 @@
     v-if="eventToDelete"
     :content="$t('event.delete.message')"
     :title="$t('event.delete.title')"
-    cancel-button-label="common.cancel"
-    confirm-button-label="common.delete"
     :asyncing="isDeletingEvent"
     @cancel="eventToDelete = null"
     @confirm="deleteEvent"

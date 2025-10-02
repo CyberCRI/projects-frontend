@@ -160,8 +160,6 @@ try {
     v-if="newsToDelete"
     :content="$t('news.delete.message')"
     :title="$t('news.delete.title')"
-    cancel-button-label="common.cancel"
-    confirm-button-label="common.delete"
     :asyncing="isDeletingNews"
     @cancel="newsToDelete = null"
     @confirm="doDeleteNews"

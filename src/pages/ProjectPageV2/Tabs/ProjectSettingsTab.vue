@@ -158,8 +158,6 @@
       v-if="showConfirmQuit"
       :content="$t('common.quit-project')"
       :title="$t('project.quit')"
-      :cancel-button-label="'common.cancel'"
-      :confirm-button-label="'project.quit'"
       :asyncing="asyncing"
       @cancel="toggleShowConfirmQuitVisible"
       @confirm="quitProject"
@@ -170,7 +168,7 @@
       :content="$t('common.cant-quit-self')"
       :title="$t('project.quit')"
       no-second-button
-      :cancel-button-label="'common.ok'"
+      cancel-button-label="common.ok"
       @cancel="toggleShowQuitIsImposibleVisible"
     />
 

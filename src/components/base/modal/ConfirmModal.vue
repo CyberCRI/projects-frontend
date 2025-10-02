@@ -38,12 +38,12 @@ export default {
 
     cancelButtonLabel: {
       type: String,
-      default: 'common.cancel',
+      default: 'common.no',
     },
 
     confirmButtonLabel: {
       type: String,
-      default: 'common.delete',
+      default: 'common.yes',
     },
 
     noSecondButton: {

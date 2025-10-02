@@ -22,6 +22,7 @@
       :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
       :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
       :confirm-button-label="$t('common.save')"
+      :cancel-button-label="$t('common.cancel')"
       :asyncing="asyncing"
       @cancel="showConfirmSaveInSoloMode = false"
       @confirm="patchProject(true)"
