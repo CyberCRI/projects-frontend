@@ -10,18 +10,7 @@
 </template>
 
 <script setup>
-import useUsersStore from '@/stores/useUsers.ts'
-
 defineOptions({
   name: 'ProfileEditPublicationsTab',
-})
-
-const { t } = useNuxtI18n()
-
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
 })
 </script>

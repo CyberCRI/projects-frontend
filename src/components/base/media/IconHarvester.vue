@@ -28,9 +28,10 @@ defineOptions({
   name: 'IconHarvester',
 })
 
-const props = defineProps({
+defineProps({
   harvester: {
     type: String,
+    required: true,
     validator: (val) => Object.keys(icons).includes(val),
   },
   title: {

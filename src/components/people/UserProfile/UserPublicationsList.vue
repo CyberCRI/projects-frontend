@@ -47,7 +47,15 @@
           >
             <strong>{{ author.display_name }}</strong>
           </NuxtLink>
-          <strong v-else class="profile-publication-contributor">{{ author.display_name }}</strong>
+          <a
+            v-else
+            :href="researcherHarvesterToUrl(author)"
+            rel="noreferer,noopener"
+            target="_blank"
+            class="profile-publication-contributor"
+          >
+            {{ author.display_name }}
+          </a>
           <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
           <span v-if="idx + 2 < publi.authors.length">,</span>
           <span v-else-if="idx + 2 === publi.authors.length">
@@ -58,19 +66,11 @@
       <p class="profile-publication-description">
         {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
       </p>
-      <div class="public-tags">
-        <BadgeItem
-          v-for="tag in publi.tags || []"
-          :key="tag.name"
-          :label="tag.name"
-          :icon-name="iconName(tag.perc)"
-        />
-      </div>
       <div class="public-sources-container">
         <a
           v-for="source in publi.sources"
           :key="source.identifier.id"
-          :href="harvesterToUrl(source.identifier)"
+          :href="documentHarvesterToUrl(source.identifier)"
           :title="`${t('common.link-to')} ${source.identifier.harvester}`"
           target="_blank"
           rel="referer,noopener"
@@ -97,13 +97,12 @@
 
 <script setup>
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
-import BadgeItem from '@/components/base/BadgeItem.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import {
   sanitizeResearcherDocument,
   sanitizeResearcherDocumentAnalytics,
 } from '@/api/sanitizes/researcher'
-import { harvesterToUrl } from '@/functs/researcher.ts'
+import { documentHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
   name: 'UserPublicationsList',
@@ -221,19 +220,11 @@ const yearsInfo = computed(() => {
 
   return info
 })
-
-const iconName = (perc) => {
-  // in progress icon, start from 1 to 8
-  // so we calculate the percentage of icon
-  const calc = Math.round(perc / (100 / 8))
-  const progressValue = Math.max(Math.min(calc, 8), 1)
-
-  return `progress-${progressValue}`
-}
 </script>
 
 <style lang="scss" scoped>
 $profile-publications: 1rem;
+
 .profile-publications-container {
   display: flex;
   flex-direction: column;
@@ -261,6 +252,7 @@ $profile-publications: 1rem;
   font-weight: bold;
   font-size: 0.9rem;
 }
+
 // if is a link, add correct color and underline
 a.profile-publication-contributor {
   color: $primary-dark;
@@ -277,7 +269,7 @@ a.profile-publication-contributor {
   grid-template-columns: 50% 50%;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (width <= 1000px) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
@@ -296,22 +288,27 @@ a.profile-publication-contributor {
   align-items: baseline;
   flex-direction: column;
   gap: 1rem;
+
   & > h5 {
     opacity: 0.7;
     font-size: 0.8rem;
     width: 100%;
   }
 }
+
 .public-year {
   display: flex;
   justify-content: end;
   gap: 2rem;
 }
+
 .publi-year-bar {
   border: none;
   margin: 0 1px;
+
   --max-bar-height: 60;
   --min-bar-height: 5;
+
   width: 10px;
   display: inline-block;
   background-color: #501087;
@@ -319,36 +316,49 @@ a.profile-publication-contributor {
   transition: all 0.4s;
   transform-origin: bottom;
   border-radius: 20px;
+
   & > span {
     display: none;
   }
+
   &:not(.preview) {
     cursor: pointer;
-    &:hover {
+
+    &:hover:not(.selected) {
       transform: scale(120%);
     }
-    &.disabled {
+
+    &.selected:hover {
+      transform: scale(105%);
+    }
+
+    &:not(:hover).disabled {
       opacity: 0.5;
     }
+
     &.selected {
       width: 4rem;
       min-height: 1.5rem;
       display: inline-flex;
+      vertical-align: bottom;
+
       & > span {
-        display: table;
         color: white;
         font-weight: bold;
         text-align: center;
         margin: auto;
+        display: block;
       }
     }
   }
 }
+
 .public-year-info {
   display: flex;
   width: 100%;
   gap: 1rem;
   align-items: baseline;
+  font-weight: bold;
 }
 
 .public-numbers-container {
@@ -356,6 +366,7 @@ a.profile-publication-contributor {
   justify-content: end;
   gap: 2rem;
 }
+
 .publi-numbers {
   display: flex;
   flex-direction: column;
@@ -366,16 +377,10 @@ a.profile-publication-contributor {
     color: #501087;
     font-size: 2rem;
   }
+
   & :last-child {
     opacity: 0.6;
   }
-}
-
-.public-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem;
-  margin-top: 0.5rem;
 }
 
 .public-sources-container {
@@ -384,12 +389,14 @@ a.profile-publication-contributor {
   gap: 0.2rem;
   margin-top: 0.5rem;
 }
+
 .public-sources {
   border: 1px gray;
   border-radius: 30px;
   padding: 0.2rem 0.4rem;
   transition: all 0.2s;
   background-color: $primary-light;
+
   &:hover {
     transform: scale(102%);
   }
