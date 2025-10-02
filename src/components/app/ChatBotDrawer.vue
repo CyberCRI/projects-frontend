@@ -134,18 +134,39 @@ const submitButtonStyles = computed(() => ({
   },
 }))
 
-const messageStyles = computed(() => ({
-  default: {
-    user: {
-      background: '#00dba7', // '$primary'
+const messageStyles = computed(() => {
+  const botStyles = {
+    bubble: {
+      background: '#f1f1f1', // '$almost-white'
       color: '#000',
     },
-    assistant: {
-      background: '#bdbdbd', // '$light-gray'
-      color: '#000',
+  }
+  return {
+    default: {
+      shared: {
+        bubble: {
+          'font-size': '1rem',
+          padding: '1rem',
+        },
+        outerContainer: {
+          padding: '0',
+        },
+        innerContainer: {
+          padding: '0',
+          width: 'auto',
+        },
+      },
+      user: {
+        bubble: {
+          background: '#1d727c', // '$primary-dark'
+          color: '#fff',
+        },
+      },
+      assistant: botStyles,
+      ai: botStyles,
     },
-  },
-}))
+  }
+})
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 </script>
