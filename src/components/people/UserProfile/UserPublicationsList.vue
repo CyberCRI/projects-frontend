@@ -1,6 +1,6 @@
 <template>
   <div v-if="documents" class="profile-publications-container">
-    <div class="profile-info-container">
+    <div class="profile-info-container" :class="{ preview: preview }">
       <div class="public-year-container">
         <h5>
           {{ t('profile.research-output-year') }}
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="public-numbers-container">
-        <div v-for="obj in documentsAnalytics.document_type" :key="obj.name" class="publi-numbers">
+        <div v-for="obj in documentsTypeInfos" :key="obj.name" class="publi-numbers">
           <span>{{ obj.count }}</span>
           <span>{{ obj.name ?? t('common.other') }}</span>
         </div>
@@ -220,6 +220,13 @@ const yearsInfo = computed(() => {
 
   return info
 })
+
+const documentsTypeInfos = computed(() => {
+  if (props.limit) {
+    return documentsAnalytics.value.document_type.slice(0, props.limit)
+  }
+  return documentsAnalytics.value.document_type
+})
 </script>
 
 <style lang="scss" scoped>
@@ -269,16 +276,24 @@ a.profile-publication-contributor {
   grid-template-columns: 50% 50%;
 }
 
+.profile-info-container:not(.preview) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  .public-year-container > h5 {
+    text-align: center;
+  }
+}
 @media screen and (width <= 1000px) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-  }
-
-  .public-year-container > h5 {
-    text-align: center;
+    .public-year-container > h5 {
+      text-align: center;
+    }
   }
 }
 
@@ -309,7 +324,7 @@ a.profile-publication-contributor {
   --max-bar-height: 60;
   --min-bar-height: 5;
 
-  width: 10px;
+  width: 12.5px;
   display: inline-block;
   background-color: #501087;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
