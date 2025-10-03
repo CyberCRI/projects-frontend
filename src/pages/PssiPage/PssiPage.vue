@@ -18,186 +18,219 @@ try {
 </script>
 <template>
   <div class="page-section-narrow legal-page pssi page-top">
-    <h1 class="page-title">
-      Plan de S&eacute;curit&eacute; des Syst&egrave;mes d&#39;Information (PSSI) pour
-      l&#39;Association Learning Planet Institute (LPI)
+    <h1
+      id="plan-de-sécurité-des-systèmes-dinformation-pssi-pour-lassociation-learning-planet-institute-lpi"
+      class="page-title"
+    >
+      Plan de Sécurité des Systèmes d’Information (PSSI) pour l’Association Learning Planet
+      Institute (LPI)
     </h1>
     <section>
-      <h3>1. Introduction</h3>
+      <h3 id="introduction">1. Introduction</h3>
       <ul>
         <li>
-          <strong>Objectif :</strong>
-          Assurer la s&eacute;curit&eacute; des syst&egrave;mes d&#39;information de
-          l&#39;association pour prot&eacute;ger les donn&eacute;es des &eacute;tudiants et des
-          enseignants chercheurs, ainsi que l&rsquo;ensemble des utilisateurs de nos plateformes
+          <strong>Objectif</strong>
+          : Assurer la sécurité des systèmes d’information de l’association pour protéger les
+          données des étudiants et des enseignants chercheurs, ainsi que l’ensemble des utilisateurs
+          de nos plateformes
+          <br />
         </li>
         <li>
-          <strong>Champ d&#39;application :</strong>
-          Ce PSSI s&#39;applique &agrave; toutes les ressources informatiques et donn&eacute;es
-          g&eacute;r&eacute;es par l&rsquo;&eacute;quipe plateforme num&eacute;rique du LPI.
+          <strong>Champ d’application</strong>
+          : Ce PSSI s’applique à toutes les ressources informatiques et données gérées par l’équipe
+          plateforme numérique du LPI.
         </li>
       </ul>
     </section>
     <section>
-      <h3>2. Politique de S&eacute;curit&eacute;</h3>
+      <h3 id="politique-de-sécurité">2. Politique de Sécurité</h3>
       <ul>
         <li>
-          <strong>Engagement :</strong>
-          La direction du P&ocirc;le s&#39;engage &agrave; prot&eacute;ger les syst&egrave;mes
-          d&#39;information contre les menaces et &agrave; garantir la confidentialit&eacute;,
-          l&#39;int&eacute;grit&eacute; et la disponibilit&eacute; des donn&eacute;es.
+          <strong>Engagement</strong>
+          : La direction du Pôle s’engage à protéger les systèmes d’information contre les menaces
+          et à garantir la confidentialité, l’intégrité et la disponibilité des données.
+          <br />
         </li>
         <li>
-          <strong>Objectifs :</strong>
-          Prot&eacute;ger les donn&eacute;es personnelles, assurer la continuit&eacute; des
-          services, et pr&eacute;venir les violations de s&eacute;curit&eacute;.
+          <strong>Objectifs</strong>
+          : Protéger les données personnelles, assurer la continuité des services, et prévenir les
+          violations de sécurité.
         </li>
       </ul>
     </section>
     <section>
-      <h3>3. Organisation de la S&eacute;curit&eacute;</h3>
+      <h3 id="organisation-de-la-sécurité">3. Organisation de la Sécurité</h3>
       <ul>
         <li>
-          <strong>Responsable S&eacute;curit&eacute; :</strong>
-          Stanislas Bruhi&egrave;re, charg&eacute; de la gestion de la s&eacute;curit&eacute; des
-          syst&egrave;mes d&#39;information.
+          <strong>Responsable Sécurité</strong>
+          : Stanislas Bruhière, chargé de la gestion de la sécurité des systèmes d’information.
+          <br />
         </li>
         <li>
-          <strong>&Eacute;quipe S&eacute;curit&eacute; :</strong>
-          membres techniques de l&rsquo;&eacute;quipe plateformes (d&eacute;veloppeurs front-end et
-          back-end des plateformes, &eacute;quipe support IT, responsable support plateformes)
+          <strong>Équipe Sécurité</strong>
+          : membres techniques de l’équipe plateformes (développeurs front-end et back-end des
+          plateformes, équipe support IT, responsable support plateformes)
         </li>
       </ul>
     </section>
     <section>
-      <h3>4. &Eacute;valuation des Risques</h3>
+      <h3 id="évaluation-des-risques">4. Évaluation des Risques</h3>
       <ul>
         <li>
-          <strong>Identification :</strong>
-          Recensement des menaces potentielles comme les cyberattaques et les erreurs humaines tels
-          que d&eacute;crits dans le Plan de Continuit&eacute; d&#39;activit&eacute;.
+          <strong>Identification</strong>
+          : Recensement des menaces potentielles comme les cyberattaques et les erreurs humaines
+          tels que décrits dans le Plan de Continuité d’activité.
+          <br />
         </li>
         <li>
-          <strong>Analyse :</strong>
-          &Eacute;valuation des impacts possibles sur les activit&eacute;s et les donn&eacute;es.
+          <strong>Analyse</strong>
+          : Évaluation des impacts possibles sur les activités et les données.
+          <br />
         </li>
         <li>
-          <strong>Traitement :</strong>
-          Strat&eacute;gies d&#39;att&eacute;nuation et plan de r&eacute;ponse aux risques
-          identifi&eacute;s.
+          <strong>Traitement</strong>
+          : Stratégies d’atténuation et plan de réponse aux risques identifiés.
         </li>
       </ul>
     </section>
     <section>
-      <h3>5. Contr&ocirc;les de S&eacute;curit&eacute;</h3>
-      <h4>Contr&ocirc;les Techniques :</h4>
+      <h3 id="contrôles-de-sécurité">5. Contrôles de Sécurité</h3>
       <ul>
         <li>
-          <strong>Gestion des Acc&egrave;s :</strong>
-          Authentification forte et gestion des permissions, avec un traitement sp&eacute;cifique
-          des comptes d&rsquo;administration.
+          <strong>Contrôles Techniques</strong>
+          :
+          <ul>
+            <li>
+              <strong>Gestion des Accès</strong>
+              : Authentification forte et gestion des permissions, avec un traitement spécifique des
+              comptes d’administration.
+              <br />
+            </li>
+            <li>
+              <strong>Cryptographie</strong>
+              : Chiffrement des données sensibles.
+              <br />
+            </li>
+            <li>
+              <strong>Protection</strong>
+              : Pare-feu, antivirus, et systèmes de détection d’intrusion.
+              <br />
+            </li>
+            <li>
+              <strong>Sécurisation des données</strong>
+              : Géo-réplication des données, sauvegardes régulières
+              <br />
+            </li>
+            <li>
+              <strong>Architecture IA sécurisée par design</strong>
+              : isolement du contexte transmis à chaque interaction avec un bot conversationnel,
+              avec anonymisation quand c’est possible et pertinent, pour réduire les risques de
+              fuites de données personnelles et de dérives de l’IA (hallucinations, jailbreaking…)
+            </li>
+          </ul>
         </li>
         <li>
-          <strong>Cryptographie :</strong>
-          Chiffrement des donn&eacute;es sensibles.
-        </li>
-        <li>
-          <strong>Protection :</strong>
-          Pare-feu, antivirus, et syst&egrave;mes de d&eacute;tection d&#39;intrusion.
-        </li>
-        <li>
-          <strong>S&eacute;curisation des donn&eacute;es :</strong>
-          G&eacute;o-r&eacute;plication des donn&eacute;es, sauvegardes r&eacute;guli&egrave;res
+          <strong>Contrôles Organisationnels</strong>
+          :
+          <ul>
+            <li>
+              Règles de sécurité pour le traitement des données et l’utilisation des systèmes.
+              <br />
+            </li>
+            <li>
+              Signature de la charte informatique par les employés
+              <br />
+            </li>
+            <li>
+              Signature de la carte administrateur par les personnes habilitées
+              <br />
+            </li>
+            <li>
+              Processus de nettoyage des comptes obsolète (en continu et audit tous les 6 mois)
+              <br />
+            </li>
+            <li>Processus de rotation des mots de passe</li>
+          </ul>
         </li>
       </ul>
-      <p></p>
-      <h4>Contr&ocirc;les Organisationnels :</h4>
+      <h4 id="détection-gestion-des-incidents-de-sécurité">
+        6. Détection &amp; gestion des Incidents de Sécurité
+      </h4>
       <ul>
         <li>
-          R&egrave;gles de s&eacute;curit&eacute; pour le traitement des donn&eacute;es et
-          l&#39;utilisation des syst&egrave;mes.
+          <strong>Identification</strong>
+          : Processus de signalement des incidents (voir PCA).
+          <br />
         </li>
-        <li>Signature de la charte informatique par les employ&eacute;s</li>
-        <li>Signature de la carte administrateur par les personnes habilit&eacute;es</li>
         <li>
-          Processus de nettoyage des comptes obsol&egrave;te (en continu et audit tous les 6 mois)
+          <strong>Réponse</strong>
+          : Procédures pour la gestion et la résolution des incidents (voir PCA).
+          <br />
         </li>
-        <li>Processus de rotation des mots de passe</li>
+        <li>
+          <strong>Analyse</strong>
+          : Post-mortem pour améliorer les pratiques de sécurité.
+        </li>
+      </ul>
+      <h4 id="formation-et-sensibilisation">7. Formation et Sensibilisation</h4>
+      <ul>
+        <li>
+          <strong>Formation</strong>
+          : Sessions régulières pour sensibiliser les employés aux risques de sécurité et aux bonnes
+          pratiques.
+          <br />
+        </li>
+        <li>
+          <strong>Sensibilisation</strong>
+          : Communication continue sur les politiques de sécurité et les procédures.
+        </li>
       </ul>
     </section>
     <section>
-      <h3>6. D&eacute;tection &amp; gestion des Incidents de S&eacute;curit&eacute;</h3>
+      <h3 id="conformité-et-audits">8. Conformité et Audits</h3>
       <ul>
         <li>
-          <strong>Identification :</strong>
-          Processus de signalement des incidents (voir PCA).
+          <strong>Conformité</strong>
+          : Respect des réglementations en vigueur (RGPD, etc.). Suivi des traitements de données
+          personnelles coordonné par la DPO.
+          <br />
         </li>
         <li>
-          <strong>R&eacute;ponse :</strong>
-          Proc&eacute;dures pour la gestion et la r&eacute;solution des incidents (voir PCA).
-        </li>
-        <li>
-          <strong>Analyse :</strong>
-          Post-mortem pour am&eacute;liorer les pratiques de s&eacute;curit&eacute;.
+          <strong>Audits</strong>
+          : Vérifications régulières pour évaluer l’efficacité des mesures de sécurité.
         </li>
       </ul>
     </section>
     <section>
-      <h3>7. Formation et Sensibilisation</h3>
+      <h3 id="plan-de-continuité-des-activités">9. Plan de Continuité des Activités</h3>
       <ul>
         <li>
-          <strong>Formation :</strong>
-          Sessions r&eacute;guli&egrave;res pour sensibiliser les employ&eacute;s aux risques de
-          s&eacute;curit&eacute; et aux bonnes pratiques.
+          <strong>Préparation</strong>
+          : Mesures pour maintenir les opérations en cas d’incident majeur (voir PCA).
+          <br />
         </li>
         <li>
-          <strong>Sensibilisation :</strong>
-          Communication continue sur les politiques de s&eacute;curit&eacute; et les
-          proc&eacute;dures.
+          <strong>Reprise</strong>
+          : Plan pour la restauration des services après une interruption.
         </li>
       </ul>
     </section>
     <section>
-      <h3>8. Conformit&eacute; et Audits</h3>
+      <h3 id="révision-du-pssi">10. Révision du PSSI</h3>
       <ul>
         <li>
-          <strong>Conformit&eacute; :</strong>
-          Respect des r&eacute;glementations en vigueur (RGPD, etc.). Suivi des traitements de
-          donn&eacute;es personnelles coordonn&eacute; par la DPO.
+          <strong>Mise à Jour</strong>
+          : Révision annuelle du PSSI pour refléter les évolutions technologiques et les nouvelles
+          menaces, sous la responsabilité du DevOps / responsable sécurité.
+          <br />
         </li>
         <li>
-          <strong>Audits :</strong>
-          V&eacute;rifications r&eacute;guli&egrave;res pour &eacute;valuer
-          l&rsquo;efficacit&eacute; des mesures de s&eacute;curit&eacute;.
+          <strong>Documentation</strong>
+          : Conservation des documents de sécurité à jour et accessibles sur la plateforme en ligne
+          Confluence.
         </li>
       </ul>
     </section>
-    <section>
-      <h3>9. Plan de Continuit&eacute; des Activit&eacute;s</h3>
-      <ul>
-        <li>
-          <strong>Pr&eacute;paration :</strong>
-          Mesures pour maintenir les op&eacute;rations en cas d&rsquo;incident majeur (voir PCA).
-        </li>
-        <li>
-          <strong>Reprise :</strong>
-          Plan pour la restauration des services apr&egrave;s une interruption.
-        </li>
-      </ul>
-      <h3>10. R&eacute;vision du PSSI</h3>
-      <ul>
-        <li>
-          <strong>Mise &agrave; Jour :</strong>
-          R&eacute;vision annuelle du PSSI pour refl&eacute;ter les &eacute;volutions technologiques
-          et les nouvelles menaces, sous la responsabilit&eacute; du DevOps / responsable
-          s&eacute;curit&eacute;.
-        </li>
-        <li>
-          <strong>Documentation :</strong>
-          Conservation des documents de s&eacute;curit&eacute; &agrave; jour et accessibles sur la
-          plateforme en ligne Confluence.
-        </li>
-      </ul>
-    </section>
+    <p class="last-updated">Dernière révision: 29 septembre 2025</p>
   </div>
 </template>

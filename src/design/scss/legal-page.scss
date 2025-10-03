@@ -112,4 +112,11 @@
       }
     }
   }
+
+  .last-updated {
+    font-size: $font-size-s;
+    text-align: right;
+    font-style: italic;
+    margin-block: $space-l;
+  }
 }
