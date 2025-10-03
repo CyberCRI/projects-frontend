@@ -277,7 +277,7 @@ export default {
             user: this.user,
           },
           // dispay publications only if user have publications
-          condition: this.user?.researcher?.documents_count,
+          condition: this.user?.researcher?.publications_count,
           icon: 'Pen',
         },
         {

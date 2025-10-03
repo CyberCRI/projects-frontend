@@ -3,9 +3,9 @@
     <div>
       <h4 class="title">
         {{ title }}
-        <span>({{ documents_count }})</span>
+        <span>({{ publicationsCount }})</span>
       </h4>
-      <UserPublicationsList v-if="documents_count > 0" :limit="null" :user="user" />
+      <UserPublicationsList v-if="publicationsCount > 0" :limit="null" :user="user" />
       <span v-else class="publications-tab-empty">
         {{ t('you.no-publications') }}
       </span>
@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const title = t('me.publications')
-const documents_count = props.user.researcher?.documents_count ?? 0
+const publicationsCount = props.user.researcher?.publications_count ?? 0
 </script>
 
 <style lang="scss" scoped>

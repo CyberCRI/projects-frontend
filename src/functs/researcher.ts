@@ -13,13 +13,13 @@ const cleanHarvesterValue = (identifier: Identifier): Identifier => {
  * sanitize harvester url to "correct" url
  *
  * @function
- * @name documentHarvesterToUrl
+ * @name publicationHarvesterToUrl
  * @kind variable
  * @param {Identifier} identifier
  * @returns {String}
  * @exports
  */
-export const documentHarvesterToUrl = (identifier: Identifier): string => {
+export const publicationHarvesterToUrl = (identifier: Identifier): string => {
   const iden = cleanHarvesterValue(identifier)
   if (iden.value.startsWith('http')) {
     return iden.value

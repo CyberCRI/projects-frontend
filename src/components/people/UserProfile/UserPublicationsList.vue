@@ -1,10 +1,10 @@
 <template>
-  <div v-if="documents" class="profile-publications-container">
+  <div v-if="publications" class="profile-publications-container">
     <div class="profile-info-container" :class="{ preview: preview }">
       <div class="public-year-container">
         <h5>
           {{ t('profile.research-output-year') }}
-          {{ yearSelected ? `${yearSelected} (${documents.count})` : '' }}
+          {{ yearSelected ? `${yearSelected} (${publications.count})` : '' }}
         </h5>
         <div class="public-year-info">
           <span>{{ yearsInfo.minYear }}</span>
@@ -30,13 +30,13 @@
         </div>
       </div>
       <div class="public-numbers-container">
-        <div v-for="obj in documentsTypeInfos" :key="obj.name" class="publi-numbers">
+        <div v-for="obj in publicationsTypeInfos" :key="obj.name" class="publi-numbers">
           <span>{{ obj.count }}</span>
           <span>{{ obj.name ?? t('common.other') }}</span>
         </div>
       </div>
     </div>
-    <article v-for="publi in documents.results" :key="publi.id" class="profile-publications">
+    <article v-for="publi in publications.results" :key="publi.id" class="profile-publications">
       <h2>{{ publi.title }}</h2>
       <div>
         <span v-for="(author, idx) in publi.authors" :key="author.id">
@@ -70,7 +70,7 @@
         <a
           v-for="identifier in publi.identifiers"
           :key="identifier.id"
-          :href="documentHarvesterToUrl(identifier)"
+          :href="publicationHarvesterToUrl(identifier)"
           :title="`${t('common.link-to')} ${identifier.harvester}`"
           target="_blank"
           rel="referer,noopener"
@@ -99,10 +99,10 @@
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import {
-  sanitizeResearcherDocument,
-  sanitizeResearcherDocumentAnalytics,
+  sanitizeResearcherPublication,
+  sanitizeResearcherPublicationAnalytics,
 } from '@/api/sanitizes/researcher'
-import { documentHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
+import { publicationHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
   name: 'UserPublicationsList',
@@ -124,23 +124,23 @@ const props = defineProps({
 })
 const { t, locale } = useNuxtI18n()
 
-const documents = ref(null)
+const publications = ref(null)
 const pagination = computed(() => {
-  if (documents.value === null) {
+  if (publications.value === null) {
     return { total: 0 }
   }
   return {
-    currentPage: documents.value.current_page,
-    total: documents.value.total_page,
-    previous: documents.value.previous,
-    next: documents.value.next,
-    first: documents.value.first,
-    last: documents.value.last,
+    currentPage: publications.value.current_page,
+    total: publications.value.total_page,
+    previous: publications.value.previous,
+    next: publications.value.next,
+    first: publications.value.first,
+    last: publications.value.last,
   }
 })
 const loading = ref(false)
-const documentsAnalytics = ref({
-  document_type: [],
+const publicationsAnalytics = ref({
+  publication_type: [],
   years: [],
 })
 
@@ -155,14 +155,14 @@ const onSelectedYear = (year) => {
   yearSelected.value = yearSelected.value === year ? null : year
 }
 
-const defaultURL = `crisalid/researcher/${props.user.researcher.id}/documents?offset=0&limit=${props.limit || 10}`
+const defaultURL = `crisalid/researcher/${props.user.researcher.id}/publications?offset=0&limit=${props.limit || 10}`
 
 const refresh = (url) => {
   loading.value = true
   useAPI(url)
-    .then(sanitizeResearcherDocument)
+    .then(sanitizeResearcherPublication)
     .then((data) => {
-      documents.value = data
+      publications.value = data
     })
     .finally(() => {
       loading.value = false
@@ -172,25 +172,25 @@ const refresh = (url) => {
 watch(yearSelected, () => {
   const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
   refresh(`${defaultURL}${publicationDate}`)
-  getDocumentsInfo()
+  getPublicationsInfo()
 })
 
-const getDocumentsInfo = () => {
+const getPublicationsInfo = () => {
   const limit = props.preview ? `&limit=5` : ''
   const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
 
   useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/documents?analytics=info${limit}${publicationDate}`
+    `crisalid/researcher/${props.user.researcher.id}/publications?analytics=info${limit}${publicationDate}`
   )
-    .then(sanitizeResearcherDocumentAnalytics)
+    .then(sanitizeResearcherPublicationAnalytics)
     .then((data) => {
-      documentsAnalytics.value = data
+      publicationsAnalytics.value = data
     })
 }
 
 onMounted(() => {
   refresh(defaultURL)
-  getDocumentsInfo()
+  getPublicationsInfo()
 })
 
 // this create graph
@@ -200,7 +200,7 @@ const yearsInfo = computed(() => {
     maxYear: null,
     bar: [],
   }
-  documentsAnalytics.value.years.forEach((o) => {
+  publicationsAnalytics.value.years.forEach((o) => {
     if (info.minYear == null || info.minYear > o.year) {
       info.minYear = o.year
     }
@@ -221,11 +221,11 @@ const yearsInfo = computed(() => {
   return info
 })
 
-const documentsTypeInfos = computed(() => {
+const publicationsTypeInfos = computed(() => {
   if (props.limit) {
-    return documentsAnalytics.value.document_type.slice(0, props.limit)
+    return publicationsAnalytics.value.publication_type.slice(0, props.limit)
   }
-  return documentsAnalytics.value.document_type
+  return publicationsAnalytics.value.publication_type
 })
 </script>
 
@@ -281,16 +281,19 @@ a.profile-publication-contributor {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+
   .public-year-container > h5 {
     text-align: center;
   }
 }
+
 @media screen and (width <= 1000px) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+
     .public-year-container > h5 {
       text-align: center;
     }
