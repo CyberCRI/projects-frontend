@@ -68,15 +68,15 @@
       </p>
       <div class="public-sources-container">
         <a
-          v-for="source in publi.sources"
-          :key="source.identifier.id"
-          :href="documentHarvesterToUrl(source.identifier)"
-          :title="`${t('common.link-to')} ${source.identifier.harvester}`"
+          v-for="identifier in publi.identifiers"
+          :key="identifier.id"
+          :href="documentHarvesterToUrl(identifier)"
+          :title="`${t('common.link-to')} ${identifier.harvester}`"
           target="_blank"
           rel="referer,noopener"
           class="public-sources"
         >
-          <IconHarvester :harvester="source.identifier.harvester" height="1.3rem" />
+          <IconHarvester :harvester="identifier.harvester" height="1.3rem" />
         </a>
       </div>
     </article>

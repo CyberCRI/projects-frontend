@@ -11,15 +11,11 @@ export type Researcher = {
   identifiers: Identifier[]
 }
 
-export type DocumentSource = {
-  document_type: null
-  identifier: Identifier
-}
-
 export type Document = {
   id: number
   title: string
+  document_type: null | string
   authors: Researcher[]
-  sources: DocumentSource[]
+  identifiers: Identifier[]
   publication_date: string | null | Date
 }
