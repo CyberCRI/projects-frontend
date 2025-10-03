@@ -19,7 +19,7 @@
                 selected: yearSelected === obj.year,
                 preview: preview,
               }"
-              :title="`${t('common.select')} ${obj.year} ${t('common.year')}`"
+              :title="`${t('profile.publications')} ${obj.year} (${obj.count})`"
               :style="{ '--bar-count': obj.height }"
               @click="onSelectedYear(obj.year)"
             >
@@ -98,10 +98,7 @@
 <script setup>
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import {
-  sanitizeResearcherPublication,
-  sanitizeResearcherPublicationAnalytics,
-} from '@/api/sanitizes/researcher'
+import { sanitizeResearcherPublication } from '@/api/sanitizes/researcher'
 import { publicationHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
@@ -181,11 +178,9 @@ const getPublicationsInfo = () => {
 
   useAPI(
     `crisalid/researcher/${props.user.researcher.id}/publications?analytics=info${limit}${publicationDate}`
-  )
-    .then(sanitizeResearcherPublicationAnalytics)
-    .then((data) => {
-      publicationsAnalytics.value = data
-    })
+  ).then((data) => {
+    publicationsAnalytics.value = data
+  })
 }
 
 onMounted(() => {

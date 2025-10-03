@@ -19,3 +19,8 @@ export type Publication = {
   identifiers: Identifier[]
   publication_date: string | null | Date
 }
+
+export type ResearcherPublicationAnalytics = {
+  year: string | Date | number
+  count: number
+}
