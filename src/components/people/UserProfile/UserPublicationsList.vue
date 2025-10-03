@@ -7,7 +7,7 @@
           {{ yearSelected ? `${yearSelected} (${publications.count})` : '' }}
         </h5>
         <div class="public-year-info">
-          <span>{{ yearsInfo.minYear }}</span>
+          <span class="public-year-info-minyear">{{ yearsInfo.minYear }}</span>
           <div class="publi-year">
             <component
               :is="preview ? 'button' : 'div'"
@@ -26,7 +26,7 @@
               <span>{{ obj.year }}</span>
             </component>
           </div>
-          <span>{{ yearsInfo.maxYear }}</span>
+          <span class="public-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
         </div>
       </div>
       <div class="public-numbers-container">
@@ -213,6 +213,8 @@ const yearsInfo = computed(() => {
     obj.height = (obj.count / maxCount) * 100
   })
 
+  info.bar = info.bar.reverse()
+
   return info
 })
 
@@ -313,6 +315,14 @@ a.profile-publication-contributor {
   display: flex;
   justify-content: end;
   gap: 2rem;
+}
+
+.public-year-info-minyear {
+  align-self: baseline;
+}
+
+.public-year-info-maxyear {
+  align-self: flex-end;
 }
 
 .publi-year-bar {
