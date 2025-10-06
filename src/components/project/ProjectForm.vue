@@ -253,10 +253,20 @@ export default {
 
   watch: {
     'form.category': async function (categoryId, oldVal) {
-      if (categoryId && categoryId !== oldVal)
+      if (categoryId && categoryId !== oldVal) {
         this.selectedCategory = this.categories.find((category) => category.id === categoryId)
-      // set default tags according to selected category
-      this.tags = [...this.selectedCategory.tags]
+        // set default tags according to selected category
+        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
+      }
+    },
+
+    categories: function (neo, old) {
+      const categoryId = this.form.category
+      if (neo && neo !== old && categoryId) {
+        this.selectedCategory = neo.find((category) => category.id === categoryId)
+        // set default tags according to selected category
+        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
+      }
     },
 
     form: {
