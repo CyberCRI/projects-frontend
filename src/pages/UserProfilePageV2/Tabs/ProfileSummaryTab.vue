@@ -23,7 +23,7 @@
       <!-- publications -->
       <UserProjectsSearch
         v-if="user.researcher?.publications_count"
-        :limit="LIMIT_PUBLICATIONS"
+        :limit="publicationsLimit"
         :user="user"
       >
         <template #default>
@@ -33,12 +33,12 @@
               <span>({{ user.researcher.publications_count }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="user.researcher.publications_count > LIMIT_PUBLICATIONS"
+              v-if="user.researcher.publications_count > publicationsLimit"
               data-test="see-more"
               :to="{ name: 'ProfilePublicationsOther' }"
             />
           </div>
-          <UserPublicationsList preview :limit="LIMIT_PUBLICATIONS" :user="user" />
+          <UserPublicationsList preview :limit="publicationsLimit" :user="user" />
         </template>
       </UserProjectsSearch>
 
@@ -163,7 +163,7 @@ export default {
   data() {
     return {
       listLimit: 6,
-      LIMIT_PUBLICATIONS: 3,
+      publicationsLimit: 3,
     }
   },
 

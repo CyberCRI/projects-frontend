@@ -8,7 +8,7 @@
 import halIcon from '@/assets/svg/hal.svg'
 import idrefIcon from '@/assets/svg/idref.svg'
 import scopusIcon from '@/assets/svg/scopus.svg'
-import orcidIcon from '@/assets/svg/orcid.svg?raw'
+import orcidIcon from '@/assets/svg/orcid.svg'
 import openalexIcon from '@/assets/svg/openalex.svg'
 import scanrIcon from '@/assets/svg/scanr.svg'
 

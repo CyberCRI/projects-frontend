@@ -1474,6 +1474,10 @@
           }
         }
       },
+      "publications": {
+        "no-editable": "The publications are not yet available.",
+        "tab": "Publications"
+      },
       "privacy": {
         "tab": "Privacy",
         "save-error": "Error while saving profile.",

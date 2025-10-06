@@ -395,6 +395,24 @@ export default {
           actionIcon: 'Pen',
         },
         {
+          label: this.$t('profile.edit.publications.tab'),
+          key: 'publications',
+          id: 'profile-edit-publications',
+          view: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfilePublications' + roadSuffix,
+            params,
+          },
+          props,
+          // dispay publications only if user have publications
+          condition: this.user?.researcher?.publications_count,
+          icon: 'Pen',
+          actionIcon: 'Pen',
+        },
+        {
           label: this.$t('profile.edit.groups.tab'),
           key: 'groups',
           id: 'profile-edit-groups',

@@ -5,7 +5,7 @@
         {{ title }}
         <span>({{ publicationsCount }})</span>
       </h4>
-      <UserPublicationsList v-if="publicationsCount > 0" :limit="null" :user="user" />
+      <UserPublicationsList v-if="publicationsCount > 0" :user="user" />
       <span v-else class="publications-tab-empty">
         {{ t('you.no-publications') }}
       </span>
