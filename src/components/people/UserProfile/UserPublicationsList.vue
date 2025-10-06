@@ -137,7 +137,7 @@ const pagination = computed(() => {
 })
 const loading = ref(false)
 const publicationsAnalytics = ref({
-  publication_type: [],
+  publication_types: [],
   years: [],
 })
 
@@ -152,9 +152,7 @@ const onSelectedYear = (year) => {
   yearSelected.value = yearSelected.value === year ? null : year
 }
 
-const defaultURL = `crisalid/researcher/${props.user.researcher.id}/publications?offset=0&limit=${props.limit || 10}`
-
-const refresh = (url) => {
+const getPublications = (url) => {
   loading.value = true
   useAPI(url)
     .then(sanitizeResearcherPublication)
@@ -166,29 +164,31 @@ const refresh = (url) => {
     })
 }
 
+const defaultURL = `crisalid/researcher/${props.user.researcher.id}/publications?offset=0&limit=${props.limit || 10}`
 watch(yearSelected, () => {
   const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
-  refresh(`${defaultURL}${publicationDate}`)
+  getPublications(`${defaultURL}${publicationDate}`)
   getPublicationsInfo()
 })
 
 const getPublicationsInfo = () => {
-  const limit = props.preview ? `&limit=5` : ''
+  const limit = props.preview ? `limit=5` : ''
   const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
 
   useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/publications?analytics=info${limit}${publicationDate}`
+    `crisalid/researcher/${props.user.researcher.id}/publications/analytics?${limit}${publicationDate}`
   ).then((data) => {
     publicationsAnalytics.value = data
   })
 }
 
+// when components is mounted, getch
 onMounted(() => {
-  refresh(defaultURL)
+  getPublications(defaultURL)
   getPublicationsInfo()
 })
 
-// this create graph
+// this create years graph
 const yearsInfo = computed(() => {
   const info = {
     minYear: null,
@@ -220,9 +220,9 @@ const yearsInfo = computed(() => {
 
 const publicationsTypeInfos = computed(() => {
   if (props.limit) {
-    return publicationsAnalytics.value.publication_type.slice(0, props.limit)
+    return publicationsAnalytics.value.publication_types.slice(0, props.limit)
   }
-  return publicationsAnalytics.value.publication_type
+  return publicationsAnalytics.value.publication_types
 })
 </script>
 
