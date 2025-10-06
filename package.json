@@ -34,7 +34,8 @@
     "prepare": "husky install",
     "check-unused-comp": "check-unused-comp .",
     "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/*.?(json|yml|yaml|js)'",
-    "list-icons": "node ./utilities/list-icons.js"
+    "list-icons": "node ./utilities/list-icons.js",
+    "autotranslate": "node ./utilities/autotranslate.js"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.5.0",
