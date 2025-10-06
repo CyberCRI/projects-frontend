@@ -6,9 +6,9 @@
         <span>({{ publicationsCount }})</span>
       </h4>
       <UserPublicationsList v-if="publicationsCount > 0" :user="user" />
-      <span v-else class="publications-tab-empty">
+      <div v-else class="publications-tab-empty">
         {{ t('you.no-publications') }}
-      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -46,5 +46,7 @@ const publicationsCount = props.user.researcher?.publications_count ?? 0
 .publications-tab-empty {
   font-style: italic;
   opacity: 0.7;
+  width: 100%;
+  text-align: center;
 }
 </style>

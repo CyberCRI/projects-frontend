@@ -89,8 +89,8 @@
       @update-pagination="refresh"
     />
   </div>
-  <div v-else-if="loading">loading...</div>
-  <div v-else>
+  <div v-else-if="loading" class="publications-loading">{{ t('common.loading') }}...</div>
+  <div v-else class="publications-empty">
     {{ t('you.no-publications') }}
   </div>
 </template>
@@ -427,5 +427,14 @@ a.profile-publication-contributor {
 
 .m-auto {
   margin: auto;
+}
+
+.publications-loading,
+.publications-empty {
+  width: 100%;
+  text-align: center;
+  opacity: 0.5;
+  font-style: italic;
+  font-weight: bold;
 }
 </style>
