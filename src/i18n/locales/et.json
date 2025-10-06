@@ -331,7 +331,9 @@
         "accept": "Nõustun",
         "accepted": "Vastu võetud",
         "no-result": "Tulemust pole"
-      }
+      },
+      "accept-success": "Edukalt vastu võetud taotlus",
+      "decline-success": "Rakendus lükati edukalt tagasi"
     }
   },
   "account": {
@@ -552,7 +554,12 @@
     "disconnect": "Lahutage",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
-    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
+    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
+    "select": "vali",
+    "year": "aasta",
+    "link-to": "link",
+    "other": "teised",
+    "and": "ja"
   },
   "complete-profile": {
     "bio": {
@@ -1051,7 +1058,8 @@
     "no-project-reviewing": "Sa ei ole veel projekti ülevaataja",
     "skills": "Oskused",
     "hobbies": "Hobid",
-    "levels-help-link": "Oskuste tase"
+    "levels-help-link": "Oskuste tase",
+    "publications": "Minu väljaanded"
   },
   "you": {
     "no-follow": "Projekte ei ole veel rakendatud",
@@ -1059,7 +1067,9 @@
     "no-bio": "Biograafiat veel pole",
     "no-skill": "Oskusi pole veel näidatud",
     "no-project-participate": "Ei ole veel projekti liige",
-    "no-project-reviewing": "Pole veel projekti ülevaataja"
+    "no-project-reviewing": "Pole veel projekti ülevaataja",
+    "publications": "Tema väljaanded",
+    "no-publications": "Väljaanded veel puuduvad"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1464,7 +1474,8 @@
             "title": "4. tasand: ekspert",
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
-        }
+        },
+        "nothing-yet": "Sa pole veel oskusi lisanud."
       },
       "privacy": {
         "tab": "Privaatsus",
@@ -1499,6 +1510,10 @@
           "org": "Portaal",
           "pub": "Avalik"
         }
+      },
+      "publications": {
+        "no-editable": "Väljaanded ei ole veel kättesaadavad.",
+        "tab": "Trükised"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -1519,7 +1534,9 @@
     "mentorship-asked": "Sa küsisid mentorlust",
     "mentorship-offered": "Sa pakkusid mentorlust",
     "mentorship-asking": "Sa küsid mentorlust",
-    "mentorship-offering": "Sa pakud mentorlust"
+    "mentorship-offering": "Sa pakud mentorlust",
+    "publications": "Trükised",
+    "research-output-year": "Teadustöö väljundaasta"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",
@@ -1588,7 +1605,8 @@
         "required": "Vajalik on otstarbeväli",
         "max": "Eesmärgiväli ei tohi olla suurem kui 180 märki",
         "min": "Eesmärgi väli peab olema vähemalt 3 märki."
-      }
+      },
+      "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1882,7 +1900,8 @@
     "current-skill-description": "Tüübi oskuste märgis ja vali õige oskus",
     "disambiguate": "(Desambiguation)",
     "suggestions": "Soovitused",
-    "choose-skill": "Klõpsa valitud oskusel:"
+    "choose-skill": "Klõpsa valitud oskusel:",
+    "main-tags": "või valida peasiltide hulgast"
   },
   "sdg": {
     "1": {
@@ -2557,6 +2576,9 @@
         "label": "Teatamine",
         "notice": "Valimise korral teavitatakse kõiki uuest juhendist",
         "button": "Saada teade"
+      },
+      "image": {
+        "label": "Pilt"
       }
     },
     "list": {

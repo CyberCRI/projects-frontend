@@ -554,7 +554,12 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)"
+    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
+    "select": "Sélectionner",
+    "year": "année",
+    "link-to": "lien vers",
+    "other": "autres",
+    "and": "et"
   },
   "complete-profile": {
     "bio": {
@@ -1053,7 +1058,8 @@
     "no-project-reviewing": "Vous ne révisez pas encore de projet",
     "skills": "Compétences",
     "hobbies": "Hobbies",
-    "levels-help-link": "Niveaux de compétence"
+    "levels-help-link": "Niveaux de compétence",
+    "publications": "Mes publications"
   },
   "you": {
     "no-follow": "Pas encore de projets suivis",
@@ -1061,7 +1067,9 @@
     "no-bio": "Pas encore de biographie",
     "no-skill": "Pas encore de compétences indiquées",
     "no-project-participate": "N’est pas encore membre d’un projet",
-    "no-project-reviewing": "Ne revise pas encore de projets"
+    "no-project-reviewing": "Ne revise pas encore de projets",
+    "publications": "Ses publications",
+    "no-publications": "Pas encore de publications"
   },
   "multieditor": {
     "blockquote": "Citation",
@@ -1166,7 +1174,8 @@
       "title": "Montrez votre impact",
       "text": "Augmentez votre impact en montrant vos efforts pour le bien commun. Identifiez les {sdg} auxquels vous contribuez. Géolocalisez tous les lieux où vos projets génèrent un impact.",
       "sdg": "Objectifs de Développement Durable",
-      "link": "https://fr.unesco.org/sdgs"
+      "link": "https://fr.unesco.org/sdgs",
+      "sdgAbbr": "Objectifs de développement durable"
     }
   },
   "mentorship": {
@@ -1464,7 +1473,9 @@
             "title": "Niveau 4 : Expert",
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
-        }
+        },
+        "search": "recherche",
+        "nothing-yet": "Tu n'as pas encore ajouté de compétences."
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -1499,6 +1510,10 @@
           "org": "Mon portail",
           "pub": "Public"
         }
+      },
+      "publications": {
+        "no-editable": "Les publications ne sont pas encore disponibles.",
+        "tab": "Publications"
       }
     },
     "go-to-page": "Voir la page du profil",
@@ -1519,7 +1534,9 @@
     "mentorship-asked": "Vous avez demandé un mentorat",
     "mentorship-offered": "Vous avez proposé un mentorat",
     "mentorship-asking": "Vous demandez un mentorat",
-    "mentorship-offering": "Vous proposez un mentorat"
+    "mentorship-offering": "Vous proposez un mentorat",
+    "publications": "Publications",
+    "research-output-year": "Année de production de la recherche"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",

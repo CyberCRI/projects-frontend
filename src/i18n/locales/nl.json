@@ -331,7 +331,9 @@
         "accept": "Accepteren",
         "accepted": "Goedgekeurd",
         "no-result": "Geen resultaat"
-      }
+      },
+      "accept-success": "Toepassing succesvol aanvaard",
+      "decline-success": "Aanvraag succesvol afgewezen"
     }
   },
   "account": {
@@ -552,7 +554,12 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)"
+    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
+    "select": "selecteren",
+    "year": "jaar",
+    "link-to": "verwijzing naar",
+    "other": "Andere",
+    "and": "en"
   },
   "complete-profile": {
     "bio": {
@@ -1051,7 +1058,8 @@
     "no-project-reviewing": "U bent nog geen beoordelaar van een project",
     "skills": "Vaardigheden",
     "hobbies": "Hobby's",
-    "levels-help-link": "Vaardigheden"
+    "levels-help-link": "Vaardigheden",
+    "publications": "Mijn publicaties"
   },
   "you": {
     "no-follow": "Nog geen projecten gevolgd",
@@ -1059,7 +1067,9 @@
     "no-bio": "Nog geen biografie",
     "no-skill": "Nog geen vaardigheden aangegeven",
     "no-project-participate": "Nog geen lid van een project",
-    "no-project-reviewing": "Nog geen recensent van een project"
+    "no-project-reviewing": "Nog geen recensent van een project",
+    "publications": "Zijn publicaties",
+    "no-publications": "Nog geen publicaties"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1377,7 +1387,8 @@
             "notice-levels": "Geef je niveau van meesterschap aan.",
             "help-levels": "Meer over vaardigheden"
           },
-          "selection": "Geselecteerde vaardigheden"
+          "selection": "Geselecteerde vaardigheden",
+          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd."
         },
         "hobbies": {
           "nothing-yet": "Je hebt nog geen hobby's toegevoegd.",
@@ -1499,6 +1510,10 @@
           "org": "Mijn portaal",
           "pub": "Openbaar"
         }
+      },
+      "publications": {
+        "no-editable": "De publicaties zijn nog niet beschikbaar.",
+        "tab": "Publicaties"
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
@@ -1519,7 +1534,9 @@
     "mentorship-asked": "U vroeg om mentorschap.",
     "mentorship-offered": "Je bood mentorschap aan.",
     "mentorship-asking": "U vraagt om mentorschap.",
-    "mentorship-offering": "Je biedt mentorschap aan."
+    "mentorship-offering": "Je biedt mentorschap aan.",
+    "publications": "Publicaties",
+    "research-output-year": "Produktiejaar onderzoek"
   },
   "profile-completed-modal": {
     "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",
@@ -1588,7 +1605,8 @@
         "required": "Het doelveld is vereist",
         "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
         "min": "Het doelveld moet ten minste 3 karakters tellen"
-      }
+      },
+      "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1882,7 +1900,8 @@
     "current-skill-description": "Type skills label en selecteer de juiste vaardigheid",
     "disambiguate": "(DISAMBIGUATIE)",
     "suggestions": "Voorstellen",
-    "choose-skill": "Klik op de gekozen vaardigheid:"
+    "choose-skill": "Klik op de gekozen vaardigheid:",
+    "main-tags": "of kies uit de hoofdtags"
   },
   "sdg": {
     "1": {
@@ -2557,6 +2576,9 @@
         "label": "Kennisgeving",
         "notice": "Indien geselecteerd wordt iedereen op de hoogte gebracht van de nieuwe instructie",
         "button": "Een melding versturen"
+      },
+      "image": {
+        "label": "Afbeelding"
       }
     },
     "list": {

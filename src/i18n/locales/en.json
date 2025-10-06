@@ -331,7 +331,9 @@
         "accept": "Accept",
         "accepted": "Accepted",
         "no-result": "No result"
-      }
+      },
+      "accept-success": "Successfully accepted application",
+      "decline-success": "Application rejected successfully"
     }
   },
   "account": {
@@ -1472,7 +1474,8 @@
             "title": "Level 4: Expert",
             "description": "PhD-level or did a big project, or can teach to master level"
           }
-        }
+        },
+        "nothing-yet": "You haven't added skills yet."
       },
       "publications": {
         "no-editable": "The publications are not yet available.",
@@ -1602,7 +1605,8 @@
         "required": "The purpose field is required",
         "max": "The purpose field may not be greater than 180 characters",
         "min": "The purpose field must be at least 3 characters"
-      }
+      },
+      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation."
     },
     "image-header": "Image",
     "image-alert": {
@@ -1896,7 +1900,8 @@
     "current-skill-description": "Type skill’s label and select the right skill",
     "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Suggestions",
-    "choose-skill": "Click on the chosen skill:"
+    "choose-skill": "Click on the chosen skill:",
+    "main-tags": "or choose from the main tags"
   },
   "sdg": {
     "1": {
@@ -2571,6 +2576,9 @@
         "label": "Notification",
         "notice": "If selected, everyone will be notified of the new instruction",
         "button": "Send a notification"
+      },
+      "image": {
+        "label": "Image"
       }
     },
     "list": {

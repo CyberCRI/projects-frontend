@@ -331,7 +331,9 @@
         "accept": "Accepta",
         "accepted": "Acceptat",
         "no-result": "Sense resultats"
-      }
+      },
+      "accept-success": "L' aplicació s' ha acceptat correctament",
+      "decline-success": "L' aplicació s' ha rebutjat correctament"
     }
   },
   "account": {
@@ -552,7 +554,12 @@
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
-    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)"
+    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
+    "select": "Selecciona",
+    "year": "any",
+    "link-to": "enllaç a",
+    "other": "altra",
+    "and": "i"
   },
   "complete-profile": {
     "bio": {
@@ -1051,7 +1058,8 @@
     "no-project-reviewing": "Encara no esteu revisant un projecte",
     "skills": "Habilitats",
     "hobbies": "Hobbiesusa. kgm",
-    "levels-help-link": "Nivells d'kill"
+    "levels-help-link": "Nivells d'kill",
+    "publications": "Les meves publicacions"
   },
   "you": {
     "no-follow": "Encara no hi ha cap projecte seguit",
@@ -1059,7 +1067,9 @@
     "no-bio": "Encara no hi ha biografia",
     "no-skill": "Encara no s' han indicat habilitats",
     "no-project-participate": "Encara no és membre d' un projecte",
-    "no-project-reviewing": "Encara no és un revisador d'un projecte"
+    "no-project-reviewing": "Encara no és un revisador d'un projecte",
+    "publications": "Les seves publicacions",
+    "no-publications": "Encara no hi ha publicacions"
   },
   "multieditor": {
     "blockquote": "Bloqueja la cita",
@@ -1354,7 +1364,7 @@
       },
       "skills": {
         "tab": "Habilitats",
-        "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col\u00b7legues i a la teva comunitat trobar-te basant-te en all\u00f2 que t'importa.",
+        "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col·legues i a la teva comunitat trobar-te basant-te en allò que t'importa.",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
         "search": "cerca",
@@ -1464,7 +1474,8 @@
             "title": "Nivell 4: Expert",
             "description": "Nivell de doctorat o va fer un gran projecte, o pot ensenyar al nivell mestre"
           }
-        }
+        },
+        "nothing-yet": "Encara no has afegit habilitats."
       },
       "privacy": {
         "tab": "Privadesa",
@@ -1499,6 +1510,10 @@
           "org": "El meu portal",
           "pub": "Públic"
         }
+      },
+      "publications": {
+        "no-editable": "Les publicacions encara no estan disponibles.",
+        "tab": "Publicacions"
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",
@@ -1519,7 +1534,9 @@
     "mentorship-asked": "Vas demanar un mentor.",
     "mentorship-offered": "Heu ofert un mentor",
     "mentorship-asking": "Demana a mentor",
-    "mentorship-offering": "Estàs oferint mentors"
+    "mentorship-offering": "Estàs oferint mentors",
+    "publications": "Publicacions",
+    "research-output-year": "Any de sortida de recerca"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",
@@ -1588,7 +1605,8 @@
         "required": "Es requereix el camp de propòsit",
         "max": "El camp de propòsit no pot ser més gran que 180 caràcters",
         "min": "El camp de propòsit ha de ser almenys 3 caràcters"
-      }
+      },
+      "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació."
     },
     "image-header": "Imatge",
     "image-alert": {
@@ -1882,7 +1900,8 @@
     "current-skill-description": "Tipus d' etiqueta i selecciona l' habilitat correcta",
     "disambiguate": "(DISAMBIGUACIÓ)",
     "suggestions": "Suggeriments",
-    "choose-skill": "Feu clic sobre l' habilitat seleccionada:"
+    "choose-skill": "Feu clic sobre l' habilitat seleccionada:",
+    "main-tags": "o escolliu des de les etiquetes principals"
   },
   "sdg": {
     "1": {
@@ -2557,6 +2576,9 @@
         "label": "Notificació",
         "notice": "Si se selecciona, tothom no serà notificat de la nova instrucció",
         "button": "Envia una notificació"
+      },
+      "image": {
+        "label": "Imatge"
       }
     },
     "list": {
