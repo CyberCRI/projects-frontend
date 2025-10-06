@@ -1026,7 +1026,9 @@
     "label-ca": "Katalaani",
     "label-nl": "Hollandi",
     "label-es": "Hispaania",
-    "label-et": "Eesti"
+    "label-et": "Eesti",
+    "auto-translate-on": "Automaatne tõlge sees",
+    "auto-translate-off": "Automaatne tõlge välja lülitatud"
   },
   "location": {
     "loading": "Laadimiskohad"

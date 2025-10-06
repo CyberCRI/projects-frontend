@@ -1026,7 +1026,9 @@
     "label-ca": "Catalan",
     "label-nl": "Dutch",
     "label-es": "Español",
-    "label-et": "Estonia"
+    "label-et": "Estonia",
+    "auto-translate-on": "Traducción automática activada",
+    "auto-translate-off": "Traducción automática desactivada"
   },
   "location": {
     "loading": "Lugares de carga"

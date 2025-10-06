@@ -74,7 +74,7 @@ describe('On tab focus', () => {
   let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: '123' } as OrganizationOutput
+    organizationsStore._current = { code: '123' } as OrganizationOutput
     usersStore = useUsersStore(pinia)
   })
   //const localStorageMock = mockLocalStorage()

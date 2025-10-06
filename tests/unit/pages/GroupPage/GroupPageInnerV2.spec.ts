@@ -77,7 +77,7 @@ describe('GroupPageInnerV2', () => {
   beforeEach(() => {
     usePeopleGroupsStore(pinia)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'TEST' } as unknown as OrganizationOutput
 
     usersStore = useUsersStore(pinia)
     usersStore.id = 123

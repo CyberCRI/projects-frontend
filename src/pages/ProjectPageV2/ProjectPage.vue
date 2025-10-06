@@ -206,7 +206,7 @@ const chooseGoalOrSdg = (choice) => {
         />
       </template>
       <template #content>
-        <SubPageTitle :title-prefix="project?.title" :current-tab="currentTab" />
+        <SubPageTitle :title-prefix="project?.$t?.title" :current-tab="currentTab" />
         <NuxtPage v-bind="currentTab?.props" />
       </template>
     </NavPanelLayout>

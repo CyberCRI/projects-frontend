@@ -10,14 +10,21 @@ import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organi
 
 import analytics from '@/analytics'
 
+import useAutoTranslate from '@/composables/useAutoTranslate'
+
 export interface OrganizationsState {
-  all: OrganizationOutput[]
-  current: OrganizationOutput | null
+  _all: OrganizationOutput[]
+  _current: OrganizationOutput | null
 }
 
 const useOrganizationsStore = defineStore('organizations', () => {
-  const all = ref([])
-  const current = ref(null)
+  const { translateOrganization, translateOrganizations } = useAutoTranslate()
+
+  const _all = ref([])
+  const _current = ref(null)
+
+  const all = translateOrganizations(_all)
+  const current = translateOrganization(_current)
 
   const isDefault = computed((): boolean => {
     return current.value?.code === 'DEFAULT'
@@ -52,7 +59,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
       // TODO: temp fix while API is not setup
       organization.languages = organization.languages || ['en', 'fr']
 
-      current.value = organization
+      _current.value = organization
       analytics.setOrganizationProperties()
 
       return organization
@@ -64,7 +71,8 @@ const useOrganizationsStore = defineStore('organizations', () => {
   async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
     try {
       const response = await getOrganizations()
-      all.value = response.results
+      console.log(response.results)
+      _all.value = response.results
 
       return response
     } catch (err) {
@@ -78,7 +86,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     try {
       const result = await patchOrganization(current.value.code, organization)
       const currentOrganization = { ...current.value, ...organization, ...result }
-      current.value = currentOrganization
+      _current.value = currentOrganization
       return currentOrganization
     } catch (err) {
       throw new Error(err)
@@ -97,6 +105,9 @@ const useOrganizationsStore = defineStore('organizations', () => {
     getCurrentOrganization,
     getAllOrganizations,
     updateCurrentOrganization,
+    // needed in unit test, shouldn't be used anywhere else
+    _all,
+    _current,
   }
 })
 

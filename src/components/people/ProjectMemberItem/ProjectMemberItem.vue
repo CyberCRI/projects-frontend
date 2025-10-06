@@ -19,7 +19,7 @@
 
     <!--        TODO: ask Api to send information-->
     <div v-if="$filters.isNotGroup(user)" class="job">
-      {{ user.job }}
+      {{ user?.$t?.job }}
     </div>
 
     <div v-if="$filters.isGroup(user)" class="name-ctn">

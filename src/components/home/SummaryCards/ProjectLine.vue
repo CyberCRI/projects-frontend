@@ -5,14 +5,14 @@
   >
     <CroppedApiImage
       ref="projectImg"
-      :alt="`${project.title} image`"
+      :alt="`${project?.$t?.title} image`"
       class="img-container"
       :picture-data="project?.header_image"
       picture-size="medium"
       default-picture="/placeholders/header_placeholder.png"
     />
     <div class="project-title">
-      {{ $filters.capitalize(project.title) }}
+      {{ $filters.capitalize(project?.$t?.title) }}
     </div>
   </NuxtLink>
 </template>
