@@ -1,5 +1,7 @@
 import path from 'node:path'
 import fs from 'node:fs'
+import { spawnSync } from 'node:child_process'
+import { exit } from 'node:process'
 
 const directoryPath = path.join(path.dirname(import.meta.dirname), '/src/i18n/locales')
 let ALL_LOCALES = []
@@ -33,8 +35,12 @@ const diffLocal = (obj1, obj2) => {
   return result
 }
 
-const readJson = (file) => {
-  return JSON.parse(fs.readFileSync(path.join(directoryPath, file)).toString())
+const readJson = (filename) => {
+  return JSON.parse(fs.readFileSync(path.join(directoryPath, filename), 'utf8'))
+}
+
+const writeJson = (filename, content) => {
+  fs.writeFileSync(filename, JSON.stringify(content, null, 2), 'utf8')
 }
 
 // content of files
@@ -129,6 +135,38 @@ Object.entries(missing).forEach(([code, diffs]) => {
   })
 })
 
+if (Object.keys(needToTranslate).length === 0) {
+  console.log('all key are translated...')
+  exit(0)
+}
+
 const toShow = JSON.parse(JSON.stringify(needToTranslate))
 Object.values(toShow).forEach((e) => (e.to = e.to.join(' / ')))
 console.table(toShow, ['from', 'to'])
+
+const output = spawnSync(`${import.meta.dirname}/translate/run.sh`, [
+  JSON.stringify(needToTranslate),
+])
+
+if (output.status) {
+  console.log(output)
+  exit(1)
+}
+const translated = JSON.parse(output.stdout)
+
+const ignored = translated.__INGORED__
+delete translated.__INGORED__
+Object.entries(translated).forEach(([k, trad]) => {
+  Object.entries(trad).forEach(([code, value]) => {
+    setValue(newFileContent[code], k, value)
+  })
+})
+
+ALL_LOCALES.forEach(({ code, file }) => {
+  writeJson(path.join(directoryPath, file), newFileContent[code])
+})
+
+Object.entries(ignored).forEach(([from, to]) => {
+  console.log(`ingored lang from ${from}: ${to}`)
+})
+console.log('saved...')
