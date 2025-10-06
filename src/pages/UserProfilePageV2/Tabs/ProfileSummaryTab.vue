@@ -20,6 +20,28 @@
       <SkillSummary :user="user" class="unboxed" />
     </div>
     <div class="lists">
+      <!-- publications -->
+      <UserProjectsSearch
+        v-if="user.researcher?.publications_count"
+        :limit="publicationsLimit"
+        :user="user"
+      >
+        <template #default>
+          <div class="project-list-header">
+            <h4 class="title">
+              {{ $t('me.publications') }}
+              <span>({{ user.researcher.publications_count }})</span>
+            </h4>
+            <SeeMoreArrow
+              v-if="user.researcher.publications_count > publicationsLimit"
+              data-test="see-more"
+              :to="{ name: 'ProfilePublicationsOther' }"
+            />
+          </div>
+          <UserPublicationsList preview :limit="publicationsLimit" :user="user" />
+        </template>
+      </UserProjectsSearch>
+
       <!-- user projects (Owners, Members) -->
       <UserProjectsSearch :limit="listLimit" :member-roles="['owners', 'members']" :user="user">
         <template #default="{ items: projects, isLoading, totalCount }">
@@ -141,6 +163,7 @@ export default {
   data() {
     return {
       listLimit: 6,
+      publicationsLimit: 3,
     }
   },
 
