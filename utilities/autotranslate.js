@@ -30,17 +30,17 @@ const diffLocal = (obj1, obj2) => {
   let missing = new Set()
   let empty = new Set()
   const diffRecusr = (key, o1, o2) => {
-    const [suMissing, subEmpty] = diffLocal(o1, o2)
+    const [subMissing, subEmpty] = diffLocal(o1, o2)
     return [
-      new Set([...suMissing].map((k) => `${key}.${k}`)),
+      new Set([...subMissing].map((k) => `${key}.${k}`)),
       new Set([...subEmpty].map((k) => `${key}.${k}`)),
     ]
   }
 
   Object.keys(obj1).forEach((key) => {
     if (typeof obj1[key] === 'object') {
-      const [suMissing, subEmpty] = diffRecusr(key, obj1[key], obj2[key] ?? {})
-      missing = new Set([...missing, ...suMissing])
+      const [subMissing, subEmpty] = diffRecusr(key, obj1[key], obj2[key] ?? {})
+      missing = new Set([...missing, ...subMissing])
       empty = new Set([...empty, ...subEmpty])
     } else if (!['object', 'number', 'string'].includes(typeof obj1[key])) {
       console.error(typeof obj1[key])
