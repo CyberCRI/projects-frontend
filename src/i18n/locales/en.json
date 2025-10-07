@@ -118,6 +118,12 @@
     }
   },
   "admin": {
+    "terms": {
+      "title": "Terms and Conditions",
+      "using-default": "You are currently using default Terms and Conditions",
+      "error": "An error occurred while saving the Terms and Conditions.",
+      "saved": "Terms and Conditions saved successfully"
+    },
     "accounts": {
       "table": {
         "last-name": "Last name",
@@ -219,7 +225,8 @@
       "users": "Users",
       "requests": "Requests",
       "groups": "Groups",
-      "settings": "Settings"
+      "settings": "Settings",
+      "terms": "ToS"
     },
     "page-title": "Admin",
     "portal": {
