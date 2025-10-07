@@ -1,8 +1,7 @@
 import type { ProjectCategoryOutput } from '@/models/project-category.model'
-import { getAllProjectCategories, ProjectCategoryParams } from '@/api/project-categories.service'
+import { getAllProjectCategories } from '@/api/project-categories.service'
 import type { APIResponseList } from '@/api/types'
 import { toRaw } from 'vue'
-import { useRuntimeConfig } from '#imports'
 import { defineStore } from 'pinia'
 
 export interface ProjectCategoriesState {
@@ -70,17 +69,11 @@ const useProjectCategoriesStore = defineStore('projectCategories', {
   },
 
   actions: {
-    getAllProjectCategories(
-      params: ProjectCategoryParams = {}
-    ): Promise<APIResponseList<ProjectCategoryOutput>> {
-      // If no organization set in the param use default one
-      // TODO check why rootState.organizations.current is sometimes null
-      // the fallback on env value is a temporary fix
-      const runtimeConfig = useRuntimeConfig()
-      if (!params.organization) params.organization = runtimeConfig.public.appApiOrgCode
+    getAllProjectCategories(): Promise<APIResponseList<ProjectCategoryOutput>> {
+      const organizationCode = useOrganizationCode()
 
       return new Promise((resolve, reject) => {
-        getAllProjectCategories(params)
+        getAllProjectCategories(organizationCode)
           .then((response) => {
             // Only store project categories from org
             // Except in "TheAdvancedProjectOptions" where we need all project categories from every org

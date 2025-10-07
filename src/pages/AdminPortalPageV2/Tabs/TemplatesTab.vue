@@ -301,8 +301,10 @@ export default {
     },
 
     async fillForm() {
+      const organizationCode = useOrganizationCode()
       this.fetchingTemplate = true
       this.selectedCategory = await getProjectCategory(
+        organizationCode,
         this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0]?.id
       )
 
@@ -333,6 +335,7 @@ export default {
     },
 
     async submit() {
+      const organizationCode = useOrganizationCode()
       this.isLoading = true
 
       const template = {
@@ -353,7 +356,7 @@ export default {
       }
 
       try {
-        await patchProjectCategory(this.selectedCategory?.id, updatedData)
+        await patchProjectCategory(organizationCode, this.selectedCategory?.id, updatedData)
 
         this.toaster.pushSuccess(this.$t('toasts.category-template-update.success'))
       } catch (error) {
