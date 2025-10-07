@@ -118,6 +118,12 @@
     }
   },
   "admin": {
+    "terms": {
+      "title": "Conditions Générales d'Utilisation",
+      "using-default": "Vous utilisez actuellement les Conditions Générales d'Utilisation par défaut",
+      "error": "Une erreur s'est produite lors de l'enregistrement des Conditions Générales d'Utilisation.",
+      "saved": "Conditions Générales d'Utilisation enregistrées avec succès."
+    },
     "accounts": {
       "table": {
         "last-name": "Nom",
@@ -219,7 +225,8 @@
       "users": "Utilisateurs",
       "requests": "Demandes",
       "groups": "Groupes",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "terms": "CGU"
     },
     "page-title": "Admin",
     "portal": {
