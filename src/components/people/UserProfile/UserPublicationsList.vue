@@ -86,7 +86,7 @@
       :current="pagination.currentPage"
       :pagination="pagination"
       :total="pagination.total"
-      @update-pagination="refresh"
+      @update-pagination="getPublications"
     />
   </div>
   <div v-else-if="loading" class="publications-loading">{{ t('common.loading') }}...</div>
