@@ -12,7 +12,9 @@
       {{ title }}
     </template>
     <template #body>
-      {{ content }}
+      <slot>
+        {{ content }}
+      </slot>
     </template>
   </DialogModal>
 </template>
