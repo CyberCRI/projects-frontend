@@ -1,7 +1,7 @@
 <script setup>
 import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
-
+const { t } = useI18n()
 const organizationsStore = useOrganizations()
 
 try {
@@ -10,7 +10,7 @@ try {
   const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
   useLpiHead(
     useRequestURL().toString(),
-    'Conditions générales d’utilisation',
+    computed(() => t('tos.title')),
     organization?.dashboard_subtitle,
     image,
     dimensions
@@ -21,11 +21,8 @@ try {
 </script>
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
-    <h1 class="page-title">Conditions générales d’utilisation</h1>
-    <TipTapOutput
-      v-if="false && organizationsStore?.hasTerms"
-      :content="organizationsStore?.termsContent"
-    />
+    <h1 class="page-title">{{ $t('tos.title') }}</h1>
+    <TipTapOutput v-if="organizationsStore?.hasTerms" :content="organizationsStore?.termsContent" />
     <DefaultTermsOfService v-else />
   </div>
 </template>
