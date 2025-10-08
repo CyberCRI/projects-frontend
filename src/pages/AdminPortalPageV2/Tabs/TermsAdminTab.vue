@@ -15,7 +15,7 @@ const termsContent = ref('<p></p>')
 const isLoading = ref(true)
 
 const resetTerms = () => {
-  termsContent.value = currentOrganization?.termsContent || '<p></p>'
+  termsContent.value = organizationsStore?.termsContent || '<p></p>'
 }
 
 const isAsyncing = ref(false)
@@ -52,7 +52,7 @@ watch(
       <LoaderSimple />
     </div>
     <template v-else>
-      <p v-if="!currentOrganization?.hasTerms" class="notice">
+      <p v-if="!organizationsStore?.hasTerms" class="notice">
         {{ $t('admin.terms.using-default') }}
       </p>
       <TipTapEditor

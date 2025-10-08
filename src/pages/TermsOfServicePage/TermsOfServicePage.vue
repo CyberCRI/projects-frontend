@@ -4,8 +4,6 @@ import useOrganizations from '@/stores/useOrganizations'
 
 const organizationsStore = useOrganizations()
 
-const currentOrganization = computed(() => organizationsStore.current)
-
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
@@ -25,8 +23,8 @@ try {
   <div class="page-section-narrow legal-page terms-of-service page-top">
     <h1 class="page-title">Conditions générales d’utilisation</h1>
     <TipTapOutput
-      v-if="currentOrganization?.hasTerms"
-      :content="currentOrganization?.termsContent"
+      v-if="false && organizationsStore?.hasTerms"
+      :content="organizationsStore?.termsContent"
     />
     <DefaultTermsOfService v-else />
   </div>
