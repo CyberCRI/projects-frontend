@@ -4,7 +4,7 @@
       <div class="public-year-container">
         <h5>
           {{ t('profile.research-output-year') }}
-          {{ yearSelected ? `${yearSelected} (${publications.count})` : '' }}
+          {{ filters.year ? `${filters.year} (${publications.count})` : '' }}
         </h5>
         <div class="public-year-info">
           <span class="public-year-info-minyear">{{ yearsInfo.minYear }}</span>
@@ -15,13 +15,13 @@
               :key="obj.year"
               class="publi-year-bar"
               :class="{
-                disabled: yearSelected !== null && yearSelected !== obj.year,
-                selected: yearSelected === obj.year,
+                disabled: filters.year && filters.year !== obj.year,
+                selected: filters.year === obj.year,
                 preview: preview,
               }"
               :title="`${t('profile.publications')} ${obj.year} (${obj.count})`"
               :style="{ '--bar-count': obj.height }"
-              @click="onSelectedYear(obj.year)"
+              @click="onFilter('year', obj.year)"
             >
               <span>{{ obj.year }}</span>
             </component>
@@ -30,16 +30,47 @@
         </div>
       </div>
       <div class="public-numbers-container">
-        <div v-for="obj in publicationsTypeInfos" :key="obj.name" class="publi-numbers">
+        <component
+          :is="preview ? 'div' : 'button'"
+          v-for="obj in publicationsTypeInfos"
+          :key="obj.name"
+          class="publi-numbers"
+          :class="{
+            disabled:
+              filters.publication_type !== undefined &&
+              filters.publication_type !== (obj.name ?? ''),
+            selected: filters.publication_type === (obj.name ?? ''),
+            preview: preview,
+          }"
+          @click="onFilter('publication_type', obj.name ?? '')"
+        >
           <span>{{ obj.count }}</span>
           <span>{{ obj.name ?? t('common.other') }}</span>
-        </div>
+        </component>
+      </div>
+      <div v-if="!preview" class="public-roles-container">
+        <component
+          :is="preview ? 'div' : 'button'"
+          v-for="[role, count] in publicationsRoleInfos"
+          :key="role"
+          class="publi-roles"
+          @click="onFilter('roles', role)"
+        >
+          <BadgeItem
+            :class="{
+              disabled: filters.roles !== null && filters.roles !== role,
+              selected: filters.roles === role,
+              preview: preview,
+            }"
+            :label="`${role} ${count}`"
+          />
+        </component>
       </div>
     </div>
     <article v-for="publi in publications.results" :key="publi.id" class="profile-publications">
       <h2>{{ publi.title }}</h2>
       <div>
-        <span v-for="(author, idx) in publi.authors" :key="author.id">
+        <span v-for="(author, idx) in publi.contributors" :key="author.id">
           <NuxtLink
             v-if="author.user?.slug"
             class="profile-publication-contributor"
@@ -48,7 +79,7 @@
             <strong>{{ author.display_name }}</strong>
           </NuxtLink>
           <a
-            v-else
+            v-else-if="researcherHarvesterToUrl(author)"
             :href="researcherHarvesterToUrl(author)"
             rel="noreferer,noopener"
             target="_blank"
@@ -56,9 +87,12 @@
           >
             {{ author.display_name }}
           </a>
+          <span v-else class="profile-publication-contributor">
+            {{ author.display_name }}
+          </span>
           <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
-          <span v-if="idx + 2 < publi.authors.length">,</span>
-          <span v-else-if="idx + 2 === publi.authors.length">
+          <span v-if="idx + 2 < publi.contributors.length">,</span>
+          <span v-else-if="idx + 2 === publi.contributors.length">
             {{ ` ${$t('common.and')} ` }}
           </span>
         </span>
@@ -141,15 +175,20 @@ const publicationsAnalytics = ref({
   years: [],
 })
 
-// for filters year
-const yearSelected = ref(null)
-const onSelectedYear = (year) => {
-  // block select date in preview (from snapshot page)
+// filter backend query
+// default role "author" to only show author publication
+const filters = reactive({
+  roles: 'author',
+})
+const onFilter = (key, value) => {
   if (props.preview) {
     return
   }
-  // if the selected year is the same, reset filters
-  yearSelected.value = yearSelected.value === year ? null : year
+  if (filters[key] === value) {
+    delete filters[key]
+  } else {
+    filters[key] = value
+  }
 }
 
 const getPublications = (url) => {
@@ -164,19 +203,25 @@ const getPublications = (url) => {
     })
 }
 
+const sanitizeFilters = () => {
+  const publicationDate =
+    filters.year !== undefined ? `&publication_date__year=${filters.year}` : ''
+  const pubType =
+    filters.publication_type !== undefined ? `&publication_type=${filters.publication_type}` : ''
+  const roles = filters.roles !== undefined ? `&roles=${filters.roles}` : ''
+  return `${publicationDate}${pubType}${roles}`
+}
+
 const defaultURL = `crisalid/researcher/${props.user.researcher.id}/publications?offset=0&limit=${props.limit || 10}`
-watch(yearSelected, () => {
-  const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
-  getPublications(`${defaultURL}${publicationDate}`)
+watch(filters, () => {
+  getPublications(`${defaultURL}${sanitizeFilters()}`)
   getPublicationsInfo()
 })
 
 const getPublicationsInfo = () => {
   const limit = props.preview ? `limit=5` : ''
-  const publicationDate = yearSelected.value ? `&publication_date__year=${yearSelected.value}` : ''
-
   useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/publications/analytics?${limit}${publicationDate}`
+    `crisalid/researcher/${props.user.researcher.id}/publications/analytics?${limit}${sanitizeFilters()}`
   ).then((data) => {
     publicationsAnalytics.value = data
   })
@@ -184,7 +229,7 @@ const getPublicationsInfo = () => {
 
 // when components is mounted, getch
 onMounted(() => {
-  getPublications(defaultURL)
+  getPublications(`${defaultURL}${sanitizeFilters()}`)
   getPublicationsInfo()
 })
 
@@ -224,6 +269,16 @@ const publicationsTypeInfos = computed(() => {
   }
   return publicationsAnalytics.value.publication_types
 })
+
+const publicationsRoleInfos = computed(() => {
+  const roles = Object.entries(publicationsAnalytics.value.roles)
+    .sort(([, c]) => c)
+    .reverse()
+  if (props.limit) {
+    return roles.slice(0, props.limit)
+  }
+  return roles
+})
 </script>
 
 <style lang="scss" scoped>
@@ -255,12 +310,18 @@ $profile-publications: 1rem;
 .profile-publication-contributor {
   font-weight: bold;
   font-size: 0.9rem;
+  padding-left: 0.2rem;
 }
 
 // if is a link, add correct color and underline
 a.profile-publication-contributor {
   color: $primary-dark;
   text-decoration: underline;
+}
+
+span.profile-publication-contributor {
+  font-style: italic;
+  font-weight: normal;
 }
 
 .profile-publication-description {
@@ -271,6 +332,7 @@ a.profile-publication-contributor {
 .profile-info-container {
   display: grid;
   grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto;
 }
 
 .profile-info-container:not(.preview) {
@@ -395,6 +457,28 @@ a.profile-publication-contributor {
   flex-direction: column;
   text-align: center;
   justify-content: end;
+  border-radius: 12px;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  transition: all 0.2s;
+
+  &:not(.preview) {
+    cursor: pointer;
+
+    &:hover,
+    &.selected {
+      background-color: #501087;
+      color: white;
+
+      & :first-child {
+        color: white;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.6;
+    }
+  }
 
   & :first-child {
     color: #501087;
@@ -403,6 +487,7 @@ a.profile-publication-contributor {
 
   & :last-child {
     opacity: 0.6;
+    text-transform: capitalize;
   }
 }
 
@@ -436,5 +521,19 @@ a.profile-publication-contributor {
   opacity: 0.5;
   font-style: italic;
   font-weight: bold;
+}
+
+.publi-roles {
+  margin: 0;
+  border: 0;
+  background-color: unset;
+
+  > :not(.preview) {
+    cursor: pointer;
+
+    &.disaled {
+      opacity: 0.4;
+    }
+  }
 }
 </style>
