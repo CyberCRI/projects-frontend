@@ -14,8 +14,9 @@ export type Researcher = {
 export type Publication = {
   id: number
   title: string
+  description: string
   publication_type: null | string
-  authors: Researcher[]
+  contributors: Researcher[]
   identifiers: Identifier[]
   publication_date: string | null | Date
 }

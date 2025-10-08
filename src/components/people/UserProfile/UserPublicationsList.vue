@@ -97,9 +97,12 @@
           </span>
         </span>
       </div>
-      <p class="profile-publication-description">
-        {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
+      <p class="profile-publication-description" :class="{ preview: preview }">
+        {{ publi.description }}
       </p>
+      <span>
+        {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
+      </span>
       <div class="public-sources-container">
         <a
           v-for="identifier in publi.identifiers"
@@ -327,6 +330,13 @@ span.profile-publication-contributor {
 .profile-publication-description {
   font-weight: 400;
   opacity: 0.75;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.profile-publication-description.preview {
+  -webkit-line-clamp: 2;
 }
 
 .profile-info-container {
