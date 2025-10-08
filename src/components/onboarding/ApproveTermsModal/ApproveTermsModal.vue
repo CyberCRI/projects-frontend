@@ -7,8 +7,8 @@ const usersStore = useUsersStore()
 
 const needsAproval = computed(() => {
   if (!usersStore.isConnected) return false
-  if (!usersStore.signed_terms_and_conditions?.version) return true
-  return organizationsStore.termsVersion > usersStore.signed_terms_and_conditions?.version
+  if (!usersStore.user?.signed_terms_and_conditions?.version) return true
+  return organizationsStore.termsVersion > usersStore.user?.signed_terms_and_conditions?.version
 })
 
 const firstnotice = useTemplateRef('firstnotice')
@@ -29,10 +29,11 @@ watchEffect(() => {
 
 const onTermApproved = async () => {
   // TODO: update profile
-  usersStore.signed_terms_and_conditions = {
-    version: organizationsStore.termsVersion,
-    date: new Date().toISOString(),
-  }
+  if (usersStore.userFromApi)
+    usersStore.userFromApi.signed_terms_and_conditions = {
+      version: organizationsStore.termsVersion,
+      date: new Date().toISOString(),
+    }
 }
 </script>
 <template>
