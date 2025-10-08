@@ -51,16 +51,15 @@ watch(
       <LoaderSimple />
     </div>
     <template v-else>
-      <p v-if="!currentOrganization?.hasTerms" class="notice">
+      <p v-if="!organizationsStore?.hasTerms" class="notice">
         {{ $t('admin.terms.using-default') }}
       </p>
-      <TipTapEditor
-        ref="tiptapEditor"
-        v-model="termsContent"
-        :save-image-callback="saveDescriptionImage"
-        class="no-max-height"
-        mode="full"
-      />
+      <p v-else class="notice">
+        Version: {{ organizationsStore.termsVersion }}
+        <!-- ,
+        {{ $d(new Date(organizationsStore.termsDate)) }}-->
+      </p>
+      <TipTapEditor ref="tiptapEditor" v-model="termsContent" class="no-max-height" mode="medium" />
       <div class="actions">
         <LpiButton
           :disabled="isAsyncing"

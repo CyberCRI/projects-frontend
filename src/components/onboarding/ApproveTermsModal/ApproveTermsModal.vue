@@ -4,11 +4,17 @@ import useOrganizations from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()
+import { patchUser } from '@/api/people.service'
+
+const lastApprovedVersion = computed(() => {
+  if (!usersStore.isConnected) return null
+  return usersStore.user?.signed_terms_and_conditions?.version || null
+})
 
 const needsAproval = computed(() => {
   if (!usersStore.isConnected) return false
   if (!usersStore.user?.signed_terms_and_conditions?.version) return true
-  return organizationsStore.termsVersion > usersStore.user?.signed_terms_and_conditions?.version
+  return organizationsStore.termsVersion > lastApprovedVersion.value
 })
 
 const firstnotice = useTemplateRef('firstnotice')
@@ -22,18 +28,31 @@ const onTosScroll = (e) => {
   }
 }
 
+const isAsyncing = ref(false)
+
 watchEffect(() => {
   if (needsAproval.value && firstnotice.value)
     onTosScroll({ target: firstnotice.value?.parentElement })
 })
 
 const onTermApproved = async () => {
-  // TODO: update profile
-  if (usersStore.userFromApi)
-    usersStore.userFromApi.signed_terms_and_conditions = {
-      version: organizationsStore.termsVersion,
-      date: new Date().toISOString(),
+  if (!usersStore.userFromApi) return
+  isAsyncing.value = true
+  try {
+    const user = usersStore.userFromApi
+    const payload = {
+      signed_terms_and_conditions: {
+        version: organizationsStore.termsVersion,
+        date: new Date().toISOString(),
+      },
     }
+    await patchUser(user.id, payload)
+    await usersStore.getUser(user.id)
+  } catch (err) {
+    console.error(err)
+  } finally {
+    isAsyncing.value = false
+  }
 }
 </script>
 <template>
@@ -43,11 +62,15 @@ const onTermApproved = async () => {
     :width="width"
     :height="height"
     :is-small="isSmall"
+    :can-close="false"
     @content-scroll="onTosScroll"
   >
     <template #header-title>Approve Terms and Conditions</template>
     <template #content>
-      <p ref="firstnotice" class="notice instructions">
+      <p v-if="lastApprovedVersion" ref="firstnotice" class="notice instructions">
+        Our Terms and Conditions have been updated, please take a moment to review and approve them.
+      </p>
+      <p v-else ref="firstnotice" class="notice instructions">
         Please read and approve the updated Terms and Conditions to continue using the platform.
       </p>
       <div class="tos-content">
@@ -65,10 +88,10 @@ const onTermApproved = async () => {
         </p>
         <div class="action-buttons">
           <LpiButton
-            :disabled="asyncing || !hasReadAll"
+            :disabled="isAsyncing || !hasReadAll"
             :label="$t('common.yes')"
             data-test="approve-terms"
-            :btn-icon="asyncing ? 'LoaderSimple' : null"
+            :btn-icon="isAsyncing ? 'LoaderSimple' : null"
             @click="onTermApproved"
           />
         </div>
