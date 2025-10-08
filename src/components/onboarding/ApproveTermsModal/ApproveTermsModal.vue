@@ -2,18 +2,26 @@
 // import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
+import useToasterStore from '@/stores/useToaster.ts'
+import { patchUser } from '@/api/people.service'
 const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()
-import { patchUser } from '@/api/people.service'
+const toaster = useToasterStore()
+
+const { t } = useI18n()
+
+const orgCode = computed(() => organizationsStore?.current?.code || '')
+
+const signedTerms = computed(() => usersStore.user?.signed_terms_and_conditions || {})
 
 const lastApprovedVersion = computed(() => {
   if (!usersStore.isConnected) return null
-  return usersStore.user?.signed_terms_and_conditions?.version || null
+  return signedTerms.value?.[orgCode.value]?.version || null
 })
 
 const needsAproval = computed(() => {
   if (!usersStore.isConnected) return false
-  if (!usersStore.user?.signed_terms_and_conditions?.version) return true
+  if (!lastApprovedVersion.value) return true
   return organizationsStore.termsVersion > lastApprovedVersion.value
 })
 
@@ -36,20 +44,27 @@ watchEffect(() => {
 })
 
 const onTermApproved = async () => {
-  if (!usersStore.userFromApi) return
+  const user = usersStore.userFromApi
+  if (!user) return
   isAsyncing.value = true
-  try {
-    const user = usersStore.userFromApi
-    const payload = {
-      signed_terms_and_conditions: {
+  const payload = {
+    signed_terms_and_conditions: {
+      ...signedTerms?.value,
+      [orgCode.value]: {
         version: organizationsStore.termsVersion,
         date: new Date().toISOString(),
       },
-    }
+    },
+  }
+  try {
     await patchUser(user.id, payload)
     await usersStore.getUser(user.id)
   } catch (err) {
     console.error(err)
+    toaster.pushError(t('tos.error-approving'))
+    // mock acceptance (non persited past next reload)
+    // to still allow navigation in case of trouble
+    user.signed_terms_and_conditions = payload.signed_terms_and_conditions
   } finally {
     isAsyncing.value = false
   }
@@ -65,13 +80,13 @@ const onTermApproved = async () => {
     :can-close="false"
     @content-scroll="onTosScroll"
   >
-    <template #header-title>Approve Terms and Conditions</template>
+    <template #header-title>{{ $t('tos.approve-title') }}</template>
     <template #content>
       <p v-if="lastApprovedVersion" ref="firstnotice" class="notice instructions">
-        Our Terms and Conditions have been updated, please take a moment to review and approve them.
+        {{ $t('tos.evolved') }}
       </p>
       <p v-else ref="firstnotice" class="notice instructions">
-        Please read and approve the updated Terms and Conditions to continue using the platform.
+        {{ $t('tos.review-and-sign') }}
       </p>
       <div class="tos-content">
         <TipTapOutput
@@ -84,7 +99,7 @@ const onTermApproved = async () => {
     <template #footer>
       <div class="approve-footer">
         <p class="notice" :class="{ transparent: hasReadAll }">
-          Go to the bottom of the terms before you can approve.
+          {{ $t('tos.scroll-notice') }}
         </p>
         <div class="action-buttons">
           <LpiButton
