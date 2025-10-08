@@ -46,13 +46,12 @@ watch(
 )
 </script>
 <template>
-  <div class="page-section-narrow legal-page terms-of-service page-top">
-    <h1 class="page-title">Conditions générales d’utilisation</h1>
+  <div class="terms-of-service-admin-tab">
     <div v-if="isLoading" class="loader">
       <LoaderSimple />
     </div>
     <template v-else>
-      <p v-if="!organizationsStore?.hasTerms" class="notice">
+      <p v-if="!currentOrganization?.hasTerms" class="notice">
         {{ $t('admin.terms.using-default') }}
       </p>
       <TipTapEditor
@@ -102,5 +101,9 @@ watch(
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.no-max-height {
+  max-height: 50vh;
 }
 </style>
