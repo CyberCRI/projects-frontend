@@ -16,6 +16,7 @@ export interface UserModel {
   description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
+  signed_terms_and_conditions?: { version: number | null; date: string | null } | null
 }
 
 export interface UserFromJWTModel {
