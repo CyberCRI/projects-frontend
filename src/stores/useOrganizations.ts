@@ -45,6 +45,16 @@ const useOrganizationsStore = defineStore('organizations', () => {
     return Object.values(index)
   })
 
+  // Terms and Conditions might be null initially
+  const termsId = computed((): number | null => current.value?.terms_and_conditions?.id || null)
+  const termsVersion = computed(
+    (): number | null => current.value?.terms_and_conditions?.version || null
+  )
+  const termsContent = computed(
+    (): string | null => current.value?.terms_and_conditions?.content || null
+  )
+  const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
+
   async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
     try {
       // foo
@@ -93,6 +103,10 @@ const useOrganizationsStore = defineStore('organizations', () => {
     isDefault,
     languages,
     allClassifications,
+    hasTerms,
+    termsId,
+    termsVersion,
+    termsContent,
     // actions
     getCurrentOrganization,
     getAllOrganizations,
