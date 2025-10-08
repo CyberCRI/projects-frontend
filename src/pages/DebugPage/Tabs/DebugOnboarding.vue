@@ -9,6 +9,16 @@
       :disabled="!usersStore.userFromApi || reseting"
       @click="resetOnboardingStatus"
     />
+    <hr />
+    <p class="notice">Reset terms approval for the current user.</p>
+    <p v-if="!usersStore.userFromApi">Login first !</p>
+    <LpiButton
+      class="reset-button"
+      :btn-icon="resetingTerms ? 'LoaderSimple' : 'RotateRight'"
+      :label="'Reset terms approval'"
+      :disabled="!usersStore.userFromApi || resetingTerms"
+      @click="resetTermsSigned"
+    />
   </div>
 </template>
 <script>
@@ -32,6 +42,7 @@ export default {
   data() {
     return {
       reseting: false,
+      resetingTerms: false,
     }
   },
   methods: {
@@ -44,10 +55,29 @@ export default {
         await patchUser(keycloak_id, payload)
         await this.usersStore.getUser(keycloak_id)
         this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
-      } catch {
+      } catch (err) {
+        console.error(err)
         this.toaster.pushError(`Error while reseting onboarding status`)
       } finally {
         this.reseting = false
+      }
+    },
+    async resetTermsSigned() {
+      this.resetingTerms = true
+      try {
+        if (!this.usersStore.userFromApi) return
+        const user = this.usersStore.userFromApi
+        const payload = {
+          signed_terms_and_conditions: {},
+        }
+        await patchUser(user.id, payload)
+        await this.usersStore.getUser(user.id)
+        this.toaster.pushSuccess(`Terms approval reseted for ${user.email}`)
+      } catch (err) {
+        console.error(err)
+        this.toaster.pushError(`Error while reseting terms approval`)
+      } finally {
+        this.resetingTerms = false
       }
     },
   },
