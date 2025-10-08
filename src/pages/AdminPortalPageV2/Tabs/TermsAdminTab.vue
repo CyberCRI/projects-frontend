@@ -55,7 +55,7 @@ watch(
         {{ $t('admin.terms.using-default') }}
       </p>
       <p v-else class="notice">
-        Version: {{ organizationsStore.termsVersion }}
+        {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
         <!-- ,
         {{ $d(new Date(organizationsStore.termsDate)) }}-->
       </p>

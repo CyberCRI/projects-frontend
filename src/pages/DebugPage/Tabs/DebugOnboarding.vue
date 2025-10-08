@@ -68,7 +68,10 @@ export default {
         if (!this.usersStore.userFromApi) return
         const user = this.usersStore.userFromApi
         const payload = {
-          signed_terms_and_conditions: {},
+          signed_terms_and_conditions: {
+            ...user.signed_terms_and_conditions,
+            [orgCode.value]: undefined,
+          },
         }
         await patchUser(user.id, payload)
         await this.usersStore.getUser(user.id)

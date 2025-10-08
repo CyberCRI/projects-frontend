@@ -122,7 +122,8 @@
       "title": "Terms and Conditions",
       "using-default": "You are currently using default Terms and Conditions",
       "error": "An error occurred while saving the Terms and Conditions.",
-      "saved": "Terms and Conditions saved successfully"
+      "saved": "Terms and Conditions saved successfully",
+      "version": "Version:"
     },
     "accounts": {
       "table": {
@@ -3092,5 +3093,13 @@
       "Unknown": "unknown",
       "Working-Paper": "working paper"
     }
+  },
+  "tos": {
+    "evolved": "Our Terms and Conditions have been updated, please take a moment to review and approve them.",
+    "review-and-sign": "Please read and approve the updated Terms and Conditions to continue using the platform.",
+    "scroll-notice": " Go to the bottom of the terms before you can approve.",
+    "error-approving": "Error while approving terms and conditions, please try again later.",
+    "title": "Terms and Conditions",
+    "approve-title": "Please Approve the Terms and Conditions"
   }
 }
