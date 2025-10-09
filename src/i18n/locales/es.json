@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Ver todos",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "No hay noticias... ¡todavía!"
   },
   "file": {
     "add-image": "a\u00f1adir una imagen",

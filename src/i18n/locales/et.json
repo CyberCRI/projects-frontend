@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Näe kõiki",
-    "title": "Uudisvoog"
+    "title": "Uudisvoog",
+    "empty": "Ei mingeid uudiseid... veel!"
   },
   "file": {
     "add-image": "pildi lisamine",
