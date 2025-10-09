@@ -2655,5 +2655,10 @@
   "documents-page": {
     "title": "Documents of the {platformName} platform",
     "description": "Find here all the documents related to the {platformName} platform, including the terms of service, privacy policy, and other legal documents."
+  },
+  "chatbot": {
+    "title": "Chat with AI",
+    "input-placeholder": "Type your message here...",
+    "intro-message": "Hello How can I assist you today?"
   }
 }
