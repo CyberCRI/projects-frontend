@@ -11,7 +11,7 @@ const isLoading = useState(() => false)
 const request = useState(() => ({ results: [] }))
 
 const newsfeed = computed(() => {
-  return request.value ? request.value.results : []
+  return request.value?.results || []
 })
 
 const pagination = computed(() => {
