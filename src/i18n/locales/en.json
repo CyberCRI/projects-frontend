@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "See all",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "There's no news... yet!"
   },
   "file": {
     "add-image": "add an image",

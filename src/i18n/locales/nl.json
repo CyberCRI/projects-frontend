@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Alles zien",
-    "title": "Nieuwsfeed"
+    "title": "Nieuwsfeed",
+    "empty": "Geen nieuwsfeed... nog niet!"
   },
   "file": {
     "add-image": "een afbeelding toevoegen",

@@ -789,7 +789,8 @@
   },
   "feed": {
     "see-all": "Tout voir",
-    "title": "Fil d'infos"
+    "title": "Fil d'infos",
+    "empty": "Pas de nouvelles... Pour le moment !"
   },
   "file": {
     "add-image": "ajouter une image",

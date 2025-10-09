@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Veure- ho tot",
-    "title": "Reducció de notícies"
+    "title": "Reducció de notícies",
+    "empty": "No hi ha notícies... encara!"
   },
   "file": {
     "add-image": "afegeix una imatge",
