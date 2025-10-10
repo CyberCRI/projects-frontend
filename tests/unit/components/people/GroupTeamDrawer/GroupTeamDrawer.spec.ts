@@ -35,8 +35,7 @@ describe('GroupTeamDrawer.vue', () => {
       },
     }
   })
-
-  it('should render GroupTeamDrawer component', () => {
+  ;(it('should render GroupTeamDrawer component', () => {
     wrapper = lpiMount(GroupTeamDrawer, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -50,5 +49,5 @@ describe('GroupTeamDrawer.vue', () => {
       wrapper = lpiShallowMount(GroupTeamDrawer, defaultParams)
       wrapper.vm.goBackToUserSelection()
       expect(wrapper.emitted('set-mode')).toBeTruthy()
-    })
+    }))
 })

@@ -31,8 +31,7 @@ describe('CompleteProfileStep1.vue', () => {
       i18n,
     }
   })
-
-  it('should render component', () => {
+  ;(it('should render component', () => {
     const wrapper = lpiShallowMount(CompleteProfileStep1, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -42,5 +41,5 @@ describe('CompleteProfileStep1.vue', () => {
 
       vm.save()
       expect(wrapper.emitted('saving')).toBeTruthy()
-    })
+    }))
 })

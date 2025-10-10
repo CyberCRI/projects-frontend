@@ -47,8 +47,7 @@ describe('BlogDrawer.vue', () => {
       },
     }
   })
-
-  it('should render component', () => {
+  ;(it('should render component', () => {
     const wrapper = lpiMount(BlogDrawer, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -58,5 +57,5 @@ describe('BlogDrawer.vue', () => {
 
       vm.closeDrawer()
       expect(wrapper.emitted('close')).toBeTruthy()
-    })
+    }))
 })

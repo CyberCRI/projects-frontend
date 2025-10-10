@@ -20,8 +20,7 @@ describe('GroupDescriptionDrawer.vue', () => {
       i18n,
     }
   })
-
-  it('should render GroupDescriptionDrawer component', () => {
+  ;(it('should render GroupDescriptionDrawer component', () => {
     wrapper = lpiMount(GroupDescriptionDrawer, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -38,5 +37,5 @@ describe('GroupDescriptionDrawer.vue', () => {
 
       vm.saveDescription()
       expect(wrapper.emitted('update-description')).toBeTruthy()
-    })
+    }))
 })

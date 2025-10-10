@@ -26,8 +26,7 @@ describe('ProfileCompletedModal.vue', () => {
       i18n,
     }
   })
-
-  it('should render ProfileCompletedModal component', () => {
+  ;(it('should render ProfileCompletedModal component', () => {
     wrapper = lpiMount(ProfileCompletedModal, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -44,5 +43,5 @@ describe('ProfileCompletedModal.vue', () => {
 
       vm.takeTour()
       expect(wrapper.emitted('take-tour')).toBeTruthy()
-    })
+    }))
 })
