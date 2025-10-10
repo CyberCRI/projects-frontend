@@ -140,7 +140,6 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: ALL_LOCALES,
-    lazy: true,
     defaultLocale: 'en',
     restructureDir: './src/i18n',
     // detectBrowserLanguage: {
