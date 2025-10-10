@@ -24,8 +24,7 @@ describe('CompleteProfileDrawer.vue', () => {
       i18n,
     }
   })
-
-  it('should render component', () => {
+  ;(it('should render component', () => {
     const wrapper = lpiShallowMount(CompleteProfileDrawer, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -35,5 +34,5 @@ describe('CompleteProfileDrawer.vue', () => {
 
       vm.cancel()
       expect(wrapper.emitted('close')).toBeTruthy()
-    })
+    }))
 })

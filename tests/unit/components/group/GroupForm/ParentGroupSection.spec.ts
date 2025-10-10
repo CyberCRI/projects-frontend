@@ -52,8 +52,7 @@ describe('ParentGroupSection.vue', () => {
       },
     }
   })
-
-  it('should render ParentGroupSection component', () => {
+  ;(it('should render ParentGroupSection component', () => {
     wrapper = lpiMount(ParentGroupSection, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -63,5 +62,5 @@ describe('ParentGroupSection.vue', () => {
 
       vm.confirmGroup()
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    })
+    }))
 })

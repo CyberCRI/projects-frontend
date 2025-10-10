@@ -35,8 +35,7 @@ describe('GroupTeamSection.vue', () => {
       },
     }
   })
-
-  it('should render GroupTeamSection component', () => {
+  ;(it('should render GroupTeamSection component', () => {
     wrapper = lpiMount(GroupTeamSection, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -46,5 +45,5 @@ describe('GroupTeamSection.vue', () => {
 
       vm.addUsers([])
       expect(wrapper.emitted('update:model-value')).toBeTruthy()
-    })
+    }))
 })
