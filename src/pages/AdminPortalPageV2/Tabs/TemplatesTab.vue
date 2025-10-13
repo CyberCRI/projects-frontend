@@ -26,6 +26,20 @@
         </ProjectCategoriesDropdown>
         <FieldErrors :errors="v$.selectedCategory?.id.$errors" />
       </div>
+      <div v-if="templates.length > 1" class="block-container">
+        <h4 class="title">
+          {{ $t('template.template') }}
+        </h4>
+        <span class="description">{{ $t('template.tips-template') }}</span>
+        <LpiSelect
+          v-model="selectedTemplateId"
+          class="category-select"
+          data-test="select-project-template"
+          :placeholder="selectedTemplateLabel"
+          :options="templates"
+        />
+      </div>
+
       <div v-if="fetchingTemplate" class="loader">
         <LoaderSimple />
       </div>
@@ -167,6 +181,7 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import { getProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
+import { getProjectTemplate } from '@/api/project-templates.service'
 import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
@@ -178,6 +193,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
+import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
@@ -215,20 +231,11 @@ export default {
 
   data() {
     return {
-      form: {
-        language: undefined,
-        title: '',
-        purpose: '',
-        description: '<p></p>',
-        blogTitle: '',
-        blogContent: '<p></p>',
-        goalTitle: '',
-        goal_description: '<p></p>',
-        tags: [],
-        comment: '',
-      },
+      form: this.clearForm(),
       isLoading: false,
       selectedCategory: null,
+      selectedTemplate: null,
+      selectedTemplateId: null,
       tagSearchIsOpened: false,
       editorKey: 0,
       newTags: [],
@@ -250,9 +257,24 @@ export default {
     categories() {
       return this.projectCategoriesStore.allOrderedByOrderId
     },
+    templates() {
+      const t = this.selectedCategory?.templates ?? []
+      return t.map((el) => {
+        return {
+          ...el,
+          label: el.name,
+          value: el.id,
+        }
+      })
+    },
 
     otherFieldDisabled() {
-      return !this.selectedCategory?.id || this.fetchingTemplate
+      const isNil = (v) => [undefined, null].includes(v)
+      return (
+        isNil(this.selectedCategory?.id) ||
+        isNil(this.selectedTemplate?.id) ||
+        this.fetchingTemplate
+      )
     },
 
     allTags() {
@@ -263,6 +285,9 @@ export default {
       return this.selectedCategory
         ? this.selectedCategory.name
         : this.$t('project.form.select-category')
+    },
+    selectedTemplateLabel() {
+      return this.selectedTemplate?.name ?? this.$t('project.form.select-template')
     },
   },
   watch: {
@@ -275,7 +300,33 @@ export default {
     },
     selectedCategory: {
       handler: function (neo, old) {
-        if (neo?.id && neo?.id != old?.id) this.fillForm()
+        if (neo?.id && neo?.id != old?.id) {
+          // if linked templates are only 1 template , auto select it
+          if (neo.templates.length <= 1) {
+            this.selectedTemplate = neo.templates[0]
+            return
+          }
+        }
+        if (neo?.id != old?.id) {
+          this.form = this.clearForm()
+          this.selectedTemplate = null
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+    selectedTemplateId: {
+      handler: function (neo, old) {
+        if (neo !== old) {
+          this.selectedTemplate = this.templates.find((e) => e.value === neo)
+        }
+      },
+    },
+    selectedTemplate: {
+      handler: function (neo, old) {
+        if (neo?.id && neo?.id != old?.id) {
+          this.fillForm()
+        }
       },
       immediate: true,
       deep: true,
@@ -287,6 +338,20 @@ export default {
   },
 
   methods: {
+    clearForm() {
+      return {
+        language: undefined,
+        title: '',
+        purpose: '',
+        description: '<p></p>',
+        blogTitle: '',
+        blogContent: '<p></p>',
+        goalTitle: '',
+        goal_description: '<p></p>',
+        tags: [],
+        comment: '',
+      }
+    },
     tagTitle(tag) {
       return tag['title_' + this.locale] || tag.title
     },
@@ -301,25 +366,28 @@ export default {
     },
 
     async fillForm() {
+      console.log('icici')
       const organizationCode = useOrganizationCode()
       this.fetchingTemplate = true
-      this.selectedCategory = await getProjectCategory(
-        organizationCode,
-        this.selectedCategory?.id ? this.selectedCategory.id : this.categories[0]?.id
-      )
+      const category = this.selectedCategory ?? this.categories[0]
+      const templateId = this.selectedTemplate?.id ?? category.templates[0]?.id
+      this.selectedCategory = await getProjectCategory(organizationCode, category.id)
+      this.selectedTemplate = await getProjectTemplate(organizationCode, templateId)
 
-      if (this.selectedCategory?.template) {
+      console.log('fetch')
+
+      if (this.selectedTemplate) {
         /* Titles and purpose */
-        this.form.title = this.selectedCategory?.template.title_placeholder
-        this.form.purpose = this.selectedCategory?.template.goal_placeholder
-        this.form.description = this.selectedCategory?.template.description_placeholder || '<p></p>'
+        this.form.title = this.selectedTemplate.title_placeholder
+        this.form.purpose = this.selectedTemplate.goal_placeholder
+        this.form.description = this.selectedTemplate.description_placeholder || '<p></p>'
         /* Blog */
-        this.form.blogTitle = this.selectedCategory?.template.blogentry_title_placeholder
-        this.form.blogContent = this.selectedCategory?.template.blogentry_placeholder || '<p></p>'
+        this.form.blogTitle = this.selectedTemplate.blogentry_title_placeholder
+        this.form.blogContent = this.selectedTemplate.blogentry_placeholder || '<p></p>'
 
         /* Goal */
-        this.form.goalTitle = this.selectedCategory?.template.goal_title
-        this.form.goal_description = this.selectedCategory?.template.goal_description || '<p></p>'
+        this.form.goalTitle = this.selectedTemplate.goal_title
+        this.form.goal_description = this.selectedTemplate.goal_description || '<p></p>'
 
         /* Language */
         this.form.language = this.selectedCategory?.lang || this.locale
@@ -328,7 +396,7 @@ export default {
         this.form.tags = this.selectedCategory?.tags
 
         /* Comment */
-        this.form.comment = this.selectedCategory?.template.comment || '<p></p>'
+        this.form.comment = this.selectedTemplate.comment || '<p></p>'
       }
       this.editorKey += 1
       this.fetchingTemplate = false

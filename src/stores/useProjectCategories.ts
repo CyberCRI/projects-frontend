@@ -3,6 +3,7 @@ import { getAllProjectCategories } from '@/api/project-categories.service'
 import type { APIResponseList } from '@/api/types'
 import { toRaw } from 'vue'
 import { defineStore } from 'pinia'
+import useOrganizationCode from '@/composables/useOrganizationCode'
 
 export interface ProjectCategoriesState {
   all: ProjectCategoryOutput[]
