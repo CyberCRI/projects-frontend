@@ -141,7 +141,7 @@
     "faker": "5",
     "faker-create-factory": "1",
     "flush-promises": "^1.0.2",
-    "happy-dom": "^17.0.0",
+    "happy-dom": "^20.0.0",
     "husky": "^7",
     "lint-staged": "^15.4.3",
     "postcss": "^8.4.31",
