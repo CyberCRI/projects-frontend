@@ -88,6 +88,7 @@ export default defineConfig([
       ],
       '@typescript-eslint/no-explicit-any': 'off',
       // 'vue/no-undef-properties': 'error',
+      'vue/attribute-hyphenation': ['error', 'always', { ignoreTags: ['deep-chat'] }],
     },
 
     // globals: {

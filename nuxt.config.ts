@@ -1,7 +1,6 @@
 import { alias } from './alias'
 import fs from 'node:fs'
 import path from 'node:path'
-
 import * as dotenv from 'dotenv'
 
 // Determine the environment file
@@ -71,6 +70,13 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  vue: {
+    compilerOptions: {
+      // treat all tags with a dash as custom elements
+      // isCustomElement: (tag) => tag.includes('-')
+      isCustomElement: (tag) => ['deep-chat'].includes(tag),
+    },
+  },
   vite: {
     resolve: {
       alias,
@@ -108,6 +114,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     appGeocodingApiKey: '',
+    appOpenaiApiKey: '',
+    appOpenaiApiPromptId: '',
+    appOpenaiApiPromptVersion: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -136,6 +145,7 @@ export default defineNuxtConfig({
       appDisconnectionGraceDuration: 0,
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
+      appChatbotEnabled: 0,
     },
   },
   i18n: {
