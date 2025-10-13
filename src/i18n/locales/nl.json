@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Alles zien",
-    "title": "Nieuwsfeed"
+    "title": "Nieuwsfeed",
+    "empty": "Geen nieuwsfeed... nog niet!"
   },
   "file": {
     "add-image": "een afbeelding toevoegen",
@@ -2654,5 +2655,10 @@
   "documents-page": {
     "title": "Documenten van het {platformName} platform",
     "description": "Vind hier alle documenten met betrekking tot het {platformName} platform, waaronder de servicevoorwaarden, het privacybeleid en andere juridische documenten."
+  },
+  "chatbot": {
+    "title": "Chat met AI",
+    "input-placeholder": "Typ hier je bericht...",
+    "intro-message": "Hallo, hoe kan ik je vandaag helpen?"
   }
 }

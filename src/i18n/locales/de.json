@@ -787,7 +787,8 @@
   },
   "feed": {
     "see-all": "Alle",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "Keine Nachrichten... noch nicht!"
   },
   "file": {
     "add-image": "ein Bild hinzuf\u00fcgen",
@@ -2654,5 +2655,10 @@
   "documents-page": {
     "title": "Dokumente der {platformName} Plattform",
     "description": "Finden Sie hier alle Dokumente zur {platformName} Plattform, einschließlich der Nutzungsbedingungen, der Datenschutzrichtlinie und anderer rechtlicher Dokumente."
+  },
+  "chatbot": {
+    "title": "Chat mit KI",
+    "input-placeholder": "Geben Sie hier Ihre Nachricht ein...",
+    "intro-message": "Hallo, wie kann ich Ihnen heute helfen?"
   }
 }

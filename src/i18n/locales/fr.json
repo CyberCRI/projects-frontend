@@ -789,7 +789,8 @@
   },
   "feed": {
     "see-all": "Tout voir",
-    "title": "Fil d'infos"
+    "title": "Fil d'infos",
+    "empty": "Pas de nouvelles... Pour le moment !"
   },
   "file": {
     "add-image": "ajouter une image",
@@ -2659,5 +2660,10 @@
   "documents-page": {
     "title": "Documents de la plateforme {platformName}",
     "description": "Retrouvez ici tous les documents relatifs à la plateforme {platformName}, y compris les conditions d'utilisation, la politique de confidentialité et d'autres documents juridiques."
+  },
+  "chatbot": {
+    "title": "Discuter avec l'IA",
+    "input-placeholder": "Tapez votre message ici...",
+    "intro-message": "Bonjour, comment puis-je vous aider aujourd'hui ?"
   }
 }

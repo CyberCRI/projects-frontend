@@ -1,12 +1,15 @@
 <template>
   <NewsListSkeleton v-if="isLoading" :limit="5" />
-  <div v-else>
+  <div v-else-if="newsfeed?.length">
     <div class="home-news-container">
       <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
     </div>
-    <div class="see-all">
+    <div v-if="hasMoreNews" class="see-all">
       <LpiButton :label="$t('feed.see-all')" :secondary="false" @click="seeAll" />
     </div>
+  </div>
+  <div v-else>
+    <EmptyNewsFeed />
   </div>
 </template>
 
@@ -37,6 +40,7 @@ export default {
     return {
       isLoading: true,
       newsfeed: [],
+      hasMoreNews: false,
     }
   },
 
@@ -53,11 +57,11 @@ export default {
   methods: {
     async loadNewsfeed() {
       this.isLoading = true
-      this.newsfeed = (
-        await getNewsfeed(this.organization.code, {
-          limit: this.limit,
-        })
-      ).results
+      const response = await getNewsfeed(this.organization.code, {
+        limit: this.limit,
+      })
+      this.newsfeed = response.results
+      this.hasMoreNews = !!response.next
       this.isLoading = false
     },
 

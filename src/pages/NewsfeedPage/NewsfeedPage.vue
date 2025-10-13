@@ -11,7 +11,7 @@ const isLoading = useState(() => false)
 const request = useState(() => ({ results: [] }))
 
 const newsfeed = computed(() => {
-  return request.value ? request.value.results : []
+  return request.value?.results || []
 })
 
 const pagination = computed(() => {
@@ -71,8 +71,11 @@ try {
       <div v-if="isLoading">
         <NewsListSkeleton :limit="15" />
       </div>
-      <div v-else class="news-container">
+      <div v-else-if="newsfeed.length" class="news-container">
         <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
+      </div>
+      <div v-else>
+        <EmptyNewsFeed />
       </div>
     </div>
 
