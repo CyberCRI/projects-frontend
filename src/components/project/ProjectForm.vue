@@ -1,25 +1,53 @@
 <template>
   <form>
     <!--  Category -->
-    <div v-if="isAddMode && categories && categories.length" class="category-ctn">
-      <label class="label">{{ $t('project.form.project-category') }} *</label>
-      <ProjectCategoriesDropdown
-        ref="categoryDropdown"
-        class="category-select"
-        data-test="select-project-category"
-        :dropdown-label="selectedCategoryLabel"
-      >
-        <template #default="{ category }">
-          <ProjectCategoriesDropdownElementButton
-            :category="category"
-            @choose-category="setCategory(category.id)"
-          />
-        </template>
-      </ProjectCategoriesDropdown>
-    </div>
+    <template v-if="isAddMode && categories && categories.length">
+      <div class="category-ctn">
+        <label class="label">{{ $t('project.form.project-category') }} *</label>
+        <ProjectCategoriesDropdown
+          ref="categoryDropdown"
+          class="category-select"
+          data-test="select-project-category"
+          :dropdown-label="selectedCategoryLabel"
+        >
+          <template #default="{ category }">
+            <ProjectCategoriesDropdownElementButton
+              :category="category"
+              @choose-category="setCategory(category.id)"
+            />
+          </template>
+        </ProjectCategoriesDropdown>
+      </div>
+      <template v-if="selectedCategory?.templates?.length > 1">
+        <div class="category-ctn">
+          <label class="label">{{ $t('project.form.project-templates') }} *</label>
+          <LpiDropDown
+            v-model="selectedTemplate"
+            :options="selectedCategory.templates"
+            data-test="select-project-template"
+            :default-label="$t('project.form.project-templates')"
+          >
+            <template #default="{ option, selected }">
+              <LpiDropDownElementButton
+                :option="option"
+                :selected="selected"
+                @click="setTemplate(option)"
+              />
+            </template>
+          </LpiDropDown>
+        </div>
+      </template>
+    </template>
 
     <!--  Title -->
-    <FieldDisabler :disabled="otherFieldDisabled">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+    >
       <TextInput
         v-model="form.title"
         :placeholder="titlePlaceholder"
@@ -38,7 +66,15 @@
     </FieldDisabler>
 
     <!-- Purpose -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="purpose-input">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="purpose-input"
+    >
       <TextInput
         v-model="form.purpose"
         :placeholder="purposePlaceholder"
@@ -53,7 +89,16 @@
     </FieldDisabler>
 
     <!-- Team -->
-    <FieldDisabler v-if="isAddMode" :disabled="otherFieldDisabled" class="team">
+    <FieldDisabler
+      v-if="isAddMode"
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="team"
+    >
       <TeamSection
         :selected-category="selectedCategory"
         :unfocusable="otherFieldDisabled"
@@ -62,7 +107,15 @@
     </FieldDisabler>
 
     <!-- Tag -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="tags">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="tags"
+    >
       <label>
         {{ $filters.capitalize($t('tag.title')) }}
         <span
@@ -81,7 +134,15 @@
     <div class="spacer" />
 
     <!-- Picture -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="img-ctn">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="img-ctn"
+    >
       <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
@@ -94,7 +155,15 @@
     </FieldDisabler>
 
     <!-- Language -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="language">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="language"
+    >
       <label>{{ $filters.capitalize($t('project.language')) }}</label>
       <LpiSelect
         v-model="form.language"
@@ -139,11 +208,15 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { useRuntimeConfig } from '#imports'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
+import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
 
 export default {
   name: 'ProjectForm',
 
   components: {
+    LpiDropDown,
+    LpiDropDownElementButton,
     TextInput,
     TeamSection,
     LpiSelect,
@@ -196,8 +269,10 @@ export default {
 
     return {
       loading: false,
+      templates: [],
       displayedImage: '',
       selectedCategory: undefined,
+      selectedTemplate: null,
       form: JSON.parse(JSON.stringify(this.modelValue)),
       tags: [...this.modelValue.tags],
       tagSearchIsOpened: false,
@@ -245,8 +320,15 @@ export default {
     },
 
     otherFieldDisabled() {
+      console.log(`
+            this.isAddMode :: ${this.isAddMode} :: ${this.isAddMode}
+            !!this.categories :: ${!!this.categories} :: ${!!this.categories}
+            this.categories.length > 0 :: ${this.categories.length > 0} :: ${this.categories.length}
+            !this.form.category :: ${!this.form.category} :: ${this.form.category}
+            !this.form.template :: ${!this.form.template} :: ${this.form.template}
+          `)
       return (
-        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.category
+        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
       )
     },
   },
@@ -257,6 +339,11 @@ export default {
         this.selectedCategory = this.categories.find((category) => category.id === categoryId)
         // set default tags according to selected category
         if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
+        if (this.selectedCategory.templates.length == 1) {
+          this.setTemplate(this.selectedCategory.templates[0])
+        } else {
+          this.setTemplate(null)
+        }
       }
     },
 
@@ -296,6 +383,11 @@ export default {
     setCategory(categoryId) {
       this.form.category = categoryId
       this.$refs.categoryDropdown?.close()
+    },
+
+    setTemplate(template) {
+      this.selectedTemplate = template
+      this.form.template = template?.id
     },
     closeTagSearchTags() {
       this.tagSearchIsOpened = false
@@ -338,6 +430,10 @@ export default {
 
   .category-ctn {
     margin-bottom: $space-xl;
+
+    & > * + * {
+      margin-top: 0.5rem;
+    }
   }
 
   .category-select {

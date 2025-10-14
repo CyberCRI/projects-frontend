@@ -1,0 +1,187 @@
+<template>
+  <div v-click-outside="close" class="project-dropdown" :class="{ 'is-open': open }">
+    <button type="button" class="dropdown toggle-btn" @click.prevent="toogle">
+      <span class="dropdown-btn">{{ showLabel }}</span>
+      <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
+    </button>
+    <transition name="slide">
+      <div v-if="open" class="choose-project-">
+        <div class="drop-down-menu custom-scrollbar">
+          <ul>
+            <LpiDropdDownElement
+              v-for="option in props.options"
+              :key="option.id"
+              :option="option"
+              :selected="option.id === selectedOption?.id"
+            >
+              <template #default="{ option: _option, _selected }">
+                <slot
+                  name="default"
+                  :selected="_selected"
+                  :option="_option"
+                  @click.prevent="close"
+                />
+              </template>
+            </LpiDropdDownElement>
+          </ul>
+        </div>
+      </div>
+    </transition>
+  </div>
+</template>
+
+<script setup>
+import { capitalize } from 'es-toolkit'
+
+import IconImage from '@/components/base/media/IconImage.vue'
+import LpiDropdDownElement from '@/components/base/form/LpiDropDownElement.vue'
+
+defineOptions({
+  name: 'LpiDropDown',
+})
+
+defineEmits(['close'])
+
+const props = defineProps({
+  defaultLabel: {
+    type: String,
+    required: true,
+  },
+  modelValue: {
+    type: [Number, null, Object],
+    required: true,
+  },
+  options: {
+    type: Array,
+    required: true,
+  },
+})
+
+const open = ref(false)
+
+const close = () => (open.value = false)
+const toogle = () => (open.value = !open.value)
+
+watch(() => props.modelValue, close)
+
+const selectedOption = computed(() => {
+  const choices = [props.modelValue, props.modelValue?.id]
+  const flatChild = (el) => {
+    let arr = []
+    el.forEach((e) => {
+      if (e.children) {
+        arr = [...arr, flatChild(e.children)]
+      } else {
+        arr.push(e)
+      }
+    })
+    return arr
+  }
+  const flat = flatChild(props.options)
+  return flat.find(({ id }) => choices.includes(id))
+})
+
+const showLabel = computed(() => {
+  // find the correct element form modelValue (modelValue is object from options or the id )
+  const vl =
+    selectedOption.value?.label ??
+    selectedOption.value?.name ??
+    selectedOption.value?.value ??
+    props.defaultLabel
+  return capitalize(vl.toString())
+})
+</script>
+
+<style lang="scss" scoped>
+.project-dropdown {
+  position: relative;
+
+  &.is-open,
+  &.is-open .choose-project- {
+    box-shadow: 0 12px 12px rgb(0 0 0 / 30%);
+  }
+}
+
+.dropdown {
+  border: 1px solid $lighter-gray;
+  border-radius: $border-radius-s;
+  height: pxToRem(50px);
+  display: flex;
+  justify-content: space-between;
+  padding-inline: $space-m;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+
+  @media (min-width: $min-tablet) {
+    margin-top: $space-l;
+  }
+
+  .dropdown-btn {
+    color: $primary-dark;
+    font-size: $font-size-m;
+    font-weight: 700;
+  }
+
+  .caret {
+    margin-left: $space-l;
+    fill: $primary-dark;
+    width: pxToRem(20px);
+  }
+}
+
+.is-open .dropdown {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+}
+
+.choose-project- {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s;
+  transform-origin: top center;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  transform: scaleY(1);
+
+  :deep(a) {
+    opacity: 0;
+  }
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: scaleY(0) translateY(-2rem);
+
+  :deep(a) {
+    opacity: 0;
+  }
+}
+
+.drop-down-menu {
+  background-color: $white;
+  border-width: 0 1px 1px;
+  border-style: solid;
+  border-color: $lighter-gray;
+  border-bottom-left-radius: $border-radius-xs;
+  border-bottom-right-radius: $border-radius-xs;
+  max-height: pxToRem(450px);
+  padding: $space-s $space-xs;
+  transition: 0.15s all ease-in-out;
+  cursor: pointer;
+  will-change: transform;
+  overflow-y: scroll;
+}
+</style>

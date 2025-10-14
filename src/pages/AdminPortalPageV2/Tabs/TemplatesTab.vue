@@ -31,19 +31,33 @@
           {{ $t('template.template') }}
         </h4>
         <span class="description">{{ $t('template.tips-template') }}</span>
-        <LpiSelect
-          v-model="selectedTemplateId"
-          class="category-select"
-          data-test="select-project-template"
-          :placeholder="selectedTemplateLabel"
+        <LpiDropDown
+          v-model="selectedTemplate"
           :options="templates"
-        />
+          data-test="select-project-template"
+          :default-label="$t('project.form.project-templates')"
+        >
+          <template #default="{ option, selected }">
+            <LpiDropDownElementButton
+              :option="option"
+              :selected="selected"
+              @click="selectTemplate(option)"
+            />
+          </template>
+        </LpiDropDown>
       </div>
 
       <div v-if="fetchingTemplate" class="loader">
         <LoaderSimple />
       </div>
-      <FieldDisabler :disabled="otherFieldDisabled">
+      <FieldDisabler
+        :label="
+          !selectedCategory
+            ? $t('project.create.choose-category-first')
+            : $t('project.create.choose-template-first')
+        "
+        :disabled="otherFieldDisabled"
+      >
         <div class="block-container">
           <div class="title-button-ctn">
             <h4 class="title">
@@ -80,15 +94,36 @@
           {{ $t('template.title') }}
         </h4>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <TextInput v-model="form.title" :label="$t('template.placeholder-title')" />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <TextInput v-model="form.purpose" :label="$t('template.placeholder-purpose')" />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <label class="label">{{ $filters.capitalize($t('template.description')) }}</label>
           <TipTapEditor
             :key="`description-${editorKey}`"
@@ -98,14 +133,28 @@
           />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <TextInput
             v-model="form.blogTitle"
             :label="$filters.capitalize($t('template.blog-title'))"
           />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <label class="label">{{ $filters.capitalize($t('template.blog-content')) }}</label>
           <TipTapEditor
             :key="`blog-${editorKey}`"
@@ -115,14 +164,28 @@
           />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <TextInput
             v-model="form.goalTitle"
             :label="$filters.capitalize($t('template.advancement-goal-title'))"
           />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <label class="label">
             {{ $filters.capitalize($t('template.advancement-goal-content')) }}
           </label>
@@ -135,7 +198,14 @@
           />
         </FieldDisabler>
 
-        <FieldDisabler :disabled="otherFieldDisabled">
+        <FieldDisabler
+          :label="
+            !selectedCategory
+              ? $t('project.create.choose-category-first')
+              : $t('project.create.choose-template-first')
+          "
+          :disabled="otherFieldDisabled"
+        >
           <label class="label">
             {{ $filters.capitalize($t('template.comment')) }}
           </label>
@@ -176,6 +246,7 @@
 </template>
 
 <script>
+import { isNil } from 'es-toolkit'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -193,10 +264,11 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
 import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
 import { postTemplateImage } from '@/api/templates.service'
-import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
+import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
 export default {
   name: 'TemplatesTab',
 
@@ -213,6 +285,8 @@ export default {
     ProjectCategoriesDropdown,
     ProjectCategoriesDropdownElementButton,
     LoaderSimple,
+    LpiDropDown,
+    LpiDropDownElementButton,
   },
 
   setup() {
@@ -235,7 +309,6 @@ export default {
       isLoading: false,
       selectedCategory: null,
       selectedTemplate: null,
-      selectedTemplateId: null,
       tagSearchIsOpened: false,
       editorKey: 0,
       newTags: [],
@@ -269,7 +342,6 @@ export default {
     },
 
     otherFieldDisabled() {
-      const isNil = (v) => [undefined, null].includes(v)
       return (
         isNil(this.selectedCategory?.id) ||
         isNil(this.selectedTemplate?.id) ||
@@ -285,9 +357,6 @@ export default {
       return this.selectedCategory
         ? this.selectedCategory.name
         : this.$t('project.form.select-category')
-    },
-    selectedTemplateLabel() {
-      return this.selectedTemplate?.name ?? this.$t('project.form.select-template')
     },
   },
   watch: {
@@ -314,13 +383,6 @@ export default {
       },
       immediate: true,
       deep: true,
-    },
-    selectedTemplateId: {
-      handler: function (neo, old) {
-        if (neo !== old) {
-          this.selectedTemplate = this.templates.find((e) => e.value === neo)
-        }
-      },
     },
     selectedTemplate: {
       handler: function (neo, old) {
