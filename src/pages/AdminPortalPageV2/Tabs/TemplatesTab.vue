@@ -4,8 +4,15 @@
       <div v-html="$t('template.info')" />
     </LpiSnackbar>
 
+    <GroupButton
+      v-model="templateMode"
+      :options="[
+        { value: 'edit', label: $t('common.edit') },
+        { value: 'create', label: $t('common.create') },
+      ]"
+    />
     <div class="form">
-      <div class="block-container">
+      <!-- <div class="block-container">
         <h4 class="title">
           {{ $t('template.category') }}
         </h4>
@@ -45,6 +52,76 @@
             />
           </template>
         </LpiDropDown>
+      </div> -->
+
+      <div class="clock-container">
+        <div class="block-container">
+          <h4 class="title">
+            {{ $t('template.template') }}
+          </h4>
+          <span class="description">{{ $t('template.tips-template') }}</span>
+          <LpiDropDown
+            v-if="templateMode === 'edit'"
+            v-model="selectedTemplate"
+            :options="templates"
+            data-test="select-project-template"
+            :default-label="$t('project.form.project-templates')"
+          >
+            <template #default="{ option, selected }">
+              <LpiDropDownElementButton
+                :option="option"
+                :selected="selected"
+                @click="setTemplate(option)"
+              />
+            </template>
+          </LpiDropDown>
+          <TextInput
+            v-else
+            v-model="form.name"
+            :placeholder="$t('project.form.project-templates')"
+          />
+        </div>
+
+        <FieldDisabler
+          :label="$t('project.create.choose-template-first')"
+          :disabled="!selectedTemplate && templateMode !== 'create'"
+        >
+          <div class="block-container">
+            <div class="title-button-ctn">
+              <h4 class="title">
+                {{ $t('template.category') }}
+              </h4>
+              <LpiButton
+                :label="$filters.capitalize($t('category.edit'))"
+                @click="categorySearchIsOpened = true"
+              />
+            </div>
+
+            <div v-if="form.categories.length" class="tag-grid">
+              <FilterValue
+                v-for="category in form.categories"
+                :key="category.id"
+                icon="Close"
+                :label="category.name"
+                @click="deleteCategory(category)"
+              />
+            </div>
+
+            <span v-if="form.categories.length === 0" class="description">
+              {{ $t('template.no-category-set') }}
+            </span>
+            <BaseDrawer
+              :confirm-action-name="$t('common.confirm')"
+              :is-opened="categorySearchIsOpened"
+              :title="$t('template.edit-category')"
+              class="small"
+              @close="closeCategory"
+              @confirm="closeCategory"
+            >
+              <CategoriesFilterEditor v-model="form.categories" />
+            </BaseDrawer>
+          </div>
+        </FieldDisabler>
       </div>
 
       <div v-if="fetchingTemplate" class="loader">
@@ -90,7 +167,7 @@
       </div> -->
 
       <div class="block-container template-container form">
-        <h4 class="title">
+        <h4 v-if="!otherFieldDisabled" class="title">
           {{ $t('template.title') }}
         </h4>
 
@@ -305,11 +382,13 @@ export default {
 
   data() {
     return {
+      templateMode: 'edit',
       form: this.clearForm(),
       isLoading: false,
       selectedCategory: null,
       selectedTemplate: null,
       tagSearchIsOpened: false,
+      categorySearchIsOpened: false,
       editorKey: 0,
       newTags: [],
       fetchingTemplate: false,
@@ -330,7 +409,17 @@ export default {
     categories() {
       return this.projectCategoriesStore.allOrderedByOrderId
     },
+    templates() {
+      let t = []
+      this.categories.forEach((el) => {
+        t = [...t, ...el.templates]
+      })
+      return t
+    },
     otherFieldDisabled() {
+      if (this.templateMode === 'create') {
+        return false
+      }
       return (
         isNil(this.selectedCategory?.id) ||
         isNil(this.selectedTemplate?.id) ||
@@ -392,6 +481,7 @@ export default {
     clearForm() {
       return {
         language: undefined,
+        name: '',
         title: '',
         purpose: '',
         description: '<p></p>',
@@ -401,6 +491,7 @@ export default {
         goal_description: '<p></p>',
         tags: [],
         comment: '',
+        categories: [],
       }
     },
     tagTitle(tag) {
@@ -412,6 +503,7 @@ export default {
     },
     setTemplate(template) {
       this.selectedTemplate = template
+      this.fillTemplate()
     },
     saveTemplateImage(file) {
       const formData = new FormData()
@@ -419,8 +511,44 @@ export default {
       return postTemplateImage({ id: this.selectedCategory.id, body: formData })
     },
 
+    async fillTemplate() {
+      const organizationCode = useOrganizationCode()
+      const templateId = this.selectedTemplate?.id ?? category.templates[0]?.id
+      this.selectedTemplate = await getProjectTemplate(organizationCode, templateId)
+
+      console.log('fetch')
+
+      if (this.selectedTemplate) {
+        /* Titles and purpose */
+        this.form.title = this.selectedTemplate.title_placeholder
+        this.form.purpose = this.selectedTemplate.goal_placeholder
+        this.form.description = this.selectedTemplate.description_placeholder || '<p></p>'
+        /* Blog */
+        this.form.blogTitle = this.selectedTemplate.blogentry_title_placeholder
+        this.form.blogContent = this.selectedTemplate.blogentry_placeholder || '<p></p>'
+
+        /* Goal */
+        this.form.goalTitle = this.selectedTemplate.goal_title
+        this.form.goal_description = this.selectedTemplate.goal_description || '<p></p>'
+
+        /* Language */
+        this.form.language = this.selectedCategory?.lang || this.locale
+
+        /* Tags */
+        this.form.tags = this.selectedCategory?.tags
+        this.form.categories = this.selectedTemplate.categories
+
+        /* Comment */
+        this.form.comment = this.selectedTemplate.comment || '<p></p>'
+      }
+      this.editorKey += 1
+      this.fetchingTemplate = false
+    },
+
     async fillForm() {
       console.log('icici')
+      await this.fifillTemplatellTemplate()
+      return
       const organizationCode = useOrganizationCode()
       this.fetchingTemplate = true
       const category = this.selectedCategory ?? this.categories[0]
@@ -498,6 +626,13 @@ export default {
       this.tagSearchIsOpened = false
     },
 
+    closeCategory() {
+      this.categorySearchIsOpened = false
+    },
+    updateTemplateCategories() {
+      this.closeCategory()
+    },
+
     closeTags() {
       this.newTags = [...this.form.tags]
       this.tagSearchIsOpened = false
@@ -505,6 +640,11 @@ export default {
 
     deleteOrganizationTag(tag) {
       this.form.tags = this.form.tags.filter((t) => t !== tag)
+    },
+
+    deleteCategory(category) {
+      console.log(category)
+      this.form.categories = this.form.categories.filter((c) => c.id !== category.id)
     },
   },
 }
