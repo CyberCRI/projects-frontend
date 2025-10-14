@@ -1,6 +1,11 @@
 import OpenAI from 'openai'
 
-const { appOpenaiApiPromptId, appOpenaiApiPromptVersion, appOpenaiApiKey } = useRuntimeConfig()
+const {
+  appOpenaiApiPromptId,
+  appOpenaiApiPromptVersion,
+  appOpenaiApiKey,
+  appOpenaiApiVectorStoreId,
+} = useRuntimeConfig()
 
 const { appChatbotEnabled } = useRuntimeConfig().public
 
@@ -59,12 +64,13 @@ export default defineLazyEventHandler(() => {
       input: adaptedMessages, // [{ role: 'user', content: messages[0].content }]
       conversation: conversationId,
       reasoning: {},
-      tools: [
-        {
-          type: 'file_search',
-          vector_store_ids: ['vs_68da7bdcdba081918133c06e5984489b'],
-        },
-      ],
+      tools: [],
+    }
+    if (appOpenaiApiVectorStoreId) {
+      requestOptions.tools.push({
+        type: 'file_search',
+        vector_store_ids: [appOpenaiApiVectorStoreId],
+      })
     }
 
     // console.log('\x1b[36m%s\x1b[0m', 'OPENAI REQUEST')

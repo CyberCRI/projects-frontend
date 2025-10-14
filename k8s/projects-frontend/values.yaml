@@ -37,6 +37,7 @@ config:
     NUXT_PUBLIC_APP_GEOCODING_API_URL: https://maps.googleapis.com/maps/api/geocode/json
     NUXT_APP_OPENAI_API_PROMPT_ID: ''
     NUXT_APP_OPENAI_API_PROMPT_VERSION: ''
+    NUXT_APP_OPENAI_API_VECTOR_STORE_ID: ''
     NUXT_PUBLIC_APP_CHATBOT_ENABLED: ''
 e2eEnv:
   nonSensitive:
