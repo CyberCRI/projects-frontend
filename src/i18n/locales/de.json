@@ -549,7 +549,7 @@
     "the-project": "Das Projekt",
     "title": "Titel",
     "yes": "Ja.",
-    "disconnect": "Trennen",
+    "disconnect": "Abmelden",
     "confirm-close": "Sind Sie sicher, dass Sie den Editor schlie\u00dfen wollen? \u00c4nderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
     "file-too-big": "Die Datei ist zu gro\u00df (max: {maxSize}Mb)"
@@ -893,7 +893,7 @@
     "contact": "Kontakt",
     "edit-group": "Gruppe bearbeiten",
     "see-more-people-button": "Siehe {users} mehr",
-    "see-subgroups": "Siehe {count} Untergruppe | Siehe {count} Untergruppen",
+    "see-subgroups": "Siehe {count} Untergruppe | {count} Untergruppen ansehen",
     "share": "Teilen",
     "the-team": "Das Team ({users})",
     "news": "Ank\u00fcndigungen",
@@ -1046,7 +1046,7 @@
     "no-bio": "Sie schreiben Ihre Biographie noch nicht",
     "no-skill": "Sie haben noch keine F\u00e4higkeiten hinzugef\u00fcgt",
     "page-title": "Mein Profil",
-    "projects-participate": "Projekte, die ich bin",
+    "projects-participate": "Projekte, an denen ich beteiligt bin",
     "no-project-participate": "Sie sind noch nicht Mitglied eines Projekts",
     "projects-reviewing": "Projekte, die ich rezensiere",
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
@@ -2515,7 +2515,7 @@
       "read-more": "Weiterlesen"
     },
     "page": {
-      "others": "Sonstige Nachrichten"
+      "others": "Weitere Nachrichten"
     },
     "drawer": {
       "title": "Nachrichten bearbeiten"

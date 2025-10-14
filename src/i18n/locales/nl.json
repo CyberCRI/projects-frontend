@@ -808,7 +808,7 @@
     "title": "Titel",
     "url": "url",
     "contact": {
-      "subtitle": "Vul dit snelle formulier in en we nemen spoedig contact met u op",
+      "subtitle": "Vul dit korte formulier in en we nemen spoedig contact met u op",
       "subject": "Onderwerp",
       "subject-placeholder": "Wat wil je met ons delen?",
       "email": "E-mail",
@@ -893,7 +893,7 @@
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} meer",
-    "see-subgroups": "Zie {count} subgroep ",
+    "see-subgroups": "Zie de subgroep | Zie {count} subgroepen",
     "share": "Delen",
     "the-team": "Het team ({users})",
     "news": "Mededelingen",
