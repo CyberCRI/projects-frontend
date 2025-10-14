@@ -14,7 +14,7 @@
               :option="option"
               :selected="option.id === selectedOption?.id"
             >
-              <template #default="{ option: _option, _selected }">
+              <template #default="{ option: _option, selected: _selected }">
                 <slot
                   name="default"
                   :selected="_selected"
@@ -62,10 +62,12 @@ const open = ref(false)
 const close = () => (open.value = false)
 const toogle = () => (open.value = !open.value)
 
+// when value change, close select
 watch(() => props.modelValue, close)
 
+// find the correct element form modelValue (modelValue is object from options or the id )
 const selectedOption = computed(() => {
-  const choices = [props.modelValue, props.modelValue?.id]
+  const choice = props.modelValue?.id ?? props.modelValue
   const flatChild = (el) => {
     let arr = []
     el.forEach((e) => {
@@ -78,11 +80,10 @@ const selectedOption = computed(() => {
     return arr
   }
   const flat = flatChild(props.options)
-  return flat.find(({ id }) => choices.includes(id))
+  return flat.find(({ id }) => id === choice)
 })
 
 const showLabel = computed(() => {
-  // find the correct element form modelValue (modelValue is object from options or the id )
   const vl =
     selectedOption.value?.label ??
     selectedOption.value?.name ??

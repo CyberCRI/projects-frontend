@@ -26,14 +26,14 @@
         </ProjectCategoriesDropdown>
         <FieldErrors :errors="v$.selectedCategory?.id.$errors" />
       </div>
-      <div v-if="templates.length > 1" class="block-container">
+      <div v-if="selectedCategory?.templates?.length > 1" class="block-container">
         <h4 class="title">
           {{ $t('template.template') }}
         </h4>
         <span class="description">{{ $t('template.tips-template') }}</span>
         <LpiDropDown
           v-model="selectedTemplate"
-          :options="templates"
+          :options="selectedCategory.templates"
           data-test="select-project-template"
           :default-label="$t('project.form.project-templates')"
         >
@@ -41,7 +41,7 @@
             <LpiDropDownElementButton
               :option="option"
               :selected="selected"
-              @click="selectTemplate(option)"
+              @click="setTemplate(option)"
             />
           </template>
         </LpiDropDown>
@@ -330,17 +330,6 @@ export default {
     categories() {
       return this.projectCategoriesStore.allOrderedByOrderId
     },
-    templates() {
-      const t = this.selectedCategory?.templates ?? []
-      return t.map((el) => {
-        return {
-          ...el,
-          label: el.name,
-          value: el.id,
-        }
-      })
-    },
-
     otherFieldDisabled() {
       return (
         isNil(this.selectedCategory?.id) ||
@@ -420,6 +409,9 @@ export default {
     setCategory(category) {
       this.selectedCategory = category
       this.$refs.categoryDropdown?.close()
+    },
+    setTemplate(template) {
+      this.selectedTemplate = template
     },
     saveTemplateImage(file) {
       const formData = new FormData()
