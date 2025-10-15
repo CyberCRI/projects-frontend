@@ -40,7 +40,7 @@
             @project-message-edited="$emit('project-message-posted', $event)"
           />
         </div>
-        <TipTapOutput v-else class="comment-content" :content="comment.content" />
+        <TipTapOutput v-else class="comment-content" :content="comment?.$t?.content" />
 
         <div class="comment-footer">
           <div v-if="isConnected" class="actions">

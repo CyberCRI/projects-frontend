@@ -1027,7 +1027,9 @@
     "label-ca": "Catalan",
     "label-nl": "Dutch",
     "label-es": "Spanish",
-    "label-et": "Estonian"
+    "label-et": "Estonian",
+    "auto-translate-on": "Auto translate on",
+    "auto-translate-off": "Auto translate off"
   },
   "location": {
     "loading": "Loading locations"

@@ -49,7 +49,7 @@ describe('GroupMembersTab', () => {
       getUser: vi.fn(),
     } as any)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'TEST' } as unknown as OrganizationOutput
   })
 
   it('should render GroupMembersTab component', () => {

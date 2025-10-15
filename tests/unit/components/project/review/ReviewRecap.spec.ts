@@ -9,15 +9,18 @@ import useProjectsStore from '@/stores/useProjects'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
+import { useAutoTranslate } from '#imports'
 // issue with webcrypto, so mock so offending import
 import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
-const project = {
-  id: 123,
-}
+const { translateProject, translateReviews } = useAutoTranslate()
 
-const reviews = [
+const project = translateProject({
+  id: 123,
+}).value
+
+const reviews = translateReviews([
   {
     id: 158,
     description: "<p>C'était <b>très</b> intéressant</p>",
@@ -48,7 +51,7 @@ const reviews = [
       profile_picture: { variations: {} },
     },
   },
-]
+]).value
 
 const i18n = {
   locale: 'en',
@@ -75,8 +78,8 @@ describe('ReviewRecap.vue', () => {
       links: [],
     }
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
-    organizationsStore.all = OrganizationOutputFactory.generateMany(2)
+    organizationsStore._current = OrganizationOutputFactory.generate()
+    organizationsStore._all = OrganizationOutputFactory.generateMany(2)
 
     usersStore = useUsersStore(pinia)
     usersStore.accessToken = 123

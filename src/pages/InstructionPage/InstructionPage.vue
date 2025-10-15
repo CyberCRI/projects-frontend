@@ -11,6 +11,8 @@ const props = defineProps({
   },
 })
 
+const { translateInstruction } = useAutoTranslate()
+
 const { d, t } = useI18n()
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
 const toaster = useToasterStore()
@@ -18,7 +20,8 @@ const organizationsStore = useOrganizationsStore()
 const router = useRouter()
 const route = useRoute()
 
-const instruction = useState(() => null)
+const _instruction = useState(() => null)
+const instruction = translateInstruction(_instruction)
 const loading = ref(false)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
@@ -41,7 +44,7 @@ const loadInstruction = async () => {
   loading.value = true
   // TODO: Fetch instuction
   try {
-    instruction.value = await getInstruction(organizationsStore.current?.code, props.slugOrId)
+    _instruction.value = await getInstruction(organizationsStore.current?.code, props.slugOrId)
 
     loading.value = false
   } catch (err) {
@@ -123,7 +126,7 @@ try {
         width="50%"
       />
       <h1 v-else-if="instruction" class="page-title">
-        {{ instruction.title }}
+        {{ instruction?.$t?.title }}
       </h1>
       <SkeletonComponent
         v-if="loading"
@@ -143,7 +146,7 @@ try {
     <SkeletonComponent class="text-skeleton" height="16px" />
   </div>
   <div v-else-if="instruction" class="page-section-narrow">
-    <TipTapOutput class="instruction-content" :content="instruction.content" />
+    <TipTapOutput class="instruction-content" :content="instruction?.$t?.content" />
   </div>
   <EditInstructionDrawer
     :is-opened="!!editedInstruction"

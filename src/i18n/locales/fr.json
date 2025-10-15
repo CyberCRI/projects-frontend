@@ -1029,7 +1029,9 @@
     "label-ca": "Catalan",
     "label-nl": "Néerlandais",
     "label-es": "Espagnol",
-    "label-et": "Estonien"
+    "label-et": "Estonien",
+    "auto-translate-on": "Traduction automatique activée",
+    "auto-translate-off": "Traduction automatique désactivée"
   },
   "location": {
     "loading": "Chargement des lieux en cours"

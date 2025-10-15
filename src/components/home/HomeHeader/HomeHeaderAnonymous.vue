@@ -23,12 +23,12 @@
         }"
       >
         <h1 class="image-main-title">
-          {{ organization?.dashboard_title }}
+          {{ organization?.$t?.dashboard_title }}
         </h1>
         <template v-if="hasDescription">
           <div v-if="showLessDescription" :style="styleDescription" class="description-limited">
             <HtmlLimiter
-              :html="organization.description || ''"
+              :html="organization?.$t?.description || ''"
               :striped-tags="['table']"
               class="introduction-text homepage-introduction-text"
               @computed="descriptionLayoutComputed"

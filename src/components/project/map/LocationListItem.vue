@@ -9,8 +9,8 @@ defineEmits(['focus-location', 'delete-location', 'edit-location'])
 <template>
   <div class="location-list-item">
     <div class="location-title">
-      <h4>{{ location.title }}</h4>
-      <p>{{ location.description }}</p>
+      <h4>{{ location?.$t?.title }}</h4>
+      <p>{{ location?.$t?.description }}</p>
     </div>
     <ContextActionButton
       secondary

@@ -44,7 +44,7 @@ describe('ProfileProjectTab', () => {
     usersStore.isConnected = true
     usersStore.getUser = vi.fn()
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
     usePeopleGroupsStore(pinia)
     useProjectsStore(pinia)
   })
