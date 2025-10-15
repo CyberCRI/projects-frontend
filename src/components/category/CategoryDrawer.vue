@@ -25,6 +25,41 @@
         <TipTapEditor v-model="category.description" />
       </CategoryField>
 
+      <CategoryField :label="$t('form.templates')">
+        <div class="block-container">
+          <div class="title-templates">
+            <h4 class="title">
+              {{ $t('template.template') }}
+            </h4>
+            <LpiButton
+              :label="$filters.capitalize($t('category.edit'))"
+              @click="templateSearchIsOpened = true"
+            />
+          </div>
+
+          <div class="template-grid">
+            <FilterValue
+              v-for="template in category.templates"
+              :key="template.id"
+              class="pointer"
+              icon="Eye"
+              :label="template.name"
+              @click="templateNavigate(template)"
+            />
+          </div>
+
+          <span v-if="category.templates.length === 0" class="description">
+            {{ $t('template.no-templates-set') }}
+          </span>
+          <FilterDrawer
+            v-model:open="templateSearchIsOpened"
+            v-model="category.templates"
+            :options="AllTemplates"
+            :title="$t('template.add-template')"
+          />
+        </div>
+      </CategoryField>
+
       <p class="pre-field-notice">
         {{ $t('admin.portal.categories.background-notice') }}
       </p>
@@ -224,6 +259,10 @@ import { LazyImageResizer } from '#components'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import useOrganizationCode from '@/composables/useOrganizationCode.ts'
+import { getTemplates } from '@/api/templates.service.ts'
+import FilterDrawer from '@/components/base/FilterDrawer.vue'
+
 export function defaultForm() {
   return {
     name: '',
@@ -240,6 +279,7 @@ export function defaultForm() {
     organization_code: null,
     children: [],
     order_index: 0,
+    templates: [],
   }
 }
 
@@ -261,6 +301,7 @@ export default {
     LazyImageResizer,
     BaseModal,
     LpiButton,
+    FilterDrawer,
   },
   props: {
     editedCategory: {
@@ -293,6 +334,8 @@ export default {
       asyncing: false,
       pictureRatio: 16 / 9,
       showImageResizer: false,
+      AllTemplates: [],
+      templateSearchIsOpened: false,
     }
   },
   computed: {
@@ -333,9 +376,12 @@ export default {
     } else {
       this.category = { ...defaultForm(), parent: this.parentCategory }
     }
-    this.category.organization_code = this.organizationsStore.current?.code
+    const organizationCode = useOrganizationCode()
+    this.category.organization_code = organizationCode
     const bgImage = this.category?.background_image
     this.category.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
+
+    this.AllTemplates = (await getTemplates(organizationCode)).results
   },
 
   methods: {
@@ -376,6 +422,12 @@ export default {
     submitCategory() {
       this.asyncing = true
       this.$emit('submit-category', this.category)
+    },
+
+    templateNavigate(template) {
+      // redirect to template editor
+      const route = this.$router.resolve({ name: 'templates', query: { id: template.id } })
+      window.open(route.href, '_blank')
     },
   },
 }
@@ -561,5 +613,19 @@ export default {
   justify-content: center;
   align-items: center;
   gap: $space-xl;
+}
+
+.template-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-s;
+}
+.title-templates {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>

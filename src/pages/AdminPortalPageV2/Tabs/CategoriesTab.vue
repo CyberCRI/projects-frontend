@@ -104,6 +104,8 @@ import { createProjectCategory, patchProjectCategory } from '@/api/project-categ
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationCode from '@/composables/useOrganizationCode.ts'
+
 export default {
   name: 'CategoriesTab',
 
@@ -193,7 +195,7 @@ export default {
       this.draggedCategory = this.categoryIndex[event.item.dataset.categoryId]
     },
     async onDragEnd(event) {
-      const organizationCode = useOrganization()
+      const organizationCode = useOrganizationCode()
       const categoryId = event.item.dataset.categoryId
       const oldParentId = event.from.dataset.parentCategory || null
       const newParentId = event.to.dataset.parentCategory || null
@@ -272,7 +274,7 @@ export default {
     },
 
     async setImage(data, id, imageSizes, imageId) {
-      const organizationCode = useOrganization()
+      const organizationCode = useOrganizationCode()
       if (data.background_image instanceof File && id) {
         const formData = new FormData()
         formData.append('file', data.background_image, data.background_image.name)
@@ -288,7 +290,7 @@ export default {
     },
 
     async submitCategory(category) {
-      const organizationCode = useOrganization()
+      const organizationCode = useOrganizationCode()
       const imageSizes = category.imageSizes || null
       const imageId = category.background_image?.id || null
       const data = {
@@ -337,7 +339,7 @@ export default {
     },
 
     async deleteCategory() {
-      const organizationCode = useOrganization()
+      const organizationCode = useOrganizationCode()
       if (
         !this.categoryToDelete ||
         this.categoryToDelete.children?.length ||

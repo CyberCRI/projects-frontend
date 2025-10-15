@@ -4,3 +4,7 @@ import useAPI from '@/composables/useAPI'
 export async function postTemplateImage({ id, body }: { id: number; body: ImageTemplateInput }) {
   return await useAPI(`category/${id}/template-image/`, { body, method: 'POST' }) //.data.value
 }
+
+export function getTemplates(organizationCode: number) {
+  return useAPI(`organization/${organizationCode}/template`)
+}
