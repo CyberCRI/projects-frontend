@@ -60,7 +60,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     (): number | null => current.value?.terms_and_conditions?.version || null
   )
   const termsContent = computed(
-    (): string | null => current.value?.terms_and_conditions?.content || null
+    (): string | null => current.value?.terms_and_conditions?.displayed_content || null
   )
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
