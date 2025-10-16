@@ -2,10 +2,6 @@
   <div class="filter-editor">
     <ul>
       <li v-for="option in options" :key="option.id" class="sub-list option-picker-element">
-        <div class="icon-td grey-color">
-          <IconImage class="icon" name="ChevronRight" />
-        </div>
-
         <div class="control">
           <input
             :ref="selectedId.includes(option.id) ? 'selected' : 'unselected'"
@@ -86,7 +82,8 @@ li {
 
 .option-picker-element {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr;
+
   & > * {
     align-content: center;
   }

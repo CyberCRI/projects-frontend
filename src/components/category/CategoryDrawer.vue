@@ -426,7 +426,7 @@ export default {
 
     templateNavigate(template) {
       // redirect to template editor
-      const route = this.$router.resolve({ name: 'templates', query: { id: template.id } })
+      const route = this.$router.resolve({ name: 'templatesEdit', params: { id: template.id } })
       window.open(route.href, '_blank')
     },
   },
@@ -620,11 +620,13 @@ export default {
   flex-wrap: wrap;
   gap: $space-s;
 }
+
 .title-templates {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
+
 .pointer {
   cursor: pointer;
 }

@@ -275,6 +275,9 @@
         "upload-picture": "Upload a picture",
         "tips-background-image": "It is not required if you would rather simply display a color.  Minimum width: 1024px, Minimum height: 400px."
       },
+      "templates": {
+        "add": "Add a template"
+      },
       "chat": "Chat platform (Connected view)",
       "events": "Events",
       "instructions": "Instructions",
@@ -495,6 +498,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "create": "Create",
     "activate": "Activate",
     "activated": "Activated",
     "add": "Add",
@@ -1569,6 +1573,7 @@
     "follow": "Follow",
     "followed": "Followed",
     "form": {
+      "project-templates": "Template name",
       "add-tags": "Add tags",
       "create-project": "Create project",
       "edit-project": "Edit project",
@@ -2004,7 +2009,10 @@
     "tags": "Template tags",
     "title": "Templates",
     "tips-category": "Select a category to which your template will apply.",
-    "comment": "Template for comment"
+    "comment": "Template for comment",
+    "tips-template": "",
+    "template": "Template",
+    "no-category-set": "No Category set"
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",
@@ -2606,6 +2614,7 @@
   },
   "message": {
     "error-login": "An error occured during login. Please try again.",
+    "error-default": "An error occured. Please try again or contact administrator.",
     "failed": "Error while sending message. Please try again.",
     "leave-confirmation": "You're about to leave the page with unsaved data.",
     "sent": "Message sent",
