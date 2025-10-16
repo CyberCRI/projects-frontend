@@ -186,7 +186,7 @@
         "error": "Viga sildi loomisel"
       },
       "edit-tag": {
-        "title": "Redigeeri silti",
+        "title": "Redigeeri märksõnad",
         "success": "Silti muudeti edukalt",
         "error": "Viga sildi muutmisel"
       },
@@ -277,7 +277,7 @@
       },
       "chat": "Vestlusplatvorm (Ühendatud vaade)",
       "events": "Sündmused",
-      "instructions": "Juhised",
+      "instructions": "Juhendid",
       "news": "Uudised",
       "featured-projects": "Omanäolised projektid"
     },
@@ -500,9 +500,9 @@
     "add": "Lisa",
     "added-on-the": "lisatud",
     "back": "tagasi",
-    "cancel": "Tühistage",
+    "cancel": "Tühista",
     "chose-date": "Valitud kuupäev",
-    "confirm": "Kinnitan",
+    "confirm": "Kinnita",
     "continue": "Jätkata",
     "confirm-delete": "Oled kindel, et soovid selle kustutada?",
     "deadline": "tähtaeg",
@@ -542,34 +542,34 @@
     "see-less": "vähem",
     "see-more": "näha rohkem",
     "see": "Vaata",
-    "see-all": "Näe kõiki",
+    "see-all": "Vaata kõiki",
     "set-deadline": "määratud tähtaeg",
     "shrink": "psühhiaatri",
     "submit": "esitada",
     "the-project": "Projekt",
     "title": "tiitli",
     "yes": "jah",
-    "disconnect": "Lahutage",
+    "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
     "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
   },
   "complete-profile": {
     "bio": {
-      "title": "Bio",
-      "notice": "Bio võimaldab inimestel mõista, kes sa oled, mida sa teed ja seista.",
+      "title": "biograafia",
+      "notice": "Biograafia võimaldab inimestel mõista, kes sa oled, mida sa teed ja seista.",
       "notice-exemples": "Vajad inspiratsiooni? Siin on näiteid {0}, {1} või {2} kohta.",
       "exemples": {
         "researcher": "teadlane",
         "professional": "professionaalne",
         "student": "õpilane"
       },
-      "long-bio": "Pikk bio",
+      "long-bio": "Pikk biograafia",
       "long-bio-notice": "Esitage siin oma professionaalsed jõupingutused",
       "personal-bio": "Isiklik biobioloogia",
       "personal-bio-notice": "Esitage siin oma isiklikud huvid."
     },
-    "cancel": "Tühistage",
+    "cancel": "Tühista",
     "notice": {
       "help": "Me oleme siin, et aidata.",
       "intro": "Tärniga * märgitud väljad on kohustuslikud. Saate seda alati oma profiilis hiljem muuta.",
@@ -781,12 +781,12 @@
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
     "delete-confirm-title": "Kohandatud abi kaardi kustutamine",
     "info": "On olemas üldine abi, millele pääseb juurde, klõpsates ülemises paremas nurgas nuppu \"Abi\". Kui soovite lisada oma portaalile omase abilehega vahekaardi, saate seda teha allpool.",
-    "portal": "Aita",
+    "portal": "Abi",
     "tab": "Kaardi nimi",
     "video": "Videoõpe"
   },
   "feed": {
-    "see-all": "Näe kõiki",
+    "see-all": "Vaata kõiki",
     "title": "Uudisvoog",
     "empty": "Ei mingeid uudiseid... veel!"
   },
@@ -808,13 +808,13 @@
     "title": "Pealkiri",
     "url": "url",
     "contact": {
-      "subtitle": "Täitke see kiire vorm ja me tuleme teile varsti tagasi",
-      "subject": "Subjekt",
+      "subtitle": "Täitke see vorm ja me võtame teiega peagi ühendust",
+      "subject": "Teema",
       "subject-placeholder": "Mida sa tahaksid meiega jagada?",
       "email": "Email",
       "email-placeholder": "Email",
       "content": "Sõnum",
-      "content-placeholder": "Esitage meile küsimusi maksimaalsete üksikasjadega."
+      "content-placeholder": "Esitage võimalikult täpne küsimus"
     },
     "report": {
       "title": "Tiitliväli on nõutav",
@@ -893,7 +893,7 @@
     "contact": "Kontakt",
     "edit-group": "Redigeerimisgrupp",
     "see-more-people-button": "Vt {users} rohkem",
-    "see-subgroups": "Vt {count} alagrupp | Vt {count} alagrupid",
+    "see-subgroups": "Vt {count} alagrupp | Vt {count} alagrupi",
     "share": "Jaga",
     "the-team": "Meeskond ({users})",
     "news": "Teadaanne",
@@ -1002,7 +1002,7 @@
     "announcements": "Teadaandeid",
     "news": "Uudised",
     "calendar": "Kalender",
-    "instructions": "Juhised",
+    "instructions": "Juhendid",
     "communities": "Portaalid",
     "home": "Kodu",
     "categories": {
@@ -1014,10 +1014,10 @@
     "short-title": {
       "events": "Kalender",
       "projects": "Sinu projektid",
-      "instructions": "Juhised"
+      "instructions": "Juhendid"
     },
     "create-project": "Projekti loomine",
-    "check-locations": "Kontrolli meie asukohti",
+    "check-locations": "Vaata meie asukohti",
     "our-locations": "Meie asukohad"
   },
   "language": {
@@ -1042,13 +1042,13 @@
   "me": {
     "follow": "Projektid, mida jälgin",
     "no-follow": "Sa ei jälgi veel projekti",
-    "groups": "Rühmad Ma olen liige",
+    "groups": "Minu grupid",
     "no-group": "Sa ei ole veel grupi liige",
     "my-projects": "projektid",
     "no-bio": "Sa ei ole veel oma elulugu kirjutanud.",
-    "no-skill": "Sa ei lisa veel oskusi",
+    "no-skill": "Sa ei ole veel oskusi lisanud.",
     "page-title": "Minu profiil",
-    "projects-participate": "Projektid, mille liige ma olen",
+    "projects-participate": "Minu projektid",
     "no-project-participate": "Sa ei ole veel projekti liige",
     "projects-reviewing": "Projektid, mida ma üle vaatan",
     "no-project-reviewing": "Sa ei ole veel projekti ülevaataja",
@@ -1316,7 +1316,7 @@
         }
       },
       "bio": {
-        "tab": "Bio",
+        "tab": "Biograafia",
         "save-error": "Viga profiili salvestamisel.",
         "save-success": "Profiil salvestatud.",
         "short-bio": {
@@ -1324,7 +1324,7 @@
           "placeholder": "1 kuni 2 rida lühidalt kirjeldada teid"
         },
         "long-bio": {
-          "label": "Pikk biobioloogia",
+          "label": "Pikk biograafia",
           "placeholder": "Esitle ennast professionaalselt. Esitage oma karjääri ja oma praegust ametit."
         },
         "personal-bio": {
@@ -1335,7 +1335,7 @@
       "projects": {
         "tab": "Projektid",
         "member": {
-          "label": "Projektid, mille liige ma olen",
+          "label": "Minu projektid",
           "notice": "Kui soovite saada olemasoleva projekti liikmeks, peaksite paluma projekti meeskonnal teid lisada. Või saate oma projekti luua."
         },
         "followed": {
@@ -1352,7 +1352,7 @@
       "groups": {
         "tab": "Grupid",
         "groups": {
-          "label": "Rühmad Ma olen liige"
+          "label": "Minu grupid"
         }
       },
       "skills": {
@@ -1510,9 +1510,9 @@
     "skills": "Oskused",
     "groups": "Grupid",
     "snapshot": "Pilt",
-    "bio": "Bio",
-    "bio_pro": "Professional Bio",
-    "bio_personal": "Personal Bio",
+    "bio": "Biograafia",
+    "bio_pro": "Professional Biograafia",
+    "bio_personal": "Personal Biograafia",
     "cancel-title": "Loobu profiili redigeerimisest",
     "cancel-content": "Kas tõesti tühistada oma profiiliväljaanne? Kõik tehtud muudatused lähevad kaotsi.",
     "can-mentor": "Võib olla mentor",
@@ -1831,7 +1831,7 @@
     "filter-by-category": "Lisa kategooria",
     "language": "keele",
     "people": "inimesi",
-    "tag": "silti",
+    "tag": "Märksõnad",
     "or": "või",
     "ambiguousTag": "Mitmetähenduslik silt",
     "subtitle-ambiguous-tag": "Sellel sildil on erinevad tähendused. Valige üks, millest olete huvitatud:",
@@ -1879,9 +1879,9 @@
     "open-map": "Ava kaart",
     "pick-tag-classification": "Sildiraamistiku valimine",
     "pick-skill-classification": "Vali oskuste raamistik",
-    "pick-tag-preset": "Või valida soovitatud sildi",
+    "pick-tag-preset": "Või vali soovitatud märksõna",
     "pick-skill-preset": "Või valida soovitatud oskus",
-    "current-tag-description": "Kirjuta sildi esimesed tähed ja vali õige silt",
+    "current-tag-description": "Kirjuta märksõna esimesed tähed ja vali õige märksõna",
     "current-skill-description": "Tüübi oskuste märgis ja vali õige oskus",
     "disambiguate": "(Desambiguation)",
     "suggestions": "Soovitused",
@@ -2000,7 +2000,7 @@
     "description": "Kirjelduse vorm",
     "language": "Keelemall",
     "info": "Kui soovite kasutajatele soovitada, kuidas oma projekti konkreetses kategoorias korraldada, saate luua selle kategooria malli. Siis, kui kasutaja loob projekti selles kategoorias, projekti initsialiseeritakse teksti, et sa määratletud mall. See tekst on mõeldud juhendina kasutajatele.",
-    "no-tag-set": "Ühtegi silti pole praeguseks seatud.",
+    "no-tag-set": "Ühtegi märksõnad pole praeguseks seatud.",
     "placeholder-purpose": "Projekti eesmärk",
     "placeholder-title": "Tiitel Kohapealne",
     "tags": "Malli sildid",
@@ -2274,7 +2274,7 @@
     "complete-now": "Lähme!"
   },
   "notifications": {
-    "header": "Teatised",
+    "header": "Teated",
     "title": "Märguannete seadistused",
     "tabs": {
       "email": "E- posti teated",
@@ -2287,7 +2287,7 @@
       "title": "Projektist teatamine",
       "changes": "Teadete muutmine",
       "reviews": "Teadete läbivaatamine",
-      "members": "Liikmete teatised",
+      "members": "Liikmete teated",
       "applications": "Taotlusest teavitamine",
       "blogEntries": "Blogikirjete teated"
     },
@@ -2360,7 +2360,7 @@
   "recommendations": {
     "empty": "Sul pole soovitusi",
     "connect-to": "Võib-olla soovite ühendust võtta",
-    "title": "Soovitatav teile",
+    "title": "Soovitused teile",
     "is-featured": "(Featured)",
     "more-projects": "Avasta rohkem projekte",
     "more-profiles": "Rohkem profiile",
@@ -2375,8 +2375,8 @@
     "no-event": "Sündmust veel pole.",
     "calendar": {
       "title": "Kalender",
-      "future": "Tulevikus",
-      "past": "Minevik",
+      "future": "Tuleviku sündmused",
+      "past": "Toimunud sündmused",
       "month": {
         "10": {
           "short": "Oktoober",
@@ -2564,7 +2564,7 @@
       }
     },
     "list": {
-      "title": "Juhised",
+      "title": "Juhendid",
       "create": "Lisa",
       "read-more": "Loe"
     },
@@ -2652,7 +2652,7 @@
   },
   "card-list": {
     "list": "Nimekiri",
-    "grid": "Võrk"
+    "grid": "Võrgustik"
   },
   "documents-page": {
     "title": "{platformName} platvormi dokumendid",
