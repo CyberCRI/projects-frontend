@@ -12,13 +12,21 @@ export default function useAutoTranslate() {
     return entity[`${field}_detected_language`]
   }
 
+  const useOriginalValue = (entity, field) => {
+    const _entity = unref(entity)
+    const _field = unref(field)
+    let res = !isAutoTranslateActivated.value
+    if (!res && _entity && _field) res = _entity[`${_field}_detected_language`] === locale.value
+    return res
+  }
+
   const getTranslatableField = (entity: any, field: string, defaultValue: any = '') =>
     computed(() => {
       const _entity = unref(entity)
       const _field = unref(field)
       const _defaultValue = unref(defaultValue)
       if (!_entity || !_field) return _defaultValue
-      if (!isAutoTranslateActivated.value) return _entity[_field] || _defaultValue
+      if (useOriginalValue(_entity, _field)) return _entity[_field] || _defaultValue
       return _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
     })
 
@@ -30,7 +38,7 @@ export default function useAutoTranslate() {
       for (const field of fields) {
         const _field = unref(field)
         if (!_entity || !_field) continue
-        else if (!isAutoTranslateActivated.value) res[_field] = _entity[_field] || _defaultValue
+        else if (useOriginalValue(_entity, _field)) res[_field] = _entity[_field] || _defaultValue
         else res[_field] = _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
       }
       return res
