@@ -16,17 +16,12 @@ import { postTemplate, postTemplateImage } from '@/api/templates.service'
 import { useFormTemplate } from '@/services/template'
 import TemplateForm from '@/components/templates/TemplateForm.vue'
 
-defineOptions({ name: 'TemplatesTabCreate' })
+defineOptions({ name: 'TemplatesCreateTab' })
 
 const { t } = useNuxtI18n()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
-const { data: form, errors, isValid } = useFormTemplate()
-
-const submit = () => postTemplate(organizationCode, form.value).then(() => redirect())
-const redirect = () => router.push({ name: 'templatesList' })
-
-const saveImageTemplate = (file) => postTemplateImage(organizationCode, file)
+const saveImageTemplate = (file) => postTemplateImage(organizationCode, 0, file)
 </script>
 
 <style lang="scss">

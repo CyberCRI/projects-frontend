@@ -51,12 +51,12 @@ export default function useAdminPagesRoutes() {
             {
               path: 'edit/:id',
               name: 'templatesEdit',
-              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesTabEdit.vue'),
+              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesEditTab.vue'),
             },
             {
               path: 'create',
               name: 'templatesCreate',
-              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesTabCreate.vue'),
+              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesCreateTab.vue'),
             },
           ],
         },

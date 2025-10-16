@@ -19,7 +19,7 @@ import { useFormTemplate } from '@/services/template'
 import TemplateForm from '@/components/templates/TemplateForm.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
-defineOptions({ name: 'TemplatesTabEdit' })
+defineOptions({ name: 'TemplatesEditTab' })
 
 const { t } = useNuxtI18n()
 const route = useRoute()

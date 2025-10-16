@@ -20,10 +20,6 @@ const rules = {
   name: {
     required,
   },
-  categories: {
-    required,
-    minLengthValue: minLength(1),
-  },
 }
 
 export const useFormTemplate = (...options) => {
