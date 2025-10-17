@@ -8,7 +8,7 @@
       />
     </template>
 
-    <FetchLoader :status="status">
+    <FetchLoader :status="status" :with-data="!!data">
       <div class="list">
         <ul>
           <AdminList
@@ -18,7 +18,7 @@
             :action-see="false"
             :action-add="false"
             @edit="redirectEditTemplate(template)"
-            @delete="toDelete = template"
+            @delete="setDeleted(template)"
           />
         </ul>
       </div>
@@ -58,10 +58,11 @@ const redirectEditTemplate = (template) =>
 
 // link template to deleted
 const templateToDelete = ref(null)
+const setDeleted = (template) => (templateToDelete.value = template)
 const cancelDelete = () => (templateToDelete.value = null)
 const confirmDelete = () => {
-  deleteTemplate(organizationCode, toDelete.value.id).then(() => refresh())
-  toDelete.value = null
+  deleteTemplate(organizationCode, templateToDelete.value.id).then(() => refresh())
+  templateToDelete.value = null
 }
 </script>
 

@@ -9,7 +9,7 @@ type OptionsForm = {
 }
 
 type UseFormResult = {
-  data: Ref<object>
+  form: Ref<object>
   isValid: Ref<boolean>
   errors: Ref<object>
   cleanedData: null | Ref<object>
@@ -25,20 +25,20 @@ type UseFormResult = {
  * @returns {UseFormResult}
  */
 const useForm = (options: OptionsForm = { onClean: (d) => d }): UseFormResult => {
-  const data = ref<object>({ ...(options.default ?? {}) })
+  const form = ref<object>({ ...(options.default ?? {}) })
 
   const isValid = ref<boolean>(false)
-  const v$ = useValidate(options.rules ?? {}, data)
+  const v$ = useValidate(options.rules ?? {}, form)
 
   // debounce validate to optimize check
   const validate = debounce(() => {
     v$.value.$validate().then((v) => (isValid.value = v))
   }, options.validateTimeout ?? 200)
-  watch(data, () => validate(), { deep: true })
+  watch(form, () => validate(), { deep: true })
 
   const errors = computed(() => {
     const err = {}
-    Object.keys(data.value).forEach((k) => {
+    Object.keys(form.value).forEach((k) => {
       if (v$.value[k]?.$errors) {
         err[k] = v$.value[k].$errors
       }
@@ -51,11 +51,11 @@ const useForm = (options: OptionsForm = { onClean: (d) => d }): UseFormResult =>
     if (!isValid) {
       return null
     }
-    return options.onClean(data.value)
+    return options.onClean(form.value)
   })
 
   return {
-    data,
+    form,
     errors,
     isValid,
     cleanedData,

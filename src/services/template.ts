@@ -1,7 +1,8 @@
-import { required } from '@vuelidate/validators'
+import { required, minLength } from '@vuelidate/validators'
 import useForm from '@/composables/useForm'
+import { clone } from 'es-toolkit'
 
-const DEFAULT_FORM = Object.freeze({
+const DEFAULT_FORM = {
   language: undefined,
   name: '',
   title: '',
@@ -14,13 +15,14 @@ const DEFAULT_FORM = Object.freeze({
   project_tags: [],
   comment: '',
   categories: [],
-})
+}
 
-const RULES = Object.freeze({
+const RULES = {
   name: {
     required,
+    minLengthValue: minLength(1),
   },
-})
+}
 
 export const useFormTemplate = (...options) => {
   const onClean = (data) => {
@@ -32,5 +34,5 @@ export const useFormTemplate = (...options) => {
 
     return data
   }
-  return useForm({ default: DEFAULT_FORM, rules: RULES, onClean, ...options })
+  return useForm({ default: clone(DEFAULT_FORM), rules: clone(RULES), onClean, ...options })
 }

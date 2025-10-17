@@ -3,7 +3,7 @@
     <FetchLoader :status="status">
       <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
       <div class="form-actions">
-        <LpiButton :label="capitalize(t('common.cancel'))" :click="redirect" />
+        <LpiButton :label="capitalize(t('common.cancel'))" @click="redirect" />
         <LpiButton :disabled="!isValid" :label="capitalize(t('common.save'))" @click="submit" />
       </div>
     </FetchLoader>
@@ -27,7 +27,7 @@ const router = useRouter()
 const organizationCode = useOrganizationCode()
 const templateId = route.params.id
 const { data: template, status } = getTemplate(organizationCode, templateId)
-const { data: form, errors, isValid } = useFormTemplate()
+const { form, errors, isValid, cleanedData } = useFormTemplate()
 
 // assing fetching templates to localform
 watch(
@@ -39,7 +39,7 @@ watch(
 )
 
 const submit = () => {
-  patchTemplate(organizationCode, templateId, form.value)
+  patchTemplate(organizationCode, templateId, cleanedData.value)
     .then(() => redirect())
     .catch(console.error)
 }

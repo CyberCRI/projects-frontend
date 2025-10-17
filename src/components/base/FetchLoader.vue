@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="['pending', 'idle'].includes(status)" class="m-auto w-fit">
+    <div v-if="loading" class="m-auto w-fit">
       <LpiLoader type="simple" />
       <span class="loading">
         {{ props.label ?? t('common.loading') }}
@@ -40,6 +40,18 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  withData: {
+    type: Boolean,
+    default: null,
+  },
+})
+
+const loading = computed(() => {
+  // if data already set, dont add loading
+  if (props.withData === true) {
+    return false
+  }
+  return ['pending', 'idle'].includes(props.status)
 })
 </script>
 

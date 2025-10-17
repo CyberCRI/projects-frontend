@@ -2,7 +2,7 @@
   <LayoutTab :title="$t('template.create')" :notice="t('template.info')">
     <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
     <div class="form-actions">
-      <LpiButton :label="capitalize(t('common.cancel'))" :click="redirect" />
+      <LpiButton :label="capitalize(t('common.cancel'))" @click="redirect" />
       <LpiButton :disabled="!isValid" :label="capitalize(t('common.save'))" @click="submit" />
     </div>
   </LayoutTab>
@@ -21,13 +21,14 @@ defineOptions({ name: 'TemplatesCreateTab' })
 const { t } = useNuxtI18n()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
-const { data: form, errors, isValid, cleanedData } = useFormTemplate()
+const { form, errors, isValid, cleanedData } = useFormTemplate()
 
 const submit = () => {
-  postTemplate(organizationCode, templateId, cleanedData.value)
+  postTemplate(organizationCode, cleanedData.value)
     .then(() => redirect())
     .catch(console.error)
 }
+
 const redirect = () => router.push({ name: 'templatesList' })
 
 // we don't have the templateId (we are on creation) so we put -1
