@@ -15,6 +15,8 @@ type UseFormResult = {
   cleanedData: null | Ref<object>
 }
 
+const onClean = (d) => d
+
 /**
  * composable to facilitate the management of a form with errors/validation
  *
@@ -24,17 +26,17 @@ type UseFormResult = {
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = (options: OptionsForm = { onClean: (d) => d }): UseFormResult => {
+const useForm = (options: OptionsForm = { onClean }): UseFormResult => {
   const form = ref<object>({ ...(options.default ?? {}) })
+  const _onClean = options.onClean ?? onClean
 
   const isValid = ref<boolean>(false)
   const v$ = useValidate(options.rules ?? {}, form)
 
   // debounce validate to optimize check
-  const validate = debounce(() => {
-    v$.value.$validate().then((v) => (isValid.value = v))
-  }, options.validateTimeout ?? 200)
-  watch(form, () => validate(), { deep: true })
+  const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
+  const debounceValidate = debounce(validate, options.validateTimeout ?? 200)
+  watch(form, () => debounceValidate(), { deep: true, immediate: true })
 
   const errors = computed(() => {
     const err = {}
@@ -48,10 +50,10 @@ const useForm = (options: OptionsForm = { onClean: (d) => d }): UseFormResult =>
 
   // clean data (before send to backend)
   const cleanedData = computed(() => {
-    if (!isValid) {
+    if (!isValid.value) {
       return null
     }
-    return options.onClean(form.value)
+    return _onClean(form.value)
   })
 
   return {
