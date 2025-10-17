@@ -13,7 +13,7 @@ import { capitalize } from 'es-toolkit'
 import useNuxtI18n from '@/composables/useNuxtI18n'
 import LayoutTab from '@/components/admin/LayoutTab.vue'
 import { postTemplate, postTemplateImage } from '@/api/templates.service'
-import { useFormTemplate } from '@/services/template'
+import { useFormTemplate } from '@/form/template'
 import TemplateForm from '@/components/templates/TemplateForm.vue'
 
 defineOptions({ name: 'TemplatesCreateTab' })
