@@ -5,12 +5,14 @@ type OptionsForm = {
   default?: object
   rules?: object
   validateTimeout?: number
+  onClean: (data: object) => object
 }
 
 type UseFormResult = {
   data: Ref<object>
   isValid: Ref<boolean>
   errors: Ref<object>
+  cleanedData: null | Ref<object>
 }
 
 /**
@@ -22,7 +24,7 @@ type UseFormResult = {
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = (options: OptionsForm = {}): UseFormResult => {
+const useForm = (options: OptionsForm = { onClean: (d) => d }): UseFormResult => {
   const data = ref<object>({ ...(options.default ?? {}) })
 
   const isValid = ref<boolean>(false)
@@ -44,10 +46,19 @@ const useForm = (options: OptionsForm = {}): UseFormResult => {
     return err
   })
 
+  // clean data (before send to backend)
+  const cleanedData = computed(() => {
+    if (!isValid) {
+      return null
+    }
+    return options.onClean(data.value)
+  })
+
   return {
     data,
     errors,
     isValid,
+    cleanedData,
   }
 }
 

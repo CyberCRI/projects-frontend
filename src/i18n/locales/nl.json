@@ -279,7 +279,10 @@
       "events": "Gebeurtenissen",
       "instructions": "Instructies",
       "news": "Nieuws",
-      "featured-projects": "Aanbevolen projecten"
+      "featured-projects": "Aanbevolen projecten",
+      "templates": {
+        "add": "Een sjabloon toevoegen"
+      }
     },
     "form": {
       "admin-info": {
@@ -552,7 +555,8 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)"
+    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
+    "create": "Aanmaken"
   },
   "complete-profile": {
     "bio": {
@@ -861,7 +865,8 @@
         "format": "Voer een geldig e-mailadres in"
       },
       "description": "Het beschrijvingsveld is vereist"
-    }
+    },
+    "templates": "Sjablonen"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1378,7 +1383,8 @@
             "notice-levels": "Geef je niveau van meesterschap aan.",
             "help-levels": "Meer over vaardigheden"
           },
-          "selection": "Geselecteerde vaardigheden"
+          "selection": "Geselecteerde vaardigheden",
+          "nothing-yet": "Je hebt nog geen vaardigheden toegevoegd."
         },
         "hobbies": {
           "nothing-yet": "Je hebt nog geen hobby's toegevoegd.",
@@ -1589,7 +1595,8 @@
         "required": "Het doelveld is vereist",
         "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
         "min": "Het doelveld moet ten minste 3 karakters tellen"
-      }
+      },
+      "project-templates": "Sjabloonnaam"
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -2004,7 +2011,14 @@
     "tags": "Sjabloontags",
     "title": "Sjablonen",
     "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is.",
-    "comment": "Sjabloon voor commentaar"
+    "comment": "Sjabloon voor commentaar",
+    "tips-template": "",
+    "template": "Sjabloon",
+    "no-category-set": "Geen categorie ingesteld",
+    "create": "Sjabloon aanmaken",
+    "edit": "Sjabloon editie",
+    "list": "Sjabloonlijst",
+    "add-template": "Sjabloon toevoegen"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -2614,7 +2628,8 @@
       "unauthorized": "Ongeautoriseerd: Toegang wordt geweigerd wegens ongeldige referenties.",
       "unprocessable-entity": "Onverwerkbare entiteit: Kan de inhoud niet verwerken.",
       "bad-gateway": "Onjuiste gateway: De server kwam een tijdelijke fout tegen en kon uw verzoek niet voltooien."
-    }
+    },
+    "error-default": "Er is een fout opgetreden. Probeer opnieuw of contacteer beheerder."
   },
   "people-groups": {
     "browse-tree": "Groepsboom doorbladeren"

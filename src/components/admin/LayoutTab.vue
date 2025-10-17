@@ -1,11 +1,10 @@
 <template>
   <div class="layout-tab">
+    <h2 v-if="title" class="title">
+      {{ title }}
+    </h2>
     <div class="header">
-      <div v-if="notice" class="notices">
-        <LpiSnackbar border icon="QuestionMark" type="info" class="snackbar">
-          <div v-html="notice" />
-        </LpiSnackbar>
-      </div>
+      <div v-if="notice" class="notices" v-html="notice" />
       <div v-if="$slots.actions" class="actions">
         <slot name="actions" />
       </div>
@@ -24,19 +23,34 @@ defineProps({
     type: String,
     default: null,
   },
+  title: {
+    type: String,
+    required: true,
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .layout-tab {
+  .title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: calc(var(--font-base-scale, 1) * 2.625rem);
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
   .header {
     display: flex;
     align-items: end;
     gap: $space-2xl;
 
-    .notices {
-      // flex-basis: 75%;
+    .notices:not(:only-child) {
+      flex-basis: 75%;
+    }
 
+    .notices {
       p + p {
         margin-top: $space-m;
       }

@@ -1,5 +1,5 @@
 <template>
-  <LayoutTab :notice="t('template.info')">
+  <LayoutTab :title="t('template.list')" :notice="t('template.info')">
     <template #actions>
       <LinkButton
         btn-icon="Plus"

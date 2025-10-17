@@ -32,6 +32,7 @@
               {{ $t('template.template') }}
             </h4>
             <LpiButton
+              :disabled="status !== 'success'"
               :label="$filters.capitalize($t('category.edit'))"
               @click="templateSearchIsOpened = true"
             />
@@ -54,7 +55,7 @@
           <FilterDrawer
             v-model:open="templateSearchIsOpened"
             v-model="category.templates"
-            :options="AllTemplates"
+            :options="allTemplates?.results"
             :title="$t('template.add-template')"
           />
         </div>
@@ -112,7 +113,7 @@
               ref="imageResizer"
               :image="displayedImage"
               :image-sizes="category.imageSizes"
-              :ratio="pictureRatio"
+              :ratio="PICTURE_RATIO"
               from-center
               @invalid-image-size="showImageResizer = false"
             />
@@ -173,7 +174,7 @@
         <Sortable
           v-else
           :list="category.children"
-          :options="dragOptions"
+          :options="DRAG_OPTIONS"
           group="category-children"
           tag="transition-group"
           item-key="id"
@@ -242,18 +243,17 @@
   </Drawer>
 </template>
 
-<script>
+<script setup>
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-import { Sketch } from '@ckpack/vue-color'
+import { Sketch as SketchPicker } from '@ckpack/vue-color'
 import CategoryField from '@/components/category/CategoryField.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { Sortable } from 'sortablejs-vue3'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { LazyImageResizer } from '#components'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
@@ -263,7 +263,9 @@ import useOrganizationCode from '@/composables/useOrganizationCode.ts'
 import { getTemplates } from '@/api/templates.service.ts'
 import FilterDrawer from '@/components/base/FilterDrawer.vue'
 
-export function defaultForm() {
+defineOptions({ name: 'CategoryDrawer' })
+
+const defaultForm = () => {
   return {
     name: '',
     description: '<p></p>',
@@ -283,153 +285,112 @@ export function defaultForm() {
   }
 }
 
-export default {
-  name: 'CategoryDrawer',
-
-  components: {
-    Drawer,
-    TextInput,
-    TipTapEditor,
-    SketchPicker: Sketch,
-    ImageInput,
-    CategoryCardImage,
-    CategoryField,
-    RadioButton,
-    IconImage,
-    Sortable,
-    LinkButton,
-    LazyImageResizer,
-    BaseModal,
-    LpiButton,
-    FilterDrawer,
+const props = defineProps({
+  editedCategory: {
+    type: Object,
+    default: null,
   },
-  props: {
-    editedCategory: {
-      type: Object,
-      default: null,
-    },
-    parentCategory: {
-      type: Number,
-      default: null,
-    },
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+  parentCategory: {
+    type: Number,
+    default: null,
   },
-
-  emits: ['close-modal', 'submit-category'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
+  isOpened: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  data() {
-    return {
-      category: defaultForm(),
-      projects: [],
-      displayedImage: null,
-      asyncing: false,
-      pictureRatio: 16 / 9,
-      showImageResizer: false,
-      AllTemplates: [],
-      templateSearchIsOpened: false,
-    }
-  },
-  computed: {
-    dragOptions() {
-      return {
-        animation: 200,
-        group: 'category-children',
-        disabled: false,
-        ghostClass: 'child-ghost',
-      }
-    },
-  },
+const emits = defineEmits(['close-modal', 'submit-category'])
 
-  watch: {
-    'category.foreground_color': function (val) {
-      if (typeof val !== String && val.hex) this.category.foreground_color = val.hex
-    },
+const organizationCode = useOrganizationCode()
+const { data: allTemplates, status } = getTemplates(organizationCode)
 
-    'category.background_color': function (val) {
-      if (typeof val !== String && val.hex) this.category.background_color = val.hex
-    },
-    // not using computed
-    // beacuse can also be set from a file object in form
-    'category.background_image': function (val) {
-      this.displayedImage = val && val.variations ? val.variations.small : null
-    },
-  },
+const category = ref({
+  ...defaultForm(),
+  ...(props.editedCategory ?? {}),
+  parent: props.parentCategory,
+  organization_code: organizationCode,
+})
 
-  async created() {
-    if (this.editedCategory) {
-      // Fill form with edited category data
-      this.category = {
-        ...this.editedCategory,
-        description: this.editedCategory.description,
-      }
-      // TODO what was this meant to do ?
-      // this.image
-    } else {
-      this.category = { ...defaultForm(), parent: this.parentCategory }
-    }
-    const organizationCode = useOrganizationCode()
-    this.category.organization_code = organizationCode
-    const bgImage = this.category?.background_image
-    this.category.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
+const bgImage = category.value.background_image
+category.value.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
 
-    this.AllTemplates = (await getTemplates(organizationCode)).results
-  },
+const router = useRouter()
+const displayedImage = ref(null)
+const asyncing = ref(false)
+const PICTURE_RATIO = 16 / 9
+const showImageResizer = ref(false)
+const templateSearchIsOpened = ref(false)
 
-  methods: {
-    saveImageSizes() {
-      this.category.imageSizes = {
-        scaleX: this.$refs.imageResizer.scaleX,
-        scaleY: this.$refs.imageResizer.scaleY,
-        left: this.$refs.imageResizer.left,
-        top: this.$refs.imageResizer.top,
-        naturalRatio: this.$refs.imageResizer.naturalRatio,
-      }
-      this.showImageResizer = false
-    },
-    onReorder(event) {
-      const { newIndex, oldIndex } = event
-      const movedChild = this.category.children[oldIndex]
-      this.category.children.splice(oldIndex, 1)
-      this.category.children.splice(newIndex, 0, movedChild)
-    },
+const DRAG_OPTIONS = {
+  animation: 200,
+  group: 'category-children',
+  disabled: false,
+  ghostClass: 'child-ghost',
+}
 
-    closeModal() {
-      this.$emit('close-modal')
-    },
+watch('category.foreground_color', (val) => {
+  if (typeof val !== String && val.hex) {
+    category.value.foreground_color = val.hex
+  }
+})
 
-    showNewImage(image) {
-      const newImage = image
+watch('category.background_color', (val) => {
+  if (typeof val !== String && val.hex) {
+    category.value.background_color = val.hex
+  }
+})
 
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(newImage)
+// not using computed
+// beacuse can also be set from a file object in form
+watch('category.background_image', (val) => {
+  displayedImage.value = val && val.variations ? val.variations.small : null
+})
 
-      fileReader.onload = (fileReaderEvent) => {
-        this.displayedImage = fileReaderEvent.target.result
-      }
-      this.category.imageSizes = null // reset image framing
-      this.category.background_image = image
-    },
+const imageResizer = useTemplateRef('imageResizer')
+const saveImageSizes = () => {
+  category.value.imageSizes = {
+    scaleX: imageResizer.value.scaleX,
+    scaleY: imageResizer.value.scaleY,
+    left: imageResizer.value.left,
+    top: imageResizer.value.top,
+    naturalRatio: imageResizer.value.naturalRatio,
+  }
+  showImageResizer.value = false
+}
+const onReorder = (event) => {
+  const { newIndex, oldIndex } = event
+  const movedChild = category.value.children[oldIndex]
+  category.value.children.splice(oldIndex, 1)
+  category.value.children.splice(newIndex, 0, movedChild)
+}
 
-    submitCategory() {
-      this.asyncing = true
-      this.$emit('submit-category', this.category)
-    },
+const closeModal = () => {
+  emits('close-modal')
+}
 
-    templateNavigate(template) {
-      // redirect to template editor
-      const route = this.$router.resolve({ name: 'templatesEdit', params: { id: template.id } })
-      window.open(route.href, '_blank')
-    },
-  },
+const showNewImage = (image) => {
+  const newImage = image
+
+  const fileReader = new FileReader()
+  fileReader.readAsDataURL(newImage)
+
+  fileReader.onload = (fileReaderEvent) => {
+    displayedImage.value = fileReaderEvent.target.result
+  }
+  category.value.imageSizes = null // reset image framing
+  category.value.background_image = image
+}
+
+const submitCategory = () => {
+  asyncing.value = true
+  emits('submit-category', category.value)
+}
+
+const templateNavigate = (template) => {
+  // redirect to template editor
+  const route = router.resolve({ name: 'templatesEdit', params: { id: template.id } })
+  window.open(route.href, '_blank')
 }
 </script>
 

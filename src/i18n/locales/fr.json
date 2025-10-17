@@ -279,7 +279,10 @@
       "events": "Événements",
       "instructions": "Instructions",
       "news": "Actualités",
-      "featured-projects": "Projets à la une"
+      "featured-projects": "Projets à la une",
+      "templates": {
+        "add": "Ajouter un modèle"
+      }
     },
     "form": {
       "admin-info": {
@@ -554,7 +557,8 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)"
+    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
+    "create": "Créer"
   },
   "complete-profile": {
     "bio": {
@@ -863,7 +867,8 @@
         "format": "Veuillez entrer une adresse email valide"
       },
       "description": "Le champ description est obligatoire"
-    }
+    },
+    "templates": "Modèles"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1167,7 +1172,8 @@
       "title": "Montrez votre impact",
       "text": "Augmentez votre impact en montrant vos efforts pour le bien commun. Identifiez les {sdg} auxquels vous contribuez. Géolocalisez tous les lieux où vos projets génèrent un impact.",
       "sdg": "Objectifs de Développement Durable",
-      "link": "https://fr.unesco.org/sdgs"
+      "link": "https://fr.unesco.org/sdgs",
+      "sdgAbbr": "Objectifs de développement durable"
     }
   },
   "mentorship": {
@@ -1465,7 +1471,8 @@
             "title": "Niveau 4 : Expert",
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
-        }
+        },
+        "search": "recherche"
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -1590,7 +1597,8 @@
         "required": "Le champ titre est obligatoire",
         "max": "Le champ mission ne peut pas contenir plus de 180 caractères",
         "min": "Le champ mission doit contenir au minimum 3 caractères"
-      }
+      },
+      "project-templates": "Nom du modèle"
     },
     "image-header": "Image",
     "image-alert": {
@@ -2006,7 +2014,14 @@
     "tags": "Tags du template",
     "title": "Templates",
     "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template.",
-    "comment": "Template pour les commentaires"
+    "comment": "Template pour les commentaires",
+    "tips-template": "",
+    "template": "Modèle",
+    "no-category-set": "Aucun ensemble de catégories",
+    "create": "Création de modèles",
+    "edit": "Édition modèle",
+    "list": "Liste des modèles",
+    "add-template": "Ajouter un modèle"
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",
@@ -2619,7 +2634,8 @@
       "unauthorized": "Non autorisé: Accès refusé en raison d'informations d'identification non valides.",
       "unprocessable-entity": "Unprocessable entity: le serveur n'a pas été en mesure de réaliser les instructions demandées",
       "bad-gateway": "Bad gateway: Le serveur a rencontré une erreur temporaire et n'a pas pu répondre à votre demande."
-    }
+    },
+    "error-default": "Une erreur s'est produite. Veuillez réessayer ou contacter l'administrateur."
   },
   "people-groups": {
     "browse-tree": "Parcourir l'arbre des groupes"
