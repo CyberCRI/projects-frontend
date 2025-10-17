@@ -40,7 +40,7 @@
 <script setup>
 import useNuxtI18n from '@/composables/useNuxtI18n'
 
-import AdminList from '@/components/admin/AdminList.vue'
+import AdminList from '@/components/admin/AdminListItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LayoutTab from '@/components/admin/LayoutTab.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'

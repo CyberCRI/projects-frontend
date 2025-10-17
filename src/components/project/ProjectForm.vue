@@ -320,13 +320,6 @@ export default {
     },
 
     otherFieldDisabled() {
-      console.log(`
-            this.isAddMode :: ${this.isAddMode} :: ${this.isAddMode}
-            !!this.categories :: ${!!this.categories} :: ${!!this.categories}
-            this.categories.length > 0 :: ${this.categories.length > 0} :: ${this.categories.length}
-            !this.form.category :: ${!this.form.category} :: ${this.form.category}
-            !this.form.template :: ${!this.form.template} :: ${this.form.template}
-          `)
       return (
         this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
       )

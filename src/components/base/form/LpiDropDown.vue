@@ -1,12 +1,12 @@
 <template>
-  <div v-click-outside="close" class="project-dropdown" :class="{ 'is-open': open }">
+  <div v-click-outside="close" class="lpi-dropdown" :class="{ 'is-open': open }">
     <button type="button" class="dropdown toggle-btn" @click.prevent="toogle">
       <span class="dropdown-btn">{{ showLabel }}</span>
       <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
     </button>
     <transition name="slide">
-      <div v-if="open" class="choose-project-">
-        <div class="drop-down-menu custom-scrollbar">
+      <div v-if="open" class="lpi-dropdown-choose">
+        <div class="dropdown-menu custom-scrollbar">
           <ul>
             <LpiDropdDownElement
               v-for="option in props.options"
@@ -94,11 +94,11 @@ const showLabel = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.project-dropdown {
+.lpi-dropdown {
   position: relative;
 
   &.is-open,
-  &.is-open .choose-project- {
+  &.is-open .lpi-dropdown-choose {
     box-shadow: 0 12px 12px rgb(0 0 0 / 30%);
   }
 }
@@ -137,7 +137,7 @@ const showLabel = computed(() => {
   border-bottom: 0;
 }
 
-.choose-project- {
+.lpi-dropdown-choose {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -171,7 +171,7 @@ const showLabel = computed(() => {
   }
 }
 
-.drop-down-menu {
+.dropdown-menu {
   background-color: $white;
   border-width: 0 1px 1px;
   border-style: solid;

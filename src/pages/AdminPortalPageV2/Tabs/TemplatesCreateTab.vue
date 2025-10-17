@@ -13,7 +13,7 @@ import { capitalize } from 'es-toolkit'
 import useNuxtI18n from '@/composables/useNuxtI18n'
 import LayoutTab from '@/components/admin/LayoutTab.vue'
 import { postTemplate, postTemplateImage } from '@/api/templates.service'
-import { useFormTemplate } from '@/form/template'
+import { useTemplateForm } from '@/form/template'
 import TemplateForm from '@/components/templates/TemplateForm.vue'
 
 defineOptions({ name: 'TemplatesCreateTab' })
@@ -21,7 +21,7 @@ defineOptions({ name: 'TemplatesCreateTab' })
 const { t } = useNuxtI18n()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
-const { form, errors, isValid, cleanedData } = useFormTemplate()
+const { form, errors, isValid, cleanedData } = useTemplateForm()
 
 const submit = () => {
   postTemplate(organizationCode, cleanedData.value)

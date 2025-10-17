@@ -16,7 +16,7 @@ type UseFormResult = {
 }
 
 /**
- * easiar form check
+ * composable to facilitate the management of a form with errors/validation
  *
  * @function
  * @name useForm

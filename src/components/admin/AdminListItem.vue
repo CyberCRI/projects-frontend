@@ -57,7 +57,7 @@ import ContextActionButton from '@/components/base/button/ContextActionButton.vu
 import useNuxtI18n from '@/composables/useNuxtI18n'
 
 defineOptions({
-  name: 'AdminList',
+  name: 'AdminListItem',
 })
 
 const { t } = useNuxtI18n()
