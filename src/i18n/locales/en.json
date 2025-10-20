@@ -1532,6 +1532,7 @@
     "take-tour": "Take the tour now"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
     "add-location-point": "Add a location point",

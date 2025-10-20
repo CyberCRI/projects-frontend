@@ -126,6 +126,7 @@ export default {
         'Archive',
         'VipCrownLine',
         'SparklingFill',
+        'InfoCardLine',
       ],
     }
   },

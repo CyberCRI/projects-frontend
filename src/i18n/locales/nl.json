@@ -1532,6 +1532,7 @@
     "take-tour": "Neem de rondleiding nu."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Voeg een locatie toe",
     "add-linked-project": "Een gekoppeld project toevoegen",
     "add-location-point": "Plaatspunt toevoegen",
