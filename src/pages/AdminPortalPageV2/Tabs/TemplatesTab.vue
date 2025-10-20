@@ -17,6 +17,7 @@
             :label="template.name"
             :action-see="false"
             :action-add="false"
+            :data-test="`template-list-${template.id}`"
             @edit="redirectEditTemplate(template)"
             @delete="setDeleted(template)"
           />
@@ -29,6 +30,7 @@
             templateName: templateToDelete.name,
           })
         "
+        :data-test="`template-modal-delete-${templateToDelete.id}`"
         :title="$t('admin.portal.templates.delete-templates')"
         @cancel="cancelDelete"
         @confirm="confirmDelete"
@@ -50,6 +52,7 @@ defineOptions({ name: 'TemplatesTab' })
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
+console.log(organizationCode)
 const { data, status, refresh } = getTemplates(organizationCode)
 
 const router = useRouter()

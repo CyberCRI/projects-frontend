@@ -12,6 +12,7 @@
             class="edit-btn small"
             secondary
             no-border
+            data-test="action-edit"
             :action-label="t('common.edit')"
             @click.stop.prevent="emit('edit')"
           />
@@ -22,6 +23,7 @@
             class="edit-btn small"
             secondary
             no-border
+            data-test="action-add"
             :action-label="t('common.add')"
             @click.stop.prevent="emit('add')"
           />
@@ -32,6 +34,7 @@
             class="edit-btn small"
             secondary
             no-border
+            data-test="action-see"
             :action-label="t('common.see')"
             @click.stop.prevent="emit('see')"
           />
@@ -42,6 +45,7 @@
             class="edit-btn small"
             secondary
             no-border
+            data-test="action-delete"
             :action-label="t('common.delete')"
             @click.stop.prevent="emit('delete')"
           />
