@@ -3,8 +3,13 @@
     <FetchLoader :status="status">
       <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
       <div class="form-actions">
-        <LpiButton :label="capitalize(t('common.cancel'))" @click="redirect" />
-        <LpiButton :disabled="!isValid" :label="capitalize(t('common.save'))" @click="submit" />
+        <LpiButton data-test="cancel" :label="capitalize(t('common.cancel'))" @click="redirect" />
+        <LpiButton
+          data-test="submit"
+          :disabled="!isValid"
+          :label="capitalize(t('common.save'))"
+          @click="submit"
+        />
       </div>
     </FetchLoader>
   </LayoutTab>

@@ -4,6 +4,7 @@ import { describe, it } from 'vitest'
 
 describe('TemplatesEditTab.vue', () => {
   it('Mount', async () => {
-    const doc = await lpiMount(TemplatesEditTab)
+    const wrapper = await lpiMount(TemplatesEditTab)
+    await wrapper.unmount()
   })
 })

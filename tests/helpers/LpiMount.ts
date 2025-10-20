@@ -5,6 +5,7 @@ import { capitalize, isNotGroup, isGroup } from '@/filters'
 import { clickOutside, disableFocus } from '@/directives'
 import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
+import english from '@/i18n/locales/en.json'
 
 config.global.mocks = {
   $filters: {
@@ -14,6 +15,16 @@ config.global.mocks = {
   },
 }
 
+const defaultI18nOptions = () => {
+  return {
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: {
+      en: english,
+    },
+  }
+}
+
 function buildOptions(options: any = {}) {
   const plugins = []
 
@@ -21,7 +32,7 @@ function buildOptions(options: any = {}) {
 
   let i18n
   // if (options.i18n) {
-  i18n = createI18n({ legacy: false, ...(options?.i18n || {}) })
+  i18n = createI18n({ legacy: false, ...(options?.i18n || defaultI18nOptions()) })
   plugins.push(i18n)
   // }
 

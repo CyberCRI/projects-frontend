@@ -9,9 +9,8 @@ describe('TemplatesTab.vue', () => {
     registerEndpoint('organization/CRI/template', () => {
       throw createError({ statusCode: 500 })
     })
-    const doc = await lpiMount(TemplatesTab)
-    await delay(1)
-    expect(doc.find('.error')).toBeTruthy()
+    const wrapper = await lpiMount(TemplatesTab)
+    expect(wrapper.find('.error')).toBeTruthy()
   })
   it('BackendResult', async () => {
     registerEndpoint('organization/CRI/template', () => {
@@ -22,10 +21,9 @@ describe('TemplatesTab.vue', () => {
         ],
       }
     })
-    const doc = await lpiMount(TemplatesTab)
-    expect(doc.find('.loading')).toBeTruthy()
-    await delay(10)
-    expect(doc.findAll('li').length).toEqual(2)
+    const wrapper = await lpiMount(TemplatesTab)
+    await delay(1)
+    expect(wrapper.findAll('li').length).toEqual(2)
   })
   it('DeleteTemplate', async () => {
     registerEndpoint('organization/CRI/template', () => {
@@ -36,12 +34,11 @@ describe('TemplatesTab.vue', () => {
         ],
       }
     })
-    const doc = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMount(TemplatesTab)
     await delay(1)
-    expect(doc.findAll('[data-test^=template-modal-delete]').length).toEqual(0)
-    doc.find(`[data-test=template-list-666] [data-test=action-delete]`).trigger('click')
-    await delay(1)
-    expect(doc.findAll('[data-test^=template-modal-delete]').length).toEqual(1)
+    expect(wrapper.findAll('[data-test^=template-modal-delete]').length).toEqual(0)
+    await wrapper.find(`[data-test=template-list-666] [data-test=action-delete]`).trigger('click')
+    expect(wrapper.findAll('[data-test^=template-modal-delete]').length).toEqual(1)
   })
   it('EditTemplate', async () => {
     registerEndpoint('organization/CRI/template', () => {
@@ -52,8 +49,11 @@ describe('TemplatesTab.vue', () => {
         ],
       }
     })
-    const doc = await lpiMount(TemplatesTab)
-    await delay(1)
-    doc.find(`[data-test=template-list-666] [data-test=action-edit]`).trigger('click')
+    const wrapper = await lpiMount(TemplatesTab)
+    await wrapper.find(`[data-test=template-list-666] [data-test=action-edit]`).trigger('click')
+  })
+  it('umount', async () => {
+    const wrapper = await lpiMount(TemplatesTab)
+    await wrapper.unmount()
   })
 })

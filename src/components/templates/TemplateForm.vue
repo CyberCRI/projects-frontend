@@ -5,7 +5,11 @@
         {{ $t('template.template') }}
       </h4>
       <span class="description">{{ $t('template.tips-template') }}</span>
-      <TextInput v-model="form.name" :placeholder="$t('project.form.project-templates')" />
+      <TextInput
+        v-model="form.name"
+        data-test="name"
+        :placeholder="$t('project.form.project-templates')"
+      />
       <FieldErrors :errors="errors.name" />
     </div>
     <div class="block-container">

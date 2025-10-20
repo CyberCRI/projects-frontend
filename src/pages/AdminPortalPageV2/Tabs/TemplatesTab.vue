@@ -52,7 +52,6 @@ defineOptions({ name: 'TemplatesTab' })
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
-console.log(organizationCode)
 const { data, status, refresh } = getTemplates(organizationCode)
 
 const router = useRouter()
