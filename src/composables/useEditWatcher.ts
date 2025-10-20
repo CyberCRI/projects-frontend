@@ -1,5 +1,5 @@
 import useGlobalsStore from '@/stores/useGlobals'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 
 import { toRaw, isRef, isReactive, isProxy } from 'vue'
 

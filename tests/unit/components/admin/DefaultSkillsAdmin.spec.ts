@@ -17,9 +17,9 @@ import {
   getOrgClassificationTags,
 } from '@/api/tag-classification.service'
 
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
-vi.mock('lodash.debounce', () => ({ default: vi.fn((fn) => fn) }))
+vi.mock('es-toolkit', () => ({ debounce: vi.fn((fn) => fn) }))
 
 vi.mock('@/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({

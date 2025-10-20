@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'

@@ -165,7 +165,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 

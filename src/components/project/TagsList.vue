@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 
 export default {

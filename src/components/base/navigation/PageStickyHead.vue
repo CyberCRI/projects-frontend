@@ -11,7 +11,7 @@
   </aside>
 </template>
 <script>
-import throttle from 'lodash.throttle'
+import { throttle } from 'es-toolkit'
 
 export default {
   name: 'PageStickyHead',

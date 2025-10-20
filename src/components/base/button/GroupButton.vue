@@ -40,7 +40,7 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'GroupButton',

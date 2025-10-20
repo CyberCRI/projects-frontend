@@ -1,6 +1,6 @@
 import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
-import merge from 'lodash.merge'
+import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
 
 const useAPI = (url: string, options) => {

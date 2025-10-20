@@ -235,7 +235,7 @@
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'

@@ -104,7 +104,7 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'TabsLayout',

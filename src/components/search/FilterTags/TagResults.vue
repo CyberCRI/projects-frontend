@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 import { getOrgClassificationTags } from '@/api/tag-classification.service'
 

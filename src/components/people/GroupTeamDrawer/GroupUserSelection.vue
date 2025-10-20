@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'

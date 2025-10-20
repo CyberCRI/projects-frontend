@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { searchGroupsAlgolia } from '@/api/search.service.ts'

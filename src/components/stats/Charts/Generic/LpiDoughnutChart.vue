@@ -7,7 +7,7 @@ import { DoughnutChart, useDoughnutChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { onMounted, onUnmounted, ref } from 'vue'
 
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 Chart.register(...registerables)
 export default {

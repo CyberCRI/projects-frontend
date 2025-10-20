@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import { searchPeopleAdmin } from '@/api/people.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {

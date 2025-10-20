@@ -104,7 +104,7 @@
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'

@@ -50,7 +50,7 @@
 </template>
 <script>
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import throttle from 'lodash/throttle'
+import { throttle } from 'es-toolkit'
 import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
