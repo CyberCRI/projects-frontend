@@ -9,7 +9,7 @@
         <slot name="footer">
           <LpiButton
             :disabled="asyncing"
-            :label="$filters.capitalize($t('common.cancel'))"
+            :label="capitalize(t('common.cancel'))"
             secondary
             class="footer__left-button"
             data-test="close-button"
@@ -18,7 +18,7 @@
 
           <LpiButton
             :disabled="confirmActionDisabled || asyncing"
-            :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
+            :label="capitalize(confirmActionName || t('common.confirm'))"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="footer__right-button"
             data-test="confirm-button"
@@ -30,54 +30,44 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FormPanel',
+<script setup>
+import { capitalize } from 'es-toolkit'
 
-  props: {
-    confirmActionName: {
-      type: String,
-      default: null,
-    },
+defineOptions({ name: 'FormPanel' })
 
-    noFooter: {
-      type: Boolean,
-      default: false,
-    },
+const { t } = useNuxtI18n()
 
-    customStyle: {
-      type: Object,
-      default: () => {},
-    },
-
-    confirmActionDisabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    asyncing: {
-      type: Boolean,
-      deafault: false,
-    },
+defineProps({
+  confirmActionName: {
+    type: String,
+    default: null,
   },
 
-  emits: ['close', 'confirm', 'unselect'],
-
-  data() {
-    return {
-      scrolled: false,
-    }
+  noFooter: {
+    type: Boolean,
+    default: false,
   },
 
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-    confirm() {
-      this.$emit('confirm')
-    },
+  customStyle: {
+    type: Object,
+    default: () => {},
   },
-}
+
+  confirmActionDisabled: {
+    type: Boolean,
+    default: false,
+  },
+
+  asyncing: {
+    type: Boolean,
+    deafault: false,
+  },
+})
+
+const emit = defineEmits(['close', 'confirm'])
+
+const close = () => emit('close')
+const confirm = () => emit('confirm')
 </script>
 
 <style lang="scss" scoped>

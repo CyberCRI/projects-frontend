@@ -10,7 +10,7 @@
           <tr>
             <th v-for="(filter, index) in filters" :key="index">
               <span class="button">
-                {{ $filters.capitalize($t(filter.label)) }}
+                {{ capitalize($t(filter.label)) }}
               </span>
             </th>
             <th>
@@ -28,12 +28,12 @@
             </td>
           </tr>
           <tr v-for="(user, index) in filteredUsers" v-else :key="index">
-            <td>{{ $filters.capitalize(user.family_name) }}</td>
-            <td>{{ $filters.capitalize(user.given_name) }}</td>
+            <td>{{ capitalize(user.family_name) }}</td>
+            <td>{{ capitalize(user.given_name) }}</td>
             <td>
               <a class="mail-link" :href="`mailto:${user.email}`">{{ user.email }}</a>
             </td>
-            <td>{{ $filters.capitalize(user.job) }}</td>
+            <td>{{ capitalize(user.job) }}</td>
             <td class="has-more">
               <ToolTip
                 v-if="user.message?.length > 36"
@@ -104,7 +104,7 @@
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
-import { debounce } from 'es-toolkit'
+import { debounce, capitalize } from 'es-toolkit'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
@@ -137,6 +137,7 @@ export default {
     return {
       toaster,
       organizationsStore,
+      capitalize,
     }
   },
 

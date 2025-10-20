@@ -7,13 +7,13 @@
     @submit="insertVideo"
   >
     <template #header>
-      {{ $filters.capitalize($t('file.add-video')) }}
+      {{ capitalize($t('file.add-video')) }}
     </template>
 
     <template #body>
       <TextInput
         v-model="videoSrc"
-        :placeholder="$filters.capitalize($t('resource.add-link'))"
+        :placeholder="capitalize($t('resource.add-link'))"
         data-test="input-video-link"
         class="text-input"
       />
@@ -29,6 +29,7 @@
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
+import { capitalize } from 'es-toolkit'
 
 // TODO: validate video src and display error message
 export default {
@@ -44,6 +45,9 @@ export default {
   },
 
   emits: ['closeModal'],
+  setup() {
+    return { capitalize }
+  },
 
   data() {
     return {

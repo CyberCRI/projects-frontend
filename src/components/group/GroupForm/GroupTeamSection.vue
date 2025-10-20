@@ -2,14 +2,14 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('team.group-members')) }}
+        {{ capitalize($t('team.group-members')) }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
       <LpiButton
         v-if="!modelValue.length"
         class="add-user-card"
         btn-icon="Plus"
-        :label="$filters.capitalize($t('group.form.add'))"
+        :label="capitalize($t('group.form.add'))"
         data-test="add-members"
         @click="openDrawer('select')"
       />
@@ -18,14 +18,14 @@
         <LpiButton
           class="add-user-card"
           btn-icon="Pen"
-          :label="$filters.capitalize($t('group.form.edit-members'))"
+          :label="capitalize($t('group.form.edit-members'))"
           data-test="add-members"
           @click="openDrawer('select')"
         />
         <LpiButton
           class="add-user-card"
           btn-icon="Pen"
-          :label="$filters.capitalize($t('group.form.edit-roles'))"
+          :label="capitalize($t('group.form.edit-roles'))"
           data-test="edit-roles"
           @click="openDrawer('roles')"
         />
@@ -46,7 +46,7 @@
       <LinkButton
         v-if="shortList?.length < modelValue?.length"
         class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
+        :label="capitalize($t(seeMoreLabel))"
         @click="showFullList = !showFullList"
       />
     </div>
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import useUsersStore from '@/stores/useUsers'
 
 export default {
@@ -81,6 +83,7 @@ export default {
     const usersStore = useUsersStore()
     return {
       usersStore,
+      capitalize,
     }
   },
 

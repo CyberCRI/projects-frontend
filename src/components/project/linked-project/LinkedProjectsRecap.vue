@@ -2,7 +2,7 @@
   <div class="linked-projects-recap">
     <SectionHeader
       :title="$t('project.linked', linkedProjects.length)"
-      :button-label="$filters.capitalize($t('project.show-n-projects', linkedProjects.length))"
+      :button-label="capitalize($t('project.show-n-projects', linkedProjects.length))"
       class="section-header"
       :has-button="linkedProjects.length > 6"
       @redirect-button-clicked="goToLinkedProjectsView"
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import useProjectsStore from '@/stores/useProjects.ts'
@@ -34,6 +36,7 @@ export default {
     const projectsStore = useProjectsStore()
     return {
       projectsStore,
+      capitalize,
     }
   },
 

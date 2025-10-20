@@ -37,7 +37,7 @@
 
   <!-- Picture -->
   <AccountSection>
-    <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
+    <label class="label">{{ capitalize($t('project.image-header')) }}</label>
     <ImageEditor
       :picture-alt="`${modelValue.name} image`"
       :contain="true"
@@ -51,6 +51,8 @@
   </AccountSection>
 </template>
 <script>
+import { capitalize } from 'es-toolkit'
+
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
@@ -79,7 +81,7 @@ export default {
   emits: ['update:modelValue'],
   setup() {
     const runtimeConfig = useRuntimeConfig()
-    return { runtimeConfig }
+    return { runtimeConfig, capitalize }
   },
   data() {
     const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {

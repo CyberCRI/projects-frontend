@@ -2,7 +2,7 @@
   <div class="group-member-section">
     <div class="team-outer-ctn">
       <SectionHeader
-        :button-label="$filters.capitalize($t('common.see-more'))"
+        :button-label="capitalize($t('common.see-more'))"
         :title="$t('group.the-team', { users: members.length })"
         class="section-header"
         @redirect-button-clicked="goTo"
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
@@ -49,7 +51,7 @@ export default {
 
   setup() {
     const { isMobile, viewportWidth } = useViewportWidth()
-    return { isMobile, viewportWidth }
+    return { isMobile, viewportWidth, capitalize }
   },
 
   computed: {

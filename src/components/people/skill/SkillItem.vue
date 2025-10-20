@@ -2,7 +2,7 @@
   <div class="skill" :class="{ 'is-open': isOpen, 'no-description': !description?.length }">
     <div class="summary-content" @click="isOpen = !isOpen">
       <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
-      <span class="skill-title">{{ $filters.capitalize(label) }}</span>
+      <span class="skill-title">{{ capitalize(label) }}</span>
       <SkillSteps :active-step="level" :steps="steps" class="steps" />
     </div>
 
@@ -13,37 +13,32 @@
     </transition>
   </div>
 </template>
-<script>
+<script setup>
+import { capitalize } from 'es-toolkit'
+
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'SkillItem',
-  components: { SkillSteps, IconImage },
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    level: {
-      type: Number,
-      required: true,
-    },
-    steps: {
-      type: Number,
-      default: 4,
-    },
+defineOptions({ name: 'SkillItem' })
+defineProps({
+  label: {
+    type: String,
+    required: true,
   },
-  data() {
-    return {
-      isOpen: false,
-    }
+  description: {
+    type: String,
+    required: true,
   },
-}
+  level: {
+    type: Number,
+    required: true,
+  },
+  steps: {
+    type: Number,
+    default: 4,
+  },
+})
+const isOpen = ref(false)
 </script>
 <style lang="scss" scoped>
 .skill {

@@ -5,6 +5,7 @@ import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from 'es-toolkit'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -87,7 +88,7 @@ try {
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="capitalize($t('common.cancel'))"
         secondary
         class="footer__left-button"
         data-test="close-button"
@@ -96,7 +97,7 @@ try {
 
       <LpiButton
         :disabled="invalid || asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="capitalize($t('common.confirm'))"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"

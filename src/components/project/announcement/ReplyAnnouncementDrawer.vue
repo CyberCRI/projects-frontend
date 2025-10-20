@@ -17,7 +17,7 @@
       <div class="form-section">
         <TextInput
           v-model="form.applicant_firstname"
-          :label="$filters.capitalize($t('recruit.firstname'))"
+          :label="capitalize($t('recruit.firstname'))"
           @blur="v$.form.applicant_firstname.$touch"
         />
 
@@ -27,7 +27,7 @@
       <div class="form-section">
         <TextInput
           v-model="form.applicant_name"
-          :label="$filters.capitalize($t('recruit.lastname'))"
+          :label="capitalize($t('recruit.lastname'))"
           @blur="v$.form.applicant_name.$touch"
         />
 
@@ -38,7 +38,7 @@
         <TextInput
           v-model="form.applicant_email"
           input-type="email"
-          :label="$filters.capitalize($t('form.email'))"
+          :label="capitalize($t('form.email'))"
           @blur="v$.form.applicant_email.$touch"
         />
 
@@ -47,7 +47,7 @@
 
       <div class="form-section editor-section">
         <label for="motivation" class="label">
-          {{ $filters.capitalize($t('recruit.about-you')) }}
+          {{ capitalize($t('recruit.about-you')) }}
         </label>
 
         <TipTapEditor
@@ -66,6 +66,8 @@
   </BaseDrawer>
 </template>
 <script>
+import { capitalize } from 'es-toolkit'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
@@ -102,6 +104,7 @@ export default {
     return {
       toaster,
       runtimeConfig,
+      capitalize,
     }
   },
 

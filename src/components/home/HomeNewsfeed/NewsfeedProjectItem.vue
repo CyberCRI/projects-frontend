@@ -14,7 +14,7 @@
       />
     </div>
     <h3 class="project-title">
-      {{ $filters.capitalize(project?.$t?.title) }}
+      {{ capitalize(project?.$t?.title) }}
     </h3>
     <div class="project-description">
       <p class="clamped">
@@ -25,29 +25,25 @@
   </NuxtLink>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from 'es-toolkit'
+
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 
-export default {
-  name: 'NewsfeedProjectItem',
+defineOptions({ name: 'NewsfeedProjectItem' })
 
-  components: { SummaryAction, CroppedApiImage },
-
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
+const props = defineProps({
+  project: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  computed: {
-    purpose() {
-      const sanitized = this.project?.$t?.purpose.replace(/<[^>]+>/g, ' ') || ''
-      return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
-    },
-  },
-}
+const purpose = computed(() => {
+  const sanitized = props.project?.$t?.purpose.replace(/<[^>]+>/g, ' ') || ''
+  return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
+})
 </script>
 
 <style lang="scss" scoped>

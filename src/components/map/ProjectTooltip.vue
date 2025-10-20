@@ -3,20 +3,20 @@
     <div class="project-tooltip__header">
       <div :class="location.type" class="project-tooltip__header--dot" />
       <h2 class="project-tooltip__header--title">
-        {{ $filters.capitalize(typeLabel) }}
+        {{ capitalize(typeLabel) }}
       </h2>
     </div>
 
     <div class="project-tooltip__location">
       <h3 class="project-tooltip__location--title">
-        {{ $filters.capitalize(location.title) }}
+        {{ capitalize(location.title) }}
       </h3>
       <p class="project-tooltip__location--description">
-        {{ $filters.capitalize(location.description) }}
+        {{ capitalize(location.description) }}
       </p>
 
       <LinkButton
-        :label="$filters.capitalize($t('project.view'))"
+        :label="capitalize($t('project.view'))"
         class="project-tooltip__button"
         btn-icon="ArrowRight"
         :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
 export default {
@@ -57,6 +59,10 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+
+  setup() {
+    return { capitalize }
   },
 
   computed: {

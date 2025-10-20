@@ -3,6 +3,7 @@ import { getAllInstructions, deleteInstruction } from '@/api/instruction.service
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from 'es-toolkit'
 
 const { translateInstructions } = useAutoTranslate()
 const toaster = useToasterStore()
@@ -85,7 +86,7 @@ try {
       <LpiButton
         v-if="canCreateInstruction"
         primary
-        :label="$filters.capitalize($t('instructions.list.create'))"
+        :label="capitalize($t('instructions.list.create'))"
         data-test="create-instruction-button"
         btn-icon="Plus"
         class="create-instruction-button"

@@ -5,7 +5,7 @@
     <div v-if="isEditionEnabled" class="add-goal">
       <LpiButton
         v-if="isEditionEnabled"
-        :label="$filters.capitalize($t('goal.add'))"
+        :label="capitalize($t('goal.add'))"
         class="add-goal-btn"
         btn-icon="Plus"
         @click="projectLayoutToggleAddModal('goal')"
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
 import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
 import GoalItem from '@/components/project/goal/GoalItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
@@ -81,6 +82,7 @@ export default {
     return {
       toaster,
       canEditProject,
+      capitalize,
     }
   },
 

@@ -3,8 +3,8 @@
     <div class="form-section">
       <TextInput
         :model-value="modelValue.title"
-        :label="$filters.capitalize($t('instructions.form.title.label'))"
-        :placeholder="$filters.capitalize($t('instructions.form.title.placeholder'))"
+        :label="capitalize($t('instructions.form.title.label'))"
+        :placeholder="capitalize($t('instructions.form.title.placeholder'))"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
         @blur="v$.modelValue.title.$validate"
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-section">
-      <label>{{ $filters.capitalize($t('instructions.form.content.label')) }}</label>
+      <label>{{ capitalize($t('instructions.form.content.label')) }}</label>
       <TipTapEditor
         ref="tiptapEditor"
         :model-value="modelValue.content"
@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
@@ -125,6 +127,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
 

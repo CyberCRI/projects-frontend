@@ -15,7 +15,7 @@
         <div class="buttons-ctn">
           <LpiButton
             v-if="!isAddMode"
-            :label="$filters.capitalize($t('common.delete'))"
+            :label="capitalize($t('common.delete'))"
             :btn-icon="deleteLoading ? 'LoaderSimple' : null"
             class="delete-button"
             @click="showDeleteConfirm"
@@ -23,7 +23,7 @@
 
           <LpiButton
             :disabled="!faq.title"
-            :label="$filters.capitalize(isAddMode ? $t('common.add') : $t('common.edit'))"
+            :label="capitalize(isAddMode ? $t('common.add') : $t('common.edit'))"
             :btn-icon="addOrEditLoading ? 'LoaderSimple' : null"
             @click="submitFaq"
           />
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
@@ -81,6 +83,7 @@ export default {
       toaster,
       organizationsStore,
       projectsStore,
+      capitalize,
     }
   },
 

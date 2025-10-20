@@ -32,7 +32,7 @@
     <div v-if="listProjects?.length > listLimit" class="show-more">
       <LinkButton
         class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
+        :label="capitalize($t(seeMoreLabel))"
         @click="isSeeMore = !isSeeMore"
       />
     </div>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import PickProjectSelection from '@/components/project/PickProjectSelection.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -91,6 +93,7 @@ export default {
     const toaster = useToasterStore()
     return {
       toaster,
+      capitalize,
     }
   },
 

@@ -47,7 +47,7 @@
             <div class="reply-action">
               <ExternalLabelButton
                 v-if="!isReply"
-                :label="$filters.capitalize($t('common.reply'))"
+                :label="capitalize($t('common.reply'))"
                 btn-icon="Reply"
                 :has-border="true"
                 @click="toggleReply"
@@ -57,7 +57,7 @@
             <div v-if="canEdit" class="author-action">
               <ExternalLabelButton
                 v-if="canEdit"
-                :label="$filters.capitalize($t('common.edit'))"
+                :label="capitalize($t('common.edit'))"
                 :has-border="true"
                 btn-icon="Pen"
                 @click="toggleEdit"
@@ -65,7 +65,7 @@
 
               <ExternalLabelButton
                 v-if="canEdit"
-                :label="$filters.capitalize($t('common.delete'))"
+                :label="capitalize($t('common.delete'))"
                 :has-border="true"
                 btn-icon="TrashCanOutline"
                 @click="openConfirmModal"
@@ -135,6 +135,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
@@ -201,6 +203,7 @@ export default {
       toaster,
       usersStore,
       isAdmin,
+      capitalize,
     }
   },
 

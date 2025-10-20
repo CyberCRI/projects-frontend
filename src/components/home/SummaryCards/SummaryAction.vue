@@ -1,33 +1,31 @@
 <template>
   <component :is="to ? 'NuxtLink' : 'vue:span'" :to="to" class="summary-action">
     <IconImage class="icon" :name="actionIcon" />
-    <span class="label">{{ $filters.capitalize(actionLabel) }}</span>
+    <span class="label">{{ capitalize(actionLabel) }}</span>
   </component>
 </template>
-<script>
+<script setup>
+import { capitalize } from 'es-toolkit'
+
 import IconImage from '@/components/base/media/IconImage.vue'
-import { NuxtLink } from '#components'
-export default {
-  name: 'SummaryAction',
 
-  components: { IconImage, NuxtLink },
+defineOptions({ name: 'SummaryAction' })
 
-  props: {
-    actionIcon: {
-      type: String,
-      default: 'ArrowRight',
-    },
-
-    actionLabel: {
-      type: String,
-      default: '',
-    },
-    to: {
-      type: [Object, String, null],
-      default: null,
-    },
+defineProps({
+  actionIcon: {
+    type: String,
+    default: 'ArrowRight',
   },
-}
+
+  actionLabel: {
+    type: String,
+    default: '',
+  },
+  to: {
+    type: [Object, String, null],
+    default: null,
+  },
+})
 </script>
 <style lang="scss" scoped>
 .summary-action {

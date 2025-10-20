@@ -1,7 +1,7 @@
 <template>
   <div class="similar-projects">
     <h3 class="group-section-title">
-      {{ $filters.capitalize($t('project.suggested', 2)) }}
+      {{ capitalize($t('project.suggested', 2)) }}
     </h3>
     <p class="hint">{{ $t('project.suggested-hint') }}</p>
 
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 export default {
   name: 'SimilarProjectsV2',
 
@@ -30,6 +32,7 @@ export default {
     return {
       isMobile,
       isTablet,
+      capitalize,
     }
   },
 

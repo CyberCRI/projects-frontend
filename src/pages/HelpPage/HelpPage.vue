@@ -1,5 +1,6 @@
 <script setup>
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from 'es-toolkit'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useI18n()
@@ -86,7 +87,7 @@ try {
   <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
     <div>
       <h1 class="page-title">
-        {{ $filters.capitalize($t('faq.portal')) }}
+        {{ capitalize($t('faq.portal')) }}
       </h1>
     </div>
 

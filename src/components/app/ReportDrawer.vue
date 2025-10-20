@@ -3,7 +3,7 @@
     :is-opened="isOpened"
     :title="type ? $t(`report.${type}`) : ''"
     class="report-form medium"
-    :confirm-action-name="$filters.capitalize($t('common.save'))"
+    :confirm-action-name="capitalize($t('common.save'))"
     :confirm-action-disabled="v$.$invalid"
     :asyncing="isLoading"
     @close="$emit('close')"
@@ -12,7 +12,7 @@
     <div class="form">
       <div>
         <h4 class="title">
-          {{ $filters.capitalize($t('form.email-contact')) }}
+          {{ capitalize($t('form.email-contact')) }}
         </h4>
         <TextInput
           v-model="form.reported_by"
@@ -25,7 +25,7 @@
 
       <div>
         <h4 class="title">
-          {{ $filters.capitalize($t('form.url')) }}
+          {{ capitalize($t('form.url')) }}
         </h4>
         <span class="description">
           {{ type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url') }}
@@ -85,6 +85,7 @@ import { helpers, url, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { capitalize } from 'es-toolkit'
 
 function defaultForm() {
   return {
@@ -118,6 +119,7 @@ export default {
     return {
       toaster,
       organizationsStore,
+      capitalize,
     }
   },
 

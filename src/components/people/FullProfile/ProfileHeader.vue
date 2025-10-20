@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user.job) }}
+            {{ capitalize(user.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
@@ -133,6 +135,7 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
+      capitalize,
     }
   },
 

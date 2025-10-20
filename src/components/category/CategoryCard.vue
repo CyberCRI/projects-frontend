@@ -15,7 +15,7 @@
 
     <div class="title-description-ctn">
       <h3 class="title">
-        {{ $filters.capitalize(category?.$t?.name) }}
+        {{ capitalize(category?.$t?.name) }}
       </h3>
       <p class="description" v-html="category?.$t?.description" />
     </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
@@ -38,6 +40,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return { capitalize }
   },
 
   computed: {

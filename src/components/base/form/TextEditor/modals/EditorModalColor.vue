@@ -8,7 +8,7 @@
   >
     <template #header>
       {{
-        $filters.capitalize(
+        capitalize(
           mode === 'add' ? $t('multieditor.color.set-color') : $t('multieditor.color.change-color')
         )
       }}
@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
@@ -74,6 +76,9 @@ export default {
   },
 
   emits: ['closeModal'],
+  setup() {
+    return { capitalize }
+  },
 
   data() {
     return {

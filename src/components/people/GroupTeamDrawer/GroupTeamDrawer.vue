@@ -2,7 +2,7 @@
   <BaseDrawer
     :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
-    :title="$filters.capitalize(label)"
+    :title="capitalize(label)"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
     @close="$emit('close')"
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupUserSelection from './GroupUserSelection.vue'
 import GroupRoleSelection from './GroupRoleSelection.vue'
@@ -53,6 +55,10 @@ export default {
   },
 
   emits: ['close', 'add-user', 'set-mode'],
+
+  setup() {
+    return { capitalize }
+  },
 
   data() {
     return {

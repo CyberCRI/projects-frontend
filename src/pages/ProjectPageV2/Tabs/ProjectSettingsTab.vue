@@ -69,7 +69,7 @@
         </h3>
         <div>
           <LpiButton
-            :label="$filters.capitalize($t('project.review'))"
+            :label="capitalize($t('project.review'))"
             :secondary="true"
             @click="toggleReviewDrawer"
           />
@@ -189,6 +189,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import analytics from '@/analytics'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -245,6 +247,7 @@ export default {
       isOrgAdmin,
       isAdmin,
       canAddReview,
+      capitalize,
     }
   },
 
@@ -314,19 +317,19 @@ export default {
       return [
         {
           value: 'private',
-          label: this.$filters.capitalize(this.$t('status.private')),
+          label: capitalize(this.$t('status.private')),
           iconName: 'EyeSlash',
           condition: true,
         },
         {
           value: 'public',
-          label: this.$filters.capitalize(this.$t('status.public')),
+          label: capitalize(this.$t('status.public')),
           iconName: 'Eye',
           condition: true,
         },
         {
           value: 'org',
-          label: this.$filters.capitalize(this.$t('common.org')),
+          label: capitalize(this.$t('common.org')),
           iconName: 'PeopleGroup',
           condition: !organizationCodes.includes('DEFAULT'),
         },
@@ -344,13 +347,13 @@ export default {
       return [
         {
           value: 'running',
-          label: this.$filters.capitalize(this.$t('status.ongoing')),
+          label: capitalize(this.$t('status.ongoing')),
           iconName: 'Spinner',
           condition: true,
         },
         {
           value: 'toreview',
-          label: this.$filters.capitalize(this.$t('project.reviewable')),
+          label: capitalize(this.$t('project.reviewable')),
           iconName: 'ListCheck',
           condition:
             this.projectReviewers.length &&
@@ -358,7 +361,7 @@ export default {
         },
         {
           value: 'completed',
-          label: this.$filters.capitalize(this.$t('status.completed')),
+          label: capitalize(this.$t('status.completed')),
           iconName: 'Check',
           condition: true,
         },

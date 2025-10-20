@@ -10,6 +10,7 @@ const useAPI = (url: string, options) => {
     const localStorage = _localStorage
     const runtimeConfig = useRuntimeConfig()
     const usersStore = useUsers()
+    console.log(runtimeConfig.public)
     return {
       baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
       method: 'GET',

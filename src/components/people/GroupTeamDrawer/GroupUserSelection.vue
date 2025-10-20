@@ -13,7 +13,7 @@
     <div v-if="selectedUsers.length > listLimit" class="show-more">
       <LinkButton
         class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
+        :label="capitalize($t(seeMoreLabel))"
         @click="isSeeMore = !isSeeMore"
       />
     </div>
@@ -22,7 +22,7 @@
       <SearchInput
         ref="search-input-ctn"
         v-model="queryString"
-        :placeholder="$filters.capitalize($t('search.search'))"
+        :placeholder="capitalize($t('search.search'))"
         full
         @delete-query="deleteQuery"
       />
@@ -30,7 +30,7 @@
         v-if="!isLoading && userResults.length"
         class="select-btn"
         :secondary="true"
-        :label="$filters.capitalize($t('drawer.select-all'))"
+        :label="capitalize($t('drawer.select-all'))"
         @click="selectAll"
       />
     </section>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { debounce } from 'es-toolkit'
+import { debounce, capitalize } from 'es-toolkit'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
@@ -105,6 +105,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
 

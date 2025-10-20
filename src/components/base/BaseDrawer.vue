@@ -10,7 +10,7 @@
             <slot name="header_prefix" />
 
             <div class="header__title">
-              {{ $filters.capitalize(title) }}
+              {{ capitalize(title) }}
             </div>
 
             <slot name="header_clear" />
@@ -29,7 +29,7 @@
           <slot name="footer">
             <LpiButton
               :disabled="asyncing"
-              :label="$filters.capitalize($t('common.cancel'))"
+              :label="capitalize($t('common.cancel'))"
               secondary
               class="footer__left-button"
               data-test="close-button"
@@ -38,7 +38,7 @@
 
             <LpiButton
               :disabled="confirmActionDisabled || asyncing"
-              :label="$filters.capitalize(confirmActionName || $t('common.confirm'))"
+              :label="capitalize(confirmActionName || $t('common.confirm'))"
               :btn-icon="asyncing ? 'LoaderSimple' : null"
               class="footer__right-button"
               data-test="confirm-button"
@@ -54,6 +54,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { capitalize } from 'es-toolkit'
 
 export default {
   name: 'BaseDrawer',
@@ -101,6 +102,9 @@ export default {
   },
 
   emits: ['close', 'confirm', 'unselect'],
+  setup() {
+    return { capitalize }
+  },
 
   data() {
     return {

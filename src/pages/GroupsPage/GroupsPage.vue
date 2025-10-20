@@ -2,6 +2,7 @@
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from 'es-toolkit'
 
 const props = defineProps({
   groupId: {
@@ -135,7 +136,7 @@ try {
 <template>
   <div class="page-section-extra-wide groups-layout page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('common.groups')) }}
+      {{ capitalize($t('common.groups')) }}
     </h1>
 
     <div v-if="!groupId" class="search-input-container">

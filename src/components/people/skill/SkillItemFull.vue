@@ -8,7 +8,7 @@
       >
         <div class="skill-title">
           <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
-          <span class="skill-title">{{ $filters.capitalize(label) }}</span>
+          <span class="skill-title">{{ capitalize(label) }}</span>
         </div>
         <transition name="open">
           <div v-show="isOpen" class="description mobile">
@@ -95,6 +95,8 @@
   </div>
 </template>
 <script>
+import { capitalize } from 'es-toolkit'
+
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
@@ -145,7 +147,7 @@ export default {
   emits: ['mentorship-send'],
   setup() {
     const skillTexts = useSkillTexts()
-    return { skillTexts }
+    return { skillTexts, capitalize }
   },
   data() {
     return {

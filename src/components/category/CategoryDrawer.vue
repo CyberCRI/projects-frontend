@@ -3,7 +3,7 @@
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
     :title="
-      $filters.capitalize(
+      capitalize(
         !category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')
       )
     "
@@ -208,6 +208,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -282,6 +284,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
 

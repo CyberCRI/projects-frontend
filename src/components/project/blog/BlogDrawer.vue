@@ -38,8 +38,8 @@
     <div>
       <TextInput
         v-model="title"
-        :label="$filters.capitalize($t('common.title'))"
-        :placeholder="$filters.capitalize(titlePlaceholder)"
+        :label="capitalize($t('common.title'))"
+        :placeholder="capitalize(titlePlaceholder)"
         class="input-field"
         @blur="v$.title.$validate"
       />
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -153,6 +155,7 @@ export default {
       projectsStore,
       usersStore,
       v$,
+      capitalize,
     }
   },
 

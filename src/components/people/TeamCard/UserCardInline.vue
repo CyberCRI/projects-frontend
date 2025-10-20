@@ -3,7 +3,7 @@
     class="user-card-small"
     :class="{ selected: selected, passive: passive }"
     :data-test="`user-card-${user.given_name}`"
-    @click="$emit('user-clicked')"
+    @click="emit('user-clicked')"
   >
     <div class="user-container">
       <CroppedApiImage
@@ -17,11 +17,11 @@
       />
       <div class="user-info">
         <div v-if="$filters.isNotGroup(user)" class="name">
-          {{ $filters.capitalize(user.given_name) }}
-          {{ $filters.capitalize(user.family_name) }}
+          {{ capitalize(user.given_name) }}
+          {{ capitalize(user.family_name) }}
         </div>
         <div v-else class="name">
-          {{ $filters.capitalize(user.name) }}
+          {{ capitalize(user.name) }}
         </div>
 
         <div v-if="role" class="role">
@@ -42,59 +42,55 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from 'es-toolkit'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
-export default {
-  name: 'UserCardInline',
+defineOptions({ name: 'UserCardInline' })
+const { t } = useNuxtI18n()
 
-  components: { IconImage, CroppedApiImage },
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-
-    role: {
-      type: String,
-      default: null,
-    },
-
-    icon: {
-      type: String,
-      default: null,
-    },
-    selected: {
-      type: Boolean,
-      default: false,
-    },
-    passive: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+  role: {
+    type: String,
+    default: null,
   },
 
-  emits: ['user-clicked'],
-
-  computed: {
-    roleLabel() {
-      if (this.role) {
-        if (this.role === 'owners') return this.$t('role.editor')
-        else if (this.role === 'members') return this.$t('role.teammate')
-        else if (this.role === 'reviewers') return this.$t('role.reviewer')
-      }
-      return null
-    },
-
-    userImage() {
-      if (this.$filters.isNotGroup(this.user)) {
-        return this.user.profile_picture
-      }
-      return this.user.header_image
-    },
+  icon: {
+    type: String,
+    default: null,
   },
+  selected: {
+    type: Boolean,
+    default: false,
+  },
+  passive: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(['user-clicked'])
+
+const roleLabel = () => {
+  if (props.role) {
+    if (props.role === 'owners') return t('role.editor')
+    else if (props.role === 'members') return t('role.teammate')
+    else if (props.role === 'reviewers') return t('role.reviewer')
+  }
+  return null
+}
+
+const userImage = () => {
+  if ($filters.isNotGroup(props.user)) {
+    return props.user.profile_picture
+  }
+  return props.user.header_image
 }
 </script>
 

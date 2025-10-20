@@ -2,9 +2,9 @@
   <div :class="isBlog ? 'is-blog' : 'is-comment'" class="publication-recap">
     <div class="publication-header">
       <SectionHeader
-        :button-label="$filters.capitalize($t('common.see-more'))"
+        :button-label="capitalize($t('common.see-more'))"
         :quantity="publications.length"
-        :title="$filters.capitalize(isBlog ? $t('blog.posts') : $t('comment.comments'))"
+        :title="capitalize(isBlog ? $t('blog.posts') : $t('comment.comments'))"
         @redirect-button-clicked="redirectToPage"
       />
     </div>
@@ -27,50 +27,40 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from 'es-toolkit'
+
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
-export default {
-  name: 'PublicationRecap',
+defineOptions({ name: 'PublicationRecap' })
+const router = useRouter()
+const route = useRoute()
 
-  components: {
-    SectionHeader,
-    TipTapOutput,
+const props = defineProps({
+  isBlog: {
+    type: Boolean,
+    default: true,
   },
-
-  props: {
-    isBlog: {
-      type: Boolean,
-      default: true,
-    },
-
-    publications: {
-      type: Array,
-      required: true,
-    },
+  publications: {
+    type: Array,
+    required: true,
   },
+})
 
-  computed: {
-    lastPublication() {
-      return this.publications.reduce((mostRecent, publication) =>
-        new Date(mostRecent.updated_at) > new Date(publication.updated_at)
-          ? mostRecent
-          : publication
-      )
-    },
-  },
+const lastPublication = computed(() => {
+  return props.publications.reduce((mostRecent, publication) =>
+    new Date(mostRecent.updated_at) > new Date(publication.updated_at) ? mostRecent : publication
+  )
+})
 
-  methods: {
-    redirectToPage() {
-      const routeName = this.isBlog ? 'projectBlog' : 'projectComments'
-      this.$router.push({
-        name: routeName,
-        params: { slugOrId: this.$route.params.slugOrId },
-        hash: '#tab',
-      })
-    },
-  },
+const redirectToPage = () => {
+  const routeName = props.isBlog ? 'projectBlog' : 'projectComments'
+  router.push({
+    name: routeName,
+    params: { slugOrId: route.params.slugOrId },
+    hash: '#tab',
+  })
 }
 </script>
 

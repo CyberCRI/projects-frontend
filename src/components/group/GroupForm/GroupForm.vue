@@ -49,7 +49,7 @@
 
     <!-- Image -->
     <div class="img-ctn">
-      <label>{{ $filters.capitalize($t('group.image-header')) }}</label>
+      <label>{{ capitalize($t('group.image-header')) }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -65,14 +65,14 @@
     <!-- Description -->
     <div class="description">
       <label>
-        {{ $filters.capitalize($t('group.form.description-label')) }}
+        {{ capitalize($t('group.form.description-label')) }}
 
         <LpiButton
           v-if="!form.description || isAddMode"
           class="add-btn"
           :btn-icon="form.description ? 'Pen' : 'Plus'"
           data-test="add-description"
-          :label="$filters.capitalize($t(form.description ? 'group.form.edit' : 'group.form.add'))"
+          :label="capitalize($t(form.description ? 'group.form.edit' : 'group.form.add'))"
           @click="descriptionIsOpened = true"
         />
       </label>
@@ -108,7 +108,7 @@
 
     <!-- Visibility -->
     <div class="visibility">
-      <label>{{ $filters.capitalize($t('group.form.visibility.title')) }}</label>
+      <label>{{ capitalize($t('group.form.visibility.title')) }}</label>
       <div class="visibility-options">
         <template v-for="visibility in visibilities" :key="visibility.id">
           <label
@@ -166,6 +166,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
@@ -199,6 +201,7 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
+      capitalize,
     }
   },
 

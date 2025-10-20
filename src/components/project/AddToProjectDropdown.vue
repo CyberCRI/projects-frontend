@@ -8,7 +8,7 @@
       <LpiButton
         v-if="item.condition"
         :data-test="item.dataTest"
-        :label="$filters.capitalize($t(item.label))"
+        :label="capitalize($t(item.label))"
         :secondary="true"
         class="add-to-project__button borderless squarish unpad no-height not-centered"
         btn-icon="Plus"
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
@@ -34,7 +36,7 @@ export default {
 
   setup() {
     const { canEditProject, canCreateComments } = usePermissions()
-    return { canEditProject, canCreateComments }
+    return { canEditProject, canCreateComments, capitalize }
   },
 
   computed: {

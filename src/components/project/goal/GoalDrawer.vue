@@ -12,14 +12,14 @@
     <div class="form">
       <TextInput
         v-model="form.title"
-        :label="$filters.capitalize(`${$t('goal.title')}:`)"
-        :placeholder="$filters.capitalize($t('goal.title'))"
+        :label="capitalize(`${$t('goal.title')}:`)"
+        :placeholder="capitalize($t('goal.title'))"
         @blur="v$.form.title.$touch"
       />
       <FieldErrors :errors="v$.form.title.$errors" />
 
       <div class="goal-description-section">
-        <span class="goal-label">{{ $filters.capitalize($t('goal.description')) }}:</span>
+        <span class="goal-label">{{ capitalize($t('goal.description')) }}:</span>
         <TipTapEditor
           v-model="form.description"
           class="goal-description"
@@ -31,7 +31,7 @@
       <SwitchInput
         v-model="deadlineVisible"
         class="deadline-switch"
-        :label="$filters.capitalize(`${$t('common.set-deadline')}:`)"
+        :label="capitalize(`${$t('common.set-deadline')}:`)"
       />
 
       <DatePicker
@@ -42,7 +42,7 @@
       />
 
       <div class="status-ctn">
-        <span class="goal-label">{{ $filters.capitalize($t('goal.status-title')) }}:</span>
+        <span class="goal-label">{{ capitalize($t('goal.status-title')) }}:</span>
         <GroupButton
           v-model="form.status"
           class="group-button-labels"
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -158,22 +160,22 @@ export default {
       return [
         {
           value: 'na',
-          label: this.$filters.capitalize(this.$t('status.na')),
+          label: capitalize(this.$t('status.na')),
           selected: this.form.status === 'na',
         },
         {
           value: 'ongoing',
-          label: this.$filters.capitalize(this.$t('status.ongoing')),
+          label: capitalize(this.$t('status.ongoing')),
           selected: this.form.status === 'ongoing',
         },
         {
           value: 'complete',
-          label: this.$filters.capitalize(this.$t('status.completed')),
+          label: capitalize(this.$t('status.completed')),
           selected: this.form.status === 'complete',
         },
         {
           value: 'cancel',
-          label: this.$filters.capitalize(this.$t('status.canceled')),
+          label: capitalize(this.$t('status.canceled')),
           selected: this.form.status === 'cancel',
         },
       ]

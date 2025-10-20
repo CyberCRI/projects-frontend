@@ -4,7 +4,7 @@
       <SearchInput
         v-model="queryString"
         :full="true"
-        :placeholder="$filters.capitalize($t('search.projects'))"
+        :placeholder="capitalize($t('search.projects'))"
         class="input"
         @enter="immediateSearch"
         @delete-query="deleteQuery"
@@ -13,7 +13,7 @@
         v-if="!isLoading"
         class="select-btn"
         :secondary="true"
-        :label="$filters.capitalize($t('drawer.select-all'))"
+        :label="capitalize($t('drawer.select-all'))"
         @click="selectAll"
       />
     </section>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -94,6 +95,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
 

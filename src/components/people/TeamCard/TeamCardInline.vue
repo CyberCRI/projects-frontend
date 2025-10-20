@@ -18,11 +18,11 @@
 
       <div class="user-info">
         <div v-if="$filters.isNotGroup(user)" class="name">
-          {{ $filters.capitalize(user.given_name) }}
-          {{ $filters.capitalize(user.family_name) }}
+          {{ capitalize(user.given_name) }}
+          {{ capitalize(user.family_name) }}
         </div>
         <div v-else class="name">
-          {{ $filters.capitalize(user.name) }}
+          {{ capitalize(user.name) }}
         </div>
         <div v-if="roleLabel" class="role">
           {{ $t(roleLabel) }}
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -72,6 +74,7 @@ export default {
     const usersStore = useUsersStore()
     return {
       usersStore,
+      capitalize,
     }
   },
 

@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user?.$t?.job) }}
+            {{ capitalize(user?.$t?.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'ProfileHeaderV2',
@@ -92,6 +94,7 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
+      capitalize,
     }
   },
 

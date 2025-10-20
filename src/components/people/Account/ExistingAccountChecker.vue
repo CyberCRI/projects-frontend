@@ -17,7 +17,7 @@
     <div class="footer">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="capitalize($t('common.cancel'))"
         secondary
         class="footer__left-button"
         data-test="close-button"
@@ -26,7 +26,7 @@
 
       <LpiButton
         :disabled="v$.$invalid || asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="capitalize($t('common.confirm'))"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"
@@ -36,6 +36,8 @@
   </div>
 </template>
 <script>
+import { capitalize } from 'es-toolkit'
+
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
@@ -56,6 +58,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
   data() {

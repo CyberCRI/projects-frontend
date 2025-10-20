@@ -5,9 +5,7 @@
       :confirm-action-disabled="v$.$invalid"
       :is-opened="isOpened"
       :title="
-        $filters.capitalize(
-          isAddMode ? $t('recruit.add-announcement') : $t('recruit.edit-announcement')
-        )
+        capitalize(isAddMode ? $t('recruit.add-announcement') : $t('recruit.edit-announcement'))
       "
       class="medium"
       :asyncing="asyncing"
@@ -16,14 +14,14 @@
     >
       <div class="announcement-form">
         <div class="form-section">
-          <label class="label">{{ $filters.capitalize($t('recruit.type')) }}:</label>
+          <label class="label">{{ capitalize($t('recruit.type')) }}:</label>
           <GroupButton v-model="form.type" :options="typeOptions" />
         </div>
 
         <div class="form-section">
           <TextInput
             v-model="form.title"
-            :label="$filters.capitalize(`${$t('recruit.title')}:`)"
+            :label="capitalize(`${$t('recruit.title')}:`)"
             :placeholder="$t('recruit.title')"
             class="form-section"
             @blur="v$.form.title.$touch"
@@ -31,7 +29,7 @@
           <FieldErrors :errors="v$.form.title.$errors" />
         </div>
         <div class="form-section description-section">
-          <label class="label">{{ $filters.capitalize($t('common.description')) }}:</label>
+          <label class="label">{{ capitalize($t('common.description')) }}:</label>
           <TipTapEditor
             v-model="form.description"
             class="description-field"
@@ -43,7 +41,7 @@
         <div class="form-section">
           <SwitchInput
             v-model="hasDeadline"
-            :label="$filters.capitalize(`${$t('common.deadline')}:`)"
+            :label="capitalize(`${$t('common.deadline')}:`)"
             class="vertical black-label"
           />
           <DatePicker
@@ -67,6 +65,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
@@ -163,19 +163,19 @@ export default {
       return [
         {
           value: 'na',
-          label: this.$filters.capitalize(this.$t('common.none')),
+          label: capitalize(this.$t('common.none')),
         },
         {
           value: 'participant',
-          label: this.$filters.capitalize(this.$t('recruit.participant')),
+          label: capitalize(this.$t('recruit.participant')),
         },
         {
           value: 'traineeship',
-          label: this.$filters.capitalize(this.$t('recruit.traineeship')),
+          label: capitalize(this.$t('recruit.traineeship')),
         },
         {
           value: 'job',
-          label: this.$filters.capitalize(this.$t('recruit.job')),
+          label: capitalize(this.$t('recruit.job')),
         },
       ]
     },

@@ -2,6 +2,7 @@
 import { getAnnouncements } from '@/api/announcements.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from 'es-toolkit'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
@@ -55,7 +56,7 @@ try {
 <template>
   <div class="announcements-page page-section-medium page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('home.announcements')) }}
+      {{ capitalize($t('home.announcements')) }}
     </h1>
 
     <AnnouncementCardListSkeleton v-if="isLoading" />

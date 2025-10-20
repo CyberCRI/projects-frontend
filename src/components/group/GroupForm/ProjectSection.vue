@@ -2,13 +2,13 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('group.form.project-label')) }}
+        {{ capitalize($t('group.form.project-label')) }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
       <LpiButton
         class="add-project-card"
         :btn-icon="modelValue.length ? 'Pen' : 'Plus'"
-        :label="$filters.capitalize($t(modelValue.length ? 'group.form.edit' : 'group.form.add'))"
+        :label="capitalize($t(modelValue.length ? 'group.form.edit' : 'group.form.add'))"
         data-test="add-projects"
         @click="drawerIsOpen = true"
       />
@@ -28,7 +28,7 @@
       <LinkButton
         v-if="shortList?.length < modelValue?.length"
         class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
+        :label="capitalize($t(seeMoreLabel))"
         @click="showFullList = !showFullList"
       />
     </div>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { capitalize } from 'es-toolkit'
+
 export default {
   name: 'ProjectSection',
 
@@ -56,6 +58,10 @@ export default {
   },
 
   emits: ['update:model-value'],
+
+  setup() {
+    return { capitalize }
+  },
 
   data() {
     return {
