@@ -1,5 +1,5 @@
 <template>
-  <div class="user" @click="$emit('user-click', user)">
+  <div class="user" @click="emits('user-click', user)">
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
@@ -30,40 +30,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
-export default {
-  name: 'GroupMemberItem',
+defineOptions({ name: 'GroupMemberItem' })
 
-  components: {
-    CroppedApiImage,
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-  },
+const emits = defineEmits(['user-click'])
 
-  emits: ['user-click'],
-
-  computed: {
-    userName() {
-      return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
-    },
-    roleLabel() {
-      if (this.user) {
-        if (this.user.is_leader && this.user.is_manager) return 'group.role.leaders-managers.label'
-        else if (this.user.is_manager) return 'group.role.managers.label'
-        else if (this.user.is_leader) return 'group.role.leaders.label'
-        else return 'group.role.members.label'
-      }
-      return null
-    },
-  },
-}
+const userName = computed(() => {
+  return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
+})
+const roleLabel = computed(() => {
+  if (props.user) {
+    if (props.user.is_leader && props.user.is_manager) return 'group.role.leaders-managers.label'
+    else if (props.user.is_manager) return 'group.role.managers.label'
+    else if (props.user.is_leader) return 'group.role.leaders.label'
+    else return 'group.role.members.label'
+  }
+  return null
+})
 </script>
 
 <style lang="scss" scoped>
