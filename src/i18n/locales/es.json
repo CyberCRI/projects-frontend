@@ -334,7 +334,9 @@
         "accept": "Aceptar",
         "accepted": "Aceptado",
         "no-result": "Sin resultado"
-      }
+      },
+      "accept-success": "Solicitud aceptada con éxito",
+      "decline-success": "Solicitud rechazada con éxito"
     }
   },
   "account": {
@@ -611,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Ahora, describir su proyecto.",
+    "default-project": "Ahora, describir su proyecto.",
     "placeholder": "Aún no tienes una descripción, piensa en añadir una!",
     "delete": "¿Seguro que quieres cerrar el editor?",
     "edit-saved": "Cualquier cambio que usted (y cualquier co-autor) haga no será salvado.",
@@ -1470,7 +1472,8 @@
             "title": "Nivel 4: Experto",
             "description": "Nivel de doctorado o hizo un gran proyecto, o puede enseñar a nivel maestro"
           }
-        }
+        },
+        "nothing-yet": "Aún no has añadido habilidades."
       },
       "privacy": {
         "tab": "Privacidad",
@@ -1595,7 +1598,8 @@
         "max": "El campo de propósito puede no ser mayor que 180 caracteres",
         "min": "El campo de propósito debe ser por lo menos 3 caracteres"
       },
-      "project-templates": "Nombre de plantilla"
+      "project-templates": "Nombre de plantilla",
+      "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación."
     },
     "image-header": "Imagen",
     "image-alert": {
@@ -1889,7 +1893,8 @@
     "current-skill-description": "Escriba la etiqueta de habilidad y seleccione la habilidad correcta",
     "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Propuestas",
-    "choose-skill": "Haga clic en la habilidad elegida:"
+    "choose-skill": "Haga clic en la habilidad elegida:",
+    "main-tags": "o elegir entre las etiquetas principales"
   },
   "sdg": {
     "1": {
@@ -2001,12 +2006,11 @@
     "advancement-goal-title": "Plantilla para el título del objetivo de promoción",
     "advancement-goal-content": "plantilla para el contenido de metas de avance",
     "category": "Plantilla Categoría",
-    "description": "Plantilla para Descripción",
     "language": "Plantilla de idiomas",
     "info": "Si desea sugerir a los usuarios cómo organizar su proyecto en una categoría específica, puede crear una plantilla para esa categoría. Luego, cuando un usuario creará un proyecto en esa categoría, el proyecto será inicializado con el texto que usted definió en la plantilla. Este texto se entiende como guía para los usuarios.",
     "no-tag-set": "No se ha fijado ninguna etiqueta por ahora.",
-    "placeholder-purpose": "Objetivo del proyecto",
-    "placeholder-title": "Título Titular",
+    "project-purpose": "Objetivo del proyecto",
+    "project-title": "Título Titular",
     "tags": "Etiquetas de plantilla",
     "title": "Plantillas",
     "tips-category": "Seleccione una categoría a la que se aplicará su plantilla.",
@@ -2017,7 +2021,13 @@
     "create": "Creación de plantillas",
     "edit": "Edición de plantilla",
     "list": "Lista de plantillas",
-    "add-template": "Agregar plantilla"
+    "add-template": "Agregar plantilla",
+    "description": "Plantilla Descripción",
+    "project-description": "Plantilla para descripción del proyecto",
+    "title-project": "Proyecto",
+    "title-blog": "Blog",
+    "title-goal": "Objetivo",
+    "title-comment": "Comentario"
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",
@@ -2572,6 +2582,9 @@
         "label": "Notificación",
         "notice": "Si se selecciona, todos serán notificados de la nueva instrucción",
         "button": "Enviar una notificación"
+      },
+      "image": {
+        "label": "Imagen"
       }
     },
     "list": {

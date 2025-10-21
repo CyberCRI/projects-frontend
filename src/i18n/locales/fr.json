@@ -613,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Veuillez décrire votre projet",
+    "default-project": "Veuillez décrire votre projet",
     "delete": "Etes-vous sûr de vouloir fermer l'éditeur ?",
     "edit-saved": "Les modifications que vous (et vos éventuels co-auteurs) avez apportées ne seront pas enregistrées",
     "edit": "modifier la description (brouillon)",
@@ -1472,7 +1472,8 @@
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
         },
-        "search": "recherche"
+        "search": "recherche",
+        "nothing-yet": "Tu n'as pas encore ajouté de compétences."
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -2005,12 +2006,11 @@
     "advancement-goal-title": "template de titre d'objectif d'avancement",
     "advancement-goal-content": "template de contenu d'objectif d'avancement",
     "category": "Catégorie du template",
-    "description": "template de description",
     "language": "Langue du template",
     "info": "Si vous voulez suggérer à vos utilisateurs comment organiser leur projet dans une catégorie en particulier, vous pouvez créer un template pour cette catégorie. Ensuite, lorsque l'utilisateur créera un projet dans cette catégorie, le projet sera initialisé avec le texte que vous aurez défini dans le template. Ce texte est un guide pour l'utilisateur.",
     "no-tag-set": "Aucun tag n'a été défini pour le moment.",
-    "placeholder-purpose": "Objectif du projet",
-    "placeholder-title": "Titre",
+    "project-purpose": "Objectif du projet",
+    "project-title": "Titre",
     "tags": "Tags du template",
     "title": "Templates",
     "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template.",
@@ -2021,7 +2021,13 @@
     "create": "Création de modèles",
     "edit": "Édition modèle",
     "list": "Liste des modèles",
-    "add-template": "Ajouter un modèle"
+    "add-template": "Ajouter un modèle",
+    "description": "Description du modèle",
+    "project-description": "Modèle de description du projet",
+    "title-project": "Projet",
+    "title-blog": "Blog",
+    "title-goal": "Objectif",
+    "title-comment": "Commentaire"
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",

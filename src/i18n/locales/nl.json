@@ -334,7 +334,9 @@
         "accept": "Accepteren",
         "accepted": "Goedgekeurd",
         "no-result": "Geen resultaat"
-      }
+      },
+      "accept-success": "Toepassing succesvol aanvaard",
+      "decline-success": "Aanvraag succesvol afgewezen"
     }
   },
   "account": {
@@ -611,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Beschrijf nu je project.",
+    "default-project": "Beschrijf nu je project.",
     "placeholder": "Je hebt nog geen beschrijving, denk erover om er een toe te voegen!",
     "delete": "Weet u zeker dat u de editor wilt sluiten?",
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
@@ -1596,7 +1598,8 @@
         "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
         "min": "Het doelveld moet ten minste 3 karakters tellen"
       },
-      "project-templates": "Sjabloonnaam"
+      "project-templates": "Sjabloonnaam",
+      "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1890,7 +1893,8 @@
     "current-skill-description": "Type skills label en selecteer de juiste vaardigheid",
     "disambiguate": "(DISAMBIGUATIE)",
     "suggestions": "Voorstellen",
-    "choose-skill": "Klik op de gekozen vaardigheid:"
+    "choose-skill": "Klik op de gekozen vaardigheid:",
+    "main-tags": "of kies uit de hoofdtags"
   },
   "sdg": {
     "1": {
@@ -2002,12 +2006,11 @@
     "advancement-goal-title": "template voor de titel van het doel van de vooruitgang",
     "advancement-goal-content": "sjabloon voor doelinhoud voor vooruitgang",
     "category": "Sjablooncategorie",
-    "description": "Sjabloon voor beschrijving",
     "language": "Taalsjabloon",
     "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project geïnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
     "no-tag-set": "Er is voorlopig geen tag ingesteld.",
-    "placeholder-purpose": "Projectdoelstelling",
-    "placeholder-title": "Titel Plaatshouder",
+    "project-purpose": "Projectdoelstelling",
+    "project-title": "Titel Plaatshouder",
     "tags": "Sjabloontags",
     "title": "Sjablonen",
     "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is.",
@@ -2018,7 +2021,13 @@
     "create": "Sjabloon aanmaken",
     "edit": "Sjabloon editie",
     "list": "Sjabloonlijst",
-    "add-template": "Sjabloon toevoegen"
+    "add-template": "Sjabloon toevoegen",
+    "description": "Sjabloonbeschrijving",
+    "project-description": "Sjabloon voor projectbeschrijving",
+    "title-project": "Project",
+    "title-blog": "Blog",
+    "title-goal": "Doel",
+    "title-comment": "Opmerking"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -2573,6 +2582,9 @@
         "label": "Kennisgeving",
         "notice": "Indien geselecteerd wordt iedereen op de hoogte gebracht van de nieuwe instructie",
         "button": "Een melding versturen"
+      },
+      "image": {
+        "label": "Afbeelding"
       }
     },
     "list": {

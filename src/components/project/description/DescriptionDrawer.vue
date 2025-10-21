@@ -230,10 +230,10 @@ export default {
     getProjectDescription(project) {
       if (this.descriptionIsNotEmpty) {
         return project.description
-      } else if (project.template && project.template.description_placeholder) {
-        return project.template.description_placeholder
+      } else if (project.template && project.template.project_description) {
+        return project.template.project_description
       }
-      return this.$t('description.default-placeholder')
+      return this.$t('description.default-project')
     },
 
     loadProject(project) {

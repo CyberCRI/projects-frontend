@@ -334,7 +334,9 @@
         "accept": "Nõustun",
         "accepted": "Vastu võetud",
         "no-result": "Tulemust pole"
-      }
+      },
+      "accept-success": "Edukalt vastu võetud taotlus",
+      "decline-success": "Rakendus lükati edukalt tagasi"
     }
   },
   "account": {
@@ -611,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Kirjelda nüüd oma projekti.",
+    "default-project": "Kirjelda nüüd oma projekti.",
     "placeholder": "Sul pole veel kirjeldust, mõtle ühe lisamisele!",
     "delete": "Kas oled kindel, et soovid toimetaja sulgeda?",
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
@@ -1470,7 +1472,8 @@
             "title": "4. tasand: ekspert",
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
-        }
+        },
+        "nothing-yet": "Sa pole veel oskusi lisanud."
       },
       "privacy": {
         "tab": "Privaatsus",
@@ -1595,7 +1598,8 @@
         "max": "Eesmärgiväli ei tohi olla suurem kui 180 märki",
         "min": "Eesmärgi väli peab olema vähemalt 3 märki."
       },
-      "project-templates": "Malli nimi"
+      "project-templates": "Malli nimi",
+      "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1889,7 +1893,8 @@
     "current-skill-description": "Tüübi oskuste märgis ja vali õige oskus",
     "disambiguate": "(Desambiguation)",
     "suggestions": "Soovitused",
-    "choose-skill": "Klõpsa valitud oskusel:"
+    "choose-skill": "Klõpsa valitud oskusel:",
+    "main-tags": "või valida peasiltide hulgast"
   },
   "sdg": {
     "1": {
@@ -2001,12 +2006,11 @@
     "advancement-goal-title": "edutamiseesmärgi tiitli mall",
     "advancement-goal-content": "edutamise eesmärgi sisu mall",
     "category": "Malli kategooria",
-    "description": "Kirjelduse vorm",
     "language": "Keelemall",
     "info": "Kui soovite kasutajatele soovitada, kuidas oma projekti konkreetses kategoorias korraldada, saate luua selle kategooria malli. Siis, kui kasutaja loob projekti selles kategoorias, projekti initsialiseeritakse teksti, et sa määratletud mall. See tekst on mõeldud juhendina kasutajatele.",
     "no-tag-set": "Ühtegi silti pole praeguseks seatud.",
-    "placeholder-purpose": "Projekti eesmärk",
-    "placeholder-title": "Tiitel Kohapealne",
+    "project-purpose": "Projekti eesmärk",
+    "project-title": "Tiitel Kohapealne",
     "tags": "Malli sildid",
     "title": "Mallid",
     "tips-category": "Vali kategooria, millele mall rakendub.",
@@ -2017,7 +2021,13 @@
     "create": "Malli loomine",
     "edit": "Malli väljaanne",
     "list": "Mallide nimekiri",
-    "add-template": "Lisa mall"
+    "add-template": "Lisa mall",
+    "description": "Malli kirjeldus",
+    "project-description": "Projekti kirjelduse vorm",
+    "title-project": "Projekt",
+    "title-blog": "Blogi",
+    "title-goal": "Värav",
+    "title-comment": "Kommentaar"
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",
@@ -2572,6 +2582,9 @@
         "label": "Teatamine",
         "notice": "Valimise korral teavitatakse kõiki uuest juhendist",
         "button": "Saada teade"
+      },
+      "image": {
+        "label": "Pilt"
       }
     },
     "list": {

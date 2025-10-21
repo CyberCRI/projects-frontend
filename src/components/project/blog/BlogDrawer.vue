@@ -190,12 +190,8 @@ export default {
     },
 
     titlePlaceholder() {
-      if (
-        this.project &&
-        this.project.template &&
-        this.project.template.blogentry_title_placeholder
-      )
-        return this.project.template.blogentry_title_placeholder
+      if (this.project && this.project.template && this.project.template.blogentry_project_title)
+        return this.project.template.blogentry_project_title
       return this.$t('common.title')
     },
 

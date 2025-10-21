@@ -303,9 +303,9 @@ export default {
       if (
         this.selectedCategory &&
         this.selectedCategory.template &&
-        this.selectedCategory.template.title_placeholder
+        this.selectedCategory.template.project_title
       )
-        return this.selectedCategory.template.title_placeholder
+        return this.selectedCategory.template.project_title
       return this.$t('project.form.title-placeholder')
     },
 

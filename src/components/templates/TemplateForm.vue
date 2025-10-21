@@ -12,6 +12,20 @@
       />
       <FieldErrors :errors="errors.name" />
     </div>
+
+    <div class="block-container">
+      <h4 class="title">
+        {{ $t('template.description') }}
+      </h4>
+      <span class="description">{{ $t('template.tips-template') }}</span>
+      <TipTapEditor
+        :key="`description-${editorKey}`"
+        v-model="form.project_purpose"
+        :save-image-callback="saveImageCallback"
+        mode="full"
+      />
+    </div>
+
     <div class="block-container">
       <div class="title-button-ctn">
         <h4 class="title">
@@ -46,27 +60,36 @@
       </BaseDrawer>
     </div>
 
-    <h4 class="title">
-      {{ t('template.title') }}
+    <h4 class="divider-title">
+      {{ t('template.title-project') }}
     </h4>
-
     <div>
-      <TextInput v-model="form.title" :label="t('template.placeholder-title')" />
+      <TextInput v-model="form.project_title" :label="t('template.project-title')" />
     </div>
 
     <div>
-      <TextInput v-model="form.purpose" :label="t('template.placeholder-purpose')" />
-    </div>
-
-    <div>
-      <label class="label">{{ capitalize(t('template.description')) }}</label>
+      <label class="label">{{ capitalize(t('template.project-purpose')) }}</label>
       <TipTapEditor
-        :key="`description-${editorKey}`"
-        v-model="form.description"
+        :key="`project-purpose-${editorKey}`"
+        v-model="form.project_purpose"
         :save-image-callback="saveImageCallback"
         mode="full"
       />
     </div>
+
+    <div>
+      <label class="label">{{ capitalize(t('template.project-description')) }}</label>
+      <TipTapEditor
+        :key="`project-description-${editorKey}`"
+        v-model="form.project_description"
+        :save-image-callback="saveImageCallback"
+        mode="full"
+      />
+    </div>
+
+    <h4 class="divider-title">
+      {{ t('template.title-blog') }}
+    </h4>
 
     <div>
       <TextInput v-model="form.blog_title" :label="capitalize(t('template.blog-title'))" />
@@ -81,6 +104,10 @@
         mode="full"
       />
     </div>
+
+    <h4 class="divider-title">
+      {{ t('template.title-goal') }}
+    </h4>
 
     <div>
       <TextInput
@@ -101,6 +128,10 @@
         mode="full"
       />
     </div>
+
+    <h4 class="divider-title">
+      {{ t('template.title-comment') }}
+    </h4>
 
     <div>
       <label class="label">
@@ -181,5 +212,23 @@ const confirmCategory = () => {
 
 .block-container {
   margin-bottom: 1rem;
+}
+
+.divider-title {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2.5rem;
+  color: $primary-dark;
+
+  &::before,
+  &::after {
+    content: '';
+    transform: translateY(-0.7rem);
+    display: inline-block;
+    width: 3rem;
+    height: 0.2rem;
+    background-color: $primary-dark;
+    border-radius: 40px;
+  }
 }
 </style>

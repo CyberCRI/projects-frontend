@@ -3,16 +3,20 @@ import useForm from '@/composables/useForm'
 import { clone } from 'es-toolkit'
 
 const DEFAULT_FORM = {
-  language: undefined,
   name: '',
-  title: '',
-  purpose: '',
-  description: '<p></p>',
+  description: '',
+
+  project_title: '',
+  project_description: '<p></p>',
+  project_purpose: '',
+  project_tags: [],
+
   blog_title: '',
   blog_content: '<p></p>',
+
   goal_title: '',
   goal_description: '<p></p>',
-  project_tags: [],
+
   comment: '',
   categories: [],
 }

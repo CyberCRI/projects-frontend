@@ -334,7 +334,9 @@
         "accept": "Annahme",
         "accepted": "angenommen",
         "no-result": "Kein Ergebnis"
-      }
+      },
+      "accept-success": "Erfolgreiche Anwendung",
+      "decline-success": "Antrag abgelehnt erfolgreich"
     }
   },
   "account": {
@@ -611,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Jetzt beschreiben Sie Ihr Projekt.",
+    "default-project": "Jetzt beschreiben Sie Ihr Projekt.",
     "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzufügen!",
     "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
     "edit-saved": "Änderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
@@ -1470,7 +1472,8 @@
             "title": "Ebene 4: Experten",
             "description": "PhD-Level oder hat ein großes Projekt, oder kann Meister-Level lehren"
           }
-        }
+        },
+        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt."
       },
       "privacy": {
         "tab": "Datenschutz",
@@ -1595,7 +1598,8 @@
         "max": "Das Zielfeld darf nicht größer als 180 Zeichen sein",
         "min": "Das Zielfeld muss mindestens 3 Zeichen sein"
       },
-      "project-templates": "Vorname"
+      "project-templates": "Vorname",
+      "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen."
     },
     "image-header": "Bild",
     "image-alert": {
@@ -1889,7 +1893,8 @@
     "current-skill-description": "Füge deine Fähigkeit hinzu und wähle die passende Kompetenz aus",
     "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Vorschläge",
-    "choose-skill": "Klicken Sie auf die gewählte Fähigkeit:"
+    "choose-skill": "Klicken Sie auf die gewählte Fähigkeit:",
+    "main-tags": "oder wählen Sie aus den wichtigsten Tags"
   },
   "sdg": {
     "1": {
@@ -2001,12 +2006,11 @@
     "advancement-goal-title": "Vorlage für Weiterentwicklungszieltitel",
     "advancement-goal-content": "Vorlage für den Fortschrittszielinhalt",
     "category": "Kategorie",
-    "description": "Vorlage für Beschreibung",
     "language": "Sprache Vorlage",
     "info": "Wenn Sie den Benutzern vorschlagen möchten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, können Sie eine Vorlage für diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden für Nutzer gedacht.",
     "no-tag-set": "Es wurde jetzt kein Tag gesetzt.",
-    "placeholder-purpose": "Projektziel",
-    "placeholder-title": "Titel Platzhalter",
+    "project-purpose": "Projektziel",
+    "project-title": "Titel Platzhalter",
     "tags": "Vorlage-Tags",
     "title": "Vorlagen",
     "tips-category": "Wählen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
@@ -2017,7 +2021,13 @@
     "create": "Erstellung von Dokumenten",
     "edit": "Ausgabe von Dokumenten",
     "list": "Vorlagenliste",
-    "add-template": "Vorlage hinzufügen"
+    "add-template": "Vorlage hinzufügen",
+    "description": "Vorlage Beschreibung",
+    "project-description": "Vorlage für Projektbeschreibung",
+    "title-project": "Projekt",
+    "title-blog": "Blog",
+    "title-goal": "Ziel",
+    "title-comment": "Anmerkung"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
@@ -2572,6 +2582,9 @@
         "label": "Notifizierung",
         "notice": "Wenn Sie ausgewählt werden, werden alle über die neue Anweisung informiert",
         "button": "Nachricht senden"
+      },
+      "image": {
+        "label": "Bild"
       }
     },
     "list": {
