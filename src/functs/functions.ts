@@ -1,11 +1,6 @@
 import useAPI from '@/composables/useAPI'
 import { useRuntimeConfig } from '#imports'
 export default {
-  copyObject(obj) {
-    // simple way to copy object - Not perfect, to rethink.
-    return JSON.parse(JSON.stringify(obj))
-  },
-
   toHDate(d) {
     const months = [
       'Jan',

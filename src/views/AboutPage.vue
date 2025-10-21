@@ -164,139 +164,122 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { debounce } from 'es-toolkit'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 
-export default {
-  name: 'AboutPage',
+defineOptions({ name: 'AboutPage' })
 
-  components: { LpiButton, CriPartners },
+const runtimeConfig = useRuntimeConfig()
+const scrollAtTop = ref(true)
+const currentOffset = ref(0)
+const peopleUrl = import.meta.env.NUXT_PUBLIC_APP_PEOPLE // TODO needed that ?
 
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      runtimeConfig,
-    }
+const coreTeam = [
+  {
+    id: 'b9afa4d6-9640-4f77-99af-7b3861c0207c',
+    name: 'Julien Joubin',
+    pic: 'julien.jpg',
   },
-
-  data() {
-    return {
-      peopleUrl: process.env.NUXT_PUBLIC_APP_PEOPLE,
-      currentOffset: 0,
-      scrollAtTop: true,
-      coreTeam: [
-        {
-          id: 'b9afa4d6-9640-4f77-99af-7b3861c0207c',
-          name: 'Julien Joubin',
-          pic: 'julien.jpg',
-        },
-        {
-          id: 'cadf5827-e757-4910-96b2-5cc74f8ab6b3',
-          name: 'Iryna Nikolayeva',
-          pic: 'iryna.jpg',
-        },
-        {
-          id: '59dd46e8-65bb-4ffc-83bc-98cc8d5bd057',
-          name: 'Nicolas Pigelet',
-          pic: 'nicop.jpg',
-        },
-        {
-          id: '720deaa8-5f28-4411-a8f6-f8ecf8e0a101',
-          name: 'Eric Cherel',
-          pic: 'eric.jpg',
-        },
-        {
-          id: 'aed0e73b-f49a-489e-94b3-fc1787464bb6',
-          name: 'Jean-Marc Sevin',
-          pic: 'jeanmarc.jpg',
-        },
-        {
-          id: 'a99d8fb2-8edc-4a15-be2a-d22659f0ee68',
-          name: 'Nicolas Zilberman',
-          pic: 'nicoz.jpg',
-        },
-        {
-          id: '11f84d3f-8ffc-4360-b168-0df3d8a2a89f',
-          name: 'Andrea Giraldo Sevilla',
-          pic: 'andrea.jpg',
-        },
-        {
-          id: '3e64510a-4ac3-44f7-a653-e85eb785dcc7',
-          name: 'Roy Saurahb',
-          pic: 'roy.jpg',
-        },
-      ],
-      contributors: [
-        {
-          id: 'd5aa7350-d123-4ca8-bdea-5c7447a59e08',
-          name: 'Nadia Allam-mi ',
-          pic: 'nadia.jpg',
-        },
-        {
-          id: 'c7946a22-d065-4663-a7ed-71b5b5ef53f2',
-          name: 'Ignacio Atal',
-          pic: 'ignacio.jpg',
-        },
-        {
-          id: '77118d11-cccd-42be-a72c-761090c59508',
-          name: 'Pleen Lejeune',
-          pic: 'pleen.jpg',
-        },
-        {
-          id: '5764f1d8-c26e-46db-ae63-0b4d07e61211',
-          name: 'David Jung',
-          pic: 'david.jpg',
-        },
-        {
-          id: '572124b7-f570-4cbe-b9a1-6ac44dfa175a',
-          name: 'Prashant Sinha',
-          pic: 'prashant.jpg',
-        },
-        {
-          id: '87d6ffae-9905-49a9-a242-8b156d26386d',
-          name: 'Federica Minichiello',
-          pic: 'federica.jpg',
-        },
-        {
-          id: '7c7a2665-b2e5-4f1b-aae0-ac920e417697',
-          name: 'Gaell Mainguy',
-          pic: 'gaell.jpg',
-        },
-        {
-          id: '330b37fd-8768-4764-94db-bc47a91828e5',
-          name: 'François Taddei',
-          pic: 'francois.jpg',
-        },
-      ],
-    }
+  {
+    id: 'cadf5827-e757-4910-96b2-5cc74f8ab6b3',
+    name: 'Iryna Nikolayeva',
+    pic: 'iryna.jpg',
   },
-
-  mounted() {
-    this.toggleTopBtn = debounce(
-      () => {
-        this.currentOffset = document.querySelector('#scrollview').scrollTop
-        this.scrollAtTop = this.currentOffset > 500 ? false : true
-      },
-      150,
-      { leading: false, trailing: true }
-    )
-
-    document.querySelector('#scrollview').addEventListener('scroll', this.toggleTopBtn)
+  {
+    id: '59dd46e8-65bb-4ffc-83bc-98cc8d5bd057',
+    name: 'Nicolas Pigelet',
+    pic: 'nicop.jpg',
   },
-
-  beforeUnmount() {
-    document.querySelector('#scrollview').removeEventListener('scroll', this.toggleTopBtn)
+  {
+    id: '720deaa8-5f28-4411-a8f6-f8ecf8e0a101',
+    name: 'Eric Cherel',
+    pic: 'eric.jpg',
   },
-
-  methods: {
-    goTo(anchor) {
-      document.querySelector(anchor).scrollIntoView({
-        behavior: 'smooth',
-      })
-    },
+  {
+    id: 'aed0e73b-f49a-489e-94b3-fc1787464bb6',
+    name: 'Jean-Marc Sevin',
+    pic: 'jeanmarc.jpg',
   },
+  {
+    id: 'a99d8fb2-8edc-4a15-be2a-d22659f0ee68',
+    name: 'Nicolas Zilberman',
+    pic: 'nicoz.jpg',
+  },
+  {
+    id: '11f84d3f-8ffc-4360-b168-0df3d8a2a89f',
+    name: 'Andrea Giraldo Sevilla',
+    pic: 'andrea.jpg',
+  },
+  {
+    id: '3e64510a-4ac3-44f7-a653-e85eb785dcc7',
+    name: 'Roy Saurahb',
+    pic: 'roy.jpg',
+  },
+]
+const contributors = [
+  {
+    id: 'd5aa7350-d123-4ca8-bdea-5c7447a59e08',
+    name: 'Nadia Allam-mi ',
+    pic: 'nadia.jpg',
+  },
+  {
+    id: 'c7946a22-d065-4663-a7ed-71b5b5ef53f2',
+    name: 'Ignacio Atal',
+    pic: 'ignacio.jpg',
+  },
+  {
+    id: '77118d11-cccd-42be-a72c-761090c59508',
+    name: 'Pleen Lejeune',
+    pic: 'pleen.jpg',
+  },
+  {
+    id: '5764f1d8-c26e-46db-ae63-0b4d07e61211',
+    name: 'David Jung',
+    pic: 'david.jpg',
+  },
+  {
+    id: '572124b7-f570-4cbe-b9a1-6ac44dfa175a',
+    name: 'Prashant Sinha',
+    pic: 'prashant.jpg',
+  },
+  {
+    id: '87d6ffae-9905-49a9-a242-8b156d26386d',
+    name: 'Federica Minichiello',
+    pic: 'federica.jpg',
+  },
+  {
+    id: '7c7a2665-b2e5-4f1b-aae0-ac920e417697',
+    name: 'Gaell Mainguy',
+    pic: 'gaell.jpg',
+  },
+  {
+    id: '330b37fd-8768-4764-94db-bc47a91828e5',
+    name: 'François Taddei',
+    pic: 'francois.jpg',
+  },
+]
+
+const toggleTopBtn = debounce(
+  () => {
+    currentOffset.value = document.querySelector('#scrollview').scrollTop
+    scrollAtTop.value = currentOffset.value > 500 ? false : true
+  },
+  150,
+  { leading: false, trailing: true }
+)
+
+onMounted(() => {
+  document.querySelector('#scrollview').addEventListener('scroll', toggleTopBtn)
+})
+
+onBeforeUnmount(() => {
+  document.querySelector('#scrollview').removeEventListener('scroll', toggleTopBtn)
+})
+
+const goTo = (anchor) => {
+  document.querySelector(anchor).scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
