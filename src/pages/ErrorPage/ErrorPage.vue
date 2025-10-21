@@ -5,7 +5,7 @@ import { capitalize } from 'es-toolkit'
 
 const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isConnected = computed(() => {
   return usersStore.isConnected

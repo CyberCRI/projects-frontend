@@ -6,7 +6,7 @@ import { capitalize } from 'es-toolkit'
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
 

@@ -38,7 +38,7 @@ export default {
 
   getTimePassed(d) {
     /* https://natclark.com/tutorials/javascript-relative-time/ */
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const now = new Date().getTime()
     const old = new Date(d).getTime()
     const formatter = new Intl.RelativeTimeFormat(locale.value || 'en', {

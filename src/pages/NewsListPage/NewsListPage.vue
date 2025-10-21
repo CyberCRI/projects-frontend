@@ -11,7 +11,7 @@ const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const loading = ref(false)
 const editedNews = ref(null)

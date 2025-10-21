@@ -3,7 +3,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import { capitalize } from 'es-toolkit'
 
 const { onboardingTrap } = useOnboardingStatus()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 provide(
   'helpPageHasFaq',

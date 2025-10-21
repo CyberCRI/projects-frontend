@@ -4,7 +4,7 @@ import { capitalize } from 'es-toolkit'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { canCreateEvent } = usePermissions()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const router = useRouter()
 const tabs = computed(() => {
   return [

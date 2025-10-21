@@ -5,7 +5,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import { capitalize } from 'es-toolkit'
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const announcements = useState(() => [])
 const isLoading = useState(() => false)

@@ -10,7 +10,7 @@ import { capitalize } from 'es-toolkit'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const newsForm = useTemplateRef('newsForm')
 

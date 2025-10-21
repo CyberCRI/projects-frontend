@@ -8,7 +8,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isLoading = ref(false)
 const form = ref({

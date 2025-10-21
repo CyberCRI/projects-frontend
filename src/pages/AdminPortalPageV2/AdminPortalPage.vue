@@ -3,7 +3,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 const organizationsStore = useOrganizationsStore()
 import { getOrganizationByCode } from '@/api/organizations.service'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const tabs = computed(() => {
   const requestAdminTab = organizationsStore.current?.access_request_enabled
     ? [

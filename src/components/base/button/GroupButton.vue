@@ -91,7 +91,7 @@ export default {
 
   emits: ['update:model-value'],
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       locale,
     }

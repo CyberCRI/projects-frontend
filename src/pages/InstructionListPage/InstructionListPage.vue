@@ -10,7 +10,7 @@ const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const _allInstructions = useState(() => [])
 const allInstructions = translateInstructions(_allInstructions)

@@ -48,7 +48,7 @@ export default {
   },
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const runtimeConfig = useRuntimeConfig()
     const { canEditProject } = usePermissions()
     return {

@@ -15,7 +15,7 @@ const organizationsStore = useOrganizationsStore()
 
 const { searchFromQuery } = useSearch('groups')
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 // ???
 // const permissions = usePermissions()

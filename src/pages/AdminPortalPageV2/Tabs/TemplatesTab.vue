@@ -198,7 +198,7 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const projectCategoriesStore = useProjectCategories()
     const projectsStore = useProjectsStore()
     return {

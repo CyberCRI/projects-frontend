@@ -210,7 +210,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
-    const { locale, setLocale } = useI18n()
+    const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     return {
       projectCategoriesStore,

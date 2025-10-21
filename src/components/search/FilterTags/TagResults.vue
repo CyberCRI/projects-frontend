@@ -84,7 +84,7 @@ export default {
 
   setup() {
     const organizationsStore = useOrganizationsStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       locale,
       organizationsStore,

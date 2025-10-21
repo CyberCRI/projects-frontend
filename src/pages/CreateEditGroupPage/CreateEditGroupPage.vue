@@ -51,7 +51,7 @@ const usersStore = useUsersStore()
 const { canCreateGroup, canEditGroup } = usePermissions()
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isFormCorrect = ref(true)
 

@@ -3,7 +3,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 onMounted(organizationsStore.getAllOrganizations)
 
