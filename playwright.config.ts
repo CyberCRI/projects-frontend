@@ -13,7 +13,7 @@ dotenv.config()
 export default defineConfig({
   /* Maximum time the whole test suite can run for. */
   globalTimeout: 90 * 60 * 1000,
-  testDir: './tests/playwright',
+  testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 30 * 60 * 1000,
   expect: {
