@@ -1,9 +1,12 @@
 import useNuxtI18n from '@/composables/useNuxtI18n'
 
-export default (url, title, description, image, dimensions = null) => {
+export default (url, _title, _description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useNuxtI18n()
 
+  // sanitize to use in html meta tagswœ
+  const title = computed(() => (unref(_title) || '').replace(/<[^>]*>?/gm, ''))
+  const description = computed(() => (_description || '').replace(/<[^>]*>?/gm, ''))
   let imgMimeType = 'image/jpeg'
   if (image) {
     try {
@@ -60,7 +63,7 @@ export default (url, title, description, image, dimensions = null) => {
     }
   }
   const setHead = () =>
-    useHeadSafe({
+    useHead({
       title: title,
       titleTemplate: (t) => (t && `Projects - ${t}`) || 'Projects',
       link: [
