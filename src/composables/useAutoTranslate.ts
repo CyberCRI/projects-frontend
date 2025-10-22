@@ -64,7 +64,7 @@ export default function useAutoTranslate() {
 
   const translateComment = (comment) => {
     const _comment = unref(comment)
-    _comment.replies = translateEntities(_comment.replies, translateComment)
+    if (_comment) _comment.replies = translateEntities(_comment.replies, translateComment)
     return translateEntity(_comment, ['content'])
   }
   const translateComments = (comments) => translateEntities(comments, translateComment)
