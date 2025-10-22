@@ -193,7 +193,6 @@ export default function useProjectData() {
 
   const getComments = async (project_id) => {
     try {
-      console.log('fetch comments for project', project_id)
       const response = await getCommentApi(project_id)
       _comments.value = response.results
     } catch (err) {
