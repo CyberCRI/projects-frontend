@@ -14,6 +14,7 @@ const props = defineProps({
   },
 })
 
+const chartData = null
 const displayedNumber = ref(0)
 
 let intervalId = null

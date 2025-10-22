@@ -49,12 +49,15 @@ const config = {
 
 const mapRef = useTemplateRef('map')
 
-watch(props.loading, () => {
-  if (!neo && mapRef) {
-    console.log('center')
-    mapRef.centerMap()
+watch(
+  () => props.loading,
+  (neo) => {
+    if (!neo && mapRef.value) {
+      console.log('center')
+      mapRef.value.centerMap()
+    }
   }
-})
+)
 </script>
 
 <style lang="scss">

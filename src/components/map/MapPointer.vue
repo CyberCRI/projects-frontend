@@ -61,8 +61,8 @@ const markerRef = useTemplateRef('marker')
 onMounted(() => {
   emits('mounted', {
     location: props.location,
-    markerContent: markerRef,
-    tooltip: tooltipRef,
+    markerContent: markerRef.value,
+    tooltip: tooltipRef.value,
   })
 })
 

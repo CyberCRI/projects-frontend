@@ -91,11 +91,22 @@ export default {
   },
 
   data() {
+    const markAllGroups = throttle(async () => {
+      // dont directly modify allGroup
+      // because it will cause a lot of re-render
+      let groups = JSON.parse(JSON.stringify(this.allGroups))
+      for (let group of groups) {
+        await this.markGroup(group)
+      }
+      this.allGroups = groups
+    }, 500)
+
     return {
       groupFilter: '',
       groupIndex: {},
       loading: false,
       allGroups: [],
+      markAllGroups,
     }
   },
 
@@ -212,16 +223,6 @@ export default {
       group.hidden = !show
       return show
     },
-
-    markAllGroups: throttle(async function markAllgroups() {
-      // dont directly modify allGroup
-      // because it will cause a lot of re-render
-      let groups = JSON.parse(JSON.stringify(this.allGroups))
-      for (let group of groups) {
-        await this.markGroup(group)
-      }
-      this.allGroups = groups
-    }, 500),
   },
 }
 </script>

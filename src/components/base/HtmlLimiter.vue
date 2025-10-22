@@ -99,6 +99,10 @@ export default {
       this.computing = true
       this.croppedHtml = this.html
 
+      if (!this.$refs.inner) {
+        return
+      }
+
       this.$refs.inner.innerHTML = this.croppedHtml
       if (this.preprocess) {
         // preprocess html

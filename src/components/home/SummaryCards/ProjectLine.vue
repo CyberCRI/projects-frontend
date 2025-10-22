@@ -22,9 +22,9 @@ import { capitalize } from 'es-toolkit'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
-definePorps({ name: 'ProjectLine' })
+defineOptions({ name: 'ProjectLine' })
 
-definePorps({
+defineProps({
   project: {
     type: Object,
     required: true,

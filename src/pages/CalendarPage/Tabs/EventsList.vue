@@ -1,5 +1,7 @@
 <script setup>
 import { getAllEvents } from '@/api/event.service'
+import EventList from '@/components/event/EventList/EventList.vue'
+import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 const organizationsStore = useOrganizationsStore()
 const { translateEvents } = useAutoTranslate()

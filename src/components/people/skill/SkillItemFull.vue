@@ -109,7 +109,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 
 defineOptions({ name: 'SkillItemFull' })
 
-defineProps({
+const props = defineProps({
   skill: {
     type: Object,
     required: true,

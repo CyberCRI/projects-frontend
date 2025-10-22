@@ -11,8 +11,8 @@ defineOptions({ name: 'TotalChart' })
 
 defineProps({
   stats: {
-    type: Array,
-    default: () => [],
+    type: Number,
+    default: null,
   },
 })
 </script>

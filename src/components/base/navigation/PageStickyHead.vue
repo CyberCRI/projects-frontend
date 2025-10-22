@@ -1,5 +1,5 @@
 <template>
-  <aside class="page-sticky-head">
+  <aside ref="aside" class="page-sticky-head">
     <h1 v-if="isHeaderSticked" class="page-title-recall">
       <div class="text-limiter">{{ pageTitle }}</div>
     </h1>
@@ -10,54 +10,47 @@
     ></slot>
   </aside>
 </template>
-<script>
+<script setup>
 import { throttle } from 'es-toolkit'
 
-export default {
-  name: 'PageStickyHead',
+defineOptions({ name: 'PageStickyHead' })
 
-  props: {
-    pageTitle: {
-      type: String,
-      required: true,
-    },
+defineProps({
+  pageTitle: {
+    type: String,
+    required: true,
   },
-  data() {
-    return {
-      anchorOffset: 0,
-      isHeaderSticked: false,
-    }
-  },
-  mounted() {
-    this.computeAnchorOffset()
-    // in unit tests, window might be undefined
-    window?.addEventListener('resize', this.computeAnchorOffset)
-    window?.addEventListener('resize', this.checkIfSummaryIsSticked)
-    window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
-  },
-  beforeUnmount() {
-    // in unit tests, window might be undefined
-    window?.removeEventListener('resize', this.computeAnchorOffset)
-    window?.addEventListener('resize', this.checkIfSummaryIsSticked)
-    window?.addEventListener('scroll', this.checkIfSummaryIsSticked)
-  },
-  methods: {
-    computeAnchorOffset: throttle(function () {
-      if (!this) return // safeguard for debounced behavior when the component is unmounted
-      const aside = this?.$el
-      const asideHeight = aside ? aside.offsetHeight : 0
-      const anchorOffset = asideHeight + 20 /* ??? */
-      this.anchorOffset = anchorOffset
-    }, 100),
+})
 
-    checkIfSummaryIsSticked: throttle(function () {
-      const header = this.$el
-      this.isHeaderSticked =
-        header?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
-        window?.innerWidth > 768 /* $min-tablet */
-    }, 16),
-  },
-}
+const anchorOffset = ref(0)
+const isHeaderSticked = ref(false)
+
+const aside = useTemplateRef('aside')
+
+const computeAnchorOffset = throttle(() => {
+  const asideHeight = aside.value ? aside.value.offsetHeight : 0
+  anchorOffset.value = asideHeight + 20 /* ??? */
+}, 100)
+
+const checkIfSummaryIsSticked = throttle(() => {
+  isHeaderSticked.value =
+    aside.value?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
+    window?.innerWidth > 768 /* $min-tablet */
+}, 16)
+
+onMounted(() => {
+  computeAnchorOffset()
+  // in unit tests, window might be undefined
+  window?.addEventListener('resize', computeAnchorOffset)
+  window?.addEventListener('resize', checkIfSummaryIsSticked)
+  window?.addEventListener('scroll', checkIfSummaryIsSticked)
+})
+onBeforeUnmount(() => {
+  // in unit tests, window might be undefined
+  window?.removeEventListener('resize', computeAnchorOffset)
+  window?.addEventListener('resize', checkIfSummaryIsSticked)
+  window?.addEventListener('scroll', checkIfSummaryIsSticked)
+})
 </script>
 <style scoped lang="scss">
 aside {

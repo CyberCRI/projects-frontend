@@ -146,10 +146,21 @@ export default {
         this.runtimeConfig.public.appPublicBinariesPrefix
       }/patatoids-project/Patatoid-${index}.png`
     })
+
+    const updateForm = throttle((data) => {
+      // short throttling is mandatory here
+      // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
+      // and without a delay model dont have time to be updated in the second event
+      // resulting in lost of the first event data (eg the picture)
+      // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
+      this.$emit('update:modelValue', { ...this.modelValue, ...data })
+    }, 16)
+
     return {
       v$: useVuelidate(),
       defaultPictures,
       showDatePicker: false,
+      updateForm,
     }
   },
 
@@ -199,15 +210,6 @@ export default {
       this.updateForm({ publication_date: modelData })
       this.showDatePicker = false
     },
-
-    updateForm: throttle(function (data) {
-      // short throttling is mandatory here
-      // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
-      // and without a delay model dont have time to be updated in the second event
-      // resulting in lost of the first event data (eg the picture)
-      // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
-      this.$emit('update:modelValue', { ...this.modelValue, ...data })
-    }, 16),
   },
 }
 </script>

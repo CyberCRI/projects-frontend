@@ -38,7 +38,7 @@ const organization = computed(() => {
 const router = useRouter()
 
 const goToChat = () => {
-  window.open(this.organization.chat_url, '_blank')
+  window.open(organization.value.chat_url, '_blank')
 }
 </script>
 
