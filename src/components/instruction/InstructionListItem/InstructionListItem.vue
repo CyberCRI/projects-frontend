@@ -12,8 +12,8 @@
         class="instruction-actions"
         :can-edit="canEditInstruction"
         :can-delete="canDeleteInstruction"
-        @edit="$emit('edit-instruction', instruction)"
-        @delete="$emit('delete-instruction', instruction)"
+        @edit="emits('edit-instruction', instruction)"
+        @delete="emits('delete-instruction', instruction)"
       />
     </div>
     <div class="instruction-excerpt" :style="style">
@@ -30,48 +30,30 @@
     </div>
   </NuxtLink>
 </template>
-<script>
+<script setup>
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 
-export default {
-  name: 'InstructionListItem',
+defineOptions({ name: 'InstructionListItem' })
 
-  components: {
-    SummaryAction,
-    HtmlLimiter,
-    ContextActionMenu,
+defineProps({
+  instruction: {
+    type: Object,
+    required: true,
   },
+})
 
-  props: {
-    instruction: {
-      type: Object,
-      required: true,
-    },
-  },
+const emits = defineEmits(['delete-instruction', 'edit-instruction'])
 
-  emits: ['delete-instruction', 'edit-instruction'],
+const { canEditInstruction, canDeleteInstruction } = usePermissions()
 
-  setup() {
-    const { canEditInstruction, canDeleteInstruction } = usePermissions()
-    return { canEditInstruction, canDeleteInstruction }
-  },
-
-  data() {
-    return {
-      style: {},
-    }
-  },
-
-  methods: {
-    computeLayout() {
-      this.style = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-    },
-  },
+const style = ref({})
+const computeLayout = () => {
+  style.value = {}
+}
+const layoutComputed = (event) => {
+  style.value = { height: event.height + 'px' }
 }
 </script>
 <style scoped lang="scss">

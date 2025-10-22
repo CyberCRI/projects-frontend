@@ -12,8 +12,8 @@
         class="news-actions"
         :can-edit="canEditNews"
         :can-delete="canDeleteNews"
-        @edit="$emit('edit-news', news)"
-        @delete="$emit('delete-news', news)"
+        @edit="emits('edit-news', news)"
+        @delete="emits('delete-news', news)"
       />
     </div>
     <div class="news-img-ctn">
@@ -37,8 +37,8 @@
           class="news-actions"
           :can-edit="canEditNews"
           :can-delete="canDeleteNews"
-          @edit="$emit('edit-news', news)"
-          @delete="$emit('delete-news', news)"
+          @edit="emits('edit-news', news)"
+          @delete="emits('delete-news', news)"
         />
       </div>
       <div class="news-excerpt" :style="style">
@@ -51,58 +51,39 @@
         />
       </div>
       <div class="read-more-ctn">
-        <SummaryAction class="read-button" :action-label="$t('news.list.read-more')" />
+        <SummaryAction class="read-button" :action-label="t('news.list.read-more')" />
       </div>
     </div>
   </NuxtLink>
 </template>
-<script>
+<script setup>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 
-export default {
-  name: 'NewsListItem',
+defineOptions({ name: 'NewsListItem' })
 
-  components: {
-    CroppedApiImage,
-    SummaryAction,
-    HtmlLimiter,
-    ContextActionMenu,
+defineProps({
+  news: {
+    type: Object,
+    required: true,
   },
+})
 
-  props: {
-    news: {
-      type: Object,
-      required: true,
-    },
-  },
+const emits = defineEmits(['delete-news', 'edit-news'])
+const { t } = useNuxtI18n()
+const { canEditNews, canDeleteNews } = usePermissions()
+const style = ref({})
+const textsStyle = ref({})
 
-  emits: ['delete-news', 'edit-news'],
-
-  setup() {
-    const { canEditNews, canDeleteNews } = usePermissions()
-    return { canEditNews, canDeleteNews }
-  },
-
-  data() {
-    return {
-      style: {},
-      textsStyle: {},
-    }
-  },
-
-  methods: {
-    computeLayout() {
-      this.style = {}
-      this.textsStyle = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-      this.textsStyle = { height: 'auto' }
-    },
-  },
+const computeLayout = () => {
+  style.value = {}
+  textsStyle.value = {}
+}
+const layoutComputed = (event) => {
+  style.value = { height: event.height + 'px' }
+  textsStyle.value = { height: 'auto' }
 }
 </script>
 <style scoped lang="scss">

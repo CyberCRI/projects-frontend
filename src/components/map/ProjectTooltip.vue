@@ -42,52 +42,34 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from 'es-toolkit'
 
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { cropIfTooLong } from '@/functs/string'
 
-export default {
-  name: 'ProjectTooltip',
+defineOptions({ name: 'ProjectTooltip' })
 
-  components: {
-    LinkButton,
+const props = defineProps({
+  location: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  props: {
-    location: {
-      type: Object,
-      default: () => {},
-    },
-  },
-
-  setup() {
-    return { capitalize }
-  },
-
-  computed: {
-    title() {
-      return this.cropIfTooLong(this.project.title, 45)
-    },
-    purpose() {
-      return this.cropIfTooLong(this.project.purpose, 85)
-    },
-
-    project() {
-      return this.location.project
-    },
-    typeLabel() {
-      return this.location.type === 'impact' ? this.$t('project.impact') : this.$t('team.team')
-    },
-  },
-
-  methods: {
-    cropIfTooLong(text, length) {
-      if (text) return text.length > length ? text.substring(0, length) + '...' : text
-      return ''
-    },
-  },
-}
+const { t } = useNuxtI18n()
+const project = computed(() => {
+  return props.location.project
+})
+const typeLabel = computed(() => {
+  return props.location.type === 'impact' ? t('project.impact') : t('team.team')
+})
+const title = computed(() => {
+  return cropIfTooLong(project.value.title, 45)
+})
+const purpose = computed(() => {
+  return cropIfTooLong(project.value.purpose, 85)
+})
 </script>
 
 <style lang="scss" scoped>

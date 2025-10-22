@@ -28,7 +28,7 @@
           <LpiButton
             v-show="hasPrevious"
             class="button-footer"
-            :label="$t('onboarding-modal.previous')"
+            :label="t('onboarding-modal.previous')"
             btn-icon="Previous"
             :secondary="true"
             @click="previous()"
@@ -38,7 +38,7 @@
           <LpiButton
             v-show="hasNext"
             class="button-footer"
-            :label="$t('onboarding-modal.next')"
+            :label="t('onboarding-modal.next')"
             btn-icon="Next"
             :reversed-order="true"
             :secondary="true"
@@ -50,62 +50,52 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
-export default {
-  name: 'OnboardingModal',
+defineOptions({ name: 'OnboardingModal' })
 
-  components: { BaseModal, SkillSteps, LpiButton },
-
-  props: {
-    stepNumber: {
-      type: Number,
-      default: 1,
-    },
-
-    initialStep: {
-      type: Number,
-      default: 1,
-    },
+const props = defineProps({
+  stepNumber: {
+    type: Number,
+    default: 1,
   },
 
-  emits: ['stepped'],
-
-  data() {
-    return {
-      activeStep: this.initialStep,
-    }
+  initialStep: {
+    type: Number,
+    default: 1,
   },
+})
 
-  computed: {
-    hasPrevious() {
-      return this.activeStep > 1
-    },
-    hasNext() {
-      return this.activeStep < this.stepNumber
-    },
-    hasBothButtons() {
-      return this.hasPrevious && this.hasNext
-    },
-  },
+const emits = defineEmits(['stepped'])
 
-  methods: {
-    previous() {
-      if (this.activeStep > 1) {
-        this.activeStep--
-        this.$emit('stepped', this.activeStep)
-      }
-    },
-    next() {
-      if (this.activeStep < this.stepNumber) {
-        this.activeStep++
-        this.$emit('stepped', this.activeStep)
-      }
-    },
-  },
+const { t } = useNuxtI18n()
+
+const activeStep = ref(props.initialStep)
+
+const hasPrevious = computed(() => {
+  return activeStep.value > 1
+})
+const hasNext = computed(() => {
+  return activeStep.value < props.stepNumber
+})
+const hasBothButtons = computed(() => {
+  return this.hasPrevious && hasNext.value
+})
+
+const previous = () => {
+  if (activeStep.value > 1) {
+    activeStep.value--
+    emits('stepped', activeStep.value)
+  }
+}
+const next = () => {
+  if (activeStep.value < props.stepNumber) {
+    activeStep.value++
+    emits('stepped', activeStep.value)
+  }
 }
 </script>
 

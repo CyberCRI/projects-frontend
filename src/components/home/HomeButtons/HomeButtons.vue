@@ -8,7 +8,7 @@
         btn-icon="Plus"
         class="individual-button white-bg"
         data-test="create-project"
-        @click="$router.push({ name: 'createProject' })"
+        @click="router.push({ name: 'createProject' })"
       />
 
       <LpiButton
@@ -25,31 +25,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'HomeButtons',
 
-  components: { LpiButton },
+defineOptions({ name: 'HomeButtons' })
+const organizationsStore = useOrganizationsStore()
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
+const organization = computed(() => {
+  return organizationsStore.current
+})
+const router = useRouter()
 
-  methods: {
-    goToChat() {
-      window.open(this.organization.chat_url, '_blank')
-    },
-  },
+const goToChat = () => {
+  window.open(this.organization.chat_url, '_blank')
 }
 </script>
 
