@@ -34,7 +34,7 @@
         :label="capitalize(`${$t('common.set-deadline')}:`)"
       />
 
-      <DatePicker
+      <VueDatePicker
         v-if="deadlineVisible"
         v-model="form.deadline_at"
         class="goal-deadline"
@@ -63,12 +63,12 @@
 
 <script>
 import { capitalize } from 'es-toolkit'
+import VueDatePicker from '@vuepic/vue-datepicker'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
-import DatePicker from '@/components/base/form/DatePicker.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 
 import utils from '@/functs/functions.ts'
@@ -90,10 +90,10 @@ export default {
     BaseDrawer,
     TextInput,
     TipTapEditor,
-    DatePicker,
     SwitchInput,
     GroupButton,
     FieldErrors,
+    VueDatePicker,
   },
 
   props: {

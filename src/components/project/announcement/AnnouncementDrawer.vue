@@ -44,7 +44,7 @@
             :label="capitalize(`${$t('common.deadline')}:`)"
             class="vertical black-label"
           />
-          <DatePicker
+          <VueDatePicker
             v-if="hasDeadline"
             v-model="form.deadline"
             class="datepicker"
@@ -66,13 +66,12 @@
 
 <script>
 import { capitalize } from 'es-toolkit'
-
+import VueDatePicker from '@vuepic/vue-datepicker'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import DatePicker from '@/components/base/form/DatePicker.vue'
 
 import utils from '@/functs/functions.ts'
 import useVuelidate from '@vuelidate/core'
@@ -95,8 +94,8 @@ export default {
     SwitchInput,
     TextInput,
     TipTapEditor,
-    DatePicker,
     FieldErrors,
+    VueDatePicker,
   },
 
   props: {
@@ -127,6 +126,7 @@ export default {
     const toaster = useToasterStore()
     return {
       toaster,
+      capitalize,
     }
   },
 

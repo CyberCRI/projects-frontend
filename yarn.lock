@@ -4382,11 +4382,6 @@ cacheable@^2.1.0:
     keyv "^5.5.3"
     qified "^0.5.0"
 
-calendar-data-generate@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/calendar-data-generate/-/calendar-data-generate-1.0.3.tgz#c54be48de84aca72452e6eab81d6dd2b7fdd452f"
-  integrity sha512-B5Gzp1Z+KASQX+LdUNb5fjFvv2ONhLet4vGV6wJbvw0fFSPPW/vbundamN6vJ6RZEghiR8n09vsKLMX+f5sFpQ==
-
 callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
@@ -10926,13 +10921,6 @@ vue-component-type-helpers@^2.0.0:
   version "2.2.12"
   resolved "https://registry.yarnpkg.com/vue-component-type-helpers/-/vue-component-type-helpers-2.2.12.tgz#5014787aad185a22f460ad469cc51f14524308bc"
   integrity sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw==
-
-vue-datepicker-ui@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/vue-datepicker-ui/-/vue-datepicker-ui-3.1.1.tgz#af0eade76bb12a8147a3d0d05ed9592cfe56f1ff"
-  integrity sha512-vUQcNMrv7X9FF9GIY2xcnp1mXNLkZ7VvmZ0B3C377ztl5Rnhr6rTNv1G6/2LuM/tHHLFieMNvNBVt87E9DhsUA==
-  dependencies:
-    calendar-data-generate "^1.0.3"
 
 vue-demi@^0.13.11:
   version "0.13.11"

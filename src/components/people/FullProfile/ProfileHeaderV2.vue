@@ -79,7 +79,7 @@ import { capitalize } from 'es-toolkit'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 defineOptions({ name: 'ProfileHeaderV2' })
 
-defineProps({
+const props = defineProps({
   user: {
     type: Object,
     default: () => {},
