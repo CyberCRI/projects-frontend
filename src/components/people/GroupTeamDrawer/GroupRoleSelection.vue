@@ -3,14 +3,14 @@
     <LpiButton
       v-if="!isEditMode"
       :border="false"
-      :label="$t('common.back')"
+      :label="t('common.back')"
       :secondary="true"
       class="back-btn"
       btn-icon="ArrowLeft"
-      @click="$emit('back-to-user-selection')"
+      @click="emits('back-to-user-selection')"
     />
     <div class="tooltip-ctn">
-      {{ $t('role.select') }}
+      {{ t('role.select') }}
 
       <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
         <button class="question-mark tooltip">
@@ -20,16 +20,16 @@
           <div class="tooltip-div">
             <ul class="list-ctn">
               <li class="item">
-                <span class="item-bold">{{ $t('role.leader') }}</span>
-                : {{ $t('role.role-leader') }}
+                <span class="item-bold">{{ t('role.leader') }}</span>
+                : {{ t('role.role-leader') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ $t('role.editor') }}</span>
-                : {{ $t('role.role-editor') }}
+                <span class="item-bold">{{ t('role.editor') }}</span>
+                : {{ t('role.role-editor') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ $t('role.member') }}</span>
-                : {{ $t('role.role-member') }}
+                <span class="item-bold">{{ t('role.member') }}</span>
+                : {{ t('role.role-member') }}
               </li>
             </ul>
           </div>
@@ -65,89 +65,75 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from 'es-toolkit'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 
-export default {
-  name: 'GroupRoleSelection',
+defineOptions({ name: 'GroupRoleSelection' })
 
-  components: { LpiButton, IconImage, ToolTip },
-
-  props: {
-    selectedUsers: {
-      type: Object,
-      default: () => {},
-    },
-
-    isEditMode: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  selectedUsers: {
+    type: Object,
+    default: () => {},
   },
 
-  emits: ['select-role', 'back-to-user-selection'],
-
-  data() {
-    return {
-      userList: [],
-    }
+  isEditMode: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  computed: {
-    roleOptions() {
-      return [
-        {
-          value: 'leaders',
-          label: capitalize(this.$t('group.role.leaders.label')),
-          dataTest: 'button-role-leader',
-          tip: this.$t('group.role.leaders.help'),
-          userKey: 'is_leader',
-        },
-        {
-          value: 'editors',
-          label: capitalize(this.$t('group.role.managers.label')),
-          dataTest: 'button-role-managers',
-          tip: this.$t('group.role.managers.help'),
-          userKey: 'is_manager',
-        },
-        {
-          value: 'members',
-          label: capitalize(this.$t('group.role.members.label')),
-          tip: this.$t('group.role.members.help'),
-          dataTest: 'button-role-members',
-          userKey: 'is_member',
-        },
-      ]
-    },
+const emits = defineEmits(['select-role', 'back-to-user-selection'])
+const { t } = useNuxtI18n()
+const userList = ref([])
+
+const roleOptions = [
+  {
+    value: 'leaders',
+    label: capitalize(t('group.role.leaders.label')),
+    dataTest: 'button-role-leader',
+    tip: t('group.role.leaders.help'),
+    userKey: 'is_leader',
   },
-
-  mounted() {
-    this.userList = [...this.selectedUsers]
-    for (let i = 0; i < this.userList.length; i++) {
-      if (this.userList[i].is_leader) this.userList[i].role = 'leaders'
-      else if (this.userList[i].is_manager) this.userList[i].role = 'editors'
-      else this.userList[i].role = 'members'
-    }
-    /* This is call is here to set up and update the user status on all parents */
-    /* Also this used to be a watcher */
-    this.$emit('select-role', this.userList)
+  {
+    value: 'editors',
+    label: capitalize(t('group.role.managers.label')),
+    dataTest: 'button-role-managers',
+    tip: t('group.role.managers.help'),
+    userKey: 'is_manager',
   },
-
-  methods: {
-    selectRole(user, role) {
-      const index = this.userList.findIndex((usr) => usr.id === user.id)
-
-      this.userList[index].role = role
-      this.userList[index].is_manager = role === 'editors'
-      this.userList[index].is_leader = role === 'leaders'
-
-      this.$emit('select-role', this.userList)
-    },
+  {
+    value: 'members',
+    label: capitalize(t('group.role.members.label')),
+    tip: t('group.role.members.help'),
+    dataTest: 'button-role-members',
+    userKey: 'is_member',
   },
+]
+
+onMounted(() => {
+  userList.value = [...props.selectedUsers]
+  for (let i = 0; i < userList.value.length; i++) {
+    if (userList.value[i].is_leader) userList.value[i].role = 'leaders'
+    else if (userList.value[i].is_manager) userList.value[i].role = 'editors'
+    else userList.value[i].role = 'members'
+  }
+  /* This is call is here to set up and update the user status on all parents */
+  /* Also this used to be a watcher */
+  emits('select-role', userList.value)
+})
+
+const selectRole = (user, role) => {
+  const index = userList.value.findIndex((usr) => usr.id === user.id)
+
+  userList.value[index].role = role
+  userList.value[index].is_manager = role === 'editors'
+  userList.value[index].is_leader = role === 'leaders'
+
+  emits('select-role', userList.value)
 }
 </script>
 

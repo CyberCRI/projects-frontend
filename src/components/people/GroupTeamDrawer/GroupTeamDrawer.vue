@@ -1,11 +1,11 @@
 <template>
   <BaseDrawer
-    :confirm-action-name="$t('common.add')"
+    :confirm-action-name="t('common.add')"
     :is-opened="isOpened"
     :title="capitalize(label)"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
-    @close="$emit('close')"
+    @close="emits('close')"
     @confirm="selectAction"
   >
     <GroupUserSelection
@@ -25,88 +25,67 @@
   </BaseDrawer>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from 'es-toolkit'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupUserSelection from './GroupUserSelection.vue'
 import GroupRoleSelection from './GroupRoleSelection.vue'
 
-export default {
-  name: 'GroupTeamDrawer',
+defineOptions({ name: 'GroupTeamDrawer' })
 
-  components: { BaseDrawer, GroupUserSelection, GroupRoleSelection },
-
-  props: {
-    currentUsers: {
-      type: Array,
-      default: () => [],
-    },
-
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-
-    mode: {
-      type: String,
-      default: 'select', // 'select' or 'roles'
-    },
+const props = defineProps({
+  currentUsers: {
+    type: Array,
+    default: () => [],
   },
 
-  emits: ['close', 'add-user', 'set-mode'],
-
-  setup() {
-    return { capitalize }
+  isOpened: {
+    type: Boolean,
+    default: false,
   },
 
-  data() {
-    return {
-      selectedUsers: [],
-      selectedRole: 'members', // ????
-      defaultRole: 'members',
-      form: {
-        members: [],
-        owners: [],
-        reviewers: [],
-      },
-    }
+  mode: {
+    type: String,
+    default: 'select', // 'select' or 'roles'
   },
+})
 
-  computed: {
-    label() {
-      return this.currentUsers?.length ? this.$t('team.edit') : this.$t('team.add')
-    },
+const emits = defineEmits(['close', 'add-user', 'set-mode'])
+const { t } = useNuxtI18n()
+const selectedUsers = ref([])
+const selectedRole = 'members'
+
+const label = computed(() => {
+  return props.currentUsers?.length ? t('team.edit') : t('team.add')
+})
+
+watch(
+  isOpened,
+  (neo) => {
+    if (neo) selectedUsers.value = [...props.currentUsers]
   },
+  { immediate: true }
+)
 
-  watch: {
-    isOpened: {
-      handler: function (neo) {
-        if (neo) this.selectedUsers = [...this.currentUsers]
-      },
-      immediate: true,
-    },
-  },
+const addTeamMember = async () => {
+  emits('add-user', selectedUsers.value)
+  emits('close')
+}
 
-  methods: {
-    async addTeamMember() {
-      this.$emit('add-user', this.selectedUsers)
-      this.$emit('close')
-    },
+const goBackToUserSelection = () => {
+  emits('set-mode', 'select')
+}
 
-    goBackToUserSelection() {
-      this.$emit('set-mode', 'select')
-    },
+const updateUsers = (users) => {
+  selectedUsers.value = [...users]
+}
 
-    updateUsers(users) {
-      this.selectedUsers = [...users]
-    },
-
-    selectAction() {
-      if (this.mode == 'roles') {
-        this.addTeamMember()
-      } else this.$emit('set-mode', 'roles')
-    },
-  },
+const selectAction = () => {
+  if (this.mode == 'roles') {
+    addTeamMember()
+  } else {
+    emits('set-mode', 'roles')
+  }
 }
 </script>

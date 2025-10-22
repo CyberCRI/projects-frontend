@@ -3,7 +3,7 @@
     class="team-card-small"
     :class="{ passive: !iconName }"
     :data-test="`user-card-${user.id}`"
-    @click="iconName ? $emit('user-clicked') : null"
+    @click="iconName ? emits('user-clicked') : null"
   >
     <div class="user-container">
       <CroppedApiImage
@@ -25,7 +25,7 @@
           {{ capitalize(user.name) }}
         </div>
         <div v-if="roleLabel" class="role">
-          {{ $t(roleLabel) }}
+          {{ t(roleLabel) }}
         </div>
 
         <div v-if="user.job" class="title">
@@ -35,60 +35,49 @@
     </div>
 
     <div v-if="iconName" class="icon">
-      <IconImage :name="iconName" @click="$emit('user-clicked')" />
+      <IconImage :name="iconName" @click="emits('user-clicked')" />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from 'es-toolkit'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
-export default {
-  name: 'TeamCardInline',
+defineOptions({ name: 'TeamCardInline' })
 
-  components: { IconImage, CroppedApiImage },
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-
-    roleLabel: {
-      type: [String, null],
-      default: null,
-    },
-
-    icon: {
-      type: String,
-      default: null,
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
 
-  emits: ['user-clicked'],
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
-      capitalize,
-    }
+  roleLabel: {
+    type: [String, null],
+    default: null,
   },
 
-  computed: {
-    currentUser() {
-      return this.usersStore.userFromApi
-    },
-
-    iconName() {
-      if (this.icon) return this.icon
-      return this.user.id !== this.currentUser.id ? 'Close' : null
-    },
+  icon: {
+    type: String,
+    default: null,
   },
-}
+})
+
+const emits = defineEmits(['user-clicked'])
+const { t } = useNuxtI18n()
+const usersStore = useUsersStore()
+
+const currentUser = computed(() => {
+  return usersStore.userFromApi
+})
+
+const iconName = computed(() => {
+  if (props.icon) return props.icon
+  return props.user.id !== currentUser.value.id ? 'Close' : null
+})
 </script>
 
 <style lang="scss" scoped>

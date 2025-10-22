@@ -14,21 +14,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'SocialNetworks',
+defineOptions({ name: 'SocialNetworks' })
 
-  components: { IconImage },
-
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
+defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

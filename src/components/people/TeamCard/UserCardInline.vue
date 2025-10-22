@@ -3,7 +3,7 @@
     class="user-card-small"
     :class="{ selected: selected, passive: passive }"
     :data-test="`user-card-${user.given_name}`"
-    @click="emit('user-clicked')"
+    @click="emits('user-clicked')"
   >
     <div class="user-container">
       <CroppedApiImage
@@ -75,7 +75,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['user-clicked'])
+const emits = defineEmits(['user-clicked'])
 
 const roleLabel = () => {
   if (props.role) {
