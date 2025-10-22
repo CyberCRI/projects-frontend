@@ -157,6 +157,24 @@ export default {
     },
   },
 
+  setup(props) {
+    const { translateUsers, translateProjects } = useAutoTranslate()
+    const rawMembers = computed(() => props.membersInitialRequest.results || [])
+    const members = translateUsers(rawMembers)
+    const membersCount = computed(() => props.membersInitialRequest.count || 0)
+
+    const rawProjects = computed(() => props.projectsInitialRequest.results || [])
+    const projects = translateProjects(rawProjects)
+    const projectsCount = computed(() => props.projectsInitialRequest.count || 0)
+
+    return {
+      members,
+      membersCount,
+      projects,
+      projectsCount,
+    }
+  },
+
   data() {
     return {
       style: {},
@@ -166,21 +184,6 @@ export default {
         user_id: null,
       },
     }
-  },
-
-  computed: {
-    members() {
-      return this.membersInitialRequest.results || []
-    },
-    membersCount() {
-      return this.membersInitialRequest.count || 0
-    },
-    projects() {
-      return this.projectsInitialRequest.results || []
-    },
-    projectsCount() {
-      return this.projectsInitialRequest.count || 0
-    },
   },
 
   methods: {
