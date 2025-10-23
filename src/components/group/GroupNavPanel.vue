@@ -24,7 +24,7 @@
           </a>
         </template>
         <ExternalLabelButton
-          :label="$t('group.contact')"
+          :label="t('group.contact')"
           btn-icon="EmailOutline"
           vertical-layout
           label-on-hover
@@ -35,56 +35,35 @@
   </NavPanelAside>
 </template>
 
-<script>
-export default {
-  name: 'GroupNavPanel',
+<script setup>
+defineOptions({ name: 'GroupNavPanel' })
 
-  props: {
-    email: {
-      type: String,
-      default: '',
-    },
-    groupTabs: { type: Array, required: true },
-    currentTab: {
-      type: Object,
-      default: () => {},
-    },
-    canEditGroup: {
-      type: Boolean,
-      default: false,
-    },
-    isEditing: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  email: {
+    type: String,
+    default: '',
   },
-
-  emits: ['navigated', 'toggle-editing'],
-  // data() {
-  //   return {
-  //     addToProjectMenuVisible: false,
-  //   }
-  // },
-  data() {
-    return {
-      sharedUrl: useRequestURL().toString(),
-    }
+  groupTabs: { type: Array, required: true },
+  currentTab: {
+    type: Object,
+    default: () => {},
   },
-
-  methods: {
-    navigated() {
-      this.$emit('navigated')
-    },
-
-    // toggleAddToProject() {
-    //   this.addToProjectMenuVisible = !this.addToProjectMenuVisible
-    // },
-
-    switchView() {
-      this.$emit('toggle-editing', !this.isEditing)
-    },
+  canEditGroup: {
+    type: Boolean,
+    default: false,
   },
-}
+  isEditing: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const { t } = useNuxtI18n()
+const emits = defineEmits(['navigated', 'toggle-editing'])
+const sharedUrl = useRequestURL().toString()
+
+const navigated = () => emits('navigated')
+const switchView = () => emits('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>

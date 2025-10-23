@@ -2,13 +2,13 @@
   <div class="group-section">
     <label>
       <span class="section-title">
-        {{ capitalize($t('group.form.parent-group-label')) }}
+        {{ capitalize(t('group.form.parent-group-label')) }}
       </span>
 
       <LpiButton
         class="add-parent-group-card"
         :btn-icon="modelValue ? 'Pen' : 'Plus'"
-        :label="capitalize($t(modelValue ? 'group.form.edit' : 'group.form.add'))"
+        :label="capitalize(t(modelValue ? 'group.form.edit' : 'group.form.add'))"
         data-test="add-parent-group-card"
         @click="drawerIsOpen = true"
       />
@@ -19,8 +19,8 @@
     </div>
 
     <PickGroupDrawer
-      :drawer-title="$t('group.form.add-parent-group')"
-      :subtitle="$t('admin.groups.subtitle-edit-child')"
+      :drawer-title="t('group.form.add-parent-group')"
+      :subtitle="t('admin.groups.subtitle-edit-child')"
       :is-opened="drawerIsOpen"
       :groups="groups"
       :initial-group="modelValue"
@@ -32,44 +32,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from '@/functs/string'
 
-export default {
-  name: 'ParentGroupSection',
+defineOptions({ name: 'ParentGroupSection' })
 
-  props: {
-    modelValue: {
-      type: [Object, null],
-      default: null,
-    },
-    groups: {
-      type: Array,
-      default: () => [],
-    },
+defineProps({
+  modelValue: {
+    type: [Object, null],
+    default: null,
   },
+  groups: {
+    type: Array,
+    default: () => [],
+  },
+})
 
-  emits: ['update:modelValue'],
-  setup() {
-    return { capitalize }
-  },
+const emits = defineEmits(['update:modelValue'])
+const { t } = useNuxtI18n()
+const drawerIsOpen = ref(false)
+const forbiddenIds = ref([])
 
-  data() {
-    return {
-      drawerIsOpen: false,
-      forbiddenIds: [],
-    }
-  },
-
-  methods: {
-    closeDrawer() {
-      this.drawerIsOpen = false
-    },
-    confirmGroup(group) {
-      this.$emit('update:modelValue', group)
-      this.closeDrawer()
-    },
-  },
+const closeDrawer = () => {
+  drawerIsOpen.value = false
+}
+const confirmGroup = (group) => {
+  emits('update:modelValue', group)
+  closeDrawer()
 }
 </script>
 

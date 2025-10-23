@@ -1,7 +1,7 @@
 <template>
   <div v-if="subgroups.length > 0 && !isLoading" class="subgroups">
     <div class="subgroups-title">
-      <span class="name">{{ $t('group.subgroups') }} :</span>
+      <span class="name">{{ t('group.subgroups') }} :</span>
     </div>
     <NuxtLink
       v-for="(subgroup, index) in subgroups"
@@ -17,23 +17,22 @@
   <div v-else class="empty-subgroups" />
 </template>
 
-<script>
+<script setup>
 import SubGroupsSkeleton from '@/components/group/SubGroups/SubGroupsSkeleton.vue'
-export default {
-  name: 'SubGroups',
-  components: { SubGroupsSkeleton },
-  props: {
-    subgroups: {
-      type: Array,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
+
+defineOptions({ name: 'SubGroups' })
+defineProps({
+  subgroups: {
+    type: Array,
+    required: true,
   },
-}
+  isLoading: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
+})
+const { t } = useNuxtI18n()
 </script>
 
 <style lang="scss" scoped>

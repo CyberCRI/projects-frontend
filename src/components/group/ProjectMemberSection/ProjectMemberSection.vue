@@ -2,8 +2,8 @@
   <div class="group-member-section">
     <div class="team-outer-ctn">
       <SectionHeader
-        :button-label="capitalize($t('common.see-more'))"
-        :title="$t('group.the-team', { users: members.length })"
+        :button-label="capitalize(t('common.see-more'))"
+        :title="t('group.the-team', { users: members.length })"
         class="section-header"
         @redirect-button-clicked="goTo"
       />
@@ -13,7 +13,7 @@
           :key="member.id"
           :user="member"
           class="project-member shadow-drop"
-          @user-click="$emit('user-click', $event)"
+          @user-click="emits('user-click', $event)"
         />
       </div>
 
@@ -28,53 +28,45 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { capitalize } from '@/functs/string'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
 
-export default {
-  name: 'ProjectMemberSection',
+defineOptions({ name: 'ProjectMemberSection' })
 
-  components: { LpiButton, SectionHeader },
-
-  props: {
-    members: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  members: {
+    type: Array,
+    required: true,
   },
+})
 
-  emits: ['user-click'],
+const emits = defineEmits(['user-click'])
+const { isMobile } = useViewportWidth()
+const { t } = useNuxtI18n()
 
-  setup() {
-    const { isMobile, viewportWidth } = useViewportWidth()
-    return { isMobile, viewportWidth, capitalize }
-  },
+const router = useRouter()
+const route = useRoute()
 
-  computed: {
-    additionalMembersLabel() {
-      return this.$t('group.see-more-people-button', {
-        users: this.members.length - this.totalDisplayed,
-      })
-    },
+const totalDisplayed = computed(() => {
+  return isMobile.value ? 6 : 8
+})
 
-    totalDisplayed() {
-      return this.isMobile.value ? 6 : 8
-    },
-  },
+const additionalMembersLabel = computed(() => {
+  return t('group.see-more-people-button', {
+    users: props.members.length - totalDisplayed.value,
+  })
+})
 
-  methods: {
-    goTo() {
-      this.$router.push({
-        name: 'projectTeam',
-        params: { slugOrId: this.$route.params.slugOrId },
-        hash: '#tab',
-      })
-    },
-  },
+const goTo = () => {
+  router.push({
+    name: 'projectTeam',
+    params: { slugOrId: route.params.slugOrId },
+    hash: '#tab',
+  })
 }
 </script>
 

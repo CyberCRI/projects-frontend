@@ -29,7 +29,7 @@
             <IconImage
               class="icon green-color clickable"
               name="FileTreeOutline"
-              @click="$emit('move', group)"
+              @click="emits('move', group)"
             />
           </div>
           <div class="icon-td">
@@ -54,49 +54,29 @@
     </li>
   </ul>
 </template>
-<script>
+<script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'GroupsElement',
+defineOptions({ name: 'GroupsElement' })
 
-  components: {
-    IconImage,
+defineProps({
+  group: {
+    type: Object,
+    required: true,
   },
+})
 
-  props: {
-    group: {
-      type: Object,
-      required: true,
-    },
-  },
+const router = useRouter()
+const emits = defineEmits(['move', 'add', 'edit'])
+const showChild = ref(false)
 
-  emits: ['move', 'add', 'edit'],
-
-  data() {
-    return {
-      showChild: false,
-    }
-  },
-
-  methods: {
-    showChildren() {
-      this.showChild = !this.showChild
-    },
-    goTo(group) {
-      this.$router.push({ name: 'Group', params: { groupId: group.slug || group.id } })
-    },
-    addGroup(group) {
-      this.$emit('add', group)
-    },
-    editGroup(group) {
-      this.$emit('edit', group)
-    },
-    moveGroup(group) {
-      this.$emit('move', group)
-    },
-  },
+const showChildren = () => (showChild.value = !showChild.value)
+const goTo = (group) => {
+  router.push({ name: 'Group', params: { groupId: group.slug || group.id } })
 }
+const addGroup = (group) => emits('add', group)
+const editGroup = (group) => emits('edit', group)
+const moveGroup = (group) => emits('move', group)
 </script>
 <style lang="scss" scoped>
 .top-list {

@@ -40,57 +40,39 @@
     </div>
   </li>
 </template>
-<script>
+<script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
-export default {
-  name: 'MultiGroupPickerElement',
+defineOptions({ name: 'MultiGroupPickerElement' })
 
-  components: {
-    IconImage,
-    LpiCheckbox,
+const props = defineProps({
+  group: {
+    type: Object,
+    required: true,
+  },
+  selectedGroups: {
+    type: Object,
+    default: () => ({}),
   },
 
-  props: {
-    group: {
-      type: Object,
-      required: true,
-    },
-    selectedGroups: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    forceOpen: {
-      type: Boolean,
-      default: false,
-    },
+  forceOpen: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  emits: ['toggle-group'],
+const emits = defineEmits(['toggle-group'])
+const showChild = ref(false)
 
-  data() {
-    return {
-      showChild: false,
-    }
-  },
+const hasDisplayableChildren = computed(() => {
+  return props.group.children?.some((child) => !child.hidden)
+})
 
-  computed: {
-    hasDisplayableChildren() {
-      return this.group.children?.some((child) => !child.hidden)
-    },
-  },
-
-  methods: {
-    showChildren() {
-      this.showChild = !this.showChild
-    },
-    toggleGroup(group) {
-      this.$emit('toggle-group', group)
-    },
-  },
+const showChildren = () => {
+  showChild.value = !showChild.value
 }
+const toggleGroup = (group) => emits('toggle-group', group)
 </script>
 <style lang="scss" scoped>
 .icon-td {
