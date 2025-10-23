@@ -46,7 +46,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['click'])
+const emit = defineEmits(['click'])
 const { getTranslatableField } = useAutoTranslate()
 const translatedJob = getTranslatableField(props.user, 'job')
 
@@ -66,7 +66,7 @@ const mailTo = () => {
 const userAction = (event) => {
   if (isPrivateUser.value) return
 
-  emits('click', event)
+  emit('click', event)
 }
 </script>
 

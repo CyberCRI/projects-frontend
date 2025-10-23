@@ -1,9 +1,9 @@
 <template>
-  <BaseDrawer :is-opened="isOpened" title="" class="full" no-footer @close="emits('close')">
+  <BaseDrawer :is-opened="isOpened" title="" class="full" no-footer @close="emit('close')">
     <ExistingAccountChecker
       v-if="isAddMode && !targetUser"
       @check-done="onCheckDone"
-      @cancel="emits('close')"
+      @cancel="emit('close')"
     />
     <AccountLayout
       v-else
@@ -11,7 +11,7 @@
       :is-add-mode="isAddMode"
       :is-invite-mode="isInviteMode"
       :selected-user="targetUser || selectedUser"
-      @close="emits('close')"
+      @close="emit('close')"
     />
   </BaseDrawer>
 </template>
@@ -37,7 +37,7 @@ defineProps({
 })
 
 const { t } = useNuxtI18n()
-const emits = defineEmits(['close'])
+const emit = defineEmits(['close'])
 const toaster = useToasterStore()
 const targetUser = ref(null)
 

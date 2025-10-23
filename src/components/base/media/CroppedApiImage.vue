@@ -52,7 +52,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['load', 'error'])
+const emit = defineEmits(['load', 'error'])
 const runtimeConfig = useRuntimeConfig()
 const imageLoaded = ref(false)
 const imageError = ref(false)
@@ -74,10 +74,10 @@ const imageSizes = computed(() => {
 const onImageError = (event) => {
   imageError.value = true
   imageLoaded.value = true
-  emits('error', event)
+  emit('error', event)
 }
 const onImageLoaded = (event) => {
   imageLoaded.value = true
-  emits('load', event)
+  emit('load', event)
 }
 </script>

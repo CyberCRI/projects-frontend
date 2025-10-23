@@ -62,7 +62,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['toggle-group'])
+const emit = defineEmits(['toggle-group'])
 const showChild = ref(false)
 
 const hasDisplayableChildren = computed(() => {
@@ -72,7 +72,7 @@ const hasDisplayableChildren = computed(() => {
 const showChildren = () => {
   showChild.value = !showChild.value
 }
-const toggleGroup = (group) => emits('toggle-group', group)
+const toggleGroup = (group) => emit('toggle-group', group)
 </script>
 <style lang="scss" scoped>
 .icon-td {

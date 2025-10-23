@@ -17,7 +17,7 @@ import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
 defineOptions({ name: 'CompleteProfileStep2' })
-const emits = defineEmits(['saving', 'loading'])
+const emit = defineEmits(['saving', 'loading'])
 
 const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
@@ -36,7 +36,7 @@ const loadUser = async () => {
 
 onMounted(async () => {
   loading.value = true
-  emits('loading', true)
+  emit('loading', true)
 
   try {
     await loadUser()
@@ -44,7 +44,7 @@ onMounted(async () => {
     console.error(error)
   } finally {
     loading.value = false
-    emits('loading', false)
+    emit('loading', false)
   }
 })
 

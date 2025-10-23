@@ -11,7 +11,7 @@
             v-if="isEditable"
             action-icon="Pen"
             class="edit-btn small"
-            @click.stop="emits('edit-location', location)"
+            @click.stop="emit('edit-location', location)"
           />
         </div>
       </div>
@@ -50,7 +50,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['mounted', 'unmounted', 'edit-location'])
+const emit = defineEmits(['mounted', 'unmounted', 'edit-location'])
 const { t } = useNuxtI18n()
 const pointerLabel = computed(() => {
   return props.location.type === 'impact' ? t('project.impact') : t('team.team')
@@ -59,7 +59,7 @@ const pointerLabel = computed(() => {
 const tooltipRef = useTemplateRef('tooltip')
 const markerRef = useTemplateRef('marker')
 onMounted(() => {
-  emits('mounted', {
+  emit('mounted', {
     location: props.location,
     markerContent: markerRef.value,
     tooltip: tooltipRef.value,
@@ -67,7 +67,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  emits('unmounted', props.location)
+  emit('unmounted', props.location)
 })
 </script>
 

@@ -11,7 +11,7 @@
           v-if="projectListSlotProps.item"
           :horizontal-display="true"
           :project="projectListSlotProps.item"
-          @card-update="emits('card-update')"
+          @card-update="emit('card-update')"
         />
       </template>
       <template #empty>
@@ -25,7 +25,7 @@
         :current="pagination.currentPage"
         :pagination="pagination"
         :total="pagination.total"
-        @update-pagination="emits('pagination-changed', $event)"
+        @update-pagination="emit('pagination-changed', $event)"
       />
     </div>
   </div>
@@ -71,7 +71,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['card-update', 'pagination-changed'])
+const emit = defineEmits(['card-update', 'pagination-changed'])
 const gridLayout = computed(() => `desktop-col--${props.numberColumn}`)
 </script>
 

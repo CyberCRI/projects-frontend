@@ -14,8 +14,6 @@ defineProps({
   },
 })
 
-const emits = defineEmits(['navigated'])
-const navigated = () => {
-  emits('navigated')
-}
+const emit = defineEmits(['navigated'])
+const navigated = () => emit('navigated')
 </script>

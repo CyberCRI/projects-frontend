@@ -5,7 +5,7 @@
     :title="capitalize(label)"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
-    @close="emits('close')"
+    @close="emit('close')"
     @confirm="selectAction"
   >
     <GroupUserSelection
@@ -51,7 +51,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['close', 'add-user', 'set-mode'])
+const emit = defineEmits(['close', 'add-user', 'set-mode'])
 const { t } = useNuxtI18n()
 const selectedUsers = ref([])
 const selectedRole = 'members'
@@ -69,12 +69,12 @@ watch(
 )
 
 const addTeamMember = async () => {
-  emits('add-user', selectedUsers.value)
-  emits('close')
+  emit('add-user', selectedUsers.value)
+  emit('close')
 }
 
 const goBackToUserSelection = () => {
-  emits('set-mode', 'select')
+  emit('set-mode', 'select')
 }
 
 const updateUsers = (users) => {
@@ -85,7 +85,7 @@ const selectAction = () => {
   if (this.mode == 'roles') {
     addTeamMember()
   } else {
-    emits('set-mode', 'roles')
+    emit('set-mode', 'roles')
   }
 }
 </script>

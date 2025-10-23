@@ -5,8 +5,8 @@
     class="small"
     :confirm-action-name="t('common.save')"
     :confirm-action-disabled="!rooted && selectedGroup === null"
-    @close="emits('close')"
-    @confirm="emits('confirm', selectedGroup)"
+    @close="emit('close')"
+    @confirm="emit('confirm', selectedGroup)"
   >
     <PickGroup
       :subtitle="subtitle"
@@ -61,7 +61,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['close', 'confirm'])
+const emit = defineEmits(['close', 'confirm'])
 const { t } = useNuxtI18n()
 const selectedGroup = ref(null)
 

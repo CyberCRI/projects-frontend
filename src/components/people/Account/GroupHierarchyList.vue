@@ -47,10 +47,10 @@ defineProps({
     required: true,
   },
 })
-const emits = defineEmits(['add-group'])
+const emit = defineEmits(['add-group'])
 const show = ref(false)
 const setGroupList = (groupId) => {
-  emits('add-group', groupId)
+  emit('add-group', groupId)
 }
 </script>
 

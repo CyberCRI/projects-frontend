@@ -56,7 +56,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['update:model-value'])
+const emit = defineEmits(['update:model-value'])
 
 const drawerIsOpen = ref(false)
 const showFullList = ref(false)
@@ -69,13 +69,13 @@ const seeMoreLabel = computed(() => {
 })
 
 const onProjectsPicked = (projects) => {
-  emits('update:model-value', [...projects])
+  emit('update:model-value', [...projects])
   drawerIsOpen.value = false
 }
 
 const onRemoveProject = (project) => {
   const projects = this.modelValue.filter((p) => p.id !== project.id)
-  emits('update:model-value', [...projects])
+  emit('update:model-value', [...projects])
 }
 </script>
 

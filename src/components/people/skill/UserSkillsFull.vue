@@ -29,7 +29,7 @@
         :has-asked-mentorship="userMentorship[skill.id] === 'mentoree'"
         :has-offered-mentorship="userMentorship[skill.id] === 'mentor'"
         :mentorship-is-loading="mentorshipIsLoading"
-        @mentorship-send="emits('reload-mentorship')"
+        @mentorship-send="emit('reload-mentorship')"
       />
     </div>
   </div>
@@ -66,7 +66,7 @@ defineProps({
   },
 })
 const { t } = useNuxtI18n()
-const emits = defineEmits(['reload-mentorship'])
+const emit = defineEmits(['reload-mentorship'])
 </script>
 
 <style lang="scss" scoped>

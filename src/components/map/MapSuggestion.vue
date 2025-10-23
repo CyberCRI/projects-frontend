@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div ref="marker" class="map-pointer">
-      <div class="badge" @click="emits('pick-location', location)">
+      <div class="badge" @click="emit('pick-location', location)">
         <div :class="location.type" class="badge__dot" />
         <div class="badge__label">
           {{ location.label }}
@@ -23,18 +23,18 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['mounted', 'unmounted', 'pick-location'])
+const emit = defineEmits(['mounted', 'unmounted', 'pick-location'])
 
 const markerRef = useTemplateRef('marker')
 onMounted(() => {
-  emits('mounted', {
+  emit('mounted', {
     location: props.location,
     markerContent: markerRef.value,
   })
 })
 
 onUnmounted(() => {
-  emits('unmounted', props.location)
+  emit('unmounted', props.location)
 })
 </script>
 

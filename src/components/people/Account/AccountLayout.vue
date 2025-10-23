@@ -13,7 +13,7 @@
       :is-add-mode="isAddMode"
       :is-invite-mode="isInviteMode"
       :selected-user="currentUser"
-      @close="emits('close')"
+      @close="emit('close')"
     />
   </div>
 </template>
@@ -41,7 +41,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['close'])
+const emit = defineEmits(['close'])
 
 const currentUser = ref(null)
 const isLoading = ref(true)

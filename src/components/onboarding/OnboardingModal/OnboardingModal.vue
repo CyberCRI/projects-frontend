@@ -69,7 +69,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['stepped'])
+const emit = defineEmits(['stepped'])
 
 const { t } = useNuxtI18n()
 
@@ -88,13 +88,13 @@ const hasBothButtons = computed(() => {
 const previous = () => {
   if (activeStep.value > 1) {
     activeStep.value--
-    emits('stepped', activeStep.value)
+    emit('stepped', activeStep.value)
   }
 }
 const next = () => {
   if (activeStep.value < props.stepNumber) {
     activeStep.value++
-    emits('stepped', activeStep.value)
+    emit('stepped', activeStep.value)
   }
 }
 </script>

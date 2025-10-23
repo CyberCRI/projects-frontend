@@ -13,7 +13,7 @@
           :key="member.id"
           :user="member"
           class="project-member shadow-drop"
-          @user-click="emits('user-click', $event)"
+          @user-click="emit('user-click', $event)"
         />
       </div>
 
@@ -44,7 +44,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['user-click'])
+const emit = defineEmits(['user-click'])
 const { isMobile } = useViewportWidth()
 const { t } = useNuxtI18n()
 

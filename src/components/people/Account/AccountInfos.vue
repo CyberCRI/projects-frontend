@@ -71,7 +71,7 @@ defineProps({
   },
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()
 
@@ -80,7 +80,7 @@ const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
 })
 
 const updateForm = (fieldName, fieldValue) => {
-  emits('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })
+  emit('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })
 }
 </script>
 <style lang="scss" scoped>

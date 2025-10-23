@@ -7,7 +7,7 @@
       :secondary="true"
       class="back-btn"
       btn-icon="ArrowLeft"
-      @click="emits('back-to-user-selection')"
+      @click="emit('back-to-user-selection')"
     />
     <div class="tooltip-ctn">
       {{ t('role.select') }}
@@ -86,7 +86,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['select-role', 'back-to-user-selection'])
+const emit = defineEmits(['select-role', 'back-to-user-selection'])
 const { t } = useNuxtI18n()
 const userList = ref([])
 
@@ -123,7 +123,7 @@ onMounted(() => {
   }
   /* This is call is here to set up and update the user status on all parents */
   /* Also this used to be a watcher */
-  emits('select-role', userList.value)
+  emit('select-role', userList.value)
 })
 
 const selectRole = (user, role) => {
@@ -133,7 +133,7 @@ const selectRole = (user, role) => {
   userList.value[index].is_manager = role === 'editors'
   userList.value[index].is_leader = role === 'leaders'
 
-  emits('select-role', userList.value)
+  emit('select-role', userList.value)
 }
 </script>
 

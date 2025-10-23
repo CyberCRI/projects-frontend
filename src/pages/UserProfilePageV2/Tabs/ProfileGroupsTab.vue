@@ -19,7 +19,7 @@
                 :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
                 :group="cardListSlotProps.item"
                 :title="groupIsOtherOrg(cardListSlotProps.item) ? t('group.is-other-org') : ''"
-                @navigated-away="emits('close')"
+                @navigated-away="emit('close')"
                 @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
               />
             </template>
@@ -63,7 +63,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['close'])
+const emit = defineEmits(['close'])
 const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
 const orgStore = useOrganizations()

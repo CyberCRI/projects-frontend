@@ -90,7 +90,7 @@
       :is-open="mentorshipDrawerIsOpen"
       :is-offer="mentorshipDrawerIsOffer"
       @close="mentorshipDrawerIsOpen = false"
-      @mentorship-send="emits('mentorship-send')"
+      @mentorship-send="emit('mentorship-send')"
     />
   </div>
 </template>
@@ -137,7 +137,7 @@ const props = defineProps({
 })
 
 const { t } = useNuxtI18n()
-const emits = defineEmits(['mentorship-send'])
+const emit = defineEmits(['mentorship-send'])
 const skillTexts = useSkillTexts()
 const isOpen = ref(false)
 const mentorshipDrawerIsOpen = ref(false)

@@ -107,7 +107,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const emits = defineEmits(['navigated'])
+const emit = defineEmits(['navigated'])
 
 const hasOnlyMail = computed(() => {
   return (
@@ -136,7 +136,7 @@ const socialName = (url) => {
 }
 
 const fixLocation = (l) => l.split('\n').join('<br />')
-const navigated = () => emits('navigated')
+const navigated = () => emit('navigated')
 const switchView = () => router.push(props.editProfileLink)
 </script>
 

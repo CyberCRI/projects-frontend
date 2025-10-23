@@ -12,8 +12,8 @@
         class="instruction-actions"
         :can-edit="canEditInstruction"
         :can-delete="canDeleteInstruction"
-        @edit="emits('edit-instruction', instruction)"
-        @delete="emits('delete-instruction', instruction)"
+        @edit="emit('edit-instruction', instruction)"
+        @delete="emit('delete-instruction', instruction)"
       />
     </div>
     <div class="instruction-excerpt" :style="style">
@@ -26,7 +26,7 @@
       />
     </div>
     <div class="read-more-ctn">
-      <SummaryAction class="read-button" :action-label="$t('instructions.list.read-more')" />
+      <SummaryAction class="read-button" :action-label="t('instructions.list.read-more')" />
     </div>
   </NuxtLink>
 </template>
@@ -44,7 +44,8 @@ defineProps({
   },
 })
 
-const emits = defineEmits(['delete-instruction', 'edit-instruction'])
+const { t } = useNuxtI18n()
+const emit = defineEmits(['delete-instruction', 'edit-instruction'])
 
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
 

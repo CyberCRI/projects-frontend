@@ -59,11 +59,11 @@ const props = defineProps({
 })
 
 const { t } = useNuxtI18n()
-const emits = defineEmits(['navigated', 'toggle-editing'])
+const emit = defineEmits(['navigated', 'toggle-editing'])
 const sharedUrl = useRequestURL().toString()
 
-const navigated = () => emits('navigated')
-const switchView = () => emits('toggle-editing', !props.isEditing)
+const navigated = () => emit('navigated')
+const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>

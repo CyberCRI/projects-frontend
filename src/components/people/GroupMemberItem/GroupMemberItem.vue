@@ -1,5 +1,5 @@
 <template>
-  <div class="user" @click="emits('user-click', user)">
+  <div class="user" @click="emit('user-click', user)">
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
@@ -44,7 +44,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['user-click'])
+const emit = defineEmits(['user-click'])
 
 const userName = computed(() => {
   return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`

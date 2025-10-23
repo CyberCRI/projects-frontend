@@ -48,7 +48,7 @@ defineProps({
   },
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 const { t } = useNuxtI18n()
 const drawerIsOpen = ref(false)
 const forbiddenIds = ref([])
@@ -57,7 +57,7 @@ const closeDrawer = () => {
   drawerIsOpen.value = false
 }
 const confirmGroup = (group) => {
-  emits('update:modelValue', group)
+  emit('update:modelValue', group)
   closeDrawer()
 }
 </script>

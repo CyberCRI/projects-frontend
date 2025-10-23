@@ -29,7 +29,7 @@
             <IconImage
               class="icon green-color clickable"
               name="FileTreeOutline"
-              @click="emits('move', group)"
+              @click="emit('move', group)"
             />
           </div>
           <div class="icon-td">
@@ -67,16 +67,16 @@ defineProps({
 })
 
 const router = useRouter()
-const emits = defineEmits(['move', 'add', 'edit'])
+const emit = defineEmits(['move', 'add', 'edit'])
 const showChild = ref(false)
 
 const showChildren = () => (showChild.value = !showChild.value)
 const goTo = (group) => {
   router.push({ name: 'Group', params: { groupId: group.slug || group.id } })
 }
-const addGroup = (group) => emits('add', group)
-const editGroup = (group) => emits('edit', group)
-const moveGroup = (group) => emits('move', group)
+const addGroup = (group) => emit('add', group)
+const editGroup = (group) => emit('edit', group)
+const moveGroup = (group) => emit('move', group)
 </script>
 <style lang="scss" scoped>
 .top-list {

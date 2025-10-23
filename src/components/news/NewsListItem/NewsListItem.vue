@@ -12,8 +12,8 @@
         class="news-actions"
         :can-edit="canEditNews"
         :can-delete="canDeleteNews"
-        @edit="emits('edit-news', news)"
-        @delete="emits('delete-news', news)"
+        @edit="emit('edit-news', news)"
+        @delete="emit('delete-news', news)"
       />
     </div>
     <div class="news-img-ctn">
@@ -37,8 +37,8 @@
           class="news-actions"
           :can-edit="canEditNews"
           :can-delete="canDeleteNews"
-          @edit="emits('edit-news', news)"
-          @delete="emits('delete-news', news)"
+          @edit="emit('edit-news', news)"
+          @delete="emit('delete-news', news)"
         />
       </div>
       <div class="news-excerpt" :style="style">
@@ -71,7 +71,7 @@ defineProps({
   },
 })
 
-const emits = defineEmits(['delete-news', 'edit-news'])
+const emit = defineEmits(['delete-news', 'edit-news'])
 const { t } = useNuxtI18n()
 const { canEditNews, canDeleteNews } = usePermissions()
 const style = ref({})

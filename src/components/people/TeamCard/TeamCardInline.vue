@@ -3,7 +3,7 @@
     class="team-card-small"
     :class="{ passive: !iconName }"
     :data-test="`user-card-${user.id}`"
-    @click="iconName ? emits('user-clicked') : null"
+    @click="iconName ? emit('user-clicked') : null"
   >
     <div class="user-container">
       <CroppedApiImage
@@ -35,7 +35,7 @@
     </div>
 
     <div v-if="iconName" class="icon">
-      <IconImage :name="iconName" @click="emits('user-clicked')" />
+      <IconImage :name="iconName" @click="emit('user-clicked')" />
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['user-clicked'])
+const emit = defineEmits(['user-clicked'])
 const { t } = useNuxtI18n()
 const usersStore = useUsersStore()
 
