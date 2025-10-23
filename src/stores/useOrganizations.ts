@@ -71,7 +71,6 @@ const useOrganizationsStore = defineStore('organizations', () => {
   async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
     try {
       const response = await getOrganizations()
-      console.log(response.results)
       _all.value = response.results
 
       return response

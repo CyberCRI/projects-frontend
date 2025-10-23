@@ -1532,6 +1532,7 @@
     "take-tour": "Tee nüüd ringkäik."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Lisa asukoht",
     "add-linked-project": "Lisa seotud projekt",
     "add-location-point": "Asukohapunkti lisamine",

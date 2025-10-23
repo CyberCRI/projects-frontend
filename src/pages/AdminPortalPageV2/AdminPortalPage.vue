@@ -118,7 +118,6 @@ const breadcrumbs = computed(() => [
     route: { name: 'Admin' },
   },
 ])
-
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)

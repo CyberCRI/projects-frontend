@@ -56,7 +56,33 @@
         :menu-entries="actionMenu"
         @navigated="navigated"
         @action-triggered="onActionTriggered"
-      />
+      >
+        <li class="navpanel-menu-entry">
+          <ToolTip
+            class="project-infos-tip shadowed"
+            placement="top"
+            trigger="clickToOpen"
+            style="width: 100%"
+          >
+            <template #custom-content>
+              <dl class="projects-infos-list">
+                <dt>{{ $t('header.views') }}</dt>
+                <dd>{{ project?.views }}</dd>
+                <dt>{{ $t('header.creation') }}</dt>
+                <dd>{{ $d(new Date(project.created_at)) }}</dd>
+
+                <dt>{{ $t('header.update') }}</dt>
+                <dd>{{ $d(new Date(project.updated_at)) }}</dd>
+              </dl>
+            </template>
+            <span class="navpanel-menu-link" data-test="project-infos">
+              <IconImage class="icon" name="InfoCardLine" />
+
+              {{ $t('project.infos') }}
+            </span>
+          </ToolTip>
+        </li>
+      </NavPanelMenu>
     </div>
 
     <SimilarProjectsV2
@@ -206,6 +232,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/components/base/navigation/navpanel-menu-entry';
+
 .edit-btn-ctn {
   padding-bottom: 1rem;
   display: flex;
@@ -266,5 +294,19 @@ export default {
 
   --external-button-outer-size: 1.2rem;
   --external-button-inner-size: 1.2rem;
+}
+
+.projects-infos-list {
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  dd + dt {
+    margin-top: 0.5rem;
+  }
 }
 </style>

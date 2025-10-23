@@ -7,10 +7,9 @@ const { t } = useNuxtI18n()
 
 onMounted(organizationsStore.getAllOrganizations)
 
-const organisations = computed(() => {
-  console.log(organizationsStore.all)
-  return organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
-})
+const organisations = computed(() =>
+  organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
+)
 
 try {
   const runtimeConfig = useRuntimeConfig()

@@ -64,8 +64,19 @@
             'ProfileGroups',
             'ProfileSkills',
             'ProfileEdit',
+            'ProfileEditOther',
             'ProfileOtherUser',
             'ProfileEditOtherUser',
+            'ProfileSummaryOther',
+            'ProfileBioOther',
+            'ProfileProjectsOther',
+            'ProfileGroupsOther',
+            'ProfileSkillsOther',
+            'ProfileEditGeneralOther',
+            'ProfileEditBioOther',
+            'ProfileEditProjectsOther',
+            'ProfileEditGroupsOther',
+            'ProfileEditSkillsOther',
           ]"
           :to="{ name: 'People' }"
         />
