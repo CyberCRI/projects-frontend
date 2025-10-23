@@ -6,7 +6,7 @@ export default (url, _title, _description, image, dimensions = null) => {
 
   // sanitize to use in html meta tagswœ
   const title = computed(() => (unref(_title) || '').replace(/<[^>]*>?/gm, ''))
-  const description = computed(() => (_description || '').replace(/<[^>]*>?/gm, ''))
+  const description = computed(() => (unref(_description) || '').replace(/<[^>]*>?/gm, ''))
   let imgMimeType = 'image/jpeg'
   if (image) {
     try {
