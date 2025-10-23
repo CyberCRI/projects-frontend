@@ -3,7 +3,7 @@ import useToasterStore from '@/stores/useToaster'
 import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
 
-const useAPI = (url: string, options) => {
+const useAPI = <T>(url: string, options) => {
   const defaultOptions = () => {
     let _localStorage = null
     if (import.meta.client) _localStorage = window.localStorage
@@ -89,7 +89,7 @@ const useAPI = (url: string, options) => {
   }
 
   const _options = merge(defaultOptions(), options)
-  return $fetch(url, _options)
+  return $fetch<T>(url, _options)
 }
 
 export default useAPI
