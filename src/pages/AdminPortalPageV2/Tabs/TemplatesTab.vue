@@ -156,7 +156,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 </script>
 <script>
 import TextInput from '@/components/base/form/TextInput.vue'

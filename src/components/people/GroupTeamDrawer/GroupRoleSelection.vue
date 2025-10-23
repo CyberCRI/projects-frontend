@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'

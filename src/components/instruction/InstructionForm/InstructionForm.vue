@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SimilarProjectsItem from '@/components/project/SimilarProjectsItem.vue'

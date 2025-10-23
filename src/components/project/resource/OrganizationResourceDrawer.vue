@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 // import analytics from '@/analytics'

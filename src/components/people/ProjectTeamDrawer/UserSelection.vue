@@ -48,11 +48,13 @@
 </template>
 
 <script>
-import { debounce, capitalize } from 'es-toolkit'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { searchGroupsAlgolia } from '@/api/search.service.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { isNotGroup } from '@/functs/users'
 
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import TeamResultList from '@/components/people/ProjectTeamDrawer/TeamResultList.vue'
@@ -191,7 +193,7 @@ export default {
 
     selectUser(user) {
       this.selectedUsers.push(user)
-      if (this.$filters.isNotGroup(user)) {
+      if (isNotGroup(user)) {
         user.role = 'owners'
       }
 

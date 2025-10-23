@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { cropIfTooLong } from '@/functs/string'

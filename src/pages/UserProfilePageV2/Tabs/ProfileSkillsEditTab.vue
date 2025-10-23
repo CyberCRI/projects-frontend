@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 // import useUsersStore from '@/stores/useUsers.ts'

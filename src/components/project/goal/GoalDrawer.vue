@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import VueDatePicker from '@vuepic/vue-datepicker'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'

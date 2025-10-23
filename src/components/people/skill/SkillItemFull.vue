@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import IconImage from '@/components/base/media/IconImage.vue'

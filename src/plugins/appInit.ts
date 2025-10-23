@@ -5,9 +5,7 @@ export default defineNuxtPlugin(async () => {
   // main make some unit (keycloak.spec) tests fail
   // so disable when in test mode
   // see https://github.com/nuxt/test-utils/issues/526
-  const process = await import('node:process')
-  const isTest = String(process.env?.TEST) === 'true'
-  if (!isTest) {
+  if (import.meta?.env?.TEST !== 'true') {
     await main()
   }
 })

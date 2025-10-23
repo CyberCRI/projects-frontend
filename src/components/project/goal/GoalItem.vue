@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'

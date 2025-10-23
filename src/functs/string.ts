@@ -1,3 +1,4 @@
+import { capitalize as esCapitalize } from 'es-toolkit'
 /**
  * crop text if is too long
  *
@@ -14,4 +15,11 @@ export const cropIfTooLong = (text: string | null, length: number): string => {
     return text.length > length ? text.substring(0, length) + '...' : text
   }
   return ''
+}
+
+export const capitalize = (text: string | undefined | null): string => {
+  if (!text) {
+    return ''
+  }
+  return esCapitalize(text)
 }

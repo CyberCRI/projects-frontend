@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import AnnouncementItem from '@/components/project/announcement/AnnouncementItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'

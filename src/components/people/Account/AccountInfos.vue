@@ -51,7 +51,7 @@
   </AccountSection>
 </template>
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'

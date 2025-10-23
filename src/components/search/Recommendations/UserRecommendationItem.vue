@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'

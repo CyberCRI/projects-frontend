@@ -1,7 +1,7 @@
 <script setup>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers.ts'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()

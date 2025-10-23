@@ -50,7 +50,7 @@ import analytics from '@/analytics'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
 import useToasterStore from '@/stores/useToaster.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 export default {
   name: 'LocationForm',

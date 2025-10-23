@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiSelect from '@/components/base/form/LpiSelect.vue'

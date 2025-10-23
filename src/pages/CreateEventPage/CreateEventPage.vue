@@ -4,7 +4,7 @@ import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

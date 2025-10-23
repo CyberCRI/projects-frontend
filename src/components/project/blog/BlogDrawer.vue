@@ -85,7 +85,7 @@
 <script>
 import VueDatePicker from '@vuepic/vue-datepicker'
 
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'

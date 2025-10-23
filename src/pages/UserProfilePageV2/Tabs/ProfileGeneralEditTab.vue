@@ -232,7 +232,7 @@
   /-->
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'

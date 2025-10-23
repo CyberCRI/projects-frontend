@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

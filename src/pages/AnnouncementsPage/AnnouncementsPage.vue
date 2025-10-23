@@ -2,7 +2,7 @@
 import { getAnnouncements } from '@/api/announcements.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

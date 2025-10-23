@@ -33,7 +33,7 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
     "prepare": "husky install",
     "check-unused-comp": "check-unused-comp .",
-    "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/locales/*.?(json|yml|yaml|js)'",
+    "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/i18n/locales/*.?(json|yml|yaml|js)'",
     "list-icons": "node ./utilities/list-icons.js",
     "autotranslate": "node ./utilities/autotranslate.js"
   },

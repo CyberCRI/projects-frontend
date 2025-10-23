@@ -75,7 +75,7 @@
   </template>
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'

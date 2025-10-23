@@ -189,7 +189,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import analytics from '@/analytics'
 import { deleteProjectMembersSelf } from '@/api/project-members.service'

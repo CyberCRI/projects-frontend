@@ -17,10 +17,13 @@ import {
   getOrgClassificationTags,
 } from '@/api/tag-classification.service'
 
-import { debounce } from 'es-toolkit'
+import { debounce, throttle, capitalize } from 'es-toolkit'
 
-vi.mock('es-toolkit', () => ({ debounce: vi.fn((fn) => fn) }))
-
+vi.mock('es-toolkit', () => ({
+  debounce: vi.fn((fn) => fn),
+  throttle: vi.fn((fn) => fn),
+  capitalize: vi.fn((t) => t || ''),
+}))
 vi.mock('@/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     count: 3,

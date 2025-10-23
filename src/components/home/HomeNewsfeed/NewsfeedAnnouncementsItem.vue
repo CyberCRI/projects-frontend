@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'

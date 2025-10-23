@@ -104,7 +104,8 @@
 <script>
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 
-import { debounce, capitalize } from 'es-toolkit'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'

@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import GroupsElementRadio from '@/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'

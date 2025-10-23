@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'

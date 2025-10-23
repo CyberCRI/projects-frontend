@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 defineOptions({ name: 'ProjectCategoriesDropdownElementButton' })
 

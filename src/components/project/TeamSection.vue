@@ -37,12 +37,13 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import useUsersStore from '@/stores/useUsers'
+import { isGroup } from '@/functs/users'
 
 export default {
   name: 'TeamSection',
@@ -114,7 +115,7 @@ export default {
       payload.forEach((user) => {
         // current user is automatically added as owner
         // so dont duplicate him
-        if (this.$filters.isGroup(user) || user.id !== this.currentUser.id) {
+        if (isGroup(user) || user.id !== this.currentUser.id) {
           this.projectUsers.push({
             user: user,
             role: user.role,

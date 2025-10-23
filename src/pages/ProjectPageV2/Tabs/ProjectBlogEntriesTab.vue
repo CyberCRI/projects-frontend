@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'

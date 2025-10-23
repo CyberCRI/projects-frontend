@@ -166,7 +166,8 @@
 </template>
 
 <script>
-import { debounce, capitalize } from 'es-toolkit'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { searchPeopleAdmin } from '@/api/people.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {

@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

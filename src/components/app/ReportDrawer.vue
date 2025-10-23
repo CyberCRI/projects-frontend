@@ -85,7 +85,7 @@ import { helpers, url, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 function defaultForm() {
   return {

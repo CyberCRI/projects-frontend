@@ -110,7 +110,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'

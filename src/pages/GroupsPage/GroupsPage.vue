@@ -2,7 +2,7 @@
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const props = defineProps({
   groupId: {

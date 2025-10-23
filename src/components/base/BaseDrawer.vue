@@ -54,7 +54,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 export default {
   name: 'BaseDrawer',

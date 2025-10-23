@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'

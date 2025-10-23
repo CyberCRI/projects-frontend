@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'

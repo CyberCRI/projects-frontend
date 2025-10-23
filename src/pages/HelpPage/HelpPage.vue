@@ -1,6 +1,6 @@
 <script setup>
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()

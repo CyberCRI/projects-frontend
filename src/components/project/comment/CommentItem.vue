@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'

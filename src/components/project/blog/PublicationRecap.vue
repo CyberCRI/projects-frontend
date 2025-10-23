@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'

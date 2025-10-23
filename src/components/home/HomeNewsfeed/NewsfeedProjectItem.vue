@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'

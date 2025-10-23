@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'

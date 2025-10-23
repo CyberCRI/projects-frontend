@@ -141,6 +141,7 @@ export default {
   data() {
     return {
       listLimit: 6,
+      isLoading: false,
     }
   },
 

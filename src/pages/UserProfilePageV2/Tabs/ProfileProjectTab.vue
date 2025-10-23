@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

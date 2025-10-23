@@ -17,7 +17,7 @@
       />
 
       <div class="user-info">
-        <div v-if="$filters.isNotGroup(user)" class="name">
+        <div v-if="isNotGroup(user)" class="name">
           {{ capitalize(user.given_name) }}
           {{ capitalize(user.family_name) }}
         </div>
@@ -41,7 +41,8 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
+import { isNotGroup } from '@/functs/users'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'

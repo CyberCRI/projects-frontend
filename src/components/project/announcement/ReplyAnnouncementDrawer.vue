@@ -66,7 +66,7 @@
   </BaseDrawer>
 </template>
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'

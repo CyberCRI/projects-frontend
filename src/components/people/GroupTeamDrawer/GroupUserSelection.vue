@@ -66,7 +66,8 @@
 </template>
 
 <script>
-import { debounce, capitalize } from 'es-toolkit'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'

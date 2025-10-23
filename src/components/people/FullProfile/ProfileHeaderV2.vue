@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 defineOptions({ name: 'ProfileHeaderV2' })

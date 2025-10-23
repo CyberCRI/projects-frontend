@@ -29,7 +29,7 @@
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 // TODO: validate video src and display error message
 export default {

@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { debounce, capitalize } from 'es-toolkit'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { getAllProjects } from '@/api/projects.service'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'

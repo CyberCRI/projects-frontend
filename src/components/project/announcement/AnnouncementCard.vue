@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { useRuntimeConfig } from '#imports'
 

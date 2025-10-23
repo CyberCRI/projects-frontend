@@ -92,7 +92,8 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
+import { isNotGroup, isGroup } from '@/functs/users'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -221,11 +222,11 @@ export default {
     // if (this.selectedUserRole && this.isEditMode) this.userRole = this.selectedUerRole
     // if (this.selectedGroupRole && this.isEditMode) this.groupRole = this.selectedGroupRole
 
-    this.userList = this.selectedUsers.filter(this.$filters.isNotGroup).map((user) => ({
+    this.userList = this.selectedUsers.filter(isNotGroup).map((user) => ({
       ...user,
       role: this.selectedUserRole || 'owners',
     }))
-    this.groupList = this.selectedUsers.filter(this.$filters.isGroup).map((user) => ({
+    this.groupList = this.selectedUsers.filter(isGroup).map((user) => ({
       ...user,
       role: this.selectedGroupRole || 'member_groups',
     }))

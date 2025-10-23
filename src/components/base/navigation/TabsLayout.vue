@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'

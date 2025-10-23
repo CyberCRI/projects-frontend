@@ -4,7 +4,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { deleteOrganizationFile, getOrganizationFiles } from '@/api/organization-files.service'
 import useToasterStore from '@/stores/useToaster'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const { t } = useNuxtI18n()
 

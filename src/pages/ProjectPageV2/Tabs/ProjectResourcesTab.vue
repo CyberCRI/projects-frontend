@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/project/resource/ResourceCard.vue'

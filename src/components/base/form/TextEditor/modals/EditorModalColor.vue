@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

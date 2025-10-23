@@ -11,18 +11,18 @@
       {{ t(roleLabel) }}
     </span>
 
-    <div v-if="$filters.isNotGroup(user)" class="name-ctn">
+    <div v-if="isNotGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ userName }}
       </h4>
     </div>
 
     <!--        TODO: ask Api to send information-->
-    <div v-if="$filters.isNotGroup(user)" class="job">
+    <div v-if="isNotGroup(user)" class="job">
       {{ user?.$t?.job }}
     </div>
 
-    <div v-if="$filters.isGroup(user)" class="name-ctn">
+    <div v-if="isGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ user.name }}
       </h4>
@@ -31,6 +31,8 @@
 </template>
 
 <script setup>
+import { isNotGroup, isGroup } from '@/functs/users'
+
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
 defineOptions({ name: 'ProjectMemberItem' })

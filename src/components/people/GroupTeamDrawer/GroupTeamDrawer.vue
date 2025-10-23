@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupUserSelection from './GroupUserSelection.vue'
@@ -61,7 +61,7 @@ const label = computed(() => {
 })
 
 watch(
-  isOpened,
+  props.isOpened,
   (neo) => {
     if (neo) selectedUsers.value = [...props.currentUsers]
   },

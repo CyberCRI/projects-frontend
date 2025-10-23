@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'

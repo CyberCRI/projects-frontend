@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'

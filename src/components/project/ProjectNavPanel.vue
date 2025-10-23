@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import useUsersStore from '@/stores/useUsers.ts'
 import followUtils from '@/functs/followUtils.ts'
 

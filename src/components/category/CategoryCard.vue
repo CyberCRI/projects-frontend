@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'

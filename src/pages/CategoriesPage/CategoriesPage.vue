@@ -1,7 +1,7 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()

@@ -201,7 +201,7 @@
 </template>
 
 <script>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { deleteProjectMembers } from '@/api/project-members.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
