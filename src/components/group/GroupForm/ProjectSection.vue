@@ -61,6 +61,8 @@ const emit = defineEmits(['update:model-value'])
 const drawerIsOpen = ref(false)
 const showFullList = ref(false)
 
+const { t } = useNuxtI18n()
+
 const shortList = computed(() => {
   return props.modelValue.slice(0, 8)
 })
