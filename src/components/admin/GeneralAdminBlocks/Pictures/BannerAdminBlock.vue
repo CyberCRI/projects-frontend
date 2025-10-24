@@ -17,7 +17,7 @@ import { postOrganisationBanner, patchOrganisationBanner } from '@/api/organizat
 import AdminBlock from '../AdminBlock.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 

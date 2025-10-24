@@ -4,11 +4,12 @@ import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from '@/functs/string'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
 const form = ref(defaultForm())
@@ -72,7 +73,7 @@ try {
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="capitalize($t('common.cancel'))"
         secondary
         class="footer__left-button"
         data-test="close-button"

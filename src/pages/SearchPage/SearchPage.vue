@@ -4,7 +4,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const { searchFromQuery } = useSearch(null)
 
 const { onboardingTrap } = useOnboardingStatus()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 onMounted(async () => {
   onboardingTrap('explore_projects', false)

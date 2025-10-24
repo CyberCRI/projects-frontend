@@ -4,13 +4,14 @@ import useAPI from '@/composables/useAPI.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from '@/functs/string'
 
 const { translateNews } = useAutoTranslate()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const loading = ref(false)
 const editedNews = ref(null)
@@ -122,7 +123,7 @@ try {
       <LpiButton
         v-if="canCreateNews"
         primary
-        :label="$filters.capitalize($t('news.list.create'))"
+        :label="capitalize($t('news.list.create'))"
         data-test="create-news-button"
         btn-icon="Plus"
         class="create-news-button"

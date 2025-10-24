@@ -2,6 +2,7 @@
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { capitalize } from '@/functs/string'
 
 const props = defineProps({
   groupId: {
@@ -14,7 +15,7 @@ const organizationsStore = useOrganizationsStore()
 
 const { searchFromQuery } = useSearch('groups')
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 // ???
 // const permissions = usePermissions()
@@ -135,7 +136,7 @@ try {
 <template>
   <div class="page-section-extra-wide groups-layout page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('common.groups')) }}
+      {{ capitalize($t('common.groups')) }}
     </h1>
 
     <div v-if="!groupId" class="search-input-container">

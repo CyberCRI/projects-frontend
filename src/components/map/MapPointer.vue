@@ -11,7 +11,7 @@
             v-if="isEditable"
             action-icon="Pen"
             class="edit-btn small"
-            @click.stop="$emit('edit-location', location)"
+            @click.stop="emit('edit-location', location)"
           />
         </div>
       </div>
@@ -23,58 +23,52 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ProjectTooltip from '@/components/map/ProjectTooltip.vue'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
-export default {
-  name: 'MapPointer',
+defineOptions({ name: 'MapPointer' })
 
-  components: {
-    ProjectTooltip,
-    LocationTooltip,
-  },
-  props: {
-    location: {
-      type: Object,
-      default: null,
-    },
-
-    hasProjectTip: {
-      type: Boolean,
-      default: false,
-    },
-
-    hasLocationTip: {
-      type: Boolean,
-      default: false,
-    },
-
-    isEditable: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  location: {
+    type: Object,
+    default: null,
   },
 
-  emits: ['mounted', 'unmounted', 'edit-location'],
-
-  computed: {
-    pointerLabel() {
-      return this.location.type === 'impact' ? this.$t('project.impact') : this.$t('team.team')
-    },
+  hasProjectTip: {
+    type: Boolean,
+    default: false,
   },
 
-  mounted() {
-    this.$emit('mounted', {
-      location: this.location,
-      markerContent: this.$refs.marker,
-      tooltip: this.$refs.tooltip,
-    })
+  hasLocationTip: {
+    type: Boolean,
+    default: false,
   },
 
-  unmounted() {
-    this.$emit('unmounted', this.location)
+  isEditable: {
+    type: Boolean,
+    default: false,
   },
-}
+})
+
+const emit = defineEmits(['mounted', 'unmounted', 'edit-location'])
+const { t } = useNuxtI18n()
+const pointerLabel = computed(() => {
+  return props.location.type === 'impact' ? t('project.impact') : t('team.team')
+})
+
+const tooltipRef = useTemplateRef('tooltip')
+const markerRef = useTemplateRef('marker')
+onMounted(() => {
+  emit('mounted', {
+    location: props.location,
+    markerContent: markerRef.value,
+    tooltip: tooltipRef.value,
+  })
+})
+
+onUnmounted(() => {
+  emit('unmounted', props.location)
+})
 </script>
 
 <style lang="scss" scoped>

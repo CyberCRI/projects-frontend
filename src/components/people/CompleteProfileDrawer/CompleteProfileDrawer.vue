@@ -90,7 +90,7 @@ export default {
   emits: ['close', 'completed'],
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrapAll } = useOnboardingStatus()
     return {

@@ -2,61 +2,46 @@
   <LineChart v-bind="lineChartProps" />
 </template>
 
-<script>
+<script setup>
 import { LineChart, useLineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import { onMounted, onUnmounted, ref } from 'vue'
-
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 Chart.register(...registerables)
-export default {
-  name: 'LpiLineChart',
+defineOptions({ name: 'LpiLineChart' })
 
-  components: {
-    LineChart,
+const props = defineProps({
+  chartData: {
+    type: Object,
+    default: null,
   },
 
-  props: {
-    chartData: {
-      type: Object,
-      default: null,
-    },
-
-    options: {
-      type: Object,
-      default: null,
-    },
+  options: {
+    type: Object,
+    default: null,
   },
+})
 
-  setup(props) {
-    const dataValue = ref(props.chartData)
-    const dataOptions = ref(props.options)
+const dataValue = ref(props.chartData)
+const dataOptions = ref(props.options)
 
-    const { lineChartProps, lineChartRef } = useLineChart({
-      chartData: dataValue,
-      options: dataOptions,
-    })
+const { lineChartProps } = useLineChart({
+  chartData: dataValue,
+  options: dataOptions,
+})
 
-    const rerenderChart = function () {
-      useLineChart({
-        chartData: dataValue,
-        options: dataOptions,
-      })
-    }
+const rerenderChart = debounce(() => {
+  useLineChart({
+    chartData: dataValue,
+    options: dataOptions,
+  })
+}, 300)
 
-    onMounted(() => {
-      window.addEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-    })
+onMounted(() => {
+  window.addEventListener('resize', rerenderChart) // Adapt chart's size to window
+})
 
-    onUnmounted(() => {
-      window.removeEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-    })
-
-    return {
-      lineChartProps,
-      lineChartRef,
-    }
-  },
-}
+onUnmounted(() => {
+  window.removeEventListener('resize', rerenderChart) // Adapt chart's size to window
+})
 </script>

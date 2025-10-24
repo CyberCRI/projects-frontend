@@ -175,7 +175,7 @@
 import allSdgs from '@/data/sdgs.json'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
@@ -189,7 +189,7 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrap } = useOnboardingStatus()

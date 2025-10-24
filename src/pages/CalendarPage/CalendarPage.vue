@@ -1,8 +1,10 @@
 <script setup>
+import { capitalize } from '@/functs/string'
+
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { canCreateEvent } = usePermissions()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const router = useRouter()
 const tabs = computed(() => {
   return [
@@ -48,7 +50,7 @@ try {
       <LpiButton
         v-if="canCreateEvent"
         primary
-        :label="$filters.capitalize($t('event.create.button'))"
+        :label="capitalize($t('event.create.button'))"
         data-test="create-event-button"
         btn-icon="Plus"
         class="create-event-button"

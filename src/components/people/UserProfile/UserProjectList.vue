@@ -11,7 +11,7 @@
           v-if="projectListSlotProps.item"
           :horizontal-display="true"
           :project="projectListSlotProps.item"
-          @card-update="$emit('card-update')"
+          @card-update="emit('card-update')"
         />
       </template>
       <template #empty>
@@ -25,68 +25,54 @@
         :current="pagination.currentPage"
         :pagination="pagination"
         :total="pagination.total"
-        @update-pagination="$emit('pagination-changed', $event)"
+        @update-pagination="emit('pagination-changed', $event)"
       />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import EmptyCard from './EmptyCard.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 
-export default {
-  name: 'UserProjectList',
+defineOptions({ name: 'UserProjectList' })
 
-  components: {
-    CardList,
-    ProjectCard,
-    EmptyCard,
-    PaginationButtons,
+const props = defineProps({
+  projects: {
+    // use this to pass project list (without making a request here)
+    type: [Array, Boolean],
+    required: true,
   },
 
-  props: {
-    projects: {
-      // use this to pass project list (without making a request here)
-      type: [Array, Boolean],
-      required: true,
-    },
-
-    projectsLoading: {
-      type: Boolean,
-      default: false,
-    },
-
-    emptyLabel: {
-      type: String,
-      default: null,
-    },
-
-    numberColumn: {
-      type: Number,
-      default: 4,
-    },
-
-    limit: {
-      type: Number,
-      default: 12,
-    },
-    pagination: {
-      type: [Object, null],
-      default: null,
-    },
+  projectsLoading: {
+    type: Boolean,
+    default: false,
   },
 
-  emits: ['card-update', 'pagination-changed'],
-
-  computed: {
-    gridLayout() {
-      return `desktop-col--${this.numberColumn}`
-    },
+  emptyLabel: {
+    type: String,
+    default: null,
   },
-}
+
+  numberColumn: {
+    type: Number,
+    default: 4,
+  },
+
+  limit: {
+    type: Number,
+    default: 12,
+  },
+  pagination: {
+    type: [Object, null],
+    default: null,
+  },
+})
+
+const emit = defineEmits(['card-update', 'pagination-changed'])
+const gridLayout = computed(() => `desktop-col--${props.numberColumn}`)
 </script>
 
 <style lang="scss" scoped>

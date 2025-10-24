@@ -40,7 +40,7 @@
                 :class="{ unsortable: filter.unsortable }"
                 @click="sortBy(filter)"
               >
-                {{ $filters.capitalize($t(filter.label)) }}
+                {{ capitalize($t(filter.label)) }}
                 <IconImage
                   v-if="!filter.unsortable"
                   :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
@@ -72,11 +72,11 @@
                 </div>
               </td>
               <td>
-                {{ $filters.capitalize(user.family_name) }}
-                {{ $filters.capitalize(user.given_name) }}
+                {{ capitalize(user.family_name) }}
+                {{ capitalize(user.given_name) }}
               </td>
-              <!-- <td>{{ $filters.capitalize(user.given_name) }}</td> -->
-              <!-- <td>{{ $filters.capitalize(user.job) }}</td> -->
+              <!-- <td>{{ capitalize(user.given_name) }}</td> -->
+              <!-- <td>{{ capitalize(user.job) }}</td> -->
               <!-- <td class="has-more">
               {{ user.current_org_role ? $t(`groups.roles.${user.current_org_role}`) : '-' }}
             </td> -->
@@ -166,7 +166,8 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { searchPeopleAdmin } from '@/api/people.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
@@ -176,6 +177,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
   data() {

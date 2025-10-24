@@ -188,7 +188,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       organizationsStore,
       usersStore,

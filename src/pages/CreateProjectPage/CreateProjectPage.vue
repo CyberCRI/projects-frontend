@@ -18,7 +18,7 @@ const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 const { onboardingTrap } = useOnboardingStatus()
-const { t, locale } = useI18n()
+const { t, locale } = useNuxtI18n()
 
 const isFormCorrect = ref(true)
 const form = ref({

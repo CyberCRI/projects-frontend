@@ -32,44 +32,29 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import useUsersStore from '@/stores/useUsers.ts'
 
-export default {
-  name: 'ProfileBioTab',
+defineOptions({ name: 'ProfileBioTab' })
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
+})
 
-  setup() {
-    const usersStore = useUsersStore()
-    const { canEditUser } = usePermissions()
-    return {
-      usersStore,
-      canEditUser,
-    }
-  },
+const { t } = useNuxtI18n()
 
-  computed: {
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
+const usersStore = useUsersStore()
 
-    noDescription() {
-      return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
-    },
-    // editBioLink() {
-    //   return {
-    //     name: 'ProfileEditBio' + (this.isCurrentUser ? '' : 'Other'),
-    //     params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
-    //   }
-    // },
-  },
-}
+const isCurrentUser = computed(() => {
+  return usersStore.id === props.user.id
+})
+
+const noDescription = computed(() => {
+  return isCurrentUser.value ? t('me.no-bio') : t('you.no-bio')
+})
 </script>
 
 <style lang="scss" scoped>

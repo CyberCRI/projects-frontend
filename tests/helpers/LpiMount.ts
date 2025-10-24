@@ -1,18 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
-import { config, mount, shallowMount } from '@vue/test-utils'
-import { capitalize, isNotGroup, isGroup } from '@/filters'
+import { mount, shallowMount } from '@vue/test-utils'
 import { clickOutside, disableFocus } from '@/directives'
 import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-
-config.global.mocks = {
-  $filters: {
-    capitalize,
-    isNotGroup,
-    isGroup,
-  },
-}
 
 function buildOptions(options: any = {}) {
   const plugins = []

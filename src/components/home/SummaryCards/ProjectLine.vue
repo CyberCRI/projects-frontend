@@ -12,26 +12,24 @@
       default-picture="/placeholders/header_placeholder.png"
     />
     <div class="project-title">
-      {{ $filters.capitalize(project?.$t?.title) }}
+      {{ capitalize(project?.$t?.title) }}
     </div>
   </NuxtLink>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
-export default {
-  name: 'ProjectLine',
+defineOptions({ name: 'ProjectLine' })
 
-  components: { CroppedApiImage },
-
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
+defineProps({
+  project: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -12,7 +12,7 @@ export default function useProjectSocket({ project, reloadProject, getBlogEntrie
   const usersStore = useUsersStore()
   const { canEditProject } = usePermissions()
 
-  const { t } = useI18n()
+  const { t } = useNuxtI18n()
   const toaster = useToasterStore()
 
   // computed

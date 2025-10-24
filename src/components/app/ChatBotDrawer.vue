@@ -2,7 +2,7 @@
 import 'deep-chat'
 import analytics from '@/analytics'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
