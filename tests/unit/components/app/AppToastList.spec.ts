@@ -1,4 +1,4 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 
@@ -27,7 +27,7 @@ describe('AppToastList', () => {
   })
 
   it('should auto close after a delay', async () => {
-    wrapper = lpiShallowMount(AppToastList, defaultParams)
+    wrapper = lpiMount(AppToastList, defaultParams)
     const toaster = useToasterStore()
     toaster.toastList.push({
       isOpened: true,

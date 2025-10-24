@@ -3,7 +3,7 @@
     <slot />
 
     <div class="notice">
-      <span>{{ $t('project.create.choose-category-first') }}</span>
+      <span>{{ label }}</span>
     </div>
   </div>
 </template>
@@ -14,6 +14,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    label: {
+      type: String,
+      required: true,
     },
   },
 }

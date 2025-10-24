@@ -6,9 +6,9 @@ import { ImageModel } from '@/models/image.model'
  * @description Template of a category
  */
 export interface TemplateModel extends BaseModel {
-  title_placeholder: string
+  project_title: string
   goal_placeholder: string
-  description_placeholder: string
+  project_description: string
   blogentry_placeholder: string
   images: ImageModel[]
 }

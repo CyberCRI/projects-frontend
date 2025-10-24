@@ -95,10 +95,11 @@ const cache = reactive({
 async function hydrateFilters() {
   const rawFilters = props.search || {}
   const filters = {}
+  const organizationCode = useOrganizationCode()
 
   filters.categories = await Promise.all(
     (rawFilters.categories || []).map(async (catId) => {
-      if (!cache.categories[catId]) return await getProjectCategory(catId)
+      if (!cache.categories[catId]) return await getProjectCategory(organizationCode, catId)
       else return cache.categories[catId]
     })
   )

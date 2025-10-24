@@ -7,6 +7,11 @@ import 'regenerator-runtime/runtime'
 import { TextEncoder, TextDecoder } from 'util'
 import { afterEach } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { RouterLinkStub, config } from '@vue/test-utils'
+
+config.global.stubs = {
+  RouterLink: RouterLinkStub,
+}
 
 // crypto is not in jsdom
 // window.crypto =

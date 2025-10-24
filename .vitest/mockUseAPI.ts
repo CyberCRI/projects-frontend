@@ -4,5 +4,6 @@ import { vi } from 'vitest'
 vi.mock('../src/composables/useAPI', () => {
   return {
     default: vi.fn().mockResolvedValue({ data: { results: [] } }),
+    defaultOptions: vi.fn(() => ({})),
   }
 })

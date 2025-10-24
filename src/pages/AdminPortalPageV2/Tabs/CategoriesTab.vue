@@ -104,6 +104,8 @@ import { createProjectCategory, patchProjectCategory } from '@/api/project-categ
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useOrganizationCode from '@/composables/useOrganizationCode.ts'
+
 export default {
   name: 'CategoriesTab',
 
@@ -193,6 +195,7 @@ export default {
       this.draggedCategory = this.categoryIndex[event.item.dataset.categoryId]
     },
     async onDragEnd(event) {
+      const organizationCode = useOrganizationCode()
       const categoryId = event.item.dataset.categoryId
       const oldParentId = event.from.dataset.parentCategory || null
       const newParentId = event.to.dataset.parentCategory || null
@@ -219,12 +222,12 @@ export default {
         // update new parent children
         const newParentPromises = newParentChildren.map(async (child, index) => {
           if (child.id == category.id) {
-            return await patchProjectCategory(child.id, {
+            return await patchProjectCategory(organizationCode, child.id, {
               order_index: index,
               parent: newParentId,
             })
           } else if (index != child.order_index) {
-            return await patchProjectCategory(child.id, { order_index: index })
+            return await patchProjectCategory(organizationCode, child.id, { order_index: index })
           } else return Promise.resolve()
         })
         // update old parent children if necessary
@@ -232,7 +235,7 @@ export default {
           oldParentId !== newParentId
             ? oldParentChildren.map(async (child, index) => {
                 if (index != child.order_index) {
-                  return await patchProjectCategory(child.id, {
+                  return await patchProjectCategory(organizationCode, child.id, {
                     order_index: index,
                   })
                 } else return Promise.resolve()
@@ -271,21 +274,23 @@ export default {
     },
 
     async setImage(data, id, imageSizes, imageId) {
+      const organizationCode = useOrganizationCode()
       if (data.background_image instanceof File && id) {
         const formData = new FormData()
         formData.append('file', data.background_image, data.background_image.name)
-        const res = await postProjectCategoryBackground({ id, body: formData })
+        const res = await postProjectCategoryBackground(organizationCode, { id, body: formData })
         imageId = res.id
       }
       if (imageSizes && id) {
         delete data.background_image
         const formData = new FormData()
         imageSizesFormData(formData, imageSizes)
-        await patchProjectCategoryBackground({ id, imageId, body: formData })
+        await patchProjectCategoryBackground(organizationCode, { id, imageId, body: formData })
       }
     },
 
     async submitCategory(category) {
+      const organizationCode = useOrganizationCode()
       const imageSizes = category.imageSizes || null
       const imageId = category.background_image?.id || null
       const data = {
@@ -301,7 +306,7 @@ export default {
         categoryId = newCategory.id
       } else {
         // edit catgeory
-        await patchProjectCategory(categoryId, data)
+        await patchProjectCategory(organizationCode, categoryId, data)
       }
       await this.setImage(data, categoryId, imageSizes, imageId)
 
@@ -310,7 +315,7 @@ export default {
         await Promise.all(
           category.children.map(async (child, index) => {
             if (index != child.order_index)
-              return await patchProjectCategory(child.id, { order_index: index })
+              return await patchProjectCategory(organizationCode, child.id, { order_index: index })
             else return Promise.resolve()
           })
         )
@@ -334,6 +339,7 @@ export default {
     },
 
     async deleteCategory() {
+      const organizationCode = useOrganizationCode()
       if (
         !this.categoryToDelete ||
         this.categoryToDelete.children?.length ||
@@ -343,7 +349,7 @@ export default {
         return
       }
       try {
-        await deleteProjectCategory(this.categoryToDelete.id)
+        await deleteProjectCategory(organizationCode, this.categoryToDelete.id)
         this.toaster.pushSuccess(this.$t('admin.portal.categories.delete-category-success'))
 
         await this.projectCategoriesStore.getAllProjectCategories()
