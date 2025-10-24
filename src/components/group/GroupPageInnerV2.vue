@@ -74,12 +74,16 @@ export default {
       useToggleableNavPanel(uniqueId)
 
     const onNavigated = collapseIfUnderBreakpoint
-
+    const { translateGroup } = useAutoTranslate()
+    const rawGroupData = ref({})
+    const groupData = translateGroup(rawGroupData)
     return {
       peopleGroupsStore,
       organizationsStore,
       canEditGroup,
       isNavCollapsed,
+      rawGroupData,
+      groupData,
       toggleNavPanel,
       onNavigated,
     }
@@ -87,7 +91,6 @@ export default {
 
   data() {
     return {
-      groupData: null,
       membersInitialRequest: {},
       projectsInitialRequest: {},
       isLoading: true,
@@ -98,7 +101,7 @@ export default {
 
   computed: {
     groupName() {
-      return this.groupData?.name
+      return this.groupData?.$t?.name
     },
     groupImage() {
       return this.groupData?.header_image
@@ -114,10 +117,10 @@ export default {
     // },
 
     groupDescription() {
-      return this.groupData?.description
+      return this.groupData?.$t?.description
     },
     groupShortDescription() {
-      return this.groupData?.short_description
+      return this.groupData?.$t?.short_description
     },
 
     groupHierarchy() {
@@ -128,7 +131,7 @@ export default {
       if (!this.groupData) return [root]
       return [
         root,
-        ...this.groupData.hierarchy.map((group) => ({
+        ...(this.groupData?.hierarchy || []).map((group) => ({
           name: group.name,
           route: { name: 'Group', params: { groupId: group.slug || group.id } },
         })),
@@ -334,7 +337,7 @@ export default {
     async loadGroup() {
       try {
         this.isLoading = true
-        this.groupData = await getGroup(
+        this.rawGroupData = await getGroup(
           this.currentOrganizationCode,
           this.groupId,
           /*no error*/ true

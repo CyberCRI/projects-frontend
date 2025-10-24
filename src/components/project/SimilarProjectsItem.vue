@@ -10,13 +10,13 @@
   >
     <CroppedApiImage
       v-if="project?.header_image"
-      :alt="`${project.title} image`"
+      :alt="`${project?.$t?.title} image`"
       :picture-data="project.header_image"
       picture-size="small"
       default-picture="/placeholders/header_placeholder.png"
     />
 
-    <p>{{ project.title }}</p>
+    <p>{{ project?.$t?.title }}</p>
   </NuxtLink>
 </template>
 

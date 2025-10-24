@@ -49,7 +49,7 @@ const factory = (props?) => {
 describe('LinkCreateTab.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
   })
 
   it('should mount the component', () => {

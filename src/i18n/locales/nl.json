@@ -814,7 +814,7 @@
     "title": "Titel",
     "url": "url",
     "contact": {
-      "subtitle": "Vul dit snelle formulier in en we nemen spoedig contact met u op",
+      "subtitle": "Vul dit korte formulier in en we nemen spoedig contact met u op",
       "subject": "Onderwerp",
       "subject-placeholder": "Wat wil je met ons delen?",
       "email": "E-mail",
@@ -900,7 +900,7 @@
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} meer",
-    "see-subgroups": "Zie {count} subgroep ",
+    "see-subgroups": "Zie de subgroep | Zie {count} subgroepen",
     "share": "Delen",
     "the-team": "Het team ({users})",
     "news": "Mededelingen",
@@ -1034,7 +1034,9 @@
     "label-ca": "Catalaans",
     "label-nl": "Nederlands",
     "label-es": "Spaans",
-    "label-et": "Ests"
+    "label-et": "Ests",
+    "auto-translate-on": "Automatisch vertalen aan",
+    "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
     "loading": "Locatie laden"
@@ -1538,6 +1540,7 @@
     "take-tour": "Neem de rondleiding nu."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Voeg een locatie toe",
     "add-linked-project": "Een gekoppeld project toevoegen",
     "add-location-point": "Plaatspunt toevoegen",

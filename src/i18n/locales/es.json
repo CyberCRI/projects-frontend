@@ -1034,7 +1034,9 @@
     "label-ca": "Catalan",
     "label-nl": "Dutch",
     "label-es": "Español",
-    "label-et": "Estonia"
+    "label-et": "Estonia",
+    "auto-translate-on": "Traducción automática activada",
+    "auto-translate-off": "Traducción automática desactivada"
   },
   "location": {
     "loading": "Lugares de carga"
@@ -1538,6 +1540,7 @@
     "take-tour": "Tome el tour ahora"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Agregar un lugar",
     "add-linked-project": "Agregar un proyecto vinculado",
     "add-location-point": "Agregar un punto de ubicación",

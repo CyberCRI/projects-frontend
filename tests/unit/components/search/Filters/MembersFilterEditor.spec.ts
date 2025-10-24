@@ -34,7 +34,7 @@ const factory = (props?) => {
 describe('MembersFilterEditor.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
   })
   it('should render component', () => {
     const wrapper = factory({ modelValue: [] })

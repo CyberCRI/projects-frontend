@@ -1034,7 +1034,9 @@
     "label-ca": "Catalan",
     "label-nl": "Néerlandais",
     "label-es": "Espagnol",
-    "label-et": "Estonien"
+    "label-et": "Estonien",
+    "auto-translate-on": "Traduction automatique activée",
+    "auto-translate-off": "Traduction automatique désactivée"
   },
   "location": {
     "loading": "Chargement des lieux en cours"
@@ -1538,6 +1540,7 @@
     "take-tour": "Faire le tour maintenant"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Ajouter une localisation",
     "add-linked-project": "Ajouter un projet lié",
     "add-location-point": "Ajouter un point de localisation",

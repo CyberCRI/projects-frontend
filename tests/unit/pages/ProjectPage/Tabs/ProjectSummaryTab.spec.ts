@@ -25,7 +25,7 @@ const i18n = {
 describe('Tab.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
   })
   it('should render component', () => {
     const project = ProjectOutputFactory.generate()

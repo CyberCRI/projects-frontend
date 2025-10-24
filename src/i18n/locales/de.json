@@ -554,8 +554,8 @@
     "the-project": "Das Projekt",
     "title": "Titel",
     "yes": "Ja.",
-    "disconnect": "Trennen",
-    "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
+    "disconnect": "Abmelden",
+    "confirm-close": "Sind Sie sicher, dass Sie den Editor schlie\u00dfen wollen? \u00c4nderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
     "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
     "create": "Erstellung"
@@ -900,7 +900,7 @@
     "contact": "Kontakt",
     "edit-group": "Gruppe bearbeiten",
     "see-more-people-button": "Siehe {users} mehr",
-    "see-subgroups": "Siehe {count} Untergruppe | Siehe {count} Untergruppen",
+    "see-subgroups": "Siehe {count} Untergruppe | {count} Untergruppen ansehen",
     "share": "Teilen",
     "the-team": "Das Team ({users})",
     "news": "Ankündigungen",
@@ -1034,7 +1034,9 @@
     "label-ca": "Katalanisch",
     "label-nl": "Niederländisch",
     "label-es": "Spanisch",
-    "label-et": "Estnisch"
+    "label-et": "Estnisch",
+    "auto-translate-on": "Automatische Übersetzung ein",
+    "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
     "loading": "Ladestellen"
@@ -1053,7 +1055,7 @@
     "no-bio": "Sie schreiben Ihre Biographie noch nicht",
     "no-skill": "Sie haben noch keine Fähigkeiten hinzugefügt",
     "page-title": "Mein Profil",
-    "projects-participate": "Projekte, die ich bin",
+    "projects-participate": "Projekte, an denen ich beteiligt bin",
     "no-project-participate": "Sie sind noch nicht Mitglied eines Projekts",
     "projects-reviewing": "Projekte, die ich rezensiere",
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
@@ -1538,6 +1540,7 @@
     "take-tour": "Machen Sie die Tour jetzt"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
     "add-location-point": "Einen Ortspunkt hinzufügen",
@@ -2538,7 +2541,7 @@
       "read-more": "Weiterlesen"
     },
     "page": {
-      "others": "Sonstige Nachrichten"
+      "others": "Weitere Nachrichten"
     },
     "drawer": {
       "title": "Nachrichten bearbeiten"

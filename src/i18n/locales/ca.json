@@ -113,7 +113,7 @@
         "text": "Visualitza les posicions obertes"
       },
       "button_contact": {
-        "text": "Contacte amb nosaltres"
+        "text": "Contacta amb nosaltres"
       }
     }
   },
@@ -562,7 +562,7 @@
   },
   "complete-profile": {
     "bio": {
-      "title": "Biotec",
+      "title": "Perfil",
       "notice": "Bio Bioto permet a la gent entendre qui ets, què fas i defensar-te.",
       "notice-exemples": "Necessites inspiració? Aquí teniu exemples de {0}, {1} o {2}.",
       "exemples": {
@@ -793,7 +793,7 @@
   },
   "feed": {
     "see-all": "Veure- ho tot",
-    "title": "Reducció de notícies",
+    "title": "Fil de notícies",
     "empty": "No hi ha notícies... encara!"
   },
   "file": {
@@ -814,7 +814,7 @@
     "title": "Títol",
     "url": "URL",
     "contact": {
-      "subtitle": "Ompliu aquesta forma ràpida i us hi tornarem aviat",
+      "subtitle": "Ompliu aquest formulari i us respondrem aviat",
       "subject": "Assumpte",
       "subject-placeholder": "Què t'agradaria compartir amb nosaltres?",
       "email": "Correu electrònic",
@@ -871,7 +871,7 @@
     "templates": "Plantilles"
   },
   "footer": {
-    "contact": "Contacte amb nosaltres",
+    "contact": "Contacta amb nosaltres",
     "legal-notices": "Avisos legals",
     "terms-of-service": "Termes de servei",
     "cookies": "Galetes",
@@ -900,7 +900,7 @@
     "contact": "Contacte",
     "edit-group": "Edita grup",
     "see-more-people-button": "Vegeu {users} més",
-    "see-subgroups": "Mireu el subagrupador {count} mireu {count} subagrupacions",
+    "see-subgroups": "Veure el subgrup | Veure {count} subgrups",
     "share": "Comparteix",
     "the-team": "L' equip ({users})",
     "news": "Anuncis",
@@ -909,7 +909,7 @@
     "see-more": "Veure més",
     "see-less": "Veure menys",
     "subgroups": "SUBGROUPSConstellation name (optional)",
-    "snapshot": "instantània",
+    "snapshot": "Visió general",
     "members": "Membres",
     "projects": "Projectes",
     "visibility-private": "Visibilitat: privat",
@@ -1034,7 +1034,9 @@
     "label-ca": "Català",
     "label-nl": "Neerlandès",
     "label-es": "Espanyol",
-    "label-et": "Estonià"
+    "label-et": "Estonià",
+    "auto-translate-on": "Traducció automàtica activada",
+    "auto-translate-off": "Traducció automàtica desactivada"
   },
   "location": {
     "loading": "S' estan carregant les localitzacions"
@@ -1053,7 +1055,7 @@
     "no-bio": "Encara no has escrit la teva biografia",
     "no-skill": "Encara no heu afegit habilitat",
     "page-title": "El meu perfil",
-    "projects-participate": "Projectes sóc membre de",
+    "projects-participate": "Projectes dels quals sóc membre",
     "no-project-participate": "Encara no sou membre d' un projecte",
     "projects-reviewing": "Estic revisant projectes",
     "no-project-reviewing": "Encara no esteu revisant un projecte",
@@ -1321,7 +1323,7 @@
         }
       },
       "bio": {
-        "tab": "Biotec",
+        "tab": "Perfil",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
         "short-bio": {
@@ -1340,7 +1342,7 @@
       "projects": {
         "tab": "Projectes",
         "member": {
-          "label": "Projectes sóc membre de",
+          "label": "Projectes dels quals sóc membre",
           "notice": "Si voleu ser membre d' un projecte existent, hauríeu de demanar-li a l'equip del projecte que us afegeixi. O pots crear el teu projecte."
         },
         "followed": {
@@ -1515,10 +1517,10 @@
     "projects": "Projectes",
     "skills": "Habilitats",
     "groups": "Grups",
-    "snapshot": "instantània",
-    "bio": "Biotec",
-    "bio_pro": "Biotec professional",
-    "bio_personal": "Biotec personal",
+    "snapshot": "Visió general",
+    "bio": "Perfil",
+    "bio_pro": "Perfil professional",
+    "bio_personal": "Perfil personal",
     "cancel-title": "Cancel· la l' edició del perfil",
     "cancel-content": "Esteu segur que voleu cancel· lar la vostra edició de perfils? Qualsevol canvi fet es perdrà.",
     "can-mentor": "Pot ser mentor",
@@ -1538,6 +1540,7 @@
     "take-tour": "Fes la volta ara."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
     "add-location-point": "Afegeix un punt d' emplaçament",
@@ -1764,7 +1767,7 @@
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
-    "contact-us": "Contacte amb nosaltres"
+    "contact-us": "Contacta amb nosaltres"
   },
   "request-access": {
     "title": "Petició d' accés",
@@ -1799,7 +1802,7 @@
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
-    "contact-us": "Contacte amb nosaltres"
+    "contact-us": "Contacta amb nosaltres"
   },
   "role": {
     "role-editor": "Té tots els drets d' edició per aquest grup.",
@@ -2381,7 +2384,7 @@
   "recommendations": {
     "empty": "No tens recomanacions",
     "connect-to": "Potser voldreu connectar amb",
-    "title": "Recomanat per a vós",
+    "title": "Recomanat per a tu",
     "is-featured": "(Fatuta)",
     "more-projects": "Descobreix més projectes",
     "more-profiles": "Descobriu més perfils",

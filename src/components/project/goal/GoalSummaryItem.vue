@@ -9,7 +9,7 @@
     </div>
 
     <div class="goal-title">
-      {{ goal.title }}
+      {{ goal?.$t?.title }}
     </div>
 
     <div v-if="goal.deadline_at" class="deadline">

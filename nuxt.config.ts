@@ -40,8 +40,8 @@ try {
 // console.log(ALL_LOCALES)
 
 export default defineNuxtConfig({
-  // ssr: false,
-  compatibilityDate: '2024-11-01',
+  ssr: true,
+  // compatibilityDate: '2024-11-01',
   devtools: {
     enabled: import.meta.dev,
 
@@ -117,6 +117,7 @@ export default defineNuxtConfig({
     appOpenaiApiKey: '',
     appOpenaiApiPromptId: '',
     appOpenaiApiPromptVersion: '',
+    appOpenaiApiVectorStoreId: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',

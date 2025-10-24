@@ -15,9 +15,9 @@
 
     <div class="title-description-ctn">
       <h3 class="title">
-        {{ $filters.capitalize(category.name) }}
+        {{ $filters.capitalize(category?.$t?.name) }}
       </h3>
-      <p class="description" v-html="category.description" />
+      <p class="description" v-html="category?.$t?.description" />
     </div>
   </NuxtLink>
 </template>

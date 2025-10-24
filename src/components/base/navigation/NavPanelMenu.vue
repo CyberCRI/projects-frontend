@@ -1,15 +1,16 @@
 <template>
   <menu>
+    <slot />
     <li
       v-for="entry in menuEntries"
       :key="entry.key"
-      class="menu-entry"
+      class="navpanel-menu-entry"
       :class="{ active: isCurrentTab(entry, currentTab) }"
     >
       <template v-if="entry.condition">
         <NuxtLink
           v-if="!entry.isAddAction"
-          class="link"
+          class="navpanel-menu-link"
           :data-test="entry.dataTest"
           :to="entry.view"
           @click="onMenuEntryClicked($event, entry)"
@@ -22,7 +23,7 @@
         </NuxtLink>
         <span
           v-else
-          class="link"
+          class="navpanel-menu-link"
           :data-test="entry.dataTest"
           @click="onMenuEntryClicked($event, entry)"
         >
@@ -91,45 +92,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/components/base/navigation/navpanel-menu-entry';
+
 menu {
   display: flex;
   flex-flow: column;
   gap: 2px;
   list-style-type: none;
-
-  .menu-entry {
-    cursor: pointer;
-    border-radius: $border-radius-s;
-
-    &:hover,
-    &.active {
-      background-color: $primary-light;
-    }
-
-    .link {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      padding: 0.4rem;
-      color: $primary-dark;
-      cursor: pointer;
-
-      .icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        fill: $primary-dark;
-      }
-
-      .action-icon {
-        margin-left: auto;
-        opacity: 0;
-      }
-
-      &:hover .action-icon {
-        opacity: 1;
-      }
-    }
-  }
 }
 </style>

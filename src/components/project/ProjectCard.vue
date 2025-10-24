@@ -43,11 +43,11 @@
       :picture-data="project.header_image"
       picture-size="medium"
       default-picture="/placeholders/header_placeholder.png"
-      :alt="`${project.title} image`"
+      :alt="`${translatedTitle} image`"
       class="picture picture-project"
     />
     <div
-      :class="{ 'has-description': project.purpose && project.purpose.length }"
+      :class="{ 'has-description': translatedPurpose && translatedPurpose.length }"
       class="text text-limit"
     >
       <div ref="type" class="card-type">
@@ -56,10 +56,10 @@
         </div>
       </div>
       <div class="card-title">
-        {{ project.title }}
+        {{ translatedTitle }}
       </div>
       <div :style="{ '-webkit-line-clamp': purposeClamp }" class="card-description">
-        {{ project.purpose }}
+        {{ translatedPurpose }}
       </div>
     </div>
   </BasicCard>
@@ -126,10 +126,15 @@ export default {
     'custom-icon-click',
   ],
 
-  setup() {
+  setup(props) {
     const usersStore = useUsersStore()
+    const { getTranslatableField } = useAutoTranslate()
+    const translatedTitle = getTranslatableField(props.project, 'title')
+    const translatedPurpose = getTranslatableField(props.project, 'purpose')
     return {
       usersStore,
+      translatedTitle,
+      translatedPurpose,
     }
   },
 
@@ -192,7 +197,7 @@ export default {
     },
 
     titleRoughLines() {
-      return Math.ceil(this.project.title.length / 20)
+      return Math.ceil(this.translatedTitle.length / 20)
     },
 
     // show at least on line for purpose

@@ -31,9 +31,9 @@
         {{ group.members_count }}
       </div>
       <div class="card-type">
-        {{ group.name }}
+        {{ translatedName }}
       </div>
-      <p v-html="group.short_description" />
+      <p v-html="translatedShortDescription" />
     </div>
 
     <template v-if="hasSubGroupsLink" #footer>
@@ -85,6 +85,17 @@ export default {
   },
 
   emits: ['add', 'unselect', 'click', 'navigated-away'],
+
+  setup(props) {
+    const { getTranslatableField } = useAutoTranslate()
+    const translatedName = getTranslatableField(props.group, 'name')
+    const translatedShortDescription = getTranslatableField(props.group, 'short_description')
+
+    return {
+      translatedName,
+      translatedShortDescription,
+    }
+  },
 
   computed: {
     showAddButton() {

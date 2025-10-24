@@ -125,7 +125,7 @@ export default {
       return this.blogEntries.map((blogEntry) => {
         return {
           id: blogEntry.id,
-          label: blogEntry.title,
+          label: blogEntry.$t?.title,
           date: blogEntry.created_at,
         }
       })
