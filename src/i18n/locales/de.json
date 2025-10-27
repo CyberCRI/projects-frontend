@@ -2191,6 +2191,10 @@
       "success": "Das Projekt wurde erfolgreich erstellt",
       "error": "Fehler bei der Projekterstellung"
     },
+    "project-header-create": {
+      "success": "Das Projektbild wurde erfolgreich erstellt",
+      "error": "Fehler bei der Erstellung des Projektbildes"
+    },
     "project-destroy": {
       "success": "Das Projekt wurde erfolgreich gel\u00f6scht",
       "error": "Fehler bei der Projektl\u00f6schung"
@@ -2198,6 +2202,10 @@
     "project-edit": {
       "success": "Das Projekt wurde erfolgreich aktualisiert",
       "error": "Fehler beim Projektupdate"
+    },
+    "project-header-edit": {
+      "success": "Das Projektbild wurde erfolgreich aktualisiert",
+      "error": "Fehler bei der Aktualisierung des Projektbildes"
     },
     "project-duplication": {
       "success": "Das Projekt wurde erfolgreich dupliziert",

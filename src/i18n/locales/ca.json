@@ -2191,6 +2191,10 @@
       "success": "El projecte s' ha creat correctament",
       "error": "Error durant la creació del projecte"
     },
+    "project-header-create": {
+      "success": "La imatge del projecte s' ha creat correctament",
+      "error": "Error durant la creació de la imatge del projecte"
+    },
     "project-destroy": {
       "success": "El projecte s' ha esborrat correctament",
       "error": "Error durant l' esborrat del projecte"
@@ -2198,6 +2202,10 @@
     "project-edit": {
       "success": "El projecte s' ha actualitzat amb èxitName",
       "error": "Error durant l' actualització del projecte"
+    },
+    "project-header-edit": {
+      "success": "La imatge del projecte s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la imatge del projecte"
     },
     "project-duplication": {
       "success": "El projecte s' ha duplicat correctament",
