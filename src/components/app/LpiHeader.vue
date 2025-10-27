@@ -260,17 +260,22 @@ export default {
           action: () => this.updateLanguage(lang),
         }))
         .filter((lang) => lang.label !== this.locale.toUpperCase())
-      menu.push({
-        label: this.isAutoTranslateActivated
-          ? this.$t('language.auto-translate-on')
-          : this.$t('language.auto-translate-on'),
-        action: () => {
-          this.isAutoTranslateActivated = !this.isAutoTranslateActivated
-        },
-        leftIcon: this.isAutoTranslateActivated ? 'CheckBoxChecked' : 'SquareRoundedOutline',
-      })
+      if (this.showAutoTranslateOption)
+        menu.push({
+          label: this.isAutoTranslateActivated
+            ? this.$t('language.auto-translate-on')
+            : this.$t('language.auto-translate-on'),
+          action: () => {
+            this.isAutoTranslateActivated = !this.isAutoTranslateActivated
+          },
+          leftIcon: this.isAutoTranslateActivated ? 'CheckBoxChecked' : 'SquareRoundedOutline',
+        })
 
       return menu
+    },
+
+    showAutoTranslateOption() {
+      return ['EDUSYNERGY', 'CRI'].includes(this.organisation.code)
     },
 
     organization() {
