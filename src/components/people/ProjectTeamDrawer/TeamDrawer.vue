@@ -2,7 +2,7 @@
   <BaseDrawer
     :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
-    :title="capitalize(label)"
+    :title="label"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
     :asyncing="asyncing"
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import UserSelection from './UserSelection.vue'
 import RoleSelection from './RoleSelection.vue'
@@ -76,7 +74,6 @@ export default {
     const toaster = useToasterStore()
     return {
       toaster,
-      capitalize,
     }
   },
 

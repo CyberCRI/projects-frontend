@@ -19,14 +19,10 @@
       <IconImage class="close" name="Close" @click="$emit('close')" />
       <p>{{ $t('project.image-alert.notice') }}</p>
       <div class="actions">
-        <LpiButton
-          :label="capitalize($t('common.cancel'))"
-          :secondary="true"
-          @click="$emit('close')"
-        />
+        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="$emit('close')" />
 
         <LpiButton
-          :label="capitalize($t('project.image-alert.upload'))"
+          :label="$t('project.image-alert.upload')"
           class="footer__right-button"
           @click="$emit('edit')"
         />
@@ -36,8 +32,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 

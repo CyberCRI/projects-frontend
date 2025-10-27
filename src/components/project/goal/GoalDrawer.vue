@@ -12,14 +12,14 @@
     <div class="form">
       <TextInput
         v-model="form.title"
-        :label="capitalize(`${$t('goal.title')}:`)"
-        :placeholder="capitalize($t('goal.title'))"
+        :label="`${$t('goal.title')}:`"
+        :placeholder="$t('goal.title')"
         @blur="v$.form.title.$touch"
       />
       <FieldErrors :errors="v$.form.title.$errors" />
 
       <div class="goal-description-section">
-        <span class="goal-label">{{ capitalize($t('goal.description')) }}:</span>
+        <span class="goal-label">{{ $t('goal.description') }}:</span>
         <TipTapEditor
           v-model="form.description"
           class="goal-description"
@@ -31,7 +31,7 @@
       <SwitchInput
         v-model="deadlineVisible"
         class="deadline-switch"
-        :label="capitalize(`${$t('common.set-deadline')}:`)"
+        :label="`${$t('common.set-deadline')}:`"
       />
 
       <VueDatePicker
@@ -42,7 +42,7 @@
       />
 
       <div class="status-ctn">
-        <span class="goal-label">{{ capitalize($t('goal.status-title')) }}:</span>
+        <span class="goal-label">{{ $t('goal.status-title') }}:</span>
         <GroupButton
           v-model="form.status"
           class="group-button-labels"
@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import VueDatePicker from '@vuepic/vue-datepicker'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -160,22 +159,22 @@ export default {
       return [
         {
           value: 'na',
-          label: capitalize(this.$t('status.na')),
+          label: this.$t('status.na'),
           selected: this.form.status === 'na',
         },
         {
           value: 'ongoing',
-          label: capitalize(this.$t('status.ongoing')),
+          label: this.$t('status.ongoing'),
           selected: this.form.status === 'ongoing',
         },
         {
           value: 'complete',
-          label: capitalize(this.$t('status.completed')),
+          label: this.$t('status.completed'),
           selected: this.form.status === 'complete',
         },
         {
           value: 'cancel',
-          label: capitalize(this.$t('status.canceled')),
+          label: this.$t('status.canceled'),
           selected: this.form.status === 'cancel',
         },
       ]

@@ -17,7 +17,7 @@
 
     <LpiButton
       v-if="isInEditingMode && canEditProject"
-      :label="capitalize($t('sdg.add-short'))"
+      :label="$t('sdg.add-short')"
       class="add-sdg-btn"
       btn-icon="Plus"
       @click="showSdgModal"
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 export default {
@@ -55,7 +54,6 @@ export default {
       locale,
       runtimeConfig,
       canEditProject,
-      capitalize,
     }
   },
 

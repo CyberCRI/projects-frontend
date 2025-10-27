@@ -9,7 +9,7 @@
         <slot name="footer">
           <LpiButton
             :disabled="asyncing"
-            :label="capitalize(t('common.cancel'))"
+            :label="t('common.cancel')"
             secondary
             class="footer__left-button"
             data-test="close-button"
@@ -18,7 +18,7 @@
 
           <LpiButton
             :disabled="confirmActionDisabled || asyncing"
-            :label="capitalize(confirmActionName || t('common.confirm'))"
+            :label="confirmActionName || t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="footer__right-button"
             data-test="confirm-button"
@@ -31,8 +31,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 defineOptions({ name: 'FormPanel' })
 
 const { t } = useNuxtI18n()

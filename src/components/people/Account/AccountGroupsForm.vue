@@ -75,8 +75,6 @@
   </template>
 </template>
 <script>
-import { capitalize } from '@/functs/string'
-
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
@@ -126,20 +124,20 @@ export default {
       return [
         {
           value: 'leaders',
-          label: capitalize(this.$t('group.role.leaders.label')),
+          label: this.$t('group.role.leaders.label'),
           dataTest: 'button-role-leader',
           tip: this.$t('group.role.leaders.help'),
         },
         {
           value: 'managers',
-          label: capitalize(this.$t('group.role.managers.label')),
+          label: this.$t('group.role.managers.label'),
           dataTest: 'button-role-editor',
           tip: this.$t('group.role.managers.help'),
         },
         // keeping for future use
         // {
         //     value: 'members',
-        //     label: capitalize(this.$t('group.role.members.label')),
+        //     label: this.$t('group.role.members.label'),
         //     tip: this.$t('group.role.members.help'),
         //     dataTest: 'button-role-members',
         // },

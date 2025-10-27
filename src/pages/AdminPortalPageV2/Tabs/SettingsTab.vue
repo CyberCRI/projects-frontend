@@ -1,6 +1,4 @@
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
@@ -144,7 +142,7 @@ const saveData = async () => {
             />
             <FieldErrors :errors="v$.form.language.$errors" />
           </AdminBlock>
-          <AdminBlock :block-title="capitalize($t('admin.portal.general.portal-referencing'))">
+          <AdminBlock :block-title="$t('admin.portal.general.portal-referencing')">
             <span class="description">{{ $t('tips.organization-visibility') }}</span>
             <GroupButton
               v-model="form.is_logo_visible_on_parent_dashboard"
@@ -155,7 +153,7 @@ const saveData = async () => {
 
             <div v-if="form.is_logo_visible_on_parent_dashboard" class="color-ctn">
               <span class="description">
-                {{ capitalize($t('tips.organization-logo')) }}
+                {{ $t('tips.organization-logo') }}
               </span>
 
               <Sketch
@@ -168,7 +166,7 @@ const saveData = async () => {
 
           <LpiButton
             :disabled="v$.$invalid"
-            :label="capitalize($t('common.save'))"
+            :label="$t('common.save')"
             :btn-icon="isLoading ? 'LoaderSimple' : null"
             class="save-button"
             @click="saveData"

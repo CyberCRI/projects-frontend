@@ -2,13 +2,13 @@
   <div class="group-section">
     <label>
       <span class="section-title">
-        {{ capitalize(t('group.form.parent-group-label')) }}
+        {{ t('group.form.parent-group-label') }}
       </span>
 
       <LpiButton
         class="add-parent-group-card"
         :btn-icon="modelValue ? 'Pen' : 'Plus'"
-        :label="capitalize(t(modelValue ? 'group.form.edit' : 'group.form.add'))"
+        :label="t(modelValue ? 'group.form.edit' : 'group.form.add')"
         data-test="add-parent-group-card"
         @click="drawerIsOpen = true"
       />
@@ -33,8 +33,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 defineOptions({ name: 'ParentGroupSection' })
 
 defineProps({

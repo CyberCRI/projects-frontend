@@ -15,7 +15,7 @@
       <template #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }">
         <div class="project-list-header">
           <h4 class="title">
-            {{ capitalize($t('me.projects-participate')) }}
+            {{ $t('me.projects-participate') }}
             <span>({{ totalCount }})</span>
           </h4>
         </div>
@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -102,7 +101,6 @@ export default {
     return {
       usersStore,
       canCreateProject,
-      capitalize,
     }
   },
 

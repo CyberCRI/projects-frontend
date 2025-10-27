@@ -3,7 +3,7 @@
     <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleDescription">
       <div class="content">
         <div class="left" :class="goal.status">
-          {{ capitalize($t(`status.${goal.status}`)) }}
+          {{ $t(`status.${goal.status}`) }}
         </div>
 
         <div class="right">
@@ -13,7 +13,7 @@
             </p>
 
             <p v-if="deadlineVisible" class="goal-deadline" :class="goal.status">
-              {{ capitalize(deadlineFormatted) }}
+              {{ deadlineFormatted }}
             </p>
 
             <span v-if="hasDescription" class="chevron-icon">
@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
@@ -74,10 +72,6 @@ export default {
   },
 
   emits: ['edit-goal', 'delete-goal'],
-  setup() {
-    return { capitalize }
-  },
-
   data() {
     return {
       descriptionVisible: false,

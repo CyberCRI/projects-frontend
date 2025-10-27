@@ -54,7 +54,7 @@
             </div>
             <LinkButton
               v-if="isMobile"
-              :label="capitalize(showMoreButtonLabel)"
+              :label="showMoreButtonLabel"
               class="more-btn"
               btn-icon="DotsHorizontal"
               data-test="extra-tabs-button-mobile"
@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
@@ -149,7 +148,7 @@ export default {
 
   setup() {
     const { isMobile } = useViewportWidth()
-    return { isMobile, capitalize }
+    return { isMobile }
   },
 
   data() {

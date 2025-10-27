@@ -7,7 +7,7 @@
       ref="search-input"
       v-model="queryString"
       :full="true"
-      :placeholder="capitalize($t('search.search-group'))"
+      :placeholder="$t('search.search-group')"
       class="input"
       @enter="launchSearch"
       @delete-query="deleteQuery"
@@ -30,8 +30,6 @@
   </div>
 </template>
 <script>
-import { capitalize } from '@/functs/string'
-
 import GroupsElementRadio from '@/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import { searchGroupsAlgolia } from '@/api/search.service.ts'
@@ -72,7 +70,6 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
-      capitalize,
     }
   },
   data() {

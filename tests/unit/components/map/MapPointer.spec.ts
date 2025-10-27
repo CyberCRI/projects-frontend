@@ -45,7 +45,7 @@ describe('MapPointer.vue', () => {
     const badgeLabel = wrapper.find('.badge__label')
 
     expect(hiddenBadge.exists()).toBeFalsy()
-    expect(badgeLabel.text()).toBe('impact')
+    expect(badgeLabel.text()).toBe('Impact')
   })
 
   it('should display team badge', () => {

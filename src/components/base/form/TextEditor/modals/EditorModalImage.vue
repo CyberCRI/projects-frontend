@@ -8,7 +8,7 @@
     @submit="insertImage"
   >
     <template #header>
-      {{ capitalize($t('file.add-image')) }}
+      {{ $t('file.add-image') }}
     </template>
 
     <template #body>
@@ -29,7 +29,6 @@ import DialogModal from '@/components/base/modal/DialogModal.vue'
 import ImageInput from '@/components/base/form/ImageInput.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useRuntimeConfig } from '#imports'
-import { capitalize } from '@/functs/string'
 
 export default {
   name: 'EditorModalImage',
@@ -57,7 +56,6 @@ export default {
     return {
       toaster,
       runtimeConfig,
-      capitalize,
     }
   },
 

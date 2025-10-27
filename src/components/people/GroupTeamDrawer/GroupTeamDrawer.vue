@@ -2,7 +2,7 @@
   <BaseDrawer
     :confirm-action-name="t('common.add')"
     :is-opened="isOpened"
-    :title="capitalize(label)"
+    :title="label"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
     @close="emit('close')"
@@ -26,8 +26,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupUserSelection from './GroupUserSelection.vue'
 import GroupRoleSelection from './GroupRoleSelection.vue'

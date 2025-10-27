@@ -10,7 +10,7 @@
           <tr>
             <th v-for="(filter, index) in filters" :key="index">
               <span class="button">
-                {{ capitalize($t(filter.label)) }}
+                {{ $t(filter.label) }}
               </span>
             </th>
             <th>
@@ -149,31 +149,31 @@ export default {
       showPendingOnly: false,
       filters: [
         {
-          label: 'admin.requests.table.last-name',
+          label: this.$t('admin.requests.table.last-name'),
           isActive: false,
           filter: 'family_name',
           order: '',
         },
         {
-          label: 'admin.requests.table.first-name',
+          label: this.$t('admin.requests.table.first-name'),
           isActive: false,
           filter: 'given_name',
           order: '',
         },
         {
-          label: 'admin.requests.table.email',
+          label: this.$t('admin.requests.table.email'),
           isActive: false,
           filter: 'email',
           order: '',
         },
         {
-          label: 'admin.requests.table.title',
+          label: this.$t('admin.requests.table.title'),
           isActive: false,
           filter: 'job',
           order: '',
         },
         {
-          label: 'admin.requests.table.message',
+          label: this.$t('admin.requests.table.message'),
           isActive: false,
           filter: 'message',
           order: '',

@@ -1,6 +1,5 @@
 <script setup>
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from '@/functs/string'
 
 const { searchFromQuery } = useSearch('people')
 const { t } = useNuxtI18n()
@@ -39,7 +38,7 @@ try {
 <template>
   <div class="page-section-extra-wide page-top">
     <h1 class="page-title">
-      {{ capitalize($t('common.people')) }}
+      {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
       <SearchBlock :limit="30" section="people" :freeze-search="isNavigating" />

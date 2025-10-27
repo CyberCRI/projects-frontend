@@ -30,11 +30,7 @@
       </template>
     </div>
     <div v-if="listProjects?.length > listLimit" class="show-more">
-      <LinkButton
-        class="see-more-btn"
-        :label="capitalize($t(seeMoreLabel))"
-        @click="isSeeMore = !isSeeMore"
-      />
+      <LinkButton class="see-more-btn" :label="$t(seeMoreLabel)" @click="isSeeMore = !isSeeMore" />
     </div>
     <PickProjectSelection
       :selected-projects="listProjects"
@@ -46,8 +42,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import PickProjectSelection from '@/components/project/PickProjectSelection.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
@@ -93,7 +87,6 @@ export default {
     const toaster = useToasterStore()
     return {
       toaster,
-      capitalize,
     }
   },
 

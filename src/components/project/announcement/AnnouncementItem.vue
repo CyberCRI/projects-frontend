@@ -2,13 +2,13 @@
   <div class="announcement">
     <div class="banner">
       <div class="creation-date">
-        {{ capitalize(createdDateLabel) }}
+        {{ createdDateLabel }}
       </div>
       <div v-if="!!announcement.deadline" class="deadline">
-        {{ capitalize(deadlineLabel) }}
+        {{ deadlineLabel }}
       </div>
       <div v-if="announcement.type && announcement.type !== 'na'" class="type">
-        {{ capitalize($t(`recruit.${announcement.type}`)) }}
+        {{ $t(`recruit.${announcement.type}`) }}
       </div>
     </div>
 
@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import utils from '@/functs/functions.ts'
@@ -81,7 +79,6 @@ export default {
     const { canEditProject } = usePermissions()
     return {
       canEditProject,
-      capitalize,
     }
   },
 

@@ -55,7 +55,7 @@
                   type="radio"
                   @change="selectRole(user, roleOption.value)"
                 />
-                {{ capitalize(roleOption.label) }}
+                {{ roleOption.label }}
               </label>
             </div>
           </div>
@@ -66,8 +66,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
@@ -93,21 +91,21 @@ const userList = ref([])
 const roleOptions = [
   {
     value: 'leaders',
-    label: capitalize(t('group.role.leaders.label')),
+    label: t('group.role.leaders.label'),
     dataTest: 'button-role-leader',
     tip: t('group.role.leaders.help'),
     userKey: 'is_leader',
   },
   {
     value: 'editors',
-    label: capitalize(t('group.role.managers.label')),
+    label: t('group.role.managers.label'),
     dataTest: 'button-role-managers',
     tip: t('group.role.managers.help'),
     userKey: 'is_manager',
   },
   {
     value: 'members',
-    label: capitalize(t('group.role.members.label')),
+    label: t('group.role.members.label'),
     tip: t('group.role.members.help'),
     dataTest: 'button-role-members',
     userKey: 'is_member',

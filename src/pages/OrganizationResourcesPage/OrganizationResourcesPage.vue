@@ -4,7 +4,6 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { deleteOrganizationFile, getOrganizationFiles } from '@/api/organization-files.service'
 import useToasterStore from '@/stores/useToaster'
-import { capitalize } from '@/functs/string'
 
 const { t } = useNuxtI18n()
 
@@ -101,7 +100,7 @@ try {
     </p>
     <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
-        :label="capitalize(t('resource.add-file'))"
+        :label="t('resource.add-file')"
         class="add-item-btn"
         btn-icon="Plus"
         data-test="in-page-add-resources"

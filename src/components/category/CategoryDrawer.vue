@@ -2,11 +2,7 @@
   <Drawer
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
-    :title="
-      capitalize(
-        !category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')
-      )
-    "
+    :title="!category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')"
     class="category-modal small"
     :asyncing="asyncing"
     @close="closeModal"
@@ -208,8 +204,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import Drawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -284,7 +278,6 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
-      capitalize,
     }
   },
 

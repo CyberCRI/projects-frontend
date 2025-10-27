@@ -102,7 +102,7 @@
       <div class="confirm-ctn">
         <LpiButton
           :disabled="asyncSave"
-          :label="capitalize($t('common.cancel'))"
+          :label="$t('common.cancel')"
           :secondary="true"
           class="footer__left-button"
           data-test="close-button"
@@ -111,7 +111,7 @@
 
         <LpiButton
           :disabled="asyncSave || v$.$invalid"
-          :label="capitalize($t('common.confirm'))"
+          :label="$t('common.confirm')"
           :btn-icon="asyncSave ? 'LoaderSimple' : null"
           :secondary="false"
           class="footer__right-button"
@@ -124,8 +124,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import RadioButton from '@/components/base/form/RadioButton.vue'
@@ -196,7 +194,6 @@ export default {
     return {
       toaster,
       organizationsStore,
-      capitalize,
     }
   },
 

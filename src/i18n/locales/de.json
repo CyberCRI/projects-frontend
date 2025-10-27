@@ -6,15 +6,15 @@
     }
   },
   "about": {
-    "page-title": "\u00dcber uns",
+    "page-title": "Über uns",
     "HEADER": {
       "title": "Projektteam"
     },
     "WHY": {
       "title": "Warum Projects.directory erstellen?",
       "des": "In jeder Organisation mit mehr als zwanzig Mitgliedern, ist es schwer zu wissen, wer tut, was und was jemand gerade arbeitet. Wir haben Projekte gestartet, um {link} Nutzer ihre Projekte und Initiativen zwischen Studenten, Forschern, Mitarbeitern und Lehrern zu teilen.",
-      "des1": "In einem interdisziplin\u00e4ren Umfeld k\u00f6nnen Sie sich nicht nur auf eine Top-down-Kommunikation verlassen: Menschen m\u00fcssen reden, andere Projekte entdecken, die f\u00fcr ihre Arbeit relevant sind, von coolen Projekten inspiriert werden, die f\u00fcr sich und den Planeten Sinn machen. So bauten wir eine Plattform, um jedem seine eigenen Projekte und Leidenschaften ihrer Gemeinschaft und der Welt zeigen zu lassen.",
-      "des2": "Es war bald offensichtlich, dass eine Organisation \u00e4hnliche Bed\u00fcrfnisse hat. So lassen wir andere Gruppen ihre eigenen Projekte (NGOs, Universit\u00e4ten...) auf ihren eigenen Portalen teilen, w\u00e4hrend alle Projekte, die auf einem {link} geteilt wurden. Wir haben die Unterst\u00fctzung des franz\u00f6sischen Bildungsministeriums, der Stadt Paris, der Region \u00cele-de-France, der Universit\u00e9 de Paris und vielen anderen.",
+      "des1": "In einem interdisziplinären Umfeld können Sie sich nicht nur auf eine Top-down-Kommunikation verlassen: Menschen müssen reden, andere Projekte entdecken, die für ihre Arbeit relevant sind, von coolen Projekten inspiriert werden, die für sich und den Planeten Sinn machen. So bauten wir eine Plattform, um jedem seine eigenen Projekte und Leidenschaften ihrer Gemeinschaft und der Welt zeigen zu lassen.",
+      "des2": "Es war bald offensichtlich, dass eine Organisation ähnliche Bedürfnisse hat. So lassen wir andere Gruppen ihre eigenen Projekte (NGOs, Universitäten...) auf ihren eigenen Portalen teilen, während alle Projekte, die auf einem {link} geteilt wurden. Wir haben die Unterstützung des französischen Bildungsministeriums, der Stadt Paris, der Region Île-de-France, der Université de Paris und vielen anderen.",
       "platform": "Globale Plattform",
       "button_blog": {
         "text": "Online-Blog"
@@ -22,9 +22,9 @@
     },
     "GOAL": {
       "title": "Wohin gehen wir von dort?",
-      "des": "CRI und die UNESCO ko-erstellt {lpiLink}, eine Initiative, die Bildung weltweit zu transformieren. #LearningPlanet ist eine globale offene Allianz von p\u00e4dagogischen Stakeholdern und Lerngemeinschaften mit einer Ursache, mit der Mission, Lernende aller Altersgruppen zu inspirieren und zu st\u00e4rken, um bessere Zukunft zu gestalten. Unser Ziel ist es, die Zusammenarbeit zwischen Tausenden von Akteuren der Bildung zu f\u00f6rdern und ein digitales \u00d6kosystem zu schaffen, das ihnen hilft, gemeinsam besser zu lernen",
-      "des1": "Projekte. Verzeichnis ist das reifeste Werkzeug dieses digitalen \u00d6kosystems. Wir hoffen, dass jede Organisation, die sich auf die L\u00f6sung nachhaltiger Entwicklungsziele konzentriert, ihre Projekte und Initiativen gemeinsam nutzen wird.",
-      "des2": "Projekte. Verzeichnis nutzt kollektive und k\u00fcnstliche Intelligenz aus der Initiative {weLearnLink} und dem Projekt {skillLink}.",
+      "des": "CRI und die UNESCO ko-erstellt {lpiLink}, eine Initiative, die Bildung weltweit zu transformieren. #LearningPlanet ist eine globale offene Allianz von pädagogischen Stakeholdern und Lerngemeinschaften mit einer Ursache, mit der Mission, Lernende aller Altersgruppen zu inspirieren und zu stärken, um bessere Zukunft zu gestalten. Unser Ziel ist es, die Zusammenarbeit zwischen Tausenden von Akteuren der Bildung zu fördern und ein digitales Ökosystem zu schaffen, das ihnen hilft, gemeinsam besser zu lernen",
+      "des1": "Projekte. Verzeichnis ist das reifeste Werkzeug dieses digitalen Ökosystems. Wir hoffen, dass jede Organisation, die sich auf die Lösung nachhaltiger Entwicklungsziele konzentriert, ihre Projekte und Initiativen gemeinsam nutzen wird.",
+      "des2": "Projekte. Verzeichnis nutzt kollektive und künstliche Intelligenz aus der Initiative {weLearnLink} und dem Projekt {skillLink}.",
       "button_community": {
         "text": "An Bord Ihrer Gemeinde"
       }
@@ -34,16 +34,16 @@
       "des": "Sie schaffen und verbessern die Projektplattform",
       "list": [
         {
-          "title": "Technologief\u00fchrer",
-          "des": "Sch\u00f6pfer von CRI-Projekten, Vollstack-Experte"
+          "title": "Technologieführer",
+          "des": "Schöpfer von CRI-Projekten, Vollstack-Experte"
         },
         {
           "title": "Projektleiter",
-          "des": "Setzt die Strategie, organisiert das Projekt und macht die Bed\u00fcrfnisse unserer Nutzer aus"
+          "des": "Setzt die Strategie, organisiert das Projekt und macht die Bedürfnisse unserer Nutzer aus"
         },
         {
           "title": "Frontend Entwickler",
-          "des": "Erstellt sch\u00f6ne Designs und implementiert sie in der App"
+          "des": "Erstellt schöne Designs und implementiert sie in der App"
         },
         {
           "title": "Chief Information Officer",
@@ -51,15 +51,15 @@
         },
         {
           "title": "Datenwissenschaftler",
-          "des": "F\u00fcr Empfehlungs-Engine und Suchalgorithmen verantwortlich"
+          "des": "Für Empfehlungs-Engine und Suchalgorithmen verantwortlich"
         },
         {
           "title": "Back-end Entwickler",
           "des": "Entwickelt APIs und komplexe Back-End Aufgaben"
         },
         {
-          "title": "P\u00e4dagogische Koordination",
-          "des": "Auftragsvergabe innerhalb der Universit\u00e4t von Paris am Challenge Institute"
+          "title": "Pädagogische Koordination",
+          "des": "Auftragsvergabe innerhalb der Universität von Paris am Challenge Institute"
         },
         {
           "title": "Techniker",
@@ -68,46 +68,46 @@
       ]
     },
     "TEAM_CONTRIB": {
-      "title": "Beitr\u00e4ge",
+      "title": "Beiträge",
       "des": "Sie helfen uns, die Plattform zu gestalten",
       "list": [
         {
           "title": "Praktikant",
-          "des": "Unterst\u00fctzt Benutzer und erstellt Hilfedokumentation"
+          "des": "Unterstützt Benutzer und erstellt Hilfedokumentation"
         },
         {
           "title": "Wissenschaftlicher Berater",
-          "des": "Sch\u00f6pfer von ProfChercheurs Initiative und CRI-Forschungskollegen"
+          "des": "Schöpfer von ProfChercheurs Initiative und CRI-Forschungskollegen"
         },
         {
           "title": "Leiter der Gemeinschaft",
-          "des": "PHD-Studierende und \u00c9PhiScience-Gr\u00fcnder, Super-Tester neuer Features"
+          "des": "PHD-Studierende und ÉPhiScience-Gründer, Super-Tester neuer Features"
         },
         {
-          "title": "P\u00e4dagogischer Koordinator",
-          "des": "Designs und Tests p\u00e4dagogische Szenarien mit Projekten mit Lizenzstudenten"
+          "title": "Pädagogischer Koordinator",
+          "des": "Designs und Tests pädagogische Szenarien mit Projekten mit Lizenzstudenten"
         },
         {
           "title": "Full-Stack Entwickler",
           "des": "Erstellt und integriert die WeLearn-Konzeptkarte in Projektsuche"
         },
         {
-          "title": "Community Manager und Schl\u00fcsselanwender",
-          "des": "Deployed France EduNum Projects Portal f\u00fcr das franz\u00f6sische Bildungsministerium"
+          "title": "Community Manager und Schlüsselanwender",
+          "des": "Deployed France EduNum Projects Portal für das französische Bildungsministerium"
         },
         {
           "title": "Projektberater und CRI Vorstandsmitglied",
           "des": "Leads Lernen Planet Initiative"
         },
         {
-          "title": "CRI Mitbegr\u00fcnder",
-          "des": "Hilft, die Vision f\u00fcr die Zukunft der Bildung und unser digitales \u00d6kosystem zu schaffen"
+          "title": "CRI Mitbegründer",
+          "des": "Hilft, die Vision für die Zukunft der Bildung und unser digitales Ökosystem zu schaffen"
         }
       ]
     },
     "JOBS": {
       "title": "Willst du mit uns arbeiten?",
-      "des": "Wir stellen Spezialisten zur Verf\u00fcgung, um uns dabei zu helfen, neue Features zu entwickeln und zu wachsen.",
+      "des": "Wir stellen Spezialisten zur Verfügung, um uns dabei zu helfen, neue Features zu entwickeln und zu wachsen.",
       "des1": "Sie wollen die Bildung verbessern und allen Changemakers helfen, ihre Projekte auf der ganzen Welt zu teilen? Begleiten Sie uns!",
       "button_jobboard": {
         "text": "Offene Positionen anzeigen"
@@ -133,52 +133,52 @@
     },
     "featured-tags": {
       "title": "Empfohlene Projekt-Tags",
-      "notice": "W\u00e4hlen Sie Tags aus, die standardm\u00e4\u00dfig beim Suchen oder Erstellen von Projekten vorgeschlagen werden"
+      "notice": "Wählen Sie Tags aus, die standardmäßig beim Suchen oder Erstellen von Projekten vorgeschlagen werden"
     },
     "featured-skills": {
-      "title": "Vorgeschlagene F\u00e4higkeiten",
-      "notice": "W\u00e4hlen Sie F\u00e4higkeiten, die standardm\u00e4\u00dfig beim Suchen oder Erstellen von Profilen vorgeschlagen werden"
+      "title": "Vorgeschlagene Fähigkeiten",
+      "notice": "Wählen Sie Fähigkeiten, die standardmäßig beim Suchen oder Erstellen von Profilen vorgeschlagen werden"
     },
     "classifications": {
       "esco-link": "Was ist ESCO?",
       "title": "Kundenspezifische Rahmenbedingungen",
-      "subtitle": "Projekte verwenden Wikipedia f\u00fcr Tags und ESCO standardm\u00e4\u00dfig F\u00e4higkeiten. Sie k\u00f6nnen auch eigene Repositories hinzuf\u00fcgen.",
+      "subtitle": "Projekte verwenden Wikipedia für Tags und ESCO standardmäßig Fähigkeiten. Sie können auch eigene Repositories hinzufügen.",
       "enter-title": "Geben Sie einen Titel ein",
       "enter-description": "Beschreibung eingeben",
       "title-field": "Titel des Rahmens",
       "description-field": "Beschreibung",
       "add-classification": {
-        "title": "Einen Rahmen hinzuf\u00fcgen",
+        "title": "Einen Rahmen hinzufügen",
         "error": "Fehler beim Speichern des Rahmens",
         "success": "Der Rahmen wurde erfolgreich geschaffen"
       },
       "edit-classification": {
         "title": "Einen Rahmen bearbeiten",
-        "error": "Fehler beim \u00c4ndern des Rahmens",
-        "success": "Der Rahmen wurde erfolgreich ge\u00e4ndert"
+        "error": "Fehler beim Ändern des Rahmens",
+        "success": "Der Rahmen wurde erfolgreich geändert"
       },
       "delete-classification": {
-        "title": "L\u00f6schen des Rahmens",
-        "content": "Sind Sie sicher, dass Sie den Rahmen '{title}' l\u00f6schen m\u00f6chten?",
-        "error": "Fehler beim L\u00f6schen des Rahmens",
-        "success": "Der Rahmen wurde erfolgreich gel\u00f6scht"
+        "title": "Löschen des Rahmens",
+        "content": "Sind Sie sicher, dass Sie den Rahmen '{title}' löschen möchten?",
+        "error": "Fehler beim Löschen des Rahmens",
+        "success": "Der Rahmen wurde erfolgreich gelöscht"
       },
       "create-classification": "Erstellen eines Rahmens",
       "create-tag": "Erstellen eines Tags",
       "tags": "Tags",
-      "enabled-for-projects": "Erm\u00f6glicht f\u00fcr Projekte",
-      "enabled-for-skills": "Erm\u00f6glicht f\u00fcr F\u00e4higkeiten",
-      "enabled-for-projects-success": "Rahmen f\u00fcr Projekte",
-      "enabled-for-skills-success": "Framework aktiviert f\u00fcr F\u00e4higkeiten",
+      "enabled-for-projects": "Ermöglicht für Projekte",
+      "enabled-for-skills": "Ermöglicht für Fähigkeiten",
+      "enabled-for-projects-success": "Rahmen für Projekte",
+      "enabled-for-skills-success": "Framework aktiviert für Fähigkeiten",
       "disabled-for-projects-success": "Projektbehinderte",
-      "disabled-for-skills-success": "Rahmenbehinderte f\u00fcr F\u00e4higkeiten",
+      "disabled-for-skills-success": "Rahmenbehinderte für Fähigkeiten",
       "disabled": "Behinderte",
       "no-custom": "Noch kein benutzerdefinierter Rahmen",
       "table": {
         "filter": "Filter-Tags",
         "tag": "Tag",
         "description": "Beschreibung",
-        "actions": "Ma\u00dfnahmen"
+        "actions": "Maßnahmen"
       },
       "add-tag": {
         "title": "In den Warenkorb",
@@ -186,9 +186,9 @@
         "error": "Fehler beim Erstellen des Tags"
       },
       "edit-tag": {
-        "title": "Schlagw\u00f6rter bearbeiten",
-        "success": "Der Tag wurde erfolgreich ge\u00e4ndert",
-        "error": "Fehler beim \u00c4ndern des Tags"
+        "title": "Schlagwörter bearbeiten",
+        "success": "Der Tag wurde erfolgreich geändert",
+        "error": "Fehler beim Ändern des Tags"
       },
       "tag-form": {
         "title-en": "Titel (EN)",
@@ -200,24 +200,24 @@
       },
       "tag-delete": {
         "confirm": {
-          "title": "Tag l\u00f6schen?",
-          "description": "` Sind Sie sicher, dass Sie den Tag '{tagName}' l\u00f6schen m\u00f6chten?"
+          "title": "Tag löschen?",
+          "description": "` Sind Sie sicher, dass Sie den Tag '{tagName}' löschen möchten?"
         },
-        "success": "Tag '{tagName}' gel\u00f6scht",
-        "error": "Fehler beim L\u00f6schen des Tags '{tagName} '"
+        "success": "Tag '{tagName}' gelöscht",
+        "error": "Fehler beim Löschen des Tags '{tagName} '"
       }
     },
     "org-file-confirm-delete": "Möchten Sie diese Datei wirklich von der Plattform löschen?",
     "tabs": {
       "information": "Allgemeines",
       "categories": "Kategorien",
-      "tags": "Schlagw\u00f6rter",
-      "skills": "F\u00e4higkeiten",
+      "tags": "Schlagwörter",
+      "skills": "Fähigkeiten",
       "help": "Hilfe",
       "links": "Links",
       "templates": "Vorlagen",
       "users": "Benutzer",
-      "requests": "Antr\u00e4ge",
+      "requests": "Anträge",
       "groups": "Gruppen",
       "settings": "Einstellungen"
     },
@@ -227,13 +227,13 @@
       "general": {
         "invisible": "Unsichtbar",
         "logo": "Logo",
-        "size-min-logo": "Mindestgr\u00f6\u00dfe f\u00fcr das Logo: {minWidth}px * {minHeight}px",
+        "size-min-logo": "Mindestgröße für das Logo: {minWidth}px * {minHeight}px",
         "portal-referencing": "Elternportal Referenzierung",
         "visible": "Sichtbar",
-        "public-image": "Bild (\u00f6ffentliche Ansicht)",
+        "public-image": "Bild (öffentliche Ansicht)",
         "wording": {
           "title": "Homepage-Wortung",
-          "notice": "Bearbeiten Sie hier die Texte, die auf Ihrer Homepage erscheinen (Titel und Beschreibung auf der \u00f6ffentlichen Ansicht und Titel nur auf Ihrer angeschlossenen Ansicht, d.h. sobald Ihre Benutzer angemeldet sind).",
+          "notice": "Bearbeiten Sie hier die Texte, die auf Ihrer Homepage erscheinen (Titel und Beschreibung auf der öffentlichen Ansicht und Titel nur auf Ihrer angeschlossenen Ansicht, d.h. sobald Ihre Benutzer angemeldet sind).",
           "fields": {
             "title": "Titel",
             "title-placeholder": "(kein Titel noch)",
@@ -253,27 +253,27 @@
         }
       },
       "categories": {
-        "add": "Kategorie hinzuf\u00fcgen",
+        "add": "Kategorie hinzufügen",
         "authorizations": "Genehmigungen",
         "children": "Kinderkategorien",
         "no-child": "Keine Kinderkategorie",
         "description-limit": "Maximal 300 Zeichen.",
         "edit": "Kategorie bearbeiten",
         "is-reviewable": "Bewertungen autorisieren",
-        "limit-publication-to-reviewers": "Begrenzung der Ver\u00f6ffentlichung der Pr\u00fcfer",
+        "limit-publication-to-reviewers": "Begrenzung der Veröffentlichung der Prüfer",
         "preview-categories": "Voransicht",
         "display-projects": "Projekte anzeigen",
         "hide-projects": "Projekte verbergen",
-        "delete-category": "Kategorie l\u00f6schen",
-        "delete-category-description": "Sind Sie sicher, dass Sie die Kategorie '{categoryName}' l\u00f6schen m\u00f6chten? Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+        "delete-category": "Kategorie löschen",
+        "delete-category-description": "Sind Sie sicher, dass Sie die Kategorie '{categoryName}' löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
         "delete-category-has-children": "Diese Kategorie hat Unterkategorien und/oder Projekte. Entfernen Sie sie zuerst.",
-        "delete-category-error": "Fehler beim L\u00f6schen der Kategorie",
-        "delete-category-success": "Kategorie gel\u00f6scht",
-        "background-notice": "F\u00fcr den Header der Seite dieser Kategorie k\u00f6nnen Sie eine Hintergrundfarbe ausw\u00e4hlen oder Ihr eigenes Hintergrundbild hochladen",
-        "background-color": "W\u00e4hlen Sie eine Hintergrundfarbe",
-        "background-image": "W\u00e4hlen Sie ein Hintergrundbild",
+        "delete-category-error": "Fehler beim Löschen der Kategorie",
+        "delete-category-success": "Kategorie gelöscht",
+        "background-notice": "Für den Header der Seite dieser Kategorie können Sie eine Hintergrundfarbe auswählen oder Ihr eigenes Hintergrundbild hochladen",
+        "background-color": "Wählen Sie eine Hintergrundfarbe",
+        "background-image": "Wählen Sie ein Hintergrundbild",
         "upload-picture": "Bild hochladen",
-        "tips-background-image": "Es ist nicht erforderlich, wenn Sie lieber einfach eine Farbe anzeigen w\u00fcrden. Mindestbreite: 1024px, Mindesth\u00f6he: 400px."
+        "tips-background-image": "Es ist nicht erforderlich, wenn Sie lieber einfach eine Farbe anzeigen würden. Mindestbreite: 1024px, Mindesthöhe: 400px."
       },
       "chat": "Chat-Plattform (Connected view)",
       "events": "Veranstaltungen",
@@ -293,13 +293,13 @@
         },
         "contact-email": {
           "required": "Die E-Mail ist erforderlich",
-          "email": "Dies muss eine g\u00fcltige E-Mail sein"
+          "email": "Dies muss eine gültige E-Mail sein"
         },
         "language": {
           "required": "Die Sprache ist erforderlich"
         },
         "background-color": {
-          "required-if": "Die Hintergrundfarbe ist erforderlich, wenn die Verkn\u00fcpfung auf dem Hauptportal der Projekte"
+          "required-if": "Die Hintergrundfarbe ist erforderlich, wenn die Verknüpfung auf dem Hauptportal der Projekte"
         }
       },
       "template": {
@@ -309,25 +309,25 @@
       }
     },
     "groups": {
-      "intro": "Verwenden Sie Gruppen, um Ihre Benutzer effizienter zu verwalten. Sie k\u00f6nnen Gruppen erstellen und Benutzer zu ihnen hinzuf\u00fcgen. Sie k\u00f6nnen auch Untergruppen erstellen.",
+      "intro": "Verwenden Sie Gruppen, um Ihre Benutzer effizienter zu verwalten. Sie können Gruppen erstellen und Benutzer zu ihnen hinzufügen. Sie können auch Untergruppen erstellen.",
       "create-group": "Gruppe erstellen",
-      "add-modal-title-1": "Kindergruppe hinzuf\u00fcgen zu \"",
+      "add-modal-title-1": "Kindergruppe hinzufügen zu \"",
       "add-modal-title-2": "\" Gruppe",
-      "subtitle-add-child": "W\u00e4hlen Sie in der Liste die Kindergruppe. Sie k\u00f6nnen nur eine ausw\u00e4hlen.",
-      "edit-modal-title": "Stammgruppe hinzuf\u00fcgen",
-      "subtitle-edit-child": "W\u00e4hlen Sie in der Liste die Elterngruppe. Sie k\u00f6nnen nur eine ausw\u00e4hlen."
+      "subtitle-add-child": "Wählen Sie in der Liste die Kindergruppe. Sie können nur eine auswählen.",
+      "edit-modal-title": "Stammgruppe hinzufügen",
+      "subtitle-edit-child": "Wählen Sie in der Liste die Elterngruppe. Sie können nur eine auswählen."
     },
     "requests": {
-      "intro": "Hier ist die Liste der Personen, die Zugriff auf Ihr Portal beantragt haben. Sie k\u00f6nnen ihre Anfrage akzeptieren oder ablehnen.",
+      "intro": "Hier ist die Liste der Personen, die Zugriff auf Ihr Portal beantragt haben. Sie können ihre Anfrage akzeptieren oder ablehnen.",
       "table": {
         "last-name": "Vorname",
         "first-name": "Vorname",
         "title": "Titel",
         "email": "E-Mail senden",
         "message": "Nachricht",
-        "action": "Nur anh\u00e4ngig",
+        "action": "Nur anhängig",
         "decline": "Deko",
-        "declined": "Entf\u00e4llt",
+        "declined": "Entfällt",
         "accept": "Annahme",
         "accepted": "angenommen",
         "no-result": "Kein Ergebnis"
@@ -337,12 +337,12 @@
   "account": {
     "another-organization": "weitere Organisation",
     "role-in-organization": "in",
-    "title-create-add": "Konto erstellen / hinzuf\u00fcgen",
+    "title-create-add": "Konto erstellen / hinzufügen",
     "title-create": "Konto erstellen",
     "title-edit": "Konto bearbeiten",
-    "title-invite": "Konto hinzuf\u00fcgen",
+    "title-invite": "Konto hinzufügen",
     "switch-to-edit": "Konto existiert bereits in Ihrer Organisation, Wechsel zum Bearbeiten",
-    "switch-to-invite": "Konto existiert bereits in einer anderen Organisation, Umschaltung auf Hinzuf\u00fcgen",
+    "switch-to-invite": "Konto existiert bereits in einer anderen Organisation, Umschaltung auf Hinzufügen",
     "sub-title": "Felder mit * sind obligatorisch.",
     "link": "Brauchen Sie Hilfe? Wir sind hier.",
     "form": {
@@ -361,15 +361,15 @@
       "no-group-selected": "Noch keine Gruppen"
     },
     "password-reset": {
-      "success": "Passwort zur\u00fccksetzen Link senden",
+      "success": "Passwort zurücksetzen Link senden",
       "error": "Fehler beim Senden von Passwort-Reset-Link"
     },
     "create-success": "Konto erstellen",
     "update-success": "Konto aktualisiert",
-    "delete-success": "Konto gel\u00f6scht",
-    "delete-account": "Konto l\u00f6schen",
+    "delete-success": "Konto gelöscht",
+    "delete-account": "Konto löschen",
     "reset-password": "Passwort vergessen?",
-    "reset-delete": "Passwort zur\u00fccksetzen und Konto l\u00f6schen",
+    "reset-delete": "Passwort zurücksetzen und Konto löschen",
     "error": "Ein Fehler ist veraltet.",
     "role": {
       "none": "Keine",
@@ -377,7 +377,7 @@
       "facilitator": "Fazit",
       "admin": "Org admin"
     },
-    "user-exists-in-other-org": "Ein Benutzer mit der gleichen E-Mail existiert in unserer Datenbank. Wir k\u00f6nnen ihn hier zu Ihrem Portal hinzuf\u00fcgen."
+    "user-exists-in-other-org": "Ein Benutzer mit der gleichen E-Mail existiert in unserer Datenbank. Wir können ihn hier zu Ihrem Portal hinzufügen."
   },
   "userItem": {
     "teamLeader": "Gruppenleiter"
@@ -385,10 +385,10 @@
   "groups": {
     "title": "Benutzerrolle",
     "edit": "Benutzerrolle bearbeiten",
-    "users": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie k\u00f6nnen Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Sicht der Gemeinschaft und alle \u00f6ffentlichen Projekte.",
-    "facilitators": "Fazit: Diese Rolle ist f\u00fcr Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und k\u00f6nnen sie bearbeiten. Sie haben auch alle Rechte der Nutzer.",
-    "admins": "Org admin: Diese Rolle erm\u00f6glicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org admins haben Zugriff auf das Admin-Men\u00fc des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren.",
-    "none": "Keine Diese Person hat ein Projektkonto, ist aber nicht Teil Ihres Portals. Sie k\u00f6nnen nur die \u00f6ffentlichen Projekte sehen.",
+    "users": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Sicht der Gemeinschaft und alle öffentlichen Projekte.",
+    "facilitators": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer.",
+    "admins": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren.",
+    "none": "Keine Diese Person hat ein Projektkonto, ist aber nicht Teil Ihres Portals. Sie können nur die öffentlichen Projekte sehen.",
     "roles": {
       "none": "Keine",
       "users": "Benutzer",
@@ -405,54 +405,54 @@
       "create-error": "Fehler bei der Einladungserstellung",
       "field": {
         "description": {
-          "label": "Beschreibung hinzuf\u00fcgen",
-          "notice": "Dies ist nur f\u00fcr Sie zu erinnern, wer Sie diesen Link f\u00fcr und warum erstellt.",
-          "placeholder": "F\u00fcr wen erstellen Sie diesen Link?"
+          "label": "Beschreibung hinzufügen",
+          "notice": "Dies ist nur für Sie zu erinnern, wer Sie diesen Link für und warum erstellt.",
+          "placeholder": "Für wen erstellen Sie diesen Link?"
         },
         "group": {
-          "add": "Hinzuf\u00fcgen",
+          "add": "Hinzufügen",
           "error": "Gruppe erforderlich",
-          "label": "W\u00e4hlen Sie die Gruppe *",
-          "notice": "Benutzer, die diesen Link benutzen, um sich zu registrieren, werden dieser Gruppe hinzugef\u00fcgt.",
-          "selected": "Gew\u00e4hlte Gruppe:"
+          "label": "Wählen Sie die Gruppe *",
+          "notice": "Benutzer, die diesen Link benutzen, um sich zu registrieren, werden dieser Gruppe hinzugefügt.",
+          "selected": "Gewählte Gruppe:"
         },
         "validity": {
-          "error": "G\u00fcltigkeit erforderlich",
-          "label": "W\u00e4hlen Sie Ihre G\u00fcltigkeitsdauer *",
-          "notice": "Sobald Sie es erstellen, wird der Link nur w\u00e4hrend dieser Zeit g\u00fcltig sein.",
+          "error": "Gültigkeit erforderlich",
+          "label": "Wählen Sie Ihre Gültigkeitsdauer *",
+          "notice": "Sobald Sie es erstellen, wird der Link nur während dieser Zeit gültig sein.",
           "one-year": "1 Jahr",
-          "pick-date": "W\u00e4hlen Sie ein Datum",
-          "valid-until": "G\u00fcltig bis"
+          "pick-date": "Wählen Sie ein Datum",
+          "valid-until": "Gültig bis"
         }
       },
-      "intro": "Registrieren Sie Links erm\u00f6glichen es Benutzern, die ein Projektkonto auf Ihrem Portal erstellen m\u00f6chten, dies zu tun. Alles, was Sie tun m\u00fcssen, ist mit ihnen den Link zu teilen. Viele Menschen k\u00f6nnen einen Link abonnieren. Sie k\u00f6nnen kontrollieren, welche Gruppe sie bei der Erstellung des Links sein werden.",
+      "intro": "Registrieren Sie Links ermöglichen es Benutzern, die ein Projektkonto auf Ihrem Portal erstellen möchten, dies zu tun. Alles, was Sie tun müssen, ist mit ihnen den Link zu teilen. Viele Menschen können einen Link abonnieren. Sie können kontrollieren, welche Gruppe sie bei der Erstellung des Links sein werden.",
       "link": "Brauchen Sie Hilfe? Wir sind hier.",
       "notice": "Mit * gekennzeichnete Felder sind obligatorisch.",
       "title": "Registrieren Sie sich"
     },
     "delete": {
-      "deleted-failed": "Fehler beim L\u00f6schen der Einladung"
+      "deleted-failed": "Fehler beim Löschen der Einladung"
     },
-    "delete-confirm-title": "L\u00f6schen Sie diesen Link?",
-    "expired-link-image": "Leider ist der von Ihnen verwendete Einladungslink entweder abgelaufen oder ung\u00fcltig.",
-    "expired-link": "Es scheint, dass der von Ihnen erhaltene Link abgelaufen ist oder einfach ung\u00fcltig ist. Um einen neuen Link zu erhalten, wenden Sie sich bitte an den Administrator:",
+    "delete-confirm-title": "Löschen Sie diesen Link?",
+    "expired-link-image": "Leider ist der von Ihnen verwendete Einladungslink entweder abgelaufen oder ungültig.",
+    "expired-link": "Es scheint, dass der von Ihnen erhaltene Link abgelaufen ist oder einfach ungültig ist. Um einen neuen Link zu erhalten, wenden Sie sich bitte an den Administrator:",
     "generate-link": "Link generieren",
     "list": {
       "created-by-column": "Erstellt von",
       "description-column": "Beschreibung",
-      "expire-column": "Abz\u00fcge",
+      "expire-column": "Abzüge",
       "group-column": "Gruppe",
-      "intro": "Registrieren Sie Links erm\u00f6glichen es Benutzern, die ein Projektkonto auf Ihrem Portal erstellen m\u00f6chten, dies zu tun. Alles, was Sie tun m\u00fcssen, ist mit ihnen den Link zu teilen. Viele Menschen k\u00f6nnen einen Link abonnieren. Sie k\u00f6nnen kontrollieren, welche Gruppe sie bei der Erstellung des Links sein werden.",
+      "intro": "Registrieren Sie Links ermöglichen es Benutzern, die ein Projektkonto auf Ihrem Portal erstellen möchten, dies zu tun. Alles, was Sie tun müssen, ist mit ihnen den Link zu teilen. Viele Menschen können einen Link abonnieren. Sie können kontrollieren, welche Gruppe sie bei der Erstellung des Links sein werden.",
       "link-column": "Link",
       "title": "Registrieren Sie sich"
     }
   },
   "blog": {
-    "add-entry": "Blogeintrag hinzuf\u00fcgen",
+    "add-entry": "Blogeintrag hinzufügen",
     "entry": "Blog-Eintrag",
     "last-publication": "Letzter Blogeintrag",
     "no-entry": "Noch kein Eintrag...",
-    "posts": "Blog-Eintr\u00e4ge",
+    "posts": "Blog-Einträge",
     "title": "Blog"
   },
   "browse": {
@@ -461,9 +461,9 @@
     "result-per-page": "Ergebnisse pro Seite:"
   },
   "category": {
-    "add-sub-category": "Eine Unterkategorie hinzuf\u00fcgen",
+    "add-sub-category": "Eine Unterkategorie hinzufügen",
     "edit-order-success": "Kategorien bestellen erfolgreich bearbeitet",
-    "info-organize": "Sie k\u00f6nnen Projekte in verschiedenen Kategorien (z.B. Studentenprojekte, Lehrerprojekte usw.) auflisten.",
+    "info-organize": "Sie können Projekte in verschiedenen Kategorien (z.B. Studentenprojekte, Lehrerprojekte usw.) auflisten.",
     "info-limit": "Jedes Projekt muss einer dieser Kategorien zugeordnet werden.",
     "page-title": "Kategorie",
     "title": "Kategorien",
@@ -472,50 +472,50 @@
     "edit": "Bearbeiten"
   },
   "comment": {
-    "add-comment": "F\u00fcgen Sie Ihren Kommentar hinzu!",
-    "comment-verb": "Kommentare",
-    "comments": "Kommentare",
-    "deleted": "Kommentar gel\u00f6scht",
+    "add-comment": "Fügen Sie Ihren Kommentar hinzu!",
+    "comment-verb": "Anmerkung",
+    "comments": "Bemerkungen",
+    "deleted": "Kommentar gelöscht",
     "discard-comment": "Kommentieren?",
-    "discard-changes": "\u00c4nderungen deaktivieren?",
-    "need-account": "Sie ben\u00f6tigen ein Konto, um Kommentare zu ver\u00f6ffentlichen",
+    "discard-changes": "Änderungen deaktivieren?",
+    "need-account": "Sie benötigen ein Konto, um Kommentare zu veröffentlichen",
     "no-comments": "Sei der Erste, der einen Kommentar abgibt!",
     "private-exchange": {
       "tab": "Interne Nachrichten",
       "no-message": "Noch keine interne Nachricht...",
-      "notice": "Interne Nachrichten sind nur f\u00fcr Projektteammitglieder sichtbar.",
+      "notice": "Interne Nachrichten sind nur für Projektteammitglieder sichtbar.",
       "send": "Bitte",
-      "title": "F\u00fcgen Sie Ihre interne Nachricht hinzu",
-      "delete-title": "L\u00f6schen auf jeden Fall?",
-      "delete-description": "Sind Sie sicher, dass Sie Ihre interne Nachricht dauerhaft l\u00f6schen m\u00f6chten? Diese Aktion wird irreversibel sein.",
+      "title": "Fügen Sie Ihre interne Nachricht hinzu",
+      "delete-title": "Löschen auf jeden Fall?",
+      "delete-description": "Sind Sie sicher, dass Sie Ihre interne Nachricht dauerhaft löschen möchten? Diese Aktion wird irreversibel sein.",
       "deleted": "Interne Meldung auf dem"
     },
-    "publish": "Kommentar ver\u00f6ffentlichen",
-    "delete-title": "L\u00f6schen auf jeden Fall?",
-    "delete-description": "Sind Sie sicher, dass Sie Ihre Kommentare dauerhaft l\u00f6schen m\u00f6chten? Diese Aktion wird irreversibel sein."
+    "publish": "Kommentar veröffentlichen",
+    "delete-title": "Löschen auf jeden Fall?",
+    "delete-description": "Sind Sie sicher, dass Sie Ihre Kommentare dauerhaft löschen möchten? Diese Aktion wird irreversibel sein."
   },
   "common": {
     "activate": "Aktivieren",
     "activated": "Aktiviert",
-    "add": "Hinzuf\u00fcgen",
-    "added-on-the": "zugef\u00fcgt",
-    "back": "zur\u00fcck",
+    "add": "Hinzufügen",
+    "added-on-the": "Hinzugefügt am",
+    "back": "zurück",
     "cancel": "Abbrechen",
     "chose-date": "Chose Datum",
-    "confirm": "Best\u00e4tigen",
+    "confirm": "bestätigen",
     "continue": "Weiter",
-    "confirm-delete": "Sind Sie sicher, dass Sie das l\u00f6schen m\u00f6chten?",
+    "confirm-delete": "Sind Sie sicher, dass Sie das löschen möchten?",
     "deadline": "Frist",
-    "delete": "L\u00f6schen",
-    "delete-selection": "Auswahl l\u00f6schen",
-    "delete-user": "L\u00f6schen",
-    "description": "Beschreibung",
-    "destroy-confirm": "Sind Sie sicher, dass Sie dieses Projekt l\u00f6schen m\u00f6chten? Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
-    "cant-quit-self": "Sie sind der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie k\u00f6nnen entweder einen anderen Editor hinzuf\u00fcgen, bevor Sie das Projekt verlassen, oder das Projekt aus der Registerkarte Konfiguration l\u00f6schen.",
-    "cant-quit-other": "Das ist der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie k\u00f6nnen entweder einen anderen Editor hinzuf\u00fcgen, der diese verdr\u00e4ngt, oder das Projekt aus der Registerkarte Konfiguration l\u00f6schen.",
-    "edit": "Bearbeitung",
+    "delete": "Löschen",
+    "delete-selection": "Auswahl löschen",
+    "delete-user": "Löschen",
+    "description": "Warenbezeichnung",
+    "destroy-confirm": "Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "cant-quit-self": "Sie sind der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, bevor Sie das Projekt verlassen, oder das Projekt aus der Registerkarte Konfiguration löschen.",
+    "cant-quit-other": "Das ist der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, der diese verdrängt, oder das Projekt aus der Registerkarte Konfiguration löschen.",
+    "edit": "Bearbeiten",
     "file-required": "Eine Datei ist erforderlich",
-    "for": "f\u00fcr",
+    "for": "für",
     "groups": "Gruppen",
     "index": "Index",
     "less": "weniger",
@@ -523,56 +523,56 @@
     "link-copied-failed": "Link nicht kopieren",
     "loading": "Beladung",
     "login": "Anmelden",
-    "modify": "\u00c4nderung",
+    "modify": "Änderung",
     "more": "mehr",
-    "need-login": "Sie m\u00fcssen eingeloggt sein",
+    "need-login": "Sie müssen eingeloggt sein",
     "no": "Nein",
     "no-result": "Kein Ergebnis",
-    "none": "keine",
+    "none": "Keine",
     "of": "von",
     "org": "Mitglieder des Portals",
     "quit-project": "Sind Sie sicher, dass Sie dieses Projekt beenden wollen?",
     "people": "Menschen",
-    "read": "lesen",
+    "read": "Weiterlesen",
     "reply": "Antwort",
-    "remove-group": "Sind Sie sicher, dass Sie diese Gruppe l\u00f6schen m\u00f6chten?",
-    "remove-user": "Sind Sie sicher, dass Sie diesen Benutzer l\u00f6schen m\u00f6chten?",
-    "save": "speichern",
+    "remove-group": "Sind Sie sicher, dass Sie diese Gruppe löschen möchten?",
+    "remove-user": "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?",
+    "save": "Speichern",
     "send": "Bitte",
     "see-less": "weniger",
     "see-more": "Mehr erfahren",
     "see": "Siehe",
     "see-all": "Alle",
-    "set-deadline": "Fristsetzung",
+    "set-deadline": "Frist",
     "shrink": "Schrumpfen",
     "submit": "Antrag",
     "the-project": "Das Projekt",
     "title": "Titel",
     "yes": "Ja.",
     "disconnect": "Abmelden",
-    "confirm-close": "Sind Sie sicher, dass Sie den Editor schlie\u00dfen wollen? \u00c4nderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
+    "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
-    "file-too-big": "Die Datei ist zu gro\u00df (max: {maxSize}Mb)"
+    "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)"
   },
   "complete-profile": {
     "bio": {
       "title": "Biozid",
-      "notice": "Bio erlauben Menschen zu verstehen, wer Sie sind, was Sie tun und stehen f\u00fcr.",
-      "notice-exemples": "Brauchen Sie Inspiration? Hier sind Beispiele f\u00fcr {0}, {1} oder {2}.",
+      "notice": "Bio erlauben Menschen zu verstehen, wer Sie sind, was Sie tun und stehen für.",
+      "notice-exemples": "Brauchen Sie Inspiration? Hier sind Beispiele für {0}, {1} oder {2}.",
       "exemples": {
         "researcher": "ein Forscher",
         "professional": "ein Profi",
         "student": "ein Student"
       },
       "long-bio": "Lange Bio",
-      "long-bio-notice": "Pr\u00e4sentieren Sie hier Ihre beruflichen Bem\u00fchungen",
-      "personal-bio": "Pers\u00f6nliches Bio",
-      "personal-bio-notice": "Pr\u00e4sentieren Sie hier Ihre pers\u00f6nlichen Interessen."
+      "long-bio-notice": "Präsentieren Sie hier Ihre beruflichen Bemühungen",
+      "personal-bio": "Persönliches Bio",
+      "personal-bio-notice": "Präsentieren Sie hier Ihre persönlichen Interessen."
     },
     "cancel": "Abbrechen",
     "notice": {
       "help": "Wir sind hier, um zu helfen.",
-      "intro": "Mit * gekennzeichnete Felder sind obligatorisch. Sie k\u00f6nnen dies immer sp\u00e4ter in Ihrem Profil \u00e4ndern.",
+      "intro": "Mit * gekennzeichnete Felder sind obligatorisch. Sie können dies immer später in Ihrem Profil ändern.",
       "no-idea": "Keine Ahnung, was du tun solltest?"
     },
     "onboarding": "An Bord",
@@ -587,42 +587,42 @@
       "lastname-placeholder": "Letzter Name",
       "picture": "Profilbild",
       "picture-notice": "(120px x 120px mini; Formate jpg oder png)",
-      "title": "Pers\u00f6nliche Informationen"
+      "title": "Persönliche Informationen"
     },
     "required": "Dieses Feld ist erforderlich",
     "save-and-finish": "Sparen und beenden",
-    "save-and-next": "Sparen und gehen Sie zur n\u00e4chsten",
+    "save-and-next": "Sparen und gehen Sie zur nächsten",
     "skills": {
-      "title": "Interessen und F\u00e4higkeiten"
+      "title": "Interessen und Fähigkeiten"
     },
     "sdgs": {
-      "sdg-notice": "Die Sustainable Development Goals (SDGs) sind ein Aufruf zum Handeln, um eine Reihe globaler Herausforderungen zu bew\u00e4ltigen. Indikation der Ziele, die Sie dazu beitragen m\u00f6chten, wird den Menschen in Ihrer Gemeinschaft helfen, Sie f\u00fcr Mentoring oder Hilfe zu finden.",
+      "sdg-notice": "Die Sustainable Development Goals (SDGs) sind ein Aufruf zum Handeln, um eine Reihe globaler Herausforderungen zu bewältigen. Indikation der Ziele, die Sie dazu beitragen möchten, wird den Menschen in Ihrer Gemeinschaft helfen, Sie für Mentoring oder Hilfe zu finden.",
       "title": "Nachhaltige Entwicklungsziele"
     },
-    "title": "F\u00fcllen Sie Ihr Profil"
+    "title": "Füllen Sie Ihr Profil"
   },
   "crikit": {
     "errors": {
-      "too-big-file-size": "Die Gr\u00f6\u00dfe der Datei ist zu gro\u00df, {sizeMax}MB max."
+      "too-big-file-size": "Die Größe der Datei ist zu groß, {sizeMax}MB max."
     }
   },
   "description": {
     "default-placeholder": "Jetzt beschreiben Sie Ihr Projekt.",
-    "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzuf\u00fcgen!",
-    "delete": "Sind Sie sicher, dass Sie den Editor schlie\u00dfen wollen?",
-    "edit-saved": "\u00c4nderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
+    "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzufügen!",
+    "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
+    "edit-saved": "Änderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
     "edit": "Beschreibung bearbeiten (draft)",
-    "add": "Beschreibung hinzuf\u00fcgen",
+    "add": "Beschreibung hinzufügen",
     "quit-without-saving-title": "Nicht zu retten?"
   },
   "discover": {
     "page-title": "Entdecken",
     "HEADER": {
       "title": "Teilen Sie Ihre Projekte",
-      "impact": "Auswirkungen zu erh\u00f6hen",
-      "des": "Nutzen Sie die Plattform Projekte, um Ihre Projekte zu pr\u00e4sentieren,",
-      "facilitate": "Synergien erleichtern und die Zusammenarbeit f\u00f6rdern",
-      "common": "f\u00fcr Gemeinwohl.",
+      "impact": "Auswirkungen zu erhöhen",
+      "des": "Nutzen Sie die Plattform Projekte, um Ihre Projekte zu präsentieren,",
+      "facilitate": "Synergien erleichtern und die Zusammenarbeit fördern",
+      "common": "für Gemeinwohl.",
       "button_discover": "Projekte entdecken",
       "button_access": "Zugriff auf"
     },
@@ -643,15 +643,15 @@
     "FEATURES": [
       {
         "title": "Inspiriert werden",
-        "des": "Entdecken Sie viele interessante Projekte nicht nur{0}durch unsere m\u00e4chtige Suche, sondern auch basierend auf{0} AI-Empfehlungen, Standort oder thematische Karte.",
+        "des": "Entdecken Sie viele interessante Projekte nicht nur{0}durch unsere mächtige Suche, sondern auch basierend auf{0} AI-Empfehlungen, Standort oder thematische Karte.",
         "list": [
           {
-            "title": "R\u00fcckforderungen",
-            "des": "Steigen Sie von einem Projekt auf \u00e4hnliche Projekte durch Teammitglieder oder durch automatische Projektempfehlungen."
+            "title": "Rückforderungen",
+            "des": "Steigen Sie von einem Projekt auf ähnliche Projekte durch Teammitglieder oder durch automatische Projektempfehlungen."
           },
           {
             "title": "Tageskarte",
-            "des": "Nutzen Sie unsere Tag-Karte, um Projekte auf v\u00f6llig neue Weise zu entdecken! Es b\u00fcndelt Projekte, wie \u00e4hnlich ihre Tags sind. Die Tags sind Wikipedia-Artikel."
+            "des": "Nutzen Sie unsere Tag-Karte, um Projekte auf völlig neue Weise zu entdecken! Es bündelt Projekte, wie ähnlich ihre Tags sind. Die Tags sind Wikipedia-Artikel."
           },
           {
             "title": "Geographische Karte",
@@ -661,22 +661,22 @@
       },
       {
         "title": "Teilen und Zusammenarbeit",
-        "des": "Erstellen Sie effizient eine reiche Pr\u00e4sentation Ihres Projekts,{0}und erh\u00f6hen Sie Ihre Auswirkungen durch die Kr\u00e4fte.",
+        "des": "Erstellen Sie effizient eine reiche Präsentation Ihres Projekts,{0}und erhöhen Sie Ihre Auswirkungen durch die Kräfte.",
         "list": [
           {
-            "des": "Bearbeiten Sie Ihre Projektbeschreibung gleichzeitig mit Ihren Teammitgliedern, um formatierte Texte, Bilder, Videos und Links \u00fcber einen benutzerfreundlichen Texteditor hinzuzuf\u00fcgen."
+            "des": "Bearbeiten Sie Ihre Projektbeschreibung gleichzeitig mit Ihren Teammitgliedern, um formatierte Texte, Bilder, Videos und Links über einen benutzerfreundlichen Texteditor hinzuzufügen."
           },
           {
-            "des": "Stellen Sie einfach Teilnehmer oder Mitwirkende ein, indem Sie die Informationen an die ganze Gemeinschaft durch \u00f6ffentliche Ank\u00fcndigungen aussenden."
+            "des": "Stellen Sie einfach Teilnehmer oder Mitwirkende ein, indem Sie die Informationen an die ganze Gemeinschaft durch öffentliche Ankündigungen aussenden."
           },
           {
-            "des": "Nachhaltige Entwicklung Ziele, zu denen Sie beitragen, damit Benutzer Ihr Projekt basierend auf diesen Informationen finden k\u00f6nnen."
+            "des": "Nachhaltige Entwicklung Ziele, zu denen Sie beitragen, damit Benutzer Ihr Projekt basierend auf diesen Informationen finden können."
           },
           {
             "des": "Austausch mit Community-Mitgliedern durch den Kommentarbereich."
           },
           {
-            "des": "F\u00fcllen Sie Ihr Projekt mit jeder Art von externen Ressourcen, ob sie Inspirationen, Kreationen, Dokumentationen, andere verwandte Projekte sind..."
+            "des": "Füllen Sie Ihr Projekt mit jeder Art von externen Ressourcen, ob sie Inspirationen, Kreationen, Dokumentationen, andere verwandte Projekte sind..."
           },
           {
             "des": "Lassen Sie andere Ihrem Projekt folgen oder teilen Sie es mit einem einfachen Link"
@@ -685,43 +685,43 @@
       },
       {
         "title": "TEACH",
-        "des": "Verwenden Sie speziell f\u00fcr die Lehre von projektbasierten Kursen konzipierte Funktionalit\u00e4ten.",
+        "des": "Verwenden Sie speziell für die Lehre von projektbasierten Kursen konzipierte Funktionalitäten.",
         "list": [
           {
             "title": "ZOLLPROJEKT TEMPLATEN",
-            "des": "F\u00fchren Sie einen Projektsch\u00f6pfer, so dass der Inhalt ihres Projekts Ihren Erwartungen entspricht."
+            "des": "Führen Sie einen Projektschöpfer, so dass der Inhalt ihres Projekts Ihren Erwartungen entspricht."
           },
           {
             "title": "ERGEBNISSE DER STUDENT-PROJEKTE",
-            "des": "Erstellen Sie Bewertungen und best\u00e4tigen Sie die Ver\u00f6ffentlichung Ihrer Studentenprojekte."
+            "des": "Erstellen Sie Bewertungen und bestätigen Sie die Veröffentlichung Ihrer Studentenprojekte."
           }
         ]
       },
       {
         "title": "GEMEINSCHAFT",
-        "des": "Erstellen Sie eine Instanz von Projekten nur f\u00fcr Ihre Gemeinde.{0} Und genie\u00dfen Sie die Flexibilit\u00e4t, die wir bieten, um es zu verwalten, stressfrei.",
+        "des": "Erstellen Sie eine Instanz von Projekten nur für Ihre Gemeinde.{0} Und genießen Sie die Flexibilität, die wir bieten, um es zu verwalten, stressfrei.",
         "list": [
           {
             "title": "PERSONALISIERTE PORTAL",
             "des": "Personalisieren Sie alles: Legen Sie Ihre Bilder, Logos, Titel, erstellen Sie Ihre eigenen Kategorien, Tags."
           },
           {
-            "title": "VERWALTUNG UND M\u00c4NDERUNG",
-            "des": "Verwalten Sie jederzeit Optionen f\u00fcr Ihre Community durch den Community-Admin-Raum und moderate Projekte auf Ihrem Portal mit Admin-Rechten."
+            "title": "VERWALTUNG UND MÄNDERUNG",
+            "des": "Verwalten Sie jederzeit Optionen für Ihre Community durch den Community-Admin-Raum und moderate Projekte auf Ihrem Portal mit Admin-Rechten."
           },
           {
             "title": "Klickbare Projekte auf Ihrer Website",
-            "des": "Wenn Ihre Community eine Website hat, k\u00f6nnen Sie leicht Projekte einbetten, die Sie dort zeigen m\u00f6chten. Wenn Benutzer darauf klicken, werden sie auf Projekte umgeleitet."
+            "des": "Wenn Ihre Community eine Website hat, können Sie leicht Projekte einbetten, die Sie dort zeigen möchten. Wenn Benutzer darauf klicken, werden sie auf Projekte umgeleitet."
           }
         ]
       }
     ],
     "PROJECT": {
       "title": "Folgen Sie der PROJECTS Plattform",
-      "des": "Entdecken Sie alles \u00fcber die Projektplattform in ihrem eigenen Projekt.",
+      "des": "Entdecken Sie alles über die Projektplattform in ihrem eigenen Projekt.",
       "project": {
         "title": "CRI Projekte",
-        "des": "Cr\u00e9er un annuaire des projets d'une organisation avec les ressources et comp\u00e9tences mobilis\u00e9es"
+        "des": "Créer un annuaire des projets d'une organisation avec les ressources et compétences mobilisées"
       }
     },
     "TESTIMONIALS": {
@@ -729,31 +729,31 @@
         {
           "project": {
             "title": "ZUSAMMENFASSUNG L3 - CEEBIOS _ Elise Buard",
-            "des": "Bachelor-Studienpraktikum Semester FdV. Verantwortlich f\u00fcr die Bildung von Biomimicry in Frankreich."
+            "des": "Bachelor-Studienpraktikum Semester FdV. Verantwortlich für die Bildung von Biomimicry in Frankreich."
           },
-          "title": "F\u00fcr Bildung",
-          "des": "Projektbasierte Kurse, Praktika, Studentenverb\u00e4nde, Selbststudium, etc.",
-          "quote": "Die Projektplattform erlaubte mir, \u00fcber die Ergebnisse von allem, was ich f\u00fcr mein Praktikum gemacht.{0} Der Kommentarabschnitt erlaubte den Lesern, nach mehr Informationen zu fragen und mir ihre Gedanken dar\u00fcber zu geben, was sie lesen m\u00f6chten.{0} Ich war in der Lage, mein eigenes illustriertes Logbuch zu erstellen und dies erlaubte meinen Lesern, genau die Implementierung und Erweiterung der Biomimicry zu entdecken",
+          "title": "Für Bildung",
+          "des": "Projektbasierte Kurse, Praktika, Studentenverbände, Selbststudium, etc.",
+          "quote": "Die Projektplattform erlaubte mir, über die Ergebnisse von allem, was ich für mein Praktikum gemacht.{0} Der Kommentarabschnitt erlaubte den Lesern, nach mehr Informationen zu fragen und mir ihre Gedanken darüber zu geben, was sie lesen möchten.{0} Ich war in der Lage, mein eigenes illustriertes Logbuch zu erstellen und dies erlaubte meinen Lesern, genau die Implementierung und Erweiterung der Biomimicry zu entdecken",
           "author": "- Elise Buard, Bachelorstudent, Praktikum CEEBIOS"
         },
         {
           "project": {
             "title": "PROFS-CHERCHEURS - COVID19",
-            "des": "R\u00e9pondre Collective face au COVID19"
+            "des": "Répondre Collective face au COVID19"
           },
-          "title": "F\u00fcr Forschung",
-          "des": "Forschungslabore, B\u00fcrgerinitiativen, Open-Source-Herausforderungen.",
-          "quote": "Die hohe Wirkungsforschung ist interdisziplin\u00e4rer Natur, mit mehreren Akteuren, die an der Kokonstruktion beteiligt sind. Aber viel zu oft werden Wissen und Gemeinschaften in Disziplinen vers\u00f6hnt, und die Kommunikation mit anderen Akteuren ist schwierig. Die Projects-Plattform hilft, wirkungsstarke Forschungen leicht zu pr\u00e4sentieren, Mitarbeiter \u00fcber Disziplinen hinweg zu finden und mit den Stakeholdern, die Ihre Forschung ben\u00f6tigen, leicht zusammenzuarbeiten.",
+          "title": "Für Forschung",
+          "des": "Forschungslabore, Bürgerinitiativen, Open-Source-Herausforderungen.",
+          "quote": "Die hohe Wirkungsforschung ist interdisziplinärer Natur, mit mehreren Akteuren, die an der Kokonstruktion beteiligt sind. Aber viel zu oft werden Wissen und Gemeinschaften in Disziplinen versöhnt, und die Kommunikation mit anderen Akteuren ist schwierig. Die Projects-Plattform hilft, wirkungsstarke Forschungen leicht zu präsentieren, Mitarbeiter über Disziplinen hinweg zu finden und mit den Stakeholdern, die Ihre Forschung benötigen, leicht zusammenzuarbeiten.",
           "author": "- Ignacio Atal, Prof. Chercheurs"
         },
         {
           "project": {
             "title": "Ecolo Vie",
-            "des": "R\u00e9duire l'impact \u00e9cologique de notre famille"
+            "des": "Réduire l'impact écologique de notre famille"
           },
-          "title": "F\u00fcr pers\u00f6nliche SDG-Projekte",
-          "des": "Unabh\u00e4ngige Kollektive und AktivistInnen besch\u00e4ftigen sich mit kritischen sozialen Herausforderungen.",
-          "quote": "Unser Projekt: Werden Sie eine umweltfreundliche Familie. Mit der Projects-Plattform k\u00f6nnen wir unsere Handlungen \u00fcber Lebensmittel, Transport, Wohn-, Recycling- und Kaufpraktiken leicht teilen und hoffentlich andere dazu inspirieren, sich zu \u00e4ndern, einen Haushalt zu einer Zeit!",
+          "title": "Für persönliche SDG-Projekte",
+          "des": "Unabhängige Kollektive und AktivistInnen beschäftigen sich mit kritischen sozialen Herausforderungen.",
+          "quote": "Unser Projekt: Werden Sie eine umweltfreundliche Familie. Mit der Projects-Plattform können wir unsere Handlungen über Lebensmittel, Transport, Wohn-, Recycling- und Kaufpraktiken leicht teilen und hoffentlich andere dazu inspirieren, sich zu ändern, einen Haushalt zu einer Zeit!",
           "author": "- Anne Mistral, Familienmitglied"
         }
       ]
@@ -762,25 +762,25 @@
       "title": "GET ACCESS",
       "des": "Fordern Sie den Zugriff auf Experimente alle Features{0}oder in Kontakt, um ein dediziertes Portal zu erstellen",
       "button_personal": {
-        "text": "Ein pers\u00f6nliches Konto anfordern"
+        "text": "Ein persönliches Konto anfordern"
       },
       "button_community": {
-        "text": "Projekte f\u00fcr Ihre Community anfordern"
+        "text": "Projekte für Ihre Community anfordern"
       }
     },
     "CONTACT": {
       "title": "KONTAKT",
-      "des": "F\u00fcr jede Frage kontaktieren Sie uns bitte unter {link}"
+      "des": "Für jede Frage kontaktieren Sie uns bitte unter {link}"
     }
   },
   "drawer": {
-    "clear": "Alle ausgew\u00e4hlten l\u00f6schen",
-    "select-all": "Alles ausw\u00e4hlen"
+    "clear": "Alle ausgewählten löschen",
+    "select-all": "Alles auswählen"
   },
   "faq": {
-    "delete-confirm-content": "Sind Sie sicher, dass Sie das f\u00fcr Ihr Portal personalisierte Help Tab l\u00f6schen m\u00f6chten. Alle Inhalte werden gel\u00f6scht.",
-    "delete-confirm-title": "Benutzerdefinierte Hilfe Tab L\u00f6schung",
-    "info": "Es gibt eine generische Hilfe zug\u00e4nglich, indem Sie auf die Schaltfl\u00e4che \"Help\" auf der oberen rechten Ecke. Wenn Sie eine Registerkarte mit einer Hilfeseite hinzuf\u00fcgen m\u00f6chten, die Ihrem Portal spezifisch ist, k\u00f6nnen Sie es unten tun.",
+    "delete-confirm-content": "Sind Sie sicher, dass Sie das für Ihr Portal personalisierte Help Tab löschen möchten. Alle Inhalte werden gelöscht.",
+    "delete-confirm-title": "Benutzerdefinierte Hilfe Tab Löschung",
+    "info": "Es gibt eine generische Hilfe zugänglich, indem Sie auf die Schaltfläche \"Help\" auf der oberen rechten Ecke. Wenn Sie eine Registerkarte mit einer Hilfeseite hinzufügen möchten, die Ihrem Portal spezifisch ist, können Sie es unten tun.",
     "portal": "Hilfe",
     "tab": "Name der Registerkarte",
     "video": "Video-Tutorial"
@@ -791,26 +791,26 @@
     "empty": "Keine Nachrichten... noch nicht!"
   },
   "file": {
-    "add-image": "ein Bild hinzuf\u00fcgen",
-    "add-video": "Video hinzuf\u00fcgen",
-    "add-video-hint": "F\u00fcgen Sie ein Video hinzu, indem Sie seine youtube oder vimeo URL eingeben.",
-    "attachment": "beigef\u00fcgtes Dokument | beigef\u00fcgte Dokumente",
+    "add-image": "Bild hinzufügen",
+    "add-video": "Video hinzufügen",
+    "add-video-hint": "Fügen Sie ein Video hinzu, indem Sie seine youtube oder vimeo URL eingeben.",
+    "attachment": "Befestigtes Dokument | beigefügte Dokumente",
     "upload": "Hochladen"
   },
   "form": {
     "background-color": "Hintergrundfarbe",
     "category-name": "Name der Kategorie",
     "organization-name": "Name Ihrer Gemeinde",
-    "description": "Beschreibung",
+    "description": "Warenbezeichnung",
     "email": "E-Mail senden",
     "email-contact": "E-Mail senden",
     "language": "Sprache",
     "title": "Titel",
-    "url": "URLs",
+    "url": "Url",
     "contact": {
-      "subtitle": "F\u00fcllen Sie dieses schnelle Formular aus und wir kommen in K\u00fcrze zur\u00fcck zu Ihnen",
+      "subtitle": "Füllen Sie dieses schnelle Formular aus und wir kommen in Kürze zurück zu Ihnen",
       "subject": "Gegenstand",
-      "subject-placeholder": "Was m\u00f6chten Sie mit uns teilen?",
+      "subject-placeholder": "Was möchten Sie mit uns teilen?",
       "email": "E-Mail senden",
       "email-placeholder": "E-Mail senden",
       "content": "Nachricht",
@@ -822,11 +822,11 @@
       "content": "Das Inhaltsfeld ist erforderlich",
       "url": {
         "required": "Das url Feld ist erforderlich",
-        "format": "Bitte geben Sie einen g\u00fcltigen URL ein"
+        "format": "Bitte geben Sie einen gültigen URL ein"
       },
       "email": {
         "required": "Das E-Mail-Feld ist erforderlich",
-        "format": "Bitte geben Sie eine g\u00fcltige E-Mail-Adresse ein"
+        "format": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       }
     },
     "review": {
@@ -846,7 +846,7 @@
       "description": "Das Beschreibungsfeld ist erforderlich",
       "link": {
         "required": "Das url Feld ist erforderlich",
-        "format": "Bitte geben Sie einen g\u00fcltigen URL ein"
+        "format": "Bitte geben Sie einen gültigen URL ein"
       }
     },
     "announcement": {
@@ -858,7 +858,7 @@
       "last-name": "Das Nachnamefeld ist erforderlich",
       "email": {
         "required": "Das E-Mail-Feld ist erforderlich",
-        "format": "Bitte geben Sie eine g\u00fcltige E-Mail-Adresse ein"
+        "format": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       },
       "description": "Das Beschreibungsfeld ist erforderlich"
     }
@@ -868,25 +868,25 @@
     "legal-notices": "Rechtliche Hinweise",
     "terms-of-service": "Nutzungsbedingungen",
     "cookies": "Cookies",
-    "accessibility": "Zug\u00e4nglichkeit",
-    "personal-data": "Pers\u00f6nliche Daten",
+    "accessibility": "Zugänglichkeit",
+    "personal-data": "Persönliche Daten",
     "directory": "Entdecken Sie weitere Projekte anderer Organisationen auf unserem Meta-Portal:",
     "help": "Hilfe",
     "projects": "Projektplattform",
     "madeBy": "wird von",
     "sourceText": "Siehe Quellcode",
-    "pca": "Kontinuit\u00e4tsplan (PCA)",
+    "pca": "Kontinuitätsplan (PCA)",
     "pssi": "Sicherheitsplan (PSSI)"
   },
   "goal": {
-    "add": "ein Ziel hinzuf\u00fcgen",
-    "completed-on-the": "abgeschlossen auf",
+    "add": "Ziel hinzufügen",
+    "completed-on-the": "Vollständig auf der",
     "description": "Zielbeschreibung",
     "goals": "Ziele",
-    "planned-for-the": "geplant f\u00fcr die",
+    "planned-for-the": "Für die",
     "status-title": "Status",
-    "title": "Titel des Ziels",
-    "delete": "M\u00f6chten Sie dieses Ziel l\u00f6schen?"
+    "title": "Goal's Titel",
+    "delete": "Möchten Sie dieses Ziel löschen?"
   },
   "group": {
     "is-other-org": "Diese Gruppe gehört zu einer anderen Plattform",
@@ -896,7 +896,7 @@
     "see-subgroups": "Siehe {count} Untergruppe | {count} Untergruppen ansehen",
     "share": "Teilen",
     "the-team": "Das Team ({users})",
-    "news": "Ank\u00fcndigungen",
+    "news": "Ankündigungen",
     "more": "Mehr",
     "less": "Weniger",
     "see-more": "Mehr erfahren",
@@ -906,28 +906,28 @@
     "members": "Mitglieder",
     "projects": "Projekte",
     "visibility-private": "Sichtbarkeit: privat",
-    "visibility-public": "Sichtbarkeit : \u00f6ffentlich",
+    "visibility-public": "Sichtbarkeit : öffentlich",
     "visibility-org": "Sichtbarkeit: Portal",
     "group-members": "Mitglieder der Gruppe",
     "group-projects": "Gruppenprojekte",
-    "select-group": "W\u00e4hlen Sie eine Gruppe",
+    "select-group": "Wählen Sie eine Gruppe",
     "image-header": "Bild",
     "root": "(Root)",
     "create": {
       "help-link": "Wir sind hier, um zu helfen.",
-      "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie k\u00f6nnen das immer sp\u00e4ter \u00e4ndern. Keine Ahnung, was du tun solltest?",
+      "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie können das immer später ändern. Keine Ahnung, was du tun solltest?",
       "title": "Eine neue Gruppe erstellen"
     },
     "edit": {
       "title": "Eine Gruppe bearbeiten"
     },
     "form": {
-      "add": "Hinzuf\u00fcgen",
-      "add-projects": "F\u00fcgen Sie wichtige Projekte hinzu",
+      "add": "Hinzufügen",
+      "add-projects": "Fügen Sie wichtige Projekte hinzu",
       "edit": "Bearbeiten",
       "edit-members": "Mitglieder bearbeiten",
       "edit-roles": "Rollen bearbeiten",
-      "form-incomplete": "Felder fehlen oder ung\u00fcltig, komplett um speichern zu k\u00f6nnen.",
+      "form-incomplete": "Felder fehlen oder ungültig, komplett um speichern zu können.",
       "create-group": "Gruppe erstellen",
       "edit-group": "Gruppe bearbeiten",
       "edit-name": "Name der Gruppe bearbeiten",
@@ -937,14 +937,14 @@
       "short-description-placeholder": "Beschreiben Sie Ihre Gruppe in einem Satz",
       "name-label": "Bezeichnung",
       "name-placeholder": "Ex. Hitbox: interaktive Boxsack",
-      "description-label": "Beschreibung",
-      "add-description": "Beschreibung hinzuf\u00fcgen",
-      "add-parent-group": "Stammgruppe hinzuf\u00fcgen",
+      "description-label": "Warenbezeichnung",
+      "add-description": "Beschreibung hinzufügen",
+      "add-parent-group": "Stammgruppe hinzufügen",
       "project-label": "Empfohlene Projekte",
       "parent-group-label": "Gruppe",
       "visibility": {
         "title": "Sicht der Gruppe",
-        "public": "\u00d6ffentliche",
+        "public": "Öffentliche",
         "private": "Privatpersonen",
         "members": "Mitglieder",
         "public_description": "Public: jeder kann diese Gruppe im Internet finden",
@@ -953,15 +953,15 @@
       },
       "name-errors": {
         "required": "Das Gruppennamenfeld ist erforderlich",
-        "max": "Das Gruppennamenfeld darf nicht gr\u00f6\u00dfer als 180 Zeichen sein"
+        "max": "Das Gruppennamenfeld darf nicht größer als 180 Zeichen sein"
       },
       "short-description-errors": {
-        "max": "Das Headline-Feld darf nicht gr\u00f6\u00dfer als 150 Zeichen sein"
+        "max": "Das Headline-Feld darf nicht größer als 150 Zeichen sein"
       },
       "publication-status-errors": {
         "required": "Dieses Feld ist erforderlich"
       },
-      "delete": "Gruppe l\u00f6schen"
+      "delete": "Gruppe löschen"
     },
     "role": {
       "members": {
@@ -976,37 +976,37 @@
         "label": "Leiter und Manager"
       },
       "managers": {
-        "label": "Teammitglieder",
+        "label": "Herausgeber",
         "help": "Teammitglieder"
       }
     }
   },
   "header": {
-    "private": "Private: nur f\u00fcr Teammitglieder sichtbar",
-    "org": "Nur f\u00fcr die Mitglieder Ihres Portals sichtbar",
-    "public": "\u00d6ffentlichkeit: f\u00fcr jeden Besucher der Website sichtbar",
-    "similar-project": "\u00e4hnliches Projekt",
-    "similar-projects": "\u00e4hnliche Projekte",
+    "private": "Private: nur für Teammitglieder sichtbar",
+    "org": "Nur für die Mitglieder Ihres Portals sichtbar",
+    "public": "Öffentlichkeit: für jeden Besucher der Website sichtbar",
+    "similar-project": "ähnliches Projekt",
+    "similar-projects": "ähnliche Projekte",
     "portals-start": "Es erreicht",
     "portals-end-plural": "Portale",
     "portals-end-singular": "Portal",
     "views": "Aufrufe",
     "creation": "Erstellt",
     "update": "Zuletzt bearbeitet",
-    "close": "Schlie\u00dfen",
-    "mobile-menu-title": "Men\u00fc schlie\u00dfen"
+    "close": "Schließen",
+    "mobile-menu-title": "Menü schließen"
   },
   "home": {
     "documents": "Unterlagen",
     "all-projects": "Alle Projekte",
-    "announcements": "Ank\u00fcndigungen",
+    "announcements": "Ankündigungen",
     "news": "Nachrichten",
     "calendar": "Kalender",
     "instructions": "Anweisungen",
     "communities": "Portale",
     "home": "Home",
     "categories": {
-      "title": "Projekte Kategorien"
+      "title": "Projektkategorien"
     },
     "login": "Anmelden",
     "account-request": "Ein Konto anfordern",
@@ -1046,13 +1046,13 @@
     "no-group": "Sie sind noch nicht Mitglied einer Gruppe",
     "my-projects": "meine Projekte",
     "no-bio": "Sie schreiben Ihre Biographie noch nicht",
-    "no-skill": "Sie haben noch keine F\u00e4higkeiten hinzugef\u00fcgt",
+    "no-skill": "Sie haben noch keine Fähigkeiten hinzugefügt",
     "page-title": "Mein Profil",
-    "projects-participate": "Projekte, an denen ich beteiligt bin",
+    "projects-participate": "Projekte, die ich bin",
     "no-project-participate": "Sie sind noch nicht Mitglied eines Projekts",
     "projects-reviewing": "Projekte, die ich rezensiere",
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
-    "skills": "F\u00e4higkeiten",
+    "skills": "Fähigkeiten",
     "hobbies": "Hobbys",
     "levels-help-link": "Qualifikationsniveau"
   },
@@ -1060,12 +1060,12 @@
     "no-follow": "Noch keine Projekte",
     "no-group": "Noch kein Mitglied einer Gruppe",
     "no-bio": "Noch keine Biographie",
-    "no-skill": "Noch keine F\u00e4higkeiten angegeben",
+    "no-skill": "Noch keine Fähigkeiten angegeben",
     "no-project-participate": "Noch kein Projektmitglied",
     "no-project-reviewing": "Noch kein Reviewer eines Projekts"
   },
   "multieditor": {
-    "blockquote": "Das ist nicht m\u00f6glich.",
+    "blockquote": "Das ist nicht möglich.",
     "bold": "mutig",
     "bullet_list": "Liste der Bullen",
     "click-to-play-video": "Klicken Sie erneut auf das Start/Stop-Video",
@@ -1084,17 +1084,17 @@
       }
     },
     "color": {
-      "change-color": "Farbe \u00e4ndern",
-      "choose": "Oder w\u00e4hlen Sie einen benutzerdefinierten",
+      "change-color": "Farbe ändern",
+      "choose": "Oder wählen Sie einen benutzerdefinierten",
       "color": "Farbe",
       "current": "Strom",
-      "pick": "W\u00e4hlen Sie eine Farbe",
-      "set-color": "Farbe ausw\u00e4hlen"
+      "pick": "Wählen Sie eine Farbe",
+      "set-color": "Farbe auswählen"
     },
-    "delete_column": "Diese Spalte l\u00f6schen",
-    "delete_row": "Diese Zeile l\u00f6schen",
+    "delete_column": "Diese Spalte löschen",
+    "delete_row": "Diese Zeile löschen",
     "delete_table": "Tabelle",
-    "delete_video": "Video l\u00f6schen",
+    "delete_video": "Video löschen",
     "external_link": "Open Link",
     "heading_1": "Rubrik 1",
     "heading_2": "Rubrik 2",
@@ -1104,18 +1104,18 @@
       "50_width": "50% Breite",
       "75_width": "75% Breite",
       "100_width": "100% Breite",
-      "full": "Vollst\u00e4ndig",
+      "full": "Vollständig",
       "image": "Bild",
-      "large": "Gro\u00df",
+      "large": "Groß",
       "medium": "Mittel",
       "original": "Original",
       "original_size": "Originalbreite",
       "small": "Klein"
     },
-    "insert_column_left": "F\u00fcgen Sie Kolumne vor",
-    "insert_column_right": "Column hinzuf\u00fcgen",
-    "insert_row_top": "Row hinzuf\u00fcgen",
-    "insert_row_bottom": "Hinzuf\u00fcgen von Row",
+    "insert_column_left": "Fügen Sie Kolumne vor",
+    "insert_column_right": "Column hinzufügen",
+    "insert_row_top": "Row hinzufügen",
+    "insert_row_bottom": "Hinzufügen von Row",
     "italic": "Italic",
     "link": "Gliederung",
     "edit-link": "Link bearbeiten",
@@ -1129,14 +1129,14 @@
     "server-connecting": "Server verbindet...",
     "server-disconnected": "Server wird abgeschaltet.",
     "server-unconnectable": {
-      "status": "Unf\u00e4hig, mit dem kollaborativen Server zu verbinden.",
-      "notice": "Bitte \u00fcberpr\u00fcfen Sie, ob Ihr Browser und/oder Antivirus WebSockets erlaubt.",
-      "ack-notice": "Sie k\u00f6nnen einen einfachen Editor (ohne kollaborative Bearbeitung) verwenden. Beachten Sie, dass die Daten anderer Benutzer m\u00f6glicherweise \u00fcberschrieben werden, wenn Sie gleichzeitig speichern..",
-      "do-ack": "Ich verstehe die Risiken und m\u00f6chte mit einem einfachen Editor fortfahren (ohne kollaborative Bearbeitung).",
+      "status": "Unfähig, mit dem kollaborativen Server zu verbinden.",
+      "notice": "Bitte überprüfen Sie, ob Ihr Browser und/oder Antivirus WebSockets erlaubt.",
+      "ack-notice": "Sie können einen einfachen Editor (ohne kollaborative Bearbeitung) verwenden. Beachten Sie, dass die Daten anderer Benutzer möglicherweise überschrieben werden, wenn Sie gleichzeitig speichern..",
+      "do-ack": "Ich verstehe die Risiken und möchte mit einem einfachen Editor fortfahren (ohne kollaborative Bearbeitung).",
       "do-solo-edit": "Bearbeiten auf meine eigene",
-      "head-up-warning": "Warnung: Bearbeitung im Solo-Modus kann zu Datenverlust f\u00fchren",
+      "head-up-warning": "Warnung: Bearbeitung im Solo-Modus kann zu Datenverlust führen",
       "confirm-save-title": "Sie bearbeiten im Solo-Modus.",
-      "confirm-save-text": "Wenn jemand den Inhalt w\u00e4hrend der Bearbeitung bearbeitet hat, \u00fcberschreiben Sie die \u00c4nderungen. Willst du sicher retten?"
+      "confirm-save-text": "Wenn jemand den Inhalt während der Bearbeitung bearbeitet hat, überschreiben Sie die Änderungen. Willst du sicher retten?"
     },
     "split_cell": "Splitzelle",
     "table": "Tabelle",
@@ -1157,17 +1157,17 @@
     },
     "tab2": {
       "title": "Anteil",
-      "text": "Dokumentieren und teilen Sie Ihre Projekte mit allen Besuchern und innerhalb Ihrer Community. F\u00fcgen Sie Ihrem Projekt eine Beschreibung, externe Ressourcen, Ziele, Tags und Blogeintr\u00e4ge hinzu."
+      "text": "Dokumentieren und teilen Sie Ihre Projekte mit allen Besuchern und innerhalb Ihrer Community. Fügen Sie Ihrem Projekt eine Beschreibung, externe Ressourcen, Ziele, Tags und Blogeinträge hinzu."
     },
     "tab3": {
       "title": "Zusammenarbeit",
-      "text": "Bearbeiten Sie Ihr Projekt gemeinsam mit Ihren Teammitgliedern. Ank\u00fcndigungen zur Einstellung von Teilnehmern (Mitwirkenden, neuen Teammitgliedern, Praktikanten, Arbeitnehmern usw.) erstellen, Kommentare mit Community-Mitgliedern austauschen."
+      "text": "Bearbeiten Sie Ihr Projekt gemeinsam mit Ihren Teammitgliedern. Ankündigungen zur Einstellung von Teilnehmern (Mitwirkenden, neuen Teammitgliedern, Praktikanten, Arbeitnehmern usw.) erstellen, Kommentare mit Community-Mitgliedern austauschen."
     },
     "tab4": {
       "title": "Ihre Wirkung zeigen",
-      "text": "Steigern Sie die Auswirkungen weltweit und zeigen Sie inspirierende Anstrengungen f\u00fcr gemeinsames Wohl. Identifizieren Sie, zu welchem {sdg} Sie beitragen. Geolocalise alle Orte, wo Ihre Projekte einen Einfluss erzeugen.",
+      "text": "Steigern Sie die Auswirkungen weltweit und zeigen Sie inspirierende Anstrengungen für gemeinsames Wohl. Identifizieren Sie, zu welchem {sdg} Sie beitragen. Geolocalise alle Orte, wo Ihre Projekte einen Einfluss erzeugen.",
       "sdg": "SDG",
-      "sdgAbbr": "Ziele f\u00fcr nachhaltige Entwicklung",
+      "sdgAbbr": "Ziele für nachhaltige Entwicklung",
       "link": "https://en.unesco.org/sustainable developmentgoals"
     }
   },
@@ -1179,7 +1179,7 @@
         "need-infos": "Mehr Informationen"
       },
       "your-response": "Ihre Antwort",
-      "add-comment": "Einen Kommentar hinzuf\u00fcgen",
+      "add-comment": "Einen Kommentar hinzufügen",
       "comment-notice-mentor": "Dieser Kommentar wird per E-Mail an den Mentee gesendet.",
       "comment-notice-mentoree": "Dieser Kommentar wird per E-Mail an den Mentor gesendet.",
       "comment-placeholder": "Schreiben Sie hier.",
@@ -1187,7 +1187,7 @@
       "title-mentoree": "Werde ein Mentor",
       "response-was-sent": "Ihre Antwort wurde gesendet.",
       "asked-you": "bat dich, sein Mentor zu sein",
-      "offered-you": "bot Ihnen sein Mentor f\u00fcr"
+      "offered-you": "bot Ihnen sein Mentor für"
     }
   },
   "onboarding": {
@@ -1195,20 +1195,20 @@
     "title": "Was sind Projekte?"
   },
   "onboarding-modal": {
-    "next": "N\u00e4chste",
+    "next": "Nächste",
     "previous": "Vorherige"
   },
   "onboarding-todo": {
     "platform-tour": "Erste Schritte",
     "welcome": "Willkommen {0}, starten Sie mit diesen Schritten auf der Plattform.",
-    "complete-profile": "F\u00fcllen Sie Ihr Profil",
+    "complete-profile": "Füllen Sie Ihr Profil",
     "explore-projects": "Projekte entdecken",
     "create-project": "Erstellen Sie Ihr erstes Projekt",
     "take-tour": "Nehmen Sie die Plattform Tour",
     "dont-show-again": "Zeig das nicht wieder"
   },
   "page404": {
-    "contact": "Verloren? Sie k\u00f6nnen uns bei {0} kontaktieren",
+    "contact": "Verloren? Sie können uns bei {0} kontaktieren",
     "contact-mail": "Projekte.platform{'@'}learningplanetinstitute.org",
     "illustration-text": "Ja, das ist ein Fehler 404 und jetzt bist du in diesem UNGLE...",
     "page-title": "Seite nicht gefunden",
@@ -1217,24 +1217,24 @@
     "title": "Ups....",
     "not-connected": {
       "title": "Versuchen Sie sich anzumelden",
-      "illustration-text": "Sie m\u00fcssen LOGIN",
-      "connect": "Wir k\u00f6nnen die Seite nicht finden, die Sie suchen. Um es zu erreichen, k\u00f6nnten Sie {0}.",
+      "illustration-text": "Sie müssen LOGIN",
+      "connect": "Wir können die Seite nicht finden, die Sie suchen. Um es zu erreichen, könnten Sie {0}.",
       "login": "muss sich anmelden"
     }
   },
   "picture": {
-    "add-picture": "Bild hinzuf\u00fcgen",
-    "change-picture": "Bild \u00e4ndern"
+    "add-picture": "Bild hinzufügen",
+    "change-picture": "Bild ändern"
   },
   "plateform-tour-modal": {
-    "intro": "Hier ist eine schnelle Tour durch Projekte Hauptfunktionen. Sie k\u00f6nnen immer wieder darauf zur\u00fcckkommen (zusammen mit vielen Tutorials) im Men\u00fc \u201cMehr / Hilfe\u201d .",
-    "notice-tutorial": "Sie k\u00f6nnen auch die Ins und Outs von Projekten mit unserem {0} lernen",
+    "intro": "Hier ist eine schnelle Tour durch Projekte Hauptfunktionen. Sie können immer wieder darauf zurückkommen (zusammen mit vielen Tutorials) im Menü “Mehr / Hilfe” .",
+    "notice-tutorial": "Sie können auch die Ins und Outs von Projekten mit unserem {0} lernen",
     "title": "Plattformtour: was ist Projekte",
     "tutorial": "Anleitungen"
   },
   "profile": {
     "edit": {
-      "back-to-profile": "Zur\u00fcck zum Profil",
+      "back-to-profile": "Zurück zum Profil",
       "edit-my-profile": "Mein Profil bearbeiten",
       "edit-other-profile": "Profil von {name} bearbeiten",
       "edit-your-profile": "Profil bearbeiten",
@@ -1244,7 +1244,7 @@
       "general": {
         "no-special-characters": "Keine Sonderzeichen erlaubt",
         "tab": "Allgemeine Informationen",
-        "form-has-error": "Im Formular gibt es ein fehlendes oder ung\u00fcltiges Feld.",
+        "form-has-error": "Im Formular gibt es ein fehlendes oder ungültiges Feld.",
         "save-error": "Fehler beim Speichern von Profilen.",
         "save-success": "Profil gespeichert.",
         "pronouns": {
@@ -1266,30 +1266,30 @@
           "label": "*",
           "placeholder": "Ex. jane.doe{'@'}yourcompany.com",
           "is-required": "Das E-Mail-Feld ist erforderlich.",
-          "is-email": "Die E-Mail muss eine g\u00fcltige E-Mail sein."
+          "is-email": "Die E-Mail muss eine gültige E-Mail sein."
         },
         "professional-number": {
           "label": "Berufsnummer",
           "placeholder": "ex +33 600000000"
         },
         "personal-number": {
-          "label": "Pers\u00f6nliche Nummer",
+          "label": "Persönliche Nummer",
           "placeholder": "ex +33 600000000"
         },
         "personal-webpage": {
-          "label": "Pers\u00f6nliche Webseite",
-          "placeholder": "Stellen Sie hier Ihre pers\u00f6nliche Seite URL",
-          "is-url": "Die pers\u00f6nliche Webseite muss eine g\u00fcltige URL sein."
+          "label": "Persönliche Webseite",
+          "placeholder": "Stellen Sie hier Ihre persönliche Seite URL",
+          "is-url": "Die persönliche Webseite muss eine gültige URL sein."
         },
         "linkedin": {
           "label": "Linkedin-Konto",
-          "placeholder": "Stellen Sie hier Ihre verkn\u00fcpfte Account URL",
-          "is-url": "Das Linkedin-Konto muss eine g\u00fcltige URL sein."
+          "placeholder": "Stellen Sie hier Ihre verknüpfte Account URL",
+          "is-url": "Das Linkedin-Konto muss eine gültige URL sein."
         },
         "twitter": {
           "label": "Twitter-Konto",
           "placeholder": "Stellen Sie hier Ihre Twitter-Account URL",
-          "is-url": "Der Twitter-Account muss eine g\u00fcltige URL sein."
+          "is-url": "Der Twitter-Account muss eine gültige URL sein."
         },
         "picture": {
           "label": "Profilbild"
@@ -1307,11 +1307,11 @@
           "label": "*"
         },
         "sdgs": {
-          "label": "SDGs",
-          "add": "Hinzuf\u00fcgen",
-          "notice-start": "Hinzuf\u00fcgen",
+          "label": "Sdg",
+          "add": "Hinzufügen",
+          "notice-start": "Hinzufügen",
           "notice-link": "Nachhaltige Entwicklungsziele (SDG)",
-          "notice-end": "Sie wollen dazu beitragen. Beispiel: Qualit\u00e4tserziehung, Zero Hunger, Klimaschutz, etc.",
+          "notice-end": "Sie wollen dazu beitragen. Beispiel: Qualitätserziehung, Zero Hunger, Klimaschutz, etc.",
           "link": "http://sdgs.un.org/goals"
         }
       },
@@ -1325,28 +1325,28 @@
         },
         "long-bio": {
           "label": "Lange bio",
-          "placeholder": "Pr\u00e4sentieren Sie sich professionell. Pr\u00e4sentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung."
+          "placeholder": "Präsentieren Sie sich professionell. Präsentieren Sie Ihren Karriereweg und Ihre aktuelle Besetzung."
         },
         "personal-bio": {
-          "label": "Pers\u00f6nliches Bio",
-          "placeholder": "Stellen Sie sich pers\u00f6nlich vor. Erz\u00e4hlen Sie uns von Ihnen und Ihren Leidenschaften!"
+          "label": "Persönliches Bio",
+          "placeholder": "Stellen Sie sich persönlich vor. Erzählen Sie uns von Ihnen und Ihren Leidenschaften!"
         }
       },
       "projects": {
         "tab": "Projekte",
         "member": {
           "label": "Projekte bin ich Mitglied",
-          "notice": "Wenn Sie Mitglied eines bestehenden Projekts werden m\u00f6chten, sollten Sie das Projektteam bitten, Sie hinzuzuf\u00fcgen. Oder Sie k\u00f6nnen Ihr Projekt erstellen."
+          "notice": "Wenn Sie Mitglied eines bestehenden Projekts werden möchten, sollten Sie das Projektteam bitten, Sie hinzuzufügen. Oder Sie können Ihr Projekt erstellen."
         },
         "followed": {
           "label": "Projekte, die ich folge",
-          "notice": "Wenn Sie einem Projekt folgen, erhalten Sie Benachrichtigungen \u00fcber jede neue Aktivit\u00e4t auf ihm. Wenn Sie ein Projekt verfolgen m\u00f6chten, besuchen Sie es und klicken Sie auf die Schaltfl\u00e4che \"Follow\" neben seinem Titel.",
-          "add": "Hinzuf\u00fcgen",
-          "drawer-title": "W\u00e4hlen Sie die Projekte Ich folge"
+          "notice": "Wenn Sie einem Projekt folgen, erhalten Sie Benachrichtigungen über jede neue Aktivität auf ihm. Wenn Sie ein Projekt verfolgen möchten, besuchen Sie es und klicken Sie auf die Schaltfläche \"Follow\" neben seinem Titel.",
+          "add": "Hinzufügen",
+          "drawer-title": "Wählen Sie die Projekte Ich folge"
         },
         "reviewed": {
           "label": "Projekte, die ich bewerte",
-          "notice": "Wenn Sie ein Reviewer eines bestehenden Projekts werden m\u00f6chten, sollten Sie das Projektteam bitten, Sie hinzuzuf\u00fcgen."
+          "notice": "Wenn Sie ein Reviewer eines bestehenden Projekts werden möchten, sollten Sie das Projektteam bitten, Sie hinzuzufügen."
         }
       },
       "groups": {
@@ -1356,57 +1356,57 @@
         }
       },
       "skills": {
-        "tab": "F\u00e4higkeiten",
-        "intro": "Sie haben noch keine ausgew\u00e4hlten F\u00e4higkeiten. Professionelle F\u00e4higkeiten und Hobbys erm\u00f6glichen es Ihren Kollegen und Ihrer Community, Sie basierend auf dem zu finden, was Sie gut sind, was Sie interessiert sind und was Sie interessieren.",
+        "tab": "Fähigkeiten",
+        "intro": "Sie haben noch keine ausgewählten Fähigkeiten. Professionelle Fähigkeiten und Hobbys ermöglichen es Ihren Kollegen und Ihrer Community, Sie basierend auf dem zu finden, was Sie gut sind, was Sie interessiert sind und was Sie interessieren.",
         "save-error": "Fehler beim Speichern von Profilen.",
         "save-success": "Profil gespeichert.",
         "search": "Suche",
-        "suggested-skills": "Oder w\u00e4hlen Sie eine vorgeschlagene F\u00e4higkeit",
-        "already-added": "(bereits hinzugef\u00fcgt)",
+        "suggested-skills": "Oder wählen Sie eine vorgeschlagene Fähigkeit",
+        "already-added": "(bereits hinzugefügt)",
         "skills": {
-          "nothing-yet": "Sie haben noch keine F\u00e4higkeiten hinzugef\u00fcgt.",
-          "add-success": "Skill '{name}' hinzugef\u00fcgt.",
+          "nothing-yet": "Sie haben noch keine Fähigkeiten hinzugefügt.",
+          "add-success": "Skill '{name}' hinzugefügt.",
           "edit-success": "Skill '{name}' bearbeitet.",
           "delete-success": "Die Skill '{name}' entfernt.",
-          "add": "F\u00fcgen Sie professionelle F\u00e4higkeiten",
-          "add-item": "F\u00fcgen Sie eine F\u00e4higkeit hinzu",
+          "add": "Fügen Sie professionelle Fähigkeiten",
+          "add-item": "Fügen Sie eine Fähigkeit hinzu",
           "edit-levels": "Ebenen bearbeiten",
-          "already-added": "Skill bereits hinzugef\u00fcgt",
+          "already-added": "Skill bereits hinzugefügt",
           "levels-help": "Ebene",
           "drawer": {
-            "title": "F\u00fcgen Sie professionelle F\u00e4higkeiten",
-            "notice": "Geben Sie das Etikett Ihrer F\u00e4higkeiten ein und w\u00e4hlen Sie das richtige f\u00fcr Sie unter Vorschl\u00e4gen.",
+            "title": "Fügen Sie professionelle Fähigkeiten",
+            "notice": "Geben Sie das Etikett Ihrer Fähigkeiten ein und wählen Sie das richtige für Sie unter Vorschlägen.",
             "placeholder": "Geben Sie ein Geschick",
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
-            "help-levels": "Mehr \u00fcber F\u00e4higkeiten Ebenen"
+            "help-levels": "Mehr über Fähigkeiten Ebenen"
           },
-          "selection": "Ausgew\u00e4hlte F\u00e4higkeiten"
+          "selection": "Ausgewählte Fähigkeiten"
         },
         "hobbies": {
-          "nothing-yet": "Sie haben noch keine Hobbys hinzugef\u00fcgt.",
-          "add-success": "Hobby '{name}' hinzugef\u00fcgt.",
+          "nothing-yet": "Sie haben noch keine Hobbys hinzugefügt.",
+          "add-success": "Hobby '{name}' hinzugefügt.",
           "edit-success": "Hobby '{name}' bearbeitet.",
           "delete-success": "Hobby '{name}' entfernt.",
-          "add": "Hobbys hinzuf\u00fcgen",
-          "add-item": "Ein Hobby hinzuf\u00fcgen",
-          "already-added": "Hobby bereits hinzugef\u00fcgt",
+          "add": "Hobbys hinzufügen",
+          "add-item": "Ein Hobby hinzufügen",
+          "already-added": "Hobby bereits hinzugefügt",
           "edit-levels": "Ebenen bearbeiten",
           "levels-help": "Ebene",
           "drawer": {
-            "title": "Ein pers\u00f6nliches Hobby hinzuf\u00fcgen",
-            "notice": "Geben Sie das Etikett Ihres Hobbys ein und w\u00e4hlen Sie das richtige f\u00fcr Sie unter Vorschl\u00e4gen.",
+            "title": "Ein persönliches Hobby hinzufügen",
+            "notice": "Geben Sie das Etikett Ihres Hobbys ein und wählen Sie das richtige für Sie unter Vorschlägen.",
             "placeholder": "Geben Sie ein Hobby",
             "notice-levels": "Geben Sie Ihr Niveau der Meisterschaft.",
-            "help-levels": "Mehr \u00fcber die Hobbystufen"
+            "help-levels": "Mehr über die Hobbystufen"
           },
-          "selection": "Ausgew\u00e4hlte Hobbys"
+          "selection": "Ausgewählte Hobbys"
         },
         "mentorship": {
           "contact": {
             "title-ask": "Fragen nach Mentorship",
             "title-offer": "Angebot Mentorship",
-            "notice-ask": "Bitte geben Sie die F\u00e4higkeiten an, f\u00fcr die Sie Mentorship fragen.",
-            "notice-offer": "Bitte geben Sie die F\u00e4higkeiten an, f\u00fcr die Sie Mentorship anbieten.",
+            "notice-ask": "Bitte geben Sie die Fähigkeiten an, für die Sie Mentorship fragen.",
+            "notice-offer": "Bitte geben Sie die Fähigkeiten an, für die Sie Mentorship anbieten.",
             "error": "Fehler beim Senden der Anfrage.",
             "success": "Ihre Anfrage wurde gesendet.",
             "fields": {
@@ -1418,41 +1418,41 @@
               },
               "text": {
                 "label": "Text",
-                "notice-ask": "F\u00fcgen Sie Details \u00fcber Sie und die Art der Hilfe, die Sie ben\u00f6tigen (z.B. Anzahl der Stunden, die Art der Hilfe - von einfachen Feedback bis zur Lektion...).",
-                "notice-offer": "F\u00fcgen Sie Details \u00fcber Sie und die Art der Hilfe, die Sie bieten (z.B. Anzahl der Stunden, die Art der Hilfe - von einfachen Feedback bis zur Lektion...).",
+                "notice-ask": "Fügen Sie Details über Sie und die Art der Hilfe, die Sie benötigen (z.B. Anzahl der Stunden, die Art der Hilfe - von einfachen Feedback bis zur Lektion...).",
+                "notice-offer": "Fügen Sie Details über Sie und die Art der Hilfe, die Sie bieten (z.B. Anzahl der Stunden, die Art der Hilfe - von einfachen Feedback bis zur Lektion...).",
                 "placeholder": "Starten Sie hier",
                 "required": "Das Textfeld ist erforderlich."
               },
               "email": {
                 "label": "E-Mail senden",
-                "notice": "Diese Nachricht wird als E-Mail gesendet. Um eine Antwort zu erhalten, f\u00fcgen Sie Ihre E-Mail hinzu.",
+                "notice": "Diese Nachricht wird als E-Mail gesendet. Um eine Antwort zu erhalten, fügen Sie Ihre E-Mail hinzu.",
                 "placeholder": "Eg. jane.doe{'@'}gmail.com",
-                "invalid": "Das E-Mail-Feld ist ung\u00fcltig.",
+                "invalid": "Das E-Mail-Feld ist ungültig.",
                 "required": "Das E-Mail-Feld ist erforderlich."
               }
             }
           },
           "mentorship": "Mentoring",
-          "choose": "W\u00e4hlen",
-          "edit": "Mentorship f\u00fcr \"{skill}\"",
+          "choose": "Wählen",
+          "edit": "Mentorship für \"{skill}\"",
           "error": "Fehler beim Speichern von Mentorship.",
           "success": "Mentoring gerettet",
-          "notice": "M\u00f6chten Sie Mentor oder Mentor f\u00fcr diese F\u00e4higkeiten werden? Sie bestimmen die H\u00e4ufigkeit des Austauschs, der Ihnen mit dem Mentee oder Ihrem Mentor passt. Seien Sie versichert, unser F\u00fchrer ist hier, um Ihnen zu helfen.",
+          "notice": "Möchten Sie Mentor oder Mentor für diese Fähigkeiten werden? Sie bestimmen die Häufigkeit des Austauschs, der Ihnen mit dem Mentee oder Ihrem Mentor passt. Seien Sie versichert, unser Führer ist hier, um Ihnen zu helfen.",
           "can-mentor": "I can mentor",
           "needs-mentor": "Ich suche einen Mentor.",
           "comment": "Anmerkung",
-          "comment-placeholder": "Geben Sie an, welche Hilfe Sie anbieten k\u00f6nnen oder welche Hilfe Sie ben\u00f6tigen (Stundenvolumen, H\u00e4ufigkeit, etc.)"
+          "comment-placeholder": "Geben Sie an, welche Hilfe Sie anbieten können oder welche Hilfe Sie benötigen (Stundenvolumen, Häufigkeit, etc.)"
         },
         "levels": {
           "curious": "Vorsichtig",
           "basic": "Grund",
-          "competent": "Zust\u00e4ndig",
-          "expert": "Sachverst\u00e4ndige"
+          "competent": "Zuständig",
+          "expert": "Sachverständige"
         },
         "tip": {
-          "intro-edit": "Die verschiedenen Ebenen, die Sie w\u00e4hlen k\u00f6nnen:",
+          "intro-edit": "Die verschiedenen Ebenen, die Sie wählen können:",
           "curious": {
-            "title": "Ebene 1: Kuriosit\u00e4t",
+            "title": "Ebene 1: Kuriosität",
             "description": ""
           },
           "basic": {
@@ -1465,7 +1465,7 @@
           },
           "expert": {
             "title": "Ebene 4: Experten",
-            "description": "PhD-Level oder hat ein gro\u00dfes Projekt, oder kann Meister-Level lehren"
+            "description": "PhD-Level oder hat ein großes Projekt, oder kann Meister-Level lehren"
           }
         }
       },
@@ -1475,46 +1475,46 @@
         "save-success": "Profil gespeichert.",
         "publication-status": {
           "label": "Allgemeine Profilsicht",
-          "notice": "Standard : \u00f6ffentlich f\u00fcr alle"
+          "notice": "Standard : öffentlich für alle"
         },
         "picture": {
           "label": "Bildansicht",
           "notice": "Standard : Mein Portal"
         },
         "email": {
-          "label": "Nachrichten\u00fcbermittlung",
-          "notice": "Default : versteckt f\u00fcr alle"
+          "label": "Nachrichtenübermittlung",
+          "notice": "Default : versteckt für alle"
         },
         "personal-phone": {
-          "label": "Pers\u00f6nliche Telefonsicht",
-          "notice": "Default : versteckt f\u00fcr alle"
+          "label": "Persönliche Telefonsicht",
+          "notice": "Default : versteckt für alle"
         },
         "skills-hobbies": {
-          "label": "F\u00e4higkeiten & Hobbys Sichtbarkeit",
-          "notice": "Default : versteckt f\u00fcr alle"
+          "label": "Fähigkeiten & Hobbys Sichtbarkeit",
+          "notice": "Default : versteckt für alle"
         },
         "socials": {
           "label": "Sichtbarkeit der Medien",
-          "notice": "(Ex. Linked In, Twitter, pers\u00f6nliche Website...) Standard : Mein Portal"
+          "notice": "(Ex. Linked In, Twitter, persönliche Website...) Standard : Mein Portal"
         },
         "options": {
           "hide": "Versteckt",
           "org": "Mein Portal",
-          "pub": "\u00d6ffentliche"
+          "pub": "Öffentliche"
         }
       }
     },
     "go-to-page": "Profilseite anzeigen",
     "drawer_title": "Profil",
     "projects": "Projekte",
-    "skills": "F\u00e4higkeiten",
+    "skills": "Fähigkeiten",
     "groups": "Gruppen",
     "snapshot": "Schnappschuss",
     "bio": "Biozid",
     "bio_pro": "Professionelles Bio",
-    "bio_personal": "Pers\u00f6nliches Bio",
+    "bio_personal": "Persönliches Bio",
     "cancel-title": "Profilbearbeitung abbrechen",
-    "cancel-content": "Sind Sie sicher, dass Sie Ihre Profilausgabe stornieren m\u00f6chten? Jede \u00c4nderung wird verloren gehen.",
+    "cancel-content": "Sind Sie sicher, dass Sie Ihre Profilausgabe stornieren möchten? Jede Änderung wird verloren gehen.",
     "can-mentor": "Kann Mentor sein",
     "needs-mentor": "Brauchen Sie einen Mentor",
     "ask-mentorship": "Fragen nach Mentorship",
@@ -1527,8 +1527,8 @@
   "profile-completed-modal": {
     "notice-congratulation": "Sie sind jetzt bereit, die Projektplattform zu nutzen.",
     "notice-tour": "Um Ihr Onboarding zu erleichtern, empfehlen wir Ihnen, eine schnelle Tour durch die wichtigsten Features von Projects zu machen. Dies sind 2 Minuten Ihrer Zeit wahrscheinlich gut verbracht ;)",
-    "title": "Herzlichen Gl\u00fcckwunsch, Sie sind alle bereit! Was ist mit einer schnellen Tour?",
-    "skip": "\u00dcber uns",
+    "title": "Herzlichen Glückwunsch, Sie sind alle bereit! Was ist mit einer schnellen Tour?",
+    "skip": "Über uns",
     "take-tour": "Machen Sie die Tour jetzt"
   },
   "project": {
@@ -1536,61 +1536,61 @@
     "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
     "add-location-point": "Einen Ortspunkt hinzufügen",
-    "add-review": "Zurück zur Übersicht",
+    "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",
       "blog-entry": "Blog-Eintrag",
       "goal": "Ziel",
-      "sdg": "SDG",
+      "sdg": "Sdg",
       "link-and-attached-document": "Ressourcen",
       "team-member": "Teammitglied / Gruppe",
-      "announcement": "Ank\u00fcndigung",
+      "announcement": "Ankündigung",
       "comment": "Kommentare",
       "location": "Standort"
     },
     "apply-succes": "Antrag gesendet",
-    "announcement-create": "Ank\u00fcndigung erstellen",
-    "announcements": "Ank\u00fcndigungen",
+    "announcement-create": "Ankündigung erstellen",
+    "announcements": "Ankündigungen",
     "at-coordinates": "bei Koordinaten",
     "categories": "Projektkategorien",
     "community": "Projekte der Gemeinschaft",
     "create-project": "Projekt erstellen",
     "create": {
-      "choose-category-first": "Bitte w\u00e4hlen Sie eine Kategorie zuerst",
+      "choose-category-first": "Bitte wählen Sie eine Kategorie zuerst",
       "help-link": "Wir sind hier, um zu helfen.",
-      "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie k\u00f6nnen das immer sp\u00e4ter \u00e4ndern. Keine Ahnung, was du tun solltest?",
+      "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie können das immer später ändern. Keine Ahnung, was du tun solltest?",
       "title": "Neues Projekt erstellen"
     },
-    "destroy": "Projekt l\u00f6schen",
+    "destroy": "Projekt löschen",
     "duplicate": "Duplikat dieses Projekt",
     "edit": "Projekt bearbeiten",
-    "edit-linked-project": "Verkn\u00fcpftes Projekt bearbeiten",
+    "edit-linked-project": "Verknüpftes Projekt bearbeiten",
     "edit-location-point": "Standortpunkt bearbeiten",
     "edit-map": "Geolokalisierung",
-    "edit-review": "Zur\u00fcck zur \u00dcbersicht",
+    "edit-review": "Kommentar bearbeiten",
     "files": "Projektdatei | Projektdatei | Projektdateien",
     "follow": "Folgen",
     "followed": "Folgen",
     "form": {
-      "add-tags": "Tags hinzuf\u00fcgen",
+      "add-tags": "Tags hinzufügen",
       "create-project": "Projekt erstellen",
       "edit-project": "Projekt bearbeiten",
       "edit-title": "Titel bearbeiten",
       "project-category": "Projektkategorie",
-      "select-category": "W\u00e4hlen Sie eine Kategorie",
+      "select-category": "Wählen Sie eine Kategorie",
       "purpose-label": "Ziel des Projekts",
       "purpose-placeholder": "Was ist das Ziel Ihres Projekts?",
       "resize-image": "Reframe",
-      "title-label": "Titel hinzuf\u00fcgen",
-      "title-placeholder": "Wie hei\u00dft dieses Projekt?",
+      "title-label": "Titel hinzufügen",
+      "title-placeholder": "Wie heißt dieses Projekt?",
       "upload-image": "Bild hochladen",
       "title-errors": {
         "required": "Das Titelfeld ist erforderlich",
-        "max": "Das Titelfeld darf nicht gr\u00f6\u00dfer als 180 Zeichen sein"
+        "max": "Das Titelfeld darf nicht größer als 180 Zeichen sein"
       },
       "purpose-errors": {
         "required": "Das Zielfeld ist erforderlich",
-        "max": "Das Zielfeld darf nicht gr\u00f6\u00dfer als 180 Zeichen sein",
+        "max": "Das Zielfeld darf nicht größer als 180 Zeichen sein",
         "min": "Das Zielfeld muss mindestens 3 Zeichen sein"
       }
     },
@@ -1604,40 +1604,40 @@
     "life-status": "Lebensstatus des Projekts",
     "linked": "Verbundprojekt | Verbundprojekte",
     "linked-project": "Verbundprojekt",
-    "linked-project-confirm-delete": "Sind Sie sicher, dieses verkn\u00fcpfte Projekt zu l\u00f6schen?",
+    "linked-project-confirm-delete": "Sind Sie sicher, dieses verknüpfte Projekt zu löschen?",
     "linked-projects": "Verbundprojekte",
-    "link-confirm-delete": "Sind Sie sicher, dass Sie diesen Link aus dem Projekt l\u00f6schen m\u00f6chten?",
-    "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt l\u00f6schen m\u00f6chten?",
-    "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt l\u00f6schen m\u00f6chten?",
+    "link-confirm-delete": "Sind Sie sicher, dass Sie diesen Link aus dem Projekt löschen möchten?",
+    "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt löschen möchten?",
+    "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt löschen möchten?",
     "location-type-label": "Standort",
-    "lock": "Schlossprojekt",
+    "lock": "Projekt schließen",
     "private": "Private Projekte",
-    "publish": "Projekt ver\u00f6ffentlichen",
-    "public": "\u00d6ffentliche Projekte",
+    "publish": "Projekt veröffentlichen",
+    "public": "Öffentliche Projekte",
     "quit": "Quittenprojekt",
-    "random-image": "Zuf\u00e4lliges Bild",
+    "random-image": "Zufälliges Bild",
     "resource": "Ressourcen | Ressourcen",
-    "review": "\u00dcberpr\u00fcfung",
+    "review": "Überprüfung",
     "reviews": "Bewertungen",
-    "review-confirm-delete": "Sind Sie sicher, diese Bewertung zu l\u00f6schen?",
-    "reviewable": "Zur\u00fcck zur \u00dcbersicht",
+    "review-confirm-delete": "Sind Sie sicher, diese Bewertung zu löschen?",
+    "reviewable": "Zurück zur Übersicht",
     "reviewed-on-the": "hat auf die",
-    "remove-group": "Gruppe l\u00f6schen",
-    "remove-user-title": "L\u00f6schen des Benutzers",
-    "remove-user": "L\u00f6schen",
+    "remove-group": "Gruppe löschen",
+    "remove-user-title": "Löschen des Benutzers",
+    "remove-user": "Löschen",
     "show-n-projects": "{count} Projekte anzeigen",
-    "suggested": "\u00e4hnliche Projekte",
-    "suggested-hint": "Projekte, die Sie interessieren k\u00f6nnten",
+    "suggested": "Ähnliche Projekte",
+    "suggested-hint": "Projekte, die Sie interessieren könnten",
     "summary": "Zusammenfassung",
     "settings": "Einstellungen",
     "org-settings": {
       "title": "Portal(e) des Portals",
-      "description": "Das Projekt geh\u00f6rt zu den ausgew\u00e4hlten Portalen. Achten Sie darauf, wenn Sie die Portale hinzuf\u00fcgen oder \u00e4ndern, zu denen Ihr Projekt geh\u00f6rt. So werden beispielsweise Administratoren einer neuen Organisation automatisch Zugang zu Ihrem Projekt gew\u00e4hrt. Oder Organisationen k\u00f6nnen spezifische redaktionelle Regeln haben, die Sie folgen sollten.",
-      "warning": "Ihr Projekt geh\u00f6rt zu den Organisationen unten. Dort k\u00f6nnen Sie die Kategorie Ihres Projekts bearbeiten:"
+      "description": "Das Projekt gehört zu den ausgewählten Portalen. Achten Sie darauf, wenn Sie die Portale hinzufügen oder ändern, zu denen Ihr Projekt gehört. So werden beispielsweise Administratoren einer neuen Organisation automatisch Zugang zu Ihrem Projekt gewährt. Oder Organisationen können spezifische redaktionelle Regeln haben, die Sie folgen sollten.",
+      "warning": "Ihr Projekt gehört zu den Organisationen unten. Dort können Sie die Kategorie Ihres Projekts bearbeiten:"
     },
     "updated": {
       "blog-entry": "einen Blogeintrag dieses Projekts aktualisiert",
-      "blog-entry-create": "einen neuen Blogeintrag dieses Projekts hinzugef\u00fcgt",
+      "blog-entry-create": "einen neuen Blogeintrag dieses Projekts hinzugefügt",
       "description": "die Beschreibung dieses Projekts gespeichert"
     },
     "view": "Projekt ansehen",
@@ -1645,69 +1645,69 @@
     "actions": "Schnelle Aktionen",
     "copy": "(Kopieren)",
     "nothing": "Nichts hier...",
-    "tag-warning": "NB: Wenn ein Benutzer Sprachen in Ihrem Portal schaltet, werden die Tags mit \u00dcbersetzungen f\u00fcr sie \u00fcbersetzt. Ansonsten werden die Tags auf Englisch angezeigt."
+    "tag-warning": "NB: Wenn ein Benutzer Sprachen in Ihrem Portal schaltet, werden die Tags mit Übersetzungen für sie übersetzt. Ansonsten werden die Tags auf Englisch angezeigt."
   },
   "project_list": {
     "updated_at": "Letzter Beitrag",
-    "random": "Zuf\u00e4llig",
+    "random": "Zufällig",
     "recommended": "Empfohlen",
     "sort_by": "Sortieren nach:"
   },
   "projects": "Projekte",
   "recruit": {
-    "about-you": "Erz\u00e4hlen Sie uns von sich selbst und was motiviert Sie",
-    "add-announcement": "eine Ank\u00fcndigung hinzuf\u00fcgen",
-    "announcement": "Ank\u00fcndigung",
-    "announcements": "keine Ank\u00fcndigung | {count} Ank\u00fcndigung | {count} Ank\u00fcndigungen",
-    "apply": "Anwendungsbereich",
-    "creation-date": "erstellt auf",
-    "delete-announcement-message": "M\u00f6chten Sie diese Ank\u00fcndigung l\u00f6schen?",
-    "edit-announcement": "Pressemitteilung",
-    "email": "Warnung, wir ben\u00f6tigen eine g\u00fcltige E-Mail-Adresse, um Sie zu kontaktieren. (Wir werden diese Informationen nicht auf der Plattform speichern).",
+    "about-you": "Erzählen Sie uns von sich selbst und was motiviert Sie",
+    "add-announcement": "Ankündigung hinzufügen",
+    "announcement": "Ankündigung",
+    "announcements": "Keine Ankündigung | {count} Ankündigung | {count} Ankündigungen",
+    "apply": "Anwendung",
+    "creation-date": "Erstellt am",
+    "delete-announcement-message": "Möchten Sie diese Ankündigung löschen?",
+    "edit-announcement": "Ankündigung ändern",
+    "email": "Achtung, wir brauchen eine gültige E-Mail-Adresse, um Sie zu kontaktieren. (wir speichern diese Informationen nicht auf der Plattform).",
     "firstname": "Vorname",
-    "is-remunerated": "wird verg\u00fctet",
-    "job": "Job",
+    "is-remunerated": "wird entlohnt",
+    "job": "Stellenangebote",
     "lastname": "Vorname",
     "motivation-hint": "Es sollte mindestens 20 Zeichen enthalten",
-    "new-announcement": "neue Ank\u00fcndigung",
+    "new-announcement": "Neue Ankündigung",
     "participant": "Teilnehmer",
-    "remunerated": "entlohnt",
+    "remunerated": "Vergütung",
     "send": "Bewerbung senden",
     "title": "Titel",
     "traineeship": "Ausbildung",
-    "type": "Anzeigeart",
-    "updated": "aktualisiert",
-    "valid-until-the": "g\u00fcltig bis",
+    "type": "Meldetyp",
+    "updated": "Aktualisierung",
+    "valid-until-the": "Gültig bis",
     "view": "Blick"
   },
   "report": {
     "abuse": "Missbrauch melden",
-    "abuse-title": "Erkl\u00e4ren Sie den Bericht in wenigen Worten.",
-    "abuse-text": "Beschreiben Sie so genau wie m\u00f6glich, warum Sie dieses Projekt melden.",
-    "abuse-url": "Kopieren Sie die URL der Seite, die Sie melden m\u00f6chten.",
+    "abuse-title": "Erklären Sie den Bericht in wenigen Worten.",
+    "abuse-text": "Beschreiben Sie so genau wie möglich, warum Sie dieses Projekt melden.",
+    "abuse-url": "Kopieren Sie die URL der Seite, die Sie melden möchten.",
     "bug": "Einen Fehler melden",
-    "bug-title": "Erkl\u00e4re den Bug in ein paar Worten.",
-    "bug-text": "Beschreiben Sie so genau wie m\u00f6glich das Problem, das Sie erlebt haben und wie Sie es reproduzieren.",
-    "bug-url": "Kopieren Sie die URL der Seite, in der Sie dieses Problem hinzuf\u00fcgen."
+    "bug-title": "Erkläre den Bug in ein paar Worten.",
+    "bug-text": "Beschreiben Sie so genau wie möglich das Problem, das Sie erlebt haben und wie Sie es reproduzieren.",
+    "bug-url": "Kopieren Sie die URL der Seite, in der Sie dieses Problem hinzufügen."
   },
   "resource": {
-    "add": "Hinzuf\u00fcgen von Ressourcen",
-    "add-file": "eine Datei hinzuf\u00fcgen",
-    "add-link": "einen Link hinzuf\u00fcgen",
-    "add-link-url": "Link hinzuf\u00fcgen",
-    "add-link-url-label": "URL",
-    "add-link-text": "Link hinzuf\u00fcgen",
+    "add": "Ressourcen hinzufügen",
+    "add-file": "Datei hinzufügen",
+    "add-link": "Einen Link hinzufügen",
+    "add-link-url": "Link hinzufügen",
+    "add-link-url-label": "Url",
+    "add-link-text": "Linktext hinzufügen",
     "add-link-text-label": "Text",
-    "edit-link": "einen Link bearbeiten",
+    "edit-link": "Einen Link bearbeiten",
     "edit-file": "Datei bearbeiten",
-    "max-size": "Max Gr\u00f6\u00dfe 10MB",
-    "invalid-image": "Ununterst\u00fctzte Datei ... ist das ein Bild?",
+    "max-size": "Max Größe 10MB",
+    "invalid-image": "Ununterstützte Datei ... ist das ein Bild?",
     "error-uploading-image": "Fehler beim Hochladen von Bild",
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
     "resources": "Ressourcen",
-    "web": "Link zu Web-Ressourcen",
-    "web-link": "web link | web link | web links"
+    "web": "Link zu Webressourcen | Links zu Web-Ressourcen",
+    "web-link": "Weblink | web link | web links"
   },
   "result_box": {
     "people": "Menschen",
@@ -1717,20 +1717,20 @@
   },
   "visibility": {
     "private-title": "Privat:",
-    "public-title": "\u00d6ffentlichkeit:",
+    "public-title": "Öffentlichkeit:",
     "community-title": "Mitglieder von Portal:",
-    "private": "nur f\u00fcr Teammitglieder sichtbar.",
-    "public": "f\u00fcr jeden Besucher sichtbar, auch ohne Konto.",
-    "community": "nur f\u00fcr Benutzer, die ein Konto auf diesem Portal haben."
+    "private": "nur für Teammitglieder sichtbar.",
+    "public": "für jeden Besucher sichtbar, auch ohne Konto.",
+    "community": "nur für Benutzer, die ein Konto auf diesem Portal haben."
   },
   "register": {
     "title": "Konto erstellen",
-    "title-confirm": "E-Mail Best\u00e4tigung erforderlich",
+    "title-confirm": "E-Mail Bestätigung erforderlich",
     "email": {
       "label": "*",
       "placeholder": "Geben Sie Ihre E-Mail",
       "is-required": "E-Mail ist erforderlich",
-      "is-invalid": "Dies ist keine g\u00fcltige E-Mail"
+      "is-invalid": "Dies ist keine gültige E-Mail"
     },
     "given_name": {
       "label": "Vorname *",
@@ -1747,12 +1747,12 @@
       "placeholder": "***********",
       "is-required": "Passwort ist erforderlich"
     },
-    "confirmation": "Wir haben Ihnen eine Best\u00e4tigungs-E-Mail in Ihrem Posteingang geschickt. Sobald Sie best\u00e4tigt haben, dass {0} Ihre E-Mail ist, helfen wir Ihnen, auf der Plattform zu starten.",
-    "save-error": "Es trat ein technisches Problem auf. Bitte kommen Sie sp\u00e4ter wieder.",
+    "confirmation": "Wir haben Ihnen eine Bestätigungs-E-Mail in Ihrem Posteingang geschickt. Sobald Sie bestätigt haben, dass {0} Ihre E-Mail ist, helfen wir Ihnen, auf der Plattform zu starten.",
+    "save-error": "Es trat ein technisches Problem auf. Bitte kommen Sie später wieder.",
     "email-already-exists": "Diese E-Mail ist bereits registriert.",
     "tos": "Ich stimme den {term} und {privacy} zu *",
     "tos-is-required": "Die Vereinbarung ist erforderlich, um fortzufahren",
-    "term": "Gesch\u00e4ftsbedingungen",
+    "term": "Geschäftsbedingungen",
     "privacy": "Datenschutz",
     "have-account": "Schon ein Konto?",
     "login": "Anmelden",
@@ -1762,12 +1762,12 @@
   "request-access": {
     "title": "Zugang",
     "title-confirm": "Anfrage senden",
-    "notice": "Ihr Konto muss vom Admin genehmigt werden, bevor Sie Ihr eigenes Konto erstellen k\u00f6nnen. Bitte f\u00fcllen Sie dieses Formular aus:",
+    "notice": "Ihr Konto muss vom Admin genehmigt werden, bevor Sie Ihr eigenes Konto erstellen können. Bitte füllen Sie dieses Formular aus:",
     "email": {
       "label": "*",
       "placeholder": "Geben Sie Ihre E-Mail",
       "is-required": "E-Mail ist erforderlich",
-      "is-invalid": "Dies ist keine g\u00fcltige E-Mail"
+      "is-invalid": "Dies ist keine gültige E-Mail"
     },
     "given_name": {
       "label": "Vorname *",
@@ -1786,23 +1786,23 @@
     },
     "message": {
       "label": "Nachricht",
-      "placeholder": "K\u00f6nnen Sie uns bitte sagen, warum Sie Zugang ben\u00f6tigen?"
+      "placeholder": "Können Sie uns bitte sagen, warum Sie Zugang benötigen?"
     },
-    "confirmation": "Wir schickten Ihre Anfrage an die Administratoren der Plattform. Bitte \u00fcberpr\u00fcfen Sie Ihre Mailbox ({0}) f\u00fcr die Antwort.",
+    "confirmation": "Wir schickten Ihre Anfrage an die Administratoren der Plattform. Bitte überprüfen Sie Ihre Mailbox ({0}) für die Antwort.",
     "have-account": "Schon ein Konto?",
     "login": "Anmelden",
     "need-help": "Brauchen Sie Hilfe?",
     "contact-us": "Kontaktieren Sie uns"
   },
   "role": {
-    "role-editor": "Hat alle Bearbeitungsrechte f\u00fcr diese Gruppe.",
+    "role-editor": "Hat alle Bearbeitungsrechte für diese Gruppe.",
     "role-reviewer": "Wenn das Projekt als \"ready for review\" markiert wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
     "role-teammate": "Er hat keine Bearbeitungsrechte, erscheint aber als Teammitglied.",
-    "editor": "Teammitglied",
-    "editors": "Teammitglieder",
+    "editor": "Herausgeber",
+    "editors": "Herausgeber",
     "editor-groups": "Gruppen",
     "editor-group": "Gruppe",
-    "reviewer": "Rezension",
+    "reviewer": "Rückblick",
     "reviewers": "Bewertungen",
     "reviewer-groups": "Rezensionen",
     "reviewer-group": "Rezensionsgruppe",
@@ -1810,41 +1810,41 @@
     "teammates": "Teilnehmer",
     "teammate-groups": "Teilnehmergruppen",
     "teammate-group": "Teilnehmergruppe",
-    "select": "W\u00e4hlen Sie die Rechte",
+    "select": "Wählen Sie die Rechte",
     "group": "Gruppen",
     "leader": "Gruppenleiter",
-    "role-leader": "Ist ein Editor, der mit einem \u201eGroup Leader\u201c-Tag erscheinen wird.",
+    "role-leader": "Ist ein Editor, der mit einem „Group Leader“-Tag erscheinen wird.",
     "member": "Mitglied",
     "role-member": "Erscheint als Gruppenmitglied. Ihre Projekte erscheinen unter den Projekten der Gruppe."
   },
   "search": {
     "all-filters": "Alle Filter",
-    "banner-portal": "Sie k\u00f6nnen auch nach Projekten aller Gemeinschaften auf suchen",
+    "banner-portal": "Sie können auch nach Projekten aller Gemeinschaften auf suchen",
     "browse-map": "Durchsuchen nach Karte",
     "by-language": "nach Sprache",
-    "by-people": "von Menschen",
-    "by-tag": "von tag",
-    "by-sdg": "von SDG",
-    "filter-by-language": "Sprache hinzuf\u00fcgen",
-    "filter-by-people": "Eine Person hinzuf\u00fcgen",
-    "filter-by-tag": "Einen Tag hinzuf\u00fcgen",
-    "filter-by-sdg": "Einen SDD hinzuf\u00fcgen",
-    "filter-by-category": "Kategorie hinzuf\u00fcgen",
+    "by-people": "Von Menschen",
+    "by-tag": "Nach oben",
+    "by-sdg": "von sdg",
+    "filter-by-language": "Sprache hinzufügen",
+    "filter-by-people": "Eine Person hinzufügen",
+    "filter-by-tag": "Einen Tag hinzufügen",
+    "filter-by-sdg": "Hinzufügen eines sdd",
+    "filter-by-category": "Kategorie hinzufügen",
     "language": "Sprache",
     "people": "Menschen",
     "tag": "Tag",
-    "or": "oder",
-    "ambiguousTag": "Am eindeutigen Tag",
-    "subtitle-ambiguous-tag": "Dieser Tag hat verschiedene Bedeutungen. W\u00e4hlen Sie die, an der Sie interessiert sind:",
-    "sdg": "SDG",
-    "skills": "F\u00e4higkeiten",
+    "or": "Oder",
+    "ambiguousTag": "Mehrdeutige Bezeichnung",
+    "subtitle-ambiguous-tag": "Dieses Tag hat verschiedene Bedeutungen. Wählen Sie die, an der Sie interessiert sind:",
+    "sdg": "Sdg",
+    "skills": "Fähigkeiten",
     "category": "Kategorie",
-    "choose": "W\u00e4hlen Sie unter den wichtigsten Tags oder suchen nach Tags",
+    "choose": "Wählen Sie unter den wichtigsten Tags oder suchen nach Tags",
     "filter": "Filter",
     "filters": "Filter",
-    "add-filter": "Filter hinzuf\u00fcgen",
+    "add-filter": "Filter hinzufügen",
     "geographic-map": "Geografische Karte",
-    "nothing-found": "nichts gefunden",
+    "nothing-found": "Nichts gefunden",
     "people-directory": "Suche in Personenverzeichnis",
     "projects": "Suche in Projekten",
     "projects-tab": "Projekte ({count})",
@@ -1859,34 +1859,34 @@
     "all-section": "Alle Unternehmen",
     "groups-section": "Gruppen",
     "people-section": "Menschen",
-    "result": "Ergebnisse",
+    "result": "Suchergebnisse",
     "search-title": "Suche",
     "search": "Suchgruppe",
     "search-for-a-tag": "Suche nach einem Tag",
-    "search-all": "Suche in allen Gemeinden",
+    "search-all": "Suche in allen Gemeinschaften",
     "search-group": "Erste Buchstaben der Typengruppe",
-    "search-tag": "Typ tags erste Buchstaben",
+    "search-tag": "Erste Buchstaben des Typ-Tags",
     "search-skill": "Art Skill's Label",
     "search-user": "Name der Person",
-    "search-in": "Suche Projekte in",
-    "specific-tags": "W\u00e4hlen Sie aus {organizationName} tags",
-    "wiki-tags": "W\u00e4hlen Sie thematische Tags",
-    "term-is-ambigous": "Term ist mehrdeutig.{0} Unsere Vorschl\u00e4ge",
-    "info": "Sie k\u00f6nnen auch Projekte aus allen Gemeinden suchen",
+    "search-in": "Suchergebnisse in",
+    "specific-tags": "Wählen Sie aus {organizationname} tags",
+    "wiki-tags": "Wählen Sie thematische Tags",
+    "term-is-ambigous": "Term ist mehrdeutig.{0}siehe unsere Vorschläge",
+    "info": "Sie können auch Projekte aus allen Gemeinschaften suchen",
     "geo-map": "Geografische Karte",
     "tag-map": "Tagkarte",
     "geo-map-description": "Entdecken Sie Projekte auf einer Weltkarte",
-    "tag-map-description": "Entdecken Sie Projetcs auf einer Wikip\u00e9dia-Tagskarte",
-    "open-map": "Karte \u00f6ffnen",
-    "pick-tag-classification": "W\u00e4hlen Sie ein Tags-Framework",
-    "pick-skill-classification": "W\u00e4hlen Sie einen F\u00e4higkeitenrahmen",
-    "pick-tag-preset": "Oder w\u00e4hlen Sie einen Vorschlag",
-    "pick-skill-preset": "Oder w\u00e4hlen Sie eine vorgeschlagene F\u00e4higkeit",
-    "current-tag-description": "Geben Sie die ersten Buchstaben des Tags ein und w\u00e4hlen Sie den richtigen Tag",
-    "current-skill-description": "F\u00fcge deine F\u00e4higkeit hinzu und w\u00e4hle die passende Kompetenz aus",
-    "disambiguate": "(DISAMBIGUATION)",
-    "suggestions": "Vorschl\u00e4ge",
-    "choose-skill": "Klicken Sie auf die gew\u00e4hlte F\u00e4higkeit:"
+    "tag-map-description": "Entdecken Sie Projetcs auf einer wikipédia-Tagskarte",
+    "open-map": "Karte öffnen",
+    "pick-tag-classification": "Wählen Sie ein Tag Framework",
+    "pick-skill-classification": "Wählen Sie einen Fähigkeitenrahmen",
+    "pick-tag-preset": "Oder wählen Sie einen Vorschlag",
+    "pick-skill-preset": "Oder wählen Sie eine vorgeschlagene Fähigkeit",
+    "current-tag-description": "Geben Sie die ersten Buchstaben des Tags ein und wählen Sie den richtigen Tag",
+    "current-skill-description": "Geben Sie das Label des Könnens ein und wählen Sie die richtige Geschicklichkeit",
+    "disambiguate": "(Disambiguation)",
+    "suggestions": "Vorschläge",
+    "choose-skill": "Klicken Sie auf das gewählte Können:"
   },
   "sdg": {
     "1": {
@@ -1920,7 +1920,7 @@
       "title": "Reduzierte Ungleichheiten"
     },
     "11": {
-      "title": "Nachhaltige St\u00e4dte und Gemeinschaften"
+      "title": "Nachhaltige Städte und Gemeinschaften"
     },
     "12": {
       "title": "Verantwortlicher Verbrauch und Produktion"
@@ -1938,9 +1938,9 @@
       "title": "Frieden, Gerechtigkeit und starke Institutionen"
     },
     "17": {
-      "title": "Partnerschaften f\u00fcr die Ziele"
+      "title": "Partnerschaften für die Ziele"
     },
-    "add-short": "SDG hinzuf\u00fcgen",
+    "add-short": "Hinzufügen eines sdg",
     "sdg-fulltext": "Nachhaltigkeitsziele"
   },
   "stats": {
@@ -1960,66 +1960,66 @@
   "status": {
     "complete": "abgeschlossen",
     "completed": "abgeschlossen",
-    "cancel": "Zur\u00fcck zur \u00dcbersicht",
-    "canceled": "storniert",
-    "ended": "Ende",
-    "ongoing": "laufenden",
-    "private": "Privatperson",
-    "public": "\u00d6ffentlichkeit",
+    "cancel": "Abbrechen",
+    "canceled": "Abgebrochen",
+    "ended": "Endet",
+    "ongoing": "Fortlaufen",
+    "private": "Privatpersonen",
+    "public": "Öffentliche",
     "running": "Laufen",
     "title": "Was ist der Status des Projekts?",
-    "toreview": "zu \u00fcberpr\u00fcfen",
+    "toreview": "Zur Überprüfung",
     "updated": "Status des Projekts aktualisiert",
-    "na": "keine"
+    "na": "Keine"
   },
   "tag": {
     "add-specific": "Tags erstellen, um Projekte zu organisieren",
-    "add-specific-info": "Diese Tags erm\u00f6glichen es, Projekte zus\u00e4tzlich zu Kategorien zu organisieren (Beispiele: \"Master 2 LiSc\", \"MAT001\", \"Schuljahr 2022-2023\", etc.). Sie sind spezifisch f\u00fcr Ihre Organisation. Sie sind n\u00fctzlich, um Ihre Projekte in der Suche zu filtern.",
-    "add-project-tag": "Legen Sie Tags vor, um Projekte nach Thema zu verkn\u00fcpfen",
-    "add-profile-tag": "Fertigkeiten f\u00fcr Ihre Benutzerprofile",
-    "add-project-tag-info": "Wenn ein Benutzer ein Projekt erstellt, k\u00f6nnen sie einen thematischen Tag aus Wikipedia (z.B. Biochemie, Physik, etc.) hinzuf\u00fcgen. Damit ist es einfacher, das Projekt zu finden und Projektempfehlungen durch thematische \u00c4hnlichkeit zu verbessern. Sie k\u00f6nnen wichtige thematische Tags f\u00fcr Ihre Organisation hervorheben.",
+    "add-specific-info": "Diese Tags ermöglichen es, Projekte zusätzlich zu Kategorien zu organisieren (Beispiele: \"Master 2 LiSc\", \"MAT001\", \"Schuljahr 2022-2023\", etc.). Sie sind spezifisch für Ihre Organisation. Sie sind nützlich, um Ihre Projekte in der Suche zu filtern.",
+    "add-project-tag": "Legen Sie Tags vor, um Projekte nach Thema zu verknüpfen",
+    "add-profile-tag": "Fertigkeiten für Ihre Benutzerprofile",
+    "add-project-tag-info": "Wenn ein Benutzer ein Projekt erstellt, können sie einen thematischen Tag aus Wikipedia (z.B. Biochemie, Physik, etc.) hinzufügen. Damit ist es einfacher, das Projekt zu finden und Projektempfehlungen durch thematische Ähnlichkeit zu verbessern. Sie können wichtige thematische Tags für Ihre Organisation hervorheben.",
     "edit": "Tags bearbeiten",
-    "title": "Schlagw\u00f6rter"
+    "title": "Schlagwörter"
   },
   "team": {
-    "add": "Mitglieder / Gruppen hinzuf\u00fcgen",
+    "add": "Mitglieder / Gruppen hinzufügen",
     "edit": "Teammitglied bearbeiten",
     "group-members": "Mitglieder der Gruppe",
     "project-members": "Projektmitglieder",
     "no-user-message": "Kein Benutzer entspricht Ihrer Suche",
-    "remove-user-confirm": "Sind Sie sicher, dass Sie diesen Benutzer aus dem Projekt l\u00f6schen m\u00f6chten?",
-    "remove-group-confirm": "Sind Sie sicher, dass Sie diese Gruppe aus dem Projekt l\u00f6schen m\u00f6chten?",
+    "remove-user-confirm": "Sind Sie sicher, dass Sie diesen Benutzer aus dem Projekt löschen möchten?",
+    "remove-group-confirm": "Sind Sie sicher, dass Sie diese Gruppe aus dem Projekt löschen möchten?",
     "team": "Team"
   },
   "template": {
     "edit-tags": "Tags bearbeiten",
-    "blog-content": "Vorlage f\u00fcr Blog-Inhalte",
-    "blog-title": "Vorlage f\u00fcr Blogtitel",
-    "advancement-goal-title": "Vorlage f\u00fcr Weiterentwicklungszieltitel",
-    "advancement-goal-content": "Vorlage f\u00fcr den Fortschrittszielinhalt",
+    "blog-content": "Vorlage für Blog-Inhalte",
+    "blog-title": "Vorlage für Blogtitel",
+    "advancement-goal-title": "Vorlage für Weiterentwicklungszieltitel",
+    "advancement-goal-content": "Vorlage für Weiterentwicklungszielinhalte",
     "category": "Kategorie",
-    "description": "Vorlage f\u00fcr Beschreibung",
+    "description": "Vorlage für die Beschreibung",
     "language": "Sprache Vorlage",
-    "info": "Wenn Sie den Benutzern vorschlagen m\u00f6chten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, k\u00f6nnen Sie eine Vorlage f\u00fcr diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden f\u00fcr Nutzer gedacht.",
+    "info": "Wenn Sie den Benutzern vorschlagen möchten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, können Sie eine Vorlage für diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden für Nutzer gedacht.",
     "no-tag-set": "Es wurde jetzt kein Tag gesetzt.",
     "placeholder-purpose": "Projektziel",
     "placeholder-title": "Titel Platzhalter",
     "tags": "Vorlage-Tags",
     "title": "Vorlagen",
-    "tips-category": "W\u00e4hlen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
-    "comment": "Vorlage f\u00fcr Kommentare"
+    "tips-category": "Wählen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
+    "comment": "Vorlage für Kommentar"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
-    "category-delete": "Sie k\u00f6nnen nur eine Kategorie l\u00f6schen, wenn die Kategorie keine Projekte enth\u00e4lt. Bitte \u00fcbertragen Sie alle Projekte in der Kategorie auf andere Kategorien.",
-    "category-image": "Bild verwendet, um eine Kategorie zu illustrieren. Es ist nicht erforderlich, wenn Sie lieber einfach eine Farbe anzeigen w\u00fcrden. Mindestbreite: 1024px, Mindesth\u00f6he: 400px",
-    "limit-publication-to-reviewers": "M\u00f6chtest du die Ver\u00f6ffentlichung von Projekten an Rezensatoren beschr\u00e4nken?",
+    "category-delete": "Sie können nur eine Kategorie löschen, wenn die Kategorie keine Projekte enthält. Bitte übertragen Sie alle Projekte in der Kategorie auf andere Kategorien.",
+    "category-image": "Bild verwendet, um eine Kategorie zu illustrieren. Es ist nicht erforderlich, wenn Sie lieber einfach eine Farbe anzeigen würden. Mindestbreite: 1024px, Mindesthöhe: 400px",
+    "limit-publication-to-reviewers": "Möchtest du die Veröffentlichung von Projekten an Rezensatoren beschränken?",
     "organization-name": "Dieser Name wird verwendet, um Ihre Community in gemeinschaftsspezifischen Seiten zu identifizieren (z.B. Statistikseite).",
     "organization-title": "Der Titel Ihres Portals erscheint auf dem Banner Ihrer Willkommensseite. Vorschau oben.",
     "organization-email": "Kontakt E-Mail Ihres Portals.",
-    "organization-language": "Die Sprache standardm\u00e4\u00dfig Ihres Portals.",
-    "organization-visibility": "M\u00f6chten Sie einen Link zu Ihrem Portal vom Hauptportal der Projekte?",
-    "organization-logo": "Ihr Logo wird auf einem wei\u00dfen Hintergrund auf dem Elternportal erscheinen. Wenn das zuvor hochgeladene Logo nicht mit einem wei\u00dfen Hintergrund kompatibel ist, w\u00e4hlen Sie bitte unten eine Hintergrundfarbe."
+    "organization-language": "Die Sprache standardmäßig Ihres Portals.",
+    "organization-visibility": "Möchten Sie einen Link zu Ihrem Portal vom Hauptportal der Projekte?",
+    "organization-logo": "Ihr Logo wird auf dem Elternportal auf einem weißen Hintergrund erscheinen. Wenn das Logo, das Sie zuvor hochgeladen haben, nicht mit einem weißen Hintergrund kompatibel ist, wählen Sie bitte unten eine Hintergrundfarbe."
   },
   "toasts": {
     "abuse-report": {
@@ -2027,20 +2027,20 @@
       "error": "Fehler beim Inhaltsbericht"
     },
     "announcement-create": {
-      "success": "Die Ank\u00fcndigung wurde erfolgreich erstellt",
-      "error": "Fehler w\u00e4hrend der Ank\u00fcndigungserstellung"
+      "success": "Die Ankündigung wurde erfolgreich erstellt",
+      "error": "Fehler während der Ankündigungserstellung"
     },
     "announcement-delete": {
-      "success": "Die Ank\u00fcndigung wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler w\u00e4hrend der Ank\u00fcndigungsl\u00f6schung"
+      "success": "Die Ankündigung wurde erfolgreich gelöscht",
+      "error": "Fehler während der Ankündigungslöschung"
     },
     "announcement-update": {
-      "success": "Die Ank\u00fcndigung wurde erfolgreich aktualisiert",
-      "error": "Fehler beim Ank\u00fcndigungsupdate"
+      "success": "Die Ankündigung wurde erfolgreich aktualisiert",
+      "error": "Fehler beim Ankündigungsupdate"
     },
     "bug-report": {
       "success": "Der Fehler wurde erfolgreich gemeldet",
-      "error": "Fehler w\u00e4hrend des Fehlerberichts"
+      "error": "Fehler während des Fehlerberichts"
     },
     "category-template-update": {
       "success": "Die Kategorievorlage wurde erfolgreich aktualisiert",
@@ -2055,19 +2055,19 @@
       "error": "Fehler beim Bestellupdate der Kategorien"
     },
     "comment-create": {
-      "success": "Der Kommentar wurde erfolgreich hinzugef\u00fcgt",
-      "error": "Fehler w\u00e4hrend der Kommentar-Erstellung"
+      "success": "Der Kommentar wurde erfolgreich hinzugefügt",
+      "error": "Fehler während der Kommentar-Erstellung"
     },
     "comment-delete": {
-      "success": "Der Kommentar wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler w\u00e4hrend der Kommentarl\u00f6schung"
+      "success": "Der Kommentar wurde erfolgreich gelöscht",
+      "error": "Fehler während der Kommentarlöschung"
     },
     "comment-update": {
       "success": "Der Kommentar wurde erfolgreich aktualisiert",
       "error": "Fehler beim Kommentar-Update"
     },
     "contact": {
-      "success": "Ihre Kontaktanfrage wurde ber\u00fccksichtigt",
+      "success": "Ihre Kontaktanfrage wurde berücksichtigt",
       "error": "Fehler beim Einreichen des Formulars"
     },
     "description-update": {
@@ -2079,20 +2079,20 @@
       "error": "Fehler bei der Erstellung von benutzerdefinierten Hilfen"
     },
     "faq-delete": {
-      "success": "Die benutzerdefinierte Hilfe wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler w\u00e4hrend der benutzerdefinierten Hilfe L\u00f6schung"
+      "success": "Die benutzerdefinierte Hilfe wurde erfolgreich gelöscht",
+      "error": "Fehler während der benutzerdefinierten Hilfe Löschung"
     },
     "faq-update": {
       "success": "Die benutzerdefinierte Hilfe wurde erfolgreich aktualisiert",
       "error": "Fehler beim benutzerdefinierten Hilfe-Update"
     },
     "file-create": {
-      "success": "Die Datei wurde erfolgreich hinzugef\u00fcgt",
+      "success": "Die Datei wurde erfolgreich hinzugefügt",
       "error": "Fehler bei der Dateierstellung"
     },
     "file-delete": {
-      "success": "Die Datei wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Dateil\u00f6schung"
+      "success": "Die Datei wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Dateilöschung"
     },
     "file-update": {
       "success": "Die Datei wurde erfolgreich aktualisiert",
@@ -2103,16 +2103,16 @@
       "error": "Fehler bei der Torschaffung"
     },
     "goal-delete": {
-      "success": "Das Ziel wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Ziell\u00f6schung"
+      "success": "Das Ziel wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Ziellöschung"
     },
     "goal-update": {
       "success": "Das Ziel wurde erfolgreich aktualisiert",
-      "error": "Fehler w\u00e4hrend des Torupdates"
+      "error": "Fehler während des Torupdates"
     },
     "blog-delete": {
-      "success": "Der Blogeintrag wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der L\u00f6schung des Blogeintrags"
+      "success": "Der Blogeintrag wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Löschung des Blogeintrags"
     },
     "blog-create": {
       "success": "Der Blogeintrag wurde erfolgreich erstellt",
@@ -2123,41 +2123,41 @@
       "error": "Fehler beim Blogeintragsupdate"
     },
     "group-added": {
-      "success": "Die Gruppe wurde erfolgreich hinzugef\u00fcgt",
+      "success": "Die Gruppe wurde erfolgreich hinzugefügt",
       "error": "Fehler bei der Gruppenaddition"
     },
     "link-already-exists": "Dieser Link existiert bereits",
     "link-create": {
-      "success": "Der Link wurde erfolgreich hinzugef\u00fcgt",
+      "success": "Der Link wurde erfolgreich hinzugefügt",
       "error": "Fehler bei der Linkerstellung"
     },
     "link-delete": {
-      "success": "Der Link wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Linkl\u00f6schung"
+      "success": "Der Link wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Linklöschung"
     },
     "link-update": {
       "success": "Der Link wurde erfolgreich aktualisiert",
       "error": "Fehler beim Link-Update"
     },
     "linked-project-create": {
-      "success": "Die vernetzten Projekte wurden erfolgreich erg\u00e4nzt",
-      "error": "Fehler bei der Erstellung verkn\u00fcpfter Projekte"
+      "success": "Die vernetzten Projekte wurden erfolgreich ergänzt",
+      "error": "Fehler bei der Erstellung verknüpfter Projekte"
     },
     "linked-project-delete": {
-      "success": "Das verkn\u00fcpfte Projekt wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der verkn\u00fcpften Projektl\u00f6schung"
+      "success": "Das verknüpfte Projekt wurde erfolgreich gelöscht",
+      "error": "Fehler bei der verknüpften Projektlöschung"
     },
     "linked-project-update": {
-      "success": "Das verkn\u00fcpfte Projekt wurde erfolgreich aktualisiert",
-      "error": "Fehler beim verkn\u00fcpften Projektupdate"
+      "success": "Das verknüpfte Projekt wurde erfolgreich aktualisiert",
+      "error": "Fehler beim verknüpften Projektupdate"
     },
     "location-create": {
-      "success": "Der Standort wurde erfolgreich hinzugef\u00fcgt",
+      "success": "Der Standort wurde erfolgreich hinzugefügt",
       "error": "Fehler bei der Standorterstellung"
     },
     "location-delete": {
-      "success": "Der Standort wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Ortsl\u00f6schung"
+      "success": "Der Standort wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Ortslöschung"
     },
     "location-update": {
       "success": "Der Standort wurde erfolgreich aktualisiert",
@@ -2168,15 +2168,15 @@
       "error": "Fehler beim Portal allgemeine Informationen aktualisieren"
     },
     "organization-tag-create": {
-      "success": "Der Tag wurde erfolgreich der Organisation hinzugef\u00fcgt",
+      "success": "Der Tag wurde erfolgreich der Organisation hinzugefügt",
       "error": "Fehler bei der Erstellung des Tags"
     },
     "organization-tag-delete": {
-      "success": "Der Tag wurde erfolgreich von der Organisation gel\u00f6scht",
-      "error": "Fehler beim L\u00f6schen des Tags"
+      "success": "Der Tag wurde erfolgreich von der Organisation gelöscht",
+      "error": "Fehler beim Löschen des Tags"
     },
     "group-create": {
-      "success": "Die Gruppe wurde erfolgreich gegr\u00fcndet",
+      "success": "Die Gruppe wurde erfolgreich gegründet",
       "error": "Fehler bei der Gruppenerstellung"
     },
     "group-edit": {
@@ -2192,8 +2192,8 @@
       "error": "Fehler bei der Projekterstellung"
     },
     "project-destroy": {
-      "success": "Das Projekt wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Projektl\u00f6schung"
+      "success": "Das Projekt wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Projektlöschung"
     },
     "project-edit": {
       "success": "Das Projekt wurde erfolgreich aktualisiert",
@@ -2201,22 +2201,22 @@
     },
     "project-duplication": {
       "success": "Das Projekt wurde erfolgreich dupliziert",
-      "error": "Fehler bei der Projektvervielf\u00e4ltigung"
+      "error": "Fehler bei der Projektvervielfältigung"
     },
     "project-quit": {
       "success": "Sie beenden das Projekt erfolgreich",
-      "error": "Fehler w\u00e4hrend des Betriebs"
+      "error": "Fehler während des Betriebs"
     },
     "project-life-status-update": {
       "success": "Der Projektlebensstatus wurde erfolgreich aktualisiert"
     },
     "project-message-create": {
-      "success": "Die interne Nachricht wurde erfolgreich hinzugef\u00fcgt",
+      "success": "Die interne Nachricht wurde erfolgreich hinzugefügt",
       "error": "Fehler bei der internen Nachrichtenerstellung"
     },
     "project-message-delete": {
-      "success": "Die interne Nachricht wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der internen Nachrichtenl\u00f6schung"
+      "success": "Die interne Nachricht wurde erfolgreich gelöscht",
+      "error": "Fehler bei der internen Nachrichtenlöschung"
     },
     "project-message-update": {
       "success": "Die interne Nachricht wurde erfolgreich aktualisiert",
@@ -2230,48 +2230,48 @@
       "success": "Die Projektsicht wurde erfolgreich aktualisiert"
     },
     "review-create": {
-      "success": "Die Bewertung wurde erfolgreich hinzugef\u00fcgt",
-      "error": "Fehler w\u00e4hrend der \u00dcberpr\u00fcfung Erstellung"
+      "success": "Die Bewertung wurde erfolgreich hinzugefügt",
+      "error": "Fehler während der Überprüfung Erstellung"
     },
     "review-delete": {
-      "success": "Die Bewertung wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler w\u00e4hrend der \u00dcberpr\u00fcfung L\u00f6schung"
+      "success": "Die Bewertung wurde erfolgreich gelöscht",
+      "error": "Fehler während der Überprüfung Löschung"
     },
     "review-update": {
       "success": "Die Bewertung wurde erfolgreich aktualisiert",
-      "error": "Fehler w\u00e4hrend des \u00dcberpr\u00fcfungsupdates"
+      "error": "Fehler während des Überprüfungsupdates"
     },
     "sdgs-update": {
       "success": "Die SDGs wurden erfolgreich aktualisiert",
       "error": "Fehler beim SDG-Update"
     },
     "team-member-create": {
-      "success": "Der Benutzer wurde erfolgreich hinzugef\u00fcgt",
-      "error": "Fehler bei der Benutzerzuf\u00fcgung"
+      "success": "Der Benutzer wurde erfolgreich hinzugefügt",
+      "error": "Fehler bei der Benutzerzufügung"
     },
     "team-member-delete": {
-      "success": "Der Benutzer wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Benutzerl\u00f6schung"
+      "success": "Der Benutzer wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Benutzerlöschung"
     },
     "team-group-delete": {
-      "success": "Die Gruppe wurde erfolgreich gel\u00f6scht",
-      "error": "Fehler bei der Gruppenl\u00f6schung"
+      "success": "Die Gruppe wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Gruppenlöschung"
     }
   },
   "success": {
     "created": "Erfolgreich geschaffen.",
     "updated": "Erfolgreich aktualisiert.",
-    "deleted": "Erfolgreich gel\u00f6scht."
+    "deleted": "Erfolgreich gelöscht."
   },
   "portal": {
-    "sub-title": "Entdecken Sie Portale, die zu anderen Organisationen geh\u00f6ren. Durchsuchen, inspirieren und in Kontakt treten!"
+    "sub-title": "Entdecken Sie Portale, die zu anderen Organisationen gehören. Durchsuchen, inspirieren und in Kontakt treten!"
   },
   "welcome-modal": {
     "title": "Willkommen im Projektportal von {0}",
-    "success": "\ud83c\udf89 Ihr Konto wurde erfolgreich erstellt!",
-    "instruction": "Bevor Sie die Plattform genie\u00dfen k\u00f6nnen, m\u00fcssen Sie Ihr Profil abschlie\u00dfen.",
-    "guidance": "Dies dauert nur ein paar Minuten und wir f\u00fchren Sie auf dem Weg.",
-    "complete-later": "Ich werde das sp\u00e4ter machen",
+    "success": "🎉 Ihr Konto wurde erfolgreich erstellt!",
+    "instruction": "Bevor Sie die Plattform genießen können, müssen Sie Ihr Profil abschließen.",
+    "guidance": "Dies dauert nur ein paar Minuten und wir führen Sie auf dem Weg.",
+    "complete-later": "Ich werde das später machen",
     "complete-now": "Gehen wir!"
   },
   "notifications": {
@@ -2286,82 +2286,82 @@
     },
     "project": {
       "title": "Projektbenachrichtigung",
-      "changes": "Benachrichtigungen \u00e4ndern",
+      "changes": "Benachrichtigungen ändern",
       "reviews": "Bewertungen Benachrichtigungen",
       "members": "Anmeldungen der Mitglieder",
       "applications": "Anmeldungen",
-      "blogEntries": "Blogeintr\u00e4ge Benachrichtigungen"
+      "blogEntries": "Blogeinträge Benachrichtigungen"
     },
     "projects": {
       "title": "Mitteilungen, die Sie per E-Mail erhalten:",
       "follow": "Projekte, die Sie folgen",
-      "follow-sub": "Benachrichtigt werden, wenn Projekte, die Sie folgen, ge\u00e4ndert werden",
-      "member": "Als Teammitglied hinzugef\u00fcgt",
-      "member-sub": "Werden Sie benachrichtigt, wenn Sie als Teammitglied in einem Projekt hinzugef\u00fcgt werden",
+      "follow-sub": "Benachrichtigt werden, wenn Projekte, die Sie folgen, geändert werden",
+      "member": "Als Teammitglied hinzugefügt",
+      "member-sub": "Werden Sie benachrichtigt, wenn Sie als Teammitglied in einem Projekt hinzugefügt werden",
       "comment": "Kommentare",
       "comment-sub": "Benachrichtigt, wenn jemand Ihr Projekt kommentiert",
       "internal-message": "Interne Meldungen",
-      "internal-message-sub": "Benachrichtigen, wenn jemand eine interne Nachricht zu Ihrem Projekt hinzuf\u00fcgt",
+      "internal-message-sub": "Benachrichtigen, wenn jemand eine interne Nachricht zu Ihrem Projekt hinzufügt",
       "project": "Ihre Projekte",
-      "project-sub": "Wenn andere Teammitglieder Ihre Projekte \u00e4ndern",
-      "announcement": "Ank\u00fcndigungen",
-      "announcement-sub": "Werden Sie benachrichtigt, wenn neue Ank\u00fcndigungen auf der Website ver\u00f6ffentlicht werden",
-      "review": "Zur\u00fcck zur \u00dcbersicht",
-      "review-sub": "Wenn Sie ein Projektbewerter sind, werden Sie benachrichtigt, wenn ein Projekt bereit ist, von Ihnen zu \u00fcberpr\u00fcfen",
-      "reviewed": "wurde gepr\u00fcft",
-      "reviewed-sub": "Wenn Ihr Projekt zur \u00dcberpr\u00fcfung bereit ist, werden Sie benachrichtigt, wenn der Pr\u00fcfer Ihres Projekts seine \u00dcberpr\u00fcfung vorgelegt hat",
+      "project-sub": "Wenn andere Teammitglieder Ihre Projekte ändern",
+      "announcement": "Ankündigungen",
+      "announcement-sub": "Werden Sie benachrichtigt, wenn neue Ankündigungen auf der Website veröffentlicht werden",
+      "review": "Zurück zur Übersicht",
+      "review-sub": "Wenn Sie ein Projektbewerter sind, werden Sie benachrichtigt, wenn ein Projekt bereit ist, von Ihnen zu überprüfen",
+      "reviewed": "wurde geprüft",
+      "reviewed-sub": "Wenn Ihr Projekt zur Überprüfung bereit ist, werden Sie benachrichtigt, wenn der Prüfer Ihres Projekts seine Überprüfung vorgelegt hat",
       "reply": "Antwort auf Ihren Kommentar",
       "reply-sub": "Benachrichtigen, wenn jemand auf Ihren Kommentar antwortet"
     },
     "follow": {
       "title": "Folgen Sie der Meldung",
-      "changes": "Benachrichtigungen \u00e4ndern",
+      "changes": "Benachrichtigungen ändern",
       "reviews": "Bewertungen Benachrichtigungen",
-      "blogEntries": "Blogeintr\u00e4ge Benachrichtigungen"
+      "blogEntries": "Blogeinträge Benachrichtigungen"
     },
     "organization": {
       "added": "Neuer Benutzer zur Organisationsbenachrichtigung",
       "access": "Anmeldung zur Anfrage",
-      "access-sub": "Benachrichtigen, wenn ein Benutzer Zugriff auf Ihre Organisation w\u00fcnscht",
+      "access-sub": "Benachrichtigen, wenn ein Benutzer Zugriff auf Ihre Organisation wünscht",
       "invitation": "Anmeldung zur Einladung",
-      "invitation-sub": "Benachrichtigt werden, wenn ein Einladungslink abl\u00e4uft",
+      "invitation-sub": "Benachrichtigt werden, wenn ein Einladungslink abläuft",
       "instruction": "Unterrichtung",
-      "instruction-sub": "Benachrichtigt werden, wenn eine neue Anweisung ver\u00f6ffentlicht wird"
+      "instruction-sub": "Benachrichtigt werden, wenn eine neue Anweisung veröffentlicht wird"
     },
     "read-all": "Alle Benachrichtigungen lesen",
     "type": {
       "comment": "{sender} kommentiert {project}",
       "project_message": "{sender} hinterlassen eine interne Nachricht {project}",
       "reply": "{sender} antwortete auf Ihren Kommentar in {project}",
-      "review": "{sender} \u00fcberarbeitetes Projekt {project}",
-      "ready_for_review": "{sender} markierte sein Projekt als rezensionsbereit. Sie k\u00f6nnen jetzt Projekt bewerten {project}",
+      "review": "{sender} überarbeitetes Projekt {project}",
+      "ready_for_review": "{sender} markierte sein Projekt als rezensionsbereit. Sie können jetzt Projekt bewerten {project}",
       "project_updated": "{sender} aktualisiert das Projekt {project}",
-      "group_member_added": "{sender} f\u00fcgte die Gruppe {group} als Mitglied des Projekts {project} hinzu",
-      "group_member_added_self": "{sender} f\u00fcgte die Gruppe {group} Sie sind Teil des Projekts {project}",
+      "group_member_added": "{sender} fügte die Gruppe {group} als Mitglied des Projekts {project} hinzu",
+      "group_member_added_self": "{sender} fügte die Gruppe {group} Sie sind Teil des Projekts {project}",
       "group_member_removed_other": "{sender} entfernte eine Gruppe von Mitgliedern des Projekts {project}",
       "group_member_removed": "{sender} entfernte eine Gruppe von Mitgliedern des Projekts {project}",
-      "member_added_self": "{sender} hat Sie zum Projekt {project} hinzugef\u00fcgt",
+      "member_added_self": "{sender} hat Sie zum Projekt {project} hinzugefügt",
       "member_updated_self": "Ihre Rolle im Projekt {project} wurde um {sender} aktualisiert",
-      "member_added": "{sender} f\u00fcgte ein Mitglied in das Projekt {project}",
+      "member_added": "{sender} fügte ein Mitglied in das Projekt {project}",
       "member_updated": "{sender} aktualisiert die Rolle von {user} im Projekt {project}",
       "member_removed": "{sender} entfernt {user} vom Projektteam {project}",
       "new_instruction": "Eine neue Anweisung wurde veröffentlicht",
-      "announcement": "{sender} ver\u00f6ffentlichte eine neue Ank\u00fcndigung im Projekt {project}",
-      "application": "{applicant} beantragte Ihre Ank\u00fcndigung {announcement} im Projekt {project}",
-      "blog_entry": "{sender} ver\u00f6ffentlichte einen neuen Blogeintrag im Projekt {project}",
+      "announcement": "{sender} veröffentlichte eine neue Ankündigung im Projekt {project}",
+      "application": "{applicant} beantragte Ihre Ankündigung {announcement} im Projekt {project}",
+      "blog_entry": "{sender} veröffentlichte einen neuen Blogeintrag im Projekt {project}",
       "invitation_reminder": "Eine von Ihnen erstellte Einladung wird bald ablaufen",
-      "invitation_today_reminder": "Eine {link}, die Sie f\u00fcr die Gruppe {today_group} erstellt haben, l\u00e4uft heute ab",
-      "invitation_week_reminder": "A {link} Sie erstellt f\u00fcr die Gruppe {week_group} wird in einer Woche ablaufen",
+      "invitation_today_reminder": "Eine {link}, die Sie für die Gruppe {today_group} erstellt haben, läuft heute ab",
+      "invitation_week_reminder": "A {link} Sie erstellt für die Gruppe {week_group} wird in einer Woche ablaufen",
       "register-link": "Pressemitteilung",
-      "access_request": "Antwort auf {access_request_nb} anh\u00e4ngige Zugangsanfrage(n)!",
-      "pending_access_requests": "Antwort auf {requests_count} anh\u00e4ngige Zugangsanfrage(n)!"
+      "access_request": "Antwort auf {access_request_nb} anhängige Zugangsanfrage(n)!",
+      "pending_access_requests": "Antwort auf {requests_count} anhängige Zugangsanfrage(n)!"
     },
     "empty": "Sie haben keine Benachrichtigungen"
   },
   "recommendations": {
     "empty": "Sie haben keine Empfehlungen",
-    "connect-to": "Sie m\u00f6chten vielleicht eine Verbindung mit",
-    "title": "Empfohlen f\u00fcr Sie",
+    "connect-to": "Sie möchten vielleicht eine Verbindung mit",
+    "title": "Empfohlen für Sie",
     "is-featured": "(Zwischenruf)",
     "more-projects": "Weitere Projekte",
     "more-profiles": "Weitere Profile",
@@ -2379,6 +2379,18 @@
       "future": "Zukunft",
       "past": "Vergangenheit",
       "month": {
+        "10": {
+          "short": "Ok",
+          "long": "Oktober"
+        },
+        "11": {
+          "short": "Nov.",
+          "long": "November"
+        },
+        "12": {
+          "short": "Deko",
+          "long": "Dezember"
+        },
         "01": {
           "short": "Jan",
           "long": "Januar"
@@ -2389,7 +2401,7 @@
         },
         "03": {
           "short": "Marsch",
-          "long": "M\u00e4rz"
+          "long": "März"
         },
         "04": {
           "short": "Apr.",
@@ -2414,61 +2426,49 @@
         "09": {
           "short": "Sept.",
           "long": "September"
-        },
-        "10": {
-          "short": "Ok",
-          "long": "Oktober"
-        },
-        "11": {
-          "short": "Nov.",
-          "long": "November"
-        },
-        "12": {
-          "short": "Deko",
-          "long": "Dezember"
         }
       }
     },
     "create": {
-      "title": "Kalenderveranstaltung hinzuf\u00fcgen",
-      "button": "Hinzuf\u00fcgen"
+      "title": "Kalenderveranstaltung hinzufügen",
+      "button": "Hinzufügen"
     },
     "delete": {
-      "title": "Ereignis l\u00f6schen?",
-      "message": "M\u00f6chten Sie dieses Ereignis l\u00f6schen?",
-      "success": "Event gel\u00f6scht",
-      "error": "Fehler beim L\u00f6schen des Ereignisses"
+      "title": "Ereignis löschen?",
+      "message": "Möchten Sie dieses Ereignis löschen?",
+      "success": "Event gelöscht",
+      "error": "Fehler beim Löschen des Ereignisses"
     },
     "save": {
       "success": "Event gespeichert",
       "error": "Fehler beim Versuch, das Ereignis zu speichern"
     },
     "drawer": {
-      "create": "Kalenderveranstaltung hinzuf\u00fcgen",
+      "create": "Kalenderveranstaltung hinzufügen",
       "edit": "Kalenderveranstaltung bearbeiten"
     },
     "form": {
       "title": {
         "label": "Veranstaltungsname *",
-        "placeholder": "Ex 1st sem. Pr\u00fcfung",
+        "placeholder": "Ex 1st sem. Prüfung",
         "required": "Der Name ist erforderlich"
       },
       "content": {
         "label": "Informationen",
-        "placeholder": "Informationen zu diesem Event hinzuf\u00fcgen"
+        "placeholder": "Informationen zu diesem Event hinzufügen"
       },
       "event_date": {
         "label": "Veranstaltungsdatum *",
-        "placeholder": "W\u00e4hlen Sie Datum",
+        "placeholder": "Wählen Sie Datum",
         "required": "Das Datum ist erforderlich"
       },
       "people_groups": {
         "label": "Zielgruppe(n)",
-        "notice": "W\u00e4hlen Sie die Gruppe(n), die dieses Ereignis sehen wird",
-        "select-all": "Alles ausw\u00e4hlen",
+        "notice": "Wählen Sie die Gruppe(n), die dieses Ereignis sehen wird",
+        "select-all": "Alles auswählen",
         "filter": "Filtergruppen",
         "all": "Alle Gruppen",
-        "public": "\u00d6ffentliche"
+        "public": "Öffentliche"
       }
     },
     "group-label": "Gruppe:",
@@ -2479,10 +2479,10 @@
       "title": "Eine Nachricht erstellen"
     },
     "delete": {
-      "title": "Nachrichten l\u00f6schen?",
-      "message": "M\u00f6chten Sie diese Nachricht l\u00f6schen?",
-      "success": "News gel\u00f6scht",
-      "error": "Fehler beim L\u00f6schen der Nachrichten"
+      "title": "Nachrichten löschen?",
+      "message": "Möchten Sie diese Nachricht löschen?",
+      "success": "News gelöscht",
+      "error": "Fehler beim Löschen der Nachrichten"
     },
     "save": {
       "success": "News gespeichert",
@@ -2495,20 +2495,20 @@
       "title": {
         "label": "Titel *",
         "required": "Der Titel ist erforderlich",
-        "placeholder": "der Titel der Nachrichten"
+        "placeholder": "Der Titel der Nachrichten"
       },
       "content": {
         "label": "Inhalt *",
         "required": "Der Inhalt ist erforderlich"
       },
       "publication_date": {
-        "label": "Datum der Ver\u00f6ffentlichung *",
-        "required": "Datum der Ver\u00f6ffentlichung"
+        "label": "Datum der Veröffentlichung *",
+        "required": "Datum der Veröffentlichung"
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "W\u00e4hlen Sie die Gruppe(n), die diese Nachrichten sehen wird",
-        "select-all": "Alles ausw\u00e4hlen",
+        "notice": "Wählen Sie die Gruppe(n), die diese Nachrichten sehen wird",
+        "select-all": "Alles auswählen",
         "filter": "Filtergruppen"
       }
     },
@@ -2526,13 +2526,13 @@
   },
   "instructions": {
     "create": {
-      "title": "Eine Anleitung hinzuf\u00fcgen"
+      "title": "Eine Anleitung hinzufügen"
     },
     "delete": {
-      "title": "Befehl l\u00f6schen?",
-      "message": "M\u00f6chten Sie diese Anleitung l\u00f6schen?",
-      "success": "Anleitung gel\u00f6scht",
-      "error": "Fehler beim Versuch, den Befehl zu l\u00f6schen"
+      "title": "Befehl löschen?",
+      "message": "Möchten Sie diese Anleitung löschen?",
+      "success": "Anleitung gelöscht",
+      "error": "Fehler beim Versuch, den Befehl zu löschen"
     },
     "save": {
       "success": "Anleitung gespeichert",
@@ -2542,31 +2542,31 @@
       "title": {
         "label": "Titel *",
         "required": "Der Titel ist erforderlich",
-        "placeholder": "den Titel der Anweisung"
+        "placeholder": "Der Titel der Anweisung"
       },
       "content": {
         "label": "Inhalt *",
         "required": "Der Inhalt ist erforderlich"
       },
       "publication_date": {
-        "label": "Datum der Ver\u00f6ffentlichung *",
-        "required": "Datum der Ver\u00f6ffentlichung"
+        "label": "Datum der Veröffentlichung *",
+        "required": "Datum der Veröffentlichung"
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "W\u00e4hlen Sie die Gruppe(n), die diese Anleitung sehen wird",
-        "select-all": "Alles ausw\u00e4hlen",
+        "notice": "Wählen Sie die Gruppe(n), die diese Anleitung sehen wird",
+        "select-all": "Alles auswählen",
         "filter": "Filtergruppen"
       },
       "notify": {
         "label": "Notifizierung",
-        "notice": "Wenn Sie ausgew\u00e4hlt werden, werden alle \u00fcber die neue Anweisung informiert",
+        "notice": "Wenn Sie ausgewählt werden, werden alle über die neue Anweisung informiert",
         "button": "Nachricht senden"
       }
     },
     "list": {
       "title": "Anweisungen",
-      "create": "Hinzuf\u00fcgen",
+      "create": "Hinzufügen",
       "read-more": "Weiterlesen"
     },
     "drawer": {
@@ -2575,16 +2575,16 @@
   },
   "chat": {
     "drawer": {
-      "title": "Chat-Plattform hinzuf\u00fcgen",
-      "notice": "Sie k\u00f6nnen einen Link zu Ihrer Chat-Plattform hinzuf\u00fcgen. Es wird nur f\u00fcr Ihre angeschlossenen Benutzer sichtbar sein.",
+      "title": "Chat-Plattform hinzufügen",
+      "notice": "Sie können einen Link zu Ihrer Chat-Plattform hinzufügen. Es wird nur für Ihre angeschlossenen Benutzer sichtbar sein.",
       "url": {
         "label": "Link zu Ihrer Chat-Plattform",
-        "notice": "F\u00fcgen Sie hier den Link zu Ihrer Plattform",
-        "placeholder": "URL einf\u00fcgen (https://...)"
+        "notice": "Fügen Sie hier den Link zu Ihrer Plattform",
+        "placeholder": "URL einfügen (https://...)"
       },
       "wording": {
         "label": "Link-Wortung",
-        "notice": "Was die Schaltfl\u00e4che anzeigen sollte (ex: Chat anmelden, Whatsapp anmelden...) - 12 Auto max.",
+        "notice": "Was die Schaltfläche anzeigen sollte (ex: Chat anmelden, Whatsapp anmelden...) - 12 Auto max.",
         "placeholder": "ex: Anmelden"
       },
       "success": "Chat-Einstellungen gespeichert",
@@ -2599,7 +2599,7 @@
   },
   "featured-projects": {
     "drawer": {
-      "title": "F\u00fcgen Sie wichtige Projekte hinzu",
+      "title": "Fügen Sie wichtige Projekte hinzu",
       "max-pick-reached": "Sie haben die maximale Anzahl von Projekten erreicht"
     },
     "save": {
@@ -2608,15 +2608,15 @@
     }
   },
   "message": {
-    "error-login": "Ein Fehler trat w\u00e4hrend des Logins auf. Bitte versuchen Sie es noch mal.",
+    "error-login": "Ein Fehler trat während des Logins auf. Bitte versuchen Sie es noch mal.",
     "failed": "Fehler beim Senden von Nachricht. Bitte versuchen Sie es noch mal.",
     "leave-confirmation": "Sie werden die Seite mit nicht gespeicherten Daten verlassen.",
     "sent": "Nachricht gesendet",
     "redirect": "Weiterleiten im laufenden",
     "error": {
-      "unauthorized": "Unbefugt: Der Zugang wird durch ung\u00fcltige Anmeldeinformationen verweigert.",
+      "unauthorized": "Unbefugt: Der Zugang wird durch ungültige Anmeldeinformationen verweigert.",
       "unprocessable-entity": "Unverarbeitbare Einheit: Nicht verarbeitbar, um die enthaltenen Anweisungen zu bearbeiten.",
-      "bad-gateway": "Bad Gateway: Der Server stie\u00df auf einen tempor\u00e4ren Fehler und konnte Ihre Anfrage nicht abschlie\u00dfen."
+      "bad-gateway": "Bad Gateway: Der Server stieß auf einen temporären Fehler und konnte Ihre Anfrage nicht abschließen."
     }
   },
   "people-groups": {

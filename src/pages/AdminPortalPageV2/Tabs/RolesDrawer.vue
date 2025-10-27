@@ -12,7 +12,7 @@
         <div class="checkbox-item">
           <label class="form-control">
             <input v-model="selectedRole" :value="roleOption" type="radio" />
-            {{ capitalize($t(`groups.roles.${roleOption.name}`)) }}
+            {{ $t(`groups.roles.${roleOption.name}`) }}
           </label>
           <ToolTip :hover="true" :interactive="false" :placement="left">
             <IconImage class="icon" name="HelpCircleOutline" />
@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { getGroups } from '@/api/groups.service'
@@ -67,7 +65,6 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
-      capitalize,
     }
   },
 

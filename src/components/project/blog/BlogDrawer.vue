@@ -38,8 +38,8 @@
     <div>
       <TextInput
         v-model="title"
-        :label="capitalize($t('common.title'))"
-        :placeholder="capitalize(titlePlaceholder)"
+        :label="$t('common.title')"
+        :placeholder="titlePlaceholder"
         class="input-field"
         @blur="v$.title.$validate"
       />
@@ -84,8 +84,6 @@
 
 <script>
 import VueDatePicker from '@vuepic/vue-datepicker'
-
-import { capitalize } from '@/functs/string'
 
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -156,7 +154,6 @@ export default {
       projectsStore,
       usersStore,
       v$,
-      capitalize,
     }
   },
 

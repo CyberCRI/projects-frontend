@@ -5,7 +5,7 @@
     </p>
 
     <LpiButton
-      :label="capitalize($t('description.add'))"
+      :label="$t('description.add')"
       btn-icon="ArrowRight"
       :reversed-order="true"
       data-test="add-description-button"
@@ -22,8 +22,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 

@@ -4,7 +4,7 @@
       <template #default>
         <div v-if="isEditionEnabled" class="add-blog">
           <LpiButton
-            :label="capitalize($t('blog.add-entry'))"
+            :label="$t('blog.add-entry')"
             class="add-blog-btn"
             @click="projectLayoutToggleAddModal('blogEntry')"
           />
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
@@ -100,7 +99,6 @@ export default {
       toaster,
       runtimeConfig,
       canEditProject,
-      capitalize,
     }
   },
 

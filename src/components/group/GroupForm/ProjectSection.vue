@@ -2,13 +2,13 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ capitalize(t('group.form.project-label')) }}
+        {{ t('group.form.project-label') }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
       <LpiButton
         class="add-project-card"
         :btn-icon="modelValue.length ? 'Pen' : 'Plus'"
-        :label="capitalize(t(modelValue.length ? 'group.form.edit' : 'group.form.add'))"
+        :label="t(modelValue.length ? 'group.form.edit' : 'group.form.add')"
         data-test="add-projects"
         @click="drawerIsOpen = true"
       />
@@ -28,7 +28,7 @@
       <LinkButton
         v-if="shortList?.length < modelValue?.length"
         class="see-more-btn"
-        :label="capitalize(t(seeMoreLabel))"
+        :label="t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
     </div>
@@ -45,8 +45,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 defineOptions({ name: 'ProjectSection' })
 
 const props = defineProps({

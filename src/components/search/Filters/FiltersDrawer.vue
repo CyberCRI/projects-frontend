@@ -30,7 +30,7 @@
           @toggle-filter="toggleFilter"
         >
           <template #header>
-            {{ capitalize($t(`search.${filter.title}`)) }}
+            {{ $t(`search.${filter.title}`) }}
           </template>
           <component :is="filter.componentSummary" v-model="selection[key]" />
         </FilterWrapper>
@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import Drawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import FilterWrapper from '@/components/search/Filters/FilterWrapper.vue'
@@ -77,10 +75,6 @@ export default {
   },
 
   emits: ['confirm', 'close'],
-
-  setup() {
-    return { capitalize }
-  },
 
   data() {
     return {

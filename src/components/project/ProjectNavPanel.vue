@@ -42,7 +42,7 @@
       />
       <ExternalLabelButton
         class="space-button"
-        :label="capitalize($t('comment.comment-verb'))"
+        :label="$t('comment.comment-verb')"
         btn-icon="ChatBubble"
         vertical-layout
         label-on-hover
@@ -95,7 +95,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import useUsersStore from '@/stores/useUsers.ts'
 import followUtils from '@/functs/followUtils.ts'
 
@@ -148,7 +147,6 @@ export default {
       canEditProject,
       isAdmin,
       isOrgAdmin,
-      capitalize,
     }
   },
 

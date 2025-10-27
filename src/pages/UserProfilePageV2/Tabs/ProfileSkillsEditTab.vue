@@ -15,13 +15,13 @@
       </p>
       <div class="actions">
         <LpiButton
-          :label="capitalize($t('profile.edit.skills.skills.add-item'))"
+          :label="$t('profile.edit.skills.skills.add-item')"
           btn-icon="Plus"
           data-test="initial-add-skills-button"
           @click="openDrawer('skills', 'add')"
         />
         <LpiButton
-          :label="capitalize($t('profile.edit.skills.hobbies.add-item'))"
+          :label="$t('profile.edit.skills.hobbies.add-item')"
           btn-icon="Plus"
           data-test="initial-add-hobbies-button"
           @click="openDrawer('hobbies', 'add')"
@@ -75,7 +75,7 @@
           </TransitionGroup>
           <div class="actions">
             <LpiButton
-              :label="capitalize($t(`profile.edit.skills.${key}.add-item`))"
+              :label="$t(`profile.edit.skills.${key}.add-item`)"
               btn-icon="Plus"
               :data-test="`add-${key}-button`"
               @click="openDrawer(key)"
@@ -85,7 +85,7 @@
         <div v-else class="add-action">
           <p class="intro">{{ $t(`profile.edit.skills.${key}.nothing-yet`) }}</p>
           <LpiButton
-            :label="capitalize($t(`profile.edit.skills.${key}.add-item`))"
+            :label="$t(`profile.edit.skills.${key}.add-item`)"
             btn-icon="Plus"
             :data-test="`initial-add-${key}-button`"
             @click="openDrawer(key, 'add')"
@@ -105,7 +105,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 // import useUsersStore from '@/stores/useUsers.ts'
@@ -126,7 +125,7 @@ export default {
     const toaster = useToasterStore()
     // const usersStore = useUsersStore()
     const { skillLevels, clampLevel } = useSkillLevels()
-    return { skillTexts, toaster, /*usersStore,*/ skillLevels, clampLevel, capitalize }
+    return { skillTexts, toaster, /*usersStore,*/ skillLevels, clampLevel }
   },
   data() {
     return {

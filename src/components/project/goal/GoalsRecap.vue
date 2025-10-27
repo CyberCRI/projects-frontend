@@ -1,9 +1,9 @@
 <template>
   <div class="goals-recap">
     <SectionHeader
-      :button-label="capitalize($t('common.see-more'))"
+      :button-label="$t('common.see-more')"
       :quantity="goals.length"
-      :title="capitalize($t('goal.goals'))"
+      :title="$t('goal.goals')"
       class="section-header"
       @redirect-button-clicked="goToGoalPage"
     />
@@ -21,8 +21,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 

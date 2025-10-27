@@ -1,6 +1,5 @@
 <script setup>
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from '@/functs/string'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
@@ -87,7 +86,7 @@ try {
   <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
     <div>
       <h1 class="page-title">
-        {{ capitalize($t('faq.portal')) }}
+        {{ $t('faq.portal') }}
       </h1>
     </div>
 

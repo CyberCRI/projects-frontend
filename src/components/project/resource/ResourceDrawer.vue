@@ -5,7 +5,7 @@
       :no-footer="!resourceTypeSelected && isAddMode"
       :confirm-action-name="$t('common.save')"
       :is-opened="isOpened"
-      :title="capitalize(label)"
+      :title="label"
       class="resource-modal small"
       :asyncing="isSaving"
       @close="close()"
@@ -13,7 +13,7 @@
     >
       <div v-if="isAddMode && selectedType === null" class="select-resource">
         <LpiButton
-          :label="capitalize($t('resource.add-link'))"
+          :label="$t('resource.add-link')"
           btn-icon="LinkRotated"
           data-test="add-link"
           class="button-select"
@@ -22,7 +22,7 @@
           Link
         </LpiButton>
         <LpiButton
-          :label="capitalize($t('resource.add-file'))"
+          :label="$t('resource.add-file')"
           btn-icon="File"
           data-test="add-file"
           class="button-select"
@@ -38,7 +38,7 @@
           <div class="file-input-ctn">
             <ImageInput
               id="add-file-input"
-              :label="capitalize($t('file.upload') + ' *')"
+              :label="$t('file.upload' + ' *')"
               class="text-input"
               @upload-image="uploadImage"
             />
@@ -52,7 +52,7 @@
         <template v-if="isLink">
           <TextInput
             v-model="link"
-            :label="capitalize($t('resource.link-address') + ' *')"
+            :label="$t('resource.link-address' + ' *')"
             class="text-input"
             data-test="input-link-adress"
             placeholder="https://..."
@@ -63,8 +63,8 @@
 
         <TextInput
           v-model="title"
-          :label="capitalize($t('common.title') + ' *')"
-          :placeholder="capitalize($t('common.title'))"
+          :label="$t('common.title' + ' *')"
+          :placeholder="$t('common.title')"
           class="text-input"
           data-test="input-link-title"
           @focus="checkFile"
@@ -74,8 +74,8 @@
 
         <TextInput
           v-model="description"
-          :label="capitalize($t('form.description') + ' *')"
-          :placeholder="capitalize($t('form.description'))"
+          :label="$t('form.description' + ' *')"
+          :placeholder="$t('form.description')"
           class="text-input"
           data-test="input-link-description"
           @focus="checkFile"
@@ -88,8 +88,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import utils from '@/functs/functions.ts'
 
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -138,7 +136,6 @@ export default {
     return {
       toaster,
       projectsStore,
-      capitalize,
     }
   },
 

@@ -36,7 +36,7 @@
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         :secondary="true"
         class="footer__left-button"
         data-test="close-button"
@@ -45,7 +45,7 @@
 
       <LpiButton
         :disabled="asyncing"
-        :label="capitalize($t('common.confirm'))"
+        :label="$t('common.confirm')"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         :secondary="false"
         class="footer__right-button"
@@ -56,7 +56,6 @@
   </div>
 </template>
 <script>
-import { capitalize } from '@/functs/string'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -91,7 +90,6 @@ export default {
       usersStore,
       startEditWatcher,
       stopEditWatcher,
-      capitalize,
     }
   },
   data() {

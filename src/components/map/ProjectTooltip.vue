@@ -3,7 +3,7 @@
     <div class="project-tooltip__header">
       <div :class="location.type" class="project-tooltip__header--dot" />
       <h2 class="project-tooltip__header--title">
-        {{ capitalize(typeLabel) }}
+        {{ typeLabel }}
       </h2>
     </div>
 
@@ -16,7 +16,7 @@
       </p>
 
       <LinkButton
-        :label="capitalize($t('project.view'))"
+        :label="$t('project.view')"
         class="project-tooltip__button"
         btn-icon="ArrowRight"
         :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"

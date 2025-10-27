@@ -4,9 +4,7 @@
       :confirm-action-name="$t('common.save')"
       :confirm-action-disabled="v$.$invalid"
       :is-opened="isOpened"
-      :title="
-        capitalize(isAddMode ? $t('recruit.add-announcement') : $t('recruit.edit-announcement'))
-      "
+      :title="isAddMode ? $t('recruit.add-announcement') : $t('recruit.edit-announcement')"
       class="medium"
       :asyncing="asyncing"
       @close="close"
@@ -14,14 +12,14 @@
     >
       <div class="announcement-form">
         <div class="form-section">
-          <label class="label">{{ capitalize($t('recruit.type')) }}:</label>
+          <label class="label">{{ $t('recruit.type') }}:</label>
           <GroupButton v-model="form.type" :options="typeOptions" />
         </div>
 
         <div class="form-section">
           <TextInput
             v-model="form.title"
-            :label="capitalize(`${$t('recruit.title')}:`)"
+            :label="`${$t('recruit.title')}:`"
             :placeholder="$t('recruit.title')"
             class="form-section"
             @blur="v$.form.title.$touch"
@@ -29,7 +27,7 @@
           <FieldErrors :errors="v$.form.title.$errors" />
         </div>
         <div class="form-section description-section">
-          <label class="label">{{ capitalize($t('common.description')) }}:</label>
+          <label class="label">{{ $t('common.description') }}:</label>
           <TipTapEditor
             v-model="form.description"
             class="description-field"
@@ -41,7 +39,7 @@
         <div class="form-section">
           <SwitchInput
             v-model="hasDeadline"
-            :label="capitalize(`${$t('common.deadline')}:`)"
+            :label="`${$t('common.deadline')}:`"
             class="vertical black-label"
           />
           <VueDatePicker
@@ -65,7 +63,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
@@ -126,7 +123,6 @@ export default {
     const toaster = useToasterStore()
     return {
       toaster,
-      capitalize,
     }
   },
 
@@ -163,19 +159,19 @@ export default {
       return [
         {
           value: 'na',
-          label: capitalize(this.$t('common.none')),
+          label: this.$t('common.none'),
         },
         {
           value: 'participant',
-          label: capitalize(this.$t('recruit.participant')),
+          label: this.$t('recruit.participant'),
         },
         {
           value: 'traineeship',
-          label: capitalize(this.$t('recruit.traineeship')),
+          label: this.$t('recruit.traineeship'),
         },
         {
           value: 'job',
-          label: capitalize(this.$t('recruit.job')),
+          label: this.$t('recruit.job'),
         },
       ]
     },

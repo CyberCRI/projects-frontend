@@ -1,7 +1,7 @@
 <template>
   <div class="similar-projects">
     <div class="group-section-title">
-      {{ capitalize($t('project.suggested', 2)) }}
+      {{ $t('project.suggested', 2) }}
       <span class="hint">{{ $t('project.suggested-hint') }}</span>
     </div>
 
@@ -17,7 +17,7 @@
 
       <LpiButton
         v-if="seeMoreButtonVisible"
-        :label="capitalize(allProjectsVisible ? $t('common.see-less') : $t('common.see-more'))"
+        :label="allProjectsVisible ? $t('common.see-less') : $t('common.see-more')"
         :btn-icon="allProjectsVisible ? 'ArrowLeft' : 'ArrowRight'"
         :reversed-order="true"
         class="see-more-btn"
@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import SimilarProjectsItem from '@/components/project/SimilarProjectsItem.vue'
 
@@ -50,7 +48,6 @@ export default {
     return {
       isMobile,
       isTablet,
-      capitalize,
     }
   },
 

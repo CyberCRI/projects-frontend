@@ -1,7 +1,6 @@
 <script setup>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers.ts'
-import { capitalize } from '@/functs/string'
 
 const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()
@@ -57,7 +56,7 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
             {{ $t('page404.contact-mail') }}
           </a>
         </i18n-t>
-        <LpiButton v-if="!isConnected" :label="capitalize($t('common.login'))" @click="login" />
+        <LpiButton v-if="!isConnected" :label="$t('common.login')" @click="login" />
         <div class="illustration">
           <img :src="imageFullUrl" />
           <a :class="{ 'text--connected': !isConnected }" class="text" @click="login">

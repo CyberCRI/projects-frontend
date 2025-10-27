@@ -1,6 +1,4 @@
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { canCreateEvent } = usePermissions()
@@ -50,7 +48,7 @@ try {
       <LpiButton
         v-if="canCreateEvent"
         primary
-        :label="capitalize($t('event.create.button'))"
+        :label="$t('event.create.button')"
         data-test="create-event-button"
         btn-icon="Plus"
         class="create-event-button"

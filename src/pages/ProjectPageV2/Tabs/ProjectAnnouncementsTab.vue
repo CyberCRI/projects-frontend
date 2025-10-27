@@ -2,7 +2,7 @@
   <div class="project-announcement narrow-content">
     <div v-if="canEditProject && isInEditingMode" class="add-announcement">
       <LpiButton
-        :label="capitalize($t('project.announcement-create'))"
+        :label="$t('project.announcement-create')"
         class="add-announcement-btn"
         @click="projectLayoutToggleAddModal('announcement')"
       />
@@ -23,7 +23,7 @@
     <ConfirmModal
       v-if="confirmDeleteModalVisible"
       :content="$t('recruit.delete-announcement-message')"
-      :title="capitalize($t('common.delete'))"
+      :title="$t('common.delete')"
       :asyncing="isDeleting"
       @cancel="confirmDeleteModalVisible = false"
       @confirm="deleteAnnouncement"
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import AnnouncementItem from '@/components/project/announcement/AnnouncementItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'
@@ -83,7 +82,6 @@ export default {
     return {
       toaster,
       canEditProject,
-      capitalize,
     }
   },
 

@@ -1,7 +1,6 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from '@/functs/string'
 
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
@@ -67,7 +66,7 @@ try {
   <div v-if="categories.length > 0" class="categories-layout page-top">
     <div class="page-section-extra-wide">
       <h1 class="page-title">
-        {{ capitalize($t('projects')) }}
+        {{ $t('projects') }}
       </h1>
 
       <SearchBlock :limit="30" section="projects" :freeze-search="isNavigating" />
@@ -92,7 +91,7 @@ try {
     <template v-else>
       <div class="title-ctn page-section-wide">
         <h2 class="sub-title">
-          {{ capitalize($t('home.categories.title')) }}
+          {{ $t('home.categories.title') }}
         </h2>
       </div>
       <div class="categories page-section-wide">

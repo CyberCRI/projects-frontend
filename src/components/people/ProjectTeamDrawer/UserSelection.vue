@@ -14,14 +14,14 @@
     <LinkButton
       v-if="selectedUsers.length > 5"
       class="see-more-btn"
-      :label="capitalize($t(seeMoreLabel))"
+      :label="$t(seeMoreLabel)"
       @click="isSeeMore = !isSeeMore"
     />
 
     <SearchInput
       ref="search-input-ctn"
       v-model="queryString"
-      :placeholder="capitalize($t('search.search'))"
+      :placeholder="$t('search.search')"
       full
       @enter="searchUser"
       @delete-query="deleteQuery"
@@ -49,7 +49,6 @@
 
 <script>
 import { debounce } from 'es-toolkit'
-import { capitalize } from '@/functs/string'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import { searchGroupsAlgolia } from '@/api/search.service.ts'
@@ -90,7 +89,6 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
-      capitalize,
     }
   },
 

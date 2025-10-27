@@ -4,7 +4,6 @@ import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from '@/functs/string'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -73,7 +72,7 @@ try {
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         secondary
         class="footer__left-button"
         data-test="close-button"

@@ -8,14 +8,14 @@
   >
     <div class="select-added-item">
       <LpiButton
-        :label="capitalize($t('project.add-to-project.sdg'))"
+        :label="$t('project.add-to-project.sdg')"
         btn-icon="Plus"
         data-test="button-add-sdg-to-project"
         class="button-select"
         @click="$emit('choice-made', 'sdg')"
       />
       <LpiButton
-        :label="capitalize($t('project.add-to-project.goal'))"
+        :label="$t('project.add-to-project.goal')"
         btn-icon="Plus"
         data-test="button-add-goal-to-project"
         class="button-select"
@@ -26,8 +26,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 defineOptions({ name: 'GoalOrSdgsDrawer' })
 
 defineProps({

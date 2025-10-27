@@ -2,7 +2,7 @@
   <div class="project-resources">
     <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
-        :label="capitalize($t('resource.add'))"
+        :label="$t('resource.add')"
         class="add-item-btn"
         btn-icon="Plus"
         data-test="in-page-add-resources"
@@ -14,7 +14,7 @@
       v-if="fileResources.length"
       :has-button="false"
       :quantity="fileResources.length"
-      :title="capitalize($t('project.files', fileResources.length))"
+      :title="$t('project.files', fileResources.length)"
     />
 
     <div v-if="fileResources.length" class="resource-ctn">
@@ -36,7 +36,7 @@
       v-if="linkResources.length"
       :has-button="false"
       :quantity="linkResources.length"
-      :title="capitalize($t('resource.web', linkResources.length))"
+      :title="$t('resource.web', linkResources.length)"
       class="link-header"
     />
 
@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/project/resource/ResourceCard.vue'
@@ -117,7 +116,6 @@ export default {
     return {
       toaster,
       canEditProject,
-      capitalize,
     }
   },
 

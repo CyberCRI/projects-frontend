@@ -2,7 +2,7 @@
   <div class="project-team">
     <div v-if="isEditionEnabled" class="add-user">
       <LpiButton
-        :label="capitalize($t('team.add'))"
+        :label="$t('team.add')"
         class="add-user-btn"
         btn-icon="Plus"
         @click="projectLayoutToggleAddModal('teamMember')"
@@ -14,7 +14,7 @@
       v-if="owners && owners.length"
       :has-button="false"
       :quantity="owners.length"
-      :title="capitalize($t('role.editors'))"
+      :title="$t('role.editors')"
     />
     <DynamicGrid v-if="owners && owners.length" :min-gap="gridGap" class="user-card-ctn">
       <ProjectTeamEditor
@@ -33,7 +33,7 @@
       v-if="members && members.length"
       :has-button="false"
       :quantity="members.length"
-      :title="capitalize($t('role.teammates'))"
+      :title="$t('role.teammates')"
     />
     <DynamicGrid v-if="members && members.length" :min-gap="gridGap" class="user-card-ctn">
       <ProjectTeamEditor
@@ -53,7 +53,7 @@
       v-if="reviewers && reviewers.length"
       :has-button="false"
       :quantity="reviewers.length"
-      :title="capitalize($t('role.reviewers'))"
+      :title="$t('role.reviewers')"
     />
     <DynamicGrid v-if="reviewers && reviewers.length" :min-gap="gridGap" class="user-card-ctn">
       <ProjectTeamEditor
@@ -75,7 +75,7 @@
       v-if="owner_groups && owner_groups.length"
       :has-button="false"
       :quantity="owner_groups.length"
-      :title="capitalize($t('role.editor-groups'))"
+      :title="$t('role.editor-groups')"
     />
     <DynamicGrid
       v-if="owner_groups && owner_groups.length"
@@ -101,7 +101,7 @@
       v-if="reviewer_groups && reviewer_groups.length"
       :has-button="false"
       :quantity="reviewer_groups.length"
-      :title="capitalize($t('role.reviewer-groups'))"
+      :title="$t('role.reviewer-groups')"
     />
     <DynamicGrid
       v-if="reviewer_groups && reviewer_groups.length"
@@ -130,7 +130,7 @@
       v-if="member_groups && member_groups.length"
       :has-button="false"
       :quantity="member_groups.length"
-      :title="capitalize($t('role.teammate-groups'))"
+      :title="$t('role.teammate-groups')"
     />
     <DynamicGrid
       v-if="member_groups && member_groups.length"
@@ -201,7 +201,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import { deleteProjectMembers } from '@/api/project-members.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -235,7 +234,6 @@ export default {
     return {
       toaster,
       canEditProject,
-      capitalize,
     }
   },
 

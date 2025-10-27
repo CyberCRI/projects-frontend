@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="form-section img-ctn">
-      <label>{{ capitalize($t('news.form.image.label')) }}</label>
+      <label>{{ $t('news.form.image.label') }}</label>
       <ImageEditor
         picture-alt="news image"
         :contain="true"
@@ -17,8 +17,8 @@
     <div class="form-section">
       <TextInput
         :model-value="modelValue.title"
-        :label="capitalize($t('news.form.title.label'))"
-        :placeholder="capitalize($t('news.form.title.placeholder'))"
+        :label="$t('news.form.title.label')"
+        :placeholder="$t('news.form.title.placeholder')"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
         @blur="v$.modelValue.title.$validate"
@@ -48,7 +48,7 @@
     </div>
 
     <div class="form-section">
-      <label>{{ capitalize($t('news.form.content.label')) }}</label>
+      <label>{{ $t('news.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
         :model-value="modelValue.content"
@@ -79,8 +79,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
@@ -136,7 +134,6 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
-      capitalize,
     }
   },
 

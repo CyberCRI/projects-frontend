@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -127,7 +125,7 @@ export default {
 
     groupHierarchy() {
       const root = {
-        name: capitalize(this.$t('common.groups')),
+        name: this.$t('common.groups'),
         route: { name: 'Groups' },
       }
       if (!this.groupData) return [root]

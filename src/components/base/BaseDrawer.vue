@@ -29,7 +29,7 @@
           <slot name="footer">
             <LpiButton
               :disabled="asyncing"
-              :label="capitalize($t('common.cancel'))"
+              :label="$t('common.cancel')"
               secondary
               class="footer__left-button"
               data-test="close-button"

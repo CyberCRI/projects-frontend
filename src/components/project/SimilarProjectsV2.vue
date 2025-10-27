@@ -1,9 +1,9 @@
 <template>
   <div class="similar-projects">
     <h3 class="group-section-title">
-      {{ capitalize($t('project.suggested', 2)) }}
+      {{ t('project.suggested', 2) }}
     </h3>
-    <p class="hint">{{ $t('project.suggested-hint') }}</p>
+    <p class="hint">{{ t('project.suggested-hint') }}</p>
 
     <SimilarProjectsItem
       v-for="project in similarProjectsDisplayed"
@@ -14,39 +14,21 @@
   </div>
 </template>
 
-<script>
-import { capitalize } from '@/functs/string'
+<script setup>
+defineOptions({ name: 'SimilarProjectsV2' })
 
-export default {
-  name: 'SimilarProjectsV2',
-
-  props: {
-    similarProjects: {
-      type: Array,
-      default: () => [],
-    },
+const props = defineProps({
+  similarProjects: {
+    type: Array,
+    default: () => [],
   },
+})
 
-  setup() {
-    const { isMobile, isTablet } = useViewportWidth()
-    return {
-      isMobile,
-      isTablet,
-      capitalize,
-    }
-  },
+const { t } = useNuxtI18n()
 
-  computed: {
-    similarProjectsDisplayed() {
-      // if (this.allProjectsVisible) return this.similarProjects
-      // else {
-      //   if (this.isMobile) return this.similarProjects.slice(0, 1)
-      //   else if (this.isTablet) return this.similarProjects.slice(0, 2)
-      return this.similarProjects.slice(0, 4)
-      // }
-    },
-  },
-}
+const similarProjectsDisplayed = computed(() => {
+  return props.similarProjects.slice(0, 4)
+})
 </script>
 
 <style lang="scss" scoped>

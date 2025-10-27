@@ -2,7 +2,7 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ capitalize($t('team.project-members')) }}
+        {{ $t('team.project-members') }}
         <span v-if="projectUsers.length">({{ projectUsers.length }})</span>
       </span>
       <span
@@ -12,7 +12,7 @@
         @click="teamModalVisible = true"
       >
         <IconImage name="Plus" />
-        <span>{{ capitalize($t('team.add')) }}</span>
+        <span>{{ $t('team.add') }}</span>
       </span>
     </label>
 
@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
@@ -70,7 +68,6 @@ export default {
     const usersStore = useUsersStore()
     return {
       usersStore,
-      capitalize,
     }
   },
 

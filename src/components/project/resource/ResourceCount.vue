@@ -3,11 +3,11 @@
     <div class="icon-ctn">
       <div v-if="isFile" class="resource-type">
         <IconImage name="Paperclip" />
-        <span>{{ capitalize($t('file.attachment', count)) }}</span>
+        <span>{{ $t('file.attachment', count) }}</span>
       </div>
       <div v-else class="resource-type">
         <IconImage name="Globe" />
-        <span>{{ capitalize($t('resource.web-link', count)) }}</span>
+        <span>{{ $t('resource.web-link', count) }}</span>
       </div>
     </div>
 
@@ -18,8 +18,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import IconImage from '@/components/base/media/IconImage.vue'
 
 defineOptions({ name: 'ResourceCount' })

@@ -188,7 +188,7 @@
               />
               <ExternalLabelButton
                 class="space-button bg-on-hover"
-                :label="capitalize($t('comment.comment-verb'))"
+                :label="$t('comment.comment-verb')"
                 btn-icon="ChatBubble"
                 vertical-layout
                 @click="goToCommentView"

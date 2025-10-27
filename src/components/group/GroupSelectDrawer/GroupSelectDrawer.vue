@@ -11,7 +11,7 @@
         ref="search-input"
         v-model="queryString"
         :full="true"
-        :placeholder="capitalize($t('search.search-group'))"
+        :placeholder="$t('search.search-group')"
         class="input"
         @enter="launchSearch"
         @delete-query="deleteQuery"
@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
@@ -68,7 +66,6 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
-      capitalize,
     }
   },
 

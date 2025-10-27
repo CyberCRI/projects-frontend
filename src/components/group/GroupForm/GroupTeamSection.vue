@@ -2,14 +2,14 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ capitalize($t('team.group-members')) }}
+        {{ $t('team.group-members') }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
       <LpiButton
         v-if="!modelValue.length"
         class="add-user-card"
         btn-icon="Plus"
-        :label="capitalize($t('group.form.add'))"
+        :label="$t('group.form.add')"
         data-test="add-members"
         @click="openDrawer('select')"
       />
@@ -18,14 +18,14 @@
         <LpiButton
           class="add-user-card"
           btn-icon="Pen"
-          :label="capitalize($t('group.form.edit-members'))"
+          :label="$t('group.form.edit-members')"
           data-test="add-members"
           @click="openDrawer('select')"
         />
         <LpiButton
           class="add-user-card"
           btn-icon="Pen"
-          :label="capitalize($t('group.form.edit-roles'))"
+          :label="$t('group.form.edit-roles')"
           data-test="edit-roles"
           @click="openDrawer('roles')"
         />
@@ -46,7 +46,7 @@
       <LinkButton
         v-if="shortList?.length < modelValue?.length"
         class="see-more-btn"
-        :label="capitalize($t(seeMoreLabel))"
+        :label="$t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
     </div>
@@ -64,8 +64,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import useUsersStore from '@/stores/useUsers'
 
 export default {
@@ -83,7 +81,6 @@ export default {
     const usersStore = useUsersStore()
     return {
       usersStore,
-      capitalize,
     }
   },
 

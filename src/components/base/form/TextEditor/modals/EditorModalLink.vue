@@ -7,22 +7,22 @@
     @submit="insertLink"
   >
     <template #header>
-      {{ capitalize(mode === 'add' ? $t('resource.add-link') : $t('resource.edit-link')) }}
+      {{ mode === 'add' ? $t('resource.add-link') : $t('resource.edit-link') }}
     </template>
 
     <template #body>
       <template v-if="needText">
-        <label>{{ capitalize($t('resource.add-link-text-label')) }}</label>
+        <label>{{ $t('resource.add-link-text-label') }}</label>
         <TextInput
           v-model="text"
-          :placeholder="capitalize($t('resource.add-link-text'))"
+          :placeholder="$t('resource.add-link-text')"
           data-test="input-new-link-text"
         />
       </template>
-      <label>{{ capitalize($t('resource.add-link-url-label')) }}</label>
+      <label>{{ $t('resource.add-link-url-label') }}</label>
       <TextInput
         v-model="link"
-        :placeholder="capitalize($t('resource.add-link-url'))"
+        :placeholder="$t('resource.add-link-url')"
         data-test="input-new-link"
       />
     </template>
@@ -45,7 +45,6 @@ import DialogModal from '@/components/base/modal/DialogModal.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import funct from '@/functs/functions.ts'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { capitalize } from '@/functs/string'
 
 export default {
   name: 'EditorModalLink',
@@ -57,10 +56,6 @@ export default {
   },
 
   emits: ['closeModal'],
-
-  setup() {
-    return { capitalize }
-  },
 
   data() {
     return {

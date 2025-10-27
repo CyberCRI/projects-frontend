@@ -2,7 +2,7 @@
   <div class="project-linked-projects">
     <div v-if="canEditProject && isInEditingMode" class="add-linked-project">
       <LpiButton
-        :label="capitalize($t('project.add-linked-project'))"
+        :label="$t('project.add-linked-project')"
         class="add-linked-project-btn"
         @click="projectLayoutToggleAddModal('linkedProject')"
       />
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
@@ -53,7 +52,7 @@ export default {
   setup() {
     useScrollToTab()
     const { canEditProject } = usePermissions()
-    return { canEditProject, capitalize }
+    return { canEditProject }
   },
 }
 </script>

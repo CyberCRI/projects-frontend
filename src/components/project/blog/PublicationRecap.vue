@@ -2,9 +2,9 @@
   <div :class="isBlog ? 'is-blog' : 'is-comment'" class="publication-recap">
     <div class="publication-header">
       <SectionHeader
-        :button-label="capitalize($t('common.see-more'))"
+        :button-label="$t('common.see-more')"
         :quantity="publications.length"
-        :title="capitalize(isBlog ? $t('blog.posts') : $t('comment.comments'))"
+        :title="isBlog ? $t('blog.posts') : $t('comment.comments')"
         @redirect-button-clicked="redirectToPage"
       />
     </div>
@@ -28,8 +28,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 

@@ -1,7 +1,7 @@
 <template>
   <div class="summary-block list-summary-block" :class="[nbColsText, { inlined }]">
     <h1 class="uppercase-title">
-      {{ capitalize(title) }}
+      {{ title }}
     </h1>
     <div class="column-wrapper">
       <div class="items-line">
@@ -15,8 +15,6 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-
 defineOptions({ name: 'BaseListSummaryBlock' })
 
 const props = defineProps({

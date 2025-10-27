@@ -4,7 +4,7 @@
     :confirm-action-disabled="v$.$invalid"
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
-    :title="capitalize(!rdata?.id ? $t('project.add-review') : $t('project.edit-review'))"
+    :title="!rdata?.id ? $t('project.add-review') : $t('project.edit-review')"
     class="review-drawer medium"
     :asyncing="asyncing"
     @close="closeDrawer"
@@ -12,7 +12,7 @@
   >
     <div class="review-form">
       <div class="review-entry">
-        <label>{{ capitalize($t('common.title')) }}</label>
+        <label>{{ $t('common.title') }}</label>
         <TextInput v-model="newReview.data.title" @blur="v$.newReview.data.title.$touch" />
         <FieldErrors :errors="v$.newReview.data.title.$errors" />
       </div>
@@ -26,11 +26,11 @@
         <FieldErrors :errors="v$.newReview.data.description.$errors" />
       </div>
       <div class="review-entry review-switch">
-        <label>{{ capitalize($t('project.publish')) }}</label>
+        <label>{{ $t('project.publish') }}</label>
         <SwitchInput v-model="publish" />
       </div>
       <div class="review-entry review-switch">
-        <label>{{ capitalize($t('project.lock')) }}</label>
+        <label>{{ $t('project.lock') }}</label>
         <SwitchInput v-model="lock" />
       </div>
     </div>
@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
-
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -100,7 +98,6 @@ export default {
       toaster,
       projectsStore,
       usersStore,
-      capitalize,
     }
   },
 

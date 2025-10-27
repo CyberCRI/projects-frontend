@@ -21,7 +21,7 @@
       <div class="announcement-link horizontal-padding bottom-padding">
         <span class="read">
           <span class="icon"><IconImage name="ArrowRight" /></span>
-          {{ capitalize(t('common.read')) }}
+          {{ t('common.read') }}
         </span>
       </div>
       <div class="announcement-project horizontal-padding top-padding bottom-padding">

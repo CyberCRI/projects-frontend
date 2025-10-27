@@ -4,7 +4,6 @@ import useAPI from '@/composables/useAPI.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
-import { capitalize } from '@/functs/string'
 
 const { translateNews } = useAutoTranslate()
 const toaster = useToasterStore()
@@ -123,7 +122,7 @@ try {
       <LpiButton
         v-if="canCreateNews"
         primary
-        :label="capitalize($t('news.list.create'))"
+        :label="$t('news.list.create')"
         data-test="create-news-button"
         btn-icon="Plus"
         class="create-news-button"

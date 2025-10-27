@@ -139,7 +139,7 @@
         <LinkButton
           v-if="!isConnected"
           :class="{ 'header__close-icon': isNavOpen }"
-          :label="capitalize($t('common.login'))"
+          :label="$t('common.login')"
           class="header__mobile-btn"
           data-test="login-button"
           @click="login"
@@ -199,7 +199,6 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
-import { capitalize } from '@/functs/string'
 
 export default {
   name: 'LpiHeader',
@@ -234,7 +233,6 @@ export default {
       locale,
       isAutoTranslateActivated,
       setLocale,
-      capitalize,
     }
   },
 

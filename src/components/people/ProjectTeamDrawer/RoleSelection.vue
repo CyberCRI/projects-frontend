@@ -55,7 +55,7 @@
                   type="radio"
                   @change="selectUserRole(user, roleOption.value)"
                 />
-                {{ capitalize(roleOption.label) }}
+                {{ roleOption.label }}
               </label>
             </div>
           </div>
@@ -81,7 +81,7 @@
                   type="radio"
                   @change="selectGroupRole(group, roleOption.value)"
                 />
-                {{ capitalize(roleOption.label) }}
+                {{ roleOption.label }}
               </label>
             </div>
           </div>
@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import { capitalize } from '@/functs/string'
 import { isNotGroup, isGroup } from '@/functs/users'
 
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -169,21 +168,21 @@ export default {
       return [
         {
           value: 'owners',
-          label: capitalize(this.$t('role.editor')),
+          label: this.$t('role.editor'),
           condition: true,
           dataTest: 'button-role-editor',
           tip: this.$t('role.role-editor'),
         },
         {
           value: 'reviewers',
-          label: capitalize(this.$t('role.reviewer')),
+          label: this.$t('role.reviewer'),
           condition: this.isReviewable,
           dataTest: 'button-role-reviewer',
           tip: this.$t('role.role-reviewer'),
         },
         {
           value: 'members',
-          label: capitalize(this.$t('role.teammate')),
+          label: this.$t('role.teammate'),
           condition: true,
           dataTest: 'button-role-teammate',
           tip: this.$t('role.role-teammate'),
@@ -195,21 +194,21 @@ export default {
       return [
         {
           value: 'owner_groups',
-          label: capitalize(this.$t('role.editor')),
+          label: this.$t('role.editor'),
           condition: true,
           dataTest: 'button-group-role-editor',
           tip: this.$t('role.role-editor'),
         },
         {
           value: 'reviewer_groups',
-          label: capitalize(this.$t('role.reviewer')),
+          label: this.$t('role.reviewer'),
           condition: this.isReviewable,
           dataTest: 'button-group-role-reviewer',
           tip: this.$t('role.role-reviewer'),
         },
         {
           value: 'member_groups',
-          label: capitalize(this.$t('role.teammate')),
+          label: this.$t('role.teammate'),
           condition: true,
           dataTest: 'button-group-role-teammate',
           tip: this.$t('role.role-teammate'),
