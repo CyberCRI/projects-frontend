@@ -150,6 +150,7 @@ export default function useProjectData() {
       // TODO beg for a dedicated endpoint
       const response = await getProject(project.value.id)
       _team.value = response.team
+      console.log('team loaded', _team.value)
     } catch (err) {
       console.error(err)
     }
