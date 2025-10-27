@@ -412,28 +412,33 @@ export default {
 
           // patch user picture if changed
 
-          if (
-            this.form.picture != this.user.profile_picture?.url ||
-            !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
-          ) {
-            const formData = new FormData()
-            imageSizesFormData(formData, this.form.imageSizes)
+          try {
+            if (
+              this.form.picture != this.user.profile_picture?.url ||
+              !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
+            ) {
+              const formData = new FormData()
+              imageSizesFormData(formData, this.form.imageSizes)
 
-            if (this.form.picture instanceof File) {
-              formData.append('file', this.form.picture, this.form.picture.name)
-              const picture_id = (await postUserPicture(this.user.id, formData)).id
+              if (this.form.picture instanceof File) {
+                formData.append('file', this.form.picture, this.form.picture.name)
+                const picture_id = (await postUserPicture(this.user.id, formData)).id
 
-              // TODO: make this in POST when backend allows it
-              formData.delete('file')
-              await patchUserPicture(this.user.id, picture_id, formData)
-            } else if (this.user.profile_picture && this.user.profile_picture.id) {
-              await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
+                // TODO: make this in POST when backend allows it
+                formData.delete('file')
+                await patchUserPicture(this.user.id, picture_id, formData)
+              } else if (this.user.profile_picture && this.user.profile_picture.id) {
+                await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
+              }
             }
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('profile.edit.general.save-image-error')} (${error})`)
+            console.error(error)
           }
 
-          this.$emit('profile-edited')
-
           this.startEditWatcher()
+
+          this.$emit('profile-edited')
 
           // give extra time for profile-edited event to be consumed
           await new Promise((resolve) => setTimeout(resolve, 50))

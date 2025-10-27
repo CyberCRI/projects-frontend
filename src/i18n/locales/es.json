@@ -1246,6 +1246,7 @@
         "tab": "Informaci\u00f3n general",
         "form-has-error": "Hay campo perdido o inv\u00e1lido en la forma.",
         "save-error": "Error al guardar el perfil.",
+        "save-image-error": "Error al guardar la imagen de perfil.",
         "save-success": "Perfil guardado.",
         "pronouns": {
           "label": "Pronombres",

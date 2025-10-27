@@ -1246,6 +1246,7 @@
         "tab": "General info",
         "form-has-error": "There is missing or invalid field in the form.",
         "save-error": "Error while saving profile.",
+        "save-image-error": "Error while saving profile picture.",
         "save-success": "Profile saved.",
         "pronouns": {
           "label": "Pronouns",

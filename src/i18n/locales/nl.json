@@ -1246,6 +1246,7 @@
         "tab": "Algemene informatie",
         "form-has-error": "Er ontbreekt of is een ongeldig veld in het formulier.",
         "save-error": "Fout bij opslaan van profiel.",
+        "save-image-error": "Fout bij opslaan van profielfoto.",
         "save-success": "Profiel opgeslagen.",
         "pronouns": {
           "label": "Voornaamwoorden",

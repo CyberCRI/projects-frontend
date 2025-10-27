@@ -1246,6 +1246,7 @@
         "tab": "Informació general",
         "form-has-error": "Falta o no hi ha un camp incorrecte en el formulari.",
         "save-error": "Error en desar el perfil.",
+        "save-image-error": "Error en desar la imatge de perfil.",
         "save-success": "El perfil s' ha desat.",
         "pronouns": {
           "label": "Pronomsfrance. kgm",
