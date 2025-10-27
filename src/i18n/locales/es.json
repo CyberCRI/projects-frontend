@@ -2191,6 +2191,10 @@
       "success": "El proyecto ha sido creado con \u00e9xito",
       "error": "Error durante la creaci\u00f3n del proyecto"
     },
+    "project-header-create": {
+      "success": "La imagen del proyecto se ha creado con \u00e9xito",
+      "error": "Error durante la creaci\u00f3n de la imagen del proyecto"
+    },
     "project-destroy": {
       "success": "El proyecto se ha eliminado con \u00e9xito",
       "error": "Error durante la eliminaci\u00f3n del proyecto"
@@ -2198,6 +2202,10 @@
     "project-edit": {
       "success": "El proyecto ha sido actualizado con \u00e9xito",
       "error": "Error durante la actualizaci\u00f3n del proyecto"
+    },
+    "project-header-edit": {
+      "success": "La imagen del proyecto se ha actualizado con \u00e9xito",
+      "error": "Error durante la actualizaci\u00f3n de la imagen del proyecto"
     },
     "project-duplication": {
       "success": "El proyecto se ha duplicado con \u00e9xito",

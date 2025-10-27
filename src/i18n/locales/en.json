@@ -2191,6 +2191,10 @@
       "success": "The project has been created successfully",
       "error": "Error during the project creation"
     },
+    "project-header-create": {
+      "success": "The project image has been created successfully",
+      "error": "Error during the project image creation"
+    },
     "project-destroy": {
       "success": "The project has been deleted successfully",
       "error": "Error during the project deletion"
@@ -2198,6 +2202,10 @@
     "project-edit": {
       "success": "The project has been updated successfully",
       "error": "Error during project update"
+    },
+    "project-header-edit": {
+      "success": "The project image has been updated successfully",
+      "error": "Error during project image update"
     },
     "project-duplication": {
       "success": "The project has been duplicated successfully",

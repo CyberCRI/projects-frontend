@@ -57,7 +57,7 @@ export default {
     },
     maxSizeMb: {
       type: Number,
-      default: 2,
+      default: 10,
     },
   },
 
