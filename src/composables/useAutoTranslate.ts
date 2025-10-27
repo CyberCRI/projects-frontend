@@ -114,6 +114,9 @@ export default function useAutoTranslate() {
         owners: unref(translateUsers(_team.owners)),
         members: unref(translateUsers(_team.members)),
         reviewers: unref(translateUsers(_team.reviewers)),
+        owner_groups: unref(translateGroups(_team.owner_groups)),
+        member_groups: unref(translateGroups(_team.member_groups)),
+        reviewer_groups: unref(translateGroups(_team.reviewer_groups)),
       }
     })
 
