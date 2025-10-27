@@ -110,7 +110,6 @@ export default function useAutoTranslate() {
   const translateTeam = (team) =>
     computed(() => {
       const _team = unref(team)
-      console.log('translating team', _team)
       return {
         owners: unref(translateUsers(_team.owners)),
         members: unref(translateUsers(_team.members)),
