@@ -185,7 +185,7 @@
 <script>
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { patchUser } from '@/api/people.service.ts'
-import { getAnnouncements } from '@/api/announcements.service'
+import { api } from '@/api/SwaggerProjects'
 
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
@@ -199,6 +199,7 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { sanitizeAnnouncementsList } from '@/api/sanitize/announcements'
 export default {
   name: 'LpiHeader',
 
@@ -565,16 +566,11 @@ export default {
 
     async getGlobalAnnouncements() {
       try {
-        const announcements = await getAnnouncements({
+        const { results } = await api.v1.announcementList({
           organizations: [this.organization.code],
           ordering: '-updated_at',
         })
-        this.announcements =
-          announcements.results?.filter(
-            (announcement) =>
-              (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
-              new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
-          ) || []
+        this.announcements = sanitizeAnnouncementsList(results)
       } catch (err) {
         console.error(err)
       }

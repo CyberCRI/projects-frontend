@@ -1,39 +1,27 @@
 <script setup>
-import { getAnnouncements } from '@/api/announcements.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { sanitizeAnnouncementsList } from '@/api/sanitize/announcements'
+import { api } from '@/api/SwaggerProjects'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
-const announcements = useState(() => [])
-const isLoading = useState(() => false)
+const { status, data: announcements } = useAsyncData(
+  'AnnouncementsList',
+  () =>
+    api.v1.announcementList({
+      organizations: [organization.value.code],
+      ordering: '-updated_at',
+    }),
+  {
+    transform: ({ results }) => sanitizeAnnouncementsList(results),
+  }
+)
 
 const organization = computed(() => {
   return organizationsStore.current
 })
-
-const doGetAnnouncements = async () => {
-  try {
-    isLoading.value = true
-    const { results } = await getAnnouncements({
-      organizations: [organization.value.code],
-      ordering: '-updated_at',
-    })
-    announcements.value = results.filter(
-      (announcement) =>
-        announcement.project.publication_status !== 'private' &&
-        (!announcement.deadline ||
-          new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0))
-    )
-  } catch (err) {
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(doGetAnnouncements)
 
 try {
   const runtimeConfig = useRuntimeConfig()
@@ -58,7 +46,7 @@ try {
       {{ $filters.capitalize($t('home.announcements')) }}
     </h1>
 
-    <AnnouncementCardListSkeleton v-if="isLoading" />
+    <AnnouncementCardListSkeleton v-if="status !== 'success'" />
 
     <AnnouncementCardList v-else :announcements="announcements" :is-more-toggled="true" />
   </div>

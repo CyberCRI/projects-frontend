@@ -5,7 +5,6 @@ import { useRuntimeConfig } from '#imports'
 
 export const defaultBaseURL = (full: boolean = true) => {
   const runtimeConfig = useRuntimeConfig()
-  const url = runtimeConfig.public.appApiUrl
   if (full) {
     return `${runtimeConfig.public.appApiUrl}${runtimeConfig.public.appApiDefaultVersion}/`
   }

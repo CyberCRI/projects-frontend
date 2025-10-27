@@ -8,10 +8,6 @@ import utils from '@/functs/functions'
 
 import useAPI from '@/composables/useAPI'
 
-export async function getAnnouncements(params) {
-  return await useAPI(`announcement/`, { ...utils.adaptParam(params) }) //.data.value
-}
-
 export async function getProjectAnnouncements(project_id: string, params: object) {
   return await useAPI(`project/${project_id}/announcement/`, {
     ...utils.adaptParam(params || {}),
