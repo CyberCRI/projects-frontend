@@ -1246,6 +1246,7 @@
         "tab": "Allgemeine Informationen",
         "form-has-error": "Im Formular gibt es ein fehlendes oder ung\u00fcltiges Feld.",
         "save-error": "Fehler beim Speichern von Profilen.",
+        "save-image-error": "Fehler beim Speichern des Profilbildes.",
         "save-success": "Profil gespeichert.",
         "pronouns": {
           "label": "Aussprache",

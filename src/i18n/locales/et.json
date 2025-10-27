@@ -1246,6 +1246,7 @@
         "tab": "Üldine teave",
         "form-has-error": "Vormis on puudu või vigane väli.",
         "save-error": "Viga profiili salvestamisel.",
+        "save-image-error": "Viga profiilipildi salvestamisel.",
         "save-success": "Profiil salvestatud.",
         "pronouns": {
           "label": "Asesõnad",

@@ -57,7 +57,7 @@ export default {
     },
     maxSizeMb: {
       type: Number,
-      default: 10,
+      default: 2.25,
     },
   },
 
@@ -85,7 +85,7 @@ export default {
       this.fileIsTooLarge = false
       const file = this.$refs[this.uniqueId].files[0]
       if (!file) return
-      if (this.maxSizeMb && file.size > this.maxSizeMb * 1024 * 1024) {
+      if (this.maxSizeMb && file.size > Math.round(this.maxSizeMb * 1024 * 1024)) {
         this.fileIsTooLarge = true
       } else {
         this.$emit('upload-image', file)
