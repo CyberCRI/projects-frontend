@@ -1,5 +1,5 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 import { sanitizeAnnouncementsList } from '@/api/sanitize/announcements'
 import { api } from '@/api/SwaggerProjects'

@@ -10,13 +10,14 @@ import { getProjectMessages as getProjectMessagesApi } from '@/api/project-messa
 import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.services'
 import { getAttachmentLinks } from '@/api/attachment-links.service'
 import { getAttachmentFiles } from '@/api/attachment-files.service'
-import { getProjectAnnouncements } from '@/api/announcements.service'
+import { api } from '@/api/SwaggerProjects'
 import { getBlogEntries as getBlogEntriesApi } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
 import { getProject, duplicateProject as duplicateProjectAPI } from '@/api/projects.service'
 import { getReviews as getReviewsApi } from '@/api/reviews.service'
 
 import analytics from '@/analytics'
+import { Announcement } from '@/api/Swagger'
 
 export default function useProjectData() {
   // const toaster = useToasterStore()
@@ -62,7 +63,7 @@ export default function useProjectData() {
   const _comments: Ref<any> = ref([])
   const _projectMessages: Ref<any> = ref([])
   const _locations: Ref<any> = ref([])
-  const _announcements: Ref<any> = ref([])
+  const _announcements = ref<Announcement[]>([])
   const _fileResources: Ref<any> = ref([])
   const _linkResources: ComputedRef<any> | Ref<any> = ref([])
   const _blogEntries: Ref<any> = ref([])
@@ -211,7 +212,7 @@ export default function useProjectData() {
 
   const getAnnouncements = async () => {
     try {
-      const response = await getProjectAnnouncements(project.value.id, {})
+      const response = await api.v1.projectAnnouncementList(project.value.id)
       _announcements.value = response.results
     } catch (err) {
       console.error(err)

@@ -69,12 +69,12 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import { applyAnnouncement } from '@/api/announcements.service.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useRuntimeConfig } from '#imports'
+import { api } from '@/api/SwaggerProjects'
 
 export default {
   name: 'ReplyAnnouncementDrawer',
@@ -191,7 +191,7 @@ export default {
             recaptcha: this.captchatoken,
           }
 
-          await applyAnnouncement(payload)
+          await api.v1.projectAnnouncementApplyCreate(payload.id, payload.project_id, payload)
 
           this.toaster.pushSuccess(this.$t('project.apply-succes'))
         } catch (error) {

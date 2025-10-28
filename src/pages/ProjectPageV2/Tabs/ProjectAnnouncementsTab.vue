@@ -43,9 +43,9 @@ import AnnouncementItem from '@/components/project/announcement/AnnouncementItem
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { deleteAnnouncement } from '@/api/announcements.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
+import { api } from '@/api/SwaggerProjects'
 export default {
   name: 'ProjectAnnouncementsTab',
 
@@ -104,7 +104,10 @@ export default {
     async deleteAnnouncement() {
       try {
         this.isDeleting = true
-        await deleteAnnouncement(this.announcementToBeDeleted)
+        await api.v1.projectAnnouncementDestroy(
+          this.announcementToBeDeleted.id,
+          this.announcementToBeDeleted.project.id
+        )
 
         analytics.announcement.removeAnnouncement({
           project: {

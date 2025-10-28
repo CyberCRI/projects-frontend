@@ -76,10 +76,10 @@ import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
-import { postAnnouncement, patchAnnouncement } from '@/api/announcements.service'
 import analytics from '@/analytics'
 
 import useToasterStore from '@/stores/useToaster.ts'
+import { api } from '@/api/SwaggerProjects'
 
 export default {
   name: 'AnnouncementDrawer',
@@ -228,7 +228,7 @@ export default {
 
         if (this.isAddMode) {
           try {
-            const result = await postAnnouncement(body)
+            const result = await api.v1.projectAnnouncementCreate(this.project.id, body)
             analytics.announcement.addAnnouncement({
               project: {
                 id: this.project.id,
@@ -247,7 +247,11 @@ export default {
           }
         } else {
           try {
-            const result = await patchAnnouncement(body)
+            const result = await api.v1.projectAnnouncementPartialUpdate(
+              body.id,
+              body.project_id,
+              body
+            )
 
             analytics.announcement.updateAnnouncement({
               project: {

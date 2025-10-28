@@ -94,7 +94,7 @@ export const defaultOptions = () => {
 const useAPI = (url: string, options) => {
   const _options = merge(
     {
-      baseURL: defaultBaseURL(),
+      baseURL: defaultBaseURL(true),
       ...defaultOptions(),
     },
     options

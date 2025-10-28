@@ -37,7 +37,7 @@
     "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/i18n/locales/*.?(json|yml|yaml|js)'",
     "list-icons": "node ./utilities/list-icons.js",
     "autotranslate": "node ./utilities/autotranslate.js",
-    "api:swagger": "npx swagger-typescript-api generate --path ./api.yaml -o ./src/api --name Swagger.ts --extract-request-body --extract-request-params --extract-response-body --extract-response-error --extract-responses --unwrap-response-data"
+    "api:swagger": "npx swagger-typescript-api generate --path ./api.yaml -o ./src/api --name Swagger.ts --sort-types --sort-routes --extract-request-body --extract-response-body --extract-response-error --extract-responses --unwrap-response-data"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.5.0",

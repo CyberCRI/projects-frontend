@@ -1,12 +1,17 @@
 import { defaultBaseURL, defaultOptions } from '@/composables/useAPI'
 import { ApiConfig, RequestParams, Api as SwaggerApi } from './Swagger'
+// use ofetch instead of $fetch ($fetch is a alias to ofetch)
+// because typescript show error using $fetch
 
-export class ApiProjects extends SwaggerApi<unknown> {
+import { ofetch } from 'ofetch'
+
+export class ApiProjects extends SwaggerApi<typeof ofetch> {
   public override baseUrl: string = defaultBaseURL(false)
 
   constructor(config: ApiConfig = {}) {
-    const customFetch = (...fetchParams: Parameters<typeof fetch>): ReturnType<typeof $fetch> =>
-      $fetch(fetchParams[0] as string, fetchParams[1] as object)
+    const customFetch = (...fetchParams: Parameters<typeof ofetch>) => {
+      return ofetch(...fetchParams)
+    }
 
     super({
       customFetch,
@@ -15,6 +20,7 @@ export class ApiProjects extends SwaggerApi<unknown> {
   }
 
   override mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
+    // merge request options with projects
     const p = super.mergeRequestParams(params1, params2)
 
     return {
