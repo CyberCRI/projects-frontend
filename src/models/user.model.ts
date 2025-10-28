@@ -12,10 +12,11 @@ export interface UserModel {
   email: string
   roles: string[]
   orgs: string[]
-  permissions: object
+  permissions: string[]
   description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
+  notifications?: number
 }
 
 export interface UserFromJWTModel {

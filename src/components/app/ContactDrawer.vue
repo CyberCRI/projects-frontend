@@ -3,7 +3,7 @@
     :custom-style="customNotificationStyle"
     :is-opened="isOpened"
     class="medium"
-    :confirm-action-name="$filters.capitalize($t('common.send'))"
+    :confirm-action-name="$t('common.send')"
     :confirm-action-disabled="v$.$invalid"
     :title="$t('footer.contact')"
     :asyncing="isLoading"
@@ -16,7 +16,7 @@
       </h3>
       <div class="form-input">
         <h4 class="title">
-          {{ $filters.capitalize($t('form.contact.subject')) }}
+          {{ $t('form.contact.subject') }}
         </h4>
         <TextInput
           v-model="form.subject"
@@ -31,7 +31,7 @@
 
       <div class="form-input">
         <h4 class="title">
-          {{ $filters.capitalize($t('form.contact.email')) }}
+          {{ $t('form.contact.email') }}
         </h4>
         <TextInput
           v-model="form.email"
@@ -45,7 +45,7 @@
 
       <div class="form-input">
         <h4 class="title">
-          {{ $filters.capitalize($t('form.contact.content')) }}
+          {{ $t('form.contact.content') }}
         </h4>
         <TextInput
           v-model="form.content"

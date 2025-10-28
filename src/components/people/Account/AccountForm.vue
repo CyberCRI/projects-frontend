@@ -102,7 +102,7 @@
       <div class="confirm-ctn">
         <LpiButton
           :disabled="asyncSave"
-          :label="$filters.capitalize($t('common.cancel'))"
+          :label="$t('common.cancel')"
           :secondary="true"
           class="footer__left-button"
           data-test="close-button"
@@ -111,7 +111,7 @@
 
         <LpiButton
           :disabled="asyncSave || v$.$invalid"
-          :label="$filters.capitalize($t('common.confirm'))"
+          :label="$t('common.confirm')"
           :btn-icon="asyncSave ? 'LoaderSimple' : null"
           :secondary="false"
           class="footer__right-button"
@@ -516,15 +516,20 @@ export default {
 
           const user = await patchUser(this.selectedUser.id, payload)
 
-          if (payload.profile_picture instanceof File) {
-            const image = await postUserPicture(user.id, formData)
+          try {
+            if (payload.profile_picture instanceof File) {
+              const image = await postUserPicture(user.id, formData)
 
-            formData.delete('file')
-            payload.profile_picture.id = image.id
+              formData.delete('file')
+              payload.profile_picture.id = image.id
 
-            await patchUserPicture(user.id, image.id, formData)
-          } else if (user && user.profile_picture) {
-            await patchUserPicture(user.id, user.profile_picture.id, formData)
+              await patchUserPicture(user.id, image.id, formData)
+            } else if (user && user.profile_picture) {
+              await patchUserPicture(user.id, user.profile_picture.id, formData)
+            }
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('profile.edit.general.save-image-error')} (${error})`)
+            console.error(error)
           }
           this.toaster.pushSuccess(this.$t('account.update-success'))
         }

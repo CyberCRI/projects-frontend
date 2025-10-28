@@ -9,7 +9,7 @@ defineProps({
   },
 })
 
-const { locale } = useI18n()
+const { locale } = useNuxtI18n()
 
 const escoLink = computed(
   () => `https://esco.ec.europa.eu/${locale.value}/classification/skill_main`

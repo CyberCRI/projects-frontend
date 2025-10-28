@@ -111,7 +111,7 @@
 
     <!-- Picture -->
     <div class="form-group img-ctn">
-      <label>{{ $filters.capitalize($t('profile.edit.general.picture.label')) }}</label>
+      <label>{{ $t('profile.edit.general.picture.label') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.picture"
@@ -153,9 +153,7 @@
     <div class="form-group">
       <div class="label-wrapper">
         <label>
-          {{ $filters.capitalize($t('profile.edit.general.sdgs.label')) }} ({{
-            form.sdgs ? form.sdgs.length : '0'
-          }})
+          {{ $t('profile.edit.general.sdgs.label') }} ({{ form.sdgs ? form.sdgs.length : '0' }})
         </label>
 
         <LpiButton
@@ -191,7 +189,7 @@
     <div class="form-actions" data-test="main-form">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         :secondary="true"
         class="footer__left-button"
         data-test="close-button"
@@ -200,7 +198,7 @@
 
       <LpiButton
         :disabled="v$.$errors.length || asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="$t('common.confirm')"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"
@@ -235,7 +233,7 @@
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -412,28 +410,33 @@ export default {
 
           // patch user picture if changed
 
-          if (
-            this.form.picture != this.user.profile_picture?.url ||
-            !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
-          ) {
-            const formData = new FormData()
-            imageSizesFormData(formData, this.form.imageSizes)
+          try {
+            if (
+              this.form.picture != this.user.profile_picture?.url ||
+              !isEqual(this.form.imageSizes, pictureApiToImageSizes(this.user.profile_picture))
+            ) {
+              const formData = new FormData()
+              imageSizesFormData(formData, this.form.imageSizes)
 
-            if (this.form.picture instanceof File) {
-              formData.append('file', this.form.picture, this.form.picture.name)
-              const picture_id = (await postUserPicture(this.user.id, formData)).id
+              if (this.form.picture instanceof File) {
+                formData.append('file', this.form.picture, this.form.picture.name)
+                const picture_id = (await postUserPicture(this.user.id, formData)).id
 
-              // TODO: make this in POST when backend allows it
-              formData.delete('file')
-              await patchUserPicture(this.user.id, picture_id, formData)
-            } else if (this.user.profile_picture && this.user.profile_picture.id) {
-              await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
+                // TODO: make this in POST when backend allows it
+                formData.delete('file')
+                await patchUserPicture(this.user.id, picture_id, formData)
+              } else if (this.user.profile_picture && this.user.profile_picture.id) {
+                await patchUserPicture(this.user.id, this.user.profile_picture.id, formData)
+              }
             }
+          } catch (error) {
+            this.toaster.pushError(`${this.$t('profile.edit.general.save-image-error')} (${error})`)
+            console.error(error)
           }
 
-          this.$emit('profile-edited')
-
           this.startEditWatcher()
+
+          this.$emit('profile-edited')
 
           // give extra time for profile-edited event to be consumed
           await new Promise((resolve) => setTimeout(resolve, 50))

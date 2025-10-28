@@ -9,9 +9,6 @@ import initSentry from '@/app/initSentry'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
 import analytics from '@/analytics'
 
-import '@/design/scss/reset.scss'
-import '@/design/scss/main.scss'
-
 if (import.meta.client) {
   // quick redirect to keycloak login if url says so
   quickLogin()

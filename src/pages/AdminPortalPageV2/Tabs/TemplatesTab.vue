@@ -35,10 +35,7 @@
             <h4 class="title">
               {{ $t('template.tags') }}
             </h4>
-            <LpiButton
-              :label="$filters.capitalize($t('tag.edit'))"
-              @click="tagSearchIsOpened = true"
-            />
+            <LpiButton :label="$t('tag.edit')" @click="tagSearchIsOpened = true" />
           </div>
 
           <div v-if="form.tags.length" class="tag-grid">
@@ -75,7 +72,7 @@
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
-          <label class="label">{{ $filters.capitalize($t('template.description')) }}</label>
+          <label class="label">{{ $t('template.description') }}</label>
           <TipTapEditor
             :key="`description-${editorKey}`"
             v-model="form.description"
@@ -85,14 +82,11 @@
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
-          <TextInput
-            v-model="form.blogTitle"
-            :label="$filters.capitalize($t('template.blog-title'))"
-          />
+          <TextInput v-model="form.blogTitle" :label="$t('template.blog-title')" />
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
-          <label class="label">{{ $filters.capitalize($t('template.blog-content')) }}</label>
+          <label class="label">{{ $t('template.blog-content') }}</label>
           <TipTapEditor
             :key="`blog-${editorKey}`"
             v-model="form.blogContent"
@@ -102,15 +96,12 @@
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
-          <TextInput
-            v-model="form.goalTitle"
-            :label="$filters.capitalize($t('template.advancement-goal-title'))"
-          />
+          <TextInput v-model="form.goalTitle" :label="$t('template.advancement-goal-title')" />
         </FieldDisabler>
 
         <FieldDisabler :disabled="otherFieldDisabled">
           <label class="label">
-            {{ $filters.capitalize($t('template.advancement-goal-content')) }}
+            {{ $t('template.advancement-goal-content') }}
           </label>
           <TipTapEditor
             :key="`advancement-goal-${editorKey}`"
@@ -123,7 +114,7 @@
 
         <FieldDisabler :disabled="otherFieldDisabled">
           <label class="label">
-            {{ $filters.capitalize($t('template.comment')) }}
+            {{ $t('template.comment') }}
           </label>
 
           <TipTapEditor
@@ -139,7 +130,7 @@
         <div class="form-actions">
           <LpiButton
             :disabled="otherFieldDisabled"
-            :label="$filters.capitalize($t('common.save'))"
+            :label="$t('common.save')"
             :btn-icon="isLoading ? 'LoaderSimple' : null"
             color="green"
             @click="submit"
@@ -201,7 +192,7 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const projectCategoriesStore = useProjectCategories()
     const projectsStore = useProjectsStore()
     return {

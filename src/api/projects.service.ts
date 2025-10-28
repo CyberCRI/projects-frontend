@@ -14,19 +14,23 @@ import { imageSizesFormData } from '@/functs/imageSizesUtils'
 
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
+  return result
+}
 
-  if (project.header_image instanceof File && result) {
+export async function createProjectHeader(projectId, project) {
+  if (project.header_image instanceof File && projectId) {
     const headerFormData = new FormData()
     headerFormData.append('file', project['header_image'], project['header_image'].name)
 
     const imageSizes = project['imageSizes']
     imageSizesFormData(headerFormData, imageSizes)
     project.header_image_id = (
-      (await postProjectHeader({ project_id: result.id, body: headerFormData })) as any
+      (await postProjectHeader({ project_id: projectId, body: headerFormData })) as any
     ).id
+    return project.header_image_id
   }
 
-  return result
+  return false
 }
 
 export async function patchProject(id: string, project: ProjectPatchInput | FormData) {

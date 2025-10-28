@@ -2,8 +2,8 @@
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+
+const { t } = useNuxtI18n()
 
 const emit = defineEmits(['do-fallback-edit'])
 

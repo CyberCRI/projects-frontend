@@ -331,7 +331,9 @@
         "accept": "Accept",
         "accepted": "Accepted",
         "no-result": "No result"
-      }
+      },
+      "accept-success": "Successfully accepted application",
+      "decline-success": "Application rejected successfully"
     }
   },
   "account": {
@@ -448,11 +450,11 @@
     }
   },
   "blog": {
-    "add-entry": "add blog entry",
+    "add-entry": "Add blog entry",
     "entry": "blog entry",
     "last-publication": "last blog entry",
     "no-entry": "No entry yet ...",
-    "posts": "blog entries",
+    "posts": "Blog entries",
     "title": "Blog"
   },
   "browse": {
@@ -473,7 +475,7 @@
   },
   "comment": {
     "add-comment": "Add your comment!",
-    "comment-verb": "comment",
+    "comment-verb": "Comment",
     "comments": "Comments",
     "deleted": "Comment deleted on the",
     "discard-comment": "Discard comment?",
@@ -498,18 +500,18 @@
     "activate": "Activate",
     "activated": "Activated",
     "add": "Add",
-    "added-on-the": "added on",
+    "added-on-the": "Added on",
     "back": "back",
     "cancel": "Cancel",
     "chose-date": "Chose date",
     "confirm": "Confirm",
     "continue": "Continue",
     "confirm-delete": "Are you sure you want to delete this?",
-    "deadline": "deadline",
+    "deadline": "Deadline",
     "delete": "Delete",
     "delete-selection": "Delete selection",
     "delete-user": "Delete",
-    "description": "description",
+    "description": "Description",
     "destroy-confirm": "Are you sure that you want to delete this project? This action cannot be undone.",
     "cant-quit-self": "You are the last editor of the team. Every project must have at least one editor.\nYou can either add another editor before leaving the project, or delete the project from the Configuration tab.",
     "cant-quit-other": "This is the last editor of the team. Every project must have at least one editor.\nYou can either add another editor supressing this one, or delete the project from the Configuration tab.",
@@ -522,32 +524,32 @@
     "link-copied-success": "Link copied",
     "link-copied-failed": "Failed to copy link",
     "loading": "Loading",
-    "login": "login",
+    "login": "Login",
     "modify": "Modify",
     "more": "more",
     "need-login": "You need to be logged in",
     "no": "no",
     "no-result": "No result",
-    "none": "none",
+    "none": "None",
     "of": "of",
-    "org": "portal members",
+    "org": "Portal members",
     "quit-project": "Are you sure you want to quit this project?",
     "people": "People",
-    "read": "read",
-    "reply": "reply",
+    "read": "Read",
+    "reply": "Reply",
     "remove-group": "Are you sure you want to delete this group?",
     "remove-user": "Are you sure you want to delete this user?",
-    "save": "save",
+    "save": "Save",
     "send": "Send",
-    "see-less": "see less",
-    "see-more": "see more",
+    "see-less": "See less",
+    "see-more": "See more",
     "see": "See",
     "see-all": "See all",
-    "set-deadline": "set deadline",
+    "set-deadline": "Set deadline",
     "shrink": "shrink",
     "submit": "submit",
     "the-project": "The project",
-    "title": "title",
+    "title": "Title",
     "yes": "yes",
     "disconnect": "Disconnect",
     "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
@@ -791,10 +793,10 @@
     "empty": "There's no news... yet!"
   },
   "file": {
-    "add-image": "add an image",
-    "add-video": "add a video",
+    "add-image": "Add an image",
+    "add-video": "Add a video",
     "add-video-hint": "Add a video by entering its youtube or vimeo URL.",
-    "attachment": "attached document | attached documents",
+    "attachment": "Attached document | attached documents",
     "upload": "Upload"
   },
   "form": {
@@ -803,10 +805,10 @@
     "organization-name": "Name of your community",
     "description": "Description",
     "email": "Email",
-    "email-contact": "email",
+    "email-contact": "Email",
     "language": "Language",
     "title": "Title",
-    "url": "url",
+    "url": "Url",
     "contact": {
       "subtitle": "Fill in this quick form and we’ll get back to you shortly",
       "subject": "Subject",
@@ -879,13 +881,13 @@
     "pssi": "Security plan (PSSI)"
   },
   "goal": {
-    "add": "add a goal",
-    "completed-on-the": "completed on the",
-    "description": "goal description",
+    "add": "Add a goal",
+    "completed-on-the": "Completed on the",
+    "description": "Goal description",
     "goals": "Goals",
-    "planned-for-the": "planned for the",
-    "status-title": "status",
-    "title": "goal's title",
+    "planned-for-the": "Planned for the",
+    "status-title": "Status",
+    "title": "Goal's title",
     "delete": "Would you like to delete this goal?"
   },
   "group": {
@@ -969,7 +971,7 @@
         "help": "Member"
       },
       "leaders": {
-        "label": "Group Leader",
+        "label": "Group leader",
         "help": "Group Leader"
       },
       "leaders-managers": {
@@ -1006,7 +1008,7 @@
     "communities": "Portals",
     "home": "Home",
     "categories": {
-      "title": "Projects Categories"
+      "title": "Projects categories"
     },
     "login": "Login",
     "account-request": "Request an account",
@@ -1048,7 +1050,7 @@
     "no-bio": "You did not write your biography yet",
     "no-skill": "You did not add skill yet",
     "page-title": "My profile",
-    "projects-participate": "Projects I'm a member of",
+    "projects-participate": "Projects i'm a member of",
     "no-project-participate": "You are not member of a project yet",
     "projects-reviewing": "Projects I'm reviewing",
     "no-project-reviewing": "You are not reviewer of a project yet",
@@ -1246,6 +1248,7 @@
         "tab": "General info",
         "form-has-error": "There is missing or invalid field in the form.",
         "save-error": "Error while saving profile.",
+        "save-image-error": "Error while saving profile picture.",
         "save-success": "Profile saved.",
         "pronouns": {
           "label": "Pronouns",
@@ -1307,7 +1310,7 @@
           "label": "Tags *"
         },
         "sdgs": {
-          "label": "SDGs",
+          "label": "Sdgs",
           "add": "Add",
           "notice-start": "Add ",
           "notice-link": "Sustainable Development Goals (SDGs)",
@@ -1467,7 +1470,8 @@
             "title": "Level 4: Expert",
             "description": "PhD-level or did a big project, or can teach to master level"
           }
-        }
+        },
+        "nothing-yet": "You haven't added skills yet."
       },
       "privacy": {
         "tab": "Privacy",
@@ -1541,7 +1545,7 @@
       "title": "Add to project",
       "blog-entry": "Blog entry",
       "goal": "Goal",
-      "sdg": "SDG",
+      "sdg": "Sdg",
       "link-and-attached-document": "Resources",
       "team-member": "Team member / group",
       "announcement": "Announcement",
@@ -1568,7 +1572,7 @@
     "edit-location-point": "Edit location point",
     "edit-map": "Edit geolocation",
     "edit-review": "Edit review",
-    "files": "project file | project file | project files",
+    "files": "Project file | project file | project files",
     "follow": "Follow",
     "followed": "Followed",
     "form": {
@@ -1592,15 +1596,16 @@
         "required": "The purpose field is required",
         "max": "The purpose field may not be greater than 180 characters",
         "min": "The purpose field must be at least 3 characters"
-      }
+      },
+      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation."
     },
     "image-header": "Image",
     "image-alert": {
       "upload": "Upload",
       "notice": "Upload a new visual to maximise impact! You’ll need a square shape!"
     },
-    "impact": "impact",
-    "language": "project language",
+    "impact": "Impact",
+    "language": "Project language",
     "life-status": "Project's life status",
     "linked": "Linked project | Linked projects",
     "linked-project": "Linked project",
@@ -1610,14 +1615,14 @@
     "file-confirm-delete": "Are you sure you want to delete this file from the project?",
     "blog-confirm-delete": "Are you sure you want to delete this blog entry from the project?",
     "location-type-label": "Location type",
-    "lock": "lock project",
+    "lock": "Lock project",
     "private": "Private Projects",
-    "publish": "publish project",
+    "publish": "Publish project",
     "public": "Public projects",
     "quit": "Quit project",
     "random-image": "Random image",
     "resource": "Resource | Resources",
-    "review": "review",
+    "review": "Review",
     "reviews": "Reviews",
     "review-confirm-delete": "Are you sure to delete this review?",
     "reviewable": "Ready for review",
@@ -1626,7 +1631,7 @@
     "remove-user-title": "Delete user",
     "remove-user": "Delete",
     "show-n-projects": "Show the {count} projects",
-    "suggested": "similar project | similar projects",
+    "suggested": "Similar project | similar projects",
     "suggested-hint": "Projects that might interest you",
     "summary": "Summary",
     "settings": "Settings",
@@ -1640,7 +1645,7 @@
       "blog-entry-create": "added a new blog entry of this project",
       "description": "saved this project's description"
     },
-    "view": "view project",
+    "view": "View project",
     "visibility": "Project's Visibility",
     "actions": "Quick actions",
     "copy": "(copy)",
@@ -1653,32 +1658,32 @@
     "recommended": "Recommended",
     "sort_by": "Sort by:"
   },
-  "projects": "projects",
+  "projects": "Projects",
   "recruit": {
     "about-you": "Tell us about yourself and what motivates you",
-    "add-announcement": "add an announcement",
-    "announcement": "announcement",
-    "announcements": "no announcement | {count} announcement | {count} announcements",
-    "apply": "apply",
-    "creation-date": "created on",
+    "add-announcement": "Add an announcement",
+    "announcement": "Announcement",
+    "announcements": "No announcement | {count} announcement | {count} announcements",
+    "apply": "Apply",
+    "creation-date": "Created on",
     "delete-announcement-message": "Do you want to delete this announcement ?",
-    "edit-announcement": "edit announcement",
-    "email": "Warning, we need a valid email address to contact you. (We will not save this information on the platform).",
-    "firstname": "firstname",
-    "is-remunerated": "is remunerated",
-    "job": "job",
-    "lastname": "lastname",
+    "edit-announcement": "Edit announcement",
+    "email": "Warning, we need a valid email address to contact you. (we will not save this information on the platform).",
+    "firstname": "Firstname",
+    "is-remunerated": "Is remunerated",
+    "job": "Job",
+    "lastname": "Lastname",
     "motivation-hint": "It should contain at least 20 characters",
-    "new-announcement": "new announcement",
-    "participant": "participant",
-    "remunerated": "remunerated",
+    "new-announcement": "New announcement",
+    "participant": "Participant",
+    "remunerated": "Remunerated",
     "send": "Send application",
     "title": "Title",
-    "traineeship": "traineeship",
-    "type": "announcement type",
-    "updated": "updated",
-    "valid-until-the": "valid until",
-    "view": "view"
+    "traineeship": "Traineeship",
+    "type": "Announcement type",
+    "updated": "Updated",
+    "valid-until-the": "Valid until",
+    "view": "View"
   },
   "report": {
     "abuse": "Report abuse",
@@ -1691,23 +1696,23 @@
     "bug-url": "Copy paste the URL of the page where you add this issue."
   },
   "resource": {
-    "add": "add resource",
-    "add-file": "add a file",
-    "add-link": "add a link",
-    "add-link-url": "add link URL",
-    "add-link-url-label": "URL",
-    "add-link-text": "add link text",
+    "add": "Add resource",
+    "add-file": "Add a file",
+    "add-link": "Add a link",
+    "add-link-url": "Add link url",
+    "add-link-url-label": "Url",
+    "add-link-text": "Add link text",
     "add-link-text-label": "Text",
-    "edit-link": "edit a link",
-    "edit-file": "edit a file",
+    "edit-link": "Edit a link",
+    "edit-file": "Edit a file",
     "max-size": "Max size 10MB",
     "invalid-image": "Unsupported file ... is this an image ?",
     "error-uploading-image": "Error while uploading image ",
     "cannot-upload-image": "Cannot upload image for now",
-    "link-address": "link address",
+    "link-address": "Link address",
     "resources": "Resources",
-    "web": "link to web resources | links to web resources",
-    "web-link": "web link | web link | web links"
+    "web": "Link to web resources | links to web resources",
+    "web-link": "Web link | web link | web links"
   },
   "result_box": {
     "people": "people",
@@ -1821,32 +1826,32 @@
     "all-filters": "All filters",
     "banner-portal": "You can also search for projects of all communities on ",
     "browse-map": "Browse by map",
-    "by-language": "by language",
-    "by-people": "by people",
-    "by-tag": "by tag",
-    "by-sdg": "by SDG",
+    "by-language": "By language",
+    "by-people": "By people",
+    "by-tag": "By tag",
+    "by-sdg": "By sdg",
     "filter-by-language": "Add a language",
     "filter-by-people": "Add a person",
     "filter-by-tag": "Add a tag",
-    "filter-by-sdg": "Add a SDD",
+    "filter-by-sdg": "Add a sdd",
     "filter-by-category": "Add a category",
-    "language": "language",
-    "people": "people",
-    "tag": "tag",
-    "or": "or",
-    "ambiguousTag": "Ambiguous Tag",
-    "subtitle-ambiguous-tag": "This tag has different meanings. Select the one you are interested in:",
-    "sdg": "SDG",
+    "language": "Language",
+    "people": "People",
+    "tag": "Tag",
+    "or": "Or",
+    "ambiguousTag": "Ambiguous tag",
+    "subtitle-ambiguous-tag": "This tag has different meanings. select the one you are interested in:",
+    "sdg": "Sdg",
     "skills": "Skills",
-    "category": "category",
-    "choose": "choose among main tags or search for tags",
-    "filter": "filter",
+    "category": "Category",
+    "choose": "Choose among main tags or search for tags",
+    "filter": "Filter",
     "filters": "Filters",
     "add-filter": "Add a filter",
     "geographic-map": "Geographic map",
-    "nothing-found": "nothing found",
-    "people-directory": "search in people directory",
-    "projects": "search in projects",
+    "nothing-found": "Nothing found",
+    "people-directory": "Search in people directory",
+    "projects": "Search in projects",
     "projects-tab": "Projects ({count})",
     "projects-tab-label": "Projects",
     "group-tab": "Groups ({count})",
@@ -1859,7 +1864,7 @@
     "all-section": "All entities",
     "groups-section": "Groups",
     "people-section": "People",
-    "result": "search results",
+    "result": "Search results",
     "search-title": "Search",
     "search": "Search group",
     "search-for-a-tag": "Search for a tag",
@@ -1869,14 +1874,14 @@
     "search-skill": "Type skill's label",
     "search-user": "Type person's name first letters",
     "search-in": "Search projects in",
-    "specific-tags": "choose from {organizationName} tags",
-    "wiki-tags": "choose thematic tags",
-    "term-is-ambigous": "Term is ambiguous.{0}See our suggestions",
+    "specific-tags": "Choose from {organizationname} tags",
+    "wiki-tags": "Choose thematic tags",
+    "term-is-ambigous": "Term is ambiguous.{0}see our suggestions",
     "info": "You can also search projects from every communities on",
     "geo-map": "Geographic map",
     "tag-map": "Tag map",
     "geo-map-description": "Discover projects on a world map",
-    "tag-map-description": "Discover projetcs on a Wikipédia tag map",
+    "tag-map-description": "Discover projetcs on a wikipédia tag map",
     "open-map": "Open the map",
     "pick-tag-classification": "Choose a tag framework",
     "pick-skill-classification": "Choose a skill framework",
@@ -1884,9 +1889,10 @@
     "pick-skill-preset": "Or choose a suggested skill",
     "current-tag-description": "Type tag’s first letters and select the right tag",
     "current-skill-description": "Type skill’s label and select the right skill",
-    "disambiguate": "(DISAMBIGUATION)",
+    "disambiguate": "(disambiguation)",
     "suggestions": "Suggestions",
-    "choose-skill": "Click on the chosen skill:"
+    "choose-skill": "Click on the chosen skill:",
+    "main-tags": "Or choose from the main tags"
   },
   "sdg": {
     "1": {
@@ -1940,7 +1946,7 @@
     "17": {
       "title": "Partnerships for the Goals"
     },
-    "add-short": "add a SDG",
+    "add-short": "Add a sdg",
     "sdg-fulltext": "sustainable development goals"
   },
   "stats": {
@@ -1958,19 +1964,19 @@
     "updated": "Updated"
   },
   "status": {
-    "complete": "completed",
-    "completed": "completed",
-    "cancel": "cancel",
-    "canceled": "canceled",
-    "ended": "ended",
-    "ongoing": "ongoing",
-    "private": "private",
-    "public": "public",
-    "running": "running",
+    "complete": "Completed",
+    "completed": "Completed",
+    "cancel": "Cancel",
+    "canceled": "Canceled",
+    "ended": "Ended",
+    "ongoing": "Ongoing",
+    "private": "Private",
+    "public": "Public",
+    "running": "Running",
     "title": "What is the project life status ?",
-    "toreview": "to review",
-    "updated": "project's status updated",
-    "na": "none"
+    "toreview": "To review",
+    "updated": "Project's status updated",
+    "na": "None"
   },
   "tag": {
     "add-specific": "Create tags to organize projects",
@@ -1978,14 +1984,14 @@
     "add-project-tag": "Put tags forward to link projects by theme",
     "add-profile-tag": "Put skills forward for your users profiles",
     "add-project-tag-info": "When a user creates a project, they can add a thematic tag from Wikipedia (e.g. biochemistry, physics, etc.). This makes it easier to find the project and improve project recommendations by thematic similarity. You can highlight important thematic tags for your organization.",
-    "edit": "edit tags",
+    "edit": "Edit tags",
     "title": "Tags"
   },
   "team": {
-    "add": "add members / groups",
-    "edit": "edit team member",
-    "group-members": "group members",
-    "project-members": "project members",
+    "add": "Add members / groups",
+    "edit": "Edit team member",
+    "group-members": "Group members",
+    "project-members": "Project members",
     "no-user-message": "No user corresponds to your search",
     "remove-user-confirm": "Are you sure you want to delete this user from the project?",
     "remove-group-confirm": "Are you sure you want to delete this group from the project?",
@@ -1995,10 +2001,10 @@
     "edit-tags": "Edit tags",
     "blog-content": "Template for blog content",
     "blog-title": "Template for blog title",
-    "advancement-goal-title": "template for advancement goal title",
-    "advancement-goal-content": "template for advancement goal content",
+    "advancement-goal-title": "Template for advancement goal title",
+    "advancement-goal-content": "Template for advancement goal content",
     "category": "Template Category",
-    "description": "Template for Description",
+    "description": "Template for description",
     "language": "Language Template",
     "info": "If you want to suggest to users how to organise their project in a specific category, you can create a template for that category. Then, when a user will create a project in that category, the project will be initialised with the text that you defined in the template. This text is meant as a guide to users.",
     "no-tag-set": "No tag has been set for now.",
@@ -2019,7 +2025,7 @@
     "organization-email": "Contact email of your portal.",
     "organization-language": "The language by default of your portal.",
     "organization-visibility": "Do you want a link to your portal from the main portal of Projects?",
-    "organization-logo": "Your logo will appear on the parent portal on a white background. If the logo you previously uploaded is not compatible with a white background, please choose a background color below."
+    "organization-logo": "Your logo will appear on the parent portal on a white background. if the logo you previously uploaded is not compatible with a white background, please choose a background color below."
   },
   "toasts": {
     "abuse-report": {
@@ -2191,6 +2197,10 @@
       "success": "The project has been created successfully",
       "error": "Error during the project creation"
     },
+    "project-header-create": {
+      "success": "The project image has been created successfully",
+      "error": "Error during the project image creation"
+    },
     "project-destroy": {
       "success": "The project has been deleted successfully",
       "error": "Error during the project deletion"
@@ -2198,6 +2208,10 @@
     "project-edit": {
       "success": "The project has been updated successfully",
       "error": "Error during project update"
+    },
+    "project-header-edit": {
+      "success": "The project image has been updated successfully",
+      "error": "Error during project image update"
     },
     "project-duplication": {
       "success": "The project has been duplicated successfully",
@@ -2495,7 +2509,7 @@
       "title": {
         "label": "Title *",
         "required": "The title is required",
-        "placeholder": "the title of the news"
+        "placeholder": "The title of the news"
       },
       "content": {
         "label": "Content *",
@@ -2542,7 +2556,7 @@
       "title": {
         "label": "Title *",
         "required": "The title is required",
-        "placeholder": "the title of the instruction"
+        "placeholder": "The title of the instruction"
       },
       "content": {
         "label": "Content *",
@@ -2562,6 +2576,9 @@
         "label": "Notification",
         "notice": "If selected, everyone will be notified of the new instruction",
         "button": "Send a notification"
+      },
+      "image": {
+        "label": "Image"
       }
     },
     "list": {

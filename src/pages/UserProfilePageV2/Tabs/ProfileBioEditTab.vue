@@ -36,7 +36,7 @@
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         :secondary="true"
         class="footer__left-button"
         data-test="close-button"
@@ -45,7 +45,7 @@
 
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="$t('common.confirm')"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         :secondary="false"
         class="footer__right-button"

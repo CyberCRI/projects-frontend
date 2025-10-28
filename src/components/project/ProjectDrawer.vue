@@ -48,7 +48,7 @@ export default {
   emits: ['close', 'project-edited'],
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const projectsStore = useProjectsStore()
     return {
       toaster,

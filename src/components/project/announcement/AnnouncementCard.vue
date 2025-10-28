@@ -1,19 +1,19 @@
 <template>
   <div class="announcement-wrapper">
-    <div class="announcement-card shadow-box" @click="$emit('know-more-clicked', announcement)">
+    <div class="announcement-card shadow-box" @click="emit('know-more-clicked', announcement)">
       <div class="announcement-header horizontal-padding top-padding">
         <span class="date-ctn">
           {{ $d(new Date(announcement.updated_at)) }}
         </span>
         <span v-if="announcement.type && announcement.type !== 'na'" class="dot">&#9679;</span>
         <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
-          {{ $t(`recruit.${announcement.type}`) }}
+          {{ t(`recruit.${announcement.type}`) }}
         </span>
       </div>
 
       <div class="main-content horizontal-padding bottom-padding">
         <h3 class="announcement-title bottom-padding">
-          {{ $filters.capitalize(announcement.title) }}
+          {{ capitalize(announcement.title) }}
         </h3>
 
         <div class="description" v-html="announcement.description" />
@@ -21,7 +21,7 @@
       <div class="announcement-link horizontal-padding bottom-padding">
         <span class="read">
           <span class="icon"><IconImage name="ArrowRight" /></span>
-          {{ $filters.capitalize($t('common.read')) }}
+          {{ t('common.read') }}
         </span>
       </div>
       <div class="announcement-project horizontal-padding top-padding bottom-padding">
@@ -33,7 +33,7 @@
         />
         <div class="text">
           <h5 class="project-label">
-            {{ $t('common.the-project') }}
+            {{ t('common.the-project') }}
           </h5>
           <h4 class="project-title">
             {{ announcement.project.title }}
@@ -44,42 +44,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { stripTags } from '@/filters/index.ts'
 import { useRuntimeConfig } from '#imports'
 
-export default {
-  name: 'AnnouncementCard',
+defineOptions({ name: 'AnnouncementCard' })
 
-  components: { IconImage },
-
-  filters: { stripTags },
-
-  props: {
-    announcement: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  announcement: {
+    type: Object,
+    required: true,
   },
+})
 
-  emits: ['know-more-clicked'],
+const emit = defineEmits(['know-more-clicked'])
 
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      runtimeConfig,
-    }
-  },
+const { t } = useNuxtI18n()
+const runtimeConfig = useRuntimeConfig()
 
-  computed: {
-    projectImage() {
-      return `url(${this.announcement.project?.header_image?.variations?.small}), url(${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-1.png)`
-    },
-  },
-}
+const projectImage = computed(() => {
+  return `url(${props.announcement.project?.header_image?.variations?.small}), url(${
+    runtimeConfig.public.appPublicBinariesPrefix
+  }/patatoids-project/Patatoid-1.png)`
+})
 </script>
 
 <style lang="scss" scoped>

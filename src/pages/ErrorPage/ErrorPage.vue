@@ -4,7 +4,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 
 const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isConnected = computed(() => {
   return usersStore.isConnected
@@ -56,11 +56,7 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
             {{ $t('page404.contact-mail') }}
           </a>
         </i18n-t>
-        <LpiButton
-          v-if="!isConnected"
-          :label="$filters.capitalize($t('common.login'))"
-          @click="login"
-        />
+        <LpiButton v-if="!isConnected" :label="$t('common.login')" @click="login" />
         <div class="illustration">
           <img :src="imageFullUrl" />
           <a :class="{ 'text--connected': !isConnected }" class="text" @click="login">

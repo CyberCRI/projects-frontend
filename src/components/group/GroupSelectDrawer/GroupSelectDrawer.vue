@@ -11,7 +11,7 @@
         ref="search-input"
         v-model="queryString"
         :full="true"
-        :placeholder="$filters.capitalize($t('search.search-group'))"
+        :placeholder="$t('search.search-group')"
         class="input"
         @enter="launchSearch"
         @delete-query="deleteQuery"

@@ -30,11 +30,7 @@
       </template>
     </div>
     <div v-if="listProjects?.length > listLimit" class="show-more">
-      <LinkButton
-        class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
-        @click="isSeeMore = !isSeeMore"
-      />
+      <LinkButton class="see-more-btn" :label="$t(seeMoreLabel)" @click="isSeeMore = !isSeeMore" />
     </div>
     <PickProjectSelection
       :selected-projects="listProjects"

@@ -9,17 +9,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'StatCard',
+<script setup>
+defineOptions({ name: 'StatCard' })
 
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
+defineProps({
+  title: {
+    type: String,
+    default: '',
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

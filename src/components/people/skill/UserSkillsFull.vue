@@ -5,7 +5,7 @@
         <span v-if="title" class="column-label">{{ title }}</span>
       </div>
       <div class="skill-level">
-        <span class="column-label">{{ $t(`profile.edit.skills.skills.levels-help`) }}</span>
+        <span class="column-label">{{ t(`profile.edit.skills.skills.levels-help`) }}</span>
         <SkillLevelTip>
           <LinkButton
             label=""
@@ -17,7 +17,7 @@
         </SkillLevelTip>
       </div>
       <div class="mentorship">
-        <span class="column-label">{{ $t(`profile.edit.skills.mentorship.mentorship`) }}</span>
+        <span class="column-label">{{ t(`profile.edit.skills.mentorship.mentorship`) }}</span>
       </div>
     </div>
     <div class="columns-wrapper">
@@ -29,48 +29,44 @@
         :has-asked-mentorship="userMentorship[skill.id] === 'mentoree'"
         :has-offered-mentorship="userMentorship[skill.id] === 'mentor'"
         :mentorship-is-loading="mentorshipIsLoading"
-        @mentorship-send="$emit('reload-mentorship')"
+        @mentorship-send="emit('reload-mentorship')"
       />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import SkillItemFull from '@/components/people/skill/SkillItemFull.vue'
 import SkillLevelTip from '@/components/people/skill/SkillLevelTip.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 
-export default {
-  name: 'UserSkillsFull',
+defineOptions({ name: 'UserSkillsFull' })
 
-  components: { SkillItemFull, LinkButton, SkillLevelTip },
-
-  props: {
-    skills: {
-      type: Array,
-      required: true,
-    },
-
-    title: {
-      type: String,
-      default: '',
-    },
-    userMentorship: {
-      type: Object, // {skillId: "mentor"| "mentoree"}
-      default: () => ({}),
-    },
-    isSelf: {
-      type: Boolean,
-      default: false,
-    },
-    mentorshipIsLoading: {
-      type: Boolean,
-      default: false,
-    },
+defineProps({
+  skills: {
+    type: Array,
+    required: true,
   },
 
-  emits: ['reload-mentorship'],
-}
+  title: {
+    type: String,
+    default: '',
+  },
+  userMentorship: {
+    type: Object, // {skillId: "mentor"| "mentoree"}
+    default: () => ({}),
+  },
+  isSelf: {
+    type: Boolean,
+    default: false,
+  },
+  mentorshipIsLoading: {
+    type: Boolean,
+    default: false,
+  },
+})
+const { t } = useNuxtI18n()
+const emit = defineEmits(['reload-mentorship'])
 </script>
 
 <style lang="scss" scoped>

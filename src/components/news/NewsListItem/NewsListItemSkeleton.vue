@@ -18,16 +18,10 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 
-export default {
-  name: 'NewsListItemSkeleton',
-
-  components: {
-    SkeletonComponent,
-  },
-}
+defineOptions({ name: 'NewsListItemSkeleton' })
 </script>
 <style scoped lang="scss">
 .news-list-item {

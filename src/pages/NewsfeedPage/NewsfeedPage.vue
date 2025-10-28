@@ -7,7 +7,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const { translateNewsfeed } = useAutoTranslate()
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isLoading = useState(() => false)
 const request = useState(() => ({ results: [] }))

@@ -3,14 +3,14 @@ import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEdito
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 import { onMounted, onBeforeUnmount } from 'vue'
-import { useI18n } from 'vue-i18n'
+
 import {
   emitsDefinitions,
   propsDefinitions,
   useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 // events
 const emit = defineEmits(emitsDefinitions)

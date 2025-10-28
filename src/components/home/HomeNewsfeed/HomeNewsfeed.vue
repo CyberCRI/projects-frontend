@@ -44,6 +44,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      hasMoreNews: false,
+    }
+  },
+
   computed: {
     organization() {
       return this.organizationsStore.current

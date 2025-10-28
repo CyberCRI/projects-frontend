@@ -5,7 +5,7 @@ import { sanitizeAnnouncementsList } from '@/api/sanitize/announcements'
 import { api } from '@/api/SwaggerProjects'
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const { status, data: announcements } = useAsyncData(
   'AnnouncementsList',
@@ -43,7 +43,7 @@ try {
 <template>
   <div class="announcements-page page-section-medium page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('home.announcements')) }}
+      {{ $t('home.announcements') }}
     </h1>
 
     <AnnouncementCardListSkeleton v-if="status !== 'success'" />

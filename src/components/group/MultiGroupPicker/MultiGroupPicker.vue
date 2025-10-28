@@ -50,7 +50,7 @@
 </template>
 <script>
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import throttle from 'lodash/throttle'
+import { throttle } from 'es-toolkit'
 import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
@@ -91,11 +91,22 @@ export default {
   },
 
   data() {
+    const markAllGroups = throttle(async () => {
+      // dont directly modify allGroup
+      // because it will cause a lot of re-render
+      let groups = JSON.parse(JSON.stringify(this.allGroups))
+      for (let group of groups) {
+        await this.markGroup(group)
+      }
+      this.allGroups = groups
+    }, 500)
+
     return {
       groupFilter: '',
       groupIndex: {},
       loading: false,
       allGroups: [],
+      markAllGroups,
     }
   },
 
@@ -212,16 +223,6 @@ export default {
       group.hidden = !show
       return show
     },
-
-    markAllGroups: throttle(async function markAllgroups() {
-      // dont directly modify allGroup
-      // because it will cause a lot of re-render
-      let groups = JSON.parse(JSON.stringify(this.allGroups))
-      for (let group of groups) {
-        await this.markGroup(group)
-      }
-      this.allGroups = groups
-    }, 500),
   },
 }
 </script>

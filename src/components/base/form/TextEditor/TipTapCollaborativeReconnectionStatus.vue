@@ -1,6 +1,5 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 defineProps({
   disconnectionGrace: { type: Boolean, required: true },
   status: { type: String, required: true },

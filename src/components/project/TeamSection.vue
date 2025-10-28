@@ -2,7 +2,7 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('team.project-members')) }}
+        {{ $t('team.project-members') }}
         <span v-if="projectUsers.length">({{ projectUsers.length }})</span>
       </span>
       <span
@@ -12,7 +12,7 @@
         @click="teamModalVisible = true"
       >
         <IconImage name="Plus" />
-        <span>{{ $filters.capitalize($t('team.add')) }}</span>
+        <span>{{ $t('team.add') }}</span>
       </span>
     </label>
 
@@ -41,6 +41,7 @@ import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import useUsersStore from '@/stores/useUsers'
+import { isGroup } from '@/functs/users'
 
 export default {
   name: 'TeamSection',
@@ -111,7 +112,7 @@ export default {
       payload.forEach((user) => {
         // current user is automatically added as owner
         // so dont duplicate him
-        if (this.$filters.isGroup(user) || user.id !== this.currentUser.id) {
+        if (isGroup(user) || user.id !== this.currentUser.id) {
           this.projectUsers.push({
             user: user,
             role: user.role,

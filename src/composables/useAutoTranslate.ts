@@ -2,7 +2,7 @@ export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
 
-  // const { locale } = useI18n()
+  // const { locale } = useNuxtI18n()
   // but we use auto translate in organization pinia store so
   // https://stackoverflow.com/questions/77594888/how-to-use-i18n-messages-in-a-nuxt3-pinia-store
   const locale = (useNuxtApp().$i18n as any).locale
@@ -114,6 +114,9 @@ export default function useAutoTranslate() {
         owners: unref(translateUsers(_team.owners)),
         members: unref(translateUsers(_team.members)),
         reviewers: unref(translateUsers(_team.reviewers)),
+        owner_groups: unref(translateGroups(_team.owner_groups)),
+        member_groups: unref(translateGroups(_team.member_groups)),
+        reviewer_groups: unref(translateGroups(_team.reviewer_groups)),
       }
     })
 

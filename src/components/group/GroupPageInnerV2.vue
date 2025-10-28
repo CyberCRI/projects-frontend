@@ -125,7 +125,7 @@ export default {
 
     groupHierarchy() {
       const root = {
-        name: this.$filters.capitalize(this.$t('common.groups')),
+        name: this.$t('common.groups'),
         route: { name: 'Groups' },
       }
       if (!this.groupData) return [root]

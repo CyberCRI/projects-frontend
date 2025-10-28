@@ -28,45 +28,42 @@
   <GroupHeaderSkeleton v-else />
 </template>
 
-<script>
-export default {
-  name: 'GroupHeaderV2',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: [Object, null],
-      required: true,
-    },
-    visibility: {
-      type: String,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-    shortDescription: {
-      type: String,
-      default: null,
-      required: false,
-    },
+<script setup>
+defineOptions({ name: 'GroupHeaderV2' })
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
   },
-
-  computed: {
-    groupVisibilityLabel() {
-      if (this.visibility === 'public') return this.$t('group.visibility-public')
-      else if (this.visibility === 'private') return this.$t('group.visibility-private')
-      return this.$t('group.visibility-org')
-    },
-
-    groupVisibilityIcon() {
-      return this.visibility === 'public' ? 'Eye' : 'EyeSlash'
-    },
+  image: {
+    type: [Object, null],
+    required: true,
   },
+  visibility: {
+    type: String,
+    required: true,
+  },
+  isLoading: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
+  shortDescription: {
+    type: String,
+    default: null,
+    required: false,
+  },
+})
+
+const { t } = useNuxtI18n()
+const groupVisibilityLabel = () => {
+  if (props.visibility === 'public') return t('group.visibility-public')
+  else if (props.visibility === 'private') return t('group.visibility-private')
+  return t('group.visibility-org')
+}
+
+const groupVisibilityIcon = () => {
+  return props.visibility === 'public' ? 'Eye' : 'EyeSlash'
 }
 </script>
 

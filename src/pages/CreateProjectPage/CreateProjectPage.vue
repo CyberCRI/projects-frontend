@@ -7,7 +7,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 import analytics from '@/analytics'
-import { createProject } from '@/api/projects.service'
+import { createProject, createProjectHeader } from '@/api/projects.service'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 defineEmits(['close'])
@@ -18,7 +18,7 @@ const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 const { onboardingTrap } = useOnboardingStatus()
-const { t, locale } = useI18n()
+const { t, locale } = useNuxtI18n()
 
 const isFormCorrect = ref(true)
 const form = ref({
@@ -108,7 +108,11 @@ const doCreateProject = async () => {
   isSaving.value = true
   try {
     const project = await createProject(payload)
-
+    try {
+      await createProjectHeader(project.id, payload)
+    } catch (headerError) {
+      toaster.pushError(`${t('toasts.project-header-create.error')} (${headerError})`)
+    }
     // fetch updated project list from user so permissions as set correctly
     await usersStore.getUser(usersStore.id)
 
