@@ -114,6 +114,9 @@ export default function useAutoTranslate() {
         owners: unref(translateUsers(_team.owners)),
         members: unref(translateUsers(_team.members)),
         reviewers: unref(translateUsers(_team.reviewers)),
+        owner_groups: unref(translateGroups(_team.owner_groups)),
+        member_groups: unref(translateGroups(_team.member_groups)),
+        reviewer_groups: unref(translateGroups(_team.reviewer_groups)),
       }
     })
 
@@ -181,8 +184,15 @@ export default function useAutoTranslate() {
 
   // -----------
   // categoris
-  const translateCategory = (event) => translateEntity(event, ['name', 'description'])
-  const translateCategories = (events) => translateEntities(events, translateCategory)
+  const translateCategory = (category) => {
+    const rawCategory = unref(category)
+    if (rawCategory.children)
+      rawCategory.children = unref(translateEntities(rawCategory.children, translateCategory))
+    if (rawCategory.hierarchy)
+      rawCategory.hierarchy = unref(translateEntities(rawCategory.hierarchy, translateCategory))
+    return translateEntity(rawCategory, ['name', 'description'])
+  }
+  const translateCategories = (categories) => translateEntities(categories, translateCategory)
 
   return {
     isAutoTranslateActivated,

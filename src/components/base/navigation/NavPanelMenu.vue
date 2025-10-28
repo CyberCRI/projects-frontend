@@ -8,8 +8,20 @@
       :class="{ active: isCurrentTab(entry, currentTab) }"
     >
       <template v-if="entry.condition">
+        <span
+          v-if="entry.isNotLink"
+          class="navpanel-menu-link"
+          :data-test="entry.dataTest"
+          @click="onMenuEntryClicked($event, entry)"
+        >
+          <IconImage class="icon" :name="entry.icon || 'Article'" />
+
+          {{ entry.label }}
+
+          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
+        </span>
         <NuxtLink
-          v-if="!entry.isAddAction"
+          v-else
           class="navpanel-menu-link"
           :data-test="entry.dataTest"
           :to="entry.view"
@@ -21,18 +33,6 @@
 
           <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
         </NuxtLink>
-        <span
-          v-else
-          class="navpanel-menu-link"
-          :data-test="entry.dataTest"
-          @click="onMenuEntryClicked($event, entry)"
-        >
-          <IconImage class="icon" :name="entry.icon || 'Article'" />
-
-          {{ entry.label }}
-
-          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
-        </span>
       </template>
     </li>
   </menu>
@@ -77,11 +77,10 @@ export default {
         } else {
           this.$emit('action-triggered', entry)
         }
-        evt.preventDefault()
-      } else {
-        // naviguation guard is in middleware
-        this.$emit('navigated')
+        // evt.preventDefault()
       }
+      // naviguation guard is in middleware
+      this.$emit('navigated')
     },
     isCurrentTab(entry, currentTab) {
       if (entry?.view?.name) return entry?.view?.name == currentTab?.view?.name

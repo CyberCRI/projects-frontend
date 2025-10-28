@@ -18,7 +18,10 @@
       />
     </label>
 
-    <input :id="uniqueId" :ref="uniqueId" type="file" @change="uploadImage" />
+    <input :id="uniqueId" :ref="uniqueId" type="file" accept="image/*" @change="uploadImage" />
+    <p v-if="fileIsTooLarge" class="error-message">
+      {{ $t('common.file-too-big', { maxSize: maxSizeMb }) }}
+    </p>
   </div>
 </template>
 
@@ -52,6 +55,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    maxSizeMb: {
+      type: Number,
+      default: 2.25,
+    },
   },
 
   emits: ['upload-image'],
@@ -59,6 +66,7 @@ export default {
   data() {
     return {
       uniqueId: (Math.random() + 1).toString(36).substring(7),
+      fileIsTooLarge: false,
     }
   },
 
@@ -74,7 +82,14 @@ export default {
 
   methods: {
     uploadImage(event) {
-      this.$emit('upload-image', this.$refs[this.uniqueId].files[0])
+      this.fileIsTooLarge = false
+      const file = this.$refs[this.uniqueId].files[0]
+      if (!file) return
+      if (this.maxSizeMb && file.size > Math.round(this.maxSizeMb * 1024 * 1024)) {
+        this.fileIsTooLarge = true
+      } else {
+        this.$emit('upload-image', file)
+      }
       event.target.value = ''
     },
   },
@@ -84,6 +99,9 @@ export default {
 <style lang="scss" scoped>
 .image-input-ctn {
   width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
   input[type='file'] {
     display: none;
@@ -91,6 +109,11 @@ export default {
 
   label {
     cursor: pointer;
+  }
+
+  .error-message {
+    color: $salmon;
+    font-weight: bold;
   }
 }
 </style>

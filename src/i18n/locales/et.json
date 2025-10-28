@@ -1246,6 +1246,7 @@
         "tab": "Üldine teave",
         "form-has-error": "Vormis on puudu või vigane väli.",
         "save-error": "Viga profiili salvestamisel.",
+        "save-image-error": "Viga profiilipildi salvestamisel.",
         "save-success": "Profiil salvestatud.",
         "pronouns": {
           "label": "Asesõnad",
@@ -2191,6 +2192,10 @@
       "success": "Projekt on edukalt loodud",
       "error": "Viga projekti loomise ajal"
     },
+    "project-header-create": {
+      "success": "Projektipildi loomine õnnestus",
+      "error": "Viga projektipildi loomisel"
+    },
     "project-destroy": {
       "success": "Projekt on edukalt kustutatud",
       "error": "Viga projekti kustutamisel"
@@ -2198,6 +2203,10 @@
     "project-edit": {
       "success": "Projekti on edukalt uuendatud",
       "error": "Viga projekti uuendamisel"
+    },
+    "project-header-edit": {
+      "success": "Projektipilt on edukalt uuendatud",
+      "error": "Viga projektipildi uuendamisel"
     },
     "project-duplication": {
       "success": "Projekti on edukalt dubleeritud",

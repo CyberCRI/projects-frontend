@@ -1248,6 +1248,7 @@
         "tab": "Infos Générales",
         "form-has-error": "Il y a des champs manquants ou invalides dans le formulaires.",
         "save-error": "Erreur lors de la sauvegarde du profil.",
+        "save-image-error": "Erreur lors de la sauvegarde de l'image de profil.",
         "save-success": "Le profil a été sauvegardé.",
         "pronouns": {
           "label": "Pronoms",
@@ -2195,6 +2196,10 @@
       "success": "Le projet a bien été créé",
       "error": "Erreur lors de la création du projet"
     },
+    "project-header-create": {
+      "success": "L'image du projet a bien été créée",
+      "error": "Erreur lors de la création de l'image du projet"
+    },
     "project-destroy": {
       "success": "Le projet a bien été supprimé",
       "error": "Erreur lors de la suppression du projet"
@@ -2202,6 +2207,10 @@
     "project-edit": {
       "success": "Le projet a bien été mis à jour",
       "error": "Erreur lors de la mise à jour du projet"
+    },
+    "project-header-edit": {
+      "success": "L'image du projet a bien été mise à jour",
+      "error": "Erreur lors de la mise à jour de l'image du projet"
     },
     "project-duplication": {
       "success": "Le projet a bien été dupliqué",
