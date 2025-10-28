@@ -54,12 +54,12 @@ import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import ProjectSummaryBlock from '@/components/home/SummaryCards/ProjectSummaryBlock.vue'
 import EventSummaryBlock from '@/components/home/SummaryCards/EventSummaryBlock.vue'
 import InstructionSummaryBlock from '@/components/home/SummaryCards/InstructionSummaryBlock.vue'
-import { getAllEvents } from '@/api/event.service'
 import { getAllInstructions } from '@/api/instruction.service'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { api } from '@/api/SwaggerProjects'
 export default {
   name: 'HomeHeaderConnected',
 
@@ -166,7 +166,7 @@ export default {
       const todayAtZero = new Date()
       todayAtZero.setHours(0, 0, 0, 0)
       this._events = (
-        await getAllEvents(this.organizationsStore.current?.code, {
+        await api.v1.organizationEventList(this.organizationsStore.current?.code, {
           ordering: 'event_date',
           from_date: todayAtZero.toISOString(),
           limit: this.summaryMaxEvents,

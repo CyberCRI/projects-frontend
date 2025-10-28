@@ -1,15 +1,31 @@
 <script setup>
-import { getAllEvents } from '@/api/event.service'
+import { api } from '@/api/SwaggerProjects'
 import EventList from '@/components/event/EventList/EventList.vue'
 import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
+import { useAsyncPaginatedData } from '@/composables/usePaginated'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-const organizationsStore = useOrganizationsStore()
-const { translateEvents } = useAutoTranslate()
-const _eventsFromAPi = ref([])
-const eventsFromAPi = translateEvents(_eventsFromAPi)
-const loading = ref(false)
+
+defineOptions({ name: 'EventsList' })
 
 const props = defineProps({ isFuture: { type: Boolean, default: false } })
+
+const organizationsStore = useOrganizationsStore()
+const { translateEvents } = useAutoTranslate()
+
+const { status, data, refresh } = useAsyncPaginatedData('organizationEventList', ({ query }) => {
+  const todayZeroHour = new Date()
+  todayZeroHour.setHours(0, 0, 0, 0)
+  const newQuery = {
+    ...query,
+    // if isFuture reverse ordering with "-"
+    ordering: `${props.isFuture ? '-' : ''}event_date`,
+    from_date: todayZeroHour.toISOString(),
+  }
+  return api.v1.organizationEventList(organizationsStore.current.code, newQuery)
+})
+
+const eventsFromAPi = translateEvents(data)
+const isLoading = computed(() => status.value !== 'success')
 
 const eventsByMonth = computed(() => {
   // sort and group by month
@@ -35,32 +51,10 @@ const eventsByMonth = computed(() => {
 const hasEvent = computed(() => {
   return Object.entries(eventsByMonth.value).length > 0
 })
-
-const fetchEvents = async () => {
-  // Fetch events
-  loading.value = true
-  // today date at midnight
-  let todayZeroHour = new Date()
-  todayZeroHour.setHours(0, 0, 0, 0)
-  const options = props.isFuture
-    ? {
-        ordering: 'event_date',
-        from_date: todayZeroHour.toISOString(),
-      }
-    : {
-        ordering: '-event_date',
-        to_date: todayZeroHour.toISOString(),
-      }
-  _eventsFromAPi.value = (await getAllEvents(organizationsStore.current?.code, options)).results
-
-  loading.value = false
-}
-
-onMounted(fetchEvents)
 </script>
 <template>
-  <EventListSkeleton v-if="loading" />
-  <EventList v-else-if="hasEvent" :events-by-month="eventsByMonth" @reload-events="fetchEvents" />
+  <EventListSkeleton v-if="isLoading" />
+  <EventList v-else-if="hasEvent" :events-by-month="eventsByMonth" @reload-events="refresh" />
   <p v-else class="no-event">
     {{ $t('event.no-event') }}
   </p>
