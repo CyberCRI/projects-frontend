@@ -73,8 +73,8 @@ import ResourceCard from '@/components/project/resource/ResourceCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
 import { deleteAttachmentFile } from '@/api/attachment-files.service'
-import { deleteAttachmentLink } from '@/api/attachment-links.service'
 import useToasterStore from '@/stores/useToaster.ts'
+import { api } from '@/api/SwaggerProjects'
 export default {
   name: 'ProjectResourcesTab',
 
@@ -151,10 +151,7 @@ export default {
       this.asyncing = true
       if (type === 'link') {
         try {
-          await deleteAttachmentLink({
-            id: resource.id,
-            projectId: this.project.id,
-          })
+          await api.v1.projectLinkDestroy(resource.id, this.project.id)
 
           analytics.attachmentLink.removeAttachment({
             project: {

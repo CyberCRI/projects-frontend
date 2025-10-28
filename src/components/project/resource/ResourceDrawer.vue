@@ -100,9 +100,9 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 import analytics from '@/analytics'
 import { postAttachmentFiles, patchAttachmentFile } from '@/api/attachment-files.service'
-import { postAttachmentLinks, patchAttachmentLink } from '@/api/attachment-links.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
+import { api } from '@/api/SwaggerProjects'
 export default {
   name: 'ResourceDrawer',
 
@@ -273,7 +273,7 @@ export default {
         }
 
         try {
-          const result = await postAttachmentLinks(body)
+          const result = await api.v1.projectLinkCreate(body.project_id, body)
 
           analytics.attachmentLink.addAttachment({
             project: {
@@ -353,7 +353,7 @@ export default {
       }
 
       try {
-        const result = await patchAttachmentLink(body)
+        const result = await api.v1.projectLinkPartialUpdate(body.id, body.project_id, body)
 
         analytics.attachmentLink.updateAttachment({
           project: {

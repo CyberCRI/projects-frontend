@@ -8,7 +8,6 @@ import { getSuggestedProjects } from '@/api/welearn.service'
 import { getComments as getCommentApi } from '@/api/comments.service'
 import { getProjectMessages as getProjectMessagesApi } from '@/api/project-messages.service'
 import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.services'
-import { getAttachmentLinks } from '@/api/attachment-links.service'
 import { getAttachmentFiles } from '@/api/attachment-files.service'
 import { api } from '@/api/SwaggerProjects'
 import { getBlogEntries as getBlogEntriesApi } from '@/api/blogentries.service'
@@ -17,7 +16,7 @@ import { getProject, duplicateProject as duplicateProjectAPI } from '@/api/proje
 import { getReviews as getReviewsApi } from '@/api/reviews.service'
 
 import analytics from '@/analytics'
-import { Announcement } from '@/api/Swagger'
+import { Announcement, AttachmentLink } from '@/api/Swagger'
 
 export default function useProjectData() {
   // const toaster = useToasterStore()
@@ -65,7 +64,7 @@ export default function useProjectData() {
   const _locations: Ref<any> = ref([])
   const _announcements = ref<Announcement[]>([])
   const _fileResources: Ref<any> = ref([])
-  const _linkResources: ComputedRef<any> | Ref<any> = ref([])
+  const _linkResources = ref<AttachmentLink[]>([])
   const _blogEntries: Ref<any> = ref([])
   const _goals: Ref<any> = ref([])
   const _team: Ref<any> = ref({ owners: [], members: [], reviewers: [] })
@@ -185,7 +184,7 @@ export default function useProjectData() {
 
   const getLinkResources = async () => {
     try {
-      const response = await getAttachmentLinks(project.value.id)
+      const response = await api.v1.projectLinkList(project.value.id)
       _linkResources.value = response.results
     } catch (err) {
       console.error(err)
