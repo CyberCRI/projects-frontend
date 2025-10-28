@@ -275,7 +275,7 @@ export default {
     },
 
     showAutoTranslateOption() {
-      return ['EDUSYNERGY', 'CRI'].includes(this.organisation.code)
+      return !!this.organisation?.auto_translate_content
     },
 
     organization() {
