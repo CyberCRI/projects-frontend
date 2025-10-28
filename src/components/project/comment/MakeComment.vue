@@ -44,7 +44,6 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import utils from '@/functs/functions.ts'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import analytics from '@/analytics'
-import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
@@ -53,6 +52,7 @@ import {
   postProjectMessage,
   postProjectMessageImage,
 } from '@/api/project-messages.service'
+import { api } from '@/api/SwaggerProjects'
 
 export default {
   name: 'MakeComment',
@@ -146,7 +146,7 @@ export default {
       if (this.isPrivate) {
         return postProjectMessageImage(this.project.id, formData)
       } else {
-        return postCommentImage(this.project.id, formData)
+        return api.v1.projectCommentImageCreate(this.project.id, formData)
       }
     },
 
@@ -211,7 +211,7 @@ export default {
       } else {
         if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
         try {
-          const result = await postComment(payload)
+          const result = await api.v1.projectCommentCreate(payload.project_id, payload)
           analytics.comment.comment({
             project: {
               id: this.project.id,
@@ -267,7 +267,11 @@ export default {
         }
 
         try {
-          const result = await patchComment(comment.id, comment)
+          const result = await api.v1.projectCommentPartialUpdate(
+            comment.id,
+            comment.project_id,
+            comment
+          )
           analytics.comment.updateComment({
             project: {
               id: this.project.id,

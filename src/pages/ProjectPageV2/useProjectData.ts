@@ -5,7 +5,6 @@ import useUsersStore from '@/stores/useUsers'
 import useProjectCategories from '@/stores/useProjectCategories'
 
 import { getSuggestedProjects } from '@/api/welearn.service'
-import { getComments as getCommentApi } from '@/api/comments.service'
 import { getProjectMessages as getProjectMessagesApi } from '@/api/project-messages.service'
 import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.services'
 import { getAttachmentFiles } from '@/api/attachment-files.service'
@@ -15,7 +14,7 @@ import { getProject, duplicateProject as duplicateProjectAPI } from '@/api/proje
 import { getReviews as getReviewsApi } from '@/api/reviews.service'
 
 import analytics from '@/analytics'
-import { Announcement, AttachmentLink } from '@/api/Swagger'
+import { Announcement, AttachmentLink, Comment } from '@/api/Swagger'
 import { sortBlogEntry } from '@/api/sanitize/blogentries'
 
 export default function useProjectData() {
@@ -59,7 +58,7 @@ export default function useProjectData() {
   const project: ComputedRef<any> = translateProject(_project)
 
   const _similarProjects: Ref<any> = ref([])
-  const _comments: Ref<any> = ref([])
+  const _comments = ref<Comment[]>([])
   const _projectMessages: Ref<any> = ref([])
   const _locations: Ref<any> = ref([])
   const _announcements = ref<Announcement[]>([])
@@ -190,7 +189,7 @@ export default function useProjectData() {
 
   const getComments = async (project_id) => {
     try {
-      const response = await getCommentApi(project_id)
+      const response = await api.v1.projectCommentList(project_id)
       _comments.value = response.results
     } catch (err) {
       console.error(err)

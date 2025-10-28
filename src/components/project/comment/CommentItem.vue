@@ -140,12 +140,12 @@ import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vu
 import MakeComment from '@/components/project/comment/MakeComment.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { api } from '@/api/SwaggerProjects'
 
 export default {
   name: 'CommentItem',
@@ -270,7 +270,7 @@ export default {
         }
       } else {
         try {
-          await deleteComment(this.project.id, this.comment.id)
+          await api.v1.projectCommentDestroy(this.comment.id, this.project.id)
           analytics.comment.deleteComment({
             project: {
               id: this.project.id,
