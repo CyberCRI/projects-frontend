@@ -177,30 +177,43 @@ export default {
       imageSizesFormData(formData, imageSizes)
 
       if (payload.header_image instanceof File) {
-        formData.append('file', payload['header_image'], payload['header_image'].name)
-        payload.header_image_id = (
-          await postProjectHeader({
+        try {
+          formData.append('file', payload['header_image'], payload['header_image'].name)
+          payload.header_image_id = (
+            await postProjectHeader({
+              project_id: this.currentProject.id,
+              body: formData,
+            })
+          ).id
+          // TODO: make this in POST when backend allows it
+          formData.delete('file')
+          await patchProjectHeader({
             project_id: this.currentProject.id,
+            image_id: payload.header_image_id,
             body: formData,
           })
-        ).id
-
-        // TODO: make this in POST when backend allows it
-        formData.delete('file')
-        await patchProjectHeader({
-          project_id: this.currentProject.id,
-          image_id: payload.header_image_id,
-          body: formData,
-        })
+        } catch (headerError) {
+          this.toaster.pushError(
+            `${this.$t('toasts.project-header-create.error')} (${headerError})`
+          )
+          console.error(headerError)
+        }
       } else if (this.currentProject.header_image.id) {
-        await patchProjectHeader({
-          project_id: this.currentProject.id,
-          image_id: this.currentProject.header_image.id,
-          body: formData,
-        })
+        try {
+          await patchProjectHeader({
+            project_id: this.currentProject.id,
+            image_id: this.currentProject.header_image.id,
+            body: formData,
+          })
+          delete payload.header_image
+          delete payload.imageSizes
+        } catch (headerError) {
+          this.toaster.pushError(
+            `${this.$t('toasts.project-header-create.error')} (${headerError})`
+          )
+          console.error(headerError)
+        }
       }
-      delete payload.header_image
-      delete payload.imageSizes
 
       try {
         await this.projectsStore.updateProject({
