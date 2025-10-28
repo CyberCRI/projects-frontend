@@ -93,13 +93,12 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { postBlogEntryImage } from '@/api/blogentries.service'
-import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { api } from '@/api/SwaggerProjects'
 
 export default {
   name: 'BlogDrawer',
@@ -249,11 +248,12 @@ export default {
       const formData = new FormData()
       formData.append('file', file, file.name)
 
-      return postBlogEntryImage({
-        project_id: this.project.id,
-        body: formData,
-        blog_entry_id: this.editedBlog?.id || null,
-      })
+      const blog_entry_id = this.editedBlog?.id
+      return api.v1.projectBlogEntryImageCreate(
+        this.project.id,
+        formData,
+        blog_entry_id ? { blog_entry_id } : null
+      )
     },
 
     save() {
@@ -284,7 +284,7 @@ export default {
           created_at: this.selectedDate,
         }
 
-        const result = await postBlogEntry(body)
+        const result = await api.v1.projectBlogEntryCreate(body.project_id, body)
 
         analytics.blog.addBlog({
           project: {
@@ -337,10 +337,7 @@ export default {
           images_ids: [...this.editedBlog.images, ...this.addedImages],
         }
 
-        const result = await patchBlogEntry({
-          project_id: this.project.id,
-          body: body,
-        })
+        const result = await api.v1.projectBlogEntryPartialUpdate(body.id, body.project_id, body)
 
         analytics.blog.updateBlog({
           project: {

@@ -10,13 +10,13 @@ import { getProjectMessages as getProjectMessagesApi } from '@/api/project-messa
 import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.services'
 import { getAttachmentFiles } from '@/api/attachment-files.service'
 import { api } from '@/api/SwaggerProjects'
-import { getBlogEntries as getBlogEntriesApi } from '@/api/blogentries.service'
 import { getAllGoals } from '@/api/goals.service'
 import { getProject, duplicateProject as duplicateProjectAPI } from '@/api/projects.service'
 import { getReviews as getReviewsApi } from '@/api/reviews.service'
 
 import analytics from '@/analytics'
 import { Announcement, AttachmentLink } from '@/api/Swagger'
+import { sortBlogEntry } from '@/api/sanitize/blogentries'
 
 export default function useProjectData() {
   // const toaster = useToasterStore()
@@ -163,11 +163,8 @@ export default function useProjectData() {
 
   const getBlogEntries = async () => {
     try {
-      const response = await getBlogEntriesApi(project.value.id)
-      const sortedEntries = (response.results || []).sort((a, b) => {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      })
-      _blogEntries.value = sortedEntries
+      const response = await api.v1.projectBlogEntryList(project.value.id)
+      _blogEntries.value = sortBlogEntry(response.results)
     } catch (err) {
       console.error(err)
     }

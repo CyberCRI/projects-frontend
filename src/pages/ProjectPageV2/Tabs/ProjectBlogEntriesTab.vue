@@ -58,9 +58,9 @@ import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import analytics from '@/analytics'
-import { deleteBlogEntry } from '@/api/blogentries.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import { useRuntimeConfig } from '#imports'
+import { api } from '@/api/SwaggerProjects'
 export default {
   name: 'ProjectBlogEntriesTab',
 
@@ -201,10 +201,7 @@ export default {
     async deleteBlogEntry() {
       this.asyncing = true
       try {
-        await deleteBlogEntry({
-          id: this.currentBlogEntry.id,
-          project_id: this.project.id,
-        })
+        await api.v1.projectBlogEntryDestroy(this.currentBlogEntry.id, this.project.id)
 
         this.$emit('reload-blog-entries')
 
