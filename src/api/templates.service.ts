@@ -2,11 +2,11 @@ import useAPI from '@/composables/useAPI'
 import useAPI2 from '@/composables/useAPI2'
 
 export function getTemplates(organizationCode: number) {
-  return useAPI2(`organization/${organizationCode}/template`)
+  return useAPI2(`organization/${organizationCode}/template/`)
 }
 
 export function getTemplate(organizationCode: number, templateId: number) {
-  return useAPI2(`organization/${organizationCode}/template/${templateId}`)
+  return useAPI2(`organization/${organizationCode}/template/${templateId}/`)
 }
 
 export function deleteTemplate(organizationCode: number, templateId: number) {
