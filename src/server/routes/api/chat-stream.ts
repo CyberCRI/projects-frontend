@@ -1,13 +1,14 @@
 import OpenAI from 'openai'
 
+const runtimeConfig = useRuntimeConfig()
 const {
   appOpenaiApiPromptId,
   appOpenaiApiPromptVersion,
   appOpenaiApiKey,
   appOpenaiApiVectorStoreId,
-} = useRuntimeConfig()
-
-const { appChatbotEnabled } = useRuntimeConfig().public
+  appMcpServerUrl,
+} = runtimeConfig
+const { appChatbotEnabled } = runtimeConfig.public
 
 export default defineLazyEventHandler(() => {
   const openai = appOpenaiApiKey
@@ -16,6 +17,7 @@ export default defineLazyEventHandler(() => {
       })
     : null
 
+  console.log('appChatbotEnabled:', appChatbotEnabled)
   return defineEventHandler(async (event) => {
     // return 404 if not configured
     if (!openai || !appChatbotEnabled) {
@@ -54,7 +56,7 @@ export default defineLazyEventHandler(() => {
       prompt['version'] = String(appOpenaiApiPromptVersion)
     }
 
-    const requestOptions = {
+    const requestOptions: any = {
       prompt,
       //store: false, // do not store in OpenAI's servers, we do this on client side
       store: true, // we want to store it to be able to use follow-up questions
@@ -63,6 +65,18 @@ export default defineLazyEventHandler(() => {
       reasoning: {},
       tools: [],
       stream: true,
+    }
+
+    if (appMcpServerUrl) {
+      console.log('Adding MCP tool with server URL:', appMcpServerUrl)
+      requestOptions.tools.push({
+        type: 'mcp',
+        server_label: 'pojects-local-mcp',
+        server_description:
+          'A MCP to fetch information about projects, people and groups on this Projects platform.',
+        server_url: appMcpServerUrl,
+        require_approval: 'never',
+      })
     }
 
     if (appOpenaiApiVectorStoreId) {
