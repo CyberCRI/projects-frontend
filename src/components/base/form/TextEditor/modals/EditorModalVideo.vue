@@ -7,13 +7,13 @@
     @submit="insertVideo"
   >
     <template #header>
-      {{ $filters.capitalize($t('file.add-video')) }}
+      {{ $t('file.add-video') }}
     </template>
 
     <template #body>
       <TextInput
         v-model="videoSrc"
-        :placeholder="$filters.capitalize($t('resource.add-link'))"
+        :placeholder="$t('resource.add-link')"
         data-test="input-video-link"
         class="text-input"
       />
@@ -44,7 +44,6 @@ export default {
   },
 
   emits: ['closeModal'],
-
   data() {
     return {
       videoSrc: '',

@@ -6,7 +6,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isLoading = ref(false)
 const form = ref({
@@ -142,9 +142,7 @@ const saveData = async () => {
             />
             <FieldErrors :errors="v$.form.language.$errors" />
           </AdminBlock>
-          <AdminBlock
-            :block-title="$filters.capitalize($t('admin.portal.general.portal-referencing'))"
-          >
+          <AdminBlock :block-title="$t('admin.portal.general.portal-referencing')">
             <span class="description">{{ $t('tips.organization-visibility') }}</span>
             <GroupButton
               v-model="form.is_logo_visible_on_parent_dashboard"
@@ -155,7 +153,7 @@ const saveData = async () => {
 
             <div v-if="form.is_logo_visible_on_parent_dashboard" class="color-ctn">
               <span class="description">
-                {{ $filters.capitalize($t('tips.organization-logo')) }}
+                {{ $t('tips.organization-logo') }}
               </span>
 
               <Sketch
@@ -168,7 +166,7 @@ const saveData = async () => {
 
           <LpiButton
             :disabled="v$.$invalid"
-            :label="$filters.capitalize($t('common.save'))"
+            :label="$t('common.save')"
             :btn-icon="isLoading ? 'LoaderSimple' : null"
             class="save-button"
             @click="saveData"

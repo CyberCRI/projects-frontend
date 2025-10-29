@@ -2,7 +2,7 @@
   <div class="groups-tab">
     <div>
       <h4 class="title">
-        {{ $t('me.groups') }}
+        {{ t('me.groups') }}
         <span>({{ user?.people_groups?.length || 0 }})</span>
       </h4>
       <ListPaginator class="paginator" :limit="listLimit" :list="user?.people_groups || []">
@@ -18,8 +18,8 @@
                 v-if="cardListSlotProps.item"
                 :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
                 :group="cardListSlotProps.item"
-                :title="groupIsOtherOrg(cardListSlotProps.item) ? $t('group.is-other-org') : ''"
-                @navigated-away="$emit('close')"
+                :title="groupIsOtherOrg(cardListSlotProps.item) ? t('group.is-other-org') : ''"
+                @navigated-away="emit('close')"
                 @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
               />
             </template>
@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
@@ -55,62 +55,37 @@ import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
-export default {
-  name: 'ProfileGroupsTab',
-
-  components: {
-    CardList,
-    GroupCard,
-    EmptyCard,
-    ListPaginator,
-    PaginationButtons,
+defineOptions({ name: 'ProfileGroupsTab' })
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+})
 
-  emits: ['close'],
+const emit = defineEmits(['close'])
+const { t } = useNuxtI18n()
+const usersStore = useUsersStore()
+const orgStore = useOrganizations()
+const listLimit = 12
 
-  setup() {
-    const usersStore = useUsersStore()
-    const orgStore = useOrganizations()
-    return {
-      usersStore,
-      orgStore,
-    }
-  },
+const isCurrentUser = computed(() => {
+  return usersStore.id === props.user.id
+})
 
-  data() {
-    return {
-      listLimit: 12,
-    }
-  },
+const noGroupLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-group') : t('you.no-group')
+})
 
-  computed: {
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
+const groupIsOtherOrg = (group) => {
+  return group.organization != orgStore?.current?.code
+}
 
-    noGroupLabel() {
-      return this.isCurrentUser ? this.$t('me.no-group') : this.$t('you.no-group')
-    },
-  },
-
-  methods: {
-    groupIsOtherOrg(group) {
-      return group.organization != this.orgStore?.current?.code
-    },
-
-    cancelIfOtherOrg(evt, group) {
-      if (this.groupIsOtherOrg(group)) {
-        evt.stopImmediatePropagation()
-        evt.preventDefault()
-      }
-    },
-  },
+const cancelIfOtherOrg = (evt, group) => {
+  if (groupIsOtherOrg(group)) {
+    evt.stopImmediatePropagation()
+    evt.preventDefault()
+  }
 }
 </script>
 

@@ -5,7 +5,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 
 const isClient = import.meta.client
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const projectLocations = ref([])
 const loading = ref(true)

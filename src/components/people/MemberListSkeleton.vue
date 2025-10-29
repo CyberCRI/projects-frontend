@@ -12,26 +12,20 @@
   </DynamicGrid>
 </template>
 
-<script>
+<script setup>
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
-export default {
-  name: 'MemberListSkeleton',
 
-  components: {
-    DynamicGrid,
+defineOptions({ name: 'MemberListSkeleton' })
+defineProps({
+  limit: {
+    type: Number,
+    default: 12,
   },
-
-  props: {
-    limit: {
-      type: Number,
-      default: 12,
-    },
-    minGap: {
-      type: Number,
-      default: 0,
-    },
+  minGap: {
+    type: Number,
+    default: 0,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

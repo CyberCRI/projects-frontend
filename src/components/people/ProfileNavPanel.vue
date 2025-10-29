@@ -68,98 +68,76 @@
   </NavPanelAside>
 </template>
 
-<script>
-export default {
-  name: 'ProfileNavPanel',
+<script setup>
+defineOptions({ name: 'ProfileNavPanel' })
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-
-    isSelf: {
-      type: Boolean,
-      default: false,
-    },
-
-    editButtonLabel: {
-      type: String,
-      required: true,
-    },
-    editProfileLink: {
-      type: Object,
-      required: true,
-    },
-
-    canEditUser: {
-      type: Boolean,
-      default: false,
-    },
-    profileTabs: { type: Array, required: true },
-    currentTab: {
-      type: Object,
-      default: () => {},
-    },
-    isEditing: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
 
-  emits: ['navigated'],
-  // data() {
-  //   return {
-  //     addToProjectMenuVisible: false,
-  //   }
-  // },
-
-  computed: {
-    hasOnlyMail() {
-      return (
-        !this.user?.mobile &&
-        !this.user?.location &&
-        !this.user?.facebook &&
-        !this.user?.twitter &&
-        !this.user?.linkedin &&
-        !this.user?.skype
-      )
-    },
-    hasNoContact() {
-      return !this.user?.email && this.hasOnlyMail
-    },
+  isSelf: {
+    type: Boolean,
+    default: false,
   },
 
-  methods: {
-    socialName(url) {
-      let socialArr = url.split('/')
-      // if url end with a "/" last item is empty
-      if (socialArr.length > 0 && socialArr[socialArr.length - 1])
-        return socialArr[socialArr.length - 1]
-      // so fallback to the second last item
-      if (socialArr.length > 1 && socialArr[socialArr.length - 2])
-        return socialArr[socialArr.length - 2]
-      // or fallback to the url itself
-      return url
-    },
-
-    fixLocation(l) {
-      return l.split('\n').join('<br />')
-    },
-
-    navigated() {
-      this.$emit('navigated')
-    },
-
-    // toggleAddToProject() {
-    //   this.addToProjectMenuVisible = !this.addToProjectMenuVisible
-    // },
-
-    switchView() {
-      this.$router.push(this.editProfileLink)
-    },
+  editButtonLabel: {
+    type: String,
+    required: true,
   },
+  editProfileLink: {
+    type: Object,
+    required: true,
+  },
+
+  canEditUser: {
+    type: Boolean,
+    default: false,
+  },
+  profileTabs: { type: Array, required: true },
+  currentTab: {
+    type: Object,
+    default: () => {},
+  },
+  isEditing: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const router = useRouter()
+const emit = defineEmits(['navigated'])
+
+const hasOnlyMail = computed(() => {
+  return (
+    !props.user?.mobile &&
+    !props.user?.location &&
+    !props.user?.facebook &&
+    !props.user?.twitter &&
+    !props.user?.linkedin &&
+    !props.user?.skype
+  )
+})
+const hasNoContact = computed(() => {
+  return !props.user?.email && hasOnlyMail.value
+})
+
+const socialName = (url) => {
+  let socialArr = url.split('/')
+  // if url end with a "/" last item is empty
+  if (socialArr.length > 0 && socialArr[socialArr.length - 1])
+    return socialArr[socialArr.length - 1]
+  // so fallback to the second last item
+  if (socialArr.length > 1 && socialArr[socialArr.length - 2])
+    return socialArr[socialArr.length - 2]
+  // or fallback to the url itself
+  return url
 }
+
+const fixLocation = (l) => l.split('\n').join('<br />')
+const navigated = () => emit('navigated')
+const switchView = () => router.push(props.editProfileLink)
 </script>
 
 <style lang="scss" scoped>

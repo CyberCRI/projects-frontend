@@ -38,8 +38,8 @@
     <div>
       <TextInput
         v-model="title"
-        :label="$filters.capitalize($t('common.title'))"
-        :placeholder="$filters.capitalize(titlePlaceholder)"
+        :label="$t('common.title')"
+        :placeholder="titlePlaceholder"
         class="input-field"
         @blur="v$.title.$validate"
       />
@@ -78,15 +78,16 @@
 
       <FieldErrors :errors="v$.editorBlogEntry.$errors" />
     </div>
-    <DatePicker v-model="selectedDate" class="input-field" position="top" />
+    <VueDatePicker v-model="selectedDate" class="input-field" position="top" />
   </BaseDrawer>
 </template>
 
 <script>
+import VueDatePicker from '@vuepic/vue-datepicker'
+
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import DatePicker from '@/components/base/form/DatePicker.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
@@ -107,10 +108,10 @@ export default {
     TextInput,
     TipTapCollaborativeEditor,
     TipTapEditor,
-    DatePicker,
     BaseDrawer,
     ConfirmModal,
     FieldErrors,
+    VueDatePicker,
   },
 
   inject: {

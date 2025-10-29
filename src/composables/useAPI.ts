@@ -1,15 +1,16 @@
 import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
-import merge from 'lodash.merge'
+import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
 
-const useAPI = (url: string, options) => {
+const useAPI = <T>(url: string, options) => {
   const defaultOptions = () => {
     let _localStorage = null
     if (import.meta.client) _localStorage = window.localStorage
     const localStorage = _localStorage
     const runtimeConfig = useRuntimeConfig()
     const usersStore = useUsers()
+    console.log(runtimeConfig.public)
     return {
       baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
       method: 'GET',
@@ -88,7 +89,7 @@ const useAPI = (url: string, options) => {
   }
 
   const _options = merge(defaultOptions(), options)
-  return $fetch(url, _options)
+  return $fetch<T>(url, _options)
 }
 
 export default useAPI

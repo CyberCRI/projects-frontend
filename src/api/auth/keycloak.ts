@@ -185,7 +185,7 @@ export default function useKeycloak() {
         })
       } catch (e) {
         console.error(e)
-        // const { t } = useI18n()
+        // const { t } = useNuxtI18n()
         toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
       }
     },
@@ -207,7 +207,7 @@ export default function useKeycloak() {
     onLoginError(): void {
       const toaster = useToasterStore()
       const home = '/dashboard'
-      // const { t } = useI18n()
+      // const { t } = useNuxtI18n()
       toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
       // TOOO do this the nuxt way
       const router = useRouter()

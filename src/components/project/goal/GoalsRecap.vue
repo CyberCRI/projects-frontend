@@ -1,9 +1,9 @@
 <template>
   <div class="goals-recap">
     <SectionHeader
-      :button-label="$filters.capitalize($t('common.see-more'))"
+      :button-label="$t('common.see-more')"
       :quantity="goals.length"
-      :title="$filters.capitalize($t('goal.goals'))"
+      :title="$t('goal.goals')"
       class="section-header"
       @redirect-button-clicked="goToGoalPage"
     />
@@ -20,49 +20,44 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 
-export default {
-  name: 'GoalsRecap',
-
-  components: { GoalSummaryItem, SectionHeader },
-
-  props: {
-    goals: {
-      type: Array,
-      required: true,
-    },
+defineOptions({ name: 'GoalsRecap' })
+defineEmits(['access-goals-view'])
+const props = defineProps({
+  goals: {
+    type: Array,
+    required: true,
   },
+})
 
-  emits: ['access-goals-view'],
-  computed: {
-    sortedGoals() {
-      return [...this.goals]
-        .sort((a, b) => {
-          if (!a.deadline_at && !b.deadline_at) {
-            return a.title < b.title ? -1 : 1
-          } else if (!a.deadline_at) {
-            return -1
-          } else if (!b.deadline_at) {
-            return 1
-          } else {
-            return a.deadline_at < b.deadline_at ? -1 : 1
-          }
-        })
-        .slice(0, 5) // Limit to 5 goals for display
-    },
-  },
-  methods: {
-    goToGoalPage() {
-      this.$router.push({
-        name: 'projectGoals',
-        params: { slugOrId: this.$route.params.slugOrId },
-        hash: '#tab',
-      })
-    },
-  },
+const router = useRouter()
+const route = useRoute()
+
+const sortedGoals = computed(() => {
+  return [...props.goals]
+    .sort((a, b) => {
+      if (!a.deadline_at && !b.deadline_at) {
+        return a.title < b.title ? -1 : 1
+      } else if (!a.deadline_at) {
+        return -1
+      } else if (!b.deadline_at) {
+        return 1
+      } else {
+        return a.deadline_at < b.deadline_at ? -1 : 1
+      }
+    })
+    .slice(0, 5) // Limit to 5 goals for display
+})
+
+const goToGoalPage = () => {
+  router.push({
+    name: 'projectGoals',
+    params: { slugOrId: route.params.slugOrId },
+    hash: '#tab',
+  })
 }
 </script>
 

@@ -12,14 +12,14 @@
     <div class="form">
       <TextInput
         v-model="form.title"
-        :label="$filters.capitalize(`${$t('goal.title')}:`)"
-        :placeholder="$filters.capitalize($t('goal.title'))"
+        :label="`${$t('goal.title')}:`"
+        :placeholder="$t('goal.title')"
         @blur="v$.form.title.$touch"
       />
       <FieldErrors :errors="v$.form.title.$errors" />
 
       <div class="goal-description-section">
-        <span class="goal-label">{{ $filters.capitalize($t('goal.description')) }}:</span>
+        <span class="goal-label">{{ $t('goal.description') }}:</span>
         <TipTapEditor
           v-model="form.description"
           class="goal-description"
@@ -31,10 +31,10 @@
       <SwitchInput
         v-model="deadlineVisible"
         class="deadline-switch"
-        :label="$filters.capitalize(`${$t('common.set-deadline')}:`)"
+        :label="`${$t('common.set-deadline')}:`"
       />
 
-      <DatePicker
+      <VueDatePicker
         v-if="deadlineVisible"
         v-model="form.deadline_at"
         class="goal-deadline"
@@ -42,7 +42,7 @@
       />
 
       <div class="status-ctn">
-        <span class="goal-label">{{ $filters.capitalize($t('goal.status-title')) }}:</span>
+        <span class="goal-label">{{ $t('goal.status-title') }}:</span>
         <GroupButton
           v-model="form.status"
           class="group-button-labels"
@@ -62,11 +62,12 @@
 </template>
 
 <script>
+import VueDatePicker from '@vuepic/vue-datepicker'
+
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
-import DatePicker from '@/components/base/form/DatePicker.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 
 import utils from '@/functs/functions.ts'
@@ -88,10 +89,10 @@ export default {
     BaseDrawer,
     TextInput,
     TipTapEditor,
-    DatePicker,
     SwitchInput,
     GroupButton,
     FieldErrors,
+    VueDatePicker,
   },
 
   props: {
@@ -158,22 +159,22 @@ export default {
       return [
         {
           value: 'na',
-          label: this.$filters.capitalize(this.$t('status.na')),
+          label: this.$t('status.na'),
           selected: this.form.status === 'na',
         },
         {
           value: 'ongoing',
-          label: this.$filters.capitalize(this.$t('status.ongoing')),
+          label: this.$t('status.ongoing'),
           selected: this.form.status === 'ongoing',
         },
         {
           value: 'complete',
-          label: this.$filters.capitalize(this.$t('status.completed')),
+          label: this.$t('status.completed'),
           selected: this.form.status === 'complete',
         },
         {
           value: 'cancel',
-          label: this.$filters.capitalize(this.$t('status.canceled')),
+          label: this.$t('status.canceled'),
           selected: this.form.status === 'cancel',
         },
       ]

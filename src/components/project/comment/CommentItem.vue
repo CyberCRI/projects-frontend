@@ -47,7 +47,7 @@
             <div class="reply-action">
               <ExternalLabelButton
                 v-if="!isReply"
-                :label="$filters.capitalize($t('common.reply'))"
+                :label="$t('common.reply')"
                 btn-icon="Reply"
                 :has-border="true"
                 @click="toggleReply"
@@ -57,7 +57,7 @@
             <div v-if="canEdit" class="author-action">
               <ExternalLabelButton
                 v-if="canEdit"
-                :label="$filters.capitalize($t('common.edit'))"
+                :label="$t('common.edit')"
                 :has-border="true"
                 btn-icon="Pen"
                 @click="toggleEdit"
@@ -65,7 +65,7 @@
 
               <ExternalLabelButton
                 v-if="canEdit"
-                :label="$filters.capitalize($t('common.delete'))"
+                :label="$t('common.delete')"
                 :has-border="true"
                 btn-icon="TrashCanOutline"
                 @click="openConfirmModal"

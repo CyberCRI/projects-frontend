@@ -4,7 +4,7 @@
       :confirm-action-disabled="v$.$invalid || hasFileError"
       :confirm-action-name="$t('common.save')"
       :is-opened="isOpened"
-      :title="$filters.capitalize(label)"
+      :title="label"
       class="resource-modal small"
       :asyncing="isSaving"
       @close="close()"
@@ -16,7 +16,7 @@
           <div class="file-input-ctn">
             <ImageInput
               id="add-file-input"
-              :label="$filters.capitalize($t('file.upload') + ' *')"
+              :label="$t('file.upload' + ' *')"
               class="text-input"
               @upload-image="uploadImage"
             />
@@ -29,8 +29,8 @@
 
         <TextInput
           v-model="title"
-          :label="$filters.capitalize($t('common.title') + ' *')"
-          :placeholder="$filters.capitalize($t('common.title'))"
+          :label="$t('common.title' + ' *')"
+          :placeholder="$t('common.title')"
           class="text-input"
           data-test="input-link-title"
           @focus="checkFile"
@@ -40,8 +40,8 @@
 
         <TextInput
           v-model="description"
-          :label="$filters.capitalize($t('form.description') + ' *')"
-          :placeholder="$filters.capitalize($t('form.description'))"
+          :label="$t('form.description' + ' *')"
+          :placeholder="$t('form.description')"
           class="text-input"
           data-test="input-link-description"
           @focus="checkFile"
@@ -52,7 +52,6 @@
     </BaseDrawer>
   </div>
 </template>
-
 <script>
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'

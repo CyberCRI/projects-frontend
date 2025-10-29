@@ -2,7 +2,7 @@
   <div class="project-announcement narrow-content">
     <div v-if="canEditProject && isInEditingMode" class="add-announcement">
       <LpiButton
-        :label="$filters.capitalize($t('project.announcement-create'))"
+        :label="$t('project.announcement-create')"
         class="add-announcement-btn"
         @click="projectLayoutToggleAddModal('announcement')"
       />
@@ -23,7 +23,7 @@
     <ConfirmModal
       v-if="confirmDeleteModalVisible"
       :content="$t('recruit.delete-announcement-message')"
-      :title="$filters.capitalize($t('common.delete'))"
+      :title="$t('common.delete')"
       :asyncing="isDeleting"
       @cancel="confirmDeleteModalVisible = false"
       @confirm="deleteAnnouncement"

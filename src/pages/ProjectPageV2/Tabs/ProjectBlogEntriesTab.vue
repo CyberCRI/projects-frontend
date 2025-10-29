@@ -4,7 +4,7 @@
       <template #default>
         <div v-if="isEditionEnabled" class="add-blog">
           <LpiButton
-            :label="$filters.capitalize($t('blog.add-entry'))"
+            :label="$t('blog.add-entry')"
             class="add-blog-btn"
             @click="projectLayoutToggleAddModal('blogEntry')"
           />

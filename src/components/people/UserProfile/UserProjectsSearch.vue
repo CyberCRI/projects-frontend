@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import funct from '@/functs/functions.ts'
 import { getAllProjects } from '@/api/projects.service'
 import { getUserFollows } from '@/api/follows.service'

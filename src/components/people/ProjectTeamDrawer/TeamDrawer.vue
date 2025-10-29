@@ -2,7 +2,7 @@
   <BaseDrawer
     :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
-    :title="$filters.capitalize(label)"
+    :title="label"
     class="team-modal large"
     :confirm-action-disabled="selectedUsers.length === 0"
     :asyncing="asyncing"

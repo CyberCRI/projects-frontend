@@ -45,7 +45,7 @@ export default function useProjectData() {
 
   const route = useRoute()
   const router = useRouter()
-  const { t } = useI18n()
+  const { t } = useNuxtI18n()
 
   const { isAdmin, canEditProject, isOrgUser } = usePermissions()
 

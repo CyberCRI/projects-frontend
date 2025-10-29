@@ -60,23 +60,29 @@ const useUsersStore = defineStore('users', () => {
     return userFromApi.value?.id
   })
 
-  const user = computed((): UserModel | null => {
-    if (userFromToken.value) {
-      return {
-        id: userFromToken.value.pid,
-        name: {
-          firstname: userFromToken.value.given_name,
-          lastname: userFromToken.value.family_name,
-        },
-        email: userFromToken.value.email,
-        roles: userFromToken.value.roles || [],
-        orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
-        permissions: permissions.value,
+  const user = computed(
+    ():
+      | (Omit<UserModel, 'permissions'> & {
+          permissions: { [key: string]: boolean }
+        })
+      | null => {
+      if (userFromToken.value) {
+        return {
+          id: userFromToken.value.pid,
+          name: {
+            firstname: userFromToken.value.given_name,
+            lastname: userFromToken.value.family_name,
+          },
+          email: userFromToken.value.email,
+          roles: userFromToken.value.roles || [],
+          orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
+          permissions: permissions.value,
+        }
       }
-    }
 
-    return null
-  })
+      return null
+    }
+  )
 
   function stopUserDataRefreshLoop() {
     if (userDataRefreshLoop.value) {

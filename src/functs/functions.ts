@@ -1,11 +1,6 @@
 import useAPI from '@/composables/useAPI'
 import { useRuntimeConfig } from '#imports'
 export default {
-  copyObject(obj) {
-    // simple way to copy object - Not perfect, to rethink.
-    return JSON.parse(JSON.stringify(obj))
-  },
-
   toHDate(d) {
     const months = [
       'Jan',
@@ -38,7 +33,7 @@ export default {
 
   getTimePassed(d) {
     /* https://natclark.com/tutorials/javascript-relative-time/ */
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const now = new Date().getTime()
     const old = new Date(d).getTime()
     const formatter = new Intl.RelativeTimeFormat(locale.value || 'en', {

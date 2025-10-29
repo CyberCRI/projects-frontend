@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware(async function postLogin(to) {
     if (state) {
       const keycloak = useKeycloak()
       const usersStore = useUsersStore()
-      // const { setLocale } = useI18n()
+      // const { setLocale } = useNuxtI18n()
 
       // Log in user after redirection is successful from keycloack
       await keycloak.loginIfValidState(loginSearchParams)

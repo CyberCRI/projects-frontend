@@ -8,7 +8,7 @@
     @submit="insertImage"
   >
     <template #header>
-      {{ $filters.capitalize($t('file.add-image')) }}
+      {{ $t('file.add-image') }}
     </template>
 
     <template #body>

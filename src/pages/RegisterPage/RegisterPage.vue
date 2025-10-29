@@ -21,7 +21,7 @@ const props = defineProps({
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const runtimeConfig = useRuntimeConfig()
-const { t, locale } = useI18n()
+const { t, locale } = useNuxtI18n()
 
 const form = ref({
   email: '',
