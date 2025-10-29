@@ -1,6 +1,5 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import mcpServer from '@/mcp-server'
-import { createApp, createRouter, eventHandler, createEventStream } from 'h3'
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
   //   const eventStream = createEventStream(event)
