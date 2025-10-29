@@ -2031,7 +2031,10 @@
     "title-project": "Projekt",
     "title-blog": "Blogi",
     "title-goal": "Värav",
-    "title-comment": "Kommentaar"
+    "title-comment": "Kommentaar",
+    "no-templates-set": "Malli pole määratud.",
+    "project-purpose": "Projekti eesmärgi vorm",
+    "project-title": "Projekti nimetuse vorm"
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",

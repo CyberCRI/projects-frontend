@@ -2031,7 +2031,10 @@
     "title-project": "Projecte",
     "title-blog": "Bloc",
     "title-goal": "Objectiu",
-    "title-comment": "Comentari"
+    "title-comment": "Comentari",
+    "no-templates-set": "No s' ha establert cap plantilla.",
+    "placeholder-purpose": "propòsit del projecte",
+    "placeholder-title": "Títol en ordre"
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
