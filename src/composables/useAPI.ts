@@ -29,7 +29,7 @@ export const defaultOptions = () => {
     onResponse({ response }) {
       // Process the response data
       // TODO nuxt is this needed ?
-      if (response?._data) localStorage?.setItem('token', response._data.token)
+      if (response?._data && localStorage) localStorage.setItem('token', response._data.token)
     },
     async onResponseError({ request, options, response }) {
       // // keep for futur debug

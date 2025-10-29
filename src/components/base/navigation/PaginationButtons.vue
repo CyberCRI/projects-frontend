@@ -19,59 +19,51 @@
   </ul>
 </template>
 
-<script>
+<script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'PaginationButtons',
+defineOptions({ name: 'PaginationButtons' })
 
-  components: { IconImage },
-
-  props: {
-    current: {
-      type: Number,
-      required: true,
-    },
-
-    total: {
-      type: Number,
-      required: true,
-    },
-
-    pagination: {
-      type: Object,
-      default: () => {},
-    },
+const props = defineProps({
+  current: {
+    type: Number,
+    required: true,
   },
 
-  emits: ['update-pagination'],
-
-  computed: {
-    pages() {
-      const pages = Array.from(Array(this.total), (_, i) => {
-        return { value: i + 1, current: this.current === i + 1 }
-      })
-
-      if (this.total - this.current > 2)
-        pages.splice(this.current + 1, this.total - this.current - 2, { value: '...' })
-      if (this.current > 3) pages.splice(1, this.current - 3, { value: '...' })
-
-      return pages
-    },
+  total: {
+    type: Number,
+    required: true,
   },
 
-  methods: {
-    updatePage(pageNumber) {
-      if (this.current === pageNumber - 1) this.goToPage('next')
-      if (this.current === pageNumber + 1) this.goToPage('previous')
-      if (pageNumber === 1) this.goToPage('first')
-      if (pageNumber === this.total) this.goToPage('last')
-    },
-
-    goToPage(pageName) {
-      this.$emit('update-pagination', this.pagination[pageName])
-    },
+  pagination: {
+    type: Object,
+    default: () => {},
   },
+})
+
+const emit = defineEmits(['update-pagination'])
+
+const pages = computed(() => {
+  const pages = Array.from(Array(props.total), (_, i) => {
+    return { value: i + 1, current: props.current === i + 1 }
+  })
+
+  if (props.total - props.current > 2)
+    pages.splice(props.current + 1, props.total - props.current - 2, { value: '...' })
+  if (props.current > 3) pages.splice(1, props.current - 3, { value: '...' })
+
+  return pages
+})
+
+const updatePage = (pageNumber) => {
+  if (props.current === pageNumber - 1) goToPage('next')
+  if (props.current === pageNumber + 1) goToPage('previous')
+  if (pageNumber === 1) goToPage('first')
+  if (pageNumber === props.total) goToPage('last')
+}
+
+const goToPage = (pageName) => {
+  emit('update-pagination', props.pagination[pageName])
 }
 </script>
 

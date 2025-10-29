@@ -43,7 +43,7 @@ import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { api } from '@/api/SwaggerProjects'
-import { useAsyncPaginatedAPI } from '@/composables/useAsyncAPI'
+import { useAsyncPaginationAPI } from '@/composables/useAsyncAPI'
 
 defineOptions({ name: 'EventAdminBlock' })
 
@@ -60,7 +60,7 @@ const {
   data: events,
   refresh,
   paginated,
-} = useAsyncPaginatedAPI(
+} = useAsyncPaginationAPI(
   'organizationEventList',
   ({ query }) => {
     const todayAtZero = new Date()
@@ -72,7 +72,7 @@ const {
     })
   },
   {
-    paginatedConfig: {
+    paginationConfig: {
       limit: 4,
     },
   }

@@ -4,6 +4,7 @@ import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/mode
 import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
+import { Organization } from '@/api/Swagger'
 
 export async function patchOrganization(
   code: string,
@@ -16,7 +17,7 @@ export async function patchOrganization(
 }
 
 export async function getOrganizationByCode(code: string) {
-  return await useAPI(`organization/${code}/`, {}) //.data.value
+  return (await useAPI(`organization/${code}/`, {})) as Organization //.data.value
 }
 
 export async function getOrganizations() {

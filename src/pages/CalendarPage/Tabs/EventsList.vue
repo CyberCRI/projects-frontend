@@ -2,7 +2,7 @@
 import { api } from '@/api/SwaggerProjects'
 import EventList from '@/components/event/EventList/EventList.vue'
 import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
-import { useAsyncPaginatedAPI } from '@/composables/useAsyncAPI'
+import { useAsyncPaginationAPI } from '@/composables/useAsyncAPI'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 defineOptions({ name: 'EventsList' })
@@ -13,7 +13,7 @@ const organizationsStore = useOrganizationsStore()
 const { translateEvents } = useAutoTranslate()
 const { t } = useNuxtI18n()
 
-const { status, data, refresh } = useAsyncPaginatedAPI('organizationEventList', ({ query }) => {
+const { status, data, refresh } = useAsyncPaginationAPI('organizationEventList', ({ query }) => {
   const todayZeroHour = new Date()
   todayZeroHour.setHours(0, 0, 0, 0)
   const newQuery = {

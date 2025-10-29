@@ -24,7 +24,7 @@
     :is-opened="!!editedNews"
     :news="editedNews"
     @close="editedNews = null"
-    @news-edited="loadNews"
+    @news-edited="refresh"
   />
 
   <ConfirmModal
@@ -36,77 +36,66 @@
     @confirm="deleteNews"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { useAsyncPaginationAPI } from '@/composables/useAsyncAPI'
+import { api } from '@/api/SwaggerProjects'
 
-export default {
-  name: 'NewsAdminBlock',
+defineOptions({ name: 'NewsAdminBlock' })
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+
+const editedNews = ref(null)
+const newsToDelete = ref(null)
+const isDeletingNews = ref(false)
+const { t } = useNuxtI18n()
+
+const {
+  isLoading,
+  data: allNews,
+  refresh,
+  paginated,
+} = useAsyncPaginationAPI(
+  'organizationNewsList',
+  ({ query }) => {
+    return api.v1.organizationNewsList(organizationsStore.current?.code, {
+      ...query,
+      ordering: '-publication_date',
+    })
   },
-
-  data() {
-    return {
-      allNews: [],
-      newsCount: 0,
-      isLoading: true,
-      editedNews: null,
-      newsToDelete: null,
-      isDeletingNews: false,
-    }
-  },
-
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.newsCount})`
-      return this.$t('admin.portal.news') + extra
+  {
+    paginationConfig: {
+      limit: 4,
     },
-  },
+  }
+)
 
-  async mounted() {
-    await this.loadNews()
-  },
+const blockTitle = computed(() => {
+  let extra = isLoading.value ? '' : ` (${paginated.total.value})`
+  return t('admin.portal.news') + extra
+})
 
-  methods: {
-    async loadNews() {
-      this.isLoading = true
-      const request = await getAllNews(this.organizationsStore.current?.code, {
-        ordering: '-publication_date',
-        limit: 4,
-      })
-      this.allNews = request.results
-      this.newsCount = request.count
-      this.isLoading = false
-    },
+const addNews = () => {
+  editedNews.value = defaultForm()
+}
 
-    addNews() {
-      this.editedNews = defaultForm()
-    },
+const deleteNews = async () => {
+  isDeletingNews.value = true
+  try {
+    await api.v1.organizationNewsDestroy(newsToDelete.value.id, organizationsStore.current?.code)
+    toaster.pushSuccess(t('news.delete.success'))
 
-    async deleteNews() {
-      this.isDeletingNews = true
-      try {
-        await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-        this.toaster.pushSuccess(this.$t('news.delete.success'))
-
-        this.loadNews()
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.newsToDelete = null
-        this.isDeletingNews = false
-      }
-    },
-  },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('news.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    newsToDelete.value = null
+    isDeletingNews.value = false
+  }
 }
 </script>

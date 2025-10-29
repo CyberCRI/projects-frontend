@@ -2,6 +2,9 @@
 import type { /*EventModel,*/ EventInput /*, EventOutput*/ } from '@/models/event.model'
 import useAPI from '@/composables/useAPI'
 
+/*
+   TODO: swagger api is not correct !!!
+*/
 export async function createEvent(orgCode: string, body: EventInput) {
   return await useAPI(`organization/${orgCode}/event/`, { body, method: 'POST' }) //.data.value
 }
