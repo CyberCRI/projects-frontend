@@ -118,6 +118,7 @@ export default defineNuxtConfig({
     appOpenaiApiPromptId: '',
     appOpenaiApiPromptVersion: '',
     appOpenaiApiVectorStoreId: '',
+    appMcpServerUrl: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
