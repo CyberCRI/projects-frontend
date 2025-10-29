@@ -13,7 +13,7 @@
         :is-opened="!!editedEvent"
         :event="editedEvent"
         @close="editedEvent = null"
-        @event-edited="loadEvents"
+        @event-edited="refresh"
       />
 
       <ConfirmModal
@@ -36,13 +36,14 @@
     </template>
   </AdminBlock>
 </template>
-<script setup>
-import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
+<script setup lang="ts">
+import { deleteEvent as deleteEventApi } from '@/api/event.service'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { api } from '@/api/SwaggerProjects'
-import { useAsyncPaginatedData } from '@/composables/usePaginated'
+import { useAsyncPaginatedAPI } from '@/composables/useAsyncAPI'
 
 defineOptions({ name: 'EventAdminBlock' })
 
@@ -58,7 +59,8 @@ const {
   status,
   data: events,
   refresh,
-} = useAsyncPaginatedData(
+  paginated,
+} = useAsyncPaginatedAPI(
   'organizationEventList',
   ({ query }) => {
     const todayAtZero = new Date()
@@ -80,7 +82,7 @@ const {
 const isLoading = computed(() => status.value !== 'success')
 
 const blockTitle = computed(() => {
-  let extra = isLoading ? '' : ` (${events.value.count})`
+  let extra = isLoading ? '' : ` (${paginated.total.value})`
   return t('admin.portal.events') + extra
 })
 
@@ -93,7 +95,7 @@ const deleteEvent = async () => {
   console.log('delete event', eventToDelete.value)
   isDeletingEvent.value = true
   try {
-    await deleteEvent(this.organizationsStore.current?.code, eventToDelete.value.id)
+    await deleteEventApi(organizationsStore.current?.code, eventToDelete.value.id)
     toaster.pushSuccess(t('event.delete.success'))
 
     refresh()

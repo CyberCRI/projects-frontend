@@ -1,16 +1,16 @@
 import { PaginatedAccessRequestList } from '@/api/Swagger'
 
-type Paginated<T = any[]> = Omit<PaginatedAccessRequestList, 'results'> & {
+export type Paginated<T = any[]> = Omit<PaginatedAccessRequestList, 'results'> & {
   results: T
 }
 
-type PaginatedQuery = {
+export type PaginatedQuery = {
   limit: number
   offset?: number
 }
 
 const DEFAULT_PAGINATED_LIMIT = 100
-type PaginatedConfig = {
+export type PaginatedConfig = {
   limit?: number
   offset?: number
 }
@@ -78,7 +78,7 @@ export const usePaginated = (results: Ref<Paginated>, PaginatedConfig: Paginated
     page.value += 1
   }
 
-  const query = () => {
+  const query = (): PaginatedQuery => {
     // page - 1 for first page
     const offset = (page.value - 1) * limit
     return {
@@ -96,75 +96,5 @@ export const usePaginated = (results: Ref<Paginated>, PaginatedConfig: Paginated
     next,
     canNext,
     query,
-  }
-}
-
-type AsyncPaginatedHandler = {
-  ctx?: Parameters<Parameters<typeof useAsyncData>['1']>[0]
-  query: PaginatedQuery
-}
-
-type AsyncDataConfig<ResT, DataT> = Parameters<typeof useAsyncData<ResT, unknown, DataT>>['2']
-
-type AsyncPaginatedConfig<ResT, DataT> = Omit<AsyncDataConfig<ResT, DataT>, 'transform'> & {
-  paginatedConfig?: PaginatedConfig
-}
-
-type AsyncPaginatedParameters<ResT, DataT> = [
-  Parameters<typeof useAsyncData<ResT, unknown, DataT>>['0'],
-  (
-    obj: AsyncPaginatedHandler
-  ) => ReturnType<Parameters<typeof useAsyncData<ResT, unknown, DataT>>['1']>,
-  AsyncPaginatedConfig<ResT, DataT>,
-]
-/**
- * you can change/set page automaticlym and the request auto refresh it
- * a wrapped composable under useAsyncData and usePaginated
- *
- * @constant
- * @name useAsyncPaginatedData
- * @kind variable
- * @type {<ResT extends Paginated<ResT["results"]>, DataT = ResT["results"]>(params_0: globalThis.MaybeRefOrGetter<string>, params_1: (obj: AsyncPaginatedHandler) => Promise<ResT>, params_2: AsyncPaginatedConfig<ResT, DataT>) => { paginated: { page: globalThis.Ref<number, number>; setPage: (pageValue: number) => void; total: globalThis.Ref<number, number>; prev: () => void; canPrev: globalThis.ComputedRef<boolean>; next: () => void; canNext: globalThis.ComputedRef<boolean>; query: () => { ...; }; }; ... 10 more ...; [Symbol.toStringTag]: string; }}
- * @exports
- */
-export const useAsyncPaginatedData = <
-  ResT extends Paginated<ResT['results']>,
-  DataT = ResT['results'],
->(
-  ...params: AsyncPaginatedParameters<ResT, DataT>
-) => {
-  const paginatedData = ref()
-  const paginated = usePaginated(paginatedData, params[2]?.paginatedConfig)
-
-  // pass all arguements, but override the transform data
-  const results = useAsyncData<ResT, unknown, DataT>(
-    params[0],
-    // override handler to add paginated query
-    (ctx) => {
-      return params[1]({
-        ctx,
-        query: paginated.query(),
-      })
-    },
-    {
-      ...((params[2] ?? {}) as AsyncDataConfig<ResT, DataT>),
-      // add page watcher
-      watch: [...[params[2]?.watch || []], paginated.page],
-
-      transform(dataApi: ResT) {
-        paginatedData.value = dataApi
-        // @ts-ignore
-        if (params[2]?.transform) {
-          // @ts-ignore
-          return params[2].transform(dataApi.results)
-        }
-        return dataApi.results as DataT
-      },
-    }
-  )
-
-  return {
-    ...results,
-    paginated,
   }
 }

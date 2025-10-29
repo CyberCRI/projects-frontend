@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { api } from '@/api/SwaggerProjects'
 import EventList from '@/components/event/EventList/EventList.vue'
 import EventListSkeleton from '@/components/event/EventList/EventListSkeleton.vue'
-import { useAsyncPaginatedData } from '@/composables/usePaginated'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { useAsyncPaginatedAPI } from '@/composables/useAsyncAPI'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 defineOptions({ name: 'EventsList' })
 
@@ -11,8 +11,9 @@ const props = defineProps({ isFuture: { type: Boolean, default: false } })
 
 const organizationsStore = useOrganizationsStore()
 const { translateEvents } = useAutoTranslate()
+const { t } = useNuxtI18n()
 
-const { status, data, refresh } = useAsyncPaginatedData('organizationEventList', ({ query }) => {
+const { status, data, refresh } = useAsyncPaginatedAPI('organizationEventList', ({ query }) => {
   const todayZeroHour = new Date()
   todayZeroHour.setHours(0, 0, 0, 0)
   const newQuery = {
@@ -33,7 +34,7 @@ const eventsByMonth = computed(() => {
     .slice(0)
     ?.sort((a, b) => {
       const mul = props.isFuture ? -1 : 1
-      return mul * (new Date(b.event_date) - new Date(a.event_date))
+      return mul * (new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
     })
     .reduce((acc, event) => {
       // keep the year in key !
@@ -56,7 +57,7 @@ const hasEvent = computed(() => {
   <EventListSkeleton v-if="isLoading" />
   <EventList v-else-if="hasEvent" :events-by-month="eventsByMonth" @reload-events="refresh" />
   <p v-else class="no-event">
-    {{ $t('event.no-event') }}
+    {{ t('event.no-event') }}
   </p>
 </template>
 
