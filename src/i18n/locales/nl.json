@@ -2031,7 +2031,10 @@
     "title-project": "Project",
     "title-blog": "Blog",
     "title-goal": "Doel",
-    "title-comment": "Opmerking"
+    "title-comment": "Opmerking",
+    "no-templates-set": "Geen sjabloon ingesteld.",
+    "placeholder-purpose": "Doel van het project",
+    "placeholder-title": "Titel ter plaatse"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",

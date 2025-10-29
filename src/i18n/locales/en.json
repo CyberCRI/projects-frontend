@@ -2028,10 +2028,13 @@
     "edit": "Template edition",
     "list": "Template list",
     "add-template": "Add template",
+    "no-templates-set": "No Template set.",
     "title-project": "Project",
     "title-blog": "Blog",
     "title-goal": "Goal",
-    "title-comment": "Comment"
+    "title-comment": "Comment",
+    "placeholder-purpose": "Purpose of the project",
+    "placeholder-title": "Title On-site"
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",

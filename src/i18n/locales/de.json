@@ -555,7 +555,7 @@
     "title": "Titel",
     "yes": "Ja.",
     "disconnect": "Abmelden",
-    "confirm-close": "Sind Sie sicher, dass Sie den Editor schlie\u00dfen wollen? \u00c4nderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
+    "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
     "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
     "create": "Erstellung"
@@ -2031,7 +2031,10 @@
     "title-project": "Projekt",
     "title-blog": "Blog",
     "title-goal": "Ziel",
-    "title-comment": "Anmerkung"
+    "title-comment": "Anmerkung",
+    "no-templates-set": "Kein Template-Set.",
+    "placeholder-purpose": "Ziel des Projekts",
+    "placeholder-title": "Titel Vor Ort"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",

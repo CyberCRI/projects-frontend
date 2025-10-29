@@ -2031,7 +2031,10 @@
     "title-project": "Proyecto",
     "title-blog": "Blog",
     "title-goal": "Objetivo",
-    "title-comment": "Comentario"
+    "title-comment": "Comentario",
+    "no-templates-set": "Sin plantilla.",
+    "placeholder-purpose": "Finalidad del proyecto",
+    "placeholder-title": "Título In situ"
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",
@@ -2216,8 +2219,8 @@
       "error": "Error durante la creación del proyecto"
     },
     "project-header-create": {
-      "success": "La imagen del proyecto se ha creado con \u00e9xito",
-      "error": "Error durante la creaci\u00f3n de la imagen del proyecto"
+      "success": "La imagen del proyecto se ha creado con éxito",
+      "error": "Error durante la creación de la imagen del proyecto"
     },
     "project-destroy": {
       "success": "El proyecto se ha eliminado con éxito",
@@ -2228,8 +2231,8 @@
       "error": "Error durante la actualización del proyecto"
     },
     "project-header-edit": {
-      "success": "La imagen del proyecto se ha actualizado con \u00e9xito",
-      "error": "Error durante la actualizaci\u00f3n de la imagen del proyecto"
+      "success": "La imagen del proyecto se ha actualizado con éxito",
+      "error": "Error durante la actualización de la imagen del proyecto"
     },
     "project-duplication": {
       "success": "El proyecto se ha duplicado con éxito",
