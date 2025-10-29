@@ -1,10 +1,7 @@
 import type { ProjectCategoryOutput } from '@/models/project-category.model'
-import {
-  getAllProjectCategories as apiGetAllProjectCategories,
-  ProjectCategoryParams,
-} from '@/api/project-categories.service'
+import useOrganizationCode from '@/composables/useOrganizationCode'
+import { getAllProjectCategories as apiGetAllProjectCategories } from '@/api/project-categories.service'
 import type { APIResponseList } from '@/api/types'
-import { useRuntimeConfig } from '#imports'
 import { defineStore } from 'pinia'
 import useAutoTranslate from '@/composables/useAutoTranslate'
 
@@ -73,17 +70,14 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
   })
 
   // actions: {
-  const getAllProjectCategories = (
-    params: ProjectCategoryParams = {}
-  ): Promise<APIResponseList<ProjectCategoryOutput>> => {
+  const getAllProjectCategories = (): Promise<APIResponseList<ProjectCategoryOutput>> => {
     // If no organization set in the param use default one
     // TODO check why rootState.organizations.current is sometimes null
     // the fallback on env value is a temporary fix
-    const runtimeConfig = useRuntimeConfig()
-    if (!params.organization) params.organization = runtimeConfig.public.appApiOrgCode
+    const organizationCode = useOrganizationCode()
 
     return new Promise((resolve, reject) => {
-      apiGetAllProjectCategories(params)
+      apiGetAllProjectCategories(organizationCode)
         .then((response) => {
           // Only store project categories from org
           // Except in "TheAdvancedProjectOptions" where we need all project categories from every org

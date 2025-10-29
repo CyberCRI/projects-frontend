@@ -25,6 +25,7 @@ const form = ref({
   title: '',
   purpose: '',
   category: undefined,
+  template: undefined,
   header_image: null,
 
   language: locale.value,
@@ -77,7 +78,7 @@ const formNotEmpty = computed(() => {
   return (
     !!form.value.title &&
     !!form.value.purpose &&
-    (!categories.value?.length || !!form.value.category)
+    (!categories.value?.length || !!form.value.category || !!form.value.template)
   )
 })
 
@@ -104,6 +105,9 @@ const doCreateProject = async () => {
 
   if (form.value.category) {
     payload['project_categories_ids'] = [form.value.category.toString()]
+  }
+  if (form.value.template) {
+    payload['template_id'] = form.value.template
   }
   isSaving.value = true
   try {

@@ -279,7 +279,10 @@
       "events": "Événements",
       "instructions": "Instructions",
       "news": "Actualités",
-      "featured-projects": "Projets à la une"
+      "featured-projects": "Projets à la une",
+      "templates": {
+        "add": "Ajouter un modèle"
+      }
     },
     "form": {
       "admin-info": {
@@ -554,7 +557,8 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)"
+    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
+    "create": "Créer"
   },
   "complete-profile": {
     "bio": {
@@ -609,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Veuillez décrire votre projet",
+    "default-project": "Veuillez décrire votre projet",
     "delete": "Etes-vous sûr de vouloir fermer l'éditeur ?",
     "edit-saved": "Les modifications que vous (et vos éventuels co-auteurs) avez apportées ne seront pas enregistrées",
     "edit": "modifier la description (brouillon)",
@@ -863,7 +867,8 @@
         "format": "Veuillez entrer une adresse email valide"
       },
       "description": "Le champ description est obligatoire"
-    }
+    },
+    "templates": "Modèles"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1169,7 +1174,8 @@
       "title": "Montrez votre impact",
       "text": "Augmentez votre impact en montrant vos efforts pour le bien commun. Identifiez les {sdg} auxquels vous contribuez. Géolocalisez tous les lieux où vos projets génèrent un impact.",
       "sdg": "Objectifs de Développement Durable",
-      "link": "https://fr.unesco.org/sdgs"
+      "link": "https://fr.unesco.org/sdgs",
+      "sdgAbbr": "Objectifs de développement durable"
     }
   },
   "mentorship": {
@@ -1468,7 +1474,9 @@
             "title": "Niveau 4 : Expert",
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
-        }
+        },
+        "search": "recherche",
+        "nothing-yet": "Tu n'as pas encore ajouté de compétences."
       },
       "privacy": {
         "tab": "Confidentialité",
@@ -1594,7 +1602,8 @@
         "required": "Le champ titre est obligatoire",
         "max": "Le champ mission ne peut pas contenir plus de 180 caractères",
         "min": "Le champ mission doit contenir au minimum 3 caractères"
-      }
+      },
+      "project-templates": "Nom du modèle"
     },
     "image-header": "Image",
     "image-alert": {
@@ -2001,16 +2010,28 @@
     "advancement-goal-title": "template de titre d'objectif d'avancement",
     "advancement-goal-content": "template de contenu d'objectif d'avancement",
     "category": "Catégorie du template",
-    "description": "template de description",
     "language": "Langue du template",
     "info": "Si vous voulez suggérer à vos utilisateurs comment organiser leur projet dans une catégorie en particulier, vous pouvez créer un template pour cette catégorie. Ensuite, lorsque l'utilisateur créera un projet dans cette catégorie, le projet sera initialisé avec le texte que vous aurez défini dans le template. Ce texte est un guide pour l'utilisateur.",
     "no-tag-set": "Aucun tag n'a été défini pour le moment.",
-    "placeholder-purpose": "Objectif du projet",
-    "placeholder-title": "Titre",
+    "project-purpose": "Objectif du projet",
+    "project-title": "Titre",
     "tags": "Tags du template",
     "title": "Templates",
     "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template.",
-    "comment": "Template pour les commentaires"
+    "comment": "Template pour les commentaires",
+    "tips-template": "",
+    "template": "Modèle",
+    "no-category-set": "Aucun ensemble de catégories",
+    "create": "Création de modèles",
+    "edit": "Édition modèle",
+    "list": "Liste des modèles",
+    "add-template": "Ajouter un modèle",
+    "description": "Description du modèle",
+    "project-description": "Modèle de description du projet",
+    "title-project": "Projet",
+    "title-blog": "Blog",
+    "title-goal": "Objectif",
+    "title-comment": "Commentaire"
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",
@@ -2631,7 +2652,8 @@
       "unauthorized": "Non autorisé: Accès refusé en raison d'informations d'identification non valides.",
       "unprocessable-entity": "Unprocessable entity: le serveur n'a pas été en mesure de réaliser les instructions demandées",
       "bad-gateway": "Bad gateway: Le serveur a rencontré une erreur temporaire et n'a pas pu répondre à votre demande."
-    }
+    },
+    "error-default": "Une erreur s'est produite. Veuillez réessayer ou contacter l'administrateur."
   },
   "people-groups": {
     "browse-tree": "Parcourir l'arbre des groupes"

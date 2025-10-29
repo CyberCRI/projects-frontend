@@ -279,7 +279,10 @@
       "events": "Sündmused",
       "instructions": "Juhendid",
       "news": "Uudised",
-      "featured-projects": "Omanäolised projektid"
+      "featured-projects": "Omanäolised projektid",
+      "templates": {
+        "add": "Malli lisamine"
+      }
     },
     "form": {
       "admin-info": {
@@ -331,7 +334,9 @@
         "accept": "Nõustun",
         "accepted": "Vastu võetud",
         "no-result": "Tulemust pole"
-      }
+      },
+      "accept-success": "Edukalt vastu võetud taotlus",
+      "decline-success": "Rakendus lükati edukalt tagasi"
     }
   },
   "account": {
@@ -552,7 +557,8 @@
     "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
-    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
+    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
+    "create": "Loo"
   },
   "complete-profile": {
     "bio": {
@@ -607,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Kirjelda nüüd oma projekti.",
+    "default-project": "Kirjelda nüüd oma projekti.",
     "placeholder": "Sul pole veel kirjeldust, mõtle ühe lisamisele!",
     "delete": "Kas oled kindel, et soovid toimetaja sulgeda?",
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
@@ -861,7 +867,8 @@
         "format": "Palun sisesta kehtiv e- posti aadress"
       },
       "description": "Kirjeldusväli on nõutav"
-    }
+    },
+    "templates": "Mallid"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1468,7 +1475,8 @@
             "title": "4. tasand: ekspert",
             "description": "PhD tasemel või tegi suure projekti või võib õpetada magistri tasemel"
           }
-        }
+        },
+        "nothing-yet": "Sa pole veel oskusi lisanud."
       },
       "privacy": {
         "tab": "Privaatsus",
@@ -1593,7 +1601,9 @@
         "required": "Vajalik on otstarbeväli",
         "max": "Eesmärgiväli ei tohi olla suurem kui 180 märki",
         "min": "Eesmärgi väli peab olema vähemalt 3 märki."
-      }
+      },
+      "project-templates": "Malli nimi",
+      "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1887,7 +1897,8 @@
     "current-skill-description": "Tüübi oskuste märgis ja vali õige oskus",
     "disambiguate": "(Desambiguation)",
     "suggestions": "Soovitused",
-    "choose-skill": "Klõpsa valitud oskusel:"
+    "choose-skill": "Klõpsa valitud oskusel:",
+    "main-tags": "või valida peasiltide hulgast"
   },
   "sdg": {
     "1": {
@@ -1999,7 +2010,6 @@
     "advancement-goal-title": "edutamiseesmärgi tiitli mall",
     "advancement-goal-content": "edutamise eesmärgi sisu mall",
     "category": "Malli kategooria",
-    "description": "Kirjelduse vorm",
     "language": "Keelemall",
     "info": "Kui soovite kasutajatele soovitada, kuidas oma projekti konkreetses kategoorias korraldada, saate luua selle kategooria malli. Siis, kui kasutaja loob projekti selles kategoorias, projekti initsialiseeritakse teksti, et sa määratletud mall. See tekst on mõeldud juhendina kasutajatele.",
     "no-tag-set": "Ühtegi märksõnad pole praeguseks seatud.",
@@ -2008,7 +2018,20 @@
     "tags": "Malli sildid",
     "title": "Mallid",
     "tips-category": "Vali kategooria, millele mall rakendub.",
-    "comment": "Kommentaari mall"
+    "comment": "Kommentaari mall",
+    "tips-template": "",
+    "template": "Mall",
+    "no-category-set": "Kategooriat pole määratud",
+    "create": "Malli loomine",
+    "edit": "Malli väljaanne",
+    "list": "Mallide nimekiri",
+    "add-template": "Lisa mall",
+    "description": "Malli kirjeldus",
+    "project-description": "Projekti kirjelduse vorm",
+    "title-project": "Projekt",
+    "title-blog": "Blogi",
+    "title-goal": "Värav",
+    "title-comment": "Kommentaar"
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",
@@ -2571,6 +2594,9 @@
         "label": "Teatamine",
         "notice": "Valimise korral teavitatakse kõiki uuest juhendist",
         "button": "Saada teade"
+      },
+      "image": {
+        "label": "Pilt"
       }
     },
     "list": {
@@ -2626,7 +2652,8 @@
       "unauthorized": "Volitamata: Juurdepääs keelatakse kehtetute volituste tõttu.",
       "unprocessable-entity": "Töötlemata üksus: ei suuda töödelda sisalduvaid juhiseid.",
       "bad-gateway": "Halb värav: Serveril tekkis ajutine viga ja ta ei suutnud teie taotlust täita."
-    }
+    },
+    "error-default": "Tekkis viga. Palun proovige uuesti või võtke ühendust administraatoriga."
   },
   "people-groups": {
     "browse-tree": "Grupipuu sirvimine"

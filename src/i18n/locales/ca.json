@@ -279,7 +279,10 @@
       "events": "Esdeveniments",
       "instructions": "Instruccions",
       "news": "Notícies",
-      "featured-projects": "Projectes de característiques"
+      "featured-projects": "Projectes de característiques",
+      "templates": {
+        "add": "Afegeix una plantilla"
+      }
     },
     "form": {
       "admin-info": {
@@ -331,7 +334,9 @@
         "accept": "Accepta",
         "accepted": "Acceptat",
         "no-result": "Sense resultats"
-      }
+      },
+      "accept-success": "L' aplicació s' ha acceptat correctament",
+      "decline-success": "L' aplicació s' ha rebutjat correctament"
     }
   },
   "account": {
@@ -552,7 +557,8 @@
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
-    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)"
+    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
+    "create": "Crea"
   },
   "complete-profile": {
     "bio": {
@@ -607,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Ara, descriu el teu projecte.",
+    "default-project": "Ara, descriu el teu projecte.",
     "placeholder": "Encara no teniu cap descripció, penseu en afegir-ne un!",
     "delete": "Esteu segur que voleu tancar l' editor?",
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
@@ -861,7 +867,8 @@
         "format": "Si us plau, introduïu una adreça de correu electrònic vàlida"
       },
       "description": "Cal el camp de descripció"
-    }
+    },
+    "templates": "Plantilles"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -1358,7 +1365,7 @@
       },
       "skills": {
         "tab": "Habilitats",
-        "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col\u00b7legues i a la teva comunitat trobar-te basant-te en all\u00f2 que t'importa.",
+        "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col·legues i a la teva comunitat trobar-te basant-te en allò que t'importa.",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
         "search": "cerca",
@@ -1468,7 +1475,8 @@
             "title": "Nivell 4: Expert",
             "description": "Nivell de doctorat o va fer un gran projecte, o pot ensenyar al nivell mestre"
           }
-        }
+        },
+        "nothing-yet": "Encara no has afegit habilitats."
       },
       "privacy": {
         "tab": "Privadesa",
@@ -1593,7 +1601,9 @@
         "required": "Es requereix el camp de propòsit",
         "max": "El camp de propòsit no pot ser més gran que 180 caràcters",
         "min": "El camp de propòsit ha de ser almenys 3 caràcters"
-      }
+      },
+      "project-templates": "Nom de la plantilla",
+      "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació."
     },
     "image-header": "Imatge",
     "image-alert": {
@@ -1887,7 +1897,8 @@
     "current-skill-description": "Tipus d' etiqueta i selecciona l' habilitat correcta",
     "disambiguate": "(DISAMBIGUACIÓ)",
     "suggestions": "Suggeriments",
-    "choose-skill": "Feu clic sobre l' habilitat seleccionada:"
+    "choose-skill": "Feu clic sobre l' habilitat seleccionada:",
+    "main-tags": "o escolliu des de les etiquetes principals"
   },
   "sdg": {
     "1": {
@@ -1999,16 +2010,28 @@
     "advancement-goal-title": "plantilla per al títol de l' objectiu",
     "advancement-goal-content": "plantilla per al contingut de l' objectiu",
     "category": "Categoria de plantilla",
-    "description": "Plantilla per a la descripció",
     "language": "Plantilla d' idioma",
     "info": "Si voleu suggerir als usuaris com organitzar el seu projecte en una categoria específica, podeu crear una plantilla per aquesta categoria. Llavors, quan un usuari crearà un projecte en aquesta categoria, el projecte serà inicials amb el text que heu definit a la plantilla. Aquest text està dissenyat com a guia per als usuaris.",
     "no-tag-set": "No s' ha establert cap etiqueta per ara.",
-    "placeholder-purpose": "objectiu del projecte",
-    "placeholder-title": "Lloc de substitució del títol",
+    "project-purpose": "objectiu del projecte",
+    "project-title": "Lloc de substitució del títol",
     "tags": "Etiquetes de plantilla",
     "title": "Plantilles",
     "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla.",
-    "comment": "Plantilla per al comentari"
+    "comment": "Plantilla per al comentari",
+    "tips-template": "",
+    "template": "Plantilla",
+    "no-category-set": "Sense conjunt de categoria",
+    "create": "Creació de plantilla",
+    "edit": "Edició de la plantilla",
+    "list": "Llista de plantilles",
+    "add-template": "Afegeix plantilla",
+    "description": "Descripció de la plantilla",
+    "project-description": "Plantilla per a la descripció del projecte",
+    "title-project": "Projecte",
+    "title-blog": "Bloc",
+    "title-goal": "Objectiu",
+    "title-comment": "Comentari"
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
@@ -2571,6 +2594,9 @@
         "label": "Notificació",
         "notice": "Si se selecciona, tothom no serà notificat de la nova instrucció",
         "button": "Envia una notificació"
+      },
+      "image": {
+        "label": "Imatge"
       }
     },
     "list": {
@@ -2626,7 +2652,8 @@
       "unauthorized": "Sense autoritzar: S' ha denegat l' accés degut a les credencials no vàlides.",
       "unprocessable-entity": "Entitat no es pot processar: no es pot processar les instruccions contingudes.",
       "bad-gateway": "Portal incorrecte: El servidor ha trobat un error temporal i no ha pogut completar la vostra petició."
-    }
+    },
+    "error-default": "S' ha produït un error. Torneu a provar o contacteu amb l' administrador."
   },
   "people-groups": {
     "browse-tree": "Navega per l' arbre de grups"
