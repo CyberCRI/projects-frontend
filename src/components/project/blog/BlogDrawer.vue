@@ -124,7 +124,7 @@ export default {
   props: {
     project: {
       type: Object,
-      retuired: true,
+      required: true,
     },
     isOpened: {
       type: Boolean,
