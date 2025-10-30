@@ -72,7 +72,7 @@ const currentRouteName = computed(() => {
 const isChatBotOpen = ref(false)
 
 const hasChatBot = computed(
-  () => !!useRuntimeConfig().public.appChatbotEnabled && usersStore.isConnected
+  () => !!useRuntimeConfig().public.appChatbotEnabled /* && usersStore.isConnected */
 )
 
 const toggleReportBugModal = () => {
