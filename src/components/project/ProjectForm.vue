@@ -50,7 +50,7 @@
     >
       <TextInput
         v-model="form.title"
-        :placeholder="titlePlaceholder"
+        :placeholder="$t('project.form.title-placeholder')"
         :unfocusable="otherFieldDisabled"
         space-below-label="large-space"
         data-test="title-input"
@@ -77,7 +77,7 @@
     >
       <TextInput
         v-model="form.purpose"
-        :placeholder="purposePlaceholder"
+        :placeholder="$t('project.form.project-purpose')"
         :unfocusable="otherFieldDisabled"
         data-test="purpose-input"
         space-below-label="large-space"
@@ -287,9 +287,7 @@ export default {
 
   computed: {
     selectedCategoryLabel() {
-      return this.selectedCategory
-        ? this.selectedCategory.name
-        : this.$t('project.form.select-category')
+      return this.selectedCategory?.name || this.$t('project.form.select-category')
     },
 
     languageOptions() {
@@ -300,26 +298,6 @@ export default {
           dataTest: `project-form-${language}`,
         }
       })
-    },
-
-    titlePlaceholder() {
-      if (
-        this.selectedCategory &&
-        this.selectedCategory.template &&
-        this.selectedCategory.template.project_title
-      )
-        return this.selectedCategory.template.project_title
-      return this.$t('project.form.title-placeholder')
-    },
-
-    purposePlaceholder() {
-      if (
-        this.selectedCategory &&
-        this.selectedCategory.template &&
-        this.selectedCategory.template.goal_placeholder
-      )
-        return this.selectedCategory.template.goal_placeholder
-      return this.$t('project.form.purpose-placeholder')
     },
 
     otherFieldDisabled() {
@@ -384,6 +362,7 @@ export default {
     async setTemplate(template) {
       if (template === null) {
         this.selectedTemplate = template
+        this.form.template = null
         return
       }
       const { data } = await getTemplate(this.organizationsStore.current.code, template.id)

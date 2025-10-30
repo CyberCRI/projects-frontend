@@ -1589,7 +1589,7 @@
       "project-category": "Project category",
       "select-category": "Pick a category",
       "purpose-label": "Project's goal",
-      "purpose-placeholder": "What is the goal of your project?",
+      "project-purpose": "What is the goal of your project?",
       "resize-image": "Reframe",
       "title-label": "Add a title",
       "title-placeholder": "What is the name of this project?",

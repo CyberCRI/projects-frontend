@@ -1588,7 +1588,7 @@
       "project-category": "Categoria del projecte",
       "select-category": "Escull una categoria",
       "purpose-label": "objectiu del projecte",
-      "purpose-placeholder": "Quin és l'objectiu del teu projecte?",
+      "project-purpose": "Quin és l'objectiu del teu projecte?",
       "resize-image": "Rel· la",
       "title-label": "Afegeix un títol",
       "title-placeholder": "Com es diu aquest projecte?",
