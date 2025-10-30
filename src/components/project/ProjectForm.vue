@@ -210,6 +210,7 @@ import { useRuntimeConfig } from '#imports'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
 import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
+import { getTemplate } from '@/api/templates.service'
 
 export default {
   name: 'ProjectForm',
@@ -254,9 +255,11 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const { translateTemplate } = useAutoTranslate()
     return {
       organizationsStore,
       runtimeConfig,
+      translateTemplate,
     }
   },
 
@@ -333,9 +336,9 @@ export default {
         // set default tags according to selected category
         if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
         if (this.selectedCategory.templates.length == 1) {
-          this.setTemplate(this.selectedCategory.templates[0])
+          await this.setTemplate(this.selectedCategory.templates[0])
         } else {
-          this.setTemplate(null)
+          await this.setTemplate(null)
         }
       }
     },
@@ -378,9 +381,17 @@ export default {
       this.$refs.categoryDropdown?.close()
     },
 
-    setTemplate(template) {
+    async setTemplate(template) {
+      if (template === null) {
+        this.selectedTemplate = template
+        return
+      }
+      const { data } = await getTemplate(this.organizationsStore.current.code, template.id)
+      const trans = this.translateTemplate(data.value)
+      this.form.title = trans.value.$t.project_title
+      this.form.purpose = trans.value.$t.project_purpose
+      this.form.template = template.id
       this.selectedTemplate = template
-      this.form.template = template?.id
     },
     closeTagSearchTags() {
       this.tagSearchIsOpened = false
@@ -404,7 +415,10 @@ export default {
       this.form.team.member_groups = []
 
       team.forEach((user) => {
-        this.form.team[user.role].push(user.user.id)
+        // check for not duplicates user
+        if (!this.form.team[user.role].includes(user.user.id)) {
+          this.form.team[user.role].push(user.user.id)
+        }
       })
     },
 

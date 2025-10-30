@@ -220,10 +220,10 @@ export default {
     getProjectDescription(project) {
       if (this.descriptionIsNotEmpty) {
         return project.description
-      } else if (project.template && project.template.project_description) {
-        return project.template.project_description
       }
-      return this.$t('description.default-project')
+      return (
+        this.project.template?.$t?.project_description || this.$t('description.default-project')
+      )
     },
 
     loadProject(project) {
