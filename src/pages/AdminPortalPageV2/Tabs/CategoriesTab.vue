@@ -298,6 +298,8 @@ export default {
         // some category have tags for historical reasons
         // api expecty just ids
         tags: category.tags?.map((tag) => tag.id) || [],
+        // convert array templates to array with ids
+        templates_ids: category.templates.map((el) => el.id),
       }
       delete data.imageSizes
       let categoryId = category.id
