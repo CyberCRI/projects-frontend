@@ -112,8 +112,7 @@ export default {
 
   computed: {
     commentTemplate() {
-      // return this.projectCategoryForCurrentOrganization?.template?.comment || '<p></p>'
-      return this.project.template?.comment || '<p></p>'
+      return this.project.template?.comment_content || '<p></p>'
     },
 
     initialComment() {

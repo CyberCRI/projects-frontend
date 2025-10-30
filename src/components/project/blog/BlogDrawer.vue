@@ -219,7 +219,7 @@ export default {
 
           this.room = null
           this.selectedDate = new Date()
-          this.title = null
+          this.title = this.getNewBlogIniatialTitle()
           this.addedImages = []
         }
         this.$nextTick(() => {
@@ -232,7 +232,10 @@ export default {
 
   methods: {
     getNewBlogIniatialContent() {
-      return this.project?.template?.blogentry_placeholder || '<p></p>'
+      return this.project?.template?.blogentry_content || '<p></p>'
+    },
+    getNewBlogIniatialTitle() {
+      return this.project?.template?.blogentry_title || ''
     },
 
     handleDestroyModalConfirmed() {
@@ -388,7 +391,10 @@ export default {
           this.closeDrawer()
         }
       } else {
-        if (this.editorBlogEntry !== this.getNewBlogIniatialContent || this.title) {
+        if (
+          this.editorBlogEntry !== this.getNewBlogIniatialContent() ||
+          this.title !== this.getNewBlogIniatialTitle()
+        ) {
           this.confirmModalIsOpen = true
         } else {
           this.closeDrawer()
