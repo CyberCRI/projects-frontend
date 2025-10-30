@@ -404,7 +404,10 @@ export default {
       this.form.team.member_groups = []
 
       team.forEach((user) => {
-        this.form.team[user.role].push(user.user.id)
+        // check for not duplicates user
+        if (!this.form.team[user.role].includes(user.user.id)) {
+          this.form.team[user.role].push(user.user.id)
+        }
       })
     },
 
