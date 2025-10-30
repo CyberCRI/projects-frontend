@@ -140,6 +140,27 @@ export default function useAutoTranslate() {
     ])
   const translateOrganizations = (orgs) => translateEntities(orgs, translateOrganization)
 
+  const translateTemplate = (template) => {
+    const _template = unref(template)
+    if (_template?.project_tags)
+      _template.project_tags = unref(translateTags(_template.project_tags))
+    if (_template?.categories)
+      _template.categories = unref(translateCategories(_template.categories))
+    return translateEntity(_template, [
+      'name',
+      'description',
+      'project_title',
+      'project_description',
+      'project_purpose',
+      'blogentry_title',
+      'blogentry_content',
+      'goal_title',
+      'goal_description',
+      'comment_content',
+    ])
+  }
+  const translateTemplates = (templates) => translateEntities(templates, translateTemplate)
+
   // -------
   // use full
 
@@ -255,5 +276,9 @@ export default function useAutoTranslate() {
     // categories
     translateCategory,
     translateCategories,
+
+    // templates
+    translateTemplate,
+    translateTemplates,
   }
 }
