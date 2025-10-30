@@ -255,9 +255,11 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const { translateTemplate } = useAutoTranslate()
     return {
       organizationsStore,
       runtimeConfig,
+      translateTemplate,
     }
   },
 
@@ -385,8 +387,9 @@ export default {
         return
       }
       const { data } = await getTemplate(this.organizationsStore.current.code, template.id)
-      this.form.title = data.value.project_title
-      this.form.purpose = data.value.project_purpose
+      const trans = this.translateTemplate(data.value)
+      this.form.title = trans.value.$t.project_title
+      this.form.purpose = trans.value.$t.project_purpose
       this.form.template = template.id
       this.selectedTemplate = template
     },

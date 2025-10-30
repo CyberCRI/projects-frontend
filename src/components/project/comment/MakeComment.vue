@@ -112,7 +112,7 @@ export default {
 
   computed: {
     commentTemplate() {
-      return this.project.template?.comment_content || '<p></p>'
+      return this.project.template?.$t?.comment_content || '<p></p>'
     },
 
     initialComment() {

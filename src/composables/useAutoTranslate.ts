@@ -58,8 +58,16 @@ export default function useAutoTranslate() {
 
   // --------------------
   // Projects
-  const translateProject = (project) =>
-    translateEntity(project, ['title', 'description', 'purpose'])
+  const translateProject = (project) => {
+    return computed(() => {
+      const unrefProject = unref(project)
+      if (!unrefProject) return project
+      return {
+        ...unref(translateEntity(unrefProject, ['title', 'description', 'purpose'])),
+        template: unref(translateTemplate(unrefProject.template)),
+      }
+    })
+  }
   const translateProjects = (projects) => translateEntities(projects, translateProject)
 
   const translateComment = (comment) => {
