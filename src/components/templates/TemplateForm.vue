@@ -92,14 +92,14 @@
     </h4>
 
     <div>
-      <TextInput v-model="form.blog_title" :label="capitalize(t('template.blog-title'))" />
+      <TextInput v-model="form.blogentry_title" :label="capitalize(t('template.blog-title'))" />
     </div>
 
     <div>
       <label class="label">{{ capitalize(t('template.blog-content')) }}</label>
       <TipTapEditor
         :key="`blog-${editorKey}`"
-        v-model="form.blog_content"
+        v-model="form.blogentry_content"
         :save-image-callback="saveImageCallback"
         mode="full"
       />
@@ -140,7 +140,7 @@
 
       <TipTapEditor
         :key="`comment-${editorKey}`"
-        v-model="form.comment"
+        v-model="form.comment_content"
         :save-image-callback="saveImageCallback"
         class="comment-description"
         mode="full"

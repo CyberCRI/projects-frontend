@@ -11,13 +11,13 @@ const DEFAULT_FORM = {
   project_purpose: '',
   project_tags: [],
 
-  blog_title: '',
-  blog_content: '<p></p>',
+  blogentry_title: '',
+  blogentry_content: '<p></p>',
 
   goal_title: '',
   goal_description: '<p></p>',
 
-  comment: '',
+  comment_content: '',
   categories: [],
 }
 
