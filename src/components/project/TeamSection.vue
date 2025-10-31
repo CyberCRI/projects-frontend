@@ -99,6 +99,7 @@ export default {
     adaptedCurrentUser: {
       handler: function (neo) {
         if (neo) {
+          // current user is automatically added as owner
           this.addUser(this.adaptedCurrentUser)
         }
       },
@@ -119,13 +120,7 @@ export default {
       this.$emit('update-team', this.projectUsers)
     },
     addPayloadUsers(payload) {
-      payload.forEach((user) => {
-        // current user is automatically added as owner
-        // so dont duplicate him
-        if (this.$filters.isGroup(user)) {
-          this.addUser(user)
-        }
-      })
+      payload.forEach((user) => this.addUser(user))
     },
 
     removeUser(user) {
