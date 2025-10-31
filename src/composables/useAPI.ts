@@ -86,8 +86,8 @@ const defaultOptions = () => {
   }
 }
 
-const useAPI = (url: string, options) => {
-  const _options = merge(defaultOptions(), options)
+const useAPI = (url: string, options?: any) => {
+  const _options = merge(defaultOptions(), options || {})
   return $fetch(url, _options)
 }
 
