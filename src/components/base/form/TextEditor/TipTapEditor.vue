@@ -50,6 +50,7 @@ defineExpose({
       :show-menu="mode !== 'none'"
       :save-icon-visible="saveIconVisible"
       :save-image-callback="saveImageCallback"
+      :disable-save="disableSave"
       @image="emit('image', $event)"
       @saved="emit('saved', $event)"
     />
