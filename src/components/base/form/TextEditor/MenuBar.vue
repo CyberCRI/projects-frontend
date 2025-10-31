@@ -50,7 +50,7 @@ export default {
     },
     disableSave: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
 
@@ -291,7 +291,7 @@ export default {
             icon: 'save-line',
             title: 'multieditor.save',
             action: () => this.$emit('saved'),
-            isDisabled: disableSave,
+            isDisabled: this.disableSave,
           }
         )
       }
