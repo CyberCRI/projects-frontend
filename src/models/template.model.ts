@@ -7,9 +7,9 @@ import { ImageModel } from '@/models/image.model'
  */
 export interface TemplateModel extends BaseModel {
   project_title: string
-  goal_placeholder: string
+  goal_title: string
   project_description: string
-  blogentry_placeholder: string
+  blogentry_title: string
   images: ImageModel[]
 }
 

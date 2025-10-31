@@ -20,7 +20,7 @@
       <span class="description">{{ $t('template.tips-template') }}</span>
       <TipTapEditor
         :key="`description-${editorKey}`"
-        v-model="form.project_purpose"
+        v-model="form.description"
         :save-image-callback="saveImageCallback"
         mode="full"
       />

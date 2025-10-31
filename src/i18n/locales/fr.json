@@ -1589,7 +1589,7 @@
       "project-category": "Catégorie du projet",
       "select-category": "Choisir une catégorie",
       "purpose-label": "Objectif du projet",
-      "purpose-placeholder": "Quel est l’objectif de votre projet ?",
+      "project-purpose": "Quel est l’objectif de votre projet ?",
       "resize-image": "Recadrer",
       "title-label": "Ajouter un titre",
       "title-placeholder": "Comment s'appelle ce projet ?",
