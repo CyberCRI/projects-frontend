@@ -68,13 +68,7 @@
     </div>
 
     <div>
-      <label class="label">{{ capitalize(t('template.project-purpose')) }}</label>
-      <TipTapEditor
-        :key="`project-purpose-${editorKey}`"
-        v-model="form.project_purpose"
-        :save-image-callback="saveImageCallback"
-        mode="full"
-      />
+      <TextInput v-model="form.project_purpose" :label="t('template.project-purpose')" />
     </div>
 
     <div>
