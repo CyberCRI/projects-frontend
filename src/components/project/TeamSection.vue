@@ -31,7 +31,7 @@
       :is-opened="teamModalVisible"
       :selected-categories="[selectedCategory]"
       @close="teamModalVisible = false"
-      @add-user="addUser"
+      @add-user="addPayloadUsers"
     />
   </div>
 </template>
@@ -90,16 +90,16 @@ export default {
         job: this.currentUser.job,
         people_id: this.currentUser.people_id,
         profile_picture: this.currentUser.profile_picture,
+        role: 'owners',
       }
     },
   },
 
   watch: {
-    currentUser: {
+    adaptedCurrentUser: {
       handler: function (neo) {
         if (neo) {
-          this.projectUsers.push({ user: this.adaptedCurrentUser, role: 'owners' })
-          this.$emit('update-team', this.projectUsers)
+          this.addUser(this.adaptedCurrentUser)
         }
       },
       immediate: true,
@@ -107,19 +107,25 @@ export default {
   },
 
   methods: {
-    addUser(payload) {
+    addUser(newUser) {
+      // don't duplicate users
+      if (this.projectUsers.find(({ user }) => user.id === newUser.id)) {
+        return
+      }
+      this.projectUsers.push({
+        user: user,
+        role: user.role,
+      })
+      this.$emit('update-team', this.projectUsers)
+    },
+    addPayloadUsers(payload) {
       payload.forEach((user) => {
         // current user is automatically added as owner
         // so dont duplicate him
-        if (this.$filters.isGroup(user) || user.id !== this.currentUser.id) {
-          this.projectUsers.push({
-            user: user,
-            role: user.role,
-          })
+        if (this.$filters.isGroup(user)) {
+          this.addUser(user)
         }
       })
-
-      this.$emit('update-team', this.projectUsers)
     },
 
     removeUser(user) {
