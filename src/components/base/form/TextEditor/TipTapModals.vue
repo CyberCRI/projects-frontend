@@ -17,6 +17,8 @@ defineProps({
   showMenu: { type: Boolean, required: true },
   mode: { type: String, required: true },
 
+  disableSave: { type: Boolean, default: false },
+
   saveIconVisible: { type: Boolean, default: false },
   saveImageCallback: {
     // function must take a file argument and return a promise resolving to an {url, width, height} object
@@ -90,6 +92,7 @@ function openImageModal() {
     :open-link-modal="openLinkModal"
     :open-video-modal="openVideoModal"
     :save-icon-visible="saveIconVisible"
+    :disable-save="disableSave"
     @saved="$emit('saved')"
   />
 

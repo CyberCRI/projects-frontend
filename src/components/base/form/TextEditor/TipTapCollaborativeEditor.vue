@@ -60,6 +60,10 @@ const props = defineProps({
       const lightness = randomIntInRange(20, 60) // neither too dark nor too light
       return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
+    disableSave: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   providerParams: {
@@ -383,6 +387,7 @@ defineExpose({
         :show-menu="disconnectionGrace"
         :save-icon-visible="saveIconVisible"
         :save-image-callback="saveImageCallback"
+        :disable-save="disableSave"
         @image="emit('image', $event)"
         @saved="emit('saved', $event)"
       />
