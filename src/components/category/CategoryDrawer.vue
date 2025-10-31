@@ -329,23 +329,32 @@ const DRAG_OPTIONS = {
   ghostClass: 'child-ghost',
 }
 
-watch('category.foreground_color', (val) => {
-  if (typeof val !== String && val.hex) {
-    category.value.foreground_color = val.hex
+watch(
+  () => category.value.foreground_color,
+  (val) => {
+    if (typeof val !== String && val.hex) {
+      category.value.foreground_color = val.hex
+    }
   }
-})
+)
 
-watch('category.background_color', (val) => {
-  if (typeof val !== String && val.hex) {
-    category.value.background_color = val.hex
+watch(
+  () => category.value.background_color,
+  (val) => {
+    if (typeof val !== String && val.hex) {
+      category.value.background_color = val.hex
+    }
   }
-})
+)
 
 // not using computed
 // beacuse can also be set from a file object in form
-watch('category.background_image', (val) => {
-  displayedImage.value = val && val.variations ? val.variations.small : null
-})
+watch(
+  () => category.value.background_image,
+  (val) => {
+    displayedImage.value = val && val.variations ? val.variations.small : null
+  }
+)
 
 const imageResizer = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
