@@ -50,7 +50,7 @@ export default {
           small: undefined,
         },
       },
-      language: orgStore.current?.language || locale.value,
+      language: orgStore.current?.language || locale.value || 'en',
       tags: [],
     })
     const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
