@@ -7,7 +7,7 @@ export async function getBlogEntries(id) {
 }
 
 export async function getBlogEntry(body: BlogEntryInput) {
-  return (await useAPI(`project/${body.project_id}/blog-entry/${body.blog_entry_id}`, {})).data
+  return (await useAPI(`project/${body.project_id}/blog-entry/${body.blog_entry_id}/`, {})).data
     .value
 }
 

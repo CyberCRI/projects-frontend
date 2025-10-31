@@ -44,7 +44,7 @@ export async function deleteProjectCategory(organizationCode: string, id: number
 }
 
 export async function getProjectCategory(organizationCode: string, id: number) {
-  return await useAPI(`organization/${organizationCode}/category/${id}`)
+  return await useAPI(`organization/${organizationCode}/category/${id}/`)
 }
 
 export async function getAllProjectCategories(organizationCode: string) {
