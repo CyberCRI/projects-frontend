@@ -114,8 +114,8 @@ export default {
         return
       }
       this.projectUsers.push({
-        user: user,
-        role: user.role,
+        user: newUser,
+        role: newUser.role,
       })
       this.$emit('update-team', this.projectUsers)
     },
