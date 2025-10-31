@@ -304,7 +304,7 @@ export default {
       delete data.imageSizes
       let categoryId = category.id
       if (!categoryId) {
-        const newCategory = await createProjectCategory(data)
+        const newCategory = await createProjectCategory(organizationCode, data)
         categoryId = newCategory.id
       } else {
         // edit catgeory
