@@ -68,6 +68,7 @@
         mode="full"
         save-icon-visible
         :save-image-callback="saveBlogImage"
+        :disable-save="asyncing"
         @unauthorized="closeDrawer"
         @image="handleImage"
         @saved="submitBlogEntry(false)"

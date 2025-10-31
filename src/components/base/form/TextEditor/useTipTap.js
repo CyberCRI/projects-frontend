@@ -42,6 +42,10 @@ export const propsDefinitions = {
     type: [Function, null],
     required: false,
   },
+  disableSave: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 export function useTipTap({ props, emit, t }) {

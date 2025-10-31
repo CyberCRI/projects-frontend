@@ -35,6 +35,7 @@
         :save-image-callback="saveDescriptionImage"
         class="no-max-height"
         mode="full"
+        :disable-save="asyncing"
         @unauthorized="$emit('close')"
         @saved="patchProject(false)"
         @socket-ready="socketReady = $event"
